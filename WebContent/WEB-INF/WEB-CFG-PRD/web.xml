@@ -132,11 +132,11 @@
     <!-- define log4j -->
     <context-param>
         <param-name>webAppRootKey</param-name>
-        <param-value>akb.pfp.local</param-value>
+        <param-value>akb.pfp.prd</param-value>
     </context-param>
     <context-param>
         <param-name>log4jConfigLocation</param-name>
-        <param-value>classpath:config/log4j/local/log4j.xml</param-value>
+        <param-value>classpath:config/log4j/prd/log4j.xml</param-value>
     </context-param>
     <context-param>
         <param-name>log4jRefreshInterval</param-name>
@@ -151,7 +151,7 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
         	classpath:config/spring/spring*.xml,
-        	classpath:config/spring/local/spring*.xml
+        	classpath:config/spring/prd/spring*.xml
         </param-value>
     </context-param>
     <listener>
