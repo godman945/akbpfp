@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfpUser" table="pfp_user" catalog="akb">
+        <id name="userId" type="string">
+            <column name="user_id" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="pfpCustomerInfo" class="com.pchome.akbpfp.db.pojo.PfpCustomerInfo" fetch="select">
+            <column name="customer_info_id" length="20">
+                <comment>&#169;&#210;&#196;&#221;&#177;b&#164;&#225;</comment>
+            </column>
+        </many-to-one>
+        <property name="privilegeId" type="int">
+            <column name="privilege_id" not-null="true">
+                <comment>&#168;&#207;&#165;&#206;&#197;v&#173;&#173;</comment>
+            </column>
+        </property>
+        <property name="userName" type="string">
+            <column name="user_name" length="20">
+                <comment>&#168;&#207;&#165;&#206;&#170;&#204;&#166;W&#186;&#217;</comment>
+            </column>
+        </property>
+        <property name="userEmail" type="string">
+            <column name="user_email" length="50" not-null="true">
+                <comment>&#168;&#207;&#165;&#206;&#170;&#204;&#171;H&#189;c</comment>
+            </column>
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="1" not-null="true">
+                <comment>&#177;b&#184;&#185;&#168;&#207;&#165;&#206;&#170;&#172;&#186;A</comment>
+            </column>
+        </property>
+        <property name="lastLoginDate" type="timestamp">
+            <column name="last_login_date" length="19">
+                <comment>&#179;&#204;&#171;&#225;&#181;n&#164;J&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="lastLoginIp" type="string">
+            <column name="last_login_ip" length="20">
+                <comment>&#179;&#204;&#171;&#225;&#181;n&#164;JIP</comment>
+            </column>
+        </property>
+        <property name="inviteDate" type="date">
+            <column name="invite_date" length="10" not-null="true">
+                <comment>&#193;&#220;&#189;&#208;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="activateDate" type="timestamp">
+            <column name="activate_date" length="19">
+                <comment>&#177;&#210;&#165;&#206;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <set name="pfpUserMemberRefs" table="pfp_user_member_ref" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" length="20" not-null="true">
+                    <comment>&#195;&#246;&#193;&#228;&#166;r&#188;s&#167;i&#183;|&#173;&#251;&#177;b&#184;&#185;</comment>
+                </column>
+            </key>
+            <one-to-many class="com.pchome.akbpfp.db.pojo.PfpUserMemberRef" />
+        </set>
+        <set name="pfpOrders" table="pfp_order" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" length="20" not-null="true">
+                    <comment>&#164;U&#179;&#230;&#177;b&#184;&#185;</comment>
+                </column>
+            </key>
+            <one-to-many class="com.pchome.akbpfp.db.pojo.PfpOrder" />
+        </set>
+        <set name="pfdUserAdAccountRefs" table="pfd_user_ad_account_ref" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pfp_user_id" length="20" not-null="true">
+                    <comment>&#184;g&#190;P&#176;&#211;&#181;n&#164;J&#188;s&#167;i&#177;b&#164;&#225;Id</comment>
+                </column>
+            </key>
+            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef" />
+        </set>
+    </class>
+</hibernate-mapping>

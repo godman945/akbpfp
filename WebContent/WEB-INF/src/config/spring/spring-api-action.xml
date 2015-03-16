@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">   
+    
+    <!-- order api action -->
+    <bean id="OrderAPIAction" class="com.pchome.akbpfp.struts2.action.api.OrderAPIAction" scope="prototype" >  
+    	<property name="springECcoderUtil" ref="SpringECcoderUtil" />  
+		<property name="pfpOrderService" ref="PfpOrderService" />
+		<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+		<property name="pfpUserService" ref="PfpUserService" />
+		<property name="admAccesslogService" ref="AdmAccesslogService" />
+		<property name="boardProvider" ref="BoardProviderProxy" />
+		<property name="controlPriceAPI" ref="ControlPriceAPI" />
+		<property name="channelId" value="${billing.channel.id}" /> 
+		<property name="password" value="${billing.password}" /> 
+		
+    </bean>
+
+    <!-- invite api action -->
+    <bean id="InviteAPIAction" class="com.pchome.akbpfp.struts2.action.api.InviteAPIAction" scope="prototype" >  
+    	<property name="memberServer" value="${member.server.http}" />
+    	<property name="akbPfpServer" value="${akbpfp.server}" />
+    	<property name="pfpUserService" ref="PfpUserService" />
+    	<property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
+    	<property name="memberAPI" ref="MemberAPI" />
+    </bean>
+    
+    <bean id="AdModelAPIAction" class="com.pchome.akbpfp.struts2.action.api.AdModelAPIAction" scope="prototype" >
+    	<property name="admAPI" ref="APIProviderProxy" />
+    </bean>
+	
+	<bean id="LifeCheckAPIAction" class="com.pchome.akbpfp.struts2.action.api.LifeCheckAPIAction" scope="prototype" >
+    	<property name="admAPI" ref="APIProviderProxy" />
+    </bean>
+</beans>

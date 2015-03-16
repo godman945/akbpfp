@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <!-- index -->
+    <definition name="index.index" extends="default.layout" >
+    	<put-attribute name="menu" value="" />
+    	<put-attribute name="header" value="/ftl/index/indexHeader.ftl" />
+        <put-attribute name="body" value="/ftl/index/indexBody.ftl" />
+        <put-attribute name="footer" value="/ftl/index/indexFooter.ftl" />
+    </definition>
+    
+    <!-- show -->
+    <definition name="index.show" extends="default.layout" >
+    	<put-attribute name="menu" value="" />
+    	<put-attribute name="header" value="/ftl/index/indexHeader.ftl" />
+        <put-attribute name="body" value="/ftl/index/showBody.ftl" />
+         <put-attribute name="footer" value="/ftl/index/indexFooter.ftl" />
+    </definition>
+    
+    <!-- pay -->
+    <definition name="index.pay" extends="default.layout" >
+    	<put-attribute name="menu" value="" />
+    	<put-attribute name="header" value="/ftl/index/indexHeader.ftl" />
+        <put-attribute name="body" value="/ftl/index/payBody.ftl" />
+         <put-attribute name="footer" value="/ftl/index/indexFooter.ftl" />
+    </definition>
+    
+    <!-- advantage -->
+    <definition name="index.advantage" extends="default.layout" >
+    	<put-attribute name="menu" value="" />
+    	<put-attribute name="header" value="/ftl/index/indexHeader.ftl" />
+        <put-attribute name="body" value="/ftl/index/advantageBody.ftl" />
+         <put-attribute name="footer" value="/ftl/index/indexFooter.ftl" />
+    </definition>
+    
+    <!-- qa -->
+    <definition name="index.qa" extends="default.layout" >
+    	<put-attribute name="menu" value="" />
+    	<put-attribute name="header" value="/ftl/index/indexHeader.ftl" />
+        <put-attribute name="body" value="/ftl/index/qaBody.ftl" />
+         <put-attribute name="footer" value="/ftl/index/indexFooter.ftl" />
+    </definition>
+    
+    <!-- faq -->
+    <definition name="index.faq" extends="default.layout" >
+    	<put-attribute name="menu" value="" />
+    	<put-attribute name="header" value="/ftl/index/faqHeader.ftl" />
+        <put-attribute name="body" value="/ftl/index/faqBody.ftl" />
+         <put-attribute name="footer" value="/ftl/index/indexFooter.ftl" />
+    </definition>
+    
+    <!-- click -->
+    <definition name="index.click" extends="default.layout" >
+    	<put-attribute name="menu" value="" />
+    	<put-attribute name="header" value="/ftl/index/indexHeader.ftl" />
+        <put-attribute name="body" value="/ftl/index/clickBody.ftl" />
+         <put-attribute name="footer" value="/ftl/index/indexFooter.ftl" />
+    </definition>
+    
+    <!-- click2 -->
+    <definition name="index.click2" extends="default.layout" >
+    	<put-attribute name="menu" value="" />
+    	<put-attribute name="header" value="/ftl/index/indexHeader.ftl" />
+        <put-attribute name="body" value="/ftl/index/click2Body.ftl" />
+         <put-attribute name="footer" value="/ftl/index/indexFooter.ftl" />
+    </definition>
+    
+    <!-- rule -->
+    <!--
+    <definition name="index.rule" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/index/ruleBody.ftl" />
+    </definition>
+    -->
+    <!-- open -->
+    <definition name="index.open" extends="default.layout" >
+    	<put-attribute name="menu" value="" />
+    	<put-attribute name="header" value="" />
+        <put-attribute name="body" value="/ftl/open/openBody.ftl" />
+         <put-attribute name="footer" value="" />
+    </definition>
+
+    <definition name="index.certify" extends="default.layout">
+		<put-attribute name="body" value="/ftl/index/certify.ftl" />
+    </definition>
+
+</tiles-definitions>

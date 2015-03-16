@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.AdmRecognizeDetail" table="adm_recognize_detail" catalog="akb">
+        <id name="recordDetailId" type="java.lang.Integer">
+            <column name="record_detail_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="admRecognizeRecord" class="com.pchome.akbpfp.db.pojo.AdmRecognizeRecord" fetch="select">
+            <column name="recognize_record_id" length="20" not-null="true">
+                <comment>&#165;[&#173;&#200;&#170;&#247;&#189;s&#184;&#185;</comment>
+            </column>
+        </many-to-one>
+        <property name="customerInfoId" type="string">
+            <column name="customer_info_id" length="20" not-null="true">
+                <comment>&#177;b&#164;&#225;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="pfdUserId" type="string">
+            <column name="pfd_user_id" length="20">
+                <comment>pfd&#177;b&#184;&#185;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="payType" type="string">
+            <column name="pay_type" length="1" not-null="true">
+                <comment>&#165;I&#180;&#218;&#164;&#232;&#166;&#161;:1.&#185;w&#165;I 2.&#171;&#225;&#165;I</comment>
+            </column>
+        </property>
+        <property name="pfdCustomerInfoId" type="string">
+            <column name="pfd_customer_info_id" length="20">
+                <comment>&#184;g&#190;P&#176;&#211;&#177;b&#164;&#225;</comment>
+            </column>
+        </property>
+        <property name="costPrice" type="float">
+            <column name="cost_price" precision="10" not-null="true">
+                <comment>&#170;&#225;&#182;O&#166;&#168;&#165;&#187;</comment>
+            </column>
+        </property>
+        <property name="orderType" type="string">
+            <column name="order_type" length="1" not-null="true">
+                <comment>&#192;x&#173;&#200;&#195;&#254;&#171;&#172;</comment>
+            </column>
+        </property>
+        <property name="costDate" type="date">
+            <column name="cost_date" length="10" not-null="true">
+                <comment>&#170;&#225;&#182;O&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="recordRemain" type="float">
+            <column name="record_remain" precision="10" not-null="true">
+                <comment>&#165;[&#173;&#200;&#170;&#247;&#190;l&#195;B</comment>
+            </column>
+        </property>
+        <property name="note" type="string">
+            <column name="note" length="200">
+                <comment>&#179;&#198;&#181;&#249;</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

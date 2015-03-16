@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfpBoard" table="pfp_board" catalog="akb">
+        <id name="boardId" type="java.lang.Integer">
+            <column name="board_id" />
+            <generator class="identity" />
+        </id>
+        <property name="customerInfoId" type="string">
+            <column name="customer_info_id" length="20" not-null="true">
+                <comment>&#177;b&#164;&#225;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="content" type="string">
+            <column name="content" length="500" not-null="true">
+                <comment>&#164;&#186;&#174;e</comment>
+            </column>
+        </property>
+        <property name="boardType" type="string">
+            <column name="board_type" length="1" not-null="true">
+                <comment>&#164;&#189;&#167;i&#196;&#221;&#169;&#202;</comment>
+            </column>
+        </property>
+        <property name="category" type="string">
+            <column name="category" length="2" not-null="true">
+                <comment>&#186;&#216;&#195;&#254;</comment>
+            </column>
+        </property>
+        <property name="deleteId" type="string">
+            <column name="delete_id" length="20">
+                <comment>&#167;R&#176;&#163; id</comment>
+            </column>
+        </property>
+        <property name="startDate" type="string">
+            <column name="start_date" length="10" not-null="true">
+                <comment>&#164;W&#189;u&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="endDate" type="string">
+            <column name="end_date" length="10" not-null="true">
+                <comment>&#164;U&#189;u&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="display" type="string">
+            <column name="display" length="1" not-null="true">
+                <comment>&#172;O&#167;_&#197;&#227;&#165;&#220;</comment>
+            </column>
+        </property>
+        <property name="hasUrl" type="string">
+            <column name="has_url" length="1" not-null="true">
+                <comment>&#177;&#210;&#165;&#206;&#179;s&#181;&#178;</comment>
+            </column>
+        </property>
+        <property name="urlAddress" type="string">
+            <column name="url_address" length="500">
+                <comment>&#179;s&#181;&#178;&#186;&#244;&#167;}</comment>
+            </column>
+        </property>
+        <property name="editor" type="string">
+            <column name="editor" length="50" not-null="true">
+                <comment>&#173;&#215;&#167;&#239;&#170;&#204;&#177;b&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="author" type="string">
+            <column name="author" length="50" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#170;&#204;&#177;b&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

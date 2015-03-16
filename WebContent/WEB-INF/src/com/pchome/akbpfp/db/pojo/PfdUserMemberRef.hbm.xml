@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfdUserMemberRef" table="pfd_user_member_ref" catalog="akb">
+        <composite-id name="id" class="com.pchome.akbpfp.db.pojo.PfdUserMemberRefId">
+            <key-property name="userId" type="string">
+                <column name="user_id" length="20" />
+            </key-property>
+            <key-property name="memberId" type="string">
+                <column name="member_id" length="20" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="pfdUser" class="com.pchome.akbpfp.db.pojo.PfdUser" update="false" insert="false" fetch="select">
+            <column name="user_id" length="20" not-null="true">
+                <comment>&#184;g&#190;P&#176;&#211;&#177;b&#184;&#185;</comment>
+            </column>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

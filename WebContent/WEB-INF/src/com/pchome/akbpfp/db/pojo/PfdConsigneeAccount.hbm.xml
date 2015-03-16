@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013/12/11 ?U?? 12:32:36 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfdConsigneeAccount" table="pfd_consignee_account" catalog="akb">
+        <id name="consigneeId" type="string">
+            <column name="consignee_id" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="password" type="string">
+            <column name="password" length="50" not-null="true">
+                <comment>&#177;K&#189;X</comment>
+            </column>
+        </property>
+        <property name="consigneeInfoId" type="int">
+            <column name="consignee_info_id" not-null="true" />
+        </property>
+        <property name="status" type="int">
+            <column name="status" not-null="true">
+                <comment>&#170;&#172;&#186;A</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

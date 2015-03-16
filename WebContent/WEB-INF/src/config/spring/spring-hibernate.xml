@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" destroy-method="destroy">
+        <property name="dataSource" ref="mySqlDataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.connection.characterEncoding">utf-8</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+                
+                <!-- 2 lever save
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>-->
+            </props>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+            	<!-- ADM pojo -->
+                <value>com.pchome.akbpfp.db.pojo.AdmAccesslog</value>
+                <value>com.pchome.akbpfp.db.pojo.AdmDefineAd</value>
+                <value>com.pchome.akbpfp.db.pojo.AdmFeedbackRecord</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmFreeAction</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmFreeGift</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmFreeRecord</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmManagerDetail</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmRecognizeDetail</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmRecognizeRecord</value>
+
+            	<!-- PFD pojo -->
+                <value>com.pchome.akbpfp.db.pojo.PfdAdActionReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdAdGroupReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdAdReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdApplyForBusiness</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdBonusDetail</value>       
+                <value>com.pchome.akbpfp.db.pojo.PfdBonusItem</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdBonusSet</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdContract</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdCustomerInfo</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdKeywordReport</value>   
+                <value>com.pchome.akbpfp.db.pojo.PfdMonthTotalBonus</value>              
+                <value>com.pchome.akbpfp.db.pojo.PfdUser</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdUserMemberRef</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef</value>    
+
+	            <!-- PFP pojo -->
+                <value>com.pchome.akbpfp.db.pojo.PfpAd</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdAction</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdActionReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdClick</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdDetail</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdExcludeKeyword</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdGift</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdGroup</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdGroupReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdInvalid</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdKeyword</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdKeywordPvclk</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdKeywordReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdKeywordInvalid</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdOsReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdPvclk</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdRank</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdRate</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdSysprice</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpBoard</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpChannelAdmin</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpCustomerInfo</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpEnterprise</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpIllegalKeyword</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpKeywordSysprice</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpMenu</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpOrder</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpOrderDetail</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpUser</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpUserMemberRef</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpPrivilegeModel</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpPrivilegeModelMenuRef</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpSyspriceRate</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpTransDetail</value>
+
+	            <!-- Sequence pojo -->
+                <value>com.pchome.akbpfp.db.pojo.Sequence</value>                
+            </list>
+        </property>
+    </bean>
+
+    <bean id="sessionFactory_report" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" destroy-method="destroy">
+        <property name="dataSource" ref="mySqlDataSource_report" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.connection.characterEncoding">utf-8</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+                
+                <!-- 2 lever save
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>-->
+            </props>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+	            <!-- ADM pojo -->
+                <value>com.pchome.akbpfp.db.pojo.AdmAccesslog</value>
+                <value>com.pchome.akbpfp.db.pojo.AdmDefineAd</value>
+                <value>com.pchome.akbpfp.db.pojo.AdmFeedbackRecord</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmFreeAction</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmFreeGift</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmFreeRecord</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmManagerDetail</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmRecognizeDetail</value>
+            	<value>com.pchome.akbpfp.db.pojo.AdmRecognizeRecord</value>
+
+	            <!-- PFD pojo -->
+                <value>com.pchome.akbpfp.db.pojo.PfdAdActionReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdAdGroupReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdAdReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdApplyForBusiness</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdBonusDetail</value>       
+                <value>com.pchome.akbpfp.db.pojo.PfdBonusItem</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdBonusSet</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdContract</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdCustomerInfo</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdMonthTotalBonus</value>              
+                <value>com.pchome.akbpfp.db.pojo.PfdKeywordReport</value>   
+                <value>com.pchome.akbpfp.db.pojo.PfdUser</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdUserMemberRef</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef</value>    
+
+	            <!-- PFP pojo -->
+                <value>com.pchome.akbpfp.db.pojo.PfpAd</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdAction</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdActionReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdClick</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdDetail</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdExcludeKeyword</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdGift</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdGroup</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdGroupReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdInvalid</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdKeyword</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdKeywordPvclk</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdKeywordReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdKeywordInvalid</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdOsReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdPvclk</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdRank</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdRate</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpAdSysprice</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpBoard</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpChannelAdmin</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpCustomerInfo</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpEnterprise</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpIllegalKeyword</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpKeywordSysprice</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpMenu</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpOrder</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpOrderDetail</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpUser</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpUserMemberRef</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpPrivilegeModel</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpPrivilegeModelMenuRef</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpReport</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpSyspriceRate</value>
+                <value>com.pchome.akbpfp.db.pojo.PfpTransDetail</value>
+                <value>com.pchome.akbpfp.db.pojo.Sequence</value>                
+
+	            <!-- Sequence pojo -->
+                <value>com.pchome.akbpfp.db.pojo.Sequence</value>                
+            </list>
+        </property>
+    </bean>
+    
+    <!-- spring transcation setting -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <!-- annotationtransation  method add @Transactional -->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+</beans>

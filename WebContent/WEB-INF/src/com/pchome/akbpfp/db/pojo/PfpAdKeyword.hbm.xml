@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfpAdKeyword" table="pfp_ad_keyword" catalog="akb">
+        <id name="adKeywordSeq" type="string">
+            <column name="ad_keyword_seq" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="pfpAdGroup" class="com.pchome.akbpfp.db.pojo.PfpAdGroup" fetch="select">
+            <column name="ad_group_seq" length="20" not-null="true">
+                <comment>&#188;s&#167;i&#184;s&#178;&#213;&#167;&#199;&#184;&#185;</comment>
+            </column>
+        </many-to-one>
+        <property name="adKeyword" type="string">
+            <column name="ad_keyword" length="50" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r</comment>
+            </column>
+        </property>
+        <property name="adKeywordSearchPrice" type="float">
+            <column name="ad_keyword_search_price" precision="10" not-null="true">
+                <comment>&#167;&#228;&#170;F&#166;&#232;&#195;&#246;&#193;&#228;&#166;r&#188;s&#167;i&#165;X&#187;&#249;</comment>
+            </column>
+        </property>
+        <property name="adKeywordChannelPrice" type="float">
+            <column name="ad_keyword_channel_price" precision="10" not-null="true">
+                <comment>PChome&#192;W&#185;D&#195;&#246;&#193;&#228;&#166;r&#188;s&#167;i&#165;X&#187;&#249;</comment>
+            </column>
+        </property>
+        <property name="adKeywordOrder" type="float">
+            <column name="ad_keyword_order" precision="10" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#177;&#198;&#166;W</comment>
+            </column>
+        </property>
+        <property name="adKeywordStatus" type="int">
+            <column name="ad_keyword_status" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#170;&#172;&#186;A</comment>
+            </column>
+        </property>
+        <property name="adKeywordCreateTime" type="timestamp">
+            <column name="ad_keyword_create_time" length="19" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#171;&#216;&#165;&#223;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="adKeywordUpdateTime" type="timestamp">
+            <column name="ad_keyword_update_time" length="19" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#167;&#243;&#183;s&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <set name="pfpAdKeywordPvclks" table="pfp_ad_keyword_pvclk" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ad_keyword_seq" length="20" not-null="true">
+                    <comment>&#195;&#246;&#193;&#228;&#166;r&#167;&#199;&#184;&#185;</comment>
+                </column>
+            </key>
+            <one-to-many class="com.pchome.akbpfp.db.pojo.PfpAdKeywordPvclk" />
+        </set>
+        <set name="pfpAdRanks" table="pfp_ad_rank" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ad_keyword_seq" length="20" not-null="true">
+                    <comment>&#195;&#246;&#193;&#228;&#166;r&#167;&#199;&#184;&#185;</comment>
+                </column>
+            </key>
+            <one-to-many class="com.pchome.akbpfp.db.pojo.PfpAdRank" />
+        </set>
+    </class>
+</hibernate-mapping>

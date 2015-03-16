@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.Sequence" table="sequence" catalog="akb">
+        <id name="tableName" type="string">
+            <column name="table_name" length="50" />
+            <generator class="assigned" />
+        </id>
+        <property name="tableChar" type="string">
+            <column name="table_char" length="7" not-null="true">
+                <comment>&#170;&#237;&#174;&#230;&#165;N&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="tableDate" type="string">
+            <column name="table_date" length="8" not-null="true">
+                <comment>&#170;&#237;&#174;&#230;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="tableNo" type="int">
+            <column name="table_no" not-null="true">
+                <comment>&#170;&#237;&#174;&#230;&#167;&#199;&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

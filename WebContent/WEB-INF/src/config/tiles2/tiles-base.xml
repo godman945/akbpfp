@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+    <!-- default layout template -->
+    <definition name="default.layout" template="/ftl/default/layout.ftl">
+    	<put-attribute name="head" value="default.head" />
+        <put-attribute name="header" value="default.header" />
+        <put-attribute name="menu" value="default.menu" />
+        <put-attribute name="body" value="default.body" />
+        <put-attribute name="footer" value="default.footer" />
+    </definition>
+
+    <definition name="default.head" template="/ftl/default/head.ftl" >
+    	<put-attribute name="css" value="" />
+        <put-attribute name="js" value="" />
+    </definition>  
+     
+    <definition name="default.header" template="/ftl/default/header.ftl" />
+    
+    <definition name="default.menu" template="/ftl/default/menu.ftl" >
+    	<put-attribute name="submenu" value=""/>
+    </definition>
+    
+    <definition name="default.body" template="/ftl/default/body.ftl" />
+    
+    <definition name="default.footer" template="/ftl/default/footer.ftl" />
+    
+    <definition name="default.page" template="/ftl/default/page.ftl" />
+    
+    <!-- error -->
+    <definition name=".error.error" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/error/errorBody.ftl" />
+    </definition>
+    
+    <!-- page not found -->
+    <definition name=".error.pageNotFound" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/error/pageNotFoundBody.ftl" />
+    </definition>
+    
+    <!-- customerInfoClose -->
+    <definition name=".customerInfo.status.close" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/error/customerInfoCloseBody.ftl" />
+    </definition>
+    
+    <!-- customerInfoStop -->
+    <definition name=".customerInfo.status.stop" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/error/customerInfoStopBody.ftl" />
+    </definition>
+    
+    <!-- customerInfoAddMoney -->
+    <definition name=".customerInfo.status.addMoney" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/error/customerInfoAddMoneyBody.ftl" />
+    </definition>
+    
+    <!-- userStop -->
+    <definition name=".user.status.stop" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/error/userStopBody.ftl" />
+    </definition>
+    
+    <!-- userClose -->
+    <definition name=".user.status.close" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/error/userCloseBody.ftl" />
+    </definition>
+    
+    <!-- userInvite -->
+    <definition name=".user.status.invite" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/error/userInviteBody.ftl" />
+    </definition>
+    
+    <definition name="default.layout2" template="/ftl/default/layout2.ftl">
+    	<put-attribute name="head" value="default.head" />
+        <put-attribute name="body" value="default.body" />
+    </definition>
+    
+    <!-- userPrivilegeError -->
+    <definition name="user.privilege.error" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/error/userPrivilegeBody.ftl" />
+    </definition>
+    
+    <!-- userPrivilegeError -->
+    <definition name=".not.root.user.error" extends="default.layout" >
+        <put-attribute name="body" value="/ftl/error/notRootUserBody.ftl" />
+    </definition>
+    
+</tiles-definitions>

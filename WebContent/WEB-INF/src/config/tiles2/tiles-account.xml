@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<!-- info -->
+	<definition name="account.info.view" extends="account.layout">
+		<put-attribute name="head" value="account.info.head" />
+    	<put-attribute name="body" value="/ftl/account/info/view.body.ftl" />
+    </definition>
+    
+    <definition name="account.info.head" extends="account.head" >
+    	<put-attribute name="js" value="/ftl/account/info/view.js.ftl" />
+    </definition>
+    
+    <definition name="account.info.modify" extends="account.layout">
+		<put-attribute name="head" value="account.info.modify.head" />
+    	<put-attribute name="body" value="account.info.modify.body" />
+    </definition>
+    
+    <definition name="account.info.modify.head" extends="account.head" >
+    	<put-attribute name="js" value="/ftl/account/info/modify.js.ftl" />
+    </definition>
+    
+    <definition name="account.info.modify.body" template="/ftl/account/info/modify.body.ftl" />
+    
+    <!-- remain -->
+	<definition name="account.remain.view" extends="account.layout">
+		<put-attribute name="head" value="account.remain.head" />
+    	<put-attribute name="body" value="/ftl/account/remain/view.body.ftl" />
+    </definition>
+    
+    <definition name="account.remain.head" extends="account.head" >
+    	<put-attribute name="js" value="/ftl/account/remain/view.js.ftl" />
+    </definition>
+    
+    <!-- users -->
+    <definition name="account.user.view" extends="account.layout">
+    	<put-attribute name="head" value="account.user.view.head" />
+    	<put-attribute name="body" value="account.user.view.body" />
+    </definition>
+    
+    <definition name="account.user.view.head" extends="account.head" >
+    	<put-attribute name="js" value="/ftl/account/user/user.view.js.ftl" />
+    </definition>
+    
+    <definition name="account.user.view.body" template="/ftl/account/user/user.view.body.ftl" />
+    
+    <definition name="account.user.invite" extends="account.layout">
+    	<put-attribute name="head" value="account.user.invite.head" />
+    	<put-attribute name="body" value="/ftl/account/user/invite.body.ftl" />
+    </definition>
+    
+    <definition name="account.user.invite.head" extends="account.head" >
+    	<put-attribute name="js" value="/ftl/account/user/invite.js.ftl" />
+    </definition>
+    
+    <definition name="account.adm.modify" extends="account.layout">
+    	<put-attribute name="head" value="account.adm.modify.head" />
+    	<put-attribute name="body" value="/ftl/account/user/adm.modify.body.ftl" />
+    </definition>
+    
+    <definition name="account.adm.modify.head" extends="account.head" >
+    	<put-attribute name="js" value="/ftl/account/user/adm.modify.js.ftl" />
+    </definition>
+    
+    <definition name="account.user.modify" extends="account.layout">
+    	<put-attribute name="head" value="account.user.modify.head" />
+    	<put-attribute name="body" value="/ftl/account/user/user.modify.body.ftl" />
+    </definition>
+      
+    <definition name="account.user.modify.head" extends="account.head" >
+    	<put-attribute name="js" value="/ftl/account/user/user.modify.js.ftl" />
+    </definition>
+    
+	<!-- account content -->
+    <definition name="account.content.view" extends="account.layout">
+    	<put-attribute name="head" value="account.content.head" />
+    	<put-attribute name="body" value="/ftl/account/content/view.body.ftl" />
+    </definition> 
+  
+  	<definition name="account.content.head" extends="account.head" >
+    	<put-attribute name="js" value="/ftl/account/content/view.js.ftl" />
+    </definition>
+    
+	<definition name="account.remain.clause" extends="account.layout" >
+    	<put-attribute name="head" value="account.remain.clause.head" />
+		<put-attribute name="body" value="/ftl/account/remain/clause.body.ftl" />
+    </definition>
+    
+    <definition name="account.remain.clause.head" extends="account.head" >
+    	<put-attribute name="js" value="/ftl/account/remain/clause.js.ftl" />
+    </definition>
+    
+	<!-- account default -->
+	<definition name="account.layout" extends="default.layout" >
+		<put-attribute name="head" value="account.head" />
+    	<put-attribute name="menu" value="account.menu" />
+    </definition>
+    
+    <definition name="account.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/account/css.ftl" />
+    </definition>
+        
+	<definition name="account.menu" extends="default.menu" >
+    	<put-attribute name="submenu" value="/ftl/account/submenu.ftl" />
+    </definition> 	
+    
+    <definition name="account.info.message" template="/ftl/account/info/message.ftl" />
+    
+    <definition name="account.user.invite.message" template="/ftl/account/user/alert.message.ftl" />
+
+</tiles-definitions>

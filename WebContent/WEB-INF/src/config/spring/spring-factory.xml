@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+    
+<!-- 
+    <bean id="OrderCost" class="com.pchome.akbpfp.factory.bill.OrderCost" scope="prototype" >
+   		<property name="pfpOrderService" ref="PfpOrderService" />
+    </bean>
+    
+   	<bean id="AdClickCost" class="com.pchome.akbpfp.factory.bill.AdClickCost" scope="prototype" >
+   		<property name="pfpAdPvclkService" ref="PfpAdPvclkService" />
+    </bean>
+   
+    <bean id="TransDetailFactory" class="com.pchome.akbpfp.factory.bill.TransDetailFactory" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="pfptransDetailService" ref="PfpTransDetailService" />
+    	<property name="orderCost" ref="OrderCost" />
+    	<property name="adClickCost" ref="AdClickCost" />
+    </bean>
+-->    
+    
+    
+</beans>

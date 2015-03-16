@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- apply ajax -->
+    <bean id="ApplyAjax" class="com.pchome.akbpfp.struts2.ajax.apply.ApplyAjax" scope="prototype" >
+    	<property name="admFreeGiftService" ref="AdmFreeGiftService" />
+    </bean>
+    
+    <!-- account user ajax -->
+    <bean id="AccountUserAjax" class="com.pchome.akbpfp.struts2.ajax.account.AccountUserAjax" scope="prototype" >
+    	<property name="memberAPI" ref="MemberAPI" />
+    	<property name="inviteMailAPI" ref="InviteMailAPI" />
+    	<property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
+    	<property name="pfpUserService" ref="PfpUserService" />
+    	<property name="akbPfpServer" value="${akbpfp.server}" />
+    </bean>
+    
+    <!-- summary ajax -->
+    <bean id="SummaryAjax" class="com.pchome.akbpfp.struts2.ajax.summary.SummaryAjax" scope="prototype" >
+    	<property name="pfpAdPvclkService" ref="PfpAdPvclkService" />
+    </bean>
+     
+    <!-- board ajax -->
+    <bean id="BoardAjax" class="com.pchome.akbpfp.struts2.ajax.board.BoardAjax" scope="prototype" >
+    	<property name="pfpBoardService" ref="PfpBoardService" />
+    </bean>
+    
+    <!-- bill ajax -->
+    <bean id="BillAjax" class="com.pchome.akbpfp.struts2.ajax.bill.BillAjax" scope="prototype" >
+    	<property name="pfpTransDetailService" ref="PfpTransDetailService" />
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    </bean>
+
+	<!-- ad ajax -->
+    <bean id="AdGroupAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdGroupAjax" scope="prototype" >
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" />
+     	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+    </bean>
+
+    <bean id="AdKeywordAddAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdKeywordAddAjax" scope="prototype" >
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="pfpAdKeywordService" ref="PfpAdKeywordService" />
+    </bean>
+
+    <bean id="AdExcludeKeywordAddAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdExcludeKeywordAddAjax" scope="prototype" >
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="pfpAdExcludeKeywordService" ref="PfpAdExcludeKeywordService" />
+    </bean>
+
+    <bean id="AdUtilAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax" scope="prototype" />
+
+    <!-- adAction ajax -->
+    <bean id="AdActionAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdActionAjax" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="pfpAdActionService" ref="PfpAdActionService" />
+    </bean>
+    
+    <bean id="AdActionViewAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdActionViewAjax" scope="prototype" >
+    	<property name="pfpAdActionService" ref="PfpAdActionService" /> 
+    </bean>
+
+    <bean id="AdGroupViewAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdGroupViewAjax" scope="prototype" >
+	    <property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    </bean> 
+    
+	<bean id="AdKeywordViewAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdKeywordViewAjax" scope="prototype" >
+	    <property name="pfpAdKeywordService" ref="PfpAdKeywordService" /> 
+    </bean>  
+    
+    <bean id="AdAdViewAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdAdViewAjax" scope="prototype" >
+	    <property name="pfpAdService" ref="PfpAdService" /> 
+    </bean> 
+</beans>

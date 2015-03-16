@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.AdmAccesslog" table="adm_accesslog" catalog="akb">
+        <id name="accesslogId" type="java.lang.Integer">
+            <column name="accesslog_id" />
+            <generator class="identity" />
+        </id>
+        <property name="channel" type="string">
+            <column name="channel" length="50" not-null="true">
+                <comment>&#192;W&#185;D&#166;W&#186;&#217;</comment>
+            </column>
+        </property>
+        <property name="action" type="string">
+            <column name="action" length="2" />
+        </property>
+        <property name="message" type="string">
+            <column name="message" length="500" not-null="true">
+                <comment>&#179;s&#189;u&#176;T&#174;&#167;</comment>
+            </column>
+        </property>
+        <property name="memberId" type="string">
+            <column name="member_id" length="50">
+                <comment>&#183;|&#173;&#251;&#177;b&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="orderId" type="string">
+            <column name="order_id" length="20">
+                <comment>&#173;q&#179;&#230;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="customerInfoId" type="string">
+            <column name="customerInfo_id" length="20">
+                <comment>&#177;b&#184;&#185;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="userId" type="string">
+            <column name="user_id" length="20">
+                <comment>&#168;&#207;&#165;&#206;&#170;&#204;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="clientIp" type="string">
+            <column name="client_ip" length="20">
+                <comment>&#179;s&#189;uIP</comment>
+            </column>
+        </property>
+        <property name="mailSend" type="string">
+            <column name="mail_send" length="1" not-null="true">
+                <comment>&#171;H&#165;&#243;&#179;q&#170;&#190;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

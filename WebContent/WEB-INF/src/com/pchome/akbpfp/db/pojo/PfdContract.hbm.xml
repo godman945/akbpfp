@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfdContract" table="pfd_contract" catalog="akb">
+        <id name="pfdContractId" type="string">
+            <column name="pfd_contract_id" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="pfdCustomerInfo" class="com.pchome.akbpfp.db.pojo.PfdCustomerInfo" fetch="select">
+            <column name="pfd_customer_info_id" length="20" not-null="true">
+                <comment>&#184;g&#190;P&#176;&#211;&#189;s&#184;&#185;</comment>
+            </column>
+        </many-to-one>
+        <property name="status" type="string">
+            <column name="status" length="1" not-null="true">
+                <comment>&#166;X&#172;&#249;&#170;&#172;&#186;A 0:&#178;&#215;&#164;&#238; 1:&#165;&#205;&#174;&#196;&#164;&#164; 2:&#169;|&#165;&#188;&#165;&#205;&#174;&#196;
+                3:&#185;L&#180;&#193;&#165;&#162;&#174;&#196;</comment>
+            </column>
+        </property>
+        <property name="contractDate" type="timestamp">
+            <column name="contract_date" length="19" not-null="true">
+                <comment>&#195;&#177;&#172;&#249;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="startDate" type="timestamp">
+            <column name="start_date" length="19" not-null="true">
+                <comment>&#166;X&#172;&#249;&#176;_&#169;l&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="endDate" type="timestamp">
+            <column name="end_date" length="19" not-null="true">
+                <comment>&#166;X&#172;&#249;&#181;&#178;&#167;&#244;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="closeDate" type="timestamp">
+            <column name="close_date" length="19">
+                <comment>&#166;X&#172;&#249;&#178;&#215;&#164;&#238;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="closeReason" type="string">
+            <column name="close_reason" length="50">
+                <comment>&#166;X&#172;&#249;&#178;&#215;&#164;&#238;&#178;z&#165;&#209;</comment>
+            </column>
+        </property>
+        <property name="pfpPayType" type="string">
+            <column name="pfp_pay_type" length="1" not-null="true">
+                <comment>&#165;I&#180;&#218;&#164;&#232;&#166;&#161;:1.&#185;w&#165;I 2.&#171;&#225;&#165;I 3.&#168;&#226;&#170;&#204;&#179;&#163;&#166;&#179;</comment>
+            </column>
+        </property>
+        <property name="payDay" type="int">
+            <column name="pay_day" not-null="true">
+                <comment>&#165;I&#180;&#218;&#164;&#209;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="overdueFine" type="double">
+            <column name="overdue_fine" precision="22" scale="0" not-null="true">
+                <comment>&#185;O&#180;&#193;&#187;@&#180;&#218;%</comment>
+            </column>
+        </property>
+        <property name="memo" type="string">
+            <column name="memo" length="200">
+                <comment>&#179;&#198;&#181;&#249;</comment>
+            </column>
+        </property>
+        <property name="remindFlag" type="string">
+            <column name="remind_flag" length="1">
+                <comment>&#180;&#163;&#191;&#244;&#168;&#236;&#180;&#193;&#181;&#249;&#176;O</comment>
+            </column>
+        </property>
+        <property name="remindDate" type="timestamp">
+            <column name="remind_date" length="19">
+                <comment>&#180;&#163;&#191;&#244;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <set name="pfdBonusSets" table="pfd_bonus_set" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="pfd_contract" length="20" not-null="true">
+                    <comment>&#184;g&#190;P&#176;&#211;&#166;X&#172;&#249;</comment>
+                </column>
+            </key>
+            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdBonusSet" />
+        </set>
+    </class>
+</hibernate-mapping>

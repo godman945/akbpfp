@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfpAdAction" table="pfp_ad_action" catalog="akb">
+        <id name="adActionSeq" type="string">
+            <column name="ad_action_seq" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="pfpCustomerInfo" class="com.pchome.akbpfp.db.pojo.PfpCustomerInfo" fetch="select">
+            <column name="customer_info_id" length="20" not-null="true">
+                <comment>&#177;b&#164;&#225;&#189;s&#184;&#185;</comment>
+            </column>
+        </many-to-one>
+        <property name="adActionName" type="string">
+            <column name="ad_action_name" length="20" not-null="true">
+                <comment>&#188;s&#167;i&#166;W&#186;&#217;</comment>
+            </column>
+        </property>
+        <property name="adActionDesc" type="string">
+            <column name="ad_action_desc" length="300" not-null="true">
+                <comment>&#188;s&#167;i&#172;&#161;&#176;&#202;&#194;&#178;&#173;z</comment>
+            </column>
+        </property>
+        <property name="adType" type="int">
+            <column name="ad_type" not-null="true">
+                <comment>&#188;s&#167;i&#167;&#206;&#166;&#161; 1:&#167;&#228;&#170;F&#166;&#232;&#188;s&#167;i 2:PChome&#192;W&#185;D&#188;s&#167;i</comment>
+            </column>
+        </property>
+        <property name="adActionStartDate" type="date">
+            <column name="ad_action_start_date" length="10" not-null="true">
+                <comment>&#188;s&#167;i&#182;}&#169;l&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="adActionEndDate" type="date">
+            <column name="ad_action_end_date" length="10" not-null="true">
+                <comment>&#188;s&#167;i&#181;&#178;&#167;&#244;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="adActionMax" type="float">
+            <column name="ad_action_max" precision="10" not-null="true">
+                <comment>&#168;C&#164;&#233;&#185;w&#186;&#226;&#164;W&#173;&#173;</comment>
+            </column>
+        </property>
+        <property name="adActionControlPrice" type="float">
+            <column name="ad_action_control_price" precision="10" not-null="true">
+                <comment>&#189;&#213;&#177;&#177;&#170;&#247;&#195;B</comment>
+            </column>
+        </property>
+        <property name="adActionStatus" type="int">
+            <column name="ad_action_status" not-null="true">
+                <comment>&#188;s&#167;i&#170;&#172;&#186;A</comment>
+            </column>
+        </property>
+        <property name="aid" type="string">
+            <column name="aid" length="16">
+                <comment>&#167;K&#182;O&#165;Z&#181;n&#188;s&#167;iid</comment>
+            </column>
+        </property>
+        <property name="userId" type="string">
+            <column name="user_id" length="20" not-null="true">
+                <comment>&#188;s&#167;i&#177;b&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="adActionCreatTime" type="timestamp">
+            <column name="ad_action_creat_time" length="19" not-null="true">
+                <comment>&#188;s&#167;i&#172;&#161;&#176;&#202;&#171;&#216;&#165;&#223;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="adActionUpdateTime" type="timestamp">
+            <column name="ad_action_update_time" length="19" not-null="true">
+                <comment>&#188;s&#167;i&#172;&#161;&#176;&#202;&#173;&#215;&#167;&#239;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <set name="pfpAdGroups" table="pfp_ad_group" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ad_action_seq" length="20" not-null="true">
+                    <comment>&#188;s&#167;i&#172;&#161;&#176;&#202;&#167;&#199;&#184;&#185;</comment>
+                </column>
+            </key>
+            <one-to-many class="com.pchome.akbpfp.db.pojo.PfpAdGroup" />
+        </set>
+    </class>
+</hibernate-mapping>

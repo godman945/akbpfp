@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfdKeywordReport" table="pfd_keyword_report" catalog="akb">
+        <id name="keywordReportSeq" type="java.lang.Integer">
+            <column name="keyword_report_seq" />
+            <generator class="identity" />
+        </id>
+        <property name="adPvclkDate" type="date">
+            <column name="ad_pvclk_date" length="10" not-null="true">
+                <comment>&#188;s&#167;i&#195;n&#165;&#250;&#194;I&#192;&#187;&#188;&#198;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="adPvclkDevice" type="string">
+            <column name="ad_pvclk_device" length="20">
+                <comment>&#184;&#203;&#184;m PC or mobile</comment>
+            </column>
+        </property>
+        <property name="pfdCustomerInfoId" type="string">
+            <column name="pfd_customer_info_id" length="20">
+                <comment>pfd&#177;b&#164;&#225;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="pfdUserId" type="string">
+            <column name="pfd_user_id" length="20">
+                <comment>pfd&#177;b&#184;&#185;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="pfpCustomerInfoId" type="string">
+            <column name="pfp_customer_info_id" length="20" not-null="true">
+                <comment>pfp&#177;b&#164;&#225;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="keywordSeq" type="string">
+            <column name="keyword_seq" length="20" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#167;&#199;&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="adGroupSeq" type="string">
+            <column name="ad_group_seq" length="20" not-null="true">
+                <comment>&#188;s&#167;i&#184;s&#178;&#213;&#167;&#199;&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="adActionSeq" type="string">
+            <column name="ad_action_seq" length="20" not-null="true">
+                <comment>&#188;s&#167;i&#172;&#161;&#176;&#202;&#167;&#199;&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="adType" type="int">
+            <column name="ad_type" not-null="true">
+                <comment>&#188;s&#167;i&#167;&#206;&#166;&#161; 1:&#167;&#228;&#170;F&#166;&#232;&#188;s&#167;i 2:PChome&#192;W&#185;D&#188;s&#167;i</comment>
+            </column>
+        </property>
+        <property name="adPv" type="int">
+            <column name="ad_pv" not-null="true">
+                <comment>&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adClk" type="int">
+            <column name="ad_clk" not-null="true">
+                <comment>&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adInvalidClk" type="int">
+            <column name="ad_invalid_clk" not-null="true">
+                <comment>&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adPvPrice" type="float">
+            <column name="ad_pv_price" precision="10" not-null="true">
+                <comment>&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adClkPrice" type="float">
+            <column name="ad_clk_price" precision="10" not-null="true">
+                <comment>&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adInvalidClkPrice" type="float">
+            <column name="ad_invalid_clk_price" precision="10" not-null="true">
+                <comment>&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

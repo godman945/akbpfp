@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<!-- Account List -->
+	<definition name="account.list.view" extends="default.layout">
+		<put-attribute name="head" value="/ftl/manager/head.ftl" />
+		<put-attribute name="menu" value="/ftl/manager/menu.ftl" />
+    	<put-attribute name="body" value="/ftl/manager/view.body.ftl" />
+    </definition>
+
+</tiles-definitions>

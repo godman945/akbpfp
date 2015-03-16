@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Oct 31, 2014 3:12:27 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.AdmFreeRecord" table="adm_free_record" catalog="akb">
+        <id name="recordId" type="java.lang.Integer">
+            <column name="record_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="admFreeAction" class="com.pchome.akbpfp.db.pojo.AdmFreeAction" fetch="select">
+            <column name="action_id" length="20" not-null="true">
+                <comment>&#192;u&#180;f&#172;&#161;&#176;&#202;&#189;s&#184;&#185;</comment>
+            </column>
+        </many-to-one>
+        <property name="customerInfoId" type="string">
+            <column name="customer_info_id" length="20" not-null="true">
+                <comment>&#177;b&#164;&#225;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="recordDate" type="date">
+            <column name="record_date" length="10" not-null="true">
+                <comment>&#176;O&#191;&#253;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

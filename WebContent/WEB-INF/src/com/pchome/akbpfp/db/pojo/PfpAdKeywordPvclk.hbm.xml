@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfpAdKeywordPvclk" table="pfp_ad_keyword_pvclk" catalog="akb">
+        <id name="adKeywordPvclkSeq" type="java.lang.Integer">
+            <column name="ad_keyword_pvclk_seq" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="pfpAdKeyword" class="com.pchome.akbpfp.db.pojo.PfpAdKeyword" fetch="select">
+            <column name="ad_keyword_seq" length="20" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#167;&#199;&#184;&#185;</comment>
+            </column>
+        </many-to-one>
+        <property name="customerInfoId" type="string">
+            <column name="customer_info_id" length="20" not-null="true">
+                <comment>&#177;b&#164;&#225;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="pfdCustomerInfoId" type="string">
+            <column name="pfd_customer_info_id" length="20">
+                <comment>&#184;g&#190;P&#176;&#211;&#177;b&#164;&#225;</comment>
+            </column>
+        </property>
+        <property name="pfdUserId" type="string">
+            <column name="pfd_user_id" length="20">
+                <comment>&#184;g&#190;P&#176;&#211;&#177;b&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="payType" type="java.lang.Integer">
+            <column name="pay_type">
+                <comment>&#165;I&#180;&#218;&#164;&#232;&#166;&#161;:1.&#185;w&#165;I 2.&#171;&#225;&#165;I</comment>
+            </column>
+        </property>
+        <property name="adGroupSeq" type="string">
+            <column name="ad_group_seq" length="20" />
+        </property>
+        <property name="adActionSeq" type="string">
+            <column name="ad_action_seq" length="20" />
+        </property>
+        <property name="adKeywordType" type="int">
+            <column name="ad_keyword_type" not-null="true">
+                <comment>&#188;s&#167;i&#167;&#206;&#166;&#161; 1:&#167;&#228;&#170;F&#166;&#232;&#188;s&#167;i 2:PChome&#192;W&#185;D&#188;s&#167;i</comment>
+            </column>
+        </property>
+        <property name="adKeywordPvclkPropClassify" type="string">
+            <column name="ad_keyword_pvclk_prop_classify" length="20" not-null="true">
+                <comment>&#169;&#202;&#189;&#232;&#164;&#192;&#195;&#254;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPvclkDate" type="date">
+            <column name="ad_keyword_pvclk_date" length="10" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#195;n&#165;&#250;&#194;I&#192;&#187;&#188;&#198;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPvclkTime" type="int">
+            <column name="ad_keyword_pvclk_time" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#195;n&#165;&#250;&#194;I&#192;&#187;&#172;&#246;&#191;&#253;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPv" type="int">
+            <column name="ad_keyword_pv" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#195;n&#165;&#250;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adKeywordClk" type="int">
+            <column name="ad_keyword_clk" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adKeywordInvalidClk" type="int">
+            <column name="ad_keyword_invalid_clk" not-null="true">
+                <comment>&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPvPrice" type="float">
+            <column name="ad_keyword_pv_price" precision="10" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adKeywordClkPrice" type="float">
+            <column name="ad_keyword_clk_price" precision="10" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#188;s&#167;i&#194;I&#192;&#187;&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adKeywordInvalidClkPrice" type="float">
+            <column name="ad_keyword_invalid_clk_price" precision="10" not-null="true">
+                <comment>&#181;L&#174;&#196;&#194;I&#192;&#187;&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPvclkDevice" type="string">
+            <column name="ad_keyword_pvclk_device" length="20">
+                <comment>&#194;s&#196;&#253;&#194;I&#192;&#187;&#170;&#186;&#184;&#203;&#184;m</comment>
+            </column>
+        </property>
+        <property name="adKeywordPvclkOs" type="string">
+            <column name="ad_keyword_pvclk_os" length="20">
+                <comment>&#194;s&#196;&#253;&#194;I&#192;&#187;&#170;&#186;&#167;@&#183;~&#168;t&#178;&#206;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPvclkBrand" type="string">
+            <column name="ad_keyword_pvclk_brand" length="20">
+                <comment>&#194;s&#196;&#253;&#194;I&#192;&#187;&#170;&#186;&#171;~&#181;P</comment>
+            </column>
+        </property>
+        <property name="adKeywordPvclkArea" type="string">
+            <column name="ad_keyword_pvclk_area" length="20">
+                <comment>&#194;s&#196;&#253;&#194;I&#192;&#187;&#170;&#186;&#166;a&#176;&#207;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPvclkCreateTime" type="timestamp">
+            <column name="ad_keyword_pvclk_create_time" length="19" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#194;s&#196;&#253;&#194;I&#192;&#187;&#171;&#216;&#165;&#223;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPvclkUpdateTime" type="timestamp">
+            <column name="ad_keyword_pvclk_update_time" length="19" not-null="true">
+                <comment>&#195;&#246;&#193;&#228;&#166;r&#194;s&#196;&#253;&#194;I&#192;&#187;&#167;&#243;&#183;s&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

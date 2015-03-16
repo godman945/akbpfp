@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>    
+
+	<definition name="apply.layout" extends="default.layout" >
+    	<put-attribute name="head" value="apply.view.head" />
+    	<put-attribute name="menu" value="/ftl/apply/menu.ftl" />
+    </definition>
+    
+    <definition name="apply.view.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/apply/css.ftl" />
+    	<put-attribute name="js" value="apply.js" />
+    </definition>
+    
+    <definition name="apply.js" template="/ftl/apply/js.ftl" >
+    	<put-attribute name="jsName" value="apply/apply.js" />
+    </definition>
+    
+    <definition name="apply.view" extends="apply.layout">
+		<put-attribute name="body" value="/ftl/apply/view.body.ftl" />
+    </definition>
+    
+    <definition name="apply.wait.head" extends="apply.view.head" >
+    	<put-attribute name="js" value="wait.js" />
+    </definition>
+    
+    <definition name="wait.js" extends="apply.js" >
+    	<put-attribute name="jsName" value="apply/wait.js" />
+    </definition>
+    
+    <definition name="apply.wait" extends="apply.layout">
+    	<put-attribute name="head" value="apply.wait.head" />
+		<put-attribute name="body" value="/ftl/apply/wait.body.ftl" />
+    </definition>
+    
+    <definition name="apply.billing.order" extends="apply.layout">
+    	<put-attribute name="head" value="apply.wait.head" />
+		<put-attribute name="body" value="/ftl/apply/billing.order.body.ftl" />
+    </definition>
+    
+    <!-- 
+    <definition name="apply.wait" extends="apply.layout">
+    	<put-attribute name="head" value="apply.wait.head" />
+		<put-attribute name="body" value="/ftl/apply/wait.view.body.ftl" />
+    </definition>
+
+    <definition name="apply.wait.head" extends="apply.view.head" >
+    	<put-attribute name="js" value="/ftl/apply/wait.js.ftl" />
+    </definition>
+     -->
+
+	<!-- PFD 新開 PFP 帳戶第一次登入頁面 -->
+	<definition name="authorization.layout" extends="default.layout" >
+    	<put-attribute name="head" value="authorization.view.head" />
+    	<put-attribute name="menu" value="/ftl/authorization/menu.ftl" />
+    </definition>
+    
+    <definition name="authorization.view.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/authorization/css.ftl" />
+    	<put-attribute name="js" value="authorization.view.js" />
+    </definition>
+    
+    <definition name="authorization.view.js" template="/ftl/authorization/js.ftl" >
+    	<put-attribute name="jsName" value="authorization/authorization.js" />
+    </definition>
+    
+    <definition name="authorization.view" extends="authorization.layout">
+		<put-attribute name="body" value="/ftl/authorization/view.body.ftl" />
+    </definition>
+
+</tiles-definitions>

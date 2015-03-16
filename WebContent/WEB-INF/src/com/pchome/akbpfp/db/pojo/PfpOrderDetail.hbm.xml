@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfpOrderDetail" table="pfp_order_detail" catalog="akb">
+        <composite-id name="id" class="com.pchome.akbpfp.db.pojo.PfpOrderDetailId">
+            <key-property name="orderId" type="string">
+                <column name="order_id" length="20" />
+            </key-property>
+            <key-property name="productId" type="string">
+                <column name="product_id" length="10" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="pfpOrder" class="com.pchome.akbpfp.db.pojo.PfpOrder" update="false" insert="false" fetch="select">
+            <column name="order_id" length="20" not-null="true">
+                <comment>&#173;q&#179;&#230;&#189;s&#184;&#185;</comment>
+            </column>
+        </many-to-one>
+        <property name="productName" type="string">
+            <column name="product_name" length="10" not-null="true">
+                <comment>&#178;&#163;&#171;~&#166;W&#186;&#217;</comment>
+            </column>
+        </property>
+        <property name="producPrice" type="float">
+            <column name="produc_price" precision="10" not-null="true">
+                <comment>&#178;&#163;&#171;~&#170;&#247;&#195;B</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

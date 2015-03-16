@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014/5/5 ?U?? 05:30:59 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfpChannelAdmin" table="pfp_channel_admin" catalog="akb">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="memberId" type="string">
+            <column name="member_id" length="20" not-null="true">
+                <comment>&#183;|&#173;&#251;&#164;&#164;&#164;&#223;&#177;b&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="adminName" type="string">
+            <column name="admin_name" length="20" not-null="true">
+                <comment>&#186;&#222;&#178;z&#170;&#204;&#166;W&#186;&#217;</comment>
+            </column>
+        </property>
+        <property name="adminIp" type="string">
+            <column name="admin_ip" length="20" not-null="true">
+                <comment>&#186;&#222;&#178;z&#170;&#204;IP</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

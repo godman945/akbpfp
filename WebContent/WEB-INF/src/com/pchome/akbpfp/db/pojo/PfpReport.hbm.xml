@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfpReport" table="pfp_report" catalog="akb">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="reportTime" type="date">
+            <column name="report_time" length="10" not-null="true">
+                <comment>&#179;&#248;&#170;&#237;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="activateNum" type="int">
+            <column name="activate_num" not-null="true">
+                <comment>&#183;s&#182;}&#179;q&#164;&#225;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="activatePrice" type="float">
+            <column name="activate_price" precision="10" not-null="true">
+                <comment>&#183;s&#182;}&#179;q&#192;x&#173;&#200;&#170;&#247;&#195;B</comment>
+            </column>
+        </property>
+        <property name="customerNum" type="int">
+            <column name="customer_num" not-null="true">
+                <comment>&#192;x&#173;&#200;&#164;&#225;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="customerPrice" type="float">
+            <column name="customer_price" precision="10" not-null="true">
+                <comment>&#192;x&#173;&#200;&#170;&#247;&#195;B</comment>
+            </column>
+        </property>
+        <property name="giftPrice" type="float">
+            <column name="gift_price" precision="10" not-null="true">
+                <comment>&#195;&#216;&#176;e&#194;&#167;&#170;&#247;</comment>
+            </column>
+        </property>
+        <property name="refundPrice" type="float">
+            <column name="refund_price" precision="10" not-null="true">
+                <comment>&#176;h&#180;&#218;&#170;&#247;&#195;B</comment>
+            </column>
+        </property>
+        <property name="remainPrice" type="float">
+            <column name="remain_price" precision="10" not-null="true">
+                <comment>&#188;s&#167;i&#190;l&#195;B</comment>
+            </column>
+        </property>
+        <property name="adNew" type="int">
+            <column name="ad_new" not-null="true">
+                <comment>&#183;s&#188;W&#188;s&#167;i</comment>
+            </column>
+        </property>
+        <property name="adNum" type="int">
+            <column name="ad_num" not-null="true">
+                <comment>&#188;s&#167;i</comment>
+            </column>
+        </property>
+        <property name="adReady" type="int">
+            <column name="ad_ready" not-null="true">
+                <comment>&#171;&#221;&#188;&#189;&#169;&#241;&#188;s&#167;i</comment>
+            </column>
+        </property>
+        <property name="adDue" type="int">
+            <column name="ad_due" not-null="true">
+                <comment>7&#164;&#233;&#164;&#186;&#167;Y&#177;N&#168;&#236;&#180;&#193;&#188;s&#167;i</comment>
+            </column>
+        </property>
+        <property name="adPv" type="int">
+            <column name="ad_pv" not-null="true">
+                <comment>&#188;s&#167;i&#195;n&#165;&#250;</comment>
+            </column>
+        </property>
+        <property name="adClk" type="int">
+            <column name="ad_clk" not-null="true">
+                <comment>&#188;s&#167;i&#194;I&#192;&#187;</comment>
+            </column>
+        </property>
+        <property name="adClkPrice" type="float">
+            <column name="ad_clk_price" precision="10" not-null="true">
+                <comment>&#194;I&#192;&#187;&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="cpc" type="float">
+            <column name="cpc" precision="10" not-null="true">
+                <comment>cpc</comment>
+            </column>
+        </property>
+        <property name="cpm" type="float">
+            <column name="cpm" precision="10" not-null="true">
+                <comment>cpm</comment>
+            </column>
+        </property>
+        <property name="ctr" type="float">
+            <column name="ctr" precision="10" not-null="true">
+                <comment>ctr</comment>
+            </column>
+        </property>
+        <property name="adUnderMax" type="int">
+            <column name="ad_under_max" not-null="true">
+                <comment>&#165;&#188;&#185;F&#185;w&#186;&#226;&#188;s&#167;i&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="reachRate" type="float">
+            <column name="reach_rate" precision="10" not-null="true">
+                <comment>&#171;&#200;&#164;&#225;&#185;w&#186;&#226;&#185;F&#166;&#168;&#178;v</comment>
+            </column>
+        </property>
+        <property name="overPrice" type="float">
+            <column name="over_price" precision="10" not-null="true">
+                <comment>&#192;&#231;&#185;B&#182;O&#165;&#206;(&#182;W&#188;&#189;)</comment>
+            </column>
+        </property>
+        <property name="adInvalidClk" type="int">
+            <column name="ad_invalid_clk" not-null="true">
+                <comment>&#180;c&#183;N&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adInvalidClkPrice" type="float">
+            <column name="ad_invalid_clk_price" precision="10" not-null="true">
+                <comment>&#180;c&#183;N&#194;I&#192;&#187;&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="updateTime" type="timestamp">
+            <column name="update_time" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="createTime" type="timestamp">
+            <column name="create_time" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

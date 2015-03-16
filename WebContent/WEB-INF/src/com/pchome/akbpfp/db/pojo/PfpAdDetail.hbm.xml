@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfpAdDetail" table="pfp_ad_detail" catalog="akb">
+        <id name="adDetailSeq" type="string">
+            <column name="ad_detail_seq" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="pfpAd" class="com.pchome.akbpfp.db.pojo.PfpAd" fetch="select">
+            <column name="ad_seq" length="20" not-null="true">
+                <comment>&#188;s&#167;i&#167;&#199;&#184;&#185;</comment>
+            </column>
+        </many-to-one>
+        <property name="adDetailId" type="string">
+            <column name="ad_detail_id" length="20" not-null="true">
+                <comment>&#164;&#184;&#165;&#243;id</comment>
+            </column>
+        </property>
+        <property name="adDetailContent" type="string">
+            <column name="ad_detail_content" not-null="true">
+                <comment>&#188;s&#167;i&#169;&#250;&#178;&#211;&#164;&#186;&#174;e</comment>
+            </column>
+        </property>
+        <property name="adPoolSeq" type="string">
+            <column name="ad_pool_seq" length="20">
+                <comment>&#184;&#234;&#174;&#198;&#168;&#211;&#183;&#189;&#167;&#199;&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="defineAdSeq" type="string">
+            <column name="define_ad_seq" length="20">
+                <comment>&#188;s&#167;i&#169;w&#184;q&#167;&#199;&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="verifyFlag" type="string">
+            <column name="verify_flag" length="1" not-null="true">
+                <comment>&#172;O&#167;_&#187;&#221;&#173;n&#188;f&#174;&#214; y:&#187;&#221;&#173;n, n:&#164;&#163;&#187;&#221;&#173;n</comment>
+            </column>
+        </property>
+        <property name="verifyStatus" type="string">
+            <column name="verify_status" length="1" not-null="true">
+                <comment>&#197;&#231;&#195;&#210;&#170;&#172;&#186;A y:&#179;q&#185;L, n:&#165;&#162;&#177;&#209;</comment>
+            </column>
+        </property>
+        <property name="sysVerifyTime" type="timestamp">
+            <column name="sys_verify_time" length="19">
+                <comment>&#168;t&#178;&#206;&#188;f&#174;&#214;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="userVerifyTime" type="timestamp">
+            <column name="user_verify_time" length="19">
+                <comment>&#164;H&#164;u&#188;f&#174;&#214;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="illegalKeyword" type="string">
+            <column name="illegal_keyword" length="50">
+                <comment>&#185;H&#179;W&#166;r&#181;&#252;</comment>
+            </column>
+        </property>
+        <property name="adDetailCreateTime" type="timestamp">
+            <column name="ad_detail_create_time" length="19" not-null="true">
+                <comment>&#188;s&#167;i&#164;&#186;&#174;e&#171;&#216;&#165;&#223;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="adDetailUpdateTime" type="timestamp">
+            <column name="ad_detail_update_time" length="19" not-null="true">
+                <comment>&#188;s&#167;i&#164;&#186;&#174;e&#173;&#215;&#167;&#239;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014/5/5 ?U?? 05:30:59 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.AdmFeedbackRecord" table="adm_feedback_record" catalog="akb">
+        <id name="feedbackRecordId" type="string">
+            <column name="feedback_record_id" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="pfpCustomerInfo" class="com.pchome.akbpfp.db.pojo.PfpCustomerInfo" fetch="select">
+            <column name="customer_info_id" length="20" not-null="true">
+                <comment>&#177;b&#164;&#225;&#189;s&#184;&#185;</comment>
+            </column>
+        </many-to-one>
+        <property name="reason" type="string">
+            <column name="reason" length="50" not-null="true">
+                <comment>&#195;&#216;&#176;e&#173;&#236;&#166;]</comment>
+            </column>
+        </property>
+        <property name="feedbackMoney" type="float">
+            <column name="feedback_money" precision="10" not-null="true">
+                <comment>&#166;^&#245;X&#170;&#247;&#195;B</comment>
+            </column>
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="1" not-null="true">
+                <comment>&#170;&#172;&#186;A</comment>
+            </column>
+        </property>
+        <property name="giftDate" type="date">
+            <column name="gift_date" length="10" not-null="true">
+                <comment>&#195;&#216;&#176;e&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="editor" type="string">
+            <column name="editor" length="50" not-null="true">
+                <comment>&#173;&#215;&#167;&#239;&#170;&#204;</comment>
+            </column>
+        </property>
+        <property name="author" type="string">
+            <column name="author" length="50" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#170;&#204;</comment>
+            </column>
+        </property>
+        <property name="updateDate" type="timestamp">
+            <column name="update_date" length="19" not-null="true">
+                <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="createDate" type="timestamp">
+            <column name="create_date" length="19" not-null="true">
+                <comment>&#171;&#216;&#165;&#223;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>
