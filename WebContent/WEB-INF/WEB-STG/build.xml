@@ -2,7 +2,7 @@
 
 <project name="akbpfp" basedir="." default="build">
     <property name="appserver.home" value="/usr/share/tomcat-6" />
-    <property name="web.dir" value="/export/home/webuser/akb/webapps/ROOT" />
+    <property name="web.dir" value="/export/home/webuser/akb/webapps/pfp" />
 
     <property name="src.dir" value="${web.dir}/WEB-INF/src" />
     <property name="build.dir" value="${web.dir}/WEB-INF/classes" />
