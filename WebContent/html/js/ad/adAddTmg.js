@@ -1,4 +1,4 @@
-﻿﻿$(document).ready(function(){
+﻿$(document).ready(function(){
 	var LinkUrl = false;
 	var ShowUrl = false;
 	var pages = -1;
@@ -211,14 +211,25 @@
 	//檢查網址是否有效
 	function urlCheck(urlType,adUrl){
 		var adUrlHint = urlType != "adShowURL" ? "chkLinkURL" : "chkShowURL";
+		var securityUrlJsonObj = "";
 		if(adUrl != "" && urlType.indexOf("show.pchome.com.tw") < 0) {
 			if(ValidURL(adUrl)) {
 				$("#"+adUrlHint).text("網址檢查中");
 				$.ajax({
 					type: "POST",
 					url: "checkAdUrl.html",
-					data: { url: adUrl}
-				}).done(function( msg ) {
+					data: { url: adUrl},
+					success : function(response) {
+						securityUrlJsonObj = response;
+					}
+				}).done(function(msg) {
+					var obj = JSON.parse(securityUrlJsonObj);
+					if('malware' == obj.success.msg){
+						$("#"+adUrlHint).text("抱歉，該網址被判斷為有問題，請填入其它網址!");
+						return false;
+					}
+					
+					
 					if(msg == "false") {
 						$("#"+adUrlHint).css("color","red");
 						$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
