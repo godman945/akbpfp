@@ -219,26 +219,17 @@
 					type: "POST",
 					url: "checkAdUrl.html",
 					data: { url: adUrl},
-					success : function(response) {
-						securityUrlJsonObj = response;
-					}
 				}).done(function(msg) {
-					var obj = JSON.parse(securityUrlJsonObj);
-					if('malware' == obj.success.msg){
-						$("#"+adUrlHint).text("抱歉，該網址被判斷為有問題，請填入其它網址!");
-						return false;
-					}
-					
-					
-					if(msg == "false") {
+					if(msg == 'malware'){
 						$("#"+adUrlHint).css("color","red");
-						$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
+						$("#"+adUrlHint).text("抱歉，該網址被判斷為有問題，請填入其它網址!");
 						if(urlType == "adShowURL"){
 							ShowUrl = false;
 						}else{
 							LinkUrl = false;
 						}
-					} else {
+						return false;
+					}else if(msg == 'true'){
 						$("#"+urlType).css("color","");
 						$("#"+adUrlHint).css("color","green");
 						$("#"+adUrlHint).text("網址確認正確");
@@ -246,6 +237,21 @@
 							ShowUrl = true;
 						}else{
 							LinkUrl = true;
+						}
+					}else if(msg == 'false'){
+						$("#"+adUrlHint).css("color","red");
+						$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
+						if(urlType == "adShowURL"){
+							ShowUrl = false;
+						}else{
+							LinkUrl = false;
+						}
+						return false;
+					}else{
+						if($('#adLinkURL').val().length <= 1024){
+							LinkUrl = true;
+						}else{
+							LinkUrl = false;
 						}
 					}
 				});

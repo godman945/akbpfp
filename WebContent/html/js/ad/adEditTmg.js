@@ -167,6 +167,8 @@
 	function chk_adLinkURLLink() {
 		urlCheck("adLinkURL",$("#adLinkURL").val());
 		
+		
+		
 //		var adLinkURL = $("#adLinkURL").val();
 //		chkWord($("#adLinkURL"), "spanAdLinkURL");
 //		if(adLinkURL != "" && adLinkURL.indexOf("show.pchome.com.tw") < 0) {
@@ -305,7 +307,25 @@
 					url: "checkAdUrl.html",
 					data: { url: adUrl}
 				}).done(function( msg ) {
-					if(msg == "false") {
+					if(msg == 'malware'){
+						$("#"+adUrlHint).css("color","red");
+						$("#"+adUrlHint).text("抱歉，該網址被判斷為有問題，請填入其它網址!");
+						if(urlType == "adShowURL"){
+							ShowUrl = false;
+						}else{
+							LinkUrl = false;
+						}
+						return false;
+					}else if(msg == 'true'){
+						$("#"+urlType).css("color","");
+						$("#"+adUrlHint).css("color","green");
+						$("#"+adUrlHint).text("網址確認正確");
+						if(urlType == "adShowURL"){
+							ShowUrl = true;
+						}else{
+							LinkUrl = true;
+						}
+					}else if(msg == 'false'){
 						$("#"+adUrlHint).css("color","red");
 						$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
 						if(urlType == "adShowURL"){
@@ -313,25 +333,14 @@
 						}else{
 							LinkUrl = false;
 						}
-					} else {
-						$("#"+urlType).css("color","");
-						$("#"+adUrlHint).css("color","green");
-						$("#"+adUrlHint).text("網址確認正確");
-						if(urlType == "adShowURL"){
-							if($('#adShowURL').val().length<=$('#adShowURL').attr("maxlength")){
-								ShowUrl = true;
-							}else{
-								ShowUrl = false;
-							}
-						}else{
-							if($('#adLinkURL').val().length <= 1024){
-								LinkUrl = true;
-							}else{
-								LinkUrl = false;
-							}
-								
-						}
+						return false;
+					}else{
+						if($('#adLinkURL').val().length <= 1024){
+						LinkUrl = true;
+					}else{
+						LinkUrl = false;
 					}
+				}
 				});
 			}else {
 				$("#"+urlType).css("color","red");

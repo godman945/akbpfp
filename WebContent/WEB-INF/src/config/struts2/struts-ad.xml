@@ -249,7 +249,6 @@
 		<interceptor-ref name="adPrivilegeInterceptor" />
         <result type="stream">
             <param name="inputName">msg</param>
-            <param name="inputName">urlSecurityJson</param>
         </result>
 	</action>
 
