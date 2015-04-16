@@ -9,7 +9,7 @@ import com.pchome.enumerate.billing.EnumBillingStatus;
 import com.pchome.enumerate.billing.EnumRedirectStatus;
 
 public class AccountStatusAPI {
-	
+
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private PfpOrderService pfpOrderService;
 	
