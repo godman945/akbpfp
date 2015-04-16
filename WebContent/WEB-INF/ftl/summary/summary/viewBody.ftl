@@ -100,22 +100,3 @@
 
 </div>
 
-
-<!-- Google Code for &#38364;&#37749;&#23383;&#24291;&#21578; Conversion Page -->
-<script type="text/javascript">
-/* <![CDATA[ */
-var google_conversion_id = 1000234696;
-var google_conversion_language = "en";
-var google_conversion_format = "1";
-var google_conversion_color = "ffffff";
-var google_conversion_label = "uatICJiXggkQyL353AM";
-var google_remarketing_only = false;
-/* ]]> */
-</script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<noscript>
-<div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1000234696/?label=uatICJiXggkQyL353AM&amp;guid=ON&amp;script=0"/>
-</div>
-</noscript>
