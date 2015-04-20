@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <project name="akbpfp" basedir="." default="build">
-    <property name="appserver.home" value="/usr/share/tomcat-6" />
+    <property name="appserver.home" value="/usr/share/tomcat-8" />
     <property name="web.dir" value="/export/home/webuser/akb/webapps/ROOT" />
 
     <property name="src.dir" value="${web.dir}/WEB-INF/src" />
