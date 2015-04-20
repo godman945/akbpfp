@@ -130,15 +130,8 @@
         <th height="35"><span class="t_s02">* </span>首次儲值金額<br><span id="first" name="first" class="t_s01"> (首次儲值金額最少為新台幣$500)</span></th>
         <td>NT$
           	<input type="text" id="addMoney" name="addMoney" value="${accountVO.addMoney!}" autocomplete="off" maxlength="6" style="width:50px" <#if accountVO.giftSno??>readonly</#if> />
+        	<a href="http://show.pchome.com.tw/click.html#content" target=" target=_blank" style="color:red;">母親節大省方案！儲$3,000送$1,000</a>
         </td>
-    </tr>
-    <tr>
-        <th height="35">營業稅</th>
-        <td>NT$ <span id="addTax">${accountVO.addTax!}</span></td>
-    </tr>
-    <tr>
-      <th height="35">總金額(含5%營業稅)<br /><span class="t_s01">(實際付款及發票金額)</span></th>
-      <td>NT$ <span id="total"/>${(accountVO.addMoney+accountVO.addTax)!}</span></td>
     </tr>
 </tbody>
 </table>
@@ -150,7 +143,7 @@
 		<input type="checkbox" id="accept" name="accept" />
   		<strong>我同意接受<a href="http://show.pchome.com.tw/faq.html?fid=4&qid=2" target="_blank">約定條款</a>和<a href="http://show.pchome.com.tw/faq.html?fid=4&qid=5" target="_blank">刊登規範</a></strong>
   		<p>
-		<input type="button" id="save" value="付款儲值" disabled="true" />
+		<input type="button" id="save" value="付款儲值" onclick='goog_report_conversion()' disabled="true" />
 	</center>
 </div>
 
@@ -159,3 +152,36 @@
 <input type="hidden" id="giftMoney" name="giftMoney" value="${accountVO.giftMoney!}" >
 
 </form>
+<!-- Google Code for &#38364;&#37749;&#23383;&#24291;&#21578; Conversion Page
+In your html page, add the snippet and call
+goog_report_conversion when someone clicks on the
+chosen link or button. -->
+<script type="text/javascript">
+  /* <![CDATA[ */
+  goog_snippet_vars = function() {
+    var w = window;
+    w.google_conversion_id = 1000234696;
+    w.google_conversion_label = "uatICJiXggkQyL353AM";
+    w.google_remarketing_only = false;
+  }
+  // DO NOT CHANGE THE CODE BELOW.
+  goog_report_conversion = function(url) {
+    goog_snippet_vars();
+    window.google_conversion_format = "3";
+    window.google_is_call = true;
+    var opt = new Object();
+    opt.onload_callback = function() {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  }
+  var conv_handler = window['google_trackConversion'];
+  if (typeof(conv_handler) == 'function') {
+    conv_handler(opt);
+  }
+}
+/* ]]> */
+</script>
+<script type="text/javascript"
+  src="//www.googleadservices.com/pagead/conversion_async.js">
+</script>
