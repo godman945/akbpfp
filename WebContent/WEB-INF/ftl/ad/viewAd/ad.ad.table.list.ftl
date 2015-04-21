@@ -46,19 +46,9 @@
 					</iframe>    	
 		        </td>
 		        <td class="td02">
-		        <${vo.adStatusDesc!}>
+		        ${vo.adStatusDesc!}
 		        <#if vo.adStatus == 3 || vo.adStatus == 6>
-		        <br>
-		        <#assign reason>
-  						${vo.adRejectReason?replace("客服中心","<a href='http://faq.pchome.com.tw/service/user_reply.html?ch=show' target='_blank'>客服中心</a>")}
-				</#assign>
-				<#assign reason2>
-  						${reason?replace("廣告規範","<a href='https://show.pchome.com.tw/faq.html?fid=4&qid=5' target='_blank'>廣告規範</a>")}
-				</#assign>
-				<#assign reason3>
-  						${reason2?replace("相關規範","<a href='https://show.pchome.com.tw/faq.html?fid=4&qid=5' target='_blank'>相關規範</a>")}
-				</#assign>
-		        ${reason3!}
+		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${vo.adRejectReason!}">
 		        </#if>
 		        </td>
 				<td class="td01">${vo.adPv?string('#,###')!}</td>				
