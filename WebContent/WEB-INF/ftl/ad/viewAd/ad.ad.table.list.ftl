@@ -7,7 +7,6 @@
 		<input type="button" name="start" onClick="modifyAdStatus('4')" value="開 啟" /> &nbsp;
 		<input type="button" name="close" onClick="modifyAdStatus('10')" value="關 閉" /> &nbsp;
 	</span>
-
 	<span class="pages"><@t.insertAttribute name="page" /></span>			
 </div>			
 

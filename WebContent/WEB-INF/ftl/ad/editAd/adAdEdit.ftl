@@ -72,9 +72,7 @@
 <@t.insertAttribute name="adTmg" />
 <!-- adTmg end -->
 </#if>
-
 		</div>
-
 		<#if adStyle == "TXT" || adStyle == "TMG">
 		<!-- adKeyword start -->
 		<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adKeywordAdd.js" ></script>
