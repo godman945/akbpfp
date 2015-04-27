@@ -7,7 +7,6 @@
 		<input type="button" name="start" onClick="modifyAdStatus('4')" value="開 啟" /> &nbsp;
 		<input type="button" name="close" onClick="modifyAdStatus('10')" value="關 閉" /> &nbsp;
 	</span>
-
 	<span class="pages"><@t.insertAttribute name="page" /></span>			
 </div>			
 
@@ -49,7 +48,7 @@
 		        <td class="td02">
 		        ${vo.adStatusDesc!}
 		        <#if vo.adStatus == 3 || vo.adStatus == 6>
-		        <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${vo.adRejectReason!}">
+		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${vo.adRejectReason!}">
 		        </#if>
 		        </td>
 				<td class="td01">${vo.adPv?string('#,###')!}</td>				

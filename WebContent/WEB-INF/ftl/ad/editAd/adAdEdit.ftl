@@ -20,7 +20,20 @@
 			<img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">修改廣告
 		</h2>
 		<div class="grtba" style="padding:1px 10px;margin-bottom:10px;">
-			<h4 >廣告狀態：${adStatusDesc!}<span class="t_s01"> ${adVerifyRejectReason!}</span></h4>
+			<h4 >廣告狀態：${adStatusDesc!}
+			<span class="t_s01"> 
+				<#assign reason>
+  						${adVerifyRejectReason?replace("客服中心","<a href='http://faq.pchome.com.tw/service/user_reply.html?ch=show' target='_blank'>客服中心</a>")}
+				</#assign>
+				<#assign reason2>
+  						${reason?replace("廣告規範","<a href='https://show.pchome.com.tw/faq.html?fid=4&qid=5' target='_blank'>廣告規範</a>")}
+				</#assign>
+				<#assign reason3>
+  						${reason2?replace("相關規範","<a href='https://show.pchome.com.tw/faq.html?fid=4&qid=5' target='_blank'>相關規範</a>")}
+				</#assign>
+		        ${reason3!}
+			</span>
+			</h4>
 		</div>
 		<div class="grtba">
 			<h4 style="display:none;">建立廣告</h4>
@@ -59,9 +72,7 @@
 <@t.insertAttribute name="adTmg" />
 <!-- adTmg end -->
 </#if>
-
 		</div>
-
 		<#if adStyle == "TXT" || adStyle == "TMG">
 		<!-- adKeyword start -->
 		<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adKeywordAdd.js" ></script>
