@@ -454,16 +454,17 @@ function deleteImage() {
 			url: "deleteIMG.html",
 			data: { imgFile: $("#imgFile").val()}
 		}).done(function( msg ) {
-			if(msg == "delFinish") {
-				$("#imghead").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
-				$("#previewImg").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
-				$("#uploadFile").replaceWith($('#uploadFile').clone());
-				$("#imgFile").val("");
-			}
+//			if(msg == "delFinish") {
+//				
+//			}
 		});
 	} else {
 		$("#chkFile").text("");
 	} 
+	$("#imghead").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
+	$("#previewImg").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
+	$("#uploadFile").replaceWith($('#uploadFile').clone());
+	$("#imgFile").val("");
 	$("#sizeCheckDiv").css("display","none");
 	$("#uploadCheckDiv").css("display","none");
 }
@@ -497,7 +498,6 @@ function previewImage(file) {
 		$("#modifyForm").attr("target", "uploadIMG");
 		$("#modifyForm").attr("action", "fileUpload.html");
 		$("#modifyForm").submit();
-
 	}
 }
 
