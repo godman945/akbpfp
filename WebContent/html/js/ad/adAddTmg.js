@@ -343,6 +343,15 @@
 	
 	
 	function saveData() {
+		if($("#uploadFile").val()==""){
+			$("#uploadCheckDiv").css("display","");
+			return false;
+		}else{
+			$("#uploadCheckDiv").css("display","none");
+		}
+		if(!sizeFlag){
+			return false;
+		}
 		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 		if(confirm(alt)) {
 			var kwLen = document.getElementsByName("keywords").length;
@@ -455,10 +464,27 @@ function deleteImage() {
 	} else {
 		$("#chkFile").text("");
 	} 
+	$("#sizeCheckDiv").css("display","none");
+	$("#uploadCheckDiv").css("display","none");
 }
 
 //預覽圖片
+var sizeFlag = false;
 function previewImage(file) {
+	sizeFlag = false;
+	var size = ($("#uploadFile")[0].files[0].size / 1024);
+	size = Math.round(size);
+	
+	if(size > 1024){
+		sizeFlag = false;
+		$("#sizeCheckDiv").css("display","");
+		$("#uploadCheckDiv").css("display","none");
+		return false;
+	}else{
+		sizeFlag = true;
+		$("#sizeCheckDiv").css("display","none");
+		$("#uploadCheckDiv").css("display","none");
+	}
 	var picPath = file.value;
 	var type = picPath.substring(picPath.lastIndexOf(".")+1, picPath.length).toLowerCase();
 	$("#imghead").css("display", "inline");
