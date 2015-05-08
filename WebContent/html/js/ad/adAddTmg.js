@@ -345,6 +345,7 @@
 	function saveData() {
 		if($("#uploadFile").val()==""){
 			$("#uploadCheckDiv").css("display","");
+			location.hash="uploadFile"
 			return false;
 		}else{
 			$("#uploadCheckDiv").css("display","none");
