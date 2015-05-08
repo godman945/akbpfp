@@ -480,6 +480,8 @@ function previewImage(file) {
 		sizeFlag = false;
 		$("#sizeCheckDiv").css("display","");
 		$("#uploadCheckDiv").css("display","none");
+		$("#imghead").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
+		$("#previewImg").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
 		return false;
 	}else{
 		sizeFlag = true;
