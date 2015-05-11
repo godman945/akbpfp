@@ -477,7 +477,7 @@ function previewImage(file) {
 		$("#uploadCheckDiv").css("display","none");
 		$("#imghead").attr("src", "./html/img/upl9090.gif");
 		$("#previewImg").attr("src", "./html/img/upl9090.gif");
-//		$("#uploadFile").replaceWith($('#uploadFile').clone());
+		$("#uploadFile").replaceWith($('#uploadFile').clone());
 		$("#imgFile").val("");
 		location.href="#uploadFile";
 	}else{
