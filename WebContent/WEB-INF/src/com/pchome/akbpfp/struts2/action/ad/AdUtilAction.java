@@ -35,7 +35,7 @@ public class AdUtilAction extends BaseCookieAction{
 	private String imgFile;
 
 	public String fileUpload() throws Exception{
-	    log.info("fileUpload");
+	    log.info("alex fileUpload");
 		result = "noFile";
 		try {
 			System.out.println("ulTmpName = " + ulTmpName);
