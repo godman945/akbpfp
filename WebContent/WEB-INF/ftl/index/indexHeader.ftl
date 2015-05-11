@@ -33,7 +33,7 @@
     <!-- 母親節活動 start -->
 	<div id="header">
 		<div id="header-top">
-			<a href="<@s.url value="/" />click.html#content" class="ad4c"><img src="<@s.url value="/" />html/main/img/topad_150303.png" border="0"  alt="儲三千送一千"></a>
+			<a href="<@s.url value="/" />redirect.html" class="ad4c"><img src="<@s.url value="/" />html/main/img/topad_150511.png" border="0"  alt="儲三千送一千"></a>
 			<a href="<@s.url value="/" />redirect.html"><img src="<@s.url value="/" />html/main/img/logo_tt.gif" border="0" class="logo_tt"></a>
 			<a href="<@s.url value="/" />redirect.html" class="btngo" title="立即購買"></a> 
 			<a href="http://www.pchome.com.tw/" class="logo" target="_blank"><img src="<@s.url value="/" />html/main/img/top_pchome.png" alt="PChome" border="0" /></a>
@@ -41,7 +41,6 @@
 			<img src="<@s.url value="/" />html/main/img/icon_note1.png" border="0" class="icon_note1">
             <img src="<@s.url value="/" />html/main/img/icon_3s_motherday.gif" alt="三大優勢" border="0" class="icon_3s">
 			<img src="<@s.url value="/" />html/main/img/tt_pp2.png" class="tt_pp">
-			<a href="<@s.url value="/" />click.html#content" class="adevent"><img src="<@s.url value="/" />html/main/img/btn_motherday.jpg" border="0"/></a>		
 		</div>
 	</div>
     <!-- 母親節活動 end -->
