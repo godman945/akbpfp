@@ -471,6 +471,8 @@ function previewImage(file) {
 	sizeFlag = true;
 	var size = ($("#uploadFile")[0].files[0].size / 1024);
 	size = Math.round(size);
+	alert(size);
+	
 	if(size > 1024){
 		sizeFlag = false;
 		$("#sizeCheckDiv").css("display","");
