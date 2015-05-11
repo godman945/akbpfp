@@ -473,17 +473,11 @@ function previewImage(file) {
 	size = Math.round(size);
 	if(size > 1024){
 		sizeFlag = false;
-//		deleteImage();
 		$("#sizeCheckDiv").css("display","");
 		$("#uploadCheckDiv").css("display","none");
-		
-		
 		$("#imghead").attr("src", "./html/img/upl9090.gif");
 		$("#previewImg").attr("src", "./html/img/upl9090.gif");
 		$("#uploadFile").replaceWith($('#uploadFile').clone());
-		
-		
-		
 		location.href="#uploadFile";
 		return false;
 	}else{
