@@ -211,34 +211,15 @@
 	//檢查網址是否有效
 	function urlCheck(urlType,adUrl){
 		var adUrlHint = urlType != "adShowURL" ? "chkLinkURL" : "chkShowURL";
-		var securityUrlJsonObj = "";
 		if(adUrl != "" && urlType.indexOf("show.pchome.com.tw") < 0) {
 			if(ValidURL(adUrl)) {
 				$("#"+adUrlHint).text("網址檢查中");
 				$.ajax({
 					type: "POST",
 					url: "checkAdUrl.html",
-					data: { url: adUrl},
-				}).done(function(msg) {
-					if(msg == 'malware'){
-						$("#"+adUrlHint).css("color","red");
-						$("#"+adUrlHint).text("抱歉，該網址被判斷為有問題，請填入其它網址!");
-						if(urlType == "adShowURL"){
-							ShowUrl = false;
-						}else{
-							LinkUrl = false;
-						}
-						return false;
-					}else if(msg == 'true'){
-						$("#"+urlType).css("color","");
-						$("#"+adUrlHint).css("color","green");
-						$("#"+adUrlHint).text("網址確認正確");
-						if(urlType == "adShowURL"){
-							ShowUrl = true;
-						}else{
-							LinkUrl = true;
-						}
-					}else if(msg == 'false'){
+					data: { url: adUrl}
+				}).done(function( msg ) {
+					if(msg == "false") {
 						$("#"+adUrlHint).css("color","red");
 						$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
 						if(urlType == "adShowURL"){
@@ -246,12 +227,14 @@
 						}else{
 							LinkUrl = false;
 						}
-						return false;
-					}else{
-						if($('#adLinkURL').val().length <= 1024){
-							LinkUrl = true;
+					} else {
+						$("#"+urlType).css("color","");
+						$("#"+adUrlHint).css("color","green");
+						$("#"+adUrlHint).text("網址確認正確");
+						if(urlType == "adShowURL"){
+							ShowUrl = true;
 						}else{
-							LinkUrl = false;
+							LinkUrl = true;
 						}
 					}
 				});
@@ -343,10 +326,6 @@
 	
 	
 	function saveData() {
-//		if(!sizeFlag){
-//			location.href="#uploadFile";
-//			return false;
-//		}
 		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 		if(confirm(alt)) {
 			var kwLen = document.getElementsByName("keywords").length;
@@ -442,7 +421,6 @@ function ValidURL(url) {
 }
 
 function deleteImage() {
-	sizeFlag = true;
 	$("#previewImg").css("display", "none");
 	if($("#imgFile").val() != "") {
 		$.ajax({
@@ -450,23 +428,19 @@ function deleteImage() {
 			url: "deleteIMG.html",
 			data: { imgFile: $("#imgFile").val()}
 		}).done(function( msg ) {
-//			if(msg == "delFinish") {
-//				
-//			}
+			if(msg == "delFinish") {
+				$("#imghead").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
+				$("#previewImg").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
+				$("#uploadFile").replaceWith($('#uploadFile').clone());
+				$("#imgFile").val("");
+			}
 		});
 	} else {
 		$("#chkFile").text("");
 	} 
-	$("#imghead").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
-	$("#previewImg").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
-	$("#uploadFile").replaceWith($('#uploadFile').clone());
-	$("#imgFile").val("");
-	$("#sizeCheckDiv").css("display","none");
-	$("#uploadCheckDiv").css("display","none");
 }
 
 //預覽圖片
-var sizeFlag = true;
 function previewImage(file) {
 	var picPath = file.value;
 	var type = picPath.substring(picPath.lastIndexOf(".")+1, picPath.length).toLowerCase();
