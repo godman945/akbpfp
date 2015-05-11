@@ -473,10 +473,11 @@ function previewImage(file) {
 	size = Math.round(size);
 	if(size > 1024){
 		sizeFlag = false;
-		deleteImage();
+//		deleteImage();
 		$("#sizeCheckDiv").css("display","");
 		$("#uploadCheckDiv").css("display","none");
 		location.href="#uploadFile";
+		return false;
 	}else{
 		sizeFlag = true;
 		$("#sizeCheckDiv").css("display","none");
