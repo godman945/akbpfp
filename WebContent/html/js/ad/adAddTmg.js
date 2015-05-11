@@ -480,6 +480,7 @@ function previewImage(file) {
 		$("#uploadFile").replaceWith($('#uploadFile').clone());
 		$("#imgFile").val("");
 		location.href="#uploadFile";
+		$("#uploadFile").replaceWith($('#uploadFile').clone());
 	}else{
 		sizeFlag = true;
 		$("#sizeCheckDiv").css("display","none");
