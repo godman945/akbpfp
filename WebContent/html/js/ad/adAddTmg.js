@@ -473,14 +473,18 @@ function previewImage(file) {
 	size = Math.round(size);
 	if(size > 1024){
 		sizeFlag = false;
-		$("#sizeCheckDiv").css("display","");
-		$("#uploadCheckDiv").css("display","none");
+		$("#previewImg").css("display", "none");
 		$("#imghead").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
 		$("#previewImg").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
 		$("#uploadFile").replaceWith($('#uploadFile').clone());
 		$("#imgFile").val("");
-		location.href="#uploadFile";
+		$("#sizeCheckDiv").css("display","none");
+		$("#uploadCheckDiv").css("display","none");
+		$("#sizeCheckDiv").css("display","");
+		$("#uploadCheckDiv").css("display","none");
 		$("#uploadFile").replaceWith($('#uploadFile').clone());
+		$("#imgFile").val("");
+		location.href="#uploadFile";
 	}else{
 		sizeFlag = true;
 		$("#sizeCheckDiv").css("display","none");
