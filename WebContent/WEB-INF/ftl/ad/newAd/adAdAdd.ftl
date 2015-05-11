@@ -9,17 +9,6 @@
 </#if>
 
 
-
-
-
-
-
-
-
-
-
-
-
 <div class="cont">
 <#if adStyle == "TXT">
     <form method="post" id="modifyForm" name="modifyForm" action="doAdAdAddTxt.html">

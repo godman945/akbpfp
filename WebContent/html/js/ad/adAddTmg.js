@@ -343,14 +343,8 @@
 	
 	
 	function saveData() {
-		if($("#uploadFile").val()==""){
-			$("#uploadCheckDiv").css("display","");
-			location.hash="uploadFile"
-			return false;
-		}else{
-			$("#uploadCheckDiv").css("display","none");
-		}
 		if(!sizeFlag){
+			location.href="#uploadFile";
 			return false;
 		}
 		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
@@ -448,6 +442,7 @@ function ValidURL(url) {
 }
 
 function deleteImage() {
+	sizeFlag = true;
 	$("#previewImg").css("display", "none");
 	if($("#imgFile").val() != "") {
 		$.ajax({
@@ -471,12 +466,11 @@ function deleteImage() {
 }
 
 //預覽圖片
-var sizeFlag = false;
+var sizeFlag = true;
 function previewImage(file) {
-	sizeFlag = false;
+	sizeFlag = true;
 	var size = ($("#uploadFile")[0].files[0].size / 1024);
 	size = Math.round(size);
-	
 	if(size > 1024){
 		sizeFlag = false;
 		$("#sizeCheckDiv").css("display","");
@@ -485,7 +479,7 @@ function previewImage(file) {
 		$("#previewImg").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
 		$("#uploadFile").replaceWith($('#uploadFile').clone());
 		$("#imgFile").val("");
-		return false;
+		location.href="#uploadFile";
 	}else{
 		sizeFlag = true;
 		$("#sizeCheckDiv").css("display","none");
