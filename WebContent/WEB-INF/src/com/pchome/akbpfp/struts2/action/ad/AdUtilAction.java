@@ -74,8 +74,8 @@ public class AdUtilAction extends BaseCookieAction{
 				is.close();
 				os.close();
 
-				System.out.println("cutFile.length() = " + cutFile.length());
-				System.out.println("allowSize = " + allowSize);
+				log.info("cutFile.length() = " + cutFile.length());
+				log.info("allowSize = " + allowSize);
 				if(cutFile.length() < allowSize) {
 					// 進行圖片截取
 					ImageUtil imgCutUtil = new ImageUtil();
@@ -87,7 +87,7 @@ public class AdUtilAction extends BaseCookieAction{
 					imgResizeUtil.resizeImage(resizeFile, tmpFile, 90, imgType);
 					imgFile = tmpFile.getAbsolutePath();
 					imgFile = imgFile.indexOf("\\") > 0?imgFile.replaceAll("\\\\", "/"):imgFile;
-					System.out.println("imgFile = " + imgFile);
+					log.info("imgFile = " + imgFile);
 
 					resizeFile.delete();
 					result = "resizeOK";
@@ -97,9 +97,9 @@ public class AdUtilAction extends BaseCookieAction{
 			}
 
 			result = "resizeOK";
-			System.out.println("result = " + result);
+			log.info("result = " + result);
 		} catch(Exception ex) {
-			System.out.println("Exception(AdUtilAjax.checkUrl) : " + ex.toString());
+			log.info("Exception(AdUtilAjax.checkUrl) : " + ex.toString());
 			result = "resizeErr";
 		}
 		msg = new ByteArrayInputStream(result.getBytes());
