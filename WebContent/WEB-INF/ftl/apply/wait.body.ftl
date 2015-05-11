@@ -130,7 +130,6 @@
         <th height="35"><span class="t_s02">* </span>首次儲值金額<br><span id="first" name="first" class="t_s01"> (首次儲值金額最少為新台幣$500)</span></th>
         <td>NT$
           	<input type="text" id="addMoney" name="addMoney" value="${accountVO.addMoney!}" autocomplete="off" maxlength="6" style="width:50px" <#if accountVO.giftSno??>readonly</#if> />
-        	<a href="http://show.pchome.com.tw/click.html#content" target=" target=_blank" style="color:red;">母親節大省方案！儲$3,000送$1,000</a>
         </td>
     </tr>
     <tr>

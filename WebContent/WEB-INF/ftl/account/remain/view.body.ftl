@@ -21,7 +21,6 @@
     	<th height="35"><span class="t_s02">* </span>本次加值金額<br /> <span class="t_s01">儲值金額最少為新台幣$500</span></th>
     	<td>
     		NT$ <input type="text" id="addMoney" name="addMoney" value="${accountVO.addMoney!}" autocomplete="off" maxlength="6" >
-			<a href="http://show.pchome.com.tw/click.html#content" target=" target=_blank" style="color:red;">母親節大省方案！儲$3,000送$1,000</a>
 		</td>
     </tr>
  	<tr>
