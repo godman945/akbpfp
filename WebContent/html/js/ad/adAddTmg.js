@@ -441,6 +441,7 @@ function deleteImage() {
 }
 
 //預覽圖片
+var sizeFlag = true;
 function previewImage(file) {
 	var picPath = file.value;
 	var type = picPath.substring(picPath.lastIndexOf(".")+1, picPath.length).toLowerCase();
