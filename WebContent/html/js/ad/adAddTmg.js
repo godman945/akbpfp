@@ -443,6 +443,7 @@ function ValidURL(url) {
 
 function deleteImage() {
 	sizeFlag = true;
+	alert("DFFF");
 	$("#previewImg").css("display", "none");
 	if($("#imgFile").val() != "") {
 		$.ajax({
