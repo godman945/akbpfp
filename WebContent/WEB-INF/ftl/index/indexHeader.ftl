@@ -46,7 +46,6 @@
     <!-- 母親節活動 end -->
 
 <#else>
-
     <!-- 原版 start -->
     <div id="header">
         <div id="header-top">
