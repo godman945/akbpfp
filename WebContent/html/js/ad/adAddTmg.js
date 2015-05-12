@@ -326,6 +326,10 @@
 	
 	
 	function saveData() {
+		if(!sizeFlag){
+			location.href="#uploadFile";
+			return false;
+		}
 		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 		if(confirm(alt)) {
 			var kwLen = document.getElementsByName("keywords").length;
@@ -403,6 +407,7 @@
 		}
 	}
 
+	
 	function setData() {
 		if(LinkUrl && ShowUrl && $("#adTitle").val()!="" && $("#adContent").val()!=""){
 			document.getElementsByName("adDetailContent")[0].value = document.getElementById('uploadFile').value;
@@ -421,6 +426,7 @@ function ValidURL(url) {
 }
 
 function deleteImage() {
+	sizeFlag = true;
 	$("#previewImg").css("display", "none");
 	if($("#imgFile").val() != "") {
 		$.ajax({
@@ -437,28 +443,46 @@ function deleteImage() {
 		});
 	} else {
 		$("#chkFile").text("");
+		$("#sizeCheckDiv").css("display","none");
+		
 	} 
 }
 
 //預覽圖片
 var sizeFlag = true;
 function previewImage(file) {
-	var picPath = file.value;
-	var type = picPath.substring(picPath.lastIndexOf(".")+1, picPath.length).toLowerCase();
-	$("#imghead").css("display", "inline");
-	if(type!="jpg" && type!="png"){
-		$("#chkFile").text("請選擇圖片檔案格式為 jpg、png 的檔案");
+	sizeFlag = true;
+	var size = ($("#uploadFile")[0].files[0].size / 1024);
+	size = Math.round(size);
+	if(size > 1024){
+		sizeFlag = false;
+		$("#sizeCheckDiv").css("display","");
+		$("#uploadCheckDiv").css("display","none");
+		$("#imghead").attr("src", "./html/img/upl9090.gif");
+		$("#previewImg").attr("src", "./html/img/upl9090.gif");
+		$("#uploadFile").replaceWith($('#uploadFile').clone());
+		location.href="#uploadFile";
 		return false;
-	} else {
-		$("#chkFile").text("圖片上傳中");
-		$("#imgType").val(type);
-		$("#modifyForm").attr("target", "uploadIMG");
-		$("#modifyForm").attr("action", "fileUpload.html");
-		$("#modifyForm").submit();
-
+	}else{
+		sizeFlag = true;
+		$("#sizeCheckDiv").css("display","none");
+		$("#uploadCheckDiv").css("display","none");
+		var picPath = file.value;
+		var type = picPath.substring(picPath.lastIndexOf(".")+1, picPath.length).toLowerCase();
+		$("#imghead").css("display", "inline");
+		if(type!="jpg" && type!="png"){
+			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png 的檔案");
+			return false;
+		} else {
+			$("#chkFile").text("圖片上傳中");
+			$("#imgType").val(type);
+			$("#modifyForm").attr("target", "uploadIMG");
+			$("#modifyForm").attr("action", "fileUpload.html");
+			$("#modifyForm").submit();
+		}
 	}
 }
-
+ 
 // 選擇廣告樣式，並分別導入廣告樣式頁面
 function setAdStyle(adStyle) {
 	location.href = "adAdAdd.html?adActionSeq="+ $("#adActionSeq").val() + "&adGroupSeq=" + $("#adGroupSeq").val() + "&adStyle=" + adStyle;
