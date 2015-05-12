@@ -46,7 +46,7 @@
     <!-- 母親節活動 end -->
 
 <#else>
-    <!-- 原版 start -->
+    <!-- 原版 start 
     <div id="header">
         <div id="header-top">
             <a href="<@s.url value="/" />redirect.html"><img src="<@s.url value="/" />html/main/img/logo_tt.gif" border="0" style="position:absolute; left: 160px; top: 179px;"></a>
@@ -56,9 +56,32 @@
             <img src="<@s.url value="/" />html/main/img/icon_note.png" width="246" height="128" border="0" style="position:absolute; left: 208px; top: 484px;">
             <img src="<@s.url value="/" />html/main/img/top_ad_20140301up.png" border="0" />
             <img src="<@s.url value="/" />html/main/img/icon_3s.gif" alt="三大優勢" border="0" style="position:absolute; left: 45px; top: 361px;" />
-            <img src="<@s.url value="/" />html/main/img/tt_pp.png" border="0" class="tt_pp">	
+            <img src="<@s.url value="/" />html/main/img/tt_pp2" border="0" class="tt_pp">	
         </div>
     </div>
+    -->
     <!-- 原版 end -->
+
+
+
+
+<div id="header">
+		<div id="header-top">
+			<a href="<@s.url value="/" />redirect.html"><img src="<@s.url value="/" />html/main/img/top_ad_20140301up.png" border="0" alt="儲三千送一千"></a>
+			<a href="<@s.url value="/" />redirect.html"><img src="<@s.url value="/" />html/main/img/logo_tt.gif" border="0" class="logo_tt"></a>
+			<a href="<@s.url value="/" />redirect.html" class="btngo" title="立即購買"></a> 
+			<a href="http://www.pchome.com.tw/" class="logo" target="_blank"><img src="<@s.url value="/" />html/main/img/top_pchome.png" alt="PChome" border="0"></a>
+			<a href="<@s.url value="/" />faq.html?fid=3&qid=25" target="_blank" class="faq"><img src="<@s.url value="/" />html/main/img/tt_fq.png" border="0" alt="FAQ"></a>
+			<img src="<@s.url value="/" />html/main/img/icon_note1.png" border="0" class="icon_note1">
+            <img src="<@s.url value="/" />html/main/img/icon_3s.gif" alt="三大優勢" border="0" class="icon_3s">
+			<img src="<@s.url value="/" />html/main/img/tt_pp2.png" class="tt_pp">
+			<a href="/click.html#content" class="adevent" style="margin-top:10px;"><img src="<@s.url value="/" />html/main/img/sshot_3.png" border="0"></a>		
+		</div>
+	</div>
+
+
+
+
+
 
 </#if>

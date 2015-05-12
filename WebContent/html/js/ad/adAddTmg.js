@@ -443,8 +443,9 @@ function deleteImage() {
 		});
 	} else {
 		$("#chkFile").text("");
+		$("#sizeCheckDiv").css("display","none");
+		
 	} 
-	$("#sizeCheckDiv").css("display","none");
 }
 
 //預覽圖片

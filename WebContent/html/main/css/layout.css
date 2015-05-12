@@ -6,19 +6,21 @@ body{ background:url(../img/bg.png); font-family:微軟正黑體,Arial}
 .topbar a{color:#1d5ed6;}
 .topbar{box-shadow: #666 2px 2px 3px;}
 /*------------------------header------------------------*/
+/*20150315修改*/
 #header{width: 100%;padding:0;margin: 0 ; background:#f4f4ed url(../img/bg_top.png);border:0;}
 #header-top{position: relative;margin:0 auto;width:1050px;height:642px;background:url(../img/top_tit.gif) top center;}
 #header-top .logo{position: absolute;left: 126px;top: 132px;}
 #header-top .logo4c{position: absolute; left: 128px; top: 16px;}
-#header-top .faq{position:absolute; left: 280px; top: 368px; cursor:pointer;}
-#header-top .tt_pp{
-	position:absolute;
-	left: 17px;
-	top: 319px;
-}
+#header-top .faq{position:absolute; left: 145px; top: 373px;}
+#header-top .tt_pp{	position:absolute;	right: -35px;	top: 318px;}
 #header-top .ad4c{position: absolute;top: 0px;left: 29px;}
-#header-top a.btngo{position: absolute;left: 425px;top: 475px;width:350px;height:140px;background:url(../img/btn_gobuy.png) no-repeat;display: block;	-webkit-transition: 0.3s;-moz-transition: 0.3s;-ms-transition: 0.3s;-o-transition: 0.3s;transition: 0.3s;}
-#header-top  a.btngo:hover{ background:url(../img/btn_gobuy_a.png);}
+#header-top .adevent{display:block;position:absolute; left: 105px; top: 472px;width:140px;height:170px; cursor:pointer}
+#header-top .logo_tt{position:absolute; left: 160px; top: 179px;}
+#header-top .icon_3s{position:absolute; left: 779px; top: 368px;}
+#header-top .icon_note1{position:absolute; left: 590px; top: 484px;}
+
+#header-top a.btngo{position: absolute;left: 303px;top: 475px;width:350px;height:160px;background:url(../img/btn_gobuy.png) no-repeat;display: block;	-webkit-transition: 0.3s;-moz-transition: 0.3s;-ms-transition: 0.3s;-o-transition: 0.3s;transition: 0.3s;}
+#header-top a.btngo:hover{ background:url(../img/btn_gobuy_a.png);}
 .nav{background: url(../img/navbg.png) repeat-x 0 50px;height:95px;box-shadow:#666 2px 2px 3px ;padding-top:3px;}
 .cotnav{background:url(../img/navbg.png) repeat-x;height:50px;box-shadow:#666 2px 2px 3px ;}
 #gNavi,#topNavi{width: 980px;height: 50px;margin:0 auto;text-align:center;}
