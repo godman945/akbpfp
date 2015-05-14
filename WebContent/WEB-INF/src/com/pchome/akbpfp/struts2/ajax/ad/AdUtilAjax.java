@@ -71,6 +71,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			    log.info("url = " + url);
 			    urlState = HttpUtil.getInstance().getStatusCode(url);
 			    msg = new ByteArrayInputStream("".getBytes());
+			    log.info("urlState>>>"+urlState);
 			    if(urlState >= 200 && urlState < 300){
 				noError = true;
 				log.info("urlState = " + urlState);
