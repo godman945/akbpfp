@@ -89,6 +89,7 @@ public class HttpUtil {
 		enCodeUrl = enCodeUrl + url.charAt(i);
 	    }
 	}
+	log.info("enCode end"+enCodeUrl);
 	return enCodeUrl;
     }
     // Add URL ASCII Code 2014/10/15 反譯alex
