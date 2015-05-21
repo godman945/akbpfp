@@ -149,6 +149,25 @@
     	<put-attribute name="page" value="default.page" />  	
     </definition>
     
+    <!-- 圖片廣告-->
+     <definition name="ad.add.img" extends="default.layout">
+     	<!-- <put-attribute name="head" value="ad.add.img.head" /> -->
+        <put-attribute name="body" value=".ad.ad.add.img.body" />
+     </definition>
+
+	<definition name="ad.add.img.head" template="/ftl/ad/newAd/ad.add.img.js.ftl">
+
+	</definition>
+	
+	<definition name=".ad.ad.add.img.body" template="/ftl/ad/newAd/ad.add.img.body.ftl">
+    	<put-attribute name="includeJs" value="/ftl/ad/newAd/ad.add.img.js.ftl" />
+    	<put-attribute name="adTmg" value="/ftl/ad/newAd/ad.ad.img.Tmg.ftl" />
+    	<put-attribute name="adKeyword" value="/ftl/ad/newAd/adAdAddKeyword.ftl" />
+	</definition>
+    <!-- 圖片廣告 End -->
+     
+    
+    
     <!-- adGroupView -->
     <definition name="ad.group.view" extends="ad.layout">
     	<put-attribute name="head" value="ad.group.view.head" />

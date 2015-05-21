@@ -1,4 +1,4 @@
-﻿$(document).ready(function(){
+﻿﻿$(document).ready(function(){
 	var LinkUrl = false;
 	var ShowUrl = false;
 	var pages = -1;

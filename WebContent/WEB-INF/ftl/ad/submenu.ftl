@@ -18,6 +18,8 @@
        	<a href="<@s.url value="/" />adActionAdd.html" style="color:#db0000;text-decoration:underline">新增廣告</a>
     </@s.else>
 </div>
+
+
 </#if>
 
 <div class="submn">
@@ -35,4 +37,15 @@
        	<a href="<@s.url value="/" />adActionView.html">檢視廣告</a>
     </@s.else>
 </div>
+
+<@s.if test="%{#uri.indexOf('/adAdAdd') > -1 }">
+<div class="submn"><a href="<@s.url value="/" />adAddImg.html">
+	<@s.if test="%{#uri.indexOf('/adAddImg') > -1}">
+        <b>圖片廣告</b>
+    </@s.if>
+    <@s.else>
+       	圖片廣告
+    </@s.else>
+</a></div>
+</@s.if>
 <!-- submenu end -->

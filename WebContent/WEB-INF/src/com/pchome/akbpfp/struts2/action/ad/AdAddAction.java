@@ -491,16 +491,6 @@ public class AdAddAction extends BaseCookieAction{
 		return list;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	// 新增排除關鍵字
 	private void addExcludeKeywords(PfpAdGroup pfpAdGroup) {
 		try {
@@ -524,6 +514,20 @@ public class AdAddAction extends BaseCookieAction{
 		}
 	}
 
+	
+	public String adAddImgView(){
+	    adStyle = "TMG";
+	    return SUCCESS;
+	}
+	
+	
+	//上傳圖片
+	public String uploadImg(){
+	    System.out.println("FFF");
+	    result = "alex";
+	    return SUCCESS;
+	}
+	
 	public void setPfpCustomerInfoService(
 			PfpCustomerInfoService pfpCustomerInfoService) {
 		this.pfpCustomerInfoService = pfpCustomerInfoService;
