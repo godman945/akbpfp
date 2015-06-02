@@ -38,6 +38,7 @@
     </@s.else>
 </div>
 
+<!--
 <@s.if test="%{#uri.indexOf('/adAdAdd') > -1 }">
 <div class="submn"><a href="<@s.url value="/" />adAddImg.html">
 	<@s.if test="%{#uri.indexOf('/adAddImg') > -1}">
@@ -48,4 +49,5 @@
     </@s.else>
 </a></div>
 </@s.if>
+-->
 <!-- submenu end -->

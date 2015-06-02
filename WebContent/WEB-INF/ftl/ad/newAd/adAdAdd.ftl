@@ -58,7 +58,7 @@
 <@t.insertAttribute name="adTmg" />
 <!-- adTmg end -->
 </#if>
-
+ 
 		</div>
 
 		<#if adStyle == "TXT" || adStyle == "TMG">
