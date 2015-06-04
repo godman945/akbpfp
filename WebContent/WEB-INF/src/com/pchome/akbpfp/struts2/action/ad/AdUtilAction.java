@@ -42,6 +42,7 @@ public class AdUtilAction extends BaseCookieAction{
 			if(uploadFile != null) {
 				InputStream is = new FileInputStream(uploadFile);
 				if(uploadFile.length()/1024 > 1024){
+				    result = "overSize";
 				    return SUCCESS;
 				}
 

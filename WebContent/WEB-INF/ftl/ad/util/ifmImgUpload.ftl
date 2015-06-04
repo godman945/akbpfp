@@ -27,6 +27,12 @@ function initPage() {
 		parent.document.getElementById("chkFile").style.color = "red";
 		parent.document.getElementById("chkFile").innerText = "檔案大小超過 １ＭＢ，請重新選擇！";
 		parent.document.getElementById("chkFile").textContent = "檔案大小超過 １ＭＢ，請重新選擇！";
+		var imghead  = parent.document.getElementById("imghead");
+		var previewImg  = parent.document.getElementById("previewImg");
+		var uploadFile  = parent.document.getElementById("uploadFile");
+		$("imghead").attr("src", "./html/img/upl9090.gif");
+		$("previewImg").attr("src", "./html/img/upl9090.gif");
+		$("uploadFile").replaceWith($('#uploadFile').clone());
 	} else if(msg == "noFile") {
 		parent.document.getElementById("chkFile").style.color = "red";
 		parent.document.getElementById("chkFile").innerText = "請選擇圖片檔！";
@@ -35,7 +41,7 @@ function initPage() {
 		parent.document.getElementById("chkFile").style.color = "red";
 		parent.document.getElementById("chkFile").innerText = "系統問題，請與服務人員聯絡，謝謝您！";
 		parent.document.getElementById("chkFile").textContent = "系統問題，請與服務人員聯絡，謝謝您！";
-	}
+	}	
 }
 
 </script>
