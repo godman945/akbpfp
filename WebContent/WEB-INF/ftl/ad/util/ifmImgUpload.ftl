@@ -30,9 +30,9 @@ function initPage() {
 		var imghead  = parent.document.getElementById("imghead");
 		var previewImg  = parent.document.getElementById("previewImg");
 		var uploadFile  = parent.document.getElementById("uploadFile");
-		$("imghead").attr("src", "./html/img/upl9090.gif");
-		$("previewImg").attr("src", "./html/img/upl9090.gif");
-		$("uploadFile").replaceWith($('#uploadFile').clone());
+		$(imghead).attr("src", "./html/img/upl9090.gif");
+		$(previewImg).attr("src", "./html/img/upl9090.gif");
+		$(uploadFile).replaceWith($('#uploadFile').clone());
 	} else if(msg == "noFile") {
 		parent.document.getElementById("chkFile").style.color = "red";
 		parent.document.getElementById("chkFile").innerText = "請選擇圖片檔！";
