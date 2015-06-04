@@ -1,4 +1,4 @@
-﻿﻿$(document).ready(function(){
+﻿$(document).ready(function(){
 	var LinkUrl = false;
 	var ShowUrl = false;
 	var pages = -1;
@@ -425,6 +425,7 @@ function ValidURL(url) {
 	return isUrl;
 }
 
+
 function deleteImage() {
 	sizeFlag = true;
 	$("#previewImg").css("display", "none");
@@ -451,7 +452,10 @@ function deleteImage() {
 var sizeFlag = true;
 function previewImage(file) {
 	sizeFlag = true;
-	var size = ($("#uploadFile")[0].files[0].size / 1024);
+	var size = 0;
+	if(!$.browser.msie) { 
+		size = ($("#uploadFile")[0].files[0].size / 1024);
+	}
 	size = Math.round(size);
 	if(size > 1024){
 		sizeFlag = false;

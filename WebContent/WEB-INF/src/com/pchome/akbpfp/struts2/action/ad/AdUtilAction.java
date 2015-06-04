@@ -41,6 +41,9 @@ public class AdUtilAction extends BaseCookieAction{
 			System.out.println("ulTmpName = " + ulTmpName);
 			if(uploadFile != null) {
 				InputStream is = new FileInputStream(uploadFile);
+				if(uploadFile.length()/1024 > 1024){
+				    return SUCCESS;
+				}
 
 				// 存放截圖的暫存目錄
 				File iCutPath = new File(photoTmpPath + "cut/");
