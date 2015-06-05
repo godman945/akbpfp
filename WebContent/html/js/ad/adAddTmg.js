@@ -335,6 +335,14 @@
 			return false;
 		}
 		
+		if($("#chkShowURL").css("color") == "rgb(255, 0, 0)"){
+			$('#chkShowURL').css("color","red");
+			$("#chkShowURL").text("請填寫廣告連結網址.");
+			location.href="#chkShowURL";
+			return false;
+		}
+		
+		
 		if(!sizeFlag){
 			location.href="#uploadFile";
 			return false;
