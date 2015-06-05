@@ -16,7 +16,9 @@ import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+import com.pchome.akbpfd.db.service.user.PfdUserMemberRefService;
 import com.pchome.akbpfp.api.CookieProccessAPI;
+import com.pchome.akbpfp.db.pojo.PfdUserMemberRef;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.pojo.PfpUser;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
@@ -27,6 +29,7 @@ import com.pchome.enumerate.account.EnumAccountStatus;
 import com.pchome.enumerate.account.EnumPfpRootUser;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.cookie.EnumCookiePfpKey;
+import com.pchome.enumerate.privilege.EnumPrivilegeModel;
 import com.pchome.enumerate.user.EnumUserStatus;
 import com.pchome.soft.depot.utils.CookieStringToMap;
 import com.pchome.soft.depot.utils.CookieUtil;
@@ -39,6 +42,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private CookieProccessAPI cookieProccessAPI;
 	private PfpUserMemberRefService pfpUserMemberRefService;
+	private PfdUserMemberRefService pfdUserMemberRefService;
 	/**
 	 * 登入判斷
 	 */
@@ -56,32 +60,63 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		//log.info("userData: " + userData);
 		
 		if(StringUtils.isNotBlank(pcId) && StringUtils.isNotBlank(userData)){
-		
 			// 解析 cookie 
 			EnumMap<EnumCookiePfpKey, String> cookieMap = CookieStringToMap.getInstance().transformEnumMap(userData);
-			
 			if(cookieMap == null){
 				return "index";
 			}
-			
-			//新增pfp外部頁面登出後檢查
+			//新增外部登出後重登
+			//1.判斷目前cookie登陸使用者是否相同
+			//2.判斷使用者權限 --> 小天使  > PFD > 一般user
+			//3.具有管理者權限但非該系統管理者
+			//4.寫入cookie
 			String realCookieCustomerTitle = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
 			String cookieCustomerTitle = cookieMap.get(EnumCookiePfpKey.PFP_REALITY_USER_TITLE);
-			PfpUser pfpUser = new PfpUser();
-			List<PfpUserMemberRef> pfpUserMemberRefList = new ArrayList<PfpUserMemberRef>();
-			pfpUserMemberRefList = pfpUserMemberRefService.loadAll();
 			if(!realCookieCustomerTitle.equals(cookieCustomerTitle)){
+			    PfpUser pfpUser = new PfpUser();
+			    List<PfpUserMemberRef> pfpUserMemberRefList = new ArrayList<PfpUserMemberRef>();
+			    pfpUserMemberRefList = pfpUserMemberRefService.loadAll();
+			    boolean pfpAngelFlag= false;
+			    boolean pfdAngelFlag = false;
 			    for (PfpUserMemberRef pfpUserMemberRef : pfpUserMemberRefList) {
 				if(pfpUserMemberRef.getId().getMemberId().equals(realCookieCustomerTitle)){
 				    pfpUser = pfpUserMemberRef.getPfpUser();
-				    cookieProccessAPI.deletePfpLoginCookie(response);
-				    cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.PCHOME_MANAGER, realCookieCustomerTitle);
-				    userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
-				    return "index";
+				    if(EnumPrivilegeModel.ADM_USER.getPrivilegeId() == pfpUserMemberRef.getPfpUser().getPrivilegeId() ){
+					pfpAngelFlag = true;
+				    }
+				    PfdUserMemberRef pfdUserMemberRef = pfdUserMemberRefService.getUserMemberRef(pfpUserMemberRef.getId().getMemberId());
+				    if(!(pfdUserMemberRef == null)){
+					if(EnumPrivilegeModel.ADM_USER.getPrivilegeId() == pfdUserMemberRef.getPfdUser().getPrivilegeId() ){
+					    pfdAngelFlag = true;
+					}
+				    }
+				    if(pfpAngelFlag && pfdAngelFlag){
+					cookieProccessAPI.deletePfpLoginCookie(response);
+					cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.PCHOME_MANAGER, realCookieCustomerTitle);
+					userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+					return "index";
+				    }else if(!pfpAngelFlag && !pfdAngelFlag){
+					if(!StringUtils.isBlank(cookieCustomerTitle)){
+					    cookieProccessAPI.deletePfpLoginCookie(response);
+					    cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.NO, realCookieCustomerTitle);
+					    userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+					    return "summary";
+					}else{
+					    cookieProccessAPI.deletePfpLoginCookie(response);
+					    cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.NO, realCookieCustomerTitle);
+					    userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+					    return "index";
+					}
+				    }else if(pfpAngelFlag){
+					cookieProccessAPI.deletePfpLoginCookie(response);
+					cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.PCHOME_MANAGER, realCookieCustomerTitle);
+					userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+					return "index";
+				    }
+				    break; 
 				}
 			    }
 			}
-			
 			
 			// 檢查帳戶狀態
 			String custmerInfoId = cookieMap.get(EnumCookiePfpKey.PFP_CUSTOMER_INFO_ID);
@@ -202,6 +237,15 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	public void setPfpUserMemberRefService(
 		PfpUserMemberRefService pfpUserMemberRefService) {
 	    this.pfpUserMemberRefService = pfpUserMemberRefService;
+	}
+
+	public PfdUserMemberRefService getPfdUserMemberRefService() {
+	    return pfdUserMemberRefService;
+	}
+
+	public void setPfdUserMemberRefService(
+		PfdUserMemberRefService pfdUserMemberRefService) {
+	    this.pfdUserMemberRefService = pfdUserMemberRefService;
 	}
 
 

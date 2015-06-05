@@ -15,6 +15,7 @@
         <property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
         <property name="cookieProccessAPI" ref="CookieProccessAPI" />
         <property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
+        <property name="pfdUserMemberRefService" ref="PfdUserMemberRefService" />
     </bean>
     
     <!-- Cookie Prove Interceptor -->

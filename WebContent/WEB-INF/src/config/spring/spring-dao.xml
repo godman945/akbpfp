@@ -32,6 +32,11 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
+   <bean id="PfdUserMemberRefDAO" class="com.pchome.akbpfd.db.dao.user.PfdUserMemberRefDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    
     <bean id="PfpPrivilegeModelDAO" class="com.pchome.akbpfp.db.dao.privilege.PfpPrivilegeModelDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>

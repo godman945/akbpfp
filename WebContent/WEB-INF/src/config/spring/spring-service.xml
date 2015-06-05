@@ -41,6 +41,10 @@
         <property name="dao" ref="PfpUserMemberRefDAO" />  
     </bean>
     
+    <bean id="PfdUserMemberRefService" class="com.pchome.akbpfd.db.service.user.PfdUserMemberRefService">  
+        <property name="dao" ref="PfdUserMemberRefDAO" />  
+    </bean>
+
     <bean id="PfpMenuService" class="com.pchome.akbpfp.db.service.menu.PfpMenuService" />
      
    	<bean id="AdmAccesslogService" class="com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService" >
