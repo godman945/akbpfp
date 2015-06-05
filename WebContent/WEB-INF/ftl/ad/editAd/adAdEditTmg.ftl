@@ -17,8 +17,7 @@
 							<span class="imgar" style="width:100%;">
 								<span style="display:block;width:115px;float:left"><img class="img" id="imghead" src="${adDetailContent[0]!}" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'" style="width:90px;height:90px"></span>                    	
 								<!--上傳圖片start-->
-								<div style="float:left;width:250px;text-align:left;"> 
-									&nbsp;請上傳90 ｘ90，1024Kb以內jpg或png格式的圖片<br>
+								<div style="float:left;text-align:left;">請上傳90 ｘ90，1024Kb以內jpg或png格式的圖片<br>
 									<input type="hidden" id="adDetailID" name="adDetailID" value="img">
 									<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[0]!}">
 									<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[0]!}">

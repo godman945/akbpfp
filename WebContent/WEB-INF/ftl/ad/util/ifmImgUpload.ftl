@@ -24,15 +24,23 @@ function initPage() {
 		parent.document.getElementById("chkFile").innerText = "";
 		parent.document.getElementById("chkFile").textContent = "";
 	} else if(msg == "overSize") {
-		parent.document.getElementById("chkFile").style.color = "red";
-		parent.document.getElementById("chkFile").innerText = "檔案大小超過 １ＭＢ，請重新選擇！";
-		parent.document.getElementById("chkFile").textContent = "檔案大小超過 １ＭＢ，請重新選擇！";
+	//	parent.document.getElementById("chkFile").style.color = "red";
+	//	parent.document.getElementById("chkFile").innerText = "檔案大小超過 １ＭＢ，請重新選擇！";
+	//	parent.document.getElementById("chkFile").textContent = "檔案大小超過 １ＭＢ，請重新選擇！";
+	
+	
 		var imghead  = parent.document.getElementById("imghead");
 		var previewImg  = parent.document.getElementById("previewImg");
 		var uploadFile  = parent.document.getElementById("uploadFile");
+		var chkFile = parent.document.getElementById("chkFile");
+		var sizeCheckDiv  = parent.document.getElementById("sizeCheckDiv");
+		var uploadCheckDiv  = parent.document.getElementById("uploadCheckDiv");
+		$(sizeCheckDiv).css("display","");
+		$(uploadCheckDiv).css("display","none");
 		$(imghead).attr("src", "./html/img/upl9090.gif");
 		$(previewImg).attr("src", "./html/img/upl9090.gif");
 		$(uploadFile).replaceWith($(uploadFile).clone());
+		$(chkFile).css("display","none");
 	} else if(msg == "noFile") {
 		parent.document.getElementById("chkFile").style.color = "red";
 		parent.document.getElementById("chkFile").innerText = "請選擇圖片檔！";

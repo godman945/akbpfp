@@ -1,6 +1,5 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-
 			<!-- IE 沒有 placeholder 效果，用此 code 模擬 placeholder(Jack指導版) --> 
 			<!--[if IE]>
 			<script language="JavaScript" src="<@s.url value="/" />html/js/ad/simuPlaceholderTmg.js" ></script>
@@ -16,8 +15,7 @@
 							<span class="imgar" style="width:100%;">
 								<span style="display:block;width:115px;float:left"><img id="imghead" src="<@s.url value="/" />html/img/upl9090.gif" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'"></span>                    	
 								<!--上傳圖片start-->
-								<div style="float:left;width:250px;text-align:left;"> 
-									&nbsp;請上傳90 ｘ90，1024Kb以內jpg或png格式的圖片<br>
+								<div style="float:left;text-align:left;">請上傳90 ｘ90，1024Kb以內jpg或png格式的圖片<br>
 									<input type="hidden" id="adDetailID" name="adDetailID" value="img">
 									<input type="hidden" id="adDetailName" name="adDetailName" value="廣告圖片">
 									<input type="hidden" id="adDetailContent" name="adDetailContent" value="">

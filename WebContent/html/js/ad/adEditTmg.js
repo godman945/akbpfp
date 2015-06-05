@@ -462,6 +462,10 @@
 			location.href="#uploadFile";
 			return false;
 		}
+		if($(sizeCheckDiv).css("display") == "block"){
+			location.href="#uploadFile";
+			return false;
+		}
 		if(LinkUrl && ShowUrl && $("#adTitle").val()!="" && $("#adContent").val()!=""){
 				var adStatus = $("#adStatus").val();
 				var alertMsg = "";
@@ -600,7 +604,10 @@ function deleteImage() {
 var sizeFlag = true;
 function previewImage(file) {
 	sizeFlag = true;
-	var size = ($("#uploadFile")[0].files[0].size / 1024);
+	var size = 0;
+	if(!$.browser.msie) { 
+		size = ($("#uploadFile")[0].files[0].size / 1024);
+	}
 	size = Math.round(size);
 	if(size > 1024){
 		sizeFlag = false;
@@ -622,6 +629,7 @@ function previewImage(file) {
 			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png 的檔案");
 			return false;
 		} else {
+			$("#chkFile").css("display","");
 			$("#chkFile").text("圖片上傳中");
 			$("#imgType").val(type);
 			$("#modifyForm").attr("target", "uploadIMG");

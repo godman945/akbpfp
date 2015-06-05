@@ -330,6 +330,11 @@
 			location.href="#uploadFile";
 			return false;
 		}
+		if($(sizeCheckDiv).css("display") == "block"){
+			location.href="#uploadFile";
+			return false;
+		}
+		
 		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 		if(confirm(alt)) {
 			var kwLen = document.getElementsByName("keywords").length;
@@ -395,11 +400,13 @@
 					errId = "#errAdImg";
 				}
 				location.href="#errAdImg";
-			} else {
+			}	else {
 				if(kwLen == 0) {
+					alert("C");
 					location.href="#errAdKeyword";
 					$('#chkAdKeyword').text("請輸入關鍵字");
-				} else if(kwLen > 0 && document.getElementsByName("keywords")[kwLen - 1].value == null) {
+				} 
+				else if(kwLen > 0 && document.getElementsByName("keywords")[kwLen - 1].value == null) {
 					location.href="#errAdKeyword";
 					$('#chkAdKeyword').text("請輸入關鍵字");
 				}
@@ -477,6 +484,7 @@ function previewImage(file) {
 			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png 的檔案");
 			return false;
 		} else {
+			$("#chkFile").css("display","");
 			$("#chkFile").text("圖片上傳中");
 			$("#imgType").val(type);
 			$("#modifyForm").attr("target", "uploadIMG");
