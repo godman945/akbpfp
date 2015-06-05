@@ -1,5 +1,4 @@
 ﻿$(document).ready(function(){
-
 	var LinkUrl = true;
 	var ShowUrl = true;
 	var pages = -1;
@@ -456,13 +455,27 @@
 //	var kwLen = document.getElementsByName("keywords").length;
 
 	function saveData() {
-		//取得驗證回傳值
-//		if(chk_adTitle() && chk_adContent() && $("#chkFile").text() == "" && ((kwLen > 0 && document.getElementsByName("keywords")[kwLen - 1].value != null) || document.getElementById('existKW').length > 0)){
+		
+		
+		if($("#chkShowURL").css("color") == "rgb(255, 0, 0)"){
+			$('#chkShowURL').css("color","red");
+			$("#chkShowURL").text("請填寫廣告連結網址.");
+			location.href="#chkLinkURL";
+			return false;
+		}
+		
+		if($("#chkLinkURL").css("color") == "rgb(255, 0, 0)"){
+			$('#chkLinkURL').css("color","red");
+			$("#chkLinkURL").text("請填寫廣告連結網址.");
+			location.href="#chkLinkURL";
+			return false;
+		}
+		
 		if(!sizeFlag){
 			location.href="#uploadFile";
 			return false;
 		}
-		if($(sizeCheckDiv).css("display") == "block"){
+		if($(sizeCheckDiv).css("color") == "block"){
 			location.href="#uploadFile";
 			return false;
 		}
@@ -507,58 +520,6 @@
 				}
 				location.href="#errAdContent";
 			}
-			
-			
-//			else if(!LinkUrl) {
-//				chk_adLinkURLLink();
-//				chk_adShowURL();
-////				chk_adShowURLLink();
-//				if(errId != "#errAdLinkURL") {
-//					pages--;
-//					errId = "#errAdLinkURL";
-//				}
-//				location.href="#errAdLinkURL";
-//			} else if(!ShowUrl || $("#adShowURL").val() == "") {
-//				chk_adLinkURLLink();
-//				chk_adShowURL();
-////				chk_adShowURLLink();
-//				if(errId != "#errAdShowURL") {
-//					pages--;
-//					errId = "#errAdShowURL";
-//				}
-//				location.href="#errAdShowURL";
-//			}
-//		} else if(!chk_adTitle()) {
-//			if(errId != "#errAdTitle") {
-//				pages--;
-//				errId = "#errAdTitle";
-//			}
-//			location.href="#errAdTitle";
-//		} else if(!chk_adContent()) {
-//			if(errId != "#errAdContent") {
-//				pages--;
-//				errId = "#errAdContent";
-//			}
-//			location.href="#errAdContent";
-//		} else if($("#chkFile").text() != "") {
-//			if(errId != "#errAdImg") {
-//				pages--;
-//				errId = "#errAdImg";
-//			}
-//			location.href="#errAdImg";
-//		} else {
-//			if(kwLen == 0) {
-//				if(errId != "#errAdKeyword") {
-//					pages--;
-//					errId = "#errAdKeyword";
-//				}
-//				location.href="#errAdKeyword";
-//				$('#chkAdKeyword').text("請輸入關鍵字");
-//			} else if(kwLen > 0 && document.getElementsByName("keywords")[kwLen - 1].value == null) {
-//				location.href="#errAdKeyword";
-//				$('#chkAdKeyword').text("請輸入關鍵字");
-//			}
-//		}
 	}
 
 	function setData() {
@@ -605,7 +566,7 @@ var sizeFlag = true;
 function previewImage(file) {
 	sizeFlag = true;
 	var size = 0;
-	if(!$.browser.msie) { 
+	if(!$.browser.msie || $.browser.mozilla) { 
 		size = ($("#uploadFile")[0].files[0].size / 1024);
 	}
 	size = Math.round(size);

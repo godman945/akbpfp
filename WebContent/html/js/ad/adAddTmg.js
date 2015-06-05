@@ -220,6 +220,7 @@
 					data: { url: adUrl}
 				}).done(function( msg ) {
 					if(msg == "false") {
+						$("#chkShowURL").css("color","red");
 						$("#"+adUrlHint).css("color","red");
 						$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
 						if(urlType == "adShowURL"){
@@ -239,6 +240,7 @@
 					}
 				});
 			}else {
+				$("#"+adUrlHint).css("color","red");
 				$("#"+adUrlHint).text("請填寫廣告顯示網址.");
 				$("#previewURL").text($("#"+urlType).attr("placeholder"));
 				ShowUrl = false;
@@ -326,11 +328,18 @@
 	
 	
 	function saveData() {
+		if($("#adLinkURL").val() == ""){
+			$('#chkLinkURL').css("color","red");
+			$("#chkLinkURL").text("請填寫廣告連結網址.");
+			location.href="#chkLinkURL";
+			return false;
+		}
+		
 		if(!sizeFlag){
 			location.href="#uploadFile";
 			return false;
 		}
-		if($(sizeCheckDiv).css("display") == "block"){
+		if($("#sizeCheckDiv").css("display") == "block"){
 			location.href="#uploadFile";
 			return false;
 		}
