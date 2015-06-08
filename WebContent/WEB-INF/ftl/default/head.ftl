@@ -12,7 +12,6 @@
 <title>PChome 關鍵字廣告</title>
     <link href="<@s.url value="/" />html/css/style.css" rel="stylesheet" type="text/css" /> 
     <@t.insertAttribute name="css" />
-    
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery-1.8.3.min.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery-common.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.blockUI.js"></script>
@@ -29,6 +28,8 @@
 </#if>
 
 <#-- 返回管理者介面 -->
-<#if root_user?? && root_user == "PM">
-<div class="" style=" position: fixed; width:226px; height:54px; background: url(<@s.url value="/" />html/img/back2.png); bottom:0; left:0; z-index:1000;"><a href="accountList.html" style=" display:block;width:226px; height:54px;color:#FFF; font-size:20px; font-weight:bold; line-height:40px;text-align:left; text-decoration:none; text-indent:-9999px;">返回管理者介面</a></div>
+
+<#if accountType ? exists && '${accountType}' == "PM" >
+	<div class="" style=" position: fixed; width:226px; height:54px; background: url(<@s.url value="/" />html/img/back2.png); bottom:0; left:0; z-index:1000;"><a href="accountList.html" style=" display:block;width:226px; height:54px;color:#FFF; font-size:20px; font-weight:bold; line-height:40px;text-align:left; text-decoration:none; text-indent:-9999px;">返回管理者介面</a></div>
 </#if>
+
