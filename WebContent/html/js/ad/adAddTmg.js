@@ -163,6 +163,12 @@
 			var hostname = $("<a>").prop("href", "http://"+adShowURL).prop("hostname");
 			urlCheck("adShowURL","http://"+hostname);
 		}else{
+			if($("#adShowURL").val() == "show.pchome.com.tw" || $("#chkShowURL").css("color") == "rgb(255, 0, 0)"){
+				$('#chkShowURL').css("color","red");
+				$("#chkShowURL").text("請填寫顯示網址.");
+				location.href="#chkShowURL";
+				return;
+			}
 			chk_adShowURL();
 			var adShowURL = $("#adShowURL").val();
 			urlCheck("adShowURL",adShowURL);

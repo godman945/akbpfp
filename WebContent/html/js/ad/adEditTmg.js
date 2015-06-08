@@ -153,72 +153,54 @@
 //		}
 //		chkWord($('#adLinkURL'), "spanAdLinkURL");
 	}
-	//檢查網址blur事件
-	$('#adLinkURL').blur(function() {
-		chk_adLinkURLLink();
-		chk_adShowURL();
-	});
-	
 	
 	
 	//檢查廣告連結網址
 	
 	function chk_adLinkURLLink() {
 		urlCheck("adLinkURL",$("#adLinkURL").val());
-		
-		
-		
-//		var adLinkURL = $("#adLinkURL").val();
-//		chkWord($("#adLinkURL"), "spanAdLinkURL");
-//		if(adLinkURL != "" && adLinkURL.indexOf("show.pchome.com.tw") < 0) {
-//			if(ValidURL(adLinkURL)) {
-//				$('#chkLinkURL').css("color","red");
-//				$('#chkLinkURL').text("網址檢查中");
-//				$.ajax({
-//					type: "POST",
-//					url: "checkAdUrl.html",
-//					data: { url: adLinkURL}
-//				}).done(function( msg ) {
-//					if(msg == "false") {
-//						$('#chkLinkURL').css("color","red");
-//						$('#chkLinkURL').text("請輸入正確的廣告連結網址");
-//						LinkUrl = false;
-//					} else {
-//						$('#chkLinkURL').css("color","green");
-//						$('#chkLinkURL').text("網址確認正確");
-//						LinkUrl = true;
-//					}
-//				});
-//			} else {
-//				$('#chkLinkURL').css("color","red");
-//				$('#chkLinkURL').text("請輸入正確的廣告連結網址");
-//				LinkUrl = false;
-//			}
-//		} else {
-//			$('#chkLinkURL').css("color","red");
-//			$("#chkLinkURL").text("請填寫廣告連結網址.");
-//			LinkUrl = false;
-//		}
 	}
 	
 	
+	//檢查網址blur事件
+	$('#adLinkURL').blur(function() {
+		if($("#adLinkURL").val() == "show.pchome.com.tw" || $("#chkLinkURL").css("color") == "rgb(255, 0, 0)"){
+			$('#chkLinkURL').css("color","red");
+			$("#chkLinkURL").text("請填寫連結網址.");
+		}else{
+			chk_adLinkURLLink();
+			chk_adShowURL();
+		}
+	});
+	
 	//網域鍵盤輸入事件檢查
 	$('#adShowURL').bind('keyup', function() {
-		chk_adShowURL();
-		chk_adLinkURLLink();
+		if($("#adShowURL").val() == "" || $("#chkShowURL").css("color") == "rgb(255, 0, 0)"){
+			$('#chkShowURL').css("color","red");
+			$("#chkShowURL").text("請填寫顯示網址.");
+			return;
+		}else{
+			chk_adShowURL();
+			chk_adLinkURLLink();
+		}
 	});
 	//檢查網域blur事件
 	$('#adShowURL').blur(function() {
 		var adShowURL = $("#adShowURL").val();
-		if($("#sameRealUrl").prop("checked")){
-			chk_adShowURL();
-			var hostname = $("<a>").prop("href", "http://"+adShowURL).prop("hostname");
-			urlCheck("adShowURL","http://"+hostname);
+		if($("#adShowURL").val() == "show.pchome.com.tw" || $("#chkShowURL").css("color") == "rgb(255, 0, 0)"){
+			$('#chkShowURL').css("color","red");
+			$("#chkShowURL").text("請填寫顯示網址.");
+			return;
 		}else{
-			chk_adShowURL();
-			urlCheck("adShowURL",adShowURL);
+			if($("#sameRealUrl").prop("checked")){
+				chk_adShowURL();
+				var hostname = $("<a>").prop("href", "http://"+adShowURL).prop("hostname");
+				urlCheck("adShowURL","http://"+hostname);
+			}else{
+				chk_adShowURL();
+				urlCheck("adShowURL",adShowURL);
+			}
 		}
-		
 	});
 	//顯示網域提示字數與檢查
 	function chk_adShowURL() {
