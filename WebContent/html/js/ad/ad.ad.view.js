@@ -2,7 +2,7 @@
 
 	$.ajax({ 
 		type: "GET", 
-		url: "static/cache.js", 
+		url: "/pfp/html/js/ad/ad.ad.view.js", 
 		dataType: "text", 
 		cache:false, 
 		ifModified :true 
