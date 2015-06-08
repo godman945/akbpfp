@@ -1,6 +1,7 @@
 ﻿$(document).ready(function(){
 
-    
+    alert("A");
+    jQuery.ajaxSetup({cache:false})
 });
 
 
