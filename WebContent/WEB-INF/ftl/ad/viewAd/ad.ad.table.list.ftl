@@ -1,6 +1,5 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-
 <div>
     <span style="padding:10px;float:left">                   
 	    <input type="button" name="stop" onClick="modifyAdStatus('9')" value="暫 停" /> &nbsp; 
@@ -73,9 +72,6 @@
 					
 				</td>
 			</tr>
-			
-			
-			${adAdViewVO.adHtml}<br>
 	    </#list>
 	<#else>
 	<tr>
@@ -107,3 +103,8 @@
 	<input type="button" name="start" onClick="modifyAdStatus('4')" value="開 啟" /> &nbsp;
 	<input type="button" name="close" onClick="modifyAdStatus('10')" value="關 閉" /> &nbsp;          
 </span>
+
+
+ <#list adAdViewVO as vo>
+ 	${adAdViewVO.adHtml}
+</#list>
