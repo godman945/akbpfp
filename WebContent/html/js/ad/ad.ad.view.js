@@ -1,7 +1,12 @@
 ﻿$(document).ready(function(){
 
-    alert("A");
-    jQuery.ajaxSetup({cache:false})
+	$.ajax({ 
+		type: "GET", 
+		url: "static/cache.js", 
+		dataType: "text", 
+		cache:false, 
+		ifModified :true 
+		}); 
 });
 
 
