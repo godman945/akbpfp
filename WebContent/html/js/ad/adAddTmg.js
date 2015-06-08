@@ -342,11 +342,15 @@
 	
 	function saveData() {
 		var kwLen = document.getElementsByName("keywords").length;
-		if(kwLen < 2){
-			$('#chkAdKeyword').text("請輸入關鍵字");
-			location.href="#errAdKeyword";
-			return false;
+		if( $("#existKW").children().length == 0 ){
+			if(kwLen < 2){
+				$('#chkAdKeyword').text("請輸入關鍵字");
+				location.href="#errAdKeyword";
+				return false;
+			}
 		}
+		
+		
 		//for IE
 		if($("#adTitle").val() == "PChome關鍵字廣告 全新登場"){
 			$('#chkAdTitle').css("color","red");
@@ -410,7 +414,6 @@
 		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 		if(confirm(alt)) {
 			var kwLen = document.getElementsByName("keywords").length;
-			
 			
 			
 			
