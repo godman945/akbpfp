@@ -12,6 +12,7 @@
     <!-- index -->
     <bean id="IndexAction" class="com.pchome.akbpfp.struts2.action.index.IndexAction" scope="prototype" > 
     	<property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
+    	<property name="pfdUserMemberRefService" ref="PfdUserMemberRefService" />
     	<property name="faqServerMain" value="${faq.server.main}" />
     	<property name="faqServerGroup" value="${faq.server.group}" />
     	<property name="faqServerSolution" value="${faq.server.solution}" />

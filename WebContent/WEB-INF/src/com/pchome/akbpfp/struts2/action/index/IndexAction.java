@@ -12,18 +12,24 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.pchome.akbpfd.db.service.user.PfdUserMemberRefService;
+import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
 import com.pchome.akbpfp.db.service.user.PfpUserMemberRefService;
 import com.pchome.akbpfp.db.vo.faq.FaqListVO;
 import com.pchome.akbpfp.db.vo.faq.FaqQuestionVO;
 import com.pchome.akbpfp.db.vo.faq.FaqSolutionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.account.EnumPfpRootUser;
+import com.pchome.enumerate.privilege.EnumPrivilegeModel;
 import com.pchome.utils.HttpUtil;
 
 
 
 public class IndexAction extends BaseCookieAction {
 	
-	private PfpUserMemberRefService PfpUserMemberRefService;
+    	private static final long serialVersionUID = 1L;
+	private PfpUserMemberRefService pfpUserMemberRefService;
+	private PfdUserMemberRefService pfdUserMemberRefService;
 	private String result="success";
 
 	private List<FaqListVO> faqListVOs = new ArrayList<FaqListVO>();	// 總攬頁項目及內容的列表物件
@@ -39,8 +45,23 @@ public class IndexAction extends BaseCookieAction {
 	private String sid;	// 原本是faq換頁使用，現在採 ajax 處理，不用換頁，所以目前無用
 	private String qimg = "q01";
 	private InputStream msg;	// 回傳問題的答案使用
-
+	private String accountType;
 	public String execute() throws Exception{
+	    //判斷登入者使否取有小天使權限或PFD切換權限
+	    boolean pfpAngelFlag= false;
+	    List<PfpUserMemberRef> pfpUserMemberRefList = pfpUserMemberRefService.loadAll();
+	    for (PfpUserMemberRef pfpUserMemberRef : pfpUserMemberRefList) {
+		if(pfpUserMemberRef.getId().getMemberId().equals(super.getId_pchome()) && pfpUserMemberRef.getPfpUser().getPrivilegeId() == EnumPrivilegeModel.ADM_USER.getPrivilegeId()){
+		    pfpAngelFlag = true;
+		    break;
+		}
+	    }
+	    if(pfpAngelFlag){
+		accountType = EnumPfpRootUser.PCHOME_MANAGER.getPrivilege();
+	    }else if(!pfpAngelFlag){
+		accountType = EnumPfpRootUser.NO.getPrivilege();
+	    }
+	    
 		/*
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
@@ -381,12 +402,28 @@ public class IndexAction extends BaseCookieAction {
 //			
 //		return result;
 //	}
-	public void setPfpUserMemberRefService(PfpUserMemberRefService pfpUserMemberRefService) {
-		PfpUserMemberRefService = pfpUserMemberRefService;
-	}
+	
 
 	public List<FaqListVO> getFaqListVOs() {
 		return faqListVOs;
+	}
+
+	public PfpUserMemberRefService getPfpUserMemberRefService() {
+	    return pfpUserMemberRefService;
+	}
+
+	public void setPfpUserMemberRefService(
+		PfpUserMemberRefService pfpUserMemberRefService) {
+	    this.pfpUserMemberRefService = pfpUserMemberRefService;
+	}
+
+	public PfdUserMemberRefService getPfdUserMemberRefService() {
+	    return pfdUserMemberRefService;
+	}
+
+	public void setPfdUserMemberRefService(
+		PfdUserMemberRefService pfdUserMemberRefService) {
+	    this.pfdUserMemberRefService = pfdUserMemberRefService;
 	}
 
 	public void setFaqListVOs(List<FaqListVO> faqListVOs) {
@@ -476,5 +513,15 @@ public class IndexAction extends BaseCookieAction {
 	public InputStream getMsg() {
 		return msg;
 	}
+
+	public String getAccountType() {
+	    return accountType;
+	}
+
+	public void setAccountType(String accountType) {
+	    this.accountType = accountType;
+	}
+
+	
 
 }

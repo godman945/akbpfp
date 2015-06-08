@@ -72,8 +72,8 @@ public class PfpUserMemberRefDAO extends BaseDAO<PfpUserMemberRef,String> implem
 		hql.append(" order by id.userId desc ");
 		
 		Object[] ob = new Object[]{memberId, 
-									EnumUserStatus.DELETE.getStatusId(),
-									EnumAccountStatus.DELETE.getStatus()};
+		EnumUserStatus.DELETE.getStatusId(),
+		EnumAccountStatus.DELETE.getStatus()};
 		
 		return super.getHibernateTemplate().find(hql.toString(), ob);		 
 	}
@@ -87,7 +87,7 @@ public class PfpUserMemberRefDAO extends BaseDAO<PfpUserMemberRef,String> implem
 		hql.append(" order by id.userId desc ");
 		
 		Object[] ob = new Object[]{memberId, EnumAccountStatus.APPLY.getStatus()};
-
+		log.info(hql.toString());
 		return super.getHibernateTemplate().find(hql.toString(), ob);	
 	}
 	
