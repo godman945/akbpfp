@@ -101,10 +101,7 @@
 		return back;
 	}
 
-	//連結網址鍵盤件鍵檢查
-	$('#adLinkURL').bind('keyup', function() {
-		chk_adLinkURL();
-	});
+	
 	
 	//提示顯示輸入連結網址字數與檢查
 	function chk_adLinkURL() {
@@ -135,44 +132,50 @@
 		chkWord($('#adLinkURL'), "spanAdLinkURL");
 		setData();
 	}
+	
 
-	//檢查網址blur事件
-	$("#adLinkURL").blur(function() {
-		if($("#adLinkURL").val()!="show.pchome.com.tw"){
-			urlCheck("adLinkURL",$("#adLinkURL").val());
-			chk_adLinkURLLink();
-		}
-	});
-	
-	
 	//檢查廣告連結網址
 	function chk_adLinkURLLink() {
 		urlCheck("adLinkURL",$("#adLinkURL").val());
 	}
+	
+	//連結網址鍵盤件鍵檢查
+	$('#adLinkURL').bind('keyup', function() {
+//		chk_adLinkURL();
+//		chk_adLinkURLLink();
+	});
+	
+	//檢查網址blur事件
+	$("#adLinkURL").blur(function() {
+		if($("#adLinkURL").val() != "show.pchome.com.tw"){
+			urlCheck("adLinkURL",$("#adLinkURL").val());
+		}else{
+			$("#chkLinkURL").css("color","red");
+			$("#chkLinkURL").text("請輸入正確的廣告連結網址");
+		}
+	});
+	
 
 	//網域鍵盤輸入事件檢查
 	$('#adShowURL').bind('keyup', function() {
-		chk_adShowURL();
+//		console.log($("#adShowURL").val());
+//		chk_adShowURL();
+//		chk_adLinkURLLink();
+//		chkWord($('#adLinkURL'), "spanAdLinkURL");
 	});
 	
 	
 	//檢查網域blur事件
 	$("#adShowURL").blur(function() {
-		if($("#adShowURL").val()!="show.pchome.com.tw" && $("#sameRealUrl").prop("checked")){
-			chk_adShowURL();
-			var adShowURL = $("#adShowURL").val();
-			var hostname = $("<a>").prop("href", "http://"+adShowURL).prop("hostname");
-			urlCheck("adShowURL","http://"+hostname);
+		if($("#adShowURL").val() == "show.pchome.com.tw"){
+			$("#chkShowURL").css("color","red");
+			$("#chkShowURL").text("請輸入正確的廣告顯示網址");
 		}else{
-			if($("#adShowURL").val() == "show.pchome.com.tw" || $("#chkShowURL").css("color") == "rgb(255, 0, 0)"){
-				$('#chkShowURL').css("color","red");
-				$("#chkShowURL").text("請填寫顯示網址.");
-				location.href="#chkShowURL";
-				return;
+			urlCheck("adShowURL",$("#adShowURL").val());
+			if($("#adShowURL").val() == ""){
+				$("#chkShowURL").css("color","red");
+				$("#chkShowURL").text("請輸入正確的廣告顯示網址");
 			}
-			chk_adShowURL();
-			var adShowURL = $("#adShowURL").val();
-			urlCheck("adShowURL",adShowURL);
 		}
 	});
 	
@@ -228,7 +231,12 @@
 					if(msg == "false") {
 						$("#chkShowURL").css("color","red");
 						$("#"+adUrlHint).css("color","red");
-						$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
+						if(adUrlHint == "chkLinkURL"){
+							$("#"+adUrlHint).text("請輸入正確的廣告連結網址");
+						}else if(adUrlHint == "chkShowURL"){
+							$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
+						}
+						
 						if(urlType == "adShowURL"){
 							ShowUrl = false;
 						}else{
@@ -259,30 +267,23 @@
 
 	//點擊顯示網域
 	$("#sameRealUrl").click(function() {
-		var hostName ="";
-		if($("#sameRealUrl").prop("checked") && $("#chkLinkURL").text() != "網址確認正確" ){
-			$('#chkLinkURL').css("color","red");
-			$("#chkLinkURL").text("請填寫廣告連結網址.");
-			return false;
-		}
-		
-		
-		if($("#sameRealUrl").prop("checked") &&  $("#adLinkURL").val() !="" ){
-			if($("#adLinkURL").val().indexOf("http") < 0 ){
-				hostName = $('<a>').prop('href', "http://"+$("#adLinkURL").val()).prop('hostname');
-				urlCheck("adShowURL","http://"+hostName);
+		if($("#sameRealUrl").prop("checked")){
+			if($("#sameRealUrl").prop("checked") && $("#chkLinkURL").text() != "網址確認正確" ){
+				$('#chkLinkURL').css("color","red");
+				$("#chkLinkURL").text("請填寫廣告連結網址.");
+				return false;
 			}else{
-				hostName = $('<a>').prop('href', $("#adLinkURL").val()).prop('hostname');
-				urlCheck("adShowURL",hostName);
+				hostName = $('<a>').prop('href', "http://"+$("#adLinkURL").val()).prop('hostname');
+				urlCheck("adShowURL","http://"+hostName)
+				if($("#chkLinkURL").text() == "網址確認正確"){
+					$("#adShowURL").val(hostName);
+				}
 			}
-			$("#adShowURL").val(hostName);
 		}else{
 			$("#adShowURL").val("");
-			$("#chkShowURL").css("color","red");
+			$('#chkShowURL').css("color","red");
 			$("#chkShowURL").text("請填寫廣告顯示網址.");
-			$("#previewURL").text($("#chkShowURL").attr("placeholder"));
-			ShowUrl = false;
-			}
+		}
 	});
 	//輸入字數檢查與提示
 	function chkWord(el, showId) {
