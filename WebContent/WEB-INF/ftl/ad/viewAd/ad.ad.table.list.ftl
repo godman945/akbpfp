@@ -73,6 +73,9 @@
 					
 				</td>
 			</tr>
+			
+			
+			${adAdViewVO.adHtml}<br>
 	    </#list>
 	<#else>
 	<tr>
