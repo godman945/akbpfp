@@ -178,6 +178,7 @@
 		}
 	});
 	
+	
 	//顯示網域提示字數與檢查
 	function chk_adShowURL() {
 		var maxlength = $('#adShowURL').attr("maxlength");
