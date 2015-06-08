@@ -163,9 +163,12 @@
 	
 	//檢查網址blur事件
 	$('#adLinkURL').blur(function() {
-		if($("#adLinkURL").val() == "show.pchome.com.tw" || $("#chkLinkURL").css("color") == "rgb(255, 0, 0)"){
+		console.log("====");
+		if($("#adLinkURL").val() == "show.pchome.com.tw"){
+			console.log("A");
 			$('#chkLinkURL').css("color","red");
 			$("#chkLinkURL").text("請填寫連結網址.");
+			return;
 		}else{
 			chk_adLinkURLLink();
 			chk_adShowURL();
@@ -175,10 +178,12 @@
 	//網域鍵盤輸入事件檢查
 	$('#adShowURL').bind('keyup', function() {
 		if($("#adShowURL").val() == "" || $("#chkShowURL").css("color") == "rgb(255, 0, 0)"){
+//			alert($("#adShowURL").val());
 			$('#chkShowURL').css("color","red");
 			$("#chkShowURL").text("請填寫顯示網址.");
 			return;
 		}else{
+//			alert("F1");
 			chk_adShowURL();
 			chk_adLinkURLLink();
 		}
@@ -186,7 +191,7 @@
 	//檢查網域blur事件
 	$('#adShowURL').blur(function() {
 		var adShowURL = $("#adShowURL").val();
-		if($("#adShowURL").val() == "show.pchome.com.tw" || $("#chkShowURL").css("color") == "rgb(255, 0, 0)"){
+		if($("#adShowURL").val() == "show.pchome.com.tw"){
 			$('#chkShowURL').css("color","red");
 			$("#chkShowURL").text("請填寫顯示網址.");
 			return;
@@ -323,7 +328,11 @@
 				}
 				});
 			}else {
-				$("#"+urlType).css("color","red");
+				if(urlType == "adShowURL"){
+					$("#chkShowURL").css("color","red");
+				}else if(urlType == "adLinkURL"){
+					$("#chkLinkURL").css("color","red");
+				}
 				$("#"+adUrlHint).text("請填寫廣告顯示網址.");
 				$("#previewURL").text($("#"+urlType).attr("placeholder"));
 				ShowUrl = false;
