@@ -563,6 +563,7 @@ function ValidURL(url) {
 function deleteImage() {
 	sizeFlag = true;
 	$("#previewImg").css("display", "none");
+	$("#uploadFile").val("");
 	if($("#imgFile").val() != "") {
 		$.ajax({
 			type: "POST",
