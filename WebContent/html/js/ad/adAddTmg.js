@@ -141,8 +141,7 @@
 	
 	//連結網址鍵盤件鍵檢查
 	$('#adLinkURL').bind('keyup', function() {
-//		chk_adLinkURL();
-//		chk_adLinkURLLink();
+		chk_adLinkURL();
 	});
 	
 	//檢查網址blur事件
