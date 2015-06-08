@@ -36,8 +36,8 @@ import com.pchome.soft.depot.utils.CookieUtil;
 
 public class LoginCheckInterceptor extends AbstractInterceptor{
 
+    	private static final long serialVersionUID = 1L;
 	protected final Log log = LogFactory.getLog(this.getClass());
-	
 	private PfpUserService pfpUserService;
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private CookieProccessAPI cookieProccessAPI;
@@ -51,12 +51,10 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
-		String pcId = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), 
-											EnumCookieConstants.COOKIE_USING_CODE.getValue());
+		String pcId = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		//log.info("pcId: " + pcId);
 		
-		String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(), 
-											EnumCookieConstants.COOKIE_USING_CODE.getValue());
+		String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		//log.info("userData: " + userData);
 		
 		if(StringUtils.isNotBlank(pcId) && StringUtils.isNotBlank(userData)){
@@ -72,51 +70,51 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 			//4.寫入cookie
 			String realCookieCustomerTitle = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
 			String cookieCustomerTitle = cookieMap.get(EnumCookiePfpKey.PFP_REALITY_USER_TITLE);
-			if(!realCookieCustomerTitle.equals(cookieCustomerTitle)){
-			    PfpUser pfpUser = new PfpUser();
-			    List<PfpUserMemberRef> pfpUserMemberRefList = new ArrayList<PfpUserMemberRef>();
-			    pfpUserMemberRefList = pfpUserMemberRefService.loadAll();
-			    boolean pfpAngelFlag= false;
-			    boolean pfdAngelFlag = false;
-			    for (PfpUserMemberRef pfpUserMemberRef : pfpUserMemberRefList) {
-				if(pfpUserMemberRef.getId().getMemberId().equals(realCookieCustomerTitle)){
-				    pfpUser = pfpUserMemberRef.getPfpUser();
-				    if(EnumPrivilegeModel.ADM_USER.getPrivilegeId() == pfpUserMemberRef.getPfpUser().getPrivilegeId() ){
-					pfpAngelFlag = true;
-				    }
-				    PfdUserMemberRef pfdUserMemberRef = pfdUserMemberRefService.getUserMemberRef(pfpUserMemberRef.getId().getMemberId());
-				    if(!(pfdUserMemberRef == null)){
-					if(EnumPrivilegeModel.ADM_USER.getPrivilegeId() == pfdUserMemberRef.getPfdUser().getPrivilegeId() ){
-					    pfdAngelFlag = true;
-					}
-				    }
-				    if(pfpAngelFlag && pfdAngelFlag){
-					cookieProccessAPI.deletePfpLoginCookie(response);
-					cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.PCHOME_MANAGER, realCookieCustomerTitle);
-					userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
-					return "index";
-				    }else if(!pfpAngelFlag && !pfdAngelFlag){
-					if(!StringUtils.isBlank(cookieCustomerTitle)){
-					    cookieProccessAPI.deletePfpLoginCookie(response);
-					    cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.NO, realCookieCustomerTitle);
-					    userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
-					    return "summary";
-					}else{
-					    cookieProccessAPI.deletePfpLoginCookie(response);
-					    cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.NO, realCookieCustomerTitle);
-					    userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
-					    return "index";
-					}
-				    }else if(pfpAngelFlag){
-					cookieProccessAPI.deletePfpLoginCookie(response);
-					cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.PCHOME_MANAGER, realCookieCustomerTitle);
-					userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
-					return "index";
-				    }
-				    break; 
-				}
-			    }
-			}
+//			if(!realCookieCustomerTitle.equals(cookieCustomerTitle)){
+//			    PfpUser pfpUser = new PfpUser();
+//			    List<PfpUserMemberRef> pfpUserMemberRefList = new ArrayList<PfpUserMemberRef>();
+//			    pfpUserMemberRefList = pfpUserMemberRefService.loadAll();
+//			    boolean pfpAngelFlag= false;
+//			    boolean pfdAngelFlag = false;
+//			    for (PfpUserMemberRef pfpUserMemberRef : pfpUserMemberRefList) {
+//				if(pfpUserMemberRef.getId().getMemberId().equals(realCookieCustomerTitle)){
+//				    pfpUser = pfpUserMemberRef.getPfpUser();
+//				    if(EnumPrivilegeModel.ADM_USER.getPrivilegeId() == pfpUserMemberRef.getPfpUser().getPrivilegeId() ){
+//					pfpAngelFlag = true;
+//				    }
+//				    PfdUserMemberRef pfdUserMemberRef = pfdUserMemberRefService.getUserMemberRef(pfpUserMemberRef.getId().getMemberId());
+//				    if(!(pfdUserMemberRef == null)){
+//					if(EnumPrivilegeModel.ADM_USER.getPrivilegeId() == pfdUserMemberRef.getPfdUser().getPrivilegeId() ){
+//					    pfdAngelFlag = true;
+//					}
+//				    }
+//				    if(pfpAngelFlag && pfdAngelFlag){
+//					cookieProccessAPI.deletePfpLoginCookie(response);
+//					cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.PCHOME_MANAGER, realCookieCustomerTitle);
+//					userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+//					return "index";
+//				    }else if(!pfpAngelFlag && !pfdAngelFlag){
+//					if(!StringUtils.isBlank(cookieCustomerTitle)){
+//					    cookieProccessAPI.deletePfpLoginCookie(response);
+//					    cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.NO, realCookieCustomerTitle);
+//					    userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+//					    return "summary";
+//					}else{
+//					    cookieProccessAPI.deletePfpLoginCookie(response);
+//					    cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.NO, realCookieCustomerTitle);
+//					    userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+//					    return "index";
+//					}
+//				    }else if(pfpAngelFlag){
+//					cookieProccessAPI.deletePfpLoginCookie(response);
+//					cookieProccessAPI.writerPfpLoginCookie(response, pfpUser, EnumPfpRootUser.PCHOME_MANAGER, realCookieCustomerTitle);
+//					userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+//					return "index";
+//				    }
+//				    break; 
+//				}
+//			    }
+//			}
 			
 			// 檢查帳戶狀態
 			String custmerInfoId = cookieMap.get(EnumCookiePfpKey.PFP_CUSTOMER_INFO_ID);
