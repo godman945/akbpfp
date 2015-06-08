@@ -155,6 +155,7 @@
 		chk_adShowURL();
 	});
 	
+	
 	//檢查網域blur事件
 	$("#adShowURL").blur(function() {
 		if($("#adShowURL").val()!="show.pchome.com.tw" && $("#sameRealUrl").prop("checked")){

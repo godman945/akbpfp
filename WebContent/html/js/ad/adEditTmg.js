@@ -161,7 +161,6 @@
 		urlCheck("adLinkURL",$("#adLinkURL").val());
 	}
 	
-	
 	//檢查網址blur事件
 	$('#adLinkURL').blur(function() {
 		if($("#adLinkURL").val() == "show.pchome.com.tw" || $("#chkLinkURL").css("color") == "rgb(255, 0, 0)"){
