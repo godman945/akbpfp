@@ -274,8 +274,11 @@
 			}else{
 				hostName = $('<a>').prop('href', "http://"+$("#adLinkURL").val()).prop('hostname');
 				urlCheck("adShowURL","http://"+hostName)
+				var url = $("#adLinkURL").val();
+				var urlParts = url.replace('http://','').replace('https://','').split(/[/?#]/);
+				var domain = urlParts[0];
 				if($("#chkLinkURL").text() == "網址確認正確"){
-					$("#adShowURL").val(hostName);
+					$("#adShowURL").val(domain);
 				}
 			}
 		}else{
