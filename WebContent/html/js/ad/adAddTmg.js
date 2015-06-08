@@ -158,7 +158,7 @@
 	//網域鍵盤輸入事件檢查
 	$('#adShowURL').bind('keyup', function() {
 //		console.log($("#adShowURL").val());
-//		chk_adShowURL();
+		chk_adShowURL();
 //		chk_adLinkURLLink();
 //		chkWord($('#adLinkURL'), "spanAdLinkURL");
 	});
@@ -280,6 +280,7 @@
 				if($("#chkLinkURL").text() == "網址確認正確"){
 					$("#adShowURL").val(domain);
 				}
+				urlCheck("adShowURL",$("#adShowURL").val());
 			}
 		}else{
 			$("#adShowURL").val("");
