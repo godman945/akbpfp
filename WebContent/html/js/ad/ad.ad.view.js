@@ -7,6 +7,18 @@
 		cache:false, 
 		ifModified :true 
 		}); 
+	
+	
+	$.ajax({ 
+		type: "GET", 
+		url: "/pfp/html/js/ad/ad.ad.view.js", 
+		dataType: "text", 
+		beforeSend :function(xmlHttp){ 
+		xmlHttp.setRequestHeader("If-Modified-Since","0"); 
+		xmlHttp.setRequestHeader("Cache-Control","no-cache"); 
+
+		} 
+		}); 
 });
 
 
