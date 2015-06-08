@@ -1,6 +1,6 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-
+<meta http-equiv="cache-control" content="no-cache">   
 <div>
     <span style="padding:10px;float:left">                   
 	    <input type="button" name="stop" onClick="modifyAdStatus('9')" value="暫 停" /> &nbsp; 
