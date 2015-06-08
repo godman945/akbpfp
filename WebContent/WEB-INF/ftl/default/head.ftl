@@ -20,16 +20,15 @@
 </head>
 
 <body>
-
 <#if back2PFD?exists && back2PFD!="">
 <!-- 返回經銷商 start -->
 <div class="" style=" position: fixed; width:226px; height:54px; background: url(<@s.url value="/" />html/img/back.png); bottom:0; left:0; z-index:1000;"><a href="${back2PFD!}" style=" display:block;width:226px; height:54px;color:#FFF; font-size:20px; font-weight:bold; line-height:40px;text-align:left; text-decoration:none; text-indent:-9999px;">返回經銷商</a></div>
 <!-- 返回經銷商 end -->
 </#if>
-
 <#-- 返回管理者介面 -->
-
 <#if accountType ? exists && '${accountType}' == "PM" >
+	<div class="" style=" position: fixed; width:226px; height:54px; background: url(<@s.url value="/" />html/img/back2.png); bottom:0; left:0; z-index:1000;"><a href="accountList.html" style=" display:block;width:226px; height:54px;color:#FFF; font-size:20px; font-weight:bold; line-height:40px;text-align:left; text-decoration:none; text-indent:-9999px;">返回管理者介面</a></div>
+	<#elseif "${root_user}" == "PM">
 	<div class="" style=" position: fixed; width:226px; height:54px; background: url(<@s.url value="/" />html/img/back2.png); bottom:0; left:0; z-index:1000;"><a href="accountList.html" style=" display:block;width:226px; height:54px;color:#FFF; font-size:20px; font-weight:bold; line-height:40px;text-align:left; text-decoration:none; text-indent:-9999px;">返回管理者介面</a></div>
 </#if>
 
