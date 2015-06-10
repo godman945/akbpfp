@@ -518,6 +518,7 @@ function deleteImage() {
 //預覽圖片
 var sizeFlag = true;
 function previewImage(file) {
+	deleteImage();
 	sizeFlag = true;
 	var size = 0;
 	if(!$.browser.msie || $.browser.mozilla) { 
