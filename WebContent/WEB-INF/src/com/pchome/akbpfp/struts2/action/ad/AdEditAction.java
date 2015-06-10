@@ -166,6 +166,10 @@ public class AdEditAction extends BaseCookieAction{
 		// 上傳圖片暫存檔名(亂數產生)
 		ulTmpName = RandomStringUtils.randomAlphanumeric(30);
 
+		response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Pragma", "no-cache");
+		response.setDateHeader("Expires", 0);
+		
 		return SUCCESS;
 	}
 
