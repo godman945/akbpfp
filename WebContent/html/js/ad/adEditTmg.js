@@ -318,42 +318,11 @@
 			chkWord($('#adLinkURL'), "spanAdLinkURL");
 	}
 	
-//	function chk_adShowURLLink() {
-//		var adShowURL = $("#adShowURL").val();
-//		chkWord($("#adShowURL"), "spanAdShowURL");
-//		if(adShowURL != "" && adShowURL.indexOf("show.pchome.com.tw") < 0) {
-//			if(ValidURL(adShowURL)) {
-//				$('#chkShowURL').css("color","red");
-//				$('#chkShowURL').text("網址檢查中");
-//				$.ajax({
-//					type: "POST",
-//					url: "checkAdUrl.html",
-//					data: { url: adShowURL}
-//				}).done(function( msg ) {
-//					if(msg == "false") {
-//						$('#chkShowURL').css("color","red");
-//						$('#chkShowURL').text("請輸入正確的廣告顯示網址");
-//						ShowUrl = false;
-//					} else {
-//						$('#chkShowURL').css("color","green");
-//						$('#chkShowURL').text("網址確認正確");
-//						ShowUrl = true;
-//					}
-//				});
-//			} else {
-//				$('#chkShowURL').css("color","red");
-//				$('#chkShowURL').text("請輸入正確的廣告顯示網址");
-//				ShowUrl = false;
-//			}
-//		} else {
-//			$('#chkShowURL').css("color","red");
-//			$("#chkShowURL").text("請填寫廣告顯示網址.");
-//			$("#previewURL").text($('#adShowURL').attr("placeholder"));
-//			ShowUrl = false;
-//		}
-//	}
 	//點擊顯示網域
 	$("#sameRealUrl").click(function() {
+		if($("#chkLinkURL").css("color") == "rgb(255, 0, 0)"  || $("#chkLinkURL").text() != "網址確認正確"){
+			return false;
+		}
 		var hostName ="";
 		if($("#sameRealUrl").prop("checked") &&  $("#adLinkURL").val() !=""){
 			if($("#adLinkURL").val().indexOf("http") < 0 ){
@@ -392,13 +361,6 @@
 				$('#'+showId).text("已輸入" + length + "字，剩" + (maxlength - length) + "字");
 			}
 		}
-//		var length = el.val().length;
-//		var maxlength = el.attr("maxlength");
-//		if(el.val() == el.attr("placeholder")) {
-//			$('#'+showId).text("已輸入0字，剩" + maxlength + "字");
-//		} else {
-//			$('#'+showId).text("已輸入" + length + "字，剩" + (maxlength - length) + "字");
-//		}
 	}
 
 	$('#save').click(function(){
@@ -452,15 +414,11 @@
 		
 		
 		if($("#chkLinkURL").css("color") == "rgb(255, 0, 0)"  || $("#chkLinkURL").text() != "網址確認正確"){
-			$('#chkLinkURL').css("color","red");
-			$("#chkLinkURL").text("請填寫廣告連結網址.");
 			location.href="#chkLinkURL";
 			return false;
 		}
 		
 		if($("#chkShowURL").css("color") == "rgb(255, 0, 0)" || $("#chkShowURL").text() != "網址確認正確"){
-			$('#chkShowURL').css("color","red");
-			$("#chkShowURL").text("請填寫顯示網址.");
 			location.href="#chkShowURL";
 			return false;
 		}

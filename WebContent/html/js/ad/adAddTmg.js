@@ -253,6 +253,7 @@
 			}else {
 				if(urlType == 'adLinkURL'){
 					if($("#adLinkURL").length > 0){
+						$('#chkLinkURL').css("color","red");
 						$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
 					}else{
 						
@@ -268,12 +269,13 @@
 				}
 			}
 		}else{
-			
 			if(urlType == 'adLinkURL'){
 				if($("#adLinkURL").val().length > 0){
+					$('#chkLinkURL').css("color","red");
 					$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
 					return false;
 				}else{
+					$('#chkLinkURL').css("color","red");
 					$("#"+adUrlHint).text("請輸入廣告連結網址.");
 					return false;
 				}
@@ -294,6 +296,9 @@
 
 	//點擊顯示網域
 	$("#sameRealUrl").click(function() {
+		if($("#chkLinkURL").css("color") == "rgb(255, 0, 0)"  || $("#chkLinkURL").text() != "網址確認正確"){
+			return false;
+		}
 		if($("#sameRealUrl").prop("checked")){
 			if($("#sameRealUrl").prop("checked") && $("#chkLinkURL").text() != "網址確認正確" ){
 				$('#chkLinkURL').css("color","red");
@@ -423,14 +428,23 @@
 		
 		if($("#chkLinkURL").css("color") == "rgb(255, 0, 0)"  || $("#chkLinkURL").text() != "網址確認正確"){
 			$('#chkLinkURL').css("color","red");
-			$("#chkLinkURL").text("請輸入廣告連結網址.");
+			if($("#adLinkURL").val() == "" || $("#adLinkURL").val() == "show.pchome.com.tw"){
+				$("#chkLinkURL").text("請輸入廣告連結網址.");
+			}else{
+				$('#chkLinkURL').css("color","red");
+				$("#chkLinkURL").text("請輸入正確廣告連結網址.");
+			}
 			location.href="#chkLinkURL";
 			return false;
 		}
 		
 		if($("#chkShowURL").css("color") == "rgb(255, 0, 0)" || $("#chkShowURL").text() != "網址確認正確"){
 			$('#chkShowURL').css("color","red");
-			$("#chkShowURL").text("請輸入顯示網址.");
+			if($("#adShowURL").val() == "" || $("#adShowURL").val() == "show.pchome.com.tw"){
+				$("#chkShowURL").text("請輸入廣告顯示網址.");
+			}else{
+				$("#chkShowURL").text("請輸入正確廣告顯示網址.");
+			}
 			location.href="#chkShowURL";
 			return false;
 		}
