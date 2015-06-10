@@ -29,6 +29,11 @@
 		<th>編輯</th>
 	</tr>
 </thead>
+<#assign aDateTime = .now>
+<#assign aDate = aDateTime?date>
+<#assign aTime = aDateTime?time>
+
+
 <tbody>
 	<#if adAdViewVO?exists>
 	    <#list adAdViewVO as vo>
@@ -60,7 +65,7 @@
 				<td>${vo.adGroupName!}</td>
 				<td class="td02">
 					<#if vo.adStatus != 9>
-						<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}">製作新廣告</a><br>
+						<a href="adAdAdd.html?t=${aDateTime?iso_local}&adGroupSeq=${vo.adGroupSeq!}">製作新廣告</a><br>
 						<a href="adKeywordAdd.html?adGroupSeq=${vo.adGroupSeq!}">新增關鍵字</a><br>
 					</#if>
 					<#if vo.adStatus != 2 && vo.adStatus != 13>					
@@ -103,5 +108,4 @@
 	<input type="button" name="start" onClick="modifyAdStatus('4')" value="開 啟" /> &nbsp;
 	<input type="button" name="close" onClick="modifyAdStatus('10')" value="關 閉" /> &nbsp;          
 </span>
-
-
+${aDateTime?iso_local} 
