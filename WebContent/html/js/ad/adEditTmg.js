@@ -1,4 +1,4 @@
-﻿﻿$(document).ready(function(){
+﻿$(document).ready(function(){
 	var LinkUrl = true;
 	var ShowUrl = true;
 	var pages = -1;
@@ -518,7 +518,6 @@ function deleteImage() {
 //預覽圖片
 var sizeFlag = true;
 function previewImage(file) {
-	deleteImage();
 	sizeFlag = true;
 	var size = 0;
 	if(!$.browser.msie || $.browser.mozilla) { 
@@ -535,6 +534,7 @@ function previewImage(file) {
 		location.href="#uploadFile";
 		return false;
 	}else{
+		deleteImage();
 		sizeFlag = true;
 		$("#sizeCheckDiv").css("display","none");
 		$("#uploadCheckDiv").css("display","none");
