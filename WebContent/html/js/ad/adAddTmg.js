@@ -30,7 +30,7 @@
 		var length = adTitle.length;
 		if(adTitle == "") {
 			$('#chkAdTitle').css("color","red");
-			$("#chkAdTitle").text("請填寫廣告標題.");
+			$("#chkAdTitle").text("請輸入廣告標題.");
 			$("#previewTitle").text($('#adTitle').attr("placeholder"));
 		} else if(adTitle == $('#adTitle').attr("placeholder")) {
 			$("#previewTitle").text($('#adTitle').attr("placeholder"));
@@ -73,7 +73,7 @@
 		var length = adContent.length;
 		if(adContent == "") {
 			$('#chkAdContent').css("color","red");
-			$("#chkAdContent").text("請填寫廣告內容.");
+			$("#chkAdContent").text("請輸入廣告內容.");
 			$("#previewContent").text($('#adContent').attr("placeholder"));
 		} else if(adContent == $('#adContent').attr("placeholder")) {
 			$("#previewContent").text($('#adContent').attr("placeholder"));
@@ -116,7 +116,7 @@
 //		}
 		if(adLinkURL == "") {
 			$('#chkLinkURL').css("color","red");
-			$("#chkLinkURL").text("請填寫廣告連結網址.");
+			$("#chkLinkURL").text("請輸入廣告連結網址.");
 			
 		} else {
 			$("#chkLinkURL").text("");
@@ -150,17 +150,14 @@
 			urlCheck("adLinkURL",$("#adLinkURL").val());
 		}else{
 			$("#chkLinkURL").css("color","red");
-			$("#chkLinkURL").text("請輸入正確的廣告連結網址");
+			$("#chkLinkURL").text("請輸入廣告連結網址");
 		}
 	});
 	
 
 	//網域鍵盤輸入事件檢查
 	$('#adShowURL').bind('keyup', function() {
-//		console.log($("#adShowURL").val());
 		chk_adShowURL();
-//		chk_adLinkURLLink();
-//		chkWord($('#adLinkURL'), "spanAdLinkURL");
 	});
 	
 	
@@ -168,12 +165,12 @@
 	$("#adShowURL").blur(function() {
 		if($("#adShowURL").val() == "show.pchome.com.tw"){
 			$("#chkShowURL").css("color","red");
-			$("#chkShowURL").text("請輸入正確的廣告顯示網址");
+			$("#chkShowURL").text("請輸入廣告顯示網址");
 		}else{
 			urlCheck("adShowURL",$("#adShowURL").val());
 			if($("#adShowURL").val() == ""){
 				$("#chkShowURL").css("color","red");
-				$("#chkShowURL").text("請輸入正確的廣告顯示網址");
+				$("#chkShowURL").text("請輸入廣告顯示網址");
 			}
 		}
 	});
@@ -186,7 +183,7 @@
 		var length = adShowURL.length;
 			if(adShowURL == "") {
 				$('#chkShowURL').css("color","red");
-				$("#chkShowURL").text("請填寫廣告顯示網址.");
+				$("#chkShowURL").text("請輸入廣告顯示網址.");
 				$("#previewURL").text($('#adShowURL').attr("placeholder"));
 			} else {
 				// 去掉網址的 http://
@@ -254,10 +251,94 @@
 					}
 				});
 			}else {
-				$("#"+adUrlHint).css("color","red");
-				$("#"+adUrlHint).text("請填寫廣告連結網址.");
-				$("#previewURL").text($("#"+urlType).attr("placeholder"));
-				ShowUrl = false;
+				if(urlType == 'adLinkURL'){
+					if($("#adLinkURL").length > 0){
+						$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
+					}else{
+						
+					}
+//					$("#previewURL").text($("#"+urlType).attr("placeholder"));
+				}
+				if(urlType == 'adShowURL'){
+					if($("#adShowURL").length > 0){
+						$('#chkShowURL').css("color","red");
+						$("#"+adUrlHint).text("請輸入正確廣告顯示網址.");
+					}else{
+						
+					}
+					
+					
+//					$("#previewURL").text($("#"+urlType).attr("placeholder"));
+				}
+				
+//				if($("#adShowURL").val() == "" ){
+//					if(urlType == 'adLinkURL'){
+//						$("#"+adUrlHint).text("請輸入廣告連結網址.");
+//						$("#previewURL").text($("#"+urlType).attr("placeholder"));
+//					}
+//					if(urlType == 'adShowURL'){
+//						$("#"+adUrlHint).text("請輸入廣告顯示網址.");
+//						$("#previewURL").text($("#"+urlType).attr("placeholder"));
+//					}
+//			
+//				}
+				
+				
+//				$("#"+adUrlHint).css("color","red");
+////				alert(adUrlHint);
+////				alert($("#"+adUrlHint).val());
+//				if($("#adShowURL").val() == "" ){
+////					alert("A10");
+////					if(urlType == 'adLinkURL'){
+////						$("#"+adUrlHint).text("請輸入廣告連結網址.");
+////						$("#previewURL").text($("#"+urlType).attr("placeholder"));
+////					}
+////					if(urlType == 'adShowURL'){
+////						$("#"+adUrlHint).text("請輸入廣告顯示網址.");
+////						$("#previewURL").text($("#"+urlType).attr("placeholder"));
+////					}
+////					
+////					return false;
+//				}else{
+//					if(urlType == 'adLinkURL'){
+//						if($("#adLinkURL").val().length > 0){
+//							$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
+//							return false;
+//						}else{
+//							$("#"+adUrlHint).text("請輸入廣告連結網址.");
+//							return false;
+//						}
+//						
+//					}
+//					if(urlType == 'adShowURL'){
+//						$("#"+adUrlHint).text("請輸入正確廣告顯示網址.");
+//						return false;
+//					}else{
+//						$("#"+adUrlHint).text("請輸入廣告顯示網址.");
+//						return false;
+//					}
+//					
+//				}
+//				ShowUrl = false;
+			}
+		}else{
+			
+			if(urlType == 'adLinkURL'){
+				if($("#adLinkURL").val().length > 0){
+					$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
+					return false;
+				}else{
+					$("#"+adUrlHint).text("請輸入廣告連結網址.");
+					return false;
+				}
+				
+			}
+			if(urlType == 'adShowURL'){
+				$("#"+adUrlHint).text("請輸入正確廣告顯示網址.");
+				return false;
+			}else{
+				$("#"+adUrlHint).text("請輸入廣告顯示網址.");
+				return false;
 			}
 		}
 		//連結網址字數檢查
@@ -270,8 +351,15 @@
 		if($("#sameRealUrl").prop("checked")){
 			if($("#sameRealUrl").prop("checked") && $("#chkLinkURL").text() != "網址確認正確" ){
 				$('#chkLinkURL').css("color","red");
-				$("#chkLinkURL").text("請填寫廣告連結網址.");
-				return false;
+				if($("#adLinkURL").val() == ""){
+					$("#chkLinkURL").text("請輸入廣告連結網址.");
+					return false;
+				}else{
+					if($("#adLinkURL").val() == "show.pchome.com.tw"){
+						$("#chkLinkURL").text("請輸入廣告連結網址.");
+						return false;
+					}
+				}
 			}else{
 				hostName = $('<a>').prop('href', "http://"+$("#adLinkURL").val()).prop('hostname');
 				urlCheck("adShowURL","http://"+hostName)
@@ -286,7 +374,7 @@
 		}else{
 			$("#adShowURL").val("");
 			$('#chkShowURL').css("color","red");
-			$("#chkShowURL").text("請填寫廣告顯示網址.");
+			$("#chkShowURL").text("請輸入廣告顯示網址.");
 		}
 	});
 	//輸入字數檢查與提示
@@ -359,14 +447,14 @@
 		//for IE
 		if($("#adTitle").val() == "PChome關鍵字廣告 全新登場"){
 			$('#chkAdTitle').css("color","red");
-			$("#chkAdTitle").text("請填寫廣告內容.");
+			$("#chkAdTitle").text("請輸入廣告內容.");
 			location.href="#chkAdTitle";
 			return false;
 		}
 		
 		if($("#adContent").val() == "讓您的廣告受到世界矚目、訂單多到接不完！立即使用PChome關鍵字廣告‎。"){
 			$('#chkAdContent').css("color","red");
-			$("#chkAdContent").text("請填寫廣告內容.");
+			$("#chkAdContent").text("請輸入廣告內容.");
 			location.href="#chkAdContent";
 			return false;
 		}
@@ -374,14 +462,14 @@
 		
 		if($("#adTitle").val() == ""){
 			$('#chkAdTitle').css("color","red");
-			$("#chkAdTitle").text("請填寫廣告內容.");
+			$("#chkAdTitle").text("請輸入廣告內容.");
 			location.href="#chkAdTitle";
 			return false;
 		}
 		
 		if($("#adContent").val() == ""){
 			$('#chkAdContent').css("color","red");
-			$("#chkAdContent").text("請填寫廣告內容.");
+			$("#chkAdContent").text("請輸入廣告內容.");
 			location.href="#chkAdContent";
 			return false;
 		}
@@ -389,14 +477,14 @@
 		
 		if($("#chkLinkURL").css("color") == "rgb(255, 0, 0)"  || $("#chkLinkURL").text() != "網址確認正確"){
 			$('#chkLinkURL').css("color","red");
-			$("#chkLinkURL").text("請填寫廣告連結網址.");
+			$("#chkLinkURL").text("請輸入廣告連結網址.");
 			location.href="#chkLinkURL";
 			return false;
 		}
 		
 		if($("#chkShowURL").css("color") == "rgb(255, 0, 0)" || $("#chkShowURL").text() != "網址確認正確"){
 			$('#chkShowURL').css("color","red");
-			$("#chkShowURL").text("請填寫顯示網址.");
+			$("#chkShowURL").text("請輸入顯示網址.");
 			location.href="#chkShowURL";
 			return false;
 		}
