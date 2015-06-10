@@ -257,7 +257,6 @@
 					}else{
 						
 					}
-//					$("#previewURL").text($("#"+urlType).attr("placeholder"));
 				}
 				if(urlType == 'adShowURL'){
 					if($("#adShowURL").length > 0){
@@ -266,60 +265,7 @@
 					}else{
 						
 					}
-					
-					
-//					$("#previewURL").text($("#"+urlType).attr("placeholder"));
 				}
-				
-//				if($("#adShowURL").val() == "" ){
-//					if(urlType == 'adLinkURL'){
-//						$("#"+adUrlHint).text("請輸入廣告連結網址.");
-//						$("#previewURL").text($("#"+urlType).attr("placeholder"));
-//					}
-//					if(urlType == 'adShowURL'){
-//						$("#"+adUrlHint).text("請輸入廣告顯示網址.");
-//						$("#previewURL").text($("#"+urlType).attr("placeholder"));
-//					}
-//			
-//				}
-				
-				
-//				$("#"+adUrlHint).css("color","red");
-////				alert(adUrlHint);
-////				alert($("#"+adUrlHint).val());
-//				if($("#adShowURL").val() == "" ){
-////					alert("A10");
-////					if(urlType == 'adLinkURL'){
-////						$("#"+adUrlHint).text("請輸入廣告連結網址.");
-////						$("#previewURL").text($("#"+urlType).attr("placeholder"));
-////					}
-////					if(urlType == 'adShowURL'){
-////						$("#"+adUrlHint).text("請輸入廣告顯示網址.");
-////						$("#previewURL").text($("#"+urlType).attr("placeholder"));
-////					}
-////					
-////					return false;
-//				}else{
-//					if(urlType == 'adLinkURL'){
-//						if($("#adLinkURL").val().length > 0){
-//							$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
-//							return false;
-//						}else{
-//							$("#"+adUrlHint).text("請輸入廣告連結網址.");
-//							return false;
-//						}
-//						
-//					}
-//					if(urlType == 'adShowURL'){
-//						$("#"+adUrlHint).text("請輸入正確廣告顯示網址.");
-//						return false;
-//					}else{
-//						$("#"+adUrlHint).text("請輸入廣告顯示網址.");
-//						return false;
-//					}
-//					
-//				}
-//				ShowUrl = false;
 			}
 		}else{
 			

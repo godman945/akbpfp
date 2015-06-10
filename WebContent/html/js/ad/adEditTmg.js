@@ -112,12 +112,10 @@
 		var maxlength = $('#adLinkURL').attr("maxlength");
 		var adLinkURL = $('#adLinkURL').val();
 		var length = adLinkURL.length;
-		if(adLinkURL != $("#adShowURL").val()) {
-//			$('#sameRealUrl').attr("checked", false);
-		}
 		if(adLinkURL == "") {
 			$('#chkLinkURL').css("color","red");
-			$("#chkLinkURL").text("請填寫廣告連結網址.");
+			$("#chkLinkURL").text("請輸入廣告連結網址.");
+			
 		} else {
 			$("#chkLinkURL").text("");
 			if(length == 1024) {
@@ -131,27 +129,6 @@
 		//連結網址字數檢查
 		chkWord($('#adLinkURL'), "spanAdLinkURL");
 		setData();
-//		var maxlength = $('#adLinkURL').attr("maxlength");
-//		var adLinkURL = $('#adLinkURL').val();
-//		var length = adLinkURL.length;
-//		if(adLinkURL != $("#adShowURL").val()) {
-//			$('#sameRealUrl').attr("checked", false);
-//		}
-//		if(adLinkURL == "") {
-//			$('#chkLinkURL').css("color","red");
-//			$("#chkLinkURL").text("請填寫廣告連結網址.");
-//		} else {
-//			$("#chkLinkURL").text("");
-//			if(length == maxlength) {
-//				$('#chkLinkURL').css("color","blue");
-//				$("#chkLinkURL").text("廣告連結網址輸入字數已達上限" +maxlength+ "字");
-//			} else if(length > maxlength) { 
-//				$('#chkLinkURL').css("color","red");
-//				$("#chkLinkURL").text("廣告連結網址最多輸入"+maxlength+"字");
-//			}
-//			setData();
-//		}
-//		chkWord($('#adLinkURL'), "spanAdLinkURL");
 	}
 	
 	
@@ -163,46 +140,28 @@
 	
 	//檢查網址blur事件
 	$('#adLinkURL').blur(function() {
-		console.log("====");
-		if($("#adLinkURL").val() == "show.pchome.com.tw"){
-			console.log("A");
-			$('#chkLinkURL').css("color","red");
-			$("#chkLinkURL").text("請填寫連結網址.");
-			return;
+		if($("#adLinkURL").val() != "show.pchome.com.tw"){
+			urlCheck("adLinkURL",$("#adLinkURL").val());
 		}else{
-			chk_adLinkURLLink();
-			chk_adShowURL();
+			$("#chkLinkURL").css("color","red");
+			$("#chkLinkURL").text("請輸入廣告連結網址");
 		}
 	});
 	
 	//網域鍵盤輸入事件檢查
 	$('#adShowURL').bind('keyup', function() {
-		if($("#adShowURL").val() == "" || $("#chkShowURL").css("color") == "rgb(255, 0, 0)"){
-//			alert($("#adShowURL").val());
-			$('#chkShowURL').css("color","red");
-			$("#chkShowURL").text("請填寫顯示網址.");
-			return;
-		}else{
-//			alert("F1");
-			chk_adShowURL();
-			chk_adLinkURLLink();
-		}
+		chk_adShowURL();
 	});
 	//檢查網域blur事件
 	$('#adShowURL').blur(function() {
-		var adShowURL = $("#adShowURL").val();
 		if($("#adShowURL").val() == "show.pchome.com.tw"){
-			$('#chkShowURL').css("color","red");
-			$("#chkShowURL").text("請填寫顯示網址.");
-			return;
+			$("#chkShowURL").css("color","red");
+			$("#chkShowURL").text("請輸入廣告顯示網址");
 		}else{
-			if($("#sameRealUrl").prop("checked")){
-				chk_adShowURL();
-				var hostname = $("<a>").prop("href", "http://"+adShowURL).prop("hostname");
-				urlCheck("adShowURL","http://"+hostname);
-			}else{
-				chk_adShowURL();
-				urlCheck("adShowURL",adShowURL);
+			urlCheck("adShowURL",$("#adShowURL").val());
+			if($("#adShowURL").val() == ""){
+				$("#chkShowURL").css("color","red");
+				$("#chkShowURL").text("請輸入廣告顯示網址");
 			}
 		}
 	});
@@ -281,7 +240,6 @@
 	
 	
 	
-	//檢查網址是否有效
 	function urlCheck(urlType,adUrl){
 		var adUrlHint = urlType != "adShowURL" ? "chkLinkURL" : "chkShowURL";
 		if(adUrl != "" && urlType.indexOf("show.pchome.com.tw") < 0) {
@@ -292,16 +250,21 @@
 					url: "checkAdUrl.html",
 					data: { url: adUrl}
 				}).done(function( msg ) {
-					if(msg == 'malware'){
+					if(msg == "false") {
+						$("#chkShowURL").css("color","red");
 						$("#"+adUrlHint).css("color","red");
-						$("#"+adUrlHint).text("抱歉，該網址被判斷為有問題，請填入其它網址!");
+						if(adUrlHint == "chkLinkURL"){
+							$("#"+adUrlHint).text("請輸入正確的廣告連結網址");
+						}else if(adUrlHint == "chkShowURL"){
+							$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
+						}
+						
 						if(urlType == "adShowURL"){
 							ShowUrl = false;
 						}else{
 							LinkUrl = false;
 						}
-						return false;
-					}else if(msg == 'true'){
+					} else {
 						$("#"+urlType).css("color","");
 						$("#"+adUrlHint).css("color","green");
 						$("#"+adUrlHint).text("網址確認正確");
@@ -310,39 +273,49 @@
 						}else{
 							LinkUrl = true;
 						}
-					}else if(msg == 'false'){
-						$("#"+adUrlHint).css("color","red");
-						$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
-						if(urlType == "adShowURL"){
-							ShowUrl = false;
-						}else{
-							LinkUrl = false;
-						}
-						return false;
-					}else{
-						if($('#adLinkURL').val().length <= 1024){
-						LinkUrl = true;
-					}else{
-						LinkUrl = false;
 					}
-				}
 				});
 			}else {
-				if(urlType == "adShowURL"){
-					$("#chkShowURL").css("color","red");
-				}else if(urlType == "adLinkURL"){
-					$("#chkLinkURL").css("color","red");
+				if(urlType == 'adLinkURL'){
+					if($("#adLinkURL").length > 0){
+						$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
+					}else{
+						
+					}
 				}
-				$("#"+adUrlHint).text("請填寫廣告顯示網址.");
-				$("#previewURL").text($("#"+urlType).attr("placeholder"));
-				ShowUrl = false;
+				if(urlType == 'adShowURL'){
+					if($("#adShowURL").length > 0){
+						$('#chkShowURL').css("color","red");
+						$("#"+adUrlHint).text("請輸入正確廣告顯示網址.");
+					}else{
+						
+					}
+				}
+			}
+		}else{
+			
+			if(urlType == 'adLinkURL'){
+				if($("#adLinkURL").val().length > 0){
+					$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
+					return false;
+				}else{
+					$("#"+adUrlHint).text("請輸入廣告連結網址.");
+					return false;
+				}
+				
+			}
+			if(urlType == 'adShowURL'){
+				$("#"+adUrlHint).text("請輸入正確廣告顯示網址.");
+				return false;
+			}else{
+				$("#"+adUrlHint).text("請輸入廣告顯示網址.");
+				return false;
 			}
 		}
 		//連結網址字數檢查
-		chkWord($('#adLinkURL'), "spanAdLinkURL");
-		//連結網域字數檢查
-		chkWord($('#adShowURL'), "spanAdShowURL");
-	}	
+			chkWord($('#adShowURL'), "spanAdShowURL");
+			chkWord($('#adLinkURL'), "spanAdLinkURL");
+	}
 	
 //	function chk_adShowURLLink() {
 //		var adShowURL = $("#adShowURL").val();
