@@ -534,7 +534,7 @@ function previewImage(file) {
 		location.href="#uploadFile";
 		return false;
 	}else{
-		deleteImage();
+//		deleteImage();
 		sizeFlag = true;
 		$("#sizeCheckDiv").css("display","none");
 		$("#uploadCheckDiv").css("display","none");
