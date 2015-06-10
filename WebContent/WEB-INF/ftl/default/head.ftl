@@ -10,6 +10,9 @@
 <meta name="keywords" content="關鍵字,google 關鍵字,yahoo 關鍵字,關鍵字廣告,關鍵字排名,關鍵字排行,關鍵字工具,關鍵字廣告費,關鍵字廣告費用,關鍵字搜尋,關鍵字建議工具,關鍵字行銷,關鍵字查詢,關鍵字聯播網,Google adwords,搜尋關鍵字,內容關鍵字,聯播網,興趣行銷,再行銷,標籤廣告,網頁廣告,Google 廣告,Yahoo　廣告,Pchome 廣告,露天廣告,買廣告,廣告曝光" />
 <meta http-equiv="Pragma" CONTENT="no-cache">
 <meta http-equiv="Expires" CONTENT="-1">
+<% Response.CacheControl = "no-cache" %>
+<% Response.AddHeader "Pragma", "no-cache" %>
+<% Response.Expires = -1 %>
 <link rel="shortcut icon" href="http://www.pchome.com.tw/favicon.ico">
 <title>PChome 關鍵字廣告</title>
     <link href="<@s.url value="/" />html/css/style.css" rel="stylesheet" type="text/css" /> 
