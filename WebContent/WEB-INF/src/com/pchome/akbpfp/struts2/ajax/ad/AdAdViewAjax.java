@@ -36,7 +36,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private float totalAvgCost = 0;
 	private int totalCost = 0;
 	private int totalInvalidClk = 0;
-	
+	private String test = "";
 	public String adAdViewTableAjax() throws Exception{
 		int type = Integer.parseInt(searchType);
 		long allAdActionViews = 0;
@@ -54,8 +54,24 @@ public class AdAdViewAjax extends BaseCookieAction{
 																pageNo, 
 																pageSize);
 			}
+			
+			
 		}
 
+		
+		
+		System.out.println("AAAAAAAAAAAAAAA");
+		System.out.println(adAdViewVO.get(0).getAdHtml());
+		System.out.println(adAdViewVO.get(0).getAdHtml().length());
+		test = adAdViewVO.get(0).getAdHtml();
+//		for (String a : adAdViewVO.get(0).getAdHtml().length()) {
+//		    
+//		}
+		
+		
+		
+		
+		
 		if(allAdActionViews > 0) {
 			totalCount = allAdActionViews;
 			pageCount = (int) Math.ceil(((float)totalCount / pageSize));
@@ -163,6 +179,14 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	public int getTotalInvalidClk() {
 		return totalInvalidClk;
+	}
+
+	public String getTest() {
+	    return test;
+	}
+
+	public void setTest(String test) {
+	    this.test = test;
 	}
 
 
