@@ -1,6 +1,5 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-<meta http-equiv="cache-control" content="no-cache">   
 <div>
     <span style="padding:10px;float:left">                   
 	    <input type="button" name="stop" onClick="modifyAdStatus('9')" value="暫 停" /> &nbsp; 
@@ -42,7 +41,7 @@
 				</#if>
 				</td>
 		        <td height="35" > 
-		        	<iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe>
+		        	<iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}"$time='${.now?string("yy-MM-dd HH:mm:ss")}' marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe>
 					</iframe>    	
 		        </td>
 		        <td class="td02">
