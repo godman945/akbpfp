@@ -278,6 +278,7 @@
 			}else {
 				if(urlType == 'adLinkURL'){
 					if($("#adLinkURL").length > 0){
+						$('#chkLinkURL').css("color","red");
 						$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
 					}else{
 						
