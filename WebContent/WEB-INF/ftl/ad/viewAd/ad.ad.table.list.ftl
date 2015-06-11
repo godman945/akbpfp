@@ -104,5 +104,3 @@
 	<input type="button" name="close" onClick="modifyAdStatus('10')" value="關 閉" /> &nbsp;          
 </span>
 
-<iframe height="120" width="350" src="http://search.pchome.com.tw/suggest/keyword/search.html?q=02"></iframe>
-</iframe>    
