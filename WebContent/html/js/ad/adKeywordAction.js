@@ -1,4 +1,4 @@
-﻿$(document).ready(function(){
+﻿﻿$(document).ready(function(){
 	//新增關鍵字用參數
 	var existKeywords1 = "";
 	var existKeywords2 = "";
@@ -286,9 +286,6 @@
 							url: "getSuggestKW.html",
 							data: { q: word }
 						}).done(function( msg ) {
-							
-							alert(msg);
-							
 							var suggestKeyword = msg.split(",");
 							var suggestKeywordsLen = 0;
 							if(msg != "" && suggestKeyword.length > 0) {
