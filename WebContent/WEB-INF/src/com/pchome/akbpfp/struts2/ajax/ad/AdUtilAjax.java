@@ -91,7 +91,7 @@ public class AdUtilAjax extends BaseCookieAction{
 	}
 
 	public String getSuggestKW() throws Exception{
-		
+		log.info("start getSuggestKW");
 //	    String kwApi2 = "http://search.pchome.com.tw/suggest/keyword/search.html?q=" +java.net.URLEncoder.encode(q, "UTF-8");
 //	    
 //	    
