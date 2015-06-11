@@ -550,7 +550,7 @@ function previewImage(file) {
 	if(!$.browser.msie ) { 
 		size = ($("#uploadFile")[0].files[0].size / 1024);
 	}
-	if($.browser.msie || $.browser.mozilla) { 
+	if($.browser.msie) { 
 		deleteImage();
 	}
 	size = Math.round(size);
