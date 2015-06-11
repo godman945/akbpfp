@@ -41,7 +41,7 @@
 				</#if>
 				</td>
 		        <td height="35" > 
-		        	<iframe height="120" width="350" src="adModel.html?t=${aDateTime?iso_local}&adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}"&time='${.now?string("yy-MM-dd HH:mm:ss")}' marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe>
+		        	<iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe>
 					</iframe>    	
 		        </td>
 		        <td class="td02">
@@ -103,3 +103,4 @@
 	<input type="button" name="start" onClick="modifyAdStatus('4')" value="開 啟" /> &nbsp;
 	<input type="button" name="close" onClick="modifyAdStatus('10')" value="關 閉" /> &nbsp;          
 </span>
+
