@@ -530,8 +530,10 @@ function deleteImage() {
 			data: { imgFile: $("#imgFile").val()}
 		}).done(function( msg ) {
 			if(msg == "delFinish") {
-				$("#imghead").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
-				$("#previewImg").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
+				var date = new Date();
+				var time = d.getTime();
+				$("#imghead").attr("src", "./html/img/upl9090.gif?" + time);
+				$("#previewImg").attr("src", "./html/img/upl9090.gif?" + time);
 				$("#uploadFile").replaceWith($('#uploadFile').clone());
 				$("#imgFile").val("");
 			}
@@ -570,7 +572,7 @@ function previewImage(file) {
 		var picPath = file.value;
 		var type = picPath.substring(picPath.lastIndexOf(".")+1, picPath.length).toLowerCase();
 		$("#imghead").css("display", "inline");
-		if(type!="jpg" && type!="png"){
+		if(type!="jpg" && type != "png"){
 			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png 的檔案");
 			return false;
 		} else {
