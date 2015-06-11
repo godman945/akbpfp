@@ -17,8 +17,8 @@
 function initPage() {
 	var msg = "${result}";
 	if(msg == "resizeOK") {
-		parent.document.getElementById("imghead").src = "<@s.url value="/" />img/tmp/${ulTmpName}.${imgType}?time=${time}" ;
-		parent.document.getElementById("previewImg").src = "<@s.url value="/" />img/tmp/${ulTmpName}.${imgType}?time=${time}";
+		parent.document.getElementById("imghead").src = "<@s.url value="/" />img/tmp/${ulTmpName}${time}.${imgType}?time=${time}" ;
+		parent.document.getElementById("previewImg").src = "<@s.url value="/" />img/tmp/${ulTmpName}${time}.${imgType}?time=${time}";
 		parent.document.getElementById("previewImg").style.display = "inline";
 		parent.document.getElementById("imgFile").value = "${imgFile}";
 		parent.document.getElementById("chkFile").innerText = "";

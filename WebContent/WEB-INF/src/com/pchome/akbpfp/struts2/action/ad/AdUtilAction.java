@@ -41,6 +41,9 @@ public class AdUtilAction extends BaseCookieAction{
 	public String fileUpload() throws Exception{
 	    log.info("alex fileUpload");
 		result = "noFile";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date date = new Date();
+		time = sdf.format(date);
 		try {
 			System.out.println("ulTmpName = " + ulTmpName);
 			if(uploadFile != null) {
@@ -66,11 +69,11 @@ public class AdUtilAction extends BaseCookieAction{
 				iTmpPath.setWritable(true);
 
 				// 截圖暫存檔
-				File cutFile = new File(photoTmpPath + "cut/", ulTmpName + "." + imgType);
+				File cutFile = new File(photoTmpPath + "cut/", ulTmpName+time+ "." + imgType);
 				// 縮圖暫存檔
-				File resizeFile = new File(photoTmpPath + "resize/", ulTmpName + "." + imgType);
+				File resizeFile = new File(photoTmpPath + "resize/", ulTmpName+time + "." + imgType);
 				// 處理完成暫存檔
-				File tmpFile = new File(photoTmpPath, ulTmpName + "." + imgType);
+				File tmpFile = new File(photoTmpPath, ulTmpName+time + "." + imgType);
 				
 				// 先將圖片存成原圖暫存檔
 				OutputStream os = new FileOutputStream(cutFile);
@@ -111,9 +114,6 @@ public class AdUtilAction extends BaseCookieAction{
 			result = "resizeErr";
 		}
 		msg = new ByteArrayInputStream(result.getBytes());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-		Date date = new Date();
-		time = sdf.format(date);
 		return SUCCESS;
 	}
 
