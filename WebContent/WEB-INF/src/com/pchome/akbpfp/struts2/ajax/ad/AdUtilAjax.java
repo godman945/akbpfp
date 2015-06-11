@@ -6,14 +6,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
-
-import sun.nio.cs.StandardCharsets;
 
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.soft.depot.utils.HttpUtil;
@@ -112,14 +111,9 @@ public class AdUtilAjax extends BaseCookieAction{
 //	    
 //	    InputStream stream = new ByteArrayInputStream(response.getEntity().getContent().getBytes());
 //	    InputStream   inputStream   =   new   ByteArrayInputStream(str.getBytes());
-	    
-	    System.out.println(response);
-	    
-	    
-	    
-	    String   str   =   "123";
-	    InputStream   inputStream   =   new   ByteArrayInputStream(str.getBytes());
-	    
+	    String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8"); 
+	    System.out.println(theString);
+	    InputStream   inputStream   =   new   ByteArrayInputStream(theString.getBytes());
 	    msg = inputStream;
 	    
 	    
