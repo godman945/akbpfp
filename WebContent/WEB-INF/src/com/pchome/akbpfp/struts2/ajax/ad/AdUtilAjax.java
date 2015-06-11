@@ -92,33 +92,48 @@ public class AdUtilAjax extends BaseCookieAction{
 
 	public String getSuggestKW() throws Exception{
 		
-	    String kwApi2 = "http://search.pchome.com.tw/suggest/keyword/search.html?q=" +java.net.URLEncoder.encode(q, "UTF-8");
+//	    String kwApi2 = "http://search.pchome.com.tw/suggest/keyword/search.html?q=" +java.net.URLEncoder.encode(q, "UTF-8");
+//	    
+//	    
+//	    System.out.println(kwApi2);
+//	    log.info("===========:"+kwApi2);
+//	    String result2 = HttpUtil.getInstance().getResult(kwApi2, "UTF-8");
+//	    log.info("===========:"+result2);
+	    
+	    HttpGet request = new HttpGet();
+	    request.setURI(new URI("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLEncoder.encode(q, "UTF-8")));
+	    HttpClient client = new DefaultHttpClient();
+	    HttpResponse response = client.execute(request);
+	    
+	    System.out.println("response:"+response);
+	    
+	    InputStream urlContent = response.getEntity().getContent();
+//	    BufferedReader buf = new BufferedReader(new InputStreamReader(urlContent,"UTF-8"));
 	    
 	    
-	    System.out.println(kwApi2);
-	    log.info("===========:"+kwApi2);
-	    String result2 = HttpUtil.getInstance().getResult(kwApi2, "UTF-8");
-	    log.info("===========:"+result2);
+	    msg = urlContent;
 	    
 	    
 	    
 	    
 	    
 	    
+	    System.out.println(java.net.URLEncoder.encode(q, "UTF-8"));
+	    System.out.println("--------------------");
 	    
 	    
-	    log.info(">>>getSuggestKW");
-		try {
-			if(q != null && !q.trim().equals("")) {
-				String kwApi = "http://search.pchome.com.tw/suggest/keyword/search.html?q=" +java.net.URLEncoder.encode(q, "UTF-8");
-				log.info("kwApi = " + kwApi);
-				result = HttpUtil.getInstance().getResult(kwApi, "UTF-8");
-				log.info("result = " + result);
-			}
-		} catch(Exception ex) {
-		    log.info("Exception(AdUtilAjax.getSuggestKW) : " + ex.toString());
-		}
-		msg = new ByteArrayInputStream(result.getBytes());
+//	    log.info(">>>getSuggestKW");
+//		try {
+//			if(q != null && !q.trim().equals("")) {
+//				String kwApi = "http://search.pchome.com.tw/suggest/keyword/search.html?q=" +java.net.URLEncoder.encode(q, "UTF-8");
+//				log.info("kwApi = " + kwApi);
+//				result = HttpUtil.getInstance().getResult(kwApi, "UTF-8");
+//				log.info("result = " + result);
+//			}
+//		} catch(Exception ex) {
+//		    log.info("Exception(AdUtilAjax.getSuggestKW) : " + ex.toString());
+//		}
+//		msg = new ByteArrayInputStream(result.getBytes());
 		return SUCCESS;
 	}
 
