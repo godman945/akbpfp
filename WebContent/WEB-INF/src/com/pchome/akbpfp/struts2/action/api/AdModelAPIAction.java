@@ -3,6 +3,8 @@ package com.pchome.akbpfp.struts2.action.api;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import org.apache.commons.io.IOUtils;
+
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.rmi.api.IAPIProvider;
 
@@ -27,6 +29,10 @@ public class AdModelAPIAction extends BaseCookieAction{
 		
 		returnAdHtml = new ByteArrayInputStream(adHtml.getBytes("UTF-8"));	 
 		
+//		System.out.println(returnAdHtml);
+		String StringFromInputStream = IOUtils.toString(returnAdHtml, "UTF-8");
+//		System.out.println("FFFFFFFFFFFFFFFFFFFFF");
+		log.info(StringFromInputStream);
 		return SUCCESS;
 	}
 	
