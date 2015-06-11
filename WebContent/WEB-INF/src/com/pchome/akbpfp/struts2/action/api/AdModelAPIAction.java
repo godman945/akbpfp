@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.commons.io.IOUtils;
 
@@ -23,38 +25,14 @@ public class AdModelAPIAction extends BaseCookieAction{
 	 */
 	public String adModelAction() throws Exception{
 		
-		//log.info(" tproNo = "+tproNo+"  , adNo = "+adNo);
-
-		String adHtml = admAPI.getAdContent(tproNo, adNo);
-
-		//log.info(" adHtml = "+adHtml);
-		
-		returnAdHtml = new ByteArrayInputStream(adHtml.getBytes("UTF-8"));	 
-		
-//		System.out.println(returnAdHtml);
-//		String StringFromInputStream = IOUtils.toString(returnAdHtml, "UTF-8");
-//		System.out.println("FFFFFFFFFFFFFFFFFFFFF");
-//		log.info(StringFromInputStream);
-		
-		
-		
-		 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(returnAdHtml, "UTF-8"));
-		
-		 String line = bufferedReader.readLine();
-		 while(line != null){
-		     log.info(line);
-		 }
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		return SUCCESS;
+	    //log.info(" tproNo = "+tproNo+"  , adNo = "+adNo);
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+	    Date date = new Date();
+	    System.out.println(sdf.format(date));
+	    String adHtml = admAPI.getAdContent(tproNo, adNo);
+	    adHtml = adHtml.replaceAll("jpg", "jpg?time="+sdf.format(date));
+	    returnAdHtml = new ByteArrayInputStream(adHtml.getBytes("UTF-8"));
+	    return SUCCESS;
 	}
 	
 	public void setAdmAPI(IAPIProvider admAPI) {
