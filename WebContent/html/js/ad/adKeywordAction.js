@@ -286,6 +286,7 @@
 							url: "getSuggestKW.html",
 							data: { q: word }
 						}).done(function( msg ) {
+							console.log("log:"+msg);
 							var suggestKeyword = msg.split(",");
 							var suggestKeywordsLen = 0;
 							if(msg != "" && suggestKeyword.length > 0) {
