@@ -13,7 +13,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
-import com.opensymphony.xwork2.inject.util.Strings;
+import sun.nio.cs.StandardCharsets;
+
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.soft.depot.utils.HttpUtil;
 public class AdUtilAjax extends BaseCookieAction{
@@ -91,7 +92,7 @@ public class AdUtilAjax extends BaseCookieAction{
 	}
 
 	public String getSuggestKW() throws Exception{
-		log.info("start getSuggestKW");
+	    log.info("start getSuggestKW");
 //	    String kwApi2 = "http://search.pchome.com.tw/suggest/keyword/search.html?q=" +java.net.URLEncoder.encode(q, "UTF-8");
 //	    
 //	    
@@ -104,22 +105,25 @@ public class AdUtilAjax extends BaseCookieAction{
 	    request.setURI(new URI("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLEncoder.encode(q, "UTF-8")));
 	    HttpClient client = new DefaultHttpClient();
 	    HttpResponse response = client.execute(request);
+//	    InputStream urlContent = response.getEntity().getContent();
+//	    System.out.println(response.getEntity().getContent());
+//	    
+//	    
+//	    
+//	    InputStream stream = new ByteArrayInputStream(response.getEntity().getContent().getBytes());
+//	    InputStream   inputStream   =   new   ByteArrayInputStream(str.getBytes());
 	    
-	    System.out.println("response:"+response);
+	    System.out.println(response.getEntity().getContent());
 	    
-	    InputStream urlContent = response.getEntity().getContent();
-//	    BufferedReader buf = new BufferedReader(new InputStreamReader(urlContent,"UTF-8"));
-	    
-	    
-	    msg = urlContent;
+	    msg = response.getEntity().getContent();
 	    
 	    
 	    
 	    
 	    
 	    
-	    System.out.println(java.net.URLEncoder.encode(q, "UTF-8"));
-	    System.out.println("--------------------");
+//	    System.out.println(java.net.URLEncoder.encode(q, "UTF-8"));
+//	    System.out.println("--------------------");
 	    
 	    
 //	    log.info(">>>getSuggestKW");
