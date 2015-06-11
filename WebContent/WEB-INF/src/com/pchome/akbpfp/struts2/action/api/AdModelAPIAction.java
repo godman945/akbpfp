@@ -28,9 +28,9 @@ public class AdModelAPIAction extends BaseCookieAction{
 	    //log.info(" tproNo = "+tproNo+"  , adNo = "+adNo);
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 	    Date date = new Date();
-	    System.out.println(sdf.format(date));
 	    String adHtml = admAPI.getAdContent(tproNo, adNo);
 	    adHtml = adHtml.replaceAll("jpg", "jpg?time="+sdf.format(date));
+	    log.info(adHtml);
 	    returnAdHtml = new ByteArrayInputStream(adHtml.getBytes("UTF-8"));
 	    return SUCCESS;
 	}
