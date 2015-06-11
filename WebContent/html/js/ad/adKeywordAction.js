@@ -279,14 +279,14 @@
 		        onBlock: function() { 
 					// 清空舊的系統建議關鍵字
 					$("#suggestWordUL").empty();
-			
 					if(word != "" && word.replace(/\s/g, "") != "") {
 						$.ajax({
 							type: "get",
 							url: "getSuggestKW.html",
 							data: { q: word }
 						}).done(function( msg ) {
-							console.log("log:"+msg);
+							obj = JSON.parse(msg);
+							msg = obj["result"];
 							var suggestKeyword = msg.split(",");
 							var suggestKeywordsLen = 0;
 							if(msg != "" && suggestKeyword.length > 0) {

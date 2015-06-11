@@ -248,6 +248,7 @@
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
         <result type="stream">
+            <param name="contentType">text/html</param>
             <param name="inputName">msg</param>
         </result>
 	</action>
@@ -255,9 +256,10 @@
 	<action name="getSuggestKW" class="AdUtilAjax" method="getSuggestKW">
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
-        <result type="stream">
-            <param name="inputName">msg</param>
-        </result>
+       	<result type="json" name="success">
+			<param name="noCache">true</param>
+			<param name="contentType">text/html</param>
+		</result>
 	</action>
 
 	<action name="adFreeAdd" class="AdFreeAddAction" method="adFreeAdd">
@@ -516,6 +518,8 @@
     	</action>
     	
       	<action name="adAddImgAjax" class="AdAddAction" method="uploadImg">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
        		<result type="json" name="success">
         		<param name="root">result</param>
         	</result>
