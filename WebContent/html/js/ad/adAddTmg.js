@@ -547,9 +547,11 @@ var sizeFlag = true;
 function previewImage(file) {
 	sizeFlag = true;
 	var size = 0;
-//	deleteImage();
 	if(!$.browser.msie ) { 
 		size = ($("#uploadFile")[0].files[0].size / 1024);
+	}
+	if($.browser.msie) { 
+		deleteImage();
 	}
 	size = Math.round(size);
 	if(size > 1024){
