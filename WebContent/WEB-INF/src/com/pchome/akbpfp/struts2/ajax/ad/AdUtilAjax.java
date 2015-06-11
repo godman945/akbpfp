@@ -113,9 +113,14 @@ public class AdUtilAjax extends BaseCookieAction{
 //	    InputStream stream = new ByteArrayInputStream(response.getEntity().getContent().getBytes());
 //	    InputStream   inputStream   =   new   ByteArrayInputStream(str.getBytes());
 	    
-	    System.out.println(response.getEntity().getContent());
+	    System.out.println(response);
 	    
-	    msg = response.getEntity().getContent();
+	    
+	    
+	    String   str   =   "123";
+	    InputStream   inputStream   =   new   ByteArrayInputStream(str.getBytes());
+	    
+	    msg = inputStream;
 	    
 	    
 	    
