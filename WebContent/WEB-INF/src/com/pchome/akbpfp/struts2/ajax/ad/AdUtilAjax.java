@@ -98,7 +98,7 @@ public class AdUtilAjax extends BaseCookieAction{
 	    System.out.println(kwApi2);
 	    log.info("===========:"+kwApi2);
 	    String result2 = HttpUtil.getInstance().getResult(kwApi2, "UTF-8");
-	    
+	    log.info("===========:"+result2);
 	    
 	    
 	    
