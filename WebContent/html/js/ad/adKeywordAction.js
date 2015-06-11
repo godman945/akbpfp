@@ -287,7 +287,7 @@
 							data: { q: word }
 						}).done(function( msg ) {
 							
-							console.log(msg);
+							alert(msg);
 							
 							var suggestKeyword = msg.split(",");
 							var suggestKeywordsLen = 0;
