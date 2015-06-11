@@ -108,7 +108,7 @@ public class AdUtilAjax extends BaseCookieAction{
 //	    System.out.println(response.getEntity().getContent());
 //	    
 //	    
-//	    
+//	     
 //	    InputStream stream = new ByteArrayInputStream(response.getEntity().getContent().getBytes());
 //	    InputStream   inputStream   =   new   ByteArrayInputStream(str.getBytes());
 	    String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8"); 
