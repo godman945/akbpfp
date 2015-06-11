@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -13,7 +14,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
-import com.opensymphony.xwork2.inject.util.Strings;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.soft.depot.utils.HttpUtil;
 public class AdUtilAjax extends BaseCookieAction{
@@ -91,19 +91,28 @@ public class AdUtilAjax extends BaseCookieAction{
 	}
 
 	public String getSuggestKW() throws Exception{
-		log.info(">>>getSuggestKW");
-		try {
-			if(q != null && !q.trim().equals("")) {
-				String kwApi = "http://search.pchome.com.tw/suggest/keyword/search.html?q=" +java.net.URLEncoder.encode(q, "UTF-8");
-				log.info("kwApi = " + kwApi);
-				result = HttpUtil.getInstance().getResult(kwApi, "UTF-8");
-				log.info("result = " + result);
-			}
-		} catch(Exception ex) {
-		    log.info("Exception(AdUtilAjax.checkUrl) : " + ex.toString());
-		}
-		msg = new ByteArrayInputStream(result.getBytes());
-		return SUCCESS;
+//		log.info(">>>getSuggestKW");
+//		try {
+//			if(q != null && !q.trim().equals("")) {
+//				String kwApi = "http://search.pchome.com.tw/suggest/keyword/search.html?q=" +java.net.URLEncoder.encode(q, "UTF-8");
+//				log.info("kwApi = " + kwApi);
+//				result = HttpUtil.getInstance().getResult(kwApi, "UTF-8");
+//				log.info("result = " + result);
+//			}
+//		} catch(Exception ex) {
+//		    log.info("Exception(AdUtilAjax.checkUrl) : " + ex.toString());
+//		}
+//		msg = new ByteArrayInputStream(result.getBytes());
+	    
+	    HttpGet request = new HttpGet();
+	    request.setURI(new URI("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLEncoder.encode(q, "UTF-8")));
+	    HttpClient client = new DefaultHttpClient();
+	    HttpResponse response = client.execute(request);
+	    String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8"); 
+	    System.out.println(theString);
+	    InputStream   inputStream   =   new   ByteArrayInputStream(theString.getBytes());
+	    msg = inputStream;
+	    return SUCCESS;
 	}
 
 	// get data
