@@ -520,8 +520,11 @@ var sizeFlag = true;
 function previewImage(file) {
 	sizeFlag = true;
 	var size = 0;
-	if(!$.browser.msie || $.browser.mozilla) { 
+	if(!$.browser.msie ) { 
 		size = ($("#uploadFile")[0].files[0].size / 1024);
+	}
+	if($.browser.msie || $.browser.mozilla) { 
+		deleteImage();
 	}
 	size = Math.round(size);
 	if(size > 1024){
@@ -534,7 +537,6 @@ function previewImage(file) {
 		location.href="#uploadFile";
 		return false;
 	}else{
-//		deleteImage();
 		sizeFlag = true;
 		$("#sizeCheckDiv").css("display","none");
 		$("#uploadCheckDiv").css("display","none");
