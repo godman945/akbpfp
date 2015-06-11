@@ -100,7 +100,7 @@ public class AdUtilAjax extends BaseCookieAction{
 				log.info("result = " + result);
 			}
 		} catch(Exception ex) {
-		    log.info("Exception(AdUtilAjax.checkUrl) : " + ex.toString());
+		    log.info("Exception(AdUtilAjax.getSuggestKW) : " + ex.toString());
 		}
 		msg = new ByteArrayInputStream(result.getBytes());
 		return SUCCESS;
@@ -126,6 +126,10 @@ public class AdUtilAjax extends BaseCookieAction{
 
 	public String getResult() {
 		return result;
+	}
+
+	public void setMsg(InputStream msg) {
+	    this.msg = msg;
 	}
 
 
