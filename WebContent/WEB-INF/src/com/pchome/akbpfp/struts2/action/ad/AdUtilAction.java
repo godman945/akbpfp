@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -33,7 +35,9 @@ public class AdUtilAction extends BaseCookieAction{
 	private InputStream msg;
 	private String result;
 	private String imgFile;
-
+	
+	
+	private String  time;
 	public String fileUpload() throws Exception{
 	    log.info("alex fileUpload");
 		result = "noFile";
@@ -107,6 +111,9 @@ public class AdUtilAction extends BaseCookieAction{
 			result = "resizeErr";
 		}
 		msg = new ByteArrayInputStream(result.getBytes());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date date = new Date();
+		time = sdf.format(date);
 		return SUCCESS;
 	}
 
@@ -184,4 +191,13 @@ public class AdUtilAction extends BaseCookieAction{
 	public String getImgFile() {
 		return imgFile;
 	}
+
+	public String getTime() {
+	    return time;
+	}
+
+	public void setTime(String time) {
+	    this.time = time;
+	}
+	
 }
