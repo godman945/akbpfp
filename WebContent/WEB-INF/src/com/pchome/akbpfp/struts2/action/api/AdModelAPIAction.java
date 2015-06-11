@@ -1,7 +1,9 @@
 package com.pchome.akbpfp.struts2.action.api;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.apache.commons.io.IOUtils;
 
@@ -30,9 +32,28 @@ public class AdModelAPIAction extends BaseCookieAction{
 		returnAdHtml = new ByteArrayInputStream(adHtml.getBytes("UTF-8"));	 
 		
 //		System.out.println(returnAdHtml);
-		String StringFromInputStream = IOUtils.toString(returnAdHtml, "UTF-8");
+//		String StringFromInputStream = IOUtils.toString(returnAdHtml, "UTF-8");
 //		System.out.println("FFFFFFFFFFFFFFFFFFFFF");
-		log.info(StringFromInputStream);
+//		log.info(StringFromInputStream);
+		
+		
+		
+		 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(returnAdHtml, "UTF-8"));
+		
+		 String line = bufferedReader.readLine();
+		 while(line != null){
+		     log.info(line);
+		 }
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		return SUCCESS;
 	}
 	
