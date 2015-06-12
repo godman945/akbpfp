@@ -34,7 +34,7 @@
 							<!-- 批次新增關鍵字end -->
 							<!-- 建議START -->
 							<div id="divSuggestWord" class="sugestword" style="display:none;">
-								<ul id="suggestWordUL">
+								<ul id="suggestWordUL" style="font-size:12px;">
 								</ul>
 							</div>
 							<!-- 建議end -->

@@ -531,7 +531,7 @@ function deleteImage() {
 		}).done(function( msg ) {
 			if(msg == "delFinish") {
 				var date = new Date();
-				var time = d.getTime();
+				var time = date.getTime();
 				$("#imghead").attr("src", "./html/img/upl9090.gif?" + time);
 				$("#previewImg").attr("src", "./html/img/upl9090.gif?" + time);
 				$("#uploadFile").replaceWith($('#uploadFile').clone());

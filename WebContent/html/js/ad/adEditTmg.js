@@ -503,8 +503,10 @@ function deleteImage() {
 			data: { imgFile: $("#imgFile").val()}
 		}).done(function( msg ) {
 			if(msg == "delFinish") {
-				$("#imghead").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
-				$("#previewImg").attr("src", "./html/img/upl9090.gif?" + (Math.random()*1000+1000));
+				var date = new Date();
+				var time = date.getTime();
+				$("#imghead").attr("src", "./html/img/upl9090.gif?" + time);
+				$("#previewImg").attr("src", "./html/img/upl9090.gif?" + time);
 				$("#uploadFile").replaceWith($('#uploadFile').clone());
 				$("#imgFile").val("");
 			}
