@@ -96,7 +96,7 @@
 							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[4]!}">
 							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[4]!}">
 							<input type="checkbox" id="sameRealUrl" name="sameRealUrl">廣告對外顯示網址同廣告連結網址網域<br>
-							<input type="text" class="inputPlaceholderTmg" data-value="spanAdShowURL" id="adShowURL" name="adShowURL" style="width:96%;" value="${adDetailContent[4]!}" placeholder="show.pchome.com.tw" maxlength="30"><br>
+							<input type="text" class="inputPlaceholderTmg" data-value="spanAdShowURL" id="adShowURL" name="adShowURL" style="width:96%;"  value="${adDetailContent[4]!}" placeholder="show.pchome.com.tw" maxlength="30"><br>
 							<span id="chkShowURL" name="chkShowURL" style="float:righ;color:red"></span>
 							<span style="float:right" id="spanAdShowURL">　</span>
 						</td>
