@@ -12,3 +12,7 @@
 <script src="https://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-audio.js"></script>
 <script src="https://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-video.js"></script>
 <script src="https://blueimp.github.io/jQuery-File-Upload/js/jquery.fileupload-validate.js"></script>
+<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" />
+<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/html5shiv.js"></script>
+

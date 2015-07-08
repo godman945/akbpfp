@@ -2,11 +2,6 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 <div class="cont">
     <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
-		<ul class="admenuul">
-            <li class="m01"><a href="#" class="active">圖像廣告</a></li>
-            <li class="m02"><a href="#">圖文廣告</a></li>
-            <li class="m03"><a href="#">影音廣告</a></li>
-        </ul>
         <div class="grtba">
 			<h4 style="display:none;">建立廣告</h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">
@@ -52,7 +47,7 @@
 						</td>
 					</tr>
                     <tr>
-						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br><a name="errAdImg">支援規格查詢</a></th>
+						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br><a name="errAdImg" onclick="approveSize();">支援規格查詢</a></th>
 						<td style="background:#f9f9f9;">
 							<span class="imgar" style="width:100%;">
                             <!--上傳圖片start-->
@@ -61,9 +56,8 @@
                                 <input type="hidden" id="adDetailName" name="adDetailName" value="廣告圖片">
                                 <input type="hidden" id="adDetailContent" name="adDetailContent" value="">
                                 <!--<input type="file" id="uploadFile" name="uploadFile" onchange="previewImage(this)">-->
-                                <input id="fileupload" type="file" name="files[]" multiple>
-                                <span id="chkFile" name="chkFile" style="color:red;size:5"></span><br />
-                                已上傳 0/100									
+                                <input id="fileupload" type="file" name="files[]" multiple onchange="createPreViewArea(this)">
+                                <span id="chkFile" name="chkFile" style="color:red;size:5"></span><br />已上傳 0/100									
                             </div>
                             <!--上傳圖片end-->
 						  </span>
@@ -76,7 +70,7 @@
                 <ul class="aduplodul">
                     <!--上傳失敗start-->
                     <li class="failbox">    
-                        <a class="addel" href="#">丟</a> 
+                        <p class="addel"  onclick="removeImg(this);"></p> 
                         <em>上傳失敗!</em>
                         <ul>
                         <li class="yes"><i>尺寸</i><b>300 x 100</b></li>
@@ -89,31 +83,17 @@
                         </div>
                     </li>
                     <!--上傳失敗end-->
-                    <!--上傳成功start-->  
-                    <li class="okbox">    
-                        <div class="adboxdv">
-                        <img src="<@s.url value="/" />html/img/300250.jpg">
-                        <a class="fancy adinf" href="#" alt="預覽">預覽</a></div>
-                        <ul>
-                        <li><i>尺寸</i><b>300 x 100</b></li>
-                        <li><i>大小</i><b>100KB</b></li>
-                        <li><i>格式</i><b>PNG</b></li>
-                        </ul>
-                        <a class="addel" href="#">丟</a>   
-                    </li>
-                    <!--上傳成功end-->
+                    
             </div>
             <!--上傳訊息end-->
+            
+            
+            
+            
+            
 <!-- adTmg end -->
-
 		</div>
-
-		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
-		<center style="margin-top:10px;">
-			<input type="button" id="cancel" value="取 消"> 
-			<input type="button" id="save" value="送出審核"> 
-			<!-- <input type="button" id="saveNew" value="儲存後再新增廣告"> --> 
-		</center>
+		
 		<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="ag_201505050001">
 		<input type="hidden" id="saveAndNew" name="saveAndNew" value="">
 		<input type="hidden" id="ulTmpName" name="ulTmpName" value="mpjxRl0rewSuBhH3madQgOsPImwqLs">
@@ -123,3 +103,62 @@
 	<iframe id="uploadIMG" name="uploadIMG" style="display:none;height:150px;width:600px"></iframe>
 	<iframe id="doAdd" name="doAdd" style="display:none;height:150px;width:600px"></iframe>
 </div>
+
+<!-- 預覽畫面
+<div style="display:;width:70%;"  id="preViewImgDiv" >
+	<div style="margin:0px auto;text-align:center; background:url(03.jpg) no-repeat;height:1617px;background-position:center top;"> 
+		<div id="alex99" name="alex99"></div>
+	</div>
+</div>
+ -->
+
+
+
+
+
+
+
+
+
+
+
+<div id="newPreview"></div>
+
+
+
+
+
+
+
+
+
+
+<div id="newPreview"></div>
+<div id="showPicUrl"></div>
+<hr><br>
+请选择图片：<input type="file" name="file" onchange="javascript:PreviewImg(this);">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<form>
+   <input type="file" name="files[]" multiple>
+</form>
+
+
+
+
+
+
