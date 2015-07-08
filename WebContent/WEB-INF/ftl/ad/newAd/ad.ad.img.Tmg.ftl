@@ -86,11 +86,6 @@
                     
             </div>
             <!--上傳訊息end-->
-            
-            
-            
-            
-            
 <!-- adTmg end -->
 		</div>
 		
@@ -111,54 +106,3 @@
 	</div>
 </div>
  -->
-
-
-
-
-
-
-
-
-
-
-
-<div id="newPreview"></div>
-
-
-
-
-
-
-
-
-
-
-<div id="newPreview"></div>
-<div id="showPicUrl"></div>
-<hr><br>
-请选择图片：<input type="file" name="file" onchange="javascript:PreviewImg(this);">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<form>
-   <input type="file" name="files[]" multiple>
-</form>
-
-
-
-
-
-
