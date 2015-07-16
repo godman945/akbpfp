@@ -91,7 +91,7 @@
                 <value>com.pchome.akbpfp.db.pojo.PfpReport</value>
                 <value>com.pchome.akbpfp.db.pojo.PfpSyspriceRate</value>
                 <value>com.pchome.akbpfp.db.pojo.PfpTransDetail</value>
-
+				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
 	            <!-- Sequence pojo -->
                 <value>com.pchome.akbpfp.db.pojo.Sequence</value>                
             </list>
@@ -111,7 +111,8 @@
                 <!-- 2 lever save
                 <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
                 <prop key="hibernate.cache.use_second_level_cache">true</prop>
-                <prop key="hibernate.cache.use_query_cache">true</prop>-->
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                -->
             </props>
         </property>
         <property name="annotatedClasses">

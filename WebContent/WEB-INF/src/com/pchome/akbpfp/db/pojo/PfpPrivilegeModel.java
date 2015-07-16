@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,76 +19,76 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_privilege_model", catalog = "akb")
 public class PfpPrivilegeModel implements java.io.Serializable {
 
-	private Integer modelId;
-	private String modelName;
-	private String note;
-	private Date createDate;
-	private Date updateDate;
+    private Integer modelId;
+    private String modelName;
+    private String note;
+    private Date createDate;
+    private Date updateDate;
 
-	public PfpPrivilegeModel() {
-	}
+    public PfpPrivilegeModel() {
+    }
 
-	public PfpPrivilegeModel(String modelName, Date createDate, Date updateDate) {
-		this.modelName = modelName;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
+    public PfpPrivilegeModel(String modelName, Date createDate, Date updateDate) {
+	this.modelName = modelName;
+	this.createDate = createDate;
+	this.updateDate = updateDate;
+    }
 
-	public PfpPrivilegeModel(String modelName, String note, Date createDate,
-			Date updateDate) {
-		this.modelName = modelName;
-		this.note = note;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
+    public PfpPrivilegeModel(String modelName, String note, Date createDate,
+	    Date updateDate) {
+	this.modelName = modelName;
+	this.note = note;
+	this.createDate = createDate;
+	this.updateDate = updateDate;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "model_id", unique = true, nullable = false)
-	public Integer getModelId() {
-		return this.modelId;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "model_id", unique = true, nullable = false)
+    public Integer getModelId() {
+	return this.modelId;
+    }
 
-	public void setModelId(Integer modelId) {
-		this.modelId = modelId;
-	}
+    public void setModelId(Integer modelId) {
+	this.modelId = modelId;
+    }
 
-	@Column(name = "model_name", nullable = false, length = 20)
-	public String getModelName() {
-		return this.modelName;
-	}
+    @Column(name = "model_name", nullable = false, length = 20)
+    public String getModelName() {
+	return this.modelName;
+    }
 
-	public void setModelName(String modelName) {
-		this.modelName = modelName;
-	}
+    public void setModelName(String modelName) {
+	this.modelName = modelName;
+    }
 
-	@Column(name = "note", length = 20)
-	public String getNote() {
-		return this.note;
-	}
+    @Column(name = "note", length = 20)
+    public String getNote() {
+	return this.note;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public void setNote(String note) {
+	this.note = note;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 19)
-	public Date getCreateDate() {
-		return this.createDate;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date", nullable = false, length = 19)
+    public Date getCreateDate() {
+	return this.createDate;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setCreateDate(Date createDate) {
+	this.createDate = createDate;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date", nullable = false, length = 19)
-	public Date getUpdateDate() {
-		return this.updateDate;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date", nullable = false, length = 19)
+    public Date getUpdateDate() {
+	return this.updateDate;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setUpdateDate(Date updateDate) {
+	this.updateDate = updateDate;
+    }
 
 }

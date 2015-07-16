@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Oct 31, 2014 3:12:27 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.AdmFreeAction" table="adm_free_action" catalog="akb">
         <id name="actionId" type="string">
@@ -36,6 +36,16 @@
         <property name="actionEndDate" type="timestamp">
             <column name="action_end_date" length="19">
                 <comment>&#172;&#161;&#176;&#202;&#181;&#178;&#167;&#244;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="inviledDate" type="date">
+            <column name="inviled_date" length="10">
+                <comment>&#170;&#237;&#169;w&#170;&#186;&#165;&#162;&#174;&#196;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="retrievedFlag" type="string">
+            <column name="retrieved_flag" length="1">
+                <comment>&#172;O&#167;_&#164;w&#166;^&#166;&#172; y:&#164;w&#166;^&#166;&#172;, n:&#165;&#188;&#166;^&#166;&#172;</comment>
             </column>
         </property>
         <property name="note" type="string">

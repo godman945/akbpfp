@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -19,60 +19,60 @@ import javax.persistence.Table;
 @Table(name = "pfp_order_detail", catalog = "akb")
 public class PfpOrderDetail implements java.io.Serializable {
 
-	private PfpOrderDetailId id;
-	private PfpOrder pfpOrder;
-	private String productName;
-	private float producPrice;
+    private PfpOrderDetailId id;
+    private PfpOrder pfpOrder;
+    private String productName;
+    private float producPrice;
 
-	public PfpOrderDetail() {
-	}
+    public PfpOrderDetail() {
+    }
 
-	public PfpOrderDetail(PfpOrderDetailId id, PfpOrder pfpOrder,
-			String productName, float producPrice) {
-		this.id = id;
-		this.pfpOrder = pfpOrder;
-		this.productName = productName;
-		this.producPrice = producPrice;
-	}
+    public PfpOrderDetail(PfpOrderDetailId id, PfpOrder pfpOrder,
+	    String productName, float producPrice) {
+	this.id = id;
+	this.pfpOrder = pfpOrder;
+	this.productName = productName;
+	this.producPrice = producPrice;
+    }
 
-	@EmbeddedId
-	@AttributeOverrides({
-			@AttributeOverride(name = "orderId", column = @Column(name = "order_id", nullable = false, length = 20)),
-			@AttributeOverride(name = "productId", column = @Column(name = "product_id", nullable = false, length = 10)) })
-	public PfpOrderDetailId getId() {
-		return this.id;
-	}
+    @EmbeddedId
+    @AttributeOverrides({
+	    @AttributeOverride(name = "orderId", column = @Column(name = "order_id", nullable = false, length = 20)),
+	    @AttributeOverride(name = "productId", column = @Column(name = "product_id", nullable = false, length = 10)) })
+    public PfpOrderDetailId getId() {
+	return this.id;
+    }
 
-	public void setId(PfpOrderDetailId id) {
-		this.id = id;
-	}
+    public void setId(PfpOrderDetailId id) {
+	this.id = id;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "order_id", nullable = false, insertable = false, updatable = false)
-	public PfpOrder getPfpOrder() {
-		return this.pfpOrder;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false, insertable = false, updatable = false)
+    public PfpOrder getPfpOrder() {
+	return this.pfpOrder;
+    }
 
-	public void setPfpOrder(PfpOrder pfpOrder) {
-		this.pfpOrder = pfpOrder;
-	}
+    public void setPfpOrder(PfpOrder pfpOrder) {
+	this.pfpOrder = pfpOrder;
+    }
 
-	@Column(name = "product_name", nullable = false, length = 10)
-	public String getProductName() {
-		return this.productName;
-	}
+    @Column(name = "product_name", nullable = false, length = 10)
+    public String getProductName() {
+	return this.productName;
+    }
 
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
+    public void setProductName(String productName) {
+	this.productName = productName;
+    }
 
-	@Column(name = "produc_price", nullable = false, precision = 10)
-	public float getProducPrice() {
-		return this.producPrice;
-	}
+    @Column(name = "produc_price", nullable = false, precision = 10)
+    public float getProducPrice() {
+	return this.producPrice;
+    }
 
-	public void setProducPrice(float producPrice) {
-		this.producPrice = producPrice;
-	}
+    public void setProducPrice(float producPrice) {
+	this.producPrice = producPrice;
+    }
 
 }

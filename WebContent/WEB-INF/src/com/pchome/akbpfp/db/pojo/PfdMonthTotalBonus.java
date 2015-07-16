@@ -1,16 +1,13 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,360 +19,357 @@ import javax.persistence.TemporalType;
 @Table(name = "pfd_month_total_bonus", catalog = "akb")
 public class PfdMonthTotalBonus implements java.io.Serializable {
 
-	private Integer bonusId;
-	private PfdCustomerInfo pfdCustomerInfo;
-	private int year;
-	private int month;
-	private int quarter;
-	private Date bonusDate;
-	private String payType;
-	private float totalAdClickCost;
-	private float bonusMoney;
-	private float totalBonusMoney;
-	private String downloadStatus;
-	private String billingStatus;
-	private String note;
-	private String financeInvoiceSno;
-	private Date financeInvoiceDate;
-	private Float financeInvoiceMoney;
-	private Date financePayDate;
-	private String adInvoiceSno;
-	private Date adInvoiceDate;
-	private Float adInvoiceMoney;
-	private String adPayType;
-	private String checkSno;
-	private Date checkClosingDate;
-	private Float debitMoney;
-	private Date debitDate;
-	private Date balanceDate;
-	private Date createDate;
-	private Date updateDate;
+    private Integer bonusId;
+    private int year;
+    private int month;
+    private int quarter;
+    private Date bonusDate;
+    private String pfdCustomerInfo;
+    private String payType;
+    private float totalAdClickCost;
+    private float bonusMoney;
+    private float totalBonusMoney;
+    private String downloadStatus;
+    private String billingStatus;
+    private String note;
+    private String financeInvoiceSno;
+    private Date financeInvoiceDate;
+    private Float financeInvoiceMoney;
+    private Date financePayDate;
+    private String adInvoiceSno;
+    private Date adInvoiceDate;
+    private Float adInvoiceMoney;
+    private String adPayType;
+    private String checkSno;
+    private Date checkClosingDate;
+    private Float debitMoney;
+    private Date debitDate;
+    private Date balanceDate;
+    private Date createDate;
+    private Date updateDate;
 
-	public PfdMonthTotalBonus() {
-	}
+    public PfdMonthTotalBonus() {
+    }
 
-	public PfdMonthTotalBonus(PfdCustomerInfo pfdCustomerInfo, int year,
-			int month, int quarter, Date bonusDate, String payType,
-			float totalAdClickCost, float bonusMoney, float totalBonusMoney,
-			String downloadStatus, String billingStatus, String note,
-			Date createDate, Date updateDate) {
-		this.pfdCustomerInfo = pfdCustomerInfo;
-		this.year = year;
-		this.month = month;
-		this.quarter = quarter;
-		this.bonusDate = bonusDate;
-		this.payType = payType;
-		this.totalAdClickCost = totalAdClickCost;
-		this.bonusMoney = bonusMoney;
-		this.totalBonusMoney = totalBonusMoney;
-		this.downloadStatus = downloadStatus;
-		this.billingStatus = billingStatus;
-		this.note = note;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
+    public PfdMonthTotalBonus(int year, int month, int quarter, Date bonusDate,
+	    String pfdCustomerInfo, String payType, float totalAdClickCost,
+	    float bonusMoney, float totalBonusMoney, String downloadStatus,
+	    String billingStatus, String note, Date createDate, Date updateDate) {
+	this.year = year;
+	this.month = month;
+	this.quarter = quarter;
+	this.bonusDate = bonusDate;
+	this.pfdCustomerInfo = pfdCustomerInfo;
+	this.payType = payType;
+	this.totalAdClickCost = totalAdClickCost;
+	this.bonusMoney = bonusMoney;
+	this.totalBonusMoney = totalBonusMoney;
+	this.downloadStatus = downloadStatus;
+	this.billingStatus = billingStatus;
+	this.note = note;
+	this.createDate = createDate;
+	this.updateDate = updateDate;
+    }
 
-	public PfdMonthTotalBonus(PfdCustomerInfo pfdCustomerInfo, int year,
-			int month, int quarter, Date bonusDate, String payType,
-			float totalAdClickCost, float bonusMoney, float totalBonusMoney,
-			String downloadStatus, String billingStatus, String note,
-			String financeInvoiceSno, Date financeInvoiceDate,
-			Float financeInvoiceMoney, Date financePayDate,
-			String adInvoiceSno, Date adInvoiceDate, Float adInvoiceMoney,
-			String adPayType, String checkSno, Date checkClosingDate,
-			Float debitMoney, Date debitDate, Date balanceDate,
-			Date createDate, Date updateDate) {
-		this.pfdCustomerInfo = pfdCustomerInfo;
-		this.year = year;
-		this.month = month;
-		this.quarter = quarter;
-		this.bonusDate = bonusDate;
-		this.payType = payType;
-		this.totalAdClickCost = totalAdClickCost;
-		this.bonusMoney = bonusMoney;
-		this.totalBonusMoney = totalBonusMoney;
-		this.downloadStatus = downloadStatus;
-		this.billingStatus = billingStatus;
-		this.note = note;
-		this.financeInvoiceSno = financeInvoiceSno;
-		this.financeInvoiceDate = financeInvoiceDate;
-		this.financeInvoiceMoney = financeInvoiceMoney;
-		this.financePayDate = financePayDate;
-		this.adInvoiceSno = adInvoiceSno;
-		this.adInvoiceDate = adInvoiceDate;
-		this.adInvoiceMoney = adInvoiceMoney;
-		this.adPayType = adPayType;
-		this.checkSno = checkSno;
-		this.checkClosingDate = checkClosingDate;
-		this.debitMoney = debitMoney;
-		this.debitDate = debitDate;
-		this.balanceDate = balanceDate;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
+    public PfdMonthTotalBonus(int year, int month, int quarter, Date bonusDate,
+	    String pfdCustomerInfo, String payType, float totalAdClickCost,
+	    float bonusMoney, float totalBonusMoney, String downloadStatus,
+	    String billingStatus, String note, String financeInvoiceSno,
+	    Date financeInvoiceDate, Float financeInvoiceMoney,
+	    Date financePayDate, String adInvoiceSno, Date adInvoiceDate,
+	    Float adInvoiceMoney, String adPayType, String checkSno,
+	    Date checkClosingDate, Float debitMoney, Date debitDate,
+	    Date balanceDate, Date createDate, Date updateDate) {
+	this.year = year;
+	this.month = month;
+	this.quarter = quarter;
+	this.bonusDate = bonusDate;
+	this.pfdCustomerInfo = pfdCustomerInfo;
+	this.payType = payType;
+	this.totalAdClickCost = totalAdClickCost;
+	this.bonusMoney = bonusMoney;
+	this.totalBonusMoney = totalBonusMoney;
+	this.downloadStatus = downloadStatus;
+	this.billingStatus = billingStatus;
+	this.note = note;
+	this.financeInvoiceSno = financeInvoiceSno;
+	this.financeInvoiceDate = financeInvoiceDate;
+	this.financeInvoiceMoney = financeInvoiceMoney;
+	this.financePayDate = financePayDate;
+	this.adInvoiceSno = adInvoiceSno;
+	this.adInvoiceDate = adInvoiceDate;
+	this.adInvoiceMoney = adInvoiceMoney;
+	this.adPayType = adPayType;
+	this.checkSno = checkSno;
+	this.checkClosingDate = checkClosingDate;
+	this.debitMoney = debitMoney;
+	this.debitDate = debitDate;
+	this.balanceDate = balanceDate;
+	this.createDate = createDate;
+	this.updateDate = updateDate;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "bonus_id", unique = true, nullable = false)
-	public Integer getBonusId() {
-		return this.bonusId;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "bonus_id", unique = true, nullable = false)
+    public Integer getBonusId() {
+	return this.bonusId;
+    }
 
-	public void setBonusId(Integer bonusId) {
-		this.bonusId = bonusId;
-	}
+    public void setBonusId(Integer bonusId) {
+	this.bonusId = bonusId;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pfd_customer_info", nullable = false)
-	public PfdCustomerInfo getPfdCustomerInfo() {
-		return this.pfdCustomerInfo;
-	}
+    @Column(name = "year", nullable = false)
+    public int getYear() {
+	return this.year;
+    }
 
-	public void setPfdCustomerInfo(PfdCustomerInfo pfdCustomerInfo) {
-		this.pfdCustomerInfo = pfdCustomerInfo;
-	}
+    public void setYear(int year) {
+	this.year = year;
+    }
 
-	@Column(name = "year", nullable = false)
-	public int getYear() {
-		return this.year;
-	}
+    @Column(name = "month", nullable = false)
+    public int getMonth() {
+	return this.month;
+    }
 
-	public void setYear(int year) {
-		this.year = year;
-	}
+    public void setMonth(int month) {
+	this.month = month;
+    }
 
-	@Column(name = "month", nullable = false)
-	public int getMonth() {
-		return this.month;
-	}
+    @Column(name = "quarter", nullable = false)
+    public int getQuarter() {
+	return this.quarter;
+    }
 
-	public void setMonth(int month) {
-		this.month = month;
-	}
+    public void setQuarter(int quarter) {
+	this.quarter = quarter;
+    }
 
-	@Column(name = "quarter", nullable = false)
-	public int getQuarter() {
-		return this.quarter;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "bonus_date", nullable = false, length = 10)
+    public Date getBonusDate() {
+	return this.bonusDate;
+    }
 
-	public void setQuarter(int quarter) {
-		this.quarter = quarter;
-	}
+    public void setBonusDate(Date bonusDate) {
+	this.bonusDate = bonusDate;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "bonus_date", nullable = false, length = 10)
-	public Date getBonusDate() {
-		return this.bonusDate;
-	}
+    @Column(name = "pfd_customer_info", nullable = false, length = 20)
+    public String getPfdCustomerInfo() {
+	return this.pfdCustomerInfo;
+    }
 
-	public void setBonusDate(Date bonusDate) {
-		this.bonusDate = bonusDate;
-	}
+    public void setPfdCustomerInfo(String pfdCustomerInfo) {
+	this.pfdCustomerInfo = pfdCustomerInfo;
+    }
 
-	@Column(name = "pay_type", nullable = false, length = 1)
-	public String getPayType() {
-		return this.payType;
-	}
+    @Column(name = "pay_type", nullable = false, length = 1)
+    public String getPayType() {
+	return this.payType;
+    }
 
-	public void setPayType(String payType) {
-		this.payType = payType;
-	}
+    public void setPayType(String payType) {
+	this.payType = payType;
+    }
 
-	@Column(name = "total_ad_click_cost", nullable = false, precision = 10)
-	public float getTotalAdClickCost() {
-		return this.totalAdClickCost;
-	}
+    @Column(name = "total_ad_click_cost", nullable = false, precision = 10)
+    public float getTotalAdClickCost() {
+	return this.totalAdClickCost;
+    }
 
-	public void setTotalAdClickCost(float totalAdClickCost) {
-		this.totalAdClickCost = totalAdClickCost;
-	}
+    public void setTotalAdClickCost(float totalAdClickCost) {
+	this.totalAdClickCost = totalAdClickCost;
+    }
 
-	@Column(name = "bonus_money", nullable = false, precision = 10)
-	public float getBonusMoney() {
-		return this.bonusMoney;
-	}
+    @Column(name = "bonus_money", nullable = false, precision = 10)
+    public float getBonusMoney() {
+	return this.bonusMoney;
+    }
 
-	public void setBonusMoney(float bonusMoney) {
-		this.bonusMoney = bonusMoney;
-	}
+    public void setBonusMoney(float bonusMoney) {
+	this.bonusMoney = bonusMoney;
+    }
 
-	@Column(name = "total_bonus_money", nullable = false, precision = 10)
-	public float getTotalBonusMoney() {
-		return this.totalBonusMoney;
-	}
+    @Column(name = "total_bonus_money", nullable = false, precision = 10)
+    public float getTotalBonusMoney() {
+	return this.totalBonusMoney;
+    }
 
-	public void setTotalBonusMoney(float totalBonusMoney) {
-		this.totalBonusMoney = totalBonusMoney;
-	}
+    public void setTotalBonusMoney(float totalBonusMoney) {
+	this.totalBonusMoney = totalBonusMoney;
+    }
 
-	@Column(name = "download_status", nullable = false, length = 1)
-	public String getDownloadStatus() {
-		return this.downloadStatus;
-	}
+    @Column(name = "download_status", nullable = false, length = 1)
+    public String getDownloadStatus() {
+	return this.downloadStatus;
+    }
 
-	public void setDownloadStatus(String downloadStatus) {
-		this.downloadStatus = downloadStatus;
-	}
+    public void setDownloadStatus(String downloadStatus) {
+	this.downloadStatus = downloadStatus;
+    }
 
-	@Column(name = "billing_status", nullable = false, length = 1)
-	public String getBillingStatus() {
-		return this.billingStatus;
-	}
+    @Column(name = "billing_status", nullable = false, length = 1)
+    public String getBillingStatus() {
+	return this.billingStatus;
+    }
 
-	public void setBillingStatus(String billingStatus) {
-		this.billingStatus = billingStatus;
-	}
+    public void setBillingStatus(String billingStatus) {
+	this.billingStatus = billingStatus;
+    }
 
-	@Column(name = "note", nullable = false, length = 500)
-	public String getNote() {
-		return this.note;
-	}
+    @Column(name = "note", nullable = false, length = 500)
+    public String getNote() {
+	return this.note;
+    }
 
-	public void setNote(String note) {
-		this.note = note;
-	}
+    public void setNote(String note) {
+	this.note = note;
+    }
 
-	@Column(name = "finance_invoice_sno", length = 20)
-	public String getFinanceInvoiceSno() {
-		return this.financeInvoiceSno;
-	}
+    @Column(name = "finance_invoice_sno", length = 20)
+    public String getFinanceInvoiceSno() {
+	return this.financeInvoiceSno;
+    }
 
-	public void setFinanceInvoiceSno(String financeInvoiceSno) {
-		this.financeInvoiceSno = financeInvoiceSno;
-	}
+    public void setFinanceInvoiceSno(String financeInvoiceSno) {
+	this.financeInvoiceSno = financeInvoiceSno;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "finance_invoice_date", length = 10)
-	public Date getFinanceInvoiceDate() {
-		return this.financeInvoiceDate;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "finance_invoice_date", length = 10)
+    public Date getFinanceInvoiceDate() {
+	return this.financeInvoiceDate;
+    }
 
-	public void setFinanceInvoiceDate(Date financeInvoiceDate) {
-		this.financeInvoiceDate = financeInvoiceDate;
-	}
+    public void setFinanceInvoiceDate(Date financeInvoiceDate) {
+	this.financeInvoiceDate = financeInvoiceDate;
+    }
 
-	@Column(name = "finance_invoice_money", precision = 10)
-	public Float getFinanceInvoiceMoney() {
-		return this.financeInvoiceMoney;
-	}
+    @Column(name = "finance_invoice_money", precision = 10)
+    public Float getFinanceInvoiceMoney() {
+	return this.financeInvoiceMoney;
+    }
 
-	public void setFinanceInvoiceMoney(Float financeInvoiceMoney) {
-		this.financeInvoiceMoney = financeInvoiceMoney;
-	}
+    public void setFinanceInvoiceMoney(Float financeInvoiceMoney) {
+	this.financeInvoiceMoney = financeInvoiceMoney;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "finance_pay_date", length = 10)
-	public Date getFinancePayDate() {
-		return this.financePayDate;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "finance_pay_date", length = 10)
+    public Date getFinancePayDate() {
+	return this.financePayDate;
+    }
 
-	public void setFinancePayDate(Date financePayDate) {
-		this.financePayDate = financePayDate;
-	}
+    public void setFinancePayDate(Date financePayDate) {
+	this.financePayDate = financePayDate;
+    }
 
-	@Column(name = "ad_invoice_sno", length = 20)
-	public String getAdInvoiceSno() {
-		return this.adInvoiceSno;
-	}
+    @Column(name = "ad_invoice_sno", length = 20)
+    public String getAdInvoiceSno() {
+	return this.adInvoiceSno;
+    }
 
-	public void setAdInvoiceSno(String adInvoiceSno) {
-		this.adInvoiceSno = adInvoiceSno;
-	}
+    public void setAdInvoiceSno(String adInvoiceSno) {
+	this.adInvoiceSno = adInvoiceSno;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "ad_invoice_date", length = 10)
-	public Date getAdInvoiceDate() {
-		return this.adInvoiceDate;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "ad_invoice_date", length = 10)
+    public Date getAdInvoiceDate() {
+	return this.adInvoiceDate;
+    }
 
-	public void setAdInvoiceDate(Date adInvoiceDate) {
-		this.adInvoiceDate = adInvoiceDate;
-	}
+    public void setAdInvoiceDate(Date adInvoiceDate) {
+	this.adInvoiceDate = adInvoiceDate;
+    }
 
-	@Column(name = "ad_invoice_money", precision = 10)
-	public Float getAdInvoiceMoney() {
-		return this.adInvoiceMoney;
-	}
+    @Column(name = "ad_invoice_money", precision = 10)
+    public Float getAdInvoiceMoney() {
+	return this.adInvoiceMoney;
+    }
 
-	public void setAdInvoiceMoney(Float adInvoiceMoney) {
-		this.adInvoiceMoney = adInvoiceMoney;
-	}
+    public void setAdInvoiceMoney(Float adInvoiceMoney) {
+	this.adInvoiceMoney = adInvoiceMoney;
+    }
 
-	@Column(name = "ad_pay_type", length = 1)
-	public String getAdPayType() {
-		return this.adPayType;
-	}
+    @Column(name = "ad_pay_type", length = 1)
+    public String getAdPayType() {
+	return this.adPayType;
+    }
 
-	public void setAdPayType(String adPayType) {
-		this.adPayType = adPayType;
-	}
+    public void setAdPayType(String adPayType) {
+	this.adPayType = adPayType;
+    }
 
-	@Column(name = "check_sno", length = 20)
-	public String getCheckSno() {
-		return this.checkSno;
-	}
+    @Column(name = "check_sno", length = 20)
+    public String getCheckSno() {
+	return this.checkSno;
+    }
 
-	public void setCheckSno(String checkSno) {
-		this.checkSno = checkSno;
-	}
+    public void setCheckSno(String checkSno) {
+	this.checkSno = checkSno;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "check_closing_date", length = 10)
-	public Date getCheckClosingDate() {
-		return this.checkClosingDate;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "check_closing_date", length = 10)
+    public Date getCheckClosingDate() {
+	return this.checkClosingDate;
+    }
 
-	public void setCheckClosingDate(Date checkClosingDate) {
-		this.checkClosingDate = checkClosingDate;
-	}
+    public void setCheckClosingDate(Date checkClosingDate) {
+	this.checkClosingDate = checkClosingDate;
+    }
 
-	@Column(name = "debit_money", precision = 10)
-	public Float getDebitMoney() {
-		return this.debitMoney;
-	}
+    @Column(name = "debit_money", precision = 10)
+    public Float getDebitMoney() {
+	return this.debitMoney;
+    }
 
-	public void setDebitMoney(Float debitMoney) {
-		this.debitMoney = debitMoney;
-	}
+    public void setDebitMoney(Float debitMoney) {
+	this.debitMoney = debitMoney;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "debit_date", length = 10)
-	public Date getDebitDate() {
-		return this.debitDate;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "debit_date", length = 10)
+    public Date getDebitDate() {
+	return this.debitDate;
+    }
 
-	public void setDebitDate(Date debitDate) {
-		this.debitDate = debitDate;
-	}
+    public void setDebitDate(Date debitDate) {
+	this.debitDate = debitDate;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "balance_date", length = 10)
-	public Date getBalanceDate() {
-		return this.balanceDate;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "balance_date", length = 10)
+    public Date getBalanceDate() {
+	return this.balanceDate;
+    }
 
-	public void setBalanceDate(Date balanceDate) {
-		this.balanceDate = balanceDate;
-	}
+    public void setBalanceDate(Date balanceDate) {
+	this.balanceDate = balanceDate;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 19)
-	public Date getCreateDate() {
-		return this.createDate;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date", nullable = false, length = 19)
+    public Date getCreateDate() {
+	return this.createDate;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setCreateDate(Date createDate) {
+	this.createDate = createDate;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date", nullable = false, length = 19)
-	public Date getUpdateDate() {
-		return this.updateDate;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date", nullable = false, length = 19)
+    public Date getUpdateDate() {
+	return this.updateDate;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setUpdateDate(Date updateDate) {
+	this.updateDate = updateDate;
+    }
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.AdmRecognizeDetail" table="adm_recognize_detail" catalog="akb">
         <id name="recordDetailId" type="java.lang.Integer">
@@ -23,11 +23,6 @@
                 <comment>pfd&#177;b&#184;&#185;&#189;s&#184;&#185;</comment>
             </column>
         </property>
-        <property name="payType" type="string">
-            <column name="pay_type" length="1" not-null="true">
-                <comment>&#165;I&#180;&#218;&#164;&#232;&#166;&#161;:1.&#185;w&#165;I 2.&#171;&#225;&#165;I</comment>
-            </column>
-        </property>
         <property name="pfdCustomerInfoId" type="string">
             <column name="pfd_customer_info_id" length="20">
                 <comment>&#184;g&#190;P&#176;&#211;&#177;b&#164;&#225;</comment>
@@ -36,6 +31,11 @@
         <property name="costPrice" type="float">
             <column name="cost_price" precision="10" not-null="true">
                 <comment>&#170;&#225;&#182;O&#166;&#168;&#165;&#187;</comment>
+            </column>
+        </property>
+        <property name="tax" type="float">
+            <column name="tax" precision="10" not-null="true">
+                <comment>&#181;|&#170;&#247;</comment>
             </column>
         </property>
         <property name="orderType" type="string">
@@ -51,6 +51,11 @@
         <property name="recordRemain" type="float">
             <column name="record_remain" precision="10" not-null="true">
                 <comment>&#165;[&#173;&#200;&#170;&#247;&#190;l&#195;B</comment>
+            </column>
+        </property>
+        <property name="taxRemain" type="float">
+            <column name="tax_remain" precision="10" not-null="true">
+                <comment>&#181;|&#170;&#247;&#190;l&#195;B</comment>
             </column>
         </property>
         <property name="note" type="string">

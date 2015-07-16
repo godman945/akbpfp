@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,92 +19,92 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_mailbox", catalog = "akb")
 public class PfpMailbox implements java.io.Serializable {
 
-	private Integer mailboxId;
-	private String customerInfoId;
-	private String category;
-	private String receiver;
-	private String send;
-	private Date updateDate;
-	private Date createDate;
+    private Integer mailboxId;
+    private String customerInfoId;
+    private String category;
+    private String receiver;
+    private String send;
+    private Date updateDate;
+    private Date createDate;
 
-	public PfpMailbox() {
-	}
+    public PfpMailbox() {
+    }
 
-	public PfpMailbox(String customerInfoId, String category, String receiver,
-			String send, Date updateDate, Date createDate) {
-		this.customerInfoId = customerInfoId;
-		this.category = category;
-		this.receiver = receiver;
-		this.send = send;
-		this.updateDate = updateDate;
-		this.createDate = createDate;
-	}
+    public PfpMailbox(String customerInfoId, String category, String receiver,
+	    String send, Date updateDate, Date createDate) {
+	this.customerInfoId = customerInfoId;
+	this.category = category;
+	this.receiver = receiver;
+	this.send = send;
+	this.updateDate = updateDate;
+	this.createDate = createDate;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "mailbox_id", unique = true, nullable = false)
-	public Integer getMailboxId() {
-		return this.mailboxId;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "mailbox_id", unique = true, nullable = false)
+    public Integer getMailboxId() {
+	return this.mailboxId;
+    }
 
-	public void setMailboxId(Integer mailboxId) {
-		this.mailboxId = mailboxId;
-	}
+    public void setMailboxId(Integer mailboxId) {
+	this.mailboxId = mailboxId;
+    }
 
-	@Column(name = "customer_info_id", nullable = false, length = 20)
-	public String getCustomerInfoId() {
-		return this.customerInfoId;
-	}
+    @Column(name = "customer_info_id", nullable = false, length = 20)
+    public String getCustomerInfoId() {
+	return this.customerInfoId;
+    }
 
-	public void setCustomerInfoId(String customerInfoId) {
-		this.customerInfoId = customerInfoId;
-	}
+    public void setCustomerInfoId(String customerInfoId) {
+	this.customerInfoId = customerInfoId;
+    }
 
-	@Column(name = "category", nullable = false, length = 2)
-	public String getCategory() {
-		return this.category;
-	}
+    @Column(name = "category", nullable = false, length = 2)
+    public String getCategory() {
+	return this.category;
+    }
 
-	public void setCategory(String category) {
-		this.category = category;
-	}
+    public void setCategory(String category) {
+	this.category = category;
+    }
 
-	@Column(name = "receiver", nullable = false, length = 50)
-	public String getReceiver() {
-		return this.receiver;
-	}
+    @Column(name = "receiver", nullable = false, length = 50)
+    public String getReceiver() {
+	return this.receiver;
+    }
 
-	public void setReceiver(String receiver) {
-		this.receiver = receiver;
-	}
+    public void setReceiver(String receiver) {
+	this.receiver = receiver;
+    }
 
-	@Column(name = "send", nullable = false, length = 1)
-	public String getSend() {
-		return this.send;
-	}
+    @Column(name = "send", nullable = false, length = 1)
+    public String getSend() {
+	return this.send;
+    }
 
-	public void setSend(String send) {
-		this.send = send;
-	}
+    public void setSend(String send) {
+	this.send = send;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date", nullable = false, length = 19)
-	public Date getUpdateDate() {
-		return this.updateDate;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date", nullable = false, length = 19)
+    public Date getUpdateDate() {
+	return this.updateDate;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setUpdateDate(Date updateDate) {
+	this.updateDate = updateDate;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 19)
-	public Date getCreateDate() {
-		return this.createDate;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date", nullable = false, length = 19)
+    public Date getCreateDate() {
+	return this.createDate;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setCreateDate(Date createDate) {
+	this.createDate = createDate;
+    }
 
 }

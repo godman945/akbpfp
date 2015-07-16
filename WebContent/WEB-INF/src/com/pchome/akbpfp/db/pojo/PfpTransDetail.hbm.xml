@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpTransDetail" table="pfp_trans_detail" catalog="akb">
         <id name="transId" type="java.lang.Integer">
@@ -64,13 +64,24 @@
             </column>
         </property>
         <property name="totalLaterSpend" type="float">
-            <column name="total_later_spend" precision="10" not-null="true" />
+            <column name="total_later_spend" precision="10" not-null="true">
+                <comment>&#171;&#225;&#165;I&#177;b&#164;&#225;&#193;`&#170;&#225;&#182;O</comment>
+            </column>
         </property>
         <property name="totalLaterSave" type="float">
-            <column name="total_later_save" precision="10" not-null="true" />
+            <column name="total_later_save" precision="10" not-null="true">
+                <comment>&#171;&#225;&#165;I&#177;b&#164;&#225;&#193;`&#165;[&#173;&#200;</comment>
+            </column>
         </property>
         <property name="laterRemain" type="float">
-            <column name="later_remain" precision="10" not-null="true" />
+            <column name="later_remain" precision="10" not-null="true">
+                <comment>&#181;L&#174;&#196;&#196;&#230;&#166;&#236;</comment>
+            </column>
+        </property>
+        <property name="totalLaterRetrieve" type="float">
+            <column name="total_later_retrieve" precision="10" not-null="true">
+                <comment>&#171;&#225;&#165;I&#177;b&#164;&#225;&#193;`&#166;^&#166;&#172;&#170;&#247;&#195;B</comment>
+            </column>
         </property>
         <property name="updateDate" type="timestamp">
             <column name="update_date" length="19" not-null="true">

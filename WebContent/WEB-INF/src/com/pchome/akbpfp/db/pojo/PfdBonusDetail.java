@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,244 +22,244 @@ import javax.persistence.TemporalType;
 @Table(name = "pfd_bonus_detail", catalog = "akb")
 public class PfdBonusDetail implements java.io.Serializable {
 
-	private Integer bonusDetailId;
-	private PfdCustomerInfo pfdCustomerInfo;
-	private PfdBonusItem pfdBonusItem;
-	private int year;
-	private int month;
-	private int quarter;
-	private String payType;
-	private String monthBonus;
-	private String bonusDetailName;
-	private String bonusDetailDesc;
-	private String bonusDetailNote;
-	private int bonusAmount;
-	private float adClickCost;
-	private float bonusPercent;
-	private float bonusMoney;
-	private Date startDate;
-	private Date endDate;
-	private String reportAction;
-	private Date createDate;
-	private Date updateDate;
+    private Integer bonusDetailId;
+    private PfdCustomerInfo pfdCustomerInfo;
+    private PfdBonusItem pfdBonusItem;
+    private int year;
+    private int month;
+    private int quarter;
+    private String payType;
+    private String monthBonus;
+    private String bonusDetailName;
+    private String bonusDetailDesc;
+    private String bonusDetailNote;
+    private int bonusAmount;
+    private float adClickCost;
+    private float bonusPercent;
+    private float bonusMoney;
+    private Date startDate;
+    private Date endDate;
+    private String reportAction;
+    private Date createDate;
+    private Date updateDate;
 
-	public PfdBonusDetail() {
-	}
+    public PfdBonusDetail() {
+    }
 
-	public PfdBonusDetail(PfdCustomerInfo pfdCustomerInfo,
-			PfdBonusItem pfdBonusItem, int year, int month, int quarter,
-			String payType, String monthBonus, String bonusDetailName,
-			String bonusDetailDesc, String bonusDetailNote, int bonusAmount,
-			float adClickCost, float bonusPercent, float bonusMoney,
-			Date startDate, Date endDate, String reportAction, Date createDate,
-			Date updateDate) {
-		this.pfdCustomerInfo = pfdCustomerInfo;
-		this.pfdBonusItem = pfdBonusItem;
-		this.year = year;
-		this.month = month;
-		this.quarter = quarter;
-		this.payType = payType;
-		this.monthBonus = monthBonus;
-		this.bonusDetailName = bonusDetailName;
-		this.bonusDetailDesc = bonusDetailDesc;
-		this.bonusDetailNote = bonusDetailNote;
-		this.bonusAmount = bonusAmount;
-		this.adClickCost = adClickCost;
-		this.bonusPercent = bonusPercent;
-		this.bonusMoney = bonusMoney;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.reportAction = reportAction;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
+    public PfdBonusDetail(PfdCustomerInfo pfdCustomerInfo,
+	    PfdBonusItem pfdBonusItem, int year, int month, int quarter,
+	    String payType, String monthBonus, String bonusDetailName,
+	    String bonusDetailDesc, String bonusDetailNote, int bonusAmount,
+	    float adClickCost, float bonusPercent, float bonusMoney,
+	    Date startDate, Date endDate, String reportAction, Date createDate,
+	    Date updateDate) {
+	this.pfdCustomerInfo = pfdCustomerInfo;
+	this.pfdBonusItem = pfdBonusItem;
+	this.year = year;
+	this.month = month;
+	this.quarter = quarter;
+	this.payType = payType;
+	this.monthBonus = monthBonus;
+	this.bonusDetailName = bonusDetailName;
+	this.bonusDetailDesc = bonusDetailDesc;
+	this.bonusDetailNote = bonusDetailNote;
+	this.bonusAmount = bonusAmount;
+	this.adClickCost = adClickCost;
+	this.bonusPercent = bonusPercent;
+	this.bonusMoney = bonusMoney;
+	this.startDate = startDate;
+	this.endDate = endDate;
+	this.reportAction = reportAction;
+	this.createDate = createDate;
+	this.updateDate = updateDate;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "bonus_detail_id", unique = true, nullable = false)
-	public Integer getBonusDetailId() {
-		return this.bonusDetailId;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "bonus_detail_id", unique = true, nullable = false)
+    public Integer getBonusDetailId() {
+	return this.bonusDetailId;
+    }
 
-	public void setBonusDetailId(Integer bonusDetailId) {
-		this.bonusDetailId = bonusDetailId;
-	}
+    public void setBonusDetailId(Integer bonusDetailId) {
+	this.bonusDetailId = bonusDetailId;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pfd_customer_info", nullable = false)
-	public PfdCustomerInfo getPfdCustomerInfo() {
-		return this.pfdCustomerInfo;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pfd_customer_info", nullable = false)
+    public PfdCustomerInfo getPfdCustomerInfo() {
+	return this.pfdCustomerInfo;
+    }
 
-	public void setPfdCustomerInfo(PfdCustomerInfo pfdCustomerInfo) {
-		this.pfdCustomerInfo = pfdCustomerInfo;
-	}
+    public void setPfdCustomerInfo(PfdCustomerInfo pfdCustomerInfo) {
+	this.pfdCustomerInfo = pfdCustomerInfo;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "bonus_item_id", nullable = false)
-	public PfdBonusItem getPfdBonusItem() {
-		return this.pfdBonusItem;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bonus_item_id", nullable = false)
+    public PfdBonusItem getPfdBonusItem() {
+	return this.pfdBonusItem;
+    }
 
-	public void setPfdBonusItem(PfdBonusItem pfdBonusItem) {
-		this.pfdBonusItem = pfdBonusItem;
-	}
+    public void setPfdBonusItem(PfdBonusItem pfdBonusItem) {
+	this.pfdBonusItem = pfdBonusItem;
+    }
 
-	@Column(name = "year", nullable = false)
-	public int getYear() {
-		return this.year;
-	}
+    @Column(name = "year", nullable = false)
+    public int getYear() {
+	return this.year;
+    }
 
-	public void setYear(int year) {
-		this.year = year;
-	}
+    public void setYear(int year) {
+	this.year = year;
+    }
 
-	@Column(name = "month", nullable = false)
-	public int getMonth() {
-		return this.month;
-	}
+    @Column(name = "month", nullable = false)
+    public int getMonth() {
+	return this.month;
+    }
 
-	public void setMonth(int month) {
-		this.month = month;
-	}
+    public void setMonth(int month) {
+	this.month = month;
+    }
 
-	@Column(name = "quarter", nullable = false)
-	public int getQuarter() {
-		return this.quarter;
-	}
+    @Column(name = "quarter", nullable = false)
+    public int getQuarter() {
+	return this.quarter;
+    }
 
-	public void setQuarter(int quarter) {
-		this.quarter = quarter;
-	}
+    public void setQuarter(int quarter) {
+	this.quarter = quarter;
+    }
 
-	@Column(name = "pay_type", nullable = false, length = 1)
-	public String getPayType() {
-		return this.payType;
-	}
+    @Column(name = "pay_type", nullable = false, length = 1)
+    public String getPayType() {
+	return this.payType;
+    }
 
-	public void setPayType(String payType) {
-		this.payType = payType;
-	}
+    public void setPayType(String payType) {
+	this.payType = payType;
+    }
 
-	@Column(name = "month_bonus", nullable = false, length = 1)
-	public String getMonthBonus() {
-		return this.monthBonus;
-	}
+    @Column(name = "month_bonus", nullable = false, length = 1)
+    public String getMonthBonus() {
+	return this.monthBonus;
+    }
 
-	public void setMonthBonus(String monthBonus) {
-		this.monthBonus = monthBonus;
-	}
+    public void setMonthBonus(String monthBonus) {
+	this.monthBonus = monthBonus;
+    }
 
-	@Column(name = "bonus_detail_name", nullable = false, length = 100)
-	public String getBonusDetailName() {
-		return this.bonusDetailName;
-	}
+    @Column(name = "bonus_detail_name", nullable = false, length = 100)
+    public String getBonusDetailName() {
+	return this.bonusDetailName;
+    }
 
-	public void setBonusDetailName(String bonusDetailName) {
-		this.bonusDetailName = bonusDetailName;
-	}
+    public void setBonusDetailName(String bonusDetailName) {
+	this.bonusDetailName = bonusDetailName;
+    }
 
-	@Column(name = "bonus_detail_desc", nullable = false, length = 500)
-	public String getBonusDetailDesc() {
-		return this.bonusDetailDesc;
-	}
+    @Column(name = "bonus_detail_desc", nullable = false, length = 500)
+    public String getBonusDetailDesc() {
+	return this.bonusDetailDesc;
+    }
 
-	public void setBonusDetailDesc(String bonusDetailDesc) {
-		this.bonusDetailDesc = bonusDetailDesc;
-	}
+    public void setBonusDetailDesc(String bonusDetailDesc) {
+	this.bonusDetailDesc = bonusDetailDesc;
+    }
 
-	@Column(name = "bonus_detail_note", nullable = false, length = 500)
-	public String getBonusDetailNote() {
-		return this.bonusDetailNote;
-	}
+    @Column(name = "bonus_detail_note", nullable = false, length = 500)
+    public String getBonusDetailNote() {
+	return this.bonusDetailNote;
+    }
 
-	public void setBonusDetailNote(String bonusDetailNote) {
-		this.bonusDetailNote = bonusDetailNote;
-	}
+    public void setBonusDetailNote(String bonusDetailNote) {
+	this.bonusDetailNote = bonusDetailNote;
+    }
 
-	@Column(name = "bonus_amount", nullable = false)
-	public int getBonusAmount() {
-		return this.bonusAmount;
-	}
+    @Column(name = "bonus_amount", nullable = false)
+    public int getBonusAmount() {
+	return this.bonusAmount;
+    }
 
-	public void setBonusAmount(int bonusAmount) {
-		this.bonusAmount = bonusAmount;
-	}
+    public void setBonusAmount(int bonusAmount) {
+	this.bonusAmount = bonusAmount;
+    }
 
-	@Column(name = "ad_click_cost", nullable = false, precision = 10)
-	public float getAdClickCost() {
-		return this.adClickCost;
-	}
+    @Column(name = "ad_click_cost", nullable = false, precision = 10)
+    public float getAdClickCost() {
+	return this.adClickCost;
+    }
 
-	public void setAdClickCost(float adClickCost) {
-		this.adClickCost = adClickCost;
-	}
+    public void setAdClickCost(float adClickCost) {
+	this.adClickCost = adClickCost;
+    }
 
-	@Column(name = "bonus_percent", nullable = false, precision = 10)
-	public float getBonusPercent() {
-		return this.bonusPercent;
-	}
+    @Column(name = "bonus_percent", nullable = false, precision = 10)
+    public float getBonusPercent() {
+	return this.bonusPercent;
+    }
 
-	public void setBonusPercent(float bonusPercent) {
-		this.bonusPercent = bonusPercent;
-	}
+    public void setBonusPercent(float bonusPercent) {
+	this.bonusPercent = bonusPercent;
+    }
 
-	@Column(name = "bonus_money", nullable = false, precision = 10)
-	public float getBonusMoney() {
-		return this.bonusMoney;
-	}
+    @Column(name = "bonus_money", nullable = false, precision = 10)
+    public float getBonusMoney() {
+	return this.bonusMoney;
+    }
 
-	public void setBonusMoney(float bonusMoney) {
-		this.bonusMoney = bonusMoney;
-	}
+    public void setBonusMoney(float bonusMoney) {
+	this.bonusMoney = bonusMoney;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "start_date", nullable = false, length = 10)
-	public Date getStartDate() {
-		return this.startDate;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "start_date", nullable = false, length = 10)
+    public Date getStartDate() {
+	return this.startDate;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public void setStartDate(Date startDate) {
+	this.startDate = startDate;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "end_date", nullable = false, length = 10)
-	public Date getEndDate() {
-		return this.endDate;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "end_date", nullable = false, length = 10)
+    public Date getEndDate() {
+	return this.endDate;
+    }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public void setEndDate(Date endDate) {
+	this.endDate = endDate;
+    }
 
-	@Column(name = "report_action", nullable = false, length = 500)
-	public String getReportAction() {
-		return this.reportAction;
-	}
+    @Column(name = "report_action", nullable = false, length = 500)
+    public String getReportAction() {
+	return this.reportAction;
+    }
 
-	public void setReportAction(String reportAction) {
-		this.reportAction = reportAction;
-	}
+    public void setReportAction(String reportAction) {
+	this.reportAction = reportAction;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 19)
-	public Date getCreateDate() {
-		return this.createDate;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date", nullable = false, length = 19)
+    public Date getCreateDate() {
+	return this.createDate;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setCreateDate(Date createDate) {
+	this.createDate = createDate;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date", nullable = false, length = 19)
-	public Date getUpdateDate() {
-		return this.updateDate;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date", nullable = false, length = 19)
+    public Date getUpdateDate() {
+	return this.updateDate;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setUpdateDate(Date updateDate) {
+	this.updateDate = updateDate;
+    }
 
 }

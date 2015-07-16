@@ -58,6 +58,11 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+	<!-- pfb Size -->
+	<bean id="PfbxSizeDAO" class="com.pchome.akbpfp.db.dao.pfbx.PfbxSizeDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
     <!-- report -->
     <bean id="AdActionReportDAO" class="com.pchome.akbpfp.db.dao.report.AdActionReportDAO">
         <property name="sessionFactory" ref="sessionFactory_report" />

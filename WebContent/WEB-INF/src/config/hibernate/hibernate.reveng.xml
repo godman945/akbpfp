@@ -10,28 +10,33 @@
 	<table-filter match-name="adm_manager_detail" match-catalog="akb" />
 	<table-filter match-name="adm_recognize_detail" match-catalog="akb" />
 	<table-filter match-name="adm_recognize_record" match-catalog="akb" />
-	<table-filter match-name="pfd_apply_for_business" match-catalog="akb" />
+	<table-filter match-name="pfd_apply_for_business"
+		match-catalog="akb" />
 	<table-filter match-name="pfd_ad_action_report" match-catalog="akb" />
 	<table-filter match-name="pfd_ad_group_report" match-catalog="akb" />
 	<table-filter match-name="pfd_ad_report" match-catalog="akb" />
 	<table-filter match-name="pfd_keyword_report" match-catalog="akb" />
-	<table-filter match-name="pfd_bonus_detail" match-catalog="akb"/>
-	<table-filter match-name="pfd_bonus_item" match-catalog="akb"/>
-	<table-filter match-name="pfd_bonus_set" match-catalog="akb"/>
-	<table-filter match-name="pfd_contract" match-catalog="akb"/>	
-	<table-filter match-name="pfd_customer_info" match-catalog="akb"/>
-	<table-filter match-name="pfd_fixed_bonus_detail" match-catalog="akb"/>
-	<table-filter match-name="pfd_month_total_bonus" match-catalog="akb"/>
-  	<table-filter match-name="pfd_user" match-catalog="akb"/>
-  	<table-filter match-name="pfd_user_ad_account_ref" match-catalog="akb"/>
-  	<table-filter match-name="pfd_user_member_ref" match-catalog="akb"/>
+	<table-filter match-name="pfd_bonus_detail" match-catalog="akb" />
+	<table-filter match-name="pfd_bonus_item" match-catalog="akb" />
+	<table-filter match-name="pfd_bonus_set" match-catalog="akb" />
+	<table-filter match-name="pfd_contract" match-catalog="akb" />
+	<table-filter match-name="pfd_customer_info" match-catalog="akb" />
+	<table-filter match-name="pfd_fixed_bonus_detail"
+		match-catalog="akb" />
+	<table-filter match-name="pfd_month_total_bonus"
+		match-catalog="akb" />
+	<table-filter match-name="pfd_user" match-catalog="akb" />
+	<table-filter match-name="pfd_user_ad_account_ref"
+		match-catalog="akb" />
+	<table-filter match-name="pfd_user_member_ref" match-catalog="akb" />
 	<table-filter match-name="pfp_ad" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_action" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_action_report" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_category" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_click" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_detail" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_exclude_keyword" match-catalog="akb" />
+	<table-filter match-name="pfp_ad_exclude_keyword"
+		match-catalog="akb" />
 	<table-filter match-name="pfp_ad_group" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_group_report" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_invalid" match-catalog="akb" />
@@ -51,12 +56,14 @@
 	<table-filter match-name="pfp_order" match-catalog="akb" />
 	<table-filter match-name="pfp_order_detail" match-catalog="akb" />
 	<table-filter match-name="pfp_privilege_model" match-catalog="akb" />
-	<table-filter match-name="pfp_privilege_model_menu_ref" match-catalog="akb" />
+	<table-filter match-name="pfp_privilege_model_menu_ref"
+		match-catalog="akb" />
 	<table-filter match-name="pfp_report" match-catalog="akb" />
 	<table-filter match-name="pfp_sysprice_rate" match-catalog="akb" />
 	<table-filter match-name="pfp_trans_detail" match-catalog="akb" />
 	<table-filter match-name="pfp_user" match-catalog="akb" />
 	<table-filter match-name="pfp_user_member_ref" match-catalog="akb" />
 	<table-filter match-name="sequence" match-catalog="akb" />
+	<table-filter match-name="pfbx_size" match-catalog="akb"></table-filter>
 
 </hibernate-reverse-engineering>

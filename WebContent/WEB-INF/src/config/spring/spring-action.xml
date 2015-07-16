@@ -200,6 +200,7 @@
         <property name="photoPath" value="${photo.path}" />
         <property name="photoDbPath" value="${photo.db.path}" />
 		<property name="controlPriceAPI" ref="ControlPriceAPI" />
+		<property name="pfbSizeService" ref="PfbSizeService" />
     </bean>
 
     <bean id="AdKeywordAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdKeywordAddAction" scope="prototype" >

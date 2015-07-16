@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,96 +22,96 @@ import javax.persistence.TemporalType;
 @Table(name = "pfd_bonus_set", catalog = "akb")
 public class PfdBonusSet implements java.io.Serializable {
 
-	private Integer bonusSetId;
-	private PfdContract pfdContract;
-	private PfdBonusItem pfdBonusItem;
-	private PfdCustomerInfo pfdCustomerInfo;
-	private int bonusGroupId;
-	private Date createDate;
-	private Date updateDate;
+    private Integer bonusSetId;
+    private PfdContract pfdContract;
+    private PfdBonusItem pfdBonusItem;
+    private PfdCustomerInfo pfdCustomerInfo;
+    private int bonusGroupId;
+    private Date createDate;
+    private Date updateDate;
 
-	public PfdBonusSet() {
-	}
+    public PfdBonusSet() {
+    }
 
-	public PfdBonusSet(PfdContract pfdContract, PfdBonusItem pfdBonusItem,
-			PfdCustomerInfo pfdCustomerInfo, int bonusGroupId, Date createDate,
-			Date updateDate) {
-		this.pfdContract = pfdContract;
-		this.pfdBonusItem = pfdBonusItem;
-		this.pfdCustomerInfo = pfdCustomerInfo;
-		this.bonusGroupId = bonusGroupId;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
+    public PfdBonusSet(PfdContract pfdContract, PfdBonusItem pfdBonusItem,
+	    PfdCustomerInfo pfdCustomerInfo, int bonusGroupId, Date createDate,
+	    Date updateDate) {
+	this.pfdContract = pfdContract;
+	this.pfdBonusItem = pfdBonusItem;
+	this.pfdCustomerInfo = pfdCustomerInfo;
+	this.bonusGroupId = bonusGroupId;
+	this.createDate = createDate;
+	this.updateDate = updateDate;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "bonus_set_id", unique = true, nullable = false)
-	public Integer getBonusSetId() {
-		return this.bonusSetId;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "bonus_set_id", unique = true, nullable = false)
+    public Integer getBonusSetId() {
+	return this.bonusSetId;
+    }
 
-	public void setBonusSetId(Integer bonusSetId) {
-		this.bonusSetId = bonusSetId;
-	}
+    public void setBonusSetId(Integer bonusSetId) {
+	this.bonusSetId = bonusSetId;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pfd_contract", nullable = false)
-	public PfdContract getPfdContract() {
-		return this.pfdContract;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pfd_contract", nullable = false)
+    public PfdContract getPfdContract() {
+	return this.pfdContract;
+    }
 
-	public void setPfdContract(PfdContract pfdContract) {
-		this.pfdContract = pfdContract;
-	}
+    public void setPfdContract(PfdContract pfdContract) {
+	this.pfdContract = pfdContract;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pfd_bonus_item", nullable = false)
-	public PfdBonusItem getPfdBonusItem() {
-		return this.pfdBonusItem;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pfd_bonus_item", nullable = false)
+    public PfdBonusItem getPfdBonusItem() {
+	return this.pfdBonusItem;
+    }
 
-	public void setPfdBonusItem(PfdBonusItem pfdBonusItem) {
-		this.pfdBonusItem = pfdBonusItem;
-	}
+    public void setPfdBonusItem(PfdBonusItem pfdBonusItem) {
+	this.pfdBonusItem = pfdBonusItem;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pfd_customer_info", nullable = false)
-	public PfdCustomerInfo getPfdCustomerInfo() {
-		return this.pfdCustomerInfo;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pfd_customer_info", nullable = false)
+    public PfdCustomerInfo getPfdCustomerInfo() {
+	return this.pfdCustomerInfo;
+    }
 
-	public void setPfdCustomerInfo(PfdCustomerInfo pfdCustomerInfo) {
-		this.pfdCustomerInfo = pfdCustomerInfo;
-	}
+    public void setPfdCustomerInfo(PfdCustomerInfo pfdCustomerInfo) {
+	this.pfdCustomerInfo = pfdCustomerInfo;
+    }
 
-	@Column(name = "bonus_group_id", nullable = false)
-	public int getBonusGroupId() {
-		return this.bonusGroupId;
-	}
+    @Column(name = "bonus_group_id", nullable = false)
+    public int getBonusGroupId() {
+	return this.bonusGroupId;
+    }
 
-	public void setBonusGroupId(int bonusGroupId) {
-		this.bonusGroupId = bonusGroupId;
-	}
+    public void setBonusGroupId(int bonusGroupId) {
+	this.bonusGroupId = bonusGroupId;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 19)
-	public Date getCreateDate() {
-		return this.createDate;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_date", nullable = false, length = 19)
+    public Date getCreateDate() {
+	return this.createDate;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setCreateDate(Date createDate) {
+	this.createDate = createDate;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date", nullable = false, length = 19)
-	public Date getUpdateDate() {
-		return this.updateDate;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date", nullable = false, length = 19)
+    public Date getUpdateDate() {
+	return this.updateDate;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setUpdateDate(Date updateDate) {
+	this.updateDate = updateDate;
+    }
 
 }

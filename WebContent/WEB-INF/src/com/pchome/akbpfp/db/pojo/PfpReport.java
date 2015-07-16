@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,307 +19,399 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_report", catalog = "akb")
 public class PfpReport implements java.io.Serializable {
 
-	private Integer id;
-	private Date reportTime;
-	private int activateNum;
-	private float activatePrice;
-	private int customerNum;
-	private float customerPrice;
-	private float giftPrice;
-	private float refundPrice;
-	private float remainPrice;
-	private int adNew;
-	private int adNum;
-	private int adReady;
-	private int adDue;
-	private int adPv;
-	private int adClk;
-	private float adClkPrice;
-	private float cpc;
-	private float cpm;
-	private float ctr;
-	private int adUnderMax;
-	private float reachRate;
-	private float overPrice;
-	private int adInvalidClk;
-	private float adInvalidClkPrice;
-	private Date updateTime;
-	private Date createTime;
+    private Integer id;
+    private Date reportTime;
+    private int activateNum;
+    private float activatePrice;
+    private int customerNum;
+    private float customerPrice;
+    private int advanceActivateNum;
+    private float advanceActivatePrice;
+    private int advanceCustomerNum;
+    private float advanceCustomerPrice;
+    private int laterActivateNum;
+    private float laterActivatePrice;
+    private int laterCustomerNum;
+    private float laterCustomerPrice;
+    private float giftPrice;
+    private float refundPrice;
+    private float remainPrice;
+    private int adNew;
+    private int adNum;
+    private int adReady;
+    private int adDue;
+    private int adPv;
+    private int adClk;
+    private float adClkPrice;
+    private float cpc;
+    private float cpm;
+    private float ctr;
+    private int adUnderMax;
+    private float reachRate;
+    private float overPrice;
+    private int adInvalidClk;
+    private float adInvalidClkPrice;
+    private Date updateTime;
+    private Date createTime;
 
-	public PfpReport() {
-	}
+    public PfpReport() {
+    }
 
-	public PfpReport(Date reportTime, int activateNum, float activatePrice,
-			int customerNum, float customerPrice, float giftPrice,
-			float refundPrice, float remainPrice, int adNew, int adNum,
-			int adReady, int adDue, int adPv, int adClk, float adClkPrice,
-			float cpc, float cpm, float ctr, int adUnderMax, float reachRate,
-			float overPrice, int adInvalidClk, float adInvalidClkPrice,
-			Date updateTime, Date createTime) {
-		this.reportTime = reportTime;
-		this.activateNum = activateNum;
-		this.activatePrice = activatePrice;
-		this.customerNum = customerNum;
-		this.customerPrice = customerPrice;
-		this.giftPrice = giftPrice;
-		this.refundPrice = refundPrice;
-		this.remainPrice = remainPrice;
-		this.adNew = adNew;
-		this.adNum = adNum;
-		this.adReady = adReady;
-		this.adDue = adDue;
-		this.adPv = adPv;
-		this.adClk = adClk;
-		this.adClkPrice = adClkPrice;
-		this.cpc = cpc;
-		this.cpm = cpm;
-		this.ctr = ctr;
-		this.adUnderMax = adUnderMax;
-		this.reachRate = reachRate;
-		this.overPrice = overPrice;
-		this.adInvalidClk = adInvalidClk;
-		this.adInvalidClkPrice = adInvalidClkPrice;
-		this.updateTime = updateTime;
-		this.createTime = createTime;
-	}
+    public PfpReport(Date reportTime, int activateNum, float activatePrice,
+	    int customerNum, float customerPrice, int advanceActivateNum,
+	    float advanceActivatePrice, int advanceCustomerNum,
+	    float advanceCustomerPrice, int laterActivateNum,
+	    float laterActivatePrice, int laterCustomerNum,
+	    float laterCustomerPrice, float giftPrice, float refundPrice,
+	    float remainPrice, int adNew, int adNum, int adReady, int adDue,
+	    int adPv, int adClk, float adClkPrice, float cpc, float cpm,
+	    float ctr, int adUnderMax, float reachRate, float overPrice,
+	    int adInvalidClk, float adInvalidClkPrice, Date updateTime,
+	    Date createTime) {
+	this.reportTime = reportTime;
+	this.activateNum = activateNum;
+	this.activatePrice = activatePrice;
+	this.customerNum = customerNum;
+	this.customerPrice = customerPrice;
+	this.advanceActivateNum = advanceActivateNum;
+	this.advanceActivatePrice = advanceActivatePrice;
+	this.advanceCustomerNum = advanceCustomerNum;
+	this.advanceCustomerPrice = advanceCustomerPrice;
+	this.laterActivateNum = laterActivateNum;
+	this.laterActivatePrice = laterActivatePrice;
+	this.laterCustomerNum = laterCustomerNum;
+	this.laterCustomerPrice = laterCustomerPrice;
+	this.giftPrice = giftPrice;
+	this.refundPrice = refundPrice;
+	this.remainPrice = remainPrice;
+	this.adNew = adNew;
+	this.adNum = adNum;
+	this.adReady = adReady;
+	this.adDue = adDue;
+	this.adPv = adPv;
+	this.adClk = adClk;
+	this.adClkPrice = adClkPrice;
+	this.cpc = cpc;
+	this.cpm = cpm;
+	this.ctr = ctr;
+	this.adUnderMax = adUnderMax;
+	this.reachRate = reachRate;
+	this.overPrice = overPrice;
+	this.adInvalidClk = adInvalidClk;
+	this.adInvalidClkPrice = adInvalidClkPrice;
+	this.updateTime = updateTime;
+	this.createTime = createTime;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
-		return this.id;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    public Integer getId() {
+	return this.id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "report_time", nullable = false, length = 10)
-	public Date getReportTime() {
-		return this.reportTime;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "report_time", nullable = false, length = 10)
+    public Date getReportTime() {
+	return this.reportTime;
+    }
 
-	public void setReportTime(Date reportTime) {
-		this.reportTime = reportTime;
-	}
+    public void setReportTime(Date reportTime) {
+	this.reportTime = reportTime;
+    }
 
-	@Column(name = "activate_num", nullable = false)
-	public int getActivateNum() {
-		return this.activateNum;
-	}
+    @Column(name = "activate_num", nullable = false)
+    public int getActivateNum() {
+	return this.activateNum;
+    }
 
-	public void setActivateNum(int activateNum) {
-		this.activateNum = activateNum;
-	}
+    public void setActivateNum(int activateNum) {
+	this.activateNum = activateNum;
+    }
 
-	@Column(name = "activate_price", nullable = false, precision = 10)
-	public float getActivatePrice() {
-		return this.activatePrice;
-	}
+    @Column(name = "activate_price", nullable = false, precision = 10)
+    public float getActivatePrice() {
+	return this.activatePrice;
+    }
 
-	public void setActivatePrice(float activatePrice) {
-		this.activatePrice = activatePrice;
-	}
+    public void setActivatePrice(float activatePrice) {
+	this.activatePrice = activatePrice;
+    }
 
-	@Column(name = "customer_num", nullable = false)
-	public int getCustomerNum() {
-		return this.customerNum;
-	}
+    @Column(name = "customer_num", nullable = false)
+    public int getCustomerNum() {
+	return this.customerNum;
+    }
 
-	public void setCustomerNum(int customerNum) {
-		this.customerNum = customerNum;
-	}
+    public void setCustomerNum(int customerNum) {
+	this.customerNum = customerNum;
+    }
 
-	@Column(name = "customer_price", nullable = false, precision = 10)
-	public float getCustomerPrice() {
-		return this.customerPrice;
-	}
+    @Column(name = "customer_price", nullable = false, precision = 10)
+    public float getCustomerPrice() {
+	return this.customerPrice;
+    }
 
-	public void setCustomerPrice(float customerPrice) {
-		this.customerPrice = customerPrice;
-	}
+    public void setCustomerPrice(float customerPrice) {
+	this.customerPrice = customerPrice;
+    }
 
-	@Column(name = "gift_price", nullable = false, precision = 10)
-	public float getGiftPrice() {
-		return this.giftPrice;
-	}
+    @Column(name = "advance_activate_num", nullable = false)
+    public int getAdvanceActivateNum() {
+	return this.advanceActivateNum;
+    }
 
-	public void setGiftPrice(float giftPrice) {
-		this.giftPrice = giftPrice;
-	}
+    public void setAdvanceActivateNum(int advanceActivateNum) {
+	this.advanceActivateNum = advanceActivateNum;
+    }
 
-	@Column(name = "refund_price", nullable = false, precision = 10)
-	public float getRefundPrice() {
-		return this.refundPrice;
-	}
+    @Column(name = "advance_activate_price", nullable = false, precision = 10)
+    public float getAdvanceActivatePrice() {
+	return this.advanceActivatePrice;
+    }
 
-	public void setRefundPrice(float refundPrice) {
-		this.refundPrice = refundPrice;
-	}
+    public void setAdvanceActivatePrice(float advanceActivatePrice) {
+	this.advanceActivatePrice = advanceActivatePrice;
+    }
 
-	@Column(name = "remain_price", nullable = false, precision = 10)
-	public float getRemainPrice() {
-		return this.remainPrice;
-	}
+    @Column(name = "advance_customer_num", nullable = false)
+    public int getAdvanceCustomerNum() {
+	return this.advanceCustomerNum;
+    }
 
-	public void setRemainPrice(float remainPrice) {
-		this.remainPrice = remainPrice;
-	}
+    public void setAdvanceCustomerNum(int advanceCustomerNum) {
+	this.advanceCustomerNum = advanceCustomerNum;
+    }
 
-	@Column(name = "ad_new", nullable = false)
-	public int getAdNew() {
-		return this.adNew;
-	}
+    @Column(name = "advance_customer_price", nullable = false, precision = 10)
+    public float getAdvanceCustomerPrice() {
+	return this.advanceCustomerPrice;
+    }
 
-	public void setAdNew(int adNew) {
-		this.adNew = adNew;
-	}
+    public void setAdvanceCustomerPrice(float advanceCustomerPrice) {
+	this.advanceCustomerPrice = advanceCustomerPrice;
+    }
 
-	@Column(name = "ad_num", nullable = false)
-	public int getAdNum() {
-		return this.adNum;
-	}
+    @Column(name = "later_activate_num", nullable = false)
+    public int getLaterActivateNum() {
+	return this.laterActivateNum;
+    }
 
-	public void setAdNum(int adNum) {
-		this.adNum = adNum;
-	}
+    public void setLaterActivateNum(int laterActivateNum) {
+	this.laterActivateNum = laterActivateNum;
+    }
 
-	@Column(name = "ad_ready", nullable = false)
-	public int getAdReady() {
-		return this.adReady;
-	}
+    @Column(name = "later_activate_price", nullable = false, precision = 10)
+    public float getLaterActivatePrice() {
+	return this.laterActivatePrice;
+    }
 
-	public void setAdReady(int adReady) {
-		this.adReady = adReady;
-	}
+    public void setLaterActivatePrice(float laterActivatePrice) {
+	this.laterActivatePrice = laterActivatePrice;
+    }
 
-	@Column(name = "ad_due", nullable = false)
-	public int getAdDue() {
-		return this.adDue;
-	}
+    @Column(name = "later_customer_num", nullable = false)
+    public int getLaterCustomerNum() {
+	return this.laterCustomerNum;
+    }
 
-	public void setAdDue(int adDue) {
-		this.adDue = adDue;
-	}
+    public void setLaterCustomerNum(int laterCustomerNum) {
+	this.laterCustomerNum = laterCustomerNum;
+    }
 
-	@Column(name = "ad_pv", nullable = false)
-	public int getAdPv() {
-		return this.adPv;
-	}
+    @Column(name = "later_customer_price", nullable = false, precision = 10)
+    public float getLaterCustomerPrice() {
+	return this.laterCustomerPrice;
+    }
 
-	public void setAdPv(int adPv) {
-		this.adPv = adPv;
-	}
+    public void setLaterCustomerPrice(float laterCustomerPrice) {
+	this.laterCustomerPrice = laterCustomerPrice;
+    }
 
-	@Column(name = "ad_clk", nullable = false)
-	public int getAdClk() {
-		return this.adClk;
-	}
+    @Column(name = "gift_price", nullable = false, precision = 10)
+    public float getGiftPrice() {
+	return this.giftPrice;
+    }
 
-	public void setAdClk(int adClk) {
-		this.adClk = adClk;
-	}
+    public void setGiftPrice(float giftPrice) {
+	this.giftPrice = giftPrice;
+    }
 
-	@Column(name = "ad_clk_price", nullable = false, precision = 10)
-	public float getAdClkPrice() {
-		return this.adClkPrice;
-	}
+    @Column(name = "refund_price", nullable = false, precision = 10)
+    public float getRefundPrice() {
+	return this.refundPrice;
+    }
 
-	public void setAdClkPrice(float adClkPrice) {
-		this.adClkPrice = adClkPrice;
-	}
+    public void setRefundPrice(float refundPrice) {
+	this.refundPrice = refundPrice;
+    }
 
-	@Column(name = "cpc", nullable = false, precision = 10)
-	public float getCpc() {
-		return this.cpc;
-	}
+    @Column(name = "remain_price", nullable = false, precision = 10)
+    public float getRemainPrice() {
+	return this.remainPrice;
+    }
 
-	public void setCpc(float cpc) {
-		this.cpc = cpc;
-	}
+    public void setRemainPrice(float remainPrice) {
+	this.remainPrice = remainPrice;
+    }
 
-	@Column(name = "cpm", nullable = false, precision = 10)
-	public float getCpm() {
-		return this.cpm;
-	}
+    @Column(name = "ad_new", nullable = false)
+    public int getAdNew() {
+	return this.adNew;
+    }
 
-	public void setCpm(float cpm) {
-		this.cpm = cpm;
-	}
+    public void setAdNew(int adNew) {
+	this.adNew = adNew;
+    }
 
-	@Column(name = "ctr", nullable = false, precision = 10)
-	public float getCtr() {
-		return this.ctr;
-	}
+    @Column(name = "ad_num", nullable = false)
+    public int getAdNum() {
+	return this.adNum;
+    }
 
-	public void setCtr(float ctr) {
-		this.ctr = ctr;
-	}
+    public void setAdNum(int adNum) {
+	this.adNum = adNum;
+    }
 
-	@Column(name = "ad_under_max", nullable = false)
-	public int getAdUnderMax() {
-		return this.adUnderMax;
-	}
+    @Column(name = "ad_ready", nullable = false)
+    public int getAdReady() {
+	return this.adReady;
+    }
 
-	public void setAdUnderMax(int adUnderMax) {
-		this.adUnderMax = adUnderMax;
-	}
+    public void setAdReady(int adReady) {
+	this.adReady = adReady;
+    }
 
-	@Column(name = "reach_rate", nullable = false, precision = 10)
-	public float getReachRate() {
-		return this.reachRate;
-	}
+    @Column(name = "ad_due", nullable = false)
+    public int getAdDue() {
+	return this.adDue;
+    }
 
-	public void setReachRate(float reachRate) {
-		this.reachRate = reachRate;
-	}
+    public void setAdDue(int adDue) {
+	this.adDue = adDue;
+    }
 
-	@Column(name = "over_price", nullable = false, precision = 10)
-	public float getOverPrice() {
-		return this.overPrice;
-	}
+    @Column(name = "ad_pv", nullable = false)
+    public int getAdPv() {
+	return this.adPv;
+    }
 
-	public void setOverPrice(float overPrice) {
-		this.overPrice = overPrice;
-	}
+    public void setAdPv(int adPv) {
+	this.adPv = adPv;
+    }
 
-	@Column(name = "ad_invalid_clk", nullable = false)
-	public int getAdInvalidClk() {
-		return this.adInvalidClk;
-	}
+    @Column(name = "ad_clk", nullable = false)
+    public int getAdClk() {
+	return this.adClk;
+    }
 
-	public void setAdInvalidClk(int adInvalidClk) {
-		this.adInvalidClk = adInvalidClk;
-	}
+    public void setAdClk(int adClk) {
+	this.adClk = adClk;
+    }
 
-	@Column(name = "ad_invalid_clk_price", nullable = false, precision = 10)
-	public float getAdInvalidClkPrice() {
-		return this.adInvalidClkPrice;
-	}
+    @Column(name = "ad_clk_price", nullable = false, precision = 10)
+    public float getAdClkPrice() {
+	return this.adClkPrice;
+    }
 
-	public void setAdInvalidClkPrice(float adInvalidClkPrice) {
-		this.adInvalidClkPrice = adInvalidClkPrice;
-	}
+    public void setAdClkPrice(float adClkPrice) {
+	this.adClkPrice = adClkPrice;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_time", nullable = false, length = 19)
-	public Date getUpdateTime() {
-		return this.updateTime;
-	}
+    @Column(name = "cpc", nullable = false, precision = 10)
+    public float getCpc() {
+	return this.cpc;
+    }
 
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
+    public void setCpc(float cpc) {
+	this.cpc = cpc;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_time", nullable = false, length = 19)
-	public Date getCreateTime() {
-		return this.createTime;
-	}
+    @Column(name = "cpm", nullable = false, precision = 10)
+    public float getCpm() {
+	return this.cpm;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public void setCpm(float cpm) {
+	this.cpm = cpm;
+    }
+
+    @Column(name = "ctr", nullable = false, precision = 10)
+    public float getCtr() {
+	return this.ctr;
+    }
+
+    public void setCtr(float ctr) {
+	this.ctr = ctr;
+    }
+
+    @Column(name = "ad_under_max", nullable = false)
+    public int getAdUnderMax() {
+	return this.adUnderMax;
+    }
+
+    public void setAdUnderMax(int adUnderMax) {
+	this.adUnderMax = adUnderMax;
+    }
+
+    @Column(name = "reach_rate", nullable = false, precision = 10)
+    public float getReachRate() {
+	return this.reachRate;
+    }
+
+    public void setReachRate(float reachRate) {
+	this.reachRate = reachRate;
+    }
+
+    @Column(name = "over_price", nullable = false, precision = 10)
+    public float getOverPrice() {
+	return this.overPrice;
+    }
+
+    public void setOverPrice(float overPrice) {
+	this.overPrice = overPrice;
+    }
+
+    @Column(name = "ad_invalid_clk", nullable = false)
+    public int getAdInvalidClk() {
+	return this.adInvalidClk;
+    }
+
+    public void setAdInvalidClk(int adInvalidClk) {
+	this.adInvalidClk = adInvalidClk;
+    }
+
+    @Column(name = "ad_invalid_clk_price", nullable = false, precision = 10)
+    public float getAdInvalidClkPrice() {
+	return this.adInvalidClkPrice;
+    }
+
+    public void setAdInvalidClkPrice(float adInvalidClkPrice) {
+	this.adInvalidClkPrice = adInvalidClkPrice;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_time", nullable = false, length = 19)
+    public Date getUpdateTime() {
+	return this.updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+	this.updateTime = updateTime;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_time", nullable = false, length = 19)
+    public Date getCreateTime() {
+	return this.createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+	this.createTime = createTime;
+    }
 
 }

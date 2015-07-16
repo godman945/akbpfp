@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdPvclk" table="pfp_ad_pvclk" catalog="akb">
         <id name="adPvclkSeq" type="java.lang.Integer">
@@ -16,6 +16,16 @@
         <property name="customerInfoId" type="string">
             <column name="customer_info_id" length="20" not-null="true">
                 <comment>&#177;b&#164;&#225;&#189;s&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="pfbxCustomerInfoId" type="string">
+            <column name="pfbx_customer_info_id" length="20">
+                <comment>&#193;p&#188;&#189;&#186;&#244;&#177;b&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="pfbxPositionId" type="string">
+            <column name="pfbx_position_id" length="20">
+                <comment>&#193;p&#188;&#189;&#186;&#244;&#170;&#169;&#166;&#236;</comment>
             </column>
         </property>
         <property name="pfdCustomerInfoId" type="string">
@@ -65,7 +75,7 @@
             </column>
         </property>
         <property name="adPvclkPropClassify" type="string">
-            <column name="ad_pvclk_prop_classify" length="20" not-null="true">
+            <column name="ad_pvclk_prop_classify" length="100" not-null="true">
                 <comment>&#169;&#202;&#189;&#232;&#164;&#192;&#195;&#254;</comment>
             </column>
         </property>

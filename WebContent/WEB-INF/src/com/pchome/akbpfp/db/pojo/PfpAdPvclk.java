@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,391 +22,414 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_ad_pvclk", catalog = "akb")
 public class PfpAdPvclk implements java.io.Serializable {
 
-	private Integer adPvclkSeq;
-	private PfpAd pfpAd;
-	private String customerInfoId;
-	private String pfdCustomerInfoId;
-	private String pfdUserId;
-	private Integer payType;
-	private String adGroupSeq;
-	private String adActionSeq;
-	private int adType;
-	private Date adPvclkDate;
-	private int adPvclkTime;
-	private String templateProductSeq;
-	private String templateAdSeq;
-	private String adPvclkPropClassify;
-	private String adUrl;
-	private String styleNo;
-	private int adPv;
-	private int adClk;
-	private int adInvalidClk;
-	private float adPvPrice;
-	private float adClkPrice;
-	private float adInvalidClkPrice;
-	private String adPvclkDevice;
-	private String adPvclkOs;
-	private String adPvclkBrand;
-	private String adPvclkArea;
-	private float adActionControlPrice;
-	private float adActionMaxPrice;
-	private Date adPvclkCreateTime;
-	private Date adPvclkUpdateTime;
+    private Integer adPvclkSeq;
+    private PfpAd pfpAd;
+    private String customerInfoId;
+    private String pfbxCustomerInfoId;
+    private String pfbxPositionId;
+    private String pfdCustomerInfoId;
+    private String pfdUserId;
+    private Integer payType;
+    private String adGroupSeq;
+    private String adActionSeq;
+    private int adType;
+    private Date adPvclkDate;
+    private int adPvclkTime;
+    private String templateProductSeq;
+    private String templateAdSeq;
+    private String adPvclkPropClassify;
+    private String adUrl;
+    private String styleNo;
+    private int adPv;
+    private int adClk;
+    private int adInvalidClk;
+    private float adPvPrice;
+    private float adClkPrice;
+    private float adInvalidClkPrice;
+    private String adPvclkDevice;
+    private String adPvclkOs;
+    private String adPvclkBrand;
+    private String adPvclkArea;
+    private float adActionControlPrice;
+    private float adActionMaxPrice;
+    private Date adPvclkCreateTime;
+    private Date adPvclkUpdateTime;
 
-	public PfpAdPvclk() {
-	}
+    public PfpAdPvclk() {
+    }
 
-	public PfpAdPvclk(PfpAd pfpAd, String customerInfoId, int adType,
-			Date adPvclkDate, int adPvclkTime, String templateProductSeq,
-			String templateAdSeq, String adPvclkPropClassify, String adUrl,
-			String styleNo, int adPv, int adClk, int adInvalidClk,
-			float adPvPrice, float adClkPrice, float adInvalidClkPrice,
-			String adPvclkDevice, String adPvclkOs, String adPvclkBrand,
-			String adPvclkArea, float adActionControlPrice,
-			float adActionMaxPrice, Date adPvclkCreateTime,
-			Date adPvclkUpdateTime) {
-		this.pfpAd = pfpAd;
-		this.customerInfoId = customerInfoId;
-		this.adType = adType;
-		this.adPvclkDate = adPvclkDate;
-		this.adPvclkTime = adPvclkTime;
-		this.templateProductSeq = templateProductSeq;
-		this.templateAdSeq = templateAdSeq;
-		this.adPvclkPropClassify = adPvclkPropClassify;
-		this.adUrl = adUrl;
-		this.styleNo = styleNo;
-		this.adPv = adPv;
-		this.adClk = adClk;
-		this.adInvalidClk = adInvalidClk;
-		this.adPvPrice = adPvPrice;
-		this.adClkPrice = adClkPrice;
-		this.adInvalidClkPrice = adInvalidClkPrice;
-		this.adPvclkDevice = adPvclkDevice;
-		this.adPvclkOs = adPvclkOs;
-		this.adPvclkBrand = adPvclkBrand;
-		this.adPvclkArea = adPvclkArea;
-		this.adActionControlPrice = adActionControlPrice;
-		this.adActionMaxPrice = adActionMaxPrice;
-		this.adPvclkCreateTime = adPvclkCreateTime;
-		this.adPvclkUpdateTime = adPvclkUpdateTime;
-	}
+    public PfpAdPvclk(PfpAd pfpAd, String customerInfoId, int adType,
+	    Date adPvclkDate, int adPvclkTime, String templateProductSeq,
+	    String templateAdSeq, String adPvclkPropClassify, String adUrl,
+	    String styleNo, int adPv, int adClk, int adInvalidClk,
+	    float adPvPrice, float adClkPrice, float adInvalidClkPrice,
+	    String adPvclkDevice, String adPvclkOs, String adPvclkBrand,
+	    String adPvclkArea, float adActionControlPrice,
+	    float adActionMaxPrice, Date adPvclkCreateTime,
+	    Date adPvclkUpdateTime) {
+	this.pfpAd = pfpAd;
+	this.customerInfoId = customerInfoId;
+	this.adType = adType;
+	this.adPvclkDate = adPvclkDate;
+	this.adPvclkTime = adPvclkTime;
+	this.templateProductSeq = templateProductSeq;
+	this.templateAdSeq = templateAdSeq;
+	this.adPvclkPropClassify = adPvclkPropClassify;
+	this.adUrl = adUrl;
+	this.styleNo = styleNo;
+	this.adPv = adPv;
+	this.adClk = adClk;
+	this.adInvalidClk = adInvalidClk;
+	this.adPvPrice = adPvPrice;
+	this.adClkPrice = adClkPrice;
+	this.adInvalidClkPrice = adInvalidClkPrice;
+	this.adPvclkDevice = adPvclkDevice;
+	this.adPvclkOs = adPvclkOs;
+	this.adPvclkBrand = adPvclkBrand;
+	this.adPvclkArea = adPvclkArea;
+	this.adActionControlPrice = adActionControlPrice;
+	this.adActionMaxPrice = adActionMaxPrice;
+	this.adPvclkCreateTime = adPvclkCreateTime;
+	this.adPvclkUpdateTime = adPvclkUpdateTime;
+    }
 
-	public PfpAdPvclk(PfpAd pfpAd, String customerInfoId,
-			String pfdCustomerInfoId, String pfdUserId, Integer payType,
-			String adGroupSeq, String adActionSeq, int adType,
-			Date adPvclkDate, int adPvclkTime, String templateProductSeq,
-			String templateAdSeq, String adPvclkPropClassify, String adUrl,
-			String styleNo, int adPv, int adClk, int adInvalidClk,
-			float adPvPrice, float adClkPrice, float adInvalidClkPrice,
-			String adPvclkDevice, String adPvclkOs, String adPvclkBrand,
-			String adPvclkArea, float adActionControlPrice,
-			float adActionMaxPrice, Date adPvclkCreateTime,
-			Date adPvclkUpdateTime) {
-		this.pfpAd = pfpAd;
-		this.customerInfoId = customerInfoId;
-		this.pfdCustomerInfoId = pfdCustomerInfoId;
-		this.pfdUserId = pfdUserId;
-		this.payType = payType;
-		this.adGroupSeq = adGroupSeq;
-		this.adActionSeq = adActionSeq;
-		this.adType = adType;
-		this.adPvclkDate = adPvclkDate;
-		this.adPvclkTime = adPvclkTime;
-		this.templateProductSeq = templateProductSeq;
-		this.templateAdSeq = templateAdSeq;
-		this.adPvclkPropClassify = adPvclkPropClassify;
-		this.adUrl = adUrl;
-		this.styleNo = styleNo;
-		this.adPv = adPv;
-		this.adClk = adClk;
-		this.adInvalidClk = adInvalidClk;
-		this.adPvPrice = adPvPrice;
-		this.adClkPrice = adClkPrice;
-		this.adInvalidClkPrice = adInvalidClkPrice;
-		this.adPvclkDevice = adPvclkDevice;
-		this.adPvclkOs = adPvclkOs;
-		this.adPvclkBrand = adPvclkBrand;
-		this.adPvclkArea = adPvclkArea;
-		this.adActionControlPrice = adActionControlPrice;
-		this.adActionMaxPrice = adActionMaxPrice;
-		this.adPvclkCreateTime = adPvclkCreateTime;
-		this.adPvclkUpdateTime = adPvclkUpdateTime;
-	}
+    public PfpAdPvclk(PfpAd pfpAd, String customerInfoId,
+	    String pfbxCustomerInfoId, String pfbxPositionId,
+	    String pfdCustomerInfoId, String pfdUserId, Integer payType,
+	    String adGroupSeq, String adActionSeq, int adType,
+	    Date adPvclkDate, int adPvclkTime, String templateProductSeq,
+	    String templateAdSeq, String adPvclkPropClassify, String adUrl,
+	    String styleNo, int adPv, int adClk, int adInvalidClk,
+	    float adPvPrice, float adClkPrice, float adInvalidClkPrice,
+	    String adPvclkDevice, String adPvclkOs, String adPvclkBrand,
+	    String adPvclkArea, float adActionControlPrice,
+	    float adActionMaxPrice, Date adPvclkCreateTime,
+	    Date adPvclkUpdateTime) {
+	this.pfpAd = pfpAd;
+	this.customerInfoId = customerInfoId;
+	this.pfbxCustomerInfoId = pfbxCustomerInfoId;
+	this.pfbxPositionId = pfbxPositionId;
+	this.pfdCustomerInfoId = pfdCustomerInfoId;
+	this.pfdUserId = pfdUserId;
+	this.payType = payType;
+	this.adGroupSeq = adGroupSeq;
+	this.adActionSeq = adActionSeq;
+	this.adType = adType;
+	this.adPvclkDate = adPvclkDate;
+	this.adPvclkTime = adPvclkTime;
+	this.templateProductSeq = templateProductSeq;
+	this.templateAdSeq = templateAdSeq;
+	this.adPvclkPropClassify = adPvclkPropClassify;
+	this.adUrl = adUrl;
+	this.styleNo = styleNo;
+	this.adPv = adPv;
+	this.adClk = adClk;
+	this.adInvalidClk = adInvalidClk;
+	this.adPvPrice = adPvPrice;
+	this.adClkPrice = adClkPrice;
+	this.adInvalidClkPrice = adInvalidClkPrice;
+	this.adPvclkDevice = adPvclkDevice;
+	this.adPvclkOs = adPvclkOs;
+	this.adPvclkBrand = adPvclkBrand;
+	this.adPvclkArea = adPvclkArea;
+	this.adActionControlPrice = adActionControlPrice;
+	this.adActionMaxPrice = adActionMaxPrice;
+	this.adPvclkCreateTime = adPvclkCreateTime;
+	this.adPvclkUpdateTime = adPvclkUpdateTime;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "ad_pvclk_seq", unique = true, nullable = false)
-	public Integer getAdPvclkSeq() {
-		return this.adPvclkSeq;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "ad_pvclk_seq", unique = true, nullable = false)
+    public Integer getAdPvclkSeq() {
+	return this.adPvclkSeq;
+    }
 
-	public void setAdPvclkSeq(Integer adPvclkSeq) {
-		this.adPvclkSeq = adPvclkSeq;
-	}
+    public void setAdPvclkSeq(Integer adPvclkSeq) {
+	this.adPvclkSeq = adPvclkSeq;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ad_seq", nullable = false)
-	public PfpAd getPfpAd() {
-		return this.pfpAd;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ad_seq", nullable = false)
+    public PfpAd getPfpAd() {
+	return this.pfpAd;
+    }
 
-	public void setPfpAd(PfpAd pfpAd) {
-		this.pfpAd = pfpAd;
-	}
+    public void setPfpAd(PfpAd pfpAd) {
+	this.pfpAd = pfpAd;
+    }
 
-	@Column(name = "customer_info_id", nullable = false, length = 20)
-	public String getCustomerInfoId() {
-		return this.customerInfoId;
-	}
+    @Column(name = "customer_info_id", nullable = false, length = 20)
+    public String getCustomerInfoId() {
+	return this.customerInfoId;
+    }
 
-	public void setCustomerInfoId(String customerInfoId) {
-		this.customerInfoId = customerInfoId;
-	}
+    public void setCustomerInfoId(String customerInfoId) {
+	this.customerInfoId = customerInfoId;
+    }
 
-	@Column(name = "pfd_customer_info_id", length = 20)
-	public String getPfdCustomerInfoId() {
-		return this.pfdCustomerInfoId;
-	}
+    @Column(name = "pfbx_customer_info_id", length = 20)
+    public String getPfbxCustomerInfoId() {
+	return this.pfbxCustomerInfoId;
+    }
 
-	public void setPfdCustomerInfoId(String pfdCustomerInfoId) {
-		this.pfdCustomerInfoId = pfdCustomerInfoId;
-	}
+    public void setPfbxCustomerInfoId(String pfbxCustomerInfoId) {
+	this.pfbxCustomerInfoId = pfbxCustomerInfoId;
+    }
 
-	@Column(name = "pfd_user_id", length = 20)
-	public String getPfdUserId() {
-		return this.pfdUserId;
-	}
+    @Column(name = "pfbx_position_id", length = 20)
+    public String getPfbxPositionId() {
+	return this.pfbxPositionId;
+    }
 
-	public void setPfdUserId(String pfdUserId) {
-		this.pfdUserId = pfdUserId;
-	}
+    public void setPfbxPositionId(String pfbxPositionId) {
+	this.pfbxPositionId = pfbxPositionId;
+    }
 
-	@Column(name = "pay_type")
-	public Integer getPayType() {
-		return this.payType;
-	}
+    @Column(name = "pfd_customer_info_id", length = 20)
+    public String getPfdCustomerInfoId() {
+	return this.pfdCustomerInfoId;
+    }
 
-	public void setPayType(Integer payType) {
-		this.payType = payType;
-	}
+    public void setPfdCustomerInfoId(String pfdCustomerInfoId) {
+	this.pfdCustomerInfoId = pfdCustomerInfoId;
+    }
 
-	@Column(name = "ad_group_seq", length = 20)
-	public String getAdGroupSeq() {
-		return this.adGroupSeq;
-	}
+    @Column(name = "pfd_user_id", length = 20)
+    public String getPfdUserId() {
+	return this.pfdUserId;
+    }
 
-	public void setAdGroupSeq(String adGroupSeq) {
-		this.adGroupSeq = adGroupSeq;
-	}
+    public void setPfdUserId(String pfdUserId) {
+	this.pfdUserId = pfdUserId;
+    }
 
-	@Column(name = "ad_action_seq", length = 20)
-	public String getAdActionSeq() {
-		return this.adActionSeq;
-	}
+    @Column(name = "pay_type")
+    public Integer getPayType() {
+	return this.payType;
+    }
 
-	public void setAdActionSeq(String adActionSeq) {
-		this.adActionSeq = adActionSeq;
-	}
+    public void setPayType(Integer payType) {
+	this.payType = payType;
+    }
 
-	@Column(name = "ad_type", nullable = false)
-	public int getAdType() {
-		return this.adType;
-	}
+    @Column(name = "ad_group_seq", length = 20)
+    public String getAdGroupSeq() {
+	return this.adGroupSeq;
+    }
 
-	public void setAdType(int adType) {
-		this.adType = adType;
-	}
+    public void setAdGroupSeq(String adGroupSeq) {
+	this.adGroupSeq = adGroupSeq;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "ad_pvclk_date", nullable = false, length = 10)
-	public Date getAdPvclkDate() {
-		return this.adPvclkDate;
-	}
+    @Column(name = "ad_action_seq", length = 20)
+    public String getAdActionSeq() {
+	return this.adActionSeq;
+    }
 
-	public void setAdPvclkDate(Date adPvclkDate) {
-		this.adPvclkDate = adPvclkDate;
-	}
+    public void setAdActionSeq(String adActionSeq) {
+	this.adActionSeq = adActionSeq;
+    }
 
-	@Column(name = "ad_pvclk_time", nullable = false)
-	public int getAdPvclkTime() {
-		return this.adPvclkTime;
-	}
+    @Column(name = "ad_type", nullable = false)
+    public int getAdType() {
+	return this.adType;
+    }
 
-	public void setAdPvclkTime(int adPvclkTime) {
-		this.adPvclkTime = adPvclkTime;
-	}
+    public void setAdType(int adType) {
+	this.adType = adType;
+    }
 
-	@Column(name = "template_product_seq", nullable = false, length = 20)
-	public String getTemplateProductSeq() {
-		return this.templateProductSeq;
-	}
+    @Temporal(TemporalType.DATE)
+    @Column(name = "ad_pvclk_date", nullable = false, length = 10)
+    public Date getAdPvclkDate() {
+	return this.adPvclkDate;
+    }
 
-	public void setTemplateProductSeq(String templateProductSeq) {
-		this.templateProductSeq = templateProductSeq;
-	}
+    public void setAdPvclkDate(Date adPvclkDate) {
+	this.adPvclkDate = adPvclkDate;
+    }
 
-	@Column(name = "template_ad_seq", nullable = false, length = 20)
-	public String getTemplateAdSeq() {
-		return this.templateAdSeq;
-	}
+    @Column(name = "ad_pvclk_time", nullable = false)
+    public int getAdPvclkTime() {
+	return this.adPvclkTime;
+    }
 
-	public void setTemplateAdSeq(String templateAdSeq) {
-		this.templateAdSeq = templateAdSeq;
-	}
+    public void setAdPvclkTime(int adPvclkTime) {
+	this.adPvclkTime = adPvclkTime;
+    }
 
-	@Column(name = "ad_pvclk_prop_classify", nullable = false, length = 100)
-	public String getAdPvclkPropClassify() {
-		return this.adPvclkPropClassify;
-	}
+    @Column(name = "template_product_seq", nullable = false, length = 20)
+    public String getTemplateProductSeq() {
+	return this.templateProductSeq;
+    }
 
-	public void setAdPvclkPropClassify(String adPvclkPropClassify) {
-		this.adPvclkPropClassify = adPvclkPropClassify;
-	}
+    public void setTemplateProductSeq(String templateProductSeq) {
+	this.templateProductSeq = templateProductSeq;
+    }
 
-	@Column(name = "ad_url", nullable = false, length = 1000)
-	public String getAdUrl() {
-		return this.adUrl;
-	}
+    @Column(name = "template_ad_seq", nullable = false, length = 20)
+    public String getTemplateAdSeq() {
+	return this.templateAdSeq;
+    }
 
-	public void setAdUrl(String adUrl) {
-		this.adUrl = adUrl;
-	}
+    public void setTemplateAdSeq(String templateAdSeq) {
+	this.templateAdSeq = templateAdSeq;
+    }
 
-	@Column(name = "style_no", nullable = false, length = 30)
-	public String getStyleNo() {
-		return this.styleNo;
-	}
+    @Column(name = "ad_pvclk_prop_classify", nullable = false, length = 100)
+    public String getAdPvclkPropClassify() {
+	return this.adPvclkPropClassify;
+    }
 
-	public void setStyleNo(String styleNo) {
-		this.styleNo = styleNo;
-	}
+    public void setAdPvclkPropClassify(String adPvclkPropClassify) {
+	this.adPvclkPropClassify = adPvclkPropClassify;
+    }
 
-	@Column(name = "ad_pv", nullable = false)
-	public int getAdPv() {
-		return this.adPv;
-	}
+    @Column(name = "ad_url", nullable = false, length = 1000)
+    public String getAdUrl() {
+	return this.adUrl;
+    }
 
-	public void setAdPv(int adPv) {
-		this.adPv = adPv;
-	}
+    public void setAdUrl(String adUrl) {
+	this.adUrl = adUrl;
+    }
 
-	@Column(name = "ad_clk", nullable = false)
-	public int getAdClk() {
-		return this.adClk;
-	}
+    @Column(name = "style_no", nullable = false, length = 30)
+    public String getStyleNo() {
+	return this.styleNo;
+    }
 
-	public void setAdClk(int adClk) {
-		this.adClk = adClk;
-	}
+    public void setStyleNo(String styleNo) {
+	this.styleNo = styleNo;
+    }
 
-	@Column(name = "ad_invalid_clk", nullable = false)
-	public int getAdInvalidClk() {
-		return this.adInvalidClk;
-	}
+    @Column(name = "ad_pv", nullable = false)
+    public int getAdPv() {
+	return this.adPv;
+    }
 
-	public void setAdInvalidClk(int adInvalidClk) {
-		this.adInvalidClk = adInvalidClk;
-	}
+    public void setAdPv(int adPv) {
+	this.adPv = adPv;
+    }
 
-	@Column(name = "ad_pv_price", nullable = false, precision = 10)
-	public float getAdPvPrice() {
-		return this.adPvPrice;
-	}
+    @Column(name = "ad_clk", nullable = false)
+    public int getAdClk() {
+	return this.adClk;
+    }
 
-	public void setAdPvPrice(float adPvPrice) {
-		this.adPvPrice = adPvPrice;
-	}
+    public void setAdClk(int adClk) {
+	this.adClk = adClk;
+    }
 
-	@Column(name = "ad_clk_price", nullable = false, precision = 10)
-	public float getAdClkPrice() {
-		return this.adClkPrice;
-	}
+    @Column(name = "ad_invalid_clk", nullable = false)
+    public int getAdInvalidClk() {
+	return this.adInvalidClk;
+    }
 
-	public void setAdClkPrice(float adClkPrice) {
-		this.adClkPrice = adClkPrice;
-	}
+    public void setAdInvalidClk(int adInvalidClk) {
+	this.adInvalidClk = adInvalidClk;
+    }
 
-	@Column(name = "ad_invalid_clk_price", nullable = false, precision = 10)
-	public float getAdInvalidClkPrice() {
-		return this.adInvalidClkPrice;
-	}
+    @Column(name = "ad_pv_price", nullable = false, precision = 10)
+    public float getAdPvPrice() {
+	return this.adPvPrice;
+    }
 
-	public void setAdInvalidClkPrice(float adInvalidClkPrice) {
-		this.adInvalidClkPrice = adInvalidClkPrice;
-	}
+    public void setAdPvPrice(float adPvPrice) {
+	this.adPvPrice = adPvPrice;
+    }
 
-	@Column(name = "ad_pvclk_device", nullable = false, length = 20)
-	public String getAdPvclkDevice() {
-		return this.adPvclkDevice;
-	}
+    @Column(name = "ad_clk_price", nullable = false, precision = 10)
+    public float getAdClkPrice() {
+	return this.adClkPrice;
+    }
 
-	public void setAdPvclkDevice(String adPvclkDevice) {
-		this.adPvclkDevice = adPvclkDevice;
-	}
+    public void setAdClkPrice(float adClkPrice) {
+	this.adClkPrice = adClkPrice;
+    }
 
-	@Column(name = "ad_pvclk_os", nullable = false, length = 20)
-	public String getAdPvclkOs() {
-		return this.adPvclkOs;
-	}
+    @Column(name = "ad_invalid_clk_price", nullable = false, precision = 10)
+    public float getAdInvalidClkPrice() {
+	return this.adInvalidClkPrice;
+    }
 
-	public void setAdPvclkOs(String adPvclkOs) {
-		this.adPvclkOs = adPvclkOs;
-	}
+    public void setAdInvalidClkPrice(float adInvalidClkPrice) {
+	this.adInvalidClkPrice = adInvalidClkPrice;
+    }
 
-	@Column(name = "ad_pvclk_brand", nullable = false, length = 20)
-	public String getAdPvclkBrand() {
-		return this.adPvclkBrand;
-	}
+    @Column(name = "ad_pvclk_device", nullable = false, length = 20)
+    public String getAdPvclkDevice() {
+	return this.adPvclkDevice;
+    }
 
-	public void setAdPvclkBrand(String adPvclkBrand) {
-		this.adPvclkBrand = adPvclkBrand;
-	}
+    public void setAdPvclkDevice(String adPvclkDevice) {
+	this.adPvclkDevice = adPvclkDevice;
+    }
 
-	@Column(name = "ad_pvclk_area", nullable = false, length = 20)
-	public String getAdPvclkArea() {
-		return this.adPvclkArea;
-	}
+    @Column(name = "ad_pvclk_os", nullable = false, length = 20)
+    public String getAdPvclkOs() {
+	return this.adPvclkOs;
+    }
 
-	public void setAdPvclkArea(String adPvclkArea) {
-		this.adPvclkArea = adPvclkArea;
-	}
+    public void setAdPvclkOs(String adPvclkOs) {
+	this.adPvclkOs = adPvclkOs;
+    }
 
-	@Column(name = "ad_action_control_price", nullable = false, precision = 10)
-	public float getAdActionControlPrice() {
-		return this.adActionControlPrice;
-	}
+    @Column(name = "ad_pvclk_brand", nullable = false, length = 20)
+    public String getAdPvclkBrand() {
+	return this.adPvclkBrand;
+    }
 
-	public void setAdActionControlPrice(float adActionControlPrice) {
-		this.adActionControlPrice = adActionControlPrice;
-	}
+    public void setAdPvclkBrand(String adPvclkBrand) {
+	this.adPvclkBrand = adPvclkBrand;
+    }
 
-	@Column(name = "ad_action_max_price", nullable = false, precision = 10)
-	public float getAdActionMaxPrice() {
-		return this.adActionMaxPrice;
-	}
+    @Column(name = "ad_pvclk_area", nullable = false, length = 20)
+    public String getAdPvclkArea() {
+	return this.adPvclkArea;
+    }
 
-	public void setAdActionMaxPrice(float adActionMaxPrice) {
-		this.adActionMaxPrice = adActionMaxPrice;
-	}
+    public void setAdPvclkArea(String adPvclkArea) {
+	this.adPvclkArea = adPvclkArea;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_pvclk_create_time", nullable = false, length = 19)
-	public Date getAdPvclkCreateTime() {
-		return this.adPvclkCreateTime;
-	}
+    @Column(name = "ad_action_control_price", nullable = false, precision = 10)
+    public float getAdActionControlPrice() {
+	return this.adActionControlPrice;
+    }
 
-	public void setAdPvclkCreateTime(Date adPvclkCreateTime) {
-		this.adPvclkCreateTime = adPvclkCreateTime;
-	}
+    public void setAdActionControlPrice(float adActionControlPrice) {
+	this.adActionControlPrice = adActionControlPrice;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_pvclk_update_time", nullable = false, length = 19)
-	public Date getAdPvclkUpdateTime() {
-		return this.adPvclkUpdateTime;
-	}
+    @Column(name = "ad_action_max_price", nullable = false, precision = 10)
+    public float getAdActionMaxPrice() {
+	return this.adActionMaxPrice;
+    }
 
-	public void setAdPvclkUpdateTime(Date adPvclkUpdateTime) {
-		this.adPvclkUpdateTime = adPvclkUpdateTime;
-	}
+    public void setAdActionMaxPrice(float adActionMaxPrice) {
+	this.adActionMaxPrice = adActionMaxPrice;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ad_pvclk_create_time", nullable = false, length = 19)
+    public Date getAdPvclkCreateTime() {
+	return this.adPvclkCreateTime;
+    }
+
+    public void setAdPvclkCreateTime(Date adPvclkCreateTime) {
+	this.adPvclkCreateTime = adPvclkCreateTime;
+    }
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ad_pvclk_update_time", nullable = false, length = 19)
+    public Date getAdPvclkUpdateTime() {
+	return this.adPvclkUpdateTime;
+    }
+
+    public void setAdPvclkUpdateTime(Date adPvclkUpdateTime) {
+	this.adPvclkUpdateTime = adPvclkUpdateTime;
+    }
 
 }

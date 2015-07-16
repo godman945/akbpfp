@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpReport" table="pfp_report" catalog="akb">
         <id name="id" type="java.lang.Integer">
@@ -30,6 +30,46 @@
         </property>
         <property name="customerPrice" type="float">
             <column name="customer_price" precision="10" not-null="true">
+                <comment>&#192;x&#173;&#200;&#170;&#247;&#195;B</comment>
+            </column>
+        </property>
+        <property name="advanceActivateNum" type="int">
+            <column name="advance_activate_num" not-null="true">
+                <comment>&#183;s&#182;}&#179;q&#164;&#225;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="advanceActivatePrice" type="float">
+            <column name="advance_activate_price" precision="10" not-null="true">
+                <comment>&#183;s&#182;}&#179;q&#192;x&#173;&#200;&#170;&#247;&#195;B</comment>
+            </column>
+        </property>
+        <property name="advanceCustomerNum" type="int">
+            <column name="advance_customer_num" not-null="true">
+                <comment>&#192;x&#173;&#200;&#164;&#225;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="advanceCustomerPrice" type="float">
+            <column name="advance_customer_price" precision="10" not-null="true">
+                <comment>&#192;x&#173;&#200;&#170;&#247;&#195;B</comment>
+            </column>
+        </property>
+        <property name="laterActivateNum" type="int">
+            <column name="later_activate_num" not-null="true">
+                <comment>&#183;s&#182;}&#179;q&#164;&#225;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="laterActivatePrice" type="float">
+            <column name="later_activate_price" precision="10" not-null="true">
+                <comment>&#183;s&#182;}&#179;q&#192;x&#173;&#200;&#170;&#247;&#195;B</comment>
+            </column>
+        </property>
+        <property name="laterCustomerNum" type="int">
+            <column name="later_customer_num" not-null="true">
+                <comment>&#192;x&#173;&#200;&#164;&#225;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="laterCustomerPrice" type="float">
+            <column name="later_customer_price" precision="10" not-null="true">
                 <comment>&#192;x&#173;&#200;&#170;&#247;&#195;B</comment>
             </column>
         </property>

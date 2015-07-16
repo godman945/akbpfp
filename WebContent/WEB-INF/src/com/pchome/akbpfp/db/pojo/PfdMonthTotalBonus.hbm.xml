@@ -1,18 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfdMonthTotalBonus" table="pfd_month_total_bonus" catalog="akb">
         <id name="bonusId" type="java.lang.Integer">
             <column name="bonus_id" />
             <generator class="identity" />
         </id>
-        <many-to-one name="pfdCustomerInfo" class="com.pchome.akbpfp.db.pojo.PfdCustomerInfo" fetch="select">
-            <column name="pfd_customer_info" length="20" not-null="true">
-                <comment>&#184;g&#190;P&#176;&#211;&#177;b&#164;&#225;</comment>
-            </column>
-        </many-to-one>
         <property name="year" type="int">
             <column name="year" not-null="true">
                 <comment>&#166;~</comment>
@@ -31,6 +26,11 @@
         <property name="bonusDate" type="date">
             <column name="bonus_date" length="10" not-null="true">
                 <comment>&#188;&#250;&#170;&#247;&#173;p&#186;&#226;&#164;&#233;&#180;&#193;</comment>
+            </column>
+        </property>
+        <property name="pfdCustomerInfo" type="string">
+            <column name="pfd_customer_info" length="20" not-null="true">
+                <comment>&#184;g&#190;P&#176;&#211;&#177;b&#164;&#225;</comment>
             </column>
         </property>
         <property name="payType" type="string">

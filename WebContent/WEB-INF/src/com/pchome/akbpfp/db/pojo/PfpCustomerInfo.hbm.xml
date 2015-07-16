@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpCustomerInfo" table="pfp_customer_info" catalog="akb">
         <id name="customerInfoId" type="string">
@@ -55,7 +55,7 @@
         </property>
         <property name="laterRemain" type="float">
             <column name="later_remain" precision="10" not-null="true">
-                <comment>&#171;&#225;&#165;I&#190;l&#195;B</comment>
+                <comment>&#181;L&#174;&#196;&#196;&#230;&#166;&#236;</comment>
             </column>
         </property>
         <property name="memberId" type="string">
@@ -118,12 +118,32 @@
                 <comment>&#171;&#225;&#165;I&#193;`&#170;&#225;&#182;O&#170;&#247;&#195;B</comment>
             </column>
         </property>
+        <property name="totalLaterRetrieve" type="float">
+            <column name="total_later_retrieve" precision="10" not-null="true">
+                <comment>&#171;&#225;&#165;I&#166;^&#166;&#172;&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
         <property name="recognize" type="string">
             <column name="recognize" length="1" not-null="true" />
         </property>
         <property name="authorizedPage" type="string">
             <column name="authorized_page" length="1" not-null="true">
                 <comment>&#172;O&#167;_&#182;}&#177;&#210;&#177;&#194;&#197;v&#173;&#182;:Y&#172;O N&#167;_</comment>
+            </column>
+        </property>
+        <property name="black" type="string">
+            <column name="black" length="1">
+                <comment>&#182;&#194;&#166;W&#179;&#230;</comment>
+            </column>
+        </property>
+        <property name="blackReason" type="string">
+            <column name="black_reason" length="20">
+                <comment>&#182;&#194;&#166;W&#179;&#230;&#178;z&#165;&#209;</comment>
+            </column>
+        </property>
+        <property name="blackTime" type="timestamp">
+            <column name="black_time" length="19">
+                <comment>&#182;&#194;&#166;W&#179;&#230;&#174;&#201;&#182;&#161;</comment>
             </column>
         </property>
         <property name="createDate" type="timestamp">
@@ -168,13 +188,13 @@
             </key>
             <one-to-many class="com.pchome.akbpfp.db.pojo.PfpOrder" />
         </set>
-        <set name="pfdFixedBonusDetails" table="pfd_fixed_bonus_detail" inverse="true" lazy="true" fetch="select">
+        <set name="pfdUserAdAccountRefs" table="pfd_user_ad_account_ref" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="pfp_customer_info" length="20" not-null="true">
-                    <comment>&#195;&#246;&#193;&#228;&#166;r&#177;b&#164;&#225;</comment>
+                <column name="pfp_customer_info_id" length="20" not-null="true">
+                    <comment>&#188;s&#167;i&#177;b&#164;&#225;</comment>
                 </column>
             </key>
-            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail" />
+            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef" />
         </set>
         <set name="pfpAdActions" table="pfp_ad_action" inverse="true" lazy="true" fetch="select">
             <key>
@@ -184,13 +204,13 @@
             </key>
             <one-to-many class="com.pchome.akbpfp.db.pojo.PfpAdAction" />
         </set>
-        <set name="pfdUserAdAccountRefs" table="pfd_user_ad_account_ref" inverse="true" lazy="true" fetch="select">
+        <set name="pfdFixedBonusDetails" table="pfd_fixed_bonus_detail" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="pfp_customer_info_id" length="20" not-null="true">
-                    <comment>&#188;s&#167;i&#177;b&#164;&#225;</comment>
+                <column name="pfp_customer_info" length="20" not-null="true">
+                    <comment>&#195;&#246;&#193;&#228;&#166;r&#177;b&#164;&#225;</comment>
                 </column>
             </key>
-            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef" />
+            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail" />
         </set>
         <set name="pfpUsers" table="pfp_user" inverse="true" lazy="true" fetch="select">
             <key>

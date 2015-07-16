@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,56 +16,56 @@ import javax.persistence.Table;
 @Table(name = "pfp_ad_sysprice", catalog = "akb")
 public class PfpAdSysprice implements java.io.Serializable {
 
-	private Integer id;
-	private String adPoolSeq;
-	private float sysprice;
-	private int amount;
+    private Integer id;
+    private String adPoolSeq;
+    private float sysprice;
+    private int amount;
 
-	public PfpAdSysprice() {
-	}
+    public PfpAdSysprice() {
+    }
 
-	public PfpAdSysprice(String adPoolSeq, float sysprice, int amount) {
-		this.adPoolSeq = adPoolSeq;
-		this.sysprice = sysprice;
-		this.amount = amount;
-	}
+    public PfpAdSysprice(String adPoolSeq, float sysprice, int amount) {
+	this.adPoolSeq = adPoolSeq;
+	this.sysprice = sysprice;
+	this.amount = amount;
+    }
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
-		return this.id;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    public Integer getId() {
+	return this.id;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public void setId(Integer id) {
+	this.id = id;
+    }
 
-	@Column(name = "ad_pool_seq", nullable = false, length = 20)
-	public String getAdPoolSeq() {
-		return this.adPoolSeq;
-	}
+    @Column(name = "ad_pool_seq", nullable = false, length = 20)
+    public String getAdPoolSeq() {
+	return this.adPoolSeq;
+    }
 
-	public void setAdPoolSeq(String adPoolSeq) {
-		this.adPoolSeq = adPoolSeq;
-	}
+    public void setAdPoolSeq(String adPoolSeq) {
+	this.adPoolSeq = adPoolSeq;
+    }
 
-	@Column(name = "sysprice", nullable = false, precision = 10)
-	public float getSysprice() {
-		return this.sysprice;
-	}
+    @Column(name = "sysprice", nullable = false, precision = 10)
+    public float getSysprice() {
+	return this.sysprice;
+    }
 
-	public void setSysprice(float sysprice) {
-		this.sysprice = sysprice;
-	}
+    public void setSysprice(float sysprice) {
+	this.sysprice = sysprice;
+    }
 
-	@Column(name = "amount", nullable = false)
-	public int getAmount() {
-		return this.amount;
-	}
+    @Column(name = "amount", nullable = false)
+    public int getAmount() {
+	return this.amount;
+    }
 
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
+    public void setAmount(int amount) {
+	this.amount = amount;
+    }
 
 }

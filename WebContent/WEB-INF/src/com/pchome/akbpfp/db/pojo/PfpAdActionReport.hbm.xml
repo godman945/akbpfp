@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdActionReport" table="pfp_ad_action_report" catalog="akb">
         <id name="adActionReportSeq" type="java.lang.Integer">
@@ -26,6 +26,11 @@
         <property name="adActionSeq" type="string">
             <column name="ad_action_seq" length="20" not-null="true">
                 <comment>&#188;s&#167;i&#172;&#161;&#176;&#202;&#167;&#199;&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="payType" type="string">
+            <column name="pay_type" length="1" not-null="true">
+                <comment>&#165;I&#180;&#218;&#164;&#232;&#166;&#161;:1&#185;w&#165;I 2&#171;&#225;&#165;I</comment>
             </column>
         </property>
         <property name="adType" type="int">

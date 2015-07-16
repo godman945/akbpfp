@@ -1,11 +1,20 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -15,6 +24,7 @@ import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.api.ControlPriceAPI;
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
 import com.pchome.akbpfp.db.pojo.AdmDefineAd;
+import com.pchome.akbpfp.db.pojo.PfbxSize;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdExcludeKeyword;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
@@ -27,6 +37,7 @@ import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.ad.PfpAdKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
+import com.pchome.akbpfp.db.service.pfbx.IPfbSizeService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdDetailVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -73,7 +84,8 @@ public class AdAddAction extends BaseCookieAction{
 	private String photoTmpPath;
 	private String photoPath;
 	private String photoDbPath;
-
+	//判斷是否多檔上傳
+	private String multipartImgUupload;
 	// return data
 	private InputStream msg;
 	private String result;
@@ -87,8 +99,13 @@ public class AdAddAction extends BaseCookieAction{
 	private PfpAdExcludeKeywordService pfpAdExcludeKeywordService;
 	private DefineAdService defineAdService;
 	private SyspriceOperaterAPI syspriceOperaterAPI;
+	private IPfbSizeService pfbSizeService;
+	//廣告支援尺寸表
+	private List<PfbxSize> pfbSizeList = new ArrayList<PfbxSize>();
 	private ControlPriceAPI controlPriceAPI;
-
+	
+	private File[] uploadFile;
+	
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
 		String referer = request.getHeader("Referer");
@@ -279,7 +296,6 @@ public class AdAddAction extends BaseCookieAction{
 
 		// 新增關鍵字
 		addKeywords(pfpAdGroup);
-		System.out.println("FFFFFFFFFFFFFFF");
 		//新增排除關鍵字
 		addExcludeKeywords(pfpAdGroup);
 
@@ -514,20 +530,128 @@ public class AdAddAction extends BaseCookieAction{
 		}
 	}
 
-	
+	/**
+	 * 批次上傳圖像廣告
+	 * 1.取得初始畫面
+	 * 2.取得尺寸列表
+	 * */
 	public String adAddImgView(){
 	    adStyle = "TMG";
+	    multipartImgUupload = "YES";
+	    pfbSizeList = pfbSizeService.loadAll();
 	    return SUCCESS;
 	}
 	
 	
-	//上傳圖片
-	public String uploadImg(){
+	/**
+	 * 進行批次上傳圖像廣告
+	 * 
+	 * */
+	@SuppressWarnings("resource")
+	public String uploadImg() throws Exception{
 	    System.out.println("FFF");
 	    result = "alex";
+//	    System.out.println(uploadFile.size());
+	    String path = "/home/webuser/akb/pfp/alex_test";
+	    BufferedOutputStream bufferOutput = null;  
+	    for (File file : uploadFile) {
+		
+		File originalImgFile = file;
+		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, "jpg", baos);
+		baos.flush();
+		byte[] originalImgByte = baos.toByteArray();
+		baos.close();
+		    
+		    
+		byte[] resizedBytes = baos.toByteArray();
+		File resizedImgFile = new File("/home/webuser/akb/pfp/alex_test/test.png");
+		FileOutputStream fos = new FileOutputStream(resizedImgFile);
+		fos.write(resizedBytes);
+		fos.close();
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+//		System.out.println(file.getName());
+//		OutputStream os = new FileOutputStream(file);
+//		byte[] buffer = new byte[1024];
+//		int length = 0;
+//		
+//		InputStream is = new FileInputStream(file);
+//		while((length = is.read(buffer)) > 0) {
+//		    os.write(buffer, 0, length);
+//		}
+////		is.close();
+////		os.close();
+//		
+//		
+//		 FileOutputStream file3 =new FileOutputStream("D:/alex_test/upload_bed33ec_14e948f7bd2__7ff5_00000002.tmp");
+//		 while((length = is.read(buffer)) > 0) {
+//		     file3.write(buffer, 0, length);
+//		 }
+//		 file3.close();
+//		 is.close();
+//		 os.close();
+			
+		 
+		 
+		 
+//		 BufferedInputStream bi= new BufferedInputStream(is);
+//		 while((length = is.read(buffer)) > 0) {
+//		     file3.write(buffer, 0, length);
+//		 }
+		 
+//		 while(bi.available()>0){
+//		     file3.write(bi.read());
+//		 }
+//		 file3.flush();
+//		 file3.close();
+//		 bi.close();
+//		 is.close();
+		
+		
+		
+		
+		
+		
+		
+		
+//		bufferOutput = new BufferedOutputStream(new FileOutputStream(new File(path)),1024);  
+//		bufferOutput.write(buffer);  
+//		bufferOutput.flush();  
+	    }
 	    return SUCCESS;
 	}
 	
+	public List<PfbxSize> getPfbSizeList() {
+	    return pfbSizeList;
+	}
+
+	public void setPfbSizeList(List<PfbxSize> pfbSizeList) {
+	    this.pfbSizeList = pfbSizeList;
+	}
+
 	public void setPfpCustomerInfoService(
 			PfpCustomerInfoService pfpCustomerInfoService) {
 		this.pfpCustomerInfoService = pfpCustomerInfoService;
@@ -772,5 +896,24 @@ public class AdAddAction extends BaseCookieAction{
 	public void setControlPriceAPI(ControlPriceAPI controlPriceAPI) {
 		this.controlPriceAPI = controlPriceAPI;
 	}
+
+	public IPfbSizeService getPfbSizeService() {
+	    return pfbSizeService;
+	}
+
+	public void setPfbSizeService(IPfbSizeService pfbSizeService) {
+	    this.pfbSizeService = pfbSizeService;
+	}
+
+	public File[] getUploadFile() {
+	    return uploadFile;
+	}
+
+	public void setUploadFile(File[] uploadFile) {
+	    this.uploadFile = uploadFile;
+	}
+
+
+
 
 }

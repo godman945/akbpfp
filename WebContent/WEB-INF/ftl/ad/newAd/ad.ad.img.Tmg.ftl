@@ -25,7 +25,6 @@
 						<td>
 							<input type="radio" id="adStyle" name="adStyle" value="TXT" onclick="setAdStyle(this.value);" >文字廣告
 							<input type="radio" id="adStyle" name="adStyle" value="TMG" onclick="setAdStyle(this.value);" checked>圖文廣告
-							
 						</td>
 					</tr>
 				</tbody>
@@ -47,7 +46,7 @@
 						</td>
 					</tr>
                     <tr>
-						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br><a name="errAdImg" onclick="approveSize();">支援規格查詢</a></th>
+						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br><a href="#" name="errAdImg" onclick="approveSize();">支援規格查詢</a></th>
 						<td style="background:#f9f9f9;">
 							<span class="imgar" style="width:100%;">
                             <!--上傳圖片start-->
@@ -55,8 +54,8 @@
                                 <input type="hidden" id="adDetailID" name="adDetailID" value="img">
                                 <input type="hidden" id="adDetailName" name="adDetailName" value="廣告圖片">
                                 <input type="hidden" id="adDetailContent" name="adDetailContent" value="">
-                                <!--<input type="file" id="uploadFile" name="uploadFile" onchange="previewImage(this)">-->
-                                <input id="fileupload" type="file" name="files[]" multiple onchange="createPreViewArea(this)">
+                                <!--<input type="file" id="uploadFile" name="uploadFile" onchange="previewImage(this)">
+                                <input id="fileupload" type="file" name="files[]" multiple onchange="createImgDom(this)">-->
                                 <span id="chkFile" name="chkFile" style="color:red;size:5"></span><br />已上傳 0/100									
                             </div>
                             <!--上傳圖片end-->
@@ -68,22 +67,6 @@
             <!--上傳訊息start 預設是隱藏，有資料才顯示-->
             <div class="aduplodulbg" style="" >
                 <ul class="aduplodul">
-                    <!--上傳失敗start-->
-                    <li class="failbox">    
-                        <p class="addel"  onclick="removeImg(this);"></p> 
-                        <em>上傳失敗!</em>
-                        <ul>
-                        <li class="yes"><i>尺寸</i><b>300 x 100</b></li>
-                        <li class="name"><i>檔名</i><b>ehdk.PNG</b></li>
-                        <li class="yes"><i>大小</i><b>50KB</b></li>        
-                        </ul> 
-                        <div class="adboxdv">
-                        <span><i>說明：</i>檔案空白</span>
-                        <span class="adinf">系統無法上傳檔案!</span>  
-                        </div>
-                    </li>
-                    <!--上傳失敗end-->
-                    
             </div>
             <!--上傳訊息end-->
 <!-- adTmg end -->
@@ -99,10 +82,75 @@
 	<iframe id="doAdd" name="doAdd" style="display:none;height:150px;width:600px"></iframe>
 </div>
 
-<!-- 預覽畫面
-<div style="display:;width:70%;"  id="preViewImgDiv" >
+<!-- 預覽畫面 -->
+<div style="display:none;width:70%;"  id="preViewImgDiv" >
 	<div style="margin:0px auto;text-align:center; background:url(03.jpg) no-repeat;height:1617px;background-position:center top;"> 
-		<div id="alex99" name="alex99"></div>
+		<div id="preDiv" name="preDiv"></div>
 	</div>
 </div>
- -->
+
+
+
+
+<div style="display:none;width:70%;"  id="preViewImgDiv" >
+	<div style="margin:0px auto;text-align:center; background:url(03.jpg) no-repeat;height:1617px;background-position:center top;"> 
+		<div id="sizeDiv" name="sizeDiv">
+		
+		</div>
+	</div>
+</div>
+
+<#if pfbSizeList?exists>
+<div style="display:none;"  id="approveSizeDiv">
+	<div class="noticepop" style="width:auto;"><h4>廣告圖片支援規格查詢</h4><div>
+    <table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
+        <tbody>
+            <tr>
+                <th height="20">格式</th>
+                <td>
+                 JPG, PNG
+                </td>
+            </tr>
+            <tr>
+                <th height="20">大小上限</th>
+                <td>
+                 150 KB 
+              </td>
+            </tr>
+            <tr>
+              <th height="20">尺寸</th>
+              <td>
+               <div id="adSizeDiv" style="height:200px;overflow:auto;">
+              <#list pfbSizeList as pfbSizeVO>
+	 			<p>${pfbSizeVO.width!} x ${pfbSizeVO.height!}<br></p>
+			  </#list>
+			  </div>
+              </td>
+            </tr>					
+        </tbody>
+    </table>
+    <center><input onclick="closeBtn();" class="popbtn" type="button" value="關閉"></center>
+    </div>
+    <a href="#" onclick="closeBtn();" class="popclose">關閉</a>
+   </div>
+</div>
+</#if>
+
+<div id="preview"></div>
+
+
+
+
+
+
+
+
+<form id="formImg" action="adAddImgAjax.html"  method="post"  target="hidden_frame" enctype="multipart/form-data">
+   <div class="fromtrs">
+   	  <input id="uploadFile" type="file" name="uploadFile" multiple onchange="uploadImg(this)">
+   </div>
+</form> 
+<iframe style="display:none" name='hidden_frame' id="hidden_frame"></iframe>
+<div class="fromtrs">
+   <img id="img" src="" width="80" height="80"/>
+</div>

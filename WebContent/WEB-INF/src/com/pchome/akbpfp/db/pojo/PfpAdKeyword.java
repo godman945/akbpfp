@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1
+// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -23,158 +23,158 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_ad_keyword", catalog = "akb")
 public class PfpAdKeyword implements java.io.Serializable {
 
-	private String adKeywordSeq;
-	private PfpAdGroup pfpAdGroup;
-	private String adKeyword;
-	private float adKeywordSearchPrice;
-	private float adKeywordChannelPrice;
-	private float adKeywordOrder;
-	private int adKeywordStatus;
-	private Date adKeywordCreateTime;
-	private Date adKeywordUpdateTime;
-	private Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks = new HashSet<PfpAdKeywordPvclk>(
-			0);
-	private Set<PfpAdRank> pfpAdRanks = new HashSet<PfpAdRank>(0);
+    private String adKeywordSeq;
+    private PfpAdGroup pfpAdGroup;
+    private String adKeyword;
+    private float adKeywordSearchPrice;
+    private float adKeywordChannelPrice;
+    private float adKeywordOrder;
+    private int adKeywordStatus;
+    private Date adKeywordCreateTime;
+    private Date adKeywordUpdateTime;
+    private Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks = new HashSet<PfpAdKeywordPvclk>(
+	    0);
+    private Set<PfpAdRank> pfpAdRanks = new HashSet<PfpAdRank>(0);
 
-	public PfpAdKeyword() {
-	}
+    public PfpAdKeyword() {
+    }
 
-	public PfpAdKeyword(String adKeywordSeq, PfpAdGroup pfpAdGroup,
-			String adKeyword, float adKeywordSearchPrice,
-			float adKeywordChannelPrice, float adKeywordOrder,
-			int adKeywordStatus, Date adKeywordCreateTime,
-			Date adKeywordUpdateTime) {
-		this.adKeywordSeq = adKeywordSeq;
-		this.pfpAdGroup = pfpAdGroup;
-		this.adKeyword = adKeyword;
-		this.adKeywordSearchPrice = adKeywordSearchPrice;
-		this.adKeywordChannelPrice = adKeywordChannelPrice;
-		this.adKeywordOrder = adKeywordOrder;
-		this.adKeywordStatus = adKeywordStatus;
-		this.adKeywordCreateTime = adKeywordCreateTime;
-		this.adKeywordUpdateTime = adKeywordUpdateTime;
-	}
+    public PfpAdKeyword(String adKeywordSeq, PfpAdGroup pfpAdGroup,
+	    String adKeyword, float adKeywordSearchPrice,
+	    float adKeywordChannelPrice, float adKeywordOrder,
+	    int adKeywordStatus, Date adKeywordCreateTime,
+	    Date adKeywordUpdateTime) {
+	this.adKeywordSeq = adKeywordSeq;
+	this.pfpAdGroup = pfpAdGroup;
+	this.adKeyword = adKeyword;
+	this.adKeywordSearchPrice = adKeywordSearchPrice;
+	this.adKeywordChannelPrice = adKeywordChannelPrice;
+	this.adKeywordOrder = adKeywordOrder;
+	this.adKeywordStatus = adKeywordStatus;
+	this.adKeywordCreateTime = adKeywordCreateTime;
+	this.adKeywordUpdateTime = adKeywordUpdateTime;
+    }
 
-	public PfpAdKeyword(String adKeywordSeq, PfpAdGroup pfpAdGroup,
-			String adKeyword, float adKeywordSearchPrice,
-			float adKeywordChannelPrice, float adKeywordOrder,
-			int adKeywordStatus, Date adKeywordCreateTime,
-			Date adKeywordUpdateTime,
-			Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks, Set<PfpAdRank> pfpAdRanks) {
-		this.adKeywordSeq = adKeywordSeq;
-		this.pfpAdGroup = pfpAdGroup;
-		this.adKeyword = adKeyword;
-		this.adKeywordSearchPrice = adKeywordSearchPrice;
-		this.adKeywordChannelPrice = adKeywordChannelPrice;
-		this.adKeywordOrder = adKeywordOrder;
-		this.adKeywordStatus = adKeywordStatus;
-		this.adKeywordCreateTime = adKeywordCreateTime;
-		this.adKeywordUpdateTime = adKeywordUpdateTime;
-		this.pfpAdKeywordPvclks = pfpAdKeywordPvclks;
-		this.pfpAdRanks = pfpAdRanks;
-	}
+    public PfpAdKeyword(String adKeywordSeq, PfpAdGroup pfpAdGroup,
+	    String adKeyword, float adKeywordSearchPrice,
+	    float adKeywordChannelPrice, float adKeywordOrder,
+	    int adKeywordStatus, Date adKeywordCreateTime,
+	    Date adKeywordUpdateTime,
+	    Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks, Set<PfpAdRank> pfpAdRanks) {
+	this.adKeywordSeq = adKeywordSeq;
+	this.pfpAdGroup = pfpAdGroup;
+	this.adKeyword = adKeyword;
+	this.adKeywordSearchPrice = adKeywordSearchPrice;
+	this.adKeywordChannelPrice = adKeywordChannelPrice;
+	this.adKeywordOrder = adKeywordOrder;
+	this.adKeywordStatus = adKeywordStatus;
+	this.adKeywordCreateTime = adKeywordCreateTime;
+	this.adKeywordUpdateTime = adKeywordUpdateTime;
+	this.pfpAdKeywordPvclks = pfpAdKeywordPvclks;
+	this.pfpAdRanks = pfpAdRanks;
+    }
 
-	@Id
-	@Column(name = "ad_keyword_seq", unique = true, nullable = false, length = 20)
-	public String getAdKeywordSeq() {
-		return this.adKeywordSeq;
-	}
+    @Id
+    @Column(name = "ad_keyword_seq", unique = true, nullable = false, length = 20)
+    public String getAdKeywordSeq() {
+	return this.adKeywordSeq;
+    }
 
-	public void setAdKeywordSeq(String adKeywordSeq) {
-		this.adKeywordSeq = adKeywordSeq;
-	}
+    public void setAdKeywordSeq(String adKeywordSeq) {
+	this.adKeywordSeq = adKeywordSeq;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ad_group_seq", nullable = false)
-	public PfpAdGroup getPfpAdGroup() {
-		return this.pfpAdGroup;
-	}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ad_group_seq", nullable = false)
+    public PfpAdGroup getPfpAdGroup() {
+	return this.pfpAdGroup;
+    }
 
-	public void setPfpAdGroup(PfpAdGroup pfpAdGroup) {
-		this.pfpAdGroup = pfpAdGroup;
-	}
+    public void setPfpAdGroup(PfpAdGroup pfpAdGroup) {
+	this.pfpAdGroup = pfpAdGroup;
+    }
 
-	@Column(name = "ad_keyword", nullable = false, length = 50)
-	public String getAdKeyword() {
-		return this.adKeyword;
-	}
+    @Column(name = "ad_keyword", nullable = false, length = 50)
+    public String getAdKeyword() {
+	return this.adKeyword;
+    }
 
-	public void setAdKeyword(String adKeyword) {
-		this.adKeyword = adKeyword;
-	}
+    public void setAdKeyword(String adKeyword) {
+	this.adKeyword = adKeyword;
+    }
 
-	@Column(name = "ad_keyword_search_price", nullable = false, precision = 10)
-	public float getAdKeywordSearchPrice() {
-		return this.adKeywordSearchPrice;
-	}
+    @Column(name = "ad_keyword_search_price", nullable = false, precision = 10)
+    public float getAdKeywordSearchPrice() {
+	return this.adKeywordSearchPrice;
+    }
 
-	public void setAdKeywordSearchPrice(float adKeywordSearchPrice) {
-		this.adKeywordSearchPrice = adKeywordSearchPrice;
-	}
+    public void setAdKeywordSearchPrice(float adKeywordSearchPrice) {
+	this.adKeywordSearchPrice = adKeywordSearchPrice;
+    }
 
-	@Column(name = "ad_keyword_channel_price", nullable = false, precision = 10)
-	public float getAdKeywordChannelPrice() {
-		return this.adKeywordChannelPrice;
-	}
+    @Column(name = "ad_keyword_channel_price", nullable = false, precision = 10)
+    public float getAdKeywordChannelPrice() {
+	return this.adKeywordChannelPrice;
+    }
 
-	public void setAdKeywordChannelPrice(float adKeywordChannelPrice) {
-		this.adKeywordChannelPrice = adKeywordChannelPrice;
-	}
+    public void setAdKeywordChannelPrice(float adKeywordChannelPrice) {
+	this.adKeywordChannelPrice = adKeywordChannelPrice;
+    }
 
-	@Column(name = "ad_keyword_order", nullable = false, precision = 10)
-	public float getAdKeywordOrder() {
-		return this.adKeywordOrder;
-	}
+    @Column(name = "ad_keyword_order", nullable = false, precision = 10)
+    public float getAdKeywordOrder() {
+	return this.adKeywordOrder;
+    }
 
-	public void setAdKeywordOrder(float adKeywordOrder) {
-		this.adKeywordOrder = adKeywordOrder;
-	}
+    public void setAdKeywordOrder(float adKeywordOrder) {
+	this.adKeywordOrder = adKeywordOrder;
+    }
 
-	@Column(name = "ad_keyword_status", nullable = false)
-	public int getAdKeywordStatus() {
-		return this.adKeywordStatus;
-	}
+    @Column(name = "ad_keyword_status", nullable = false)
+    public int getAdKeywordStatus() {
+	return this.adKeywordStatus;
+    }
 
-	public void setAdKeywordStatus(int adKeywordStatus) {
-		this.adKeywordStatus = adKeywordStatus;
-	}
+    public void setAdKeywordStatus(int adKeywordStatus) {
+	this.adKeywordStatus = adKeywordStatus;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_keyword_create_time", nullable = false, length = 19)
-	public Date getAdKeywordCreateTime() {
-		return this.adKeywordCreateTime;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ad_keyword_create_time", nullable = false, length = 19)
+    public Date getAdKeywordCreateTime() {
+	return this.adKeywordCreateTime;
+    }
 
-	public void setAdKeywordCreateTime(Date adKeywordCreateTime) {
-		this.adKeywordCreateTime = adKeywordCreateTime;
-	}
+    public void setAdKeywordCreateTime(Date adKeywordCreateTime) {
+	this.adKeywordCreateTime = adKeywordCreateTime;
+    }
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_keyword_update_time", nullable = false, length = 19)
-	public Date getAdKeywordUpdateTime() {
-		return this.adKeywordUpdateTime;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ad_keyword_update_time", nullable = false, length = 19)
+    public Date getAdKeywordUpdateTime() {
+	return this.adKeywordUpdateTime;
+    }
 
-	public void setAdKeywordUpdateTime(Date adKeywordUpdateTime) {
-		this.adKeywordUpdateTime = adKeywordUpdateTime;
-	}
+    public void setAdKeywordUpdateTime(Date adKeywordUpdateTime) {
+	this.adKeywordUpdateTime = adKeywordUpdateTime;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpAdKeyword")
-	public Set<PfpAdKeywordPvclk> getPfpAdKeywordPvclks() {
-		return this.pfpAdKeywordPvclks;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpAdKeyword")
+    public Set<PfpAdKeywordPvclk> getPfpAdKeywordPvclks() {
+	return this.pfpAdKeywordPvclks;
+    }
 
-	public void setPfpAdKeywordPvclks(Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks) {
-		this.pfpAdKeywordPvclks = pfpAdKeywordPvclks;
-	}
+    public void setPfpAdKeywordPvclks(Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks) {
+	this.pfpAdKeywordPvclks = pfpAdKeywordPvclks;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpAdKeyword")
-	public Set<PfpAdRank> getPfpAdRanks() {
-		return this.pfpAdRanks;
-	}
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpAdKeyword")
+    public Set<PfpAdRank> getPfpAdRanks() {
+	return this.pfpAdRanks;
+    }
 
-	public void setPfpAdRanks(Set<PfpAdRank> pfpAdRanks) {
-		this.pfpAdRanks = pfpAdRanks;
-	}
+    public void setPfpAdRanks(Set<PfpAdRank> pfpAdRanks) {
+	this.pfpAdRanks = pfpAdRanks;
+    }
 
 }

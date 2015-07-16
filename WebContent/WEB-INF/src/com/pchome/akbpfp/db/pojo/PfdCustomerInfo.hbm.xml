@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Sep 18, 2014 6:53:12 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfdCustomerInfo" table="pfd_customer_info" catalog="akb">
         <id name="customerInfoId" type="string">
@@ -133,6 +133,11 @@
                 <comment>&#164;w&#166;&#172;&#168;&#236;&#170;&#247;&#195;B</comment>
             </column>
         </property>
+        <property name="mixFlag" type="string">
+            <column name="mix_flag" length="1">
+                <comment>&#186;&#238;&#166;X&#184;g&#190;P&#176;&#211;</comment>
+            </column>
+        </property>
         <property name="activateDate" type="timestamp">
             <column name="activate_date" length="19">
                 <comment>&#182;}&#179;q&#164;&#233;&#180;&#193;</comment>
@@ -148,14 +153,6 @@
                 <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
             </column>
         </property>
-        <set name="pfdMonthTotalBonuses" table="pfd_month_total_bonus" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="pfd_customer_info" length="20" not-null="true">
-                    <comment>&#184;g&#190;P&#176;&#211;&#177;b&#164;&#225;</comment>
-                </column>
-            </key>
-            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdMonthTotalBonus" />
-        </set>
         <set name="pfdUsers" table="pfd_user" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="customer_info_id" length="20" not-null="true">
