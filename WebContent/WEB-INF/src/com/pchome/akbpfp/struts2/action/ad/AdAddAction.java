@@ -1,15 +1,12 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +37,7 @@ import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfbx.IPfbSizeService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdDetailVO;
+import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
@@ -551,11 +549,19 @@ public class AdAddAction extends BaseCookieAction{
 	public String uploadImg() throws Exception{
 	    System.out.println("FFF");
 	    result = "alex";
-//	    System.out.println(uploadFile.size());
-	    String path = "/home/webuser/akb/pfp/alex_test";
+	    
+	    String customerInfoId = super.getCustomer_info_id();
+	    String userImgPath = "/home/webuser/akb/pfp/alex_test/";
 	    BufferedOutputStream bufferOutput = null;  
+	    
+	    Date date = new Date();
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	    File customerImgFile = null;
+	    File customerImgFileDateFile = null;
+	    File customerImgFileOriginalDateFile = null;
+	    customerImgFile = new File(userImgPath+customerInfoId);
+	    CommonUtilModel commonUtilModel = new CommonUtilModel();
 	    for (File file : uploadFile) {
-		
 		File originalImgFile = file;
 		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -563,13 +569,31 @@ public class AdAddAction extends BaseCookieAction{
 		baos.flush();
 		byte[] originalImgByte = baos.toByteArray();
 		baos.close();
-		    
-		    
-		byte[] resizedBytes = baos.toByteArray();
-		File resizedImgFile = new File("/home/webuser/akb/pfp/alex_test/test.png");
-		FileOutputStream fos = new FileOutputStream(resizedImgFile);
-		fos.write(resizedBytes);
-		fos.close();
+		
+		if(!customerImgFile.exists()){
+		    customerImgFile.mkdirs();
+		}
+		customerImgFileDateFile = new File(userImgPath+customerInfoId+"\\"+sdf.format(date));
+		if(!customerImgFileDateFile.exists()){
+		    customerImgFileDateFile.mkdirs();
+		    customerImgFileOriginalDateFile = new File(userImgPath+customerInfoId+"\\"+sdf.format(date)+"\\original");
+		    customerImgFileOriginalDateFile.mkdirs();
+		    commonUtilModel.writeImg(bufferedImage,userImgPath,customerInfoId, sdf.format(date));
+		}else{
+		    commonUtilModel.writeImg(bufferedImage,userImgPath,customerInfoId, sdf.format(date));
+		}
+		
+		
+		
+		
+		
+		
+		
+//		byte[] resizedBytes = baos.toByteArray();
+//		File resizedImgFile = new File("/home/webuser/akb/pfp/alex_test/test.png");
+//		FileOutputStream fos = new FileOutputStream(resizedImgFile);
+//		fos.write(resizedBytes);
+//		fos.close();
 		
 		
 		
