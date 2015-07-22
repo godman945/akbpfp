@@ -33,7 +33,7 @@
 <!-- adTmg start -->
   			
 			<h4>製作廣告</h4>
-			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
+			<table width="100%" id="alex" cellspacing="1" cellpadding="0" border="0" class="tb02">
 				<tbody>
 					<tr>
 						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>廣告連結網址</th>
@@ -64,6 +64,12 @@
 					</tr>					
 				</tbody>
 			</table>
+			 
+			<div id="notSuppotDiv" style="display:none;">
+				您的瀏覽器不支援唷! 請更換IE10以上或其它瀏覽器 
+				<img src="<@s.url value="/" />html/main/img/tt_pp2.png" class="tt_pp">
+			</div>
+			
             <!--上傳訊息start 預設是隱藏，有資料才顯示-->
             <div class="aduplodulbg" style="" >
                 <ul id="AG" class="aduplodul">

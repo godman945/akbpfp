@@ -9,7 +9,17 @@ var jsonObj = null;
 var fileArray =[];
 var seqArray = [];
 var uploadFileSize = "";
+ 
 $(document).ready(function(){
+	if($.browser.msie){
+		if(parseInt($.browser.version) < 10){
+			$("#alex").css("display","none");
+			$("#notSuppotDiv").css("display","");
+			$("#submitBtn").attr("disabled", true);
+		}
+	}
+	
+	
 	//存入上傳後的圖片陣列
 	$(function () {
 	    $('#fileupload').fileupload({
@@ -251,9 +261,6 @@ function closeBtn(){
 
 //存檔
 function multipartImgUuploadSubmit(){
-	
-	
-	
 	var submitFlag = true;
 	var keyWordArray = [];
 	$.each($("#KeywordUL li"), function( index, obj ) {
@@ -310,6 +317,10 @@ function multipartImgUuploadSubmit(){
 		$(location).attr( 'href' , 'adAdView.html?adGroupSeq='+$("#adGroupSeq").val());
 	}
 });
-	
-	
+
+
 }  
+//取消
+function cancerSubmit(){
+	$(location).attr( 'href' , 'adActionView.html');
+}

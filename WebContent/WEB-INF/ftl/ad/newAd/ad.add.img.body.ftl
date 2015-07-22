@@ -55,7 +55,7 @@
 		</#if>
 		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
 		<center style="margin-top:10px;">
-			<input type="button" id="cancel" value="取 消"> 
+			<input type="button" id="cancel"  onclick="cancerSubmit();" value="取 消"> 
 			<input type="button" id="submitBtn" onclick="multipartImgUuploadSubmit();" value="送出審核"> 
 			<!-- <input type="button" id="saveNew" value="儲存後再新增廣告"> --> 
 		</center>
