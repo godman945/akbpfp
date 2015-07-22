@@ -31,8 +31,8 @@ public class CommonUtilModel extends BaseCookieAction{
 	    log.info("開始處理圖片:"+adSeq);
 	    Date date2 = new Date();
 	    SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"\\"+date+"\\original\\"+adSeq+".jpg"));
-	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"\\"+date+"\\temporal\\"+adSeq+".jpg"));
+	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
+	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg";
 	}
     
@@ -41,11 +41,11 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * */
 	public void deleteTemporalImg(String userImgPath,String custimerInfoid,String date,String adSeq) throws Exception{
 	    log.info("開始刪除暫存圖片:"+adSeq+".jpg");
-	    File folder = new File(userImgPath+custimerInfoid+"\\"+date+"\\temporal\\");
+	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/");
             String[] list = folder.list();           
             for(int i = 0; i < list.length; i++){
         	if(!list[i].equals(adSeq+".jpg")){
-        	    File file = new File(userImgPath+custimerInfoid+"\\"+date+"\\temporal\\"+list[i]);
+        	    File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
         	    file.delete();
         	}
             }
@@ -57,10 +57,10 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * */
 	public void deleteAllTemporalImg(String userImgPath,String custimerInfoid,String date) throws Exception{
 	    log.info("開始刪除全部暫存圖片");
-	    File folder = new File(userImgPath+custimerInfoid+"\\"+date+"\\temporal\\");
+	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/");
             String[] list = folder.list();           
             for(int i = 0; i < list.length; i++){
-        	File file = new File(userImgPath+custimerInfoid+"\\"+date+"\\temporal\\"+list[i]);
+        	File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
         	file.delete();
             }
 	}
@@ -72,13 +72,13 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * */
 	public ImageVO createAdImg(String userImgPath,String custimerInfoid,String date,String adSeq) throws Exception{
 	    log.info("開始產生廣告圖片:"+adSeq);
-	    log.info(">>>>>"+userImgPath+custimerInfoid+"\\"+date+"\\temporal\\");
-	    File folder = new File(userImgPath+custimerInfoid+"\\"+date+"\\temporal\\");
+	    log.info(">>>>>"+userImgPath+custimerInfoid+"/"+date+"/temporal/");
+	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/");
 	    String[] list = folder.list();
 	    String imgUploadPath= "";
 	    ImageVO imageVO = new ImageVO();
 	    for(int i = 0; i < list.length; i++){
-		File file = new File(userImgPath+custimerInfoid+"\\"+date+"\\temporal\\"+list[i]);
+		File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
 		if(adSeq.equals(file.getName().substring(0,file.getName().indexOf(".")))){
 		    BufferedImage bufferedImage = ImageIO.read(file);
 		    imageVO.setImgWidth(String.valueOf(bufferedImage.getWidth()));
@@ -88,7 +88,7 @@ public class CommonUtilModel extends BaseCookieAction{
 		    Graphics2D graphics2D = resizedImage.createGraphics();
 		    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, null);
 		    graphics2D.dispose();
-		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg"));
+		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));
 		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg");
 		   
 		}
