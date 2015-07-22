@@ -603,8 +603,6 @@ public class AdAddAction extends BaseCookieAction{
 	    File customerImgFileDateFile = null;
 	    File customerImgFileOriginalDateFile = null;
 	    File customerImgFileTemporalDateFile = null;
-	   
-	    photoDbPathNew = "/export/home/webuser/akb/pfp/img/alex_test/";
 	    customerImgFile = new File(photoDbPathNew+customerInfoId);
 	    CommonUtilModel commonUtilModel = new CommonUtilModel();
 	   
@@ -718,7 +716,6 @@ public class AdAddAction extends BaseCookieAction{
 	JSONArray seqArray = new JSONArray(seqArrayJsonObject.get("seqArray").toString());
 	// 1.存廣告檔
 	// 2.刪暫存圖檔
-	photoDbPathNew = "/export/home/webuser/akb/pfp/img/alex_test/";
 	CommonUtilModel commonUtilModel = new CommonUtilModel();
 	String customerInfoId = super.getCustomer_info_id();
 	Date date = new Date();
