@@ -604,7 +604,7 @@ public class AdAddAction extends BaseCookieAction{
 	    File customerImgFileOriginalDateFile = null;
 	    File customerImgFileTemporalDateFile = null;
 	   
-	    photoDbPathNew = "/export/home/webuser/akb/pfp/alex_test/";
+	    photoDbPathNew = "\\export\\home\\webuser\\akb\\pfp\\alex_test\\";
 	    customerImgFile = new File(photoDbPathNew+customerInfoId);
 	    CommonUtilModel commonUtilModel = new CommonUtilModel();
 	   
