@@ -1,6 +1,5 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <@s.set var="uri" value="%{#request['javax.servlet.forward.request_uri']}" />
-
 <!-- submenu start -->
 <#if addFlag?exists && addFlag=="y">
 <div class="submn">
@@ -22,6 +21,13 @@
 
 </#if>
 
+
+<div class="submn">
+	<@s.if test="%{#uri.indexOf('/adAddImg') > -1}">
+        <a href="<@s.url value="/" />adAdAdd.html?adGroupSeq=${adGroupSeq}" style="text-decoration:none"><b>製作廣告</b></a>
+    </@s.if>
+</div>
+
 <div class="submn">
 	<@s.if test="%{#uri.indexOf('/adActionView') > -1 ||
 				   #uri.indexOf('/searchAdAction') > -1 ||
@@ -37,17 +43,3 @@
        	<a href="<@s.url value="/" />adActionView.html">檢視廣告</a>
     </@s.else>
 </div>
-
-<!---->
-<@s.if test="%{#uri.indexOf('/adAdAdd') > -1 }">
-<div class="submn"><a href="<@s.url value="/" />adAddImg.html">
-	<@s.if test="%{#uri.indexOf('/adAddImg') > -1}">
-        <b>圖片廣告</b>
-    </@s.if>
-    <@s.else>
-       	圖片廣告
-    </@s.else>
-</a></div>
-</@s.if>
-
-<!-- submenu end -->
