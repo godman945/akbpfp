@@ -409,7 +409,7 @@ public class AdAddAction extends BaseCookieAction{
 			pfpAd.setAdSendVerifyTime(new Date());
 			pfpAd.setAdCreateTime(new Date());
 			pfpAd.setAdUpdateTime(new Date());
-//			pfpAdService.savePfpAd(pfpAd);
+			pfpAdService.savePfpAd(pfpAd);
 		} catch(Exception ex) {
 			log.info("Exception ex" + ex);
 		}
