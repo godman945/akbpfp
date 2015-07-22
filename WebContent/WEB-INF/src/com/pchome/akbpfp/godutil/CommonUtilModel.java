@@ -72,6 +72,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * */
 	public ImageVO createAdImg(String userImgPath,String custimerInfoid,String date,String adSeq) throws Exception{
 	    log.info("開始產生廣告圖片:"+adSeq);
+	    log.info(">>>>>"+userImgPath+custimerInfoid+"\\"+date+"\\temporal\\");
 	    File folder = new File(userImgPath+custimerInfoid+"\\"+date+"\\temporal\\");
 	    String[] list = folder.list();
 	    String imgUploadPath= "";
