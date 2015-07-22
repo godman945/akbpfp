@@ -625,6 +625,7 @@ public class AdAddAction extends BaseCookieAction{
 		baos.close();
 		 log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
 		 log.info(">>>2.path>>"+customerImgFile.getPath());
+		 log.info(customerImgFile.exists());
 		if(!customerImgFile.exists()){
 		    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
 		    customerImgFile.mkdirs();
