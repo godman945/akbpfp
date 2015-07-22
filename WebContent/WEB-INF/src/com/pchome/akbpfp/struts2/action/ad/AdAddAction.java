@@ -596,7 +596,6 @@ public class AdAddAction extends BaseCookieAction{
 	    templateProductSeq = EnumAdStyle.IMG.getTproSeq();
 	    adClass = "1";
 	    adStyle = "IMG";
-	    PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 	    String customerInfoId = super.getCustomer_info_id();
 	    Date date = new Date();
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -613,8 +612,9 @@ public class AdAddAction extends BaseCookieAction{
 	    String imgWidth ="";
 	    String imgHeight ="";
 	    String fileSize= "";
+	    imgUploadPath = "";
+	    photoDbPathNew = "/home/webuser/akb/pfp/alex_test/";
 	    for (File file : fileupload) {
-		imgUploadPath = "";
 		File originalImgFile = file;
 		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -712,6 +712,7 @@ public class AdAddAction extends BaseCookieAction{
 	JSONArray seqArray = new JSONArray(seqArrayJsonObject.get("seqArray").toString());
 	// 1.存廣告檔
 	// 2.刪暫存圖檔
+	photoDbPathNew = "/home/webuser/akb/pfp/alex_test/";
 	CommonUtilModel commonUtilModel = new CommonUtilModel();
 	String customerInfoId = super.getCustomer_info_id();
 	Date date = new Date();
