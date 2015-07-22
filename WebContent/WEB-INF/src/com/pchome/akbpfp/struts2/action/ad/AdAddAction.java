@@ -613,7 +613,7 @@ public class AdAddAction extends BaseCookieAction{
 	    String imgHeight ="";
 	    String fileSize= "";
 	    imgUploadPath = "";
-//	    photoDbPathNew = "/home/webuser/akb/pfp/alex_test/";
+	    photoDbPathNew = "/home/webuser/akb/pfp/alex_test/";
 	    log.info(">>>T>>"+photoDbPathNew);
 	    for (File file : fileupload) {
 		File originalImgFile = file;
@@ -714,7 +714,7 @@ public class AdAddAction extends BaseCookieAction{
 	// 1.存廣告檔
 	// 2.刪暫存圖檔
 	System.out.println(photoDbPathNew);
-//	photoDbPathNew = "/home/webuser/akb/pfp/alex_test/";
+	photoDbPathNew = "/home/webuser/akb/pfp/alex_test/";
 	CommonUtilModel commonUtilModel = new CommonUtilModel();
 	String customerInfoId = super.getCustomer_info_id();
 	Date date = new Date();
