@@ -623,8 +623,9 @@ public class AdAddAction extends BaseCookieAction{
 		ImageIO.write(bufferedImage, "jpg", baos);
 		baos.flush();
 		baos.close();
+		 log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
 		if(!customerImgFile.exists()){
-		    log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
+		    log.info(">>>2.path>>"+photoDbPathNew+customerInfoId);
 		    customerImgFile.mkdirs();
 		}
 		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"\\"+sdf.format(date));
