@@ -393,10 +393,11 @@ public class AdAddAction extends BaseCookieAction{
 	//新增廣告 
 	private void addAd(PfpAdGroup pfpAdGroup) {
 		try {
-		    	adSeq = "";
 		    	log.info(">>>>> time: " + new Date());
-			adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-			System.out.println(adSeq);
+			
+		    	if(adSeq == null || StringUtils.isBlank(adSeq)){
+		    	    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+		    	}
 			PfpAd pfpAd = new PfpAd();
 			pfpAd.setAdSeq(adSeq);
 			pfpAd.setPfpAdGroup(pfpAdGroup);
@@ -632,12 +633,14 @@ public class AdAddAction extends BaseCookieAction{
 		    if(!customerImgFileTemporalDateFile.exists()){
 			customerImgFileTemporalDateFile.mkdirs();
 		    }
-		    addAd(pfpAdGroup);
+		    adSeq = "";
+		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
 		    commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
 		    imgWidth = String.valueOf(bufferedImage.getWidth());
 		    imgHeight = String.valueOf(bufferedImage.getHeight());
 		}else{
-		    addAd(pfpAdGroup);
+		    adSeq = "";
+		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
 		    commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
 		    imgWidth = String.valueOf(bufferedImage.getWidth());
 		    imgHeight = String.valueOf(bufferedImage.getHeight());
@@ -716,19 +719,6 @@ public class AdAddAction extends BaseCookieAction{
 	ImageVO imageVO = new ImageVO();
 	if (seqArray.length() > 0) {
 	    for (int i = 0; i < seqArray.length(); i++) {
-		PfpAd pfpAd = new PfpAd();
-		pfpAd.setAdSeq(seqArray.get(i).toString());
-		pfpAd.setPfpAdGroup(pfpAdGroup);
-		pfpAd.setAdClass(adClass);
-		pfpAd.setAdStyle(adStyle);
-		pfpAd.setTemplateProductSeq(templateProductSeq);
-		pfpAd.setAdSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
-		pfpAd.setAdChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
-		pfpAd.setAdStatus(EnumStatus.NoVerify.getStatusId());
-		pfpAd.setAdSendVerifyTime(new Date());
-		pfpAd.setAdCreateTime(new Date());
-		pfpAd.setAdUpdateTime(new Date());
-		pfpAdService.savePfpAd(pfpAd);
 		adSeq = seqArray.get(i).toString();
 		imageVO = commonUtilModel.createAdImg(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
 		String adPoolSeq = "";
@@ -742,6 +732,7 @@ public class AdAddAction extends BaseCookieAction{
 		    result = "error";
 		    return "success";
 		}
+		addAd(pfpAdGroup);
 		saveAdDetail(imageVO.getImgPath().replace("\\", "/"),EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
 		saveAdDetail(adLinkURL,EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
 	    }
