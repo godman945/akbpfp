@@ -603,6 +603,8 @@ public class AdAddAction extends BaseCookieAction{
 	    File customerImgFileDateFile = null;
 	    File customerImgFileOriginalDateFile = null;
 	    File customerImgFileTemporalDateFile = null;
+	   
+	    photoDbPathNew = "/export/home/webuser/akb/pfp/alex_test/";
 	    customerImgFile = new File(photoDbPathNew+customerInfoId);
 	    CommonUtilModel commonUtilModel = new CommonUtilModel();
 	   
@@ -613,7 +615,6 @@ public class AdAddAction extends BaseCookieAction{
 	    String imgHeight ="";
 	    String fileSize= "";
 	    imgUploadPath = "";
-	    photoDbPathNew = "/home/webuser/akb/pfp/alex_test/";
 	    log.info(">>>T>>"+photoDbPathNew);
 	    for (File file : fileupload) {
 		File originalImgFile = file;
