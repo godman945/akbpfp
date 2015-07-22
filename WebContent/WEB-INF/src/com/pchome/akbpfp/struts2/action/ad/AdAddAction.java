@@ -653,7 +653,6 @@ public class AdAddAction extends BaseCookieAction{
 		    fileSize = String.valueOf(file.length() / 1024);
 		}
 		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
-		result = "";
 	    }
 	    return SUCCESS;
 	}
