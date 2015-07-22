@@ -11,7 +11,7 @@
 		<ul class="admenuul">
             <li class="m01"><a href="#" class="active">圖像廣告</a></li>
             <li class="m02"><a href="#">圖文廣告</a></li>
-            <li class="m03"><a href="#">影音廣告</a></li>
+            <!--<li class="m03"><a href="#">影音廣告</a></li>-->
         </ul>
         <div class="grtba">
 			<h4 style="display:none;">建立廣告</h4>
