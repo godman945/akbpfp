@@ -24,7 +24,7 @@
 		<ul class="admenuul">
             <li class="m01"><a href="#" onclick="toAdAddImg()">圖像廣告</a></li>
             <li class="m02"><a href="adAdAdd.html?adGroupSeq=ag_201507130001" class="active">圖文廣告</a></li>
-            <li class="m03"><a href="#">影音廣告</a></li>
+           <!-- <li class="m03"><a href="#">影音廣告</a></li>-->
         </ul>
         
         
