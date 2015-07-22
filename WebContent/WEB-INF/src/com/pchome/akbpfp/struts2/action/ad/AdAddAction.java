@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -15,6 +14,8 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.opensymphony.oscache.util.StringUtil;
@@ -23,6 +24,7 @@ import com.pchome.akbpfp.api.SyspriceOperaterAPI;
 import com.pchome.akbpfp.db.pojo.AdmDefineAd;
 import com.pchome.akbpfp.db.pojo.PfbxSize;
 import com.pchome.akbpfp.db.pojo.PfpAd;
+import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpAdExcludeKeyword;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
@@ -38,7 +40,10 @@ import com.pchome.akbpfp.db.service.pfbx.IPfbSizeService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdDetailVO;
 import com.pchome.akbpfp.godutil.CommonUtilModel;
+import com.pchome.akbpfp.godutil.ImageVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdDetail;
+import com.pchome.enumerate.ad.EnumAdSize;
 import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -82,8 +87,6 @@ public class AdAddAction extends BaseCookieAction{
 	private String photoTmpPath;
 	private String photoPath;
 	private String photoDbPath;
-	//判斷是否多檔上傳
-	private String multipartImgUupload;
 	// return data
 	private InputStream msg;
 	private String result;
@@ -100,10 +103,14 @@ public class AdAddAction extends BaseCookieAction{
 	private IPfbSizeService pfbSizeService;
 	//廣告支援尺寸表
 	private List<PfbxSize> pfbSizeList = new ArrayList<PfbxSize>();
+	//圖片上傳位置
+	private String imgUploadPath;
 	private ControlPriceAPI controlPriceAPI;
-	
-	private File[] uploadFile;
-	
+	private String seqArray;
+	private File[] fileupload;
+	private String adLinkURL;
+	private String photoDbPathNew;
+
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
 		String referer = request.getHeader("Referer");
@@ -386,8 +393,10 @@ public class AdAddAction extends BaseCookieAction{
 	//新增廣告 
 	private void addAd(PfpAdGroup pfpAdGroup) {
 		try {
+		    	adSeq = "";
 		    	log.info(">>>>> time: " + new Date());
 			adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+			System.out.println(adSeq);
 			PfpAd pfpAd = new PfpAd();
 			pfpAd.setAdSeq(adSeq);
 			pfpAd.setPfpAdGroup(pfpAdGroup);
@@ -400,7 +409,7 @@ public class AdAddAction extends BaseCookieAction{
 			pfpAd.setAdSendVerifyTime(new Date());
 			pfpAd.setAdCreateTime(new Date());
 			pfpAd.setAdUpdateTime(new Date());
-			pfpAdService.savePfpAd(pfpAd);
+//			pfpAdService.savePfpAd(pfpAd);
 		} catch(Exception ex) {
 			log.info("Exception ex" + ex);
 		}
@@ -532,141 +541,216 @@ public class AdAddAction extends BaseCookieAction{
 	 * 批次上傳圖像廣告
 	 * 1.取得初始畫面
 	 * 2.取得尺寸列表
+	 * @throws Exception 
 	 * */
-	public String adAddImgView(){
+	public String adAddImgView() throws Exception{
+	    PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+	    adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
+	    adGroupName  = pfpAdGroup.getAdGroupName();
 	    adStyle = "TMG";
-	    multipartImgUupload = "YES";
-	    pfbSizeList = pfbSizeService.loadAll();
+	    List<PfbxSize> pfbSizeList = pfbSizeService.loadAll();
+	    for (EnumAdSize enumAdSize : EnumAdSize.values()) {
+		for (PfbxSize pfbxSize : pfbSizeList) {
+		    if(String.valueOf(pfbxSize.getId()).equals(enumAdSize.getName())){
+			this.pfbSizeList.add(pfbxSize);
+		    }
+		}
+	    }
+	    // 取出分類所屬關鍵字
+	    pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
+	    // 取出分類所屬排除關鍵字
+	    pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, super.getCustomer_info_id());
 	    return SUCCESS;
 	}
 	
 	
+	
+	/**
+	 * 新增廣告明細
+	 * */
+	public void saveAdDetail(String content ,String adDetailId,String adPoolSeq,String defineAdSeq) throws Exception{
+	    templateProductSeq = EnumAdStyle.IMG.getTproSeq();
+	    adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+	    PfpAdDetail pfpAdDetail = new PfpAdDetail();
+	    pfpAdDetail.setAdDetailSeq(adDetailSeq);
+	    pfpAdDetail.setPfpAd(pfpAdService.getPfpAdBySeq(adSeq));
+	    pfpAdDetail.setAdDetailId(adDetailId);
+	    pfpAdDetail.setAdDetailContent(content);
+	    pfpAdDetail.setAdPoolSeq(adPoolSeq);
+	    pfpAdDetail.setDefineAdSeq(defineAdSeq);
+	    pfpAdDetail.setVerifyFlag("y");
+	    pfpAdDetail.setVerifyStatus("n");
+	    pfpAdDetail.setAdDetailCreateTime(new Date());
+	    pfpAdDetail.setAdDetailUpdateTime(new Date());
+	    pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
+	}
+	
 	/**
 	 * 進行批次上傳圖像廣告
-	 * 
+	 * 1.圖片存檔至暫存file
 	 * */
-	@SuppressWarnings("resource")
 	public String uploadImg() throws Exception{
-	    System.out.println("FFF");
-	    result = "alex";
-	    
+	    log.info("Start multipart img upload");
+	    adPoolSeq = EnumAdStyle.IMG.getAdPoolSeq();
+	    templateProductSeq = EnumAdStyle.IMG.getTproSeq();
+	    adClass = "1";
+	    adStyle = "IMG";
+	    PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 	    String customerInfoId = super.getCustomer_info_id();
-	    String userImgPath = "/home/webuser/akb/pfp/alex_test/";
-	    BufferedOutputStream bufferOutput = null;  
-	    
 	    Date date = new Date();
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	    File customerImgFile = null;
 	    File customerImgFileDateFile = null;
 	    File customerImgFileOriginalDateFile = null;
-	    customerImgFile = new File(userImgPath+customerInfoId);
+	    File customerImgFileTemporalDateFile = null;
+	    customerImgFile = new File(photoDbPathNew+customerInfoId);
 	    CommonUtilModel commonUtilModel = new CommonUtilModel();
-	    for (File file : uploadFile) {
+	   
+	    if(fileupload == null){
+		return SUCCESS;
+	    }
+	    String imgWidth ="";
+	    String imgHeight ="";
+	    String fileSize= "";
+	    for (File file : fileupload) {
+		imgUploadPath = "";
 		File originalImgFile = file;
 		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(bufferedImage, "jpg", baos);
 		baos.flush();
-		byte[] originalImgByte = baos.toByteArray();
 		baos.close();
-		
 		if(!customerImgFile.exists()){
 		    customerImgFile.mkdirs();
 		}
-		customerImgFileDateFile = new File(userImgPath+customerInfoId+"\\"+sdf.format(date));
+		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"\\"+sdf.format(date));
 		if(!customerImgFileDateFile.exists()){
 		    customerImgFileDateFile.mkdirs();
-		    customerImgFileOriginalDateFile = new File(userImgPath+customerInfoId+"\\"+sdf.format(date)+"\\original");
+		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"\\"+sdf.format(date)+"\\original");
 		    customerImgFileOriginalDateFile.mkdirs();
-		    commonUtilModel.writeImg(bufferedImage,userImgPath,customerInfoId, sdf.format(date));
+		    customerImgFileTemporalDateFile = new File(photoDbPathNew+customerInfoId+"\\"+sdf.format(date)+"\\temporal");
+		    if(!customerImgFileTemporalDateFile.exists()){
+			customerImgFileTemporalDateFile.mkdirs();
+		    }
+		    addAd(pfpAdGroup);
+		    commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
+		    imgWidth = String.valueOf(bufferedImage.getWidth());
+		    imgHeight = String.valueOf(bufferedImage.getHeight());
 		}else{
-		    commonUtilModel.writeImg(bufferedImage,userImgPath,customerInfoId, sdf.format(date));
+		    addAd(pfpAdGroup);
+		    commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
+		    imgWidth = String.valueOf(bufferedImage.getWidth());
+		    imgHeight = String.valueOf(bufferedImage.getHeight());
+		    fileSize = String.valueOf(file.length() / 1024);
 		}
-		
-		
-		
-		
-		
-		
-		
-//		byte[] resizedBytes = baos.toByteArray();
-//		File resizedImgFile = new File("/home/webuser/akb/pfp/alex_test/test.png");
-//		FileOutputStream fos = new FileOutputStream(resizedImgFile);
-//		fos.write(resizedBytes);
-//		fos.close();
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		System.out.println(file.getName());
-//		OutputStream os = new FileOutputStream(file);
-//		byte[] buffer = new byte[1024];
-//		int length = 0;
-//		
-//		InputStream is = new FileInputStream(file);
-//		while((length = is.read(buffer)) > 0) {
-//		    os.write(buffer, 0, length);
-//		}
-////		is.close();
-////		os.close();
-//		
-//		
-//		 FileOutputStream file3 =new FileOutputStream("D:/alex_test/upload_bed33ec_14e948f7bd2__7ff5_00000002.tmp");
-//		 while((length = is.read(buffer)) > 0) {
-//		     file3.write(buffer, 0, length);
-//		 }
-//		 file3.close();
-//		 is.close();
-//		 os.close();
-			
-		 
-		 
-		 
-//		 BufferedInputStream bi= new BufferedInputStream(is);
-//		 while((length = is.read(buffer)) > 0) {
-//		     file3.write(buffer, 0, length);
-//		 }
-		 
-//		 while(bi.available()>0){
-//		     file3.write(bi.read());
-//		 }
-//		 file3.flush();
-//		 file3.close();
-//		 bi.close();
-//		 is.close();
-		
-		
-		
-		
-		
-		
-		
-		
-//		bufferOutput = new BufferedOutputStream(new FileOutputStream(new File(path)),1024);  
-//		bufferOutput.write(buffer);  
-//		bufferOutput.flush();  
+		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
 	    }
 	    return SUCCESS;
 	}
+	/**
+	 * 儲存資料
+	 * */
+	public String uploadImgSave() throws Exception{
+	PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+	//建立關鍵字
+	List<String> keyWordList = new ArrayList<String>();
+	if (!keywords[0].equals("[]")) {
+	    String data = "";
+	    for (char a : keywords[0].toCharArray()) {
+		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+		    continue;
+		}
+		if (String.valueOf(a).equals("]")) {
+		    keyWordList.add(data);
+		} else {
+		    if (String.valueOf(a).equals(",")) {
+			keyWordList.add(data);
+			data = "";
+		    } else {
+			data = data + String.valueOf(a);
+		    }
+		}
+	    }
+	    keywords = keyWordList.toArray(new String[keyWordList.size()]);
+	    //新增關鍵字
+	    addKeywords(pfpAdGroup);
+	}
+	
+	
+	
+	//建立排除關鍵字
+	List<String> excludeKeyWordList = new ArrayList<String>();
+	if (!excludeKeywords[0].equals("[]")) {
+	    String data = "";
+	    for (char a : excludeKeywords[0].toCharArray()) {
+		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+		    continue;
+		}
+		if (String.valueOf(a).equals("]")) {
+		    excludeKeyWordList.add(data);
+		} else {
+		    if (String.valueOf(a).equals(",")) {
+			excludeKeyWordList.add(data);
+			data = "";
+		    } else {
+			data = data + String.valueOf(a);
+		    }
+		}
+	    }
+	    excludeKeywords = excludeKeyWordList.toArray(new String[excludeKeyWordList.size()]);
+	    //新增排除關鍵字
+	    addExcludeKeywords(pfpAdGroup);
+	}
+
+	adClass = "1";
+	adStyle = "IMG";
+	templateProductSeq = EnumAdStyle.IMG.getTproSeq();
+	JSONObject seqArrayJsonObject = new JSONObject(seqArray.toString());
+	JSONArray seqArray = new JSONArray(seqArrayJsonObject.get("seqArray").toString());
+	// 1.存廣告檔
+	// 2.刪暫存圖檔
+	CommonUtilModel commonUtilModel = new CommonUtilModel();
+	String customerInfoId = super.getCustomer_info_id();
+	Date date = new Date();
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	ImageVO imageVO = new ImageVO();
+	if (seqArray.length() > 0) {
+	    for (int i = 0; i < seqArray.length(); i++) {
+		PfpAd pfpAd = new PfpAd();
+		pfpAd.setAdSeq(seqArray.get(i).toString());
+		pfpAd.setPfpAdGroup(pfpAdGroup);
+		pfpAd.setAdClass(adClass);
+		pfpAd.setAdStyle(adStyle);
+		pfpAd.setTemplateProductSeq(templateProductSeq);
+		pfpAd.setAdSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+		pfpAd.setAdChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
+		pfpAd.setAdStatus(EnumStatus.NoVerify.getStatusId());
+		pfpAd.setAdSendVerifyTime(new Date());
+		pfpAd.setAdCreateTime(new Date());
+		pfpAd.setAdUpdateTime(new Date());
+		pfpAdService.savePfpAd(pfpAd);
+		adSeq = seqArray.get(i).toString();
+		imageVO = commonUtilModel.createAdImg(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
+		String adPoolSeq = "";
+		for (EnumAdSize enumAdSize : EnumAdSize.values()) {
+		    if (imageVO.getImgWidth().equals(enumAdSize.getWidh())  && imageVO.getImgHeight().equals(enumAdSize.getHeight())) {
+			adPoolSeq = enumAdSize.name();
+			break;
+		    }
+		}
+		if (StringUtil.isEmpty(adPoolSeq)) {
+		    result = "error";
+		    return "success";
+		}
+		saveAdDetail(imageVO.getImgPath().replace("\\", "/"),EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
+		saveAdDetail(adLinkURL,EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
+	    }
+	}
+	// 刪除暫存檔
+	commonUtilModel.deleteAllTemporalImg(photoDbPathNew, customerInfoId,sdf.format(date));
+	result = "success";
+	return "success";
+    }
 	
 	public List<PfbxSize> getPfbSizeList() {
 	    return pfbSizeList;
@@ -929,15 +1013,45 @@ public class AdAddAction extends BaseCookieAction{
 	    this.pfbSizeService = pfbSizeService;
 	}
 
-	public File[] getUploadFile() {
-	    return uploadFile;
+	
+	public String getImgUploadPath() {
+	    return imgUploadPath;
 	}
 
-	public void setUploadFile(File[] uploadFile) {
-	    this.uploadFile = uploadFile;
+	public void setImgUploadPath(String imgUploadPath) {
+	    this.imgUploadPath = imgUploadPath;
 	}
 
+	public File[] getFileupload() {
+	    return fileupload;
+	}
 
+	public void setFileupload(File[] fileupload) {
+	    this.fileupload = fileupload;
+	}
 
+	public String getSeqArray() {
+	    return seqArray;
+	}
+
+	public void setSeqArray(String seqArray) {
+	    this.seqArray = seqArray;
+	}
+
+	public String getAdLinkURL() {
+	    return adLinkURL;
+	}
+
+	public void setAdLinkURL(String adLinkURL) {
+	    this.adLinkURL = adLinkURL;
+	}
+
+	public String getPhotoDbPathNew() {
+	    return photoDbPathNew;
+	}
+
+	public void setPhotoDbPathNew(String photoDbPathNew) {
+	    this.photoDbPathNew = photoDbPathNew;
+	}
 
 }

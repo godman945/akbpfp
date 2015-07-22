@@ -1,7 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 <div class="cont">
-    <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
+    <form id="formImg" action=""  method="post"  target="hidden_frame" enctype="multipart/form-data">
         <div class="grtba">
 			<h4 style="display:none;">建立廣告</h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">
@@ -54,9 +54,9 @@
                                 <input type="hidden" id="adDetailID" name="adDetailID" value="img">
                                 <input type="hidden" id="adDetailName" name="adDetailName" value="廣告圖片">
                                 <input type="hidden" id="adDetailContent" name="adDetailContent" value="">
-                                <!--<input type="file" id="uploadFile" name="uploadFile" onchange="previewImage(this)">
-                                <input id="fileupload" type="file" name="files[]" multiple onchange="createImgDom(this)">-->
-                                <span id="chkFile" name="chkFile" style="color:red;size:5"></span><br />已上傳 0/100									
+   	  							<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroupSeq}">
+                                <input id="fileupload" type="file"  name="fileupload" multiple ><!--onchange="createImgDom(this)"-->
+                                <span id="chkFile" name="chkFile" style="color:red;size:5"></span><br /> <div>已上傳 <div id="fileUploadIndex" style="display:inline;">0</div>/<div id="fileUploadSize" style="display:inline;">0</div></div>									
                             </div>
                             <!--上傳圖片end-->
 						  </span>
@@ -66,18 +66,17 @@
 			</table>
             <!--上傳訊息start 預設是隱藏，有資料才顯示-->
             <div class="aduplodulbg" style="" >
-                <ul class="aduplodul">
+                <ul id="AG" class="aduplodul">
+                </ul>
             </div>
             <!--上傳訊息end-->
 <!-- adTmg end -->
 		</div>
-		
-		<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="ag_201505050001">
 		<input type="hidden" id="saveAndNew" name="saveAndNew" value="">
 		<input type="hidden" id="ulTmpName" name="ulTmpName" value="mpjxRl0rewSuBhH3madQgOsPImwqLs">
 		<input type="hidden" id="imgFile" name="imgFile" value="">
-        <input type="hidden" id="backPage" name="backPage" value="adGroupAdd.html?adGroupSeq=ag_201505050001">
 	</form>
+	<iframe style="display:none;" name='hidden_frame' id="hidden_frame" ></iframe>
 	<iframe id="uploadIMG" name="uploadIMG" style="display:none;height:150px;width:600px"></iframe>
 	<iframe id="doAdd" name="doAdd" style="display:none;height:150px;width:600px"></iframe>
 </div>
@@ -88,9 +87,6 @@
 		<div id="preDiv" name="preDiv"></div>
 	</div>
 </div>
-
-
-
 
 <div style="display:none;width:70%;"  id="preViewImgDiv" >
 	<div style="margin:0px auto;text-align:center; background:url(03.jpg) no-repeat;height:1617px;background-position:center top;"> 
@@ -137,20 +133,3 @@
 </#if>
 
 <div id="preview"></div>
-
-
-
-
-
-
-
-
-<form id="formImg" action="adAddImgAjax.html"  method="post"  target="hidden_frame" enctype="multipart/form-data">
-   <div class="fromtrs">
-   	  <input id="uploadFile" type="file" name="uploadFile" multiple onchange="uploadImg(this)">
-   </div>
-</form> 
-<iframe style="display:none" name='hidden_frame' id="hidden_frame"></iframe>
-<div class="fromtrs">
-   <img id="img" src="" width="80" height="80"/>
-</div>

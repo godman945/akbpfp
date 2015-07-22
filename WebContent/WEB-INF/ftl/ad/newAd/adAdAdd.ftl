@@ -20,7 +20,15 @@
 			<div class="cal">帳戶名稱：${customer_info_title!}</div>
 			<img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">新增廣告
 		</h2>
-		<div class="steps">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
+		<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
+		<ul class="admenuul">
+            <li class="m01"><a href="#" onclick="toAdAddImg()">圖像廣告</a></li>
+            <li class="m02"><a href="adAdAdd.html?adGroupSeq=ag_201507130001" class="active">圖文廣告</a></li>
+            <li class="m03"><a href="#">影音廣告</a></li>
+        </ul>
+        
+        
+        
 		<div class="grtba">
 			<h4 style="display:none;">建立廣告</h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">

@@ -153,6 +153,7 @@
      <definition name="ad.add.img" extends="default.layout">
      	<!-- <put-attribute name="head" value="ad.add.img.head" /> -->
         <put-attribute name="body" value=".ad.ad.add.img.body" />
+        <put-attribute name="menu" value="ad.menu" />
      </definition>
 
 	<definition name="ad.add.img.head" template="/ftl/ad/newAd/ad.add.img.js.ftl">

@@ -56,7 +56,7 @@
 		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
 		<center style="margin-top:10px;">
 			<input type="button" id="cancel" value="取 消"> 
-			<input type="button" id="save" onclick="multipartImgUuploadSubmit();" value="送出審核"> 
+			<input type="button" id="submitBtn" onclick="multipartImgUuploadSubmit();" value="送出審核"> 
 			<!-- <input type="button" id="saveNew" value="儲存後再新增廣告"> --> 
 		</center>
 		<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroupSeq!}">
@@ -69,8 +69,6 @@
 	<iframe id="doAdd" name="doAdd" style="display:none;height:150px;width:600px"></iframe>
 </div>
 <input type="hidden" id="messageId" value="${message!!}">
-<input type="text"  name="multipartImgUupload"  id="multipartImgUupload" value=${multipartImgUupload}>
 
 
 
-<input type="file[]" id="fileArray" name="fileArray" value="">
