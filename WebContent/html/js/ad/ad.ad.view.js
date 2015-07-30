@@ -132,3 +132,18 @@ function tableSorter(){
 			}
 	});
 }
+
+function preview(img) {
+    $.fancybox({
+        'href':img,
+        'autoSize':true,
+        'autoHeight':true,
+        'autoScale':true,
+        'transitionIn':'none',
+        'transitionOut':'none',
+        'padding':0,
+        'overlayOpacity':.75,
+        'overlayColor':'#fff',
+        'scrolling':'no'
+    });
+}

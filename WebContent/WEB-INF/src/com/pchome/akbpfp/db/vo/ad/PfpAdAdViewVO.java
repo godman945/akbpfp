@@ -19,6 +19,8 @@ public class PfpAdAdViewVO {
 	private String adRejectReason = "";
 	private int invalidClk = 0 ;
 	private String showUrl = "";
+	private String img = "";
+	private String adStyle = "";
 
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -127,5 +129,17 @@ public class PfpAdAdViewVO {
     }
     public void setShowUrl(String showUrl) {
         this.showUrl = showUrl;
+    }
+    public String getImg() {
+        return img;
+    }
+    public void setImg(String img) {
+        this.img = img;
+    }
+    public String getAdStyle() {
+        return adStyle;
+    }
+    public void setAdStyle(String adStyle) {
+        this.adStyle = adStyle;
     }
 }

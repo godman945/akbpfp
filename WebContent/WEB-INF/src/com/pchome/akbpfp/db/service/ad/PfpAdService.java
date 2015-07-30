@@ -146,6 +146,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				adAdViewVO.setAdGroupName(pfpAd.getPfpAdGroup().getAdGroupName());
 				adAdViewVO.setAdSeq(pfpAd.getAdSeq());
 				adAdViewVO.setAdTemplateNo(pfpAd.getTemplateProductSeq());
+				adAdViewVO.setAdStyle(pfpAd.getAdStyle());
 
 				for(EnumStatus status:EnumStatus.values()){
 					int adStatus = pfpAd.getAdStatus();
@@ -197,6 +198,9 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				    if ("show_url".equals(pfpAdDetail.getAdDetailId())) {
 				        adAdViewVO.setShowUrl(pfpAdDetail.getAdDetailContent());
 				    }
+                    if ("img".equals(pfpAdDetail.getAdDetailId())) {
+                        adAdViewVO.setImg(pfpAdDetail.getAdDetailContent());
+                    }
 				}
 
 				adAdViewVOs.add(adAdViewVO);

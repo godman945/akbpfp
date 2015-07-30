@@ -42,29 +42,12 @@
 				</td>
 		        <td height="35" > 
 		        	<span><iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span>
+		        	<#if "IMG" == ${vo.adStyle!}>
 		        	<span>
 			        	${vo.showUrl!}<p>
-		        		<a style="pointer:cursor" onclick="preview('${vo.adSeq!}')">預覽</a>
-						<script type="text/javascript">
-						function preview(ad_seq) {
-							$.fancybox({
-								'width'             : 300,
-								'height'            : 250,
-								'href'				:'showimg.html?id=' + ad_seq,
-								'autoSize'			: true,
-								'autoHeight'		: true,
-								'autoScale'			: true,
-								'transitionIn'		: 'none',
-								'transitionOut'		: 'none',
-								'type'				: 'iframe',
-								'padding'			: 0,
-								'overlayOpacity'    : .75,
-								'overlayColor'      : '#fff',
-								'scrolling'			: 'no'
-							});
-						}
-						</script>
+		        		<a style="cursor:pointer" onclick="preview('${vo.img!}')">預覽</a>
 		        	</span>
+		        	</#if>
 		        </td>
 		        <td class="td02">
 		        ${vo.adStatusDesc!}
