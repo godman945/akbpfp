@@ -160,11 +160,25 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	imgIndex = imgIndex +1
 	if(imgIndex == uploadFileSize){
 		$('body').unblock();
+		
+		$.each($("#AG").children() , function( index, liObj ) {
+			if($(liObj).attr("class") == "failbox"){
+				failCount = failCount + 1;
+			}else if($(liObj).attr("class") == "okbox"){
+				successCount = successCount + 1;
+			}
+			
+		})
+		
+		console.log(successCount);
+		console.log(failCount);
+		$("#finalCount").append("上傳成功:"+successCount+"張"+" 失敗:"+failCount+"張");
 		imgIndex  = 0;
 		flag = false;
 	}
 }
-
+var successCount =0;
+var failCount = 0;
 
 
 //點擊預覽
@@ -258,7 +272,6 @@ function closePrew(){
 function closeBtn(){
 	$.fancybox.close();
 }
-
 //存檔
 function multipartImgUuploadSubmit(){
 	var submitFlag = true;
@@ -266,6 +279,12 @@ function multipartImgUuploadSubmit(){
 	$.each($("#KeywordUL li"), function( index, obj ) {
 		keyWordArray.push($(obj).text());
 	});
+	
+	
+	if($("#existKW").children().length == 0 && keyWordArray.length == 0){
+		alert("請新增一筆關鍵字");
+		return false;
+	}
 	
 	var excludeKeywordULArray = [];
 	$.each($("#ExcludeKeywordUL li"), function( index, obj ) {
