@@ -18,7 +18,7 @@ public class PfpAdAdViewVO {
 	private String adTemplateNo = "";
 	private String adRejectReason = "";
 	private int invalidClk = 0 ;
-	private String showUrl = "";
+	private String realUrl = "";
 	private String img = "";
 	private String adStyle = "";
 
@@ -124,11 +124,11 @@ public class PfpAdAdViewVO {
 	public void setInvalidClk(int invalidClk) {
 		this.invalidClk = invalidClk;
 	}
-    public String getShowUrl() {
-        return showUrl;
+    public String getRealUrl() {
+        return realUrl;
     }
-    public void setShowUrl(String showUrl) {
-        this.showUrl = showUrl;
+    public void setRealUrl(String realUrl) {
+        this.realUrl = realUrl;
     }
     public String getImg() {
         return img;
