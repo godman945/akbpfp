@@ -616,6 +616,7 @@ public class AdAddAction extends BaseCookieAction{
 	    log.info(">>>alex2>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+photoDbPathNew);
 	    
 	    File testFile = new File("/export/home/webuser/akb/pfp/img/ALEX");
+	    testFile.mkdir();
 	    
 	    for (File file : fileupload) {
 		File originalImgFile = file;
