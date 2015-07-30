@@ -1,11 +1,6 @@
 package com.pchome.akbpfp.db.vo.ad;
 
-import java.util.List;
-
-import com.pchome.akbpfp.db.pojo.PfpAdDetail;
-
 public class PfpAdAdViewVO {
-
 	private String adActionSeq = "";
 	private String adActionName = "";
 	private String adType = "";
@@ -23,10 +18,8 @@ public class PfpAdAdViewVO {
 	private String adTemplateNo = "";
 	private String adRejectReason = "";
 	private int invalidClk = 0 ;
+	private String showUrl = "";
 
-	
-	
-	
 	public String getAdActionSeq() {
 		return adActionSeq;
 	}
@@ -129,6 +122,10 @@ public class PfpAdAdViewVO {
 	public void setInvalidClk(int invalidClk) {
 		this.invalidClk = invalidClk;
 	}
-
-	
+    public String getShowUrl() {
+        return showUrl;
+    }
+    public void setShowUrl(String showUrl) {
+        this.showUrl = showUrl;
+    }
 }
