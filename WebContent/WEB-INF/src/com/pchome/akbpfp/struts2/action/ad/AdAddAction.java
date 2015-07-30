@@ -566,7 +566,6 @@ public class AdAddAction extends BaseCookieAction{
 	
 	
 	
-	
 	/**
 	 * 新增廣告明細
 	 * */
@@ -577,7 +576,6 @@ public class AdAddAction extends BaseCookieAction{
 	    pfpAdDetail.setAdDetailSeq(adDetailSeq);
 	    pfpAdDetail.setPfpAd(pfpAdService.getPfpAdBySeq(adSeq));
 	    pfpAdDetail.setAdDetailId(adDetailId);
-	    log.info("alex----------------------------------------------------------:"+content);
 	    pfpAdDetail.setAdDetailContent(content);
 	    pfpAdDetail.setAdPoolSeq(adPoolSeq);
 	    pfpAdDetail.setDefineAdSeq(defineAdSeq);
@@ -739,9 +737,7 @@ public class AdAddAction extends BaseCookieAction{
 		    return "success";
 		}
 		addAd(pfpAdGroup);
-		String path = imageVO.getImgPath().replace("\\", "/");
-		path = path.replace("/home/webuser/akb/pfp", "");
-		saveAdDetail(path,EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
+		saveAdDetail(imageVO.getImgPath().replace("\\", "/"),EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
 		saveAdDetail(adLinkURL,EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
 	    }
 	}
