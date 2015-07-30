@@ -613,7 +613,7 @@ public class AdAddAction extends BaseCookieAction{
 	    String imgHeight ="";
 	    String fileSize= "";
 	    imgUploadPath = "";
-	    log.info(">>>T>>"+photoDbPathNew);
+	    log.info(">>>alex>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+photoDbPathNew);
 	    for (File file : fileupload) {
 		File originalImgFile = file;
 		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
