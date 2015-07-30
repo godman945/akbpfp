@@ -195,7 +195,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				}
 
 				for (PfpAdDetail pfpAdDetail: pfpAd.getPfpAdDetails()) {
-				    if ("show_url".equals(pfpAdDetail.getAdDetailId())) {
+				    if ("real_url".equals(pfpAdDetail.getAdDetailId())) {
 				        adAdViewVO.setRealUrl(pfpAdDetail.getAdDetailContent());
 				    }
                     if ("img".equals(pfpAdDetail.getAdDetailId())) {
