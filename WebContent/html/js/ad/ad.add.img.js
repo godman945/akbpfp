@@ -170,8 +170,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 			
 		})
 		
-		console.log(successCount);
-		console.log(failCount);
 		$("#finalCount").append("上傳成功:"+successCount+"張"+" 失敗:"+failCount+"張");
 		imgIndex  = 0;
 		flag = false;
@@ -237,6 +235,20 @@ function deleteImgDom(fileName){
 	
 	$("#fileUploadSize").text($(seqArray).length);
 	$("#fileUploadIndex").text($(seqArray).length);
+	
+	
+	$("#finalCount").empty();
+	successCount = 0;
+	failCount = 0;
+	$.each($("#AG").children() , function( index, liObj ) {
+		if($(liObj).attr("class") == "failbox"){
+			failCount = failCount + 1;
+		}else if($(liObj).attr("class") == "okbox"){
+			successCount = successCount + 1;
+		}
+		
+	})
+	$("#finalCount").append("上傳成功:"+successCount+"張"+" 失敗:"+failCount+"張");
 	
 }
 
