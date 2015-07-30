@@ -737,7 +737,9 @@ public class AdAddAction extends BaseCookieAction{
 		    return "success";
 		}
 		addAd(pfpAdGroup);
-		saveAdDetail(imageVO.getImgPath().replace("\\", "/"),EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
+		String path = imageVO.getImgPath().replace("\\", "/");
+		path = path.replaceAll("/home/webuser/akb/pfp", "");
+		saveAdDetail(path,EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
 		saveAdDetail(adLinkURL,EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
 	    }
 	}
