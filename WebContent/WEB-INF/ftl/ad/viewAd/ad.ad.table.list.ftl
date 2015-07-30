@@ -42,7 +42,7 @@
 				</td>
 		        <td height="35" > 
 		        	<span><iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span>
-		        	<#if "IMG" == ${vo.adStyle!}>
+		        	<#if "IMG" == vo.adStyle>
 		        	<span>
 			        	${vo.showUrl!}<p>
 		        		<a style="cursor:pointer" onclick="preview('${vo.img!}')">預覽</a>
