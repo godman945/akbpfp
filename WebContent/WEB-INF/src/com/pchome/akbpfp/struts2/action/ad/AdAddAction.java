@@ -566,6 +566,7 @@ public class AdAddAction extends BaseCookieAction{
 	
 	
 	
+	
 	/**
 	 * 新增廣告明細
 	 * */
@@ -576,8 +577,7 @@ public class AdAddAction extends BaseCookieAction{
 	    pfpAdDetail.setAdDetailSeq(adDetailSeq);
 	    pfpAdDetail.setPfpAd(pfpAdService.getPfpAdBySeq(adSeq));
 	    pfpAdDetail.setAdDetailId(adDetailId);
-	    
-	    log.info("alex:"+content);
+	    log.info("alex----------------------------------------------------------:"+content);
 	    pfpAdDetail.setAdDetailContent(content);
 	    pfpAdDetail.setAdPoolSeq(adPoolSeq);
 	    pfpAdDetail.setDefineAdSeq(defineAdSeq);
