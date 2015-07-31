@@ -161,6 +161,11 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	if(imgIndex == uploadFileSize){
 		$('body').unblock();
 		
+		
+		$("#finalCount").empty();
+		successCount = 0;
+		failCount = 0;
+		
 		$.each($("#AG").children() , function( index, liObj ) {
 			if($(liObj).attr("class") == "failbox"){
 				failCount = failCount + 1;
