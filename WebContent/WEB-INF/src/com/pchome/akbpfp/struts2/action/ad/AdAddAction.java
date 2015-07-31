@@ -613,11 +613,6 @@ public class AdAddAction extends BaseCookieAction{
 	    String imgHeight ="";
 	    String fileSize= "";
 	    imgUploadPath = "";
-	    log.info(">>>alex2>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+photoDbPathNew);
-	    
-	    File testFile = new File("/export/home/webuser/akb/pfp/img/ALEX");
-	    testFile.mkdir();
-	    
 	    for (File file : fileupload) {
 		File originalImgFile = file;
 		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
@@ -741,6 +736,8 @@ public class AdAddAction extends BaseCookieAction{
 		    return "success";
 		}
 		addAd(pfpAdGroup);
+		String path = imageVO.getImgPath().replace("\\", "/");
+		path = path.replace("/export/home/webuser/akb/pfp/", "");
 		saveAdDetail(imageVO.getImgPath().replace("\\", "/"),EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
 		saveAdDetail(adLinkURL,EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
 	    }
