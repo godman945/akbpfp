@@ -47,7 +47,7 @@
 						</td>
 					</tr>
                     <tr>
-						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br><a href="#" name="errAdImg" onclick="approveSize();">支援規格查詢</a></th>
+						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br><a href="#" id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a></th>
 						<td style="background:#f9f9f9;">
 							<span class="imgar" style="width:100%;">
                             <!--上傳圖片start-->
