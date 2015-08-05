@@ -8,6 +8,11 @@
 			<img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">新增廣告
 		</h2>
 		<div class="steps">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
+		<ul class="admenuul">
+            <li class="m01"><a href="adAdImg.html?adGroupSeq=${adGroupSeq!}" class="active" class="active">圖像廣告</a></li>
+            <li class="m02"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}">圖文廣告</a></li>
+            <!-- <li class="m03"><a href="#">影音廣告</a></li>-->
+        </ul>
 		<div class="grtba">
 			<h4 style="display:none;">建立廣告</h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">

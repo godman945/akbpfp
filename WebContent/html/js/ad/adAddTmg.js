@@ -590,8 +590,3 @@ function setAdStyle(adStyle) {
 function closenots(id) {
 	$("#shownotes"+id).hide();
 }
-
-//進入多檔上傳Action
-function toAdAddImg(){
-	location.href = "adAddImg.html?adGroupSeq=" + $("#adGroupSeq").val();
-}
