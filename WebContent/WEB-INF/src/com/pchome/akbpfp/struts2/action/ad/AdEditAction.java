@@ -35,7 +35,7 @@ import com.pchome.soft.depot.utils.HttpUtil;
 public class AdEditAction extends BaseCookieAction{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -44,7 +44,7 @@ public class AdEditAction extends BaseCookieAction{
 	private String adActionName;
 	private String adGroupSeq;
 	private String adGroupName;
-	
+
 	private String adSeq;
 	private String adClass;
 	private String adStyle;
@@ -83,7 +83,7 @@ public class AdEditAction extends BaseCookieAction{
 
 	public String AdAdEdit() throws Exception {
 		log.info("AdAdEdit => adSeq = " + adSeq);
-		
+
 		PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
 		adActionName = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName();
 		adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();
@@ -112,7 +112,7 @@ public class AdEditAction extends BaseCookieAction{
 		if(!customerInfoId.equals(adCustomerInfoId)) {
 			return "notOwner";
 		}
-		
+
 		for (int i = 0; i < pfpAdDetails.size(); i++) {
 			//log.info("pfpAdDetails.get(i).getAdDetailContent() = " + pfpAdDetails.get(i).getAdDetailContent());
 			String adDetailId = pfpAdDetails.get(i).getAdDetailId();
@@ -133,16 +133,22 @@ public class AdEditAction extends BaseCookieAction{
 				adDetailContent[2] = pfpAdDetails.get(i).getAdDetailContent();
 			} else if(adDetailId != null && adDetailId.equals("real_url")) {
 				adDetailSeq[3] = pfpAdDetails.get(i).getAdDetailSeq();
-				String deCodeUrl = HttpUtil.getInstance().convertRealUrl(pfpAdDetails.get(i).getAdDetailContent());
+				String deCodeUrl = pfpAdDetails.get(i).getAdDetailContent();
+				try {
+				    deCodeUrl = HttpUtil.getInstance().convertRealUrl(deCodeUrl);
+				}
+				catch (Exception e) {
+				    log.error(deCodeUrl, e);
+				}
 				adDetailContent[3] = deCodeUrl.replaceAll("http://", "");
 			} else if(adDetailId != null && adDetailId.equals("show_url")) {
 				adDetailSeq[4] = pfpAdDetails.get(i).getAdDetailSeq();
 				String show_url = pfpAdDetails.get(i).getAdDetailContent();
 				String deCodeUrl="";
 				if(show_url.indexOf("http://") < 0){
-				    deCodeUrl = HttpUtil.getInstance().convertRealUrl("http://" + show_url);  
+				    deCodeUrl = HttpUtil.getInstance().convertRealUrl("http://" + show_url);
 			    	}else{
-				    deCodeUrl =HttpUtil.getInstance().convertRealUrl(show_url);  
+				    deCodeUrl =HttpUtil.getInstance().convertRealUrl(show_url);
 				}
 				adDetailContent[4] = deCodeUrl;
 //				String show_url = HttpUtil.getInstance().getUnicode(pfpAdDetails.get(i).getAdDetailContent());
@@ -151,7 +157,7 @@ public class AdEditAction extends BaseCookieAction{
 //				adDetailContent[4] = deCodeUrl.replaceAll("http://", "");
 			}
 		}
-		
+
 		if(adDetailSeq[0] == null) {
 			adDetailSeq[0] = "";
 			adDetailContent[0] = "img/public/na.gif\" style=\"display:none";
@@ -162,7 +168,7 @@ public class AdEditAction extends BaseCookieAction{
 		pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
 		// 取出分類所屬排除關鍵字
 		pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, pfpCustomerInfo.getCustomerInfoId());
-		
+
 		// 上傳圖片暫存檔名(亂數產生)
 		ulTmpName = RandomStringUtils.randomAlphanumeric(30);
 
@@ -217,11 +223,11 @@ public class AdEditAction extends BaseCookieAction{
 						File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
 						if(!iPath.exists())			iPath.mkdirs();
 						if(!iTmpPath.exists())		iTmpPath.mkdirs();
-						
+
 						File adFile = new File(photoPath, adSeq + ".jpg");	// 上傳圖片的檔名
 						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
 						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
-						
+
 						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
 						pfpAdDetail.setAdDetailContent(imgDetail);
 					} else {
@@ -247,7 +253,7 @@ public class AdEditAction extends BaseCookieAction{
 //						adDetailContent[i] = "http://" + adDetailContent[i];
 //					    }else{
 
-//						
+//
 //					    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
 //					    }
 //					}
@@ -266,7 +272,7 @@ public class AdEditAction extends BaseCookieAction{
 					pfpAdDetail.setAdDetailContent(adDetailContent[i]);
 //				}
 			}
-			
+
 			// 如果沒有圖檔資料，要用新增，有資料的部分，就用修改
 			if(i == 0 && StringUtils.isEmpty(adDetailSeq[i])) {
 			    pfpAdDetailService.insertPfpAdDetail(pfpAdDetail);
@@ -302,7 +308,7 @@ public class AdEditAction extends BaseCookieAction{
 	private void chkAdStyle() {
 		if (StringUtils.isEmpty(adStyle) || (!adStyle.equals("TXT") && !adStyle.equals("TMG"))) {
 			message = "請選擇廣告樣式！";
-		} else if (!adStyle.equals("TXT") && !adStyle.equals("TMG")) { 
+		} else if (!adStyle.equals("TXT") && !adStyle.equals("TMG")) {
 			message = "請選擇廣告樣式！";
 		} else {
 			if(adStyle.equals("TXT")) {
@@ -314,7 +320,7 @@ public class AdEditAction extends BaseCookieAction{
 			}
 		}
 	}
-	
+
 	private void chkAdData1() {
 		try {
 			if (StringUtils.isEmpty(adClass)) {
@@ -363,7 +369,7 @@ public class AdEditAction extends BaseCookieAction{
 					    	}else{
 					    	    urlState = HttpUtil.getInstance().getStatusCode(url);
 					    	}
-					    	
+
 					    	if(urlState < 200 && urlState >= 300) {
 					    	    message = "請輸入正確的廣告顯示網址！";
 					    	}
@@ -389,7 +395,7 @@ public class AdEditAction extends BaseCookieAction{
 			log.info("Exception ex" + ex);
 		}
 	}
-	
+
 	// 新增關鍵字
 	private void addKeywords(PfpAdGroup pfpAdGroup) {
 		try {
@@ -434,7 +440,7 @@ public class AdEditAction extends BaseCookieAction{
 					pfpAdExcludeKeywordService.savePfpAdExcludeKeyword(pfpAdExcludeKeyword);
 				}
 			}
-			
+
 		} catch(Exception ex) {
 			log.info("Exception(addExcludeKeywords):" + ex);
 		}
