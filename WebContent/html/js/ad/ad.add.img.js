@@ -1,6 +1,4 @@
-﻿
-
-//1.建立上傳畫面
+﻿//1.建立上傳畫面
 //2.建立點擊預覽
 //3.送出
 var imgSeq = "";
@@ -331,12 +329,12 @@ function multipartImgUuploadSubmit(){
 	
 	if(!submitFlag ){
 		$("#chkFileMessage").html("有錯誤的檔案");
-		$("#chkFile").focus();
+		$("#errAdImg").focus();
 		return false;
 	}
 	if(seqArray.length == 0){
 		$("#chkFileMessage").html("請上傳檔案");
-		$("#chkFile").focus();
+		$("#errAdImg").focus();
 		return false;
 	}
 	var map = {

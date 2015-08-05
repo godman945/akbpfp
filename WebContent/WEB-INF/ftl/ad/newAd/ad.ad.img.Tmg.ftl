@@ -58,7 +58,7 @@
    	  							<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroupSeq}">
                                 <input id="fileupload" type="file"  name="fileupload" multiple ><!--onchange="createImgDom(this)"-->
 								<div id="chkFileMessage" style="color:red"></div>
-                                <span id="chkFile" name="chkFile" style="color:red;size:5"></span><br /> <div>已上傳 <div id="fileUploadIndex" style="display:inline;">0</div>/<div id="fileUploadSize" style="display:inline;">0</div> <div id="finalCount"  style="display:inline;color:blue;"></div></div>									
+                                <span name="chkFile" style="color:red;size:5"></span><br /> <div>已上傳 <div id="fileUploadIndex" style="display:inline;">0</div>/<div id="fileUploadSize" style="display:inline;">0</div> <div id="finalCount"  style="display:inline;color:blue;"></div></div>									
                             </div>
                             <!--上傳圖片end-->
 						  </span>
