@@ -9,7 +9,7 @@
 		</h2>
 		<div class="steps">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
 		<ul class="admenuul">
-            <li class="m01"><a href="adAdImg.html?adGroupSeq=${adGroupSeq!}" class="active" class="active">圖像廣告</a></li>
+            <li class="m01"><a href="adAddImg.html?adGroupSeq=${adGroupSeq!}" class="active" class="active">圖像廣告</a></li>
             <li class="m02"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}">圖文廣告</a></li>
             <!-- <li class="m03"><a href="#">影音廣告</a></li>-->
         </ul>
