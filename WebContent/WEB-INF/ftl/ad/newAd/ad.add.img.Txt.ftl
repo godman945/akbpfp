@@ -53,6 +53,7 @@
 							<input type="hidden" id="adDetailID" name="adDetailID" value="real_url">
 							<input type="hidden" id="adDetailName" name="adDetailName" value="廣告連結網址">
 							<input type="hidden" id="adDetailContent" name="adDetailContent">
+							<div id="adLinkURLMessage" style="color:red"></div>
 							<input type="text" class="inputPlaceholderTmg" id="adLinkURL" name="adLinkURL" style="width:96%;" placeholder="show.pchome.com.tw"  maxlength=""><br>
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">已輸入0字，剩1024字</span>
 						</td>
@@ -60,6 +61,7 @@
                     <tr>
 						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br><a name="errAdImg">支援規格查詢</a></th>
 						<td style="background:#f9f9f9;">
+							<div id="chkFileMessage" style="color:red"></div>
 							<span class="imgar" style="width:100%;">
                             <!--上傳圖片start-->
                             <div style="float:left;text-align:left;line-height:30px;color:#000"> 
@@ -367,6 +369,7 @@
 					<tr>
 						<th>已建立的分類關鍵字</th>
 						<td>
+							<div id="existKWMessage" style="color:red"></div>
 							<select id="existKW" name="existKW" size="10" style="width:200px">
 							</select>
 						</td>

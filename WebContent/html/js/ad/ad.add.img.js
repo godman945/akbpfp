@@ -291,6 +291,10 @@ function closeBtn(){
 }
 //存檔
 function multipartImgUuploadSubmit(){
+	$("#existKWMessage").html("");
+	$("#adLinkURLMessage").html("");
+	$("#chkFileMessage").html("");
+	
 	var submitFlag = true;
 	var keyWordArray = [];
 	$.each($("#KeywordUL li"), function( index, obj ) {
@@ -299,7 +303,8 @@ function multipartImgUuploadSubmit(){
 	
 	
 	if($("#existKW").children().length == 0 && keyWordArray.length == 0){
-		alert("請新增一筆關鍵字");
+		$("#existKWMessage").html("請新增一筆關鍵字");
+		$("#existKW").focus();
 		return false;
 	}
 	
@@ -319,16 +324,19 @@ function multipartImgUuploadSubmit(){
 	
 	
 	if($("#adLinkURL").val() == ""){
-		alert("請輸入網址");
+		$("#adLinkURLMessage").html("請輸入網址");
+		$("#adLinkURL").focus();
 		return false;
 	}
 	
 	if(!submitFlag ){
-		alert("有錯誤的檔案");
+		$("#chkFileMessage").html("有錯誤的檔案");
+		$("#chkFile").focus();
 		return false;
 	}
 	if(seqArray.length == 0){
-		alert("請上傳檔案");
+		$("#chkFileMessage").html("請上傳檔案");
+		$("#chkFile").focus();
 		return false;
 	}
 	var map = {
