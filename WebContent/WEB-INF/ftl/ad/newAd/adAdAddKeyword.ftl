@@ -89,6 +89,7 @@
 					<tr>
 						<th>已建立的分類關鍵字</th>
 						<td>
+							<div id="existKWMessage" style="color:red"></div>
 							<select id="existKW" name="existKW" size="10" style="width:200px">
 							<#if pfpAdKeywords?exists>
 							    <#list pfpAdKeywords as PfpAdKeyword>
