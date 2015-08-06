@@ -43,8 +43,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 		return id.toString();
 	}
 
-	@Transactional(isolation=Isolation.SERIALIZABLE)
-	private synchronized Sequence getSequence(EnumSequenceTableName enumSequenceTableName) throws Exception{
+	private Sequence getSequence(EnumSequenceTableName enumSequenceTableName) throws Exception{
 
 		Sequence sequence = ((ISequenceDAO) dao).get(enumSequenceTableName.getSnoName());
 		Date date = new Date();
@@ -90,7 +89,8 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
         return sb.toString();
 	}
 
-	private String getIDForTable(EnumSequenceTableName enumSequenceTableName, String mid) throws Exception{
+    @Transactional(isolation=Isolation.SERIALIZABLE)
+	private synchronized String getIDForTable(EnumSequenceTableName enumSequenceTableName, String mid) throws Exception{
 		Sequence sequence = getSequence(enumSequenceTableName);
 
 		int limit=0;
