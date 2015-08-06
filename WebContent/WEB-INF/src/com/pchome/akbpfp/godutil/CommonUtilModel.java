@@ -23,7 +23,7 @@ public class CommonUtilModel extends BaseCookieAction{
     Pattern pattern = Pattern.compile("[0-9]+");
     //時間格式取年月日
     SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
-    
+
     	/**
 	 * 輸出圖片
 	 * */
@@ -31,18 +31,20 @@ public class CommonUtilModel extends BaseCookieAction{
 	    log.info("開始處理圖片:"+adSeq);
 	    Date date2 = new Date();
 	    SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+	    log.info(bufferedImage);
+	    log.info(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
 	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
 	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg";
 	}
-    
+
 	/**
 	 * 刪除暫存圖片
 	 * */
 	public void deleteTemporalImg(String userImgPath,String custimerInfoid,String date,String adSeq) throws Exception{
 	    log.info("開始刪除暫存圖片:"+adSeq+".jpg");
 	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/");
-            String[] list = folder.list();           
+            String[] list = folder.list();
             for(int i = 0; i < list.length; i++){
         	if(!list[i].equals(adSeq+".jpg")){
         	    File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
@@ -50,22 +52,22 @@ public class CommonUtilModel extends BaseCookieAction{
         	}
             }
 	}
-	
-	
+
+
 	/**
 	 * 刪除全部暫存圖片
 	 * */
 	public void deleteAllTemporalImg(String userImgPath,String custimerInfoid,String date) throws Exception{
 	    log.info("開始刪除全部暫存圖片");
 	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/");
-            String[] list = folder.list();           
+            String[] list = folder.list();
             for(int i = 0; i < list.length; i++){
         	File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
         	file.delete();
             }
 	}
-	
-	
+
+
 	/**
 	 * 1.建立此次上傳圖檔
 	 * 2.進行縮圖
@@ -90,13 +92,13 @@ public class CommonUtilModel extends BaseCookieAction{
 		    graphics2D.dispose();
 		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));
 		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg");
-		   
+
 		}
 	    }
 	    return imageVO;
 	}
-    
-    
+
+
     public String getDecimalFormat1(String data) throws Exception{
 //	for (EnumCommon enumData : EnumCommon.values()) {
 //	    if(data.getClass().getName().equals(enumData.getStatusDesc())){
@@ -115,7 +117,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	}
 	return null;
     }
-    
-    
-    
+
+
+
 }
