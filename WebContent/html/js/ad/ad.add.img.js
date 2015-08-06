@@ -310,7 +310,7 @@ function multipartImgUuploadSubmit(){
 	
 	
 	if($("#existKW").children().length == 0 && keyWordArray.length == 0){
-		$("#chkKeyword").html("請新增一筆關鍵字");
+		$("#chkAdKeyword").html("請新增關鍵字");
 		$("#adKeyword").focus();
 		return false;
 	}
@@ -331,10 +331,12 @@ function multipartImgUuploadSubmit(){
 	
 
 	if (!chkWord($("#adLinkURL"), $("#spanAdLinkURL"))) {
+		alert("chkWord");
 		$("#adLinkURL").focus();
 		return false;
 	}
 	if (!chkUrl($("#adLinkURL"), $("#chkLinkURL"))) {
+		alert("chkUrl");
 		$("#adLinkURL").focus();
 		return false;
 	}
@@ -394,8 +396,9 @@ function chkUrl(valObj, msgObj){
 	}
 
 	if(!validURL(val)) {
+		alert("validURL");
 		msgObj.css("color","red");
-		msgObj.text("請輸入正確的廣告連結網址");
+		msgObj.text("請輸入正確的廣告連結網址+");
 		return false;
 	}
 	
@@ -411,7 +414,8 @@ function chkUrl(valObj, msgObj){
 			return true;
 		}
 	});
-	
+
+	alert("end");
 	msgObj.css("color","red");
 	msgObj.text("請輸入正確的廣告連結網址");
 	return false;

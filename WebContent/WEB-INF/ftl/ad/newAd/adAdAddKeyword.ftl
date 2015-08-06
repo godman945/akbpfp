@@ -19,7 +19,6 @@
 							<span class="t_s01">系統比對到您設定的關鍵字，您的廣告就有機會曝光</span>
 						</th>
 						<td>
-							<div id="chkKeyword" style="color:red"></div>
 							<input type="text" class="inputPlaceholderKeyword" data-value="請輸入關鍵字" id="adKeyword" name="adKeyword" maxlength="50" placeholder="請輸入關鍵字">
 							<input type="button" id="addAdKeyword" name="addAdKeyword" value="確認">
 							<input type="button" id="sugkw" name="sugkw" value="系統建議關鍵字">
