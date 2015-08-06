@@ -311,7 +311,7 @@ function multipartImgUuploadSubmit(){
 	
 	if($("#existKW").children().length == 0 && keyWordArray.length == 0){
 		$("#chkKeyword").html("請新增一筆關鍵字");
-		location.href = "#chkKeyword";
+		$("#adKeyword").focus();
 		return false;
 	}
 	
@@ -331,22 +331,22 @@ function multipartImgUuploadSubmit(){
 	
 
 	if (!chkWord($("#adLinkURL"), $("#spanAdLinkURL"))) {
-		location.href = "#chkLinkURL";
+		$("#adLinkURL").focus();
 		return false;
 	}
 	if (!chkUrl($("#adLinkURL"), $("#chkLinkURL"))) {
-		location.href = "#chkLinkURL";
+		$("#adLinkURL").focus();
 		return false;
 	}
 	
 	if(!submitFlag ){
 		$("#chkFile").html("有錯誤的檔案");
-		location.href = "#chkFile";
+		location.href = "#fileupload";
 		return false;
 	}
 	if(seqArray.length == 0){
 		$("#chkFile").html("請上傳檔案");
-		location.href = "#chkFile";
+		location.href = "#fileupload";
 		return false;
 	}
 	var map = {
