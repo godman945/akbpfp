@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pchome.akbpfp.db.dao.sequence.ISequenceDAO;
@@ -42,8 +43,8 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 		return id.toString();
 	}
 
-	@Transactional
-	private synchronized Sequence getSequence(EnumSequenceTableName enumSequenceTableName) throws Exception{
+	@Transactional(isolation=Isolation.SERIALIZABLE)
+	private Sequence getSequence(EnumSequenceTableName enumSequenceTableName) throws Exception{
 
 		Sequence sequence = ((ISequenceDAO) dao).get(enumSequenceTableName.getSnoName());
 		Date date = new Date();
@@ -89,8 +90,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
         return sb.toString();
 	}
 
-	@Transactional
-	private synchronized String getIDForTable(EnumSequenceTableName enumSequenceTableName, String mid) throws Exception{
+	private String getIDForTable(EnumSequenceTableName enumSequenceTableName, String mid) throws Exception{
 		Sequence sequence = getSequence(enumSequenceTableName);
 
 		int limit=0;
