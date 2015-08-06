@@ -62,7 +62,7 @@ $(document).ready(function(){
 	
 	//檢查網址blur事件
 	$("#adLinkURL").blur(function() {
-		urlCheck($("#adLinkURL"), $("#chkLinkURL"));
+		chkUrl($("#adLinkURL"), $("#chkLinkURL"));
 	});
 });
 
@@ -334,7 +334,7 @@ function multipartImgUuploadSubmit(){
 		location.href = "#chkLinkURL";
 		return false;
 	}
-	if (!urlCheck($("#adLinkURL"), $("#chkLinkURL"))) {
+	if (!chkUrl($("#adLinkURL"), $("#chkLinkURL"))) {
 		location.href = "#chkLinkURL";
 		return false;
 	}
@@ -380,7 +380,7 @@ function cancerSubmit(){
 }
 
 //檢查網址是否有效
-function urlCheck(valObj, msgObj){
+function chkUrl(valObj, msgObj){
 	var val = valObj.val();
 	
 	msgObj.css("color","");
@@ -392,8 +392,8 @@ function urlCheck(valObj, msgObj){
 		msgObj.text("請輸入廣告連結網址");
 		return false;
 	}
-
-	if(validURL(adUrl)) {
+alert(validURL(adUrl));
+	if(!validURL(adUrl)) {
 		msgObj.css("color","red");
 		msgObj.text("請輸入正確的廣告連結網址");
 		return false;
@@ -419,8 +419,7 @@ function urlCheck(valObj, msgObj){
 
 function validURL(url) {
 	var re = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-\u4e00-\u9fa5]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
-	var isUrl = re.test(url);
-	return isUrl;
+	return re.test(url);
 }
 
 //輸入字數檢查與提示
@@ -436,9 +435,6 @@ function chkWord(valObj, msgObj) {
 		msgObj.text("已輸入" + length + "字，剩" + (maxlength - length) + "字");
 		return true;
 	}
-	else {
-		msgObj.css("color","red");
-		msgObj.text("已輸入" + length + "字，超過" + (length - maxlength) + "字");
-		return false;
-	}
+	
+	return false;
 }
