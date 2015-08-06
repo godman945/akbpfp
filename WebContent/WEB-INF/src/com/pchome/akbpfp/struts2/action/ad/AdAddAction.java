@@ -742,15 +742,31 @@ public class AdAddAction extends BaseCookieAction{
         		}
         		if (StringUtil.isEmpty(adPoolSeq)) {
         		    result = "error";
-        		    return "success";
+        		    return SUCCESS;
         		}
         		addAd(pfpAdGroup);
         		String path = imageVO.getImgPath().replace("\\", "/");
         		path = path.replace("/export/home/webuser/akb/pfp/", "");
         		saveAdDetail(path,EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
-        		if (StringUtils.isNotBlank(adLinkURL) && (adLinkURL.indexOf("http://") != 0)) {
-        		    adLinkURL = "http://" + adLinkURL;
-        		}
+
+        		// check adLinkURL
+                if(StringUtils.isBlank(adLinkURL)){
+                    result = "請填寫廣告連結網址.";
+                    return SUCCESS;
+                }
+                if(adLinkURL.length() > 1024) {
+                    result = "廣告連結網址不可超過 1024字！";
+                    return SUCCESS;
+                }
+                if (adLinkURL.indexOf("http://") != 0) {
+                    adLinkURL = "http://" + adLinkURL;
+                }
+                int urlState = HttpUtil.getInstance().getStatusCode(adLinkURL);
+                if(urlState < 200 && urlState >= 300) {
+                    result = "請輸入正確的廣告連結網址！";
+                    return SUCCESS;
+                }
+
         		saveAdDetail(adLinkURL,EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
     	    }
     	}
@@ -763,7 +779,7 @@ public class AdAddAction extends BaseCookieAction{
         pfpAdGroupService.save(pfpAdGroup);
 
     	result = "success";
-    	return "success";
+    	return SUCCESS;
     }
 
 	public List<PfbxSize> getPfbSizeList() {
