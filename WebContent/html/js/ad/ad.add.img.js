@@ -392,9 +392,8 @@ function chkUrl(valObj, msgObj){
 		msgObj.text("請輸入廣告連結網址");
 		return false;
 	}
-alert(adUrl);
-alert(validURL(adUrl));
-	if(!validURL(adUrl)) {
+
+	if(!validURL(val)) {
 		msgObj.css("color","red");
 		msgObj.text("請輸入正確的廣告連結網址");
 		return false;
@@ -404,7 +403,7 @@ alert(validURL(adUrl));
 	$.ajax({
 		type: "POST",
 		url: "checkAdUrl.html",
-		data: { url: adUrl}
+		data: { url: val }
 	}).done(function( msg ) {
 		if (msg == "true") {
 			msgObj.css("color","green");
