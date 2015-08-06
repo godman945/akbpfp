@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pchome.akbpfp.db.dao.sequence.ISequenceDAO;
@@ -120,8 +121,8 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 	}
 
 	@Override
-    @Transactional
-	public synchronized String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception {
+    @Transactional(isolation=Isolation.SERIALIZABLE)
+	public String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception {
 		String id = null;
 		id = this.getIDForTable(enumSequenceTableName, mid);
 
