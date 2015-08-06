@@ -401,6 +401,9 @@ function chkUrl(valObj, msgObj){
 		data: { url: val },
 		async: false
 	}).complete(function(result) {
+		alert(result);
+		alert(result == "true");
+		alert(result == true);
 		if (result == "true") {
 			msgObj.css("color","green");
 			msgObj.text("網址確認正確");
