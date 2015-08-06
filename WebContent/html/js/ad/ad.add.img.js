@@ -369,6 +369,7 @@ function cancerSubmit(){
 
 //檢查網址blur事件
 $("#adLinkURL").blur(function() {
+	alert($("#adLinkURL").val());
 	if($("#adLinkURL").val() != "show.pchome.com.tw"){
 		urlCheck("adLinkURL",$("#adLinkURL").val());
 	}else{
