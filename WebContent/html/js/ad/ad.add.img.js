@@ -395,26 +395,44 @@ function chkUrl(valObj, msgObj){
 	}
 	
 	msgObj.text("網址檢查中");
-	$.ajax({
+//	$.ajax({
+//		type: "POST",
+//		url: "checkAdUrl.html",
+//		data: { url: val },
+//		async: false
+//	}).complete(function(result) {
+//		alert(result);
+//		alert(result == "true");
+//		alert(result == true);
+//		if (result == "true") {
+//			msgObj.css("color","green");
+//			msgObj.text("網址確認正確");
+//			return true;
+//		}
+//		else {
+//			msgObj.css("color","red");
+//			msgObj.text("請輸入正確的廣告連結網址");
+//			return false;
+//		}
+//	});
+	
+	var result = $.ajax({
 		type: "POST",
 		url: "checkAdUrl.html",
 		data: { url: val },
 		async: false
-	}).complete(function(result) {
-		alert(result);
-		alert(result == "true");
-		alert(result == true);
-		if (result == "true") {
-			msgObj.css("color","green");
-			msgObj.text("網址確認正確");
-			return true;
-		}
-		else {
-			msgObj.css("color","red");
-			msgObj.text("請輸入正確的廣告連結網址");
-			return false;
-		}
 	});
+	
+	if (result.responseText == "true") {
+		msgObj.css("color","green");
+		msgObj.text("網址確認正確");
+		return true;
+	}
+	else {
+		msgObj.css("color","red");
+		msgObj.text("請輸入正確的廣告連結網址");
+		return false;
+	}
 }
 
 function validURL(url) {
