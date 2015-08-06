@@ -377,7 +377,6 @@ function cancerSubmit(){
 //檢查網址是否有效
 function chkUrl(valObj, msgObj){
 	var val = valObj.val();
-	var urlFlag = false;
 	
 	msgObj.css("color","");
 	msgObj.text("");
@@ -404,16 +403,14 @@ function chkUrl(valObj, msgObj){
 		if (msg == "true") {
 			msgObj.css("color","green");
 			msgObj.text("網址確認正確");
-			urlFlag = true;
+			return true;
 		}
 		else {
 			msgObj.css("color","red");
 			msgObj.text("請輸入正確的廣告連結網址");
-			urlFlag = false;
+			return false;
 		}
 	});
-	
-	return urlFlag;
 }
 
 function validURL(url) {
