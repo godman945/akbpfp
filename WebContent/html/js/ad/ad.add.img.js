@@ -329,11 +329,6 @@ function multipartImgUuploadSubmit(){
 		}
 	});
 	
-
-	if (!chkWord($("#adLinkURL"), $("#spanAdLinkURL"))) {
-		$("#adLinkURL").focus();
-		return false;
-	}
 	if (!chkUrl($("#adLinkURL"), $("#chkLinkURL"))) {
 		$("#adLinkURL").focus();
 		return false;
@@ -417,6 +412,8 @@ function chkUrl(valObj, msgObj){
 			flag = false;
 		}
 	});
+	
+	alert(flag);
 	
 	return flag;
 }
