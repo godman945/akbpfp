@@ -311,7 +311,7 @@ function multipartImgUuploadSubmit(){
 	
 	if($("#existKW").children().length == 0 && keyWordArray.length == 0){
 		$("#chkKeyword").html("請新增一筆關鍵字");
-		$("#adKeyword").focus();
+		location.href = "#chkKeyword";
 		return false;
 	}
 	
@@ -331,20 +331,22 @@ function multipartImgUuploadSubmit(){
 	
 
 	if (!chkWord($("#adLinkURL"), $("#spanAdLinkURL"))) {
+		location.href = "#chkLinkURL";
 		return false;
 	}
 	if (!urlCheck($("#adLinkURL"), $("#chkLinkURL"))) {
+		location.href = "#chkLinkURL";
 		return false;
 	}
 	
 	if(!submitFlag ){
 		$("#chkFile").html("有錯誤的檔案");
-		$("#errAdImg").focus();
+		location.href = "#chkFile";
 		return false;
 	}
 	if(seqArray.length == 0){
 		$("#chkFile").html("請上傳檔案");
-		$("#errAdImg").focus();
+		location.href = "#chkFile";
 		return false;
 	}
 	var map = {
@@ -424,16 +426,17 @@ function validURL(url) {
 //輸入字數檢查與提示
 function chkWord(valObj, msgObj) {
 	var length = parseInt(valObj.val().length);
-	var maxlength = parseInt(msgObj.attr("maxlength"));
+	var maxlength = parseInt(valObj.attr("maxlength"));
 	
 	msgObj.css("color","");
 	msgObj.text("");
 	
-	if(length <= maxlength){
+	if (length <= maxlength) {
+		msgObj.css("color","");
 		msgObj.text("已輸入" + length + "字，剩" + (maxlength - length) + "字");
 		return true;
 	}
-	else if(length > maxlength){
+	else {
 		msgObj.css("color","red");
 		msgObj.text("已輸入" + length + "字，超過" + (length - maxlength) + "字");
 		return false;
