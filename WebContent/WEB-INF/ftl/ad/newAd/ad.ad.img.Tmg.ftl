@@ -42,7 +42,6 @@
 							<input type="hidden" id="adDetailName" name="adDetailName" value="廣告連結網址">
 							<input type="hidden" id="adDetailContent" name="adDetailContent">
 							<input type="text" class="inputPlaceholderTmg" id="adLinkURL" name="adLinkURL" style="width:96%;" placeholder="show.pchome.com.tw"  maxlength=""><br>
-							<div id="adLinkURLMessage" style="color:red"></div>
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">已輸入0字，剩1024字</span>
 						</td>
 					</tr>
@@ -57,8 +56,7 @@
                                 <input type="hidden" id="adDetailContent" name="adDetailContent" value="">
    	  							<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroupSeq}">
                                 <input id="fileupload" type="file"  name="fileupload" multiple ><!--onchange="createImgDom(this)"-->
-								<div id="chkFileMessage" style="color:red"></div>
-                                <span name="chkFile" style="color:red;size:5"></span><br /> <div>已上傳 <div id="fileUploadIndex" style="display:inline;">0</div>/<div id="fileUploadSize" style="display:inline;">0</div> <div id="finalCount"  style="display:inline;color:blue;"></div></div>									
+                                <span id="chkFile" name="chkFile" style="color:red;size:5"></span><br /> <div>已上傳 <div id="fileUploadIndex" style="display:inline;">0</div>/<div id="fileUploadSize" style="display:inline;">0</div> <div id="finalCount"  style="display:inline;color:blue;"></div></div>									
                             </div>
                             <!--上傳圖片end-->
 						  </span>
