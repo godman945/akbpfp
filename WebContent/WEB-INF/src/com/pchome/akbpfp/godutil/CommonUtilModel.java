@@ -31,8 +31,6 @@ public class CommonUtilModel extends BaseCookieAction{
 	    log.info("開始處理圖片:"+adSeq);
 	    Date date2 = new Date();
 	    SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-	    log.info(bufferedImage);
-	    log.info(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
 	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
 	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg";

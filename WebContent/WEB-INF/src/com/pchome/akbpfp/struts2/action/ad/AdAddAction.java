@@ -630,11 +630,6 @@ public class AdAddAction extends BaseCookieAction{
     		    customerImgFile.mkdirs();
     		}
     		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date));
-            adSeq = "";
-            adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-            commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
-            imgWidth = String.valueOf(bufferedImage.getWidth());
-            imgHeight = String.valueOf(bufferedImage.getHeight());
     		if(!customerImgFileDateFile.exists()){
     		    customerImgFileDateFile.mkdirs();
     		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original");
@@ -646,6 +641,11 @@ public class AdAddAction extends BaseCookieAction{
     		}else{
     		    fileSize = String.valueOf(file.length() / 1024);
     		}
+            adSeq = "";
+            adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+            commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
+            imgWidth = String.valueOf(bufferedImage.getWidth());
+            imgHeight = String.valueOf(bufferedImage.getHeight());
     		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
 	    }
 
