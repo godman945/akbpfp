@@ -53,7 +53,17 @@ $(document).ready(function(){
 	    }).on('fileuploadprogressall', function (e, data) {	
 	    }).on('fileuploadprocessalways', function (e, data) {
 	    })
-	})
+	});
+	
+	//檢查網址blur事件
+	$("#adLinkURL").blur(function() {
+		if($("#adLinkURL").val() != "show.pchome.com.tw"){
+			urlCheck("adLinkURL",$("#adLinkURL").val());
+		}else{
+			$("#chkLinkURL").css("color","red");
+			$("#chkLinkURL").text("請輸入廣告連結網址");
+		}
+	});
 });
 
 
@@ -366,17 +376,6 @@ function multipartImgUuploadSubmit(){
 function cancerSubmit(){
 	$(location).attr( 'href' , 'adActionView.html');
 }
-
-//檢查網址blur事件
-$("#adLinkURL").blur(function() {
-	alert($("#adLinkURL").val());
-	if($("#adLinkURL").val() != "show.pchome.com.tw"){
-		urlCheck("adLinkURL",$("#adLinkURL").val());
-	}else{
-		$("#chkLinkURL").css("color","red");
-		$("#chkLinkURL").text("請輸入廣告連結網址");
-	}
-});
 
 //檢查網址是否有效
 function urlCheck(urlType,adUrl){
