@@ -399,12 +399,9 @@ function chkUrl(valObj, msgObj){
 		type: "POST",
 		url: "checkAdUrl.html",
 		data: { url: val },
-		dataType: "json",
 		async: false
 	}).complete(function(result) {
-		var httpStatus = parseInt(result.urlState);
-		
-		if ((httpStatus >= 200) && (httpStatus < 300)) {
+		if (result == "true") {
 			msgObj.css("color","green");
 			msgObj.text("網址確認正確");
 			return true;
