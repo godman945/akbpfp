@@ -6,6 +6,7 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pchome.akbpfp.db.dao.sequence.ISequenceDAO;
 import com.pchome.akbpfp.db.pojo.Sequence;
@@ -17,36 +18,37 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	private int orderDayNum;
-	
+
 
 	public void setOrderDayNum(int orderDayNum) {
 		this.orderDayNum = orderDayNum;
 	}
-	
+
 	/**
      * 流水號長度共有15碼
      */
-	public String getSerialNumber(EnumSequenceTableName enumSequenceTableName) throws Exception{
-		
+	@Override
+    public String getSerialNumber(EnumSequenceTableName enumSequenceTableName) throws Exception{
+
 		int limit = 15;
 		Sequence sequence = this.getSequence(enumSequenceTableName);
-		
+
 		StringBuffer id = new StringBuffer();
 		id.append(sequence.getTableChar())
 			.append(sequence.getTableDate());
 		String num = this.getZeroSeq(String.valueOf(sequence.getTableNo()), (limit - id.length()));
 		id.append(num);
-		
+
 		return id.toString();
 	}
-	
-	
+
+
 	private Sequence getSequence(EnumSequenceTableName enumSequenceTableName) throws Exception{
-		
+
 		Sequence sequence = ((ISequenceDAO) dao).get(enumSequenceTableName.getSnoName());
 		Date date = new Date();
 		String today = sdf.format(date);
-		
+
 		if(sequence == null){
 			// 無資料
 			sequence = new Sequence();
@@ -55,7 +57,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 			sequence.setTableDate(today);
 			sequence.setTableNo(1);
 			sequence.setCreateDate(date);
-			
+
 		}else{
 			if(today.equals(sequence.getTableDate())){
 				// 數字累計上去
@@ -66,28 +68,28 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 				sequence.setTableDate(today);
 				sequence.setTableNo(1);
 			}
-			
+
 		}
-		
+
 		sequence.setUpdateDate(date);
 		((ISequenceDAO) dao).saveOrUpdate(sequence);
-		
+
 		return sequence;
 	}
-	
+
 	private String getZeroSeq(String str, int limit) throws Exception{
-		
+
         StringBuffer sb = new StringBuffer();
 
         for (int i = 0, length = limit - str.length(); i < length; i++) {
             sb.append("0");
         }
         sb.append(str);
-        
+
         return sb.toString();
 	}
 
-
+    @Transactional
 	private String getIDForTable(EnumSequenceTableName enumSequenceTableName, String mid) throws Exception{
 		Sequence sequence = getSequence(enumSequenceTableName);
 
@@ -119,6 +121,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 		return id.toString();
 	}
 
+	@Override
 	public synchronized String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception {
 		String id = null;
 		id = this.getIDForTable(enumSequenceTableName, mid);
@@ -132,7 +135,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 		Logger log = Logger.getLogger(SequenceService.class);
 
 		SequenceService service = (SequenceService) context.getBean("SequenceService");
-		
+
 		log.info(" id -->  "+service.getSerialNumber(EnumSequenceTableName.ORDER));
 	}
 }
