@@ -118,7 +118,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	}
 	
 	if (adSeq == "") {
-		errorMsg = '上傳失敗';
+		errorMsg = '檔案傳輸失敗';
 	}
 	
 	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"){

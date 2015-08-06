@@ -147,3 +147,90 @@ function preview(img) {
         'scrolling':'no'
     });
 }
+
+//檢查網址blur事件
+$("#adLinkURL").blur(function() {
+	if($("#adLinkURL").val() != "show.pchome.com.tw"){
+		urlCheck("adLinkURL",$("#adLinkURL").val());
+	}else{
+		$("#chkLinkURL").css("color","red");
+		$("#chkLinkURL").text("請輸入廣告連結網址");
+	}
+});
+
+//檢查網址是否有效
+function urlCheck(urlType,adUrl){
+	var adUrlHint = urlType != "adShowURL" ? "chkLinkURL" : "chkShowURL";
+	if(adUrl != "" && urlType.indexOf("show.pchome.com.tw") < 0) {
+		if(ValidURL(adUrl)) {
+			$("#"+adUrlHint).text("網址檢查中");
+			$.ajax({
+				type: "POST",
+				url: "checkAdUrl.html",
+				data: { url: adUrl}
+			}).done(function( msg ) {
+				if(msg == "false") {
+					$("#chkShowURL").css("color","red");
+					$("#"+adUrlHint).css("color","red");
+					if(adUrlHint == "chkLinkURL"){
+						$("#"+adUrlHint).text("請輸入正確的廣告連結網址");
+					}else if(adUrlHint == "chkShowURL"){
+						$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
+					}
+					
+					if(urlType == "adShowURL"){
+						ShowUrl = false;
+					}else{
+						LinkUrl = false;
+					}
+				} else {
+					$("#"+urlType).css("color","");
+					$("#"+adUrlHint).css("color","green");
+					$("#"+adUrlHint).text("網址確認正確");
+					if(urlType == "adShowURL"){
+						ShowUrl = true;
+					}else{
+						LinkUrl = true;
+					}
+				}
+			});
+		}else {
+			if(urlType == 'adLinkURL'){
+				if($("#adLinkURL").length > 0){
+					$('#chkLinkURL').css("color","red");
+					$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
+				}
+			}
+			if(urlType == 'adShowURL'){
+				if($("#adShowURL").length > 0){
+					$('#chkShowURL').css("color","red");
+					$("#"+adUrlHint).text("請輸入正確廣告顯示網址.");
+				}
+			}
+		}
+	}else{
+		if(urlType == 'adLinkURL'){
+			if($("#adLinkURL").val().length > 0){
+				$('#chkLinkURL').css("color","red");
+				$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
+				return false;
+			}else{
+				$('#chkLinkURL').css("color","red");
+				$("#"+adUrlHint).text("請輸入廣告連結網址.");
+				return false;
+			}
+			
+		}
+		if(urlType == 'adShowURL'){
+			$("#"+adUrlHint).text("請輸入正確廣告顯示網址.");
+			return false;
+		}else{
+			$("#"+adUrlHint).text("請輸入廣告顯示網址.");
+			return false;
+		}
+	}
+	
+	//連結網址字數檢查
+	chkWord($('#adShowURL'), "spanAdShowURL");
+	chkWord($('#adLinkURL'), "spanAdLinkURL");
+}
