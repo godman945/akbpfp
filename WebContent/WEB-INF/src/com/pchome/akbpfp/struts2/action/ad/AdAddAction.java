@@ -551,20 +551,21 @@ public class AdAddAction extends BaseCookieAction{
 	    adStyle = "TMG";
 	    List<PfbxSize> pfbSizeList = pfbSizeService.loadAll();
 	    for (EnumAdSize enumAdSize : EnumAdSize.values()) {
-		for (PfbxSize pfbxSize : pfbSizeList) {
-		    if(String.valueOf(pfbxSize.getId()).equals(enumAdSize.getName())){
-			this.pfbSizeList.add(pfbxSize);
-		    }
-		}
+    		for (PfbxSize pfbxSize : pfbSizeList) {
+    		    if(String.valueOf(pfbxSize.getId()).equals(enumAdSize.getName())){
+    		        this.pfbSizeList.add(pfbxSize);
+    		    }
+    		}
 	    }
+
 	    // 取出分類所屬關鍵字
 	    pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
+
 	    // 取出分類所屬排除關鍵字
 	    pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, super.getCustomer_info_id());
+
 	    return SUCCESS;
 	}
-
-
 
 	/**
 	 * 新增廣告明細
@@ -607,148 +608,154 @@ public class AdAddAction extends BaseCookieAction{
 	    CommonUtilModel commonUtilModel = new CommonUtilModel();
 
 	    if(fileupload == null){
-		return SUCCESS;
+	        return SUCCESS;
 	    }
+
 	    String imgWidth ="";
 	    String imgHeight ="";
 	    String fileSize= "";
 	    imgUploadPath = "";
 	    for (File file : fileupload) {
-		File originalImgFile = file;
-		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(bufferedImage, "jpg", baos);
-		baos.flush();
-		baos.close();
-		 log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
-		 log.info(">>>2.path>>"+customerImgFile.getPath());
-		 log.info(customerImgFile.exists());
-		if(!customerImgFile.exists()){
-		    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
-		    customerImgFile.mkdirs();
-		}
-		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date));
-		if(!customerImgFileDateFile.exists()){
-		    customerImgFileDateFile.mkdirs();
-		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original");
-		    customerImgFileOriginalDateFile.mkdirs();
-		    customerImgFileTemporalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal");
-		    if(!customerImgFileTemporalDateFile.exists()){
-			customerImgFileTemporalDateFile.mkdirs();
-		    }
-		    adSeq = "";
-		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-		    commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
-		    imgWidth = String.valueOf(bufferedImage.getWidth());
-		    imgHeight = String.valueOf(bufferedImage.getHeight());
-		}else{
-		    adSeq = "";
-		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-		    commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
-		    imgWidth = String.valueOf(bufferedImage.getWidth());
-		    imgHeight = String.valueOf(bufferedImage.getHeight());
-		    fileSize = String.valueOf(file.length() / 1024);
-		}
-		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
+    		File originalImgFile = file;
+    		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
+    		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    		ImageIO.write(bufferedImage, "jpg", baos);
+    		baos.flush();
+    		baos.close();
+    		log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
+    		log.info(">>>2.path>>"+customerImgFile.getPath());
+    		log.info(customerImgFile.exists());
+    		if(!customerImgFile.exists()){
+    		    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
+    		    customerImgFile.mkdirs();
+    		}
+    		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date));
+            adSeq = "";
+            adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+            commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
+            imgWidth = String.valueOf(bufferedImage.getWidth());
+            imgHeight = String.valueOf(bufferedImage.getHeight());
+    		if(!customerImgFileDateFile.exists()){
+    		    customerImgFileDateFile.mkdirs();
+    		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original");
+    		    customerImgFileOriginalDateFile.mkdirs();
+    		    customerImgFileTemporalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal");
+    		    if(!customerImgFileTemporalDateFile.exists()){
+    		        customerImgFileTemporalDateFile.mkdirs();
+    		    }
+    		}else{
+    		    fileSize = String.valueOf(file.length() / 1024);
+    		}
+    		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
 	    }
+
 	    return SUCCESS;
 	}
+
 	/**
 	 * 儲存資料
 	 * */
 	public String uploadImgSave() throws Exception{
-	PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-	//建立關鍵字
-	List<String> keyWordList = new ArrayList<String>();
-	if (!keywords[0].equals("[]")) {
-	    String data = "";
-	    for (char a : keywords[0].toCharArray()) {
-		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
-		    continue;
-		}
-		if (String.valueOf(a).equals("]")) {
-		    keyWordList.add(data);
-		} else {
-		    if (String.valueOf(a).equals(",")) {
-			keyWordList.add(data);
-			data = "";
-		    } else {
-			data = data + String.valueOf(a);
-		    }
-		}
-	    }
-	    keywords = keyWordList.toArray(new String[keyWordList.size()]);
-	    //新增關鍵字
-	    addKeywords(pfpAdGroup);
-	}
+    	PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 
+    	//建立關鍵字
+    	List<String> keyWordList = new ArrayList<String>();
+    	if (!keywords[0].equals("[]")) {
+    	    String data = "";
+    	    for (char a : keywords[0].toCharArray()) {
+        		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+        		    continue;
+        		}
+        		if (String.valueOf(a).equals("]")) {
+        		    keyWordList.add(data);
+        		} else {
+        		    if (String.valueOf(a).equals(",")) {
+            			keyWordList.add(data);
+            			data = "";
+        		    } else {
+        		        data = data + String.valueOf(a);
+        		    }
+        		}
+    	    }
+    	    keywords = keyWordList.toArray(new String[keyWordList.size()]);
 
+    	    //新增關鍵字
+    	    addKeywords(pfpAdGroup);
+    	}
 
-	//建立排除關鍵字
-	List<String> excludeKeyWordList = new ArrayList<String>();
-	if (!excludeKeywords[0].equals("[]")) {
-	    String data = "";
-	    for (char a : excludeKeywords[0].toCharArray()) {
-		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
-		    continue;
-		}
-		if (String.valueOf(a).equals("]")) {
-		    excludeKeyWordList.add(data);
-		} else {
-		    if (String.valueOf(a).equals(",")) {
-			excludeKeyWordList.add(data);
-			data = "";
-		    } else {
-			data = data + String.valueOf(a);
-		    }
-		}
-	    }
-	    excludeKeywords = excludeKeyWordList.toArray(new String[excludeKeyWordList.size()]);
-	    //新增排除關鍵字
-	    addExcludeKeywords(pfpAdGroup);
-	}
+    	//建立排除關鍵字
+    	List<String> excludeKeyWordList = new ArrayList<String>();
+    	if (!excludeKeywords[0].equals("[]")) {
+    	    String data = "";
+    	    for (char a : excludeKeywords[0].toCharArray()) {
+        		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+        		    continue;
+        		}
+        		if (String.valueOf(a).equals("]")) {
+        		    excludeKeyWordList.add(data);
+        		} else {
+        		    if (String.valueOf(a).equals(",")) {
+            			excludeKeyWordList.add(data);
+            			data = "";
+        		    } else {
+        		        data = data + String.valueOf(a);
+        		    }
+        		}
+    	    }
+    	    excludeKeywords = excludeKeyWordList.toArray(new String[excludeKeyWordList.size()]);
 
-	adClass = "1";
-	adStyle = "IMG";
-	templateProductSeq = EnumAdStyle.IMG.getTproSeq();
-	JSONObject seqArrayJsonObject = new JSONObject(seqArray.toString());
-	JSONArray seqArray = new JSONArray(seqArrayJsonObject.get("seqArray").toString());
-	// 1.存廣告檔
-	// 2.刪暫存圖檔
-	CommonUtilModel commonUtilModel = new CommonUtilModel();
-	String customerInfoId = super.getCustomer_info_id();
-	Date date = new Date();
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	ImageVO imageVO = new ImageVO();
-	if (seqArray.length() > 0) {
-	    for (int i = 0; i < seqArray.length(); i++) {
-		adSeq = seqArray.get(i).toString();
-		imageVO = commonUtilModel.createAdImg(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
-		String adPoolSeq = "";
-		for (EnumAdSize enumAdSize : EnumAdSize.values()) {
-		    if (imageVO.getImgWidth().equals(enumAdSize.getWidh())  && imageVO.getImgHeight().equals(enumAdSize.getHeight())) {
-			adPoolSeq = enumAdSize.name();
-			break;
-		    }
-		}
-		if (StringUtil.isEmpty(adPoolSeq)) {
-		    result = "error";
-		    return "success";
-		}
-		addAd(pfpAdGroup);
-		String path = imageVO.getImgPath().replace("\\", "/");
-		path = path.replace("/export/home/webuser/akb/pfp/", "");
-		saveAdDetail(path,EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
-		if (StringUtils.isNotBlank(adLinkURL) && (adLinkURL.indexOf("http://") != 0)) {
-		    adLinkURL = "http://" + adLinkURL;
-		}
-		saveAdDetail(adLinkURL,EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
-	    }
-	}
-	// 刪除暫存檔
-	commonUtilModel.deleteAllTemporalImg(photoDbPathNew, customerInfoId,sdf.format(date));
-	result = "success";
-	return "success";
+    	    //新增排除關鍵字
+    	    addExcludeKeywords(pfpAdGroup);
+    	}
+
+    	adClass = "1";
+    	adStyle = "IMG";
+    	templateProductSeq = EnumAdStyle.IMG.getTproSeq();
+    	JSONObject seqArrayJsonObject = new JSONObject(seqArray.toString());
+    	JSONArray seqArray = new JSONArray(seqArrayJsonObject.get("seqArray").toString());
+
+    	// 1.存廣告檔
+    	// 2.刪暫存圖檔
+    	CommonUtilModel commonUtilModel = new CommonUtilModel();
+    	String customerInfoId = super.getCustomer_info_id();
+    	Date date = new Date();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    	ImageVO imageVO = new ImageVO();
+    	if (seqArray.length() > 0) {
+    	    for (int i = 0; i < seqArray.length(); i++) {
+        		adSeq = seqArray.get(i).toString();
+        		imageVO = commonUtilModel.createAdImg(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
+        		String adPoolSeq = "";
+        		for (EnumAdSize enumAdSize : EnumAdSize.values()) {
+        		    if (imageVO.getImgWidth().equals(enumAdSize.getWidh())  && imageVO.getImgHeight().equals(enumAdSize.getHeight())) {
+            			adPoolSeq = enumAdSize.name();
+            			break;
+        		    }
+        		}
+        		if (StringUtil.isEmpty(adPoolSeq)) {
+        		    result = "error";
+        		    return "success";
+        		}
+        		addAd(pfpAdGroup);
+        		String path = imageVO.getImgPath().replace("\\", "/");
+        		path = path.replace("/export/home/webuser/akb/pfp/", "");
+        		saveAdDetail(path,EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
+        		if (StringUtils.isNotBlank(adLinkURL) && (adLinkURL.indexOf("http://") != 0)) {
+        		    adLinkURL = "http://" + adLinkURL;
+        		}
+        		saveAdDetail(adLinkURL,EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
+    	    }
+    	}
+
+    	// 刪除暫存檔
+    	commonUtilModel.deleteAllTemporalImg(photoDbPathNew, customerInfoId,sdf.format(date));
+
+        // 開啟廣告分類
+        pfpAdGroup.setAdGroupStatus(4);
+        pfpAdGroupService.save(pfpAdGroup);
+
+    	result = "success";
+    	return "success";
     }
 
 	public List<PfbxSize> getPfbSizeList() {
