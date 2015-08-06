@@ -641,7 +641,6 @@ public class AdAddAction extends BaseCookieAction{
     		}else{
     		    fileSize = String.valueOf(file.length() / 1024);
     		}
-            adSeq = "";
             adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
             commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
             imgWidth = String.valueOf(bufferedImage.getWidth());

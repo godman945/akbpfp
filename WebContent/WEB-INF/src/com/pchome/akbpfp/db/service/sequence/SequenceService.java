@@ -44,7 +44,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 	}
 
 	@Transactional(isolation=Isolation.SERIALIZABLE)
-	private Sequence getSequence(EnumSequenceTableName enumSequenceTableName) throws Exception{
+	private synchronized Sequence getSequence(EnumSequenceTableName enumSequenceTableName) throws Exception{
 
 		Sequence sequence = ((ISequenceDAO) dao).get(enumSequenceTableName.getSnoName());
 		Date date = new Date();
