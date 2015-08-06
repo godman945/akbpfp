@@ -121,7 +121,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 
 	@Override
     @Transactional
-	public String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception {
+	public synchronized String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception {
 		String id = null;
 		id = this.getIDForTable(enumSequenceTableName, mid);
 
