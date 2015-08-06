@@ -42,7 +42,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 		return id.toString();
 	}
 
-
+	@Transactional
 	private Sequence getSequence(EnumSequenceTableName enumSequenceTableName) throws Exception{
 
 		Sequence sequence = ((ISequenceDAO) dao).get(enumSequenceTableName.getSnoName());
@@ -89,7 +89,6 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
         return sb.toString();
 	}
 
-    @Transactional
 	private String getIDForTable(EnumSequenceTableName enumSequenceTableName, String mid) throws Exception{
 		Sequence sequence = getSequence(enumSequenceTableName);
 
@@ -122,7 +121,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 	}
 
 	@Override
-	public synchronized String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception {
+	public String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception {
 		String id = null;
 		id = this.getIDForTable(enumSequenceTableName, mid);
 
