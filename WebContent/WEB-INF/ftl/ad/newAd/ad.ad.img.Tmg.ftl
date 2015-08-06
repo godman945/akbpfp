@@ -36,12 +36,12 @@
 			<table width="100%" id="alex" cellspacing="1" cellpadding="0" border="0" class="tb02">
 				<tbody>
 					<tr>
-						<th height="35" style="width:12%;"><a name="errAdLinkURL" maxlength="1024"></a><span class="t_s02">* </span>廣告連結網址</th>
+						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>廣告連結網址</th>
 						<td style="min-width:250px;">
 							<input type="hidden" id="adDetailID" name="adDetailID" value="real_url">
 							<input type="hidden" id="adDetailName" name="adDetailName" value="廣告連結網址">
 							<input type="hidden" id="adDetailContent" name="adDetailContent">
-							<input type="text" class="inputPlaceholderTmg" id="adLinkURL" name="adLinkURL" style="width:96%;" placeholder="show.pchome.com.tw"  maxlength=""><br>
+							<input type="text" class="inputPlaceholderTmg" id="adLinkURL" name="adLinkURL" style="width:96%;" placeholder="show.pchome.com.tw" maxlength="1024"><br>
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">已輸入0字，剩1024字</span>
 						</td>
 					</tr>
