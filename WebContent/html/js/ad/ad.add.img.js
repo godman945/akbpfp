@@ -331,12 +331,10 @@ function multipartImgUuploadSubmit(){
 	
 
 	if (!chkWord($("#adLinkURL"), $("#spanAdLinkURL"))) {
-		alert("chkWord");
 		$("#adLinkURL").focus();
 		return false;
 	}
 	if (!chkUrl($("#adLinkURL"), $("#chkLinkURL"))) {
-		alert("chkUrl");
 		$("#adLinkURL").focus();
 		return false;
 	}
@@ -384,6 +382,7 @@ function cancerSubmit(){
 //檢查網址是否有效
 function chkUrl(valObj, msgObj){
 	var val = valObj.val();
+	var flag = false;
 	
 	msgObj.css("color","");
 	msgObj.text("");
@@ -396,9 +395,8 @@ function chkUrl(valObj, msgObj){
 	}
 
 	if(!validURL(val)) {
-		alert("validURL");
 		msgObj.css("color","red");
-		msgObj.text("請輸入正確的廣告連結網址+");
+		msgObj.text("請輸入正確的廣告連結網址");
 		return false;
 	}
 	
@@ -411,14 +409,16 @@ function chkUrl(valObj, msgObj){
 		if (msg == "true") {
 			msgObj.css("color","green");
 			msgObj.text("網址確認正確");
-			return true;
+			flag = true;
+		}
+		else {
+			msgObj.css("color","red");
+			msgObj.text("請輸入正確的廣告連結網址");
+			flag = false;
 		}
 	});
-
-	alert("end");
-	msgObj.css("color","red");
-	msgObj.text("請輸入正確的廣告連結網址");
-	return false;
+	
+	return flag;
 }
 
 function validURL(url) {
