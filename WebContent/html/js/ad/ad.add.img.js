@@ -399,7 +399,7 @@ function chkUrl(valObj, msgObj){
 		type: "POST",
 		url: "checkAdUrl.html",
 		data: { url: val },
-		dataType: json,
+		dataType: "json",
 		async: false
 	}).complete(function(result) {
 		var httpStatus = parseInt(result.urlState);
