@@ -89,8 +89,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
         return sb.toString();
 	}
 
-    @Transactional(isolation=Isolation.SERIALIZABLE)
-	private synchronized String getIDForTable(EnumSequenceTableName enumSequenceTableName, String mid) throws Exception{
+	private String getIDForTable(EnumSequenceTableName enumSequenceTableName, String mid) throws Exception{
 		Sequence sequence = getSequence(enumSequenceTableName);
 
 		int limit=0;
@@ -122,7 +121,8 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 	}
 
 	@Override
-	public String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception {
+    @Transactional(isolation=Isolation.SERIALIZABLE)
+	public synchronized String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception {
 		String id = null;
 		id = this.getIDForTable(enumSequenceTableName, mid);
 
