@@ -43,19 +43,15 @@ $(document).ready(function(){
 	    	var index = parseInt($("#fileUploadIndex").text());
 	    	index = index + 1;
 	    	$("#fileUploadIndex").text(index);
-	    	if($("#fileUploadSize").text() == "0"){
+//	    	if($("#fileUploadSize").text() == "0"){
 //	    		$("#fileUploadSize").text(data.originalFiles.length);	
-	    	}
-	    }).on('fileuploaddone', function (e, data) {
-	    }).on('fileuploaddone', function (e, data) {
-	    }).on('fileuploaddone', function (e, data) {	
-	    }).on('fileuploadprogressall', function (e, data) {	
-	    }).on('fileuploadprocessalways', function (e, data) {
-	    }).on('fileuploaddone', function (e, data) {
+//	    	}
 	    	fileArray.push(data.files[0]);
 	    	seqArray.push(jsonObj.adSeq);
 	    	//呼叫建立畫面
 	    	createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq);
+	    }).on('fileuploadprogressall', function (e, data) {	
+	    }).on('fileuploadprocessalways', function (e, data) {
 	    })
 	})
 });
@@ -119,6 +115,10 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	
 	if(!imgSizeFlag){
 		errorMsg = '檔案尺寸不符';
+	}
+	
+	if (adSeq == "") {
+		errorMsg = '上傳失敗';
 	}
 	
 	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"){
