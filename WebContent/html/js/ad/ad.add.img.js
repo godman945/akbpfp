@@ -388,18 +388,12 @@ function chk_adLinkURL() {
 	var adLinkURL = $('#adLinkURL').val();
 	var length = adLinkURL.length;
 	
-//	if(adLinkURL != $("#adShowURL").val()) {
-//		$('#sameRealUrl').attr("checked", false);
-//		$("#adShowURL").val("");
-//		$("#chkShowURL").text("");
-//	}
 	if(adLinkURL == "") {
 		$('#chkLinkURL').css("color","red");
-		$("#chkLinkURL").text("請輸入廣告連結網址.");
-		
+		$("#chkLinkURL").text("請輸入廣告連結網址");
 	} else {
 		$("#chkLinkURL").text("");
-		if(length == 1024) {
+		if(length == maxlength) {
 			$('#chkLinkURL').css("color","blue");
 			$("#chkLinkURL").text("廣告連結網址輸入字數已達上限1024字");
 		} else if(length > maxlength) { 
@@ -407,6 +401,7 @@ function chk_adLinkURL() {
 			$("#chkLinkURL").text("廣告連結網址最多輸入1024字");
 		}
 	}
+	
 	//連結網址字數檢查
 	chkWord($('#adLinkURL'), "spanAdLinkURL");
 }

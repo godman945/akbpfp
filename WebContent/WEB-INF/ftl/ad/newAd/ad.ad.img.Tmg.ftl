@@ -36,7 +36,7 @@
 			<table width="100%" id="alex" cellspacing="1" cellpadding="0" border="0" class="tb02">
 				<tbody>
 					<tr>
-						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>廣告連結網址</th>
+						<th height="35" style="width:12%;"><a name="errAdLinkURL" maxlength="1024"></a><span class="t_s02">* </span>廣告連結網址</th>
 						<td style="min-width:250px;">
 							<input type="hidden" id="adDetailID" name="adDetailID" value="real_url">
 							<input type="hidden" id="adDetailName" name="adDetailName" value="廣告連結網址">
