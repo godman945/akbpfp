@@ -398,9 +398,10 @@ function chkUrl(valObj, msgObj){
 	$.ajax({
 		type: "POST",
 		url: "checkAdUrl.html",
-		data: { url: val }
-	}).done(function( msg ) {
-		if (msg == "true") {
+		data: { url: val },
+		async: false
+	}).complete(function(result) {
+		if (result == "true") {
 			msgObj.css("color","green");
 			msgObj.text("網址確認正確");
 			return true;
