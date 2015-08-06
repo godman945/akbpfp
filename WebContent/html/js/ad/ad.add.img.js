@@ -392,6 +392,7 @@ function chkUrl(valObj, msgObj){
 		msgObj.text("請輸入廣告連結網址");
 		return false;
 	}
+alert(adUrl);
 alert(validURL(adUrl));
 	if(!validURL(adUrl)) {
 		msgObj.css("color","red");
