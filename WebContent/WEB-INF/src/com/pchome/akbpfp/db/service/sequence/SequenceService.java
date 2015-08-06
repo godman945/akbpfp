@@ -89,7 +89,8 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
         return sb.toString();
 	}
 
-	private String getIDForTable(EnumSequenceTableName enumSequenceTableName, String mid) throws Exception{
+	@Transactional
+	private synchronized String getIDForTable(EnumSequenceTableName enumSequenceTableName, String mid) throws Exception{
 		Sequence sequence = getSequence(enumSequenceTableName);
 
 		int limit=0;
