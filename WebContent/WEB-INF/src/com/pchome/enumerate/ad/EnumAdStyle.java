@@ -4,7 +4,7 @@ public enum EnumAdStyle {
 
 	TXT("tpro_201306280003", "tad_201303070002", "文字式樣板", "adp_201303070002"),
 	TMG("tpro_201306280001", "tad_201303070003", "圖文式樣板", "adp_201303070003"),
-	IMG("c_x05_po_tpro_0027", "c_x05_po_tad_0032", "圖式樣板", "adp_201507210001");
+    IMG("tpro_201306280004", "tad_201303070004", "圖式樣板", "adp_201303070004");
 	private final String tproSeq;
 	private final String tadSeq;
 	private final String tadName;
