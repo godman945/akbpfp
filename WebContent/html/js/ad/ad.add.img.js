@@ -272,7 +272,7 @@ function approveSize(){
 	 $.fancybox(
 	    		$('#approveSizeDiv').html(),
 	    		{
-	    			'modal'             : false,
+	    			'modal'             : true,
 	    			'autoDimensions'	: false,
 	    			'width'         	: 300,
 	    			'height'        	: 'auto',
