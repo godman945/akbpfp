@@ -620,6 +620,7 @@ public class AdAddAction extends BaseCookieAction{
 	    for (File file : fileupload) {
     		File originalImgFile = file;
 
+    		log.info(file.getPath());
     		if (!PATTERN.matcher(file.getPath()).matches()) {
     		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
     		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
