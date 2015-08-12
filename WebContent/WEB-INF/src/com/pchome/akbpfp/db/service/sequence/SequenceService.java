@@ -3,7 +3,6 @@ package com.pchome.akbpfp.db.service.sequence;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.commons.lang.math.RandomUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -130,7 +129,7 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 		        id = this.getIDForTable(enumSequenceTableName, mid);
 		    }
 		    catch (Exception e) {
-		        int sleepTime = RandomUtils.nextInt(100);
+		        int sleepTime = 100;
 		        log.info("sleep " + sleepTime);
 		        Thread.sleep(sleepTime);
 		    }
