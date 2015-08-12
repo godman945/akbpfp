@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
@@ -58,7 +57,6 @@ public class AdAddAction extends BaseCookieAction{
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private static final Pattern PATTERN = Pattern.compile("(.+\\.)(gif|jpe?g|png)$");
 
 	private String message = "";
 
@@ -620,21 +618,15 @@ public class AdAddAction extends BaseCookieAction{
 	    for (File file : fileupload) {
     		File originalImgFile = file;
 
-    		log.info(file.getPath());
-    		if (!PATTERN.matcher(file.getPath()).matches()) {
-    		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-    		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
-    		    return SUCCESS;
-    		}
-
     		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
     		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-//    		//2015.8.11 tim  上傳非圖像檔處理
-//    		if(bufferedImage == null){
-//    			result = "{\"adSeq\":\"" + "" + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
-//    			continue;
-//    		}
+    		//2015.8.11 tim  上傳非圖像檔處理
+    		if(bufferedImage == null){
+    		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+    		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
+    			continue;
+    		}
 
     		ImageIO.write(bufferedImage, "jpg", baos);
     		baos.flush();
