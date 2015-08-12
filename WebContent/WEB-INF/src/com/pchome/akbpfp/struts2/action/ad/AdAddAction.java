@@ -619,6 +619,13 @@ public class AdAddAction extends BaseCookieAction{
     		File originalImgFile = file;
     		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
     		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+    		//2015.8.11 tim  上傳非圖像檔處理
+    		if(bufferedImage == null){
+    			result = "{\"adSeq\":\"" + "" + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
+    			continue;
+    		}
+    		
     		ImageIO.write(bufferedImage, "jpg", baos);
     		baos.flush();
     		baos.close();
