@@ -75,7 +75,7 @@
 						<a href="adKeywordAdd.html?adGroupSeq=${vo.adGroupSeq!}">新增關鍵字</a><br>
 					</#if>
 					<#if vo.adStatus != 2 && vo.adStatus != 13>					
-						<#--<a href="adAdEdit.html?adSeq=${vo.adSeq!}">修改</a>-->
+						<a href="adAdEdit.html?adSeq=${vo.adSeq!}">修改</a>
 						<#if vo.adStatus == 0 || vo.adStatus == 1 || vo.adStatus == 3 || vo.adStatus == 6 >
 							<a href="#" onclick="closeAdAdStatus('${vo.adSeq!}','10')">關閉</a>
 						</#if>
