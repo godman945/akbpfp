@@ -30,10 +30,17 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * */
 	public String  writeImg(BufferedImage bufferedImage,String userImgPath,String custimerInfoid,String date,String adSeq) throws Exception{
 	    log.info("開始處理圖片:"+adSeq);
-	    Date date2 = new Date();
-	    SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
-	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
+	    //Date date2 = new Date();
+	    
+	    int w = bufferedImage.getWidth();
+	    int h = bufferedImage.getHeight();
+	    BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	    int[] rgb = bufferedImage.getRGB(0, 0, w, h, null, 0, w);
+	    newImage.setRGB(0, 0, w, h, rgb, 0, w);
+	    
+	    //SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+	    ImageIO.write(newImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
+	    ImageIO.write(newImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg";
 	}
 
