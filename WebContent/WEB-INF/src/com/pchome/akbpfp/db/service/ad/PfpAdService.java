@@ -110,6 +110,8 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 		keyword = CommonUtils.filterSqlInjection(keyword);
 
 		List<PfpAdAdViewVO> adAdViewVOs = null;
+		String imgFilename = null;
+
 		// 廣告明細詳細內容
 		HashMap<String, List<PfpAdDetail>> mPfpAdDetails = ((PfpAdDAO)dao).getPfpAdDetailByAdsList(customerInfoId, adGroupSeq, "title", keyword);
 
@@ -200,6 +202,8 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				    }
                     if ("img".equals(pfpAdDetail.getAdDetailId())) {
                         adAdViewVO.setImg(pfpAdDetail.getAdDetailContent());
+                        imgFilename = adAdViewVO.getImg().substring(adAdViewVO.getImg().lastIndexOf("/"));
+                        adAdViewVO.setOriginalImg(adAdViewVO.getImg().replace(imgFilename, "original/" + imgFilename));
                     }
 				}
 

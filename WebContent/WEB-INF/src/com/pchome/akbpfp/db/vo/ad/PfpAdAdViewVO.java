@@ -20,6 +20,7 @@ public class PfpAdAdViewVO {
 	private int invalidClk = 0 ;
 	private String realUrl = "";
 	private String img = "";
+	private String originalImg = "";
 	private String adStyle = "";
 
 	public String getAdActionSeq() {
@@ -135,6 +136,12 @@ public class PfpAdAdViewVO {
     }
     public void setImg(String img) {
         this.img = img;
+    }
+    public String getOriginalImg() {
+        return originalImg;
+    }
+    public void setOriginalImg(String originalImg) {
+        this.originalImg = originalImg;
     }
     public String getAdStyle() {
         return adStyle;

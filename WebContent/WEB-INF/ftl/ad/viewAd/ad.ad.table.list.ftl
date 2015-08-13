@@ -41,12 +41,14 @@
 				</#if>
 				</td>
 		        <td height="35" > 
-		        	<span><iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span>
 		        	<#if "IMG" == vo.adStyle>
-		        	<span>
-			        	${vo.realUrl!}<p>
-		        		<a style="cursor:pointer" onclick="preview('${vo.img!}')">預覽</a>
-		        	</span>
+						<span><a href="${vo.realUrl!}"><img src="${vo.img!}" /></a></span>
+			        	<span>
+				        	${vo.realUrl!}<p>
+			        		<a style="cursor:pointer" onclick="preview('${vo.originalImg!}')">預覽</a>
+			        	</span>
+					<#else>
+						<span><iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span>
 		        	</#if>
 		        </td>
 		        <td class="td02">

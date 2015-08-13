@@ -129,9 +129,8 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 		        id = this.getIDForTable(enumSequenceTableName, mid);
 		    }
 		    catch (Exception e) {
-		        int sleepTime = 100;
-		        log.info("sleep " + sleepTime);
-		        Thread.sleep(sleepTime);
+		        log.error(enumSequenceTableName + " " + mid);
+		        Thread.sleep(100);
 		    }
 		}
 
