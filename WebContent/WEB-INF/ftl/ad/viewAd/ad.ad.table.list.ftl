@@ -43,11 +43,10 @@
 		        <td height="35" > 
 		        	<#if "IMG" == vo.adStyle>
  						<div class="adreportdv">
-							<span class="adboxdvimg"><img src="${vo.originalImg!}" /></span>
+							<span class="adboxdvimg"><a href="${vo.realUrl!}" target="_blank"><img src="${vo.originalImg!}" /></a></span>
 				        	<span class="adboxdvinf">
 						        <span>
 						            <#--<i>尺寸</i><b>300 x 100</b><br>-->
-						            <b>${vo.realUrl!}</b><br>
 						            <a class="fancy" style="cursor:pointer" onclick="preview('${vo.originalImg!}')" alt="預覽">預覽</a>
 					            </span>
 				        	</span>
