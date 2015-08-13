@@ -31,7 +31,7 @@ $(document).ready(function(){
 	        },
 	        dataType: 'json',
 //	        autoUpload: false,
-	        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+//	        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 //	        maxFileSize: 5000000, // 5 MB
 //			previewMaxWidth: 210,
 //			previewMaxHeight: 180,
