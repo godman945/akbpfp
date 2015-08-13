@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.godutil;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -86,7 +87,7 @@ public class CommonUtilModel extends BaseCookieAction{
 		    int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
 		    BufferedImage resizedImage = new BufferedImage(90, 90, type);
 		    Graphics2D graphics2D = resizedImage.createGraphics();
-		    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, null);
+		    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, Color.WHITE,null);
 		    graphics2D.dispose();
 		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));
 		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg");
