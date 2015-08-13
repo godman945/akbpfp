@@ -42,11 +42,16 @@
 				</td>
 		        <td height="35" > 
 		        	<#if "IMG" == vo.adStyle>
-						<span><a href="${vo.realUrl!}"><img src="${vo.img!}" /></a></span>
-			        	<span>
-				        	${vo.realUrl!}<p>
-			        		<a style="cursor:pointer" onclick="preview('${vo.originalImg!}')">預覽</a>
-			        	</span>
+ 						<div class="adreportdv">
+							<span class="adboxdvimg"><img src="${vo.img!}" /></span>
+				        	<span class="adboxdvinf">
+						        <span>
+						            <#--<i>尺寸</i><b>300 x 100</b><br>-->
+						            <b>${vo.realUrl!}</b><br>
+						            <a class="fancy" style="cursor:pointer" onclick="preview('${vo.originalImg!}')" alt="預覽">預覽</a>
+					            </span>
+				        	</span>
+			        	</div>
 					<#else>
 						<span><iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span>
 		        	</#if>

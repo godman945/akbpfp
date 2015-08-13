@@ -203,7 +203,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
                     if ("img".equals(pfpAdDetail.getAdDetailId())) {
                         adAdViewVO.setImg(pfpAdDetail.getAdDetailContent());
                         imgFilename = adAdViewVO.getImg().substring(adAdViewVO.getImg().lastIndexOf("/"));
-                        adAdViewVO.setOriginalImg(adAdViewVO.getImg().replace(imgFilename, "original/" + imgFilename));
+                        adAdViewVO.setOriginalImg(adAdViewVO.getImg().replace(imgFilename, "/original" + imgFilename));
                     }
 				}
 
