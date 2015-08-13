@@ -1,4 +1,4 @@
-﻿﻿//1.建立上傳畫面
+﻿//1.建立上傳畫面
 //2.建立點擊預覽
 //3.送出
 var imgSeq = "";
@@ -31,7 +31,7 @@ $(document).ready(function(){
 	        },
 	        dataType: 'json',
 //	        autoUpload: false,
-//	        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+	        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 //	        maxFileSize: 5000000, // 5 MB
 //			previewMaxWidth: 210,
 //			previewMaxHeight: 180,
@@ -52,6 +52,10 @@ $(document).ready(function(){
 	    	createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq);
 	    }).on('fileuploadprogressall', function (e, data) {	
 	    }).on('fileuploadprocessalways', function (e, data) {
+	    	//2015.7.12  tim   由於error後不會執行fileuploaddone,所以要加unblock()
+	    	if(data.files.error){
+	    		$('body').unblock();
+	    	}
 	    })
 	});
 	
