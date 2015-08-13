@@ -3,7 +3,6 @@ package com.pchome.akbpfp.db.service.sequence;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -124,18 +123,20 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 	@Override
     @Transactional(isolation=Isolation.SERIALIZABLE)
 	public synchronized String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception {
-		String id = null;
-		while(StringUtils.isBlank(id)) {
-		    try {
-		        id = this.getIDForTable(enumSequenceTableName, mid);
-		    }
-		    catch (Exception e) {
-		        log.error(enumSequenceTableName + " " + mid);
-		        Thread.sleep(100);
-		    }
-		}
+//		String id = null;
+//		while(StringUtils.isBlank(id)) {
+//		    try {
+//		        id = this.getIDForTable(enumSequenceTableName, mid);
+//		    }
+//		    catch (Exception e) {
+//		        log.error(enumSequenceTableName + " " + mid);
+//		        Thread.sleep(100);
+//		    }
+//		}
+//
+//		return id;
 
-		return id;
+	    return this.getIDForTable(enumSequenceTableName, mid);
 	}
 
 	public static void main(String arg[]) throws Exception{

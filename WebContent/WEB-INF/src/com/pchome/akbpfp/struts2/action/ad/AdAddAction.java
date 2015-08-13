@@ -654,14 +654,16 @@ public class AdAddAction extends BaseCookieAction{
             imgWidth = String.valueOf(bufferedImage.getWidth());
             imgHeight = String.valueOf(bufferedImage.getHeight());
 
-    		try {
-    		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-                commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
-    		}
-    		catch (Exception e) {
-    		    adSeq = "";
-    		    log.error(e.getMessage(), e);
-    		}
+            while(StringUtils.isBlank(adSeq)) {
+        		try {
+        		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+        		}
+        		catch (Exception e) {
+        		    log.error(e.getMessage());
+                    Thread.sleep(100);
+        		}
+            }
+            commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
 
     		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
 	    }
