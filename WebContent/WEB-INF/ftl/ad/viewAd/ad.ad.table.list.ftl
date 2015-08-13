@@ -43,7 +43,7 @@
 		        <td height="35" > 
 		        	<#if "IMG" == vo.adStyle>
  						<div class="adreportdv">
-							<span class="adboxdvimg"><img src="${vo.img!}" /></span>
+							<span class="adboxdvimg"><img src="${vo.originalImg!}" /></span>
 				        	<span class="adboxdvinf">
 						        <span>
 						            <#--<i>尺寸</i><b>300 x 100</b><br>-->
