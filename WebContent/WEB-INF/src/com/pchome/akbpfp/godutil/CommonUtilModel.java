@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.godutil;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -29,10 +30,17 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * */
 	public String  writeImg(BufferedImage bufferedImage,String userImgPath,String custimerInfoid,String date,String adSeq) throws Exception{
 	    log.info("開始處理圖片:"+adSeq);
-	    Date date2 = new Date();
-	    SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
-	    ImageIO.write(bufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
+	    //Date date2 = new Date();
+	    
+	    int w = bufferedImage.getWidth();
+	    int h = bufferedImage.getHeight();
+	    BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	    int[] rgb = bufferedImage.getRGB(0, 0, w, h, null, 0, w);
+	    newImage.setRGB(0, 0, w, h, rgb, 0, w);
+	    
+	    //SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+	    ImageIO.write(newImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
+	    ImageIO.write(newImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg";
 	}
 
@@ -86,7 +94,7 @@ public class CommonUtilModel extends BaseCookieAction{
 		    int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
 		    BufferedImage resizedImage = new BufferedImage(90, 90, type);
 		    Graphics2D graphics2D = resizedImage.createGraphics();
-		    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, null);
+		    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, Color.WHITE,null);
 		    graphics2D.dispose();
 		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));
 		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg");
