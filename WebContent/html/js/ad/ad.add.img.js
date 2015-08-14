@@ -358,6 +358,7 @@ function multipartImgUuploadSubmit(){
 	callBlock();
 	$.ajax({
 	url : "adAddImgSaveAjax.html",
+	type : "POST",
 	dataType:'json',
 	data : {
 		"seqArray" : map,
@@ -460,4 +461,30 @@ function chkWord(valObj, msgObj) {
 	}
 	
 	return false;
+}
+
+function chkLeave(){
+	var keywords = "";
+	$.each($("[name=keywords]"),function(){
+		keywords += $(this).val();
+	});
+	var excludeKeywords = "";
+	$.each($("[name=excludeKeywords]"),function(){
+		excludeKeywords += $(this).val();
+	});
+	
+	var number = 0;
+	
+	$.each($(".adboxdv"),function(){
+		number++;
+	});
+	
+	if(keywords != "" || excludeKeywords != "" || number != 0 || $("#adLinkURL").val() != "" ){
+		
+		if(!confirm("您的廣告尚未編輯完成，離開後廣告資料不會存檔。")){
+			return false;
+		}
+	}
+	
+	return true;
 }

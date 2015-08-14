@@ -339,7 +339,7 @@
 			}
 		}else if(showId == "spanAdShowURL"){
 			var maxlength = el.attr("maxlength");
-			if($("#adShowURL").val().length <= maxlength){
+			if(($("#adShowURL").val()+"").length <= maxlength){
 				$("#spanAdShowURL").text("已輸入" + $("#adShowURL").val().length + "字，剩" + (maxlength - $("#adShowURL").val().length) + "字");
 			}
 		}else if( showId == "spanAdContent"){
@@ -589,4 +589,26 @@ function setAdStyle(adStyle) {
 
 function closenots(id) {
 	$("#shownotes"+id).hide();
+}
+
+function chkLeave(){
+	var keywords = "";
+	$.each($("[name=keywords]"),function(){
+		keywords += $(this).val();
+	});
+	var excludeKeywords = "";
+	$.each($("[name=excludeKeywords]"),function(){
+		excludeKeywords += $(this).val();
+	});
+	
+	if(keywords != "" || excludeKeywords != "" || $("#adTitle").val() != "" || 
+			$("#adContent").val() != "" || $("#adLinkURL").val() != "" || 
+			$("#adShowURL").val() != "" || $("#uploadFile").val() != ""){
+		
+		if(!confirm("您的廣告尚未編輯完成，離開後廣告資料不會存檔。")){
+			return false;
+		}
+	}
+	
+	return true;
 }
