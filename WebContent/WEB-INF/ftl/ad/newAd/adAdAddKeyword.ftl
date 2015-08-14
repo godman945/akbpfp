@@ -82,7 +82,7 @@
 			</table>
 		</div>
 		<div style="clear:both;height:10px"></div>
-		<div class="grtba">
+		<div class="grtba" id="divExistKW">
 			<h4>已建立的分類關鍵字</h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 				<tbody>
@@ -111,3 +111,4 @@
 				</tbody>
 			</table>
 		</div>
+		<input type="hidden" id="hiddenType" value="${hiddenType!}">

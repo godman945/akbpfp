@@ -110,6 +110,7 @@ public class AdAddAction extends BaseCookieAction{
 	private File[] fileupload;
 	private String adLinkURL;
 	private String photoDbPathNew;
+	private String hiddenType = "N";	//已建立的分類關鍵字欄位隱藏設定
 
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
@@ -128,6 +129,7 @@ public class AdAddAction extends BaseCookieAction{
 		}
 
 		saveAndNew = "";
+		hiddenType = "Y";
 		if(adStyle == null)		adStyle = "TMG";
 
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
@@ -548,6 +550,7 @@ public class AdAddAction extends BaseCookieAction{
 	    PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 	    adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 	    adGroupName  = pfpAdGroup.getAdGroupName();
+	    hiddenType = "Y";
 	    adStyle = "TMG";
 	    List<PfbxSize> pfbSizeList = pfbSizeService.loadAll();
 	    for (EnumAdSize enumAdSize : EnumAdSize.values()) {
@@ -1093,6 +1096,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setPhotoDbPathNew(String photoDbPathNew) {
 	    this.photoDbPathNew = photoDbPathNew;
+	}
+
+	public String getHiddenType() {
+		return hiddenType;
+	}
+
+	public void setHiddenType(String hiddenType) {
+		this.hiddenType = hiddenType;
 	}
 
 }
