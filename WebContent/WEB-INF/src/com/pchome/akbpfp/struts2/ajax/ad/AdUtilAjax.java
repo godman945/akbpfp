@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
@@ -91,11 +92,10 @@ public class AdUtilAjax extends BaseCookieAction{
 	}
 
 	public String getSuggestKW() throws Exception{
-	    HttpGet request = new HttpGet();
-	    request.setURI(new URI("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLEncoder.encode(q, "ISO-8859-1")));
+		HttpPost request = new HttpPost(new URI("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLEncoder.encode(q, "UTF-8")));
 	    HttpClient client = new DefaultHttpClient();
 	    HttpResponse response = client.execute(request);
-	    String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8"); 
+	    String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
 	    this.result = theString;
 	    return SUCCESS;
 	}
