@@ -110,7 +110,7 @@ public class AdAddAction extends BaseCookieAction{
 	private File[] fileupload;
 	private String adLinkURL;
 	private String photoDbPathNew;
-	private String hiddenType = "N";	//已建立的分類關鍵字欄位隱藏設定
+	private String hiddenType;	//已建立的分類關鍵字欄位隱藏設定
 
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
