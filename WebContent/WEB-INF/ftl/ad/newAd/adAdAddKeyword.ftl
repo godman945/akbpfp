@@ -106,9 +106,9 @@
 							    </#list>
 							</#if>
 							</select>
+							<input type="hidden" id="hiddenType" value="${hiddenType!}">
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<input type="hidden" id="hiddenType" value="${hiddenType!}">

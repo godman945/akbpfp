@@ -281,7 +281,7 @@
 					$("#suggestWordUL").empty();
 					if(word != "" && word.replace(/\s/g, "") != "") {
 						$.ajax({
-							type: "get",
+							type: "post",
 							url: "getSuggestKW.html",
 							data: { q: word }
 						}).done(function( msg ) {
