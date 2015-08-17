@@ -106,7 +106,7 @@
 							    </#list>
 							</#if>
 							</select>
-							<input type="hidden" id="hiddenType" value="${hiddenType!}">
+							<input type="hidden" id="adHiddenType" value="${adHiddenType!}">
 						</td>
 					</tr>
 				</tbody>
