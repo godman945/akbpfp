@@ -45,7 +45,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private float totalAvgCost = 0;
 	private int totalCost = 0;
 	private int totalInvalidClk = 0;
-	private String photoPath;
 	
 	public String adAdViewTableAjax() throws Exception{
 		int type = Integer.parseInt(searchType);
@@ -102,10 +101,10 @@ public class AdAdViewAjax extends BaseCookieAction{
 	
 	public Map<String,String> getImgSize(String originalImg){
 		Map<String,String> imgmap = new HashMap<String,String>();
-		File picture = new File(photoPath,originalImg.substring(originalImg.lastIndexOf("/") +1));
+		File picture = new File(originalImg.replace("/", "\\"));
 		String imgWidth = "0";
 		String imgHeight = "0";
-		log.info("------------------1.originalImg=" + photoPath + originalImg.substring(originalImg.lastIndexOf("/") +1));
+		log.info("------------------1.originalImg=" + originalImg.replace("/", "\\"));
 		if(picture != null){
 			FileInputStream is = null;
 			BufferedImage sourceImg = null;
@@ -114,10 +113,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 				sourceImg = javax.imageio.ImageIO.read(is);
 				imgWidth = Integer.toString(sourceImg.getWidth());
 				imgHeight = Integer.toString(sourceImg.getHeight());
-				log.info("------------------2.imgWidth=" + sourceImg.getWidth());
-				log.info("------------------3.imgHeight=" + sourceImg.getHeight());
-				log.info("------------------4.String(imgWidth)=" + imgWidth);
-				log.info("------------------5.String(imgHeight)=" + imgHeight);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -210,14 +205,5 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	public int getTotalInvalidClk() {
 		return totalInvalidClk;
-	}
-
-	public String getPhotoPath() {
-		return photoPath;
-	}
-
-	public void setPhotoPath(String photoPath) {
-		this.photoPath = photoPath;
-	}
-	
+	}	
 }

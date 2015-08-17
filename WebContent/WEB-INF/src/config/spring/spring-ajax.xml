@@ -79,6 +79,5 @@
     
     <bean id="AdAdViewAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdAdViewAjax" scope="prototype" >
 	    <property name="pfpAdService" ref="PfpAdService" /> 
-	    <property name="photoPath" value="${photo.path}" />
     </bean> 
 </beans>
