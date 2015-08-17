@@ -11,7 +11,6 @@ import java.util.Map;
 
 
 
-
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -46,7 +45,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private float totalAvgCost = 0;
 	private int totalCost = 0;
 	private int totalInvalidClk = 0;
-	private String photoPath;
 	
 	public String adAdViewTableAjax() throws Exception{
 		int type = Integer.parseInt(searchType);
@@ -103,12 +101,10 @@ public class AdAdViewAjax extends BaseCookieAction{
 	
 	public Map<String,String> getImgSize(String originalImg){
 		Map<String,String> imgmap = new HashMap<String,String>();
-		String originalImg2 = originalImg.replace("/", "\\");
-		String path = photoPath + originalImg2.substring(originalImg2.indexOf("img\\") + 4);
-		File picture = new File(path);
+		File picture = new File(originalImg.replace("/", "\\"));
 		String imgWidth = "0";
 		String imgHeight = "0";
-		log.info("------------------1.originalImg=" + path);
+		log.info("------------------1.originalImg=" + originalImg.replace("/", "\\"));
 		if(picture != null){
 			FileInputStream is = null;
 			BufferedImage sourceImg = null;
@@ -209,14 +205,5 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	public int getTotalInvalidClk() {
 		return totalInvalidClk;
-	}
-
-	public String getPhotoPath() {
-		return photoPath;
-	}
-
-	public void setPhotoPath(String photoPath) {
-		this.photoPath = photoPath;
 	}	
-	
 }
