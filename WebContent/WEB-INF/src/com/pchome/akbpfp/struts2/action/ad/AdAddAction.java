@@ -129,7 +129,7 @@ public class AdAddAction extends BaseCookieAction{
 		}
 
 		saveAndNew = "";
-		hiddenType = "Y";
+		hiddenType = "YES";
 		if(adStyle == null)		adStyle = "TMG";
 
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
@@ -550,7 +550,7 @@ public class AdAddAction extends BaseCookieAction{
 	    PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 	    adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 	    adGroupName  = pfpAdGroup.getAdGroupName();
-	    hiddenType = "Y";
+	    hiddenType = "YES";
 	    adStyle = "TMG";
 	    List<PfbxSize> pfbSizeList = pfbSizeService.loadAll();
 	    for (EnumAdSize enumAdSize : EnumAdSize.values()) {
