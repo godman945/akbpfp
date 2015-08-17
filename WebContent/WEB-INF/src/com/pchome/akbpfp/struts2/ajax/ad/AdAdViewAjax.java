@@ -1,6 +1,14 @@
 package com.pchome.akbpfp.struts2.ajax.ad;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
@@ -63,6 +71,11 @@ public class AdAdViewAjax extends BaseCookieAction{
 			if(adAdViewVO != null && adAdViewVO.size() > 0){
 				totalSize = adAdViewVO.size();		
 				for(PfpAdAdViewVO vo:adAdViewVO){
+					Map<String,String> imgmap = new HashMap<String,String>();
+					imgmap = getImgSize(vo.getOriginalImg());
+					vo.setImgWidth(imgmap.get("imgWidth"));
+					vo.setImgHeight(imgmap.get("imgHeight"));
+					
 					totalPv += vo.getAdPv();
 					totalClk += vo.getAdClk();		
 					totalCost += vo.getAdClkPrice();
@@ -85,6 +98,38 @@ public class AdAdViewAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
+	public Map<String,String> getImgSize(String originalImg){
+		Map<String,String> imgmap = new HashMap<String,String>();
+		File picture = new File(originalImg);
+		String imgWidth = "0";
+		String imgHeight = "0";
+		log.info("------------------1.originalImg=" + originalImg);
+		if(picture != null){
+			FileInputStream is = null;
+			BufferedImage sourceImg = null;
+			try {
+				is = new FileInputStream(picture);
+				sourceImg = javax.imageio.ImageIO.read(is);
+				imgWidth = Integer.toString(sourceImg.getWidth());
+				imgHeight = Integer.toString(sourceImg.getHeight());
+				log.info("------------------2.imgWidth=" + sourceImg.getWidth());
+				log.info("------------------3.imgHeight=" + sourceImg.getHeight());
+				log.info("------------------4.String(imgWidth)=" + imgWidth);
+				log.info("------------------5.String(imgHeight)=" + imgHeight);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		imgmap.put("imgWidth", imgWidth);
+		imgmap.put("imgHeight", imgHeight);
+		
+		return imgmap;
+	}
+
 	public void setPfpAdService(IPfpAdService pfpAdService) {
 		this.pfpAdService = pfpAdService;
 	}
