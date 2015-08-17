@@ -101,12 +101,11 @@ public class AdAdViewAjax extends BaseCookieAction{
 	
 	public Map<String,String> getImgSize(String originalImg){
 		Map<String,String> imgmap = new HashMap<String,String>();
-		StringBuilder filePath = new StringBuilder(request.getSession().getServletContext().getRealPath("/"));
-		File picture = new File(filePath + originalImg.replace("/", "\\"));
+		File picture = new File(request.getContextPath() + originalImg.replace("/", "\\"));
 		String imgWidth = "0";
 		String imgHeight = "0";
 		log.info("------------------1.originalImg=" + originalImg.replace("/", "\\"));
-		log.info("------------------2.filePath=" + filePath);
+		log.info("------------------2.filePath=" + request.getContextPath());
 		if(picture != null){
 			FileInputStream is = null;
 			BufferedImage sourceImg = null;
