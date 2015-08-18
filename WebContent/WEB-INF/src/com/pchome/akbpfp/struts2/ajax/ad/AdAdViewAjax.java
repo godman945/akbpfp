@@ -78,7 +78,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 			if(adAdViewVO != null && adAdViewVO.size() > 0){
 				totalSize = adAdViewVO.size();		
 				for(PfpAdAdViewVO vo:adAdViewVO){
-					Map<String,String> imgmap = new HashMap<String,String>();
+					//Map<String,String> imgmap = new HashMap<String,String>();
 					//imgmap = getImgSize(vo.getOriginalImg());
 					//vo.setImgWidth(imgmap.get("imgWidth"));
 					//vo.setImgHeight(imgmap.get("imgHeight"));
