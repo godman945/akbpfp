@@ -42,6 +42,7 @@ public class AdGroupAddAction extends BaseCookieAction{
 	private String adGroupChannelPrice;		//聯播廣告出價
 	private String AdAsideRate;				//播放率
 	private String backPage;				// 取消的返回頁面
+	private String adHiddenType;	//已建立的分類關鍵字欄位隱藏設定
 	
 	public void setAdActionMax(int adActionMax) {
 		this.adActionMax = adActionMax;
@@ -242,7 +243,10 @@ public class AdGroupAddAction extends BaseCookieAction{
 
 		//系統價更新
 		syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, Float.valueOf(adGroupChannelPrice));
-
+		
+		//設立已建立的分類關鍵字隱藏參數(設為隱藏)
+		adHiddenType = "YES";
+		
 		return SUCCESS;
 	}
 
@@ -352,6 +356,14 @@ public class AdGroupAddAction extends BaseCookieAction{
 
 	public void setSysPriceAdPoolSeq(String sysPriceAdPoolSeq) {
 		this.sysPriceAdPoolSeq = sysPriceAdPoolSeq;
+	}
+
+	public String getAdHiddenType() {
+		return adHiddenType;
+	}
+
+	public void setAdHiddenType(String adHiddenType) {
+		this.adHiddenType = adHiddenType;
 	}
 
 }

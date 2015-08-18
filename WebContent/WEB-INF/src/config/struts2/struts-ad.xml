@@ -93,6 +93,7 @@
 		<result type="redirectAction" name="success">
 			<param name="actionName">adAdAdd</param>  
 			<param name="adGroupSeq">${adGroupSeq}</param>
+			<param name="adHiddenType">${adHiddenType}</param>
 		</result>
 		<result type="tiles" name="input">.ad.group.add</result>
     </action>
