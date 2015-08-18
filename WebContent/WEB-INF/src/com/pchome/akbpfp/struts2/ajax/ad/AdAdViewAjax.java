@@ -5,9 +5,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
+
 
 
 
@@ -101,25 +107,26 @@ public class AdAdViewAjax extends BaseCookieAction{
 	
 	public Map<String,String> getImgSize(String originalImg){
 		Map<String,String> imgmap = new HashMap<String,String>();
-		File picture = new File(request.getContextPath() + "\\" +  originalImg.replace("/", "\\"));
 		String imgWidth = "0";
 		String imgHeight = "0";
-		log.info("------------------1.originalImg=" + request.getContextPath() + "\\" + originalImg.replace("/", "\\"));
-		if(picture != null){
-			FileInputStream is = null;
-			BufferedImage sourceImg = null;
-			try {
-				is = new FileInputStream(picture);
-				sourceImg = javax.imageio.ImageIO.read(is);
-				imgWidth = Integer.toString(sourceImg.getWidth());
-				imgHeight = Integer.toString(sourceImg.getHeight());
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		
+		InputStream urlimg = null;
+		BufferedImage sourceImg = null;
+		try {
+			URL input = new URL(request.getScheme()+"://"+request.getServerName() + request.getContextPath() + "/" + 
+					originalImg.replace("\\", "/") + "?customerInfoId=" + super.getCustomer_info_id());
+			HttpURLConnection conn = (HttpURLConnection)input.openConnection();
+			conn.setRequestMethod("GET");
+			urlimg = conn.getInputStream();
+			sourceImg = javax.imageio.ImageIO.read(urlimg);
+			imgWidth = Integer.toString(sourceImg.getWidth());
+			imgHeight = Integer.toString(sourceImg.getHeight());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		imgmap.put("imgWidth", imgWidth);
 		imgmap.put("imgHeight", imgHeight);

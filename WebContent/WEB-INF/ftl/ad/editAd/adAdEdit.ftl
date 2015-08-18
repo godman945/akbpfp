@@ -19,6 +19,10 @@
 			<div class="cal">帳戶名稱：${customer_info_title!}</div>
 			<img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">修改廣告
 		</h2>
+		<ul class="admenuul">
+            <li class="m02"><a onClick="return(false)" style="background-position: -130px -0px;" >圖文廣告</a></li>
+            <!-- <li class="m03"><a href="#">影音廣告</a></li>-->
+        </ul>
 		<div class="grtba" style="padding:1px 10px;margin-bottom:10px;">
 			<h4 >廣告狀態：${adStatusDesc!}
 			<span class="t_s01"> 
