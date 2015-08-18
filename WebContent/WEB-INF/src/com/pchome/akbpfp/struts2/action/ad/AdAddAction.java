@@ -129,7 +129,6 @@ public class AdAddAction extends BaseCookieAction{
 		}
 
 		saveAndNew = "";
-		adHiddenType = "YES";
 		if(adStyle == null)		adStyle = "TMG";
 
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
