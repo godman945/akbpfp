@@ -331,7 +331,7 @@ function suggestKW() {
 
 	if(word != "") {
 		$.ajax({
-			type: "get",
+			type: "post",
 			url: "getSuggestKW.html",
 			data: { q: word }
 		}).done(function( msg ) {
