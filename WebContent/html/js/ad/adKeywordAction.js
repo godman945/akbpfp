@@ -281,9 +281,9 @@
 					$("#suggestWordUL").empty();
 					if(word != "" && word.replace(/\s/g, "") != "") {
 						$.ajax({
-							type: "post",
+							type: "get",
 							url: "getSuggestKW.html",
-							data: { q: word }
+							data: { q: encodeURIComponent(word) }
 						}).done(function( msg ) {
 							obj = JSON.parse(msg);
 							msg = obj["result"];

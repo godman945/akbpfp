@@ -331,9 +331,9 @@ function suggestKW() {
 
 	if(word != "") {
 		$.ajax({
-			type: "post",
+			type: "get",
 			url: "getSuggestKW.html",
-			data: { q: word }
+			data: { q: encodeURIComponent(word) }
 		}).done(function( msg ) {
 			alert(msg);
 			var ul = document.getElementById("suggestWordUL");
