@@ -93,7 +93,8 @@ public class AdUtilAjax extends BaseCookieAction{
 
 	public String getSuggestKW() throws Exception{
 		HttpPost request = new HttpPost(new URI("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLDecoder.decode(q, "UTF-8")));
-	    HttpClient client = new DefaultHttpClient();
+		request.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; rv:28.0) Gecko/20100101 Firefox/28.0");
+		HttpClient client = new DefaultHttpClient();
 	    HttpResponse response = client.execute(request);
 	    String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
 	    this.result = theString;
