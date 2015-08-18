@@ -22,11 +22,11 @@
 </#if>
 
 
-<div class="submn">
+<!-- <div class="submn">
 	<@s.if test="%{#uri.indexOf('/adAddImg') > -1}">
         <a href="<@s.url value="/" />adAdAdd.html?adGroupSeq=${adGroupSeq}" style="text-decoration:none"><b>製作廣告</b></a>
     </@s.if>
-</div>
+</div> -->
 
 <div class="submn">
 	<@s.if test="%{#uri.indexOf('/adActionView') > -1 ||

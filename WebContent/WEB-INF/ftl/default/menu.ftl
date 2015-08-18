@@ -41,7 +41,8 @@
 					   #uri.indexOf('/adAdAdd') > -1 ||
 					   #uri.indexOf('/adAddFinish') > -1 ||
 					   #uri.indexOf('/adAdView') > -1 ||
-					   #uri.indexOf('/adKeywordView') > -1}">
+					   #uri.indexOf('/adKeywordView') > -1 ||
+					   #uri.indexOf('/adAddImg') > -1}">
 			<div class="tab_on"><a href="<@s.url value="/" />adActionView.html">廣告管理</a></div> 
 		</@s.if>
 		<@s.else>
