@@ -601,9 +601,12 @@ function chkLeave(){
 		excludeKeywords += $(this).val();
 	});
 	
-	if(keywords != "" || excludeKeywords != "" || $("#adTitle").val() != "" || 
-			$("#adContent").val() != "" || $("#adLinkURL").val() != "" || 
-			$("#adShowURL").val() != "" || $("#uploadFile").val() != ""){
+	if(keywords != "" || excludeKeywords != "" || 
+			$("#adTitle").val().replace($("#adTitle").attr("placeholder"),"") != "" || 
+			$("#adContent").val().replace($("#adContent").attr("placeholder"),"") != "" || 
+			$("#adLinkURL").val().replace($("#adLinkURL").attr("placeholder"),"") != "" || 
+			$("#adShowURL").val().replace($("#adShowURL").attr("placeholder"),"") != "" || 
+			$("#uploadFile").val() != ""){
 		
 		if(!confirm("您的廣告尚未編輯完成，離開後廣告資料不會存檔。")){
 			return false;

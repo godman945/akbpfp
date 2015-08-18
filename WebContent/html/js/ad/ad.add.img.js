@@ -479,7 +479,8 @@ function chkLeave(){
 		number++;
 	});
 	
-	if(keywords != "" || excludeKeywords != "" || number != 0 || $("#adLinkURL").val() != "" ){
+	if(keywords != "" || excludeKeywords != "" || number != 0 || 
+			$("#adLinkURL").val().replace($("#adShowURL").attr("placeholder"),"") != "" ){
 		
 		if(!confirm("您的廣告尚未編輯完成，離開後廣告資料不會存檔。")){
 			return false;
