@@ -5,9 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,32 +102,30 @@ public class AdAdViewAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
-	public Map<String,String> getImgSize(String originalImg){
+	public Map<String,String> getImgSize(String originalImg) throws IOException {
 		Map<String,String> imgmap = new HashMap<String,String>();
-		File testFile = new File("/home/webuser/akb/pfp/");
-		File picture = new File(testFile.getAbsoluteFile() + "/" +  originalImg.replace("\\", "/"));
 		String imgWidth = "0";
 		String imgHeight = "0";
-		log.info("------------------1.path=" + testFile.getAbsoluteFile());
-		if(picture != null){
-			FileInputStream is = null;
-			//InputStream urlimg = null;
-			BufferedImage sourceImg = null;
-			try {
-				//URL input = new URL("http://showstg.pchome.com.tw/pfp/img/user/AC2013071700001/20150814/original/ad_201508140041.jpg?customerInfoId=AC2013071700001");
-				//HttpURLConnection conn = (HttpURLConnection)input.openConnection();
-				//conn.setRequestMethod("GET");
-				//urlimg = conn.getInputStream();
+		File picture = null;
+		FileInputStream is = null;
+		BufferedImage sourceImg = null;
+		try{
+			picture = new File("/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/"));
+			if(picture != null){
 				is = new FileInputStream(picture);
 				sourceImg = javax.imageio.ImageIO.read(is);
 				imgWidth = Integer.toString(sourceImg.getWidth());
-				imgHeight = Integer.toString(sourceImg.getHeight());
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				imgHeight = Integer.toString(sourceImg.getHeight());	
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(is != null){
+				is.close();
 			}
 		}
 		imgmap.put("imgWidth", imgWidth);
