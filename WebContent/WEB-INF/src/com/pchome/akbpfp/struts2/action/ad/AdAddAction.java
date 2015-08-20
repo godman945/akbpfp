@@ -114,7 +114,6 @@ public class AdAddAction extends BaseCookieAction{
 
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
-		log.info("AdAdAdd => adHiddenType = " + adHiddenType);
 		String referer = request.getHeader("Referer");
 		backPage = "adActionView.html";
 		if(StringUtils.isNotEmpty(referer)) {
@@ -130,6 +129,7 @@ public class AdAddAction extends BaseCookieAction{
 		}
 
 		saveAndNew = "";
+		adHiddenType = "YES";
 		if(adStyle == null)		adStyle = "TMG";
 
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
@@ -550,6 +550,7 @@ public class AdAddAction extends BaseCookieAction{
 	    PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 	    adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 	    adGroupName  = pfpAdGroup.getAdGroupName();
+	    adHiddenType = "YES";
 	    adStyle = "TMG";
 	    List<PfbxSize> pfbSizeList = pfbSizeService.loadAll();
 	    for (EnumAdSize enumAdSize : EnumAdSize.values()) {
