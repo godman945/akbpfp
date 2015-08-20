@@ -92,7 +92,7 @@ public class AdReportService implements IAdReportService {
 					htmlCode += "<span class=\"adboxdvimg\"><a href=\"" + realUrl + "\" target=\"_blank\"><img src=\"" + img + "\" /></a></span>";
 					htmlCode += "<span class=\"adboxdvinf\"><span>";
 					htmlCode += "<i>尺寸</i><b>" + imgWidth + " x " + imgHeight + "</b><br>";
-					htmlCode += ("<span>" + realUrl + "<p><a style=\"cursor:pointer\" onclick=\"preview('" + img + "')\">預覽</a></span>");
+					htmlCode += ("<span>" + realUrl + "</span><br><a style=\"cursor:pointer\" onclick=\"preview('" + img + "')\">預覽</a>");
 					htmlCode += "</span></span></div>";
 				} else {
 					htmlCode = "<span><iframe height=\"120\" width=\"350\" src=\"adModel.html?adNo=" + adReportVO.getAdSeq() + "&tproNo=tpro_201406300001\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" frameborder=\"0\" align=\"ceneter\" class=\"akb_iframe\"></iframe></span>";

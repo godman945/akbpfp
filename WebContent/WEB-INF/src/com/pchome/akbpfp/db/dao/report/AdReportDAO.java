@@ -160,20 +160,6 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								resultData.add(adReportVO);
 							}
 							
-							//測試圖像廣告用
-							adReportVO = new AdReportVO();
-							adReportVO.setAdPvSum("100");
-							adReportVO.setAdClkSum("100");
-							adReportVO.setAdPriceSum("100");
-							adReportVO.setAdInvClkSum("100");
-							adReportVO.setAdPvclkDate("2015-08-20");
-							adReportVO.setAdActionSeq("aa_201508140001");
-							adReportVO.setAdGroupSeq("ag_201508140002");
-							adReportVO.setAdSeq("ad_201508140014");
-							adReportVO.setTemplateProductSeq(templateProductSeq);
-							adReportVO.setCustomerInfoId("AC2013071700001");
-							resultData.add(adReportVO);
-							
 						} else if (sqlType.trim().equals(EnumReport.REPORT_HQLTYPE_ADVERTISE_COUNT.getTextValue())){
 
 							for (int i=0; i<dataList.size(); i++) {
