@@ -1,5 +1,10 @@
 package com.pchome.akbpfp.db.service.report;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -55,9 +60,42 @@ public class AdReportService implements IAdReportService {
 				}
 
 				//String htmlCode = "<iframe height=\"120\" width=\"350\" src=\"adModel.html?adNo=" + adReportVO.getAdSeq() + "&tproNo=" + adReportVO.getTemplateProductSeq() + "\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" frameborder=\"0\" align=\"ceneter\" class=\"akb_iframe\"></iframe>";
-				String htmlCode = "<span><iframe height=\"120\" width=\"350\" src=\"adModel.html?adNo=" + adReportVO.getAdSeq() + "&tproNo=tpro_201406300001\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" frameborder=\"0\" align=\"ceneter\" class=\"akb_iframe\"></iframe></span>";
+				String htmlCode = "";
 				if ("IMG".equals(adStyle)) {
-				    htmlCode += ("<span>" + realUrl + "<p><a style=\"cursor:pointer\" onclick=\"preview('" + img + "')\">預覽</a></span>");
+					//取得圖片尺寸
+					String imgWidth = "0";
+					String imgHeight = "0";
+					File picture = null;
+					FileInputStream is = null;
+					BufferedImage sourceImg = null;
+					try{
+						picture = new File("/home/webuser/akb/pfp/" +  img.replace("\\", "/"));
+						if(picture != null){
+							is = new FileInputStream(picture);
+							sourceImg = javax.imageio.ImageIO.read(is);
+							imgWidth = Integer.toString(sourceImg.getWidth());
+							imgHeight = Integer.toString(sourceImg.getHeight());	
+						}
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} finally {
+						if(is != null){
+							is.close();
+						}
+					}
+					//組html畫面
+					htmlCode = "<div class=\"adreportdv\">";
+					htmlCode += "<span class=\"adboxdvimg\"><a href=\"" + realUrl + "\" target=\"_blank\"><img src=\"" + img + "\" /></a></span>";
+					htmlCode += "<span class=\"adboxdvinf\"><span>";
+					htmlCode += "<i>尺寸</i><b>" + imgWidth + " x " + imgHeight + "</b><br>";
+					htmlCode += ("<span>" + realUrl + "<p><a style=\"cursor:pointer\" onclick=\"preview('" + img + "')\">預覽</a></span>");
+					htmlCode += "</span></span></div>";
+				} else {
+					htmlCode = "<span><iframe height=\"120\" width=\"350\" src=\"adModel.html?adNo=" + adReportVO.getAdSeq() + "&tproNo=tpro_201406300001\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" frameborder=\"0\" align=\"ceneter\" class=\"akb_iframe\"></iframe></span>";
 				}
 
 				adReportVO.setAdPreview(htmlCode);

@@ -47,6 +47,7 @@
 				        	<span class="adboxdvinf">
 						        <span>
 						            <i>尺寸</i><b>${vo.imgWidth!} x ${vo.imgHeight!}</b><br>
+						            <span>${vo.realUrl!}</span><br>
 						            <a class="fancy" style="cursor:pointer" onclick="preview('${vo.originalImg!}')" alt="預覽">預覽</a>
 					            </span>
 				        	</span>
