@@ -77,7 +77,7 @@
                 	<li class="okbox" id="${adDetailSeq[1]!}">
                 		<div class="adboxdv">
                 			<img src="<@s.url value="/" />${imgFile!}" >
-                			<p class="fancy adinf" onclick="preViewImg('${imgFile!}','300','250');" alt="預覽">預覽</p>
+                			<p class="fancy adinf" onclick="preViewImg('${imgFile!}','${imgWidth!}','${imgHeight!}');" alt="預覽">預覽</p>
                 		</div>
                 		<ul>
                 			<li class="yes"><i>尺寸</i><b>${imgWidth!} x ${imgHeight!}</b></li>
