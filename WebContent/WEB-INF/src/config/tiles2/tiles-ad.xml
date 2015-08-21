@@ -165,6 +165,16 @@
     	<put-attribute name="adTmg" value="/ftl/ad/newAd/ad.ad.img.Tmg.ftl" />
     	<put-attribute name="adKeyword" value="/ftl/ad/newAd/adAdAddKeyword.ftl" />
 	</definition>
+	
+	<definition name=".ad.ad.edit.img" extends="ad.layout">
+        <put-attribute name="body" value=".ad.ad.edit.img.body" />
+    </definition>
+	
+	<definition name=".ad.ad.edit.img.body" template="/ftl/ad/editAd/adAdEditImg.ftl">
+    	<put-attribute name="includeJs" value="/ftl/ad/editAd/ad.edit.img.js.ftl" />
+    	<put-attribute name="adTmg" value="/ftl/ad/editAd/adAdImg.ftl" />
+    	<put-attribute name="adKeyword" value="/ftl/ad/newAd/adAdAddKeyword.ftl" />
+	</definition>
     <!-- 圖片廣告 End -->
      
     

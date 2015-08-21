@@ -1,6 +1,12 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +46,7 @@ public class AdEditAction extends BaseCookieAction{
 	private static final long serialVersionUID = 1L;
 
 	private String message = "";
+	private String result;
 
 	private String adActionName;
 	private String adGroupSeq;
@@ -65,7 +72,12 @@ public class AdEditAction extends BaseCookieAction{
 	private String imgFile;
 	private String divBatchWord = "display:none;";		// 為了配合 adFreeAdAddKeyword 做的設定
 	private String batchkeywords = "";					// 為了配合 adFreeAdAddKeyword 做的設定
-
+	private String adLinkURL;
+	
+	private String imgWidth = "";
+	private String imgHeight = "";
+	private String imgSize = "";
+	
 	private String photoTmpPath;
 	private String photoPath;
 	private String photoDbPath;
@@ -305,10 +317,197 @@ public class AdEditAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	//圖像廣告
+	public String AdAdEditImg() throws Exception {
+		log.info("AdAdEditImg => adSeq = " + adSeq);
+
+		PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
+		adActionName = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName();
+		adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();
+		adGroupName  = pfpAd.getPfpAdGroup().getAdGroupName();
+		adStyle = pfpAd.getAdStyle();
+		adStatus = pfpAd.getAdStatus();
+		adVerifyRejectReason = "";
+
+		// ad Status
+		for(EnumStatus status:EnumStatus.values()){
+			if(status.getStatusId() == adStatus){
+				adStatusDesc = status.getStatusRemark();
+			}
+		}
+		if((adStatus == 3 || adStatus == 6) && StringUtils.isNotEmpty(pfpAd.getAdVerifyRejectReason())) {
+			adVerifyRejectReason = "說明：" + pfpAd.getAdVerifyRejectReason();
+		}
+
+		pfpAdDetails = pfpAdDetailService.getPfpAdDetails(null, adSeq, null, null);
+		adDetailSeq = new String[2];
+		adDetailContent = new String[2];
+
+		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
+		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
+		String adCustomerInfoId = pfpAd.getPfpAdGroup().getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
+		if(!customerInfoId.equals(adCustomerInfoId)) {
+			return "notOwner";
+		}
+		
+		for (int i = 0; i < pfpAdDetails.size(); i++) {
+			//log.info("pfpAdDetails.get(i).getAdDetailContent() = " + pfpAdDetails.get(i).getAdDetailContent());
+			String adDetailId = pfpAdDetails.get(i).getAdDetailId();
+			
+			if(adDetailId != null && adDetailId.equals("real_url")) {
+				adDetailSeq[0] = pfpAdDetails.get(i).getAdDetailSeq();
+				String deCodeUrl = pfpAdDetails.get(i).getAdDetailContent();
+				try {
+				    deCodeUrl = HttpUtil.getInstance().convertRealUrl(deCodeUrl);
+				}
+				catch (Exception e) {
+				    log.error(deCodeUrl, e);
+				}
+				adDetailContent[0] = deCodeUrl.replaceAll("http://", "");
+			} else if(adDetailId != null && adDetailId.equals("img")) {
+				adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();;
+				adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent() + "?" + RandomStringUtils.randomAlphanumeric(10);
+				getImgSize(pfpAdDetails.get(i).getAdDetailContent());
+				if(adDetailContent[1].indexOf("display:none") > 0) {
+					adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
+					imgFile = "";
+				} else {
+					imgFile = photoPath + adDetailContent[1].substring(adDetailContent[1].lastIndexOf(photoDbPath) + 4);
+				}
+			}
+		}
+
+		if(adDetailSeq[0] == null) {
+			adDetailSeq[0] = "";
+			adDetailContent[0] = "img/public/na.gif\" style=\"display:none";
+			imgFile = "";
+		}
+		
+		// 取出分類所屬關鍵字
+		pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
+		// 取出分類所屬排除關鍵字
+		pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, pfpCustomerInfo.getCustomerInfoId());
+		
+		return SUCCESS;
+	}
+	
+	//修改圖像式廣告
+	@Transactional
+	public String doAdAdEditImg() throws Exception {
+		log.info("doAdAdEditImg => adSeq = " + adSeq);
+		log.info("doAdAdEditImg => adStyle = " + adStyle);
+		
+		adStyle = "IMG";
+		
+		// 檢查 adStyle 是否正確，正確的話，設定 adPoolSeq、templateProductSeq
+		chkAdStyle();
+
+		// 檢查 網址資料是否正確
+		if(StringUtils.isBlank(adLinkURL)){
+            result = "請填寫廣告連結網址.";
+            return SUCCESS;
+        }
+        if(adLinkURL.length() > 1024) {
+            result = "廣告連結網址不可超過 1024字！";
+            return SUCCESS;
+        }
+        if (adLinkURL.indexOf("http://") != 0) {
+            adLinkURL = "http://" + adLinkURL;
+        }
+        int urlState = HttpUtil.getInstance().getStatusCode(adLinkURL);
+        if(urlState < 200 && urlState >= 300) {
+            result = "請輸入正確的廣告連結網址！";
+            return SUCCESS;
+        }
+		
+        PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
+		adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();
+
+		PfpAdGroup pfpAdGroup = pfpAd.getPfpAdGroup();
+		
+		// 修改廣告
+		editAd();
+		
+		if(adDetailSeq[0] != null && adDetailSeq[0] != ""){
+			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailSeq[0]);
+			pfpAdDetail.setAdDetailContent(adLinkURL);
+			pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
+		}
+
+		//建立關鍵字
+    	List<String> keyWordList = new ArrayList<String>();
+    	if (!keywords[0].equals("[]")) {
+    	    String data = "";
+    	    for (char a : keywords[0].toCharArray()) {
+        		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+        		    continue;
+        		}
+        		if (String.valueOf(a).equals("]")) {
+        		    keyWordList.add(data);
+        		} else {
+        		    if (String.valueOf(a).equals(",")) {
+            			keyWordList.add(data);
+            			data = "";
+        		    } else {
+        		        data = data + String.valueOf(a);
+        		    }
+        		}
+    	    }
+    	    keywords = keyWordList.toArray(new String[keyWordList.size()]);
+
+    	    //新增關鍵字
+    	    addKeywords(pfpAdGroup);
+    	}
+
+    	//建立排除關鍵字
+    	List<String> excludeKeyWordList = new ArrayList<String>();
+    	if (!excludeKeywords[0].equals("[]")) {
+    	    String data = "";
+    	    for (char a : excludeKeywords[0].toCharArray()) {
+        		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+        		    continue;
+        		}
+        		if (String.valueOf(a).equals("]")) {
+        		    excludeKeyWordList.add(data);
+        		} else {
+        		    if (String.valueOf(a).equals(",")) {
+            			excludeKeyWordList.add(data);
+            			data = "";
+        		    } else {
+        		        data = data + String.valueOf(a);
+        		    }
+        		}
+    	    }
+    	    excludeKeywords = excludeKeyWordList.toArray(new String[excludeKeyWordList.size()]);
+
+    	    //新增排除關鍵字
+    	    addExcludeKeywords(pfpAdGroup);
+    	}
+		
+    	// 開啟廣告分類
+		if(pfpAdGroup.getAdGroupStatus() != 4) {
+			String oldStatus = "";
+			// 原本的廣告狀態
+			for(EnumStatus status:EnumStatus.values()){
+				if(status.getStatusId() == pfpAdGroup.getAdGroupStatus()){
+					oldStatus = status.getStatusDesc();
+				}
+			}
+			String accesslogAction_Stauts = EnumAccesslogAction.AD_STATUS_MODIFY.getMessage();
+			String accesslogMessage_Status = accesslogAction_Stauts + ":" + adGroupSeq + ",廣告分類狀態異動:" + oldStatus + "=>" + EnumStatus.Open.getStatusDesc();
+			admAccesslogService.recordAdLog(EnumAccesslogAction.AD_STATUS_MODIFY, accesslogMessage_Status, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			pfpAdGroup.setAdGroupStatus(4);
+		}
+		pfpAdGroupService.save(pfpAdGroup);
+		
+		result = "success";
+		return SUCCESS;
+	}
+	
 	private void chkAdStyle() {
-		if (StringUtils.isEmpty(adStyle) || (!adStyle.equals("TXT") && !adStyle.equals("TMG"))) {
+		if (StringUtils.isEmpty(adStyle) || (!adStyle.equals("TXT") && !adStyle.equals("TMG") && !adStyle.equals("IMG"))) {
 			message = "請選擇廣告樣式！";
-		} else if (!adStyle.equals("TXT") && !adStyle.equals("TMG")) {
+		} else if (!adStyle.equals("TXT") && !adStyle.equals("TMG") && !adStyle.equals("IMG")) {
 			message = "請選擇廣告樣式！";
 		} else {
 			if(adStyle.equals("TXT")) {
@@ -317,6 +516,9 @@ public class AdEditAction extends BaseCookieAction{
 			} else if(adStyle.equals("TMG")) {
 				adPoolSeq = EnumAdStyle.TMG.getAdPoolSeq();
 				templateProductSeq = EnumAdStyle.TMG.getTproSeq();
+			} else if(adStyle.equals("IMG")) {
+				adPoolSeq = EnumAdStyle.IMG.getAdPoolSeq();
+				templateProductSeq = EnumAdStyle.IMG.getTproSeq();
 			}
 		}
 	}
@@ -446,6 +648,36 @@ public class AdEditAction extends BaseCookieAction{
 		}
 	}
 
+	private void getImgSize(String originalImg) throws IOException {
+		imgWidth = "0";
+		imgHeight = "0";
+		imgSize = "0";
+		File picture = null;
+		FileInputStream is = null;
+		BufferedImage sourceImg = null;
+		try{
+			picture = new File("/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/"));
+			if(picture != null){
+				is = new FileInputStream(picture);
+				sourceImg = javax.imageio.ImageIO.read(is);
+				imgWidth = Integer.toString(sourceImg.getWidth());
+				imgHeight = Integer.toString(sourceImg.getHeight());
+				byte[] data = ((DataBufferByte)sourceImg.getData().getDataBuffer()).getData();
+				imgSize = Integer.toString(data.length/1024);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(is != null){
+				is.close();
+			}
+		}
+	}
+	
 	public void setPfpCustomerInfoService(PfpCustomerInfoService pfpCustomerInfoService) {
 		this.pfpCustomerInfoService = pfpCustomerInfoService;
 	}
@@ -652,6 +884,22 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public String getAdLinkURL() {
+		return adLinkURL;
+	}
+
+	public void setAdLinkURL(String adLinkURL) {
+		this.adLinkURL = adLinkURL;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 
 }

@@ -517,6 +517,14 @@
 			<result type="tiles" name="success">ad.add.img</result>
     	</action>
     	
+    	<action name="adAdEditImg" class="AdEditAction" method="AdAdEditImg">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">.ad.ad.edit.img</result>
+			<result type="redirectAction" name="notOwner">
+				<param name="actionName">adActionView</param>  
+			</result>
+		</action>
     	
     	<!-- 圖片上傳 -->
       	<action name="adAddImgAjax" class="AdAddAction" method="uploadImg">
@@ -536,6 +544,13 @@
         	</result>
      	</action>
     	
+    	<action name="adEditImgSaveAjax" class="AdEditAction" method="doAdAdEditImg">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+       		<result type="json" name="success">
+        		<param name="root">result</param>
+        	</result>
+     	</action>
     	
     	
     	

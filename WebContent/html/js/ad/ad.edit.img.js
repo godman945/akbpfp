@@ -1,0 +1,194 @@
+//1.建立上傳畫面
+//2.建立點擊預覽
+//3.送出
+var imgSeq = "";
+var jsonObj = null;
+var pages = -1;
+//建立上傳後畫面
+var fileArray =[];
+var seqArray = [];
+var uploadFileSize = "";
+
+$(document).ready(function(){
+	//檢查網址字數
+	chkWord($("#adLinkURL"), $("#spanAdLinkURL"));
+	
+	if($.browser.msie){
+		if(parseInt($.browser.version) < 10){
+			$("#alex").css("display","none");
+			$("#notSuppotDiv").css("display","");
+			$("#submitBtn").attr("disabled", true);
+		}
+	}
+	
+	//連結網址鍵盤件鍵檢查
+	$('#adLinkURL').bind('keyup', function() {
+		chkWord($("#adLinkURL"), $("#spanAdLinkURL"));
+	});
+	
+	//檢查網址blur事件
+	$("#adLinkURL").blur(function() {
+		chkUrl($("#adLinkURL"), $("#chkLinkURL"));
+	});
+});
+
+//輸入字數檢查與提示
+function chkWord(valObj, msgObj) {
+	var length = parseInt(valObj.val().length);
+	var maxlength = parseInt(valObj.attr("maxlength"));
+	
+	msgObj.css("color","");
+	msgObj.text("");
+	
+	if (length <= maxlength) {
+		msgObj.css("color","");
+		msgObj.text("已輸入" + length + "字，剩" + (maxlength - length) + "字");
+		return true;
+	}
+	
+	return false;
+}
+
+//取消
+function cancerSubmit(){
+	$("#formImg")[0].reset();
+	window.history.go(pages);
+	//$(location).attr( 'href' , 'adGroupView.html');
+}
+
+//檢查網址是否有效
+function chkUrl(valObj, msgObj){
+	var val = valObj.val();
+	
+	msgObj.css("color","");
+	msgObj.text("");
+	
+	if ((val == "") ||
+			(val.indexOf("show.pchome.com.tw") == 0)) {
+		msgObj.css("color","red");
+		msgObj.text("請輸入廣告連結網址");
+		return false;
+	}
+
+	if(!validURL(val)) {
+		msgObj.css("color","red");
+		msgObj.text("請輸入正確的廣告連結網址");
+		return false;
+	}
+	
+	msgObj.text("網址檢查中");
+	
+	var result = $.ajax({
+		type: "POST",
+		url: "checkAdUrl.html",
+		data: { url: val },
+		async: false
+	});
+	
+	if (result.responseText == "true") {
+		msgObj.css("color","green");
+		msgObj.text("網址確認正確");
+		return true;
+	}
+	else {
+		msgObj.css("color","red");
+		msgObj.text("請輸入正確的廣告連結網址");
+		return false;
+	}
+}
+
+function validURL(url) {
+	var re = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-\u4e00-\u9fa5]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
+	return re.test(url);
+}
+
+//點擊預覽
+function preViewImg(imgName,width,height){
+	var anyWindow = window.URL || window.webkitURL;
+    var objectUrl = anyWindow || imgName;
+    $("#preDiv").prepend('<img src="'+objectUrl+'" height="'+height+'" width="'+width+'">');
+    $.fancybox(
+    		$('#preDiv').html(),
+    		{
+    			'autoDimensions'	: false,
+    			'width'         	: width,
+    			'height'        	: height,
+    			'autoSize'			: true,
+    			'autoHeight'		: true,
+    			'autoScale'			: true,
+    			'transitionIn'		: 'none',
+    			'transitionOut'		: 'none',
+    			'padding'			: 0,
+    			'overlayOpacity'    : .75,
+    			'overlayColor'      : '#fff',
+    			'scrolling'			: 'no',
+    			onClosed    :   function() {
+			    closePrew();
+			    }  
+    		}
+    );
+}
+
+//關閉預覽
+function closePrew(){
+	$("#preDiv").empty();
+}
+
+//存檔
+function multipartImgUuploadSubmit(){
+	$("#chkKeyword").html("");
+	$("#chkFile").html("");
+	
+	var keyWordArray = [];
+	$.each($("#KeywordUL li"), function( index, obj ) {
+		keyWordArray.push($(obj).text());
+	});
+	
+	var excludeKeywordULArray = [];
+	$.each($("#ExcludeKeywordUL li"), function( index, obj ) {
+		excludeKeywordULArray.push($(obj).text());
+	});
+	
+	if (!chkUrl($("#adLinkURL"), $("#chkLinkURL"))) {
+		$("#adLinkURL").focus();
+		return false;
+	}
+	
+	callBlock();
+	$.ajax({
+		url : "adEditImgSaveAjax.html",
+		type : "POST",
+		dataType:'json',
+		data : {
+			"adSeq" : $("#adSeq").val(),
+			"adStyle" : "IMG",
+			"adDetailSeq" : $("#adDetailSeq").val(),
+			"adGroupSeq": $("#adGroupSeq").val(),
+			"adLinkURL" : $("#adLinkURL").val(),
+			"keywords" : JSON.stringify(keyWordArray),
+			"excludeKeywords" : JSON.stringify(excludeKeywordULArray)
+		},
+		success : function(respone) {
+			$('body').unblock();
+			$(location).attr( 'href' , 'adAdView.html?adGroupSeq='+$("#adGroupSeq").val());
+		}
+	});
+}
+
+function callBlock(){
+	$("body").block({
+		message: "<img src='html/img/LoadingWait.gif' />",
+		css: {
+			padding: 0,
+			margin: 0,
+			width: '50%',
+			top: '40%',
+			left: '35%',
+			textAlign: 'center',
+			color: '#000',
+			border: '3px solid #aaa',
+			backgroundColor: '#fff',
+			cursor: 'wait'
+		}
+	});
+}
