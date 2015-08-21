@@ -103,9 +103,7 @@ function validURL(url) {
 }
 
 //點擊預覽
-function preViewImg(imgName,width,height){
-	var anyWindow = window.URL || window.webkitURL;
-    var objectUrl = anyWindow || imgName;
+function preViewImg(objectUrl,width,height){
     $("#preDiv").prepend('<img src="'+objectUrl+'" height="'+height+'" width="'+width+'">');
     $.fancybox(
     		$('#preDiv').html(),
