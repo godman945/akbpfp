@@ -152,25 +152,34 @@ function multipartImgUuploadSubmit(){
 		return false;
 	}
 	
-	callBlock();
-	$.ajax({
-		url : "adEditImgSaveAjax.html",
-		type : "POST",
-		dataType:'json',
-		data : {
-			"adSeq" : $("#adSeq").val(),
-			"adStyle" : "IMG",
-			"adDetailSeq" : $("#adDetailSeq").val(),
-			"adGroupSeq": $("#adGroupSeq").val(),
-			"adLinkURL" : $("#adLinkURL").val(),
-			"keywords" : JSON.stringify(keyWordArray),
-			"excludeKeywords" : JSON.stringify(excludeKeywordULArray)
-		},
-		success : function(respone) {
-			$('body').unblock();
-			$(location).attr( 'href' , 'adAdView.html?adGroupSeq='+$("#adGroupSeq").val());
-		}
-	});
+	var adStatus = $("#adStatus").val();
+	var alertMsg = "";
+	if(adStatus == 3) {
+		alertMsg = "請再次確認您的廣告是否符合刊登規範\n\n提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
+	} else {
+		alertMsg = "PChome將會審核您編輯過的廣告。\n\n提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
+	}
+	if(confirm(alertMsg)) {
+		callBlock();
+		$.ajax({
+			url : "adEditImgSaveAjax.html",
+			type : "POST",
+			dataType:'json',
+			data : {
+				"adSeq" : $("#adSeq").val(),
+				"adStyle" : "IMG",
+				"adDetailSeq" : $("#adDetailSeq").val(),
+				"adGroupSeq": $("#adGroupSeq").val(),
+				"adLinkURL" : $("#adLinkURL").val(),
+				"keywords" : JSON.stringify(keyWordArray),
+				"excludeKeywords" : JSON.stringify(excludeKeywordULArray)
+			},
+			success : function(respone) {
+				$('body').unblock();
+				$(location).attr( 'href' , 'adAdView.html?adGroupSeq='+$("#adGroupSeq").val());
+			}
+		});
+	}
 }
 
 function callBlock(){
