@@ -366,14 +366,14 @@ public class AdEditAction extends BaseCookieAction{
 				}
 				adDetailContent[0] = deCodeUrl.replaceAll("http://", "");
 			} else if(adDetailId != null && adDetailId.equals("img")) {
-				adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();;
-				adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent() + "?" + RandomStringUtils.randomAlphanumeric(10);
-				getImgSize(pfpAdDetails.get(i).getAdDetailContent());
+				adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();
+				adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
+				getImgSize(adDetailContent[1]);
 				if(adDetailContent[1].indexOf("display:none") > 0) {
 					adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
 					imgFile = "";
 				} else {
-					imgFile = adDetailContent[1].substring(adDetailContent[1].lastIndexOf(photoDbPath) + 4);
+					imgFile = adDetailContent[1];
 				}
 			}
 		}
@@ -667,6 +667,7 @@ public class AdEditAction extends BaseCookieAction{
 				byte[] data = ((DataBufferByte)sourceImg.getData().getDataBuffer()).getData();
 				imgSize = Integer.toString(data.length/1024);
 				imgTypeName = originalImg.substring(originalImg.lastIndexOf(".") + 1);
+				imgTypeName = imgTypeName.toUpperCase();
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
