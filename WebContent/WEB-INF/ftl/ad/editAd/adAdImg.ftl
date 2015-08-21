@@ -76,7 +76,7 @@
                 <ul id="AG" class="aduplodul">
                 	<li class="okbox" id="${adDetailSeq[1]!}">
                 		<div class="adboxdv">
-                			<img class="img" src="<@s.url value="/" />${imgFile!}" >
+                			<img src="<@s.url value="/" />${imgFile!}" >
                 			<p class="fancy adinf" onclick="preViewImg('${imgFile!}','300','250');" alt="預覽">預覽</p>
                 		</div>
                 		<ul>

@@ -373,7 +373,7 @@ public class AdEditAction extends BaseCookieAction{
 					adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
 					imgFile = "";
 				} else {
-					imgFile = photoPath + adDetailContent[1].substring(adDetailContent[1].lastIndexOf(photoDbPath) + 4);
+					imgFile = adDetailContent[1].substring(adDetailContent[1].lastIndexOf(photoDbPath) + 4);
 				}
 			}
 		}
@@ -383,8 +383,6 @@ public class AdEditAction extends BaseCookieAction{
 			adDetailContent[1] = "img/public/na.gif\" style=\"display:none";
 			imgFile = "";
 		}
-		
-		log.info("------imgFile=" + imgFile);
 		
 		// 取出分類所屬關鍵字
 		pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
