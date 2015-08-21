@@ -77,6 +77,7 @@ public class AdEditAction extends BaseCookieAction{
 	private String imgWidth = "";
 	private String imgHeight = "";
 	private String imgSize = "";
+	private String imgTypeName = "";
 	
 	private String photoTmpPath;
 	private String photoPath;
@@ -652,6 +653,7 @@ public class AdEditAction extends BaseCookieAction{
 		imgWidth = "0";
 		imgHeight = "0";
 		imgSize = "0";
+		imgTypeName = "JPG";
 		File picture = null;
 		FileInputStream is = null;
 		BufferedImage sourceImg = null;
@@ -664,6 +666,7 @@ public class AdEditAction extends BaseCookieAction{
 				imgHeight = Integer.toString(sourceImg.getHeight());
 				byte[] data = ((DataBufferByte)sourceImg.getData().getDataBuffer()).getData();
 				imgSize = Integer.toString(data.length/1024);
+				imgTypeName = originalImg.substring(originalImg.lastIndexOf("."));
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -900,6 +903,38 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setResult(String result) {
 		this.result = result;
+	}
+
+	public String getImgWidth() {
+		return imgWidth;
+	}
+
+	public void setImgWidth(String imgWidth) {
+		this.imgWidth = imgWidth;
+	}
+
+	public String getImgHeight() {
+		return imgHeight;
+	}
+
+	public void setImgHeight(String imgHeight) {
+		this.imgHeight = imgHeight;
+	}
+
+	public String getImgSize() {
+		return imgSize;
+	}
+
+	public void setImgSize(String imgSize) {
+		this.imgSize = imgSize;
+	}
+
+	public String getImgTypeName() {
+		return imgTypeName;
+	}
+
+	public void setImgTypeName(String imgTypeName) {
+		this.imgTypeName = imgTypeName;
 	}
 
 }

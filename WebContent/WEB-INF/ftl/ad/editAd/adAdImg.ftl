@@ -76,13 +76,13 @@
                 <ul id="AG" class="aduplodul">
                 	<li class="okbox" id="${adDetailSeq[1]!}">
                 		<div class="adboxdv">
-                			<img src="${imgFile!}">
+                			<img class="img" src="${imgFile!}" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'" style="width:90px;height:90px">
                 			<p class="fancy adinf" onclick="preViewImg('${imgFile!}','300','250');" alt="預覽">預覽</p>
                 		</div>
                 		<ul>
-                			<li class="yes"><i>尺寸</i><b>width x height</b></li>
-                			<li class="yes"><i>大小</i><b>100</b></li>
-                			<li class="yes"><i>格式</i><b>JPG</b></li>
+                			<li class="yes"><i>尺寸</i><b>${imgWidth!} x ${imgHeight!}</b></li>
+                			<li class="yes"><i>大小</i><b>${imgSize!}</b></li>
+                			<li class="yes"><i>格式</i><b>${imgTypeName!}</b></li>
                 		</ul>
                 	</li>
                 </ul>
