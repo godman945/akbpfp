@@ -666,7 +666,7 @@ public class AdEditAction extends BaseCookieAction{
 				imgHeight = Integer.toString(sourceImg.getHeight());
 				byte[] data = ((DataBufferByte)sourceImg.getData().getDataBuffer()).getData();
 				imgSize = Integer.toString(data.length/1024);
-				imgTypeName = originalImg.substring(originalImg.lastIndexOf("."));
+				imgTypeName = originalImg.substring(originalImg.lastIndexOf(".") + 1);
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
