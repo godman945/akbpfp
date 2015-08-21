@@ -378,11 +378,13 @@ public class AdEditAction extends BaseCookieAction{
 			}
 		}
 
-		if(adDetailSeq[0] == null) {
-			adDetailSeq[0] = "";
-			adDetailContent[0] = "img/public/na.gif\" style=\"display:none";
+		if(adDetailSeq[1] == null) {
+			adDetailSeq[1] = "";
+			adDetailContent[1] = "img/public/na.gif\" style=\"display:none";
 			imgFile = "";
 		}
+		
+		log.info("------imgFile=" + imgFile);
 		
 		// 取出分類所屬關鍵字
 		pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
