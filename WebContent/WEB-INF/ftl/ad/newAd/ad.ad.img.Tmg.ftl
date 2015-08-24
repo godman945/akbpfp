@@ -110,7 +110,7 @@
             <tr>
                 <th height="20">格式</th>
                 <td>
-                 JPG, PNG
+                 JPG, PNG, GIF
                 </td>
             </tr>
             <tr>

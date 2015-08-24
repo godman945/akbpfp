@@ -568,8 +568,8 @@ function previewImage(file) {
 		var picPath = file.value;
 		var type = picPath.substring(picPath.lastIndexOf(".")+1, picPath.length).toLowerCase();
 		$("#imghead").css("display", "inline");
-		if(type!="jpg" && type != "png"){
-			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png 的檔案");
+		if(type!="jpg" && type != "png" && type != "gif"){
+			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png、gif 的檔案");
 			return false;
 		} else {
 			$("#chkFile").css("display","");

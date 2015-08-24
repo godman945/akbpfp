@@ -22,6 +22,7 @@ $(document).ready(function(){
 	$(function () {
 	    $('#fileupload').fileupload({
 	        url: 'adAddImgAjax.html',
+	        fileElementId: 'fileupload',
 	        success: function (respone) {
 	        	imgSeq = respone;
 	        	jsonObj =  JSON.parse(respone);
@@ -49,6 +50,7 @@ $(document).ready(function(){
 	    	fileArray.push(data.files[0]);
 	    	seqArray.push(jsonObj.adSeq);
 	    	//呼叫建立畫面
+	
 	    	createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq);
 	    }).on('fileuploadprogressall', function (e, data) {	
 	    }).on('fileuploadprocessalways', function (e, data) {
@@ -108,7 +110,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	var imgTypeName = file.name.substr(file.name.indexOf(".")+1,file.name.length);
 	var imgType ='no';
 	var errorMsg ='';
-	if(imgTypeName.toUpperCase() == "PNG" || imgTypeName.toUpperCase() == "JPG"){
+	if(imgTypeName.toUpperCase() == "PNG" || imgTypeName.toUpperCase() == "JPG" || imgTypeName.toUpperCase() == "GIF"){
 		imgType = "yes";
 	}else{
 		errorMsg = '檔案格式不符';
@@ -268,7 +270,6 @@ function deleteImgDom(fileName){
 	$("#finalCount").append("上傳成功:"+successCount+"張"+" 失敗:"+failCount+"張");
 	
 }
-
 
 
 //點擊允許尺寸

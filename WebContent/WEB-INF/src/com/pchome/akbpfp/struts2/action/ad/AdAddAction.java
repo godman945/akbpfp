@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -108,6 +109,7 @@ public class AdAddAction extends BaseCookieAction{
 	private ControlPriceAPI controlPriceAPI;
 	private String seqArray;
 	private File[] fileupload;
+	private String fileuploadFileName;
 	private String adLinkURL;
 	private String photoDbPathNew;
 	private String adHiddenType;	//已建立的分類關鍵字欄位隱藏設定
@@ -613,14 +615,15 @@ public class AdAddAction extends BaseCookieAction{
 	    if(fileupload == null){
 	        return SUCCESS;
 	    }
-
+	    
 	    String imgWidth ="0";
 	    String imgHeight ="0";
 	    String fileSize= "0";
 	    imgUploadPath = "";
 	    for (File file : fileupload) {
     		File originalImgFile = file;
-
+    		String fileType = fileuploadFileName.substring(fileuploadFileName.lastIndexOf(".") + 1);
+    		
     		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
     		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -630,8 +633,7 @@ public class AdAddAction extends BaseCookieAction{
     		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
     			continue;
     		}
-
-    		ImageIO.write(bufferedImage, "jpg", baos);
+    		String test = Integer.toString((int) Math.round(new Double(file.length())/new Double(1024)));
     		baos.flush();
     		baos.close();
     		log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
@@ -666,7 +668,7 @@ public class AdAddAction extends BaseCookieAction{
                     Thread.sleep(100);
         		}
             }
-            commonUtilModel.writeImg(bufferedImage,photoDbPathNew,customerInfoId, sdf.format(date),adSeq);
+            commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
 
     		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
 	    }
@@ -1106,6 +1108,12 @@ public class AdAddAction extends BaseCookieAction{
 		this.adHiddenType = adHiddenType;
 	}
 
-	
+	public String getFileuploadFileName() {
+		return fileuploadFileName;
+	}
+
+	public void setFileuploadFileName(String fileuploadFileName) {
+		this.fileuploadFileName = fileuploadFileName;
+	}
 
 }

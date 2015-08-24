@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
@@ -28,20 +30,36 @@ public class CommonUtilModel extends BaseCookieAction{
     	/**
 	 * 輸出圖片
 	 * */
-	public String  writeImg(BufferedImage bufferedImage,String userImgPath,String custimerInfoid,String date,String adSeq) throws Exception{
+	public String  writeImg(File originalImgFile,String userImgPath,String custimerInfoid,String date,String adSeq,String fileType) throws Exception{
 	    log.info("開始處理圖片:"+adSeq);
 	    //Date date2 = new Date();
+	    BufferedImage bufferedImage = null;
+	    if("JPG".equals(fileType.toUpperCase()) || "PNG".equals(fileType.toUpperCase())){
+	    	bufferedImage = ImageIO.read(originalImgFile);
+	    	int w = bufferedImage.getWidth();
+	    	int h = bufferedImage.getHeight();
+	    	BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	    	int[] rgb = bufferedImage.getRGB(0, 0, w, h, null, 0, w);
+	    	newImage.setRGB(0, 0, w, h, rgb, 0, w);
+	    	//SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
+	    	ImageIO.write(newImage, fileType, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType));
+	    	ImageIO.write(newImage, fileType, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType));
+	    } else if("GIF".equals(fileType.toUpperCase())){
+            File file1 = new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
+            File file2 = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
+            FileOutputStream output1 = new FileOutputStream(file1);
+            FileOutputStream output2 = new FileOutputStream(file2);
+            InputStream input = new FileInputStream(originalImgFile);
+            byte[] byt = new byte[input.available()];
+            input.read(byt);
+            output1.write(byt);
+            output2.write(byt);
+            
+            output1.close();
+            output2.close();
+	    }
 	    
-	    int w = bufferedImage.getWidth();
-	    int h = bufferedImage.getHeight();
-	    BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-	    int[] rgb = bufferedImage.getRGB(0, 0, w, h, null, 0, w);
-	    newImage.setRGB(0, 0, w, h, rgb, 0, w);
-	    
-	    //SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-	    ImageIO.write(newImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
-	    ImageIO.write(newImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
-	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg";
+	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + fileType;
 	}
 
 	/**
@@ -89,6 +107,7 @@ public class CommonUtilModel extends BaseCookieAction{
 		File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
 		if(adSeq.equals(file.getName().substring(0,file.getName().indexOf(".")))){
 		    BufferedImage bufferedImage = ImageIO.read(file);
+		    String imgType = file.getName().substring(file.getName().indexOf(".") + 1);
 		    imageVO.setImgWidth(String.valueOf(bufferedImage.getWidth()));
 		    imageVO.setImgHeight(String.valueOf(bufferedImage.getHeight()));
 		    int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
@@ -96,8 +115,8 @@ public class CommonUtilModel extends BaseCookieAction{
 		    Graphics2D graphics2D = resizedImage.createGraphics();
 		    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, Color.WHITE,null);
 		    graphics2D.dispose();
-		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));
-		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg");
+		    ImageIO.write(resizedImage, imgType, new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+"." + imgType));
+		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + imgType);
 
 		}
 	    }
