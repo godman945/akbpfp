@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -666,8 +667,7 @@ public class AdEditAction extends BaseCookieAction{
 				sourceImg = javax.imageio.ImageIO.read(is);
 				imgWidth = Integer.toString(sourceImg.getWidth());
 				imgHeight = Integer.toString(sourceImg.getHeight());
-				byte[] data = ((DataBufferByte)sourceImg.getData().getDataBuffer()).getData();
-				imgSize = Integer.toString(data.length/1024);
+				imgSize = Integer.toString((int) Math.round(new Double(picture.length())/new Double(1024)));
 				imgTypeName = originalImg.substring(originalImg.lastIndexOf(".") + 1);
 				imgTypeName = imgTypeName.toUpperCase();
 			}
