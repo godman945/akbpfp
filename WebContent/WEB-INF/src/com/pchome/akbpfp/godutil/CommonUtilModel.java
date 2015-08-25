@@ -55,6 +55,7 @@ public class CommonUtilModel extends BaseCookieAction{
             output1.write(byt);
             output2.write(byt);
             
+            input.close();
             output1.close();
             output2.close();
 	    }

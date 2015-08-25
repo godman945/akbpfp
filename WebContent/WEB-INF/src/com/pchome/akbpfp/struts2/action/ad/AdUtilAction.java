@@ -88,14 +88,29 @@ public class AdUtilAction extends BaseCookieAction{
 				log.info("cutFile.length() = " + cutFile.length());
 				log.info("allowSize = " + allowSize);
 				if(cutFile.length() < allowSize) {
-					// 進行圖片截取
-					ImageUtil imgCutUtil = new ImageUtil();
-					if(imgCutUtil.scissor(cutFile.getAbsolutePath(), resizeFile.getAbsolutePath()))
-						cutFile.delete();
 					
 					// 進行圖片縮放
-					ImageUtil imgResizeUtil = new ImageUtil();
-					imgResizeUtil.resizeImage(resizeFile, tmpFile, 90, imgType);
+					if("GIF".equals(imgType.toUpperCase())){
+						if(cutFile != null){
+							InputStream input = new FileInputStream(cutFile);
+							FileOutputStream output1 = new FileOutputStream(tmpFile);
+							byte[] byt = new byte[input.available()];
+							input.read(byt);
+							output1.write(byt);
+							output1.close();
+							input.close();
+							log.info(cutFile.getAbsolutePath());
+							cutFile.delete();
+						}
+					}else {
+						// 進行圖片截取
+						ImageUtil imgCutUtil = new ImageUtil();
+						if(imgCutUtil.scissor(cutFile.getAbsolutePath(), resizeFile.getAbsolutePath()))
+							cutFile.delete();
+						
+						ImageUtil imgResizeUtil = new ImageUtil();
+						imgResizeUtil.resizeImage(resizeFile, tmpFile, 90, imgType);	
+					}
 					imgFile = tmpFile.getAbsolutePath();
 					imgFile = imgFile.indexOf("\\") > 0?imgFile.replaceAll("\\\\", "/"):imgFile;
 					log.info("imgFile = " + imgFile);
