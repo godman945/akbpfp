@@ -31,6 +31,7 @@ $(document).ready(function(){
 //	        	$("#fileUploadSize").text(parseInt($("#fileUploadSize").text())+ data.originalFiles.length);
 	        },
 	        dataType: 'json',
+	        async: false,
 //	        autoUpload: false,
 //	        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
 //	        maxFileSize: 5000000, // 5 MB
