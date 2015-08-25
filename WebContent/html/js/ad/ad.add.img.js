@@ -38,11 +38,9 @@ $(document).ready(function(){
 //			previewMaxWidth: 210,
 //			previewMaxHeight: 180,
 //	        previewCrop: true
-	    }).on('fileuploadstart', function (e, data) {
-	    	callBlock();
 	    }).on('fileuploadadd', function (e, data) {
 	    	uploadFileSize = data.originalFiles.length
-	    	//callBlock();
+	    	callBlock();
 	    }).on('fileuploaddone', function (e, data) {
 	    	var index = parseInt($("#fileUploadIndex").text());
 	    	index = index + 1;
