@@ -107,7 +107,7 @@ public class CommonUtilModel extends BaseCookieAction{
 		File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
 		if(adSeq.equals(file.getName().substring(0,file.getName().indexOf(".")))){
 		    BufferedImage bufferedImage = ImageIO.read(file);
-		    String imgType = file.getName().substring(file.getName().indexOf(".") + 1);
+		    //String imgType = file.getName().substring(file.getName().indexOf(".") + 1);
 		    imageVO.setImgWidth(String.valueOf(bufferedImage.getWidth()));
 		    imageVO.setImgHeight(String.valueOf(bufferedImage.getHeight()));
 		    int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
@@ -115,8 +115,8 @@ public class CommonUtilModel extends BaseCookieAction{
 		    Graphics2D graphics2D = resizedImage.createGraphics();
 		    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, Color.WHITE,null);
 		    graphics2D.dispose();
-		    ImageIO.write(resizedImage, imgType, new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+"." + imgType));
-		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + imgType);
+		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));
+		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+".jpg");
 
 		}
 	    }
