@@ -56,7 +56,7 @@
 						<span><iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span>
 		        	</#if>
 		        </td>
-		        <td class="td02">
+		        <td>
 		        ${vo.adStatusDesc!}
 		        <#if vo.adStatus == 3 || vo.adStatus == 6>
 		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${vo.adRejectReason!}">
