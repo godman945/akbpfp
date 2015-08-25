@@ -40,7 +40,6 @@ $(document).ready(function(){
 //	        previewCrop: true
 	    }).on('fileuploadstart', function (e, data) {
 	    	callBlock();
-	    	alert("test");
 	    }).on('fileuploadadd', function (e, data) {
 	    	uploadFileSize = data.originalFiles.length
 	    	//callBlock();
