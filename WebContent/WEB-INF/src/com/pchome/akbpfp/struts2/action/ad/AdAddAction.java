@@ -131,7 +131,6 @@ public class AdAddAction extends BaseCookieAction{
 		}
 
 		saveAndNew = "";
-		adHiddenType = "YES";
 		if(adStyle == null)		adStyle = "TMG";
 
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
@@ -154,6 +153,10 @@ public class AdAddAction extends BaseCookieAction{
 		ulTmpName = RandomStringUtils.randomAlphanumeric(30);
 		imgFile = "";
 
+		if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
+			adHiddenType = "YES";
+		}
+		
 		return SUCCESS;
 	}
 
@@ -557,7 +560,6 @@ public class AdAddAction extends BaseCookieAction{
 	    PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 	    adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 	    adGroupName  = pfpAdGroup.getAdGroupName();
-	    adHiddenType = "YES";
 	    adStyle = "TMG";
 	    List<PfbxSize> pfbSizeList = pfbSizeService.loadAll();
 	    for (EnumAdSize enumAdSize : EnumAdSize.values()) {
@@ -574,6 +576,10 @@ public class AdAddAction extends BaseCookieAction{
 	    // 取出分類所屬排除關鍵字
 	    pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, super.getCustomer_info_id());
 
+	    if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
+			adHiddenType = "YES";
+		}
+	    
 	    return SUCCESS;
 	}
 
