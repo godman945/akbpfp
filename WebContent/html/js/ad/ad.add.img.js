@@ -38,8 +38,6 @@ $(document).ready(function(){
 //			previewMaxWidth: 210,
 //			previewMaxHeight: 180,
 //	        previewCrop: true
-	    }).on('fileuploadstart', function (e, data) {
-	    	callBlockUpload();
 	    }).on('fileuploadadd', function (e, data) {
 	    	uploadFileSize = data.originalFiles.length
 	    	callBlockUpload();
