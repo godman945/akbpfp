@@ -59,11 +59,13 @@ function modifyAdStatus(status){
 		
 		if(parseInt(status) == 10){			
 			$.fancybox({
+				'showCloseButton' :false,
 				'href'     :'closeAdActionMsg.html' 		                    
 			});
 		}
 		else if(parseInt(status) == 9){
 			$.fancybox({
+				'showCloseButton' :false,
 				'href'     :'stopAdActionMsg.html' 		                    
 			});
 		}else{
@@ -73,6 +75,7 @@ function modifyAdStatus(status){
 	}else{
 
 		$.fancybox({
+			'showCloseButton' :false,
 			'href'     :'adActionCheckboxMsg.html' 		                    
 		});
 	}
@@ -94,6 +97,7 @@ function closeAdActionStatus(adActionSeq, status){
 	$("#status").val(status);
 	
 	$.fancybox({
+		'showCloseButton' :false,
 		'href'     :'closeAdActionMsg.html' 		                    
 	});
 
