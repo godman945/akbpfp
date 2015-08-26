@@ -40,7 +40,7 @@ $(document).ready(function(){
 //	        previewCrop: true
 	    }).on('fileuploadadd', function (e, data) {
 	    	uploadFileSize = data.originalFiles.length
-	    	callBlock();
+	    	callBlockUpload();
 	    }).on('fileuploaddone', function (e, data) {
 	    	var index = parseInt($("#fileUploadIndex").text());
 	    	index = index + 1;
@@ -92,6 +92,23 @@ function callBlock(){
 	});
 }
 
+function callBlockUpload(){
+	$("body").block({
+		message: "<h3>圖片上傳中，請稍後</h3>",
+		css: {
+			padding: 0,
+			margin: 0,
+			width: '50%',
+			top: '40%',
+			left: '35%',
+			textAlign: 'center',
+			color: '#000',
+			border: '3px solid #aaa',
+			backgroundColor: '#fff',
+			cursor: 'wait'
+		}
+	});
+}
 
 //建立圖片Dom
 var imgIndex = 0;
