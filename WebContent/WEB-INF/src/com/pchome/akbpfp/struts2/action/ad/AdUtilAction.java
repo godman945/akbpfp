@@ -1,13 +1,17 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -36,6 +40,8 @@ public class AdUtilAction extends BaseCookieAction{
 	private String result;
 	private String imgFile;
 	
+	private String imgWidth;
+	private String imgHeight;
 	
 	private String  time;
 	public String fileUpload() throws Exception{
@@ -104,13 +110,15 @@ public class AdUtilAction extends BaseCookieAction{
 						}
 					}else {
 						// 進行圖片截取
-						ImageUtil imgCutUtil = new ImageUtil();
+						/*ImageUtil imgCutUtil = new ImageUtil();
 						if(imgCutUtil.scissor(cutFile.getAbsolutePath(), resizeFile.getAbsolutePath()))
-							cutFile.delete();
+							cutFile.delete();*/
 						
 						ImageUtil imgResizeUtil = new ImageUtil();
-						imgResizeUtil.resizeImage(resizeFile, tmpFile, 90, imgType);	
+						imgResizeUtil.resizeImage(cutFile, tmpFile, 90, imgType);	
+						cutFile.delete();
 					}
+					getImgSize(tmpFile,90);
 					imgFile = tmpFile.getAbsolutePath();
 					imgFile = imgFile.indexOf("\\") > 0?imgFile.replaceAll("\\\\", "/"):imgFile;
 					log.info("imgFile = " + imgFile);
@@ -147,6 +155,30 @@ public class AdUtilAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	private void getImgSize(File imgfile, int maxLength){
+		try {
+			BufferedImage inputBufImage = ImageIO.read(imgfile);
+			
+			int imageWidth = inputBufImage.getWidth(null);
+			int imageHeight = inputBufImage.getHeight(null);
+
+			if (imageWidth > imageHeight) {
+				imageHeight = (maxLength * imageHeight) / imageWidth;
+				imageWidth = maxLength;
+			} else {
+				imageWidth = (maxLength * imageWidth) / imageHeight;
+				imageHeight = maxLength;
+			}
+			
+			imgWidth = String.valueOf(imageWidth);
+			imgHeight = String.valueOf(imageHeight);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public String getPhotoPath() {
 		return photoPath;
 	}
@@ -214,5 +246,22 @@ public class AdUtilAction extends BaseCookieAction{
 	public void setTime(String time) {
 	    this.time = time;
 	}
+
+	public String getImgWidth() {
+		return imgWidth;
+	}
+
+	public void setImgWidth(String imgWidth) {
+		this.imgWidth = imgWidth;
+	}
+
+	public String getImgHeight() {
+		return imgHeight;
+	}
+
+	public void setImgHeight(String imgHeight) {
+		this.imgHeight = imgHeight;
+	}
+
 	
 }

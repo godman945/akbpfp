@@ -128,15 +128,18 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	var imgTypeName = file.name.substr(file.name.indexOf(".")+1,file.name.length);
 	var imgType ='no';
 	var errorMsg ='';
+	var errorTitle ='';
 	if(imgTypeName.toUpperCase() == "PNG" || imgTypeName.toUpperCase() == "JPG" || imgTypeName.toUpperCase() == "GIF"){
 		imgType = "yes";
 	}else{
-		errorMsg = '檔案格式不符';
+		errorTitle = '錯誤的檔案類型!';
+		errorMsg = '支援的檔案類型JPG、PNG、GIF';
 	}
 	if(Math.round(file.size/1024) < 4000){
 		imgFileSize = "yes";
 	}else{
-		errorMsg = '檔案格式不符';
+		errorTitle = '檔案過大!';
+		errorMsg = '檔案大小上限4000KB';
 	}
 	
 	$.each($("#adSizeDiv p"), function( index, obj ) {
@@ -148,11 +151,13 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	});
 	
 	if(!imgSizeFlag){
-		errorMsg = '檔案尺寸不符';
+		errorTitle = '錯誤的尺寸!';
+		errorMsg = '請確定您的廣告採用了我們支援的大小和格式，然後再次上傳<a href="#" id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a>';
 	}
 	
 	if (adSeq == "") {
-		errorMsg = '檔案傳輸失敗';
+		errorTitle = '上傳失敗!';
+		errorMsg = '檔案空白';
 	}
 	
 	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"){
@@ -173,9 +178,11 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 		$(".aduplodul").append(a);
 	}else{
 		var a =
-			'<li class="failbox" id="'+adSeq+'">'+    
-		    '<p class="addel"  onclick="deleteImgDom(\''+adSeq+'\');"></p> '+
-		    '<em>上傳失敗!</em>'+
+			'<li class="failbox" id="'+adSeq+'">'+  
+			'<a class="addel" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+
+		    //'<p class="addel"  onclick="deleteImgDom(\''+adSeq+'\');"></p> '+
+		    '<em>'+errorTitle+'</em>'+
+		    '<em>請重新上傳檔案</em>'+
 		    '<ul>'+
 		    '<li class="'+imgSize+'"><i>尺寸</i><b>'+width+' x '+height+'</b></li>'+
 			'<li><i>檔名</i><b>'+file.name+'</b></li>'+
@@ -183,7 +190,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 		    '</ul> '+
 		    '<div class="adboxdv">'+
 		    '<span><i>說明：</i>'+errorMsg+'</span>'+
-		    '<span class="adinf">系統無法上傳檔案!</span>  '+
+		    //'<span class="adinf">系統無法上傳檔案!</span>  '+
 		    '</div>'+
 		    '</li>';
 		$(".aduplodul").append($(a));
