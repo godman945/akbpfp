@@ -115,7 +115,9 @@
 		if(adLinkURL == "") {
 			$('#chkLinkURL').css("color","red");
 			$("#chkLinkURL").text("請輸入廣告連結網址.");
-			
+			$("#previewURL").text($('#adLinkURL').attr("placeholder"));
+		} else if(adLinkURL == $('#previewURL').attr("placeholder")) {
+			$("#previewURL").text($('#previewURL').attr("placeholder"));
 		} else {
 			$("#chkLinkURL").text("");
 			if(length == 1024) {
@@ -125,6 +127,7 @@
 				$('#chkLinkURL').css("color","red");
 				$("#chkLinkURL").text("廣告連結網址最多輸入1024字");
 			}
+			$("#previewURL").text(adLinkURL);
 		}
 		//連結網址字數檢查
 		chkWord($('#adLinkURL'), "spanAdLinkURL");
@@ -386,14 +389,14 @@
 		if($("#adTitle").val() == "PChome關鍵字廣告 全新登場"){
 			$('#chkAdTitle').css("color","red");
 			$("#chkAdTitle").text("請填寫廣告內容.");
-			location.href="#chkAdTitle";
+			location.href="#adTitle";
 			return false;
 		}
 		
 		if($("#adContent").val() == "讓您的廣告受到世界矚目、訂單多到接不完！立即使用PChome關鍵字廣告‎。"){
 			$('#chkAdContent').css("color","red");
 			$("#chkAdContent").text("請填寫廣告內容.");
-			location.href="#chkAdContent";
+			location.href="#adContent";
 			return false;
 		}
 		//for ie end
@@ -401,25 +404,25 @@
 		if($("#adTitle").val() == ""){
 			$('#chkAdTitle').css("color","red");
 			$("#chkAdTitle").text("請填寫廣告內容.");
-			location.href="#chkAdTitle";
+			location.href="#adTitle";
 			return false;
 		}
 		
 		if($("#adContent").val() == ""){
 			$('#chkAdContent').css("color","red");
 			$("#chkAdContent").text("請填寫廣告內容.");
-			location.href="#chkAdContent";
+			location.href="#adContent";
 			return false;
 		}
 		
 		
 		if($("#chkLinkURL").css("color") == "rgb(255, 0, 0)"  || $("#chkLinkURL").text() != "網址確認正確"){
-			location.href="#chkLinkURL";
+			location.href="#adLinkURL";
 			return false;
 		}
 		
 		if($("#chkShowURL").css("color") == "rgb(255, 0, 0)" || $("#chkShowURL").text() != "網址確認正確"){
-			location.href="#chkShowURL";
+			location.href="#adShowURL";
 			return false;
 		}
 		
@@ -545,8 +548,8 @@ function previewImage(file) {
 		var picPath = file.value;
 		var type = picPath.substring(picPath.lastIndexOf(".")+1, picPath.length).toLowerCase();
 		$("#imghead").css("display", "inline");
-		if(type!="jpg" && type!="png"){
-			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png 的檔案");
+		if(type!="jpg" && type != "png" && type != "gif"){
+			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png、gif 的檔案");
 			return false;
 		} else {
 			$("#chkFile").css("display","");

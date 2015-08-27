@@ -104,14 +104,12 @@ public class AdUtilAction extends BaseCookieAction{
 						}
 					}else {
 						// 進行圖片截取
-						//長型圖720*80 會有問題，所以先註解掉 2015/08/27 by tim
-						/*ImageUtil imgCutUtil = new ImageUtil();
+						ImageUtil imgCutUtil = new ImageUtil();
 						if(imgCutUtil.scissor(cutFile.getAbsolutePath(), resizeFile.getAbsolutePath()))
-							cutFile.delete();*/
+							cutFile.delete();
 						
 						ImageUtil imgResizeUtil = new ImageUtil();
-						imgResizeUtil.resizeImage(cutFile, tmpFile, 90, imgType);
-						cutFile.delete();
+						imgResizeUtil.resizeImage(resizeFile, tmpFile, 90, imgType);	
 					}
 					imgFile = tmpFile.getAbsolutePath();
 					imgFile = imgFile.indexOf("\\") > 0?imgFile.replaceAll("\\\\", "/"):imgFile;

@@ -117,7 +117,9 @@
 		if(adLinkURL == "") {
 			$('#chkLinkURL').css("color","red");
 			$("#chkLinkURL").text("請輸入廣告連結網址.");
-			
+			$("#previewURL").text($('#adLinkURL').attr("placeholder"));
+		} else if(adLinkURL == $('#previewURL').attr("placeholder")) {
+			$("#previewURL").text($('#previewURL').attr("placeholder"));
 		} else {
 			$("#chkLinkURL").text("");
 			if(length == 1024) {
@@ -127,6 +129,7 @@
 				$('#chkLinkURL').css("color","red");
 				$("#chkLinkURL").text("廣告連結網址最多輸入1024字");
 			}
+			$("#previewURL").text(adLinkURL);
 		}
 		//連結網址字數檢查
 		chkWord($('#adLinkURL'), "spanAdLinkURL");
@@ -396,14 +399,14 @@
 		if($("#adTitle").val() == "PChome關鍵字廣告 全新登場"){
 			$('#chkAdTitle').css("color","red");
 			$("#chkAdTitle").text("請輸入廣告內容.");
-			location.href="#chkAdTitle";
+			location.href="#adTitle";
 			return false;
 		}
 		
 		if($("#adContent").val() == "讓您的廣告受到世界矚目、訂單多到接不完！立即使用PChome關鍵字廣告‎。"){
 			$('#chkAdContent').css("color","red");
 			$("#chkAdContent").text("請輸入廣告內容.");
-			location.href="#chkAdContent";
+			location.href="#adContent";
 			return false;
 		}
 		//for ie end
@@ -411,14 +414,14 @@
 		if($("#adTitle").val() == ""){
 			$('#chkAdTitle').css("color","red");
 			$("#chkAdTitle").text("請輸入廣告內容.");
-			location.href="#chkAdTitle";
+			location.href="#adTitle";
 			return false;
 		}
 		
 		if($("#adContent").val() == ""){
 			$('#chkAdContent').css("color","red");
 			$("#chkAdContent").text("請輸入廣告內容.");
-			location.href="#chkAdContent";
+			location.href="#adContent";
 			return false;
 		}
 		
@@ -431,7 +434,7 @@
 				$('#chkLinkURL').css("color","red");
 				$("#chkLinkURL").text("請輸入正確廣告連結網址.");
 			}
-			location.href="#chkLinkURL";
+			location.href="#adLinkURL";
 			return false;
 		}
 		
@@ -442,7 +445,7 @@
 			}else{
 				$("#chkShowURL").text("請輸入正確廣告顯示網址.");
 			}
-			location.href="#chkShowURL";
+			location.href="#adShowURL";
 			return false;
 		}
 		
