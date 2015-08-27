@@ -15,7 +15,7 @@
 						<th height="35" style="width:12%"><a name="errAdImg"></a>廣告圖片</th>
 						<td style="background:#f9f9f9;">
 							<span class="imgar" style="width:100%;">
-								<span style="display:block;width:115px;float:left;table-layout:fixed;word- wrap:break-word; word-break;break-all;"><img class="img" id="imghead" src="${adDetailContent[0]!}" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'" style="width:90px;height:90px"></span>                    	
+								<span style="display:block;width:115px;float:left"><img class="img" id="imghead" style="width:90px;height:90px" src="${adDetailContent[0]!}" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'" ></span>                    	
 								<!--上傳圖片start-->
 								<div style="float:left;text-align:left;">請上傳90 ｘ90，1024Kb以內jpg、png或gif格式的圖片<br>
 									<input type="hidden" id="adDetailID" name="adDetailID" value="img">
