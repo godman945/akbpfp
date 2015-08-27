@@ -332,12 +332,12 @@ function multipartImgUuploadSubmit(){
 		keyWordArray.push($(obj).text());
 	});
 	
-	
-	if($("#existKW").children().length == 0 && keyWordArray.length == 0){
+	//2015.08.27  關鍵字不為必填 by Tim
+	/*if($("#existKW").children().length == 0 && keyWordArray.length == 0){
 		$("#chkAdKeyword").html("請新增關鍵字");
 		$("#adKeyword").focus();
 		return false;
-	}
+	}*/
 	
 	var excludeKeywordULArray = [];
 	$.each($("#ExcludeKeywordUL li"), function( index, obj ) {

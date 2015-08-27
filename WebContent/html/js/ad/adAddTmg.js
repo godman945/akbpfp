@@ -381,14 +381,15 @@
 	
 	
 	function saveData() {
-		var kwLen = document.getElementsByName("keywords").length;
+		//2015.08.27  關鍵字不為必填 by Tim
+		/*var kwLen = document.getElementsByName("keywords").length;
 		if( $("#existKW").children().length == 0 ){
 			if(kwLen < 2){
 				$('#chkAdKeyword').text("請輸入關鍵字");
 				location.href="#errAdKeyword";
 				return false;
 			}
-		}
+		}*/
 		
 		
 		//for IE
@@ -467,7 +468,7 @@
 			
 			
 			//取得驗證回傳值
-			if(chk_adTitle() && chk_adContent() && $("#chkFile").text() == "" && ((kwLen > 0 && document.getElementsByName("keywords")[kwLen - 1].value != null) || document.getElementById('existKW').length > 0)){
+			if(chk_adTitle() && chk_adContent() && $("#chkFile").text() == ""){
 					$.blockUI.defaults.applyPlatformOpacityRules = false;
 					$.blockUI({
 					    message: "<h1>製作新廣告中，請稍後...</h1>",

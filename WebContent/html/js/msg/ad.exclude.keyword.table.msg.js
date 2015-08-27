@@ -33,6 +33,7 @@ function modifyAdExcludeKeywordStatus(status){
 		
 		if(parseInt(status) == 0){			
 			$.fancybox({
+				'showCloseButton' :false,
 				'href'     :'closeExcludeKeywordMsg.html' 		                    
 			});
 		}
@@ -59,6 +60,7 @@ function updateAdExcludeKeywordStatus(){
 		dataType:"html",
 		success:function(response, status){				
 			$.fancybox({
+				'showCloseButton' :false,
 				'href'     :'adExcludeKeyword.html?adGroupSeq='+$("#adGroupSeq").val()		                    
 			});
 		},

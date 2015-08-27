@@ -58,11 +58,13 @@ function modifyAdStatus(status){
 		
 		if(parseInt(status) == 10){			
 			$.fancybox({
+				'showCloseButton' :false,
 				'href'     :'closeAdKeywordMsg.html' 		                    
 			});
 		}
 		else if(parseInt(status) == 9){
 			$.fancybox({
+				'showCloseButton' :false,
 				'href'     :'stopAdKeywordMsg.html' 		                    
 			});
 		}
@@ -74,6 +76,7 @@ function modifyAdStatus(status){
 	else{
 
 		$.fancybox({
+			'showCloseButton' :false,
 			'href'     :'adKeywordCheckboxMsg.html' 		                    
 		});
 	}
@@ -95,6 +98,7 @@ function closeAdKeywordStatus(adKeywordSeq, status){
 	$("#status").val(status);
 	
 	$.fancybox({
+		'showCloseButton' :false,
 		'href'     :'closeAdKeywordMsg.html' 		                    
 	});
 
@@ -142,6 +146,7 @@ function loadValidate(){
 function adExcludeKeyword(seq){
 	
 	$.fancybox({
+		'showCloseButton' :false,
 		'href'     :'adExcludeKeyword.html?adGroupSeq='+seq		                    
 	});
 }
