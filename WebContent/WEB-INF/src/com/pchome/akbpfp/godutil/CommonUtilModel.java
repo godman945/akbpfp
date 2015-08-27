@@ -107,16 +107,17 @@ public class CommonUtilModel extends BaseCookieAction{
 	    for(int i = 0; i < list.length; i++){
 		File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
 		if(adSeq.equals(file.getName().substring(0,file.getName().indexOf(".")))){
-		    BufferedImage bufferedImage = ImageIO.read(file);
-		    String imgType = file.getName().substring(file.getName().indexOf(".") + 1);
+			String imgType = file.getName().substring(file.getName().indexOf(".") + 1);
+			BufferedImage bufferedImage = ImageIO.read(file);
 		    imageVO.setImgWidth(String.valueOf(bufferedImage.getWidth()));
 		    imageVO.setImgHeight(String.valueOf(bufferedImage.getHeight()));
-		    int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
+		 // 2015.08.27  先把產生縮圖註解掉 by tim
+		    /*int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
 		    BufferedImage resizedImage = new BufferedImage(90, 90, type);
 		    Graphics2D graphics2D = resizedImage.createGraphics();
 		    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, Color.WHITE,null);
 		    graphics2D.dispose();
-		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));
+		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));*/
 		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + imgType);
 
 		}

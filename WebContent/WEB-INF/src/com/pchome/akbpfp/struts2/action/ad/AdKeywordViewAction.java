@@ -122,7 +122,8 @@ public class AdKeywordViewAction extends BaseCookieAction{
 		}	
 		
 		// adGroup 下層關鍵字或播放明細都被關閉, 此分類改為未完成
-		if(StringUtils.isNotBlank(adGroupSeq)){
+		// 2015/08/27 無關鍵字不更改狀態  by tim
+		/*if(StringUtils.isNotBlank(adGroupSeq)){
 			List<PfpAdKeyword> adKeyword = pfpAdKeywordService.validAdKeyword(adGroupSeq);
 			//List<PfpAd> adAd = pfpAdService.validAdAd(adGroupSeq);
 			
@@ -132,7 +133,7 @@ public class AdKeywordViewAction extends BaseCookieAction{
 				adGroup.setAdGroupUpdateTime(new Date());
 				pfpAdGroupService.saveOrUpdate(adGroup);
 			}
-		}
+		}*/
 		
 		return SUCCESS;
 	}

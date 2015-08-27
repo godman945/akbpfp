@@ -116,7 +116,7 @@
             <tr>
                 <th height="20">大小上限</th>
                 <td>
-                 150 KB 
+                 4000 KB 
               </td>
             </tr>
             <tr>
