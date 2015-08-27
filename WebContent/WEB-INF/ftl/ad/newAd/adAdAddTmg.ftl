@@ -34,10 +34,12 @@
 								<h5>廣告預覽</h5>
 								<!--<center><a href="3">參考其他人撰寫關鍵字廣告</a></center>-->
 								<div class="rstli" style="width:500px;margin:0 auto">
-									<img id="previewImg" src="<@s.url value="/" />html/img/upl9090.gif" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'">
-									<h2 style="background:none"><a href="#"  id="previewTitle" name="previewTitle" title="PChome關鍵字廣告 全新登">PChome關鍵字廣告 全新登場</a></h2>
-									<span id="previewContent" name="previewContent">讓您的廣告受到世界矚目、訂單多到接不完！立即使用PChome關鍵字廣告‎。</span>
-									<h5 id="previewURL">show.pchome.com.tw</h5>
+									<span><img id="previewImg" src="<@s.url value="/" />html/img/upl9090.gif" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'"></span>
+									<span>
+                                    	<h2 style="background:none"><a href="#"  id="previewTitle" name="previewTitle" title="PChome關鍵字廣告 全新登">PChome關鍵字廣告 全新登場</a></h2>
+										<span id="previewContent" name="previewContent">讓您的廣告受到世界矚目、訂單多到接不完！立即使用PChome關鍵字廣告‎。</span>
+										<h5 id="previewURL">show.pchome.com.tw</h5>
+									</span>
 								</div>
 								<div class="adpreviewbg" >
 									<h5>曝光示意圖</h5>
