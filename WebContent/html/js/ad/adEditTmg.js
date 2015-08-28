@@ -568,7 +568,11 @@ function previewImage(file) {
 			objectURL = $("#uploadFile").val();
 		}
 		img.src = objectURL;
-		console.log(img);
+		
+		if(!$.browser.msie ) {
+			console.log(img);
+		}
+		
 		img.onload=function (){  
 			imgWidth = img.width;  
 			imgHeight = img.height;  

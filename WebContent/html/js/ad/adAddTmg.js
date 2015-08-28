@@ -590,7 +590,10 @@ function previewImage(file) {
 		}
 		
 		img.src = objectURL;
-		console.log(img);
+		
+		if(!$.browser.msie ) {
+			console.log(img);
+		}
 		img.onload=function (){  
 			imgWidth = img.width;  
 			imgHeight = img.height;  
