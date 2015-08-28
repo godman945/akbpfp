@@ -200,6 +200,7 @@
 				$('#chkShowURL').css("color","red");
 				$("#chkShowURL").text("廣告顯示網址最多輸入"+maxlength+"字");
 			}
+			$("#previewURL").text($('#adShowURL').val());
 		}
 		//連結網域字數檢查
 		chkWord($('#adShowURL'), "spanAdShowURL");
@@ -551,7 +552,23 @@ function previewImage(file) {
 		if(type!="jpg" && type != "png" && type != "gif"){
 			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png、gif 的檔案");
 			return false;
-		} else {
+		} 
+		
+		var img = new Image();
+		var imgHeight;
+		var imgWidth;
+		var objectURL = window.URL.createObjectURL($("#uploadFile")[0].files[0]);
+		img.src = objectURL;
+		console.log(img);
+		img.onload=function (){  
+			imgWidth = img.width;  
+			imgHeight = img.height;  
+			
+			if(imgWidth != imgHeight){
+				$("#chkFile").text("請選擇圖片寬度與高度相同的檔案");
+				return false;
+			}
+			
 			$("#chkFile").css("display","");
 			$("#chkFile").text("圖片上傳中");
 			$("#imgType").val(type);

@@ -117,7 +117,6 @@
 		if(adLinkURL == "") {
 			$('#chkLinkURL').css("color","red");
 			$("#chkLinkURL").text("請輸入廣告連結網址.");
-			$("#previewURL").text($('#adLinkURL').attr("placeholder"));
 		} else if(adLinkURL == $('#previewURL').attr("placeholder")) {
 			$("#previewURL").text($('#previewURL').attr("placeholder"));
 		} else {
@@ -129,7 +128,6 @@
 				$('#chkLinkURL').css("color","red");
 				$("#chkLinkURL").text("廣告連結網址最多輸入1024字");
 			}
-			$("#previewURL").text(adLinkURL);
 		}
 		//連結網址字數檢查
 		chkWord($('#adLinkURL'), "spanAdLinkURL");
@@ -211,6 +209,7 @@
 				$('#chkShowURL').css("color","red");
 				$("#chkShowURL").text("廣告顯示網址最多輸入"+maxlength+"字");
 			}
+			$("#previewURL").text($('#adShowURL').val());
 		}
 		//連結網域字數檢查
 		chkWord($('#adShowURL'), "spanAdShowURL");
@@ -549,6 +548,7 @@ var sizeFlag = true;
 function previewImage(file) {
 	sizeFlag = true;
 	var size = 0;
+	
 	if(!$.browser.msie ) { 
 		size = ($("#uploadFile")[0].files[0].size / 1024);
 	}
@@ -575,7 +575,22 @@ function previewImage(file) {
 		if(type!="jpg" && type != "png" && type != "gif"){
 			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png、gif 的檔案");
 			return false;
-		} else {
+		} 
+		var img = new Image();
+		var imgHeight;
+		var imgWidth;
+		var objectURL = window.URL.createObjectURL($("#uploadFile")[0].files[0]);
+		img.src = objectURL;
+		console.log(img);
+		img.onload=function (){  
+			imgWidth = img.width;  
+			imgHeight = img.height;  
+			
+			if(imgWidth != imgHeight){
+				$("#chkFile").text("請選擇圖片寬度與高度相同的檔案");
+				return false;
+			}
+			
 			$("#chkFile").css("display","");
 			$("#chkFile").text("圖片上傳中");
 			$("#imgType").val(type);
@@ -583,6 +598,7 @@ function previewImage(file) {
 			$("#modifyForm").attr("action", "fileUpload.html");
 			$("#modifyForm").submit();
 		}
+		
 	}
 }
  

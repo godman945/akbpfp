@@ -23,13 +23,6 @@ function initPage() {
 		parent.document.getElementById("imgFile").value = "${imgFile}";
 		parent.document.getElementById("chkFile").innerText = "";
 		parent.document.getElementById("chkFile").textContent = "";
-		
-		var imghead  = parent.document.getElementById("imghead");
-		var previewImg  = parent.document.getElementById("previewImg");
-		$(imghead).css("width","${imgWidth}px");
-		$(imghead).css("height","${imgHeight}px");
-		$(previewImg).css("width","${imgWidth}px");
-		$(previewImg).css("height","${imgHeight}px");
 	} else if(msg == "overSize") {
 	//	parent.document.getElementById("chkFile").style.color = "red";
 	//	parent.document.getElementById("chkFile").innerText = "檔案大小超過 １ＭＢ，請重新選擇！";

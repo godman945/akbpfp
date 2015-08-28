@@ -13,7 +13,7 @@
 						<th height="35" style="width:12%"><a name="errAdImg"></a>廣告圖片</th>
 						<td style="background:#f9f9f9;">
 							<span class="imgar" style="width:100%;">
-								<span style="display:block;width:115px;float:left"><img id="imghead" src="<@s.url value="/" />html/img/upl9090.gif" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'"></span>                    	
+								<span style="display:block;width:115px;float:left"><img id="imghead" style="width:90px;height:90px;" src="<@s.url value="/" />html/img/upl9090.gif" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'"></span>                    	
 								<!--上傳圖片start-->
 								<div style="float:left;text-align:left;">請上傳90 ｘ90，1024Kb以內jpg、png或gif格式的圖片<br>
 									<input type="hidden" id="adDetailID" name="adDetailID" value="img">
@@ -35,11 +35,9 @@
 								<!--<center><a href="3">參考其他人撰寫關鍵字廣告</a></center>-->
 								<div class="rstli" style="width:500px;margin:0 auto">
 									<span><img id="previewImg" src="<@s.url value="/" />html/img/upl9090.gif" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'"></span>
-									<span>
-                                    	<h2 style="background:none"><a href="#"  id="previewTitle" name="previewTitle" title="PChome關鍵字廣告 全新登">PChome關鍵字廣告 全新登場</a></h2>
-										<span id="previewContent" name="previewContent">讓您的廣告受到世界矚目、訂單多到接不完！立即使用PChome關鍵字廣告‎。</span>
-										<h5 id="previewURL">show.pchome.com.tw</h5>
-									</span>
+									<h2 style="background:none"><a href="#"  id="previewTitle" name="previewTitle" title="PChome關鍵字廣告 全新登">PChome關鍵字廣告 全新登場</a></h2>
+									<span id="previewContent" name="previewContent">讓您的廣告受到世界矚目、訂單多到接不完！立即使用PChome關鍵字廣告‎。</span>
+									<h5 id="previewURL">show.pchome.com.tw</h5>
 								</div>
 								<div class="adpreviewbg" >
 									<h5>曝光示意圖</h5>

@@ -11,7 +11,6 @@
 		<ul class="admenuul">
             <li class="m01"><a href="adAddImg.html?adGroupSeq=${adGroupSeq!}" class="active" class="active" onClick="return(chkLeave())">圖像廣告</a></li>
             <li class="m02"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}" onClick="return(chkLeave())">圖文廣告</a></li>
-            <li class="m03"><a href="#" onClick="return(chkLeave())">影音廣告</a></li>
             <!-- <li class="m03"><a href="#">影音廣告</a></li>-->
         </ul>
 		<div class="grtba">
