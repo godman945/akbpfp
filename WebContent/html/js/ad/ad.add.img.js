@@ -333,7 +333,7 @@ function multipartImgUuploadSubmit(){
 	$("#chkKeyword").html("");
 	$("#chkFile").html("");
 	
-	var submitFlag = true;
+	//var submitFlag = true;
 	var keyWordArray = [];
 	$.each($("#KeywordUL li"), function( index, obj ) {
 		keyWordArray.push($(obj).text());
@@ -352,11 +352,10 @@ function multipartImgUuploadSubmit(){
 	});
 	
 	
-	
+	var seqOkArray = [];
 	$.each($(".aduplodul li"), function( index, obj ) {
-		if($(obj).attr("class") == "failbox"){
-			submitFlag = false;
-			return false;
+		if($(obj).attr("class") == "okbox"){
+			seqOkArray.push($(obj).attr("id"));
 		}
 	});
 	
@@ -365,20 +364,25 @@ function multipartImgUuploadSubmit(){
 		return false;
 	}
 	
-	if(!submitFlag ){
+	/*if(!submitFlag ){
 		$("#chkFile").html("有錯誤的檔案");
 		location.href = "#fileupload";
 		return false;
-	}
+	}*/
 	if(seqArray.length == 0){
-		$("#chkFile").html("請上傳檔案");
+		$("#chkFile").html("請上傳廣告圖片");
+		location.href = "#fileupload";
+		return false;
+	}
+	if(seqOkArray.length == 0){
+		$("#chkFile").html("請重新上傳正確格式的廣告圖片");
 		location.href = "#fileupload";
 		return false;
 	}
 	var map = {
-		"seqArray" : seqArray
+		"seqArray" : seqOkArray
 	}
-	console.log(seqArray);
+	console.log(seqOkArray);
 	
 	var map = JSON.stringify(map);
 	callBlock();

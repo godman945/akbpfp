@@ -332,13 +332,16 @@
 			if($("#adLinkURL").val().indexOf("http") < 0 ){
 				hostName = $('<a>').prop('href', "http://"+$("#adLinkURL").val()).prop('hostname');
 				urlCheck("adShowURL","http://"+hostName);
+				$("#previewURL").text($('#adLinkURL').val());
 			}else{
 				hostName = $('<a>').prop('href', $("#adLinkURL").val()).prop('hostname');
 				urlCheck("adShowURL",hostName);
+				$("#previewURL").text($('#adLinkURL').val());
 			}
 			$("#adShowURL").val(hostName);
 		}else{
 			$("#adShowURL").val("");
+			$("#previewURL").text($('#adShowURL').attr("placeholder"));
 			$("#chkShowURL").css("color","red");
 			$("#chkShowURL").text("請填寫廣告顯示網址.");
 			$("#previewURL").text($("#chkShowURL").attr("placeholder"));
@@ -551,13 +554,19 @@ function previewImage(file) {
 		$("#imghead").css("display", "inline");
 		if(type!="jpg" && type != "png" && type != "gif"){
 			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png、gif 的檔案");
+			$("#previewImg").removeAttr("style");
 			return false;
 		} 
 		
 		var img = new Image();
 		var imgHeight;
 		var imgWidth;
-		var objectURL = window.URL.createObjectURL($("#uploadFile")[0].files[0]);
+		var objectURL;
+		if(!$.browser.msie ) { 
+			objectURL = window.URL.createObjectURL($("#uploadFile")[0].files[0]);	
+		} else {
+			objectURL = $("#uploadFile").val();
+		}
 		img.src = objectURL;
 		console.log(img);
 		img.onload=function (){  

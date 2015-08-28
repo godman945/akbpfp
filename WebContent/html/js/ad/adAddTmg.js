@@ -319,9 +319,11 @@
 					$("#adShowURL").val(domain);
 				}
 				urlCheck("adShowURL",$("#adShowURL").val());
+				$("#previewURL").text($('#adShowURL').val());
 			}
 		}else{
 			$("#adShowURL").val("");
+			$("#previewURL").text($('#adShowURL').attr("placeholder"));
 			$('#chkShowURL').css("color","red");
 			$("#chkShowURL").text("請輸入廣告顯示網址.");
 		}
@@ -574,12 +576,19 @@ function previewImage(file) {
 		$("#imghead").css("display", "inline");
 		if(type!="jpg" && type != "png" && type != "gif"){
 			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png、gif 的檔案");
+			$("#previewImg").removeAttr("style");
 			return false;
 		} 
 		var img = new Image();
 		var imgHeight;
 		var imgWidth;
-		var objectURL = window.URL.createObjectURL($("#uploadFile")[0].files[0]);
+		var objectURL;
+		if(!$.browser.msie ) { 
+			objectURL = window.URL.createObjectURL($("#uploadFile")[0].files[0]);	
+		} else {
+			objectURL = $("#uploadFile").val();
+		}
+		
 		img.src = objectURL;
 		console.log(img);
 		img.onload=function (){  
@@ -588,6 +597,7 @@ function previewImage(file) {
 			
 			if(imgWidth != imgHeight){
 				$("#chkFile").text("請選擇圖片寬度與高度相同的檔案");
+				$("#previewImg").removeAttr("style");
 				return false;
 			}
 			
