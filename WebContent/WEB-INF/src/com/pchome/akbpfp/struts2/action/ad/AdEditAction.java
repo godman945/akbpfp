@@ -94,6 +94,7 @@ public class AdEditAction extends BaseCookieAction{
 	private AdmAccesslogService admAccesslogService;
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private HttpUtil httpUtil;
+	private String adHiddenType;	//已建立的分類關鍵字欄位隱藏設定
 
 	public String AdAdEdit() throws Exception {
 		log.info("AdAdEdit => adSeq = " + adSeq);
@@ -186,6 +187,10 @@ public class AdEditAction extends BaseCookieAction{
 		// 上傳圖片暫存檔名(亂數產生)
 		ulTmpName = RandomStringUtils.randomAlphanumeric(30);
 
+		if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
+			adHiddenType = "YES";
+		}
+		
 		return SUCCESS;
 	}
 
@@ -395,6 +400,10 @@ public class AdEditAction extends BaseCookieAction{
 		pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
 		// 取出分類所屬排除關鍵字
 		pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, pfpCustomerInfo.getCustomerInfoId());
+		
+		if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
+			adHiddenType = "YES";
+		}
 		
 		return SUCCESS;
 	}
@@ -942,6 +951,14 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setImgTypeName(String imgTypeName) {
 		this.imgTypeName = imgTypeName;
+	}
+
+	public String getAdHiddenType() {
+		return adHiddenType;
+	}
+
+	public void setAdHiddenType(String adHiddenType) {
+		this.adHiddenType = adHiddenType;
 	}
 
 }

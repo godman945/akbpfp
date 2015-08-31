@@ -332,7 +332,11 @@
 			if($("#adLinkURL").val().indexOf("http") < 0 ){
 				hostName = $('<a>').prop('href', "http://"+$("#adLinkURL").val()).prop('hostname');
 				urlCheck("adShowURL","http://"+hostName);
-				$("#previewURL").text($('#adLinkURL').val());
+				var adShowURLWord = $('#adLinkURL').val();
+				if(adShowURLWord.indexOf("/") > 0) {
+					adShowURLWord = adShowURLWord.substring(0, adShowURLWord.indexOf("/"));
+				}
+				$("#previewURL").text(adShowURLWord);
 			}else{
 				hostName = $('<a>').prop('href', $("#adLinkURL").val()).prop('hostname');
 				urlCheck("adShowURL",hostName);
