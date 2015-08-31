@@ -46,7 +46,7 @@
 						</td>
 					</tr>
                     <tr>
-						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br><a href="#" id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a></th>
+						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br><a id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a></th>
 						<td style="background:#f9f9f9;">
 							<span class="imgar" style="width:100%;">
                             <!--上傳圖片start-->
@@ -55,7 +55,7 @@
                                 <input type="hidden" id="adDetailName" name="adDetailName" value="廣告圖片">
                                 <input type="hidden" id="adDetailContent" name="adDetailContent" value="">
    	  							<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroupSeq}">
-                                <input id="fileupload" type="file"  name="fileupload" multiple ><!--onchange="createImgDom(this)"-->
+                                <input id="fileupload" type="file"  name="fileupload" multiple style="width:70px;"><!--onchange="createImgDom(this)"-->
                                 <span id="chkFile" name="chkFile" style="color:red;size:5"></span><br /> <div>已上傳 <div id="fileUploadIndex" style="display:inline;">0</div>/<div id="fileUploadSize" style="display:inline;">0</div> <div id="finalCount"  style="display:inline;color:blue;"></div></div>									
                             </div>
                             <!--上傳圖片end-->
