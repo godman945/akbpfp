@@ -39,6 +39,7 @@ $(document).ready(function(){
 //			previewMaxHeight: 180,
 //	        previewCrop: true
 	    }).on('fileuploadadd', function (e, data) {
+	    	
 	    	uploadFileSize = data.originalFiles.length
 	    	callBlockUpload();
 	    }).on('fileuploaddone', function (e, data) {
@@ -152,7 +153,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	
 	if(!imgSizeFlag){
 		errorTitle = '錯誤的尺寸!';
-		errorMsg = '上傳圖片的<a href="#" id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a>';
+		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a>';
 	}
 	
 	if (adSeq == "") {
