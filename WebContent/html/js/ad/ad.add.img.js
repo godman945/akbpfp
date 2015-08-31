@@ -152,7 +152,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	
 	if(!imgSizeFlag){
 		errorTitle = '錯誤的尺寸!';
-		errorMsg = '請確定您的廣告採用了我們支援的大小和格式，然後再次上傳<a href="#" id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a>';
+		errorMsg = '上傳圖片的<a href="#" id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a>';
 	}
 	
 	if (adSeq == "") {
@@ -164,8 +164,8 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 		var anyWindow = window.URL || window.webkitURL;
 		var objectUrl = anyWindow.createObjectURL(file);
 		var a =
-			 '<li class="okbox" id="'+adSeq+'">'+
-			 '<div class="adboxdv">'+
+			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
+			 '<div class="adboxdv" style="height:170px;">'+
 			 '<img src="'+objectUrl+'">'+
 			 '<p class="fancy adinf" onclick="preViewImg(\''+file.name+'\',\''+width+'\',\''+height+'\');" alt="預覽">預覽</p></div>'+
 			 '<ul>'+
@@ -178,14 +178,15 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 		$(".aduplodul").append(a);
 	}else{
 		var a =
-			'<li class="failbox" id="'+adSeq+'">'+  
+			'<li class="failbox" style="padding: 20px 0 0 0;" id="'+adSeq+'">'+  
 			'<a class="addel" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+
 		    //'<p class="addel"  onclick="deleteImgDom(\''+adSeq+'\');"></p> '+
-		    '<em>'+errorTitle+'</em>'+
-		    '<em>請重新上傳檔案</em>'+
+		    '<em style="line-height:27px;font-size:23px;">'+errorTitle+'</em>'+
+		    '<em style="line-height:23px;font-size:15px;">請重新上傳檔案</em>'+
 		    '<ul>'+
 		    '<li class="'+imgSize+'"><i>尺寸</i><b>'+width+' x '+height+'</b></li>'+
-			'<li><i>檔名</i><b>'+file.name+'</b></li>'+
+			'<li><i>檔名</i><b style="word-break:keep-all;white-space:nowrap;overflow:hidden;">'+file.name+'</b></li>'+
+			'<li class="'+imgFileSize+'"><i>大小</i><b>'+Math.round(file.size/1024)+'</b></li>'+
 			'<li class="'+imgType+'"><i>格式</i><b>'+imgTypeName.toUpperCase()+'</b></li>'+
 		    '</ul> '+
 		    '<div class="adboxdv">'+

@@ -118,7 +118,7 @@ public class CommonUtilModel extends BaseCookieAction{
 		    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, Color.WHITE,null);
 		    graphics2D.dispose();
 		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));*/
-		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + imgType);
+		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\original\\"+adSeq+"." + imgType);
 
 		}
 	    }

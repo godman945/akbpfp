@@ -370,7 +370,11 @@ public class AdEditAction extends BaseCookieAction{
 				adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();
 				String imgFilename = pfpAdDetails.get(i).getAdDetailContent();
 				imgFilename = imgFilename.substring(imgFilename.lastIndexOf("/"));
-				adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent().replace(imgFilename, "/original" + imgFilename);
+				if(pfpAdDetails.get(i).getAdDetailContent().indexOf("original") == -1){
+					adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent().replace(imgFilename, "/original" + imgFilename);	
+				}else {
+					adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
+				}
 				getImgSize(adDetailContent[1]);
 				if(adDetailContent[1].indexOf("display:none") > 0) {
 					adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
