@@ -394,7 +394,10 @@
 				return false;
 			}
 		}*/
-		
+		if($("#chkFile").text() != ""){
+			location.href="#imghead";
+			return false;
+		}
 		
 		//for IE
 		if($("#adTitle").val() == "PChome關鍵字廣告 全新登場"){
