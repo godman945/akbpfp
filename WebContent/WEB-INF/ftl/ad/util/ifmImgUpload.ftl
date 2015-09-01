@@ -58,11 +58,11 @@ function initPage() {
 
 		$(imghead).attr("src", "./html/img/upl9090.gif");
 		$(previewImg).attr("src", "./html/img/upl9090.gif");
-		$(uploadFile).replaceWith($(uploadFile).clone());
+		//$(uploadFile).replaceWith($(uploadFile).clone());
 		$(chkFile).css("display","inline");
 		$(chkFile).text("請選擇圖片寬度與高度相同的檔案！");
 		$(previewImg).removeAttr("style");
-		$(imgFile).val("");
+		//$(imgFile).val("");
 	} else if(msg == "resizeErr") {
 		parent.document.getElementById("chkFile").style.color = "red";
 		parent.document.getElementById("chkFile").innerText = "系統問題，請與服務人員聯絡，謝謝您！";

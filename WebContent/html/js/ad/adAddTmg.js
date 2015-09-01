@@ -582,8 +582,8 @@ function previewImage(file) {
 			$("#previewImg").removeAttr("style");
 			$("#imghead").attr("src", "./html/img/upl9090.gif");
 			$("#previewImg").attr("src", "./html/img/upl9090.gif");
-			$("#uploadFile").replaceWith($(uploadFile).clone());
-			$("#imgFile").val("");
+			//$("#uploadFile").replaceWith($(uploadFile).clone());
+			//$("#imgFile").val("");
 			return false;
 		} 
 		
