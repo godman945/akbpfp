@@ -104,6 +104,7 @@
 
 	//連結網址鍵盤件鍵檢查
 	$('#adLinkURL').bind('keyup', function() {
+		
 		chk_adLinkURL();
 	});
 	
