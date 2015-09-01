@@ -4,7 +4,7 @@
 
 	function initDate() {
 
-		if ($('#adActionStartDate').length > 0) {
+		/*if ($('#adActionStartDate').length > 0) {
 //			$('#adActionStartDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionStartDate').val().replace(/-/g,"/"))) );
             if($('#adActionStartDate').val() != "") {
                 $('#adActionStartDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionStartDate').val().replace(/-/g,"/"))) );
@@ -17,8 +17,15 @@
                 });
             }
 
-		}
+		}*/
 
+		$("#adActionStartDate").datepicker({
+            dateFormat: "yy-mm-dd",
+            yearRange:"-10:+10",
+            minDate: "-6M",
+            maxDate: 0
+        });
+		
 		if ($('#adActionEndDate').length > 0) {
             if($('#adActionEndDate').val() != "") {
                 $('#adActionEndDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionEndDate').val().replace(/-/g,"/"))) );
