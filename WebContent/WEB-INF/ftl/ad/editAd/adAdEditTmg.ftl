@@ -16,7 +16,7 @@
 						<td style="background:#f9f9f9;">
 							<span class="imgar" style="width:100%;">
 								<span style="display:block;width:115px;float:left">
-								<#if dDetailContent[0] == "img/public/na.gif">
+								<#if adDetailContent[0] == "img/public/na.gif">
 									<img class="img" id="imghead" style="width:90px;height:90px;" src="<@s.url value="/" />html/img/upl9090.gif" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'" >	
 								<#else>
 									<img class="img" id="imghead" style="width:90px;height:90px;" src="${adDetailContent[0]!}" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'" >
