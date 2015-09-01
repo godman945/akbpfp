@@ -577,41 +577,19 @@ function previewImage(file) {
 		if(type!="jpg" && type != "png" && type != "gif"){
 			$("#chkFile").text("請選擇圖片檔案格式為 jpg、png、gif 的檔案");
 			$("#previewImg").removeAttr("style");
+			$("#imghead").attr("src", "./html/img/upl9090.gif");
+			$("#previewImg").attr("src", "./html/img/upl9090.gif");
+			$("#uploadFile").replaceWith($(uploadFile).clone());
+			$("#imgFile").val("");
 			return false;
 		} 
-		var img = new Image();
-		var imgHeight;
-		var imgWidth;
-		var objectURL;
-		if(!$.browser.msie ) { 
-			objectURL = window.URL.createObjectURL($("#uploadFile")[0].files[0]);	
-		} else {
-			objectURL = $("#uploadFile").val();
-		}
 		
-		img.src = objectURL;
-		
-		if(!$.browser.msie ) {
-			console.log(img);
-		}
-		img.onload=function (){  
-			imgWidth = img.width;  
-			imgHeight = img.height;  
-			
-			if(imgWidth != imgHeight){
-				$("#chkFile").text("請選擇圖片寬度與高度相同的檔案");
-				$("#previewImg").removeAttr("style");
-				return false;
-			}
-			
-			$("#chkFile").css("display","");
-			$("#chkFile").text("圖片上傳中");
-			$("#imgType").val(type);
-			$("#modifyForm").attr("target", "uploadIMG");
-			$("#modifyForm").attr("action", "fileUpload.html");
-			$("#modifyForm").submit();
-		}
-		
+		$("#chkFile").css("display","");
+		$("#chkFile").text("圖片上傳中");
+		$("#imgType").val(type);
+		$("#modifyForm").attr("target", "uploadIMG");
+		$("#modifyForm").attr("action", "fileUpload.html");
+		$("#modifyForm").submit();
 	}
 }
  

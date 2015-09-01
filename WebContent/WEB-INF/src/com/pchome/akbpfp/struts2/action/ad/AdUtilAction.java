@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,6 +9,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -50,6 +53,18 @@ public class AdUtilAction extends BaseCookieAction{
 				InputStream is = new FileInputStream(uploadFile);
 				if(uploadFile.length()/1024 > 1024){
 				    result = "overSize";
+				    return SUCCESS;
+				}
+				
+				Integer imgWidth = 0;
+				Integer imgHeight = 0;
+				BufferedImage bufferedImage = ImageIO.read(uploadFile);
+				imgWidth = bufferedImage.getWidth();
+				imgHeight = bufferedImage.getHeight();
+				
+				if(imgWidth.intValue() != imgHeight.intValue()){
+					log.info("-------------test=");
+					result = "notSize";
 				    return SUCCESS;
 				}
 

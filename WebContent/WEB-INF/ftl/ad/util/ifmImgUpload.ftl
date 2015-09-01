@@ -16,6 +16,7 @@
 <script language="JavaScript">
 function initPage() {
 	var msg = "${result}";
+	
 	if(msg == "resizeOK") {
 		parent.document.getElementById("imghead").src = "<@s.url value="/" />img/tmp/${ulTmpName}${time}.${imgType}?time=${time}" ;
 		parent.document.getElementById("previewImg").src = "<@s.url value="/" />img/tmp/${ulTmpName}${time}.${imgType}?time=${time}";
@@ -45,6 +46,23 @@ function initPage() {
 		parent.document.getElementById("chkFile").style.color = "red";
 		parent.document.getElementById("chkFile").innerText = "請選擇圖片檔！";
 		parent.document.getElementById("chkFile").textContent = "請選擇圖片檔！";
+	} else if(msg == "notSize") {
+		var imghead  = parent.document.getElementById("imghead");
+		var previewImg  = parent.document.getElementById("previewImg");
+		var uploadFile  = parent.document.getElementById("uploadFile");
+		var chkFile = parent.document.getElementById("chkFile");
+		var sizeCheckDiv  = parent.document.getElementById("sizeCheckDiv");
+		var uploadCheckDiv  = parent.document.getElementById("uploadCheckDiv");
+		var chkFile = parent.document.getElementById("chkFile");
+		var imgFile = parent.document.getElementById("imgFile");
+
+		$(imghead).attr("src", "./html/img/upl9090.gif");
+		$(previewImg).attr("src", "./html/img/upl9090.gif");
+		$(uploadFile).replaceWith($(uploadFile).clone());
+		$(chkFile).css("display","inline");
+		$(chkFile).text("請選擇圖片寬度與高度相同的檔案！");
+		$(previewImg).removeAttr("style");
+		$(imgFile).val("");
 	} else if(msg == "resizeErr") {
 		parent.document.getElementById("chkFile").style.color = "red";
 		parent.document.getElementById("chkFile").innerText = "系統問題，請與服務人員聯絡，謝謝您！";
