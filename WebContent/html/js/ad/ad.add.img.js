@@ -130,19 +130,22 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	var imgType ='no';
 	var errorMsg ='';
 	var errorTitle ='';
-	if(imgTypeName.toUpperCase() == "PNG" || imgTypeName.toUpperCase() == "JPG" || imgTypeName.toUpperCase() == "GIF"){
-		imgType = "yes";
-	}else{
-		errorTitle = '錯誤的檔案類型!';
-		errorMsg = '支援的檔案類型JPG、PNG、GIF';
-	}
 	if(Math.round(file.size/1024) < 4000){
 		imgFileSize = "yes";
 	}else{
 		errorTitle = '檔案過大!';
 		errorMsg = '檔案大小上限4000KB';
 	}
-	
+	if(!imgSizeFlag){
+		errorTitle = '錯誤的尺寸!';
+		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a>';
+	}
+	if(imgTypeName.toUpperCase() == "PNG" || imgTypeName.toUpperCase() == "JPG" || imgTypeName.toUpperCase() == "GIF"){
+		imgType = "yes";
+	}else{
+		errorTitle = '錯誤的檔案類型!';
+		errorMsg = '支援的檔案類型JPG、PNG、GIF';
+	}
 	$.each($("#adSizeDiv p"), function( index, obj ) {
 		if($(obj).text() == width+" x "+height){
 			imgSize = "yes";
@@ -150,11 +153,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 			return false;
 		}
 	});
-	
-	if(!imgSizeFlag){
-		errorTitle = '錯誤的尺寸!';
-		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a>';
-	}
 	
 	if (adSeq == "") {
 		errorTitle = '上傳失敗!';

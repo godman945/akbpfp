@@ -542,9 +542,10 @@ function deleteImage() {
 				$("#imgFile").val("");
 			}
 		});
-	} else {
+	} /*else {
 		$("#chkFile").text("");
-	} 
+	} */
+	$("#chkFile").text("");
 	$("#sizeCheckDiv").css("display","none");
 }
 

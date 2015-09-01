@@ -112,6 +112,7 @@
 		var maxlength = $('#adLinkURL').attr("maxlength");
 		var adLinkURL = $('#adLinkURL').val();
 		var length = adLinkURL.length;
+		
 		if(adLinkURL == "") {
 			$('#chkLinkURL').css("color","red");
 			$("#chkLinkURL").text("請輸入廣告連結網址.");
@@ -127,7 +128,31 @@
 				$('#chkLinkURL').css("color","red");
 				$("#chkLinkURL").text("廣告連結網址最多輸入1024字");
 			}
-			$("#previewURL").text(adLinkURL);
+			if($("#sameRealUrl").prop("checked")){
+				var adShowURL = adLinkURL;
+				// 去掉網址的 http://
+				if(adShowURL.indexOf("://") > 0) {
+					adShowURL = adShowURL.substring(adShowURL.indexOf("://") + 3);
+				}
+				if($("#sameRealUrl").prop("checked")){
+					// 去掉連結網址 / 後的所有字串
+					if(adShowURL.indexOf("/") > 0) {
+						adShowURL = adShowURL.substring(0, adShowURL.indexOf("/"));
+					}
+				}
+				$("#chkShowURL").text("");
+				$("#previewURL").text(adShowURL);
+				$("#adShowURL").val(adShowURL);
+				length = adShowURL.length;
+				if(length == maxlength) {
+					$('#chkShowURL').css("color","blue");
+					$("#chkShowURL").text("廣告顯示網址輸入字數已達上限" +maxlength+ "字");
+				} else if(length > maxlength) { 
+					$('#chkShowURL').css("color","red");
+					$("#chkShowURL").text("廣告顯示網址最多輸入"+maxlength+"字");
+				}
+				$("#previewURL").text(adShowURL);
+			}
 		}
 		//連結網址字數檢查
 		chkWord($('#adLinkURL'), "spanAdLinkURL");
@@ -340,7 +365,17 @@
 			}else{
 				hostName = $('<a>').prop('href', $("#adLinkURL").val()).prop('hostname');
 				urlCheck("adShowURL",hostName);
-				$("#previewURL").text($('#adLinkURL').val());
+				var adLinkURL = $('#adLinkURL').val();
+				if(adLinkURL.indexOf("://") > 0) {
+					adLinkURL = adLinkURL.substring(adLinkURL.indexOf("://") + 3);
+				}
+				
+				// 去掉連結網址 / 後的所有字串
+				if(adLinkURL.indexOf("/") > 0) {
+					adLinkURL = adLinkURL.substring(0, adLinkURL.indexOf("/"));
+				}
+				
+				$("#previewURL").text(adLinkURL);
 			}
 			$("#adShowURL").val(hostName);
 		}else{
@@ -527,9 +562,10 @@ function deleteImage() {
 				$("#imgFile").val("");
 			}
 		});
-	} else {
+	} /*else {
 		$("#chkFile").text("");
-	}
+	}*/
+	$("#chkFile").text("");
 	$("#sizeCheckDiv").css("display","none");
 }
 
