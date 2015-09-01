@@ -9,6 +9,7 @@ var seqArray = [];
 var uploadFileSize = "";
  
 $(document).ready(function(){
+	$("#fileupload").hide();
 	if($.browser.msie){
 		if(parseInt($.browser.version) < 10){
 			$("#alex").css("display","none");
@@ -518,4 +519,8 @@ function chkLeave(){
 	}
 	
 	return true;
+}
+
+function fileLoad(){
+	$("#fileupload").click();
 }
