@@ -104,8 +104,7 @@
 
 	//連結網址鍵盤件鍵檢查
 	$('#adLinkURL').bind('keyup', function() {
-		
-		chk_adLinkURL();
+		//chk_adLinkURL();
 	});
 	
 	//提示顯示輸入連結網址字數與檢查
@@ -563,9 +562,9 @@ function deleteImage() {
 				$("#imgFile").val("");
 			}
 		});
-	} /*else {
+	} else {
 		$("#chkFile").text("");
-	}*/
+	}
 	$("#chkFile").text("");
 	$("#sizeCheckDiv").css("display","none");
 }

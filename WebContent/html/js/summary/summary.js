@@ -1,23 +1,4 @@
 ﻿$(document).ready(function(){
-	if($.browser.msie){
-		if(parseInt($.browser.version) < 10){
-			$("body").block({
-				message: "<div><p>您的瀏覽器不支援唷!本系統建議使用 Chrome 、 Firefox 瀏覽器，</p><p>如需使用 IE，請使用 IE10以上版本。</p><img src=\"html/main/img/tt_pp2.png\" ></div>",
-				css: {
-					padding: 0,
-					margin: 0,
-					width: '50%',
-					top: '40%',
-					left: '35%',
-					textAlign: 'center',
-					color: '#000',
-					border: '3px solid #aaa',
-					backgroundColor: '#fff',
-					cursor: 'wait'
-				}
-			});
-		}
-	}
 
 	ready();
 	

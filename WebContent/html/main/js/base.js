@@ -38,6 +38,13 @@ nav.css("display","none");
 }
 });
 
+if($.browser.msie){
+	if(parseInt($.browser.version) < 10){
+		$(".blockOverlay").css("height","270%");
+		$(".blockOverlay").css("width","115%");
+	}
+}
+
 });
 
 

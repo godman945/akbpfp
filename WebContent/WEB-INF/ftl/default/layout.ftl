@@ -11,3 +11,4 @@
 <@t.insertAttribute name="menu" />
 <@t.insertAttribute name="body" />
 <@t.insertAttribute name="footer" />
+<@t.insertAttribute name="forie10" />

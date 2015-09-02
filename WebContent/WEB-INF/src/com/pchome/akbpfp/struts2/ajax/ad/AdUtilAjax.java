@@ -34,7 +34,8 @@ public class AdUtilAjax extends BaseCookieAction{
 	
 	public String checkAdUrl() throws Exception{
 	    	log.info("checkAdUrl");
-		Boolean noError = false;
+	    //  2015/09/01  有問題，暫時先不檢查
+		/*Boolean noError = false;
 		
 		//檢查url 是否危險網址API
 		HttpGet request = new HttpGet();
@@ -87,7 +88,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			} else {
 			msg = new ByteArrayInputStream("".getBytes());
 			}
-		}
+		}*/
 		return SUCCESS;
 	}
 

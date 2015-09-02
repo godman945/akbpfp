@@ -11,6 +11,7 @@
         <put-attribute name="menu" value="default.menu" />
         <put-attribute name="body" value="default.body" />
         <put-attribute name="footer" value="default.footer" />
+        <put-attribute name="forie10" value="/ftl/default/layoutForIE10.ftl" />
     </definition>
 
     <definition name="default.head" template="/ftl/default/head.ftl" >

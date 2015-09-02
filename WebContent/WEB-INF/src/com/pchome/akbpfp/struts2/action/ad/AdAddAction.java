@@ -773,6 +773,7 @@ public class AdAddAction extends BaseCookieAction{
         		}
         		addAd(pfpAdGroup);
         		String path = imageVO.getImgPath().replace("\\", "/");
+        		
         		path = path.replace("/export/home/webuser/akb/pfp/", "");
         		saveAdDetail(path,EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
 
