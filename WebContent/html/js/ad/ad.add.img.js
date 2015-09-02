@@ -384,26 +384,27 @@ function multipartImgUuploadSubmit(){
 		"seqArray" : seqOkArray
 	}
 	console.log(seqOkArray);
-	
-	var map = JSON.stringify(map);
-	callBlock();
-	$.ajax({
-	url : "adAddImgSaveAjax.html",
-	type : "POST",
-	dataType:'json',
-	data : {
-		"seqArray" : map,
-		"adGroupSeq": $("#adGroupSeq").val(),
-		"adLinkURL" : $("#adLinkURL").val(),
-		"keywords" : JSON.stringify(keyWordArray),
-		"excludeKeywords" : JSON.stringify(excludeKeywordULArray)
-	},
-	success : function(respone) {
-		$('body').unblock();
-		$(location).attr( 'href' , 'adAdView.html?adGroupSeq='+$("#adGroupSeq").val());
+	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
+	if(confirm(alt)) {
+		var map = JSON.stringify(map);
+		callBlock();
+		$.ajax({
+			url : "adAddImgSaveAjax.html",
+			type : "POST",
+			dataType:'json',
+			data : {
+				"seqArray" : map,
+				"adGroupSeq": $("#adGroupSeq").val(),
+				"adLinkURL" : $("#adLinkURL").val(),
+				"keywords" : JSON.stringify(keyWordArray),
+				"excludeKeywords" : JSON.stringify(excludeKeywordULArray)
+			},
+			success : function(respone) {
+				$('body').unblock();
+				$(location).attr( 'href' , 'adAddFinish.html?adGroupSeq='+$("#adGroupSeq").val());
+			}
+		});
 	}
-});
-
 
 }  
 //取消
