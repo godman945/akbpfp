@@ -372,12 +372,12 @@ function multipartImgUuploadSubmit(){
 	}*/
 	if(seqArray.length == 0){
 		$("#chkFile").html("請上傳廣告圖片");
-		location.href = "#fileupload";
+		location.href = "#fileButton";
 		return false;
 	}
 	if(seqOkArray.length == 0){
 		$("#chkFile").html("請重新上傳正確格式的廣告圖片");
-		location.href = "#fileupload";
+		location.href = "#fileButton";
 		return false;
 	}
 	var map = {

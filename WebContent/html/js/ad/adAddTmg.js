@@ -1,4 +1,6 @@
 ﻿$(document).ready(function(){
+	$("#uploadFile").hide();
+	
 	var LinkUrl = false;
 	var ShowUrl = false;
 	var pages = -1;
@@ -629,4 +631,8 @@ function chkLeave(){
 	}
 	
 	return true;
+}
+
+function fileLoad(){
+	$("#uploadFile").click();
 }

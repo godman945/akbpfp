@@ -1,4 +1,6 @@
 ﻿$(document).ready(function(){
+	$("#uploadFile").hide();
+	
 	var LinkUrl = true;
 	var ShowUrl = true;
 	var pages = -1;
@@ -638,4 +640,8 @@ function setAdStyle(adStyle) {
 
 function closenots(id) {
 	$("#shownotes"+id).hide();
+}
+
+function fileLoad(){
+	$("#uploadFile").click();
 }

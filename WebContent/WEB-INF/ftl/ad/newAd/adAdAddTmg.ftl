@@ -19,6 +19,7 @@
 									<input type="hidden" id="adDetailID" name="adDetailID" value="img">
 									<input type="hidden" id="adDetailName" name="adDetailName" value="廣告圖片">
 									<input type="hidden" id="adDetailContent" name="adDetailContent" value="">
+									<input type="button" id="fileButton" name="fileButton" value="瀏覽檔案" onclick="fileLoad()" >
 									<input type="file" id="uploadFile" name="uploadFile" onchange="previewImage(this)"></br>
 									<span id="chkFile" name="chkFile" style="color:red;size:5"></span><br />
 									<input type="button" name="delImg" id="delImg" value="刪除圖片" onclick="deleteImage();" />
