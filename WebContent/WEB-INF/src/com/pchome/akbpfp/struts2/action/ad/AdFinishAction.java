@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.ad;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.pchome.akbpfp.db.service.ad.PfpAdKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.utils.EnumStatus;
 
 
 public class AdFinishAction extends BaseCookieAction{
@@ -89,6 +91,14 @@ public class AdFinishAction extends BaseCookieAction{
 		}
 
 		pfpAdList = pfpAdService.getPfpAds(null, adGroupSeq, null, null, null, null);
+		List<PfpAd> pfpAdNotCloseList = new ArrayList<PfpAd>();
+		for(PfpAd pfpAd : pfpAdList){
+			if(EnumStatus.Close.getStatusId() != pfpAd.getAdStatus()){
+				pfpAdNotCloseList.add(pfpAd);
+			}
+		}
+		pfpAdList = pfpAdNotCloseList;
+		
 		pfpAdKeywordList = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
 		return SUCCESS;
 	}

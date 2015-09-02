@@ -58,7 +58,11 @@
 		minDate: 0,
 		maxDate: '+1y',
 		onClose:function() {
-			$('#adActionEndDate').datepicker( "option", "minDate", new Date(Date.parse($(this).val().replace(/-/g,"/"))) );
+			if(new Date(Date.parse($(this).val().replace(/-/g,"/"))) < new Date()){
+    			$('#adActionEndDate').datepicker( "option", "minDate", new Date() );	
+    		} else {
+    			$('#adActionEndDate').datepicker( "option", "minDate", new Date(Date.parse($(this).val().replace(/-/g,"/"))) );
+    		}
 		}
 	});
 
