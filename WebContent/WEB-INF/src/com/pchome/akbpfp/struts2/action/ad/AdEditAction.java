@@ -428,7 +428,7 @@ public class AdEditAction extends BaseCookieAction{
             result = "廣告連結網址不可超過 1024字！";
             return SUCCESS;
         }
-        if (adLinkURL.indexOf("http://") != 0) {
+        if (adLinkURL.indexOf("http") != 0) {
             adLinkURL = "http://" + adLinkURL;
         }
         int urlState = HttpUtil.getInstance().getStatusCode(adLinkURL);

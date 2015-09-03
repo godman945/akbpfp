@@ -24,6 +24,7 @@ public class PfpAdAdViewVO {
 	private String adStyle = "";
 	private String imgWidth = "";
 	private String imgHeight = "";
+	private String showUrl = "";
 
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -162,6 +163,12 @@ public class PfpAdAdViewVO {
 	}
 	public void setImgHeight(String imgHeight) {
 		this.imgHeight = imgHeight;
+	}
+	public String getShowUrl() {
+		return showUrl;
+	}
+	public void setShowUrl(String showUrl) {
+		this.showUrl = showUrl;
 	}
     
 }

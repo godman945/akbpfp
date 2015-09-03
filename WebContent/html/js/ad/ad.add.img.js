@@ -523,5 +523,6 @@ function chkLeave(){
 }
 
 function fileLoad(){
+	$("#chkFile").html("");
 	$("#fileupload").click();
 }
