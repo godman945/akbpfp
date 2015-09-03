@@ -20,9 +20,11 @@ $(document).ready(function(){
 					cursor: 'wait'
 				}
 			});
-			
-			$(".blockOverlay").css("height","270%");
-			$(".blockOverlay").css("width","115%");
+			var pagehtml = location.pathname;
+			if(pagehtml == (<@s.url value="/" /> + "index.html") || pagehtml == (<@s.url value="/" />)){
+				$(".blockOverlay").css("height","270%");
+				$(".blockOverlay").css("width","115%");
+			}
 		}
 	}
 });
