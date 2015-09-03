@@ -4,9 +4,9 @@
 <SCRIPT LANGUAGE="JavaScript">
 $(document).ready(function(){
 	if($.browser.msie){
-		if(parseInt($.browser.version) < 10){
+		if(parseInt($.browser.version) < 9){
 			$("body").block({
-				message: "<div><p>您的瀏覽器不支援唷!</p><br/><p>本系統建議使用 Chrome 、 Firefox 瀏覽器</p><br/><p>如需使用 IE，請使用 IE10以上版本。</p></div>",
+				message: "<div><p>您的瀏覽器不支援唷!</p><br/><p>本系統建議使用 Chrome 、 Firefox 瀏覽器</p><br/><p>如需使用 IE，請使用 IE9以上版本。</p></div>",
 				css: {
 					padding: 0,
 					margin: 0,
