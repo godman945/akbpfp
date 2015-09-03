@@ -16,10 +16,13 @@ $(document).ready(function(){
 					textAlign: 'center',
 					color: '#000',
 					border: '3px solid #aaa',
-					backgroundColor: '#fff'
-					//cursor: 'wait'
+					backgroundColor: '#fff',
+					cursor: 'wait'
 				}
 			});
+			
+			$(".blockOverlay").css("height","270%");
+			$(".blockOverlay").css("width","115%");
 		}
 	}
 });
