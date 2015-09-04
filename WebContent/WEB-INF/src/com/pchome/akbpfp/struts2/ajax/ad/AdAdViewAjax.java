@@ -82,16 +82,18 @@ public class AdAdViewAjax extends BaseCookieAction{
 					
 					if("IMG".equals(vo.getAdStyle())){
 						String showUrl = vo.getRealUrl();
-						
+						log.info("------------1.showUrl=" + showUrl);
 						showUrl = showUrl.replaceAll("http://", "");
+						log.info("------------2.showUrl=" + showUrl);
 						showUrl = showUrl.replaceAll("https://", "");
+						log.info("------------3.showUrl=" + showUrl);
 		            	if(showUrl.lastIndexOf(".com/") != -1){
 		            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".com/") + 4);
 		            	}
 		            	if(showUrl.lastIndexOf(".tw/") != -1){
-		            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".com/") + 3);
+		            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".tw/") + 3);
 		            	}
-		            	
+		            	log.info("------------4.showUrl=" + showUrl);
 		            	vo.setShowUrl(showUrl);
 					}
 					
