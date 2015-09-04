@@ -242,8 +242,13 @@ public class AdEditAction extends BaseCookieAction{
 						File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
 						if(!iPath.exists())			iPath.mkdirs();
 						if(!iTmpPath.exists())		iTmpPath.mkdirs();
-
-						File adFile = new File(photoPath, adSeq + ".jpg");	// 上傳圖片的檔名
+						String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
+						File adFile = null;	// 上傳圖片的檔名
+						if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
+							adFile = new File(photoPath, adSeq + "." + fileType);
+						}else {
+							adFile = new File(photoPath, adSeq + ".jpg");
+						}
 						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
 						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
 
