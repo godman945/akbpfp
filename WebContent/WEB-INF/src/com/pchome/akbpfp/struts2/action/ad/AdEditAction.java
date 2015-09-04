@@ -243,6 +243,9 @@ public class AdEditAction extends BaseCookieAction{
 						if(!iPath.exists())			iPath.mkdirs();
 						if(!iTmpPath.exists())		iTmpPath.mkdirs();
 						String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
+						if(fileType.indexOf("?") != -1){
+							fileType = fileType.substring(0,fileType.indexOf("?"));
+						}
 						File adFile = null;	// 上傳圖片的檔名
 						if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
 							adFile = new File(photoPath, adSeq + "." + fileType);
@@ -251,7 +254,7 @@ public class AdEditAction extends BaseCookieAction{
 						}
 						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
 						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
-
+						log.info("---------------imgName=" + adFile.getName());
 						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
 						pfpAdDetail.setAdDetailContent(imgDetail);
 					} else {
