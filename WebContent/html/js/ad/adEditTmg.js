@@ -495,6 +495,21 @@
 				}
 				if(confirm(alertMsg)) {
 					setData();
+					
+					if($("#oldImgFile").val() != "") {
+						if($("#imgFile").val() != $("#oldImgFile").val()){
+							$.ajax({
+								type: "POST",
+								url: "deleteIMG.html",
+								data: { imgFile: $("#oldImgFile").val()}
+							}).done(function( msg ) {
+								if(msg == "delFinish") {
+									
+								}
+							});
+						} 	
+					}
+					
 					// form submit
 					$("#modifyForm").attr("target", "_self");
 					$("#modifyForm").attr("action", "doAdAdEditTmg.html");
@@ -550,23 +565,33 @@ function deleteImage() {
 	$("#previewImg").css("display", "none");
 	$("#uploadFile").val("");
 	if($("#imgFile").val() != "") {
-		$.ajax({
-			type: "POST",
-			url: "deleteIMG.html",
-			data: { imgFile: $("#imgFile").val()}
-		}).done(function( msg ) {
-			if(msg == "delFinish") {
-				var date = new Date();
-				var time = date.getTime();
-				$("#imghead").attr("src", "./html/img/upl9090.gif?" + time);
-				$("#previewImg").attr("src", "./html/img/upl9090.gif?" + time);
-				$("#uploadFile").replaceWith($('#uploadFile').clone());
-				$("#imgFile").val("");
-			}
-		});
-	} else {
+		if($("#imgFile").val() != $("#oldImgFile").val()){
+			$.ajax({
+				type: "POST",
+				url: "deleteIMG.html",
+				data: { imgFile: $("#imgFile").val()}
+			}).done(function( msg ) {
+				if(msg == "delFinish") {
+					var date = new Date();
+					var time = date.getTime();
+					$("#imghead").attr("src", "./html/img/upl9090.gif?" + time);
+					$("#previewImg").attr("src", "./html/img/upl9090.gif?" + time);
+					$("#uploadFile").replaceWith($('#uploadFile').clone());
+					$("#imgFile").val("");
+				}
+			});
+		} else {
+			var date = new Date();
+			var time = date.getTime();
+			$("#imghead").attr("src", "./html/img/upl9090.gif?" + time);
+			$("#previewImg").attr("src", "./html/img/upl9090.gif?" + time);
+			$("#uploadFile").replaceWith($('#uploadFile').clone());
+			$("#imgFile").val("");
+		}
+		
+	} /*else {
 		$("#chkFile").text("");
-	}
+	}*/
 	$("#chkFile").text("");
 	$("#sizeCheckDiv").css("display","none");
 }

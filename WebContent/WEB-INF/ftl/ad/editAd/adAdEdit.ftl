@@ -93,6 +93,7 @@
 		<input type="hidden" id="adSeq" name="adSeq" value="${adSeq!}">
 		<input type="hidden" id="ulTmpName" name="ulTmpName" value="${ulTmpName!}">
 		<input type="hidden" id="imgFile" name="imgFile" value="${imgFile!}">
+		<input type="hidden" id="oldImgFile" name="oldImgFile" value="${imgFile!}">
 		<input type="hidden" id="adStatus" name="adStatus" value="${adStatus!}">
 	</form>
 	<iframe id="uploadIMG" name="uploadIMG" style="display:none;height:150px;width:600px"></iframe>
