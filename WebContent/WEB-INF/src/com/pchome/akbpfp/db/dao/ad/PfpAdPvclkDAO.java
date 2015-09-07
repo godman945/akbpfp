@@ -318,19 +318,19 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 		StringBuffer hql = new StringBuffer();
 
 		if(EnumAdLayer.AD_ACTION.getType().equals(adLayer)){ // PfpAdAction 廣告活動
-			hql.append("select count(adActionSeq) ");
+			hql.append("select count(distinct adActionSeq) ");
 			hql.append(" from PfpAdActionReport ");
 			hql.append(" where customerInfoId = :customerInfoId ");	
 			hql.append(" and adPvclkDate >= :startDate ");
 			hql.append(" and adPvclkDate <= :endDate ");
 		} else if(EnumAdLayer.AD_GROUP.getType().equals(adLayer)){ // PfpAdGroup 廣告分類
-			hql.append("select count(adGroupSeq) ");
+			hql.append("select count(distinct adGroupSeq) ");
 			hql.append(" from PfpAdGroupReport");
 			hql.append(" where customerInfoId = :customerInfoId ");	
 			hql.append(" and adPvclkDate >= :startDate ");
 			hql.append(" and adPvclkDate <= :endDate ");
 		} else if(EnumAdLayer.AD_KEYWORD.getType().equals(adLayer)){ // PfpAdKeyword 關鍵字廣告
-			hql.append("select count(adKeywordSeq) ");
+			hql.append("select count(distinct adKeywordSeq) ");
 			hql.append(" from PfpAdKeywordReport");
 			hql.append(" where customerInfoId = :customerInfoId ");	
 			hql.append(" and adKeywordPvclkDate >= :startDate ");
@@ -338,7 +338,7 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 			hql.append(" group by adKeywordSeq ");
 			hql.append(" order by adKeywordSeq ");
 		} else if(EnumAdLayer.AD_AD.getType().equals(adLayer)){ // PfpAd 廣告明細
-			hql.append("select count(adSeq) ");
+			hql.append("select count(distinct adSeq) ");
 			hql.append(" from PfpAdReport");
 			hql.append(" where customerInfoId = :customerInfoId ");	
 			hql.append(" and adPvclkDate >= :startDate ");
@@ -360,7 +360,7 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 		List<Object> resultData = q.list();
 		if(resultData != null) {
 			// 由於是 report 來 group by seq，所以跟檢視廣告的取法是不一樣，用筆數來取 
-			count = (long)resultData.size();
+			count = Long.parseLong(resultData.get(0).toString());
 		}
 
 		return count;

@@ -54,7 +54,7 @@ public class SummaryAjax extends BaseCookieAction{
 				if(pvclkCosts > 0) {
 					totalCount = pvclkCosts;
 					pageCount = (int) Math.ceil(((float)totalCount / pageSize));
-				
+					
 					if("adAd".equals(adLayer.getType())){
 						for(AdLayerVO AdData:adLayerVO){
 							if("IMG".equals(AdData.getAdStyle())){
