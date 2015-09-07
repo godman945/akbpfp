@@ -21,9 +21,24 @@
 <#if adLayerVO?exists>
 	<#list adLayerVO as vo>
 	  <tr>  	
-		<td height="30" class="td02">
-		<iframe height="120" width="350" src="adModel.html?adNo=${vo.seq!}&tproNo=${vo.templateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe>
-		</iframe>
+		<td height="35" class="td02">
+		<#if "IMG" == vo.adStyle>
+ 			<div class="adreportdv">
+				<span class="adboxdvimg"><a href="${vo.realUrl!}" target="_blank"><img src="${vo.originalImg!}" /></a></span>
+				<span class="adboxdvinf">
+					<span>
+						<i>尺寸</i><b>${vo.imgWidth!} x ${vo.imgHeight!}</b><br>
+						<span>${vo.showUrl!}</span><br>
+						<a class="fancy" style="cursor:pointer" onclick="preview('${vo.originalImg!}')" alt="預覽">預覽</a>
+					</span>
+				</span>
+			</div>
+		<#else>
+			<span>
+				<iframe height="120" width="350" src="adModel.html?adNo=${vo.seq!}&tproNo=${vo.templateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe>
+				</iframe>
+			</span>
+		</#if>
 		</td>
 	    <td class="td02">${vo.statusChName!}</td>
 	    <td class="td01">${vo.pv?string('#,###')!}</td>

@@ -1,7 +1,15 @@
 package com.pchome.akbpfp.struts2.ajax.summary;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.pchome.akbpfp.db.service.ad.IPfpAdDetailService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdPvclkService;
 import com.pchome.akbpfp.db.vo.ad.AdLayerVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -16,6 +24,7 @@ public class SummaryAjax extends BaseCookieAction{
 	private static final long serialVersionUID = 2115348763760269256L;
 	
 	private IPfpAdPvclkService pfpAdPvclkService;
+	private IPfpAdDetailService pfpAdDetailService;
 	
 	private String startDate;
 	private String endDate;
@@ -41,6 +50,50 @@ public class SummaryAjax extends BaseCookieAction{
 																DateValueUtil.getInstance().getDateForStartDateAddDay(endDate, 0),
 																pageNo, 
 																pageSize);
+				
+				if("adAd".equals(adLayer.getType())){
+					for(AdLayerVO AdData:adLayerVO){
+						if("IMG".equals(AdData.getAdStyle())){
+							Map<String,String> imgmap = new HashMap<String,String>();
+							List<com.pchome.akbpfp.db.pojo.PfpAdDetail> pfpAdDetailList = pfpAdDetailService.getPfpAdDetails(null,AdData.getSeq(),null,null);
+							if(pfpAdDetailList != null){
+								for(com.pchome.akbpfp.db.pojo.PfpAdDetail pfpAdDetail:pfpAdDetailList){
+									if("img".equals(pfpAdDetail.getAdDetailId())){
+										AdData.setImg(pfpAdDetail.getAdDetailContent());
+				                        if(AdData.getImg().indexOf("original") == -1){
+				                        	if(AdData.getImg().lastIndexOf("/") >= 0){
+				                        		String imgFilename = AdData.getImg().substring(AdData.getImg().lastIndexOf("/"));
+				                        		AdData.setOriginalImg(AdData.getImg().replace(imgFilename, "/original" + imgFilename));	
+				                        	}
+				                        	AdData.setOriginalImg(AdData.getImg());
+				                        } else {
+				                        	AdData.setOriginalImg(AdData.getImg());
+				                        }
+				                        
+				                        imgmap = getImgSize(AdData.getOriginalImg());
+				                        AdData.setImgWidth(imgmap.get("imgWidth"));
+				                        AdData.setImgHeight(imgmap.get("imgHeight"));
+									} else if("real_url".equals(pfpAdDetail.getAdDetailId())){
+										AdData.setRealUrl(pfpAdDetail.getAdDetailContent());
+										String showUrl = pfpAdDetail.getAdDetailContent();
+										showUrl = showUrl.replaceAll("http://", "");
+										showUrl = showUrl.replaceAll("https://", "");
+						            	if(showUrl.lastIndexOf(".com/") != -1){
+						            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".com/") + 4);
+						            	}
+						            	if(showUrl.lastIndexOf(".tw/") != -1){
+						            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".tw/") + 3);
+						            	}
+						            	
+						            	AdData.setShowUrl(showUrl);
+									}
+								}	
+							}
+						}
+
+					}
+				}
+				
 			}
 			
 		}
@@ -54,6 +107,38 @@ public class SummaryAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	public Map<String,String> getImgSize(String originalImg) throws IOException {
+		Map<String,String> imgmap = new HashMap<String,String>();
+		String imgWidth = "0";
+		String imgHeight = "0";
+		File picture = null;
+		FileInputStream is = null;
+		BufferedImage sourceImg = null;
+		try{
+			picture = new File("/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/"));
+			if(picture != null){
+				is = new FileInputStream(picture);
+				sourceImg = javax.imageio.ImageIO.read(is);
+				imgWidth = Integer.toString(sourceImg.getWidth());
+				imgHeight = Integer.toString(sourceImg.getHeight());	
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(is != null){
+				is.close();
+			}
+		}
+		imgmap.put("imgWidth", imgWidth);
+		imgmap.put("imgHeight", imgHeight);
+		
+		return imgmap;
+	}
+	
 	public void setPfpAdPvclkService(IPfpAdPvclkService pfpAdPvclkService) {
 		this.pfpAdPvclkService = pfpAdPvclkService;
 	}
@@ -97,4 +182,9 @@ public class SummaryAjax extends BaseCookieAction{
 	public long getTotalCount() {
 		return totalCount;
 	}
+
+	public void setPfpAdDetailService(IPfpAdDetailService pfpAdDetailService) {
+		this.pfpAdDetailService = pfpAdDetailService;
+	}
+
 }

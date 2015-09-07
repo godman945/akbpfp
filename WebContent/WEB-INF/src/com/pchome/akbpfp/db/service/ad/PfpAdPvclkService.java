@@ -184,6 +184,7 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 		    				adLayerVO.setName(pfpAd.getAdSeq());
 		    				statusId = pfpAd.getAdStatus();
 		    				adLayerVO.setTemplateNo(pfpAd.getTemplateProductSeq());
+		    				adLayerVO.setAdStyle(pfpAd.getAdStyle());
 		            	}
 					}
 					adLayerVO.setStatusId(statusId);

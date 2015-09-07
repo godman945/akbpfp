@@ -26,6 +26,7 @@
     <!-- summary ajax -->
     <bean id="SummaryAjax" class="com.pchome.akbpfp.struts2.ajax.summary.SummaryAjax" scope="prototype" >
     	<property name="pfpAdPvclkService" ref="PfpAdPvclkService" />
+    	<property name="pfpAdDetailService" ref="PfpAdDetailService" />
     </bean>
      
     <!-- board ajax -->
