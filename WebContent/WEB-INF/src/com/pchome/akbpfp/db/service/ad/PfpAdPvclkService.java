@@ -192,7 +192,7 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 					// 設定狀態名稱
 					for(EnumStatus status:EnumStatus.values()){
 						if(statusId == status.getStatusId()){
-							adLayerVO.setStatusChName(status.getStatusDesc());
+							adLayerVO.setStatusChName(status.getStatusRemark());
 						}
 					}
 
