@@ -244,7 +244,6 @@ function tableSorter(){
 }
 
 function preview(img) {
-	alert("test");
     $.fancybox({
         'href':img,
         'autoSize':true,
