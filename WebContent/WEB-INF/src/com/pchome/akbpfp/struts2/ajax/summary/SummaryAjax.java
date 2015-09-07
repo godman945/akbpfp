@@ -51,49 +51,53 @@ public class SummaryAjax extends BaseCookieAction{
 																pageNo, 
 																pageSize);
 				
-				if("adAd".equals(adLayer.getType())){
-					for(AdLayerVO AdData:adLayerVO){
-						if("IMG".equals(AdData.getAdStyle())){
-							Map<String,String> imgmap = new HashMap<String,String>();
-							List<com.pchome.akbpfp.db.pojo.PfpAdDetail> pfpAdDetailList = pfpAdDetailService.getPfpAdDetails(null,AdData.getSeq(),null,null);
-							if(pfpAdDetailList != null){
-								for(com.pchome.akbpfp.db.pojo.PfpAdDetail pfpAdDetail:pfpAdDetailList){
-									if("img".equals(pfpAdDetail.getAdDetailId())){
-										AdData.setImg(pfpAdDetail.getAdDetailContent());
-				                        if(AdData.getImg().indexOf("original") == -1){
-				                        	if(AdData.getImg().lastIndexOf("/") >= 0){
-				                        		String imgFilename = AdData.getImg().substring(AdData.getImg().lastIndexOf("/"));
-				                        		AdData.setOriginalImg(AdData.getImg().replace(imgFilename, "/original" + imgFilename));	
-				                        	}
-				                        	AdData.setOriginalImg(AdData.getImg());
-				                        } else {
-				                        	AdData.setOriginalImg(AdData.getImg());
-				                        }
-				                        
-				                        imgmap = getImgSize(AdData.getOriginalImg());
-				                        AdData.setImgWidth(imgmap.get("imgWidth"));
-				                        AdData.setImgHeight(imgmap.get("imgHeight"));
-									} else if("real_url".equals(pfpAdDetail.getAdDetailId())){
-										AdData.setRealUrl(pfpAdDetail.getAdDetailContent());
-										String showUrl = pfpAdDetail.getAdDetailContent();
-										showUrl = showUrl.replaceAll("http://", "");
-										showUrl = showUrl.replaceAll("https://", "");
-						            	if(showUrl.lastIndexOf(".com/") != -1){
-						            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".com/") + 4);
-						            	}
-						            	if(showUrl.lastIndexOf(".tw/") != -1){
-						            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".tw/") + 3);
-						            	}
-						            	
-						            	AdData.setShowUrl(showUrl);
-									}
-								}	
-							}
-						}
-
-					}
-				}
+				if(pvclkCosts > 0) {
+					totalCount = pvclkCosts;
+					pageCount = (int) Math.ceil(((float)totalCount / pageSize));
 				
+					if("adAd".equals(adLayer.getType())){
+						for(AdLayerVO AdData:adLayerVO){
+							if("IMG".equals(AdData.getAdStyle())){
+								Map<String,String> imgmap = new HashMap<String,String>();
+								List<com.pchome.akbpfp.db.pojo.PfpAdDetail> pfpAdDetailList = pfpAdDetailService.getPfpAdDetails(null,AdData.getSeq(),null,null);
+								if(pfpAdDetailList != null){
+									for(com.pchome.akbpfp.db.pojo.PfpAdDetail pfpAdDetail:pfpAdDetailList){
+										if("img".equals(pfpAdDetail.getAdDetailId())){
+											AdData.setImg(pfpAdDetail.getAdDetailContent());
+					                        if(AdData.getImg().indexOf("original") == -1){
+					                        	if(AdData.getImg().lastIndexOf("/") >= 0){
+					                        		String imgFilename = AdData.getImg().substring(AdData.getImg().lastIndexOf("/"));
+					                        		AdData.setOriginalImg(AdData.getImg().replace(imgFilename, "/original" + imgFilename));	
+					                        	}
+					                        	AdData.setOriginalImg(AdData.getImg());
+					                        } else {
+					                        	AdData.setOriginalImg(AdData.getImg());
+					                        }
+					                        
+					                        imgmap = getImgSize(AdData.getOriginalImg());
+					                        AdData.setImgWidth(imgmap.get("imgWidth"));
+					                        AdData.setImgHeight(imgmap.get("imgHeight"));
+										} else if("real_url".equals(pfpAdDetail.getAdDetailId())){
+											AdData.setRealUrl(pfpAdDetail.getAdDetailContent());
+											String showUrl = pfpAdDetail.getAdDetailContent();
+											showUrl = showUrl.replaceAll("http://", "");
+											showUrl = showUrl.replaceAll("https://", "");
+							            	if(showUrl.lastIndexOf(".com/") != -1){
+							            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".com/") + 4);
+							            	}
+							            	if(showUrl.lastIndexOf(".tw/") != -1){
+							            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".tw/") + 3);
+							            	}
+							            	
+							            	AdData.setShowUrl(showUrl);
+										}
+									}	
+								}
+							}
+	
+						}
+					}
+				}	
 			}
 			
 		}
