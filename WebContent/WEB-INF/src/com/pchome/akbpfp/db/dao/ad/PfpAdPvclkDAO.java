@@ -335,7 +335,7 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 			hql.append(" where customerInfoId = :customerInfoId ");	
 			hql.append(" and adKeywordPvclkDate >= :startDate ");
 			hql.append(" and adKeywordPvclkDate <= :endDate ");
-			hql.append(" group by adKeywordSeq ");
+			//hql.append(" group by adKeywordSeq ");
 			hql.append(" order by adKeywordSeq ");
 		} else if(EnumAdLayer.AD_AD.getType().equals(adLayer)){ // PfpAd 廣告明細
 			hql.append("select count(distinct adSeq) ");
