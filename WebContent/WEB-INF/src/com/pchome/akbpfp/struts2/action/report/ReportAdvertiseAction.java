@@ -44,7 +44,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	//private String[] align_data = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right", "right"};
 	//private String[] align_sum = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right", "right"};
 	// 20140318： 隱藏 "無效點選次數" 欄位
-	private String[] align_data = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "left", "left", "left", "center", "right", "right", "right", "right", "right"};
 	private String[] align_sum = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right"};
 
 	private IAdReportService adReportService=null;
