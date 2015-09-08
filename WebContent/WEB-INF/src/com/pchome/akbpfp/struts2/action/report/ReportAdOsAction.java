@@ -176,7 +176,7 @@ public class ReportAdOsAction extends BaseReportAction {
 
 		tableHeadNameMap=new HashMap<String,String>();
 		tableHeadNameMap.put("曝光數", EnumReport.REPORT_CHART_TYPE_PV.getTextValue());
-		tableHeadNameMap.put("點選率(%)", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
+		tableHeadNameMap.put("點選率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
 		tableHeadNameMap.put("點選次數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
 		// 20140318： 隱藏 "無效點選次數" 欄位
 		//tableHeadNameMap.put("無效點選次數", EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue());
@@ -188,7 +188,7 @@ public class ReportAdOsAction extends BaseReportAction {
 
 		//optionSelect="曝光數,點選率(%),點選次數,無效點選次數,平均點選費用,費用";
 		// 20140318： 隱藏 "無效點選次數" 欄位
-		optionSelect="曝光數,點選率(%),點選次數,平均點選費用,費用";
+		optionSelect="曝光數,點選率,點選次數,平均點選費用,費用";
 
 		tableHeadShowList=new LinkedList<String>();
 
@@ -337,18 +337,30 @@ public class ReportAdOsAction extends BaseReportAction {
 		content.append("\n");
 
 		for(LinkedList<String> sl:tableDataList){
+			int dataNumber = 1;
 			for(String s:sl){
-				content.append("\"" + s + "\"");
+				if(dataNumber == 5 || dataNumber == 6){
+					content.append("\"NT$ " + s + "\"");
+				} else {
+					content.append("\"" + s + "\"");	
+				}
 				content.append(",");
+				dataNumber++;
 			}
 			content.append("\n");
 		}
 		content.append("\n");
 
 		if (tableDataTotalList!=null) {
+			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				content.append("\"" + s + "\"");
+				if(dataTotalNumber == 5 || dataTotalNumber == 6){
+					content.append("\"NT$ " + s + "\"");
+				} else {
+					content.append("\"" + s + "\"");
+				}
 				content.append(",");
+				dataTotalNumber++;
 			}
 			content.append("\n");
 		}

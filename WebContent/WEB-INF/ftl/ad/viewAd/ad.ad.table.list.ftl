@@ -19,7 +19,7 @@
 		<th>廣告明細</th>
 		<th style="width:6%">狀態</th>
 		<th style="width:6%">曝光數</th>
-		<th style="width:6%">點選率(%)</th>
+		<th style="width:6%">點選率</th>
 		<th style="width:6%">點選次數</th>	
 		<!--<th style="width:6%">無效點選次數</th>-->
 		<th style="width:8%">平均點選費用</th>
@@ -56,7 +56,7 @@
 						<span><iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span>
 		        	</#if>
 		        </td>
-		        <td>
+		        <td class="td03">
 		        ${vo.adStatusDesc!}
 		        <#if vo.adStatus == 3 || vo.adStatus == 6>
 		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${vo.adRejectReason!}">
@@ -66,8 +66,8 @@
 				<td class="td01">${vo.adClkRate?string('#.##')!}</td>
 				<td class="td01">${vo.adClk?string('#,###')!}</td>
 				<!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->
-				<td class="td01">${vo.adClkPriceAvg?string('#.##')!}</td>
-				<td class="td01">${vo.adClkPrice?string('#,###')!}</td>
+				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
+				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
 				<td>${vo.adActionName!}</td>
 				<td>${vo.adGroupName!}</td>
 				<td class="td02">
