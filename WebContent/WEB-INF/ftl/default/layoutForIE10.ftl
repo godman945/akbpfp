@@ -21,7 +21,8 @@ $(document).ready(function(){
 				}
 			});
 			var pagehtml = location.pathname;
-			if(pagehtml == ("<@s.url value="/" />" + "index.html") || pagehtml == ("<@s.url value="/" />")){
+			if(pagehtml == ("<@s.url value="/" />" + "index.html") || pagehtml == ("<@s.url value="/" />")
+				|| pagehtml == "/pfp/index.html"){
 				$(".blockOverlay").css("height","270%");
 				$(".blockOverlay").css("width","115%");
 			}
