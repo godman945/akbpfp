@@ -10,6 +10,9 @@ var seqArray = [];
 var uploadFileSize = "";
 
 $(document).ready(function(){
+	//隱藏關鍵字區域
+	$("#keywordBody").hide();
+	
 	//檢查網址字數
 	chkWord($("#adLinkURL"), $("#spanAdLinkURL"));
 	

@@ -68,8 +68,10 @@
 
 		<#if adStyle == "TXT" || adStyle == "TMG" || adStyle == "IMG">
 		<!-- adKeyword start -->
+		<div id=keywordBody>
 		<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adKeywordAdd.js" ></script>
 		<@t.insertAttribute name="adKeyword" />
+		</div>
 		<!-- adKeyword end -->
 		</#if>
 		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>

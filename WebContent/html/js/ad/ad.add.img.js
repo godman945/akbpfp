@@ -9,6 +9,9 @@ var seqArray = [];
 var uploadFileSize = "";
  
 $(document).ready(function(){
+	//隱藏關鍵字區域
+	$("#keywordBody").hide();
+	
 	$("#fileupload").hide();
 	if($.browser.msie){
 		if(parseInt($.browser.version) < 10){
