@@ -378,6 +378,8 @@ public class ReportKeywordAction extends BaseReportAction {
 			for(String s:sl){
 				if(dataNumber == 9 || dataNumber == 10){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataNumber == 7){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
 				}
@@ -393,6 +395,8 @@ public class ReportKeywordAction extends BaseReportAction {
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 9 || dataTotalNumber == 10){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataTotalNumber == 7){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
 				}

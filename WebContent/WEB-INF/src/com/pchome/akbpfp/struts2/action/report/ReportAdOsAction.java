@@ -341,6 +341,8 @@ public class ReportAdOsAction extends BaseReportAction {
 			for(String s:sl){
 				if(dataNumber == 5 || dataNumber == 6){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataNumber == 3){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
 				}
@@ -356,6 +358,8 @@ public class ReportAdOsAction extends BaseReportAction {
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 5 || dataTotalNumber == 6){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataTotalNumber == 3){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
 				}
