@@ -379,8 +379,10 @@ public class ReportCampaginAction extends BaseReportAction {
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
-				if(dataNumber == 9 || dataNumber == 10){
+				if(dataNumber == 5 ||dataNumber == 9 || dataNumber == 10){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataNumber == 7){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
 				}
@@ -396,6 +398,8 @@ public class ReportCampaginAction extends BaseReportAction {
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 9 || dataTotalNumber == 10){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataTotalNumber == 7){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
 				}

@@ -734,6 +734,8 @@ public class ReportExcerptAction extends BaseReportAction {
 			for(String s:sl){
 				if(dataNumber == 8 || dataNumber == 9){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataNumber == 5){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
 				}
@@ -749,6 +751,8 @@ public class ReportExcerptAction extends BaseReportAction {
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 8 || dataTotalNumber == 9){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataTotalNumber == 5){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
 				}

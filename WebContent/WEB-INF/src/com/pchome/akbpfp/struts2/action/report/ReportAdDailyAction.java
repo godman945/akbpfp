@@ -366,6 +366,8 @@ public class ReportAdDailyAction extends BaseReportAction {
 			for(String s:sl){
 				if(dataNumber == 6 || dataNumber == 7){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataNumber == 4){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
 				}
@@ -381,6 +383,8 @@ public class ReportAdDailyAction extends BaseReportAction {
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 6 || dataTotalNumber == 7){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataTotalNumber == 4){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
 				}

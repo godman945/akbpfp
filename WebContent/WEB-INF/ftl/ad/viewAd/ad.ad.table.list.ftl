@@ -63,7 +63,7 @@
 		        </#if>
 		        </td>
 				<td class="td01">${vo.adPv?string('#,###')!}</td>				
-				<td class="td01">${vo.adClkRate?string('#.##')!}</td>
+				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<td class="td01">${vo.adClk?string('#,###')!}</td>
 				<!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->
 				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
@@ -102,11 +102,11 @@
 	<tr class="tbg">
 		<td colspan="3">總計：${totalSize!}筆</td>
 		<td class="td01">${totalPv?string('#,###')!}</td>
-		<td class="td01">${totalClkRate?string('#.##')!}</td>
+		<td class="td01">${totalClkRate?string('#.##')!}%</td>
 		<td class="td01">${totalClk?string('#,###')!}</td>		
 		<!--<td class="td01">${totalInvalidClk?string('#.##')!}</td>-->
-		<td class="td01">${totalAvgCost?string('#.##')!}</td>
-		<td class="td01">${totalCost?string('#,###')!}</td>
+		<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
+		<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
 		<td></td>
 		<td></td>
 		<td></td>

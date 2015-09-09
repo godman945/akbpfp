@@ -381,6 +381,8 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			for(String s:sl){
 				if(dataNumber == 12 || dataNumber == 13){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataNumber == 10){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
 				}
@@ -396,6 +398,8 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 12 || dataTotalNumber == 13){
 					content.append("\"NT$ " + s + "\"");
+				} else if(dataTotalNumber == 10){
+					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
 				}
