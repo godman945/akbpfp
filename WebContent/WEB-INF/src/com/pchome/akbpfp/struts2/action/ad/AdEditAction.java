@@ -32,6 +32,7 @@ import com.pchome.akbpfp.db.service.ad.PfpAdService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdDetail;
 import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -95,6 +96,8 @@ public class AdEditAction extends BaseCookieAction{
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private HttpUtil httpUtil;
 	private String adHiddenType;	//已建立的分類關鍵字欄位隱藏設定
+	private String adDetailTitleSeq;
+	private String imgTitle;
 
 	public String AdAdEdit() throws Exception {
 		log.info("AdAdEdit => adSeq = " + adSeq);
@@ -395,6 +398,9 @@ public class AdEditAction extends BaseCookieAction{
 				} else {
 					imgFile = adDetailContent[1];
 				}
+			} else if(adDetailId != null && adDetailId.equals("title")){
+				adDetailTitleSeq = pfpAdDetails.get(i).getAdDetailSeq();
+				imgTitle = pfpAdDetails.get(i).getAdDetailContent();
 			}
 		}
 
@@ -445,6 +451,11 @@ public class AdEditAction extends BaseCookieAction{
             return SUCCESS;
         }
 		
+        if(StringUtils.isBlank(imgTitle)){
+            result = "請填寫圖片名稱！";
+            return SUCCESS;
+        }
+        
         PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
 		adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();
 
@@ -452,13 +463,34 @@ public class AdEditAction extends BaseCookieAction{
 		
 		// 修改廣告
 		editAd();
-		
+		String adImgPoolSeq = "";
 		if(adDetailSeq[0] != null && adDetailSeq[0] != ""){
 			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailSeq[0]);
+			adImgPoolSeq = pfpAdDetail.getAdPoolSeq();
 			pfpAdDetail.setAdDetailContent(adLinkURL);
 			pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
 		}
 
+		if(StringUtils.isBlank(adDetailTitleSeq)){
+			String seq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+		    PfpAdDetail pfpAdDetail = new PfpAdDetail();
+		    pfpAdDetail.setAdDetailSeq(seq);
+		    pfpAdDetail.setPfpAd(pfpAd);
+		    pfpAdDetail.setAdDetailId(EnumAdDetail.title.name());
+		    pfpAdDetail.setAdDetailContent(imgTitle);
+		    pfpAdDetail.setAdPoolSeq(adImgPoolSeq);
+		    pfpAdDetail.setDefineAdSeq(EnumAdDetail.define_ad_seq_title.getAdDetailName());
+		    pfpAdDetail.setVerifyFlag("y");
+		    pfpAdDetail.setVerifyStatus("n");
+		    pfpAdDetail.setAdDetailCreateTime(new Date());
+		    pfpAdDetail.setAdDetailUpdateTime(new Date());
+		    pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
+		} else {
+			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailTitleSeq);
+			pfpAdDetail.setAdDetailContent(imgTitle);
+			pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
+		}
+		
 		//建立關鍵字
     	List<String> keyWordList = new ArrayList<String>();
     	if (!keywords[0].equals("[]")) {
@@ -967,6 +999,22 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setAdHiddenType(String adHiddenType) {
 		this.adHiddenType = adHiddenType;
+	}
+
+	public String getAdDetailTitleSeq() {
+		return adDetailTitleSeq;
+	}
+
+	public void setAdDetailTitleSeq(String adDetailTitleSeq) {
+		this.adDetailTitleSeq = adDetailTitleSeq;
+	}
+
+	public String getImgTitle() {
+		return imgTitle;
+	}
+
+	public void setImgTitle(String imgTitle) {
+		this.imgTitle = imgTitle;
 	}
 
 }

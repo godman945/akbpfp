@@ -19,6 +19,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
 
+import sun.util.logging.resources.logging;
+
 import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.api.ControlPriceAPI;
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
@@ -748,7 +750,8 @@ public class AdAddAction extends BaseCookieAction{
     	templateProductSeq = EnumAdStyle.IMG.getTproSeq();
     	JSONObject seqArrayJsonObject = new JSONObject(seqArray.toString());
     	JSONArray seqArray = new JSONArray(seqArrayJsonObject.get("seqArray").toString());
-
+    	JSONObject imgNameMap = new JSONObject(seqArrayJsonObject.get("imgNameMap").toString());
+    	
     	// 1.存廣告檔
     	// 2.刪暫存圖檔
     	CommonUtilModel commonUtilModel = new CommonUtilModel();
@@ -759,6 +762,8 @@ public class AdAddAction extends BaseCookieAction{
     	if (seqArray.length() > 0) {
     	    for (int i = 0; i < seqArray.length(); i++) {
         		adSeq = seqArray.get(i).toString();
+        		String imgName = "";
+        		
         		imageVO = commonUtilModel.createAdImg(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
         		String adPoolSeq = "";
         		for (EnumAdSize enumAdSize : EnumAdSize.values()) {
@@ -796,6 +801,12 @@ public class AdAddAction extends BaseCookieAction{
                 }
 
         		saveAdDetail(adLinkURL,EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
+        		
+        		if(imgNameMap.get(adSeq + "_title") != null){
+        			imgName = imgNameMap.get(adSeq + "_title").toString();	
+        		}
+        		
+        		saveAdDetail(imgName,EnumAdDetail.title.name(), adPoolSeq,EnumAdDetail.define_ad_seq_title.getAdDetailName());
     	    }
     	}
 

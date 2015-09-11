@@ -166,12 +166,20 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"){
 		var anyWindow = window.URL || window.webkitURL;
 		var objectUrl = anyWindow.createObjectURL(file);
+		var fileName = file.name;
+		if(fileName.lastIndexOf(".") >= 0){
+			fileName = fileName.substring(0,fileName.lastIndexOf("."));
+			if(fileName.length > 10){
+				fileName = fileName.substring(0,10);
+			}
+		}
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
 			 '<div class="adboxdv" style="height:170px;">'+
 			 '<img src="'+objectUrl+'">'+
 			 '<p class="fancy adinf" onclick="preViewImg(\''+file.name+'\',\''+width+'\',\''+height+'\');" alt="預覽">預覽</p></div>'+
 			 '<ul>'+
+			 '<li><i>名稱</i><input type="text" id="' + adSeq + '_title" name="imgName" style="width:120px;" value="' + fileName + '" maxlength="10" /></b></li>' + 
 			 '<li class="'+imgSize+'"><i>尺寸</i><b>'+width+' x '+height+'</b></li>'+
 			 '<li class="'+imgFileSize+'"><i>大小</i><b>'+Math.round(file.size/1024)+'</b></li>'+
 			 '<li class="'+imgType+'"><i>格式</i><b>'+imgTypeName.toUpperCase()+'</b></li>'+
@@ -383,10 +391,24 @@ function multipartImgUuploadSubmit(){
 		location.href = "#fileButton";
 		return false;
 	}
+	var imgNameMap = {};
+	$.each($("[name=imgName]"), function( index, obj ) {
+		if($(obj).val() == ""){
+			var imgId = $(obj).attr("id").replace("_img","");
+			location.href = "#" + imgId;
+			alert("名稱請勿空白!");
+			return false;
+		}
+		
+		imgNameMap[$(obj).attr("id")] = $(obj).val();
+	});
+	
 	var map = {
-		"seqArray" : seqOkArray
+		"seqArray" : seqOkArray,
+		"imgNameMap" : imgNameMap
 	}
 	console.log(seqOkArray);
+	console.log(imgNameMap);
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
 		var map = JSON.stringify(map);

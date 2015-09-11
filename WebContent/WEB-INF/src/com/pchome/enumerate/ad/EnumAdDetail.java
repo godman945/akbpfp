@@ -9,6 +9,7 @@ public enum EnumAdDetail {
 	showUrl("廣告顯示網址", 35),
 	define_ad_seq_real_url("dad_201303070014", 20),
 	define_ad_seq_img("dad_201303070010", 20),
+	define_ad_seq_title("dad_201303070011", 20),
 	real_url("real_url", 1024);
 	
 	private final String AdDetailName;

@@ -74,12 +74,14 @@
             <!--上傳訊息start 預設是隱藏，有資料才顯示-->
             <div class="aduplodulbg" style="" >
                 <ul id="AG" class="aduplodul">
-                	<li class="okbox" id="${adDetailSeq[1]!}">
+                	<li class="okbox" style="padding: 0 0 20px 0;" id="${adDetailSeq[1]!}">
                 		<div class="adboxdv">
                 			<img src="<@s.url value="/" />${imgFile!}" >
                 			<p class="fancy adinf" onclick="preViewImg('${imgFile!}','${imgWidth!}','${imgHeight!}');" alt="預覽">預覽</p>
                 		</div>
                 		<ul>
+                			<li><i>名稱</i><input type="text" id="imgTitle" name="imgTitle" style="width:120px;" value="${imgTitle!}" maxlength="10" /></b></li>
+							<input type="hidden" id="adDetailTitleSeq" name="adDetailTitleSeq" value="${adDetailTitleSeq!}">
                 			<li class="yes"><i>尺寸</i><b>${imgWidth!} x ${imgHeight!}</b></li>
                 			<li class="yes"><i>大小</i><b>${imgSize!}</b></li>
                 			<li class="yes"><i>格式</i><b>${imgTypeName!}</b></li>

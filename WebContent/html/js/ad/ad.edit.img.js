@@ -155,6 +155,12 @@ function multipartImgUuploadSubmit(){
 		return false;
 	}
 	
+	if($("#imgTitle").val() == ""){
+		$("#imgTitle").focus();
+		alert("名稱請勿空白!");
+		return false;
+	}
+	
 	var adStatus = $("#adStatus").val();
 	var alertMsg = "";
 	if(adStatus == 3) {
@@ -174,6 +180,8 @@ function multipartImgUuploadSubmit(){
 				"adDetailSeq" : $("#adDetailSeq").val(),
 				"adGroupSeq": $("#adGroupSeq").val(),
 				"adLinkURL" : $("#adLinkURL").val(),
+				"adDetailTitleSeq" : $("#adDetailTitleSeq").val(),
+				"imgTitle" : $("#imgTitle").val(),
 				"keywords" : JSON.stringify(keyWordArray),
 				"excludeKeywords" : JSON.stringify(excludeKeywordULArray)
 			},
