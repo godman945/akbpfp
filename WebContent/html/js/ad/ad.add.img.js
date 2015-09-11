@@ -392,16 +392,23 @@ function multipartImgUuploadSubmit(){
 		return false;
 	}
 	var imgNameMap = {};
+	var leavetype = false;
 	$.each($("[name=imgName]"), function( index, obj ) {
 		if($(obj).val() == ""){
-			var imgId = $(obj).attr("id").replace("_img","");
+			var imgId = $(obj).attr("id").replace("_title","");
 			location.href = "#" + imgId;
+			$(this).focus();
 			alert("名稱請勿空白!");
+			leavetype = true;
 			return false;
 		}
 		
 		imgNameMap[$(obj).attr("id")] = $(obj).val();
 	});
+	
+	if(leavetype){
+		return false;
+	}
 	
 	var map = {
 		"seqArray" : seqOkArray,
