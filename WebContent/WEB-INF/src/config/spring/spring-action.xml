@@ -41,7 +41,8 @@
     	<property name="admFreeGiftService" ref="AdmFreeGiftService" />
     	<property name="redirectBillingAPI" ref="RedirectBillingAPI" />	 
     	<property name="admAccesslogService" ref="AdmAccesslogService" /> 
-    	<property name="admFreeRecordService" ref="AdmFreeRecordService" /> 
+    	<property name="admFreeRecordService" ref="AdmFreeRecordService" />
+    	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" /> 
 		<property name="billingProductId" value="${billing.product.save.id}" />
 		<property name="billingProductName" value="${billing.product.save.name}" />
 		<property name="billingService" value="${billing.service}" />	
