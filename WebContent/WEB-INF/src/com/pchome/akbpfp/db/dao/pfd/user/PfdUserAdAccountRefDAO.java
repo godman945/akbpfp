@@ -61,27 +61,15 @@ public class PfdUserAdAccountRefDAO extends BaseDAO <PfdUserAdAccountRef, String
 		.append(", :pfpPayType)");
 		
 		Session session = getSession();
-
-        try {
-			session.createSQLQuery(sql.toString())
-					.setInteger("refId", pfdUserAdAccountRefVO.getRefId())
-					.setString("pfdCustomerInfoId",
-							pfdUserAdAccountRefVO.getPfdCustomerInfoId())
-					.setString("pfdUserId",
-							pfdUserAdAccountRefVO.getPfdUserId())
-					.setString("pfpCustomerInfoId",
-							pfdUserAdAccountRefVO.getPfpCustomerInfoId())
-					.setString("pfpUserId",
-							pfdUserAdAccountRefVO.getPfpUserId())
-					.setString("pfpPayType",
-							pfdUserAdAccountRefVO.getPfpPayType())
-					.executeUpdate();
-			session.flush();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-
+        session.createSQLQuery(sql.toString())
+        		.setInteger("refId", pfdUserAdAccountRefVO.getRefId())
+        		.setString("pfdCustomerInfoId", pfdUserAdAccountRefVO.getPfdCustomerInfoId())
+        		.setString("pfdUserId", pfdUserAdAccountRefVO.getPfdUserId())
+        		.setString("pfpCustomerInfoId", pfdUserAdAccountRefVO.getPfpCustomerInfoId())
+        		.setString("pfpUserId", pfdUserAdAccountRefVO.getPfpUserId())
+        		.setString("pfpPayType", pfdUserAdAccountRefVO.getPfpPayType())
+        		.executeUpdate();
+        session.flush();
 	}
 	
 	public Integer getNewRefId(){

@@ -222,7 +222,7 @@ public class ApplyAction extends BaseSSLAction{
 
 			userStyle = "normal";
 		}
-		
+		log.info("-------------------userStyle=" + userStyle);
 		// 從會員中心取會員資料
 		this.memberVO = memberAPI.getMemberVOData(userMemberId);
 		
