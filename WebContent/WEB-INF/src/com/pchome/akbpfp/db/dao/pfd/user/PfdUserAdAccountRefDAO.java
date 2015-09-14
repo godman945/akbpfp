@@ -52,7 +52,7 @@ public class PfdUserAdAccountRefDAO extends BaseDAO <PfdUserAdAccountRef, String
 	
 	public void saveOrUpdatePfdUserAdAccountRef(PfdUserAdAccountRefVO pfdUserAdAccountRefVO){
 		final StringBuffer sql = new StringBuffer()
-		.append("INSERT INTO pfd_user_ad_account_ref(pfd_customer_info_id,pfd_user_id,pfp_customer_info_id,pfp_user_id,pfp_pay_type) ")
+		.append("INSERT INTO pfd_user_ad_account_ref(ref_id,pfd_customer_info_id,pfd_user_id,pfp_customer_info_id,pfp_user_id,pfp_pay_type) ")
 		.append("VALUES ( :refId")
 		.append(", :pfdCustomerInfoId")
 		.append(", :pfdUserId")
