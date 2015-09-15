@@ -184,9 +184,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat)
 		var fileName = file.name;
 		if(fileName.lastIndexOf(".") >= 0){
 			fileName = fileName.substring(0,fileName.lastIndexOf("."));
-			if(fileName.length > 10){
-				fileName = fileName.substring(0,10);
-			}
 		}
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
