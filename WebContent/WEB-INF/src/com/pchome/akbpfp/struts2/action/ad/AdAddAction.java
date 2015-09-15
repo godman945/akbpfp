@@ -4,14 +4,15 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
+import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -19,7 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
 
-import sun.util.logging.resources.logging;
 
 import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.api.ControlPriceAPI;
@@ -632,9 +632,11 @@ public class AdAddAction extends BaseCookieAction{
 	    String imgWidth ="0";
 	    String imgHeight ="0";
 	    String fileSize= "0";
+	    String imgMD5 = "";
+	    String imgRepeat = "no";
 	    imgUploadPath = "";
 	    for (File file : fileupload) {
-    		File originalImgFile = file;
+	    	File originalImgFile = file;
     		String fileType = fileuploadFileName.substring(fileuploadFileName.lastIndexOf(".") + 1);
     		
     		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
@@ -643,12 +645,38 @@ public class AdAddAction extends BaseCookieAction{
     		//2015.8.11 tim  上傳非圖像檔處理
     		if(bufferedImage == null){
     		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-    		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
+    		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\" "+ "}";
     			continue;
     		}
-    		String test = Integer.toString((int) Math.round(new Double(file.length())/new Double(1024)));
+    		//String test = Integer.toString((int) Math.round(new Double(file.length())/new Double(1024)));
     		baos.flush();
     		baos.close();
+	    	
+	    	//取得檔案的MD5
+	    	MessageDigest md = MessageDigest.getInstance("MD5");
+	        FileInputStream fis = new FileInputStream(file);
+	     
+	        byte[] dataBytes = new byte[1024];
+	     
+	        int nread = 0;
+	        while ((nread = fis.read(dataBytes)) != -1) {
+	            md.update(dataBytes, 0, nread);
+	        };
+	        byte[] mdbytes = md.digest();
+	        StringBuffer sb = new StringBuffer();
+	        for (int i = 0; i < mdbytes.length; i++) {
+	            sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
+	        }
+	        fis.close();
+	        imgMD5 = sb.toString();
+    		
+	        List<PfpAdDetail> pfpadDetailList = pfpAdDetailService.getPfpAdDetailsForAdGroup(customerInfoId, adGroupSeq, "MD5", imgMD5);
+	        
+	        if(!pfpadDetailList.isEmpty()){
+	        	imgRepeat = "yes";
+	        }
+	        
+	        //建立圖片
     		log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
     		log.info(">>>2.path>>"+customerImgFile.getPath());
     		log.info(customerImgFile.exists());
@@ -683,7 +711,7 @@ public class AdAddAction extends BaseCookieAction{
             }
             commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
 
-    		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  "+    "\"fileSize\":\"" + fileSize +"\" "+ "}";
+    		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\" "+ "}";
 	    }
 
 	    return SUCCESS;
@@ -751,6 +779,7 @@ public class AdAddAction extends BaseCookieAction{
     	JSONObject seqArrayJsonObject = new JSONObject(seqArray.toString());
     	JSONArray seqArray = new JSONArray(seqArrayJsonObject.get("seqArray").toString());
     	JSONObject imgNameMap = new JSONObject(seqArrayJsonObject.get("imgNameMap").toString());
+    	JSONObject imgMD5Map = new JSONObject(seqArrayJsonObject.get("imgMD5Map").toString());
     	
     	// 1.存廣告檔
     	// 2.刪暫存圖檔
@@ -763,6 +792,7 @@ public class AdAddAction extends BaseCookieAction{
     	    for (int i = 0; i < seqArray.length(); i++) {
         		adSeq = seqArray.get(i).toString();
         		String imgName = "";
+        		String imgMD5 = "";
         		
         		imageVO = commonUtilModel.createAdImg(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
         		String adPoolSeq = "";
@@ -805,8 +835,16 @@ public class AdAddAction extends BaseCookieAction{
         		if(imgNameMap.get(adSeq + "_title") != null){
         			imgName = imgNameMap.get(adSeq + "_title").toString();	
         		}
-        		
+        		if(imgName.length() > 1024){
+        			result = "輸入的廣告名稱不可超過 1024字！";
+                    return SUCCESS;
+        		}
         		saveAdDetail(imgName,EnumAdDetail.title.name(), adPoolSeq,EnumAdDetail.define_ad_seq_title.getAdDetailName());
+        		
+        		if(imgMD5Map.get(adSeq + "_imgMD5") != null){
+        			imgMD5 = imgMD5Map.get(adSeq + "_imgMD5").toString();	
+        		}
+        		saveAdDetail(imgMD5,"MD5", adPoolSeq,null);
     	    }
     	}
 

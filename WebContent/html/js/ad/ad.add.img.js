@@ -57,7 +57,7 @@ $(document).ready(function(){
 	    	seqArray.push(jsonObj.adSeq);
 	    	//呼叫建立畫面
 	
-	    	createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq);
+	    	createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq,jsonObj.imgMD5,jsonObj.imgRepeat);
 	    }).on('fileuploadprogressall', function (e, data) {	
 	    }).on('fileuploadprocessalways', function (e, data) {
 	    	//2015.7.12  tim   由於error後不會執行fileuploaddone,所以要加unblock()
@@ -118,7 +118,7 @@ function callBlockUpload(){
 //建立圖片Dom
 var imgIndex = 0;
 var flag = false;
-function createImgObjDom(file,width, height, fileSize, adSeq) {
+function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat) {
 	
 	if(flag == false){
 		$("#fileUploadSize").text(parseInt($("#fileUploadSize").text()) + uploadFileSize);
@@ -158,12 +158,27 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 		}
 	});
 	
+	if(imgRepeat == 'yes'){
+		errorTitle = '廣告圖片已存在!';
+		errorMsg = '您所上傳的廣告圖片在分類中已存在';
+	}
+	
+	var thisImgRepeat = 'no';
+	$.each($("[name=imgMD5]"), function( index, obj ) {
+		if($(obj).val() == imgMD5){
+			errorTitle = '廣告圖片重複上傳!';
+			errorMsg = '您所上傳的廣告圖片在此次新增中已存在';
+			thisImgRepeat = 'yes';
+			return false;
+		}
+	});
+	
 	if (adSeq == "") {
 		errorTitle = '上傳失敗!';
 		errorMsg = '檔案空白';
 	}
 	
-	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"){
+	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"  && imgRepeat == "no" && thisImgRepeat == "no"){
 		var anyWindow = window.URL || window.webkitURL;
 		var objectUrl = anyWindow.createObjectURL(file);
 		var fileName = file.name;
@@ -179,12 +194,13 @@ function createImgObjDom(file,width, height, fileSize, adSeq) {
 			 '<img src="'+objectUrl+'">'+
 			 '<p class="fancy adinf" onclick="preViewImg(\''+file.name+'\',\''+width+'\',\''+height+'\');" alt="預覽">預覽</p></div>'+
 			 '<ul>'+
-			 '<li><i>名稱</i><input type="text" id="' + adSeq + '_title" name="imgName" style="width:120px;" value="' + fileName + '" maxlength="10" /></b></li>' + 
+			 '<li><i>名稱</i><input type="text" id="' + adSeq + '_title" name="imgName" style="width:120px;" value="' + fileName + '" maxlength="1024" /></b></li>' + 
 			 '<li class="'+imgSize+'"><i>尺寸</i><b>'+width+' x '+height+'</b></li>'+
 			 '<li class="'+imgFileSize+'"><i>大小</i><b>'+Math.round(file.size/1024)+'</b></li>'+
 			 '<li class="'+imgType+'"><i>格式</i><b>'+imgTypeName.toUpperCase()+'</b></li>'+
 			 '</ul>'+
-			 '<a class="addel" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+ 
+			 '<a class="addel" style="top:240px;" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+ 
+			 '<input type="hidden" id="' + adSeq + '_imgMD5" name="imgMD5" value="' + imgMD5 + '" />' + 
 			 '</li>';
 		$(".aduplodul").append(a);
 	}else{
@@ -409,10 +425,15 @@ function multipartImgUuploadSubmit(){
 	if(leavetype){
 		return false;
 	}
+	var imgMD5Map = {};
+	$.each($("[name=imgMD5]"), function( index, obj ) {
+		imgMD5Map[$(obj).attr("id")] = $(obj).val();
+	});
 	
 	var map = {
 		"seqArray" : seqOkArray,
-		"imgNameMap" : imgNameMap
+		"imgNameMap" : imgNameMap,
+		"imgMD5Map" : imgMD5Map
 	}
 	console.log(seqOkArray);
 	console.log(imgNameMap);

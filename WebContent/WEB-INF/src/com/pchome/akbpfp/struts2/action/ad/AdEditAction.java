@@ -455,6 +455,10 @@ public class AdEditAction extends BaseCookieAction{
             result = "請填寫圖片名稱！";
             return SUCCESS;
         }
+        if(imgTitle.length() > 1024){
+			result = "輸入的廣告名稱不可超過 1024字！";
+            return SUCCESS;
+		}
         
         PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
 		adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();

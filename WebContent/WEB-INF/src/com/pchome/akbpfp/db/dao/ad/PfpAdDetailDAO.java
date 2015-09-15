@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.vo.ad.PfpAdDetailVO;
+import com.pchome.enumerate.utils.EnumStatus;
 
 
 public class PfpAdDetailDAO extends BaseDAO<PfpAdDetail,String> implements IPfpAdDetailDAO{
@@ -124,4 +125,38 @@ public class PfpAdDetailDAO extends BaseDAO<PfpAdDetail,String> implements IPfpA
 		session.createQuery(userSql).setString("adDetailSeq", adDetailSeq).executeUpdate();
 		session.flush();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<PfpAdDetail> getPfpAdDetailsForAdGroup(String customerInfoId, String adGroupSeq, String adDetailId, String adDetailContent)throws Exception {
+		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
+		StringBuffer sql = new StringBuffer("from PfpAdDetail where 1=1");
+		sql.append(" and pfpAd.adStatus != :status");
+		sql.append(" and pfpAd.pfpAdGroup.adGroupSeq = :adGroupSeq ");
+		if (StringUtils.isNotEmpty(customerInfoId)) {
+			sql.append(" and pfpAd.pfpAdGroup.pfpAdAction.pfpCustomerInfo.customerInfoId = :customerInfoId");
+			sqlParams.put("customerInfoId", customerInfoId);
+		}
+		if(StringUtils.isNotBlank(adDetailId)) {
+			sql.append(" and adDetailId = :adDetailId");
+			sqlParams.put("adDetailId", adDetailId);
+		}
+		
+		if(StringUtils.isNotBlank(adDetailContent)) {
+			sql.append(" and adDetailContent like :adDetailContent");
+			sqlParams.put("adDetailContent", adDetailContent);
+		}
+		
+		// 將條件資料設定給 Query，準備 query
+		Query q = super.getSession().createQuery(sql.toString())
+								.setString("adGroupSeq", adGroupSeq)
+								.setInteger("status", EnumStatus.Close.getStatusId());
+		for (String paramName:sqlParams.keySet()) {
+        	if(!paramName.equals("sql")) {
+				q.setParameter(paramName, sqlParams.get(paramName));
+        	}
+        }
+		List<PfpAdDetail> pfpAdDetails = q.list();
+		return pfpAdDetails;
+	}
+	
 }
