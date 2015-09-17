@@ -80,7 +80,7 @@
                 			<p class="fancy adinf" onclick="preViewImg('${imgFile!}','${imgWidth!}','${imgHeight!}');" alt="預覽">預覽</p>
                 		</div>
                 		<ul>
-                			<li><i>名稱</i><input type="text" id="imgTitle" name="imgTitle" style="width:120px;" value="${imgTitle!}" maxlength="1024" /></b></li>
+                			<li><i>名稱</i><b>"${imgTitle!}"</b></li>
 							<input type="hidden" id="adDetailTitleSeq" name="adDetailTitleSeq" value="${adDetailTitleSeq!}">
                 			<li class="yes"><i>尺寸</i><b>${imgWidth!} x ${imgHeight!}</b></li>
                 			<li class="yes"><i>大小</i><b>${imgSize!}</b></li>

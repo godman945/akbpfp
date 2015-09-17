@@ -401,6 +401,9 @@ public class AdEditAction extends BaseCookieAction{
 			} else if(adDetailId != null && adDetailId.equals("title")){
 				adDetailTitleSeq = pfpAdDetails.get(i).getAdDetailSeq();
 				imgTitle = pfpAdDetails.get(i).getAdDetailContent();
+				if(imgTitle.length() > 8){
+					imgTitle = imgTitle.substring(0, 8) + "...";
+				}
 			}
 		}
 
@@ -451,14 +454,14 @@ public class AdEditAction extends BaseCookieAction{
             return SUCCESS;
         }
 		
-        if(StringUtils.isBlank(imgTitle)){
+        /*if(StringUtils.isBlank(imgTitle)){
             result = "請填寫圖片名稱！";
             return SUCCESS;
         }
         if(imgTitle.length() > 1024){
 			result = "輸入的廣告名稱不可超過 1024字！";
             return SUCCESS;
-		}
+		}*/
         
         PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
 		adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();
@@ -475,7 +478,8 @@ public class AdEditAction extends BaseCookieAction{
 			pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
 		}
 
-		if(StringUtils.isBlank(adDetailTitleSeq)){
+		//修改名稱
+		/*if(StringUtils.isBlank(adDetailTitleSeq)){
 			String seq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
 		    PfpAdDetail pfpAdDetail = new PfpAdDetail();
 		    pfpAdDetail.setAdDetailSeq(seq);
@@ -493,7 +497,7 @@ public class AdEditAction extends BaseCookieAction{
 			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailTitleSeq);
 			pfpAdDetail.setAdDetailContent(imgTitle);
 			pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
-		}
+		}*/
 		
 		//建立關鍵字
     	List<String> keyWordList = new ArrayList<String>();
