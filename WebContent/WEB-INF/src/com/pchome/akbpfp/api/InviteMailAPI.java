@@ -3,8 +3,6 @@ package com.pchome.akbpfp.api;
 import java.io.File;
 import java.io.IOException;
 
-import javax.mail.internet.InternetAddress;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,7 +25,7 @@ public class InviteMailAPI {
     	SpringEmailUtil.getInstance().setHost(mailService);
     	
     	try {
-    		SpringEmailUtil.getInstance().sendHtmlEmail(Subject, new InternetAddress(mailFrom,"PChome廣告刊登-關鍵字廣告服務").getAddress(), emails, null, mailContent);
+    		SpringEmailUtil.getInstance().sendHtmlEmail(Subject, mailFrom, emails, null, mailContent);
     	} catch (Exception e) {
             log.error(" send mail error : "+e);
         }
