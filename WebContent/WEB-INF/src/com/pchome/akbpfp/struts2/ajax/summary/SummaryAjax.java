@@ -90,6 +90,8 @@ public class SummaryAjax extends BaseCookieAction{
 							            	}
 							            	
 							            	AdData.setShowUrl(showUrl);
+										} else if("title".equals(pfpAdDetail.getAdDetailId())){
+											AdData.setTitle(pfpAdDetail.getAdDetailContent());
 										}
 									}	
 								}

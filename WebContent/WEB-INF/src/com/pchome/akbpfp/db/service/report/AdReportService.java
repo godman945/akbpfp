@@ -38,6 +38,7 @@ public class AdReportService implements IAdReportService {
 		    List<PfpAdDetail> pfpAdDetailList = null;
 		    String realUrl = null;
 		    String img = null;
+		    String title = null;
 		    String adStyle = null;
 
 			for (int i=0; i<dataList.size(); i++) {
@@ -46,6 +47,7 @@ public class AdReportService implements IAdReportService {
 				pfpAdDetailList = pfpAdDetailDAO.getPfpAdDetailByAdSeq(adReportVO.getAdSeq());
 	            realUrl = null;
 	            img = null;
+	            title = null;
 	            adStyle = null;
 				for (PfpAdDetail pfpAdDetail: pfpAdDetailList) {
                     if ("real_url".equals(pfpAdDetail.getAdDetailId())) {
@@ -53,6 +55,9 @@ public class AdReportService implements IAdReportService {
                     }
                     if ("img".equals(pfpAdDetail.getAdDetailId())) {
                         img = pfpAdDetail.getAdDetailContent();
+                    }
+                    if ("title".equals(pfpAdDetail.getAdDetailId())) {
+                    	title = pfpAdDetail.getAdDetailContent();
                     }
                     if (StringUtils.isBlank(adStyle)) {
                         adStyle = pfpAdDetail.getPfpAd().getAdStyle();
@@ -87,12 +92,24 @@ public class AdReportService implements IAdReportService {
 							is.close();
 						}
 					}
+					
+					String showUrl = realUrl;
+					showUrl = showUrl.replaceAll("http://", "");
+					showUrl = showUrl.replaceAll("https://", "");
+	            	if(showUrl.lastIndexOf(".com/") != -1){
+	            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".com/") + 4);
+	            	}
+	            	if(showUrl.lastIndexOf(".tw/") != -1){
+	            		showUrl = showUrl.substring(0, showUrl.lastIndexOf(".tw/") + 3);
+	            	}
+					
 					//組html畫面
 					htmlCode = "<div class=\"adreportdv\">";
 					htmlCode += "<span class=\"adboxdvimg\"><a href=\"" + realUrl + "\" target=\"_blank\"><img src=\"" + img + "\" /></a></span>";
 					htmlCode += "<span class=\"adboxdvinf\"><span>";
+					htmlCode += "<b>" + title + "</b><br>";
 					htmlCode += "<i>尺寸</i><b>" + imgWidth + " x " + imgHeight + "</b><br>";
-					htmlCode += ("<span>" + realUrl + "</span><br><a style=\"cursor:pointer\" onclick=\"preview('" + img + "')\">預覽</a>");
+					htmlCode += ("<span>" + showUrl + "</span><br><a style=\"cursor:pointer\" onclick=\"preview('" + img + "')\">預覽</a>");
 					htmlCode += "</span></span></div>";
 					
 					adReportVO.setContent("尺寸：" + imgWidth + " x " + imgHeight);
