@@ -416,7 +416,7 @@ function multipartImgUuploadSubmit(){
 		return false;
 	}
 	
-	var leavetype = false;
+	var imgNameMap = {};
 	$.each($("[name=imgName]"), function( index, obj ) {
 		imgNameMap[$(obj).attr("id")] = $(obj).val();
 	});
