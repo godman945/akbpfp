@@ -203,13 +203,13 @@ public class HttpUtil {
 	int statusCode = HttpStatus.SC_NOT_FOUND;
 	url = getRealUrl(url);
 	if (StringUtils.isNotEmpty(url)) {
-	    HttpPost httpget = null;
+	    HttpGet httpget = null;
 	    try {
-		httpget = new HttpPost(url);
+		httpget = new HttpGet(url);
 		
 		URL connurl = new URL(url);
         HttpURLConnection conn = (HttpURLConnection) connurl.openConnection();
-        conn.setRequestMethod("GET");
+        conn.setRequestMethod("POST");
         statusCode = conn.getResponseCode();
 		//statusCode = client.execute(httpget).getStatusLine()
 		//	.getStatusCode();
