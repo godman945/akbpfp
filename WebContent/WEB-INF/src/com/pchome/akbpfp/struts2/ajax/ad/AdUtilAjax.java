@@ -32,6 +32,8 @@ public class AdUtilAjax extends BaseCookieAction{
 	private int urlState;
 	private String result;
 	
+	private String akbPfpServer;
+	
 	public String checkAdUrl() throws Exception{
 	    	log.info("checkAdUrl");
 	    
@@ -71,9 +73,8 @@ public class AdUtilAjax extends BaseCookieAction{
 			    }
 			    url = HttpUtil.getInstance().getRealUrl(url);
 			    log.info("url = " + url);
-			    String sreviceUrl = "http://" + this.request.getServerName();
-			    log.info("sreviceUrl = " + sreviceUrl);
-			    if(sreviceUrl.equals(url)){
+			    
+			    if(akbPfpServer.equals(url)){
 			    	urlState = 200;
 			    } else {
 			    	urlState = HttpUtil.getInstance().getStatusCode(url);
@@ -130,6 +131,8 @@ public class AdUtilAjax extends BaseCookieAction{
 		return result;
 	}
 
+	public void setAkbPfpServer(String akbPfpServer) {
+		this.akbPfpServer = akbPfpServer;
+	}
 
-	
 }
