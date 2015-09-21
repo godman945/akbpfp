@@ -74,7 +74,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			    url = HttpUtil.getInstance().getRealUrl(url);
 			    log.info("url = " + url);
 			    
-			    if(akbPfpServer.equals(url)){
+			    if(akbPfpServer.equals(url) || (akbPfpServer.substring(0, akbPfpServer.length() -1).equals(url))){
 			    	urlState = 200;
 			    } else {
 			    	urlState = HttpUtil.getInstance().getStatusCode(url);
