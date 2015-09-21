@@ -203,9 +203,9 @@ public class HttpUtil {
 	int statusCode = HttpStatus.SC_NOT_FOUND;
 	url = getRealUrl(url);
 	if (StringUtils.isNotEmpty(url)) {
-	    HttpGet httpget = null;
+	    HttpPost httpget = null;
 	    try {
-		httpget = new HttpGet(url);
+		httpget = new HttpPost(url);
 		
 		URL connurl = new URL(url);
         HttpURLConnection conn = (HttpURLConnection) connurl.openConnection();
