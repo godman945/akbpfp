@@ -380,7 +380,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			int dataNumber = 1;
 			for(String s:sl){
 				if(s == null){
-					s = "";
+					s = " ";
 				}
 				if(dataNumber == 12 || dataNumber == 13){
 					content.append("\"NT$ " + s + "\"");
