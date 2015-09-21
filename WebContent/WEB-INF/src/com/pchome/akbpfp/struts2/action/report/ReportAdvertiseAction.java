@@ -379,6 +379,9 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
+				if(s == null){
+					s = "";
+				}
 				if(dataNumber == 12 || dataNumber == 13){
 					content.append("\"NT$ " + s + "\"");
 				} else if(dataNumber == 10){
