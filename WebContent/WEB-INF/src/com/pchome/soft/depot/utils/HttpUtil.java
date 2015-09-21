@@ -2,7 +2,6 @@ package com.pchome.soft.depot.utils;
 
 import java.io.IOException;
 import java.lang.Character.UnicodeBlock;
-import java.net.HttpURLConnection;
 import java.net.IDN;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -206,13 +205,8 @@ public class HttpUtil {
 	    HttpGet httpget = null;
 	    try {
 		httpget = new HttpGet(url);
-		
-		URL connurl = new URL(url);
-        HttpURLConnection conn = (HttpURLConnection) connurl.openConnection();
-        conn.setRequestMethod("POST");
-        statusCode = conn.getResponseCode();
-		//statusCode = client.execute(httpget).getStatusLine()
-		//	.getStatusCode();
+		statusCode = client.execute(httpget).getStatusLine()
+			.getStatusCode();
 	    } catch (Exception e) {
 		log.error(e.getMessage(), e);
 	    } finally {
