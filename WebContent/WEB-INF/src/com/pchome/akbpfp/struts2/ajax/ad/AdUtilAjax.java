@@ -72,6 +72,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			    url = HttpUtil.getInstance().getRealUrl(url);
 			    log.info("url = " + url);
 			    String sreviceUrl = "http://" + this.request.getServerName();
+			    log.info("sreviceUrl = " + sreviceUrl);
 			    if(sreviceUrl.equals(url)){
 			    	urlState = 200;
 			    } else {
