@@ -729,37 +729,75 @@ public class ReportExcerptAction extends BaseReportAction {
 		}
 		content.append("\n");
 
-		for(LinkedList<String> sl:tableDataList){
-			int dataNumber = 1;
-			for(String s:sl){
-				if(dataNumber == 8 || dataNumber == 9){
-					content.append("\"NT$ " + s + "\"");
-				} else if(dataNumber == 5){
-					content.append("\"" + s + "%\"");
-				} else {
-					content.append("\"" + s + "\"");	
+		if(adType.equals(EnumReport.ADTYPE_AD.getTextValue())){
+			for(LinkedList<String> sl:tableDataList){
+				int dataNumber = 1;
+				for(String s:sl){
+					if(s == null){
+						s = " ";
+					}
+					if(dataNumber == 11 || dataNumber == 12){
+						content.append("\"NT$ " + s + "\"");
+					} else if(dataNumber == 8){
+						content.append("\"" + s + "%\"");
+					} else {
+						content.append("\"" + s + "\"");	
+					}
+					content.append(",");
+					dataNumber++;
 				}
-				content.append(",");
-				dataNumber++;
+				content.append("\n");
 			}
 			content.append("\n");
-		}
-		content.append("\n");
 
-		if (tableDataTotalList!=null) {
-			int dataTotalNumber = 1;
-			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 8 || dataTotalNumber == 9){
-					content.append("\"NT$ " + s + "\"");
-				} else if(dataTotalNumber == 5){
-					content.append("\"" + s + "%\"");
-				} else {
-					content.append("\"" + s + "\"");
+			if (tableDataTotalList!=null) {
+				int dataTotalNumber = 1;
+				for(String s:tableDataTotalList){
+					if(dataTotalNumber == 11 || dataTotalNumber == 12){
+						content.append("\"NT$ " + s + "\"");
+					} else if(dataTotalNumber == 8){
+						content.append("\"" + s + "%\"");
+					} else {
+						content.append("\"" + s + "\"");
+					}
+					content.append(",");
+					dataTotalNumber++;
 				}
-				content.append(",");
-				dataTotalNumber++;
+				content.append("\n");
+			}
+		} else {
+			for(LinkedList<String> sl:tableDataList){
+				int dataNumber = 1;
+				for(String s:sl){
+					if(dataNumber == 8 || dataNumber == 9){
+						content.append("\"NT$ " + s + "\"");
+					} else if(dataNumber == 5){
+						content.append("\"" + s + "%\"");
+					} else {
+						content.append("\"" + s + "\"");	
+					}
+					content.append(",");
+					dataNumber++;
+				}
+				content.append("\n");
 			}
 			content.append("\n");
+
+			if (tableDataTotalList!=null) {
+				int dataTotalNumber = 1;
+				for(String s:tableDataTotalList){
+					if(dataTotalNumber == 8 || dataTotalNumber == 9){
+						content.append("\"NT$ " + s + "\"");
+					} else if(dataTotalNumber == 5){
+						content.append("\"" + s + "%\"");
+					} else {
+						content.append("\"" + s + "\"");
+					}
+					content.append(",");
+					dataTotalNumber++;
+				}
+				content.append("\n");
+			}
 		}
 
 		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > 0) {
@@ -1450,8 +1488,11 @@ public class ReportExcerptAction extends BaseReportAction {
 				alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus)) + "，分類" + getAdStatusMap().get(Integer.toString(adGroupStatus)) + "，廣告明細" + getAdStatusMap().get(Integer.toString(adStatus));
 
 			}
-
-			tableInDataList.addLast("<img src=\"./html/img/" + icon + "\" alt=\"" + alter + "\" title=\"" + alter + "\">");
+			if(downloadFlag.equals("yes")){
+				tableInDataList.addLast(alter);
+			} else {
+				tableInDataList.addLast("<img src=\"./html/img/" + icon + "\" alt=\"" + alter + "\" title=\"" + alter + "\">");
+			}
 			tableInDataList.addLast(adDevice);
 
 			if(!tableHeadShowList.isEmpty()){
