@@ -86,7 +86,7 @@
 		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
 		<center style="margin-top:10px;">
             <input type="button" id="cancel" value="取 消">&nbsp; 
-            <#if adStatus != 6>
+            <#if adStatus != 6 && adStatus != 10 && adGroupStatus != 10 && adActionStatus != 10>
             <input type="button" id="save" value="送出審核">
             </#if>
 		</center>

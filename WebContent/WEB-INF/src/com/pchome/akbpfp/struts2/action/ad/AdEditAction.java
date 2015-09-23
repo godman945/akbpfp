@@ -98,7 +98,10 @@ public class AdEditAction extends BaseCookieAction{
 	private String adHiddenType;	//已建立的分類關鍵字欄位隱藏設定
 	private String adDetailTitleSeq;
 	private String imgTitle;
-
+	
+	private int adGroupStatus;
+	private int adActionStatus;
+	
 	public String AdAdEdit() throws Exception {
 		log.info("AdAdEdit => adSeq = " + adSeq);
 
@@ -108,6 +111,8 @@ public class AdEditAction extends BaseCookieAction{
 		adGroupName  = pfpAd.getPfpAdGroup().getAdGroupName();
 		adStyle = pfpAd.getAdStyle();
 		adStatus = pfpAd.getAdStatus();
+		adGroupStatus = pfpAd.getPfpAdGroup().getAdGroupStatus();
+		adActionStatus = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
 		adVerifyRejectReason = "";
 
 		// ad Status
@@ -346,6 +351,8 @@ public class AdEditAction extends BaseCookieAction{
 		adStyle = pfpAd.getAdStyle();
 		adStatus = pfpAd.getAdStatus();
 		adVerifyRejectReason = "";
+		adGroupStatus = pfpAd.getPfpAdGroup().getAdGroupStatus();
+		adActionStatus = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
 
 		// ad Status
 		for(EnumStatus status:EnumStatus.values()){
@@ -1023,6 +1030,22 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setImgTitle(String imgTitle) {
 		this.imgTitle = imgTitle;
+	}
+
+	public int getAdGroupStatus() {
+		return adGroupStatus;
+	}
+
+	public void setAdGroupStatus(int adGroupStatus) {
+		this.adGroupStatus = adGroupStatus;
+	}
+
+	public int getAdActionStatus() {
+		return adActionStatus;
+	}
+
+	public void setAdActionStatus(int adActionStatus) {
+		this.adActionStatus = adActionStatus;
 	}
 
 }
