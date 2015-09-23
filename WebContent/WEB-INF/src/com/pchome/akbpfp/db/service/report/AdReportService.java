@@ -107,9 +107,7 @@ public class AdReportService implements IAdReportService {
 					htmlCode = "<div class=\"adreportdv\">";
 					htmlCode += "<span class=\"adboxdvimg\"><a href=\"" + realUrl + "\" target=\"_blank\"><img src=\"" + img + "\" /></a></span>";
 					htmlCode += "<span class=\"adboxdvinf\"><span>";
-					if(title == null){
-						htmlCode += "<b></b><br>";
-					} else {
+					if(title != null){
 						htmlCode += "<b>" + title + "</b><br>";
 					}
 					htmlCode += "<i>尺寸</i><b>" + imgWidth + " x " + imgHeight + "</b><br>";
