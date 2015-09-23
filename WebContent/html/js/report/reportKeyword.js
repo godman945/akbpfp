@@ -153,8 +153,8 @@ function ready(){
     	    5 : { sorter: 'fancyNumber' },
             6 : { sorter: 'fancyNumber' },
             7 : { sorter: 'fancyNumber' },
-            8 : { sorter: 'integer' },
-            9 : { sorter: 'integer' },
+            8 : { sorter: 'rangesort' },
+            9 : { sorter: 'rangesort' },
             10 : { sorter: 'fancyNumber' }
         }
     });

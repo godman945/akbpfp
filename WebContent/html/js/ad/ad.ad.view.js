@@ -128,11 +128,11 @@ function tableSorter(){
 			3 : { sorter: 'fancyNumber' },
 			4 : { sorter: 'fancyNumber' },
 			5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' },
+			6 : { sorter: 'rangesort' },
+			7 : { sorter: 'rangesort' },
+			8:{sorter:false},
 			9:{sorter:false},
-			10:{sorter:false},
-			11:{sorter:false}
+			10:{sorter:false}
 			}
 	});
 }
