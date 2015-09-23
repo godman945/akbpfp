@@ -16,7 +16,7 @@ function tableSorter(){
 		headers:{			
 			4 : { sorter: 'fancyNumber' },
 			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: false }
+			9 : { sorter: false }
 		}
 		,
 		textExtraction: function (node) { 

@@ -9,6 +9,7 @@
 <thead>
   <tr>
 	<th style="width:10%" height="35" >帳戶編號</th>
+	<th style="width:10%">會員帳號</th>
     <th style="width:10%">帳戶名稱</th>
     <th style="width:10%">帳戶狀態</th>
     <th style="width:10%">付款方式</th>
@@ -23,6 +24,7 @@
 	<#list vos as vo>
 	  <tr>
 		<th height="35">${vo.customerInfoId!}</th>
+		<th style="width:10%">${vo.memberId!}</th>
 	    <th style="width:10%">${vo.customerInfoName!}</th>
 	    <th style="width:10%">${vo.customerInfoStatus!}</th>
 	    <th style="width:10%">${vo.customerInfoPayType!}</th>
