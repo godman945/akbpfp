@@ -44,7 +44,7 @@ public class BoardAjax extends BaseCookieAction{
 												super.getCustomer_info_id(), 
 												today);	
 		
-		//如果廣告已關閉則不顯示公告
+		//如果廣告已關閉則刪除公告
 		List<PfpBoard> chooseBoardList = new ArrayList<PfpBoard>();
 		for(PfpBoard pfpBoard:boardList){
 			String adSeq = pfpBoard.getDeleteId();
@@ -59,6 +59,8 @@ public class BoardAjax extends BaseCookieAction{
 				
 				if(adStatus != 10 && adGroupStatus != 10 && adActionStatus != 10){
 					chooseBoardList.add(pfpBoard);
+				} else {
+					pfpBoardService.delete(pfpBoard);
 				}	
 			} else {
 				chooseBoardList.add(pfpBoard);
@@ -77,6 +79,30 @@ public class BoardAjax extends BaseCookieAction{
 		List<PfpBoard> boards = pfpBoardService.findLatestBoard(boardType, 
 																super.getCustomer_info_id(), 
 																dateStr);
+		
+		//如果廣告已關閉則刪除公告
+		List<PfpBoard> chooseBoardList = new ArrayList<PfpBoard>();
+		for(PfpBoard pfpBoard:boards){
+			String adSeq = pfpBoard.getDeleteId();
+			if(adSeq != null){
+				int adStatus = 10;
+				int adGroupStatus = 10;
+				int adActionStatus = 10;
+				PfpAd pfpad = pfpAdService.getPfpAdBySeq(adSeq);
+				adStatus = pfpad.getAdStatus();
+				adGroupStatus = pfpad.getPfpAdGroup().getAdGroupStatus();
+				adActionStatus = pfpad.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
+				
+				if(adStatus != 10 && adGroupStatus != 10 && adActionStatus != 10){
+					chooseBoardList.add(pfpBoard);
+				} else {
+					pfpBoardService.delete(pfpBoard);
+				}
+			} else {
+				chooseBoardList.add(pfpBoard);
+			}
+		}
+		boards = chooseBoardList;
 		
 		int maxCount = 0;
 		
