@@ -1,7 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <@s.set var="uri" value="%{#request['javax.servlet.forward.request_uri']}" />
 <!-- submenu start -->
-<#if addFlag?exists && addFlag=="y">
+
 <div class="submn">
 	<@s.if test="%{#uri.indexOf('/adActionAdd') > -1 ||
 				   #uri.indexOf('/adActionEdit') > -1 ||
@@ -10,7 +10,8 @@
 				   #uri.indexOf('/adAdAdd') > -1 ||
 				   #uri.indexOf('/adAdEdit') > -1 ||
 				   #uri.indexOf('/adKeywordAdd') > -1 ||
-				   #uri.indexOf('/adAddFinish') > -1}">
+				   #uri.indexOf('/adAddFinish') > -1 ||
+				   #uri.indexOf('/adAddImg') > -1}">
         <a href="<@s.url value="/" />adActionAdd.html"><b>新增廣告</b></a>
     </@s.if>
     <@s.else>
@@ -19,7 +20,7 @@
 </div>
 
 
-</#if>
+
 
 
 <!-- <div class="submn">
