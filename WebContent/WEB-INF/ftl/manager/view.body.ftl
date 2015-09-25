@@ -28,10 +28,10 @@
 	    <th style="width:10%">${vo.customerInfoName!}</th>
 	    <th style="width:10%">${vo.customerInfoStatus!}</th>
 	    <th style="width:10%">${vo.customerInfoPayType!}</th>
-	    <th style="width:10%"><#if vo.customerInfoRemain??>${vo.customerInfoRemain?string('#,###,###')!}</#if></th>
+	    <th style="width:10%;text-align:right;padding: 0 5px 0 0;"><#if vo.customerInfoRemain??>NT$ ${vo.customerInfoRemain?string('#,###,###')!}</#if></th>
 	    <th style="width:10%"><#if vo.managerMemberId?? && vo.managerMemberId != ''>${vo.managerMemberId!} ( ${vo.managerName!} )</#if></th>
 	    <th style="width:10%">${vo.pfdCustomerInfoName!}</th>
-	    <th style="width:10%"><#if vo.oneWeekAdCost??>${vo.oneWeekAdCost?string('#,###,###')!}</#if></th>
+	    <th style="width:10%;text-align:right;padding: 0 5px 0 0;"><#if vo.oneWeekAdCost??>NT$ ${vo.oneWeekAdCost?string('#,###,###')!}</#if></th>
 	    <th style="width:10%"><input type="button" value="切換帳戶" onClick="changeAccount('${vo.customerInfoId!}');" /></th>
 	  </tr>	
   	</#list>
