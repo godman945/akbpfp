@@ -20,8 +20,12 @@
 		<th width="50"><a href="#" onclick="checkAll()">全選</a></th>
 		<th height="35">分類</th>
 		<th>狀態</th>
-		<th>搜尋廣告出價</th>
-		<th>聯播廣告出價</th>
+		<#if adType == '0' || adType == '1' >
+		<th style="width:12%">搜尋廣告出價</th>
+		</#if>
+		<#if adType == '0' || adType == '2' >
+		<th style="width:12%">內容廣告出價</th>
+		</#if>
 		<th style="width:8%">曝光數</th>
 		<th style="width:8%">點選率</th>
 		<th style="width:8%">點選次數</th>	
@@ -51,23 +55,27 @@
 				</#if>		        	
 		        </td>
 		        <td class="td03">${vo.adGroupStatusDesc!}</td>
+		        <#if adType == '0' || adType == '1' >
 		        <td>
-		        <div class="notsbg">
-		        <#if vo.adGroupSearchPriceType == adSearchPriceType[0].typeId >
-			        ${adSearchPriceType[0].desc!}
-			        <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="在選擇系統建議出價時刻，以此分類中的關鍵字，最高的排名價格設為出價金額範&#13;例：您在2013年9月1日設定「系統建議出價」，你設定的關鍵字「電腦」廣告排名較高出價為$5，系統即為您設定出價為$5">
-				<#else>
-					NT$ ${vo.adGroupSearchPrice!}<br/>
-			        ${adSearchPriceType[1].desc!}			        
-			        <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="您的出價已套用在此分類的每組關鍵字中">       	
-				</#if>
-				<br><input type="button" value="修改" onClick="modifySearchPrice('${vo.adGroupSeq!}','${vo.adGroupSearchPriceType!}')" />
-                </div>
+			        <div class="notsbg">
+			        <#if vo.adGroupSearchPriceType == adSearchPriceType[0].typeId >
+				        ${adSearchPriceType[0].desc!}
+				        <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="在選擇系統建議出價時刻，以此分類中的關鍵字，最高的排名價格設為出價金額範&#13;例：您在2013年9月1日設定「系統建議出價」，你設定的關鍵字「電腦」廣告排名較高出價為$5，系統即為您設定出價為$5">
+					<#else>
+						NT$ ${vo.adGroupSearchPrice!}<br/>
+				        ${adSearchPriceType[1].desc!}			        
+				        <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="您的出價已套用在此分類的每組關鍵字中">       	
+					</#if>
+					<br><input type="button" value="修改" onClick="modifySearchPrice('${vo.adGroupSeq!}','${vo.adGroupSearchPriceType!}')" />
+	                </div>
 				</td>
+				</#if>
+				<#if adType == '0' || adType == '2' >
 		        <td>
-		        NT$ ${vo.adGroupChannelPrice?string('#,###')!}
-		        <br>預估播出率：${vo.adAsideRate?string('#.##')!}%<br><input type="button" value="修改" onClick="modifyChannelPrice('${vo.adGroupSeq!}','${vo.adGroupChannelPrice!}')" />
+			        NT$ ${vo.adGroupChannelPrice?string('#,###')!}
+			        <br>預估播出率：${vo.adAsideRate?string('#.##')!}%<br><input type="button" value="修改" onClick="modifyChannelPrice('${vo.adGroupSeq!}','${vo.adGroupChannelPrice!}')" />
 		        </td>
+		        </#if>
 				<td class="td01">${vo.adPv?string('#,###')!}</td>				
 				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<td class="td01">${vo.adClk?string('#,###')!}</td>
@@ -78,7 +86,9 @@
 				<td class="td02">
 				<#if vo.adGroupStatus != 9 >
 					<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}">製作新廣告</a><br>
+					<#if adType != '2'>
 					<a href="adKeywordAdd.html?adGroupSeq=${vo.adGroupSeq!}">新增關鍵字</a><br>
+					</#if>
 				</#if>				
 					<a href="adGroupEdit.html?backPage=adAdAdd&adGroupSeq=${vo.adGroupSeq!}">修改</a>
 				<#if vo.adGroupStatus == 0>
@@ -96,7 +106,11 @@
 	</#if>
 </tbody>
 	<tr class="tbg">
+		<#if adType == '0'>
 		<td colspan="5">總計：${totalSize!}筆</td>
+		<#else>
+		<td colspan="4">總計：${totalSize!}筆</td>
+		</#if>
 		<td class="td01">${totalPv?string('#,###')!}</td>
 		<td class="td01">${totalClkRate?string('#.##')!}%</td>
 		<td class="td01">${totalClk?string('#,###')!}</td>			

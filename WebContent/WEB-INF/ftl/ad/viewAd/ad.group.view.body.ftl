@@ -63,3 +63,4 @@
  
 <input type="hidden" id="adActionSeq" name="adActionSeq" value="${adAction.adActionSeq!}" />
 <input type="hidden" id="groupMaxPrice" name="groupMaxPrice" value="${groupMaxPrice!}" />
+<input type="hidden" id="adType" name="adType" value="${adAction.adType!}" />

@@ -24,7 +24,7 @@
 	        <h4>分類出價<span class="t_s01">(分類出價是指：您願意支付每次點擊廣告的最高金額！最低出價NT$3)</span> </h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 	        	<tbody>
-	        		<tr>
+	        		<tr id="searchTr" >
 	                	<th height="35">
 							<span class="t_s02">* </span>搜尋廣告出價 <a style="cursor:pointer;" onclick="opennots(1)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
 							<div id="shownotes1" style="visibility: hidden;" class="adnoticepop">
@@ -42,17 +42,17 @@
 							<span class="t_s01"><br />(二種出價方式都可在廣告新增完成後，在檢視關鍵字列表頁，可個別修改關鍵字的出價金額)</span>
 	                    </td>
 	                </tr>
-	                <tr>
+	                <tr id="channelTr" >
 	                	<th height="35">
-							<span class="t_s02">* </span>聯播廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
+							<span class="t_s02">* </span>內容廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
 							<div id="shownotes2" style="visibility: hidden;" class="adnoticepop">
-								<h4>聯播廣告出價 說明</h4>
+								<h4>內容廣告出價 說明</h4>
 								<div class="adpopcont">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
 								<a onclick="closenots(2)" style="cursor:pointer;" class="adpopclose">關閉</a>
 							</div>
 	                	</th>
 	                    <td>
-	                    	<b>聯播廣告出價金額NT$<input type="text" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${adGroupChannelPrice!}" maxlength="6">，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span>，系統建議出價NT$ ${sysChannelPrice!} </b>
+	                    	<b>內容廣告出價金額NT$<input type="text" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${adGroupChannelPrice!}" maxlength="6">，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span>，系統建議出價NT$ ${sysChannelPrice!} </b>
 	                    	<div class="exp">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
 	                    </td>
 	                </tr>
@@ -67,6 +67,8 @@
 		<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroupSeq!}">
 		<input type="hidden" id="adActionMax" name="adActionMax" value="${adActionMax!}">
 		<input type="hidden" id="backPage" name="backPage" value="${backPage!}">
+		<input type="hidden" id="showSearchPrice" name ="showSearchPrice" value="${showSearchPrice!}" />
+	    <input type="hidden" id="showChannelPrice" name ="showChannelPrice" value="${showChannelPrice!}" />
     </form>
 </div>
 <input type="hidden" id="messageId" value="${message!}">

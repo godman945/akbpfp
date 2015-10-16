@@ -28,6 +28,16 @@
 	    },
 	    '');
 
+	var showSearchPrice = $("#showSearchPrice").val();
+	if(showSearchPrice == "no"){
+		$("#searchTr").hide();
+	}
+	
+	var showChannelPrice = $("#showChannelPrice").val();
+	if(showChannelPrice == "no"){
+		$("#channelTr").hide();
+	}
+	
 	// validate field
 	$("#modifyForm").validate({
 		rules: {

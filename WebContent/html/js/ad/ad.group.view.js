@@ -13,6 +13,7 @@ function findTableView(){
 	var pageSize = $("#pageSize").val();
 	var keyword = $("#keyword").val();
 	var adActionSeq = $("#adActionSeq").val();
+	var adType = $("#adType").val();
 	$.ajax({
 		url: "adGroupViewTable.html",
 		data:{
@@ -23,7 +24,8 @@ function findTableView(){
 			 "keyword": keyword,
 			 "pageNo": pageNo,
 			 "pageSize": pageSize,
-			 "groupMaxPrice" : $("#groupMaxPrice").val()
+			 "groupMaxPrice" : $("#groupMaxPrice").val(),
+			 "adType" : adType
 		},
 		type:"post",
 		dataType:"html",
@@ -124,17 +126,32 @@ function modifySearchPrice(seq,type){
 }
 
 function tableSorter(){
+	var adType = $("#adType").val();
 	
-	$("#tableView").tablesorter({
-		headers:{
-			0:{sorter:false},
-			5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'rangesort' },
-			9 : { sorter: 'rangesort' },
-			11:{sorter:false}
+	if(adType == "0"){
+		$("#tableView").tablesorter({
+			headers:{
+				0:{sorter:false},
+				5 : { sorter: 'fancyNumber' },
+				6 : { sorter: 'fancyNumber' },
+				7 : { sorter: 'fancyNumber' },
+				8 : { sorter: 'rangesort' },
+				9 : { sorter: 'rangesort' },
+				11:{sorter:false}
+				}
+		});
+	} else {
+		$("#tableView").tablesorter({
+			headers:{
+				0:{sorter:false},
+				4 : { sorter: 'fancyNumber' },
+				5 : { sorter: 'fancyNumber' },
+				6 : { sorter: 'fancyNumber' },
+				7 : { sorter: 'rangesort' },
+				8 : { sorter: 'rangesort' },
+				10:{sorter:false}
 			}
-	});
+		});
+	}
 }
 	

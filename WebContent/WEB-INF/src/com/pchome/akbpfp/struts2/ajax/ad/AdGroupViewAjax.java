@@ -2,6 +2,8 @@ package com.pchome.akbpfp.struts2.ajax.ad;
 
 import java.util.List;
 
+import com.pchome.akbpfp.db.pojo.PfpAdAction;
+import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdGroupViewVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -39,6 +41,8 @@ public class AdGroupViewAjax extends BaseCookieAction{
 	private int totalCost = 0;
 	private int totalInvalidClk = 0;
 	private String groupMaxPrice;
+	private String adType;						//廣告類別
+	
 	public String adGroupViewTableAjax() throws Exception{
 		int type = Integer.parseInt(searchType);
 		//List<PfpAdGroupViewVO> allAdGroupViews = null;
@@ -111,7 +115,7 @@ public class AdGroupViewAjax extends BaseCookieAction{
 	public void setPfpAdGroupService(IPfpAdGroupService pfpAdGroupService) {
 		this.pfpAdGroupService = pfpAdGroupService;
 	}
-	
+
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
@@ -202,6 +206,14 @@ public class AdGroupViewAjax extends BaseCookieAction{
 
 	public void setGroupMaxPrice(String groupMaxPrice) {
 	    this.groupMaxPrice = groupMaxPrice;
+	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
 	}
 	
 }

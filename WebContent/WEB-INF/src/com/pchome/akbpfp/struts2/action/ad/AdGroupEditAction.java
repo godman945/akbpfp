@@ -6,6 +6,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
+import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
@@ -13,6 +14,7 @@ import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.rmi.accesslog.EnumAccesslogAction;
 
@@ -45,12 +47,18 @@ public class AdGroupEditAction extends BaseCookieAction{
 	private PfpAdGroupService pfpAdGroupService;
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private AdmAccesslogService admAccesslogService;
+	
+	private String showSearchPrice;			//顯示搜尋廣告設定
+	private String showChannelPrice;		//顯示內容廣告設定
 
 	public String adGroupEdit() throws Exception {
 		log.info("AdGroupEdit => adActionSeq = " + adActionSeq);
 		log.info("Referer = " + request.getHeader("Referer"));
 		String referer = request.getHeader("Referer");
 
+		showSearchPrice = "yes";
+		showChannelPrice = "yes";
+		
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
@@ -72,6 +80,14 @@ public class AdGroupEditAction extends BaseCookieAction{
 		backPage = (referer != null && StringUtils.isNotEmpty(referer))?referer:"adGroupView.html?adActionSeq=" + adActionSeq;
 		AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(Float.parseFloat(adGroupChannelPrice)));
 
+		PfpAdAction pfpAdAction = pfpAdGroup.getPfpAdAction();
+		
+		if(EnumAdType.AD_CHANNEL.getType() == pfpAdAction.getAdType()){			//隱藏搜尋廣告設定
+			showSearchPrice = "no";
+		} else if(EnumAdType.AD_SEARCH.getType() == pfpAdAction.getAdType()){	//隱藏內容廣告設定
+			showChannelPrice = "no";
+		}
+		
 		return SUCCESS;
 	}
 
@@ -303,6 +319,14 @@ public class AdGroupEditAction extends BaseCookieAction{
 
 	public void setSysPriceAdPoolSeq(String sysPriceAdPoolSeq) {
 		this.sysPriceAdPoolSeq = sysPriceAdPoolSeq;
+	}
+
+	public String getShowSearchPrice() {
+		return showSearchPrice;
+	}
+
+	public String getShowChannelPrice() {
+		return showChannelPrice;
 	}
 
 }

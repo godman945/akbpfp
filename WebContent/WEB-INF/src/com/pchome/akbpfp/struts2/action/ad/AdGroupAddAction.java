@@ -15,6 +15,7 @@ import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
@@ -38,10 +39,13 @@ public class AdGroupAddAction extends BaseCookieAction{
 	private String defSearchPrice = "3";	//搜尋廣告系統預設出價
 	private String adGroupSearchPrice;		//搜尋廣告出價
 	private String adGroupSearchPriceType;	//搜尋廣告出價類別。1:系統建議、2:系統預設
-	private String sysChannelPrice = "3";	//聯播廣告系統建議出價
-	private String adGroupChannelPrice;		//聯播廣告出價
+	private String sysChannelPrice = "3";	//內容廣告系統建議出價
+	private String adGroupChannelPrice;		//內容廣告出價
 	private String AdAsideRate;				//播放率
 	private String backPage;				// 取消的返回頁面
+	
+	private String showSearchPrice;			//顯示搜尋廣告設定
+	private String showChannelPrice;		//顯示內容廣告設定
 	
 	public void setAdActionMax(int adActionMax) {
 		this.adActionMax = adActionMax;
@@ -80,6 +84,9 @@ public class AdGroupAddAction extends BaseCookieAction{
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String tmpSeq = "";		// 回  adActionAdd.html 讀取資料用的 adActionSeq
 		adGroupSearchPriceType = "2";
+		
+		showSearchPrice = "yes";
+		showChannelPrice = "yes";
 
 		// 由 adAddAction 取消回來時，會帶 adGroupSeq 的參數，但是不會帶 adActionSeq
 		if(StringUtils.isNotBlank(adGroupSeq)) {
@@ -95,6 +102,15 @@ public class AdGroupAddAction extends BaseCookieAction{
 			adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
 			defSearchPrice = adGroupSearchPrice;
 			sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
+			
+			PfpAdAction pfpAdAction = pfpAdGroup.getPfpAdAction();
+			
+			if(EnumAdType.AD_CHANNEL.getType() == pfpAdAction.getAdType()){			//隱藏搜尋廣告設定
+				showSearchPrice = "no";
+			} else if(EnumAdType.AD_SEARCH.getType() == pfpAdAction.getAdType()){	//隱藏內容廣告設定
+				showChannelPrice = "no";
+			}
+			
 		}
 		// 由 adActionAdd 下一步時，會帶 adActionSeq 的參數，但是不會帶 adGroupSeq
 		else if(StringUtils.isNotBlank(adActionSeq)) {
@@ -109,6 +125,13 @@ public class AdGroupAddAction extends BaseCookieAction{
 			adGroupSearchPrice = defSearchPrice;		//一開始沒有關鍵字，所以預設為3元，等廣告建完有關鍵字，再去呼叫api更新
 			sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
 			adGroupChannelPrice = "3";
+			
+			if(EnumAdType.AD_CHANNEL.getType() == pfpAdAction.getAdType()){			//隱藏搜尋廣告設定
+				showSearchPrice = "no";
+			} else if(EnumAdType.AD_SEARCH.getType() == pfpAdAction.getAdType()){	//隱藏內容廣告設定
+				showChannelPrice = "no";
+			}
+			
 		}
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
 		if(!customerInfoId.equals(adCustomerInfoId)) {
@@ -352,6 +375,14 @@ public class AdGroupAddAction extends BaseCookieAction{
 
 	public void setSysPriceAdPoolSeq(String sysPriceAdPoolSeq) {
 		this.sysPriceAdPoolSeq = sysPriceAdPoolSeq;
+	}
+
+	public String getShowSearchPrice() {
+		return showSearchPrice;
+	}
+
+	public String getShowChannelPrice() {
+		return showChannelPrice;
 	}
 
 }

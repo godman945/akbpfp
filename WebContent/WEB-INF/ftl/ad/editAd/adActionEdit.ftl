@@ -26,7 +26,7 @@
                     <tr>
                         <th height="35"><span class="t_s02">* </span>廣告播放類型</th>
                         <td>
-                        	<select id="adType" name="adType">
+                        	<select id="adType" name="adType" disabled>
 		                    	<#list adTypeList as data>
 		                    		<#if '${data.type?c!}' == adType >
 		                    		<option value="${data.type!}" selected >${data.typeName!}(${data.explanation!})</option>
@@ -40,7 +40,7 @@
                     <tr>
                         <th height="35"><span class="t_s02">* </span>廣告播放裝置</th>
                         <td>
-                        	<select id="adDevice" name="adDevice">
+                        	<select id="adDevice" name="adDevice" disabled>
 		                    	<#list adDeviceList as data2>
 		                    		<#if '${data2.devType?c!}' == adDevice >
 		                    		<option value="${data2.devType!}" selected >${data2.devTypeName!}</option>
