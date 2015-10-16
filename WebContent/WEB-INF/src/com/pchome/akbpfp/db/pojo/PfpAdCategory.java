@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,46 +19,46 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_ad_category", catalog = "akb")
 public class PfpAdCategory implements java.io.Serializable {
 
-    private Integer seq;
-    private String name;
-    private Date createDate;
+	private Integer seq;
+	private String name;
+	private Date createDate;
 
-    public PfpAdCategory() {
-    }
+	public PfpAdCategory() {
+	}
 
-    public PfpAdCategory(String name, Date createDate) {
-	this.name = name;
-	this.createDate = createDate;
-    }
+	public PfpAdCategory(String name, Date createDate) {
+		this.name = name;
+		this.createDate = createDate;
+	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "seq", unique = true, nullable = false)
-    public Integer getSeq() {
-	return this.seq;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "seq", unique = true, nullable = false)
+	public Integer getSeq() {
+		return this.seq;
+	}
 
-    public void setSeq(Integer seq) {
-	this.seq = seq;
-    }
+	public void setSeq(Integer seq) {
+		this.seq = seq;
+	}
 
-    @Column(name = "name", nullable = false, length = 20)
-    public String getName() {
-	return this.name;
-    }
+	@Column(name = "name", nullable = false, length = 20)
+	public String getName() {
+		return this.name;
+	}
 
-    public void setName(String name) {
-	this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date", nullable = false, length = 19)
-    public Date getCreateDate() {
-	return this.createDate;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date", nullable = false, length = 19)
+	public Date getCreateDate() {
+		return this.createDate;
+	}
 
-    public void setCreateDate(Date createDate) {
-	this.createDate = createDate;
-    }
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
 }

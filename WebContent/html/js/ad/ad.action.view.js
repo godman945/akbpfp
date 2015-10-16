@@ -147,14 +147,14 @@ function tableSorter(){
 	$("#tableView").tablesorter({
 		headers:{
 			0 : { sorter: false},
-			3 : { sorter: 'shortDate' },
-			4 : { sorter: 'inputs' },
-			5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'fancyNumber' },
+			5 : { sorter: 'shortDate' },
+			6 : { sorter: 'inputs' },
 			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'rangesort' },
-			9 : { sorter: 'rangesort' },
-			10: { sorter: false}
+			8 : { sorter: 'fancyNumber' },
+			9 : { sorter: 'fancyNumber' },
+			10 : { sorter: 'rangesort' },
+			11 : { sorter: 'rangesort' },
+			12: { sorter: false}
 			}
 	});
 }

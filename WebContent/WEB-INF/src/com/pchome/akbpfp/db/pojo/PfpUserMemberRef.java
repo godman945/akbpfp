@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -19,37 +19,37 @@ import javax.persistence.Table;
 @Table(name = "pfp_user_member_ref", catalog = "akb")
 public class PfpUserMemberRef implements java.io.Serializable {
 
-    private PfpUserMemberRefId id;
-    private PfpUser pfpUser;
+	private PfpUserMemberRefId id;
+	private PfpUser pfpUser;
 
-    public PfpUserMemberRef() {
-    }
+	public PfpUserMemberRef() {
+	}
 
-    public PfpUserMemberRef(PfpUserMemberRefId id, PfpUser pfpUser) {
-	this.id = id;
-	this.pfpUser = pfpUser;
-    }
+	public PfpUserMemberRef(PfpUserMemberRefId id, PfpUser pfpUser) {
+		this.id = id;
+		this.pfpUser = pfpUser;
+	}
 
-    @EmbeddedId
-    @AttributeOverrides({
-	    @AttributeOverride(name = "userId", column = @Column(name = "user_id", nullable = false, length = 20)),
-	    @AttributeOverride(name = "memberId", column = @Column(name = "member_id", nullable = false, length = 20)) })
-    public PfpUserMemberRefId getId() {
-	return this.id;
-    }
+	@EmbeddedId
+	@AttributeOverrides({
+			@AttributeOverride(name = "userId", column = @Column(name = "user_id", nullable = false, length = 20)),
+			@AttributeOverride(name = "memberId", column = @Column(name = "member_id", nullable = false, length = 20)) })
+	public PfpUserMemberRefId getId() {
+		return this.id;
+	}
 
-    public void setId(PfpUserMemberRefId id) {
-	this.id = id;
-    }
+	public void setId(PfpUserMemberRefId id) {
+		this.id = id;
+	}
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
-    public PfpUser getPfpUser() {
-	return this.pfpUser;
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
+	public PfpUser getPfpUser() {
+		return this.pfpUser;
+	}
 
-    public void setPfpUser(PfpUser pfpUser) {
-	this.pfpUser = pfpUser;
-    }
+	public void setPfpUser(PfpUser pfpUser) {
+		this.pfpUser = pfpUser;
+	}
 
 }

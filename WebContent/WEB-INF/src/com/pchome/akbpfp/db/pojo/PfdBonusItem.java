@@ -1,17 +1,13 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,115 +19,70 @@ import javax.persistence.TemporalType;
 @Table(name = "pfd_bonus_item", catalog = "akb")
 public class PfdBonusItem implements java.io.Serializable {
 
-    private Integer bonusItemId;
-    private String bonusName;
-    private String bonusType;
-    private Date createDate;
-    private Date updateDate;
-    private Set<PfdBonusSet> pfdBonusSets = new HashSet<PfdBonusSet>(0);
-    private Set<PfdBonusDetail> pfdBonusDetails = new HashSet<PfdBonusDetail>(0);
-    private Set<PfdFixedBonusDetail> pfdFixedBonusDetails = new HashSet<PfdFixedBonusDetail>(
-	    0);
+	private Integer bonusItemId;
+	private String bonusName;
+	private String bonusType;
+	private Date createDate;
+	private Date updateDate;
 
-    public PfdBonusItem() {
-    }
+	public PfdBonusItem() {
+	}
 
-    public PfdBonusItem(String bonusName, String bonusType, Date createDate,
-	    Date updateDate) {
-	this.bonusName = bonusName;
-	this.bonusType = bonusType;
-	this.createDate = createDate;
-	this.updateDate = updateDate;
-    }
+	public PfdBonusItem(String bonusName, String bonusType, Date createDate,
+			Date updateDate) {
+		this.bonusName = bonusName;
+		this.bonusType = bonusType;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+	}
 
-    public PfdBonusItem(String bonusName, String bonusType, Date createDate,
-	    Date updateDate, Set<PfdBonusSet> pfdBonusSets,
-	    Set<PfdBonusDetail> pfdBonusDetails,
-	    Set<PfdFixedBonusDetail> pfdFixedBonusDetails) {
-	this.bonusName = bonusName;
-	this.bonusType = bonusType;
-	this.createDate = createDate;
-	this.updateDate = updateDate;
-	this.pfdBonusSets = pfdBonusSets;
-	this.pfdBonusDetails = pfdBonusDetails;
-	this.pfdFixedBonusDetails = pfdFixedBonusDetails;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "bonus_item_id", unique = true, nullable = false)
+	public Integer getBonusItemId() {
+		return this.bonusItemId;
+	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "bonus_item_id", unique = true, nullable = false)
-    public Integer getBonusItemId() {
-	return this.bonusItemId;
-    }
+	public void setBonusItemId(Integer bonusItemId) {
+		this.bonusItemId = bonusItemId;
+	}
 
-    public void setBonusItemId(Integer bonusItemId) {
-	this.bonusItemId = bonusItemId;
-    }
+	@Column(name = "bonus_name", nullable = false, length = 50)
+	public String getBonusName() {
+		return this.bonusName;
+	}
 
-    @Column(name = "bonus_name", nullable = false, length = 50)
-    public String getBonusName() {
-	return this.bonusName;
-    }
+	public void setBonusName(String bonusName) {
+		this.bonusName = bonusName;
+	}
 
-    public void setBonusName(String bonusName) {
-	this.bonusName = bonusName;
-    }
+	@Column(name = "bonus_type", nullable = false, length = 1)
+	public String getBonusType() {
+		return this.bonusType;
+	}
 
-    @Column(name = "bonus_type", nullable = false, length = 1)
-    public String getBonusType() {
-	return this.bonusType;
-    }
+	public void setBonusType(String bonusType) {
+		this.bonusType = bonusType;
+	}
 
-    public void setBonusType(String bonusType) {
-	this.bonusType = bonusType;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date", nullable = false, length = 19)
+	public Date getCreateDate() {
+		return this.createDate;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date", nullable = false, length = 19)
-    public Date getCreateDate() {
-	return this.createDate;
-    }
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
-    public void setCreateDate(Date createDate) {
-	this.createDate = createDate;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "update_date", nullable = false, length = 19)
+	public Date getUpdateDate() {
+		return this.updateDate;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date", nullable = false, length = 19)
-    public Date getUpdateDate() {
-	return this.updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-	this.updateDate = updateDate;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pfdBonusItem")
-    public Set<PfdBonusSet> getPfdBonusSets() {
-	return this.pfdBonusSets;
-    }
-
-    public void setPfdBonusSets(Set<PfdBonusSet> pfdBonusSets) {
-	this.pfdBonusSets = pfdBonusSets;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pfdBonusItem")
-    public Set<PfdBonusDetail> getPfdBonusDetails() {
-	return this.pfdBonusDetails;
-    }
-
-    public void setPfdBonusDetails(Set<PfdBonusDetail> pfdBonusDetails) {
-	this.pfdBonusDetails = pfdBonusDetails;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pfdBonusItem")
-    public Set<PfdFixedBonusDetail> getPfdFixedBonusDetails() {
-	return this.pfdFixedBonusDetails;
-    }
-
-    public void setPfdFixedBonusDetails(
-	    Set<PfdFixedBonusDetail> pfdFixedBonusDetails) {
-	this.pfdFixedBonusDetails = pfdFixedBonusDetails;
-    }
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
 
 }

@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,56 +16,56 @@ import javax.persistence.Table;
 @Table(name = "pfp_keyword_sysprice", catalog = "akb")
 public class PfpKeywordSysprice implements java.io.Serializable {
 
-    private Integer id;
-    private String keyword;
-    private float sysprice;
-    private int amount;
+	private Integer id;
+	private String keyword;
+	private float sysprice;
+	private int amount;
 
-    public PfpKeywordSysprice() {
-    }
+	public PfpKeywordSysprice() {
+	}
 
-    public PfpKeywordSysprice(String keyword, float sysprice, int amount) {
-	this.keyword = keyword;
-	this.sysprice = sysprice;
-	this.amount = amount;
-    }
+	public PfpKeywordSysprice(String keyword, float sysprice, int amount) {
+		this.keyword = keyword;
+		this.sysprice = sysprice;
+		this.amount = amount;
+	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public Integer getId() {
-	return this.id;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
+	}
 
-    public void setId(Integer id) {
-	this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    @Column(name = "keyword", nullable = false, length = 50)
-    public String getKeyword() {
-	return this.keyword;
-    }
+	@Column(name = "keyword", nullable = false, length = 50)
+	public String getKeyword() {
+		return this.keyword;
+	}
 
-    public void setKeyword(String keyword) {
-	this.keyword = keyword;
-    }
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
 
-    @Column(name = "sysprice", nullable = false, precision = 10)
-    public float getSysprice() {
-	return this.sysprice;
-    }
+	@Column(name = "sysprice", nullable = false, precision = 10)
+	public float getSysprice() {
+		return this.sysprice;
+	}
 
-    public void setSysprice(float sysprice) {
-	this.sysprice = sysprice;
-    }
+	public void setSysprice(float sysprice) {
+		this.sysprice = sysprice;
+	}
 
-    @Column(name = "amount", nullable = false)
-    public int getAmount() {
-	return this.amount;
-    }
+	@Column(name = "amount", nullable = false)
+	public int getAmount() {
+		return this.amount;
+	}
 
-    public void setAmount(int amount) {
-	this.amount = amount;
-    }
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
 
 }

@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,83 +22,83 @@ import javax.persistence.TemporalType;
 @Table(name = "adm_free_record", catalog = "akb")
 public class AdmFreeRecord implements java.io.Serializable {
 
-    private Integer recordId;
-    private AdmFreeAction admFreeAction;
-    private String customerInfoId;
-    private Date recordDate;
-    private Date updateDate;
-    private Date createDate;
+	private Integer recordId;
+	private AdmFreeAction admFreeAction;
+	private String customerInfoId;
+	private Date recordDate;
+	private Date updateDate;
+	private Date createDate;
 
-    public AdmFreeRecord() {
-    }
+	public AdmFreeRecord() {
+	}
 
-    public AdmFreeRecord(AdmFreeAction admFreeAction, String customerInfoId,
-	    Date recordDate, Date updateDate, Date createDate) {
-	this.admFreeAction = admFreeAction;
-	this.customerInfoId = customerInfoId;
-	this.recordDate = recordDate;
-	this.updateDate = updateDate;
-	this.createDate = createDate;
-    }
+	public AdmFreeRecord(AdmFreeAction admFreeAction, String customerInfoId,
+			Date recordDate, Date updateDate, Date createDate) {
+		this.admFreeAction = admFreeAction;
+		this.customerInfoId = customerInfoId;
+		this.recordDate = recordDate;
+		this.updateDate = updateDate;
+		this.createDate = createDate;
+	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "record_id", unique = true, nullable = false)
-    public Integer getRecordId() {
-	return this.recordId;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "record_id", unique = true, nullable = false)
+	public Integer getRecordId() {
+		return this.recordId;
+	}
 
-    public void setRecordId(Integer recordId) {
-	this.recordId = recordId;
-    }
+	public void setRecordId(Integer recordId) {
+		this.recordId = recordId;
+	}
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "action_id", nullable = false)
-    public AdmFreeAction getAdmFreeAction() {
-	return this.admFreeAction;
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "action_id", nullable = false)
+	public AdmFreeAction getAdmFreeAction() {
+		return this.admFreeAction;
+	}
 
-    public void setAdmFreeAction(AdmFreeAction admFreeAction) {
-	this.admFreeAction = admFreeAction;
-    }
+	public void setAdmFreeAction(AdmFreeAction admFreeAction) {
+		this.admFreeAction = admFreeAction;
+	}
 
-    @Column(name = "customer_info_id", nullable = false, length = 20)
-    public String getCustomerInfoId() {
-	return this.customerInfoId;
-    }
+	@Column(name = "customer_info_id", nullable = false, length = 20)
+	public String getCustomerInfoId() {
+		return this.customerInfoId;
+	}
 
-    public void setCustomerInfoId(String customerInfoId) {
-	this.customerInfoId = customerInfoId;
-    }
+	public void setCustomerInfoId(String customerInfoId) {
+		this.customerInfoId = customerInfoId;
+	}
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "record_date", nullable = false, length = 10)
-    public Date getRecordDate() {
-	return this.recordDate;
-    }
+	@Temporal(TemporalType.DATE)
+	@Column(name = "record_date", nullable = false, length = 10)
+	public Date getRecordDate() {
+		return this.recordDate;
+	}
 
-    public void setRecordDate(Date recordDate) {
-	this.recordDate = recordDate;
-    }
+	public void setRecordDate(Date recordDate) {
+		this.recordDate = recordDate;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date", nullable = false, length = 19)
-    public Date getUpdateDate() {
-	return this.updateDate;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "update_date", nullable = false, length = 19)
+	public Date getUpdateDate() {
+		return this.updateDate;
+	}
 
-    public void setUpdateDate(Date updateDate) {
-	this.updateDate = updateDate;
-    }
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date", nullable = false, length = 19)
-    public Date getCreateDate() {
-	return this.createDate;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date", nullable = false, length = 19)
+	public Date getCreateDate() {
+		return this.createDate;
+	}
 
-    public void setCreateDate(Date createDate) {
-	this.createDate = createDate;
-    }
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
 }

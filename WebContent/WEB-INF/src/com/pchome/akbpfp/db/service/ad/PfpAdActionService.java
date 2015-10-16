@@ -12,6 +12,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdActionViewVO;
+import com.pchome.enumerate.ad.EnumAdDevice;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.util.DateValueUtil;
@@ -77,9 +78,18 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 				for(EnumAdType type:EnumAdType.values()){
 					int adType = pfpAdAction.getAdType();					
 					if(type.getType() == adType){
-						adActionViewVO.setAdType(type.getChName());
+						adActionViewVO.setAdType(type.getTypeName());
 					}					
 				}
+				
+				// 廣告播放裝置
+				for(EnumAdDevice device:EnumAdDevice.values()){
+					int adDevice = pfpAdAction.getAdDevice();
+					if(device.getDevType() == adDevice){
+						adActionViewVO.setAdDevice(device.getDevTypeName());
+					}
+				}
+				
 				// 廣告狀態
 				for(EnumStatus status:EnumStatus.values()){
 					int adStatus = pfpAdAction.getAdActionStatus();

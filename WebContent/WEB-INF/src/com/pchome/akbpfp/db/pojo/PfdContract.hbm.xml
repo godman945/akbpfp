@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2015/10/16 ?W?? 10:15:06 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfdContract" table="pfd_contract" catalog="akb">
         <id name="pfdContractId" type="string">
@@ -89,13 +89,5 @@
                 <comment>&#167;&#243;&#183;s&#164;&#233;&#180;&#193;</comment>
             </column>
         </property>
-        <set name="pfdBonusSets" table="pfd_bonus_set" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="pfd_contract" length="20" not-null="true">
-                    <comment>&#184;g&#190;P&#176;&#211;&#166;X&#172;&#249;</comment>
-                </column>
-            </key>
-            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdBonusSet" />
-        </set>
     </class>
 </hibernate-mapping>

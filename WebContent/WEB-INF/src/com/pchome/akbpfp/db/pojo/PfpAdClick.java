@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,315 +22,315 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_ad_click", catalog = "akb")
 public class PfpAdClick implements java.io.Serializable {
 
-    private Long adClickId;
-    private PfpCustomerInfo pfpCustomerInfo;
-    private String memId;
-    private String uuid;
-    private String remoteIp;
-    private String referer;
-    private String userAgent;
-    private String styleId;
-    private String tproId;
-    private String tadId;
-    private String poolId;
-    private String adId;
-    private String keywordId;
-    private String adType;
-    private String adClass;
-    private Float adRank;
-    private Float adPrice;
-    private Integer adClk;
-    private Float adActionControlPrice;
-    private Float adActionMaxPrice;
-    private Integer maliceType;
-    private Date recordDate;
-    private Integer recordTime;
-    private Date recordMinute;
-    private Date updateDate;
-    private Date createDate;
+	private Long adClickId;
+	private PfpCustomerInfo pfpCustomerInfo;
+	private String memId;
+	private String uuid;
+	private String remoteIp;
+	private String referer;
+	private String userAgent;
+	private String styleId;
+	private String tproId;
+	private String tadId;
+	private String poolId;
+	private String adId;
+	private String keywordId;
+	private String adType;
+	private String adClass;
+	private Float adRank;
+	private Float adPrice;
+	private Integer adClk;
+	private Float adActionControlPrice;
+	private Float adActionMaxPrice;
+	private Integer maliceType;
+	private Date recordDate;
+	private Integer recordTime;
+	private Date recordMinute;
+	private Date updateDate;
+	private Date createDate;
 
-    public PfpAdClick() {
-    }
+	public PfpAdClick() {
+	}
 
-    public PfpAdClick(Date updateDate, Date createDate) {
-	this.updateDate = updateDate;
-	this.createDate = createDate;
-    }
+	public PfpAdClick(Date updateDate, Date createDate) {
+		this.updateDate = updateDate;
+		this.createDate = createDate;
+	}
 
-    public PfpAdClick(PfpCustomerInfo pfpCustomerInfo, String memId,
-	    String uuid, String remoteIp, String referer, String userAgent,
-	    String styleId, String tproId, String tadId, String poolId,
-	    String adId, String keywordId, String adType, String adClass,
-	    Float adRank, Float adPrice, Integer adClk,
-	    Float adActionControlPrice, Float adActionMaxPrice,
-	    Integer maliceType, Date recordDate, Integer recordTime,
-	    Date recordMinute, Date updateDate, Date createDate) {
-	this.pfpCustomerInfo = pfpCustomerInfo;
-	this.memId = memId;
-	this.uuid = uuid;
-	this.remoteIp = remoteIp;
-	this.referer = referer;
-	this.userAgent = userAgent;
-	this.styleId = styleId;
-	this.tproId = tproId;
-	this.tadId = tadId;
-	this.poolId = poolId;
-	this.adId = adId;
-	this.keywordId = keywordId;
-	this.adType = adType;
-	this.adClass = adClass;
-	this.adRank = adRank;
-	this.adPrice = adPrice;
-	this.adClk = adClk;
-	this.adActionControlPrice = adActionControlPrice;
-	this.adActionMaxPrice = adActionMaxPrice;
-	this.maliceType = maliceType;
-	this.recordDate = recordDate;
-	this.recordTime = recordTime;
-	this.recordMinute = recordMinute;
-	this.updateDate = updateDate;
-	this.createDate = createDate;
-    }
+	public PfpAdClick(PfpCustomerInfo pfpCustomerInfo, String memId,
+			String uuid, String remoteIp, String referer, String userAgent,
+			String styleId, String tproId, String tadId, String poolId,
+			String adId, String keywordId, String adType, String adClass,
+			Float adRank, Float adPrice, Integer adClk,
+			Float adActionControlPrice, Float adActionMaxPrice,
+			Integer maliceType, Date recordDate, Integer recordTime,
+			Date recordMinute, Date updateDate, Date createDate) {
+		this.pfpCustomerInfo = pfpCustomerInfo;
+		this.memId = memId;
+		this.uuid = uuid;
+		this.remoteIp = remoteIp;
+		this.referer = referer;
+		this.userAgent = userAgent;
+		this.styleId = styleId;
+		this.tproId = tproId;
+		this.tadId = tadId;
+		this.poolId = poolId;
+		this.adId = adId;
+		this.keywordId = keywordId;
+		this.adType = adType;
+		this.adClass = adClass;
+		this.adRank = adRank;
+		this.adPrice = adPrice;
+		this.adClk = adClk;
+		this.adActionControlPrice = adActionControlPrice;
+		this.adActionMaxPrice = adActionMaxPrice;
+		this.maliceType = maliceType;
+		this.recordDate = recordDate;
+		this.recordTime = recordTime;
+		this.recordMinute = recordMinute;
+		this.updateDate = updateDate;
+		this.createDate = createDate;
+	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "ad_click_id", unique = true, nullable = false)
-    public Long getAdClickId() {
-	return this.adClickId;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "ad_click_id", unique = true, nullable = false)
+	public Long getAdClickId() {
+		return this.adClickId;
+	}
 
-    public void setAdClickId(Long adClickId) {
-	this.adClickId = adClickId;
-    }
+	public void setAdClickId(Long adClickId) {
+		this.adClickId = adClickId;
+	}
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_info_id")
-    public PfpCustomerInfo getPfpCustomerInfo() {
-	return this.pfpCustomerInfo;
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "customer_info_id")
+	public PfpCustomerInfo getPfpCustomerInfo() {
+		return this.pfpCustomerInfo;
+	}
 
-    public void setPfpCustomerInfo(PfpCustomerInfo pfpCustomerInfo) {
-	this.pfpCustomerInfo = pfpCustomerInfo;
-    }
+	public void setPfpCustomerInfo(PfpCustomerInfo pfpCustomerInfo) {
+		this.pfpCustomerInfo = pfpCustomerInfo;
+	}
 
-    @Column(name = "mem_id", length = 20)
-    public String getMemId() {
-	return this.memId;
-    }
+	@Column(name = "mem_id", length = 20)
+	public String getMemId() {
+		return this.memId;
+	}
 
-    public void setMemId(String memId) {
-	this.memId = memId;
-    }
+	public void setMemId(String memId) {
+		this.memId = memId;
+	}
 
-    @Column(name = "uuid", length = 50)
-    public String getUuid() {
-	return this.uuid;
-    }
+	@Column(name = "uuid", length = 50)
+	public String getUuid() {
+		return this.uuid;
+	}
 
-    public void setUuid(String uuid) {
-	this.uuid = uuid;
-    }
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
 
-    @Column(name = "remote_ip", length = 20)
-    public String getRemoteIp() {
-	return this.remoteIp;
-    }
+	@Column(name = "remote_ip", length = 20)
+	public String getRemoteIp() {
+		return this.remoteIp;
+	}
 
-    public void setRemoteIp(String remoteIp) {
-	this.remoteIp = remoteIp;
-    }
+	public void setRemoteIp(String remoteIp) {
+		this.remoteIp = remoteIp;
+	}
 
-    @Column(name = "referer", length = 500)
-    public String getReferer() {
-	return this.referer;
-    }
+	@Column(name = "referer", length = 500)
+	public String getReferer() {
+		return this.referer;
+	}
 
-    public void setReferer(String referer) {
-	this.referer = referer;
-    }
+	public void setReferer(String referer) {
+		this.referer = referer;
+	}
 
-    @Column(name = "user_agent", length = 500)
-    public String getUserAgent() {
-	return this.userAgent;
-    }
+	@Column(name = "user_agent", length = 500)
+	public String getUserAgent() {
+		return this.userAgent;
+	}
 
-    public void setUserAgent(String userAgent) {
-	this.userAgent = userAgent;
-    }
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
+	}
 
-    @Column(name = "style_id", length = 20)
-    public String getStyleId() {
-	return this.styleId;
-    }
+	@Column(name = "style_id", length = 20)
+	public String getStyleId() {
+		return this.styleId;
+	}
 
-    public void setStyleId(String styleId) {
-	this.styleId = styleId;
-    }
+	public void setStyleId(String styleId) {
+		this.styleId = styleId;
+	}
 
-    @Column(name = "tpro_id", length = 20)
-    public String getTproId() {
-	return this.tproId;
-    }
+	@Column(name = "tpro_id", length = 20)
+	public String getTproId() {
+		return this.tproId;
+	}
 
-    public void setTproId(String tproId) {
-	this.tproId = tproId;
-    }
+	public void setTproId(String tproId) {
+		this.tproId = tproId;
+	}
 
-    @Column(name = "tad_id", length = 20)
-    public String getTadId() {
-	return this.tadId;
-    }
+	@Column(name = "tad_id", length = 20)
+	public String getTadId() {
+		return this.tadId;
+	}
 
-    public void setTadId(String tadId) {
-	this.tadId = tadId;
-    }
+	public void setTadId(String tadId) {
+		this.tadId = tadId;
+	}
 
-    @Column(name = "pool_id", length = 20)
-    public String getPoolId() {
-	return this.poolId;
-    }
+	@Column(name = "pool_id", length = 20)
+	public String getPoolId() {
+		return this.poolId;
+	}
 
-    public void setPoolId(String poolId) {
-	this.poolId = poolId;
-    }
+	public void setPoolId(String poolId) {
+		this.poolId = poolId;
+	}
 
-    @Column(name = "ad_id", length = 20)
-    public String getAdId() {
-	return this.adId;
-    }
+	@Column(name = "ad_id", length = 20)
+	public String getAdId() {
+		return this.adId;
+	}
 
-    public void setAdId(String adId) {
-	this.adId = adId;
-    }
+	public void setAdId(String adId) {
+		this.adId = adId;
+	}
 
-    @Column(name = "keyword_id", length = 20)
-    public String getKeywordId() {
-	return this.keywordId;
-    }
+	@Column(name = "keyword_id", length = 20)
+	public String getKeywordId() {
+		return this.keywordId;
+	}
 
-    public void setKeywordId(String keywordId) {
-	this.keywordId = keywordId;
-    }
+	public void setKeywordId(String keywordId) {
+		this.keywordId = keywordId;
+	}
 
-    @Column(name = "ad_type", length = 1)
-    public String getAdType() {
-	return this.adType;
-    }
+	@Column(name = "ad_type", length = 1)
+	public String getAdType() {
+		return this.adType;
+	}
 
-    public void setAdType(String adType) {
-	this.adType = adType;
-    }
+	public void setAdType(String adType) {
+		this.adType = adType;
+	}
 
-    @Column(name = "ad_class", length = 20)
-    public String getAdClass() {
-	return this.adClass;
-    }
+	@Column(name = "ad_class", length = 20)
+	public String getAdClass() {
+		return this.adClass;
+	}
 
-    public void setAdClass(String adClass) {
-	this.adClass = adClass;
-    }
+	public void setAdClass(String adClass) {
+		this.adClass = adClass;
+	}
 
-    @Column(name = "ad_rank", precision = 10)
-    public Float getAdRank() {
-	return this.adRank;
-    }
+	@Column(name = "ad_rank", precision = 10)
+	public Float getAdRank() {
+		return this.adRank;
+	}
 
-    public void setAdRank(Float adRank) {
-	this.adRank = adRank;
-    }
+	public void setAdRank(Float adRank) {
+		this.adRank = adRank;
+	}
 
-    @Column(name = "ad_price", precision = 10)
-    public Float getAdPrice() {
-	return this.adPrice;
-    }
+	@Column(name = "ad_price", precision = 10)
+	public Float getAdPrice() {
+		return this.adPrice;
+	}
 
-    public void setAdPrice(Float adPrice) {
-	this.adPrice = adPrice;
-    }
+	public void setAdPrice(Float adPrice) {
+		this.adPrice = adPrice;
+	}
 
-    @Column(name = "ad_clk")
-    public Integer getAdClk() {
-	return this.adClk;
-    }
+	@Column(name = "ad_clk")
+	public Integer getAdClk() {
+		return this.adClk;
+	}
 
-    public void setAdClk(Integer adClk) {
-	this.adClk = adClk;
-    }
+	public void setAdClk(Integer adClk) {
+		this.adClk = adClk;
+	}
 
-    @Column(name = "ad_action_control_price", precision = 10)
-    public Float getAdActionControlPrice() {
-	return this.adActionControlPrice;
-    }
+	@Column(name = "ad_action_control_price", precision = 10)
+	public Float getAdActionControlPrice() {
+		return this.adActionControlPrice;
+	}
 
-    public void setAdActionControlPrice(Float adActionControlPrice) {
-	this.adActionControlPrice = adActionControlPrice;
-    }
+	public void setAdActionControlPrice(Float adActionControlPrice) {
+		this.adActionControlPrice = adActionControlPrice;
+	}
 
-    @Column(name = "ad_action_max_price", precision = 10)
-    public Float getAdActionMaxPrice() {
-	return this.adActionMaxPrice;
-    }
+	@Column(name = "ad_action_max_price", precision = 10)
+	public Float getAdActionMaxPrice() {
+		return this.adActionMaxPrice;
+	}
 
-    public void setAdActionMaxPrice(Float adActionMaxPrice) {
-	this.adActionMaxPrice = adActionMaxPrice;
-    }
+	public void setAdActionMaxPrice(Float adActionMaxPrice) {
+		this.adActionMaxPrice = adActionMaxPrice;
+	}
 
-    @Column(name = "malice_type")
-    public Integer getMaliceType() {
-	return this.maliceType;
-    }
+	@Column(name = "malice_type")
+	public Integer getMaliceType() {
+		return this.maliceType;
+	}
 
-    public void setMaliceType(Integer maliceType) {
-	this.maliceType = maliceType;
-    }
+	public void setMaliceType(Integer maliceType) {
+		this.maliceType = maliceType;
+	}
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "record_date", length = 10)
-    public Date getRecordDate() {
-	return this.recordDate;
-    }
+	@Temporal(TemporalType.DATE)
+	@Column(name = "record_date", length = 10)
+	public Date getRecordDate() {
+		return this.recordDate;
+	}
 
-    public void setRecordDate(Date recordDate) {
-	this.recordDate = recordDate;
-    }
+	public void setRecordDate(Date recordDate) {
+		this.recordDate = recordDate;
+	}
 
-    @Column(name = "record_time")
-    public Integer getRecordTime() {
-	return this.recordTime;
-    }
+	@Column(name = "record_time")
+	public Integer getRecordTime() {
+		return this.recordTime;
+	}
 
-    public void setRecordTime(Integer recordTime) {
-	this.recordTime = recordTime;
-    }
+	public void setRecordTime(Integer recordTime) {
+		this.recordTime = recordTime;
+	}
 
-    @Temporal(TemporalType.TIME)
-    @Column(name = "record_minute", length = 8)
-    public Date getRecordMinute() {
-	return this.recordMinute;
-    }
+	@Temporal(TemporalType.TIME)
+	@Column(name = "record_minute", length = 8)
+	public Date getRecordMinute() {
+		return this.recordMinute;
+	}
 
-    public void setRecordMinute(Date recordMinute) {
-	this.recordMinute = recordMinute;
-    }
+	public void setRecordMinute(Date recordMinute) {
+		this.recordMinute = recordMinute;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date", nullable = false, length = 19)
-    public Date getUpdateDate() {
-	return this.updateDate;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "update_date", nullable = false, length = 19)
+	public Date getUpdateDate() {
+		return this.updateDate;
+	}
 
-    public void setUpdateDate(Date updateDate) {
-	this.updateDate = updateDate;
-    }
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date", nullable = false, length = 19)
-    public Date getCreateDate() {
-	return this.createDate;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date", nullable = false, length = 19)
+	public Date getCreateDate() {
+		return this.createDate;
+	}
 
-    public void setCreateDate(Date createDate) {
-	this.createDate = createDate;
-    }
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
 }

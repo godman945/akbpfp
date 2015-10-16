@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -16,25 +16,25 @@ import javax.persistence.Table;
 @Table(name = "pfp_privilege_model_menu_ref", catalog = "akb")
 public class PfpPrivilegeModelMenuRef implements java.io.Serializable {
 
-    private PfpPrivilegeModelMenuRefId id;
+	private PfpPrivilegeModelMenuRefId id;
 
-    public PfpPrivilegeModelMenuRef() {
-    }
+	public PfpPrivilegeModelMenuRef() {
+	}
 
-    public PfpPrivilegeModelMenuRef(PfpPrivilegeModelMenuRefId id) {
-	this.id = id;
-    }
+	public PfpPrivilegeModelMenuRef(PfpPrivilegeModelMenuRefId id) {
+		this.id = id;
+	}
 
-    @EmbeddedId
-    @AttributeOverrides({
-	    @AttributeOverride(name = "modelId", column = @Column(name = "model_id", nullable = false)),
-	    @AttributeOverride(name = "menuId", column = @Column(name = "menu_id", nullable = false)) })
-    public PfpPrivilegeModelMenuRefId getId() {
-	return this.id;
-    }
+	@EmbeddedId
+	@AttributeOverrides({
+			@AttributeOverride(name = "modelId", column = @Column(name = "model_id", nullable = false)),
+			@AttributeOverride(name = "menuId", column = @Column(name = "menu_id", nullable = false)) })
+	public PfpPrivilegeModelMenuRefId getId() {
+		return this.id;
+	}
 
-    public void setId(PfpPrivilegeModelMenuRefId id) {
-	this.id = id;
-    }
+	public void setId(PfpPrivilegeModelMenuRefId id) {
+		this.id = id;
+	}
 
 }

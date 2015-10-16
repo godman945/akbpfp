@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2015/10/16 ?W?? 10:15:06 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdAction" table="pfp_ad_action" catalog="akb">
         <id name="adActionSeq" type="string">
@@ -23,9 +23,14 @@
                 <comment>&#188;s&#167;i&#172;&#161;&#176;&#202;&#194;&#178;&#173;z</comment>
             </column>
         </property>
-        <property name="adType" type="int">
-            <column name="ad_type" not-null="true">
-                <comment>&#188;s&#167;i&#167;&#206;&#166;&#161; 1:&#167;&#228;&#170;F&#166;&#232;&#188;s&#167;i 2:PChome&#192;W&#185;D&#188;s&#167;i</comment>
+        <property name="adType" type="java.lang.Integer">
+            <column name="ad_type">
+                <comment>&#188;s&#167;i&#167;&#206;&#166;&#161; 0:&#165;&#254;&#179;&#161; 1:&#183;j&#180;M&#188;s&#167;i 2:&#164;&#186;&#174;e&#188;s&#167;i</comment>
+            </column>
+        </property>
+        <property name="adDevice" type="java.lang.Integer">
+            <column name="ad_device">
+                <comment>&#188;&#189;&#169;&#241;&#184;&#203;&#184;m 0:&#165;&#254;&#179;&#161; 1:PC 2:&#164;&#226;&#190;&#247;</comment>
             </column>
         </property>
         <property name="adActionStartDate" type="date">

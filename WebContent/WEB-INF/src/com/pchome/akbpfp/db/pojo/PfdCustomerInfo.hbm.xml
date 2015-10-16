@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated Jul 14, 2015 12:06:32 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2015/10/16 ?W?? 10:15:06 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfdCustomerInfo" table="pfd_customer_info" catalog="akb">
         <id name="customerInfoId" type="string">
@@ -161,14 +161,6 @@
             </key>
             <one-to-many class="com.pchome.akbpfp.db.pojo.PfdUser" />
         </set>
-        <set name="pfdBonusSets" table="pfd_bonus_set" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="pfd_customer_info" length="20" not-null="true">
-                    <comment>&#184;g&#190;P&#176;&#211;&#177;b&#164;&#225;</comment>
-                </column>
-            </key>
-            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdBonusSet" />
-        </set>
         <set name="pfdContracts" table="pfd_contract" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="pfd_customer_info_id" length="20" not-null="true">
@@ -184,22 +176,6 @@
                 </column>
             </key>
             <one-to-many class="com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef" />
-        </set>
-        <set name="pfdBonusDetails" table="pfd_bonus_detail" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="pfd_customer_info" length="20" not-null="true">
-                    <comment>&#184;g&#190;P&#176;&#211;&#177;b&#164;&#225;</comment>
-                </column>
-            </key>
-            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdBonusDetail" />
-        </set>
-        <set name="pfdFixedBonusDetails" table="pfd_fixed_bonus_detail" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="pfd_customer_info" length="20" not-null="true">
-                    <comment>&#184;g&#190;P&#176;&#211;&#177;b&#164;&#225;</comment>
-                </column>
-            </key>
-            <one-to-many class="com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail" />
         </set>
     </class>
 </hibernate-mapping>

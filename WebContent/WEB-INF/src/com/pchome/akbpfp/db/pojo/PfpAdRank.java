@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,117 +22,117 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_ad_rank", catalog = "akb")
 public class PfpAdRank implements java.io.Serializable {
 
-    private Integer adRankSeq;
-    private PfpAdKeyword pfpAdKeyword;
-    private String customerInfoId;
-    private int adType;
-    private float adRankAvg;
-    private Date adRankDate;
-    private int adRankTime;
-    private Date adRankCreateTime;
-    private Date adRankUpdateTime;
+	private Integer adRankSeq;
+	private PfpAdKeyword pfpAdKeyword;
+	private String customerInfoId;
+	private int adType;
+	private float adRankAvg;
+	private Date adRankDate;
+	private int adRankTime;
+	private Date adRankCreateTime;
+	private Date adRankUpdateTime;
 
-    public PfpAdRank() {
-    }
+	public PfpAdRank() {
+	}
 
-    public PfpAdRank(PfpAdKeyword pfpAdKeyword, String customerInfoId,
-	    int adType, float adRankAvg, Date adRankDate, int adRankTime,
-	    Date adRankCreateTime, Date adRankUpdateTime) {
-	this.pfpAdKeyword = pfpAdKeyword;
-	this.customerInfoId = customerInfoId;
-	this.adType = adType;
-	this.adRankAvg = adRankAvg;
-	this.adRankDate = adRankDate;
-	this.adRankTime = adRankTime;
-	this.adRankCreateTime = adRankCreateTime;
-	this.adRankUpdateTime = adRankUpdateTime;
-    }
+	public PfpAdRank(PfpAdKeyword pfpAdKeyword, String customerInfoId,
+			int adType, float adRankAvg, Date adRankDate, int adRankTime,
+			Date adRankCreateTime, Date adRankUpdateTime) {
+		this.pfpAdKeyword = pfpAdKeyword;
+		this.customerInfoId = customerInfoId;
+		this.adType = adType;
+		this.adRankAvg = adRankAvg;
+		this.adRankDate = adRankDate;
+		this.adRankTime = adRankTime;
+		this.adRankCreateTime = adRankCreateTime;
+		this.adRankUpdateTime = adRankUpdateTime;
+	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "ad_rank_seq", unique = true, nullable = false)
-    public Integer getAdRankSeq() {
-	return this.adRankSeq;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "ad_rank_seq", unique = true, nullable = false)
+	public Integer getAdRankSeq() {
+		return this.adRankSeq;
+	}
 
-    public void setAdRankSeq(Integer adRankSeq) {
-	this.adRankSeq = adRankSeq;
-    }
+	public void setAdRankSeq(Integer adRankSeq) {
+		this.adRankSeq = adRankSeq;
+	}
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ad_keyword_seq", nullable = false)
-    public PfpAdKeyword getPfpAdKeyword() {
-	return this.pfpAdKeyword;
-    }
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ad_keyword_seq", nullable = false)
+	public PfpAdKeyword getPfpAdKeyword() {
+		return this.pfpAdKeyword;
+	}
 
-    public void setPfpAdKeyword(PfpAdKeyword pfpAdKeyword) {
-	this.pfpAdKeyword = pfpAdKeyword;
-    }
+	public void setPfpAdKeyword(PfpAdKeyword pfpAdKeyword) {
+		this.pfpAdKeyword = pfpAdKeyword;
+	}
 
-    @Column(name = "customer_info_id", nullable = false, length = 20)
-    public String getCustomerInfoId() {
-	return this.customerInfoId;
-    }
+	@Column(name = "customer_info_id", nullable = false, length = 20)
+	public String getCustomerInfoId() {
+		return this.customerInfoId;
+	}
 
-    public void setCustomerInfoId(String customerInfoId) {
-	this.customerInfoId = customerInfoId;
-    }
+	public void setCustomerInfoId(String customerInfoId) {
+		this.customerInfoId = customerInfoId;
+	}
 
-    @Column(name = "ad_type", nullable = false)
-    public int getAdType() {
-	return this.adType;
-    }
+	@Column(name = "ad_type", nullable = false)
+	public int getAdType() {
+		return this.adType;
+	}
 
-    public void setAdType(int adType) {
-	this.adType = adType;
-    }
+	public void setAdType(int adType) {
+		this.adType = adType;
+	}
 
-    @Column(name = "ad_rank_avg", nullable = false, precision = 10)
-    public float getAdRankAvg() {
-	return this.adRankAvg;
-    }
+	@Column(name = "ad_rank_avg", nullable = false, precision = 10)
+	public float getAdRankAvg() {
+		return this.adRankAvg;
+	}
 
-    public void setAdRankAvg(float adRankAvg) {
-	this.adRankAvg = adRankAvg;
-    }
+	public void setAdRankAvg(float adRankAvg) {
+		this.adRankAvg = adRankAvg;
+	}
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "ad_rank_date", nullable = false, length = 10)
-    public Date getAdRankDate() {
-	return this.adRankDate;
-    }
+	@Temporal(TemporalType.DATE)
+	@Column(name = "ad_rank_date", nullable = false, length = 10)
+	public Date getAdRankDate() {
+		return this.adRankDate;
+	}
 
-    public void setAdRankDate(Date adRankDate) {
-	this.adRankDate = adRankDate;
-    }
+	public void setAdRankDate(Date adRankDate) {
+		this.adRankDate = adRankDate;
+	}
 
-    @Column(name = "ad_rank_time", nullable = false)
-    public int getAdRankTime() {
-	return this.adRankTime;
-    }
+	@Column(name = "ad_rank_time", nullable = false)
+	public int getAdRankTime() {
+		return this.adRankTime;
+	}
 
-    public void setAdRankTime(int adRankTime) {
-	this.adRankTime = adRankTime;
-    }
+	public void setAdRankTime(int adRankTime) {
+		this.adRankTime = adRankTime;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "ad_rank_create_time", nullable = false, length = 19)
-    public Date getAdRankCreateTime() {
-	return this.adRankCreateTime;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ad_rank_create_time", nullable = false, length = 19)
+	public Date getAdRankCreateTime() {
+		return this.adRankCreateTime;
+	}
 
-    public void setAdRankCreateTime(Date adRankCreateTime) {
-	this.adRankCreateTime = adRankCreateTime;
-    }
+	public void setAdRankCreateTime(Date adRankCreateTime) {
+		this.adRankCreateTime = adRankCreateTime;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "ad_rank_update_time", nullable = false, length = 19)
-    public Date getAdRankUpdateTime() {
-	return this.adRankUpdateTime;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "ad_rank_update_time", nullable = false, length = 19)
+	public Date getAdRankUpdateTime() {
+		return this.adRankUpdateTime;
+	}
 
-    public void setAdRankUpdateTime(Date adRankUpdateTime) {
-	this.adRankUpdateTime = adRankUpdateTime;
-    }
+	public void setAdRankUpdateTime(Date adRankUpdateTime) {
+		this.adRankUpdateTime = adRankUpdateTime;
+	}
 
 }

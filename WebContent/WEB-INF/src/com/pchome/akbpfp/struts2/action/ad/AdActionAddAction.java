@@ -11,6 +11,8 @@ import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdDevice;
+import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
 
@@ -32,6 +34,8 @@ public class AdActionAddAction extends BaseCookieAction{
 	private String selAdActionEndDate;
 	private String adActionMax;
 	private String adActionStatus;
+	private String adType;
+	private String adDevice;
 	private float remain;
 	private int tmpRemain;
 	private String backPage;
@@ -39,6 +43,9 @@ public class AdActionAddAction extends BaseCookieAction{
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdActionService pfpAdActionService;
+	
+	private EnumAdType[] adTypeList;
+	private EnumAdDevice[] adDeviceList;
 
 	public String adActionAdd() throws Exception{
 		log.info("adActionAdd => adActionSeq = " + adActionSeq);
@@ -61,6 +68,8 @@ public class AdActionAddAction extends BaseCookieAction{
 		adActionMax = "";
 		remain = pfpCustomerInfo.getRemain();
 		tmpRemain = (int)remain;
+		adTypeList = EnumAdType.values();
+		adDeviceList = EnumAdDevice.values();
 
 		// 廣告分類點選取消回來活動頁的時候，會帶adActionSeq
 		if(adActionSeq != null && StringUtils.isNotEmpty(adActionSeq)) {
@@ -81,9 +90,13 @@ public class AdActionAddAction extends BaseCookieAction{
 				adActionEndDate = "";
 			}
 			adActionMax = Integer.toString((int)pfpAdAction.getAdActionMax());
+			adType = Integer.toString(pfpAdAction.getAdType());
+			adDevice = Integer.toString(pfpAdAction.getAdDevice());
 			tmpRemain = (int)pfpCustomerInfo.getRemain();
 		} else {
 			adActionSeq = "";
+			adType = "0";
+			adDevice = "0";
 		}
 		
 		return SUCCESS;
@@ -114,7 +127,7 @@ public class AdActionAddAction extends BaseCookieAction{
 			}
 		}
 
-		if (StringUtils.isEmpty(adActionDesc)) {
+		/*if (StringUtils.isEmpty(adActionDesc)) {
 			message = "請輸入廣告內容簡述！";
 			return INPUT;
 		} else {
@@ -123,7 +136,7 @@ public class AdActionAddAction extends BaseCookieAction{
 				message = "廣告內容簡述不可超過 50 字！";
 				return INPUT;
 			}
-		}
+		}*/
 
 		//log.info(adActionStartDate.matches("^(19[0-9][0-9]|2[01]?[0-9][0-9])(/|-)([1-9]|0[1-9]|1[0-2])(/|-)([1-9]|0[1-9]|[1-2][0-9]|3[01])$"));
 		Date ActionStartDate = new Date();
@@ -190,7 +203,7 @@ public class AdActionAddAction extends BaseCookieAction{
 			pfpAdAction.setAdActionCreatTime(new Date());
 		}
 		pfpAdAction.setAdActionName(adActionName);
-		pfpAdAction.setAdActionDesc(adActionDesc);
+		pfpAdAction.setAdActionDesc(adActionName);
 		pfpAdAction.setAdActionStartDate(ActionStartDate);
 		pfpAdAction.setAdActionEndDate(ActionEndDate);
 		pfpAdAction.setAdActionMax(iAdActionMax);
@@ -201,6 +214,8 @@ public class AdActionAddAction extends BaseCookieAction{
 		if(pfpAdActionService.getAdGroupCounts(adActionSeq) <= 0) {
 			pfpAdAction.setAdActionStatus(EnumStatus.UnDone.getStatusId());		// 新增廣告時，status 設定為未完成
 		}
+		pfpAdAction.setAdType(Integer.parseInt(adType));
+		pfpAdAction.setAdDevice(Integer.parseInt(adDevice));
 
 		pfpAdActionService.savePfpAdAction(pfpAdAction);
 		return SUCCESS;
@@ -282,6 +297,22 @@ public class AdActionAddAction extends BaseCookieAction{
 		this.adActionStatus = adActionStatus;
 	}
 
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
+	}
+
+	public String getAdDevice() {
+		return adDevice;
+	}
+
+	public void setAdDevice(String adDevice) {
+		this.adDevice = adDevice;
+	}
+
 	public void setRemain(float remain) {
 		this.remain = remain;
 	}
@@ -308,6 +339,14 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public EnumAdType[] getAdTypeList() {
+		return adTypeList;
+	}
+
+	public EnumAdDevice[] getAdDeviceList() {
+		return adDeviceList;
 	}
 
 }

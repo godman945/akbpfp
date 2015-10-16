@@ -16,6 +16,8 @@ import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdDevice;
+import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.pfd.EnumContractStatus;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.rmi.accesslog.EnumAccesslogAction;
@@ -38,6 +40,8 @@ public class AdActionEditAction extends BaseCookieAction{
 	private String selAdActionEndDate;
 	private String adActionMax;
 	private String adActionStatus;
+	private String adType;
+	private String adDevice;
 	private int tmpRemain;
 	private String backPage;
 	private String addFlag = "y"; //是否顯示新增廣告子選單
@@ -46,6 +50,9 @@ public class AdActionEditAction extends BaseCookieAction{
 	private PfpAdActionService pfpAdActionService;
 	private AdmAccesslogService admAccesslogService;
 	private ControlPriceAPI controlPriceAPI;
+	
+	private EnumAdType[] adTypeList;
+	private EnumAdDevice[] adDeviceList;
 
 	public String adActionEdit() throws Exception{
 		log.info("adActionEdit => adActionSeq = " + adActionSeq);
@@ -93,8 +100,13 @@ public class AdActionEditAction extends BaseCookieAction{
 			selAdActionEndDate = "N";
 			adActionEndDate = "";
 		}
+		adType = Integer.toString(pfpAdAction.getAdType());
+		adDevice = Integer.toString(pfpAdAction.getAdDevice());
 		adActionMax = Integer.toString((int)pfpAdAction.getAdActionMax());
 		tmpRemain = (int)pfpCustomerInfo.getRemain();
+		
+		adTypeList = EnumAdType.values();
+		adDeviceList = EnumAdDevice.values();
 		
 		return SUCCESS;
 	}
@@ -120,7 +132,7 @@ public class AdActionEditAction extends BaseCookieAction{
 			}
 		}
 
-		if (StringUtils.isEmpty(adActionDesc)) {
+		/*if (StringUtils.isEmpty(adActionDesc)) {
 			message = "請輸入廣告內容簡述！";
 			return INPUT;
 		} else {
@@ -129,7 +141,7 @@ public class AdActionEditAction extends BaseCookieAction{
 				message = "廣告內容簡述不可超過 50 字！";
 				return INPUT;
 			}
-		}
+		}*/
 
 		//log.info(adActionStartDate.matches("^(19[0-9][0-9]|2[01]?[0-9][0-9])(/|-)([1-9]|0[1-9]|1[0-2])(/|-)([1-9]|0[1-9]|[1-2][0-9]|3[01])$"));
 		Date ActionStartDate = new Date();
@@ -189,7 +201,7 @@ public class AdActionEditAction extends BaseCookieAction{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		PfpAdAction pfpAdAction = pfpAdActionService.getPfpAdActionBySeq(adActionSeq);
 		pfpAdAction.setAdActionName(adActionName);
-		pfpAdAction.setAdActionDesc(adActionDesc);
+		pfpAdAction.setAdActionDesc(adActionName);
 		// 廣告開始日期有異動
 		if(!pfpAdAction.getAdActionStartDate().equals(ActionStartDate)) {
 			String accesslogAction_Date = EnumAccesslogAction.AD_DATE_MODIFY.getMessage();
@@ -204,6 +216,9 @@ public class AdActionEditAction extends BaseCookieAction{
 			admAccesslogService.recordAdLog(EnumAccesslogAction.AD_DATE_MODIFY, accesslogMessage_Date, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 			pfpAdAction.setAdActionEndDate(ActionEndDate);
 		}
+		
+		pfpAdAction.setAdType(Integer.parseInt(adType));
+		pfpAdAction.setAdDevice(Integer.parseInt(adDevice));
 		
 		// 確認每日預算不一樣才更新
 		if(iAdActionMax != pfpAdAction.getAdActionMax()){
@@ -331,4 +346,29 @@ public class AdActionEditAction extends BaseCookieAction{
 	public String getAddFlag() {
 		return addFlag;
 	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
+	}
+
+	public String getAdDevice() {
+		return adDevice;
+	}
+
+	public void setAdDevice(String adDevice) {
+		this.adDevice = adDevice;
+	}
+
+	public EnumAdType[] getAdTypeList() {
+		return adTypeList;
+	}
+
+	public EnumAdDevice[] getAdDeviceList() {
+		return adDeviceList;
+	}
+	
 }

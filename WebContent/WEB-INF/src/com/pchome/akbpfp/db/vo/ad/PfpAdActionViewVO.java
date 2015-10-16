@@ -6,6 +6,7 @@ public class PfpAdActionViewVO {
 	private String adActionName = "";
 	private String adActionDesc = "";
 	private String adType = "";
+	private String adDevice = "";
 	private float adActionMax = 0;
 	private int adActionStatus = 0;
 	private String adActionStatusDesc = "";
@@ -45,6 +46,12 @@ public class PfpAdActionViewVO {
 	}
 	public void setAdType(String adType) {
 		this.adType = adType;
+	}
+	public String getAdDevice() {
+		return adDevice;
+	}
+	public void setAdDevice(String adDevice) {
+		this.adDevice = adDevice;
 	}
 	public float getAdActionMax() {
 		return adActionMax;

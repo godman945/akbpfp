@@ -81,10 +81,10 @@
 					}
 				}
 			},
-			adActionDesc: {
+			/*adActionDesc: {
 				required : true,
 				maxlength : 30
-			},
+			},*/
 			adActionStartDate: "required",
 			adActionEndDate: {
 				required: {
@@ -106,10 +106,10 @@
 				maxlength : "廣告名稱輸入字數已達上限 20 字",
 				remote: "廣告名稱重複，請重新輸入"
 			},
-			adActionDesc: {
+			/*adActionDesc: {
 				required : "請填寫廣告內容簡述.",
 				maxlength : "廣告內容簡述輸入字數已達上限 30 字"
-			},
+			},*/
 			adActionStartDate: {
 				required:  "請選擇廣告開始日期."
 			},

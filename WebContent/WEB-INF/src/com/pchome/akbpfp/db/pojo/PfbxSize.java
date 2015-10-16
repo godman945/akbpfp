@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,45 +16,45 @@ import javax.persistence.Table;
 @Table(name = "pfbx_size", catalog = "akb")
 public class PfbxSize implements java.io.Serializable {
 
-    private Integer id;
-    private Integer width;
-    private Integer height;
+	private Integer id;
+	private Integer width;
+	private Integer height;
 
-    public PfbxSize() {
-    }
+	public PfbxSize() {
+	}
 
-    public PfbxSize(Integer width, Integer height) {
-	this.width = width;
-	this.height = height;
-    }
+	public PfbxSize(Integer width, Integer height) {
+		this.width = width;
+		this.height = height;
+	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public Integer getId() {
-	return this.id;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
+	}
 
-    public void setId(Integer id) {
-	this.id = id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    @Column(name = "width")
-    public Integer getWidth() {
-	return this.width;
-    }
+	@Column(name = "width")
+	public Integer getWidth() {
+		return this.width;
+	}
 
-    public void setWidth(Integer width) {
-	this.width = width;
-    }
+	public void setWidth(Integer width) {
+		this.width = width;
+	}
 
-    @Column(name = "height")
-    public Integer getHeight() {
-	return this.height;
-    }
+	@Column(name = "height")
+	public Integer getHeight() {
+		return this.height;
+	}
 
-    public void setHeight(Integer height) {
-	this.height = height;
-    }
+	public void setHeight(Integer height) {
+		this.height = height;
+	}
 
 }

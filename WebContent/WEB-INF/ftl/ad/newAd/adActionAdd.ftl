@@ -25,8 +25,32 @@
                         <td><input type="text" id="adActionName" name="adActionName" maxlength="20" value="${adActionName!}"></td>
                     </tr>
                     <tr>
-                        <th height="35"><span class="t_s02">* </span>廣告內容簡述</th>
-                        <td><input type="text" id="adActionDesc" name="adActionDesc" maxlength="30" value="${adActionDesc!}"></td>
+                        <th height="35"><span class="t_s02">* </span>廣告播放類型</th>
+                        <td>
+                        	<select id="adType" name="adType">
+		                    	<#list adTypeList as data>
+		                    		<#if '${data.type?c!}' == adType >
+		                    		<option value="${data.type!}" selected >${data.typeName!}(${data.explanation!})</option>
+		                    		<#else>
+		                    		<option value="${data.type!}">${data.typeName!}(${data.explanation!})</option>
+		                    		</#if>
+		                        </#list>
+		                    </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th height="35"><span class="t_s02">* </span>廣告播放裝置</th>
+                        <td>
+                        	<select id="adDevice" name="adDevice">
+		                    	<#list adDeviceList as data2>
+		                    		<#if '${data2.devType?c!}' == adDevice >
+		                    		<option value="${data2.devType!}" selected >${data2.devTypeName!}</option>
+		                    		<#else>
+		                    		<option value="${data2.devType!}">${data2.devTypeName!}</option>
+		                    		</#if>
+		                        </#list>
+		                    </select>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -49,7 +73,7 @@
                     </tr>
                     <tr>
                         <th height="35">
-							<span class="t_s02">* </span>每日預算 <a style="cursor:pointer;" onclick="opennots(1)"><img src="<@s.url value="/" />html/img/question.gif" align="absmiddle"></a><br>
+							<span class="t_s02">* </span>每日廣告預算 <a style="cursor:pointer;" onclick="opennots(1)"><img src="<@s.url value="/" />html/img/question.gif" align="absmiddle"></a><br>
 							<div id="shownotes1" style="visibility: hidden;" class="adnoticepop">
 								<h4>每日預算設定</h4>
 								<div class="adpopcont">每日廣告的實際花費，會依搜尋量的變化，與每日設定的廣告預算有小差異。</div>

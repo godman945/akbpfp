@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,58 +19,58 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_illegal_keyword", catalog = "akb")
 public class PfpIllegalKeyword implements java.io.Serializable {
 
-    private Integer seq;
-    private String content;
-    private Date createDate;
-    private Date updateDate;
+	private Integer seq;
+	private String content;
+	private Date createDate;
+	private Date updateDate;
 
-    public PfpIllegalKeyword() {
-    }
+	public PfpIllegalKeyword() {
+	}
 
-    public PfpIllegalKeyword(String content, Date createDate, Date updateDate) {
-	this.content = content;
-	this.createDate = createDate;
-	this.updateDate = updateDate;
-    }
+	public PfpIllegalKeyword(String content, Date createDate, Date updateDate) {
+		this.content = content;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+	}
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "seq", unique = true, nullable = false)
-    public Integer getSeq() {
-	return this.seq;
-    }
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "seq", unique = true, nullable = false)
+	public Integer getSeq() {
+		return this.seq;
+	}
 
-    public void setSeq(Integer seq) {
-	this.seq = seq;
-    }
+	public void setSeq(Integer seq) {
+		this.seq = seq;
+	}
 
-    @Column(name = "content", nullable = false, length = 50)
-    public String getContent() {
-	return this.content;
-    }
+	@Column(name = "content", nullable = false, length = 50)
+	public String getContent() {
+		return this.content;
+	}
 
-    public void setContent(String content) {
-	this.content = content;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date", nullable = false, length = 19)
-    public Date getCreateDate() {
-	return this.createDate;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date", nullable = false, length = 19)
+	public Date getCreateDate() {
+		return this.createDate;
+	}
 
-    public void setCreateDate(Date createDate) {
-	this.createDate = createDate;
-    }
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date", nullable = false, length = 19)
-    public Date getUpdateDate() {
-	return this.updateDate;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "update_date", nullable = false, length = 19)
+	public Date getUpdateDate() {
+		return this.updateDate;
+	}
 
-    public void setUpdateDate(Date updateDate) {
-	this.updateDate = updateDate;
-    }
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
 
 }

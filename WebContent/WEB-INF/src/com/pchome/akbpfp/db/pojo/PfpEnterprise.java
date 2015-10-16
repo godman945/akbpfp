@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated Jul 14, 2015 12:06:31 PM by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -17,46 +17,46 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_enterprise", catalog = "akb")
 public class PfpEnterprise implements java.io.Serializable {
 
-    private String taxId;
-    private String companyName;
-    private Date createDate;
+	private String taxId;
+	private String companyName;
+	private Date createDate;
 
-    public PfpEnterprise() {
-    }
+	public PfpEnterprise() {
+	}
 
-    public PfpEnterprise(String taxId, String companyName, Date createDate) {
-	this.taxId = taxId;
-	this.companyName = companyName;
-	this.createDate = createDate;
-    }
+	public PfpEnterprise(String taxId, String companyName, Date createDate) {
+		this.taxId = taxId;
+		this.companyName = companyName;
+		this.createDate = createDate;
+	}
 
-    @Id
-    @Column(name = "tax_id", unique = true, nullable = false, length = 8)
-    public String getTaxId() {
-	return this.taxId;
-    }
+	@Id
+	@Column(name = "tax_id", unique = true, nullable = false, length = 8)
+	public String getTaxId() {
+		return this.taxId;
+	}
 
-    public void setTaxId(String taxId) {
-	this.taxId = taxId;
-    }
+	public void setTaxId(String taxId) {
+		this.taxId = taxId;
+	}
 
-    @Column(name = "company_name", nullable = false, length = 30)
-    public String getCompanyName() {
-	return this.companyName;
-    }
+	@Column(name = "company_name", nullable = false, length = 30)
+	public String getCompanyName() {
+		return this.companyName;
+	}
 
-    public void setCompanyName(String companyName) {
-	this.companyName = companyName;
-    }
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date", nullable = false, length = 19)
-    public Date getCreateDate() {
-	return this.createDate;
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "create_date", nullable = false, length = 19)
+	public Date getCreateDate() {
+		return this.createDate;
+	}
 
-    public void setCreateDate(Date createDate) {
-	this.createDate = createDate;
-    }
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 
 }

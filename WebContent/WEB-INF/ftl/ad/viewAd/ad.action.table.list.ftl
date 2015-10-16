@@ -19,6 +19,8 @@
 	<tr>
 		<th width="50"><a href="#" onclick="checkAll()">全選</a></th>
 		<th height="35">廣告</th>
+		<th>類型</th>
+		<th>裝置</th>
 		<th>狀態</th>
 		<th>廣告走期</th>
 		<th>每日花費</th>
@@ -50,6 +52,8 @@
 			        ${vo.adActionName!}
 				</#if>		        	
 		        </td>
+		        <td class="td03">${vo.adType!}</td>
+		        <td class="td03">${vo.adDevice!}</td>
 		        <td class="td03">${vo.adActionStatusDesc!}</td>
 				<td class="td03">
 				<#if vo.adEndDate == "3000-12-31">
