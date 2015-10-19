@@ -32,7 +32,9 @@
 	
 		<div class="adnav_box">
 			<ul class="detailtab">
+				<#if adType == "0" || adType == "1" >
 				<li><a href="adKeywordView.html?adGroupSeq=${adGroup.adGroupSeq!}&groupMaxPrice=${groupMaxPrice!}">關鍵字</a></li>
+				</#if>
 				<li><a href="#" class="active"><img src="<@s.url value="/" />html/img/detailtab_bg2.gif" width="7" height="10">廣告明細</a></li>
 			</ul>
 		</div>		
@@ -68,3 +70,4 @@
 	</div>
 </div> 
 <input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroup.adGroupSeq!}" />
+<input type="hidden" id="adType" name="adType" value="${adType!}" />

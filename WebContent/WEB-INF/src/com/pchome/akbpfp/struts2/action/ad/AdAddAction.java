@@ -21,6 +21,11 @@ import org.json.JSONObject;
 import org.springframework.transaction.annotation.Transactional;
 
 
+
+
+
+
+
 import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.api.ControlPriceAPI;
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
@@ -45,9 +50,14 @@ import com.pchome.akbpfp.db.vo.ad.PfpAdDetailVO;
 import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.akbpfp.godutil.ImageVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdChannelPCSize;
 import com.pchome.enumerate.ad.EnumAdDetail;
+import com.pchome.enumerate.ad.EnumAdDevice;
+import com.pchome.enumerate.ad.EnumAdSearchMobileSize;
+import com.pchome.enumerate.ad.EnumAdSearchPCSize;
 import com.pchome.enumerate.ad.EnumAdSize;
 import com.pchome.enumerate.ad.EnumAdStyle;
+import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
@@ -105,7 +115,10 @@ public class AdAddAction extends BaseCookieAction{
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private IPfbSizeService pfbSizeService;
 	//廣告支援尺寸表
-	private List<PfbxSize> pfbSizeList = new ArrayList<PfbxSize>();
+	private List<PfbxSize> searchPCSizeList = new ArrayList<PfbxSize>();
+	private List<PfbxSize> searchMobileSizeList = new ArrayList<PfbxSize>();
+	private List<PfbxSize> channelPCSizeList = new ArrayList<PfbxSize>();
+	private List<PfbxSize> channelMobileSizeList = new ArrayList<PfbxSize>();
 	//圖片上傳位置
 	private String imgUploadPath;
 	private ControlPriceAPI controlPriceAPI;
@@ -115,6 +128,9 @@ public class AdAddAction extends BaseCookieAction{
 	private String adLinkURL;
 	private String photoDbPathNew;
 	private String adHiddenType;	//已建立的分類關鍵字欄位隱藏設定
+	
+	private String adType;			//廣告類型
+	private String adDevice;		//廣告播放裝置
 
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
@@ -563,13 +579,50 @@ public class AdAddAction extends BaseCookieAction{
 	    adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 	    adGroupName  = pfpAdGroup.getAdGroupName();
 	    adStyle = "TMG";
+	    adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
+	    adDevice = pfpAdGroup.getPfpAdAction().getAdDevice().toString();
 	    List<PfbxSize> pfbSizeList = pfbSizeService.loadAll();
-	    for (EnumAdSize enumAdSize : EnumAdSize.values()) {
-    		for (PfbxSize pfbxSize : pfbSizeList) {
-    		    if(String.valueOf(pfbxSize.getId()).equals(enumAdSize.getName())){
-    		        this.pfbSizeList.add(pfbxSize);
-    		    }
-    		}
+	    //搜索廣告(電腦)尺寸列表
+	    if(Integer.parseInt(adType) == EnumAdType.AD_ALL.getType() || Integer.parseInt(adType) == EnumAdType.AD_SEARCH.getType()){
+	    	for(EnumAdSearchPCSize enumAdSearchPCSize : EnumAdSearchPCSize.values()){
+	    		for (PfbxSize pfbxSize : pfbSizeList) {
+	    			if(String.valueOf(pfbxSize.getId()).equals(enumAdSearchPCSize.getName())){
+	    				searchPCSizeList.add(pfbxSize);
+	    		    }
+	    		}
+	    	}
+	    }
+	    //內容廣告(電腦)尺寸列表
+	    if(Integer.parseInt(adType) == EnumAdType.AD_ALL.getType() || Integer.parseInt(adType) == EnumAdType.AD_CHANNEL.getType()){
+	    	for(EnumAdChannelPCSize enumAdChannelPCSize : EnumAdChannelPCSize.values()){
+	    		for (PfbxSize pfbxSize : pfbSizeList) {
+	    			if(String.valueOf(pfbxSize.getId()).equals(enumAdChannelPCSize.getName())){
+	    				channelPCSizeList.add(pfbxSize);
+	    		    }
+	    		}
+	    	}
+	    }
+	    //搜索廣告(行動裝置)尺寸列表
+	    /*if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
+	    		Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_PC.getDevType()){
+	    	for(EnumAdSearchMobileSize enumAdSearchMobileSize : EnumAdSearchMobileSize.values()){
+	    		for (PfbxSize pfbxSize : pfbSizeList) {
+	    			if(String.valueOf(pfbxSize.getId()).equals(enumAdSearchMobileSize.getName())){
+	    				searchMobileSizeList.add(pfbxSize);
+	    		    }
+	    		}
+	    	}
+	    }*/
+	    //內容廣告(行動裝置)尺寸列表
+	    if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
+	    		Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_MOBILE.getDevType()){
+	    	for(EnumAdSearchMobileSize enumAdSearchMobileSize : EnumAdSearchMobileSize.values()){
+	    		for (PfbxSize pfbxSize : pfbSizeList) {
+	    			if(String.valueOf(pfbxSize.getId()).equals(enumAdSearchMobileSize.getName())){
+	    				channelMobileSizeList.add(pfbxSize);
+	    		    }
+	    		}
+	    	}
 	    }
 
 	    // 取出分類所屬關鍵字
@@ -859,12 +912,36 @@ public class AdAddAction extends BaseCookieAction{
     	return SUCCESS;
     }
 
-	public List<PfbxSize> getPfbSizeList() {
-	    return pfbSizeList;
+	public List<PfbxSize> getSearchPCSizeList() {
+		return searchPCSizeList;
 	}
 
-	public void setPfbSizeList(List<PfbxSize> pfbSizeList) {
-	    this.pfbSizeList = pfbSizeList;
+	public void setSearchPCSizeList(List<PfbxSize> searchPCSizeList) {
+		this.searchPCSizeList = searchPCSizeList;
+	}
+
+	public List<PfbxSize> getChannelPCSizeList() {
+		return channelPCSizeList;
+	}
+
+	public void setChannelPCSizeList(List<PfbxSize> channelPCSizeList) {
+		this.channelPCSizeList = channelPCSizeList;
+	}
+
+	public List<PfbxSize> getSearchMobileSizeList() {
+		return searchMobileSizeList;
+	}
+
+	public void setSearchMobileSizeList(List<PfbxSize> searchMobileSizeList) {
+		this.searchMobileSizeList = searchMobileSizeList;
+	}
+
+	public List<PfbxSize> getChannelMobileSizeList() {
+		return channelMobileSizeList;
+	}
+
+	public void setChannelMobileSizeList(List<PfbxSize> channelMobileSizeList) {
+		this.channelMobileSizeList = channelMobileSizeList;
 	}
 
 	public void setPfpCustomerInfoService(
@@ -1175,6 +1252,22 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setFileuploadFileName(String fileuploadFileName) {
 		this.fileuploadFileName = fileuploadFileName;
+	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
+	}
+
+	public String getAdDevice() {
+		return adDevice;
+	}
+
+	public void setAdDevice(String adDevice) {
+		this.adDevice = adDevice;
 	}
 
 }

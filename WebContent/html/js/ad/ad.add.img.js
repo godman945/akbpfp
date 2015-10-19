@@ -10,7 +10,10 @@ var uploadFileSize = "";
  
 $(document).ready(function(){
 	//隱藏關鍵字區域
-	$("#keywordBody").hide();
+	var adType = $("#adType").val();
+	if(adType == "2"){
+		$("#keywordBody").hide();	
+	}
 	
 	$("#fileupload").hide();
 	if($.browser.msie){
@@ -140,6 +143,13 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat)
 		errorTitle = '檔案過大!';
 		errorMsg = '檔案大小上限4000KB';
 	}
+	$.each($("#adSizeDiv p"), function( index, obj ) {
+		if($(obj).text().indexOf(width+" x "+height) >= 0){
+			imgSize = "yes";
+			imgSizeFlag = true;
+			return false;
+		}
+	});
 	if(!imgSizeFlag){
 		errorTitle = '錯誤的尺寸!';
 		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a>';
@@ -150,13 +160,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat)
 		errorTitle = '錯誤的檔案類型!';
 		errorMsg = '支援的檔案類型JPG、PNG、GIF';
 	}
-	$.each($("#adSizeDiv p"), function( index, obj ) {
-		if($(obj).text() == width+" x "+height){
-			imgSize = "yes";
-			imgSizeFlag = true;
-			return false;
-		}
-	});
 	
 	if(imgRepeat == 'yes'){
 		errorTitle = '廣告圖片已存在!';
@@ -340,7 +343,7 @@ function approveSize(){
 	    		{
 	    			'modal'             : true,
 	    			'autoDimensions'	: false,
-	    			'width'         	: 300,
+	    			'width'         	: 460,
 	    			'height'        	: 'auto',
 	    			'autoSize'			: true,
 	    			'autoHeight'		: true,
@@ -375,12 +378,14 @@ function multipartImgUuploadSubmit(){
 		keyWordArray.push($(obj).text());
 	});
 	
-	//2015.08.27  關鍵字不為必填 by Tim
-	/*if($("#existKW").children().length == 0 && keyWordArray.length == 0){
-		$("#chkAdKeyword").html("請新增關鍵字");
-		$("#adKeyword").focus();
-		return false;
-	}*/
+	var adType = $("#adType").val();
+	if(adType == "0" || adType == "1"){
+		if($("#existKW").children().length == 0 && keyWordArray.length == 0){
+			$("#chkAdKeyword").html("請新增關鍵字");
+			$("#adKeyword").focus();
+			return false;
+		}
+	}
 	
 	var excludeKeywordULArray = [];
 	$.each($("#ExcludeKeywordUL li"), function( index, obj ) {

@@ -15,7 +15,7 @@
 				<tbody>
 					<tr>
 						<th>
-							<a name="errAdKeyword"></a>輸入關鍵字<br>
+							<a name="errAdKeyword"></a><span class="t_s02">* </span>輸入關鍵字<br>
 							<span class="t_s01">系統比對到您設定的關鍵字，您的廣告就有機會曝光</span>
 						</th>
 						<td>

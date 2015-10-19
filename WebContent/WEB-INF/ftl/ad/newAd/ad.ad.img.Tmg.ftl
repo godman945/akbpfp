@@ -103,7 +103,7 @@
 	</div>
 </div>
 
-<#if pfbSizeList?exists>
+<#if channelMobileSizeList?exists>
 <div style="display:none;"  id="approveSizeDiv">
 	<div class="noticepop" style="width:auto;"><h4>廣告圖片支援規格查詢</h4><div>
     <table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
@@ -124,9 +124,48 @@
               <th height="20">尺寸</th>
               <td>
                <div id="adSizeDiv" style="height:200px;overflow:auto;">
-              <#list pfbSizeList as pfbSizeVO>
-	 			<p>${pfbSizeVO.width!} x ${pfbSizeVO.height!}<br></p>
-			  </#list>
+                 <div>
+                 	<#if adType == '0' || adType == '1' >
+                 	<div style="color:#ff3300;"><b>僅支援搜尋廣告</b></div>
+                 		<div>
+                 			<#if channelMobileSizeList?size != 0>
+		                 	<#list searchPCSizeList as searchPCSize>
+					 			<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
+							</#list>
+							</#if>
+						</div>
+						<div>
+							<#if searchMobileSizeList?size != 0>
+		                 	<#list searchMobileSizeList as searchMobileSize>
+					 			<p>${searchMobileSize.width!} x ${searchMobileSize.height!}(行動裝置)</p>
+							</#list>
+							</#if>
+						</div>
+                 <div/>
+                 </#if>
+                 <#if adType == '0' || adType == '2' >
+                 <div>
+                 	<div style="color:#ff3300;"><b>僅支援內容廣告</b></div>
+                 		<#if adDevice == '0' || adType == '1' >
+                 		<div style="width:110px;float:left;">
+                 			<#if channelPCSizeList?size != 0>
+		                 	<#list channelPCSizeList as channelPCSize>
+					 			<p>${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+							</#list>
+							</#if>
+						</div>
+						</#if>
+						<#if adDevice == '0' || adType == '1' >
+						<div style="width:120px;float:left;">
+							<#if channelMobileSizeList?size != 0>
+		                 	<#list channelMobileSizeList as channelMobileSize>
+					 			<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+							</#list>
+							</#if>
+						</div>
+						</#if>
+                 <div/>
+                 </#if>
 			  </div>
               </td>
             </tr>					

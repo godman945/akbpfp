@@ -74,7 +74,9 @@
 				<td class="td02">
 					<#if vo.adStatus != 9>
 						<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}">製作新廣告</a><br>
+						<#if adType == "0" || adType == "1" >
 						<a href="adKeywordAdd.html?adGroupSeq=${vo.adGroupSeq!}">新增關鍵字</a><br>
+						</#if>
 					</#if>
 					<#if vo.adStatus != 2 && vo.adStatus != 13>	
 						<#if vo.adStyle == "TXT">			

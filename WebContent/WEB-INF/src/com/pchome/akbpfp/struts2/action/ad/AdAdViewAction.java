@@ -45,6 +45,8 @@ public class AdAdViewAction extends BaseCookieAction{
 	private String adAdSeq;
 	private String status;
 	private String groupMaxPrice;
+	private String adType;
+	
 	public String execute() throws Exception{
 		
 		searchAdType = EnumAdType.values();
@@ -57,6 +59,8 @@ public class AdAdViewAction extends BaseCookieAction{
 		board = pfpBoardService.findAccountRemainBoard(EnumBoardType.FINANCE, 
 														super.getCustomer_info_id(), 
 														EnumCategory.REMAIN_NOT_ENOUGH);
+		
+		adType = adGroup.getPfpAdAction().getAdType().toString();
 		
 		return SUCCESS;
 	}
@@ -196,6 +200,14 @@ public class AdAdViewAction extends BaseCookieAction{
 
 	public void setGroupMaxPrice(String groupMaxPrice) {
 	    this.groupMaxPrice = groupMaxPrice;
+	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
 	}
 	
 }

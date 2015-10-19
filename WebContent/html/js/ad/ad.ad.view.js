@@ -32,6 +32,7 @@ function findTableView(){
 	var pageSize = $("#pageSize").val();
 	var keyword = $("#keyword").val();
 	var adGroupSeq = $("#adGroupSeq").val();
+	var adType = $("#adType").val();
 	
 	$.ajax({
 		url: "adAdViewTable.html",
@@ -42,7 +43,8 @@ function findTableView(){
 			 "searchType": searchType,
 			 "keyword": keyword,
 			 "pageNo": pageNo,
-			 "pageSize": pageSize
+			 "pageSize": pageSize,
+			 "adType": adType
 		},
 		type:"post",
 		dataType:"html",

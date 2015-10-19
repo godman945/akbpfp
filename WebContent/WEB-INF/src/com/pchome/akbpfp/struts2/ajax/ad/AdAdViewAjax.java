@@ -14,6 +14,7 @@ import java.util.Map;
 
 
 
+
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -48,6 +49,8 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private float totalAvgCost = 0;
 	private int totalCost = 0;
 	private int totalInvalidClk = 0;
+	
+	private String adType;
 	
 	public String adAdViewTableAjax() throws Exception{
 		int type = Integer.parseInt(searchType);
@@ -225,5 +228,14 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	public int getTotalInvalidClk() {
 		return totalInvalidClk;
+	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
 	}	
+	
 }
