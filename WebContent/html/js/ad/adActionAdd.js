@@ -2,6 +2,31 @@
     
 	initDate();
 
+	$("#adType").change(function(){
+		var adType = $("#adType").val();
+		$("#adDevice option").each(function() {
+			var adDevice = $(this).val();
+			if(adType == "1"){
+				if(adDevice == "1"){
+					 $(this).attr("selected","selected");
+				} else {
+					 $(this).removeAttr("selected");
+				}
+			} else {
+				if(adDevice == "0"){
+					 $(this).attr("selected","selected");
+				} else {
+					 $(this).removeAttr("selected");
+				}
+			} 
+			if(adType == "1"){
+				$("#adDevice").attr("disabled","disabled");
+			} else {
+				$("#adDevice").removeAttr("disabled");
+			}
+        });
+	});
+	
 	function initDate() {
 
 		/*if ($('#adActionStartDate').length > 0) {
