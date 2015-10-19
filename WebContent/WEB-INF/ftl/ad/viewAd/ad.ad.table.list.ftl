@@ -19,7 +19,7 @@
 		<th>廣告明細</th>
 		<th style="width:6%">狀態</th>
 		<th style="width:6%">曝光數</th>
-		<th style="width:6%">點選率(%)</th>
+		<th style="width:6%">點選率</th>
 		<th style="width:6%">點選次數</th>	
 		<!--<th style="width:6%">無效點選次數</th>-->
 		<th style="width:8%">平均點選費用</th>
@@ -46,6 +46,7 @@
 							<span class="adboxdvimg"><a href="${vo.realUrl!}" target="_blank"><img src="${vo.originalImg!}" /></a></span>
 				        	<span class="adboxdvinf">
 						        <span>
+						        	<b>${vo.title!}</b><br>
 						            <i>尺寸</i><b>${vo.imgWidth!} x ${vo.imgHeight!}</b><br>
 						            <span>${vo.showUrl!}</span><br>
 						            <a class="fancy" style="cursor:pointer" onclick="preview('${vo.originalImg!}')" alt="預覽">預覽</a>
@@ -56,18 +57,18 @@
 						<span><iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span>
 		        	</#if>
 		        </td>
-		        <td>
+		        <td class="td03">
 		        ${vo.adStatusDesc!}
 		        <#if vo.adStatus == 3 || vo.adStatus == 6>
 		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${vo.adRejectReason!}">
 		        </#if>
 		        </td>
 				<td class="td01">${vo.adPv?string('#,###')!}</td>				
-				<td class="td01">${vo.adClkRate?string('#.##')!}</td>
+				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<td class="td01">${vo.adClk?string('#,###')!}</td>
 				<!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->
-				<td class="td01">${vo.adClkPriceAvg?string('#.##')!}</td>
-				<td class="td01">${vo.adClkPrice?string('#,###')!}</td>
+				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
+				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
 				<td>${vo.adActionName!}</td>
 				<td>${vo.adGroupName!}</td>
 				<td class="td02">
@@ -102,11 +103,11 @@
 	<tr class="tbg">
 		<td colspan="3">總計：${totalSize!}筆</td>
 		<td class="td01">${totalPv?string('#,###')!}</td>
-		<td class="td01">${totalClkRate?string('#.##')!}</td>
+		<td class="td01">${totalClkRate?string('#.##')!}%</td>
 		<td class="td01">${totalClk?string('#,###')!}</td>		
 		<!--<td class="td01">${totalInvalidClk?string('#.##')!}</td>-->
-		<td class="td01">${totalAvgCost?string('#.##')!}</td>
-		<td class="td01">${totalCost?string('#,###')!}</td>
+		<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
+		<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
 		<td></td>
 		<td></td>
 		<td></td>

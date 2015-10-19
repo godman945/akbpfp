@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pchome.akbpfd.db.vo.user.PfdUserAdAccountRefVO;
 import com.pchome.akbpfp.api.MemberAPI;
 import com.pchome.akbpfp.api.RedirectBillingAPI;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
@@ -24,6 +25,7 @@ import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeRecordService;
 import com.pchome.akbpfp.db.service.order.IPfpOrderDetailService;
 import com.pchome.akbpfp.db.service.order.IPfpOrderService;
+import com.pchome.akbpfp.db.service.pfd.user.IPfdUserAdAccountRefService;
 import com.pchome.akbpfp.db.service.sequence.SequenceService;
 import com.pchome.akbpfp.db.service.user.IPfpUserMemberRefService;
 import com.pchome.akbpfp.db.service.user.IPfpUserService;
@@ -58,6 +60,7 @@ public class ApplyAction extends BaseSSLAction{
 	private RedirectBillingAPI redirectBillingAPI;
 	private IAdmAccesslogService admAccesslogService;
 	private IAdmFreeRecordService admFreeRecordService;
+	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 
 	private EnumBillingStatus[] enumBillingStatus  = EnumBillingStatus.values();
 	private AccountVO accountVO;
@@ -198,6 +201,7 @@ public class ApplyAction extends BaseSSLAction{
 		PfpUser user = null;
 		String userMemberId = null; 			// 使用者登入帳號 memberId
 		PfpCustomerInfo pfpCustomerInfo = null;	// 使用者申請帳戶
+		String userStyle = "normal";			// 使用者註記
 		
 		// 開通 PFP 帳戶
 		if(StringUtils.isNotBlank(super.getCustomer_info_id())){
@@ -208,6 +212,7 @@ public class ApplyAction extends BaseSSLAction{
 				userMemberId = pfpCustomerInfo.getMemberId();
 				
 			}
+			userStyle = "pfdUser";
 		}else{
 			// 一般申請 PFP 帳戶
 			userMemberId = super.getId_pchome();
@@ -215,8 +220,9 @@ public class ApplyAction extends BaseSSLAction{
 			// 取帳戶目前狀態
 			pfpCustomerInfo = this.checkAccountExist(userMemberId);
 
+			userStyle = "normal";
 		}
-		
+		log.info("-------------------userStyle=" + userStyle);
 		// 從會員中心取會員資料
 		this.memberVO = memberAPI.getMemberVOData(userMemberId);
 		
@@ -241,6 +247,18 @@ public class ApplyAction extends BaseSSLAction{
 			
 			// 建立訂單
 			orderId = this.createNewOrder(pfpCustomerInfo, user, admFreeGift);
+			
+			// 一般申請 PFP 帳戶的使用者要設定經銷商為PCHOME經銷商
+			if("normal".equals(userStyle)){
+				PfdUserAdAccountRefVO pfdUserAdAccountRefVO = new PfdUserAdAccountRefVO();
+				pfdUserAdAccountRefVO.setRefId(pfdUserAdAccountRefService.getNewRefId());
+				pfdUserAdAccountRefVO.setPfdCustomerInfoId("PFDC20140520001");
+				pfdUserAdAccountRefVO.setPfdUserId("PFDU20140520001");
+				pfdUserAdAccountRefVO.setPfpCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+				pfdUserAdAccountRefVO.setPfpUserId(user.getUserId());
+				pfdUserAdAccountRefVO.setPfpPayType("1");
+				pfdUserAdAccountRefService.savePfdUserAdAccountRef(pfdUserAdAccountRefVO);
+			}
 			
 		}
 		else if(pfpCustomerInfo.getStatus().equals(EnumAccountStatus.APPLY.getStatus())){
@@ -720,6 +738,10 @@ public class ApplyAction extends BaseSSLAction{
 	
 	public String getChannelId() {
 		return channelId;
+	}
+	public void setPfdUserAdAccountRefService(
+			IPfdUserAdAccountRefService pfdUserAdAccountRefService) {
+		this.pfdUserAdAccountRefService = pfdUserAdAccountRefService;
 	}
 
 }

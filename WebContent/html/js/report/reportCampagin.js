@@ -140,12 +140,12 @@ function ready(){
 			0 : { sorter: false },
 			2 : { sorter: 'shortDate' },
 			3 : { sorter: 'fancyNumber' },
-			4 : { sorter: 'fancyNumber' },
+			4 : { sorter: 'rangesort' },
 			5 : { sorter: 'fancyNumber' },
 			6 : { sorter: 'fancyNumber' },
 			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'fancyNumber' },
-			9 : { sorter: 'fancyNumber' }
+			8 : { sorter: 'rangesort' },
+			9 : { sorter: 'rangesort' }
 		}
 	});
 

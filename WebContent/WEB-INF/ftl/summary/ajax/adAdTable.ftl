@@ -10,7 +10,7 @@
 	<th height="35">廣告明細</th>
     <th style="width:10%">狀態</th>
     <th style="width:10%">曝光數</th>
-    <th style="width:10%">點選率(%)</th>
+    <th style="width:10%">點選率</th>
     <th style="width:10%">點選次數</th>
     <!--<th style="width:10%">無效點選次數</th>-->
     <th style="width:10%">平均點選費用</th>
@@ -27,6 +27,7 @@
 				<span class="adboxdvimg"><a href="${vo.realUrl!}" target="_blank"><img src="${vo.originalImg!}" /></a></span>
 				<span class="adboxdvinf">
 					<span>
+						<b>${vo.title!}</b><br>
 						<i>尺寸</i><b>${vo.imgWidth!} x ${vo.imgHeight!}</b><br>
 						<span>${vo.showUrl!}</span><br>
 						<a class="fancy" style="cursor:pointer" onclick="preview('${vo.originalImg!}')" alt="預覽">預覽</a>
@@ -40,13 +41,13 @@
 			</span>
 		</#if>
 		</td>
-	    <td class="td02">${vo.statusChName!}</td>
+	    <td class="td03">${vo.statusChName!}</td>
 	    <td class="td01">${vo.pv?string('#,###')!}</td>
 	    <td class="td01">${vo.clkRate?string('#.##')!}%</td>
 	    <td class="td01">${vo.clk?string('#,###')!}</td>	  
 	    <!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->  
-	    <td class="td01">${vo.avgClkCost?string('#.##')!}</td>
-	    <td class="td01">${vo.clkCost?string('#,###')!}</td>
+	    <td class="td01">NT$ ${vo.avgClkCost?string('#.##')!}</td>
+	    <td class="td01">NT$ ${vo.clkCost?string('#,###')!}</td>
 	  </tr> 		
 	</#list>
 <#else>

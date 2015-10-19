@@ -23,7 +23,7 @@
 		<th>廣告走期</th>
 		<th>每日花費</th>
 		<th style="width:7%">曝光數</th>
-		<th>點選率(%)</th>
+		<th>點選率</th>
 		<th>點選次數</th>
 		<!--<th>無效點選次數</th>-->	
 		<th>平均點選費用</th>
@@ -50,8 +50,8 @@
 			        ${vo.adActionName!}
 				</#if>		        	
 		        </td>
-		        <td class="td02">${vo.adActionStatusDesc!}</td>
-				<td class="td02">
+		        <td class="td03">${vo.adActionStatusDesc!}</td>
+				<td class="td03">
 				<#if vo.adEndDate == "3000-12-31">
 				${vo.adStartDate!} ~ 永久
 				<#else>
@@ -60,11 +60,11 @@
 				</td>
 				<td><input type="text" id="max_${vo.adActionSeq!}" style="width:60px;text-align:right" value="${vo.adActionMax?string('###')!}" maxlength="6" class="required digits" min="100"> <input type="button" id="bt_${vo.adActionSeq!}" value="確定" onclick="updAdActionMax('${vo.adActionSeq!}')"></td>
 				<td class="td01">${vo.adPv?string('#,###')!}</td>				
-				<td class="td01">${vo.adClkRate?string('#.##')!}</td>
+				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<td class="td01">${vo.adClk?string('#,###')!}</td>
 				<!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->
-				<td class="td01">${vo.adClkPriceAvg?string('#.##')!}</td>
-				<td class="td01">${vo.adClkPrice?string('#,###')!}</td>
+				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
+				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
 				<td class="td02">
 					<#if vo.adActionStatus != 9>
 						<a href="adGroupAdd.html?adActionSeq=${vo.adActionSeq!}">新增分類</a><br>
@@ -87,11 +87,11 @@
 	<tr class="tbg">
 		<td colspan="5">總計：${totalSize!}筆</td>
 		<td class="td01">${totalPv?string('#,###')!}</td>				
-		<td class="td01">${totalClkRate?string('#.##')!}</td>
+		<td class="td01">${totalClkRate?string('#.##')!}%</td>
 		<td class="td01">${totalClk?string('#,###')!}</td>	
 		<!--<td class="td01">${totalInvildClk?string('#.##')!}</td>-->
-		<td class="td01">${totalAvgCost?string('#.##')!}</td>
-		<td class="td01">${totalCost?string('#,###')!}</td>
+		<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
+		<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
 		<td></td>
 	</tr>
 </table>

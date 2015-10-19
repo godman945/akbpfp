@@ -6,6 +6,7 @@ import com.pchome.akbpfp.db.dao.ad.PfpAdDetailDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdDetailVO;
+import com.pchome.utils.CommonUtils;
 
 public class PfpAdDetailService extends BaseService<PfpAdDetail,String> implements IPfpAdDetailService{
 	
@@ -51,6 +52,15 @@ public class PfpAdDetailService extends BaseService<PfpAdDetail,String> implemen
 		this.pfpAdDetailDAO = pfpAdDetailDAO;
 	}
 
+	public List<PfpAdDetail> getPfpAdDetailsForAdGroup(String customerInfoId, String adGroupSeq, String adDetailId, String adDetailContent)throws Exception {
+		
+		// 先攔掉 SQL Injection 攻擊語法
+		customerInfoId = CommonUtils.filterSqlInjection(customerInfoId);
+		adGroupSeq = CommonUtils.filterSqlInjection(adGroupSeq);
+		
+		return pfpAdDetailDAO.getPfpAdDetailsForAdGroup(customerInfoId, adGroupSeq, adDetailId, adDetailContent);
+	}
+	
 	public static void main(String arg[]) throws Exception{
 	}
 

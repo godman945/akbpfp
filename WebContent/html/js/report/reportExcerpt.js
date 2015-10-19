@@ -153,7 +153,8 @@ function ready(){
             4 : { sorter: 'fancyNumber' },
             5 : { sorter: 'fancyNumber' },
             6 : { sorter: 'fancyNumber' },
-            7 : { sorter: 'fancyNumber' }
+            7 : { sorter: 'rangesort' },
+            8 : { sorter: 'rangesort' }
         }
     });
 	
@@ -500,4 +501,17 @@ function serachReset(){
     document.excerptFrom.searchId.value = "";
 }
 
-
+function preview(img) {
+    $.fancybox({
+        'href':img,
+        'autoSize':true,
+        'autoHeight':true,
+        'autoScale':true,
+        'transitionIn':'none',
+        'transitionOut':'none',
+        'padding':0,
+        'overlayOpacity':.75,
+        'overlayColor':'#fff',
+        'scrolling':'no'
+    });
+}

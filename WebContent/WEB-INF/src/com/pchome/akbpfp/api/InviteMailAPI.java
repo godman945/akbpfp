@@ -7,12 +7,16 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.pchome.soft.util.SpringEmailUtil;
+import com.pchome.utils.EmailUtils;
+
+
 
 public class InviteMailAPI {
 
 	protected final static String CHARSET = "UTF-8";
 	protected final static String Subject = "PChome 廣告刊登 - 帳戶邀請信件";
+	protected final static String MailUserName = "PChome廣告刊登-關鍵字廣告服務";
+	
 
     protected Log log = LogFactory.getLog(getClass().getName());
     
@@ -22,10 +26,10 @@ public class InviteMailAPI {
     
     public void sendInviteMail(String[] emails, String mailContent){
     	
-    	SpringEmailUtil.getInstance().setHost(mailService);
+    	EmailUtils.getInstance().setHost(mailService);
     	
     	try {
-    		SpringEmailUtil.getInstance().sendHtmlEmail(Subject, mailFrom, emails, null, mailContent);
+    		EmailUtils.getInstance().sendHtmlEmail(Subject, mailFrom, MailUserName, emails, null, mailContent);
     	} catch (Exception e) {
             log.error(" send mail error : "+e);
         }

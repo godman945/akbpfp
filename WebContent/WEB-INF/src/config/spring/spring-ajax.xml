@@ -32,6 +32,7 @@
     <!-- board ajax -->
     <bean id="BoardAjax" class="com.pchome.akbpfp.struts2.ajax.board.BoardAjax" scope="prototype" >
     	<property name="pfpBoardService" ref="PfpBoardService" />
+    	<property name="pfpAdService" ref="PfpAdService" />
     </bean>
     
     <!-- bill ajax -->
@@ -58,7 +59,9 @@
     	<property name="pfpAdExcludeKeywordService" ref="PfpAdExcludeKeywordService" />
     </bean>
 
-    <bean id="AdUtilAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax" scope="prototype" />
+    <bean id="AdUtilAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax" scope="prototype" >
+    	<property name="akbPfpServer" value="${akbpfp.server}" />
+    </bean>
 
     <!-- adAction ajax -->
     <bean id="AdActionAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdActionAjax" scope="prototype" >

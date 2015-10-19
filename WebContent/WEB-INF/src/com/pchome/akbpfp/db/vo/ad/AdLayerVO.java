@@ -21,6 +21,7 @@ public class AdLayerVO {
 	private String imgWidth = "";
 	private String imgHeight = "";
 	private String showUrl = "";
+	private String title = "";
 	
 	public String getSeq() {
 		return seq;
@@ -129,6 +130,12 @@ public class AdLayerVO {
 	}
 	public void setShowUrl(String showUrl) {
 		this.showUrl = showUrl;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 }

@@ -142,8 +142,8 @@ function ready(){
 			0 : { sorter: false },
 			2 : { sorter: 'fancyNumber' },
 			3 : { sorter: 'fancyNumber' },
-			4 : { sorter: 'fancyNumber' },
-			5 : { sorter: 'fancyNumber' },
+			4 : { sorter: 'rangesort' },
+			5 : { sorter: 'rangesort' },
 			6 : { sorter: 'fancyNumber' },
 			7 : { sorter: 'fancyNumber' }
 		}

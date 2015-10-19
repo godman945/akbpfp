@@ -8,6 +8,7 @@
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery-1.8.3.min.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery-common.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.tablesorter.js"></script>	
+	<script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/manager/manager.js"></script>
 </head>
 

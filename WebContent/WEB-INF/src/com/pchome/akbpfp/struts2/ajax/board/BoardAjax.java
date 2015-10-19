@@ -3,7 +3,9 @@ package com.pchome.akbpfp.struts2.ajax.board;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpBoard;
+import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.service.board.IPfpBoardService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.rmi.board.EnumBoardType;
@@ -17,6 +19,7 @@ public class BoardAjax extends BaseCookieAction{
 	private static final long serialVersionUID = -6593611457033681402L;
 	
 	private IPfpBoardService pfpBoardService;
+	private IPfpAdService pfpAdService;
 	
 	private String boardType;				// 查詢公告類型
 	private List<PfpBoard> boardList;
@@ -40,7 +43,31 @@ public class BoardAjax extends BaseCookieAction{
 		boardList = pfpBoardService.findLatestBoard(boardType, 
 												super.getCustomer_info_id(), 
 												today);	
+		
+		//如果廣告已關閉則刪除公告
+		List<PfpBoard> chooseBoardList = new ArrayList<PfpBoard>();
+		for(PfpBoard pfpBoard:boardList){
+			String adSeq = pfpBoard.getDeleteId();
+			if(adSeq != null){
+				int adStatus = 10;
+				int adGroupStatus = 10;
+				int adActionStatus = 10;
+				PfpAd pfpad = pfpAdService.getPfpAdBySeq(adSeq);
+				adStatus = pfpad.getAdStatus();
+				adGroupStatus = pfpad.getPfpAdGroup().getAdGroupStatus();
+				adActionStatus = pfpad.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
 				
+				if(adStatus != 10 && adGroupStatus != 10 && adActionStatus != 10){
+					chooseBoardList.add(pfpBoard);
+				} else {
+					pfpBoardService.delete(pfpBoard);
+				}	
+			} else {
+				chooseBoardList.add(pfpBoard);
+			}
+		}
+		boardList = chooseBoardList;
+		
 		return SUCCESS;
 	}
 	
@@ -52,6 +79,30 @@ public class BoardAjax extends BaseCookieAction{
 		List<PfpBoard> boards = pfpBoardService.findLatestBoard(boardType, 
 																super.getCustomer_info_id(), 
 																dateStr);
+		
+		//如果廣告已關閉則刪除公告
+		List<PfpBoard> chooseBoardList = new ArrayList<PfpBoard>();
+		for(PfpBoard pfpBoard:boards){
+			String adSeq = pfpBoard.getDeleteId();
+			if(adSeq != null){
+				int adStatus = 10;
+				int adGroupStatus = 10;
+				int adActionStatus = 10;
+				PfpAd pfpad = pfpAdService.getPfpAdBySeq(adSeq);
+				adStatus = pfpad.getAdStatus();
+				adGroupStatus = pfpad.getPfpAdGroup().getAdGroupStatus();
+				adActionStatus = pfpad.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
+				
+				if(adStatus != 10 && adGroupStatus != 10 && adActionStatus != 10){
+					chooseBoardList.add(pfpBoard);
+				} else {
+					pfpBoardService.delete(pfpBoard);
+				}
+			} else {
+				chooseBoardList.add(pfpBoard);
+			}
+		}
+		boards = chooseBoardList;
 		
 		int maxCount = 0;
 		
@@ -75,6 +126,10 @@ public class BoardAjax extends BaseCookieAction{
 
 	public void setPfpBoardService(IPfpBoardService pfpBoardService) {
 		this.pfpBoardService = pfpBoardService;
+	}
+
+	public void setPfpAdService(IPfpAdService pfpAdService) {
+		this.pfpAdService = pfpAdService;
 	}
 
 	public void setBoardType(String boardType) {

@@ -69,21 +69,21 @@ public class BillAjax extends BaseCookieAction{
 				
 				content.append(vo.getTransDate()).append(",");
 				content.append(vo.getTransContents()).append(",");
-				content.append(vo.getSaveMoney()).append(",");
-				content.append(vo.getTaxMoney()).append(",");
-				content.append(vo.getReturnMoney()).append(",");
-				content.append(vo.getAdSpentMoney()).append(",");
-				content.append(vo.getRemain()).append(",");
+				content.append("NT$ " + vo.getSaveMoney()).append(",");
+				content.append("NT$ " + vo.getTaxMoney()).append(",");
+				content.append("NT$ " + vo.getReturnMoney()).append(",");
+				content.append("NT$ " + vo.getAdSpentMoney()).append(",");
+				content.append("NT$ " + vo.getRemain()).append(",");
 				content.append("\n");
 			}
 			
 			content.append(",總計,");
 			
-			content.append(billVOList.getTotalSaveMoney()).append(",");
-			content.append(billVOList.getTotalTaxMoney()).append(",");
-			content.append(billVOList.getTotalReturnMoney()).append(",");
-			content.append(billVOList.getTotalAdSpentMoney()).append(",");
-			content.append(billVOList.getRemain());
+			content.append("NT$ " + billVOList.getTotalSaveMoney()).append(",");
+			content.append("NT$ " + billVOList.getTotalTaxMoney()).append(",");
+			content.append("NT$ " + billVOList.getTotalReturnMoney()).append(",");
+			content.append("NT$ " + billVOList.getTotalAdSpentMoney()).append(",");
+			content.append("NT$ " + billVOList.getRemain());
 			
 			downloadFileName = URLEncoder.encode(fileName.toString(), "UTF-8");
 			downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));

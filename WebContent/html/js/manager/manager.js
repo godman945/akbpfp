@@ -14,9 +14,9 @@ function tableSorter(){
 	
 	$("#tableList").tablesorter({
 		headers:{			
-			4 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: false }
+			5 : { sorter: 'rangesort' },
+			8 : { sorter: 'rangesort' },
+			9 : { sorter: false }
 		}
 		,
 		textExtraction: function (node) { 

@@ -237,8 +237,8 @@ function tableSorter(){
 	
 	$("#listTable").tablesorter({
 		headers:{
-			 2 : { sorter: 'fancyNumber' },
-			 7 : { sorter: 'fancyNumber' }
+			 2 : { sorter: 'rangesort' },
+			 7 : { sorter: 'rangesort' }
 			}
 	});
 }

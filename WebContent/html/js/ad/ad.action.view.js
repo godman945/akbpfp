@@ -152,9 +152,9 @@ function tableSorter(){
 			5 : { sorter: 'fancyNumber' },
 			6 : { sorter: 'fancyNumber' },
 			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'fancyNumber' },
-			9 : { sorter: 'fancyNumber' },
-			11: { sorter: false}
+			8 : { sorter: 'rangesort' },
+			9 : { sorter: 'rangesort' },
+			10: { sorter: false}
 			}
 	});
 }

@@ -23,7 +23,7 @@
 		<th>搜尋廣告出價</th>
 		<th>聯播廣告出價</th>
 		<th style="width:8%">曝光數</th>
-		<th style="width:8%">點選率(%)</th>
+		<th style="width:8%">點選率</th>
 		<th style="width:8%">點選次數</th>	
 		<!--<th style="width:8%">無效點選次數</th>-->
 		<th style="width:8%">平均點選費用</th>
@@ -50,7 +50,7 @@
 			        ${vo.adGroupName!}
 				</#if>		        	
 		        </td>
-		        <td class="td02">${vo.adGroupStatusDesc!}</td>
+		        <td class="td03">${vo.adGroupStatusDesc!}</td>
 		        <td>
 		        <div class="notsbg">
 		        <#if vo.adGroupSearchPriceType == adSearchPriceType[0].typeId >
@@ -69,11 +69,11 @@
 		        <br>預估播出率：${vo.adAsideRate?string('#.##')!}%<br><input type="button" value="修改" onClick="modifyChannelPrice('${vo.adGroupSeq!}','${vo.adGroupChannelPrice!}')" />
 		        </td>
 				<td class="td01">${vo.adPv?string('#,###')!}</td>				
-				<td class="td01">${vo.adClkRate?string('#.##')!}</td>
+				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<td class="td01">${vo.adClk?string('#,###')!}</td>
 				<!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->
-				<td class="td01">${vo.adClkPriceAvg?string('#.##')!}</td>
-				<td class="td01">${vo.adClkPrice?string('#,###')!}</td>
+				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
+				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
 				<td>${vo.adActionName!}</td>
 				<td class="td02">
 				<#if vo.adGroupStatus != 9 >
@@ -98,11 +98,11 @@
 	<tr class="tbg">
 		<td colspan="5">總計：${totalSize!}筆</td>
 		<td class="td01">${totalPv?string('#,###')!}</td>
-		<td class="td01">${totalClkRate?string('#.##')!}</td>
+		<td class="td01">${totalClkRate?string('#.##')!}%</td>
 		<td class="td01">${totalClk?string('#,###')!}</td>			
 		<!--<td class="td01">${totalInvalidClk?string('#.##')!}</td>-->
-		<td class="td01">${totalAvgCost?string('#.##')!}</td>
-		<td class="td01">${totalCost?string('#,###')!}</td>
+		<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
+		<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
 		<td class="td01"></td>
 		<td class="td01"></td>
 

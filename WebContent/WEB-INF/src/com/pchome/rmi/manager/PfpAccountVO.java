@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class PfpAccountVO implements Serializable{
 
 	private String customerInfoId;
+	private String memberId;
 	private String customerInfoName;
 	private String customerInfoStatus;
 	private String customerInfoPayType;
@@ -21,6 +22,14 @@ public class PfpAccountVO implements Serializable{
 	
 	public void setCustomerInfoId(String customerInfoId) {
 		this.customerInfoId = customerInfoId;
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 	public String getCustomerInfoName() {

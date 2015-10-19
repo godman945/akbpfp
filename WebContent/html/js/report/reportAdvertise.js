@@ -144,8 +144,8 @@ function ready(){
 			5 : { sorter: 'fancyNumber' },
 			6 : { sorter: 'fancyNumber' },
 			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'fancyNumber' },
-			9 : { sorter: 'fancyNumber' }
+			8 : { sorter: 'rangesort' },
+			9 : { sorter: 'rangesort' }
 		}
 	});
 
@@ -403,16 +403,19 @@ function ajaxFormSubmit(){
 		data: json_data,
 		timeout: 30000,
 		error: function(xhr){
+			$('#reportTableOut').unblock();
 			alert('Ajax request 發生錯誤');
+			
 		},
 		success: function(response){
+			$('#reportTableOut').unblock();
 			$('#reportTable').html(response);
 
 			ready();
 		}
 	});
 
-	$('#reportTableOut').unblock();
+	//$('#reportTableOut').unblock();
 
 	showFlashChart();
 }
