@@ -11,7 +11,10 @@ var uploadFileSize = "";
 
 $(document).ready(function(){
 	//隱藏關鍵字區域
-	$("#keywordBody").hide();
+	var adType = $("#adType").val();
+	if(adType == "2"){
+		$("#keywordBody").hide();	
+	}
 	
 	//檢查網址字數
 	chkWord($("#adLinkURL"), $("#spanAdLinkURL"));
@@ -144,6 +147,15 @@ function multipartImgUuploadSubmit(){
 	$.each($("#KeywordUL li"), function( index, obj ) {
 		keyWordArray.push($(obj).text());
 	});
+	
+	var adType = $("#adType").val();
+	if(adType == "0" || adType == "1"){
+		if($("#existKW").children().length == 0 && keyWordArray.length == 0){
+			$("#chkAdKeyword").html("請新增關鍵字");
+			$("#adKeyword").focus();
+			return false;
+		}
+	}
 	
 	var excludeKeywordULArray = [];
 	$.each($("#ExcludeKeywordUL li"), function( index, obj ) {

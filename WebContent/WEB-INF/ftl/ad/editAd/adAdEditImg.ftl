@@ -85,6 +85,7 @@
 		<input type="hidden" id="ulTmpName" name="ulTmpName" value="${ulTmpName!}">
 		<input type="hidden" id="imgFile" name="imgFile" value="${imgFile!}">
 		<input type="hidden" id="adStatus" name="adStatus" value="${adStatus!}">
+		<input type="hidden" id="adType" name="adType" value="${adType!}">
 	</form>
 	<iframe id="uploadIMG" name="uploadIMG" style="display:none;height:150px;width:600px"></iframe>
 	<iframe id="doAdd" name="doAdd" style="display:none;height:150px;width:600px"></iframe>

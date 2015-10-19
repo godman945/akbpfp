@@ -98,6 +98,7 @@ public class AdEditAction extends BaseCookieAction{
 	private String adHiddenType;	//已建立的分類關鍵字欄位隱藏設定
 	private String adDetailTitleSeq;
 	private String imgTitle;
+	private String adType;
 	
 	private int adGroupStatus;
 	private int adActionStatus;
@@ -353,6 +354,7 @@ public class AdEditAction extends BaseCookieAction{
 		adVerifyRejectReason = "";
 		adGroupStatus = pfpAd.getPfpAdGroup().getAdGroupStatus();
 		adActionStatus = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
+		adType = pfpAd.getPfpAdGroup().getPfpAdAction().getAdType().toString();
 
 		// ad Status
 		for(EnumStatus status:EnumStatus.values()){
@@ -1046,6 +1048,14 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setAdActionStatus(int adActionStatus) {
 		this.adActionStatus = adActionStatus;
+	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
 	}
 
 }
