@@ -1,8 +1,8 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-<div class="cont">
+<div>
     <form id="formImg" action=""  method="post"  target="hidden_frame" enctype="multipart/form-data">
-        <div class="grtba">
+        <div>
 			<h4 style="display:none;">建立廣告</h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">
 				<tbody>
