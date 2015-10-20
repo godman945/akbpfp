@@ -37,8 +37,8 @@ public class ReportAdDailyAction extends BaseReportAction {
 	//private String[] align_data = {"center", "center", "right", "right", "right", "right", "right", "right"};
 	//private String[] align_sum = {"center", "center", "right", "right", "right", "right", "right", "right"};
 	// 20140318： 隱藏 "無效點選次數" 欄位
-	private String[] align_data = {"center", "center", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "center", "center", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "center", "center", "right", "right", "right", "right", "right"};
 
 	private IAdActionReportService adActionReportService = null;
 	private IPfpCustomerInfoService customerInfoService = null;
@@ -303,6 +303,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 		int totalPageSize=0;
 
 		tableHeadList.addFirst("裝置");
+		tableHeadList.addFirst("類別");
 		tableHeadList.addFirst("日期");
 
 		List<AdActionReportVO> resultSumData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_DAILY_COUNT.getTextValue(),
@@ -364,9 +365,9 @@ public class ReportAdDailyAction extends BaseReportAction {
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
-				if(dataNumber == 6 || dataNumber == 7){
+				if(dataNumber == 7 || dataNumber == 8){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataNumber == 4){
+				} else if(dataNumber == 5){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -381,9 +382,9 @@ public class ReportAdDailyAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 6 || dataTotalNumber == 7){
+				if(dataTotalNumber == 7 || dataTotalNumber == 8){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataTotalNumber == 4){
+				} else if(dataTotalNumber == 5){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -413,6 +414,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
+		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 
 		double t_pv = 0; //總曝光數
@@ -487,6 +489,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 			double ctr = 0;
 			double costAvg = 0;
 			String adDevice = vo.getAdDevice();
+			String adType = vo.getAdType();
 
 			//點選率 = 點選次數 / 曝光數
 			if (pv>0 && click>0) {
@@ -499,6 +502,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 			}
 
 			tableInDataList.addLast(reportDate);
+			tableInDataList.addLast(adType);
 			tableInDataList.addLast(adDevice);
 
 			if(!tableHeadShowList.isEmpty()){

@@ -43,8 +43,8 @@ public class ReportCampaginAction extends BaseReportAction {
 	//private String[] align_data = {"center", "left", "left", "center", "right", "right", "right", "right", "right", "right", "right"};
 	//private String[] align_sum = {"center", "center", "left", "center", "right", "right", "right", "right", "right", "right", "right"};
 	// 20140318： 隱藏 "無效點選次數" 欄位
-	private String[] align_data = {"center", "left", "center", "center", "right", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "center", "left", "center", "center", "right", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
 
 	private IAdActionReportService adActionReportService=null;
 	private IPfpAdActionService adActionService=null;
@@ -321,6 +321,7 @@ public class ReportCampaginAction extends BaseReportAction {
 
 		tableHeadList.addFirst("裝置");
 		tableHeadList.addFirst("走期");
+		tableHeadList.addFirst("類型");
 		tableHeadList.addFirst("廣告");
 		tableHeadList.addFirst("狀態");
 
@@ -379,9 +380,9 @@ public class ReportCampaginAction extends BaseReportAction {
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
-				if(dataNumber == 5 ||dataNumber == 9 || dataNumber == 10){
+				if(dataNumber == 6 ||dataNumber == 10 || dataNumber == 11){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataNumber == 7){
+				} else if(dataNumber == 8){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -396,9 +397,9 @@ public class ReportCampaginAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 9 || dataTotalNumber == 10){
+				if(dataTotalNumber == 10 || dataTotalNumber == 11){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataTotalNumber == 7){
+				} else if(dataTotalNumber == 8){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -429,6 +430,7 @@ public class ReportCampaginAction extends BaseReportAction {
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("");
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
+		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
@@ -520,6 +522,7 @@ public class ReportCampaginAction extends BaseReportAction {
 				double adActionMaxPrice = vo.getAdActionMaxPriceSum().doubleValue();
 				double count = vo.getCount().doubleValue();
 				String adDevice = vo.getAdDevice();
+				String adType = vo.getAdType();
 	
 				//點選率 = 點選次數 / 曝光數
 				if (pv>0 && click>0) {
@@ -572,7 +575,8 @@ public class ReportCampaginAction extends BaseReportAction {
 				}
 	
 				tableInDataList.addLast(adActionName);
-	
+				tableInDataList.addLast(adType);
+				
 				if (adActionEndDate.equals("3000-12-31")) {
 					adActionEndDate = "永久";
 				}

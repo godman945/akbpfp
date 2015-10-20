@@ -140,12 +140,12 @@ function ready(){
 
 	$("#excerptTable").tablesorter({
 		headers: {
-			1 : { sorter: 'fancyNumber' },
-			2 : { sorter: 'fancyNumber' },
+			//1 : { sorter: 'fancyNumber' },
 			3 : { sorter: 'fancyNumber' },
 			4 : { sorter: 'fancyNumber' },
-			5 : { sorter: 'rangesort' },
-			6 : { sorter: 'rangesort' }
+			5 : { sorter: 'fancyNumber' },
+			6 : { sorter: 'rangesort' },
+			7 : { sorter: 'rangesort' }
 		}
 	});
 

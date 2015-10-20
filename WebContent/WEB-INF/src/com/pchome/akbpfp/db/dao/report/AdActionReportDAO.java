@@ -242,6 +242,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								Double cost = (Double) objArray[3];
 								BigDecimal invClick = (BigDecimal) objArray[4];
 								String adDevice = (String) objArray[6];
+								String adType = String.valueOf(objArray[7]);
 
 								AdActionReportVO vo = new AdActionReportVO();
 
@@ -251,9 +252,25 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
-									vo.setAdDevice(adDevice);
+									if("PC".equals(adDevice)){
+										vo.setAdDevice("電腦");
+									}else if("mobile".equals(adDevice)){
+										vo.setAdDevice("行動裝置");
+									} else {
+										vo.setAdDevice(adDevice);	
+									}
 								} else {
 									vo.setAdDevice("全部");
+								}
+
+								if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
+									for(EnumAdType enumAdType:EnumAdType.values()){
+										if(Integer.parseInt(adType) == enumAdType.getType()){
+											vo.setAdType(enumAdType.getChName());
+										}
+									}
+								} else {
+									vo.setAdType("全部");
 								}
 								
 								resultData.add(vo);
@@ -649,7 +666,8 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_action_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
-		hql.append(" r.ad_pvclk_device ");
+		hql.append(" r.ad_pvclk_device, ");
+		hql.append(" r.ad_type ");
 		hql.append(" from pfp_ad_action_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId");
@@ -685,6 +703,10 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 			hql.append(" , r.ad_pvclk_device");
 		}
 
+		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
+			hql.append(" , r.ad_type");
+		}
+		
 		hql.append(" order by r.ad_pvclk_date desc");
 		sqlParams.put("sql", hql);
 

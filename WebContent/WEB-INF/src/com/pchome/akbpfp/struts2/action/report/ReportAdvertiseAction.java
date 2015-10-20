@@ -44,8 +44,8 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	//private String[] align_data = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right", "right"};
 	//private String[] align_sum = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right", "right"};
 	// 20140318： 隱藏 "無效點選次數" 欄位
-	private String[] align_data = {"center", "left", "left", "left", "center", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "left", "left", "left", "center", "center", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "center", "left", "left", "center", "center", "right", "right", "right", "right", "right"};
 
 
 	private IAdReportService adReportService=null;
@@ -309,6 +309,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		}
 
 		tableHeadList.addFirst("裝置");
+		tableHeadList.addFirst("類型");
 		tableHeadList.addFirst("廣告");
 		tableHeadList.addFirst("分類");
 
@@ -382,9 +383,9 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				if(s == null){
 					s = " ";
 				}
-				if(dataNumber == 12 || dataNumber == 13){
+				if(dataNumber == 13 || dataNumber == 14){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataNumber == 10){
+				} else if(dataNumber == 11){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -399,9 +400,9 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 12 || dataTotalNumber == 13){
+				if(dataTotalNumber == 13 || dataTotalNumber == 14){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataTotalNumber == 10){
+				} else if(dataTotalNumber == 11){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -432,6 +433,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("");
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
+		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
@@ -501,6 +503,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		int adGroupStatus = 0;
 		int adStatus = 0;
 		String adDevice = "";
+		String adType = "";
 
 		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
@@ -522,6 +525,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			adGroupName = adReportVO.getAdGroupName();
 			adPreview = adReportVO.getAdPreview();
 			adDevice = adReportVO.getAdDevice();
+			adType = adReportVO.getAdType();
 
 			pv = new Double(adReportVO.getAdPvSum());
 			click = new Double(adReportVO.getAdClkSum());
@@ -653,6 +657,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				tableInDataList.addLast(adReportVO.getRealUrl());
 				tableInDataList.addLast(adGroupName);
 				tableInDataList.addLast(adActionName);
+				tableInDataList.addLast(adType);
 				tableInDataList.addLast(adDevice);
 			} else {
 
@@ -660,6 +665,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				tableInDataList.addLast(adPreview);
 				tableInDataList.addLast(adGroupName);
 				tableInDataList.addLast(adActionName);
+				tableInDataList.addLast(adType);
 				tableInDataList.addLast(adDevice);
 			}
 
