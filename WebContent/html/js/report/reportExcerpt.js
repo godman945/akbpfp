@@ -148,13 +148,13 @@ function ready(){
 
     $("#excerptTable").tablesorter({
         headers: {
-            2 : { sorter: 'fancyNumber' },
-            3 : { sorter: 'fancyNumber' },
+            //3 : { sorter: 'fancyNumber' },
             4 : { sorter: 'fancyNumber' },
             5 : { sorter: 'fancyNumber' },
             6 : { sorter: 'fancyNumber' },
-            7 : { sorter: 'rangesort' },
-            8 : { sorter: 'rangesort' }
+            7 : { sorter: 'fancyNumber' },
+            8 : { sorter: 'rangesort' },
+            9 : { sorter: 'rangesort' }
         }
     });
 	
