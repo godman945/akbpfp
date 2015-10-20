@@ -438,10 +438,13 @@
 		
 		var adType = $("#adType").val();
 		if(adType == "0" || adType == "1"){
-			if($("#existKW").children().length == 0 && keyWordArray.length == 0){
-				$("#chkAdKeyword").html("請新增關鍵字");
-				$("#adKeyword").focus();
-				return false;
+			var kwLen = document.getElementsByName("keywords").length;
+			if( $("#existKW").children().length == 0 ){
+				if(kwLen < 2){
+					$('#chkAdKeyword').text("請新增關鍵字");
+					location.href="#errAdKeyword";
+					return false;
+				}
 			}
 		}
 		
