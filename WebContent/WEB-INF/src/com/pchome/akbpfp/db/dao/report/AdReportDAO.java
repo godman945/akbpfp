@@ -122,6 +122,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							String templateProductSeq = null;
 							String customerInfoId = null;
 							String adDevice = null;
+							String adType = null;
 
 							for (int i=0; i<dataList.size(); i++) {
 
@@ -138,6 +139,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								templateProductSeq = ObjectTransUtil.getInstance().getObjectToString(objArray[8]);
 								customerInfoId = ObjectTransUtil.getInstance().getObjectToString(objArray[9]);
 								adDevice = ObjectTransUtil.getInstance().getObjectToString(objArray[10]);
+								adType = ObjectTransUtil.getInstance().getObjectToString(objArray[11]);
 
 								adReportVO = new AdReportVO();
 
@@ -152,9 +154,25 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adReportVO.setTemplateProductSeq(templateProductSeq);
 								adReportVO.setCustomerInfoId(customerInfoId);
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
-									adReportVO.setAdDevice(adDevice);
+									if("PC".equals(adDevice)){
+										adReportVO.setAdDevice("電腦");
+									}else if("mobile".equals(adDevice)){
+										adReportVO.setAdDevice("行動裝置");
+									} else {
+										adReportVO.setAdDevice(adDevice);	
+									}
 								} else {
 									adReportVO.setAdDevice("全部");
+								}
+								
+								if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
+									for(EnumAdType enumAdType:EnumAdType.values()){
+										if(Integer.parseInt(adType) == enumAdType.getType()){
+											adReportVO.setAdType(enumAdType.getChName());
+										}
+									}
+								} else {
+									adReportVO.setAdType("全部");
 								}
 								
 								resultData.add(adReportVO);
@@ -278,7 +296,8 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" r.ad_seq, ");
 		hql.append(" r.template_product_seq, ");
 		hql.append(" r.customer_info_id, ");
-		hql.append(" r.ad_pvclk_device ");
+		hql.append(" r.ad_pvclk_device, ");
+		hql.append(" r.ad_type ");
 		hql.append(" from pfp_ad_report as r ");
 		hql.append("	left outer join (select distinct ad_seq from pfp_ad_detail) as pad on (r.ad_seq = pad.ad_seq)");
 		hql.append(" where 1 = 1 ");
@@ -315,6 +334,9 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" group by r.ad_seq");
 		if(StringUtils.isNotBlank(adPvclkDevice)) {
 			hql.append(" , r.ad_pvclk_device");
+		}
+		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
+			hql.append(" , r.ad_type");
 		}
 		hql.append(" order by r.ad_seq desc");
 		sqlParams.put("sql", hql);

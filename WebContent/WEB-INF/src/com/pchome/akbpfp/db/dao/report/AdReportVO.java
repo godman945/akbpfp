@@ -30,6 +30,7 @@ public class AdReportVO {
 	private String adInvClkSum; //廣告無效點擊總和
 	private String customerInfoId; //帳號
 	private String adDevice;
+	private String adType;
 
 	public String getAdSeq() {
 		return adSeq;
@@ -222,4 +223,13 @@ public class AdReportVO {
 	public void setAdDevice(String adDevice) {
 		this.adDevice = adDevice;
 	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
+	}
+	
 }

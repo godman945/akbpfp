@@ -17,6 +17,7 @@ public class AdGroupReportVO {
 	private BigDecimal adInvClkSum; //廣告無效點擊總和
 	private BigInteger count; //資料筆數(用於計算平均每日花費上限)
 	private String adDevice; //裝置
+	private String adType;	 //廣告類型
 
 	public Date getReportDate() {
 		return reportDate;
@@ -89,4 +90,13 @@ public class AdGroupReportVO {
 	public void setAdDevice(String adDevice) {
 		this.adDevice = adDevice;
 	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
+	}
+	
 }

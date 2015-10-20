@@ -49,8 +49,8 @@ public class ReportExcerptAction extends BaseReportAction {
 
 	private LinkedList<LinkedList<String>> tableDataList =null; // 頁面 table data
 
-	private String[] align_data = {"left", "center", "center", "right", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center","center", "center", "right", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"left", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
 
 	private IAdActionReportService adActionReportService=null;
 	private IAdGroupReportService adGroupReportService=null;
@@ -479,6 +479,7 @@ public class ReportExcerptAction extends BaseReportAction {
 
 		tableHeadList.addFirst("裝置");
 		tableHeadList.addFirst("狀態");
+		tableHeadList.addFirst("類型");
 
 //廣告層********************************************************************************************************
 		if(adType.equals(EnumReport.ADTYPE_ACTIVITY.getTextValue())){
@@ -736,9 +737,9 @@ public class ReportExcerptAction extends BaseReportAction {
 					if(s == null){
 						s = " ";
 					}
-					if(dataNumber == 11 || dataNumber == 12){
+					if(dataNumber == 12 || dataNumber == 13){
 						content.append("\"NT$ " + s + "\"");
-					} else if(dataNumber == 8){
+					} else if(dataNumber == 9){
 						content.append("\"" + s + "%\"");
 					} else {
 						content.append("\"" + s + "\"");	
@@ -753,9 +754,9 @@ public class ReportExcerptAction extends BaseReportAction {
 			if (tableDataTotalList!=null) {
 				int dataTotalNumber = 1;
 				for(String s:tableDataTotalList){
-					if(dataTotalNumber == 11 || dataTotalNumber == 12){
+					if(dataTotalNumber == 12 || dataTotalNumber == 13){
 						content.append("\"NT$ " + s + "\"");
-					} else if(dataTotalNumber == 8){
+					} else if(dataTotalNumber == 9){
 						content.append("\"" + s + "%\"");
 					} else {
 						content.append("\"" + s + "\"");
@@ -769,9 +770,9 @@ public class ReportExcerptAction extends BaseReportAction {
 			for(LinkedList<String> sl:tableDataList){
 				int dataNumber = 1;
 				for(String s:sl){
-					if(dataNumber == 8 || dataNumber == 9){
+					if(dataNumber == 9 || dataNumber == 10){
 						content.append("\"NT$ " + s + "\"");
-					} else if(dataNumber == 5){
+					} else if(dataNumber == 6){
 						content.append("\"" + s + "%\"");
 					} else {
 						content.append("\"" + s + "\"");	
@@ -786,9 +787,9 @@ public class ReportExcerptAction extends BaseReportAction {
 			if (tableDataTotalList!=null) {
 				int dataTotalNumber = 1;
 				for(String s:tableDataTotalList){
-					if(dataTotalNumber == 8 || dataTotalNumber == 9){
+					if(dataTotalNumber == 9 || dataTotalNumber == 10){
 						content.append("\"NT$ " + s + "\"");
-					} else if(dataTotalNumber == 5){
+					} else if(dataTotalNumber == 6){
 						content.append("\"" + s + "%\"");
 					} else {
 						content.append("\"" + s + "\"");
@@ -819,6 +820,7 @@ public class ReportExcerptAction extends BaseReportAction {
 
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
+		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 
@@ -880,6 +882,7 @@ public class ReportExcerptAction extends BaseReportAction {
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
+		tableDataTotalList.add("");
 
 		double t_pv = 0; //總曝光數
 		double t_click = 0; //總點選次數
@@ -939,6 +942,7 @@ public class ReportExcerptAction extends BaseReportAction {
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData_kw.size()));
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
+		tableDataTotalList.add("");
 
 		double t_pv = 0; //總曝光數
 		double t_click = 0; //總點選次數
@@ -996,6 +1000,7 @@ public class ReportExcerptAction extends BaseReportAction {
 
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData_ad.size()));
+		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		if(downloadFlag.equals("yes")){
@@ -1086,6 +1091,7 @@ public class ReportExcerptAction extends BaseReportAction {
 			double invClick = vo.getAdInvClkSum().doubleValue();
 			double ctr = 0;
 			double costAvg = 0;
+			String adType = vo.getAdType();
 			String adDevice = vo.getAdDevice();
 
 			//點選率 = 點選次數 / 曝光數
@@ -1117,6 +1123,7 @@ public class ReportExcerptAction extends BaseReportAction {
 				tableInDataList.addLast("<a href=\"javascript:adIdSearch('" + EnumReport.ADTYPE_GROUP.getTextValue() + "','" + adActionSeq + "')\">" + adActionName + "</a>");
 			}
 
+			tableInDataList.addLast(adType);
 			tableInDataList.addLast(getAdStatusMap().get(Integer.toString(adActionStatus)));
 			tableInDataList.addLast(adDevice);
 
@@ -1171,6 +1178,7 @@ public class ReportExcerptAction extends BaseReportAction {
 			double ctr = 0;
 			double costAvg = 0;
 			String adDevice = vo.getAdDevice();
+			String adType = vo.getAdType();
 
 			//點選率 = 點選次數 / 曝光數
 			if (pv>0 && click>0) {
@@ -1189,6 +1197,7 @@ public class ReportExcerptAction extends BaseReportAction {
 				tableInDataList.addLast("<a href=\"javascript:adIdSearch('" + EnumReport.ADTYPE_AD.getTextValue() + "','" + adGroupSeq + "')\">" + adGroupName + "</a>");	
 			}
 
+			tableInDataList.addLast(adType);
 			tableInDataList.addLast(getAdStatusMap().get(Integer.toString(adGroupStatus)));
 			tableInDataList.addLast(adDevice);
 
@@ -1248,6 +1257,7 @@ public class ReportExcerptAction extends BaseReportAction {
 			double ctr = 0;
 			double costAvg = 0;
 			String kwDevice = keywordReportVO.getKwDevice();
+			String kwAdType = keywordReportVO.getKwAdType();
 
 			//點選率 = 點選次數 / 曝光數
 			if (pv>0 && click>0) {
@@ -1315,6 +1325,7 @@ public class ReportExcerptAction extends BaseReportAction {
 //			}
 
 			tableInDataList.addLast(adKeyword);
+			tableInDataList.addLast(kwAdType);
 			tableInDataList.addLast(getAdStatusMap().get(Integer.toString(adKeywordStatus)));
 			tableInDataList.addLast(kwDevice);
 
@@ -1365,6 +1376,7 @@ public class ReportExcerptAction extends BaseReportAction {
 			double ctr = 0;
 			double costAvg = 0;
 			String adDevice = adReportVO.getAdDevice();
+			String adType = adReportVO.getAdType();
 
 			//點選率 = 點選次數 / 曝光數
 			if (pv>0 && click>0) {
@@ -1488,6 +1500,7 @@ public class ReportExcerptAction extends BaseReportAction {
 				alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus)) + "，分類" + getAdStatusMap().get(Integer.toString(adGroupStatus)) + "，廣告明細" + getAdStatusMap().get(Integer.toString(adStatus));
 
 			}
+			tableInDataList.addLast(adType);
 			if(downloadFlag.equals("yes")){
 				tableInDataList.addLast(alter);
 			} else {

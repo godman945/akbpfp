@@ -64,8 +64,8 @@ public class BaseReportAction extends BaseSSLAction {
 	public Map<String, String> getAdPvclkDeviceMap() {
 		Map<String, String> map = new LinkedHashMap<String, String>();
 		map.put("", "裝置");
-		map.put("PC", "PC");
-		map.put("mobile", "mobile");
+		map.put("PC", "電腦");
+		map.put("mobile", "行動裝置");
 		return map;
 	}
 

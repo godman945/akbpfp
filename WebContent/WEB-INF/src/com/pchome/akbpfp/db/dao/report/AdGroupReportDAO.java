@@ -176,6 +176,7 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 								BigInteger count = (BigInteger) objArray[5];
 								String adGroupSeq = (String) objArray[6];
 								String adDevice = (String) objArray[7];
+								String adType = String.valueOf(objArray[8]);
 
 								AdGroupReportVO vo = new AdGroupReportVO();
 
@@ -186,11 +187,27 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 								vo.setCount(count);
 								vo.setAdGroupSeq(adGroupSeq);
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
-									vo.setAdDevice(adDevice);
+									if("PC".equals(adDevice)){
+										vo.setAdDevice("電腦");
+									}else if("mobile".equals(adDevice)){
+										vo.setAdDevice("行動裝置");
+									} else {
+										vo.setAdDevice(adDevice);	
+									}
 								} else {
 									vo.setAdDevice("全部");
 								}
 
+								if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
+									for(EnumAdType enumAdType:EnumAdType.values()){
+										if(Integer.parseInt(adType) == enumAdType.getType()){
+											vo.setAdType(enumAdType.getChName());
+										}
+									}
+								} else {
+									vo.setAdType("全部");
+								}
+								
 								resultData.add(vo);
 							}
 
@@ -363,7 +380,8 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 		hql.append(" sum(r.ad_invalid_clk_price), ");
 		hql.append(" count(r.ad_group_report_seq), ");
 		hql.append(" r.ad_group_seq, ");
-		hql.append(" r.ad_pvclk_device ");
+		hql.append(" r.ad_pvclk_device, ");
+		hql.append(" r.ad_type ");
 		hql.append(" from pfp_ad_group_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");
@@ -400,6 +418,11 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 		if(StringUtils.isNotBlank(adPvclkDevice)) {
 			hql.append(" , r.ad_pvclk_device");
 		}
+		
+		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
+			hql.append(" , r.ad_type ");
+		}
+		
 		hql.append(" order by r.ad_group_seq desc");
 		sqlParams.put("sql", hql);
 

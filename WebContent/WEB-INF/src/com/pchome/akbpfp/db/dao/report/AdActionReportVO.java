@@ -17,6 +17,7 @@ public class AdActionReportVO {
 	private Double adActionMaxPriceSum; //每日花費上限總和
 	private BigInteger count; //資料筆數(用於計算平均每日花費上限)
 	private String adDevice; //裝置
+	private String adType;
 
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -89,4 +90,13 @@ public class AdActionReportVO {
 	public void setAdDevice(String adDevice) {
 		this.adDevice = adDevice;
 	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public void setAdType(String adType) {
+		this.adType = adType;
+	}
+	
 }

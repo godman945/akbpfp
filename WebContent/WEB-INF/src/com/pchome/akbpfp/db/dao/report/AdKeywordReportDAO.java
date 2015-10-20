@@ -121,6 +121,7 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 							String AdKeyword = null;
 							String customerInfoId = null;
 							String kwDevice = null;
+							String kwAdType = null;
 
 							for (int i=0; i<dataList.size(); i++) {
 
@@ -137,6 +138,7 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 								AdKeyword = ObjectTransUtil.getInstance().getObjectToString(objArray[8]);
 								customerInfoId = ObjectTransUtil.getInstance().getObjectToString(objArray[9]);
 								kwDevice = ObjectTransUtil.getInstance().getObjectToString(objArray[10]);
+								kwAdType = ObjectTransUtil.getInstance().getObjectToString(objArray[11]);
 //								System.out.println("kwPvSum = " + kwPvSum);
 //								System.out.println("kwClkSum = " + kwClkSum);
 //								System.out.println("kwPriceSum = " + kwPriceSum);
@@ -188,10 +190,27 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 								kwReportVO.setAdRankAvg(adRankAvg);
 								kwReportVO.setCustomerInfoId(customerInfoId);
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
-									kwReportVO.setKwDevice(kwDevice);
+									if("PC".equals(kwDevice)){
+										kwReportVO.setKwDevice("電腦");
+									}else if("mobile".equals(kwDevice)){
+										kwReportVO.setKwDevice("行動裝置");
+									} else {
+										kwReportVO.setKwDevice(kwDevice);	
+									}
 								} else {
 									kwReportVO.setKwDevice("全部");
 								}
+								
+								if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
+									for(EnumAdType enumAdType:EnumAdType.values()){
+										if(Integer.parseInt(kwAdType) == enumAdType.getType()){
+											kwReportVO.setKwAdType(enumAdType.getChName());
+										}
+									}
+								} else {
+									kwReportVO.setKwAdType("全部");
+								}
+								
 //								System.out.println("kwReportVO.getKwPvSum() = " + kwReportVO.getKwPvSum());
 //								System.out.println("kwReportVO.getKwClkSum() = " + kwReportVO.getKwClkSum());
 //								System.out.println("kwReportVO.getKwPriceSum() = " + kwReportVO.getKwPriceSum());
@@ -314,7 +333,8 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 		hql.append(" r.ad_keyword_seq, ");
 		hql.append(" r.ad_keyword, ");
 		hql.append(" r.customer_info_id, ");
-		hql.append(" r.ad_keyword_pvclk_device ");
+		hql.append(" r.ad_keyword_pvclk_device, ");
+		hql.append(" r.ad_keyword_type ");
 		hql.append(" from pfp_ad_keyword_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");
@@ -350,6 +370,10 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 			hql.append(" , r.ad_keyword_pvclk_device");
 		}
 
+		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
+			hql.append(" , r.ad_keyword_type");
+		}
+		
 		hql.append(" order by r.ad_keyword_seq desc");
 		sqlParams.put("sql", hql);
 

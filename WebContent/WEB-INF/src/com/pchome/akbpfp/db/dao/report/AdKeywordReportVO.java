@@ -33,6 +33,7 @@ public class AdKeywordReportVO {
 	private String kwInvClkSum; //關鍵字無效點擊總和
 	private String customerInfoId; // 帳號
 	private String kwDevice; // 裝置
+	private String kwAdType; //廣告類型
 
 	public String getKwSeq() {
 		return kwSeq;
@@ -241,4 +242,13 @@ public class AdKeywordReportVO {
 	public void setKwDevice(String kwDevice) {
 		this.kwDevice = kwDevice;
 	}
+
+	public String getKwAdType() {
+		return kwAdType;
+	}
+
+	public void setKwAdType(String kwAdType) {
+		this.kwAdType = kwAdType;
+	}
+	
 }
