@@ -436,6 +436,15 @@
 
 	function saveData() {
 		
+		var adType = $("#adType").val();
+		if(adType == "0" || adType == "1"){
+			if($("#existKW").children().length == 0 && keyWordArray.length == 0){
+				$("#chkAdKeyword").html("請新增關鍵字");
+				$("#adKeyword").focus();
+				return false;
+			}
+		}
+		
 		if($("#chkFile").text() != ""){
 			location.href="#imghead";
 			return false;

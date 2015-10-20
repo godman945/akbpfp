@@ -15,6 +15,7 @@ import com.pchome.akbpfp.db.service.ad.PfpAdKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 
 
@@ -51,6 +52,9 @@ public class AdFinishAction extends BaseCookieAction{
 	private String adWorkDatee;
 	SimpleDateFormat sdf = new  SimpleDateFormat("yyyy/MM/dd");
 	
+	private String adType;
+	private String adTypeName;
+	
 	public String AdAddFinish() throws Exception {
 	    	getadDate();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,6 +74,14 @@ public class AdFinishAction extends BaseCookieAction{
 		adGroupName  = pfpAdGroup.getAdGroupName();
 		adGroupSearchPrice = Integer.toString((int)pfpAdGroup.getAdGroupSearchPrice());
 		adGroupChannelPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
+		
+		adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
+		adTypeName = "";
+		for(EnumAdType enumAdType: EnumAdType.values()){
+			if(Integer.parseInt(adType) == enumAdType.getType()){
+				adTypeName = enumAdType.getTypeName();
+			}
+		}
 		
 		adGroupSearchPriceType = "";
 		switch(pfpAdGroup.getAdGroupSearchPriceType()) {
@@ -199,6 +211,14 @@ public class AdFinishAction extends BaseCookieAction{
 
 	public void setAdWorkDatee(String adWorkDatee) {
 	    this.adWorkDatee = adWorkDatee;
+	}
+
+	public String getAdType() {
+		return adType;
+	}
+
+	public String getAdTypeName() {
+		return adTypeName;
 	}
 	
 }
