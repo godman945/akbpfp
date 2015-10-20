@@ -114,6 +114,7 @@ public class AdEditAction extends BaseCookieAction{
 		adStatus = pfpAd.getAdStatus();
 		adGroupStatus = pfpAd.getPfpAdGroup().getAdGroupStatus();
 		adActionStatus = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
+		adType = pfpAd.getPfpAdGroup().getPfpAdAction().getAdType().toString();
 		adVerifyRejectReason = "";
 
 		// ad Status

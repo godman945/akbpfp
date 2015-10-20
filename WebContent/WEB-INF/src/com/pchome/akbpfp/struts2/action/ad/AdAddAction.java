@@ -154,6 +154,7 @@ public class AdAddAction extends BaseCookieAction{
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 		adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 		adGroupName  = pfpAdGroup.getAdGroupName();
+		adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
 
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();

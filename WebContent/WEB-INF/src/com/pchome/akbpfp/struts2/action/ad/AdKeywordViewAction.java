@@ -65,6 +65,7 @@ public class AdKeywordViewAction extends BaseCookieAction{
 		
 		String[] adKeywordSeqs = adKeywordSeq.split(",");
 		int statusId = Integer.parseInt(status);
+		String adType = "0";
 		
 		for(int i=0;i<adKeywordSeqs.length;i++){
 			
@@ -117,23 +118,24 @@ public class AdKeywordViewAction extends BaseCookieAction{
 				pfpAdKeywordService.saveOrUpdateWithCommit(adKeyword);
 				
 				adGroupSeq = adKeyword.getPfpAdGroup().getAdGroupSeq();
-				
+				adType = adKeyword.getPfpAdGroup().getPfpAdAction().getAdType().toString();
 			}
 		}	
 		
-		// adGroup 下層關鍵字或播放明細都被關閉, 此分類改為未完成
-		// 2015/08/27 無關鍵字不更改狀態  by tim
-		/*if(StringUtils.isNotBlank(adGroupSeq)){
-			List<PfpAdKeyword> adKeyword = pfpAdKeywordService.validAdKeyword(adGroupSeq);
-			//List<PfpAd> adAd = pfpAdService.validAdAd(adGroupSeq);
-			
-			if(adKeyword.size() <= 0 ){
-				PfpAdGroup adGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-				adGroup.setAdGroupStatus(EnumStatus.UnDone.getStatusId());
-				adGroup.setAdGroupUpdateTime(new Date());
-				pfpAdGroupService.saveOrUpdate(adGroup);
+		// adGroup(adAction 為 搜尋廣告 時) 下層關鍵字或播放明細都被關閉, 此分類改為未完成
+		if("0".equals(adType) || "1".equals(adType)){
+			if(StringUtils.isNotBlank(adGroupSeq)){
+				List<PfpAdKeyword> adKeyword = pfpAdKeywordService.validAdKeyword(adGroupSeq);
+				//List<PfpAd> adAd = pfpAdService.validAdAd(adGroupSeq);
+				
+				if(adKeyword.size() <= 0 ){
+					PfpAdGroup adGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+					adGroup.setAdGroupStatus(EnumStatus.UnDone.getStatusId());
+					adGroup.setAdGroupUpdateTime(new Date());
+					pfpAdGroupService.saveOrUpdate(adGroup);
+				}
 			}
-		}*/
+		}
 		
 		return SUCCESS;
 	}

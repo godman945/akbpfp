@@ -1,6 +1,12 @@
 ﻿$(document).ready(function(){
 	$("#uploadFile").hide();
 	
+	//隱藏關鍵字區域
+	var adType = $("#adType").val();
+	if(adType == "2"){
+		$("#keywordBody").hide();	
+	}
+	
 	var LinkUrl = true;
 	var ShowUrl = true;
 	var pages = -1;

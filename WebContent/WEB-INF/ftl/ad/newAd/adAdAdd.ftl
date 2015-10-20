@@ -71,8 +71,10 @@
 
 		<#if adStyle == "TXT" || adStyle == "TMG">
 		<!-- adKeyword start -->
+		<div id=keywordBody>
 		<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adKeywordAdd.js" ></script>
 		<@t.insertAttribute name="adKeyword" />
+		</div>
 		<!-- adKeyword end -->
 		</#if>
 		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
@@ -86,6 +88,7 @@
 		<input type="hidden" id="ulTmpName" name="ulTmpName" value="${ulTmpName!}">
 		<input type="hidden" id="imgFile" name="imgFile" value="${imgFile!}">
         <input type="hidden" id="backPage" name="backPage" value="${backPage!}">
+        <input type="hidden" id="adType" name="adType" value="${adType!}">
 	</form>
 	<iframe id="uploadIMG" name="uploadIMG" style="display:none;height:150px;width:600px"></iframe>
 	<iframe id="doAdd" name="doAdd" style="display:none;height:150px;width:600px"></iframe>

@@ -1,6 +1,12 @@
 ﻿$(document).ready(function(){
 	$("#uploadFile").hide();
 	
+	//隱藏關鍵字區域
+	var adType = $("#adType").val();
+	if(adType == "2"){
+		$("#keywordBody").hide();	
+	}
+	
 	var LinkUrl = false;
 	var ShowUrl = false;
 	var pages = -1;
@@ -387,15 +393,14 @@
 	
 	
 	function saveData() {
-		//2015.08.27  關鍵字不為必填 by Tim
-		/*var kwLen = document.getElementsByName("keywords").length;
-		if( $("#existKW").children().length == 0 ){
-			if(kwLen < 2){
-				$('#chkAdKeyword').text("請輸入關鍵字");
-				location.href="#errAdKeyword";
+		var adType = $("#adType").val();
+		if(adType == "0" || adType == "1"){
+			if($("#existKW").children().length == 0 && keyWordArray.length == 0){
+				$("#chkAdKeyword").html("請新增關鍵字");
+				$("#adKeyword").focus();
 				return false;
 			}
-		}*/
+		}
 		if($("#chkFile").text() != ""){
 			location.href="#imghead";
 			return false;
