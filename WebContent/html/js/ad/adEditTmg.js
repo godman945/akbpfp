@@ -442,7 +442,7 @@
 			if( $("#existKW").children().length == 0 ){
 				if(kwLen < 2){
 					$('#chkAdKeyword').text("請新增關鍵字");
-					location.href="#errAdKeyword";
+					location.href="#adKeyword";
 					return false;
 				}
 			}
