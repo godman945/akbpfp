@@ -74,9 +74,17 @@ public class AdUtilAjax extends BaseCookieAction{
 			    url = HttpUtil.getInstance().getRealUrl(url);
 			    log.info("url = " + url);
 			    
+			    // www.mjholly.com pass
+			    String passUrl = url;
+			    if(url.indexOf("www.mjholly.com") >= 0){
+			    	passUrl = passUrl.replaceAll("http://", passUrl);
+			    	passUrl = passUrl.replaceAll("https://", passUrl);
+			    	passUrl = passUrl.substring(0, passUrl.indexOf(".com") + 4);
+			    }
+			    
 			    if(akbPfpServer.equals(url) || (akbPfpServer.substring(0, akbPfpServer.length() -1).equals(url))){
 			    	urlState = 200;
-			    } else if(url.indexOf("www.mjholly.com") >= 0){
+			    } else if("www.mjholly.com".equals(passUrl)){
 			    	urlState = 200;
 			    } else {
 			    	urlState = HttpUtil.getInstance().getStatusCode(url);
