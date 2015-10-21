@@ -2,13 +2,17 @@ package com.pchome.akbpfp.struts2.action.ad;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
+import com.pchome.akbpfp.db.service.pfd.user.IPfdUserAdAccountRefService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdDevice;
@@ -43,8 +47,9 @@ public class AdActionAddAction extends BaseCookieAction{
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdActionService pfpAdActionService;
+	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 	
-	private EnumAdType[] adTypeList;
+	private Map<String,String> adTypeMap;
 	private EnumAdDevice[] adDeviceList;
 
 	public String adActionAdd() throws Exception{
@@ -68,7 +73,20 @@ public class AdActionAddAction extends BaseCookieAction{
 		adActionMax = "";
 		remain = pfpCustomerInfo.getRemain();
 		tmpRemain = (int)remain;
-		adTypeList = EnumAdType.values();
+		
+		PfdUserAdAccountRef pfdUserAdAccountRef = pfdUserAdAccountRefService.findPfdUserAdAccountRef(super.getCustomer_info_id());
+		String pfpAdTypeSelect = pfdUserAdAccountRef.getPfdCustomerInfo().getPfpAdtypeSelect();
+		String array[] = pfpAdTypeSelect.split("");
+		int number = 1;
+		adTypeMap = new HashMap<String,String>();
+		for(EnumAdType enumAdType: EnumAdType.values()){
+			if("1".equals(array[number])){
+				adTypeMap.put(String.valueOf(enumAdType.getType()), enumAdType.getTypeName() + "(" + enumAdType.getExplanation() + ")");
+			}
+			number++;
+		}
+		
+		//adTypeList = EnumAdType.values();
 		adDeviceList = EnumAdDevice.values();
 
 		// 廣告分類點選取消回來活動頁的時候，會帶adActionSeq
@@ -232,6 +250,11 @@ public class AdActionAddAction extends BaseCookieAction{
 	public void setSequenceService(ISequenceService sequenceService) {
 		this.sequenceService = sequenceService;
 	}
+	
+	public void setPfdUserAdAccountRefService(
+			IPfdUserAdAccountRefService pfdUserAdAccountRefService) {
+		this.pfdUserAdAccountRefService = pfdUserAdAccountRefService;
+	}
 
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -340,9 +363,9 @@ public class AdActionAddAction extends BaseCookieAction{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-
-	public EnumAdType[] getAdTypeList() {
-		return adTypeList;
+	
+	public Map<String, String> getAdTypeMap() {
+		return adTypeMap;
 	}
 
 	public EnumAdDevice[] getAdDeviceList() {

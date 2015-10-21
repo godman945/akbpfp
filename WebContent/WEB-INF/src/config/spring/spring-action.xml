@@ -175,7 +175,8 @@
     <bean id="AdActionAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdActionAddAction" scope="prototype" >
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
 		<property name="sequenceService" ref="SequenceService" />
-    	<property name="pfpAdActionService" ref="PfpAdActionService" /> 
+    	<property name="pfpAdActionService" ref="PfpAdActionService" />
+    	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" /> 
     </bean>
 
     <bean id="AdGroupAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdGroupAddAction" scope="prototype" >

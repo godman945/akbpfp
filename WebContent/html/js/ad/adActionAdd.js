@@ -1,5 +1,17 @@
 ﻿$(document).ready(function(){
-    
+    var firstAdType = $("#adType").val();
+    if(firstAdType == "1"){
+    	$("#adDevice option").each(function() {
+    		var adDevice = $(this).val();
+    		if(adDevice == "1"){
+				 $(this).attr("selected","selected");
+			} else {
+				 $(this).removeAttr("selected");
+			}
+    	});
+    	$("#adDevice").attr("disabled","disabled");
+    }
+	
 	initDate();
 
 	$("#adType").change(function(){

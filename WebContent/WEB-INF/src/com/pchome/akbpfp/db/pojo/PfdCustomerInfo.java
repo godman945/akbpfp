@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2015/10/16 �W�� 10:15:06 by Hibernate Tools 3.4.0.CR1
+// Generated 2015/10/21 �U�� 02:37:05 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -42,6 +42,7 @@ public class PfdCustomerInfo implements java.io.Serializable {
 	private String financialEmail;
 	private String note;
 	private String pfpPayType;
+	private String pfpAdtypeSelect;
 	private int totalQuota;
 	private int totalPfpQuota;
 	private int totalAdCostQuota;
@@ -94,10 +95,10 @@ public class PfdCustomerInfo implements java.io.Serializable {
 			String contactPerson, String contactTel, String contactMobile,
 			String contactEmail, String financialOfficer, String financialTel,
 			String financialMobile, String financialEmail, String note,
-			String pfpPayType, int totalQuota, int totalPfpQuota,
-			int totalAdCostQuota, int remainQuota, int balanceQuota,
-			String mixFlag, Date activateDate, Date createDate,
-			Date updateDate, Set<PfdUser> pfdUsers,
+			String pfpPayType, String pfpAdtypeSelect, int totalQuota,
+			int totalPfpQuota, int totalAdCostQuota, int remainQuota,
+			int balanceQuota, String mixFlag, Date activateDate,
+			Date createDate, Date updateDate, Set<PfdUser> pfdUsers,
 			Set<PfdContract> pfdContracts,
 			Set<PfdUserAdAccountRef> pfdUserAdAccountRefs) {
 		this.customerInfoId = customerInfoId;
@@ -121,6 +122,7 @@ public class PfdCustomerInfo implements java.io.Serializable {
 		this.financialEmail = financialEmail;
 		this.note = note;
 		this.pfpPayType = pfpPayType;
+		this.pfpAdtypeSelect = pfpAdtypeSelect;
 		this.totalQuota = totalQuota;
 		this.totalPfpQuota = totalPfpQuota;
 		this.totalAdCostQuota = totalAdCostQuota;
@@ -323,6 +325,15 @@ public class PfdCustomerInfo implements java.io.Serializable {
 
 	public void setPfpPayType(String pfpPayType) {
 		this.pfpPayType = pfpPayType;
+	}
+
+	@Column(name = "pfp_adtype_select", length = 10)
+	public String getPfpAdtypeSelect() {
+		return this.pfpAdtypeSelect;
+	}
+
+	public void setPfpAdtypeSelect(String pfpAdtypeSelect) {
+		this.pfpAdtypeSelect = pfpAdtypeSelect;
 	}
 
 	@Column(name = "total_quota", nullable = false)
