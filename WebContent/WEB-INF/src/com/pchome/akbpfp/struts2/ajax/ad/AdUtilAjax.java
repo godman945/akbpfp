@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -79,10 +77,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			    if(akbPfpServer.equals(url) || (akbPfpServer.substring(0, akbPfpServer.length() -1).equals(url))){
 			    	urlState = 200;
 			    } else {
-			    	URL connectionUrl = new URL(url);
-			    	HttpURLConnection con = (HttpURLConnection) connectionUrl.openConnection();
-			    	urlState = con.getResponseCode();
-			    	//urlState = HttpUtil.getInstance().getStatusCode(url);
+			    	urlState = HttpUtil.getInstance().getStatusCode(url);
 			    	msg = new ByteArrayInputStream("".getBytes());	
 			    }
 			    log.info("urlState>>>"+urlState);
