@@ -77,8 +77,8 @@ public class AdUtilAjax extends BaseCookieAction{
 			    // www.mjholly.com pass
 			    String passUrl = url;
 			    if(url.indexOf("www.mjholly.com") >= 0){
-			    	passUrl = passUrl.replaceAll("http://", passUrl);
-			    	passUrl = passUrl.replaceAll("https://", passUrl);
+			    	passUrl = passUrl.replaceAll("http://", "");
+			    	passUrl = passUrl.replaceAll("https://", "");
 			    	passUrl = passUrl.substring(0, passUrl.indexOf(".com") + 4);
 			    }
 			    
