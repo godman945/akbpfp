@@ -76,6 +76,8 @@ public class AdUtilAjax extends BaseCookieAction{
 			    
 			    if(akbPfpServer.equals(url) || (akbPfpServer.substring(0, akbPfpServer.length() -1).equals(url))){
 			    	urlState = 200;
+			    } else if(url.indexOf("www.mjholly.com") >= 0){
+			    	urlState = 200;
 			    } else {
 			    	urlState = HttpUtil.getInstance().getStatusCode(url);
 			    	msg = new ByteArrayInputStream("".getBytes());	
