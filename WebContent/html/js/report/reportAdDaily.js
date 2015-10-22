@@ -292,9 +292,16 @@ function ready(){
 		ajaxFormSubmit();
 	});
 
+	$("#adShowWay,#adPvclkDevice,#adSearchWay").change(function(){
+		searchDo();
+		ajaxFormSubmit();
+	});
+	
 	//重置 result
 	$('#btnSearchReset').click(function(){
 		serachReset();
+		searchDo();
+		ajaxFormSubmit();
 	});
 
 	//活動標籤
@@ -433,7 +440,7 @@ function serachReset(){
 	$("#searchText").attr("value", "");
 
 	$("#adPvclkDevice").children().each(function(){
-		if ($(this).val() == "all") {
+		if ($(this).val() == "") {
 			//jQuery給法
 			$(this).attr("selected", "true"); //或是給selected也可
 		}
@@ -454,7 +461,7 @@ function serachReset(){
 	});
 
 	$("#adShowWay").children().each(function(){
-		if ($(this).val() == "adshow_all") {
+		if ($(this).val() == "0") {
 			//jQuery給法
 			$(this).attr("selected", "true"); //或是給selected也可
 		}

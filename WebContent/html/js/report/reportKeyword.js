@@ -318,17 +318,22 @@ function ready(){
     
     //搜尋動作 Do
     $('#btnSearchDo').click(function(){
-    
-	   
         searchDo();
         //document.excerptFrom.submit();
         ajaxFormSubmit();
         
     });
     
+    $("#adPvclkDevice, #adSearchWay").change(function(){
+    	searchDo();
+    	ajaxFormSubmit();
+   });
+    
     //重置 result
     $('#btnSearchReset').click(function(){
         serachReset();
+        searchDo();
+    	ajaxFormSubmit();
         
     });
     
@@ -497,7 +502,7 @@ function serachReset(){
     $("#searchText").attr("value", "");
     
     $("#adPvclkDevice").children().each(function(){
-        if ($(this).val() == "all") {
+        if ($(this).val() == "") {
             //jQuery給法
             $(this).attr("selected", "true"); //或是給selected也可
         }

@@ -273,6 +273,11 @@ function ready(){
 		searchDo();
 		ajaxFormSubmit();
 	});
+	
+	$("#adPvclkOs").change(function(){
+    	searchDo();
+    	ajaxFormSubmit();
+   });
 
 	//重置 result
 	$('#btnSearchReset').click(function(){
