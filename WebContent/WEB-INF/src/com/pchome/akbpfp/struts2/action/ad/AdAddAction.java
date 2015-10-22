@@ -603,8 +603,8 @@ public class AdAddAction extends BaseCookieAction{
 	    		}
 	    	}
 	    }
-	    //搜索廣告(行動裝置)尺寸列表
-	    /*if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
+	    //搜索廣告(行動裝置)尺寸列表(目前僅測試時打開)
+	    if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
 	    		Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_PC.getDevType()){
 	    	for(EnumAdSearchMobileSize enumAdSearchMobileSize : EnumAdSearchMobileSize.values()){
 	    		for (PfbxSize pfbxSize : pfbSizeList) {
@@ -613,7 +613,7 @@ public class AdAddAction extends BaseCookieAction{
 	    		    }
 	    		}
 	    	}
-	    }*/
+	    }
 	    //內容廣告(行動裝置)尺寸列表
 	    if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
 	    		Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_MOBILE.getDevType()){
