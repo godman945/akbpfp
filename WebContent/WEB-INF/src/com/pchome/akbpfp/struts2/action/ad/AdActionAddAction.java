@@ -2,7 +2,7 @@ package com.pchome.akbpfp.struts2.action.ad;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -78,7 +78,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		String pfpAdTypeSelect = pfdUserAdAccountRef.getPfdCustomerInfo().getPfpAdtypeSelect();
 		String array[] = pfpAdTypeSelect.split("");
 		int number = 1;
-		adTypeMap = new HashMap<String,String>();
+		adTypeMap = new LinkedHashMap<String,String>();
 		for(EnumAdType enumAdType: EnumAdType.values()){
 			if("1".equals(array[number])){
 				adTypeMap.put(String.valueOf(enumAdType.getType()), enumAdType.getTypeName() + "(" + enumAdType.getExplanation() + ")");
