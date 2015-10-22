@@ -34,7 +34,7 @@ public interface IPfpAdActionService extends IBaseService<PfpAdAction,String>{
 	 * @return
 	 * @throws Exception
 	 */
-	public long getPfpAdActionCount(String customerInfoId, String keyword) throws Exception;
+	public long getPfpAdActionCount(String customerInfoId, String keyword, int adType) throws Exception;
 
 	/**
 	 * 查詢廣告活動分頁筆數(檢視廣告使用)
@@ -45,7 +45,7 @@ public interface IPfpAdActionService extends IBaseService<PfpAdAction,String>{
 	 * @return
 	 * @throws Exception
 	 */
-	public long getPfpAdActionCount(String customerInfoId, String keyword, int page, int pageSize) throws Exception;
+	public long getPfpAdActionCount(String customerInfoId, String keyword, int adType, int page, int pageSize) throws Exception;
 
 	public List<PfpAdAction> getAdActionByCustomerInfoId(String customerInfoId) throws Exception;
 	

@@ -1,5 +1,7 @@
 ﻿$(document).ready(function(){
-
+	$("#searchType").change(function(){
+		findTableView();
+	});
 });
 
 

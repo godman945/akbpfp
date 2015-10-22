@@ -680,7 +680,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 	 * @return
 	 * @throws Exception
 	 */
-	public long getPfpAdActionCount(String customerInfoId, String keyword, int page, int pageSize) throws Exception {
+	public long getPfpAdActionCount(String customerInfoId, String keyword, int adType, int page, int pageSize) throws Exception {
 		Session session = getSession();
 
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
@@ -696,6 +696,12 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 			hql.append(" and adActionName like :keyword ");						
 			sqlParams.put("keyword", keyword.trim());
 		}
+		
+		if(adType != 0){
+			hql.append(" and adType like :adType ");
+			sqlParams.put("adType", adType);
+		}
+		
 		hql.append(" order by adActionCreatTime desc ");
 		//log.info("getPfpAdActionCount.sql = " + hql);
 

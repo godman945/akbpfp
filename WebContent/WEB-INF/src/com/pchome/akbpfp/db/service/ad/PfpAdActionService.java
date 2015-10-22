@@ -176,8 +176,8 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 	 * @return
 	 * @throws Exception
 	 */
-	public long getPfpAdActionCount(String customerInfoId, String keyword) throws Exception {
-		return ((PfpAdActionDAO)dao).getPfpAdActionCount(customerInfoId, keyword, -1, -1);
+	public long getPfpAdActionCount(String customerInfoId, String keyword, int adType) throws Exception {
+		return ((PfpAdActionDAO)dao).getPfpAdActionCount(customerInfoId, keyword, adType, -1, -1);
 	}
 
 	/**
@@ -189,8 +189,8 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 	 * @return
 	 * @throws Exception
 	 */
-	public long getPfpAdActionCount(String customerInfoId, String keyword, int page, int pageSize) throws Exception {
-		return ((PfpAdActionDAO)dao).getPfpAdActionCount(customerInfoId, keyword, page, pageSize);
+	public long getPfpAdActionCount(String customerInfoId, String keyword, int adType, int page, int pageSize) throws Exception {
+		return ((PfpAdActionDAO)dao).getPfpAdActionCount(customerInfoId, keyword, adType, page, pageSize);
 	}
 
 	public List<PfpAdAction> getAdActionByCustomerInfoId(String customerInfoId) throws Exception{

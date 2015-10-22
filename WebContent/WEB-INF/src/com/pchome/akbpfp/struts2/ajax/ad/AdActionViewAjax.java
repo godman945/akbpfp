@@ -47,7 +47,7 @@ public class AdActionViewAjax extends BaseCookieAction{
 		
 		for(EnumAdType adType:EnumAdType.values()){
 			if(adType.getType() == type){
-				allAdActionViews = pfpAdActionService.getPfpAdActionCount(super.getCustomer_info_id(), keyword);
+				allAdActionViews = pfpAdActionService.getPfpAdActionCount(super.getCustomer_info_id(), keyword, adType.getType());
 				adActionViewVO = pfpAdActionService.getAdActionView(super.getCustomer_info_id(), 
 																	keyword, 
 																	adType, 
