@@ -128,7 +128,7 @@
                  	<#if adType == '0' || adType == '1' >
                  	<div style="color:#ff3300;"><b>僅支援搜尋廣告</b></div>
                  		<div>
-                 			<#if channelMobileSizeList?size != 0>
+                 			<#if searchPCSizeList?size != 0>
 		                 	<#list searchPCSizeList as searchPCSize>
 					 			<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
 							</#list>
@@ -146,7 +146,7 @@
                  <#if adType == '0' || adType == '2' >
                  <div>
                  	<div style="color:#ff3300;"><b>僅支援內容廣告</b></div>
-                 		<#if adDevice == '0' || adType == '1' >
+                 		<#if adDevice == '0' || adDevice == '1' >
                  		<div style="width:110px;float:left;">
                  			<#if channelPCSizeList?size != 0>
 		                 	<#list channelPCSizeList as channelPCSize>
@@ -155,7 +155,7 @@
 							</#if>
 						</div>
 						</#if>
-						<#if adDevice == '0' || adType == '1' >
+						<#if adDevice == '0' || adDevice == '2' >
 						<div style="width:120px;float:left;">
 							<#if channelMobileSizeList?size != 0>
 		                 	<#list channelMobileSizeList as channelMobileSize>

@@ -89,7 +89,7 @@
 	</#if>
 </tbody>
 	<tr class="tbg">
-		<td colspan="5">總計：${totalSize!}筆</td>
+		<td colspan="7">總計：${totalSize!}筆</td>
 		<td class="td01">${totalPv?string('#,###')!}</td>				
 		<td class="td01">${totalClkRate?string('#.##')!}%</td>
 		<td class="td01">${totalClk?string('#,###')!}</td>	
