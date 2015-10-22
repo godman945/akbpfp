@@ -453,14 +453,14 @@ function serachReset(){
 	});
 
 	$("#adSearchWay").children().each(function(){
-		if ($(this).val() == "0") {
+		if ($(this).val() == "adsearch_include") {
 			//jQuery給法
 			$(this).attr("selected", "true"); //或是給selected也可
 		}
 	});
 
 	$("#adShowWay").children().each(function(){
-		if ($(this).val() == "adshow_all") {
+		if ($(this).val() == "0") {
 			//jQuery給法
 			$(this).attr("selected", "true"); //或是給selected也可
 		}

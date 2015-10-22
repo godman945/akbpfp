@@ -282,6 +282,8 @@ function ready(){
 	//重置 result
 	$('#btnSearchReset').click(function(){
 		serachReset();
+		searchDo();
+    	ajaxFormSubmit();
 	});
 }
 
