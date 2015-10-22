@@ -456,7 +456,7 @@
 		//for IE
 		if($("#adTitle").val() == "PChome關鍵字廣告 全新登場"){
 			$('#chkAdTitle').css("color","red");
-			$("#chkAdTitle").text("請填寫廣告內容.");
+			$("#chkAdTitle").text("請填寫廣告標題.");
 			location.href="#adTitle";
 			return false;
 		}
@@ -471,7 +471,7 @@
 		
 		if($("#adTitle").val() == ""){
 			$('#chkAdTitle').css("color","red");
-			$("#chkAdTitle").text("請填寫廣告內容.");
+			$("#chkAdTitle").text("請填寫廣告標題.");
 			location.href="#adTitle";
 			return false;
 		}

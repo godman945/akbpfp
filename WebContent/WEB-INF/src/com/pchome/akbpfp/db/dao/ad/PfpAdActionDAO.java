@@ -561,7 +561,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<PfpAdAction> getPfpAdActionForView(String customerInfoId, String keyword, int page, int pageSize) throws Exception{
+	public List<PfpAdAction> getPfpAdActionForView(String customerInfoId, String keyword, int adType, int page, int pageSize) throws Exception{
 		Session session = getSession();
 
 		StringBuffer sql = new StringBuffer("from PfpAdAction  where adActionStatus != :status");
@@ -571,6 +571,10 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 
 		if (StringUtils.isNotEmpty(keyword)) {
 			sql.append(" and adActionName like :keyword");
+		}
+		
+		if(adType != 0){
+			sql.append(" and adType like :adType");
 		}
 		
 		sql.append(" order by adActionSeq desc ");
@@ -587,6 +591,10 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 			q.setString("keyword", "%"+keyword+"%");
 		}
 
+		if(adType != 0){
+			q.setInteger("adType", adType);
+		}
+		
 		//page=-1 取得全部不分頁用於download
 		if(page!=-1){
 			q.setFirstResult((page-1)*pageSize)  

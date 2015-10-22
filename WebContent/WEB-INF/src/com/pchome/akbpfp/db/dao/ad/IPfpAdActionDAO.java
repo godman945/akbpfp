@@ -93,7 +93,7 @@ public interface IPfpAdActionDAO extends IBaseDAO<PfpAdAction,String>{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<PfpAdAction> getPfpAdActionForView(String customerInfoId, String keyword, int page, int pageSize) throws Exception;
+	public List<PfpAdAction> getPfpAdActionForView(String customerInfoId, String keyword, int adType, int page, int pageSize) throws Exception;
 
 	/**
 	 * 查詢廣告活動成效(檢視廣告使用)

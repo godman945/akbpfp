@@ -53,7 +53,7 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 		List<PfpAdActionViewVO> adActionViewVOs = null;
 		
 		// 查詢廣告活動
-		List<PfpAdAction> pfpAdActions = ((PfpAdActionDAO)dao).getPfpAdActionForView(customerInfoId, keyword, page, pageSize);
+		List<PfpAdAction> pfpAdActions = ((PfpAdActionDAO)dao).getPfpAdActionForView(customerInfoId, keyword, enumAdType.getType(), page, pageSize);
 		
 		if(pfpAdActions.size() > 0) {
 			// 逐筆讀出本頁的廣告活動序號
