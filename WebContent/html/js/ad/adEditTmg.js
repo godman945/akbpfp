@@ -1,5 +1,16 @@
 ﻿$(document).ready(function(){
 	$("#uploadFile").hide();
+	//廣告被下架拒刊後不能做修改
+	var adStatus = $("#adStatus").val();
+	if(adStatus == "6"){
+		$("#fileButton").hide();
+		$("#delImg").hide();
+		$("#addAdKeyword").hide();
+		$("#sugkw").hide();
+		$("#addAdExcludeKeyword").hide();
+		$("#batchAddAdKeyword").hide();
+		$(":input").not("#cancel").attr("disabled","disabled");
+	}
 	
 	//隱藏關鍵字區域
 	var adType = $("#adType").val();

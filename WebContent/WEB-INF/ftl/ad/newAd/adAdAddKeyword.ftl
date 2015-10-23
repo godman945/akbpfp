@@ -24,7 +24,7 @@
 							<input type="button" id="sugkw" name="sugkw" value="系統建議關鍵字">
 							&nbsp;&nbsp;<span id="chkAdKeyword" name="chkAdKeyword" style="color:red"></span><br>
 							<span class="t_s03">輸入後 按enter 或 確認鍵 來新增關鍵字；每個關鍵字限50個字，最多可設定500個關鍵字！</span><br>
-							<a href="javascript:setBatch()">大量新增關鍵字</a><br>
+							<a id="batchAddAdKeyword" href="javascript:setBatch()">大量新增關鍵字</a><br>
 							<!-- 批次新增關鍵字START -->
 							<div id="divBatchWord" style="${divBatchWord!}">
 								<textarea id="batchkeywords" name="batchkeywords" rows="10" cols="50">${batchkeywords!}</textarea>

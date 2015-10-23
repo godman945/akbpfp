@@ -16,6 +16,16 @@ $(document).ready(function(){
 		$("#keywordBody").hide();	
 	}
 	
+	//廣告被下架拒刊後不能做修改
+	var adStatus = $("#adStatus").val();
+	if(adStatus == "6"){
+		$("#addAdKeyword").hide();
+		$("#sugkw").hide();
+		$("#addAdExcludeKeyword").hide();
+		$("#batchAddAdKeyword").hide();
+		$(":input").not("#cancel").attr("disabled","disabled");
+	}
+	
 	//檢查網址字數
 	chkWord($("#adLinkURL"), $("#spanAdLinkURL"));
 	
