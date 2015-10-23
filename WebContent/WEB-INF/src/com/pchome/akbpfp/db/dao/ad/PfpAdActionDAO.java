@@ -574,7 +574,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 		}
 		
 		if(adType != 0){
-			sql.append(" and adType like :adType");
+			sql.append(" and (adType = 0 or adType = :adType)");
 		}
 		
 		sql.append(" order by adActionSeq desc ");
@@ -698,7 +698,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 		}
 		
 		if(adType != 0){
-			hql.append(" and adType like :adType ");
+			hql.append(" and (adType = 0 or adType = :adType) ");
 			sqlParams.put("adType", adType);
 		}
 		
