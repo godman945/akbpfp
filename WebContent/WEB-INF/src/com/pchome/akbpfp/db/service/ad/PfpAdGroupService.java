@@ -12,6 +12,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdGroupViewVO;
+import com.pchome.enumerate.ad.EnumAdDevice;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
@@ -156,7 +157,16 @@ public class PfpAdGroupService extends BaseService<PfpAdGroup,String> implements
 				adGroupViewVO.setAdActionMax(pfpAdGroup.getPfpAdAction().getAdActionMax());
 				adGroupViewVO.setAdGroupSeq(pfpAdGroup.getAdGroupSeq());						
 				adGroupViewVO.setAdGroupName(pfpAdGroup.getAdGroupName());				
-			
+				
+				//裝置
+				for(EnumAdDevice adDevice:EnumAdDevice.values()){
+					int devType = pfpAdGroup.getPfpAdAction().getAdDevice();
+					
+					if(adDevice.getDevType() == devType){
+						adGroupViewVO.setAdDevice(adDevice.getDevTypeName());
+					}
+				}
+				
 				// 分類狀態
 				for(EnumStatus status:EnumStatus.values()){
 					int adStatus = pfpAdGroup.getAdGroupStatus();

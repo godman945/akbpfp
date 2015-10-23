@@ -132,24 +132,24 @@ function tableSorter(){
 		$("#tableView").tablesorter({
 			headers:{
 				0:{sorter:false},
-				5 : { sorter: 'fancyNumber' },
 				6 : { sorter: 'fancyNumber' },
 				7 : { sorter: 'fancyNumber' },
-				8 : { sorter: 'rangesort' },
+				8 : { sorter: 'fancyNumber' },
 				9 : { sorter: 'rangesort' },
-				11:{sorter:false}
+				10 : { sorter: 'rangesort' },
+				12:{sorter:false}
 				}
 		});
 	} else {
 		$("#tableView").tablesorter({
 			headers:{
 				0:{sorter:false},
-				4 : { sorter: 'fancyNumber' },
 				5 : { sorter: 'fancyNumber' },
 				6 : { sorter: 'fancyNumber' },
-				7 : { sorter: 'rangesort' },
+				7 : { sorter: 'fancyNumber' },
 				8 : { sorter: 'rangesort' },
-				10:{sorter:false}
+				9 : { sorter: 'rangesort' },
+				11:{sorter:false}
 			}
 		});
 	}

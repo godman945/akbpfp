@@ -22,6 +22,7 @@ public class PfpAdGroupViewVO {
 	private float adAsideRate = 0;
 	private float adActionMax = 0;
 	private int invalidClk = 0;
+	private String adDevice;
 	
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -143,7 +144,10 @@ public class PfpAdGroupViewVO {
 	public void setInvalidClk(int invalidClk) {
 		this.invalidClk = invalidClk;
 	}
-
-
-	
+	public String getAdDevice() {
+		return adDevice;
+	}
+	public void setAdDevice(String adDevice) {
+		this.adDevice = adDevice;
+	}
 }

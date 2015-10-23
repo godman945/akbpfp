@@ -19,6 +19,7 @@
 	<tr>
 		<th width="50"><a href="#" onclick="checkAll()">全選</a></th>
 		<th height="35">分類</th>
+		<th>裝置</th>
 		<th>狀態</th>
 		<#if adType == '0' || adType == '1' >
 		<th style="width:12%">搜尋廣告出價</th>
@@ -54,6 +55,7 @@
 			        ${vo.adGroupName!}
 				</#if>		        	
 		        </td>
+		        <td class="td03">${vo.adDevice!}</td>
 		        <td class="td03">${vo.adGroupStatusDesc!}</td>
 		        <#if adType == '0' || adType == '1' >
 		        <td>
@@ -107,9 +109,9 @@
 </tbody>
 	<tr class="tbg">
 		<#if adType == '0'>
-		<td colspan="5">總計：${totalSize!}筆</td>
+		<td colspan="6">總計：${totalSize!}筆</td>
 		<#else>
-		<td colspan="4">總計：${totalSize!}筆</td>
+		<td colspan="5">總計：${totalSize!}筆</td>
 		</#if>
 		<td class="td01">${totalPv?string('#,###')!}</td>
 		<td class="td01">${totalClkRate?string('#.##')!}%</td>
