@@ -127,50 +127,50 @@
                  <div>
                  	<#if adType == '0' || adType == '1' >
                  	<div style="color:#ff3300;"><b>僅支援搜尋廣告</b></div>
-                 		<#if adDevice == '0' || adDevice == '1' >
-                 		<div style="width:110px;float:left;">
-                 			<#if searchPCSizeList?size != 0>
-		                 	<#list searchPCSizeList as searchPCSize>
-					 			<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
-							</#list>
-							</#if>
-						</div>
+             		<#if adDevice == '0' || adDevice == '1' >
+             		<div >
+             			<#if searchPCSizeList?size != 0>
+	                 	<#list searchPCSizeList as searchPCSize>
+				 			<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
+						</#list>
 						</#if>
-						<#if adDevice == '0' || adDevice == '2' >
-						<div style="width:120px;float:left;">
-							<#if searchMobileSizeList?size != 0>
-		                 	<#list searchMobileSizeList as searchMobileSize>
-					 			<p>${searchMobileSize.width!} x ${searchMobileSize.height!}(行動裝置)</p>
-							</#list>
-							</#if>
-						</div>
+					</div>
+					</#if>
+					<#if adDevice == '0' || adDevice == '2' >
+					<div >
+						<#if searchMobileSizeList?size != 0>
+	                 	<#list searchMobileSizeList as searchMobileSize>
+				 			<p>${searchMobileSize.width!} x ${searchMobileSize.height!}(行動裝置)</p>
+						</#list>
 						</#if>
-                 <div/>
-                 </#if>
-                 <#if adType == '0' || adType == '2' >
+					</div>
+					</#if>
+                 	</#if>
+                 </div>
                  <div>
+                 	<#if adType == '0' || adType == '2' >
                  	<div style="color:#ff3300;"><b>僅支援內容廣告</b></div>
-                 		<#if adDevice == '0' || adDevice == '1' >
-                 		<div style="width:110px;float:left;">
-                 			<#if channelPCSizeList?size != 0>
-		                 	<#list channelPCSizeList as channelPCSize>
-					 			<p>${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
-							</#list>
-							</#if>
-						</div>
+             		<#if adDevice == '0' || adDevice == '1' >
+             		<div style="width:110px;float:left;">
+             			<#if channelPCSizeList?size != 0>
+	                 	<#list channelPCSizeList as channelPCSize>
+				 			<p>${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+						</#list>
 						</#if>
-						<#if adDevice == '0' || adDevice == '2' >
-						<div style="width:120px;float:left;">
-							<#if channelMobileSizeList?size != 0>
-		                 	<#list channelMobileSizeList as channelMobileSize>
-					 			<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
-							</#list>
-							</#if>
-						</div>
+					</div>
+					</#if>
+					<#if adDevice == '0' || adDevice == '2' >
+					<div style="width:120px;float:left;">
+						<#if channelMobileSizeList?size != 0>
+	                 	<#list channelMobileSizeList as channelMobileSize>
+				 			<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+						</#list>
 						</#if>
-                 <div/>
-                 </#if>
-			  </div>
+					</div>
+					</#if>
+                 	</#if>
+                 </div>
+			   </div>
               </td>
             </tr>					
         </tbody>

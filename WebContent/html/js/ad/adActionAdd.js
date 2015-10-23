@@ -1,6 +1,6 @@
 ﻿$(document).ready(function(){
 	//測試時開放，所以先註解
-    /*var firstAdType = $("#adType").val();
+    var firstAdType = $("#adType").val();
     if(firstAdType == "1"){
     	$("#adDevice option").each(function() {
     		var adDevice = $(this).val();
@@ -30,13 +30,13 @@
 					$(this).removeAttr("selected");
 				}
 			} 
-			if(adType == "1"){
-				$("#adDevice").attr("disabled","disabled");
-			} else {
-				$("#adDevice").removeAttr("disabled");
-			}
 		});
-	});*/
+		if(adType == "1"){
+			$("#adDevice").attr("disabled","disabled");
+		} else {
+			$("#adDevice").removeAttr("disabled");
+		}
+	});
 	
 	initDate();
 
