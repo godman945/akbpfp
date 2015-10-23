@@ -42,22 +42,22 @@ public class AdActionViewAjax extends BaseCookieAction{
 	}
 	
 	public String adActionViewTableAjax() throws Exception{
-		int type = Integer.parseInt(searchType);
+		//int type = Integer.parseInt(searchType);
 		long allAdActionViews = 0;
 		
-		for(EnumAdType adType:EnumAdType.values()){
-			if(adType.getType() == type){
-				allAdActionViews = pfpAdActionService.getPfpAdActionCount(super.getCustomer_info_id(), keyword, adType.getType());
+		//for(EnumAdType adType:EnumAdType.values()){
+			//if(adType.getType() == type){
+				allAdActionViews = pfpAdActionService.getPfpAdActionCount(super.getCustomer_info_id(), keyword, searchType);
 				adActionViewVO = pfpAdActionService.getAdActionView(super.getCustomer_info_id(), 
 																	keyword, 
-																	adType, 
+																	searchType, 
 																	DateValueUtil.getInstance().stringToDate(startDate), 
 																	DateValueUtil.getInstance().stringToDate(endDate),
 																	pageNo, 
 																	pageSize);
 				
-			}
-		}
+			//}
+		//}
 		
 		if(allAdActionViews > 0) {
 			totalCount = allAdActionViews;

@@ -16,7 +16,6 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
-import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 
 public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpAdActionDAO{
@@ -561,7 +560,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public List<PfpAdAction> getPfpAdActionForView(String customerInfoId, String keyword, int adType, int page, int pageSize) throws Exception{
+	public List<PfpAdAction> getPfpAdActionForView(String customerInfoId, String keyword, String adType, int page, int pageSize) throws Exception{
 		Session session = getSession();
 
 		StringBuffer sql = new StringBuffer("from PfpAdAction  where adActionStatus != :status");
@@ -573,8 +572,8 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 			sql.append(" and adActionName like :keyword");
 		}
 		
-		if(adType != 0){
-			sql.append(" and (adType = 0 or adType = :adType)");
+		if(StringUtils.isNotEmpty(adType)){
+			sql.append(" and adType = :adType");
 		}
 		
 		sql.append(" order by adActionSeq desc ");
@@ -591,8 +590,8 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 			q.setString("keyword", "%"+keyword+"%");
 		}
 
-		if(adType != 0){
-			q.setInteger("adType", adType);
+		if(StringUtils.isNotEmpty(adType)){
+			q.setString("adType", adType);
 		}
 		
 		//page=-1 取得全部不分頁用於download
@@ -680,7 +679,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 	 * @return
 	 * @throws Exception
 	 */
-	public long getPfpAdActionCount(String customerInfoId, String keyword, int adType, int page, int pageSize) throws Exception {
+	public long getPfpAdActionCount(String customerInfoId, String keyword, String adType, int page, int pageSize) throws Exception {
 		Session session = getSession();
 
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
@@ -697,9 +696,9 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 			sqlParams.put("keyword", keyword.trim());
 		}
 		
-		if(adType != 0){
-			hql.append(" and (adType = 0 or adType = :adType) ");
-			sqlParams.put("adType", adType);
+		if(StringUtils.isNotEmpty(adType)){
+			hql.append(" and adType = :adType ");
+			sqlParams.put("adType", Integer.parseInt(adType));
 		}
 		
 		hql.append(" order by adActionCreatTime desc ");
@@ -747,7 +746,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public HashMap<String, Object> getAdActionReportByAdActionsList(String customerInfoId, List<String> adActionSeqList, int adType, Date startDate, Date endDate) throws Exception{
+	public HashMap<String, Object> getAdActionReportByAdActionsList(String customerInfoId, List<String> adActionSeqList, String adType, Date startDate, Date endDate) throws Exception{
 		Session session = getSession();
 		System.out.println("customerInfoId = " + customerInfoId);
 		System.out.println("adActionSeqList = " + adActionSeqList);
@@ -776,12 +775,16 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 			sqlParams.put("adActionSeq", adActionSeqList);
 		}
 
-		if(adType > 0){
-			hql.append(" and adType = :adType ");
-			sqlParams.put("adType", adType);
-		}else{
-			hql.append(" and adType != :adType ");
-			sqlParams.put("adType", adType);
+		if(StringUtils.isNotEmpty(adType)){
+			if(Integer.parseInt(adType) > 0){
+				hql.append(" and adType = :adType ");
+				sqlParams.put("adType", Integer.parseInt(adType));
+			}else{
+				hql.append(" and adType != :adType ");
+				sqlParams.put("adType", Integer.parseInt(adType));
+			}
+		} else {
+			hql.append(" and adType != 0 ");
 		}
 
 		if (startDate != null) {

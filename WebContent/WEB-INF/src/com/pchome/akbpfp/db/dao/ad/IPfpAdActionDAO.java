@@ -54,7 +54,7 @@ public interface IPfpAdActionDAO extends IBaseDAO<PfpAdAction,String>{
 	 * @return
 	 * @throws Exception
 	 */
-	public HashMap<String, Object> getAdActionReportByAdActionsList(String customerInfoId, List<String> adActionSeqList, int adType, Date startDate, Date endDate) throws Exception;
+	public HashMap<String, Object> getAdActionReportByAdActionsList(String customerInfoId, List<String> adActionSeqList, String adType, Date startDate, Date endDate) throws Exception;
 	
 	/**
 	 * (舊版)查詢 廣告管理>檢視廣告>廣告列表 的資料，查詢 pfp_ad_action、pfp_ad_group、pfp_ad、pfp_ad_pvclk outer join起來
@@ -93,7 +93,7 @@ public interface IPfpAdActionDAO extends IBaseDAO<PfpAdAction,String>{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<PfpAdAction> getPfpAdActionForView(String customerInfoId, String keyword, int adType, int page, int pageSize) throws Exception;
+	public List<PfpAdAction> getPfpAdActionForView(String customerInfoId, String keyword, String adType, int page, int pageSize) throws Exception;
 
 	/**
 	 * 查詢廣告活動成效(檢視廣告使用)

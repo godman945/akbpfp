@@ -41,9 +41,11 @@
 		        <tbody>
 		            <tr>
 		                <td>
-		                    <select id="searchType" name="searchType">
+		                    <select id="searchType" name="searchType" style="width:139px;" >
 		                        <#list searchAdType as adType>
-		                    		<option value="${adType.type!}">${adType.chName!}</option>
+		                        	<#if adType.type == adAction.adType >
+		                    		<option value="${adType.type!}">${adType.typeName!}</option>
+		                    		</#if>
 		                        </#list>
 		                    </select>
 		                    <input type="text" id="keyword" name="keyword" style="width:400px;">

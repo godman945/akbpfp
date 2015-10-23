@@ -40,8 +40,9 @@
 		            <tr>
 		                <td>
 		                    <select id="searchType" name="searchType">
+		                    	<option value="">全部</option>
 		                    	<#list searchAdType as adType>
-		                    		<option value="${adType.type!}">${adType.chName!}</option>
+		                    		<option value="${adType.type!}">${adType.typeName!}</option>
 		                        </#list>
 		                    </select>
 		                    <input type="text" id="keyword" name="keyword" style="width:400px;">

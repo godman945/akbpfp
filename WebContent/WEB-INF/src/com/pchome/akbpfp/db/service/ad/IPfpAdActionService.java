@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
-import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.IBaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdActionViewVO;
 import com.pchome.enumerate.ad.EnumAdType;
@@ -23,7 +22,7 @@ public interface IPfpAdActionService extends IBaseService<PfpAdAction,String>{
 	
 	public List<PfpAdAction> getAdAction(String customerInfoId, Date today) throws Exception;
 	
-	public List<PfpAdActionViewVO> getAdActionView(String customerInfoId, String keyword, EnumAdType enumAdType, Date startDate, Date endDate, int page, int pageSize) throws Exception;
+	public List<PfpAdActionViewVO> getAdActionView(String customerInfoId, String keyword, String adType, Date startDate, Date endDate, int page, int pageSize) throws Exception;
 
 	/**
 	 * 查詢廣告活動全部筆數(檢視廣告使用)
@@ -34,7 +33,7 @@ public interface IPfpAdActionService extends IBaseService<PfpAdAction,String>{
 	 * @return
 	 * @throws Exception
 	 */
-	public long getPfpAdActionCount(String customerInfoId, String keyword, int adType) throws Exception;
+	public long getPfpAdActionCount(String customerInfoId, String keyword, String adType) throws Exception;
 
 	/**
 	 * 查詢廣告活動分頁筆數(檢視廣告使用)
@@ -45,7 +44,7 @@ public interface IPfpAdActionService extends IBaseService<PfpAdAction,String>{
 	 * @return
 	 * @throws Exception
 	 */
-	public long getPfpAdActionCount(String customerInfoId, String keyword, int adType, int page, int pageSize) throws Exception;
+	public long getPfpAdActionCount(String customerInfoId, String keyword, String adType, int page, int pageSize) throws Exception;
 
 	public List<PfpAdAction> getAdActionByCustomerInfoId(String customerInfoId) throws Exception;
 	

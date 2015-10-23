@@ -9,7 +9,6 @@ import java.util.List;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdActionDAO;
 import com.pchome.akbpfp.db.dao.ad.PfpAdActionDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
-import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdActionViewVO;
 import com.pchome.enumerate.ad.EnumAdDevice;
@@ -44,7 +43,7 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 		return ((PfpAdActionDAO)dao).getAdAction(customerInfoId, today);
 	}
 
-	public List<PfpAdActionViewVO> getAdActionView(String customerInfoId, String keyword, EnumAdType enumAdType, Date startDate, Date endDate, int page, int pageSize) throws Exception{
+	public List<PfpAdActionViewVO> getAdActionView(String customerInfoId, String keyword, String adType, Date startDate, Date endDate, int page, int pageSize) throws Exception{
 
 		// 先攔掉 SQL Injection 攻擊語法
 		customerInfoId = CommonUtils.filterSqlInjection(customerInfoId);
@@ -53,7 +52,7 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 		List<PfpAdActionViewVO> adActionViewVOs = null;
 		
 		// 查詢廣告活動
-		List<PfpAdAction> pfpAdActions = ((PfpAdActionDAO)dao).getPfpAdActionForView(customerInfoId, keyword, enumAdType.getType(), page, pageSize);
+		List<PfpAdAction> pfpAdActions = ((PfpAdActionDAO)dao).getPfpAdActionForView(customerInfoId, keyword, adType, page, pageSize);
 		
 		if(pfpAdActions.size() > 0) {
 			// 逐筆讀出本頁的廣告活動序號
@@ -63,7 +62,7 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 			}
 
 			// 依照讀出本頁的廣告活動序號，查詢關鍵字成效
-			HashMap<String, Object> pfpAdActionReports = ((PfpAdActionDAO)dao).getAdActionReportByAdActionsList(customerInfoId, adActionSeqs, enumAdType.getType(), startDate, endDate);
+			HashMap<String, Object> pfpAdActionReports = ((PfpAdActionDAO)dao).getAdActionReportByAdActionsList(customerInfoId, adActionSeqs, adType, startDate, endDate);
 	
 			for(PfpAdAction pfpAdAction:pfpAdActions) {
 				if(adActionViewVOs == null){
@@ -76,8 +75,8 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 	
 				// 廣告類型
 				for(EnumAdType type:EnumAdType.values()){
-					int adType = pfpAdAction.getAdType();					
-					if(type.getType() == adType){
+					int pfpAdType = pfpAdAction.getAdType();					
+					if(type.getType() == pfpAdType){
 						adActionViewVO.setAdType(type.getTypeName());
 					}					
 				}
@@ -176,7 +175,7 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 	 * @return
 	 * @throws Exception
 	 */
-	public long getPfpAdActionCount(String customerInfoId, String keyword, int adType) throws Exception {
+	public long getPfpAdActionCount(String customerInfoId, String keyword, String adType) throws Exception {
 		return ((PfpAdActionDAO)dao).getPfpAdActionCount(customerInfoId, keyword, adType, -1, -1);
 	}
 
@@ -189,7 +188,7 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 	 * @return
 	 * @throws Exception
 	 */
-	public long getPfpAdActionCount(String customerInfoId, String keyword, int adType, int page, int pageSize) throws Exception {
+	public long getPfpAdActionCount(String customerInfoId, String keyword, String adType, int page, int pageSize) throws Exception {
 		return ((PfpAdActionDAO)dao).getPfpAdActionCount(customerInfoId, keyword, adType, page, pageSize);
 	}
 
