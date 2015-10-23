@@ -39,8 +39,10 @@ function newAd() {
 					<td colspan="3">${adActionName!}</td>
 				</tr>
 				<tr>
-					<th width="20%" height="35" style="width:20%">廣告撥放類型</th>
-					<td colspan="3">${adTypeName!}</td>
+					<th style="width:20%" height="35">廣告撥放類型</th>
+					<td width="34%">${adTypeName!}</td>
+					<th width="12%" style="width:20%">播放裝置</th>
+					<td width="34%">${adDeviceName!}</td>
 				</tr>
 				<tr>
 					<th style="width:20%" height="35">廣告走期</th>

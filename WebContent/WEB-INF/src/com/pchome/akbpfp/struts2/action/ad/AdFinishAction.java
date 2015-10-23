@@ -15,6 +15,7 @@ import com.pchome.akbpfp.db.service.ad.PfpAdKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdDevice;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 
@@ -54,6 +55,7 @@ public class AdFinishAction extends BaseCookieAction{
 	
 	private String adType;
 	private String adTypeName;
+	private String adDeviceName;
 	
 	public String AdAddFinish() throws Exception {
 	    	getadDate();
@@ -76,10 +78,18 @@ public class AdFinishAction extends BaseCookieAction{
 		adGroupChannelPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
 		
 		adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
+		Integer adDevice = pfpAdGroup.getPfpAdAction().getAdDevice();
 		adTypeName = "";
+		
 		for(EnumAdType enumAdType: EnumAdType.values()){
 			if(Integer.parseInt(adType) == enumAdType.getType()){
 				adTypeName = enumAdType.getTypeName();
+			}
+		}
+		
+		for(EnumAdDevice enumAdDevice:EnumAdDevice.values()){
+			if(adDevice == enumAdDevice.getDevType()){
+				adDeviceName = enumAdDevice.getDevTypeName();
 			}
 		}
 		
@@ -219,6 +229,14 @@ public class AdFinishAction extends BaseCookieAction{
 
 	public String getAdTypeName() {
 		return adTypeName;
+	}
+
+	public String getAdDeviceName() {
+		return adDeviceName;
+	}
+
+	public void setAdDeviceName(String adDeviceName) {
+		this.adDeviceName = adDeviceName;
 	}
 	
 }
