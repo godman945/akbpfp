@@ -2,7 +2,8 @@
 	//測試時開放，所以先註解
     var firstAdType = $("#adType").val();
     if(firstAdType == "1"){
-    	$("#adDevice option").each(function() {
+    	$("#adDeviceSelect2").hide();
+    	/*$("#adDevice option").each(function() {
     		var adDevice = $(this).val();
     		if(adDevice == "1"){
 				 $(this).attr("selected","selected");
@@ -10,14 +11,21 @@
 				 $(this).removeAttr("selected");
 			}
     	});
-    	$("#adDevice").attr("disabled","disabled");
+    	$("#adDevice").attr("disabled","disabled");*/
     }
     
 	$("#adType").change(function(){
 		var adType = $("#adType").val();
 		$("#adDevice option").each(function() {
 			var adDevice = $(this).val();
-			if(adType == "1"){
+			if(adDevice == "0"){
+				$(this).attr("selected","selected");
+			} else {
+				$(this).removeAttr("selected");
+			}
+			
+			
+			/*if(adType == "1"){
 				if(adDevice == "1"){
 					$(this).attr("selected","selected");
 				} else {
@@ -29,12 +37,14 @@
 				} else {
 					$(this).removeAttr("selected");
 				}
-			} 
+			} */
 		});
 		if(adType == "1"){
-			$("#adDevice").attr("disabled","disabled");
+			$("#adDeviceSelect2").hide();
+			//$("#adDevice").attr("disabled","disabled");
 		} else {
-			$("#adDevice").removeAttr("disabled");
+			$("#adDeviceSelect2").show();
+			//$("#adDevice").removeAttr("disabled");
 		}
 	});
 	

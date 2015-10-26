@@ -46,9 +46,9 @@
                         	<select id="adDevice" name="adDevice">
 		                    	<#list adDeviceList as data2>
 		                    		<#if '${data2.devType?c!}' == adDevice >
-		                    		<option value="${data2.devType!}" selected >${data2.devTypeName!}</option>
+		                    		<option id="adDeviceSelect${data2.devType!}" value="${data2.devType!}" selected >${data2.devTypeName!}</option>
 		                    		<#else>
-		                    		<option value="${data2.devType!}">${data2.devTypeName!}</option>
+		                    		<option id="adDeviceSelect${data2.devType!}" value="${data2.devType!}">${data2.devTypeName!}</option>
 		                    		</#if>
 		                        </#list>
 		                    </select>
