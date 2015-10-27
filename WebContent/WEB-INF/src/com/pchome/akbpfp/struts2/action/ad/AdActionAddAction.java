@@ -5,7 +5,10 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+
+
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
@@ -50,7 +53,6 @@ public class AdActionAddAction extends BaseCookieAction{
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 	
 	private Map<String,String> adTypeMap;
-	private EnumAdDevice[] adDeviceList;
 	private String adAllDevice;
 	private String adSearchDevice;
 	private String adChannelDevice;
@@ -92,10 +94,31 @@ public class AdActionAddAction extends BaseCookieAction{
 		}
 		
 		//廣告播放裝置下拉選項
-		adAllDevice = pfpAdTypeSelect.substring(1,4);
-		adSearchDevice = pfpAdTypeSelect.substring(5,8);
-		adChannelDevice = pfpAdTypeSelect.substring(9);
-		adDeviceList = EnumAdDevice.values();
+		String allDeviceArray[] = {pfpAdTypeSelect.substring(1,2),pfpAdTypeSelect.substring(2,3),pfpAdTypeSelect.substring(3,4)};
+		String searchDeviceArray[] = {pfpAdTypeSelect.substring(5,6),pfpAdTypeSelect.substring(6,7),pfpAdTypeSelect.substring(7,8)};
+		String channelDeviceArray[] = {pfpAdTypeSelect.substring(9,10),pfpAdTypeSelect.substring(10,11),pfpAdTypeSelect.substring(11)};
+		int deviceNumber = 0;
+		Map<String,String> adAllDeviceMap = new LinkedHashMap<String,String>();
+		Map<String,String> adSearchDeviceMap = new LinkedHashMap<String,String>();
+		Map<String,String> adChannelDeviceMap = new LinkedHashMap<String,String>();
+		for(EnumAdDevice enumAdDevice:EnumAdDevice.values()){
+			if("1".equals(allDeviceArray[deviceNumber])){
+				adAllDeviceMap.put(String.valueOf(enumAdDevice.getDevType()), enumAdDevice.getDevTypeName());
+			}
+			if("1".equals(searchDeviceArray[deviceNumber])){
+				adSearchDeviceMap.put(String.valueOf(enumAdDevice.getDevType()), enumAdDevice.getDevTypeName());
+			}
+			if("1".equals(channelDeviceArray[deviceNumber])){
+				adChannelDeviceMap.put(String.valueOf(enumAdDevice.getDevType()), enumAdDevice.getDevTypeName());
+			}
+			deviceNumber++;
+		}
+		JSONObject jsonObj1 = new JSONObject(adAllDeviceMap);
+		JSONObject jsonObj2 = new JSONObject(adSearchDeviceMap);
+		JSONObject jsonObj3 = new JSONObject(adChannelDeviceMap);
+		adAllDevice = jsonObj1.toString(); 
+		adSearchDevice = jsonObj2.toString(); 
+		adChannelDevice = jsonObj3.toString(); 
 
 		// 廣告分類點選取消回來活動頁的時候，會帶adActionSeq
 		if(adActionSeq != null && StringUtils.isNotEmpty(adActionSeq)) {
@@ -374,10 +397,6 @@ public class AdActionAddAction extends BaseCookieAction{
 	
 	public Map<String, String> getAdTypeMap() {
 		return adTypeMap;
-	}
-
-	public EnumAdDevice[] getAdDeviceList() {
-		return adDeviceList;
 	}
 
 	public String getAdAllDevice() {

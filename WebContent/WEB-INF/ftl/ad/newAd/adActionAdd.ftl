@@ -44,13 +44,8 @@
                         <th height="35"><span class="t_s02">* </span>廣告播放裝置</th>
                         <td>
                         	<select id="adDevice" name="adDevice">
-		                    	<#list adDeviceList as data2>
-		                    		<#if '${data2.devType?c!}' == adDevice >
-		                    		<option id="adDeviceSelect${data2.devType!}" value="${data2.devType!}" selected >${data2.devTypeName!}</option>
-		                    		<#else>
-		                    		<option id="adDeviceSelect${data2.devType!}" value="${data2.devType!}">${data2.devTypeName!}</option>
-		                    		</#if>
-		                        </#list>
+		                    	
+		                       
 		                    </select>
                         </td>
                     </tr>
@@ -100,9 +95,10 @@
         <#if adActionSeq??>
         <input type="hidden" id="adActionSeq" name="adActionSeq" value="${adActionSeq!}">
         </#if>
-        <input type="hidden" id="adAllDevice" name="adAllDevice" value="${adAllDevice!}">
-        <input type="hidden" id="adSearchDevice" name="adAllDevice" value="${adSearchDevice!}">
-        <input type="hidden" id="adChannelDevice" name="adAllDevice" value="${adChannelDevice!}">
+        <input type="hidden" id="adDeviceSelect" name="adDeviceSelect" value="${adDevice!}">
+        <span id="adAllDevice" name="adAllDevice" style="display:none;" >${adAllDevice!}</span>
+        <span id="adSearchDevice" name="adSearchDevice" style="display:none;" >${adSearchDevice!}</span>
+        <span id="adChannelDevice" name="adChannelDevice" style="display:none;" >${adChannelDevice!}</span>
         <input type="hidden" id="backPage" name="backPage" value="${backPage!}">
     </form>
 </div>

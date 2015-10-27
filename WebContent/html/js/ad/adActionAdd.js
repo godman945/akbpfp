@@ -1,48 +1,40 @@
 ﻿$(document).ready(function(){
-    var firstAdType = $("#adType").val();
-    var adAllDevice = $("#adAllDevice").val().split("");
-    var adSearchDevice = $("#adSearchDevice").val().split("");
-    var adChannelDevice = $("#adChannelDevice").val().split("");
-    var firstDeviceArray;
-    if(firstAdType == "0"){
-    	firstDeviceArray = adAllDevice;
+	var firstAdType = $("#adType").val();
+	var firstAdDevice = $("#adDeviceSelect").val();
+	var firstObj;
+	if(firstAdType == "0"){
+		firstObj = JSON.parse($("#adAllDevice").text());
     } else if(firstAdType == "1"){
-    	firstDeviceArray = adSearchDevice;
+    	firstObj = JSON.parse($("#adSearchDevice").text());
     } else if(firstAdType == "2"){
-    	firstDeviceArray = adChannelDevice;
+    	firstObj = JSON.parse($("#adChannelDevice").text());
     }
-    for(var i=0;i<=2;i++){
-    	if(firstDeviceArray[i] == "0"){
-    		$("#adDeviceSelect" + i).hide();
-    	}
-    }
-    
-    $("#adType").change(function(){
-    	var deviceArray;
-    	var selectedType = "yes";
-    	var adType = $("#adType").val();
-    	if(adType == "0"){
-    		deviceArray = adAllDevice;
-        } else if(adType == "1"){
-        	deviceArray = adSearchDevice;
-        } else if(adType == "2"){
-        	deviceArray = adChannelDevice;
-        }
-    	for(var j=0;j<=2;j++){
-        	if(deviceArray[j] == "0"){
-        		$("#adDeviceSelect" + j).hide();
-        		$("#adDeviceSelect" + j).removeAttr("selected");
-        	} else if(deviceArray[j] == "1"){
-        		$("#adDeviceSelect" + j).show();
-        		if(selectedType == "yes"){
-        			$("#adDeviceSelect" + j).attr("selected","selected");
-        			selectedType = "no";
-        		} else {
-        			$("#adDeviceSelect" + j).removeAttr("selected");
-        		}
-        	}
-        }
-    });
+	
+	$.each(firstObj, function(key, value) { 
+		if(firstAdDevice == key){
+			$("#adDevice").append('<option value='+ key+' selected >' + value + '</option>');
+		} else {
+			$("#adDevice").append('<option value='+ key+'>' + value + '</option>');
+		}
+	});
+	
+	$("#adType").change(function(){
+		var adType = $("#adType").val();
+		var Obj;
+		if(adType == "0"){
+			Obj = JSON.parse($("#adAllDevice").text());
+	    } else if(adType == "1"){
+	    	Obj = JSON.parse($("#adSearchDevice").text());
+	    } else if(adType == "2"){
+	    	Obj = JSON.parse($("#adChannelDevice").text());
+	    }
+		
+		$("#adDevice option").remove();
+
+		$.each(Obj, function(key, value) { 
+			$("#adDevice").append('<option value='+ key+'>' + value + '</option>');
+		});
+	});
 	
 	initDate();
 
