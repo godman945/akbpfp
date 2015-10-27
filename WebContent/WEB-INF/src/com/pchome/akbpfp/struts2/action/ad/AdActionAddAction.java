@@ -51,6 +51,9 @@ public class AdActionAddAction extends BaseCookieAction{
 	
 	private Map<String,String> adTypeMap;
 	private EnumAdDevice[] adDeviceList;
+	private String adAllDevice;
+	private String adSearchDevice;
+	private String adChannelDevice;
 
 	public String adActionAdd() throws Exception{
 		log.info("adActionAdd => adActionSeq = " + adActionSeq);
@@ -76,8 +79,10 @@ public class AdActionAddAction extends BaseCookieAction{
 		
 		PfdUserAdAccountRef pfdUserAdAccountRef = pfdUserAdAccountRefService.findPfdUserAdAccountRef(super.getCustomer_info_id());
 		String pfpAdTypeSelect = pfdUserAdAccountRef.getPfdCustomerInfo().getPfpAdtypeSelect();
-		String array[] = pfpAdTypeSelect.split("");
-		int number = 1;
+		
+		//廣告播放類型下拉選項
+		String array[] = {pfpAdTypeSelect.substring(0,1),pfpAdTypeSelect.substring(4,5),pfpAdTypeSelect.substring(8,9)};
+		int number = 0;
 		adTypeMap = new LinkedHashMap<String,String>();
 		for(EnumAdType enumAdType: EnumAdType.values()){
 			if("1".equals(array[number])){
@@ -86,7 +91,10 @@ public class AdActionAddAction extends BaseCookieAction{
 			number++;
 		}
 		
-		//adTypeList = EnumAdType.values();
+		//廣告播放裝置下拉選項
+		adAllDevice = pfpAdTypeSelect.substring(1,4);
+		adSearchDevice = pfpAdTypeSelect.substring(5,8);
+		adChannelDevice = pfpAdTypeSelect.substring(9);
 		adDeviceList = EnumAdDevice.values();
 
 		// 廣告分類點選取消回來活動頁的時候，會帶adActionSeq
@@ -370,6 +378,18 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public EnumAdDevice[] getAdDeviceList() {
 		return adDeviceList;
+	}
+
+	public String getAdAllDevice() {
+		return adAllDevice;
+	}
+
+	public String getAdSearchDevice() {
+		return adSearchDevice;
+	}
+
+	public String getAdChannelDevice() {
+		return adChannelDevice;
 	}
 
 }

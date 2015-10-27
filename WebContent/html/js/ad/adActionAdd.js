@@ -1,9 +1,52 @@
 ﻿$(document).ready(function(){
-	//測試時開放，所以先註解
     var firstAdType = $("#adType").val();
-    if(firstAdType == "1"){
+    var adAllDevice = $("#adAllDevice").val().split("");
+    var adSearchDevice = $("#adSearchDevice").val().split("");
+    var adChannelDevice = $("#adChannelDevice").val().split("");
+    var firstDeviceArray;
+    if(firstAdType == "0"){
+    	firstDeviceArray = adAllDevice;
+    } else if(firstAdType == "1"){
+    	firstDeviceArray = adSearchDevice;
+    } else if(firstAdType == "2"){
+    	firstDeviceArray = adChannelDevice;
+    }
+    for(var i=0;i<=2;i++){
+    	if(firstDeviceArray[i] == "0"){
+    		$("#adDeviceSelect" + i).hide();
+    	}
+    }
+    
+    $("#adType").change(function(){
+    	var deviceArray;
+    	var selectedType = "yes";
+    	var adType = $("#adType").val();
+    	if(adType == "0"){
+    		deviceArray = adAllDevice;
+        } else if(adType == "1"){
+        	deviceArray = adSearchDevice;
+        } else if(adType == "2"){
+        	deviceArray = adChannelDevice;
+        }
+    	for(var j=0;j<=2;j++){
+        	if(deviceArray[j] == "0"){
+        		$("#adDeviceSelect" + j).hide();
+        		$("#adDeviceSelect" + j).removeAttr("selected");
+        	} else if(deviceArray[j] == "1"){
+        		$("#adDeviceSelect" + j).show();
+        		if(selectedType == "yes"){
+        			$("#adDeviceSelect" + j).attr("selected","selected");
+        			selectedType = "no";
+        		} else {
+        			$("#adDeviceSelect" + j).removeAttr("selected");
+        		}
+        	}
+        }
+    });
+    
+    /*if(firstAdType == "1"){
     	$("#adDeviceSelect2").hide();
-    	/*$("#adDevice option").each(function() {
+    	$("#adDevice option").each(function() {
     		var adDevice = $(this).val();
     		if(adDevice == "1"){
 				 $(this).attr("selected","selected");
@@ -11,7 +54,7 @@
 				 $(this).removeAttr("selected");
 			}
     	});
-    	$("#adDevice").attr("disabled","disabled");*/
+    	$("#adDevice").attr("disabled","disabled");
     }
     
 	$("#adType").change(function(){
@@ -25,7 +68,7 @@
 			}
 			
 			
-			/*if(adType == "1"){
+			if(adType == "1"){
 				if(adDevice == "1"){
 					$(this).attr("selected","selected");
 				} else {
@@ -37,7 +80,7 @@
 				} else {
 					$(this).removeAttr("selected");
 				}
-			} */
+			}
 		});
 		if(adType == "1"){
 			$("#adDeviceSelect2").hide();
@@ -46,7 +89,7 @@
 			$("#adDeviceSelect2").show();
 			//$("#adDevice").removeAttr("disabled");
 		}
-	});
+	});*/
 	
 	initDate();
 

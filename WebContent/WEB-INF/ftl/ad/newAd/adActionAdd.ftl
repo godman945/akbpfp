@@ -100,6 +100,9 @@
         <#if adActionSeq??>
         <input type="hidden" id="adActionSeq" name="adActionSeq" value="${adActionSeq!}">
         </#if>
+        <input type="hidden" id="adAllDevice" name="adAllDevice" value="${adAllDevice!}">
+        <input type="hidden" id="adSearchDevice" name="adAllDevice" value="${adSearchDevice!}">
+        <input type="hidden" id="adChannelDevice" name="adAllDevice" value="${adChannelDevice!}">
         <input type="hidden" id="backPage" name="backPage" value="${backPage!}">
     </form>
 </div>
