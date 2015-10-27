@@ -43,53 +43,6 @@
         	}
         }
     });
-    
-    /*if(firstAdType == "1"){
-    	$("#adDeviceSelect2").hide();
-    	$("#adDevice option").each(function() {
-    		var adDevice = $(this).val();
-    		if(adDevice == "1"){
-				 $(this).attr("selected","selected");
-			} else {
-				 $(this).removeAttr("selected");
-			}
-    	});
-    	$("#adDevice").attr("disabled","disabled");
-    }
-    
-	$("#adType").change(function(){
-		var adType = $("#adType").val();
-		$("#adDevice option").each(function() {
-			var adDevice = $(this).val();
-			if(adDevice == "0"){
-				$(this).attr("selected","selected");
-			} else {
-				$(this).removeAttr("selected");
-			}
-			
-			
-			if(adType == "1"){
-				if(adDevice == "1"){
-					$(this).attr("selected","selected");
-				} else {
-					$(this).removeAttr("selected");
-				}
-			} else {
-				if(adDevice == "0"){
-					$(this).attr("selected","selected");
-				} else {
-					$(this).removeAttr("selected");
-				}
-			}
-		});
-		if(adType == "1"){
-			$("#adDeviceSelect2").hide();
-			//$("#adDevice").attr("disabled","disabled");
-		} else {
-			$("#adDeviceSelect2").show();
-			//$("#adDevice").removeAttr("disabled");
-		}
-	});*/
 	
 	initDate();
 
