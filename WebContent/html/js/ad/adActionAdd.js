@@ -63,6 +63,13 @@
             maxDate: 0
         });
 		
+		$("#adActionStartDate").datepicker({
+            dateFormat: "yy-mm-dd",
+            yearRange:"-10:+10",
+            minDate: "-6M",
+            maxDate: 0
+		});
+		
 		/*if ($('#adActionEndDate').length > 0) {
             if($('#adActionEndDate').val() != "") {
             	if($('#adActionStartDate').val() != ""){
@@ -84,10 +91,15 @@
 		}*/
 		
 		
-		if ($('#adActionEndDate').length > 0) {
+		/*if ($('#adActionEndDate').length > 0) {
             	if($('#adActionStartDate').val() != ""){
             		if(new Date(Date.parse($('#adActionStartDate').val().replace(/-/g,"/"))) < new Date()){
-            			$('#adActionEndDate').datepicker( "option", "minDate", new Date() );	
+            			$("#adActionStartDate").datepicker({
+            	            dateFormat: "yy-mm-dd",
+            	            yearRange:"-10:+10",
+            	            minDate: "-6M",
+            	            maxDate: 0
+            	        });
             		} else {
             			$('#adActionEndDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionStartDate').val().replace(/-/g,"/"))) );
             		}
@@ -95,7 +107,7 @@
             		$('#adActionEndDate').datepicker( "option", "minDate", new Date() );
             	}
                 //$('#adActionEndDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionEndDate').val().replace(/-/g,"/"))) );
-		}
+		}*/
 		
 	}
 
@@ -174,8 +186,6 @@
 		//取得驗證回傳值
 		if($("#modifyForm").valid() == 1){
 			// form submit
-			$("#adType").removeAttr("disabled");
-			$("#adDevice").removeAttr("disabled");
 			$("#modifyForm").submit();
 		}
 		
