@@ -3,12 +3,10 @@ package com.pchome.akbpfp.struts2.action.report;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URLEncoder;
-
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -27,7 +25,6 @@ import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdActionReportService;
-
 import com.pchome.soft.util.DateValueUtil;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
 
@@ -76,6 +73,9 @@ public class ReportCampaginAction extends BaseReportAction {
 	private String adShowWay="";//廣告顯示位址,一般,內容
 	private String searchId="";//廣告id ,某活動,某群組id
 
+	private String charPic="";//圖表格式
+	private String charType="";//度量
+	
 	//download report 
 	private String downloadFlag="";//download report 旗標
 
@@ -84,26 +84,10 @@ public class ReportCampaginAction extends BaseReportAction {
 	private String downloadFileName;//下載顯示名
 
 	private String flashData;//flash chart json data
-
-	private String flashInputValue;//flash chart 頁面傳進來的data
 	
 	private String reportTitle;
 
 	public String flashDataDownLoad() throws Exception {
-
-		String fdata[]=flashInputValue.split("&");
-
-		log.info("flashInputValue="+flashInputValue);
-		startDate=StringUtils.defaultIfEmpty(fdata[0],"");
-		endDate=StringUtils.defaultIfEmpty(fdata[1],"");
-		adPvclkDevice=StringUtils.defaultIfEmpty(fdata[2],"");
-		adType=StringUtils.defaultIfEmpty(fdata[3],"");
-		adSearchWay=StringUtils.defaultIfEmpty(fdata[4],"");
-		adShowWay=StringUtils.defaultIfEmpty(fdata[5],"");
-		String charPic=StringUtils.defaultIfEmpty(fdata[6],"");//lineChart,barChart
-		String charType=StringUtils.defaultIfEmpty(fdata[7],"");//pv,ctr,click,avgcost.cost 
-		searchId=StringUtils.defaultIfEmpty(fdata[8],"");//pv,ctr,click,avgcost.cost 
-		searchText=StringUtils.defaultIfEmpty(fdata[9],"");
 
 		//查詢日期寫進 cookie
 		this.setChooseDate(startDate, endDate);
@@ -180,7 +164,7 @@ public class ReportCampaginAction extends BaseReportAction {
 			}
 		}
 
-		flashData=openFlashUtil.getChartDataForMap(charPic,charType,startDate,endDate,flashDataMap);
+		flashData=openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
 
 		return SUCCESS;
 	}
@@ -760,10 +744,6 @@ public class ReportCampaginAction extends BaseReportAction {
 		return flashData;
 	}
 
-	public void setFlashInputValue(String flashInputValue) {
-		this.flashInputValue = flashInputValue;
-	}
-
 	public LinkedHashMap<String, String> getDateSelectMap() {
 		return dateSelectMap;
 	}
@@ -790,5 +770,21 @@ public class ReportCampaginAction extends BaseReportAction {
 
 	public void setAdActionService(IPfpAdActionService adActionService) {
 		this.adActionService = adActionService;
+	}
+
+	public String getCharPic() {
+		return charPic;
+	}
+
+	public void setCharPic(String charPic) {
+		this.charPic = charPic;
+	}
+
+	public String getCharType() {
+		return charType;
+	}
+
+	public void setCharType(String charType) {
+		this.charType = charType;
 	}
 }

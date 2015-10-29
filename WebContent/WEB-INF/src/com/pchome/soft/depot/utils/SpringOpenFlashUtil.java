@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.json.JSONArray;
 
 import jofc2.model.Chart;
 import jofc2.model.axis.Label;
@@ -224,6 +225,47 @@ public class SpringOpenFlashUtil {
 
 	}
 
+	public String getChartDataForArray(String charType,String startDate,String endDate,Map<Date,Float> flashDataMap){
+		NumberFormat numFormat = null;
+
+		if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+			numFormat = new DecimalFormat("###,###,###,###");
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+			numFormat = new DecimalFormat("###,###,###,###");
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
+			numFormat = new DecimalFormat("###,###,###,###.##");
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
+			numFormat = new DecimalFormat("###,###,###,###.##");
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+			numFormat = new DecimalFormat("###,###,###,###");
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_ADSORT.getTextValue())) {
+			numFormat = new DecimalFormat("###,###,###,###");
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
+			numFormat = new DecimalFormat("###,###,###,###");
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
+			numFormat = new DecimalFormat("###,###,###,###");
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTRINVALID.getTextValue())) {
+			numFormat = new DecimalFormat("###,###,###,###");
+		}
+		//x 軸兩日期間所相差的天數
+		long maxValueX = DateValueUtil.getInstance().getDateDiffDay(startDate, endDate);
+		Date pDate=null;
+		List<Double> dataList = new ArrayList<Double>();
+		
+		for(int d=0;d<maxValueX;d++){
+			pDate=DateValueUtil.getInstance().getDateForStartDateAddDay(startDate, d);
+			if(flashDataMap.containsKey(pDate)){
+				dataList.add((double)flashDataMap.get(pDate));
+			}else{
+				dataList.add((double) 0);
+			}
+		}
+		
+		JSONArray array = new JSONArray(dataList);
+		
+		return array.toString();
+	}
+	
 	private int getFloatNum(float num,int scale,int roundingMode){
 		BigDecimal bd;
 		bd = new BigDecimal((float)num); 

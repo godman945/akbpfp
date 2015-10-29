@@ -72,6 +72,9 @@ public class ReportAdGroupAction extends BaseReportAction {
 	private String searchText="";//搜尋文字
 	private String adShowWay="";//廣告顯示位址,一般,內容
 	private String searchId="";//廣告id ,某活動,某群組id
+	
+	private String charPic="";//圖表格式
+	private String charType="";//度量
 
 	//download report 
 	private String downloadFlag="";//download report 旗標
@@ -81,26 +84,10 @@ public class ReportAdGroupAction extends BaseReportAction {
 	private String downloadFileName;//下載顯示名
 
 	private String flashData;//flash chart json data
-
-	private String flashInputValue;//flash chart 頁面傳進來的data
 	
 	private String reportTitle;
 
 	public String flashDataDownLoad() throws Exception {
-
-		String fdata[] = flashInputValue.split("&");
-
-		log.info("flashInputValue="+flashInputValue);
-		startDate=StringUtils.defaultIfEmpty(fdata[0],"");
-		endDate=StringUtils.defaultIfEmpty(fdata[1],"");
-		adPvclkDevice=StringUtils.defaultIfEmpty(fdata[2],"");
-		adType=StringUtils.defaultIfEmpty(fdata[3],"");
-		adSearchWay=StringUtils.defaultIfEmpty(fdata[4],"");
-		adShowWay=StringUtils.defaultIfEmpty(fdata[5],"");
-		String charPic=StringUtils.defaultIfEmpty(fdata[6],"");//lineChart,barChart
-		String charType=StringUtils.defaultIfEmpty(fdata[7],"");//pv,ctr,click,avgcost.cost 
-		searchId=StringUtils.defaultIfEmpty(fdata[8],"");//pv,ctr,click,avgcost.cost 
-		searchText=StringUtils.defaultIfEmpty(fdata[9],"");
 
 		//查詢日期寫進 cookie
 		this.setChooseDate(startDate, endDate);
@@ -164,7 +151,7 @@ public class ReportAdGroupAction extends BaseReportAction {
 			}
 		}
 
-		flashData = openFlashUtil.getChartDataForMap(charPic, charType, startDate, endDate, flashDataMap);
+		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
 
 		return SUCCESS;
 	}
@@ -723,10 +710,6 @@ public class ReportAdGroupAction extends BaseReportAction {
 		return flashData;
 	}
 
-	public void setFlashInputValue(String flashInputValue) {
-		this.flashInputValue = flashInputValue;
-	}
-
 	public LinkedHashMap<String, String> getDateSelectMap() {
 		return dateSelectMap;
 	}
@@ -754,4 +737,21 @@ public class ReportAdGroupAction extends BaseReportAction {
 	public void setAdGroupService(IPfpAdGroupService adGroupService) {
 		this.adGroupService = adGroupService;
 	}
+
+	public String getCharPic() {
+		return charPic;
+	}
+
+	public void setCharPic(String charPic) {
+		this.charPic = charPic;
+	}
+
+	public String getCharType() {
+		return charType;
+	}
+
+	public void setCharType(String charType) {
+		this.charType = charType;
+	}
+	
 }

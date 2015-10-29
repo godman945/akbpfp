@@ -91,8 +91,8 @@ public class ReportExcerptAction extends BaseReportAction {
 
 	private String stepStr="";//頁面顯示,目前位址,廣告活動-->act01-->
 	
-	private String charPic="";
-	private String charType="";
+	private String charPic="";//圖表格式
+	private String charType="";//度量
 
 	//download report 
 	private String downloadFlag="";//download report 旗標
@@ -103,7 +103,7 @@ public class ReportExcerptAction extends BaseReportAction {
 
 	private String flashData;//flash chart json data
 
-	private String flashInputValue;//flash chart 頁面傳進來的data
+	//private String flashInputValue;//flash chart 頁面傳進來的data
 
 	private String reportTitle;
 
@@ -340,8 +340,8 @@ public class ReportExcerptAction extends BaseReportAction {
 			}
 		}
 
-		flashData = openFlashUtil.getChartDataForMap(charPic, charType, startDate, endDate, flashDataMap);
-
+		//flashData = openFlashUtil.getChartDataForMap(charPic, charType, startDate, endDate, flashDataMap);
+		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
 		return SUCCESS;
 	}
 
@@ -1713,9 +1713,9 @@ public class ReportExcerptAction extends BaseReportAction {
 		return flashData;
 	}
 
-	public void setFlashInputValue(String flashInputValue) {
+	/*public void setFlashInputValue(String flashInputValue) {
 		this.flashInputValue = flashInputValue;
-	}
+	}*/
 
 	public LinkedHashMap<String, String> getDateSelectMap() {
 		return dateSelectMap;

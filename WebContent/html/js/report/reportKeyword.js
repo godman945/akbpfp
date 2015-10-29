@@ -1,12 +1,11 @@
 
-var json_data;
-var flashChartActionPath="reportKeywordAjaxChart.html";
+var highChartActionPath="reportKeywordAjaxChart.html";
 var reportAjaxActionPath="reportKeywordAjaxTable.html";
 //一開始執行
 $(function(){
 
     //flash chart
-    showFlashChart();
+    showHighChart();
 
     //flash data
     ready();
@@ -132,7 +131,7 @@ $(function(){
     
     //flash chart reload
     $('#reloadFlash').click(function(){
-       showFlashChart();
+       showHighChart();
     });
     
 });
@@ -369,39 +368,188 @@ function adIdSearch(adType, adId){
 }
 
 //顯示open flash
-function showFlashChart(){
-    
-	var flash_data = flashChartActionPath;
-	flash_data+="?flashInputValue="+$('#fstartDate').val();
-	flash_data+="%26"+$('#fendDate').val();
-	flash_data+="%26"+$('#fadPvclkDevice').val();
-	flash_data+="%26"+$('#fadType').val();
-	flash_data+="%26"+$('#fadSearchWay').val();
-	flash_data+="%26"+$('#fadShowWay').val();
-	flash_data+="%26"+$('#selectChartPic').val();
-	flash_data+="%26"+$('#selectChartType').val();
-    flash_data+="%26"+$('#fsearchId').val();
+function showHighChart(){
+	var dataArray;
+	$.ajax({
+		url : highChartActionPath,
+		type : "POST",
+		dataType:'json',
+		async: false,
+		data : {
+			"startDate" : $('#fstartDate').val(),
+			"endDate": $('#fendDate').val(),
+			"adPvclkDevice" : $('#fadPvclkDevice').val(),
+			"adType" : $('#fadType').val(),
+			"adSearchWay" : $('#fadSearchWay').val(),
+			"adShowWay" : $('#fadShowWay').val(),
+			"charPic" : $('#selectChartPic').val(),
+			"charType" : $('#selectChartType').val(),
+			"searchId" : $('#fsearchId').val(),
+			"searchText" : $('#searchText').val()
+		},
+		success : function(respone) {
+			console.log(respone);
+			dataArray = respone;
+		}
+	});
 	
-    //中文處理
-	if ($('#searchText').val().length == 0) {
-		flash_data += "%26Null";
-	} else {
-		flash_data += "%26" + encodeURIComponent($('#searchText').val());
+	var startDate = $('#fstartDate').val();
+	var dateArray = startDate.split("-");
+	
+	//圖表格式
+	var selectPic = $("#selectChartPic").val();
+	var chartPic = "";
+	var fontColor = "#ff5353";
+	switch(selectPic){
+		case "lineChart":
+			chartPic = "";
+			fontColor = "#ff5353";
+			break;
+		case "barChart":
+			chartPic = "column";
+			fontColor = "#519ae0";
+			break;
 	}
 	
-	//flashchart
-	$('#flashChart').flash().remove();  
-    $('#flashChart').flash({
-        swf: 'html/flash/open-flash-chart.swf',
-        width: 600,
-        height: 200,
-        flashvars: {
-            'data-file': flash_data
-        }
+	//度量
+	var selectType = $("#selectChartType").val();
+	var titleName = "";
+	var selectTypeName = "";
+	var selectSuffix = "";
+	var decimals = 0;		//顯示小數點後幾位數
+	switch(selectType){
+		case "pv":
+			titleName = "曝光數(次)";
+			selectTypeName = "曝光數";
+			selectSuffix = "次";
+			break;
+		case "ctr":
+			titleName = "點選率(%)";
+			selectTypeName = "點選率";
+			selectSuffix = "%";
+			decimals = 2;
+			break;
+		case "click":
+			titleName = "點選次數(次)";
+			selectTypeName = "點選次數";
+			selectSuffix = "次";
+			break;
+		case "invalid":
+			titleName = "無效點選數(次)";
+			selectTypeName = "無效點選數";
+			selectSuffix = "次";
+			break;
+		case "avgCost":
+			titleName = "平均點選費用(NT$)";
+			selectTypeName = "平均點選費用";
+			selectSuffix = "元";
+			decimals = 2;
+			break;
+		case "cost":
+			titleName = "費用(NT$)";
+			selectTypeName = "平均點選費用";
+			selectSuffix = "元";
+			break;
+	}
+	
+	// ---預設樣式----
+    Highcharts.setOptions({
+    	colors: [fontColor],
+        
+    	symbols:['circle'],
+       	lang: {
+       		months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '11月', '12月'],
+       		weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
+       		shortMonths: ['01/', '02/', '03/', '04/', '05/', '06/', '07/', '08/', '09/', '10/', '11/', '12/'],
+       		downloadPNG: '下載 PNG',
+       		downloadJPEG: '下載 JPEG',
+       		downloadPDF: '下載 PDF',
+       		downloadSVG: '下載 SVG',
+       		printChart: '列印圖表',
+       		exportButtonTitle: "輸出",
+       		printButtonTitle: "列印",
+       		resetZoom: "原尺寸",
+       		thousandsSep: ","
+       		//resetZoomTitle: "Reset,           
+       	}
     });
-	
-	
-	//$('#debug').html(flash_data);
+
+	$('#hcharts_bx').highcharts({  
+		chart: {
+	        type: chartPic 
+	    },	
+	    
+	    title: {
+	        text: titleName,
+	        style: {
+	        	color: fontColor,
+	        	fontWeight: 'bold',
+	        	fontFamily: '"微軟正黑體", Microsoft JhengHei, Arial, Helvetica, sans-serif, verdana'
+	        	//fontSize:'11px'
+	        	
+	        }
+	        //x: -20 //center
+	    },
+	    subtitle: {
+	        text: '',
+	        x: -20
+	    },
+	    
+	    xAxis: {
+	        crosshair: true,
+			type: 'datetime',
+			dateTimeLabelFormats:{
+				
+	            day: '%m/%e',
+	            week:'%m/%e',
+	            month:'%m/%e'
+	            
+			}
+		},
+	    yAxis: {
+	        title: {
+	            text: '',
+	            align: 'high',
+	            rotation: 0,
+	            offset: 0,
+	            x: -15,
+	            y: -20
+	        },
+	        plotLines: [{
+	            value: 0,
+	            width: 1,
+	            color: '#808080'
+	        }]
+	    },
+	    tooltip: {
+	        valueSuffix: selectSuffix,
+	        shared: true,
+	        borderColor:'#909090',
+	        borderWidth: 1,
+	        valueDecimals: decimals
+	    },
+	    
+	    series: [{
+	        name: selectTypeName,
+	        data: dataArray,
+	        lineWidth: 2,
+	        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+	        pointInterval: 24 * 3600 * 1000,
+	        formatter: function() { 
+	        	return Highcharts.numberFormat(this.percentage,2,".", ",");
+	           }
+	        
+	    }],
+	    legend: { //選單
+			enabled:false
+		},
+		exporting: { //右上打印
+			//enabled:false
+		},
+		credits: { //右下網址
+			enabled:false
+		},
+	});
 }
 
 
@@ -479,7 +627,7 @@ function ajaxFormSubmit(){
 	
     $('#reportTableOut').unblock();
 	
-	showFlashChart();
+	showHighChart();
     
 }
 

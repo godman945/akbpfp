@@ -6,7 +6,7 @@ var json_data;
 jQuery(window).load(function() {
 
     //flash chart
-    showFlashChart();
+	showHighChart();
 
     //flash data
     ready();
@@ -132,7 +132,7 @@ jQuery(window).load(function() {
     
     //flash chart reload
     $('#reloadFlash').click(function(){
-       showFlashChart();
+    	showHighChart();
     });  
 });
 
@@ -350,7 +350,7 @@ function adIdSearch(adType, adId){
 }
 
 //顯示open flash
-function showFlashChart(){
+/*function showFlashChart(){
     
 	var flash_data = "reportExcerptAjaxChart.html";
 	flash_data+="?flashInputValue="+$('#fstartDate').val();
@@ -381,9 +381,8 @@ function showFlashChart(){
         }
     });
 	
-    showHighChart();
 	//$('#debug').html(flash_data);
-}
+}*/
 
 
 
@@ -454,7 +453,7 @@ function ajaxFormSubmit(){
 	
     $('#reportTableOut').unblock();
 	
-	showFlashChart();
+    showHighChart();
     
 }
 
@@ -523,29 +522,12 @@ function preview(img) {
 }
 
 function showHighChart(){
-	var flash_data = "reportExcerptAjaxChart.html";
-	flash_data+="?flashInputValue="+$('#fstartDate').val();
-	flash_data+="%26"+$('#fendDate').val();
-	flash_data+="%26"+$('#fadPvclkDevice').val();
-	flash_data+="%26"+$('#fadType').val();
-	flash_data+="%26"+$('#fadSearchWay').val();
-	flash_data+="%26"+$('#fadShowWay').val();
-	flash_data+="%26"+$('#selectChartPic').val();
-	flash_data+="%26"+$('#selectChartType').val();
-    flash_data+="%26"+$('#fsearchId').val();
-
-    //中文處理
-    if ($('#searchText').val().length == 0) {
-    	flash_data += "%26Null";
-    } else {
-    	flash_data += "%26" + encodeURIComponent($('#searchText').val());
-    }
-	
-	
+	var dataArray;
 	$.ajax({
 		url : "reportExcerptAjaxChart.html",
 		type : "POST",
 		dataType:'json',
+		async: false,
 		data : {
 			"startDate" : $('#fstartDate').val(),
 			"endDate": $('#fendDate').val(),
@@ -559,10 +541,13 @@ function showHighChart(){
 			"searchText" : $('#searchText').val()
 		},
 		success : function(respone) {
-			
+			console.log(respone);
+			dataArray = respone;
 		}
 	});
 	
+	var startDate = $('#fstartDate').val();
+	var dateArray = startDate.split("-");
 	
 	//圖表格式
 	var selectPic = $("#selectChartPic").val();
@@ -584,6 +569,7 @@ function showHighChart(){
 	var titleName = "";
 	var selectTypeName = "";
 	var selectSuffix = "";
+	var decimals = 0;		//顯示小數點後幾位數
 	switch(selectType){
 		case "pv":
 			titleName = "曝光數(次)";
@@ -594,6 +580,7 @@ function showHighChart(){
 			titleName = "點選率(%)";
 			selectTypeName = "點選率";
 			selectSuffix = "%";
+			decimals = 2;
 			break;
 		case "click":
 			titleName = "點選次數(次)";
@@ -609,6 +596,7 @@ function showHighChart(){
 			titleName = "平均點選費用(NT$)";
 			selectTypeName = "平均點選費用";
 			selectSuffix = "元";
+			decimals = 2;
 			break;
 		case "cost":
 			titleName = "費用(NT$)";
@@ -624,7 +612,7 @@ function showHighChart(){
     	symbols:['circle'],
        	lang: {
        		months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '11月', '12月'],
-       		weekdays: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+       		weekdays: ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'],
        		shortMonths: ['01/', '02/', '03/', '04/', '05/', '06/', '07/', '08/', '09/', '10/', '11/', '12/'],
        		downloadPNG: '下載 PNG',
        		downloadJPEG: '下載 JPEG',
@@ -633,7 +621,8 @@ function showHighChart(){
        		printChart: '列印圖表',
        		exportButtonTitle: "輸出",
        		printButtonTitle: "列印",
-       		resetZoom: "原尺寸"
+       		resetZoom: "原尺寸",
+       		thousandsSep: ","
        		//resetZoomTitle: "Reset,           
        	}
     });
@@ -664,7 +653,9 @@ function showHighChart(){
 			type: 'datetime',
 			dateTimeLabelFormats:{
 				
-	            day: '%m/%e'                              
+	            day: '%m/%e',
+	            week:'%m/%e',
+	            month:'%m/%e'
 	            
 			}
 		},
@@ -687,15 +678,19 @@ function showHighChart(){
 	        valueSuffix: selectSuffix,
 	        shared: true,
 	        borderColor:'#909090',
-	        borderWidth: 1
+	        borderWidth: 1,
+	        valueDecimals: decimals
 	    },
 	    
 	    series: [{
 	        name: selectTypeName,
-	        data: [580, 431, 613, 568, 875, 754, 235, 100, 220, 180, 369,460,800, 432, 673, 568, 875, 753, 235, 100, 220, 120, 360,460],
+	        data: dataArray,
 	        lineWidth: 2,
-	        pointStart: Date.UTC(2015, 9, 28),
-	        pointInterval: 24 * 3600 * 1000            
+	        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+	        pointInterval: 24 * 3600 * 1000,
+	        formatter: function() { 
+	        	return Highcharts.numberFormat(this.percentage,2,".", ",");
+	           }
 	        
 	    }],
 	    legend: { //選單
