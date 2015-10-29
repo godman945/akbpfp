@@ -93,6 +93,8 @@
 		//取得驗證回傳值
 		if($("#modifyForm").valid() == 1){
 			// form submit
+			$("#adType").removeAttr("disabled");
+			$("#adDevice").removeAttr("disabled");
 			$("#modifyForm").submit();
 		}
 		
