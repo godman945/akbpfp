@@ -381,7 +381,7 @@ function showFlashChart(){
         }
     });
 	
-	
+    showHighChart();
 	//$('#debug').html(flash_data);
 }
 
@@ -520,4 +520,192 @@ function preview(img) {
         'overlayColor':'#fff',
         'scrolling':'no'
     });
+}
+
+function showHighChart(){
+	var flash_data = "reportExcerptAjaxChart.html";
+	flash_data+="?flashInputValue="+$('#fstartDate').val();
+	flash_data+="%26"+$('#fendDate').val();
+	flash_data+="%26"+$('#fadPvclkDevice').val();
+	flash_data+="%26"+$('#fadType').val();
+	flash_data+="%26"+$('#fadSearchWay').val();
+	flash_data+="%26"+$('#fadShowWay').val();
+	flash_data+="%26"+$('#selectChartPic').val();
+	flash_data+="%26"+$('#selectChartType').val();
+    flash_data+="%26"+$('#fsearchId').val();
+
+    //中文處理
+    if ($('#searchText').val().length == 0) {
+    	flash_data += "%26Null";
+    } else {
+    	flash_data += "%26" + encodeURIComponent($('#searchText').val());
+    }
+	
+	
+	$.ajax({
+		url : "reportExcerptAjaxChart.html",
+		type : "POST",
+		dataType:'json',
+		data : {
+			"startDate" : $('#fstartDate').val(),
+			"endDate": $('#fendDate').val(),
+			"adPvclkDevice" : $('#fadPvclkDevice').val(),
+			"adType" : $('#fadType').val(),
+			"adSearchWay" : $('#fadSearchWay').val(),
+			"adShowWay" : $('#fadShowWay').val(),
+			"charPic" : $('#selectChartPic').val(),
+			"charType" : $('#selectChartType').val(),
+			"searchId" : $('#fsearchId').val(),
+			"searchText" : $('#searchText').val()
+		},
+		success : function(respone) {
+			
+		}
+	});
+	
+	
+	//圖表格式
+	var selectPic = $("#selectChartPic").val();
+	var chartPic = "";
+	var fontColor = "#ff5353";
+	switch(selectPic){
+		case "lineChart":
+			chartPic = "";
+			fontColor = "#ff5353";
+			break;
+		case "barChart":
+			chartPic = "column";
+			fontColor = "#519ae0";
+			break;
+	}
+	
+	//度量
+	var selectType = $("#selectChartType").val();
+	var titleName = "";
+	var selectTypeName = "";
+	var selectSuffix = "";
+	switch(selectType){
+		case "pv":
+			titleName = "曝光數(次)";
+			selectTypeName = "曝光數";
+			selectSuffix = "次";
+			break;
+		case "ctr":
+			titleName = "點選率(%)";
+			selectTypeName = "點選率";
+			selectSuffix = "%";
+			break;
+		case "click":
+			titleName = "點選次數(次)";
+			selectTypeName = "點選次數";
+			selectSuffix = "次";
+			break;
+		case "invalid":
+			titleName = "無效點選數(次)";
+			selectTypeName = "無效點選數";
+			selectSuffix = "次";
+			break;
+		case "avgCost":
+			titleName = "平均點選費用(NT$)";
+			selectTypeName = "平均點選費用";
+			selectSuffix = "元";
+			break;
+		case "cost":
+			titleName = "費用(NT$)";
+			selectTypeName = "平均點選費用";
+			selectSuffix = "元";
+			break;
+	}
+	
+	// ---預設樣式----
+    Highcharts.setOptions({
+    	colors: [fontColor],
+        
+    	symbols:['circle'],
+       	lang: {
+       		months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '11月', '12月'],
+       		weekdays: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+       		shortMonths: ['01/', '02/', '03/', '04/', '05/', '06/', '07/', '08/', '09/', '10/', '11/', '12/'],
+       		downloadPNG: '下載 PNG',
+       		downloadJPEG: '下載 JPEG',
+       		downloadPDF: '下載 PDF',
+       		downloadSVG: '下載 SVG',
+       		printChart: '列印圖表',
+       		exportButtonTitle: "輸出",
+       		printButtonTitle: "列印",
+       		resetZoom: "原尺寸"
+       		//resetZoomTitle: "Reset,           
+       	}
+    });
+
+	$('#hcharts_bx').highcharts({  
+		chart: {
+	        type: chartPic 
+	    },	
+	    
+	    title: {
+	        text: titleName,
+	        style: {
+	        	color: fontColor,
+	        	fontWeight: 'bold',
+	        	fontFamily: '"微軟正黑體", Microsoft JhengHei, Arial, Helvetica, sans-serif, verdana'
+	        	//fontSize:'11px'
+	        	
+	        }
+	        //x: -20 //center
+	    },
+	    subtitle: {
+	        text: '',
+	        x: -20
+	    },
+	    
+	    xAxis: {
+	        crosshair: true,
+			type: 'datetime',
+			dateTimeLabelFormats:{
+				
+	            day: '%m/%e'                              
+	            
+			}
+		},
+	    yAxis: {
+	        title: {
+	            text: '',
+	            align: 'high',
+	            rotation: 0,
+	            offset: 0,
+	            x: -15,
+	            y: -20
+	        },
+	        plotLines: [{
+	            value: 0,
+	            width: 1,
+	            color: '#808080'
+	        }]
+	    },
+	    tooltip: {
+	        valueSuffix: selectSuffix,
+	        shared: true,
+	        borderColor:'#909090',
+	        borderWidth: 1
+	    },
+	    
+	    series: [{
+	        name: selectTypeName,
+	        data: [580, 431, 613, 568, 875, 754, 235, 100, 220, 180, 369,460,800, 432, 673, 568, 875, 753, 235, 100, 220, 120, 360,460],
+	        lineWidth: 2,
+	        pointStart: Date.UTC(2015, 9, 28),
+	        pointInterval: 24 * 3600 * 1000            
+	        
+	    }],
+	    legend: { //選單
+			enabled:false
+		},
+		exporting: { //右上打印
+			//enabled:false
+		},
+		credits: { //右下網址
+			enabled:false
+		},
+	});
 }

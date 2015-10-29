@@ -90,6 +90,9 @@ public class ReportExcerptAction extends BaseReportAction {
 	private String searchId=""; //廣告id,分類id,廣告明細id,關鍵字id
 
 	private String stepStr="";//頁面顯示,目前位址,廣告活動-->act01-->
+	
+	private String charPic="";
+	private String charType="";
 
 	//download report 
 	private String downloadFlag="";//download report 旗標
@@ -116,7 +119,7 @@ public class ReportExcerptAction extends BaseReportAction {
 			return this.resultType;
 		}
 		
-		log.info(">>> flashInputValue = " + flashInputValue);
+		/*log.info(">>> flashInputValue = " + flashInputValue);
 
 		String fdata[] = flashInputValue.split("&");
 
@@ -129,7 +132,7 @@ public class ReportExcerptAction extends BaseReportAction {
 		String charPic=StringUtils.defaultIfEmpty(fdata[6],"");//lineChart,barChart
 		String charType=StringUtils.defaultIfEmpty(fdata[7],"");//pv,ctr,click,avgcost.cost 
 		searchId=StringUtils.defaultIfEmpty(fdata[8],"");//pv,ctr,click,avgcost.cost 
-		searchText=StringUtils.defaultIfEmpty(fdata[9],"");
+		searchText=StringUtils.defaultIfEmpty(fdata[9],"");*/
 
 		//查詢日期寫進 cookie
 		this.setChooseDate(startDate, endDate);
@@ -1744,5 +1747,21 @@ public class ReportExcerptAction extends BaseReportAction {
 
 	public void setShowSearchBarFlag(String showSearchBarFlag) {
 		this.showSearchBarFlag = showSearchBarFlag;
+	}
+
+	public String getCharPic() {
+		return charPic;
+	}
+
+	public void setCharPic(String charPic) {
+		this.charPic = charPic;
+	}
+
+	public String getCharType() {
+		return charType;
+	}
+
+	public void setCharType(String charType) {
+		this.charType = charType;
 	}
 }

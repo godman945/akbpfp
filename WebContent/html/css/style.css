@@ -84,10 +84,9 @@ h3 span a:hover{background:#dadada;padding:3px;color:#666;text-decoration:none;b
 
 
 
-.tb01{background:#bcbbb8;text-align:center}
-.tb01 th{background:url(../img/gthbg.gif) #eee top repeat-x;font-size:13px;}
-.tb01 td{background:#fff;font-size:13px;
-padding:5px 5px;}
+.tb01{background:#bcbbb8;text-align:center;}
+.tb01 th{background:url(../img/gthbg.gif) #eee top repeat-x;font-size:16px; padding: 5px;}
+.tb01 td{background:#fff;font-size:16px;}
 .tb01 .tot{background:#e0e0e0;color:#000;border-top:1px #fff solid}
 .tb01 input,.tb01 textarea{font-size:13px;}
 
@@ -710,3 +709,7 @@ text-decoration:none}
 
 
 /*------------------------------------------*/
+
+/*20150918new*/
+/*#selectChartType{ width: 152px; height: 32px; line-height: 32px; background: #fff; margin: 0;font-family: 微軟正黑體,arial; font-size: 16px;}
+#reloadFlash{ height: 32px; line-height: 32px;font-family: 微軟正黑體,arial; font-size: 16px;}*/
