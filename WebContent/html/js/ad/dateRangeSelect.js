@@ -72,6 +72,7 @@
 		buttonImageOnly: true,
 		yearRange:"-10:+10",
 		rangeSelect: true, 
+		minDate: 0,
 		maxDate: '+1y',
 		onClose:function() {
 			document.getElementsByName("selAdActionEndDate")[1].checked = true;
