@@ -6,5 +6,7 @@
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.tablesorter.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.blockUI.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script>
+	<script language="JavaScript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+	<script language="JavaScript" src="http://code.highcharts.com/modules/exporting.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/<@t.getAsString name="jsName" />" ></script>

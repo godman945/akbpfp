@@ -32,13 +32,16 @@ public class SummaryAction extends BaseSSLAction{
 	private String chartDate;			
 	private LinkedHashMap<String,String> dateSelectMap;
 	
-	private String chartInputType;								// 圖表類型
+	//private String chartInputType;								// 圖表類型
 	private String effectSDate;									// 成效開始日期
 	private String effectEDate;									// 成效結束日期
 	private String startDate ;									// 日曆開始日期
 	private String endDate ;									// 日曆結束日期
 	private EnumPfdAccountPayType[] payType = EnumPfdAccountPayType.values();
 
+	//圖表參數
+	private String chartPic="";//圖表格式
+	private String chartType="";//度量
 	
 	public String execute() throws Exception{
 		
@@ -80,7 +83,7 @@ public class SummaryAction extends BaseSSLAction{
 		String endDate = DateValueUtil.getInstance().getThisMonthLastDate();		// 取本月最後一天
 		
 		
-		// 圖表區塊
+		/*// 圖表區塊
     	String chartPic="";				// 圖表類型
     	String chartType="";			// 圖表顯示條件
 
@@ -89,7 +92,7 @@ public class SummaryAction extends BaseSSLAction{
     		String chartValue[] = chartInputType.split("&");
     		chartPic = StringUtils.defaultIfEmpty(chartValue[0], "");
         	chartType = StringUtils.defaultIfEmpty(chartValue[1], "");
-    	}
+    	}*/
     	
 		Map<Date,Float> flashDataMap = pfpAdPvclkService.chartPvclkCost(super.getCustomer_info_id(), 
 																			chartType, 
@@ -97,7 +100,8 @@ public class SummaryAction extends BaseSSLAction{
 																			DateValueUtil.getInstance().getDateForStartDateAddDay(endDate, 0));
 
 		// 圖表數據
-		chartDate = openFlashUtil.getChartDataForMap(chartPic, chartType, startDate, endDate, flashDataMap);
+		chartDate = openFlashUtil.getChartDataForArray(chartType, startDate, endDate, flashDataMap);
+		//chartDate = openFlashUtil.getChartDataForMap(charPic, charType, startDate, endDate, flashDataMap);
 		
 		/*
 		log.info(" chartPic = "+chartPic);	
@@ -146,9 +150,9 @@ public class SummaryAction extends BaseSSLAction{
 		return chartDate;
 	}
 
-	public void setChartInputType(String chartInputType) {
+	/*public void setChartInputType(String chartInputType) {
 		this.chartInputType = chartInputType;
-	}
+	}*/
 
 	public LinkedHashMap<String, String> getDateSelectMap() {
 		return dateSelectMap;
@@ -174,4 +178,11 @@ public class SummaryAction extends BaseSSLAction{
 		return payType;
 	}
 
+	public void setChartPic(String chartPic) {
+		this.chartPic = chartPic;
+	}
+
+	public void setChartType(String chartType) {
+		this.chartType = chartType;
+	}
 }

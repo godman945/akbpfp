@@ -447,7 +447,7 @@ function showHighChart(){
 			break;
 		case "cost":
 			titleName = "費用(NT$)";
-			selectTypeName = "平均點選費用";
+			selectTypeName = "費用";
 			selectSuffix = "元";
 			break;
 	}

@@ -56,9 +56,9 @@
   <tr>
     <td><table width="100%" height="175" border="0" cellpadding="0" cellspacing="1" class="tb01">
       <tr>
-        <th height="50">總曝光數</th>
-        <th height="50">總點選次數</th>
-        <th height="50">總費用</th>
+        <th height="30">總曝光數</th>
+        <th height="30">總點選次數</th>
+        <th height="30">總費用</th>
       </tr>
       <tr>
         <td height="104">${totalAdPvclkCost[0]?string('#,###')!}</td>
@@ -66,7 +66,7 @@
         <td>NT$ ${totalAdPvclkCost[2]?string('#,###')!}</td>
       </tr>
     </table></td>
-    <td width="400"><@t.insertAttribute name="chartTable" /></td>
+    <td width="618"><@t.insertAttribute name="chartTable" /></td>
   </tr>
 </table>
 
