@@ -169,7 +169,7 @@ function loadChart(){
 	});
 	
 	var Nowdate=new Date();
-	var MonthFirstDay=new Date(Nowdate.getYear(),Nowdate.getMonth(),1);
+	var MonthFirstDay=new Date(Nowdate.getFullYear(),Nowdate.getMonth(),1);
 	
 	//圖表格式
 	var selectPic = $("#selectChartPic").val();
@@ -291,7 +291,7 @@ function loadChart(){
 	        name: selectTypeName,
 	        data: dataArray,
 	        lineWidth: 2,
-	        pointStart: Date.UTC(Nowdate.getYear(),Nowdate.getMonth(),MonthFirstDay.getDate()),
+	        pointStart: Date.UTC(MonthFirstDay.getFullYear(),MonthFirstDay.getMonth(),MonthFirstDay.getDate()),
 	        pointInterval: 24 * 3600 * 1000,
 	        formatter: function() { 
 	        	return Highcharts.numberFormat(this.percentage,2,".", ",");
