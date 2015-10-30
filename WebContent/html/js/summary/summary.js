@@ -292,11 +292,7 @@ function loadChart(){
 	        data: dataArray,
 	        lineWidth: 2,
 	        pointStart: Date.UTC(MonthFirstDay.getFullYear(),MonthFirstDay.getMonth(),MonthFirstDay.getDate()),
-	        pointInterval: 24 * 3600 * 1000,
-	        formatter: function() { 
-	        	return Highcharts.numberFormat(this.percentage,2,".", ",");
-	           }
-	        
+	        pointInterval: 24 * 3600 * 1000
 	    }],
 	    legend: { //選單
 			enabled:false

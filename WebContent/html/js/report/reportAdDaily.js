@@ -498,10 +498,7 @@ function showHighChart(){
 	        data: dataArray,
 	        lineWidth: 2,
 	        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
-	        pointInterval: 24 * 3600 * 1000,
-	        formatter: function() { 
-	        	return Highcharts.numberFormat(this.percentage,2,".", ",");
-	           }
+	        pointInterval: 24 * 3600 * 1000
 	        
 	    }],
 	    legend: { //選單
