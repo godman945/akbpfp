@@ -258,9 +258,9 @@ function loadChart(){
 			type: 'datetime',
 			dateTimeLabelFormats:{
 				
-	            day: '%b/%d',
-	            week:'%b/%d',
-	            month:'%b/%d'
+	            day: '%m/%e',
+	            week:'%m/%e',
+	            month:'%m/%e'
 	            
 			}
 		},
