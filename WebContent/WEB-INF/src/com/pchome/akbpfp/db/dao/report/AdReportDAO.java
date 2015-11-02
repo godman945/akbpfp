@@ -384,9 +384,8 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 
 		if (StringUtils.isNotEmpty(searchText)) {
 			String searchStr = getSearchText(searchText, adSearchWay);
-			hql.append(" and r.ad_seq in (select ad_action_seq from pfp_ad_action where 1=1");
-			hql.append(" and customer_info_id = :customerInfoId");
-			hql.append(" and ad_action_name like :searchStr)");
+			hql.append(" and r.ad_seq in (select ad_seq from pfp_ad_detail where 1=1");
+			hql.append(" and ad_detail_content like :searchStr)");
 			sqlParams.put("searchStr", searchStr);
 		}
 
