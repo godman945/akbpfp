@@ -1,7 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 
 <link href="<@s.url value="/html/css/ad/adPlugInStyle.css" />" rel="stylesheet" type="text/css" /> 
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adActionAdd.js" ></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adActionEdit.js" ></script>
 
 <div style="display: none;">
 	<img id="calImg" src="<@s.url value="/html/img/"/>icon_cal.gif" alt="Popup" class="trigger">
