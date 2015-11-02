@@ -464,9 +464,9 @@ function showHighChart(){
 			type: 'datetime',
 			dateTimeLabelFormats:{
 				
-	            day: '%m/%e',
-	            week:'%m/%e',
-	            month:'%m/%e'
+	            day: '%m/%d',
+	            week:'%m/%d',
+	            month:'%m/%d'
 	            
 			}
 		},
@@ -490,7 +490,10 @@ function showHighChart(){
 	        shared: true,
 	        borderColor:'#909090',
 	        borderWidth: 1,
-	        valueDecimals: decimals
+	        valueDecimals: decimals,
+	        dateTimeLabelFormats:{		
+	            day:"%A, %m/%d, %Y" 
+			}
 	    },
 	    
 	    series: [{
