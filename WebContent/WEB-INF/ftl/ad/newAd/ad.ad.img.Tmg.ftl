@@ -126,9 +126,9 @@
                <div id="adSizeDiv" style="height:200px;overflow:auto;">
                  <div>
                  	<#if adType == '0' || adType == '1' >
-                 	<div style="color:#ff3300;"><b>僅支援搜尋廣告</b></div>
+                 	<div style="color:#ff3300;width:230px;float:left;"><b>僅支援搜尋廣告</b></div>
              		<#if adDevice == '0' || adDevice == '1' >
-             		<div >
+             		<div style="width:110px;float:left;" >
              			<#if searchPCSizeList?size != 0>
 	                 	<#list searchPCSizeList as searchPCSize>
 				 			<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
@@ -137,7 +137,7 @@
 					</div>
 					</#if>
 					<#if adDevice == '0' || adDevice == '2' >
-					<div >
+					<div style="width:120px;float:left;" >
 						<#if searchMobileSizeList?size != 0>
 	                 	<#list searchMobileSizeList as searchMobileSize>
 				 			<p>${searchMobileSize.width!} x ${searchMobileSize.height!}(行動裝置)</p>
@@ -149,12 +149,15 @@
                  </div>
                  <div>
                  	<#if adType == '0' || adType == '2' >
-                 	<div style="color:#ff3300;"><b>僅支援內容廣告</b></div>
+                 	<div style="color:#ff3300;width:230px;float:left;"><b>僅支援內容廣告</b></div>
              		<#if adDevice == '0' || adDevice == '1' >
              		<div style="width:110px;float:left;">
              			<#if channelPCSizeList?size != 0>
 	                 	<#list channelPCSizeList as channelPCSize>
-				 			<p>${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+				 			<p><#if channelPCSize.width?length == 2 >${channelPCSize.width!
+				 			}<#else>${channelPCSize.width!
+				 			}</#if> x <#if channelPCSize.height?length == 2 >${channelPCSize.height!
+				 			} &nbsp;<#else>${channelPCSize.height!}</#if>(電腦)</p>
 						</#list>
 						</#if>
 					</div>

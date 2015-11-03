@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
 import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.api.ControlPriceAPI;
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
@@ -50,6 +51,7 @@ import com.pchome.akbpfp.db.vo.ad.PfpAdDetailVO;
 import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.akbpfp.godutil.ImageVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdCannelMobileSize;
 import com.pchome.enumerate.ad.EnumAdChannelPCSize;
 import com.pchome.enumerate.ad.EnumAdDetail;
 import com.pchome.enumerate.ad.EnumAdDevice;
@@ -604,7 +606,7 @@ public class AdAddAction extends BaseCookieAction{
 	    	}
 	    }
 	    //搜索廣告(行動裝置)尺寸列表(目前僅測試時打開)
-	    /*if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
+	    if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
 	    		Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_PC.getDevType()){
 	    	for(EnumAdSearchMobileSize enumAdSearchMobileSize : EnumAdSearchMobileSize.values()){
 	    		for (PfbxSize pfbxSize : pfbSizeList) {
@@ -613,13 +615,13 @@ public class AdAddAction extends BaseCookieAction{
 	    		    }
 	    		}
 	    	}
-	    }*/
+	    }
 	    //內容廣告(行動裝置)尺寸列表
 	    if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
 	    		Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_MOBILE.getDevType()){
-	    	for(EnumAdSearchMobileSize enumAdSearchMobileSize : EnumAdSearchMobileSize.values()){
+	    	for(EnumAdCannelMobileSize enumAdCannelMobileSize : EnumAdCannelMobileSize.values()){
 	    		for (PfbxSize pfbxSize : pfbSizeList) {
-	    			if(String.valueOf(pfbxSize.getId()).equals(enumAdSearchMobileSize.getName())){
+	    			if(String.valueOf(pfbxSize.getId()).equals(enumAdCannelMobileSize.getName())){
 	    				channelMobileSizeList.add(pfbxSize);
 	    		    }
 	    		}

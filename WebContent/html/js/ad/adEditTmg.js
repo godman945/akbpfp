@@ -107,8 +107,8 @@
 				$("#chkAdContent").text("廣告內容輸入字數已達上限" +maxlength+ "字");
 				back = true;
 			} else if(length > maxlength) { 
-				adContent = $("#adContent").val().slice(0, maxlength);
-				$('#adContent').val(adContent);
+				/*adContent = $("#adContent").val().slice(0, maxlength);
+				$('#adContent').val(adContent);*/
 				$('#chkAdContent').css("color","red");
 				$("#chkAdContent").text("廣告內容最多輸入" +maxlength+ "字");
 			} else {
