@@ -82,11 +82,11 @@
 	<tr class="tbg">
 		<td colspan="4">總計：${totalSize!}筆</td>
 		<td class="td01">${totalPv?string('#,###')!}</td>
-		<td class="td01">${totalClkRate?string('#.##')!}</td>
 		<td class="td01">${totalClk?string('#,###')!}</td>			
+		<td class="td01">${totalClkRate?string('#.##')!}%</td>
 		<!--<td class="td01">${totalInvalidClk?string('#.##')!}</td>-->
-		<td class="td01">${totalAvgCost?string('#.##')!}</td>
-		<td class="td01">${totalCost?string('#,###')!}</td>
+		<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
+		<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
 		<td></td>
 		<td></td>
 		<td></td>

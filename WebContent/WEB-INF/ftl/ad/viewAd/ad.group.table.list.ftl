@@ -114,8 +114,8 @@
 		<td colspan="5">總計：${totalSize!}筆</td>
 		</#if>
 		<td class="td01">${totalPv?string('#,###')!}</td>
-		<td class="td01">${totalClkRate?string('#.##')!}%</td>
 		<td class="td01">${totalClk?string('#,###')!}</td>			
+		<td class="td01">${totalClkRate?string('#.##')!}%</td>
 		<!--<td class="td01">${totalInvalidClk?string('#.##')!}</td>-->
 		<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
 		<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
