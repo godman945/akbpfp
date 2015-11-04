@@ -54,14 +54,14 @@
 
 <table width="100%" border="0" cellpadding="0" cellspacing="5" bgcolor="#f4f2ee">
   <tr>
-    <td><table width="100%" height="175" border="0" cellpadding="0" cellspacing="1" class="tb01">
+    <td><table width="100%" height="230" border="0" cellpadding="0" cellspacing="1" class="tb01">
       <tr>
         <th height="30">總曝光數</th>
         <th height="30">總點選次數</th>
         <th height="30">總費用</th>
       </tr>
       <tr>
-        <td height="104">${totalAdPvclkCost[0]?string('#,###')!}</td>
+        <td height="200">${totalAdPvclkCost[0]?string('#,###')!}</td>
         <td>${totalAdPvclkCost[1]?string('#,###')!}</td>        
         <td>NT$ ${totalAdPvclkCost[2]?string('#,###')!}</td>
       </tr>

@@ -16,8 +16,8 @@
       </th> 
   </tr> 
   <tr> 
-  	<td height="104"style="padding: 0 0 0 0;" >
-  		<div id="hcharts_bx" style="max-width:600px; height:100px;margin:0 auto;" data-highcharts-chart="0">
+  	<td height="200"style="padding: 0 0 0 0;" >
+  		<div id="hcharts_bx" style="max-width:600px; height:200px;margin:0 auto;" data-highcharts-chart="0">
 		</div>   
 	    <!-- <div id="flashChart">
 				<div class="movie"></div>
