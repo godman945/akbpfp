@@ -19,8 +19,8 @@
 		<th>廣告明細</th>
 		<th style="width:6%">狀態</th>
 		<th style="width:6%">曝光數</th>
-		<th style="width:6%">點選率</th>
 		<th style="width:6%">點選次數</th>	
+		<th style="width:6%">點選率</th>
 		<!--<th style="width:6%">無效點選次數</th>-->
 		<th style="width:8%">平均點選費用</th>
 		<th style="width:6%;min-width:65px">費用</th>
@@ -64,8 +64,8 @@
 		        </#if>
 		        </td>
 				<td class="td01">${vo.adPv?string('#,###')!}</td>				
-				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<td class="td01">${vo.adClk?string('#,###')!}</td>
+				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->
 				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
 				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>

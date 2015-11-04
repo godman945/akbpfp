@@ -393,8 +393,8 @@ function tableSorter(){
 	
 	$("#listTable").tablesorter({
 		headers:{
-			 2 : { sorter: 'rangesort' },
-			 7 : { sorter: 'rangesort' }
+			 5 : { sorter: 'rangesort' },
+			 6 : { sorter: 'rangesort' }
 			}
 	});
 }

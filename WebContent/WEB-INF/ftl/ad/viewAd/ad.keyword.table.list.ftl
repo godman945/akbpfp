@@ -22,8 +22,8 @@
 		<th style="width:6%">狀態</th>
 		<th style="min-width:130px;">搜尋廣告出價</th>
 		<th style="width:6%">曝光數</th>
-		<th style="width:6%">點選率(%)</th>
 		<th style="width:6%">點選次數</th>	
+		<th style="width:6%">點選率</th>
 		<!--<th style="width:6%">無效點選次數</th>-->	
 		<th style="width:8%">平均點選費用</th>
 		<th style="min-width:65px;width:9%">費用</th>
@@ -57,11 +57,11 @@
 					建議出價：NT$ ${vo.suggestPrice!}		        
 		        </td>
 				<td class="td01">${vo.adKeywordPv?string('#,###')!}</td>
-				<td class="td01">${vo.adKeywordClkRate?string('#.##')!}</td>
 				<td class="td01">${vo.adKeywordClk?string('#,###')!}</td>	
+				<td class="td01">${vo.adKeywordClkRate?string('#.##')!}%</td>
 				<!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->							
-				<td class="td01">${vo.adKeywordClkPriceAvg?string('#.##')!}</td>
-				<td class="td01">${vo.adKeywordClkPrice?string('#,###')!}</td>
+				<td class="td01">NT$ ${vo.adKeywordClkPriceAvg?string('#.##')!}</td>
+				<td class="td01">NT$ ${vo.adKeywordClkPrice?string('#,###')!}</td>
 				<#if vo.adKeywordType == "1">
 					<td class="td01">${vo.adKeywordRankAvg?string('#.##')!}</td>
 				<#else>

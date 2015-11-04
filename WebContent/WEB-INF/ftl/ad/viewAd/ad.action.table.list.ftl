@@ -25,8 +25,8 @@
 		<th>廣告走期</th>
 		<th>每日花費</th>
 		<th style="width:7%">曝光數</th>
-		<th>點選率</th>
 		<th>點選次數</th>
+		<th>點選率</th>
 		<!--<th>無效點選次數</th>-->	
 		<th>平均點選費用</th>
 		<th style="min-width:65px;width:9%">費用</th>
@@ -64,8 +64,8 @@
 				</td>
 				<td><input type="text" id="max_${vo.adActionSeq!}" style="width:60px;text-align:right" value="${vo.adActionMax?string('###')!}" maxlength="6" class="required digits" min="100"> <input type="button" id="bt_${vo.adActionSeq!}" value="確定" onclick="updAdActionMax('${vo.adActionSeq!}')"></td>
 				<td class="td01">${vo.adPv?string('#,###')!}</td>				
-				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<td class="td01">${vo.adClk?string('#,###')!}</td>
+				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->
 				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
 				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
