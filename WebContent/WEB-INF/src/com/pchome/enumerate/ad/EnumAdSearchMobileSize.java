@@ -1,7 +1,7 @@
 package com.pchome.enumerate.ad;
 
 public enum EnumAdSearchMobileSize {
-	adp_201507210004("7", "300", "100");
+	adp_201507210004("2", "300", "100");
 	//adp_201510220001("14", "320", "100"),
 	//adp_201507210001("1", "300", "250");
 	
