@@ -149,10 +149,10 @@ public class ReportCampaginAction extends BaseReportAction {
 			
 			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) pv));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) ctr));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) click));
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
+				flashDataMap.put(reportDate, new Float((float) ctr));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) invClick));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
@@ -178,8 +178,8 @@ public class ReportCampaginAction extends BaseReportAction {
 		tableHeadNameMap=new HashMap<String,String>();
 		tableHeadNameMap.put("每日花費", EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue());
 		tableHeadNameMap.put("曝光數", EnumReport.REPORT_CHART_TYPE_PV.getTextValue());
-		tableHeadNameMap.put("點選率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
 		tableHeadNameMap.put("點選次數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
+		tableHeadNameMap.put("點選率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
 		// 20140318： 隱藏 "無效點選次數" 欄位
 		//tableHeadNameMap.put("無效點選次數", EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue());
 		tableHeadNameMap.put("平均點選費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
@@ -191,7 +191,7 @@ public class ReportCampaginAction extends BaseReportAction {
 		//optionSelect="曝光數,點選率(%),點選次數,無效點選次數,平均點選費用,費用";
 		//optionSelect="每日花費,曝光數,點選率(%),點選次數,無效點選次數,平均點選費用,費用";
 		// 20140318： 隱藏 "無效點選次數" 欄位
-		optionSelect="每日花費,曝光數,點選率,點選次數,平均點選費用,費用";
+		optionSelect="每日花費,曝光數,點選次數,點選率,平均點選費用,費用";
 
 
 		tableHeadShowList=new LinkedList<String>();
@@ -366,7 +366,7 @@ public class ReportCampaginAction extends BaseReportAction {
 			for(String s:sl){
 				if(dataNumber == 6 ||dataNumber == 10 || dataNumber == 11){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataNumber == 8){
+				} else if(dataNumber == 9){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -383,7 +383,7 @@ public class ReportCampaginAction extends BaseReportAction {
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 10 || dataTotalNumber == 11){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataTotalNumber == 8){
+				} else if(dataTotalNumber == 9){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -453,10 +453,10 @@ public class ReportCampaginAction extends BaseReportAction {
 				mapKey = tableHeadNameMap.get(s);
 				if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
 					tableDataTotalList.addLast(intFormat.format(t_pv));
-				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-					tableDataTotalList.addLast(doubleFormat.format(t_ctr));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 					tableDataTotalList.addLast(intFormat.format(t_click));
+				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
+					tableDataTotalList.addLast(doubleFormat.format(t_ctr));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
 					tableDataTotalList.addLast(intFormat.format(t_invalid));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
@@ -576,11 +576,11 @@ public class ReportCampaginAction extends BaseReportAction {
 						mapKey=tableHeadNameMap.get(s);
 						if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
 							tableInDataList.addLast(intFormat.format(pv));
-						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-							tableInDataList.addLast(doubleFormat.format(ctr));
 						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 							tableInDataList.addLast(intFormat.format(click));
-	 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
+	 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
+							tableInDataList.addLast(doubleFormat.format(ctr));
+						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
 	 						tableInDataList.addLast(intFormat.format(invClick));
 	 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 							tableInDataList.addLast(doubleFormat.format(costAvg));
