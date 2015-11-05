@@ -277,7 +277,8 @@ function loadChart(){
 	            value: 0,
 	            width: 1,
 	            color: '#808080'
-	        }]
+	        }],
+	        minRange: 4
 	    },
 	    tooltip: {
 	        valueSuffix: selectSuffix,

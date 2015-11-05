@@ -226,26 +226,26 @@ public class SpringOpenFlashUtil {
 	}
 
 	public String getChartDataForArray(String charType,String startDate,String endDate,Map<Date,Float> flashDataMap){
-		NumberFormat numFormat = null;
+		int scale = 0;		//设置位数
 
 		if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-			numFormat = new DecimalFormat("###,###,###,###");
+			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-			numFormat = new DecimalFormat("###,###,###,###");
+			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-			numFormat = new DecimalFormat("###,###,###,###.##");
+			scale = 2;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-			numFormat = new DecimalFormat("###,###,###,###.##");
+			scale = 2;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-			numFormat = new DecimalFormat("###,###,###,###");
+			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_ADSORT.getTextValue())) {
-			numFormat = new DecimalFormat("###,###,###,###");
+			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
-			numFormat = new DecimalFormat("###,###,###,###");
+			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-			numFormat = new DecimalFormat("###,###,###,###");
+			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTRINVALID.getTextValue())) {
-			numFormat = new DecimalFormat("###,###,###,###");
+			scale = 0;
 		}
 		//x 軸兩日期間所相差的天數
 		long maxValueX = DateValueUtil.getInstance().getDateDiffDay(startDate, endDate);
@@ -255,7 +255,9 @@ public class SpringOpenFlashUtil {
 		for(int d=0;d<maxValueX;d++){
 			pDate=DateValueUtil.getInstance().getDateForStartDateAddDay(startDate, d);
 			if(flashDataMap.containsKey(pDate)){
-				dataList.add((double)flashDataMap.get(pDate));
+				BigDecimal bd = new BigDecimal((double)flashDataMap.get(pDate));
+				bd = bd.setScale(scale,4);
+				dataList.add(bd.doubleValue());
 			}else{
 				dataList.add((double) 0);
 			}

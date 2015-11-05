@@ -570,38 +570,45 @@ function showHighChart(){
 	var selectTypeName = "";
 	var selectSuffix = "";
 	var decimals = 0;		//顯示小數點後幾位數
+	var range = 4;			//顯示的最小範圍(x0.25)
 	switch(selectType){
 		case "pv":
 			titleName = "曝光數(次)";
 			selectTypeName = "曝光數";
 			selectSuffix = "次";
+			range = 4;
 			break;
 		case "ctr":
 			titleName = "點選率(%)";
 			selectTypeName = "點選率";
 			selectSuffix = "%";
 			decimals = 2;
+			range = 0.04;
 			break;
 		case "click":
 			titleName = "點選次數(次)";
 			selectTypeName = "點選次數";
 			selectSuffix = "次";
+			range = 4;
 			break;
 		case "invalid":
 			titleName = "無效點選數(次)";
 			selectTypeName = "無效點選數";
 			selectSuffix = "次";
+			range = 4;
 			break;
 		case "avgCost":
 			titleName = "平均點選費用(NT$)";
 			selectTypeName = "平均點選費用";
 			selectSuffix = "元";
 			decimals = 2;
+			range = 4;
 			break;
 		case "cost":
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			range = 4;
 			break;
 	}
 	
@@ -672,7 +679,8 @@ function showHighChart(){
 	            value: 0,
 	            width: 1,
 	            color: '#808080'
-	        }]
+	        }],
+	        minRange: range
 	    },
 	    tooltip: {
 	        valueSuffix: selectSuffix,
