@@ -341,7 +341,6 @@ function showHighChart(){
 	var selectTypeName = "";
 	var selectSuffix = "";
 	var decimals = 0;		//顯示小數點後幾位數
-	var range = 4;			//顯示的最小範圍(x0.25)
 	switch(selectType){
 		case "pv":
 			titleName = "曝光數(次)";
@@ -353,7 +352,6 @@ function showHighChart(){
 			selectTypeName = "點選率";
 			selectSuffix = "%";
 			decimals = 2;
-			range = 0.04;
 			break;
 		case "click":
 			titleName = "點選次數(次)";
@@ -445,8 +443,7 @@ function showHighChart(){
 	            value: 0,
 	            width: 1,
 	            color: '#808080'
-	        }],
-	        minRange: range
+	        }]
 	    },
 	    tooltip: {
 	        valueSuffix: selectSuffix,
