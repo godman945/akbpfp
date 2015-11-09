@@ -270,7 +270,7 @@ public class ReportAdGroupAction extends BaseReportAction {
 		log.info("page="+page);
 
 		if(pageSize==0){
-			pageSize=10;
+			pageSize=20;
 		}
 		log.info("pageSize="+pageSize);
 
