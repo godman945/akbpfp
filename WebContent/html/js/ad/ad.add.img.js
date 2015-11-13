@@ -221,7 +221,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat)
 		    //'<p class="addel"  onclick="deleteImgDom(\''+adSeq+'\');"></p> '+
 		    '<em style="line-height:27px;font-size:23px;">'+errorTitle+'</em>'+
 		    '<em style="line-height:23px;font-size:15px;">請重新上傳檔案</em>'+
-		    '<ul>'+
+		    '<ul style="height:110px;" >'+
 		    '<li class="'+imgSize+'"><i>尺寸</i><b>'+width+' x '+height+'</b></li>'+
 			'<li><i>檔名</i><b style="word-break:keep-all;white-space:nowrap;overflow:hidden;">'+file.name+'</b></li>'+
 			'<li class="'+imgFileSize+'"><i>大小</i><b>'+Math.round(file.size/1024)+'</b></li>'+
