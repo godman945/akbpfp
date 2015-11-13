@@ -129,7 +129,7 @@ function preViewImg(objectUrl,width,height){
     			'height'        	: height,
     			'autoSize'			: true,
     			'autoHeight'		: true,
-    			'autoScale'			: true,
+    			'autoScale'			: false,
     			'transitionIn'		: 'none',
     			'transitionOut'		: 'none',
     			'padding'			: 0,

@@ -200,7 +200,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat)
 		
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
-			 '<div class="adboxdv" style="height:170px;">'+
+			 '<div class="adboxdv" >'+
 			 '<img src="'+objectUrl+'">'+
 			 '<p class="fancy adinf" onclick="preViewImg(\''+file.name+'\',\''+width+'\',\''+height+'\');" alt="預覽">預覽</p></div>'+
 			 '<ul>'+
@@ -277,7 +277,7 @@ function preViewImg(imgName,width,height){
 		    			'height'        	: height,
 		    			'autoSize'			: true,
 		    			'autoHeight'		: true,
-		    			'autoScale'			: true,
+		    			'autoScale'			: false,
 		    			'transitionIn'		: 'none',
 		    			'transitionOut'		: 'none',
 		    			'padding'			: 0,
