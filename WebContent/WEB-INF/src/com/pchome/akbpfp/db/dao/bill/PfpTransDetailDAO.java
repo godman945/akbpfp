@@ -29,7 +29,7 @@ public class PfpTransDetailDAO extends BaseDAO <PfpTransDetail, String> implemen
 		hql.append(" where pfpCustomerInfo.customerInfoId = ? ");
 		hql.append(" and transDate >= ? ");
 		hql.append(" and transDate <= ? ");
-		hql.append(" order by transDate desc ");
+		hql.append(" order by transId desc ");
 		
 		Object[] ob = new Object[]{customerInfoId,startDate,endDate};
 		
