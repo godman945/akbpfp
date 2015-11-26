@@ -17,6 +17,7 @@
             <interceptor name="reportPrivilegeInterceptor" class="ReportPrivilegeInterceptor" />
             <interceptor name="billPrivilegeInterceptor" class="BillPrivilegeInterceptor" />
             <interceptor name="redirectNotifyInterceptor" class="RedirectNotifyInterceptor" />
+            <interceptor name="replaceValuesInterceptor" class="ReplaceValuesInterceptor" />
             
             <!-- cookie stack -->
             <interceptor-stack name="cookieStack">
@@ -45,9 +46,15 @@
                     <param name="cookiesName">id_pchome,akb_pfp_user,choose_date</param>
                     <param name="cookiesValue">*,*,*</param>
                 </interceptor-ref>
+                <interceptor-ref name="replaceValuesInterceptor" />               
                 <interceptor-ref name="defaultStack" />
                 <interceptor-ref name="cookieProveStack" />                
-                <interceptor-ref name="loginCheckInterceptor" />               
+                <interceptor-ref name="loginCheckInterceptor" />
+            </interceptor-stack>
+            
+            <interceptor-stack name="valuesCheckStack">
+            	<interceptor-ref name="replaceValuesInterceptor" />               
+                <interceptor-ref name="defaultStack" />
             </interceptor-stack>
             
         </interceptors>
