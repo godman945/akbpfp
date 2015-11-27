@@ -272,7 +272,7 @@ public class ApplyAction extends BaseSSLAction{
 				admChannelAccount.setCreateDate(new Date());
 				admChannelAccount.setUpdateDate(new Date());
 				
-				admChannelAccountService.saveOrUpdate(admChannelAccount);
+				admChannelAccountService.InsertData(admChannelAccount);
 			}
 			
 		}

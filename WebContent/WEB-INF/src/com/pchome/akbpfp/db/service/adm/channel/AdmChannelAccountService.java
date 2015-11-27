@@ -6,8 +6,11 @@ import com.pchome.akbpfp.db.service.BaseService;
 
 public class AdmChannelAccountService extends BaseService <AdmChannelAccount, String> implements IAdmChannelAccountService {
 	
+	public void InsertData(AdmChannelAccount admChannelAccount){
+		((IAdmChannelAccountDAO)dao).InsertData(admChannelAccount);
+	}
+	
 	public Integer getNewId(){
 		return ((IAdmChannelAccountDAO)dao).getNewId();
 	}
-	
 }

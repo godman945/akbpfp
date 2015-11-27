@@ -5,6 +5,7 @@ import com.pchome.akbpfp.db.service.IBaseService;
 
 public interface IAdmChannelAccountService extends IBaseService<AdmChannelAccount, String>  {
 	
-	public Integer getNewId();
+	public void InsertData(AdmChannelAccount admChannelAccount);
 	
+	public Integer getNewId();
 }
