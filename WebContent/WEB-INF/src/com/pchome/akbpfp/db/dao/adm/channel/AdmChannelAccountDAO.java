@@ -34,11 +34,11 @@ public class AdmChannelAccountDAO  extends BaseDAO <AdmChannelAccount, String> i
 	
 	@SuppressWarnings("unchecked")
 	public Integer getNewId(){
-		final StringBuffer hql = new StringBuffer()
+		final StringBuffer sql = new StringBuffer()
 		.append("select max(id) + 1 ")
-		.append(" from AdmChannelAccount ");
+		.append(" from adm_channel_account ");
 		
-		Query q = getSession().createQuery(hql.toString());
+		Query q = getSession().createSQLQuery(sql.toString());
 		
 		Integer id = 0;
 		List<Object> resultData = q.list();
