@@ -4,5 +4,7 @@ import com.pchome.akbpfp.db.pojo.AdmChannelAccount;
 import com.pchome.akbpfp.db.service.IBaseService;
 
 public interface IAdmChannelAccountService extends IBaseService<AdmChannelAccount, String>  {
-
+	
+	public void InsertData(AdmChannelAccount admChannelAccount);
+	
 }

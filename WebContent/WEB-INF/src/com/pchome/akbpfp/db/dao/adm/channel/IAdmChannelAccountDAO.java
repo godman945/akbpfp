@@ -5,5 +5,7 @@ import com.pchome.akbpfp.db.pojo.AdmChannelAccount;
 
 
 public interface IAdmChannelAccountDAO extends IBaseDAO<AdmChannelAccount, String> {
-
+	
+	public void InsertData(AdmChannelAccount admChannelAccount);
+	
 }
