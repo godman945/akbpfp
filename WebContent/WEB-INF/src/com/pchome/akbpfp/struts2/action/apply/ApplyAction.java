@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pchome.akbpfd.db.vo.user.PfdUserAdAccountRefVO;
 import com.pchome.akbpfp.api.MemberAPI;
 import com.pchome.akbpfp.api.RedirectBillingAPI;
+import com.pchome.akbpfp.db.pojo.AdmChannelAccount;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
@@ -20,6 +21,7 @@ import com.pchome.akbpfp.db.pojo.PfpUser;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRefId;
 import com.pchome.akbpfp.db.service.accesslog.IAdmAccesslogService;
+import com.pchome.akbpfp.db.service.adm.channel.IAdmChannelAccountService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeRecordService;
@@ -61,6 +63,7 @@ public class ApplyAction extends BaseSSLAction{
 	private IAdmAccesslogService admAccesslogService;
 	private IAdmFreeRecordService admFreeRecordService;
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
+	private IAdmChannelAccountService admChannelAccountService;
 
 	private EnumBillingStatus[] enumBillingStatus  = EnumBillingStatus.values();
 	private AccountVO accountVO;
@@ -250,6 +253,7 @@ public class ApplyAction extends BaseSSLAction{
 			
 			// 一般申請 PFP 帳戶的使用者要設定經銷商為PCHOME經銷商
 			if("normal".equals(userStyle)){
+				//經銷商設定
 				PfdUserAdAccountRefVO pfdUserAdAccountRefVO = new PfdUserAdAccountRefVO();
 				pfdUserAdAccountRefVO.setRefId(pfdUserAdAccountRefService.getNewRefId());
 				pfdUserAdAccountRefVO.setPfdCustomerInfoId("PFDC20140520001");
@@ -258,6 +262,16 @@ public class ApplyAction extends BaseSSLAction{
 				pfdUserAdAccountRefVO.setPfpUserId(user.getUserId());
 				pfdUserAdAccountRefVO.setPfpPayType("1");
 				pfdUserAdAccountRefService.savePfdUserAdAccountRef(pfdUserAdAccountRefVO);
+				
+				//負責業務員設定
+				AdmChannelAccount admChannelAccount = new AdmChannelAccount();
+				admChannelAccount.setMemberId("portalpfb");
+				admChannelAccount.setAccountId(pfpCustomerInfo.getCustomerInfoId());
+				admChannelAccount.setChannelCategory("0");
+				admChannelAccount.setCreateDate(new Date());
+				admChannelAccount.setUpdateDate(new Date());
+				
+				admChannelAccountService.saveOrUpdate(admChannelAccount);
 			}
 			
 		}
@@ -742,6 +756,10 @@ public class ApplyAction extends BaseSSLAction{
 	public void setPfdUserAdAccountRefService(
 			IPfdUserAdAccountRefService pfdUserAdAccountRefService) {
 		this.pfdUserAdAccountRefService = pfdUserAdAccountRefService;
+	}
+	public void setAdmChannelAccountService(
+			IAdmChannelAccountService admChannelAccountService) {
+		this.admChannelAccountService = admChannelAccountService;
 	}
 
 }
