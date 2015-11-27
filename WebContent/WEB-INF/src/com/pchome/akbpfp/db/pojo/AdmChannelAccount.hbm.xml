@@ -3,24 +3,24 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 2015/11/27 ?W?? 10:36:37 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="com.pchome.akbpfp.db.pojo.Sequence" table="sequence" catalog="akb">
-        <id name="tableName" type="string">
-            <column name="table_name" length="50" />
-            <generator class="assigned" />
+    <class name="com.pchome.akbpfp.db.pojo.AdmChannelAccount" table="adm_channel_account" catalog="akb">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
         </id>
-        <property name="tableChar" type="string">
-            <column name="table_char" length="7" not-null="true">
-                <comment>&#170;&#237;&#174;&#230;&#165;N&#184;&#185;</comment>
+        <property name="memberId" type="string">
+            <column name="member_id" length="20" not-null="true">
+                <comment>&#183;|&#173;&#251;&#164;&#164;&#164;&#223;&#177;b&#184;&#185;</comment>
             </column>
         </property>
-        <property name="tableDate" type="string">
-            <column name="table_date" length="8" not-null="true">
-                <comment>&#170;&#237;&#174;&#230;&#164;&#233;&#180;&#193;</comment>
+        <property name="accountId" type="string">
+            <column name="account_id" length="20" not-null="true">
+                <comment>&#177;b&#164;&#225;&#189;s&#184;&#185;</comment>
             </column>
         </property>
-        <property name="tableNo" type="int">
-            <column name="table_no" not-null="true">
-                <comment>&#170;&#237;&#174;&#230;&#167;&#199;&#184;&#185;</comment>
+        <property name="channelCategory" type="string">
+            <column name="channel_category" length="1" not-null="true">
+                <comment>&#192;W&#185;D&#195;&#254;&#171;&#172;</comment>
             </column>
         </property>
         <property name="updateDate" type="timestamp">

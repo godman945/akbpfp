@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2015/10/21 �U�� 02:37:05 by Hibernate Tools 3.4.0.CR1
+// Generated 2015/11/27 �W�� 10:36:36 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -327,7 +327,7 @@ public class PfdCustomerInfo implements java.io.Serializable {
 		this.pfpPayType = pfpPayType;
 	}
 
-	@Column(name = "pfp_adtype_select", length = 10)
+	@Column(name = "pfp_adtype_select", length = 12)
 	public String getPfpAdtypeSelect() {
 		return this.pfpAdtypeSelect;
 	}
