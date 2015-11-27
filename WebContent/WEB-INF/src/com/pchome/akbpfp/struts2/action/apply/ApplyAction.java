@@ -265,13 +265,14 @@ public class ApplyAction extends BaseSSLAction{
 				
 				//負責業務員設定
 				AdmChannelAccount admChannelAccount = new AdmChannelAccount();
+				admChannelAccount.setId(admChannelAccountService.getNewId());
 				admChannelAccount.setMemberId("portalpfb");
 				admChannelAccount.setAccountId(pfpCustomerInfo.getCustomerInfoId());
 				admChannelAccount.setChannelCategory("0");
 				admChannelAccount.setCreateDate(new Date());
 				admChannelAccount.setUpdateDate(new Date());
 				
-				admChannelAccountService.InsertData(admChannelAccount);
+				admChannelAccountService.saveOrUpdate(admChannelAccount);
 			}
 			
 		}
