@@ -185,6 +185,6 @@
     </bean>
     
     <bean id="AdmChannelAccountService" class="com.pchome.akbpfp.db.service.adm.channel.AdmChannelAccountService">
-             
+             <property name="dao" ref="AdmChannelAccountDAO" />
     </bean>
 </beans>
