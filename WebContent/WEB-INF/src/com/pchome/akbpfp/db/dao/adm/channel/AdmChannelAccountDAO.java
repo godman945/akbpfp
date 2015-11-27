@@ -7,14 +7,14 @@ import org.hibernate.Session;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.AdmChannelAccount;
+import com.pchome.akbpfp.db.vo.adm.channel.AdmChannelAccountVO;
 
 public class AdmChannelAccountDAO  extends BaseDAO <AdmChannelAccount, String> implements IAdmChannelAccountDAO {
 
-	public void InsertData(AdmChannelAccount admChannelAccount){
+	public void InsertData(AdmChannelAccountVO admChannelAccountVO){
 		final StringBuffer sql = new StringBuffer()
 		.append("INSERT INTO adm_channel_account(id,member_id,account_id,channel_category,update_date,create_date) ")
-		.append("VALUES ( :id")
-		.append(", :memberId")
+		.append("VALUES ( :memberId")
 		.append(", :accountId")
 		.append(", :channelCategory")
 		.append(", :updateDate")
@@ -22,12 +22,11 @@ public class AdmChannelAccountDAO  extends BaseDAO <AdmChannelAccount, String> i
 		
 		Session session = getSession();
         session.createSQLQuery(sql.toString())
-        		.setInteger("id", admChannelAccount.getId())
-        		.setString("memberId", admChannelAccount.getMemberId())
-        		.setString("accountId", admChannelAccount.getAccountId())
-        		.setString("channelCategory", admChannelAccount.getChannelCategory())
-        		.setDate("updateDate", admChannelAccount.getUpdateDate())
-        		.setDate("createDate", admChannelAccount.getCreateDate());
+        		.setString("memberId", admChannelAccountVO.getMemberId())
+        		.setString("accountId", admChannelAccountVO.getAccountId())
+        		.setString("channelCategory", admChannelAccountVO.getChannelCategory())
+        		.setString("updateDate", admChannelAccountVO.getUpdateDate())
+        		.setString("createDate", admChannelAccountVO.getCreateDate());
         		
         session.flush();
 	}

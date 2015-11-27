@@ -1,5 +1,7 @@
 package com.pchome.akbpfp.struts2.action.apply;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pchome.akbpfd.db.vo.user.PfdUserAdAccountRefVO;
 import com.pchome.akbpfp.api.MemberAPI;
 import com.pchome.akbpfp.api.RedirectBillingAPI;
-import com.pchome.akbpfp.db.pojo.AdmChannelAccount;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
@@ -32,6 +33,7 @@ import com.pchome.akbpfp.db.service.sequence.SequenceService;
 import com.pchome.akbpfp.db.service.user.IPfpUserMemberRefService;
 import com.pchome.akbpfp.db.service.user.IPfpUserService;
 import com.pchome.akbpfp.db.vo.account.AccountVO;
+import com.pchome.akbpfp.db.vo.adm.channel.AdmChannelAccountVO;
 import com.pchome.akbpfp.db.vo.member.MemberVO;
 import com.pchome.akbpfp.struts2.BaseSSLAction;
 import com.pchome.enumerate.account.EnumAccountIndustry;
@@ -264,15 +266,15 @@ public class ApplyAction extends BaseSSLAction{
 				pfdUserAdAccountRefService.savePfdUserAdAccountRef(pfdUserAdAccountRefVO);
 				
 				//負責業務員設定
-				AdmChannelAccount admChannelAccount = new AdmChannelAccount();
-				admChannelAccount.setId(admChannelAccountService.getNewId());
-				admChannelAccount.setMemberId("portalpfb");
-				admChannelAccount.setAccountId(pfpCustomerInfo.getCustomerInfoId());
-				admChannelAccount.setChannelCategory("0");
-				admChannelAccount.setCreateDate(new Date());
-				admChannelAccount.setUpdateDate(new Date());
+				DateFormat dmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				AdmChannelAccountVO admChannelAccountVO = new AdmChannelAccountVO();
+				admChannelAccountVO.setMemberId("portalpfb");
+				admChannelAccountVO.setAccountId(pfpCustomerInfo.getCustomerInfoId());
+				admChannelAccountVO.setChannelCategory("0");
+				admChannelAccountVO.setCreateDate(dmt.format(new Date()));
+				admChannelAccountVO.setUpdateDate(dmt.format(new Date()));
 				
-				admChannelAccountService.InsertData(admChannelAccount);
+				admChannelAccountService.InsertData(admChannelAccountVO);
 			}
 			
 		}
