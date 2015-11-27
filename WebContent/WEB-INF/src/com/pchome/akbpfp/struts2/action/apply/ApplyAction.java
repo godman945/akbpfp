@@ -267,6 +267,7 @@ public class ApplyAction extends BaseSSLAction{
 				
 				//負責業務員設定
 				DateFormat dmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				log.info(dmt.format(new Date()));
 				AdmChannelAccountVO admChannelAccountVO = new AdmChannelAccountVO();
 				admChannelAccountVO.setMemberId("portalpfb");
 				admChannelAccountVO.setAccountId(pfpCustomerInfo.getCustomerInfoId());

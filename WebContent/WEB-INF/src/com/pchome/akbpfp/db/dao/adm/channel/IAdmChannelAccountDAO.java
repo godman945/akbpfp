@@ -9,6 +9,4 @@ public interface IAdmChannelAccountDAO extends IBaseDAO<AdmChannelAccount, Strin
 	
 	public void InsertData(AdmChannelAccountVO AdmChannelAccountVO);
 	
-	public Integer getNewId();
-	
 }

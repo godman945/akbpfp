@@ -8,5 +8,4 @@ public interface IAdmChannelAccountService extends IBaseService<AdmChannelAccoun
 	
 	public void InsertData(AdmChannelAccountVO admChannelAccountVO);
 	
-	public Integer getNewId();
 }

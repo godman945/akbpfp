@@ -10,8 +10,4 @@ public class AdmChannelAccountService extends BaseService <AdmChannelAccount, St
 	public void InsertData(AdmChannelAccountVO admChannelAccountVO){
 		((IAdmChannelAccountDAO)dao).InsertData(admChannelAccountVO);
 	}
-	
-	public Integer getNewId(){
-		return ((IAdmChannelAccountDAO)dao).getNewId();
-	}
 }
