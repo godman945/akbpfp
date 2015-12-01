@@ -3,6 +3,7 @@
 
 <hibernate-reverse-engineering>
 	<table-filter match-name="adm_accesslog" match-catalog="akb" />
+	<table-filter match-name="adm_channel_account" match-catalog="akb" />
 	<table-filter match-name="adm_define_ad" match-catalog="akb" />
 	<table-filter match-name="adm_free_action" match-catalog="akb" />
 	<table-filter match-name="adm_free_gift" match-catalog="akb" />

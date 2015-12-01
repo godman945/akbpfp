@@ -183,4 +183,8 @@
     <bean id="AdmManagerDetailService" class="com.pchome.akbpfp.db.service.manager.AdmManagerDetailService">
         <property name="dao" ref="AdmManagerDetailDAO" />     
     </bean>
+    
+    <bean id="AdmChannelAccountService" class="com.pchome.akbpfp.db.service.adm.channel.AdmChannelAccountService">
+             <property name="dao" ref="AdmChannelAccountDAO" />
+    </bean>
 </beans>

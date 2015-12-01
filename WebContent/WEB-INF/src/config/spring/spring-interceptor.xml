@@ -40,5 +40,8 @@
     
     <!-- Redirect Notify Interceptor -->
     <bean id="RedirectNotifyInterceptor" class="com.pchome.akbpfp.interceptor.RedirectNotifyInterceptor" scope="prototype" />
+    
+    <!-- Replace Values Interceptor -->
+    <bean id="ReplaceValuesInterceptor" class="com.pchome.akbpfp.interceptor.ReplaceValuesInterceptor" scope="prototype" />
         
 </beans>

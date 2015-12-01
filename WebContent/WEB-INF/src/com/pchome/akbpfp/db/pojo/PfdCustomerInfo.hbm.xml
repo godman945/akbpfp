@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2015/10/21 ?U?? 02:37:05 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2015/11/27 ?W?? 10:36:37 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfdCustomerInfo" table="pfd_customer_info" catalog="akb">
         <id name="customerInfoId" type="string">
@@ -109,9 +109,10 @@
             </column>
         </property>
         <property name="pfpAdtypeSelect" type="string">
-            <column name="pfp_adtype_select" length="10">
-                <comment>&#186;&#222;&#178;zPFP&#165;i&#191;&#239;&#190;&#220;&#188;&#189;&#169;&#241;&#195;&#254;&#171;&#172; 111 000
-                &#183;j&#180;M&#165;[&#164;&#186;&#174;e,&#183;j&#180;M,&#164;&#186;&#174;e &#164;&#185;&#179;\:1 &#164;&#163;&#164;&#185;&#179;\:0</comment>
+            <column name="pfp_adtype_select" length="12">
+                <comment>&#186;&#222;&#178;zPFP&#165;i&#191;&#239;&#190;&#220;&#188;&#189;&#169;&#241;&#195;&#254;&#171;&#172; 1111 1111 1111
+                (1,5,9&#166;&#236;&#164;&#184;&#165;N&#170;&#237;&#183;j&#180;M&#165;[&#164;&#186;&#174;e,&#183;j&#180;M,&#164;&#186;&#174;e)(&#171;&#225;&#173;&#177;&#177;&#181;3&#166;&#236;&#164;&#184;&#165;N&#170;&#237;&#165;&#254;&#179;&#161;,PC,&#166;&#230;&#176;&#202;)
+                &#164;&#185;&#179;\:1 &#164;&#163;&#164;&#185;&#179;\:0</comment>
             </column>
         </property>
         <property name="totalQuota" type="int">

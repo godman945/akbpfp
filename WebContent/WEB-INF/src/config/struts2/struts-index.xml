@@ -30,6 +30,7 @@
         
         <action name="faq" class="IndexAction" method="faq">
         	<interceptor-ref name="cookieStack" />
+        	<interceptor-ref name="valuesCheckStack" />
             <result type="tiles" name="success">index.faq</result>
         </action>
         

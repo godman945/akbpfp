@@ -177,4 +177,8 @@
     <bean id="AdmManagerDetailDAO" class="com.pchome.akbpfp.db.dao.manager.AdmManagerDetailDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    
+    <bean id="AdmChannelAccountDAO" class="com.pchome.akbpfp.db.dao.adm.channel.AdmChannelAccountDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 </beans>

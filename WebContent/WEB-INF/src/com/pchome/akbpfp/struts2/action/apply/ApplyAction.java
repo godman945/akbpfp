@@ -1,5 +1,7 @@
 package com.pchome.akbpfp.struts2.action.apply;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +22,7 @@ import com.pchome.akbpfp.db.pojo.PfpUser;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRefId;
 import com.pchome.akbpfp.db.service.accesslog.IAdmAccesslogService;
+import com.pchome.akbpfp.db.service.adm.channel.IAdmChannelAccountService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeRecordService;
@@ -30,6 +33,7 @@ import com.pchome.akbpfp.db.service.sequence.SequenceService;
 import com.pchome.akbpfp.db.service.user.IPfpUserMemberRefService;
 import com.pchome.akbpfp.db.service.user.IPfpUserService;
 import com.pchome.akbpfp.db.vo.account.AccountVO;
+import com.pchome.akbpfp.db.vo.adm.channel.AdmChannelAccountVO;
 import com.pchome.akbpfp.db.vo.member.MemberVO;
 import com.pchome.akbpfp.struts2.BaseSSLAction;
 import com.pchome.enumerate.account.EnumAccountIndustry;
@@ -61,6 +65,7 @@ public class ApplyAction extends BaseSSLAction{
 	private IAdmAccesslogService admAccesslogService;
 	private IAdmFreeRecordService admFreeRecordService;
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
+	private IAdmChannelAccountService admChannelAccountService;
 
 	private EnumBillingStatus[] enumBillingStatus  = EnumBillingStatus.values();
 	private AccountVO accountVO;
@@ -250,6 +255,7 @@ public class ApplyAction extends BaseSSLAction{
 			
 			// 一般申請 PFP 帳戶的使用者要設定經銷商為PCHOME經銷商
 			if("normal".equals(userStyle)){
+				//經銷商設定
 				PfdUserAdAccountRefVO pfdUserAdAccountRefVO = new PfdUserAdAccountRefVO();
 				pfdUserAdAccountRefVO.setRefId(pfdUserAdAccountRefService.getNewRefId());
 				pfdUserAdAccountRefVO.setPfdCustomerInfoId("PFDC20140520001");
@@ -258,6 +264,18 @@ public class ApplyAction extends BaseSSLAction{
 				pfdUserAdAccountRefVO.setPfpUserId(user.getUserId());
 				pfdUserAdAccountRefVO.setPfpPayType("1");
 				pfdUserAdAccountRefService.savePfdUserAdAccountRef(pfdUserAdAccountRefVO);
+				
+				//負責業務員設定
+				DateFormat dmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				log.info(dmt.format(new Date()));
+				AdmChannelAccountVO admChannelAccountVO = new AdmChannelAccountVO();
+				admChannelAccountVO.setMemberId("portalpfb");
+				admChannelAccountVO.setAccountId(pfpCustomerInfo.getCustomerInfoId());
+				admChannelAccountVO.setChannelCategory("0");
+				admChannelAccountVO.setCreateDate(dmt.format(new Date()));
+				admChannelAccountVO.setUpdateDate(dmt.format(new Date()));
+				
+				admChannelAccountService.InsertData(admChannelAccountVO);
 			}
 			
 		}
@@ -742,6 +760,10 @@ public class ApplyAction extends BaseSSLAction{
 	public void setPfdUserAdAccountRefService(
 			IPfdUserAdAccountRefService pfdUserAdAccountRefService) {
 		this.pfdUserAdAccountRefService = pfdUserAdAccountRefService;
+	}
+	public void setAdmChannelAccountService(
+			IAdmChannelAccountService admChannelAccountService) {
+		this.admChannelAccountService = admChannelAccountService;
 	}
 
 }
