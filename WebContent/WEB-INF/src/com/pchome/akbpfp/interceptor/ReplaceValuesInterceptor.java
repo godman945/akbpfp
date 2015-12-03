@@ -26,8 +26,8 @@ public class ReplaceValuesInterceptor  extends AbstractInterceptor {
 				//value = value.replaceAll("&", "&amp;");
 				value = value.replaceAll("<", "&lt;");
 				value = value.replaceAll(">", "&gt;");
-				value = value.replaceAll("'", "&apos;");
-				value = value.replaceAll("\"", "&quot;");
+				//value = value.replaceAll("'", "&apos;");
+				//value = value.replaceAll("\"", "&quot;");
 				valueArrayList.add(value);
 			}
 			
