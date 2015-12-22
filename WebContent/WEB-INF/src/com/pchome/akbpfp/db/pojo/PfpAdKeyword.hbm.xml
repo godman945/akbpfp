@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2015/11/27 ?W?? 10:36:37 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2015/12/22 ?W?? 10:00:32 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdKeyword" table="pfp_ad_keyword" catalog="akb">
         <id name="adKeywordSeq" type="string">
@@ -20,7 +20,19 @@
         </property>
         <property name="adKeywordSearchPrice" type="float">
             <column name="ad_keyword_search_price" precision="10" not-null="true">
-                <comment>&#167;&#228;&#170;F&#166;&#232;&#195;&#246;&#193;&#228;&#166;r&#188;s&#167;i&#165;X&#187;&#249;</comment>
+                <comment>&#167;&#228;&#170;F&#166;&#232;&#195;&#246;&#193;&#228;&#166;r&#188;s&#167;i&#165;X&#187;&#249;(&#188;s&#170;x&#164;&#241;&#185;&#239;)</comment>
+            </column>
+        </property>
+        <property name="adKeywordSearchPhrasePrice" type="float">
+            <column name="ad_keyword_search_phrase_price" precision="10" not-null="true">
+                <comment>
+                &#167;&#228;&#170;F&#166;&#232;&#195;&#246;&#193;&#228;&#166;r&#188;s&#167;i&#165;X&#187;&#249;(&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;)</comment>
+            </column>
+        </property>
+        <property name="adKeywordSearchPrecisionPrice" type="float">
+            <column name="ad_keyword_search_precision_price" precision="10" not-null="true">
+                <comment>
+                &#167;&#228;&#170;F&#166;&#232;&#195;&#246;&#193;&#228;&#166;r&#188;s&#167;i&#165;X&#187;&#249;(&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;)</comment>
             </column>
         </property>
         <property name="adKeywordChannelPrice" type="float">
@@ -30,7 +42,32 @@
         </property>
         <property name="adKeywordOrder" type="float">
             <column name="ad_keyword_order" precision="10" not-null="true">
-                <comment>&#195;&#246;&#193;&#228;&#166;r&#177;&#198;&#166;W</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#195;&#246;&#193;&#228;&#166;r&#177;&#198;&#166;W</comment>
+            </column>
+        </property>
+        <property name="adKeywordPhraseOrder" type="float">
+            <column name="ad_keyword_phrase_order" precision="10" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#195;&#246;&#193;&#228;&#166;r&#177;&#198;&#166;W</comment>
+            </column>
+        </property>
+        <property name="adKeywordPrecisionOrder" type="float">
+            <column name="ad_keyword_precision_order" precision="10" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#195;&#246;&#193;&#228;&#166;r&#177;&#198;&#166;W</comment>
+            </column>
+        </property>
+        <property name="adKeywordOpen" type="int">
+            <column name="ad_keyword_open" not-null="true">
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#182;}&#177;&#210;&#170;&#172;&#186;A(0:&#195;&#246;&#179;&#172;&#161;A1:&#182;}&#177;&#210;)</comment>
+            </column>
+        </property>
+        <property name="adKeywordPhraseOpen" type="int">
+            <column name="ad_keyword_phrase_open" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#182;}&#177;&#210;&#170;&#172;&#186;A(0:&#195;&#246;&#179;&#172;&#161;A1:&#182;}&#177;&#210;)</comment>
+            </column>
+        </property>
+        <property name="adKeywordPrecisionOpen" type="int">
+            <column name="ad_keyword_precision_open" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#182;}&#177;&#210;&#170;&#172;&#186;A(0:&#195;&#246;&#179;&#172;&#161;A1:&#182;}&#177;&#210;)</comment>
             </column>
         </property>
         <property name="adKeywordStatus" type="int">

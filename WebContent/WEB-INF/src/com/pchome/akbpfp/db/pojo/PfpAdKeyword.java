@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2015/11/27 �W�� 10:36:36 by Hibernate Tools 3.4.0.CR1
+// Generated 2015/12/22 �W�� 10:00:32 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,8 +27,15 @@ public class PfpAdKeyword implements java.io.Serializable {
 	private PfpAdGroup pfpAdGroup;
 	private String adKeyword;
 	private float adKeywordSearchPrice;
+	private float adKeywordSearchPhrasePrice;
+	private float adKeywordSearchPrecisionPrice;
 	private float adKeywordChannelPrice;
 	private float adKeywordOrder;
+	private float adKeywordPhraseOrder;
+	private float adKeywordPrecisionOrder;
+	private int adKeywordOpen;
+	private int adKeywordPhraseOpen;
+	private int adKeywordPrecisionOpen;
 	private int adKeywordStatus;
 	private Date adKeywordCreateTime;
 	private Date adKeywordUpdateTime;
@@ -41,15 +48,26 @@ public class PfpAdKeyword implements java.io.Serializable {
 
 	public PfpAdKeyword(String adKeywordSeq, PfpAdGroup pfpAdGroup,
 			String adKeyword, float adKeywordSearchPrice,
-			float adKeywordChannelPrice, float adKeywordOrder,
+			float adKeywordSearchPhrasePrice,
+			float adKeywordSearchPrecisionPrice, float adKeywordChannelPrice,
+			float adKeywordOrder, float adKeywordPhraseOrder,
+			float adKeywordPrecisionOrder, int adKeywordOpen,
+			int adKeywordPhraseOpen, int adKeywordPrecisionOpen,
 			int adKeywordStatus, Date adKeywordCreateTime,
 			Date adKeywordUpdateTime) {
 		this.adKeywordSeq = adKeywordSeq;
 		this.pfpAdGroup = pfpAdGroup;
 		this.adKeyword = adKeyword;
 		this.adKeywordSearchPrice = adKeywordSearchPrice;
+		this.adKeywordSearchPhrasePrice = adKeywordSearchPhrasePrice;
+		this.adKeywordSearchPrecisionPrice = adKeywordSearchPrecisionPrice;
 		this.adKeywordChannelPrice = adKeywordChannelPrice;
 		this.adKeywordOrder = adKeywordOrder;
+		this.adKeywordPhraseOrder = adKeywordPhraseOrder;
+		this.adKeywordPrecisionOrder = adKeywordPrecisionOrder;
+		this.adKeywordOpen = adKeywordOpen;
+		this.adKeywordPhraseOpen = adKeywordPhraseOpen;
+		this.adKeywordPrecisionOpen = adKeywordPrecisionOpen;
 		this.adKeywordStatus = adKeywordStatus;
 		this.adKeywordCreateTime = adKeywordCreateTime;
 		this.adKeywordUpdateTime = adKeywordUpdateTime;
@@ -57,7 +75,11 @@ public class PfpAdKeyword implements java.io.Serializable {
 
 	public PfpAdKeyword(String adKeywordSeq, PfpAdGroup pfpAdGroup,
 			String adKeyword, float adKeywordSearchPrice,
-			float adKeywordChannelPrice, float adKeywordOrder,
+			float adKeywordSearchPhrasePrice,
+			float adKeywordSearchPrecisionPrice, float adKeywordChannelPrice,
+			float adKeywordOrder, float adKeywordPhraseOrder,
+			float adKeywordPrecisionOrder, int adKeywordOpen,
+			int adKeywordPhraseOpen, int adKeywordPrecisionOpen,
 			int adKeywordStatus, Date adKeywordCreateTime,
 			Date adKeywordUpdateTime,
 			Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks, Set<PfpAdRank> pfpAdRanks) {
@@ -65,8 +87,15 @@ public class PfpAdKeyword implements java.io.Serializable {
 		this.pfpAdGroup = pfpAdGroup;
 		this.adKeyword = adKeyword;
 		this.adKeywordSearchPrice = adKeywordSearchPrice;
+		this.adKeywordSearchPhrasePrice = adKeywordSearchPhrasePrice;
+		this.adKeywordSearchPrecisionPrice = adKeywordSearchPrecisionPrice;
 		this.adKeywordChannelPrice = adKeywordChannelPrice;
 		this.adKeywordOrder = adKeywordOrder;
+		this.adKeywordPhraseOrder = adKeywordPhraseOrder;
+		this.adKeywordPrecisionOrder = adKeywordPrecisionOrder;
+		this.adKeywordOpen = adKeywordOpen;
+		this.adKeywordPhraseOpen = adKeywordPhraseOpen;
+		this.adKeywordPrecisionOpen = adKeywordPrecisionOpen;
 		this.adKeywordStatus = adKeywordStatus;
 		this.adKeywordCreateTime = adKeywordCreateTime;
 		this.adKeywordUpdateTime = adKeywordUpdateTime;
@@ -112,6 +141,25 @@ public class PfpAdKeyword implements java.io.Serializable {
 		this.adKeywordSearchPrice = adKeywordSearchPrice;
 	}
 
+	@Column(name = "ad_keyword_search_phrase_price", nullable = false, precision = 10)
+	public float getAdKeywordSearchPhrasePrice() {
+		return this.adKeywordSearchPhrasePrice;
+	}
+
+	public void setAdKeywordSearchPhrasePrice(float adKeywordSearchPhrasePrice) {
+		this.adKeywordSearchPhrasePrice = adKeywordSearchPhrasePrice;
+	}
+
+	@Column(name = "ad_keyword_search_precision_price", nullable = false, precision = 10)
+	public float getAdKeywordSearchPrecisionPrice() {
+		return this.adKeywordSearchPrecisionPrice;
+	}
+
+	public void setAdKeywordSearchPrecisionPrice(
+			float adKeywordSearchPrecisionPrice) {
+		this.adKeywordSearchPrecisionPrice = adKeywordSearchPrecisionPrice;
+	}
+
 	@Column(name = "ad_keyword_channel_price", nullable = false, precision = 10)
 	public float getAdKeywordChannelPrice() {
 		return this.adKeywordChannelPrice;
@@ -128,6 +176,51 @@ public class PfpAdKeyword implements java.io.Serializable {
 
 	public void setAdKeywordOrder(float adKeywordOrder) {
 		this.adKeywordOrder = adKeywordOrder;
+	}
+
+	@Column(name = "ad_keyword_phrase_order", nullable = false, precision = 10)
+	public float getAdKeywordPhraseOrder() {
+		return this.adKeywordPhraseOrder;
+	}
+
+	public void setAdKeywordPhraseOrder(float adKeywordPhraseOrder) {
+		this.adKeywordPhraseOrder = adKeywordPhraseOrder;
+	}
+
+	@Column(name = "ad_keyword_precision_order", nullable = false, precision = 10)
+	public float getAdKeywordPrecisionOrder() {
+		return this.adKeywordPrecisionOrder;
+	}
+
+	public void setAdKeywordPrecisionOrder(float adKeywordPrecisionOrder) {
+		this.adKeywordPrecisionOrder = adKeywordPrecisionOrder;
+	}
+
+	@Column(name = "ad_keyword_open", nullable = false)
+	public int getAdKeywordOpen() {
+		return this.adKeywordOpen;
+	}
+
+	public void setAdKeywordOpen(int adKeywordOpen) {
+		this.adKeywordOpen = adKeywordOpen;
+	}
+
+	@Column(name = "ad_keyword_phrase_open", nullable = false)
+	public int getAdKeywordPhraseOpen() {
+		return this.adKeywordPhraseOpen;
+	}
+
+	public void setAdKeywordPhraseOpen(int adKeywordPhraseOpen) {
+		this.adKeywordPhraseOpen = adKeywordPhraseOpen;
+	}
+
+	@Column(name = "ad_keyword_precision_open", nullable = false)
+	public int getAdKeywordPrecisionOpen() {
+		return this.adKeywordPrecisionOpen;
+	}
+
+	public void setAdKeywordPrecisionOpen(int adKeywordPrecisionOpen) {
+		this.adKeywordPrecisionOpen = adKeywordPrecisionOpen;
 	}
 
 	@Column(name = "ad_keyword_status", nullable = false)
