@@ -109,6 +109,16 @@
 	    	<result type="tiles" name="success">stop.ad.keyword.status.msg</result>
 		</action>
 		
+		<action name="adKeywordChangeTypeMsg" class="AdKeywordMsgAction" method="execute">
+			<interceptor-ref name="loginCheckStack" />
+	    	<result type="tiles" name="success">ad.keyword.change.type.msg</result>
+		</action>
+		
+		<action name="adKeywordCloseTypeMsg" class="AdKeywordMsgAction" method="execute">
+			<interceptor-ref name="loginCheckStack" />
+	    	<result type="tiles" name="success">ad.keyword.close.type.msg</result>
+		</action>
+		
 		<action name="adAdCheckboxMsg" class="AdAdMsgAction" method="execute">
 			<interceptor-ref name="loginCheckStack" />
 	    	<result type="tiles" name="success">ad.ad.checkbox.msg</result>

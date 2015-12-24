@@ -725,12 +725,30 @@ public class PfpAdKeywordDAO extends BaseDAO<PfpAdKeyword,String> implements IPf
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 		hql.append("select adKeywordSeq,");
+		//廣泛比對
+		hql.append(" COALESCE(sum(adKeywordPv),0), ");
+		hql.append(" COALESCE(sum(adKeywordClk),0), ");
+		hql.append(" COALESCE(sum(adKeywordClkPrice),0), ");
+		hql.append(" COALESCE(sum(adKeywordInvalidClk),0), ");
+		hql.append(" COALESCE(sum(adKeywordInvalidClkPrice),0), ");
+		hql.append(" COALESCE(adKeywordType,0), ");
+		
+		//詞組比對(欄位未開，先用廣泛比對數據，之後要改欄位名稱)
+		hql.append(" COALESCE(sum(adKeywordPv),0), ");
+		hql.append(" COALESCE(sum(adKeywordClk),0), ");
+		hql.append(" COALESCE(sum(adKeywordClkPrice),0), ");
+		hql.append(" COALESCE(sum(adKeywordInvalidClk),0), ");
+		hql.append(" COALESCE(sum(adKeywordInvalidClkPrice),0), ");
+		hql.append(" COALESCE(adKeywordType,0), ");
+		
+		//精準比對(欄位未開，先用廣泛比對數據，之後要改欄位名稱)
 		hql.append(" COALESCE(sum(adKeywordPv),0), ");
 		hql.append(" COALESCE(sum(adKeywordClk),0), ");
 		hql.append(" COALESCE(sum(adKeywordClkPrice),0), ");
 		hql.append(" COALESCE(sum(adKeywordInvalidClk),0), ");
 		hql.append(" COALESCE(sum(adKeywordInvalidClkPrice),0), ");
 		hql.append(" COALESCE(adKeywordType,0) ");
+		
 		hql.append(" from PfpAdKeywordReport where 1=1 ");
 
 		if (StringUtils.isNotEmpty(customerInfoId)) {

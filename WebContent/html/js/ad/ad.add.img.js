@@ -79,6 +79,11 @@ $(document).ready(function(){
 	$("#adLinkURL").blur(function() {
 		chkUrl($("#adLinkURL"), $("#chkLinkURL"));
 	});
+	
+	//清除關鍵字比對方式提示
+	$("#adKeywordOpen, #adKeywordPhraseOpen, #adKeywordPrecisionOpen").click(function(){
+		$('#chkAdKeywordOpen').text("");
+	});
 });
 
 
@@ -385,6 +390,15 @@ function multipartImgUuploadSubmit(){
 			$("#adKeyword").focus();
 			return false;
 		}
+		
+		//檢查關建字比對方式是否有被勾選
+		if(keyWordArray.length > 0){
+			if(!$("#adKeywordOpen").attr('checked') && !$("#adKeywordPhraseOpen").attr('checked') && !$("#adKeywordPrecisionOpen").attr('checked')){
+				$('#chkAdKeywordOpen').text("請勾選關鍵字比對方式");
+				location.href="#chkAdKeywordOpen";
+				return false;
+			}
+		}
 	}
 	
 	var excludeKeywordULArray = [];
@@ -437,7 +451,8 @@ function multipartImgUuploadSubmit(){
 		"imgMD5Map" : imgMD5Map
 	}
 	console.log(seqOkArray);
-	console.log(imgNameMap);
+	console.log(imgNameMap);	
+	
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
 		var map = JSON.stringify(map);
@@ -451,11 +466,18 @@ function multipartImgUuploadSubmit(){
 				"adGroupSeq": $("#adGroupSeq").val(),
 				"adLinkURL" : $("#adLinkURL").val(),
 				"keywords" : JSON.stringify(keyWordArray),
-				"excludeKeywords" : JSON.stringify(excludeKeywordULArray)
+				"excludeKeywords" : JSON.stringify(excludeKeywordULArray),
+				"adKeywordOpen" : $("#adKeywordOpen").attr("checked"),
+				"adKeywordPhraseOpen" : $("#adKeywordPhraseOpen").attr("checked"),
+				"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked")
 			},
 			success : function(respone) {
 				$('body').unblock();
-				$(location).attr( 'href' , 'adAddFinish.html?adGroupSeq='+$("#adGroupSeq").val());
+				if(respone == "success"){
+					$(location).attr( 'href' , 'adAddFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
+				} else {
+					alert(respone);
+				}
 			}
 		});
 	}

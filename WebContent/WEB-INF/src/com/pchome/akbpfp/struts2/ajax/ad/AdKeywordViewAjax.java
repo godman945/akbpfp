@@ -1,9 +1,7 @@
 package com.pchome.akbpfp.struts2.ajax.ad;
 
-import java.util.Date;
 import java.util.List;
 
-import com.pchome.akbpfp.db.dao.ad.PfpAdKeywordDAO;
 import com.pchome.akbpfp.db.service.ad.IPfpAdKeywordService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdKeywordViewVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -29,13 +27,39 @@ public class AdKeywordViewAjax extends BaseCookieAction{
 	private int pageCount = 0;    				// 初始化共幾頁
 	private long totalCount = 0;   				// 初始化共幾筆
 	
-	private int totalSize = 0;						
+	private int totalSize = 0;
+	
+	//廣泛比對
 	private int totalPv = 0;						
 	private int totalClk = 0;						
 	private float totalClkRate = 0;
 	private float totalAvgCost = 0;
 	private int totalCost = 0;
 	private int totalInvalidClk = 0;
+	
+	//詞組比對
+	private int totalPhrasePv = 0;						
+	private int totalPhraseClk = 0;						
+	private float totalPhraseClkRate = 0;
+	private float totalPhraseAvgCost = 0;
+	private int totalPhraseCost = 0;
+	private int totalPhraseInvalidClk = 0;
+	
+	//精準比對
+	private int totalPrecisionPv = 0;						
+	private int totalPrecisionClk = 0;						
+	private float totalPrecisionClkRate = 0;
+	private float totalPrecisionAvgCost = 0;
+	private int totalPrecisionCost = 0;
+	private int totalPrecisionInvalidClk = 0;
+	
+	//總計
+	private int totalPvSum = 0;						
+	private int totalClkSum = 0;						
+	private float totalClkRateSum = 0;
+	private float totalAvgCostSum = 0;
+	private int totalCostSum = 0;
+	private int totalInvalidClkSum = 0;
 	
 	public String execute() throws Exception{
 		return SUCCESS;
@@ -60,18 +84,59 @@ public class AdKeywordViewAjax extends BaseCookieAction{
 			if(adKeywordViewVO != null && adKeywordViewVO.size() > 0){
 				totalSize = adKeywordViewVO.size();		
 				for(PfpAdKeywordViewVO vo:adKeywordViewVO){
+					//廣泛比對
 					totalPv += vo.getAdKeywordPv();
 					totalClk += vo.getAdKeywordClk();		
 					totalCost += vo.getAdKeywordClkPrice();
+					
+					//詞組比對
+					totalPhrasePv += vo.getAdKeywordPhrasePv();
+					totalPhraseClk += vo.getAdKeywordPhraseClk();		
+					totalPhraseCost += vo.getAdKeywordPhraseClkPrice();
+					
+					//精準比對
+					totalPrecisionPv += vo.getAdKeywordPrecisionPv();
+					totalPrecisionClk += vo.getAdKeywordPrecisionClk();		
+					totalPrecisionCost += vo.getAdKeywordPrecisionClkPrice();
+					
+					//總計
+					totalPvSum += vo.getAdKeywordPvSum();
+					totalClkSum += vo.getAdKeywordClkSum();		
+					totalCostSum += vo.getAdKeywordClkPriceSum();
 				}
 				
+				//廣泛比對
 				if(totalClk > 0 || totalPv > 0){
 					totalClkRate = (float)totalClk / (float)totalPv*100;
 				}
-				
 				if(totalCost > 0 || totalClk > 0){
 					totalAvgCost = (float)totalCost / (float)totalClk;	
 				}
+				
+				//詞組比對
+				if(totalPhraseClk > 0 || totalPhrasePv > 0){
+					totalPhraseClkRate = (float)totalPhraseClk / (float)totalPhrasePv*100;
+				}
+				if(totalPhraseCost > 0 || totalPhraseClk > 0){
+					totalPhraseAvgCost = (float)totalPhraseCost / (float)totalPhraseClk;	
+				}
+				
+				//精準比對
+				if(totalPrecisionClk > 0 || totalPrecisionPv > 0){
+					totalPrecisionClkRate = (float)totalPrecisionClk / (float)totalPrecisionPv*100;
+				}
+				if(totalPrecisionCost > 0 || totalPrecisionClk > 0){
+					totalPrecisionAvgCost = (float)totalPrecisionCost / (float)totalPrecisionClk;	
+				}
+				
+				//總計
+				if(totalClkSum > 0 || totalPvSum > 0){
+					totalClkRateSum = (float)totalClkSum / (float)totalPvSum*100;
+				}
+				if(totalCostSum > 0 || totalClkSum > 0){
+					totalAvgCostSum = (float)totalCostSum / (float)totalClkSum;	
+				}
+				
 			}
 		}
 		
@@ -160,6 +225,78 @@ public class AdKeywordViewAjax extends BaseCookieAction{
 
 	public int getTotalInvalidClk() {
 		return totalInvalidClk;
+	}
+
+	public int getTotalPhrasePv() {
+		return totalPhrasePv;
+	}
+
+	public int getTotalPhraseClk() {
+		return totalPhraseClk;
+	}
+
+	public float getTotalPhraseClkRate() {
+		return totalPhraseClkRate;
+	}
+
+	public float getTotalPhraseAvgCost() {
+		return totalPhraseAvgCost;
+	}
+
+	public int getTotalPhraseCost() {
+		return totalPhraseCost;
+	}
+
+	public int getTotalPhraseInvalidClk() {
+		return totalPhraseInvalidClk;
+	}
+
+	public int getTotalPrecisionPv() {
+		return totalPrecisionPv;
+	}
+
+	public int getTotalPrecisionClk() {
+		return totalPrecisionClk;
+	}
+
+	public float getTotalPrecisionClkRate() {
+		return totalPrecisionClkRate;
+	}
+
+	public float getTotalPrecisionAvgCost() {
+		return totalPrecisionAvgCost;
+	}
+
+	public int getTotalPrecisionCost() {
+		return totalPrecisionCost;
+	}
+
+	public int getTotalPrecisionInvalidClk() {
+		return totalPrecisionInvalidClk;
+	}
+
+	public int getTotalPvSum() {
+		return totalPvSum;
+	}
+
+	public int getTotalClkSum() {
+		return totalClkSum;
+	}
+
+	public float getTotalClkRateSum() {
+		return totalClkRateSum;
+	}
+
+	public float getTotalAvgCostSum() {
+		return totalAvgCostSum;
+	}
+
+	public int getTotalCostSum() {
+		return totalCostSum;
+	}
+
+	public int getTotalInvalidClkSum() {
+		return totalInvalidClkSum;
 	}
 	
 }

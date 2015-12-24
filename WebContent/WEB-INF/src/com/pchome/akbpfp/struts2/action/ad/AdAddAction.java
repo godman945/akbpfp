@@ -27,6 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
+
+
 import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.api.ControlPriceAPI;
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
@@ -133,7 +136,11 @@ public class AdAddAction extends BaseCookieAction{
 	
 	private String adType;			//廣告類型
 	private String adDevice;		//廣告播放裝置
-
+	
+	private String adKeywordOpen;			//廣泛比對
+	private String adKeywordPhraseOpen;		//詞組比對
+	private String adKeywordPrecisionOpen;	//精準比對
+	
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
 		String referer = request.getHeader("Referer");
@@ -164,7 +171,7 @@ public class AdAddAction extends BaseCookieAction{
 		if(!customerInfoId.equals(adCustomerInfoId)) {
 			return "notOwner";
 		}
-
+			
 		// 取出分類所屬關鍵字
 		pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
 		// 取出分類所屬排除關鍵字
@@ -201,7 +208,7 @@ public class AdAddAction extends BaseCookieAction{
 
 		// 新增廣告
 		addAd(pfpAdGroup);
-
+		
 		String imgDetail = "";
 		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
 		for(int i = 0; i < adDetailID.length; i++) {
@@ -370,6 +377,11 @@ public class AdAddAction extends BaseCookieAction{
 				message = "請選擇廣告分類！";
 			}
 
+			if(keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
+					&& StringUtils.isBlank(adKeywordPrecisionOpen)){
+				message = "請選擇關鍵字比對方式！";
+			}
+			
 			for(int i = 0; i < adDetailID.length; i++) {
 				if (StringUtils.isEmpty(adDetailContent[i])) {
 					if(i == 0 && adStyle.equals("TMG")) {
@@ -463,9 +475,34 @@ public class AdAddAction extends BaseCookieAction{
 			pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
 			pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
 			pfpAdKeyword.setAdKeyword(keyword);
-			pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+			//廣泛比對設定
+			if(StringUtils.isNotBlank(adKeywordOpen)){
+				pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+				pfpAdKeyword.setAdKeywordOpen(1);
+			} else {
+				pfpAdKeyword.setAdKeywordSearchPrice(0);
+				pfpAdKeyword.setAdKeywordOpen(0);
+			}
+			//詞組比對設定
+			if(StringUtils.isNotBlank(adKeywordPhraseOpen)){
+				pfpAdKeyword.setAdKeywordSearchPhrasePrice(pfpAdGroup.getAdGroupSearchPrice());
+				pfpAdKeyword.setAdKeywordPhraseOpen(1);
+			} else {
+				pfpAdKeyword.setAdKeywordSearchPhrasePrice(0);
+				pfpAdKeyword.setAdKeywordPhraseOpen(0);
+			}
+			//精準比對設定
+			if(StringUtils.isNotBlank(adKeywordPrecisionOpen)){
+				pfpAdKeyword.setAdKeywordSearchPrecisionPrice(pfpAdGroup.getAdGroupSearchPrice());
+				pfpAdKeyword.setAdKeywordPrecisionOpen(1);
+			} else {
+				pfpAdKeyword.setAdKeywordSearchPrecisionPrice(0);
+				pfpAdKeyword.setAdKeywordPrecisionOpen(0);
+			}
 			pfpAdKeyword.setAdKeywordChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
 			pfpAdKeyword.setAdKeywordOrder(0);
+			pfpAdKeyword.setAdKeywordPhraseOrder(0);
+			pfpAdKeyword.setAdKeywordPrecisionOrder(0);
 			pfpAdKeyword.setAdKeywordStatus(EnumStatus.Open.getStatusId());
 			pfpAdKeyword.setAdKeywordCreateTime(new Date());
 			pfpAdKeyword.setAdKeywordUpdateTime(new Date());
@@ -626,8 +663,8 @@ public class AdAddAction extends BaseCookieAction{
 	    		    }
 	    		}
 	    	}
-	    }
-
+	    }	
+	    
 	    // 取出分類所屬關鍵字
 	    pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
 
@@ -799,7 +836,13 @@ public class AdAddAction extends BaseCookieAction{
         		}
     	    }
     	    keywords = keyWordList.toArray(new String[keyWordList.size()]);
-
+    	    
+    	    if (keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
+					&& StringUtils.isBlank(adKeywordPrecisionOpen)) {
+    		    result = "請選擇關鍵字比對方式！";
+    		    return SUCCESS;
+    		}
+    	    
     	    //新增關鍵字
     	    addKeywords(pfpAdGroup);
     	}
@@ -1271,6 +1314,30 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setAdDevice(String adDevice) {
 		this.adDevice = adDevice;
+	}
+
+	public String getAdKeywordOpen() {
+		return adKeywordOpen;
+	}
+
+	public void setAdKeywordOpen(String adKeywordOpen) {
+		this.adKeywordOpen = adKeywordOpen;
+	}
+
+	public String getAdKeywordPhraseOpen() {
+		return adKeywordPhraseOpen;
+	}
+
+	public void setAdKeywordPhraseOpen(String adKeywordPhraseOpen) {
+		this.adKeywordPhraseOpen = adKeywordPhraseOpen;
+	}
+
+	public String getAdKeywordPrecisionOpen() {
+		return adKeywordPrecisionOpen;
+	}
+
+	public void setAdKeywordPrecisionOpen(String adKeywordPrecisionOpen) {
+		this.adKeywordPrecisionOpen = adKeywordPrecisionOpen;
 	}
 
 }

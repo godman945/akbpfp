@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -33,6 +35,7 @@ import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdDetail;
+import com.pchome.enumerate.ad.EnumAdKeywordType;
 import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -102,6 +105,10 @@ public class AdEditAction extends BaseCookieAction{
 	
 	private int adGroupStatus;
 	private int adActionStatus;
+	
+	private String adKeywordOpen;			//廣泛比對
+	private String adKeywordPhraseOpen;		//詞組比對
+	private String adKeywordPrecisionOpen;	//精準比對
 	
 	public String AdAdEdit() throws Exception {
 		log.info("AdAdEdit => adSeq = " + adSeq);
@@ -187,8 +194,8 @@ public class AdEditAction extends BaseCookieAction{
 			adDetailSeq[0] = "";
 			adDetailContent[0] = "img/public/na.gif\" style=\"display:none";
 			imgFile = "";
-		}
-
+		}	
+		
 		// 取出分類所屬關鍵字
 		pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
 		// 取出分類所屬排除關鍵字
@@ -464,6 +471,8 @@ public class AdEditAction extends BaseCookieAction{
             return SUCCESS;
         }
 		
+        
+        
         /*if(StringUtils.isBlank(imgTitle)){
             result = "請填寫圖片名稱！";
             return SUCCESS;
@@ -477,6 +486,62 @@ public class AdEditAction extends BaseCookieAction{
 		adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();
 
 		PfpAdGroup pfpAdGroup = pfpAd.getPfpAdGroup();
+		
+		//建立關鍵字
+    	List<String> keyWordList = new ArrayList<String>();
+    	if (!keywords[0].equals("[]")) {
+    	    String data = "";
+    	    for (char a : keywords[0].toCharArray()) {
+        		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+        		    continue;
+        		}
+        		if (String.valueOf(a).equals("]")) {
+        		    keyWordList.add(data);
+        		} else {
+        		    if (String.valueOf(a).equals(",")) {
+            			keyWordList.add(data);
+            			data = "";
+        		    } else {
+        		        data = data + String.valueOf(a);
+        		    }
+        		}
+    	    }
+    	    keywords = keyWordList.toArray(new String[keyWordList.size()]);
+
+    	    if (keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
+					&& StringUtils.isBlank(adKeywordPrecisionOpen)) {
+    		    result = "請選擇關鍵字比對方式！";
+    		    return SUCCESS;
+    		}
+    	    
+    	    //新增關鍵字
+    	    addKeywords(pfpAdGroup);
+    	}
+
+    	//建立排除關鍵字
+    	List<String> excludeKeyWordList = new ArrayList<String>();
+    	if (!excludeKeywords[0].equals("[]")) {
+    	    String data = "";
+    	    for (char a : excludeKeywords[0].toCharArray()) {
+        		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+        		    continue;
+        		}
+        		if (String.valueOf(a).equals("]")) {
+        		    excludeKeyWordList.add(data);
+        		} else {
+        		    if (String.valueOf(a).equals(",")) {
+            			excludeKeyWordList.add(data);
+            			data = "";
+        		    } else {
+        		        data = data + String.valueOf(a);
+        		    }
+        		}
+    	    }
+    	    excludeKeywords = excludeKeyWordList.toArray(new String[excludeKeyWordList.size()]);
+
+    	    //新增排除關鍵字
+    	    addExcludeKeywords(pfpAdGroup);
+    	}
 		
 		// 修改廣告
 		editAd();
@@ -508,56 +573,6 @@ public class AdEditAction extends BaseCookieAction{
 			pfpAdDetail.setAdDetailContent(imgTitle);
 			pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
 		}*/
-		
-		//建立關鍵字
-    	List<String> keyWordList = new ArrayList<String>();
-    	if (!keywords[0].equals("[]")) {
-    	    String data = "";
-    	    for (char a : keywords[0].toCharArray()) {
-        		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
-        		    continue;
-        		}
-        		if (String.valueOf(a).equals("]")) {
-        		    keyWordList.add(data);
-        		} else {
-        		    if (String.valueOf(a).equals(",")) {
-            			keyWordList.add(data);
-            			data = "";
-        		    } else {
-        		        data = data + String.valueOf(a);
-        		    }
-        		}
-    	    }
-    	    keywords = keyWordList.toArray(new String[keyWordList.size()]);
-
-    	    //新增關鍵字
-    	    addKeywords(pfpAdGroup);
-    	}
-
-    	//建立排除關鍵字
-    	List<String> excludeKeyWordList = new ArrayList<String>();
-    	if (!excludeKeywords[0].equals("[]")) {
-    	    String data = "";
-    	    for (char a : excludeKeywords[0].toCharArray()) {
-        		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
-        		    continue;
-        		}
-        		if (String.valueOf(a).equals("]")) {
-        		    excludeKeyWordList.add(data);
-        		} else {
-        		    if (String.valueOf(a).equals(",")) {
-            			excludeKeyWordList.add(data);
-            			data = "";
-        		    } else {
-        		        data = data + String.valueOf(a);
-        		    }
-        		}
-    	    }
-    	    excludeKeywords = excludeKeyWordList.toArray(new String[excludeKeyWordList.size()]);
-
-    	    //新增排除關鍵字
-    	    addExcludeKeywords(pfpAdGroup);
-    	}
 		
     	// 開啟廣告分類
 		if(pfpAdGroup.getAdGroupStatus() != 4) {
@@ -604,6 +619,11 @@ public class AdEditAction extends BaseCookieAction{
 				message = "請選擇廣告分類！";
 			}
 
+			if(keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
+					&& StringUtils.isBlank(adKeywordPrecisionOpen)){
+				message = "請選擇關鍵字比對方式！";
+			}
+			
 			for(int i = 0; i < adDetailID.length; i++) {
 				if (StringUtils.isEmpty(adDetailContent[i])) {
 					if(i == 0 && adStyle.equals("TMG")) {
@@ -685,9 +705,34 @@ public class AdEditAction extends BaseCookieAction{
 						pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
 						pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
 						pfpAdKeyword.setAdKeyword(keywords[i]);
-						pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+						//廣泛比對設定
+						if(StringUtils.isNotBlank(adKeywordOpen)){
+							pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+							pfpAdKeyword.setAdKeywordOpen(1);
+						} else {
+							pfpAdKeyword.setAdKeywordSearchPrice(0);
+							pfpAdKeyword.setAdKeywordOpen(0);
+						}
+						//詞組比對設定
+						if(StringUtils.isNotBlank(adKeywordPhraseOpen)){
+							pfpAdKeyword.setAdKeywordSearchPhrasePrice(pfpAdGroup.getAdGroupSearchPrice());
+							pfpAdKeyword.setAdKeywordPhraseOpen(1);
+						} else {
+							pfpAdKeyword.setAdKeywordSearchPhrasePrice(0);
+							pfpAdKeyword.setAdKeywordPhraseOpen(0);
+						}
+						//精準比對設定
+						if(StringUtils.isNotBlank(adKeywordPrecisionOpen)){
+							pfpAdKeyword.setAdKeywordSearchPrecisionPrice(pfpAdGroup.getAdGroupSearchPrice());
+							pfpAdKeyword.setAdKeywordPrecisionOpen(1);
+						} else {
+							pfpAdKeyword.setAdKeywordSearchPrecisionPrice(0);
+							pfpAdKeyword.setAdKeywordPrecisionOpen(0);
+						}
 						pfpAdKeyword.setAdKeywordChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
 						pfpAdKeyword.setAdKeywordOrder(0);
+						pfpAdKeyword.setAdKeywordPhraseOrder(0);
+						pfpAdKeyword.setAdKeywordPrecisionOrder(0);
 						pfpAdKeyword.setAdKeywordStatus(EnumStatus.Open.getStatusId());
 						pfpAdKeyword.setAdKeywordCreateTime(new Date());
 						pfpAdKeyword.setAdKeywordUpdateTime(new Date());
@@ -1057,6 +1102,30 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setAdType(String adType) {
 		this.adType = adType;
+	}
+
+	public String getAdKeywordOpen() {
+		return adKeywordOpen;
+	}
+
+	public void setAdKeywordOpen(String adKeywordOpen) {
+		this.adKeywordOpen = adKeywordOpen;
+	}
+
+	public String getAdKeywordPhraseOpen() {
+		return adKeywordPhraseOpen;
+	}
+
+	public void setAdKeywordPhraseOpen(String adKeywordPhraseOpen) {
+		this.adKeywordPhraseOpen = adKeywordPhraseOpen;
+	}
+
+	public String getAdKeywordPrecisionOpen() {
+		return adKeywordPrecisionOpen;
+	}
+
+	public void setAdKeywordPrecisionOpen(String adKeywordPrecisionOpen) {
+		this.adKeywordPrecisionOpen = adKeywordPrecisionOpen;
 	}
 
 }

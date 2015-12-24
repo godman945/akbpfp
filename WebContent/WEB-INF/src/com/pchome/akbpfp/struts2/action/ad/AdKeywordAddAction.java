@@ -15,9 +15,7 @@ import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfpAdExcludeKeywordService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdKeywordService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
-import com.pchome.akbpfp.db.service.ad.PfpAdExcludeKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
-import com.pchome.akbpfp.db.service.ad.PfpAdKeywordService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -53,6 +51,10 @@ public class AdKeywordAddAction extends BaseCookieAction{
 	private IPfpAdExcludeKeywordService pfpAdExcludeKeywordService;
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private IPfpAdService pfpAdService;
+	
+	private String adKeywordOpen;			//廣泛比對
+	private String adKeywordPhraseOpen;		//詞組比對
+	private String adKeywordPrecisionOpen;	//精準比對
 
 	public String AdKeywordAdd() throws Exception {
 		
@@ -92,6 +94,12 @@ public class AdKeywordAddAction extends BaseCookieAction{
 			
 			// 新增關鍵字
 			if(keywords != null && StringUtils.isNotBlank(keywords.toString())){
+				if(keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
+						&& StringUtils.isBlank(adKeywordPrecisionOpen)){
+					message = "請選擇關鍵字比對方式！";
+					return INPUT;
+				}
+				
 				List<String> adKeywords = this.checkKeywords(adGroupSeq, keywords);
 				
 				if(!adKeywords.isEmpty()){
@@ -103,9 +111,34 @@ public class AdKeywordAddAction extends BaseCookieAction{
 						pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
 						pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
 						pfpAdKeyword.setAdKeyword(keyword);
-						pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+						//廣泛比對設定
+						if(StringUtils.isNotBlank(adKeywordOpen)){
+							pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+							pfpAdKeyword.setAdKeywordOpen(1);
+						} else {
+							pfpAdKeyword.setAdKeywordSearchPrice(0);
+							pfpAdKeyword.setAdKeywordOpen(0);
+						}
+						//詞組比對設定
+						if(StringUtils.isNotBlank(adKeywordPhraseOpen)){
+							pfpAdKeyword.setAdKeywordSearchPhrasePrice(pfpAdGroup.getAdGroupSearchPrice());
+							pfpAdKeyword.setAdKeywordPhraseOpen(1);
+						} else {
+							pfpAdKeyword.setAdKeywordSearchPhrasePrice(0);
+							pfpAdKeyword.setAdKeywordPhraseOpen(0);
+						}
+						//精準比對設定
+						if(StringUtils.isNotBlank(adKeywordPrecisionOpen)){
+							pfpAdKeyword.setAdKeywordSearchPrecisionPrice(pfpAdGroup.getAdGroupSearchPrice());
+							pfpAdKeyword.setAdKeywordPrecisionOpen(1);
+						} else {
+							pfpAdKeyword.setAdKeywordSearchPrecisionPrice(0);
+							pfpAdKeyword.setAdKeywordPrecisionOpen(0);
+						}
 						pfpAdKeyword.setAdKeywordChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
 						pfpAdKeyword.setAdKeywordOrder(0);
+						pfpAdKeyword.setAdKeywordPhraseOrder(0);
+						pfpAdKeyword.setAdKeywordPrecisionOrder(0);
 						pfpAdKeyword.setAdKeywordStatus(EnumStatus.Open.getStatusId());
 						pfpAdKeyword.setAdKeywordCreateTime(new Date());
 						pfpAdKeyword.setAdKeywordUpdateTime(new Date());
@@ -413,4 +446,29 @@ public class AdKeywordAddAction extends BaseCookieAction{
 	public void setPfpAdService(IPfpAdService pfpAdService) {
 		this.pfpAdService = pfpAdService;
 	}
+
+	public String getAdKeywordOpen() {
+		return adKeywordOpen;
+	}
+
+	public void setAdKeywordOpen(String adKeywordOpen) {
+		this.adKeywordOpen = adKeywordOpen;
+	}
+
+	public String getAdKeywordPhraseOpen() {
+		return adKeywordPhraseOpen;
+	}
+
+	public void setAdKeywordPhraseOpen(String adKeywordPhraseOpen) {
+		this.adKeywordPhraseOpen = adKeywordPhraseOpen;
+	}
+
+	public String getAdKeywordPrecisionOpen() {
+		return adKeywordPrecisionOpen;
+	}
+
+	public void setAdKeywordPrecisionOpen(String adKeywordPrecisionOpen) {
+		this.adKeywordPrecisionOpen = adKeywordPrecisionOpen;
+	}
+	
 }

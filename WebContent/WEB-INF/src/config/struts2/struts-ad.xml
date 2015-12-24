@@ -481,6 +481,11 @@
 			<interceptor-ref name="adPrivilegeInterceptor" />
 	    </action>
 	    
+	    <action name="updAdKeywordOpen" class="AdKeywordViewAction" method="updateAdKeywordOpenAjax">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    </action>
+	    
 		<action name="updAdExcludeKeywordStatus" class="AdExcludeKeywordAction" method="updateAdExcludeKeywordStatusAction">
 			<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="adPrivilegeInterceptor" />

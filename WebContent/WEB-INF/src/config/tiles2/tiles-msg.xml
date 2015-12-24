@@ -95,6 +95,16 @@
 		<put-attribute name="jsName" value="msg/ad.keyword.msg.js" />
         <put-attribute name="body" value="/ftl/msg/ad/ad.keyword.checkbox.msg.ftl" />
     </definition>
+    
+    <definition name="ad.keyword.change.type.msg" extends="msg.layout">
+		<put-attribute name="jsName" value="msg/ad.keyword.msg.js" />
+        <put-attribute name="body" value="/ftl/msg/ad/ad.keyword.change.type.msg.ftl" />
+    </definition>
+    
+    <definition name="ad.keyword.close.type.msg" extends="msg.layout">
+		<put-attribute name="jsName" value="msg/ad.keyword.msg.js" />
+        <put-attribute name="body" value="/ftl/msg/ad/ad.keyword.close.type.msg.ftl" />
+    </definition>
 
 	<definition name="stop.ad.keyword.status.msg" extends="msg.layout">
 		<put-attribute name="jsName" value="msg/ad.keyword.msg.js" />

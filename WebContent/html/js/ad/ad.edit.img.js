@@ -46,6 +46,11 @@ $(document).ready(function(){
 	$("#adLinkURL").blur(function() {
 		chkUrl($("#adLinkURL"), $("#chkLinkURL"));
 	});
+	
+	//清除關鍵字比對方式提示
+	$("#adKeywordOpen, #adKeywordPhraseOpen, #adKeywordPrecisionOpen").click(function(){
+		$('#chkAdKeywordOpen').text("");
+	});
 });
 
 //輸入字數檢查與提示
@@ -165,6 +170,15 @@ function multipartImgUuploadSubmit(){
 			$("#adKeyword").focus();
 			return false;
 		}
+		
+		//檢查關建字比對方式是否有被勾選
+		if(keyWordArray.length > 0){
+			if(!$("#adKeywordOpen").attr('checked') && !$("#adKeywordPhraseOpen").attr('checked') && !$("#adKeywordPrecisionOpen").attr('checked')){
+				$('#chkAdKeywordOpen').text("請勾選關鍵字比對方式");
+				location.href="#chkAdKeywordOpen";
+				return false;
+			}
+		}
 	}
 	
 	var excludeKeywordULArray = [];
@@ -197,11 +211,18 @@ function multipartImgUuploadSubmit(){
 				"adGroupSeq": $("#adGroupSeq").val(),
 				"adLinkURL" : $("#adLinkURL").val(),
 				"keywords" : JSON.stringify(keyWordArray),
-				"excludeKeywords" : JSON.stringify(excludeKeywordULArray)
+				"excludeKeywords" : JSON.stringify(excludeKeywordULArray),
+				"adKeywordOpen" : $("#adKeywordOpen").attr("checked"),
+				"adKeywordPhraseOpen" : $("#adKeywordPhraseOpen").attr("checked"),
+				"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked")
 			},
 			success : function(respone) {
 				$('body').unblock();
-				$(location).attr( 'href' , 'adAdView.html?adGroupSeq='+$("#adGroupSeq").val());
+				if(respone == "success"){
+					$(location).attr( 'href' , 'adAdView.html?adGroupSeq='+$("#adGroupSeq").val());
+				} else {
+					alert(respone);
+				}
 			}
 		});
 	}

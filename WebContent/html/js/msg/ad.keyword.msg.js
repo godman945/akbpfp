@@ -19,4 +19,18 @@
 	$("#stopStatus input:button[name='no']").click(function(){
 		parent.$.fancybox.close();
 	});
+	
+	$("#changeType input:button[name='yes']").click(function(){
+		parent.updateKeywordOpenData("off");
+		parent.$.fancybox.close();
+	});
+	
+	$("#changeType input:button[name='no']").click(function(){
+		parent.notChangType();
+		parent.$.fancybox.close();
+	});
+	
+	$("#closeType input:button[name='yes']").click(function(){			
+		parent.$.fancybox.close();
+	});
 });

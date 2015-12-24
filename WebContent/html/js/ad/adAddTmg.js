@@ -380,6 +380,11 @@
 		refererHref($("#backPage").val());
 	});
 	
+	//清除關鍵字比對方式提式
+	$("#adKeywordOpen, #adKeywordPhraseOpen, #adKeywordPrecisionOpen").click(function(){
+		$('#chkAdKeywordOpen').text("");
+	});
+	
 	function refererHref(url) {
 		if (/MSIE (\d+\.\d+);/.test(navigator.userAgent) || /MSIE(\d+\.\d+);/.test(navigator.userAgent)){
 			var referLink = document.createElement('a');
@@ -400,6 +405,15 @@
 				if(kwLen < 2){
 					$('#chkAdKeyword').text("請新增關鍵字");
 					location.href="#adKeyword";
+					return false;
+				}
+			}
+			
+			//檢查關建字比對方式是否有被勾選
+			if(kwLen >= 2){
+				if(!$("#adKeywordOpen").attr('checked') && !$("#adKeywordPhraseOpen").attr('checked') && !$("#adKeywordPrecisionOpen").attr('checked')){
+					$('#chkAdKeywordOpen').text("請勾選關鍵字比對方式");
+					location.href="#chkAdKeywordOpen";
 					return false;
 				}
 			}

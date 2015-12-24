@@ -44,6 +44,12 @@ public class AdKeywordViewAction extends BaseCookieAction{
 	private String status;
 	private float userPrice;
 	private String groupMaxPrice;
+	private String adKeywordType;
+	
+	private String adKeywordOpen;			//廣泛比對
+	private String adKeywordPhraseOpen;		//詞組比對
+	private String adKeywordPrecisionOpen;	//精準比對
+	private float suggestPrice;
 	
 	public String execute() throws Exception{
 		
@@ -148,41 +154,94 @@ public class AdKeywordViewAction extends BaseCookieAction{
 			
 			log.info(" AdKeywordSearchPrice = "+adKeyword.getAdKeywordSearchPrice());
 			log.info(" userPrice = "+userPrice);
+			log.info(" adKeywordType = "+adKeywordType);
 			
-			if(adKeyword.getAdKeywordSearchPrice() != userPrice){
-				
-				StringBuffer msg = new StringBuffer();
-				
-				msg.append("收尋廣告金額異動(自行出價):");
-				msg.append("檢視廣告 ==> ");
-				msg.append(adKeyword.getPfpAdGroup().getPfpAdAction().getAdActionName()).append(" ==> ");
-				msg.append(adKeyword.getPfpAdGroup().getAdGroupName()).append(" ==> ");
-				msg.append(adKeyword.getAdKeyword()).append("(").append(adKeyword.getAdKeywordSeq()).append(")").append("：");
-				msg.append(adKeyword.getAdKeywordSearchPrice());
-				msg.append(" ==> ");
-				msg.append(userPrice);
-				
-				admAccesslogService.recordAdLog(EnumAccesslogAction.AD_MONEY_MODIFY, 
-												msg.toString(), 
-												super.getId_pchome(), 
-												super.getCustomer_info_id(), 
-												super.getUser_id(), 
-												super.request.getRemoteAddr());
-				
-				adKeyword.setAdKeywordSearchPrice(userPrice);
+			if("widely".equals(adKeywordType)){
+				if(adKeyword.getAdKeywordSearchPrice() != userPrice){
+					
+					StringBuffer msg = new StringBuffer();
+					
+					msg.append("收尋廣告金額異動(自行出價):");
+					msg.append("檢視廣告 ==> ");
+					msg.append(adKeyword.getPfpAdGroup().getPfpAdAction().getAdActionName()).append(" ==> ");
+					msg.append(adKeyword.getPfpAdGroup().getAdGroupName()).append(" ==> ");
+					msg.append(adKeyword.getAdKeyword()).append("(").append(adKeyword.getAdKeywordSeq()).append(")").append("：");
+					msg.append(adKeyword.getAdKeywordSearchPrice());
+					msg.append(" ==> ");
+					msg.append(userPrice);
+					
+					admAccesslogService.recordAdLog(EnumAccesslogAction.AD_MONEY_MODIFY, 
+													msg.toString(), 
+													super.getId_pchome(), 
+													super.getCustomer_info_id(), 
+													super.getUser_id(), 
+													super.request.getRemoteAddr());
+					
+					adKeyword.setAdKeywordSearchPrice(userPrice);
+					adKeyword.setAdKeywordUpdateTime(new Date());
+					pfpAdKeywordService.saveOrUpdate(adKeyword);
+					
+					//更新系統價
+					log.info(" modify keyword price update sys price ");
+					syspriceOperaterAPI.addKeywordSysprice(adKeyword.getAdKeyword(), userPrice);
+				}
+			} else if("phrase".equals(adKeywordType)){
+				adKeyword.setAdKeywordSearchPhrasePrice(userPrice);
 				adKeyword.setAdKeywordUpdateTime(new Date());
 				pfpAdKeywordService.saveOrUpdate(adKeyword);
-				
-				//更新系統價
-				log.info(" modify keyword price update sys price ");
-				syspriceOperaterAPI.addKeywordSysprice(adKeyword.getAdKeyword(), userPrice);
+			} else if("precision".equals(adKeywordType)){
+				adKeyword.setAdKeywordSearchPrecisionPrice(userPrice);
+				adKeyword.setAdKeywordUpdateTime(new Date());
+				pfpAdKeywordService.saveOrUpdate(adKeyword);
 			}
 			
-			
-			
-			
-			
 		}
+	}
+	
+	//修改比對方式
+	public void updateAdKeywordOpenAjax() throws Exception{
+		PfpAdKeyword adKeyword = pfpAdKeywordService.findAdKeyword(adKeywordSeq);
+		
+		log.info(" adKeywordType = "+adKeywordType);
+		
+		if("widely".equals(adKeywordType)){
+			if(StringUtils.isBlank(adKeywordOpen)){
+				adKeyword.setAdKeywordOpen(0);
+				adKeyword.setAdKeywordSearchPrice(0);
+				adKeyword.setAdKeywordUpdateTime(new Date());
+				pfpAdKeywordService.saveOrUpdate(adKeyword);
+			} else {
+				adKeyword.setAdKeywordOpen(1);
+				adKeyword.setAdKeywordSearchPrice(suggestPrice);
+				adKeyword.setAdKeywordUpdateTime(new Date());
+				pfpAdKeywordService.saveOrUpdate(adKeyword);
+			}
+		} else if("phrase".equals(adKeywordType)){
+			if(StringUtils.isBlank(adKeywordPhraseOpen)){
+				adKeyword.setAdKeywordPhraseOpen(0);
+				adKeyword.setAdKeywordSearchPhrasePrice(0);
+				adKeyword.setAdKeywordUpdateTime(new Date());
+				pfpAdKeywordService.saveOrUpdate(adKeyword);
+			} else {
+				adKeyword.setAdKeywordPhraseOpen(1);
+				adKeyword.setAdKeywordSearchPhrasePrice(suggestPrice);
+				adKeyword.setAdKeywordUpdateTime(new Date());
+				pfpAdKeywordService.saveOrUpdate(adKeyword);
+			}
+		} else if("precision".equals(adKeywordType)){
+			if(StringUtils.isBlank(adKeywordPrecisionOpen)){
+				adKeyword.setAdKeywordPrecisionOpen(0);
+				adKeyword.setAdKeywordSearchPrecisionPrice(0);
+				adKeyword.setAdKeywordUpdateTime(new Date());
+				pfpAdKeywordService.saveOrUpdate(adKeyword);
+			} else {
+				adKeyword.setAdKeywordPrecisionOpen(1);
+				adKeyword.setAdKeywordSearchPrecisionPrice(suggestPrice);
+				adKeyword.setAdKeywordUpdateTime(new Date());
+				pfpAdKeywordService.saveOrUpdate(adKeyword);
+			}
+		}
+		
 	}
 	
 	public void setPfpAdGroupService(IPfpAdGroupService pfpAdGroupService) {
@@ -265,8 +324,40 @@ public class AdKeywordViewAction extends BaseCookieAction{
 	    this.groupMaxPrice = groupMaxPrice;
 	}
 
+	public String getAdKeywordType() {
+		return adKeywordType;
+	}
+
+	public void setAdKeywordType(String adKeywordType) {
+		this.adKeywordType = adKeywordType;
+	}
+
+	public String getAdKeywordOpen() {
+		return adKeywordOpen;
+	}
+
+	public void setAdKeywordOpen(String adKeywordOpen) {
+		this.adKeywordOpen = adKeywordOpen;
+	}
+
+	public String getAdKeywordPhraseOpen() {
+		return adKeywordPhraseOpen;
+	}
+
+	public void setAdKeywordPhraseOpen(String adKeywordPhraseOpen) {
+		this.adKeywordPhraseOpen = adKeywordPhraseOpen;
+	}
+
+	public String getAdKeywordPrecisionOpen() {
+		return adKeywordPrecisionOpen;
+	}
+
+	public void setAdKeywordPrecisionOpen(String adKeywordPrecisionOpen) {
+		this.adKeywordPrecisionOpen = adKeywordPrecisionOpen;
+	}
+
+	public void setSuggestPrice(float suggestPrice) {
+		this.suggestPrice = suggestPrice;
+	}
 	
-
-
-
 }

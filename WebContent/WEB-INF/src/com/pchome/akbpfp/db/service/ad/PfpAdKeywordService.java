@@ -393,32 +393,49 @@ public class PfpAdKeywordService extends BaseService<PfpAdKeyword,String> implem
 						adKeywordViewVO.setAdKeywordStatusDesc(status.getStatusRemark());
 					}
 				}	
-	
+				
+				//比對開起狀態
+				adKeywordViewVO.setAdKeywordOpen(pfpAdKeyword.getAdKeywordOpen());
+				adKeywordViewVO.setAdKeywordPhraseOpen(pfpAdKeyword.getAdKeywordPhraseOpen());
+				adKeywordViewVO.setAdKeywordPrecisionOpen(pfpAdKeyword.getAdKeywordPrecisionOpen());
+				
+				//出價
 				adKeywordViewVO.setAdKeywordSearchPrice(pfpAdKeyword.getAdKeywordSearchPrice());
+				adKeywordViewVO.setAdKeywordSearchPhrasePrice(pfpAdKeyword.getAdKeywordSearchPhrasePrice());
+				adKeywordViewVO.setAdKeywordSearchPrecisionPrice(pfpAdKeyword.getAdKeywordSearchPrecisionPrice());
 				adKeywordViewVO.setAdKeywordChannelPrice(pfpAdKeyword.getAdKeywordChannelPrice());
 	
 				// 依照關鍵字廣告序號，讀取、設定平均排名，沒有平均排名的，就不用設定了
 				if(adRanks.get(pfpAdKeyword.getAdKeywordSeq()) != null) {
 					adKeywordViewVO.setAdKeywordRankAvg(adRanks.get(pfpAdKeyword.getAdKeywordSeq()));
+					adKeywordViewVO.setAdKeywordPhraseRankAvg(adRanks.get(pfpAdKeyword.getAdKeywordSeq()));
+					adKeywordViewVO.setAdKeywordPrecisionRankAvg(adRanks.get(pfpAdKeyword.getAdKeywordSeq()));
 				}
 	
 				// 依照關鍵字廣告序號，讀取、設定廣告成效，沒有廣告成效的，就不用設定了
 				if(pfpAdKeywordReports.size() > 0 && pfpAdKeywordReports.get(pfpAdKeyword.getAdKeywordSeq()) != null) {
 					Object[] obj = (Object[])pfpAdKeywordReports.get(pfpAdKeyword.getAdKeywordSeq());
 					if(obj != null) {
-						// 求點閱率
+						//總計
+						Integer pvSum = 0;			//曝光數
+						Integer clkSum = 0;			//點選次數
+						float clkRateSum = 0;		//點選率
+						Integer invalidClkSum = 0;	//無效點選次數
+						float clkPriceSumAvg = 0;	//平均點選費用
+						float clkPriceSum = 0;		//費用
+						
+						//-------------------廣泛比對--------------------
 						int pv = Integer.parseInt(obj[1].toString());
 						int clk = Integer.parseInt(obj[2].toString());
 						float clkPrice = Float.parseFloat(obj[3].toString());
 						int invalidClk = Integer.parseInt(obj[4].toString());
-	
-						adKeywordViewVO.setAdKeywordPv(pv);
-						adKeywordViewVO.setAdKeywordClk(clk);
-						adKeywordViewVO.setInvalidClk(invalidClk);
-						adKeywordViewVO.setAdKeywordClkPrice(clkPrice);
-	
 						float clkRate = 0;
 						float clkPriceAvg = 0;
+						
+						pvSum += pv;
+						clkSum += clk;
+						invalidClkSum += invalidClk;
+						clkPriceSum += clkPrice;
 	
 						// 點擊率
 						if(clk > 0 || pv > 0){
@@ -428,16 +445,102 @@ public class PfpAdKeywordService extends BaseService<PfpAdKeyword,String> implem
 						if(clkPrice > 0 || clk > 0){
 							clkPriceAvg = clkPrice / (float)clk;
 						}
-	
+						
+						adKeywordViewVO.setAdKeywordPv(pv);
+						adKeywordViewVO.setAdKeywordClk(clk);
+						adKeywordViewVO.setInvalidClk(invalidClk);
+						adKeywordViewVO.setAdKeywordClkPrice(clkPrice);
 						adKeywordViewVO.setAdKeywordClkRate(clkRate);
 						adKeywordViewVO.setAdKeywordClkPriceAvg(clkPriceAvg);
 						adKeywordViewVO.setAdKeywordType(obj[6].toString());
+						
+						//-------------------詞組比對--------------------
+						int phrasePv = Integer.parseInt(obj[7].toString());
+						int phraseClk = Integer.parseInt(obj[8].toString());
+						float phraseClkPrice = Float.parseFloat(obj[9].toString());
+						int phraseInvalidClk = Integer.parseInt(obj[10].toString());
+						float phraseClkRate = 0;
+						float phraseClkPriceAvg = 0;
+						
+						pvSum += phrasePv;
+						clkSum += phraseClk;
+						invalidClkSum += phraseInvalidClk;
+						clkPriceSum += phraseClkPrice;
+	
+						// 點擊率
+						if(phraseClk > 0 || phrasePv > 0){
+							phraseClkRate = (float)phraseClk / (float)phrasePv*100;
+						}
+						// 平均點擊費用
+						if(phraseClkPrice > 0 || phraseClk > 0){
+							phraseClkPriceAvg = phraseClkPrice / (float)phraseClk;
+						}
+						
+						adKeywordViewVO.setAdKeywordPhrasePv(phrasePv);
+						adKeywordViewVO.setAdKeywordPhraseClk(phraseClk);
+						adKeywordViewVO.setPhraseInvalidClk(phraseInvalidClk);
+						adKeywordViewVO.setAdKeywordPhraseClkPrice(phraseClkPrice);
+						adKeywordViewVO.setAdKeywordPhraseClkRate(phraseClkRate);
+						adKeywordViewVO.setAdKeywordPhraseClkPriceAvg(phraseClkPriceAvg);
+						adKeywordViewVO.setAdKeywordPhraseType(obj[12].toString());
+						
+						//------------------- 精準比對--------------------
+						int precisionPv = Integer.parseInt(obj[13].toString());
+						int precisionClk = Integer.parseInt(obj[14].toString());
+						float precisionClkPrice = Float.parseFloat(obj[15].toString());
+						int precisionInvalidClk = Integer.parseInt(obj[16].toString());
+						float precisionClkRate = 0;
+						float precisionClkPriceAvg = 0;
+						
+						pvSum += precisionPv;
+						clkSum += precisionClk;
+						invalidClkSum += precisionInvalidClk;
+						clkPriceSum += precisionClkPrice;
+	
+						// 點擊率
+						if(precisionClk > 0 || precisionPv > 0){
+							precisionClkRate = (float)precisionClk / (float)precisionPv*100;
+						}
+						// 平均點擊費用
+						if(precisionClkPrice > 0 || precisionClk > 0){
+							precisionClkPriceAvg = precisionClkPrice / (float)precisionClk;
+						}
+						
+						adKeywordViewVO.setAdKeywordPrecisionPv(precisionPv);
+						adKeywordViewVO.setAdKeywordPrecisionClk(precisionClk);
+						adKeywordViewVO.setPrecisionInvalidClk(precisionInvalidClk);
+						adKeywordViewVO.setAdKeywordPrecisionClkPrice(precisionClkPrice);
+						adKeywordViewVO.setAdKeywordPrecisionClkRate(precisionClkRate);
+						adKeywordViewVO.setAdKeywordPrecisionClkPriceAvg(precisionClkPriceAvg);
+						adKeywordViewVO.setAdKeywordPrecisionType(obj[18].toString());
+						
+						//------------------- 總計--------------------
+						// 點擊率
+						if(clkSum > 0 || pvSum > 0){
+							clkRateSum = (float)clkSum / (float)pvSum*100;
+						}
+						// 平均點擊費用
+						if(clkPriceSum > 0 || clkSum > 0){
+							clkPriceSumAvg = clkPriceSum / (float)clk;
+						}
+						
+						adKeywordViewVO.setAdKeywordPvSum(pvSum);
+						adKeywordViewVO.setAdKeywordClkSum(clkSum);
+						adKeywordViewVO.setInvalidClkSum(invalidClkSum);
+						adKeywordViewVO.setAdKeywordClkPriceSum(clkPriceSum);
+						adKeywordViewVO.setAdKeywordClkRateSum(clkRateSum);
+						adKeywordViewVO.setAdKeywordClkPriceSumAvg(clkPriceSumAvg);
 					}
 				}
 	
 				// 關鍵字建議價
 				float suggestPrice = syspriceOperaterAPI.getKeywordSuggesPrice(adKeywordViewVO.getAdKeyword());
+				float suggestPhrasePrice = ((int)(Math.random()*3+1)) + suggestPrice;
+				float suggestPrecisionPrice = ((int)(Math.random()*3+4)) + suggestPrice;
+				
 				adKeywordViewVO.setSuggestPrice(suggestPrice);
+				adKeywordViewVO.setSuggestPhrasePrice(suggestPhrasePrice);
+				adKeywordViewVO.setSuggestPrecisionPrice(suggestPrecisionPrice);
 	
 				adKeywordViewVOs.add(adKeywordViewVO);
 			}

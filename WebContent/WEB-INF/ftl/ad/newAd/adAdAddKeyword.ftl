@@ -52,6 +52,17 @@
 							<!-- 關鍵字end -->
 						</td>
 					</tr>
+					<tr>
+						<th>
+							<span class="t_s02">* </span>關鍵字比對方式<br>
+						</th>
+						<td>
+							<input type="checkbox" id="adKeywordOpen" name="adKeywordOpen" />廣泛比對
+            				<input type="checkbox" id="adKeywordPhraseOpen" name="adKeywordPhraseOpen" />詞組比對
+            				<input type="checkbox" id="adKeywordPrecisionOpen" name="adKeywordPrecisionOpen" />精準比對
+            				<span id="chkAdKeywordOpen" name="chkAdKeywordOpen" style="color:red"></span>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 			<div style="clear:both;height:10px"></div>

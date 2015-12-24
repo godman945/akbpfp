@@ -56,7 +56,6 @@
 					</tr>
 				</tbody>
 			</table>
-
 <#if adStyle == "TXT">
 <!-- adTxt start -->
 <@t.insertAttribute name="adTxt" />
