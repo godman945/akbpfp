@@ -136,6 +136,28 @@ public class SyspriceOperaterAPI {
 		return suggestPrice;
 	}
 
+	public float getKeywordSuggesPrice(String keyword,String keywordType) throws Exception{
+
+		/**
+		 * 取得關鍵字建議價(區分比對模式)
+		 * @author ray
+		 * 1. amount >= 10, 價格+1 
+		 * 
+		 */
+
+		PfpKeywordSysprice keywordSysprice = keywordSyspriceService.getKeywordSysprice(keyword,keywordType);
+
+		int amount = keywordSysprice.getAmount();
+		float suggestPrice = keywordSysprice.getSysprice();
+
+		if(amount >= Integer.parseInt(limiAmount)){
+			suggestPrice++;
+		}
+		
+//		log.info(" suggestPrice= "+suggestPrice);
+		return suggestPrice;
+	}
+	
 	public synchronized void addKeywordSysprice(String keyword, float userPrice) throws Exception{
 		/**
 		 * 新增關鍵字系統價

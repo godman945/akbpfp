@@ -13,9 +13,11 @@ import com.pchome.akbpfp.db.pojo.PfpKeywordSysprice;
 import com.pchome.config.TestConfig;
 import com.pchome.enumerate.account.EnumAccountStatus;
 import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.utils.AnalyzerUtil;
 
 public class PfpKeywordSyspriceDAO extends BaseDAO<PfpKeywordSysprice, String> implements IPfpKeywordSyspriceDAO{
 
+	//關鍵字建議出價(不區分比對方式)
 	@SuppressWarnings("unchecked")
 	public PfpKeywordSysprice getKeywordSysprice(String keyword) throws Exception{
 		
@@ -32,6 +34,42 @@ public class PfpKeywordSyspriceDAO extends BaseDAO<PfpKeywordSysprice, String> i
 		}
 	}
 
+	//關鍵字建議出價(區分比對方式)
+	@SuppressWarnings("unchecked")
+	public PfpKeywordSysprice getKeywordSysprice(String keyword,String keywordType) throws Exception{
+		
+		StringBuffer hql = new StringBuffer();
+		hql.append(" from PfpKeywordSysprice ");
+		
+		if("widely".equals(keywordType)){			//廣泛比對
+			List<String> wordList = AnalyzerUtil.getInstance().getAnalyerList(keyword);
+			
+			if(!wordList.isEmpty()){
+				for(int i=0;i<wordList.size();i++){
+					if(i == 0){
+						hql.append(" where keyword like '%" + wordList.get(0) + "%'");
+					} else {
+						hql.append(" or keyword like '%" + wordList.get(i) + "%'");
+					}
+				}
+			}
+			
+		} else if("phrase".equals(keywordType)){	//詞組比對
+			hql.append(" where keyword like '%" + keyword + "%'");
+		} else {									//精準比對
+			hql.append(" where keyword = '" + keyword + "'");
+		}
+		hql.append(" order by sysprice desc, amount desc ");
+		
+		List<PfpKeywordSysprice> list = super.getHibernateTemplate().find(hql.toString());
+		
+		if(list != null && list.size() > 0){
+			return list.get(0);
+		}else{
+			return null;
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<PfpAdKeyword> getKeywordSearchPriceRange(String keyword) {

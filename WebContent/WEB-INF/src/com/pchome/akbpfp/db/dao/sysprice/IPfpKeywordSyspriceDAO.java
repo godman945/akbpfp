@@ -9,6 +9,7 @@ import com.pchome.akbpfp.db.pojo.PfpKeywordSysprice;
 public interface IPfpKeywordSyspriceDAO extends IBaseDAO<PfpKeywordSysprice, String>{
 	
 	public PfpKeywordSysprice getKeywordSysprice(String keyword) throws Exception;
+	public PfpKeywordSysprice getKeywordSysprice(String keyword,String keywordType) throws Exception;
 	//取得group by 關鍵出價  ,取得某個字系統價的價格帶
 	public List<PfpAdKeyword> getKeywordSearchPriceRange(String keyword);
 	

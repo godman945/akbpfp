@@ -534,9 +534,11 @@ public class PfpAdKeywordService extends BaseService<PfpAdKeyword,String> implem
 				}
 	
 				// 關鍵字建議價
-				float suggestPrice = syspriceOperaterAPI.getKeywordSuggesPrice(adKeywordViewVO.getAdKeyword());
-				float suggestPhrasePrice = ((int)(Math.random()*3+1)) + suggestPrice;
-				float suggestPrecisionPrice = ((int)(Math.random()*3+4)) + suggestPrice;
+				float suggestPrice = syspriceOperaterAPI.getKeywordSuggesPrice(adKeywordViewVO.getAdKeyword(),"widely");
+				float suggestPhrasePrice = syspriceOperaterAPI.getKeywordSuggesPrice(adKeywordViewVO.getAdKeyword(),"phrase");
+				suggestPhrasePrice = ((int)(Math.random()*3+1)) + suggestPhrasePrice;
+				float suggestPrecisionPrice = syspriceOperaterAPI.getKeywordSuggesPrice(adKeywordViewVO.getAdKeyword(),"precision");
+				suggestPrecisionPrice = ((int)(Math.random()*3+4)) + suggestPrecisionPrice;
 				
 				adKeywordViewVO.setSuggestPrice(suggestPrice);
 				adKeywordViewVO.setSuggestPhrasePrice(suggestPhrasePrice);

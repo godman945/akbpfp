@@ -146,6 +146,7 @@ public class AdKeywordViewAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	//修改關鍵字出價
 	public void updateAdKeywordPriceAjax() throws Exception{
 		
 		PfpAdKeyword adKeyword = pfpAdKeywordService.findAdKeyword(adKeywordSeq);
@@ -155,10 +156,8 @@ public class AdKeywordViewAction extends BaseCookieAction{
 			log.info(" AdKeywordSearchPrice = "+adKeyword.getAdKeywordSearchPrice());
 			log.info(" userPrice = "+userPrice);
 			log.info(" adKeywordType = "+adKeywordType);
-			
-			if("widely".equals(adKeywordType)){
-				if(adKeyword.getAdKeywordSearchPrice() != userPrice){
-					
+			if(adKeyword.getAdKeywordSearchPrice() != userPrice){
+				if("widely".equals(adKeywordType)){
 					StringBuffer msg = new StringBuffer();
 					
 					msg.append("收尋廣告金額異動(自行出價):");
@@ -180,19 +179,19 @@ public class AdKeywordViewAction extends BaseCookieAction{
 					adKeyword.setAdKeywordSearchPrice(userPrice);
 					adKeyword.setAdKeywordUpdateTime(new Date());
 					pfpAdKeywordService.saveOrUpdate(adKeyword);
-					
-					//更新系統價
-					log.info(" modify keyword price update sys price ");
-					syspriceOperaterAPI.addKeywordSysprice(adKeyword.getAdKeyword(), userPrice);
+	
+				} else if("phrase".equals(adKeywordType)){
+					adKeyword.setAdKeywordSearchPhrasePrice(userPrice);
+					adKeyword.setAdKeywordUpdateTime(new Date());
+					pfpAdKeywordService.saveOrUpdate(adKeyword);
+				} else if("precision".equals(adKeywordType)){
+					adKeyword.setAdKeywordSearchPrecisionPrice(userPrice);
+					adKeyword.setAdKeywordUpdateTime(new Date());
+					pfpAdKeywordService.saveOrUpdate(adKeyword);
 				}
-			} else if("phrase".equals(adKeywordType)){
-				adKeyword.setAdKeywordSearchPhrasePrice(userPrice);
-				adKeyword.setAdKeywordUpdateTime(new Date());
-				pfpAdKeywordService.saveOrUpdate(adKeyword);
-			} else if("precision".equals(adKeywordType)){
-				adKeyword.setAdKeywordSearchPrecisionPrice(userPrice);
-				adKeyword.setAdKeywordUpdateTime(new Date());
-				pfpAdKeywordService.saveOrUpdate(adKeyword);
+				//更新系統價
+				log.info(" modify keyword price update sys price ");
+				syspriceOperaterAPI.addKeywordSysprice(adKeyword.getAdKeyword(), userPrice);
 			}
 			
 		}
