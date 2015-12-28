@@ -214,6 +214,9 @@ public class AdKeywordViewAction extends BaseCookieAction{
 				adKeyword.setAdKeywordSearchPrice(suggestPrice);
 				adKeyword.setAdKeywordUpdateTime(new Date());
 				pfpAdKeywordService.saveOrUpdate(adKeyword);
+				
+				//更新系統價
+				syspriceOperaterAPI.addKeywordSysprice(adKeyword.getAdKeyword(), suggestPrice);
 			}
 		} else if("phrase".equals(adKeywordType)){
 			if(StringUtils.isBlank(adKeywordPhraseOpen)){
@@ -226,6 +229,9 @@ public class AdKeywordViewAction extends BaseCookieAction{
 				adKeyword.setAdKeywordSearchPhrasePrice(suggestPrice);
 				adKeyword.setAdKeywordUpdateTime(new Date());
 				pfpAdKeywordService.saveOrUpdate(adKeyword);
+				
+				//更新系統價
+				syspriceOperaterAPI.addKeywordSysprice(adKeyword.getAdKeyword(), suggestPrice);
 			}
 		} else if("precision".equals(adKeywordType)){
 			if(StringUtils.isBlank(adKeywordPrecisionOpen)){
@@ -238,6 +244,9 @@ public class AdKeywordViewAction extends BaseCookieAction{
 				adKeyword.setAdKeywordSearchPrecisionPrice(suggestPrice);
 				adKeyword.setAdKeywordUpdateTime(new Date());
 				pfpAdKeywordService.saveOrUpdate(adKeyword);
+				
+				//更新系統價
+				syspriceOperaterAPI.addKeywordSysprice(adKeyword.getAdKeyword(), suggestPrice);
 			}
 		}
 		
