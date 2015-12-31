@@ -268,6 +268,55 @@ public class SpringOpenFlashUtil {
 		return array.toString();
 	}
 	
+	public String getKeywordChartDataForArray(String charType,String startDate,String endDate,List<Map<Date,Float>> mapList){
+		int scale = 0;		//设置位数
+
+		if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+			scale = 0;
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+			scale = 0;
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
+			scale = 2;
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
+			scale = 2;
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+			scale = 0;
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_ADSORT.getTextValue())) {
+			scale = 0;
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
+			scale = 0;
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
+			scale = 0;
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTRINVALID.getTextValue())) {
+			scale = 0;
+		}
+		
+		List<List<Double>> list = new ArrayList<List<Double>>(); 
+		
+		for(Map<Date,Float> flashDataMap:mapList){
+			//x 軸兩日期間所相差的天數
+			long maxValueX = DateValueUtil.getInstance().getDateDiffDay(startDate, endDate);
+			Date pDate=null;
+			List<Double> dataList = new ArrayList<Double>();
+			
+			for(int d=0;d<maxValueX;d++){
+				pDate=DateValueUtil.getInstance().getDateForStartDateAddDay(startDate, d);
+				if(flashDataMap.containsKey(pDate)){
+					BigDecimal bd = new BigDecimal((double)flashDataMap.get(pDate));
+					bd = bd.setScale(scale,4);
+					dataList.add(bd.doubleValue());
+				}else{
+					dataList.add((double) 0);
+				}
+			}
+			list.add(dataList);
+		}
+		
+		JSONArray array = new JSONArray(list);
+		
+		return array.toString();
+	}
+	
 	private int getFloatNum(float num,int scale,int roundingMode){
 		BigDecimal bd;
 		bd = new BigDecimal((float)num); 

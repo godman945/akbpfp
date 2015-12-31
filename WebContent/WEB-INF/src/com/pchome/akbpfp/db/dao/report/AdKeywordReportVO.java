@@ -7,7 +7,10 @@ public class AdKeywordReportVO {
 	private String kwSeq; //關鍵字序號
 	private String keyward; //關鍵字
 	private String adType; //廣告方式
-	private String adRankAvg; //排名
+	private String adStatus; //廣告狀態
+	private String adRankAvg; //廣泛比對排名
+	private String adPhrRankAvg; //詞組比對排名
+	private String adPreRankAvg; //精準比對排名
 	private String kwStatus; //關鍵字狀態
 	private String kwPvclkDate; //關鍵字曝光點擊日期
 
@@ -27,13 +30,45 @@ public class AdKeywordReportVO {
 	private String adKeyword; //關鍵字
 	private String adKeywordStatus; //關鍵字狀態
 	
-	private String kwPvSum; //關鍵字PV總和
-	private String kwClkSum; //關鍵字點擊總和
-	private String kwPriceSum; //關鍵字價格總和
-	private String kwInvClkSum; //關鍵字無效點擊總和
 	private String customerInfoId; // 帳號
 	private String kwDevice; // 裝置
 	private String kwAdType; //廣告類型
+	private String dataTotal;	//總比數
+	
+	//廣泛比對
+	private String kwOpen;	//比對方式開啟狀態
+	private String kwPvSum; //關鍵字PV總和
+	private String kwClkSum; //關鍵字點擊總和
+	private String kwCtrSum; //關鍵字點擊率總和
+	private String kwPriceSum; //關鍵字價格總和
+	private String kwPriceAvgSum; //關鍵字平均點選費用總和
+	private String kwInvClkSum; //關鍵字無效點擊總和
+	
+	//詞組比對
+	private String kwPhrOpen;	//比對方式開啟狀態
+	private String kwPhrPvSum; //關鍵字PV總和
+	private String kwPhrClkSum; //關鍵字點擊總和
+	private String kwPhrCtrSum; //關鍵字點擊率總和
+	private String kwPhrPriceSum; //關鍵字價格總和
+	private String kwPhrPriceAvgSum; //關鍵字平均點選費用總和
+	private String kwPhrInvClkSum; //關鍵字無效點擊總和
+	
+	//精準比對
+	private String kwPreOpen;	//比對方式開啟狀態
+	private String kwPrePvSum; //關鍵字PV總和
+	private String kwPreClkSum; //關鍵字點擊總和
+	private String kwPreCtrSum; //關鍵字點擊率總和
+	private String kwPrePriceSum; //關鍵字價格總和
+	private String kwPrePriceAvgSum; //關鍵字平均點選費用總和
+	private String kwPreInvClkSum; //關鍵字無效點擊總和
+	
+	//總計
+	private String kwPvTotal; //關鍵字PV總和
+	private String kwClkTotal; //關鍵字點擊總和
+	private String kwCtrTotal; //關鍵字點擊率總和
+	private String kwPriceTotal; //關鍵字價格總和
+	private String kwPriceAvgTotal; //關鍵字平均點選費用總和
+	private String kwInvClkTotal; //關鍵字無效點擊總和
 
 	public String getKwSeq() {
 		return kwSeq;
@@ -249,6 +284,222 @@ public class AdKeywordReportVO {
 
 	public void setKwAdType(String kwAdType) {
 		this.kwAdType = kwAdType;
+	}
+
+	public String getKwPhrPvSum() {
+		return kwPhrPvSum;
+	}
+
+	public void setKwPhrPvSum(String kwPhrPvSum) {
+		this.kwPhrPvSum = kwPhrPvSum;
+	}
+
+	public String getKwPhrClkSum() {
+		return kwPhrClkSum;
+	}
+
+	public void setKwPhrClkSum(String kwPhrClkSum) {
+		this.kwPhrClkSum = kwPhrClkSum;
+	}
+
+	public String getKwPhrPriceSum() {
+		return kwPhrPriceSum;
+	}
+
+	public void setKwPhrPriceSum(String kwPhrPriceSum) {
+		this.kwPhrPriceSum = kwPhrPriceSum;
+	}
+
+	public String getKwPhrInvClkSum() {
+		return kwPhrInvClkSum;
+	}
+
+	public void setKwPhrInvClkSum(String kwPhrInvClkSum) {
+		this.kwPhrInvClkSum = kwPhrInvClkSum;
+	}
+
+	public String getKwPrePvSum() {
+		return kwPrePvSum;
+	}
+
+	public void setKwPrePvSum(String kwPrePvSum) {
+		this.kwPrePvSum = kwPrePvSum;
+	}
+
+	public String getKwPreClkSum() {
+		return kwPreClkSum;
+	}
+
+	public void setKwPreClkSum(String kwPreClkSum) {
+		this.kwPreClkSum = kwPreClkSum;
+	}
+
+	public String getKwPrePriceSum() {
+		return kwPrePriceSum;
+	}
+
+	public void setKwPrePriceSum(String kwPrePriceSum) {
+		this.kwPrePriceSum = kwPrePriceSum;
+	}
+
+	public String getKwPreInvClkSum() {
+		return kwPreInvClkSum;
+	}
+
+	public void setKwPreInvClkSum(String kwPreInvClkSum) {
+		this.kwPreInvClkSum = kwPreInvClkSum;
+	}
+
+	public String getKwPvTotal() {
+		return kwPvTotal;
+	}
+
+	public void setKwPvTotal(String kwPvTotal) {
+		this.kwPvTotal = kwPvTotal;
+	}
+
+	public String getKwClkTotal() {
+		return kwClkTotal;
+	}
+
+	public void setKwClkTotal(String kwClkTotal) {
+		this.kwClkTotal = kwClkTotal;
+	}
+
+	public String getKwPriceTotal() {
+		return kwPriceTotal;
+	}
+
+	public void setKwPriceTotal(String kwPriceTotal) {
+		this.kwPriceTotal = kwPriceTotal;
+	}
+
+	public String getKwInvClkTotal() {
+		return kwInvClkTotal;
+	}
+
+	public void setKwInvClkTotal(String kwInvClkTotal) {
+		this.kwInvClkTotal = kwInvClkTotal;
+	}
+
+	public String getKwOpen() {
+		return kwOpen;
+	}
+
+	public void setKwOpen(String kwOpen) {
+		this.kwOpen = kwOpen;
+	}
+
+	public String getKwCtrSum() {
+		return kwCtrSum;
+	}
+
+	public void setKwCtrSum(String kwCtrSum) {
+		this.kwCtrSum = kwCtrSum;
+	}
+
+	public String getKwPriceAvgSum() {
+		return kwPriceAvgSum;
+	}
+
+	public void setKwPriceAvgSum(String kwPriceAvgSum) {
+		this.kwPriceAvgSum = kwPriceAvgSum;
+	}
+
+	public String getKwPhrOpen() {
+		return kwPhrOpen;
+	}
+
+	public void setKwPhrOpen(String kwPhrOpen) {
+		this.kwPhrOpen = kwPhrOpen;
+	}
+
+	public String getKwPhrCtrSum() {
+		return kwPhrCtrSum;
+	}
+
+	public void setKwPhrCtrSum(String kwPhrCtrSum) {
+		this.kwPhrCtrSum = kwPhrCtrSum;
+	}
+
+	public String getKwPhrPriceAvgSum() {
+		return kwPhrPriceAvgSum;
+	}
+
+	public void setKwPhrPriceAvgSum(String kwPhrPriceAvgSum) {
+		this.kwPhrPriceAvgSum = kwPhrPriceAvgSum;
+	}
+
+	public String getKwPreOpen() {
+		return kwPreOpen;
+	}
+
+	public void setKwPreOpen(String kwPreOpen) {
+		this.kwPreOpen = kwPreOpen;
+	}
+
+	public String getKwPreCtrSum() {
+		return kwPreCtrSum;
+	}
+
+	public void setKwPreCtrSum(String kwPreCtrSum) {
+		this.kwPreCtrSum = kwPreCtrSum;
+	}
+
+	public String getKwPrePriceAvgSum() {
+		return kwPrePriceAvgSum;
+	}
+
+	public void setKwPrePriceAvgSum(String kwPrePriceAvgSum) {
+		this.kwPrePriceAvgSum = kwPrePriceAvgSum;
+	}
+
+	public String getKwCtrTotal() {
+		return kwCtrTotal;
+	}
+
+	public void setKwCtrTotal(String kwCtrTotal) {
+		this.kwCtrTotal = kwCtrTotal;
+	}
+
+	public String getKwPriceAvgTotal() {
+		return kwPriceAvgTotal;
+	}
+
+	public void setKwPriceAvgTotal(String kwPriceAvgTotal) {
+		this.kwPriceAvgTotal = kwPriceAvgTotal;
+	}
+
+	public String getAdPhrRankAvg() {
+		return adPhrRankAvg;
+	}
+
+	public void setAdPhrRankAvg(String adPhrRankAvg) {
+		this.adPhrRankAvg = adPhrRankAvg;
+	}
+
+	public String getAdPreRankAvg() {
+		return adPreRankAvg;
+	}
+
+	public void setAdPreRankAvg(String adPreRankAvg) {
+		this.adPreRankAvg = adPreRankAvg;
+	}
+
+	public String getAdStatus() {
+		return adStatus;
+	}
+
+	public void setAdStatus(String adStatus) {
+		this.adStatus = adStatus;
+	}
+
+	public String getDataTotal() {
+		return dataTotal;
+	}
+
+	public void setDataTotal(String dataTotal) {
+		this.dataTotal = dataTotal;
 	}
 	
 }

@@ -148,13 +148,39 @@ function ready(){
     $("#excerptTable").tablesorter({
         headers: {
     	    0 : { sorter: false },
-    	    4 : { sorter: 'fancyNumber' },
-    	    5 : { sorter: 'fancyNumber' },
-            6 : { sorter: 'fancyNumber' },
-            7 : { sorter: 'fancyNumber' },
-            8 : { sorter: 'rangesort' },
-            9 : { sorter: 'rangesort' },
-            10 : { sorter: 'fancyNumber' }
+    	    5 : {sorter:false},
+			6 : {sorter:false},
+			7 : {sorter:false},
+			8 : {sorter:false},
+			9 : {sorter:false},
+			10 : {sorter:false},
+			11 : {sorter:false},
+			12 : {sorter:false},
+			13 : {sorter:false},
+			14 : {sorter:false},
+			15 : { sorter: 'fancyNumber' },
+			16 : { sorter: 'fancyNumber' },
+			17 : { sorter: 'fancyNumber' },
+			18 : { sorter: 'fancyNumber' },
+			19 : { sorter: 'fancyNumber' },
+			20 : { sorter: 'fancyNumber' },
+			21 : { sorter: 'fancyNumber' },
+			22 : { sorter: 'fancyNumber' },
+			23 : { sorter: 'fancyNumber' },
+			24 : { sorter: 'fancyNumber' },
+			25 : { sorter: 'fancyNumber' },
+			26 : { sorter: 'fancyNumber' },
+			27 : { sorter: 'rangesort' },
+			28 : { sorter: 'rangesort' },
+			29 : { sorter: 'rangesort' },
+			30 : { sorter: 'rangesort' },
+			31 : { sorter: 'rangesort' },
+			32 : { sorter: 'rangesort' },
+			33 : { sorter: 'rangesort' },
+			34 : { sorter: 'rangesort' },
+			35 : { sorter: 'fancyNumber' },
+			36 : { sorter: 'fancyNumber' },
+			37 : { sorter: 'fancyNumber' }
         }
     });
 	
@@ -369,6 +395,9 @@ function adIdSearch(adType, adId){
 
 //顯示open flash
 function showHighChart(){
+	var widDataArray;
+	var phrDataArray;
+	var preDataArray;
 	var dataArray;
 	$.ajax({
 		url : highChartActionPath,
@@ -389,7 +418,10 @@ function showHighChart(){
 		},
 		success : function(respone) {
 			console.log(respone);
-			dataArray = respone;
+			widDataArray = respone[0];
+			phrDataArray = respone[1];
+			preDataArray = respone[2];
+			dataArray = respone[3];
 		}
 	});
 	
@@ -532,16 +564,33 @@ function showHighChart(){
 			}
 	    },
 	    
-	    series: [{
-	        name: selectTypeName,
-	        data: dataArray,
-	        lineWidth: 2,
-	        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
-	        pointInterval: 24 * 3600 * 1000
-	        
-	    }],
+	    series: [
+	        {	name: "廣泛比對" + selectTypeName,
+		        data: widDataArray,
+		        lineWidth: 2,
+		        color: "#FFFF00",
+		        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+		        pointInterval: 24 * 3600 * 1000},
+	        {	name: "詞組比對" + selectTypeName,
+		        data: phrDataArray,
+		        lineWidth: 2,
+		        color: "#00FF00",
+		        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+		        pointInterval: 24 * 3600 * 1000},
+	        {	name: "精準比對" + selectTypeName,
+		        data: preDataArray,
+		        lineWidth: 2,
+		        color: "#CC00FF",
+		        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+		        pointInterval: 24 * 3600 * 1000},
+	        {	name: "總" + selectTypeName,
+	        	data: dataArray,
+	        	lineWidth: 2,
+	        	pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+	        	pointInterval: 24 * 3600 * 1000}
+	    ],
 	    legend: { //選單
-			enabled:false
+			enabled:true
 		},
 		exporting: { //右上打印
 			//enabled:false
@@ -680,4 +729,16 @@ function serachReset(){
     document.excerptFrom.searchId.value = "";
 }
 
-
+//明細按鈕(展開/隱藏)
+function toggleTd(tdClass){
+	var number = $("." + tdClass + "Th").attr("colspan");
+	if(number == 1){
+		$("." + tdClass + "Button").val("隱藏");
+		$("." + tdClass + "Th").attr("colspan","4");
+	} else {
+		$("." + tdClass + "Button").val("展開");
+		$("." + tdClass + "Th").attr("colspan","1");
+	}
+	
+	$("." + tdClass).toggle();
+}

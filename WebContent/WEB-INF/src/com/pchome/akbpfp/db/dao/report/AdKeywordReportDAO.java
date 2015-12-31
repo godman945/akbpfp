@@ -110,10 +110,24 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 							Object[] objArray = null;
 							AdKeywordReportVO kwReportVO = null;
 
+							//廣泛比對
 							BigDecimal kwPvSum = null;
 							BigDecimal kwClkSum = null;
 							Double kwPriceSum = null;
 							BigDecimal kwInvClkSum = null;
+							
+							//詞組比對
+							BigDecimal kwPhrPvSum = null;
+							BigDecimal kwPhrClkSum = null;
+							Double kwPhrPriceSum = null;
+							BigDecimal kwPhrInvClkSum = null;
+							
+							//精準比對
+							BigDecimal kwPrePvSum = null;
+							BigDecimal kwPreClkSum = null;
+							Double kwPrePriceSum = null;
+							BigDecimal kwPreInvClkSum = null;
+							
 							String kwPvclkDate = null;
 							String adActionSeq = null;
 							String adGroupSeq = null;
@@ -126,19 +140,33 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 							for (int i=0; i<dataList.size(); i++) {
 
 								objArray = (Object[]) dataList.get(i);
-
+								
+								//廣泛比對
 								kwPvSum = (BigDecimal)objArray[0];
 								kwClkSum = (BigDecimal)objArray[1];
 								kwPriceSum = (Double)objArray[2];
 								kwInvClkSum = (BigDecimal)objArray[3];
-								kwPvclkDate = ObjectTransUtil.getInstance().getObjectToString(objArray[4]);
-								adActionSeq = ObjectTransUtil.getInstance().getObjectToString(objArray[5]);
-								adGroupSeq = ObjectTransUtil.getInstance().getObjectToString(objArray[6]);
-								adKeywordSeq = ObjectTransUtil.getInstance().getObjectToString(objArray[7]);
-								AdKeyword = ObjectTransUtil.getInstance().getObjectToString(objArray[8]);
-								customerInfoId = ObjectTransUtil.getInstance().getObjectToString(objArray[9]);
-								kwDevice = ObjectTransUtil.getInstance().getObjectToString(objArray[10]);
-								kwAdType = ObjectTransUtil.getInstance().getObjectToString(objArray[11]);
+								
+								//詞組比對
+								kwPhrPvSum = (BigDecimal)objArray[4];
+								kwPhrClkSum = (BigDecimal)objArray[5];
+								kwPhrPriceSum = (Double)objArray[6];
+								kwPhrInvClkSum = (BigDecimal)objArray[7];
+								
+								//精準比對
+								kwPrePvSum = (BigDecimal)objArray[8];
+								kwPreClkSum = (BigDecimal)objArray[9];
+								kwPrePriceSum = (Double)objArray[10];
+								kwPreInvClkSum = (BigDecimal)objArray[11];
+								
+								kwPvclkDate = ObjectTransUtil.getInstance().getObjectToString(objArray[12]);
+								adActionSeq = ObjectTransUtil.getInstance().getObjectToString(objArray[13]);
+								adGroupSeq = ObjectTransUtil.getInstance().getObjectToString(objArray[14]);
+								adKeywordSeq = ObjectTransUtil.getInstance().getObjectToString(objArray[15]);
+								AdKeyword = ObjectTransUtil.getInstance().getObjectToString(objArray[16]);
+								customerInfoId = ObjectTransUtil.getInstance().getObjectToString(objArray[17]);
+								kwDevice = ObjectTransUtil.getInstance().getObjectToString(objArray[18]);
+								kwAdType = ObjectTransUtil.getInstance().getObjectToString(objArray[19]);
 //								System.out.println("kwPvSum = " + kwPvSum);
 //								System.out.println("kwClkSum = " + kwClkSum);
 //								System.out.println("kwPriceSum = " + kwPriceSum);
@@ -182,12 +210,25 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 								kwReportVO.setKwClkSum(kwClkSum.toString());
 								kwReportVO.setKwPriceSum(kwPriceSum.toString());
 								kwReportVO.setKwInvClkSum(kwInvClkSum.toString());
+								kwReportVO.setKwPhrPvSum(kwPhrPvSum.toString());
+								kwReportVO.setKwPhrClkSum(kwPhrClkSum.toString());
+								kwReportVO.setKwPhrPriceSum(kwPhrPriceSum.toString());
+								kwReportVO.setKwPhrInvClkSum(kwPhrInvClkSum.toString());
+								kwReportVO.setKwPrePvSum(kwPrePvSum.toString());
+								kwReportVO.setKwPreClkSum(kwPreClkSum.toString());
+								kwReportVO.setKwPrePriceSum(kwPrePriceSum.toString());
+								kwReportVO.setKwPreInvClkSum(kwPreInvClkSum.toString());
 								kwReportVO.setKwPvclkDate(kwPvclkDate);
 								kwReportVO.setAdActionSeq(adActionSeq);
 								kwReportVO.setAdGroupSeq(adGroupSeq);
 								kwReportVO.setAdKeywordSeq(adKeywordSeq);
 								kwReportVO.setAdKeyword(AdKeyword);
+								
+								//排名table尚未修改，先用廣泛排名替代
 								kwReportVO.setAdRankAvg(adRankAvg);
+								kwReportVO.setAdPhrRankAvg(adRankAvg);
+								kwReportVO.setAdPreRankAvg(adRankAvg);
+								
 								kwReportVO.setCustomerInfoId(customerInfoId);
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
 									if("PC".equals(kwDevice)){
@@ -234,10 +275,21 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 
 								AdKeywordReportVO kwReportVO = new AdKeywordReportVO();
 
+								//廣泛比對
 								kwReportVO.setKwPvSum(((BigDecimal)objArray[0]).toString());
 								kwReportVO.setKwClkSum(((BigDecimal)objArray[1]).toString());
 								kwReportVO.setKwPriceSum(((Double)objArray[2]).toString());
 								kwReportVO.setKwInvClkSum(((BigDecimal)objArray[3]).toString());
+								//詞組比對
+								kwReportVO.setKwPhrPvSum(((BigDecimal)objArray[4]).toString());
+								kwReportVO.setKwPhrClkSum(((BigDecimal)objArray[5]).toString());
+								kwReportVO.setKwPhrPriceSum(((Double)objArray[6]).toString());
+								kwReportVO.setKwPhrInvClkSum(((BigDecimal)objArray[7]).toString());
+								//精準比對
+								kwReportVO.setKwPrePvSum(((BigDecimal)objArray[8]).toString());
+								kwReportVO.setKwPreClkSum(((BigDecimal)objArray[9]).toString());
+								kwReportVO.setKwPrePriceSum(((Double)objArray[10]).toString());
+								kwReportVO.setKwPreInvClkSum(((BigDecimal)objArray[11]).toString());
 								
 								resultData.add(kwReportVO);
 							}
@@ -251,10 +303,21 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 								AdKeywordReportVO kwReportVO = new AdKeywordReportVO();
 
 								kwReportVO.setReportDate(ObjectTransUtil.getInstance().getObjectToString(objArray[0]));
+								//廣泛比對
 								kwReportVO.setKwPvSum(((BigDecimal)objArray[1]).toString());
 								kwReportVO.setKwClkSum(((BigDecimal)objArray[2]).toString());
 								kwReportVO.setKwPriceSum(((Double)objArray[3]).toString());
 								kwReportVO.setKwInvClkSum(((BigDecimal)objArray[4]).toString());
+								//詞組比對
+								kwReportVO.setKwPhrPvSum(((BigDecimal)objArray[5]).toString());
+								kwReportVO.setKwPhrClkSum(((BigDecimal)objArray[6]).toString());
+								kwReportVO.setKwPhrPriceSum(((Double)objArray[7]).toString());
+								kwReportVO.setKwPhrInvClkSum(((BigDecimal)objArray[8]).toString());
+								//精準比對
+								kwReportVO.setKwPrePvSum(((BigDecimal)objArray[9]).toString());
+								kwReportVO.setKwPreClkSum(((BigDecimal)objArray[10]).toString());
+								kwReportVO.setKwPrePriceSum(((Double)objArray[11]).toString());
+								kwReportVO.setKwPreInvClkSum(((BigDecimal)objArray[12]).toString());
 								
 								resultData.add(kwReportVO);
 							}
@@ -274,11 +337,26 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 		StringBuffer hql = new StringBuffer();
 
 		hql.append("select ");
+		
+		//廣泛比對
 		hql.append(" sum(r.ad_keyword_pv), ");
 		hql.append(" sum(r.ad_keyword_clk), ");			// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_keyword_clk_price), ");	// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_keyword_invalid_clk), ");
-		hql.append(" sum(r.ad_keyword_invalid_clk_price) ");
+		
+		//詞組比對(ReportTable尚未更改，先用廣泛比對欄位)
+		hql.append(" sum(r.ad_keyword_pv), ");
+		hql.append(" sum(r.ad_keyword_clk), ");			// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum(r.ad_keyword_clk_price), ");	// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum(r.ad_keyword_invalid_clk), ");
+		
+		//精準比對(ReportTable尚未更改，先用廣泛比對欄位)
+		hql.append(" sum(r.ad_keyword_pv), ");
+		hql.append(" sum(r.ad_keyword_clk), ");			// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum(r.ad_keyword_clk_price), ");	// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum(r.ad_keyword_invalid_clk) ");
+		
+		//hql.append(" sum(r.ad_keyword_invalid_clk_price) ");
 		hql.append(" from pfp_ad_keyword_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id = :customerInfoId ");
@@ -323,10 +401,24 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 		StringBuffer hql = new StringBuffer();
 
 		hql.append("select ");
+		//廣泛比對
 		hql.append(" sum(r.ad_keyword_pv), ");
 		hql.append(" sum(r.ad_keyword_clk), ");			// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_keyword_clk_price), ");	// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_keyword_invalid_clk), ");
+		
+		//詞組比對(ReportTable尚未更改，先用廣泛比對欄位)
+		hql.append(" sum(r.ad_keyword_pv), ");
+		hql.append(" sum(r.ad_keyword_clk), ");			// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum(r.ad_keyword_clk_price), ");	// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum(r.ad_keyword_invalid_clk), ");
+		
+		//精準比對(ReportTable尚未更改，先用廣泛比對欄位)
+		hql.append(" sum(r.ad_keyword_pv), ");
+		hql.append(" sum(r.ad_keyword_clk), ");			// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum(r.ad_keyword_clk_price), ");	// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum(r.ad_keyword_invalid_clk), ");
+		
 		hql.append(" r.ad_keyword_pvclk_date, ");
 		hql.append(" r.ad_action_seq, ");
 		hql.append(" r.ad_group_seq, ");
@@ -386,10 +478,25 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 
 		hql.append("select ");
 		hql.append(" r.ad_keyword_pvclk_date, ");
+		
+		//廣泛比對
+		hql.append(" sum(r.ad_keyword_pv), ");
+		hql.append(" sum(r.ad_keyword_clk), ");			// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum(r.ad_keyword_clk_price), ");	// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum(r.ad_keyword_invalid_clk), ");
+		
+		//詞組比對(ReportTable尚未更改，先用廣泛比對欄位)
+		hql.append(" sum(r.ad_keyword_pv), ");
+		hql.append(" sum(r.ad_keyword_clk), ");			// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum(r.ad_keyword_clk_price), ");	// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum(r.ad_keyword_invalid_clk), ");
+		
+		//精準比對(ReportTable尚未更改，先用廣泛比對欄位)
 		hql.append(" sum(r.ad_keyword_pv), ");
 		hql.append(" sum(r.ad_keyword_clk), ");			// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_keyword_clk_price), ");	// 產生pfp_ad_keyword_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_keyword_invalid_clk) ");
+		
 		hql.append(" from pfp_ad_keyword_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");

@@ -67,49 +67,133 @@ ${page}/${totalPage}
 
 <br>
 
-<#if (tableDataList?size > 0) > 
-
-<table id="excerptTable" width="100%" border="0" cellpadding="0" cellspacing="1" class="tablesorter" > 
+<#if (AdKeywordReportVO?size > 0) > 
+<div style="overflow-x:auto;width:100%">
+<table id="excerptTable" border="0" cellpadding="0" cellspacing="1" class="tablesorter" > 
 
 	<thead>
-		<tr height="35"> 
-			<#list tableHeadList as th>
-			<th>${th}</th>
-			</#list>
+		<tr> 
+			<th height="35" style="min-width:40px"  rowspan="2">狀態</th>
+			<th height="35" style="min-width:120px" rowspan="2">關鍵字</th>
+			<th height="35" style="min-width:70px" rowspan="2">廣告</th>
+			<th height="35" style="min-width:60px" rowspan="2">分類</th>
+			<th height="35" style="min-width:60px" rowspan="2">裝置</th>
+			<th colspan="3">比對方式</th>
+			<th class="pvDataTh" style="min-width:100px" colspan="1" >曝光數 <input class="pvDataButton" type="button" onclick="toggleTd('pvData')" value="展開" /></th>
+			<th class="clkDataTh" style="min-width:110px" colspan="1">點選次數 <input class="clkDataButton" type="button" onclick="toggleTd('clkData')" value="展開" /></th>
+			<th class="clkRateDataTh" style="min-width:100px" colspan="1">點選率 <input class="clkRateDataButton" type="button" onclick="toggleTd('clkRateData')" value="展開" /></th>
+			<th class="clkPriceAvgDataTh" style="min-width:135px" colspan="1">平均點選費用 <input class="clkPriceAvgDataButton" type="button" onclick="toggleTd('clkPriceAvgData')" value="展開" /></th>
+			<th class="clkPriceDataTh" style="min-width:90px" colspan="1">費用 <input class="clkPriceDataButton" type="button" onclick="toggleTd('clkPriceData')" value="展開" /></th>
+			<th colspan="3">平均廣告排名</th>
 		</tr> 
+		<tr>
+			<th style="min-width:40px">廣泛<br/>比對</th>
+			<th style="min-width:40px">詞組<br/>比對</th>
+			<th style="min-width:40px">精準<br/>比對</th>
+			<th class="pvData" style="min-width:60px;display:none;">廣泛<br/>比對</th>
+			<th class="pvData" style="min-width:60px;display:none;">詞組<br/>比對</th>
+			<th class="pvData" style="min-width:60px;display:none;">精準<br/>比對</th>
+			<th style="min-width:60px;">總計</th>
+			<th class="clkData" style="min-width:50px;display:none;">廣泛<br/>比對</th>
+			<th class="clkData" style="min-width:50px;display:none;">詞組<br/>比對</th>
+			<th class="clkData" style="min-width:50px;display:none;">精準<br/>比對</th>
+			<th style="min-width:50px;">總計</th>
+			<th class="clkRateData" style="min-width:40px;display:none;">廣泛<br/>比對</th>
+			<th class="clkRateData" style="min-width:40px;display:none;">詞組<br/>比對</th>
+			<th class="clkRateData" style="min-width:40px;display:none;">精準<br/>比對</th>
+			<th style="min-width:40px;">總計</th>
+			<th class="clkPriceAvgData" style="min-width:60px;display:none;">廣泛<br/>比對</th>
+			<th class="clkPriceAvgData" style="min-width:60px;display:none;">詞組<br/>比對</th>
+			<th class="clkPriceAvgData" style="min-width:60px;display:none;">精準<br/>比對</th>
+			<th style="min-width:60px;">總計</th>
+			<th class="clkPriceData" style="min-width:70px;display:none;">廣泛<br/>比對</th>
+			<th class="clkPriceData" style="min-width:70px;display:none;">詞組<br/>比對</th>
+			<th class="clkPriceData" style="min-width:70px;display:none;">精準<br/>比對</th>
+			<th style="min-width:80px;">總計</th>
+			<th style="min-width:40px;">廣泛<br/>比對</th>
+			<th style="min-width:40px;">詞組<br/>比對</th>
+			<th style="min-width:40px;">精準<br/>比對</th>
+		</tr>
 	</thead>
 
 	<tbody>
-	<#list tableDataList as td>
-		<#assign index = 0>
+	<#list AdKeywordReportVO as vo>
 		<tr height="30">
-		<#list td as tdin>
-			<#if index = 8 || index = 9>
-				<td align="${align_data[index]}">NT$ ${tdin}</td>	
-			<#elseif index = 7>
-				<td align="${align_data[index]}">${tdin}%</td>
-			<#else>	
-				<td align="${align_data[index]}">${tdin}</td>
-			</#if>
-			<#assign index = index + 1>
-		</#list>
+			<td>${vo.adStatus!}</td>
+			<td class="td02">${vo.adKeyword!}</td>
+			<td class="td02">${vo.adActionName!}</td>
+			<td class="td02">${vo.adGroupName!}</td>
+			<td>${vo.kwDevice!}</td>
+			<td style="display:none;"></td>
+	        <td style="display:none;"></td>
+	        <td style="display:none;"></td>
+	        <td style="display:none;"></td>
+	        <td style="display:none;"></td>
+	        <td style="display:none;"></td>
+	        <td style="display:none;"></td>
+	        <td>${vo.kwOpen!}</td>
+	        <td>${vo.kwPhrOpen!}</td>
+	        <td>${vo.kwPreOpen!}</td>
+	        <td class="td01 pvData" style="display:none;" >${vo.kwPvSum!}</td>
+	        <td class="td01 pvData" style="display:none;" >${vo.kwPhrPvSum!}</td>
+	        <td class="td01 pvData" style="display:none;" >${vo.kwPrePvSum!}</td>
+	        <td class="td01">${vo.kwPvTotal!}</td>
+	        <td class="td01 clkData" style="display:none;" >${vo.kwClkSum!}</td>
+	        <td class="td01 clkData" style="display:none;" >${vo.kwPhrClkSum!}</td>
+	        <td class="td01 clkData" style="display:none;" >${vo.kwPreClkSum!}</td>
+	        <td class="td01">${vo.kwClkTotal!}</td>
+	        <td class="td01 clkRateData" style="display:none;" >${vo.kwCtrSum!}%</td>
+	        <td class="td01 clkRateData" style="display:none;" >${vo.kwPhrCtrSum!}%</td>
+	        <td class="td01 clkRateData" style="display:none;" >${vo.kwPreCtrSum!}%</td>
+	        <td class="td01">${vo.kwCtrTotal!}%</td>
+	        <td class="td01 clkPriceAvgData" style="display:none;" >NT$ ${vo.kwPriceAvgSum!}</td>
+	        <td class="td01 clkPriceAvgData" style="display:none;" >NT$ ${vo.kwPhrPriceAvgSum!}</td>
+	        <td class="td01 clkPriceAvgData" style="display:none;" >NT$ ${vo.kwPrePriceAvgSum!}</td>
+	        <td class="td01">NT$ ${vo.kwPriceAvgTotal!}</td>
+	        <td class="td01 clkPriceData" style="display:none;" >NT$ ${vo.kwPriceSum!}</td>
+	        <td class="td01 clkPriceData" style="display:none;" >NT$ ${vo.kwPhrPriceSum!}</td>
+	        <td class="td01 clkPriceData" style="display:none;" >NT$ ${vo.kwPrePriceSum!}</td>
+	        <td class="td01">NT$ ${vo.kwPriceTotal!}</td>
+	        <td class="td01">${vo.adRankAvg!}</td>
+	        <td class="td01">${vo.adPhrRankAvg!}</td>
+	        <td class="td01">${vo.adPreRankAvg!}</td>   
 		</tr>
 	</#list>
 	</tbody>
 
  	<tfoot>
  	<tr height="35">
-	    <#assign index2 = 0>
-   		<#list tableDataTotalList as th>
-			<#if index2 = 8 || index2 = 9>
-				<th height="30" align="${align_sum[index2]}">NT$ ${th}</th>
-			<#elseif index2 = 7>
-				<th height="30" align="${align_sum[index2]}">${th}%</th>	
-			<#else>	
-				<th height="30" align="${align_sum[index2]}">${th}</th>
-			</#if>
-			<#assign index2 = index2 + 1>
-    	</#list>
+	    <th height="30"></th>
+	    <th height="30">${AdKeywordReportDataTotal.dataTotal!}</th>
+	    <th height="30"></th>
+	    <th height="30"></th>
+	    <th height="30"></th>
+	    <th height="30"></th>
+	    <th height="30"></th>
+	    <th height="30"></th>
+	    <th height="30" class="td01 pvData" style="display:none;" >${AdKeywordReportDataTotal.kwPvSum!}</th>
+        <th height="30" class="td01 pvData" style="display:none;" >${AdKeywordReportDataTotal.kwPhrPvSum!}</th>
+        <th height="30" class="td01 pvData" style="display:none;" >${AdKeywordReportDataTotal.kwPrePvSum!}</th>
+        <th height="30" class="td01">${AdKeywordReportDataTotal.kwPvTotal!}</th>
+        <th height="30" class="td01 clkData" style="display:none;" >${AdKeywordReportDataTotal.kwClkSum!}</th>
+        <th height="30" class="td01 clkData" style="display:none;" >${AdKeywordReportDataTotal.kwPhrClkSum!}</th>
+        <th height="30" class="td01 clkData" style="display:none;" >${AdKeywordReportDataTotal.kwPreClkSum!}</th>
+        <th height="30" class="td01">${AdKeywordReportDataTotal.kwClkTotal!}</th>
+        <th height="30" class="td01 clkRateData" style="display:none;" >${AdKeywordReportDataTotal.kwCtrSum!}%</th>
+        <th height="30" class="td01 clkRateData" style="display:none;" >${AdKeywordReportDataTotal.kwPhrCtrSum!}%</th>
+        <th height="30" class="td01 clkRateData" style="display:none;" >${AdKeywordReportDataTotal.kwPreCtrSum!}%</th>
+        <th height="30" class="td01">${AdKeywordReportDataTotal.kwCtrTotal!}%</th>
+        <th height="30" class="td01 clkPriceAvgData" style="display:none;" >NT$ ${AdKeywordReportDataTotal.kwPriceAvgSum!}</th>
+        <th height="30" class="td01 clkPriceAvgData" style="display:none;" >NT$ ${AdKeywordReportDataTotal.kwPhrPriceAvgSum!}</th>
+        <th height="30" class="td01 clkPriceAvgData" style="display:none;" >NT$ ${AdKeywordReportDataTotal.kwPrePriceAvgSum!}</th>
+        <th height="30" class="td01">NT$ ${AdKeywordReportDataTotal.kwPriceAvgTotal!}</th>
+        <th height="30" class="td01 clkPriceData" style="display:none;" >NT$ ${AdKeywordReportDataTotal.kwPriceSum!}</th>
+        <th height="30" class="td01 clkPriceData" style="display:none;" >NT$ ${AdKeywordReportDataTotal.kwPhrPriceSum!}</th>
+        <th height="30" class="td01 clkPriceData" style="display:none;" >NT$ ${AdKeywordReportDataTotal.kwPrePriceSum!}</th>
+	    <th height="30" class="td01">NT$ ${AdKeywordReportDataTotal.kwPriceTotal!}</th>
+	    <th height="30"></th>
+	    <th height="30"></th>
+	    <th height="30"></th>
    	</tr> 
    	</tfoot>
  
@@ -133,6 +217,7 @@ ${page}/${totalPage}
   
 </table> 
 </#if>
+</div>
 <form id="excerptFrom" name="excerptFrom" action="reportKeywordDownload.html" method="post">
 	<input type="hidden" id="formPage" name="page" value="${page}">	
 	<input type="hidden" id="fpageSize" name="pageSize" value="${pageSize}">
