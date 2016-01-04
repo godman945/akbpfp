@@ -258,9 +258,23 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 		// 統計每項關鍵字廣告成本
 		StringBuffer hql = new StringBuffer();
 		
-		hql.append("select adKeywordSeq, sum(adKeywordPv), sum(adKeywordClk), sum(adKeywordClkPrice), ");
+		hql.append("select adKeywordSeq, ");
+		
+		//廣泛比對
+		hql.append(" 		sum(adKeywordPv), sum(adKeywordClk), sum(adKeywordClkPrice), ");
+		hql.append(" 		sum(adKeywordInvalidClk), ");	
+		hql.append(" 		sum(adKeywordInvalidClkPrice), ");
+		
+		//詞組比對(table尚未確定欄位，所以資料先以廣泛比對欄未替代)
+		hql.append(" 		sum(adKeywordPv), sum(adKeywordClk), sum(adKeywordClkPrice), ");
+		hql.append(" 		sum(adKeywordInvalidClk), ");	
+		hql.append(" 		sum(adKeywordInvalidClkPrice), ");
+		
+		//精準比對(table尚未確定欄位，所以資料先以廣泛比對欄未替代)
+		hql.append(" 		sum(adKeywordPv), sum(adKeywordClk), sum(adKeywordClkPrice), ");
 		hql.append(" 		sum(adKeywordInvalidClk), ");	
 		hql.append(" 		sum(adKeywordInvalidClkPrice) ");
+		
 		hql.append(" from PfpAdKeywordReport");
 		hql.append(" where customerInfoId = :customerInfoId ");	
 		hql.append(" and adKeywordPvclkDate >= :startDate ");

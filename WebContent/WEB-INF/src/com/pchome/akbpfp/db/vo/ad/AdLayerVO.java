@@ -23,6 +23,33 @@ public class AdLayerVO {
 	private String showUrl = "";
 	private String title = "";
 	
+	//關鍵字廣泛比對
+	private String widOpen = "";
+	private float widPv = 0;
+	private float widClk = 0;
+	private float widClkCost = 0;
+	private float widClkRate = 0;
+	private float widAvgClkCost = 0;	
+	private float widInvalidClk = 0;
+	
+	//關鍵字詞組比對
+	private String phrOpen = "";
+	private float phrPv = 0;
+	private float phrClk = 0;
+	private float phrClkCost = 0;
+	private float phrClkRate = 0;
+	private float phrAvgClkCost = 0;	
+	private float phrInvalidClk = 0;
+	
+	//關鍵字精準比對
+	private String preOpen = "";
+	private float prePv = 0;
+	private float preClk = 0;
+	private float preClkCost = 0;
+	private float preClkRate = 0;
+	private float preAvgClkCost = 0;	
+	private float preInvalidClk = 0;
+	
 	public String getSeq() {
 		return seq;
 	}
@@ -136,6 +163,132 @@ public class AdLayerVO {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public String getWidOpen() {
+		return widOpen;
+	}
+	public void setWidOpen(String widOpen) {
+		this.widOpen = widOpen;
+	}
+	public float getWidPv() {
+		return widPv;
+	}
+	public void setWidPv(float widPv) {
+		this.widPv = widPv;
+	}
+	public float getWidClk() {
+		return widClk;
+	}
+	public void setWidClk(float widClk) {
+		this.widClk = widClk;
+	}
+	public float getWidClkCost() {
+		return widClkCost;
+	}
+	public void setWidClkCost(float widClkCost) {
+		this.widClkCost = widClkCost;
+	}
+	public float getWidClkRate() {
+		return widClkRate;
+	}
+	public void setWidClkRate(float widClkRate) {
+		this.widClkRate = widClkRate;
+	}
+	public float getWidAvgClkCost() {
+		return widAvgClkCost;
+	}
+	public void setWidAvgClkCost(float widAvgClkCost) {
+		this.widAvgClkCost = widAvgClkCost;
+	}
+	public float getWidInvalidClk() {
+		return widInvalidClk;
+	}
+	public void setWidInvalidClk(float widInvalidClk) {
+		this.widInvalidClk = widInvalidClk;
+	}
+	public String getPhrOpen() {
+		return phrOpen;
+	}
+	public void setPhrOpen(String phrOpen) {
+		this.phrOpen = phrOpen;
+	}
+	public float getPhrPv() {
+		return phrPv;
+	}
+	public void setPhrPv(float phrPv) {
+		this.phrPv = phrPv;
+	}
+	public float getPhrClk() {
+		return phrClk;
+	}
+	public void setPhrClk(float phrClk) {
+		this.phrClk = phrClk;
+	}
+	public float getPhrClkCost() {
+		return phrClkCost;
+	}
+	public void setPhrClkCost(float phrClkCost) {
+		this.phrClkCost = phrClkCost;
+	}
+	public float getPhrClkRate() {
+		return phrClkRate;
+	}
+	public void setPhrClkRate(float phrClkRate) {
+		this.phrClkRate = phrClkRate;
+	}
+	public float getPhrAvgClkCost() {
+		return phrAvgClkCost;
+	}
+	public void setPhrAvgClkCost(float phrAvgClkCost) {
+		this.phrAvgClkCost = phrAvgClkCost;
+	}
+	public float getPhrInvalidClk() {
+		return phrInvalidClk;
+	}
+	public void setPhrInvalidClk(float phrInvalidClk) {
+		this.phrInvalidClk = phrInvalidClk;
+	}
+	public String getPreOpen() {
+		return preOpen;
+	}
+	public void setPreOpen(String preOpen) {
+		this.preOpen = preOpen;
+	}
+	public float getPrePv() {
+		return prePv;
+	}
+	public void setPrePv(float prePv) {
+		this.prePv = prePv;
+	}
+	public float getPreClk() {
+		return preClk;
+	}
+	public void setPreClk(float preClk) {
+		this.preClk = preClk;
+	}
+	public float getPreClkCost() {
+		return preClkCost;
+	}
+	public void setPreClkCost(float preClkCost) {
+		this.preClkCost = preClkCost;
+	}
+	public float getPreClkRate() {
+		return preClkRate;
+	}
+	public void setPreClkRate(float preClkRate) {
+		this.preClkRate = preClkRate;
+	}
+	public float getPreAvgClkCost() {
+		return preAvgClkCost;
+	}
+	public void setPreAvgClkCost(float preAvgClkCost) {
+		this.preAvgClkCost = preAvgClkCost;
+	}
+	public float getPreInvalidClk() {
+		return preInvalidClk;
+	}
+	public void setPreInvalidClk(float preInvalidClk) {
+		this.preInvalidClk = preInvalidClk;
 	}
 	
 }

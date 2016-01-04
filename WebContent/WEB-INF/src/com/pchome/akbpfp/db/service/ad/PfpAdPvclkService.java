@@ -174,6 +174,28 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 		            		PfpAdKeyword pfpAdKeyword = (PfpAdKeyword)dataDetails.get(seq);
 		    				// 設定關鍵字廣告的名稱及狀態
 		    				adLayerVO.setName(pfpAdKeyword.getAdKeyword());
+		    				int widOpen = pfpAdKeyword.getAdKeywordOpen();
+		    				int phrOpen = pfpAdKeyword.getAdKeywordPhraseOpen();
+		    				int preOpen = pfpAdKeyword.getAdKeywordPrecisionOpen();
+		    				
+		    				if(widOpen == 1){
+		    					adLayerVO.setWidOpen("開啟");
+		    				} else {
+		    					adLayerVO.setWidOpen("關閉");
+		    				}
+		    				
+		    				if(phrOpen == 1){
+		    					adLayerVO.setPhrOpen("開啟");
+		    				} else {
+		    					adLayerVO.setPhrOpen("關閉");
+		    				}
+		    				
+		    				if(preOpen == 1){
+		    					adLayerVO.setPreOpen("開啟");
+		    				} else {
+		    					adLayerVO.setPreOpen("關閉");
+		    				}
+		    				
 		    				statusId = pfpAdKeyword.getAdKeywordStatus();
 		            	}
 		            	//顯示廣告明細
@@ -195,38 +217,133 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 							adLayerVO.setStatusChName(status.getStatusRemark());
 						}
 					}
+					if(EnumAdLayer.AD_KEYWORD.getType().equals(enumAdLayer.getType())){
+						// 關鍵字廣泛比對廣告成效資料
+						Integer widPv = Integer.parseInt(ob[1].toString());
+						float widClk = Float.parseFloat(ob[2].toString());
+						float widCost = Float.parseFloat(ob[3].toString());				
+						float widClkRate = 0;
+						float widClkCostAvg = 0;
+						float widInvalidClk = Float.parseFloat(ob[4].toString());
+						
+						// 關鍵字詞組比對廣告成效資料
+						Integer phrPv = Integer.parseInt(ob[6].toString());
+						float phrClk = Float.parseFloat(ob[7].toString());
+						float phrCost = Float.parseFloat(ob[8].toString());				
+						float phrClkRate = 0;
+						float phrClkCostAvg = 0;
+						float phrInvalidClk = Float.parseFloat(ob[9].toString());
+						
+						// 關鍵字精準比對廣告成效資料
+						Integer prePv = Integer.parseInt(ob[11].toString());
+						float preClk = Float.parseFloat(ob[12].toString());
+						float preCost = Float.parseFloat(ob[13].toString());				
+						float preClkRate = 0;
+						float preClkCostAvg = 0;
+						float preInvalidClk = Float.parseFloat(ob[14].toString());
+						
+						// 關鍵字廣告成效資料總計
+						Integer pv = widPv + phrPv + prePv;
+						float realClk = widClk + phrClk + preClk;
+						float realCost = widCost + phrCost + preCost;				
+						float clkRate = 0;
+						float clkCostAvg = 0;
+						float invalidClk = widInvalidClk + phrInvalidClk + preInvalidClk;
+						
+						// 計算點擊率
+						if(widClk > 0 || widPv > 0){
+							widClkRate = widClk / (float)widPv*100;
+						}
+						
+						if(phrClk > 0 || phrPv > 0){
+							phrClkRate = phrClk / (float)phrPv*100;
+						}
+						
+						if(preClk > 0 || prePv > 0){
+							preClkRate = preClk / (float)prePv*100;
+						}
+						
+						if(realClk > 0 || pv > 0){
+							clkRate = realClk / (float)pv*100;
+						}
 
-					// 顯示廣告成效資料
-					int pv = Integer.parseInt(ob[1].toString());
-					float realClk = Float.parseFloat(ob[2].toString());
-					float realCost = Float.parseFloat(ob[3].toString());				
-					float clkRate = 0;
-					float clkCostAvg = 0;
-					float invalidClk = Float.parseFloat(ob[4].toString());
-					//float invalidClkCost = Float.parseFloat(ob[5].toString());
+						// 計算平均點擊費用
+						if(widCost > 0 || widClk > 0){
+							widClkCostAvg = widCost / widClk;
+						}
+						
+						if(phrCost > 0 || phrClk > 0){
+							phrClkCostAvg = phrCost / phrClk;
+						}
+						
+						if(preCost > 0 || preClk > 0){
+							preClkCostAvg = preCost / preClk;
+						}
+						
+						if(realCost > 0 || realClk > 0){
+							clkCostAvg = realCost / realClk;
+						}
+						
+						adLayerVO.setWidPv(widPv);
+						adLayerVO.setWidClk(widClk);
+						adLayerVO.setWidClkCost(widCost);
+						adLayerVO.setWidClkRate(widClkRate);
+						adLayerVO.setWidAvgClkCost(widClkCostAvg);
+						adLayerVO.setWidInvalidClk(widInvalidClk);
+						
+						adLayerVO.setPhrPv(phrPv);
+						adLayerVO.setPhrClk(phrClk);
+						adLayerVO.setPhrClkCost(phrCost);
+						adLayerVO.setPhrClkRate(phrClkRate);
+						adLayerVO.setPhrAvgClkCost(phrClkCostAvg);
+						adLayerVO.setPhrInvalidClk(phrInvalidClk);
+						
+						adLayerVO.setPrePv(prePv);
+						adLayerVO.setPreClk(preClk);
+						adLayerVO.setPreClkCost(preCost);
+						adLayerVO.setPreClkRate(preClkRate);
+						adLayerVO.setPreAvgClkCost(preClkCostAvg);
+						adLayerVO.setPreInvalidClk(preInvalidClk);
+						
+						adLayerVO.setPv(pv);
+						adLayerVO.setClk(realClk);
+						adLayerVO.setClkCost(realCost);
+						adLayerVO.setClkRate(clkRate);
+						adLayerVO.setAvgClkCost(clkCostAvg);
+						adLayerVO.setInvalidClk(invalidClk);
+					} else {
+						// 顯示廣告成效資料
+						Integer pv = Integer.parseInt(ob[1].toString());
+						float realClk = Float.parseFloat(ob[2].toString());
+						float realCost = Float.parseFloat(ob[3].toString());				
+						float clkRate = 0;
+						float clkCostAvg = 0;
+						float invalidClk = Float.parseFloat(ob[4].toString());
+						//float invalidClkCost = Float.parseFloat(ob[5].toString());
 
-					//float realClk = ((float)clk - invalidClk);
-					//float realClk = (float)clk;
-					//float realCost = clkCost - invalidClkCost;
-					//float realCost = Float.parseFloat(ob[5].toString());
+						//float realClk = ((float)clk - invalidClk);
+						//float realClk = (float)clk;
+						//float realCost = clkCost - invalidClkCost;
+						//float realCost = Float.parseFloat(ob[5].toString());
 
-					// 計算點擊率
-					if(realClk > 0 || pv > 0){
-						clkRate = realClk / (float)pv*100;
+						// 計算點擊率
+						if(realClk > 0 || pv > 0){
+							clkRate = realClk / (float)pv*100;
+						}
+
+						// 計算平均點擊費用
+						if(realCost > 0 || realClk > 0){
+							clkCostAvg = realCost / realClk;
+						}
+
+						adLayerVO.setPv(pv);
+						adLayerVO.setClk(realClk);
+						adLayerVO.setClkCost(realCost);
+						adLayerVO.setClkRate(clkRate);
+						adLayerVO.setAvgClkCost(clkCostAvg);
+						adLayerVO.setInvalidClk(invalidClk);
 					}
-
-					// 計算平均點擊費用
-					if(realCost > 0 || realClk > 0){
-						clkCostAvg = realCost / realClk;
-					}
-
-					adLayerVO.setPv(pv);
-					adLayerVO.setClk(realClk);
-					adLayerVO.setClkCost(realCost);
-					adLayerVO.setClkRate(clkRate);
-					adLayerVO.setAvgClkCost(clkCostAvg);
-					adLayerVO.setInvalidClk(invalidClk);
-
+					
 					adLayerVOs.add(adLayerVO);
 				}
 			}

@@ -369,7 +369,11 @@ function findAdTable(){
 		success:function(response, status){
 			$("#tableList").html(response);	
 			page();
-			tableSorter();
+			if(adLayerType == "adKeyword"){
+				tableSorter2();
+			} else {
+				tableSorter();
+			}
 			
 		},
 		error: function(xtl) {
@@ -393,8 +397,45 @@ function tableSorter(){
 	
 	$("#listTable").tablesorter({
 		headers:{
+			 2 : { sorter: 'fancyNumber' },
+			 3 : { sorter: 'fancyNumber' },
+			 4 : { sorter: 'fancyNumber' },
 			 5 : { sorter: 'rangesort' },
 			 6 : { sorter: 'rangesort' }
+			}
+	});
+}
+
+function tableSorter2(){
+	
+	$("#listTable2").tablesorter({
+		headers:{
+			 2 : {sorter:false},
+			 3 : {sorter:false},
+			 4 : {sorter:false},
+			 5 : {sorter:false},
+			 6 : {sorter:false},
+			 7 : {sorter:false},
+			 11 : { sorter: 'fancyNumber' },
+			 12 : { sorter: 'fancyNumber' },
+			 13 : { sorter: 'fancyNumber' },
+			 14 : { sorter: 'fancyNumber' },
+			 15 : { sorter: 'fancyNumber' },
+			 16 : { sorter: 'fancyNumber' },
+			 17 : { sorter: 'fancyNumber' },
+			 18 : { sorter: 'fancyNumber' },
+			 19 : { sorter: 'fancyNumber' },
+			 20 : { sorter: 'fancyNumber' },
+			 21 : { sorter: 'fancyNumber' },
+			 22 : { sorter: 'fancyNumber' },
+			 23 : { sorter: 'rangesort' },
+			 24 : { sorter: 'rangesort' },
+			 25 : { sorter: 'rangesort' },
+			 26 : { sorter: 'rangesort' },
+			 27 : { sorter: 'rangesort' },
+			 28 : { sorter: 'rangesort' },
+			 29 : { sorter: 'rangesort' },
+			 30 : { sorter: 'rangesort' }
 			}
 	});
 }
@@ -412,4 +453,18 @@ function preview(img) {
         'overlayColor':'#fff',
         'scrolling':'no'
     });
+}
+
+//明細按鈕(展開/隱藏)
+function toggleTd(tdClass){
+	var number = $("." + tdClass + "Th").attr("colspan");
+	if(number == 1){
+		$("." + tdClass + "Button").val("隱藏");
+		$("." + tdClass + "Th").attr("colspan","4");
+	} else {
+		$("." + tdClass + "Button").val("展開");
+		$("." + tdClass + "Th").attr("colspan","1");
+	}
+	
+	$("." + tdClass).toggle();
 }
