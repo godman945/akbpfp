@@ -79,10 +79,10 @@ ${page}/${totalPage}
 
 	<thead>
 		<tr> 
-			<th height="35" style="min-width:120px" rowspan="2">關鍵字</th>
-			<th height="35" style="min-width:70px" rowspan="2">類型</th>
-			<th height="35" style="min-width:40px"  rowspan="2">狀態</th>
-			<th height="35" style="min-width:60px" rowspan="2">裝置</th>
+			<th height="35" style="min-width:100px" rowspan="2">關鍵字</th>
+			<th height="35" style="min-width:55px" rowspan="2">類型</th>
+			<th height="35" style="min-width:35px"  rowspan="2">狀態</th>
+			<th height="35" style="min-width:55px" rowspan="2">裝置</th>
 			<th colspan="3">比對方式</th>
 			<th class="pvDataTh" style="min-width:100px" colspan="1" >曝光數 <input class="pvDataButton" type="button" onclick="toggleTd('pvData')" value="展開" /></th>
 			<th class="clkDataTh" style="min-width:110px" colspan="1">點選次數 <input class="clkDataButton" type="button" onclick="toggleTd('clkData')" value="展開" /></th>
