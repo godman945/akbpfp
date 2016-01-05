@@ -73,7 +73,7 @@ public class AdActionViewAction extends BaseSSLAction{
 		if (pfpCustomerInfo.getPfdUserAdAccountRefs().size()>0) {
 			PfdUserAdAccountRef ref = pfpCustomerInfo.getPfdUserAdAccountRefs().iterator().next();
 			PfdCustomerInfo pfdCustomerInfo = ref.getPfdCustomerInfo();
-			if (pfdCustomerInfo.getMixFlag().equals("y")) { //綜合經銷商
+			if ("y".equals(pfdCustomerInfo.getMixFlag())) { //綜合經銷商
 				//若無有效合約 -> 鎖掉新增按鈕
 				if (pfdCustomerInfo.getPfdContracts().size()>0) {
 					boolean haveActiveContract = false;
