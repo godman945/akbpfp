@@ -87,7 +87,7 @@ ${page}/${totalPage}
 			<th class="pvDataTh" style="min-width:100px" colspan="1" >曝光數 <input class="pvDataButton" type="button" onclick="toggleTd('pvData')" value="展開" /></th>
 			<th class="clkDataTh" style="min-width:110px" colspan="1">點選次數 <input class="clkDataButton" type="button" onclick="toggleTd('clkData')" value="展開" /></th>
 			<th class="clkRateDataTh" style="min-width:100px" colspan="1">點選率 <input class="clkRateDataButton" type="button" onclick="toggleTd('clkRateData')" value="展開" /></th>
-			<th class="invClickDataTh" style="min-width:135px" colspan="1">無效點選次數 <input class="clkInvClickDataButton" type="button" onclick="toggleTd('invClickData')" value="展開" /></th>
+			<th class="invClickDataTh" style="min-width:135px" colspan="1">無效點選次數 <input class="invClickDataButton" type="button" onclick="toggleTd('invClickData')" value="展開" /></th>
 			<th class="clkPriceAvgDataTh" style="min-width:135px" colspan="1">平均點選費用 <input class="clkPriceAvgDataButton" type="button" onclick="toggleTd('clkPriceAvgData')" value="展開" /></th>
 			<th class="clkPriceDataTh" style="min-width:90px" colspan="1">費用 <input class="clkPriceDataButton" type="button" onclick="toggleTd('clkPriceData')" value="展開" /></th>
 		</tr> 
