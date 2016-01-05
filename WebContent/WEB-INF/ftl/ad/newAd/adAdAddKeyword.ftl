@@ -55,9 +55,10 @@
 					<tr>
 						<th>
 							<span class="t_s02">* </span>關鍵字比對方式<br>
+							<span class="t_s01">關鍵字搜尋觸擊範圍從廣泛到精準：廣泛比對→詞組比對→精準比對。建議您先使用廣泛比對，以提高搜尋廣告曝光的機會。</span>
 						</th>
 						<td>
-							<input type="checkbox" id="adKeywordOpen" name="adKeywordOpen" />廣泛比對
+							<input type="checkbox" id="adKeywordOpen" name="adKeywordOpen" checked />廣泛比對
             				<input type="checkbox" id="adKeywordPhraseOpen" name="adKeywordPhraseOpen" />詞組比對
             				<input type="checkbox" id="adKeywordPrecisionOpen" name="adKeywordPrecisionOpen" />精準比對
             				<span id="chkAdKeywordOpen" name="chkAdKeywordOpen" style="color:red"></span>
