@@ -156,6 +156,42 @@ function ready(){
             10 : { sorter: 'rangesort' }
         }
     });
+    
+    //關鍵字專用
+    $("#excerptTable2").tablesorter({
+        headers: {
+    	    4 : {sorter:false},
+			5 : {sorter:false},
+			6 : {sorter:false},
+			7 : {sorter:false},
+			8 : {sorter:false},
+			9 : {sorter:false},
+			10 : {sorter:false},
+			14 : { sorter: 'fancyNumber' },
+			15 : { sorter: 'fancyNumber' },
+			16 : { sorter: 'fancyNumber' },
+			17 : { sorter: 'fancyNumber' },
+			18 : { sorter: 'fancyNumber' },
+			19 : { sorter: 'fancyNumber' },
+			20 : { sorter: 'fancyNumber' },
+			21 : { sorter: 'fancyNumber' },
+			22 : { sorter: 'fancyNumber' },
+			23 : { sorter: 'fancyNumber' },
+			24 : { sorter: 'fancyNumber' },
+			25 : { sorter: 'fancyNumber' },
+			26 : { sorter: 'fancyNumber' },
+			27 : { sorter: 'fancyNumber' },
+			28 : { sorter: 'fancyNumber' },
+			29 : { sorter: 'rangesort' },
+			30 : { sorter: 'rangesort' },
+			31 : { sorter: 'rangesort' },
+			32 : { sorter: 'rangesort' },
+			33 : { sorter: 'rangesort' },
+			34 : { sorter: 'rangesort' },
+			35 : { sorter: 'rangesort' },
+			36 : { sorter: 'rangesort' }
+        }
+    });
 	
 	 //日期區間內容
     $('#IT_dateRange').attr("value", $('#fstartDate').val() + "~" + $('#fendDate').val());
@@ -522,6 +558,11 @@ function preview(img) {
 }
 
 function showHighChart(){
+	//----關鍵字專用----
+	var widDataArray;
+	var phrDataArray;
+	var preDataArray;
+	//------------------
 	var dataArray;
 	$.ajax({
 		url : "reportExcerptAjaxChart.html",
@@ -542,7 +583,14 @@ function showHighChart(){
 		},
 		success : function(respone) {
 			console.log(respone);
-			dataArray = respone;
+			if($('#fadType').val() == "adtype_keyword"){
+				widDataArray = respone[0];
+				phrDataArray = respone[1];
+				preDataArray = respone[2];
+				dataArray = respone[3];
+			} else {
+				dataArray = respone;
+			}
 		}
 	});
 	
@@ -627,80 +675,190 @@ function showHighChart(){
        	}
     });
 
-	$('#hcharts_bx').highcharts({  
-		chart: {
-	        type: chartPic 
-	    },	
-	    
-	    title: {
-	        text: titleName,
-	        style: {
-	        	color: fontColor,
-	        	fontWeight: 'bold',
-	        	fontFamily: '"微軟正黑體", Microsoft JhengHei, Arial, Helvetica, sans-serif, verdana'
-	        	//fontSize:'11px'
-	        	
-	        }
-	        //x: -20 //center
-	    },
-	    subtitle: {
-	        text: '',
-	        x: -20
-	    },
-	    
-	    xAxis: {
-	        crosshair: true,
-			type: 'datetime',
-			dateTimeLabelFormats:{
-				
-	            day: '%m/%d',
-	            week:'%m/%d',
-	            month:'%m/%d'
-	            
-			}
-		},
-	    yAxis: {
-	        title: {
-	            text: '',
-	            align: 'high',
-	            rotation: 0,
-	            offset: 0,
-	            x: -15,
-	            y: -20
-	        },
-	        plotLines: [{
-	            value: 0,
-	            width: 1,
-	            color: '#808080'
-	        }]
-	    },
-	    tooltip: {
-	        valueSuffix: selectSuffix,
-	        shared: true,
-	        borderColor:'#909090',
-	        borderWidth: 1,
-	        valueDecimals: decimals,
-	        dateTimeLabelFormats:{		
-	            day:"%A, %m/%d, %Y" 
-			}
-	    },
-	    
-	    series: [{
-	        name: selectTypeName,
-	        data: dataArray,
-	        lineWidth: 2,
-	        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
-	        pointInterval: 24 * 3600 * 1000
-	        
-	    }],
-	    legend: { //選單
-			enabled:false
-		},
-		exporting: { //右上打印
-			//enabled:false
-		},
-		credits: { //右下網址
-			enabled:false
-		},
-	});
+    if($('#fadType').val() == "adtype_keyword"){	//關鍵字圖表另外設定
+    	$('#hcharts_bx').highcharts({  
+    		chart: {
+    	        type: chartPic 
+    	    },	
+    	    
+    	    title: {
+    	        text: titleName,
+    	        style: {
+    	        	color: fontColor,
+    	        	fontWeight: 'bold',
+    	        	fontFamily: '"微軟正黑體", Microsoft JhengHei, Arial, Helvetica, sans-serif, verdana'
+    	        	//fontSize:'11px'
+    	        	
+    	        }
+    	        //x: -20 //center
+    	    },
+    	    subtitle: {
+    	        text: '',
+    	        x: -20
+    	    },
+    	    
+    	    xAxis: {
+    	        crosshair: true,
+    			type: 'datetime',
+    			dateTimeLabelFormats:{
+    				
+    	            day: '%m/%d',
+    	            week:'%m/%d',
+    	            month:'%m/%d'
+    	            
+    			}
+    		},
+    	    yAxis: {
+    	        title: {
+    	            text: '',
+    	            align: 'high',
+    	            rotation: 0,
+    	            offset: 0,
+    	            x: -15,
+    	            y: -20
+    	        },
+    	        plotLines: [{
+    	            value: 0,
+    	            width: 1,
+    	            color: '#808080'
+    	        }]
+    	    },
+    	    tooltip: {
+    	        valueSuffix: selectSuffix,
+    	        shared: true,
+    	        borderColor:'#909090',
+    	        borderWidth: 1,
+    	        valueDecimals: decimals,
+    	        dateTimeLabelFormats:{		
+    	            day:"%A, %m/%d, %Y" 
+    			}
+    	    },
+    	    
+    	    series: [
+    	        {	name: "廣泛比對" + selectTypeName,
+    		        data: widDataArray,
+    		        lineWidth: 2,
+    		        color: "#FFFF00",
+    		        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+    		        pointInterval: 24 * 3600 * 1000},
+    	        {	name: "詞組比對" + selectTypeName,
+    		        data: phrDataArray,
+    		        lineWidth: 2,
+    		        color: "#00FF00",
+    		        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+    		        pointInterval: 24 * 3600 * 1000},
+    	        {	name: "精準比對" + selectTypeName,
+    		        data: preDataArray,
+    		        lineWidth: 2,
+    		        color: "#CC00FF",
+    		        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+    		        pointInterval: 24 * 3600 * 1000},
+    	        {	name: "總" + selectTypeName,
+    	        	data: dataArray,
+    	        	lineWidth: 2,
+    	        	pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+    	        	pointInterval: 24 * 3600 * 1000}
+    	    ],
+    	    legend: { //選單
+    			enabled:true
+    		},
+    		exporting: { //右上打印
+    			//enabled:false
+    		},
+    		credits: { //右下網址
+    			enabled:false
+    		},
+    	});
+    } else {
+    	$('#hcharts_bx').highcharts({  
+    		chart: {
+    			type: chartPic 
+    		},	
+    		
+    		title: {
+    			text: titleName,
+    			style: {
+    				color: fontColor,
+    				fontWeight: 'bold',
+    				fontFamily: '"微軟正黑體", Microsoft JhengHei, Arial, Helvetica, sans-serif, verdana'
+    					//fontSize:'11px'
+    					
+    			}
+    		//x: -20 //center
+    		},
+    		subtitle: {
+    			text: '',
+    			x: -20
+    		},
+    		
+    		xAxis: {
+    			crosshair: true,
+    			type: 'datetime',
+    			dateTimeLabelFormats:{
+    				
+    				day: '%m/%d',
+    				week:'%m/%d',
+    				month:'%m/%d'
+    					
+    			}
+    		},
+    		yAxis: {
+    			title: {
+    				text: '',
+    				align: 'high',
+    				rotation: 0,
+    				offset: 0,
+    				x: -15,
+    				y: -20
+    			},
+    			plotLines: [{
+    				value: 0,
+    				width: 1,
+    				color: '#808080'
+    			}]
+    		},
+    		tooltip: {
+    			valueSuffix: selectSuffix,
+    			shared: true,
+    			borderColor:'#909090',
+    			borderWidth: 1,
+    			valueDecimals: decimals,
+    			dateTimeLabelFormats:{		
+    				day:"%A, %m/%d, %Y" 
+    			}
+    		},
+    		
+    		series: [{
+    			name: selectTypeName,
+    			data: dataArray,
+    			lineWidth: 2,
+    			pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+    			pointInterval: 24 * 3600 * 1000
+    			
+    		}],
+    		legend: { //選單
+    			enabled:false
+    		},
+    		exporting: { //右上打印
+    			//enabled:false
+    		},
+    		credits: { //右下網址
+    			enabled:false
+    		},
+    	});	
+    }
+}
+
+//明細按鈕(展開/隱藏)
+function toggleTd(tdClass){
+	var number = $("." + tdClass + "Th").attr("colspan");
+	if(number == 1){
+		$("." + tdClass + "Button").val("隱藏");
+		$("." + tdClass + "Th").attr("colspan","4");
+	} else {
+		$("." + tdClass + "Button").val("展開");
+		$("." + tdClass + "Th").attr("colspan","1");
+	}
+	
+	$("." + tdClass).toggle();
 }

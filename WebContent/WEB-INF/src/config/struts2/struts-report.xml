@@ -15,6 +15,13 @@
                 </param>
                 <param name="inputName">downloadFileStream</param>
             </result>
+            <result name="adKeywordReport" type="stream">
+             	<param name="contentType">application/octet-stream</param>
+             	<param name="contentDisposition">
+                    attachment;filename="${downloadFileName}"
+                </param>
+                <param name="inputName">downloadFileStream</param>
+            </result>
       	</action>
 
 		<action name="reportExcerpt" class="ReportExcerptAction">
@@ -28,6 +35,7 @@
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
             <result type="tiles" name="success">report.ajaxTable.excerpt</result>
+            <result type="tiles" name="adKeywordReport">report.ajaxTable.excerpt.keyword</result>
         </action>
 		
 		<action name="reportExcerptAjaxChart" class="ReportExcerptAction" method="flashDataDownLoad">

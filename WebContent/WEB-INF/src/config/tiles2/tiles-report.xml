@@ -29,6 +29,7 @@
     
     <!--.report.excerpt  -->
 	<definition name="report.ajaxTable.excerpt" template="/ftl/report/ajax/excerptTable.ftl" />
+	<definition name="report.ajaxTable.excerpt.keyword" template="/ftl/report/ajax/excerptKeywordTable.ftl" />
 	<definition name="report.chartTable.excerpt" template="/ftl/report/chart/excerptChartTable.ftl" />
     
 	<definition name=".report.excerpt" extends="default.report.layout">
