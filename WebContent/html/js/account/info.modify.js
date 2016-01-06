@@ -59,6 +59,11 @@
 		 window.location = "accountInfo.html";
 	});
 	
+	//帳戶名稱鍵盤件鍵檢查
+	$('#accountTitle').bind('keyup', function() {
+		chkWord($("#accountTitle"), $("#spanAccountTitle"));
+	});
+	
 	$('#save').click(function(){
 		
 		//取得驗證回傳值
@@ -120,3 +125,24 @@
 	});
 	
 });
+
+//輸入字數檢查與提示
+function chkWord(valObj, msgObj) {
+	var length = parseInt(valObj.val().length);
+	var maxlength = parseInt(valObj.attr("maxlength"));
+	
+	msgObj.css("color","");
+	msgObj.text("");
+	
+	if (length <= maxlength) {
+		msgObj.css("color","");
+		msgObj.text("已輸入" + length + "字，剩" + (maxlength - length) + "字");
+		return true;
+	} else if(length > maxlength){
+		msgObj.css("color","red");
+		msgObj.text("已輸入" + length + "字，超過" + (length - maxlength) + "字");
+		return false;
+	}
+	
+	return false;
+}
