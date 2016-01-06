@@ -20,7 +20,8 @@
 		},
 		messages: {
 			accountTitle:{
-				required: "請填寫帳戶名稱."
+				required: "請填寫帳戶名稱.",
+				maxlength: "帳戶名稱最多只能20個字."
 			},
 			companyTitle:{
 				required: "請填寫公司名稱."
