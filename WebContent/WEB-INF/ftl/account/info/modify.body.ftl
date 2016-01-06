@@ -11,7 +11,8 @@
 	<tr>
 		<th height="35"><span class="t_s02">*</span> 帳戶名稱</th>
 		<td>
-			<input type="text" id="accountTitle" name="accountTitle" value="${pfpCustomerInfo.customerInfoTitle!}" autocomplete="off" maxlength="50" style="width:250px">
+			<input type="text" id="accountTitle" name="accountTitle" value="${pfpCustomerInfo.customerInfoTitle!}" autocomplete="off" maxlength="20" style="width:250px">
+			<span style="float:right" id="spanAccountTitle">已輸入0字，剩20字</span>
 		</td>
 	</tr>
 	<tr>
