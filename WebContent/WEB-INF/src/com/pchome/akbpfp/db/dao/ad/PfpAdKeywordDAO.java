@@ -733,20 +733,20 @@ public class PfpAdKeywordDAO extends BaseDAO<PfpAdKeyword,String> implements IPf
 		hql.append(" COALESCE(sum(adKeywordInvalidClkPrice),0), ");
 		hql.append(" COALESCE(adKeywordType,0), ");
 		
-		//詞組比對(欄位未開，先用廣泛比對數據，之後要改欄位名稱)
-		hql.append(" COALESCE(sum(adKeywordPv),0), ");
-		hql.append(" COALESCE(sum(adKeywordClk),0), ");
-		hql.append(" COALESCE(sum(adKeywordClkPrice),0), ");
-		hql.append(" COALESCE(sum(adKeywordInvalidClk),0), ");
-		hql.append(" COALESCE(sum(adKeywordInvalidClkPrice),0), ");
+		//詞組比對
+		hql.append(" COALESCE(sum(adKeywordPhrasePv),0), ");
+		hql.append(" COALESCE(sum(adKeywordPhraseClk),0), ");
+		hql.append(" COALESCE(sum(adKeywordPhraseClkPrice),0), ");
+		hql.append(" COALESCE(sum(adKeywordPhraseInvalidClk),0), ");
+		hql.append(" COALESCE(sum(adKeywordPhraseInvalidClkPrice),0), ");
 		hql.append(" COALESCE(adKeywordType,0), ");
 		
-		//精準比對(欄位未開，先用廣泛比對數據，之後要改欄位名稱)
-		hql.append(" COALESCE(sum(adKeywordPv),0), ");
-		hql.append(" COALESCE(sum(adKeywordClk),0), ");
-		hql.append(" COALESCE(sum(adKeywordClkPrice),0), ");
-		hql.append(" COALESCE(sum(adKeywordInvalidClk),0), ");
-		hql.append(" COALESCE(sum(adKeywordInvalidClkPrice),0), ");
+		//精準比對
+		hql.append(" COALESCE(sum(adKeywordPrecisionPv),0), ");
+		hql.append(" COALESCE(sum(adKeywordPrecisionClk),0), ");
+		hql.append(" COALESCE(sum(adKeywordPrecisionClkPrice),0), ");
+		hql.append(" COALESCE(sum(adKeywordPrecisionInvalidClk),0), ");
+		hql.append(" COALESCE(sum(adKeywordPrecisionInvalidClkPrice),0), ");
 		hql.append(" COALESCE(adKeywordType,0) ");
 		
 		hql.append(" from PfpAdKeywordReport where 1=1 ");
@@ -826,7 +826,7 @@ public class PfpAdKeywordDAO extends BaseDAO<PfpAdKeyword,String> implements IPf
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public HashMap<String, Float> getAdRankByAGS(String customerInfoId, List<String> adKeywordSeqList, Date startDate, Date endDate) throws Exception{
+	public HashMap<String, Float> getAdRankByAGS(String customerInfoId, List<String> adKeywordSeqList, Date startDate, Date endDate,String keywordStyle) throws Exception{
 
 //		System.out.println("customerInfoId = " + customerInfoId);
 //		System.out.println("startDate = " + startDate);
@@ -859,6 +859,12 @@ public class PfpAdKeywordDAO extends BaseDAO<PfpAdKeyword,String> implements IPf
 			hql.append(" and par.adRankDate <= :endDate");
 			sqlParams.put("endDate", endDate);
 		}
+		
+		if (StringUtils.isNotEmpty(keywordStyle)) {
+			hql.append(" and IFNULL(par.adKeywordSearchStyle,'1') = :keywordStyle");
+			sqlParams.put("keywordStyle", keywordStyle);
+		}
+		
 		hql.append(" group by par.pfpAdKeyword.adKeywordSeq ");
 		log.info("getAdRankByAGS.hql = " + hql);
 

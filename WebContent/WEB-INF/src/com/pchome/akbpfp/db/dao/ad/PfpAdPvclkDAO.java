@@ -266,14 +266,14 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 		hql.append(" 		sum(adKeywordInvalidClkPrice), ");
 		
 		//詞組比對(table尚未確定欄位，所以資料先以廣泛比對欄未替代)
-		hql.append(" 		sum(adKeywordPv), sum(adKeywordClk), sum(adKeywordClkPrice), ");
-		hql.append(" 		sum(adKeywordInvalidClk), ");	
-		hql.append(" 		sum(adKeywordInvalidClkPrice), ");
+		hql.append(" 		sum(adKeywordPhrasePv), sum(adKeywordPhraseClk), sum(adKeywordPhraseClkPrice), ");
+		hql.append(" 		sum(adKeywordPhraseInvalidClk), ");	
+		hql.append(" 		sum(adKeywordPhraseInvalidClkPrice), ");
 		
 		//精準比對(table尚未確定欄位，所以資料先以廣泛比對欄未替代)
-		hql.append(" 		sum(adKeywordPv), sum(adKeywordClk), sum(adKeywordClkPrice), ");
-		hql.append(" 		sum(adKeywordInvalidClk), ");	
-		hql.append(" 		sum(adKeywordInvalidClkPrice) ");
+		hql.append(" 		sum(adKeywordPrecisionPv), sum(adKeywordPrecisionClk), sum(adKeywordPrecisionClkPrice), ");
+		hql.append(" 		sum(adKeywordPrecisionInvalidClk), ");	
+		hql.append(" 		sum(adKeywordPrecisionInvalidClkPrice) ");
 		
 		hql.append(" from PfpAdKeywordReport");
 		hql.append(" where customerInfoId = :customerInfoId ");	

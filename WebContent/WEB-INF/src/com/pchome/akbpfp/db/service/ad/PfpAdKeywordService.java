@@ -11,6 +11,7 @@ import com.pchome.akbpfp.db.dao.ad.PfpAdKeywordDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdKeywordViewVO;
+import com.pchome.enumerate.ad.EnumAdKeywordType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
@@ -367,7 +368,9 @@ public class PfpAdKeywordService extends BaseService<PfpAdKeyword,String> implem
 			HashMap<String, Object> pfpAdKeywordReports = ((PfpAdKeywordDAO)dao).getAdKeywordReportByAdKeywordsList(customerInfoId, adGroupSeq, adKeywordSeqs, EnumAdType.AD_SEARCH.getType(), startDate, endDate);
 	
 			// 依照讀出本頁的關鍵字序號，查詢關鍵字平均排名
-			HashMap<String, Float> adRanks = ((PfpAdKeywordDAO)dao).getAdRankByAGS(customerInfoId, adKeywordSeqs, startDate, endDate);
+			HashMap<String, Float> adRanks = ((PfpAdKeywordDAO)dao).getAdRankByAGS(customerInfoId, adKeywordSeqs, startDate, endDate,EnumAdKeywordType.WIDELY.getStyle());
+			HashMap<String, Float> adPhrRanks = ((PfpAdKeywordDAO)dao).getAdRankByAGS(customerInfoId, adKeywordSeqs, startDate, endDate,EnumAdKeywordType.PHRASE.getStyle());
+			HashMap<String, Float> adPreRanks = ((PfpAdKeywordDAO)dao).getAdRankByAGS(customerInfoId, adKeywordSeqs, startDate, endDate,EnumAdKeywordType.PRECISION.getStyle());
 			
 			// 逐筆讀出關鍵字資料
 			for(PfpAdKeyword pfpAdKeyword:pfpAdKeywords) {
@@ -408,8 +411,12 @@ public class PfpAdKeywordService extends BaseService<PfpAdKeyword,String> implem
 				// 依照關鍵字廣告序號，讀取、設定平均排名，沒有平均排名的，就不用設定了
 				if(adRanks.get(pfpAdKeyword.getAdKeywordSeq()) != null) {
 					adKeywordViewVO.setAdKeywordRankAvg(adRanks.get(pfpAdKeyword.getAdKeywordSeq()));
-					adKeywordViewVO.setAdKeywordPhraseRankAvg(adRanks.get(pfpAdKeyword.getAdKeywordSeq()));
-					adKeywordViewVO.setAdKeywordPrecisionRankAvg(adRanks.get(pfpAdKeyword.getAdKeywordSeq()));
+				}
+				if(adPhrRanks.get(pfpAdKeyword.getAdKeywordSeq()) != null) {
+					adKeywordViewVO.setAdKeywordPhraseRankAvg(adPhrRanks.get(pfpAdKeyword.getAdKeywordSeq()));
+				}
+				if(adPreRanks.get(pfpAdKeyword.getAdKeywordSeq()) != null) {
+					adKeywordViewVO.setAdKeywordPhraseRankAvg(adPreRanks.get(pfpAdKeyword.getAdKeywordSeq()));
 				}
 	
 				// 依照關鍵字廣告序號，讀取、設定廣告成效，沒有廣告成效的，就不用設定了
@@ -533,12 +540,14 @@ public class PfpAdKeywordService extends BaseService<PfpAdKeyword,String> implem
 					}
 				}
 	
-				// 關鍵字建議價
+				// 關鍵字建議價(詞組比對跟精準比對價錢為廣泛比對價錢往上加1~3,4~6)
 				float suggestPrice = syspriceOperaterAPI.getKeywordSuggesPrice(adKeywordViewVO.getAdKeyword(),"widely");
-				float suggestPhrasePrice = syspriceOperaterAPI.getKeywordSuggesPrice(adKeywordViewVO.getAdKeyword(),"phrase");
+				float suggestPhrasePrice = ((int)(Math.random()*3+1)) + suggestPrice;
+				float suggestPrecisionPrice = ((int)(Math.random()*3+4)) + suggestPrice;
+				/*float suggestPhrasePrice = syspriceOperaterAPI.getKeywordSuggesPrice(adKeywordViewVO.getAdKeyword(),"phrase");
 				suggestPhrasePrice = ((int)(Math.random()*3+1)) + suggestPhrasePrice;
 				float suggestPrecisionPrice = syspriceOperaterAPI.getKeywordSuggesPrice(adKeywordViewVO.getAdKeyword(),"precision");
-				suggestPrecisionPrice = ((int)(Math.random()*3+4)) + suggestPrecisionPrice;
+				suggestPrecisionPrice = ((int)(Math.random()*3+4)) + suggestPrecisionPrice;*/
 				
 				adKeywordViewVO.setSuggestPrice(suggestPrice);
 				adKeywordViewVO.setSuggestPhrasePrice(suggestPhrasePrice);
