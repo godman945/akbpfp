@@ -3,6 +3,7 @@ package com.pchome.soft.depot.utils;
 import java.io.IOException;
 import java.lang.Character.UnicodeBlock;
 import java.net.IDN;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -204,7 +205,9 @@ public class HttpUtil {
 	if (StringUtils.isNotEmpty(url)) {
 	    HttpGet httpget = null;
 	    try {
-		httpget = new HttpGet(url);
+	    URL thisUrl = new URL(url);
+	    URI uri = new URI(thisUrl.getProtocol(), thisUrl.getHost(), thisUrl.getPath(), thisUrl.getQuery(), null);
+		httpget = new HttpGet(uri);
 		statusCode = client.execute(httpget).getStatusLine()
 			.getStatusCode();
 	    } catch (Exception e) {
