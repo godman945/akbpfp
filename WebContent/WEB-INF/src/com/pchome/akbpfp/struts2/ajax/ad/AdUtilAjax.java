@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.net.URL;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -41,7 +42,9 @@ public class AdUtilAjax extends BaseCookieAction{
 		
 		//檢查url 是否危險網址API
 		HttpGet request = new HttpGet();
-		request.setURI(new URI("http://pseapi.mypchome.com.tw/api/security/safeBrowsingLookup.html?url="+url));
+		URL thisUrl = new URL("http://pseapi.mypchome.com.tw/api/security/safeBrowsingLookup.html?url="+url);
+		URI uri = new URI(thisUrl.getProtocol(), thisUrl.getHost(), thisUrl.getPath(), thisUrl.getQuery(), null);
+		request.setURI(uri);
 		HttpClient client = new DefaultHttpClient();
 		HttpResponse response = client.execute(request);
 		InputStream urlContent = response.getEntity().getContent();
