@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2015/12/22 �W�� 10:00:32 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/1/11 �W�� 10:39:29 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -31,6 +31,7 @@ public class PfpAdKeywordPvclk implements java.io.Serializable {
 	private String adGroupSeq;
 	private String adActionSeq;
 	private int adKeywordType;
+	private String adKeywordSearchStyle;
 	private String adKeywordPvclkPropClassify;
 	private Date adKeywordPvclkDate;
 	private int adKeywordPvclkTime;
@@ -75,9 +76,9 @@ public class PfpAdKeywordPvclk implements java.io.Serializable {
 	public PfpAdKeywordPvclk(PfpAdKeyword pfpAdKeyword, String customerInfoId,
 			String pfdCustomerInfoId, String pfdUserId, Integer payType,
 			String adGroupSeq, String adActionSeq, int adKeywordType,
-			String adKeywordPvclkPropClassify, Date adKeywordPvclkDate,
-			int adKeywordPvclkTime, int adKeywordPv, int adKeywordClk,
-			int adKeywordInvalidClk, float adKeywordPvPrice,
+			String adKeywordSearchStyle, String adKeywordPvclkPropClassify,
+			Date adKeywordPvclkDate, int adKeywordPvclkTime, int adKeywordPv,
+			int adKeywordClk, int adKeywordInvalidClk, float adKeywordPvPrice,
 			float adKeywordClkPrice, float adKeywordInvalidClkPrice,
 			String adKeywordPvclkDevice, String adKeywordPvclkOs,
 			String adKeywordPvclkBrand, String adKeywordPvclkArea,
@@ -90,6 +91,7 @@ public class PfpAdKeywordPvclk implements java.io.Serializable {
 		this.adGroupSeq = adGroupSeq;
 		this.adActionSeq = adActionSeq;
 		this.adKeywordType = adKeywordType;
+		this.adKeywordSearchStyle = adKeywordSearchStyle;
 		this.adKeywordPvclkPropClassify = adKeywordPvclkPropClassify;
 		this.adKeywordPvclkDate = adKeywordPvclkDate;
 		this.adKeywordPvclkTime = adKeywordPvclkTime;
@@ -189,6 +191,15 @@ public class PfpAdKeywordPvclk implements java.io.Serializable {
 
 	public void setAdKeywordType(int adKeywordType) {
 		this.adKeywordType = adKeywordType;
+	}
+
+	@Column(name = "ad_keyword_search_style", length = 1)
+	public String getAdKeywordSearchStyle() {
+		return this.adKeywordSearchStyle;
+	}
+
+	public void setAdKeywordSearchStyle(String adKeywordSearchStyle) {
+		this.adKeywordSearchStyle = adKeywordSearchStyle;
 	}
 
 	@Column(name = "ad_keyword_pvclk_prop_classify", nullable = false, length = 100)

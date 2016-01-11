@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2015/12/22 �W�� 10:00:32 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/1/11 �W�� 10:39:29 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,6 +26,7 @@ public class PfpAdRank implements java.io.Serializable {
 	private PfpAdKeyword pfpAdKeyword;
 	private String customerInfoId;
 	private int adType;
+	private String adKeywordSearchStyle;
 	private float adRankAvg;
 	private Date adRankDate;
 	private int adRankTime;
@@ -41,6 +42,21 @@ public class PfpAdRank implements java.io.Serializable {
 		this.pfpAdKeyword = pfpAdKeyword;
 		this.customerInfoId = customerInfoId;
 		this.adType = adType;
+		this.adRankAvg = adRankAvg;
+		this.adRankDate = adRankDate;
+		this.adRankTime = adRankTime;
+		this.adRankCreateTime = adRankCreateTime;
+		this.adRankUpdateTime = adRankUpdateTime;
+	}
+
+	public PfpAdRank(PfpAdKeyword pfpAdKeyword, String customerInfoId,
+			int adType, String adKeywordSearchStyle, float adRankAvg,
+			Date adRankDate, int adRankTime, Date adRankCreateTime,
+			Date adRankUpdateTime) {
+		this.pfpAdKeyword = pfpAdKeyword;
+		this.customerInfoId = customerInfoId;
+		this.adType = adType;
+		this.adKeywordSearchStyle = adKeywordSearchStyle;
 		this.adRankAvg = adRankAvg;
 		this.adRankDate = adRankDate;
 		this.adRankTime = adRankTime;
@@ -85,6 +101,15 @@ public class PfpAdRank implements java.io.Serializable {
 
 	public void setAdType(int adType) {
 		this.adType = adType;
+	}
+
+	@Column(name = "ad_keyword_search_style", length = 1)
+	public String getAdKeywordSearchStyle() {
+		return this.adKeywordSearchStyle;
+	}
+
+	public void setAdKeywordSearchStyle(String adKeywordSearchStyle) {
+		this.adKeywordSearchStyle = adKeywordSearchStyle;
 	}
 
 	@Column(name = "ad_rank_avg", nullable = false, precision = 10)

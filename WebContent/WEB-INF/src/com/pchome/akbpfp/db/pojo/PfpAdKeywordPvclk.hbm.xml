@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2015/12/22 ?W?? 10:00:32 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/1/11 ?W?? 10:39:29 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdKeywordPvclk" table="pfp_ad_keyword_pvclk" catalog="akb">
         <id name="adKeywordPvclkSeq" type="java.lang.Integer">
@@ -42,6 +42,12 @@
         <property name="adKeywordType" type="int">
             <column name="ad_keyword_type" not-null="true">
                 <comment>&#188;s&#167;i&#167;&#206;&#166;&#161; 1:&#167;&#228;&#170;F&#166;&#232;&#188;s&#167;i 2:PChome&#192;W&#185;D&#188;s&#167;i</comment>
+            </column>
+        </property>
+        <property name="adKeywordSearchStyle" type="string">
+            <column name="ad_keyword_search_style" length="1">
+                <comment>
+                &#164;&#241;&#185;&#239;&#164;&#232;&#166;&#161;(1:&#188;s&#170;x&#164;&#241;&#185;&#239;&#161;A2:&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#161;A3:&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;)</comment>
             </column>
         </property>
         <property name="adKeywordPvclkPropClassify" type="string">
