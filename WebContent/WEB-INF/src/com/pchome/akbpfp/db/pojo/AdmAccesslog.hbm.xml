@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016/1/11 ?W?? 10:39:29 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/1/11 ?U?? 01:57:12 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.AdmAccesslog" table="adm_accesslog" catalog="akb">
         <id name="accesslogId" type="java.lang.Integer">
@@ -17,7 +17,7 @@
             <column name="action" length="2" />
         </property>
         <property name="message" type="string">
-            <column name="message" length="500" not-null="true">
+            <column name="message" length="2500" not-null="true">
                 <comment>&#179;s&#189;u&#176;T&#174;&#167;</comment>
             </column>
         </property>

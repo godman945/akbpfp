@@ -43,6 +43,7 @@
 	<table-filter match-name="pfp_ad_invalid" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_keyword" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_keyword_pvclk" match-catalog="akb" />
+	<table-filter match-name="pfp_ad_keyword_report" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_pvclk" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_rank" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_rate" match-catalog="akb" />

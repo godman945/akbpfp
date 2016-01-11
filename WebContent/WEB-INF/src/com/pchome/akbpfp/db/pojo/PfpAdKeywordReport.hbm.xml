@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2014/5/5 ?U?? 05:30:59 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/1/11 ?U?? 01:57:12 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdKeywordReport" table="pfp_ad_keyword_report" catalog="akb">
         <id name="adKeywordReportSeq" type="java.lang.Integer">
@@ -45,17 +45,47 @@
         </property>
         <property name="adKeywordPv" type="int">
             <column name="ad_keyword_pv" not-null="true">
-                <comment>&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPhrasePv" type="int">
+            <column name="ad_keyword_phrase_pv" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPrecisionPv" type="int">
+            <column name="ad_keyword_precision_pv" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;</comment>
             </column>
         </property>
         <property name="adKeywordClk" type="int">
             <column name="ad_keyword_clk" not-null="true">
-                <comment>&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPhraseClk" type="int">
+            <column name="ad_keyword_phrase_clk" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPrecisionClk" type="int">
+            <column name="ad_keyword_precision_clk" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;</comment>
             </column>
         </property>
         <property name="adKeywordInvalidClk" type="int">
             <column name="ad_keyword_invalid_clk" not-null="true">
-                <comment>&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPhraseInvalidClk" type="int">
+            <column name="ad_keyword_phrase_invalid_clk" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPrecisionInvalidClk" type="int">
+            <column name="ad_keyword_precision_invalid_clk" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;</comment>
             </column>
         </property>
         <property name="adKeywordPvPrice" type="float">
@@ -65,12 +95,32 @@
         </property>
         <property name="adKeywordClkPrice" type="float">
             <column name="ad_keyword_clk_price" precision="10" not-null="true">
-                <comment>&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPhraseClkPrice" type="float">
+            <column name="ad_keyword_phrase_clk_price" precision="10" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPrecisionClkPrice" type="float">
+            <column name="ad_keyword_precision_clk_price" precision="10" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
             </column>
         </property>
         <property name="adKeywordInvalidClkPrice" type="float">
             <column name="ad_keyword_invalid_clk_price" precision="10" not-null="true">
-                <comment>&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPhraseInvalidClkPrice" type="float">
+            <column name="ad_keyword_phrase_invalid_clk_price" precision="10" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adKeywordPrecisionInvalidClkPrice" type="float">
+            <column name="ad_keyword_precision_invalid_clk_price" precision="10" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
             </column>
         </property>
         <property name="adKeywordPvclkDevice" type="string">
