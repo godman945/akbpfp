@@ -211,8 +211,8 @@ public class HttpUtil {
 		httpget = new HttpGet(uri);
 		
 		//禁止get自動處理重新定向
-		HttpParams params = client.getParams();    
-		params.setParameter(ClientPNames.HANDLE_REDIRECTS, false);
+		/*HttpParams params = client.getParams();    
+		params.setParameter(ClientPNames.HANDLE_REDIRECTS, false);*/
 		
 		statusCode = client.execute(httpget).getStatusLine()
 			.getStatusCode();
