@@ -26,6 +26,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.ClientPNames;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -208,6 +209,11 @@ public class HttpUtil {
 	    URL thisUrl = new URL(url);
 	    URI uri = new URI(thisUrl.getProtocol(), thisUrl.getHost(), thisUrl.getPath(), thisUrl.getQuery(), null);
 		httpget = new HttpGet(uri);
+		
+		//禁止get自動處理重新定向
+		HttpParams params = client.getParams();    
+		params.setParameter(ClientPNames.HANDLE_REDIRECTS, false);
+		
 		statusCode = client.execute(httpget).getStatusLine()
 			.getStatusCode();
 	    } catch (Exception e) {
