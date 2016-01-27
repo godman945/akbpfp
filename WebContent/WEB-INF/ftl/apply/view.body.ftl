@@ -42,7 +42,7 @@
   		<th height="35"><span class="t_s02">* </span>廣告連結位址</th>
   		<td>
 	  		<input type="radio" id="urlY" name="urlYN" value="1" checked /> 
-	    	http:// <input type="text" id="urlAddress" name="urlAddress" value="${accountVO.urlAddress!}" autocomplete="off" maxlength="150" style="width:300px" /><br />
+	    	<input type="text" id="urlAddress" name="urlAddress" value="${accountVO.urlAddress!}" autocomplete="off" maxlength="500" style="width:300px" /><br />
 	    	<input type="hidden" id="urlMsg" />
 		</td>
 	</tr>
