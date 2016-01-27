@@ -62,7 +62,7 @@
 	<tr>
 	    <th height="35"><span class="t_s02">*</span> 廣告連結網址</th>
 	    <td>
-	    	<input type="text" id="urlAddress" name="urlAddress" value="${pfpCustomerInfo.urlAddress!}" autocomplete="off" maxlength="500" style="width:300px" />
+	    	<input type="text" id="urlAddress" name="urlAddress" value="http://${pfpCustomerInfo.urlAddress!}" autocomplete="off" maxlength="500" style="width:300px" />
 			<input type="hidden" id="urlMsg" />
 		</td>
 	</tr>
