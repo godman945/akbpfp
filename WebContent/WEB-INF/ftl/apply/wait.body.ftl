@@ -56,7 +56,7 @@
 	</tr>
 	<tr>
   		<th height="35"><span class="t_s02">* </span>廣告連結位址</th>
-  		<td>${accountVO.urlAddress!}</td>
+  		<td>http://${accountVO.urlAddress!}</td>
 	</tr>
 </tbody>
 </table>

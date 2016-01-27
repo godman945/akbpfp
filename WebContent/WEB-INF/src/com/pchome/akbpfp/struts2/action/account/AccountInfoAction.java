@@ -64,6 +64,21 @@ public class AccountInfoAction extends BaseSSLAction{
 			return this.resultType;
 		}
 		
+		urlAddress = urlAddress.trim();
+		if(urlAddress.length() >= 7){
+			String urlHead = urlAddress.substring(0,7);
+			if("http://".equals(urlHead)){
+				urlAddress = urlAddress.substring(7);
+			}
+		}
+		
+		if(urlAddress.length() >= 8){
+			String urlHead = urlAddress.substring(0,8);
+			if("https://".equals(urlHead)){
+				urlAddress = urlAddress.substring(8);
+			}
+		}
+		
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		
 		if(pfpCustomerInfo != null){

@@ -24,6 +24,20 @@ public class ApplyAjax extends BaseCookieAction{
 	 */
 	public String checkUrlState() throws Exception{
 		
+		if(url.length() >= 7){
+			String urlHead = url.substring(0,7);
+			if("http://".equals(urlHead)){
+				url = url.substring(7);
+			}
+		}
+		
+		if(url.length() >= 8){
+			String urlHead = url.substring(0,8);
+			if("https://".equals(urlHead)){
+				url = url.substring(8);
+			}
+		}
+		
 		url = "http://"+url;
 		
 		urlState = HttpUtil.getInstance().getStatusCode(url);

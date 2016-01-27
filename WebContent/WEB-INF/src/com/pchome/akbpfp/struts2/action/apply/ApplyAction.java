@@ -442,6 +442,22 @@ public class ApplyAction extends BaseSSLAction{
 			
 			customerInfo = new PfpCustomerInfo();
 			
+			//網址去除http://及https://
+			urlAddress = urlAddress.trim();
+			if(urlAddress.length() >= 7){
+				String urlHead = urlAddress.substring(0,7);
+				if("http://".equals(urlHead)){
+					urlAddress = urlAddress.substring(7);
+				}
+			}
+			
+			if(urlAddress.length() >= 8){
+				String urlHead = urlAddress.substring(0,8);
+				if("https://".equals(urlHead)){
+					urlAddress = urlAddress.substring(8);
+				}
+			}
+			
 			customerInfo.setCustomerInfoId(customerInfoId);
 			customerInfo.setMemberId(this.memberVO.getMemberId());
 			customerInfo.setCategory(category);
