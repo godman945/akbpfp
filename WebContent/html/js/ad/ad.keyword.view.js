@@ -83,7 +83,7 @@ function modifyAdStatus(status){
 }
 
 function updateAdKeywordStatus(){
-
+	$("[id*=userPrice_widely_]").removeAttr("min");//先移除min不然會檢查
 	$("#tableForm").attr("action","updAdKeywordStatus.html");
 	$("#tableForm").submit();
 	

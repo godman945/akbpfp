@@ -157,10 +157,12 @@ public class AdKeywordViewAction extends BaseCookieAction{
 			log.info(" userPrice = "+userPrice);
 			log.info(" adKeywordType = "+adKeywordType);
 			if(adKeyword.getAdKeywordSearchPrice() != userPrice){
+				StringBuffer updatemsg = new StringBuffer();
+				
 				if("widely".equals(adKeywordType)){
 					StringBuffer msg = new StringBuffer();
 					
-					msg.append("收尋廣告金額異動(自行出價):");
+					msg.append("搜尋廣告金額異動(自行出價):");
 					msg.append("檢視廣告 ==> ");
 					msg.append(adKeyword.getPfpAdGroup().getPfpAdAction().getAdActionName()).append(" ==> ");
 					msg.append(adKeyword.getPfpAdGroup().getAdGroupName()).append(" ==> ");
@@ -176,15 +178,48 @@ public class AdKeywordViewAction extends BaseCookieAction{
 													super.getUser_id(), 
 													super.request.getRemoteAddr());
 					
+					updatemsg.append("搜尋廣告關鍵字出價修改 ==>");
+					updatemsg.append(adKeyword.getPfpAdGroup().getPfpAdAction().getAdActionName()).append(" ==> ");
+					updatemsg.append(adKeyword.getPfpAdGroup().getAdGroupName()).append(" ==> ");
+					updatemsg.append(adKeyword.getAdKeyword()).append("(").append(adKeyword.getAdKeywordSeq()).append(")").append("：");
+					updatemsg.append("廣泛比對出價修改 ==> ");
+					
+					updatemsg.append("修改前:");
+					updatemsg.append(adKeyword.getAdKeywordSearchPrice() + ";");
+					updatemsg.append("修改後:");
+					updatemsg.append(userPrice + "。");
+					
 					adKeyword.setAdKeywordSearchPrice(userPrice);
 					adKeyword.setAdKeywordUpdateTime(new Date());
 					pfpAdKeywordService.saveOrUpdate(adKeyword);
 	
 				} else if("phrase".equals(adKeywordType)){
+					updatemsg.append("搜尋廣告關鍵字出價修改 ==>");
+					updatemsg.append(adKeyword.getPfpAdGroup().getPfpAdAction().getAdActionName()).append(" ==> ");
+					updatemsg.append(adKeyword.getPfpAdGroup().getAdGroupName()).append(" ==> ");
+					updatemsg.append(adKeyword.getAdKeyword()).append("(").append(adKeyword.getAdKeywordSeq()).append(")").append("：");
+					updatemsg.append("詞組比對出價修改 ==> ");
+					
+					updatemsg.append("修改前:");
+					updatemsg.append(adKeyword.getAdKeywordSearchPhrasePrice() + ";");
+					updatemsg.append("修改後:");
+					updatemsg.append(userPrice + "。");
+					
 					adKeyword.setAdKeywordSearchPhrasePrice(userPrice);
 					adKeyword.setAdKeywordUpdateTime(new Date());
 					pfpAdKeywordService.saveOrUpdate(adKeyword);
 				} else if("precision".equals(adKeywordType)){
+					updatemsg.append("搜尋廣告關鍵字出價修改 ==>");
+					updatemsg.append(adKeyword.getPfpAdGroup().getPfpAdAction().getAdActionName()).append(" ==> ");
+					updatemsg.append(adKeyword.getPfpAdGroup().getAdGroupName()).append(" ==> ");
+					updatemsg.append(adKeyword.getAdKeyword()).append("(").append(adKeyword.getAdKeywordSeq()).append(")").append("：");
+					updatemsg.append("精準比對出價修改 ==> ");
+					
+					updatemsg.append("修改前:");
+					updatemsg.append(adKeyword.getAdKeywordSearchPrecisionPrice() + ";");
+					updatemsg.append("修改後:");
+					updatemsg.append(userPrice + "。");
+					
 					adKeyword.setAdKeywordSearchPrecisionPrice(userPrice);
 					adKeyword.setAdKeywordUpdateTime(new Date());
 					pfpAdKeywordService.saveOrUpdate(adKeyword);
@@ -192,6 +227,14 @@ public class AdKeywordViewAction extends BaseCookieAction{
 				//更新系統價
 				log.info(" modify keyword price update sys price ");
 				syspriceOperaterAPI.addKeywordSysprice(adKeyword.getAdKeyword(), userPrice);
+				
+				//修改出價紀錄Accesslog
+				admAccesslogService.recordAdLog(EnumAccesslogAction.AD_MONEY_MODIFY, 
+						updatemsg.toString(), 
+						super.getId_pchome(), 
+						super.getCustomer_info_id(), 
+						super.getUser_id(), 
+						super.request.getRemoteAddr());
 			}
 			
 		}
@@ -203,13 +246,34 @@ public class AdKeywordViewAction extends BaseCookieAction{
 		
 		log.info(" adKeywordType = "+adKeywordType);
 		
+		StringBuffer updatemsg = new StringBuffer();
+		updatemsg.append("搜尋廣告關鍵字出價修改 ==>");
+		updatemsg.append(adKeyword.getPfpAdGroup().getPfpAdAction().getAdActionName()).append(" ==> ");
+		updatemsg.append(adKeyword.getPfpAdGroup().getAdGroupName()).append(" ==> ");
+		updatemsg.append(adKeyword.getAdKeyword()).append("(").append(adKeyword.getAdKeywordSeq()).append(")").append("：");
+		
 		if("widely".equals(adKeywordType)){
+			updatemsg.append("廣泛比對方式修改 ==> ");		
 			if(StringUtils.isBlank(adKeywordOpen)){
+				updatemsg.append("修改前:");
+				updatemsg.append("比對方式  -->開啟,");
+				updatemsg.append("出價  -->" + adKeyword.getAdKeywordSearchPrice() + ";");
+				updatemsg.append("修改後:");
+				updatemsg.append("比對方式  -->關閉,");
+				updatemsg.append("出價  -->" + 0 + "。");
+				
 				adKeyword.setAdKeywordOpen(0);
 				adKeyword.setAdKeywordSearchPrice(0);
 				adKeyword.setAdKeywordUpdateTime(new Date());
 				pfpAdKeywordService.saveOrUpdate(adKeyword);
 			} else {
+				updatemsg.append("修改前:");
+				updatemsg.append("比對方式 -->關閉,");
+				updatemsg.append("出價 -->" + adKeyword.getAdKeywordSearchPrice() + ";");
+				updatemsg.append("修改後:");
+				updatemsg.append("比對方式  -->開啟,");
+				updatemsg.append("出價 -->" + suggestPrice + "。");
+				
 				adKeyword.setAdKeywordOpen(1);
 				adKeyword.setAdKeywordSearchPrice(suggestPrice);
 				adKeyword.setAdKeywordUpdateTime(new Date());
@@ -219,12 +283,27 @@ public class AdKeywordViewAction extends BaseCookieAction{
 				syspriceOperaterAPI.addKeywordSysprice(adKeyword.getAdKeyword(), suggestPrice);
 			}
 		} else if("phrase".equals(adKeywordType)){
+			updatemsg.append("詞組比對方式修改 ==> ");
 			if(StringUtils.isBlank(adKeywordPhraseOpen)){
+				updatemsg.append("修改前:");
+				updatemsg.append("比對方式  -->開啟,");
+				updatemsg.append("出價  -->" + adKeyword.getAdKeywordSearchPrice() + ";");
+				updatemsg.append("修改後:");
+				updatemsg.append("比對方式  -->關閉,");
+				updatemsg.append("出價 -->" + 0 + "。");
+				
 				adKeyword.setAdKeywordPhraseOpen(0);
 				adKeyword.setAdKeywordSearchPhrasePrice(0);
 				adKeyword.setAdKeywordUpdateTime(new Date());
 				pfpAdKeywordService.saveOrUpdate(adKeyword);
 			} else {
+				updatemsg.append("修改前:");
+				updatemsg.append("比對方式  -->關閉,");
+				updatemsg.append("出價  -->" + adKeyword.getAdKeywordSearchPrice() + ";");
+				updatemsg.append("修改後:");
+				updatemsg.append("比對方式 -->開啟,");
+				updatemsg.append("出價  -->" + suggestPrice + "。");
+				
 				adKeyword.setAdKeywordPhraseOpen(1);
 				adKeyword.setAdKeywordSearchPhrasePrice(suggestPrice);
 				adKeyword.setAdKeywordUpdateTime(new Date());
@@ -234,12 +313,27 @@ public class AdKeywordViewAction extends BaseCookieAction{
 				syspriceOperaterAPI.addKeywordSysprice(adKeyword.getAdKeyword(), suggestPrice);
 			}
 		} else if("precision".equals(adKeywordType)){
+			updatemsg.append("精準比對方式修改 ==> ");
 			if(StringUtils.isBlank(adKeywordPrecisionOpen)){
+				updatemsg.append("修改前:");
+				updatemsg.append("比對方式 -->開啟,");
+				updatemsg.append("出價  -->" + adKeyword.getAdKeywordSearchPrice() + ";");
+				updatemsg.append("修改後:");
+				updatemsg.append("比對方式 -->關閉,");
+				updatemsg.append("出價 -->" + 0 + "。");
+				
 				adKeyword.setAdKeywordPrecisionOpen(0);
 				adKeyword.setAdKeywordSearchPrecisionPrice(0);
 				adKeyword.setAdKeywordUpdateTime(new Date());
 				pfpAdKeywordService.saveOrUpdate(adKeyword);
 			} else {
+				updatemsg.append("修改前:");
+				updatemsg.append("比對方式 -->關閉,");
+				updatemsg.append("出價-->" + adKeyword.getAdKeywordSearchPrice() + ";");
+				updatemsg.append("修改後:");
+				updatemsg.append("比對方式-->開啟,");
+				updatemsg.append("出價 -->" + suggestPrice + "。");
+				
 				adKeyword.setAdKeywordPrecisionOpen(1);
 				adKeyword.setAdKeywordSearchPrecisionPrice(suggestPrice);
 				adKeyword.setAdKeywordUpdateTime(new Date());
@@ -250,6 +344,13 @@ public class AdKeywordViewAction extends BaseCookieAction{
 			}
 		}
 		
+		//修改出價紀錄Accesslog
+		admAccesslogService.recordAdLog(EnumAccesslogAction.AD_MONEY_MODIFY, 
+				updatemsg.toString(), 
+				super.getId_pchome(), 
+				super.getCustomer_info_id(), 
+				super.getUser_id(), 
+				super.request.getRemoteAddr());
 	}
 	
 	public void setPfpAdGroupService(IPfpAdGroupService pfpAdGroupService) {
