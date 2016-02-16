@@ -94,8 +94,13 @@
 					</#if>
 		        </td>
 		        <td>
-		        	<input type="text" id="userPrice_widely_${vo.adKeywordSeq!}" value="${vo.adKeywordSearchPrice!}"  style="width:40px;text-align:right"  maxlength="6" class="required digits" min="3" max="${vo.adActionMax!}" >
-                    <input type="button" id="bt_widely_${vo.adKeywordSeq!}" onClick="updateKeywordSuggest('${vo.adKeywordSeq!}','widely')" value="確定">
+		        	<#if vo.adKeywordOpen = 1 >
+		        		<input type="text" id="userPrice_widely_${vo.adKeywordSeq!}" value="${vo.adKeywordSearchPrice!}"  style="width:40px;text-align:right"  maxlength="6" class="required digits" min="3" max="${vo.adActionMax!}" >
+                    	<input type="button" id="bt_widely_${vo.adKeywordSeq!}" onClick="updateKeywordSuggest('${vo.adKeywordSeq!}','widely')" value="確定">
+                    <#else>
+                    	<input type="text" id="userPrice_widely_${vo.adKeywordSeq!}" value="${vo.adKeywordSearchPrice!}"  style="width:40px;text-align:right"  maxlength="6" class="required digits" min="3" max="${vo.adActionMax!}" disabled >
+                    	<input type="button" id="bt_widely_${vo.adKeywordSeq!}" onClick="updateKeywordSuggest('${vo.adKeywordSeq!}','widely')" value="確定" disabled>
+                    </#if>
                     <br>
 					建議出價：NT$ ${vo.suggestPrice!}		        
 		        </td>
@@ -107,8 +112,13 @@
 					</#if>
 		        </td>
 		        <td>
-		        	<input type="text" id="userPrice_phrase_${vo.adKeywordSeq!}" value="${vo.adKeywordSearchPhrasePrice!}"  style="width:40px;text-align:right"  maxlength="6" class="required digits" min="3" max="${vo.adActionMax!}" >
-                    <input type="button" id="bt_phrase_${vo.adKeywordSeq!}" onClick="updateKeywordSuggest('${vo.adKeywordSeq!}','phrase')" value="確定">
+		        	<#if vo.adKeywordPhraseOpen = 1 >
+		        		<input type="text" id="userPrice_phrase_${vo.adKeywordSeq!}" value="${vo.adKeywordSearchPhrasePrice!}"  style="width:40px;text-align:right"  maxlength="6" class="required digits" min="3" max="${vo.adActionMax!}" >
+                    	<input type="button" id="bt_phrase_${vo.adKeywordSeq!}" onClick="updateKeywordSuggest('${vo.adKeywordSeq!}','phrase')" value="確定">
+                    <#else>
+                    	<input type="text" id="userPrice_phrase_${vo.adKeywordSeq!}" value="${vo.adKeywordSearchPhrasePrice!}"  style="width:40px;text-align:right"  maxlength="6" class="required digits" min="3" max="${vo.adActionMax!}" disabled >
+                    	<input type="button" id="bt_phrase_${vo.adKeywordSeq!}" onClick="updateKeywordSuggest('${vo.adKeywordSeq!}','phrase')" value="確定" disabled >
+                    </#if>
                     <br>
 					建議出價：NT$ ${vo.suggestPhrasePrice!}		        
 		        </td>
@@ -120,8 +130,13 @@
 					</#if>
 		        </td>
 		        <td>
-		        	<input type="text" id="userPrice_precision_${vo.adKeywordSeq!}" value="${vo.adKeywordSearchPrecisionPrice!}"  style="width:40px;text-align:right"  maxlength="6" class="required digits" min="3" max="${vo.adActionMax!}" >
-                    <input type="button" id="bt_precision_${vo.adKeywordSeq!}" onClick="updateKeywordSuggest('${vo.adKeywordSeq!}','precision')" value="確定">
+		        	<#if vo.adKeywordPrecisionOpen = 1 >
+		        		<input type="text" id="userPrice_precision_${vo.adKeywordSeq!}" value="${vo.adKeywordSearchPrecisionPrice!}"  style="width:40px;text-align:right"  maxlength="6" class="required digits" min="3" max="${vo.adActionMax!}" >
+                    	<input type="button" id="bt_precision_${vo.adKeywordSeq!}" onClick="updateKeywordSuggest('${vo.adKeywordSeq!}','precision')" value="確定">
+                    <#else>
+                    	<input type="text" id="userPrice_precision_${vo.adKeywordSeq!}" value="${vo.adKeywordSearchPrecisionPrice!}"  style="width:40px;text-align:right"  maxlength="6" class="required digits" min="3" max="${vo.adActionMax!}" disabled >
+                    	<input type="button" id="bt_precision_${vo.adKeywordSeq!}" onClick="updateKeywordSuggest('${vo.adKeywordSeq!}','precision')" value="確定" disabled >
+                    </#if>
                     <br>
 					建議出價：NT$ ${vo.suggestPrecisionPrice!}		        
 		        </td>

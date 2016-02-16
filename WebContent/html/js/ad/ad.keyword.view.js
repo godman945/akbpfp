@@ -229,10 +229,15 @@ function updateKeywordOpen(seq,suggestPrice,keywordType){
 function updateKeywordOpenData(changTag){
 	var seq = $("#changTypeSeq").val();
 	var suggestPrice = 0;
+	var keywordType = $("#changType").val();
 	if(changTag == "on"){
 		suggestPrice = $("#changTypePrice").val();	
+		$("#userPrice_" + keywordType + "_" + seq).removeAttr("disabled");
+		$("#bt_" + keywordType + "_" + seq).removeAttr("disabled");
+	} else {
+		$("#userPrice_" + keywordType + "_" + seq).attr("disabled","disabled");
+		$("#bt_" + keywordType + "_" + seq).attr("disabled","disabled");
 	}
-	var keywordType = $("#changType").val();
 	
 	$.ajax({
 		url: "updAdKeywordOpen.html",
