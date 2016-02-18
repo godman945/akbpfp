@@ -262,6 +262,11 @@ public class AdAddAction extends BaseCookieAction{
 			    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
 			}
 
+			if(adDetailID[i].equals("title") || adDetailID[i].equals("content") ) {
+				adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
+				adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
+			}
+			
 			String detailContent = i == 0?imgDetail:adDetailContent[i];
 			pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
 			pfpAdDetailVO.setAdSeq(adSeq);
