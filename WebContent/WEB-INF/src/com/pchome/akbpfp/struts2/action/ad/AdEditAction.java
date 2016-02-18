@@ -307,6 +307,10 @@ public class AdEditAction extends BaseCookieAction{
 					    }
 					    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
 					}
+					if(pfpAdDetail.getAdDetailId().equals("title") || pfpAdDetail.getAdDetailId().equals("content") ) {
+						adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
+						adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
+					}
 					pfpAdDetail.setAdDetailContent(adDetailContent[i]);
 //				}
 			}
