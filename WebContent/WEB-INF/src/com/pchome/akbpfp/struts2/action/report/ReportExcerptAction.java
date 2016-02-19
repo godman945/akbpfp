@@ -934,7 +934,7 @@ public class ReportExcerptAction extends BaseReportAction {
 				content.append(" " + comma);
 				content.append(" " + comma);
 				content.append(" " + comma);
-				content.append("\"" + AdKeywordReportDataTotal.getKwPvSum() + "c" + comma);
+				content.append("\"" + AdKeywordReportDataTotal.getKwPvSum() + "\"" + comma);
 				content.append("\"" + AdKeywordReportDataTotal.getKwPhrPvSum() + "\"" + comma);
 				content.append("\"" + AdKeywordReportDataTotal.getKwPrePvSum() + "\"" + comma);
 				content.append("\"" + AdKeywordReportDataTotal.getKwPvTotal() + "\"" + comma);
