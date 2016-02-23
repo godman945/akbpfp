@@ -528,7 +528,7 @@ public class PfpAdKeywordService extends BaseService<PfpAdKeyword,String> implem
 						}
 						// 平均點擊費用
 						if(clkPriceSum > 0 || clkSum > 0){
-							clkPriceSumAvg = clkPriceSum / (float)clk;
+							clkPriceSumAvg = clkPriceSum / (float)clkSum;
 						}
 						
 						adKeywordViewVO.setAdKeywordPvSum(pvSum);
