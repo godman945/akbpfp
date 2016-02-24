@@ -207,6 +207,9 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			for (int i=0; i<resultData_ad_action.size(); i++) {
 
+				ctr = 0;
+				costAvg = 0;
+				
 				AdActionReportVO vo = resultData_ad_action.get(i);
 
 				Date reportDate = vo.getReportDate();
@@ -246,6 +249,9 @@ public class ReportExcerptAction extends BaseReportAction {
 
 					AdGroupReportVO vo = resultData_ad_group.get(i);
 
+					ctr = 0;
+					costAvg = 0;
+					
 					Date reportDate = vo.getReportDate();
 					pv = vo.getAdPvSum().doubleValue();
 					click = vo.getAdClkSum().doubleValue();
@@ -280,6 +286,9 @@ public class ReportExcerptAction extends BaseReportAction {
 		} else if (resultData_kw!=null && resultData_kw.size()>0) {
 			
 			for (int i=0; i<resultData_kw.size(); i++) {
+				
+				ctr = 0;
+				costAvg = 0;
 				
 				//詞組比對
 				double phrPv = 0;
@@ -409,6 +418,9 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			for (int i=0; i<resultData_ad.size(); i++) {
 
+				ctr = 0;
+				costAvg = 0;
+				
 				AdReportVO vo = resultData_ad.get(i);
 
 				Date reportDate = dateFormat.parse(vo.getReportDate());
