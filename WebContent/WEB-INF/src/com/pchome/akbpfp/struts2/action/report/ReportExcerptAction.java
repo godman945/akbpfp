@@ -380,14 +380,14 @@ public class ReportExcerptAction extends BaseReportAction {
 					flashTotalDataMap.put(reportDate, new Float((float) totalPv));
 				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
 					flashDataMap.put(reportDate, new Float((float) ctr));
-					flashPhrDataMap.put(reportDate, new Float((float) phrClick));
-					flashPreDataMap.put(reportDate, new Float((float) preClick));
-					flashTotalDataMap.put(reportDate, new Float((float) totalClick));
-				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-					flashDataMap.put(reportDate, new Float((float) click));
 					flashPhrDataMap.put(reportDate, new Float((float) phrCtr));
 					flashPreDataMap.put(reportDate, new Float((float) preCtr));
 					flashTotalDataMap.put(reportDate, new Float((float) totalCtr));
+				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+					flashDataMap.put(reportDate, new Float((float) click));
+					flashPhrDataMap.put(reportDate, new Float((float) phrClick));
+					flashPreDataMap.put(reportDate, new Float((float) preClick));
+					flashTotalDataMap.put(reportDate, new Float((float) totalClick));
 				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
 					flashDataMap.put(reportDate, new Float((float) invClick));
 					flashPhrDataMap.put(reportDate, new Float((float) phrInvClick));
