@@ -126,42 +126,42 @@ public class ReportKeywordAction extends BaseReportAction {
 		Map<Date,Float> flashPreDataMap=new HashMap<Date,Float>();
 		Map<Date,Float> flashTotalDataMap=new HashMap<Date,Float>();
 
-		//廣泛比對
-		double pv = 0;
-		double click = 0;
-		double cost = 0;
-		double invClick = 0;
-		double ctr = 0;
-		double costAvg = 0;
-		
-		//詞組比對
-		double phrPv = 0;
-		double phrClick = 0;
-		double phrCost = 0;
-		double phrInvClick = 0;
-		double phrCtr = 0;
-		double phrCostAvg = 0;
-		
-		//精準比對
-		double prePv = 0;
-		double preClick = 0;
-		double preCost = 0;
-		double preInvClick = 0;
-		double preCtr = 0;
-		double preCostAvg = 0;
-		
-		//總計
-		double totalPv = 0;
-		double totalClick = 0;
-		double totalCost = 0;
-		double totalInvClick = 0;
-		double totalCtr = 0;
-		double totalCostAvg = 0;
-
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		for (int i=0; i<resultData.size(); i++) {
 
+			//廣泛比對
+			double pv = 0;
+			double click = 0;
+			double cost = 0;
+			double invClick = 0;
+			double ctr = 0;
+			double costAvg = 0;
+			
+			//詞組比對
+			double phrPv = 0;
+			double phrClick = 0;
+			double phrCost = 0;
+			double phrInvClick = 0;
+			double phrCtr = 0;
+			double phrCostAvg = 0;
+			
+			//精準比對
+			double prePv = 0;
+			double preClick = 0;
+			double preCost = 0;
+			double preInvClick = 0;
+			double preCtr = 0;
+			double preCostAvg = 0;
+			
+			//總計
+			double totalPv = 0;
+			double totalClick = 0;
+			double totalCost = 0;
+			double totalInvClick = 0;
+			double totalCtr = 0;
+			double totalCostAvg = 0;
+			
 			AdKeywordReportVO keywordReportVO = resultData.get(i);
 
 			//廣泛比對

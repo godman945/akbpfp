@@ -279,31 +279,31 @@ public class ReportExcerptAction extends BaseReportAction {
 
 		} else if (resultData_kw!=null && resultData_kw.size()>0) {
 			
-			//詞組比對
-			double phrPv = 0;
-			double phrClick = 0;
-			double phrCost = 0;
-			double phrInvClick = 0;
-			double phrCtr = 0;
-			double phrCostAvg = 0;
-			
-			//精準比對
-			double prePv = 0;
-			double preClick = 0;
-			double preCost = 0;
-			double preInvClick = 0;
-			double preCtr = 0;
-			double preCostAvg = 0;
-			
-			//總計
-			double totalPv = 0;
-			double totalClick = 0;
-			double totalCost = 0;
-			double totalInvClick = 0;
-			double totalCtr = 0;
-			double totalCostAvg = 0;
-
 			for (int i=0; i<resultData_kw.size(); i++) {
+				
+				//詞組比對
+				double phrPv = 0;
+				double phrClick = 0;
+				double phrCost = 0;
+				double phrInvClick = 0;
+				double phrCtr = 0;
+				double phrCostAvg = 0;
+				
+				//精準比對
+				double prePv = 0;
+				double preClick = 0;
+				double preCost = 0;
+				double preInvClick = 0;
+				double preCtr = 0;
+				double preCostAvg = 0;
+				
+				//總計
+				double totalPv = 0;
+				double totalClick = 0;
+				double totalCost = 0;
+				double totalInvClick = 0;
+				double totalCtr = 0;
+				double totalCostAvg = 0;
 
 				AdKeywordReportVO vo = resultData_kw.get(i);
 
