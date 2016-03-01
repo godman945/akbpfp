@@ -33,6 +33,7 @@
     <bean id="BoardAjax" class="com.pchome.akbpfp.struts2.ajax.board.BoardAjax" scope="prototype" >
     	<property name="pfpBoardService" ref="PfpBoardService" />
     	<property name="pfpAdService" ref="PfpAdService" />
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
     </bean>
     
     <!-- bill ajax -->

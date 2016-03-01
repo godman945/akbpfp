@@ -9,7 +9,7 @@ import com.pchome.rmi.mailbox.EnumCategory;
 
 public interface IPfpBoardService extends IBaseService<PfpBoard,String>{
 	
-	public List<PfpBoard> findLatestBoard(String boardType, String customerInfoId, String today) throws Exception;
+	public List<PfpBoard> findLatestBoard(String boardType, String customerInfoId, String today, String activateDate) throws Exception;
 	
 	public PfpBoard findAccountRemainBoard(EnumBoardType enumBoardType, String customerInfoId, EnumCategory enumCategory) throws Exception;
 	

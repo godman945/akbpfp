@@ -10,8 +10,8 @@ import com.pchome.rmi.mailbox.EnumCategory;
 
 public class PfpBoardService extends BaseService<PfpBoard,String> implements IPfpBoardService{
 
-	public List<PfpBoard> findLatestBoard(String boardType, String customerInfoId, String today) throws Exception{		
-		return ((PfpBoardDAO)dao).findLatestBoard(boardType, customerInfoId, today);
+	public List<PfpBoard> findLatestBoard(String boardType, String customerInfoId, String today, String activateDate) throws Exception{		
+		return ((PfpBoardDAO)dao).findLatestBoard(boardType, customerInfoId, today, activateDate);
 	}
 	
 	public PfpBoard findAccountRemainBoard(EnumBoardType enumBoardType, String customerInfoId, EnumCategory enumCategory) throws Exception {

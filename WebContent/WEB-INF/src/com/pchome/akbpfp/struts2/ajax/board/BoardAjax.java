@@ -1,12 +1,16 @@
 package com.pchome.akbpfp.struts2.ajax.board;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpBoard;
+import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.service.board.IPfpBoardService;
+import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.rmi.board.EnumBoardType;
 import com.pchome.soft.util.DateValueUtil;
@@ -20,6 +24,7 @@ public class BoardAjax extends BaseCookieAction{
 	
 	private IPfpBoardService pfpBoardService;
 	private IPfpAdService pfpAdService;
+	private IPfpCustomerInfoService pfpCustomerInfoService;
 	
 	private String boardType;				// 查詢公告類型
 	private List<PfpBoard> boardList;
@@ -40,9 +45,17 @@ public class BoardAjax extends BaseCookieAction{
 		// 最新公告 
 		String today = DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH);
 		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.get(super.getCustomer_info_id());
+		
+		String activateDate = "0000-00-00";
+		if(pfpCustomerInfo.getActivateDate() != null){
+			activateDate = dateFormat.format(pfpCustomerInfo.getActivateDate());		//帳戶開通日
+		}
+		
 		boardList = pfpBoardService.findLatestBoard(boardType, 
 												super.getCustomer_info_id(), 
-												today);	
+												today,activateDate);	
 		
 		//如果廣告已關閉則刪除公告
 		List<PfpBoard> chooseBoardList = new ArrayList<PfpBoard>();
@@ -76,9 +89,17 @@ public class BoardAjax extends BaseCookieAction{
 		
 		String dateStr = DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH);
 		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.get(super.getCustomer_info_id());
+		
+		String activateDate = "0000-00-00";
+		if(pfpCustomerInfo.getActivateDate() != null){
+			activateDate = dateFormat.format(pfpCustomerInfo.getActivateDate());		//帳戶開通日
+		}
+		
 		List<PfpBoard> boards = pfpBoardService.findLatestBoard(boardType, 
 																super.getCustomer_info_id(), 
-																dateStr);
+																dateStr,activateDate);
 		
 		//如果廣告已關閉則刪除公告
 		List<PfpBoard> chooseBoardList = new ArrayList<PfpBoard>();
@@ -130,6 +151,11 @@ public class BoardAjax extends BaseCookieAction{
 
 	public void setPfpAdService(IPfpAdService pfpAdService) {
 		this.pfpAdService = pfpAdService;
+	}
+	
+	public void setPfpCustomerInfoService(
+			IPfpCustomerInfoService pfpCustomerInfoService) {
+		this.pfpCustomerInfoService = pfpCustomerInfoService;
 	}
 
 	public void setBoardType(String boardType) {
