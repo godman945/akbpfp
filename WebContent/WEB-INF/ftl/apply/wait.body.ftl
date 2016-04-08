@@ -114,7 +114,7 @@
 	</tr>
 	<tr>
 		<th height="35">禮金金額</th>
-  		<td><span id="showMoney" name="showMoney" style="color:red;font-size: 180%"><#if (accountVO.giftMoney > 0) >${accountVO.giftMoney!}</#if></span></td>
+  		<td><span id="showMoney" name="showMoney" style="color:red;"><#if (accountVO.giftMoney > 0) >${accountVO.giftMoney!}</#if></span></td>
 	</tr>
 </tbody>
 </table>   

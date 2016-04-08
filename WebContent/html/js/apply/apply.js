@@ -238,9 +238,9 @@ function checkGift(){
 		success: function(response, status) {			
 			
 			if(response.giftStatus == "used"){
-				$("#showMoney").text("禮金序號已使用");
+				$("#showMoney").text("此序號已使用");
 			}else if(response.giftStatus == "expired"){
-				$("#showMoney").text("禮金序號已到期，無法使用");
+				$("#showMoney").text("此序號逾時已失效");
 			}else if(response.giftStatus == null){
 				$("#showMoney").text("此序號不存在，請輸入正確序號");
 			}else if(response.giftStatus == "unused"){

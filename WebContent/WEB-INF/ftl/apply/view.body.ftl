@@ -105,7 +105,7 @@
 	</tr>
 	<tr>
 		<th height="35">禮金金額</th>
-  		<td><span id="showMoney" name="showMoney" style="color:red;font-size: 180%"></span></td>
+  		<td><span id="showMoney" name="showMoney" style="color:red;"></span></td>
 	</tr>
 </tbody>
 </table>   
