@@ -1,9 +1,12 @@
 package com.pchome.akbpfp.struts2.ajax.apply;
 
 
+import org.apache.commons.lang.StringUtils;
+
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.freeAction.EnumGiftSnoPayment;
 import com.pchome.enumerate.freeAction.EnumGiftSnoUsed;
 import com.pchome.soft.depot.utils.HttpUtil;
 import com.pchome.soft.util.DateValueUtil;
@@ -18,7 +21,11 @@ public class ApplyAjax extends BaseCookieAction{
 	private String giftSno;			// 序號
 	private String giftStatus;		// 序號狀態
 	private float giftMoney;		// 序號金額
-	private String giftActionName;	//禮金活動名稱
+	private String giftActionName;	// 禮金活動名稱
+	private float addMoney = 0;		// 儲值金額
+	private float addTax = 0;		// 儲值稅額
+	private float addTotal = 0;		// 總金額
+	private String payment;			// 需要付款註記
 	
 	/**
 	 * 確認 url 是否存在
@@ -78,6 +85,14 @@ public class ApplyAjax extends BaseCookieAction{
 				giftStatus = "unused";
 				giftMoney = admFreeGift.getAdmFreeAction().getGiftMoney();
 				giftActionName = admFreeGift.getAdmFreeAction().getActionName();
+				payment = admFreeGift.getAdmFreeAction().getPayment();
+				
+				if(StringUtils.equals(admFreeGift.getAdmFreeAction().getPayment(), EnumGiftSnoPayment.YES.getStatus())){
+					addMoney = admFreeGift.getAdmFreeAction().getGiftCondition();
+					addTax = (float) Math.floor(addMoney*0.05 + 0.5);
+					addTotal = 	addMoney + 	addTax;
+				}
+				
 			}
 		
 		}else{
@@ -114,6 +129,22 @@ public class ApplyAjax extends BaseCookieAction{
 
 	public String getGiftActionName() {
 		return giftActionName;
+	}
+
+	public float getAddMoney() {
+		return addMoney;
+	}
+
+	public float getAddTax() {
+		return addTax;
+	}
+
+	public float getAddTotal() {
+		return addTotal;
+	}
+
+	public String getPayment() {
+		return payment;
 	}
 	
 	

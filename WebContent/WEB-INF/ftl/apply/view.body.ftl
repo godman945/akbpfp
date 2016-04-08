@@ -111,7 +111,7 @@
 </table>   
         
 </div>
-
+<div id="addMoneyDiv" >
 <h2><img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">廣告帳戶儲值</h2><div class="grtba">
 <span class="t_s01">* </span>為必填欄位
 
@@ -133,7 +133,7 @@
     </tr>
 </tbody>
 </table>
-
+</div>
 <center style="margin:10px">提醒您請先完成儲值，帳戶開通後才能繼續使用關鍵字廣告服務，ATM轉帳後配合金融機構確認需1~24小時的時間。</center>  
 </div>
 	<center style="margin:10px">

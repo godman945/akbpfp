@@ -118,8 +118,14 @@ function checkGift(){
 				$("#addMoney").attr("readonly", "true");
 				$("#giftSno").attr("readonly", "true");
 				$("#showMoney").text("NT$" + FormatNumber(response.giftMoney) + "  " + response.giftActionName);
-				$("#addMoney").val(response.giftMoney);
+				$("#addMoney").val(response.addMoney);
 				$("#giftMoney").val(response.giftMoney);
+				$("#addTax").html(response.addTax);
+				$("#total").html(response.addTotal);
+				
+				if(response.payment == "N"){
+					$("#addMoneyDiv").hide();
+				}
 				
 			}
 		},
@@ -136,7 +142,7 @@ function clearGift(){
 	$("#giftMoney").val("");
 	$("#addMoney").removeAttr("readonly");
 	$("#giftSno").removeAttr("readonly");
-	
+	$("#addMoneyDiv").show();
 }
 
 function FormatNumber(n) { 
