@@ -117,7 +117,7 @@ function checkGift(){
 			}else if(response.giftStatus == "unused"){
 				$("#addMoney").attr("readonly", "true");
 				$("#giftSno").attr("readonly", "true");
-				$("#showMoney").text(response.giftMoney);
+				$("#showMoney").text("NT$" + FormatNumber(response.giftMoney) + "  " + response.giftActionName);
 				$("#addMoney").val(response.giftMoney);
 				$("#giftMoney").val(response.giftMoney);
 				
@@ -138,3 +138,10 @@ function clearGift(){
 	$("#giftSno").removeAttr("readonly");
 	
 }
+
+function FormatNumber(n) { 
+	n += ""; 
+	var arr = n.split("."); 
+	var re = /(\d{1,3})(?=(\d{3})+$)/g; 
+	return arr[0].replace(re,"$1,") + (arr.length == 2 ? "."+arr[1] : ""); 
+} 

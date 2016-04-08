@@ -18,6 +18,7 @@ public class ApplyAjax extends BaseCookieAction{
 	private String giftSno;			// 序號
 	private String giftStatus;		// 序號狀態
 	private float giftMoney;		// 序號金額
+	private String giftActionName;	//禮金活動名稱
 	
 	/**
 	 * 確認 url 是否存在
@@ -76,6 +77,7 @@ public class ApplyAjax extends BaseCookieAction{
 			}else{
 				giftStatus = "unused";
 				giftMoney = admFreeGift.getAdmFreeAction().getGiftMoney();
+				giftActionName = admFreeGift.getAdmFreeAction().getActionName();
 			}
 		
 		}else{
@@ -109,5 +111,10 @@ public class ApplyAjax extends BaseCookieAction{
 	public float getGiftMoney() {
 		return giftMoney;
 	}
+
+	public String getGiftActionName() {
+		return giftActionName;
+	}
+	
 	
 }
