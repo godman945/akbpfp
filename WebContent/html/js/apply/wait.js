@@ -125,6 +125,7 @@ function checkGift(){
 				
 				if(response.payment == "N"){
 					$("#addMoneyDiv").hide();
+					$("#addMoney").val("1000");
 				}
 				
 			}
@@ -143,6 +144,11 @@ function clearGift(){
 	$("#addMoney").removeAttr("readonly");
 	$("#giftSno").removeAttr("readonly");
 	$("#addMoneyDiv").show();
+	$("#addMoney").val("1000");
+	var addTax = Math.round(1000 * 0.05);
+	var total = Math.round(1000 * 1.05);	
+	$("#addTax").html(addTax);
+	$("#total").html(total);
 }
 
 function FormatNumber(n) { 
