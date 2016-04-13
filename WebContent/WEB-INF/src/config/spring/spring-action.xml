@@ -42,6 +42,7 @@
     	<property name="redirectBillingAPI" ref="RedirectBillingAPI" />	 
     	<property name="admAccesslogService" ref="AdmAccesslogService" /> 
     	<property name="admFreeRecordService" ref="AdmFreeRecordService" />
+    	<property name="transDetailService" ref="PfpTransDetailService" /> 
     	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" />
     	<property name="admChannelAccountService" ref="AdmChannelAccountService" /> 
 		<property name="billingProductId" value="${billing.product.save.id}" />
