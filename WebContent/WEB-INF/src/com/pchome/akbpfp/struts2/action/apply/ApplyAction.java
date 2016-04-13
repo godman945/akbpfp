@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pchome.akbpfp.db.pojo.PfpTransDetail;
 import com.pchome.akbpfd.db.vo.user.PfdUserAdAccountRefVO;
 import com.pchome.akbpfp.api.MemberAPI;
 import com.pchome.akbpfp.api.RedirectBillingAPI;
@@ -23,6 +24,7 @@ import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRefId;
 import com.pchome.akbpfp.db.service.accesslog.IAdmAccesslogService;
 import com.pchome.akbpfp.db.service.adm.channel.IAdmChannelAccountService;
+import com.pchome.akbpfp.db.service.bill.IPfpTransDetailService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeRecordService;
@@ -47,6 +49,7 @@ import com.pchome.enumerate.freeAction.EnumGiftSnoUsed;
 import com.pchome.enumerate.privilege.EnumPrivilegeModel;
 import com.pchome.enumerate.recognize.EnumRecognizeStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
+import com.pchome.enumerate.trans.EnumTransType;
 import com.pchome.enumerate.user.EnumUserStatus;
 import com.pchome.rmi.accesslog.EnumAccesslogAction;
 
@@ -66,6 +69,7 @@ public class ApplyAction extends BaseSSLAction{
 	private IAdmFreeRecordService admFreeRecordService;
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private IAdmChannelAccountService admChannelAccountService;
+	private IPfpTransDetailService transDetailService;
 
 	private EnumBillingStatus[] enumBillingStatus  = EnumBillingStatus.values();
 	private AccountVO accountVO;
@@ -347,6 +351,8 @@ public class ApplyAction extends BaseSSLAction{
 				
 				admFreeRecordService.saveOrUpdate(admFreeRecord);
 				
+				this.createTransDetail(pfpCustomerInfo,admFreeGift.getAdmFreeAction().getGiftMoney());
+				
 				// 直接轉址到首頁
 				result = "index";
 			}else{
@@ -606,6 +612,31 @@ public class ApplyAction extends BaseSSLAction{
 		return orderId;
 	}
 
+	/**
+	 * 建立禮金交易明細
+	 */
+	private void createTransDetail(PfpCustomerInfo customerInfo, float giftMoney){
+		
+		PfpTransDetail transDetail = new PfpTransDetail();
+		Date today = new Date();
+		
+		transDetail.setPfpCustomerInfo(customerInfo);
+		transDetail.setTransDate(today);
+		transDetail.setTransContent(EnumTransType.GIFT.getChName());
+		transDetail.setTransType(EnumTransType.GIFT.getTypeId());
+		transDetail.setIncomeExpense("+");
+		transDetail.setTransPrice(giftMoney);
+		transDetail.setTotalSavePrice(customerInfo.getTotalAddMoney());
+		transDetail.setTotalSpendPrice(customerInfo.getTotalSpend());
+		transDetail.setRemain(customerInfo.getRemain());
+		transDetail.setTotalRetrievePrice(customerInfo.getTotalRetrieve());
+		transDetail.setTax(0);	
+		
+		transDetail.setUpdateDate(today);
+		transDetail.setCreateDate(today);
+		
+		transDetailService.saveOrUpdate(transDetail);
+	}
 	
 	public void setMemberAPI(MemberAPI memberAPI) {
 		this.memberAPI = memberAPI;
@@ -780,6 +811,9 @@ public class ApplyAction extends BaseSSLAction{
 	public void setAdmChannelAccountService(
 			IAdmChannelAccountService admChannelAccountService) {
 		this.admChannelAccountService = admChannelAccountService;
+	}
+	public void setTransDetailService(IPfpTransDetailService transDetailService) {
+		this.transDetailService = transDetailService;
 	}
 
 }
