@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/1/11 �U�� 01:57:12 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/4/19 �U�� 02:15:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -35,6 +35,7 @@ public class PfdAdActionReport implements java.io.Serializable {
 	private float adClkPrice;
 	private float adInvalidClkPrice;
 	private float adActionMaxPrice;
+	private float adActionControlPrice;
 	private int adPvlckCount;
 	private Date createDate;
 	private Date updateDate;
@@ -46,7 +47,8 @@ public class PfdAdActionReport implements java.io.Serializable {
 			String pfpCustomerInfoId, String pfpPayType, String adActionSeq,
 			int adType, int adPv, int adClk, int adInvalidClk, float adPvPrice,
 			float adClkPrice, float adInvalidClkPrice, float adActionMaxPrice,
-			int adPvlckCount, Date createDate, Date updateDate) {
+			float adActionControlPrice, int adPvlckCount, Date createDate,
+			Date updateDate) {
 		this.adPvclkDate = adPvclkDate;
 		this.adPvclkDevice = adPvclkDevice;
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
@@ -60,6 +62,7 @@ public class PfdAdActionReport implements java.io.Serializable {
 		this.adClkPrice = adClkPrice;
 		this.adInvalidClkPrice = adInvalidClkPrice;
 		this.adActionMaxPrice = adActionMaxPrice;
+		this.adActionControlPrice = adActionControlPrice;
 		this.adPvlckCount = adPvlckCount;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
@@ -70,7 +73,8 @@ public class PfdAdActionReport implements java.io.Serializable {
 			String pfpCustomerInfoId, String pfpPayType, String adActionSeq,
 			int adType, int adPv, int adClk, int adInvalidClk, float adPvPrice,
 			float adClkPrice, float adInvalidClkPrice, float adActionMaxPrice,
-			int adPvlckCount, Date createDate, Date updateDate) {
+			float adActionControlPrice, int adPvlckCount, Date createDate,
+			Date updateDate) {
 		this.adPvclkDate = adPvclkDate;
 		this.adPvclkDevice = adPvclkDevice;
 		this.pfdCustomerInfoId = pfdCustomerInfoId;
@@ -86,6 +90,7 @@ public class PfdAdActionReport implements java.io.Serializable {
 		this.adClkPrice = adClkPrice;
 		this.adInvalidClkPrice = adInvalidClkPrice;
 		this.adActionMaxPrice = adActionMaxPrice;
+		this.adActionControlPrice = adActionControlPrice;
 		this.adPvlckCount = adPvlckCount;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
@@ -236,6 +241,15 @@ public class PfdAdActionReport implements java.io.Serializable {
 
 	public void setAdActionMaxPrice(float adActionMaxPrice) {
 		this.adActionMaxPrice = adActionMaxPrice;
+	}
+
+	@Column(name = "ad_action_control_price", nullable = false, precision = 10)
+	public float getAdActionControlPrice() {
+		return this.adActionControlPrice;
+	}
+
+	public void setAdActionControlPrice(float adActionControlPrice) {
+		this.adActionControlPrice = adActionControlPrice;
 	}
 
 	@Column(name = "ad_pvlck_count", nullable = false)

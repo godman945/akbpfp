@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016/1/11 ?U?? 01:57:12 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/4/19 ?U?? 02:15:50 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfdAdActionReport" table="pfd_ad_action_report" catalog="akb">
         <id name="adActionReportSeq" type="java.lang.Integer">
@@ -81,6 +81,11 @@
         <property name="adActionMaxPrice" type="float">
             <column name="ad_action_max_price" precision="16" scale="6" not-null="true">
                 <comment>&#168;C&#164;&#233;&#170;&#225;&#182;O&#164;W&#173;&#173;</comment>
+            </column>
+        </property>
+        <property name="adActionControlPrice" type="float">
+            <column name="ad_action_control_price" precision="10" not-null="true">
+                <comment>&#189;&#213;&#177;&#177;&#170;&#247;&#195;B</comment>
             </column>
         </property>
         <property name="adPvlckCount" type="int">

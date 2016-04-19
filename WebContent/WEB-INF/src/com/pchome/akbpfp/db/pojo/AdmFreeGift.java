@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/1/11 �U�� 01:57:12 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/4/19 �U�� 02:15:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -27,6 +27,7 @@ public class AdmFreeGift implements java.io.Serializable {
 	private AdmFreeAction admFreeAction;
 	private String giftSno;
 	private String customerInfoId;
+	private String orderId;
 	private Date openDate;
 	private String giftSnoStatus;
 	private Date createDate;
@@ -45,11 +46,12 @@ public class AdmFreeGift implements java.io.Serializable {
 	}
 
 	public AdmFreeGift(AdmFreeAction admFreeAction, String giftSno,
-			String customerInfoId, Date openDate, String giftSnoStatus,
-			Date createDate, Date updateDate) {
+			String customerInfoId, String orderId, Date openDate,
+			String giftSnoStatus, Date createDate, Date updateDate) {
 		this.admFreeAction = admFreeAction;
 		this.giftSno = giftSno;
 		this.customerInfoId = customerInfoId;
+		this.orderId = orderId;
 		this.openDate = openDate;
 		this.giftSnoStatus = giftSnoStatus;
 		this.createDate = createDate;
@@ -93,6 +95,15 @@ public class AdmFreeGift implements java.io.Serializable {
 
 	public void setCustomerInfoId(String customerInfoId) {
 		this.customerInfoId = customerInfoId;
+	}
+
+	@Column(name = "order_id", length = 20)
+	public String getOrderId() {
+		return this.orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	@Temporal(TemporalType.DATE)

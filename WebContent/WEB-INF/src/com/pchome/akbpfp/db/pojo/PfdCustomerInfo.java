@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/1/11 �U�� 01:57:12 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/4/19 �U�� 02:15:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;

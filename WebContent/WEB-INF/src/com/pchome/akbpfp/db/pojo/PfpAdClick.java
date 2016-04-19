@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/1/11 �U�� 01:57:12 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/4/19 �U�� 02:15:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -29,6 +29,10 @@ public class PfpAdClick implements java.io.Serializable {
 	private String remoteIp;
 	private String referer;
 	private String userAgent;
+	private String pfbxCustomerInfoId;
+	private String pfbxPositionId;
+	private String pfdCustomerInfoId;
+	private String pfdUserId;
 	private String styleId;
 	private String tproId;
 	private String tadId;
@@ -46,6 +50,11 @@ public class PfpAdClick implements java.io.Serializable {
 	private Date recordDate;
 	private Integer recordTime;
 	private Date recordMinute;
+	private String mouseMoveFlag;
+	private Integer mouseAreaWidth;
+	private Integer mouseAreaHeight;
+	private Integer mouseDownX;
+	private Integer mouseDownY;
 	private Date updateDate;
 	private Date createDate;
 
@@ -59,18 +68,26 @@ public class PfpAdClick implements java.io.Serializable {
 
 	public PfpAdClick(PfpCustomerInfo pfpCustomerInfo, String memId,
 			String uuid, String remoteIp, String referer, String userAgent,
-			String styleId, String tproId, String tadId, String poolId,
-			String adId, String keywordId, String adType, String adClass,
-			Float adRank, Float adPrice, Integer adClk,
-			Float adActionControlPrice, Float adActionMaxPrice,
-			Integer maliceType, Date recordDate, Integer recordTime,
-			Date recordMinute, Date updateDate, Date createDate) {
+			String pfbxCustomerInfoId, String pfbxPositionId,
+			String pfdCustomerInfoId, String pfdUserId, String styleId,
+			String tproId, String tadId, String poolId, String adId,
+			String keywordId, String adType, String adClass, Float adRank,
+			Float adPrice, Integer adClk, Float adActionControlPrice,
+			Float adActionMaxPrice, Integer maliceType, Date recordDate,
+			Integer recordTime, Date recordMinute, String mouseMoveFlag,
+			Integer mouseAreaWidth, Integer mouseAreaHeight,
+			Integer mouseDownX, Integer mouseDownY, Date updateDate,
+			Date createDate) {
 		this.pfpCustomerInfo = pfpCustomerInfo;
 		this.memId = memId;
 		this.uuid = uuid;
 		this.remoteIp = remoteIp;
 		this.referer = referer;
 		this.userAgent = userAgent;
+		this.pfbxCustomerInfoId = pfbxCustomerInfoId;
+		this.pfbxPositionId = pfbxPositionId;
+		this.pfdCustomerInfoId = pfdCustomerInfoId;
+		this.pfdUserId = pfdUserId;
 		this.styleId = styleId;
 		this.tproId = tproId;
 		this.tadId = tadId;
@@ -88,6 +105,11 @@ public class PfpAdClick implements java.io.Serializable {
 		this.recordDate = recordDate;
 		this.recordTime = recordTime;
 		this.recordMinute = recordMinute;
+		this.mouseMoveFlag = mouseMoveFlag;
+		this.mouseAreaWidth = mouseAreaWidth;
+		this.mouseAreaHeight = mouseAreaHeight;
+		this.mouseDownX = mouseDownX;
+		this.mouseDownY = mouseDownY;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
@@ -156,6 +178,42 @@ public class PfpAdClick implements java.io.Serializable {
 
 	public void setUserAgent(String userAgent) {
 		this.userAgent = userAgent;
+	}
+
+	@Column(name = "pfbx_customer_info_id", length = 20)
+	public String getPfbxCustomerInfoId() {
+		return this.pfbxCustomerInfoId;
+	}
+
+	public void setPfbxCustomerInfoId(String pfbxCustomerInfoId) {
+		this.pfbxCustomerInfoId = pfbxCustomerInfoId;
+	}
+
+	@Column(name = "pfbx_position_id", length = 20)
+	public String getPfbxPositionId() {
+		return this.pfbxPositionId;
+	}
+
+	public void setPfbxPositionId(String pfbxPositionId) {
+		this.pfbxPositionId = pfbxPositionId;
+	}
+
+	@Column(name = "pfd_customer_info_id", length = 20)
+	public String getPfdCustomerInfoId() {
+		return this.pfdCustomerInfoId;
+	}
+
+	public void setPfdCustomerInfoId(String pfdCustomerInfoId) {
+		this.pfdCustomerInfoId = pfdCustomerInfoId;
+	}
+
+	@Column(name = "pfd_user_id", length = 20)
+	public String getPfdUserId() {
+		return this.pfdUserId;
+	}
+
+	public void setPfdUserId(String pfdUserId) {
+		this.pfdUserId = pfdUserId;
 	}
 
 	@Column(name = "style_id", length = 20)
@@ -311,6 +369,51 @@ public class PfpAdClick implements java.io.Serializable {
 
 	public void setRecordMinute(Date recordMinute) {
 		this.recordMinute = recordMinute;
+	}
+
+	@Column(name = "mouse_move_flag", length = 2)
+	public String getMouseMoveFlag() {
+		return this.mouseMoveFlag;
+	}
+
+	public void setMouseMoveFlag(String mouseMoveFlag) {
+		this.mouseMoveFlag = mouseMoveFlag;
+	}
+
+	@Column(name = "mouse_area_width")
+	public Integer getMouseAreaWidth() {
+		return this.mouseAreaWidth;
+	}
+
+	public void setMouseAreaWidth(Integer mouseAreaWidth) {
+		this.mouseAreaWidth = mouseAreaWidth;
+	}
+
+	@Column(name = "mouse_area_height")
+	public Integer getMouseAreaHeight() {
+		return this.mouseAreaHeight;
+	}
+
+	public void setMouseAreaHeight(Integer mouseAreaHeight) {
+		this.mouseAreaHeight = mouseAreaHeight;
+	}
+
+	@Column(name = "mouse_down_x")
+	public Integer getMouseDownX() {
+		return this.mouseDownX;
+	}
+
+	public void setMouseDownX(Integer mouseDownX) {
+		this.mouseDownX = mouseDownX;
+	}
+
+	@Column(name = "mouse_down_y")
+	public Integer getMouseDownY() {
+		return this.mouseDownY;
+	}
+
+	public void setMouseDownY(Integer mouseDownY) {
+		this.mouseDownY = mouseDownY;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016/1/11 ?U?? 01:57:12 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/4/19 ?U?? 02:15:50 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.AdmFreeAction" table="adm_free_action" catalog="akb">
         <id name="actionId" type="string">
@@ -16,6 +16,11 @@
         <property name="payment" type="string">
             <column name="payment" length="1" not-null="true">
                 <comment>&#187;&#221;&#173;n&#165;I&#180;&#218;:Y&#187;&#221;&#173;n N&#164;&#163;&#187;&#221;&#173;n</comment>
+            </column>
+        </property>
+        <property name="giftStyle" type="string">
+            <column name="gift_style" length="1">
+                <comment>&#192;x&#173;&#200;&#166;&#236;&#184;m 1:&#181;&#249;&#165;U,2:&#192;x&#173;&#200;</comment>
             </column>
         </property>
         <property name="giftCondition" type="float">

@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/1/11 �U�� 01:57:12 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/4/19 �U�� 02:15:49 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -24,6 +24,7 @@ public class AdmFreeAction implements java.io.Serializable {
 	private String actionId;
 	private String actionName;
 	private String payment;
+	private String giftStyle;
 	private float giftCondition;
 	private float giftMoney;
 	private Date actionStartDate;
@@ -52,13 +53,15 @@ public class AdmFreeAction implements java.io.Serializable {
 	}
 
 	public AdmFreeAction(String actionId, String actionName, String payment,
-			float giftCondition, float giftMoney, Date actionStartDate,
-			Date actionEndDate, Date inviledDate, String retrievedFlag,
-			String note, Date updateDate, Date createDate,
-			Set<AdmFreeGift> admFreeGifts, Set<AdmFreeRecord> admFreeRecords) {
+			String giftStyle, float giftCondition, float giftMoney,
+			Date actionStartDate, Date actionEndDate, Date inviledDate,
+			String retrievedFlag, String note, Date updateDate,
+			Date createDate, Set<AdmFreeGift> admFreeGifts,
+			Set<AdmFreeRecord> admFreeRecords) {
 		this.actionId = actionId;
 		this.actionName = actionName;
 		this.payment = payment;
+		this.giftStyle = giftStyle;
 		this.giftCondition = giftCondition;
 		this.giftMoney = giftMoney;
 		this.actionStartDate = actionStartDate;
@@ -98,6 +101,15 @@ public class AdmFreeAction implements java.io.Serializable {
 
 	public void setPayment(String payment) {
 		this.payment = payment;
+	}
+
+	@Column(name = "gift_style", length = 1)
+	public String getGiftStyle() {
+		return this.giftStyle;
+	}
+
+	public void setGiftStyle(String giftStyle) {
+		this.giftStyle = giftStyle;
 	}
 
 	@Column(name = "gift_condition", nullable = false, precision = 10)

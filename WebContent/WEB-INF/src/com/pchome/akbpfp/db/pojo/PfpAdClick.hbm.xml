@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016/1/11 ?U?? 01:57:12 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/4/19 ?U?? 02:15:50 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdClick" table="pfp_ad_click" catalog="akb">
         <id name="adClickId" type="java.lang.Long">
@@ -36,6 +36,26 @@
         <property name="userAgent" type="string">
             <column name="user_agent" length="500">
                 <comment>user agent</comment>
+            </column>
+        </property>
+        <property name="pfbxCustomerInfoId" type="string">
+            <column name="pfbx_customer_info_id" length="20">
+                <comment>&#193;p&#188;&#189;&#186;&#244;&#177;b&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="pfbxPositionId" type="string">
+            <column name="pfbx_position_id" length="20">
+                <comment>&#193;p&#188;&#189;&#186;&#244;&#170;&#169;&#166;&#236;</comment>
+            </column>
+        </property>
+        <property name="pfdCustomerInfoId" type="string">
+            <column name="pfd_customer_info_id" length="20">
+                <comment>&#184;g&#190;P&#176;&#211;&#177;b&#164;&#225;</comment>
+            </column>
+        </property>
+        <property name="pfdUserId" type="string">
+            <column name="pfd_user_id" length="20">
+                <comment>&#184;g&#190;P&#176;&#211;&#183;~&#176;&#200;</comment>
             </column>
         </property>
         <property name="styleId" type="string">
@@ -121,6 +141,31 @@
         <property name="recordMinute" type="time">
             <column name="record_minute" length="8">
                 <comment>&#176;O&#191;&#253;&#174;&#201;&#164;&#192;&#172;&#237;</comment>
+            </column>
+        </property>
+        <property name="mouseMoveFlag" type="string">
+            <column name="mouse_move_flag" length="2">
+                <comment>&#183;&#198;&#185;&#171;&#178;&#190;&#176;&#202;&#167;P&#194;_ T:&#165;&#191;&#189;T F:&#165;&#162;&#177;&#209;</comment>
+            </column>
+        </property>
+        <property name="mouseAreaWidth" type="java.lang.Integer">
+            <column name="mouse_area_width">
+                <comment>&#183;&#198;&#185;&#171;&#178;&#190;&#176;&#202;&#176;&#207;&#176;&#236;:&#188;e</comment>
+            </column>
+        </property>
+        <property name="mouseAreaHeight" type="java.lang.Integer">
+            <column name="mouse_area_height">
+                <comment>&#183;&#198;&#185;&#171;&#178;&#190;&#176;&#202;&#176;&#207;&#176;&#236;:&#176;&#170;</comment>
+            </column>
+        </property>
+        <property name="mouseDownX" type="java.lang.Integer">
+            <column name="mouse_down_x">
+                <comment>&#183;&#198;&#185;&#171;&#194;I&#192;&#187;&#166;&#236;&#184;m:X</comment>
+            </column>
+        </property>
+        <property name="mouseDownY" type="java.lang.Integer">
+            <column name="mouse_down_y">
+                <comment>&#183;&#198;&#185;&#171;&#194;I&#192;&#187;&#166;&#236;&#184;m:Y</comment>
             </column>
         </property>
         <property name="updateDate" type="timestamp">
