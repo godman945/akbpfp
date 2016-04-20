@@ -45,6 +45,7 @@ import com.pchome.enumerate.account.EnumPfpAuthorizAtion;
 import com.pchome.enumerate.apply.EnumSaveMoney;
 import com.pchome.enumerate.billing.EnumBillingStatus;
 import com.pchome.enumerate.freeAction.EnumGiftSnoPayment;
+import com.pchome.enumerate.freeAction.EnumGiftSnoStyle;
 import com.pchome.enumerate.freeAction.EnumGiftSnoUsed;
 import com.pchome.enumerate.privilege.EnumPrivilegeModel;
 import com.pchome.enumerate.recognize.EnumRecognizeStatus;
@@ -241,7 +242,7 @@ public class ApplyAction extends BaseSSLAction{
 		
 		if(StringUtils.isNotBlank(giftSno)){
 			// 檢查活動序號
-			admFreeGift = admFreeGiftService.findUnusedAdmFreeGiftSno(giftSno, today);
+			admFreeGift = admFreeGiftService.findUnusedAdmFreeGiftSno(giftSno, today,EnumGiftSnoStyle.REGISTER.getStatus());
 			log.info(">>> admFreeGiftId: "+admFreeGift);
 			
 		}		
@@ -302,6 +303,14 @@ public class ApplyAction extends BaseSSLAction{
 		
 		// 開通帳戶是否介接金流
 		if(admFreeGift == null || admFreeGift.getAdmFreeAction().getPayment().equals(EnumGiftSnoPayment.YES.getStatus())){
+			
+			// 更新序號使用狀態(未付款狀態先未啟用)
+			admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+			admFreeGift.setOpenDate(today);
+			admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
+			admFreeGift.setUpdateDate(today);
+			admFreeGift.setOrderId(orderId);
+			admFreeGiftService.update(admFreeGift);
 			
 			// 轉址至金流儲值  		
 			billingUrl = redirectBillingAPI.redirectUrl(orderId);

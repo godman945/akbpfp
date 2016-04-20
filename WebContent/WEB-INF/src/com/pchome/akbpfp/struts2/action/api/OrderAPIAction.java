@@ -7,17 +7,25 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 
 import com.pchome.akbpfp.api.ControlPriceAPI;
+import com.pchome.akbpfp.db.pojo.AdmFreeGift;
+import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.pojo.PfpOrder;
+import com.pchome.akbpfp.db.pojo.PfpTransDetail;
 import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
+import com.pchome.akbpfp.db.service.bill.IPfpTransDetailService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
+import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
+import com.pchome.akbpfp.db.service.freeAction.IAdmFreeRecordService;
 import com.pchome.akbpfp.db.service.order.IPfpOrderService;
 import com.pchome.akbpfp.db.service.recognize.IAdmRecognizeRecordService;
 import com.pchome.akbpfp.db.service.user.PfpUserService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.account.EnumAccountStatus;
 import com.pchome.enumerate.billing.EnumBillingStatus;
+import com.pchome.enumerate.freeAction.EnumGiftSnoUsed;
 import com.pchome.enumerate.recognize.EnumOrderType;
+import com.pchome.enumerate.trans.EnumTransType;
 import com.pchome.enumerate.user.EnumUserStatus;
 import com.pchome.rmi.accesslog.EnumAccesslogAction;
 import com.pchome.rmi.board.IBoardProvider;
@@ -32,6 +40,9 @@ public class OrderAPIAction extends BaseCookieAction{
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private PfpUserService pfpUserService;
 	private AdmAccesslogService admAccesslogService;
+	private IAdmFreeGiftService admFreeGiftService;
+	private IAdmFreeRecordService admFreeRecordService;
+	private IPfpTransDetailService transDetailService;
 	//private IAdmRecognizeRecordService admRecognizeRecordService;
 	private IBoardProvider boardProvider;
 	private ControlPriceAPI controlPriceAPI;
@@ -107,6 +118,8 @@ public class OrderAPIAction extends BaseCookieAction{
 		
 		if(order != null){
 			
+			AdmFreeGift admFreeGift = admFreeGiftService.findAdmFreeGiftSnoByOrderId(orderId);
+			
 			if(action.equals(EnumBillingStatus.B301.toString()) || action.equals(EnumBillingStatus.B302.toString())){
 				// 交易成功
 				PfpCustomerInfo customerInfo = pfpCustomerInfoService.findCustomerInfo(order.getPfpCustomerInfo().getCustomerInfoId());
@@ -126,8 +139,31 @@ public class OrderAPIAction extends BaseCookieAction{
 						pfpUserService.saveOrUpdate(order.getPfpUser());
 					}
 					
+					float giftMoney = 0;
+					if(admFreeGift != null){
+						giftMoney = admFreeGift.getAdmFreeAction().getGiftMoney();
+						
+						// 更新廣告金序號明細(保險起見還是再改一次狀態)
+						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
+						admFreeGift.setUpdateDate(today);
+						admFreeGiftService.update(admFreeGift);
+						
+						// 參與活動記錄
+						AdmFreeRecord admFreeRecord = new AdmFreeRecord();
+						admFreeRecord.setAdmFreeAction(admFreeGift.getAdmFreeAction());
+						admFreeRecord.setCustomerInfoId(customerInfo.getCustomerInfoId());
+						admFreeRecord.setRecordDate(today);
+						admFreeRecord.setUpdateDate(today);
+						admFreeRecord.setCreateDate(today);
+						
+						admFreeRecordService.saveOrUpdate(admFreeRecord);
+						
+						//建立交易明細
+						this.createTransDetail(customerInfo,admFreeGift.getAdmFreeAction().getGiftMoney());
+					}
+					
 					// 計算帳戶餘額
-					float remain = customerInfo.getRemain() + order.getOrderPrice();
+					float remain = customerInfo.getRemain() + order.getOrderPrice() + giftMoney;
 					customerInfo.setRemain(remain);
 					customerInfo.setLaterRemain(remain);
 					customerInfo.setUpdateDate(today);
@@ -155,7 +191,32 @@ public class OrderAPIAction extends BaseCookieAction{
 				// 重算調控金額
 				controlPriceAPI.countProcess(customerInfo);
 			}
-				
+			
+			//非交易成功要修改廣告金序號明細
+			if(admFreeGift != null){
+				//非B101狀況下
+				if(!action.equals(EnumBillingStatus.B101.toString())){
+					//付款失敗情況下
+					if(action.equals(EnumBillingStatus.B401.toString()) ||action.equals(EnumBillingStatus.B402.toString()) ||
+							action.equals(EnumBillingStatus.B403.toString()) ||action.equals(EnumBillingStatus.B404.toString()) ||
+							action.equals(EnumBillingStatus.B405.toString()) ||action.equals(EnumBillingStatus.B406.toString()) ||
+							action.equals(EnumBillingStatus.B407.toString()) ||action.equals(EnumBillingStatus.B408.toString())){
+						// 恢復廣告金序號明細為未使用
+						admFreeGift.setCustomerInfoId(null);
+						admFreeGift.setOpenDate(null);
+						admFreeGift.setOrderId(null);
+						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
+						admFreeGift.setUpdateDate(today);
+						admFreeGiftService.update(admFreeGift);
+					} else {
+						// 更新廣告金序號明細使用狀態
+						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
+						admFreeGift.setUpdateDate(today);
+						admFreeGiftService.update(admFreeGift);
+					}
+				}	
+			}
+			
 			/*
 			if(action.equals(EnumBillingStatus.B101.toString())){
 				// B101訂單成立才會有金流訂單編號
@@ -213,6 +274,32 @@ public class OrderAPIAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	/**
+	 * 建立禮金交易明細
+	 */
+	private void createTransDetail(PfpCustomerInfo customerInfo, float giftMoney){
+		
+		PfpTransDetail transDetail = new PfpTransDetail();
+		Date today = new Date();
+		
+		transDetail.setPfpCustomerInfo(customerInfo);
+		transDetail.setTransDate(today);
+		transDetail.setTransContent(EnumTransType.GIFT.getChName());
+		transDetail.setTransType(EnumTransType.GIFT.getTypeId());
+		transDetail.setIncomeExpense("+");
+		transDetail.setTransPrice(giftMoney);
+		transDetail.setTotalSavePrice(customerInfo.getTotalAddMoney());
+		transDetail.setTotalSpendPrice(customerInfo.getTotalSpend());
+		transDetail.setRemain(customerInfo.getRemain());
+		transDetail.setTotalRetrievePrice(customerInfo.getTotalRetrieve());
+		transDetail.setTax(0);	
+		
+		transDetail.setUpdateDate(today);
+		transDetail.setCreateDate(today);
+		
+		transDetailService.saveOrUpdate(transDetail);
+	}
+	
 	public void setSpringECcoderUtil(SpringECcoderUtil springECcoderUtil) {
 		this.springECcoderUtil = springECcoderUtil;
 	}
@@ -296,6 +383,18 @@ public class OrderAPIAction extends BaseCookieAction{
 //	public void setPfpAdGiftService(PfpAdGiftService pfpAdGiftService) {
 //		this.pfpAdGiftService = pfpAdGiftService;
 //	}
+
+	public void setAdmFreeGiftService(IAdmFreeGiftService admFreeGiftService) {
+		this.admFreeGiftService = admFreeGiftService;
+	}
+
+	public void setAdmFreeRecordService(IAdmFreeRecordService admFreeRecordService) {
+		this.admFreeRecordService = admFreeRecordService;
+	}
+
+	public void setTransDetailService(IPfpTransDetailService transDetailService) {
+		this.transDetailService = transDetailService;
+	}
 
 	public static void main(String age[]) throws Exception{
 		//NDExNHk%2BWUNaQFxCXkRgRnhgWz5aQVlAWURZPlk%2BWT5ZPllC%0D%0A

@@ -19,9 +19,19 @@ public class AdmFreeGiftService extends BaseService<AdmFreeGift, Integer> implem
 		}
 	}
 	
-	public AdmFreeGift findUnusedAdmFreeGiftSno(String sno, Date today) {
+	public AdmFreeGift findUnusedAdmFreeGiftSno(String sno, Date today, String snoStyle) {
 		
-		List<AdmFreeGift> list = ((IAdmFreeGiftDAO)dao).findUnusedAdmFreeGiftSno(sno, today);
+		List<AdmFreeGift> list = ((IAdmFreeGiftDAO)dao).findUnusedAdmFreeGiftSno(sno, today, snoStyle);
+		
+		if(list.isEmpty()){
+			return null;
+		}else{
+			return list.get(0);
+		}
+	}
+	
+	public AdmFreeGift findAdmFreeGiftSnoByOrderId(String orderId) {
+		List<AdmFreeGift> list = ((IAdmFreeGiftDAO)dao).findAdmFreeGiftSnoByOrderId(orderId);
 		
 		if(list.isEmpty()){
 			return null;

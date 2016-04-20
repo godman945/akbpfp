@@ -25,23 +25,40 @@ public class AdmFreeGiftDAO extends BaseDAO<AdmFreeGift, Integer> implements IAd
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<AdmFreeGift> findUnusedAdmFreeGiftSno(String sno, Date today) {
+	public List<AdmFreeGift> findUnusedAdmFreeGiftSno(String sno, Date today, String snoStyle) {
 		
 		StringBuffer hql = new StringBuffer();
 		List<Object> list = new ArrayList<Object>();
 		
 		hql.append(" from AdmFreeGift ");
-		hql.append(" where customerInfoId = null ");
-		hql.append(" and openDate = null ");
+		hql.append(" where 1=1 ");
+		/*hql.append(" where customerInfoId = null ");
+		hql.append(" and openDate = null ");*/
 		hql.append(" and giftSno = ? ");
 		hql.append(" and giftSnoStatus  = ? ");
 		hql.append(" and admFreeAction.actionEndDate >= ? ");
 		hql.append(" and admFreeAction.actionStartDate <= ? ");
+		hql.append(" and admFreeAction.giftStyle = ? ");
 		
 		list.add(sno);
 		list.add(EnumGiftSnoUsed.NO.getStatus());
 		list.add(today);
 		list.add(today);
+		list.add(snoStyle);
+		
+		return super.getHibernateTemplate().find(hql.toString(), list.toArray());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AdmFreeGift> findAdmFreeGiftSnoByOrderId(String orderId) {
+		
+		StringBuffer hql = new StringBuffer();
+		List<Object> list = new ArrayList<Object>();
+		
+		hql.append(" from AdmFreeGift ");
+		hql.append(" where orderId = ? ");
+			
+		list.add(orderId);
 		
 		return super.getHibernateTemplate().find(hql.toString(), list.toArray());
 	}

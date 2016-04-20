@@ -10,5 +10,7 @@ public interface IAdmFreeGiftDAO extends IBaseDAO<AdmFreeGift, Integer> {
 
 	public List<AdmFreeGift> findAdmFreeGiftSno(String sno);
 	
-	public List<AdmFreeGift> findUnusedAdmFreeGiftSno(String sno, Date today);
+	public List<AdmFreeGift> findUnusedAdmFreeGiftSno(String sno, Date today, String snoStyle);
+	
+	public List<AdmFreeGift> findAdmFreeGiftSnoByOrderId(String orderId);
 }

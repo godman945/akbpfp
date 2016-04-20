@@ -7,6 +7,7 @@ import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.freeAction.EnumGiftSnoPayment;
+import com.pchome.enumerate.freeAction.EnumGiftSnoStyle;
 import com.pchome.enumerate.freeAction.EnumGiftSnoUsed;
 import com.pchome.soft.depot.utils.HttpUtil;
 import com.pchome.soft.util.DateValueUtil;
@@ -70,9 +71,10 @@ public class ApplyAjax extends BaseCookieAction{
 
 			long early = DateValueUtil.getInstance().getDateDiffDay(actionStartDate, today);
 			
-			if(admFreeGift.getCustomerInfoId() != null ||
+			if(admFreeGift.getGiftSnoStatus().equals(EnumGiftSnoUsed.YES.getStatus())){
+			/*if(admFreeGift.getCustomerInfoId() != null ||
 					admFreeGift.getOpenDate() != null ||
-					admFreeGift.getGiftSnoStatus().equals(EnumGiftSnoUsed.YES.getStatus())){
+					admFreeGift.getGiftSnoStatus().equals(EnumGiftSnoUsed.YES.getStatus())){*/
 				// 序號已經被使用
 				giftStatus = "used";
 			}else if(expired < 0){
@@ -81,6 +83,8 @@ public class ApplyAjax extends BaseCookieAction{
 				
 			}else if(early <= 0){
 				log.info(">>> early ");
+			} else if(!StringUtils.equals(EnumGiftSnoStyle.REGISTER.getStatus(), admFreeGift.getAdmFreeAction().getGiftStyle())){
+				giftStatus = "errStyle";
 			}else{
 				giftStatus = "unused";
 				giftMoney = admFreeGift.getAdmFreeAction().getGiftMoney();

@@ -10,5 +10,7 @@ public interface IAdmFreeGiftService extends IBaseService<AdmFreeGift, Integer> 
 	// 確認是否有這序號
 	public AdmFreeGift findAdmFreeGiftSno(String sno);
 	// 未使用且未過期序號
-	public AdmFreeGift findUnusedAdmFreeGiftSno(String sno, Date today);
+	public AdmFreeGift findUnusedAdmFreeGiftSno(String sno, Date today, String snoStyle);
+	// 依訂單編號找廣告金序號
+	public AdmFreeGift findAdmFreeGiftSnoByOrderId(String orderId);
 }

@@ -16,6 +16,9 @@
 		<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
 		<property name="pfpUserService" ref="PfpUserService" />
 		<property name="admAccesslogService" ref="AdmAccesslogService" />
+		<property name="admFreeGiftService" ref="AdmFreeGiftService" />
+		<property name="admFreeRecordService" ref="AdmFreeRecordService" />
+		<property name="transDetailService" ref="PfpTransDetailService" />
 		<property name="boardProvider" ref="BoardProviderProxy" />
 		<property name="controlPriceAPI" ref="ControlPriceAPI" />
 		<property name="channelId" value="${billing.channel.id}" /> 
