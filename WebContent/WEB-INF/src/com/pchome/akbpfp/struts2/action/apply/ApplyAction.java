@@ -607,12 +607,10 @@ public class ApplyAction extends BaseSSLAction{
 					
 					order.setGiftSno(giftSno);
 					order.setGiftMoney(giftMoney);
-					order.setOrderPrice(giftMoney);
-					orderDetail.setProducPrice(giftMoney);
-				}else{
-					order.setOrderPrice(addMoney);
-					orderDetail.setProducPrice(addMoney);
 				}
+				
+				order.setOrderPrice(addMoney);
+				orderDetail.setProducPrice(addMoney);
 			}		
 			
 			//log.info(" orderId: "+orderId);
