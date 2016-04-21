@@ -143,8 +143,9 @@ public class OrderAPIAction extends BaseCookieAction{
 					if(admFreeGift != null){
 						giftMoney = admFreeGift.getAdmFreeAction().getGiftMoney();
 						
-						// 更新廣告金序號明細(保險起見還是再改一次狀態)
+						// 更新廣告金序號明細(寫入啟用日期)
 						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
+						admFreeGift.setOpenDate(today);
 						admFreeGift.setUpdateDate(today);
 						admFreeGiftService.update(admFreeGift);
 						

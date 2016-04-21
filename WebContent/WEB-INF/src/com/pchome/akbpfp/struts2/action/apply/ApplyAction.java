@@ -305,12 +305,13 @@ public class ApplyAction extends BaseSSLAction{
 		if(admFreeGift == null || admFreeGift.getAdmFreeAction().getPayment().equals(EnumGiftSnoPayment.YES.getStatus())){
 			
 			// 更新序號使用狀態(未付款狀態先未啟用)
-			admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
-			admFreeGift.setOpenDate(today);
-			admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
-			admFreeGift.setUpdateDate(today);
-			admFreeGift.setOrderId(orderId);
-			admFreeGiftService.update(admFreeGift);
+			if(admFreeGift != null){
+				admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+				admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
+				admFreeGift.setUpdateDate(today);
+				admFreeGift.setOrderId(orderId);
+				admFreeGiftService.update(admFreeGift);
+			}
 			
 			// 轉址至金流儲值  		
 			billingUrl = redirectBillingAPI.redirectUrl(orderId);
