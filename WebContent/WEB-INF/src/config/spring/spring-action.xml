@@ -76,6 +76,9 @@
     	<property name="pfpOrderDetailService" ref="PfpOrderDetailService" />
     	<property name="redirectBillingAPI" ref="RedirectBillingAPI" />
     	<property name="admAccesslogService" ref="AdmAccesslogService" />  	
+    	<property name="admFreeGiftService" ref="AdmFreeGiftService" />
+		<property name="admFreeRecordService" ref="AdmFreeRecordService" />
+		<property name="transDetailService" ref="PfpTransDetailService" />
 		<property name="billingProductId" value="${billing.product.save.id}" />
 		<property name="billingProductName" value="${billing.product.save.name}" />		
     </bean>   

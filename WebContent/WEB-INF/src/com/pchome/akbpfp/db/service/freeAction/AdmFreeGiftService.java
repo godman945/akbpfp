@@ -39,4 +39,14 @@ public class AdmFreeGiftService extends BaseService<AdmFreeGift, Integer> implem
 			return list.get(0);
 		}
 	}
+	
+	public AdmFreeGift findUsedHistory(String actionId, String customerInfoId) {
+		List<AdmFreeGift> list = ((IAdmFreeGiftDAO)dao).findUsedHistory(actionId, customerInfoId);
+		
+		if(list.isEmpty()){
+			return null;
+		}else{
+			return list.get(0);
+		}
+	}
 }

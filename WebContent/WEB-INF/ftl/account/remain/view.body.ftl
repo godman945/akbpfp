@@ -18,16 +18,24 @@
       <td>NT$ ${accountVO.remain!}</td>
     </tr>
     <tr>
+		<th height="35">禮金序號</th>
+  		<td><input type="text" id="giftSno" name="giftSno" value="${accountVO.giftSno!}" autocomplete="off"  style="width:100px" maxlength="10" /><input type="button" id="btnClrGift" name="btnClrGift" value="清除序號"></td>
+	</tr>
+	<tr>
+		<th height="35">禮金金額</th>
+  		<td><span id="showMoney" name="showMoney" style="color:red;"></span></td>
+	</tr>
+    <tr class="addTr" >
     	<th height="35"><span class="t_s02">* </span>本次加值金額<br /> <span class="t_s01">儲值金額最少為新台幣$500</span></th>
     	<td>
     		NT$ <input type="text" id="addMoney" name="addMoney" value="${accountVO.addMoney!}" autocomplete="off" maxlength="6" >
 		</td>
     </tr>
- 	<tr>
+ 	<tr class="addTr" >
         <th height="35">營業稅</th>
         <td>NT$ <span id="addTax">${accountVO.addTax!}</span></td>
     </tr>
-    <tr>
+    <tr class="addTr" >
       <th height="35">總金額(含5%營業稅)<br /><span class="t_s01">(實際付款及發票金額)</span></th>
       <td>NT$ <span id="total"/>${(accountVO.addMoney+accountVO.addTax)!}</span></td>
     </tr>
@@ -46,6 +54,7 @@
 		<input type="button" id="save" value="付款儲值" onclick='goog_report_conversion()' disabled="true" />
 	</center>
 </div>
+<input type="hidden" id="giftMoney" name="giftMoney" >
 </form>
 
 </div> 

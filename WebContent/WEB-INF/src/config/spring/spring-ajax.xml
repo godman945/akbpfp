@@ -14,6 +14,11 @@
     	<property name="admFreeGiftService" ref="AdmFreeGiftService" />
     </bean>
     
+    <!-- apply ajax -->
+    <bean id="AccountAjax" class="com.pchome.akbpfp.struts2.ajax.account.AccountAjax" scope="prototype" >
+    	<property name="admFreeGiftService" ref="AdmFreeGiftService" />
+    </bean>
+    
     <!-- account user ajax -->
     <bean id="AccountUserAjax" class="com.pchome.akbpfp.struts2.ajax.account.AccountUserAjax" scope="prototype" >
     	<property name="memberAPI" ref="MemberAPI" />

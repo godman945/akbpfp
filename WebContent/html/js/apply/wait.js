@@ -113,7 +113,7 @@ function checkGift(){
 			}else if(response.giftStatus == "expired"){
 				$("#showMoney").text("此序號逾時已失效");
 			}else if(response.giftStatus == "expired"){
-				$("#errStyle").text("此序號不可在註冊時使用");
+				$("#showMoney").text("此序號不可在註冊時使用");
 			}else if(response.giftStatus == null){
 				$("#showMoney").text("此序號不存在，請輸入正確序號");
 			}else if(response.giftStatus == "unused"){
