@@ -11,6 +11,15 @@
     </@s.else>
 </a></div>
 
+<div class="submn"><a href="<@s.url value="/" />freeSearch.html">
+	<@s.if test="%{#uri.indexOf('freeSearch.html') > -1}">
+        <b>廣告禮金查詢</b>
+    </@s.if>
+    <@s.else>
+       	廣告禮金查詢
+    </@s.else>
+</a></div>
+
 <div class="submn"><a href="<@s.url value="/" />paySearch.html">
 	<@s.if test="%{#uri.indexOf('paySearch.html') > -1}">
         <b>付費查詢</b>

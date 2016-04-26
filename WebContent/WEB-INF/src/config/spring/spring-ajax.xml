@@ -45,6 +45,7 @@
     <bean id="BillAjax" class="com.pchome.akbpfp.struts2.ajax.bill.BillAjax" scope="prototype" >
     	<property name="pfpTransDetailService" ref="PfpTransDetailService" />
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="admFreeRecordService" ref="AdmFreeRecordService" />
     </bean>
 
 	<!-- ad ajax -->

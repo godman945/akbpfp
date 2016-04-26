@@ -22,6 +22,18 @@
             <result type="tiles" name="success">bill.paySearch.view</result>
     </action>   
     
+    <action name="freeSearch" class="BillAction" method="freeSearchAction">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="billPrivilegeInterceptor" />
+            <result type="tiles" name="success">bill.freeSearch.view</result>
+    </action>
+    
+    <action name="searchAdmFree" class="BillAjax" method="searchFreeAjax">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="billPrivilegeInterceptor" />
+            <result type="tiles" name="success">bill.admFree.table</result>
+    </action>
+    
    	<action name="transReportDownload" class="BillAjax" method="downloadTransDetailReportAjax">
    			<interceptor-ref name="loginCheckStack" />
    			<interceptor-ref name="billPrivilegeInterceptor" />

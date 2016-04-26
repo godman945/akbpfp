@@ -32,5 +32,25 @@
     	<put-attribute name="body" value="/ftl/bill/paySearch/viewBody.ftl" />
     </definition> 
     
+    <definition name="bill.freeSearch.view" extends="default.layout">
+    	<put-attribute name="head" value="freeSearch.head" />
+    	<put-attribute name="menu" value="freeSearch.menu" />
+    	<put-attribute name="body" value="freeSearch.body" />
+    </definition> 
+  
+	<definition name="freeSearch.menu" extends="default.menu" >
+    	<put-attribute name="submenu" value="/ftl/bill/submenu.ftl" />
+    </definition> 
+
+    <definition name="freeSearch.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/bill/css.ftl" />
+    	<put-attribute name="js" value="/ftl/bill/freeSearch/js.ftl" />
+    </definition>
+    
+   	<definition name="freeSearch.body" template="/ftl/bill/freeSearch/viewBody.ftl" >
+    	<put-attribute name="dateRangeSelect" value="/ftl/summary/date/dateRangeSelect.ftl" />    		
+    </definition>
+    
+    <definition name="bill.admFree.table" template="/ftl/bill/ajax/admFreeTable.ftl" />
     
 </tiles-definitions>

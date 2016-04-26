@@ -47,6 +47,22 @@ public class BillAction extends BaseSSLAction{
 		return SUCCESS;
 	}
 	
+	public String freeSearchAction() throws Exception {
+		
+		this.checkRedirectSSLUrl();
+		if(StringUtils.isNotBlank(this.resultType)){
+			return this.resultType;
+		}
+		
+		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
+		startDate = DateValueUtil.getInstance().getDateValue(-30, DateValueUtil.DBPATH);
+		endDate = DateValueUtil.getInstance().getDateValue(DateValueUtil.YESTERDAY, DateValueUtil.DBPATH);
+		
+		pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
+		
+		return SUCCESS;
+	}
+	
 	public void setPfpCustomerInfoService(
 			PfpCustomerInfoService pfpCustomerInfoService) {
 		this.pfpCustomerInfoService = pfpCustomerInfoService;

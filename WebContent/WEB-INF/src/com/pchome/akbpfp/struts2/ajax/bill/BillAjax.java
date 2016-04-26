@@ -4,10 +4,13 @@ package com.pchome.akbpfp.struts2.ajax.bill;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.List;
 
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.bill.PfpTransDetailService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
+import com.pchome.akbpfp.db.service.freeAction.AdmFreeRecordService;
+import com.pchome.akbpfp.db.vo.bill.AdmFreeVO;
 import com.pchome.akbpfp.db.vo.bill.BillVO;
 import com.pchome.akbpfp.db.vo.bill.BillVOList;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -19,10 +22,12 @@ public class BillAjax extends BaseCookieAction{
 	
 	private PfpTransDetailService pfpTransDetailService;
 	private PfpCustomerInfoService pfpCustomerInfoService;
+	private AdmFreeRecordService admFreeRecordService;
 	
 	private String startDate;
 	private String endDate;
 	private BillVOList billVOList;
+	private List<AdmFreeVO> admFreeVOList;
 	
 	private String downloadFileName;								// 下載顯示名
 	private InputStream downloadFileStream;							// 下載報表的 input stream	
@@ -95,6 +100,16 @@ public class BillAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
+	public String searchFreeAjax() throws Exception{
+		
+		admFreeVOList = admFreeRecordService.findAccountFree(super.getCustomer_info_id(), startDate, endDate);
+		
+		// 查詢日期寫進cookie
+		this.setChooseDate(startDate, endDate);
+		
+		return SUCCESS;
+	}
+	
 	public void setPfpTransDetailService(PfpTransDetailService pfpTransDetailService) {
 		this.pfpTransDetailService = pfpTransDetailService;
 	}
@@ -104,6 +119,9 @@ public class BillAjax extends BaseCookieAction{
 		this.pfpCustomerInfoService = pfpCustomerInfoService;
 	}
 
+	public void setAdmFreeRecordService(AdmFreeRecordService admFreeRecordService) {
+		this.admFreeRecordService = admFreeRecordService;
+	}
 
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
@@ -115,6 +133,10 @@ public class BillAjax extends BaseCookieAction{
 
 	public BillVOList getBillVOList() {
 		return billVOList;
+	}
+
+	public List<AdmFreeVO> getAdmFreeVOList() {
+		return admFreeVOList;
 	}
 
 	public String getDownloadFileName() {
