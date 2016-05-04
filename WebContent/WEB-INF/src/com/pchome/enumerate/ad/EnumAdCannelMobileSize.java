@@ -1,9 +1,13 @@
 package com.pchome.enumerate.ad;
 
 public enum EnumAdCannelMobileSize {
-	adp_201507210004("2", "300", "100");
+	adp_201507210004("2", "300", "100"),
 	//adp_201510220001("14", "320", "100"),
 	//adp_201507210001("1", "300", "250");
+	
+	//2016/05/04	新增加尺寸
+	adp_201601210001("16", "320", "480"),
+	adp_201605040001("21", "180", "150");
 	
 	private final String name;
 	private final String widh;
