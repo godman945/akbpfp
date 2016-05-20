@@ -419,17 +419,18 @@
 	    				break;
 	    			}
 	    		}
+	    		sWord_tmp = sWord_tmp.replace(/\t/g, "");
 	    		var aWord = sWord_tmp.split(",");
 	    		var tmp = "";
 	    		for(var iiii = 0; iiii < aWord.length; iiii++) {
-	    			tmp += aWord[iiii] + "\n";
+	    			tmp += aWord[iiii].trim() + "\n";
 	    		}
 	    		if(aWord.length > 0 && sWord_tmp != ",") {
 	    			var noAllow = "";
 	    			for(var key in aWord){
 	    				//var adKeyword = chkSpace(aWord[key]);
 	    				//adKeyword = chkDash(adKeyword);
-	    				var adKeyword = chkKeyword(aWord[key]);
+	    				var adKeyword = chkKeyword(aWord[key].trim());
 	    				if(adKeyword != "" && adKeyword.length <= 50 && isAllowKW(adKeyword) ) {
 		    				if($.inArray(adKeyword, showWord) < 0) {
 		    					if($("#KeywordUL li").length >= 500) {
