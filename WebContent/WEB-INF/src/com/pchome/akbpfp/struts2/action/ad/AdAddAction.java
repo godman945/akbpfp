@@ -251,6 +251,7 @@ public class AdAddAction extends BaseCookieAction{
 				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
 				}
 			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+			    	adDetailContent[i] = adDetailContent[i].trim();
 			}
 			if(adDetailID[i].equals("show_url")) {
 			    if(adDetailContent[i].indexOf("http://") < 0 ) {
@@ -260,6 +261,7 @@ public class AdAddAction extends BaseCookieAction{
 			    }
 //			    adDetailContent[i] = (HttpUtil.getInstance().getRealUrl(adDetailContent[i]).replace("http://", ""));
 			    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
+			    adDetailContent[i] = adDetailContent[i].trim();
 			}
 
 			if(adDetailID[i].equals("title") || adDetailID[i].equals("content") ) {
@@ -327,6 +329,7 @@ public class AdAddAction extends BaseCookieAction{
 			if(adDetailContent[i].indexOf("http") !=0 ) {
 			    adDetailContent[i] = "http://" + adDetailContent[i];
 			}
+			adDetailContent[i] = adDetailContent[i].trim();
 		    }
 		pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
 		pfpAdDetailVO.setAdSeq(adSeq);
@@ -934,7 +937,7 @@ public class AdAddAction extends BaseCookieAction{
                     return SUCCESS;
                 }
 
-        		saveAdDetail(adLinkURL,EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
+        		saveAdDetail(adLinkURL.trim(),EnumAdDetail.real_url.getAdDetailName(), adPoolSeq,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
         		
         		if(imgNameMap.get(adSeq + "_title") != null){
         			imgName = imgNameMap.get(adSeq + "_title").toString();	
