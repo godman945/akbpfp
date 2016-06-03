@@ -60,7 +60,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		if(StringUtils.isNotBlank(pcId) && StringUtils.isNotBlank(userData)){
 			// 解析 cookie 
 			EnumMap<EnumCookiePfpKey, String> cookieMap = CookieStringToMap.getInstance().transformEnumMap(userData);
-			//log.info("---------------------cookieMap: " + cookieMap);
+			log.info("---------------------cookieMap: " + cookieMap);
 			if(cookieMap == null){
 				return "index";
 			}
