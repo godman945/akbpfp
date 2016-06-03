@@ -29,6 +29,7 @@ import com.pchome.enumerate.account.EnumAccountStatus;
 import com.pchome.enumerate.account.EnumPfpRootUser;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.cookie.EnumCookiePfpKey;
+import com.pchome.enumerate.pfd.EnumPfdUserPrivilege;
 import com.pchome.enumerate.privilege.EnumPrivilegeModel;
 import com.pchome.enumerate.user.EnumUserStatus;
 import com.pchome.soft.depot.utils.CookieStringToMap;
@@ -85,7 +86,9 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 				    }
 				    PfdUserMemberRef pfdUserMemberRef = pfdUserMemberRefService.getUserMemberRef(pfpUserMemberRef.getId().getMemberId());
 				    if(!(pfdUserMemberRef == null)){
-					if(EnumPrivilegeModel.ADM_USER.getPrivilegeId() == pfdUserMemberRef.getPfdUser().getPrivilegeId() ){
+					if(EnumPfdUserPrivilege.ROOT_USER.getPrivilege() == pfdUserMemberRef.getPfdUser().getPrivilegeId() || 
+							EnumPfdUserPrivilege.ACCOUNT_MANAGER.getPrivilege() == pfdUserMemberRef.getPfdUser().getPrivilegeId() || 
+							EnumPfdUserPrivilege.SALES_MANAGER.getPrivilege() == pfdUserMemberRef.getPfdUser().getPrivilegeId() ){
 					    pfdAngelFlag = true;
 					}
 				    }
