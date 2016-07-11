@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/4/19 �U�� 02:15:49 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/7/11 �W�� 11:35:46 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -33,9 +33,19 @@ public class PfpAdAction implements java.io.Serializable {
 	private Integer adDevice;
 	private Date adActionStartDate;
 	private Date adActionEndDate;
+	private String adActionSex;
+	private int adActionStartAge;
+	private int adActionEndAge;
 	private float adActionMax;
 	private float adActionControlPrice;
 	private int adActionStatus;
+	private int adActionMonTime;
+	private int adActionTueTime;
+	private int adActionWedTime;
+	private int adActionThuTime;
+	private int adActionFriTime;
+	private int adActionSatTime;
+	private int adActionSunTime;
 	private String aid;
 	private String userId;
 	private Date adActionCreatTime;
@@ -47,18 +57,30 @@ public class PfpAdAction implements java.io.Serializable {
 
 	public PfpAdAction(String adActionSeq, PfpCustomerInfo pfpCustomerInfo,
 			String adActionName, String adActionDesc, Date adActionStartDate,
-			Date adActionEndDate, float adActionMax,
-			float adActionControlPrice, int adActionStatus, String userId,
-			Date adActionCreatTime, Date adActionUpdateTime) {
+			Date adActionEndDate, int adActionStartAge, int adActionEndAge,
+			float adActionMax, float adActionControlPrice, int adActionStatus,
+			int adActionMonTime, int adActionTueTime, int adActionWedTime,
+			int adActionThuTime, int adActionFriTime, int adActionSatTime,
+			int adActionSunTime, String userId, Date adActionCreatTime,
+			Date adActionUpdateTime) {
 		this.adActionSeq = adActionSeq;
 		this.pfpCustomerInfo = pfpCustomerInfo;
 		this.adActionName = adActionName;
 		this.adActionDesc = adActionDesc;
 		this.adActionStartDate = adActionStartDate;
 		this.adActionEndDate = adActionEndDate;
+		this.adActionStartAge = adActionStartAge;
+		this.adActionEndAge = adActionEndAge;
 		this.adActionMax = adActionMax;
 		this.adActionControlPrice = adActionControlPrice;
 		this.adActionStatus = adActionStatus;
+		this.adActionMonTime = adActionMonTime;
+		this.adActionTueTime = adActionTueTime;
+		this.adActionWedTime = adActionWedTime;
+		this.adActionThuTime = adActionThuTime;
+		this.adActionFriTime = adActionFriTime;
+		this.adActionSatTime = adActionSatTime;
+		this.adActionSunTime = adActionSunTime;
 		this.userId = userId;
 		this.adActionCreatTime = adActionCreatTime;
 		this.adActionUpdateTime = adActionUpdateTime;
@@ -67,9 +89,13 @@ public class PfpAdAction implements java.io.Serializable {
 	public PfpAdAction(String adActionSeq, PfpCustomerInfo pfpCustomerInfo,
 			String adActionName, String adActionDesc, Integer adType,
 			Integer adDevice, Date adActionStartDate, Date adActionEndDate,
+			String adActionSex, int adActionStartAge, int adActionEndAge,
 			float adActionMax, float adActionControlPrice, int adActionStatus,
-			String aid, String userId, Date adActionCreatTime,
-			Date adActionUpdateTime, Set<PfpAdGroup> pfpAdGroups) {
+			int adActionMonTime, int adActionTueTime, int adActionWedTime,
+			int adActionThuTime, int adActionFriTime, int adActionSatTime,
+			int adActionSunTime, String aid, String userId,
+			Date adActionCreatTime, Date adActionUpdateTime,
+			Set<PfpAdGroup> pfpAdGroups) {
 		this.adActionSeq = adActionSeq;
 		this.pfpCustomerInfo = pfpCustomerInfo;
 		this.adActionName = adActionName;
@@ -78,9 +104,19 @@ public class PfpAdAction implements java.io.Serializable {
 		this.adDevice = adDevice;
 		this.adActionStartDate = adActionStartDate;
 		this.adActionEndDate = adActionEndDate;
+		this.adActionSex = adActionSex;
+		this.adActionStartAge = adActionStartAge;
+		this.adActionEndAge = adActionEndAge;
 		this.adActionMax = adActionMax;
 		this.adActionControlPrice = adActionControlPrice;
 		this.adActionStatus = adActionStatus;
+		this.adActionMonTime = adActionMonTime;
+		this.adActionTueTime = adActionTueTime;
+		this.adActionWedTime = adActionWedTime;
+		this.adActionThuTime = adActionThuTime;
+		this.adActionFriTime = adActionFriTime;
+		this.adActionSatTime = adActionSatTime;
+		this.adActionSunTime = adActionSunTime;
 		this.aid = aid;
 		this.userId = userId;
 		this.adActionCreatTime = adActionCreatTime;
@@ -164,6 +200,33 @@ public class PfpAdAction implements java.io.Serializable {
 		this.adActionEndDate = adActionEndDate;
 	}
 
+	@Column(name = "ad_action_sex", length = 1)
+	public String getAdActionSex() {
+		return this.adActionSex;
+	}
+
+	public void setAdActionSex(String adActionSex) {
+		this.adActionSex = adActionSex;
+	}
+
+	@Column(name = "ad_action_start_age", nullable = false)
+	public int getAdActionStartAge() {
+		return this.adActionStartAge;
+	}
+
+	public void setAdActionStartAge(int adActionStartAge) {
+		this.adActionStartAge = adActionStartAge;
+	}
+
+	@Column(name = "ad_action_end_age", nullable = false)
+	public int getAdActionEndAge() {
+		return this.adActionEndAge;
+	}
+
+	public void setAdActionEndAge(int adActionEndAge) {
+		this.adActionEndAge = adActionEndAge;
+	}
+
 	@Column(name = "ad_action_max", nullable = false, precision = 10)
 	public float getAdActionMax() {
 		return this.adActionMax;
@@ -189,6 +252,69 @@ public class PfpAdAction implements java.io.Serializable {
 
 	public void setAdActionStatus(int adActionStatus) {
 		this.adActionStatus = adActionStatus;
+	}
+
+	@Column(name = "ad_action_mon_time", nullable = false)
+	public int getAdActionMonTime() {
+		return this.adActionMonTime;
+	}
+
+	public void setAdActionMonTime(int adActionMonTime) {
+		this.adActionMonTime = adActionMonTime;
+	}
+
+	@Column(name = "ad_action_tue_time", nullable = false)
+	public int getAdActionTueTime() {
+		return this.adActionTueTime;
+	}
+
+	public void setAdActionTueTime(int adActionTueTime) {
+		this.adActionTueTime = adActionTueTime;
+	}
+
+	@Column(name = "ad_action_wed_time", nullable = false)
+	public int getAdActionWedTime() {
+		return this.adActionWedTime;
+	}
+
+	public void setAdActionWedTime(int adActionWedTime) {
+		this.adActionWedTime = adActionWedTime;
+	}
+
+	@Column(name = "ad_action_thu_time", nullable = false)
+	public int getAdActionThuTime() {
+		return this.adActionThuTime;
+	}
+
+	public void setAdActionThuTime(int adActionThuTime) {
+		this.adActionThuTime = adActionThuTime;
+	}
+
+	@Column(name = "ad_action_fri_time", nullable = false)
+	public int getAdActionFriTime() {
+		return this.adActionFriTime;
+	}
+
+	public void setAdActionFriTime(int adActionFriTime) {
+		this.adActionFriTime = adActionFriTime;
+	}
+
+	@Column(name = "ad_action_sat_time", nullable = false)
+	public int getAdActionSatTime() {
+		return this.adActionSatTime;
+	}
+
+	public void setAdActionSatTime(int adActionSatTime) {
+		this.adActionSatTime = adActionSatTime;
+	}
+
+	@Column(name = "ad_action_sun_time", nullable = false)
+	public int getAdActionSunTime() {
+		return this.adActionSunTime;
+	}
+
+	public void setAdActionSunTime(int adActionSunTime) {
+		this.adActionSunTime = adActionSunTime;
 	}
 
 	@Column(name = "aid", length = 16)

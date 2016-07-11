@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016/4/19 ?U?? 02:15:50 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/7/11 ?W?? 11:35:46 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdPvclk" table="pfp_ad_pvclk" catalog="akb">
         <id name="adPvclkSeq" type="java.lang.Integer">
@@ -62,6 +62,21 @@
         <property name="adPvclkTime" type="int">
             <column name="ad_pvclk_time" not-null="true">
                 <comment>&#188;s&#167;i&#195;n&#165;&#250;&#194;I&#192;&#187;&#172;&#246;&#191;&#253;&#174;&#201;&#182;&#161;</comment>
+            </column>
+        </property>
+        <property name="sex" type="string">
+            <column name="sex" length="1">
+                <comment>&#169;&#202;&#167;O</comment>
+            </column>
+        </property>
+        <property name="ageCode" type="string">
+            <column name="age_code" length="1">
+                <comment>&#166;~&#196;&#214;&#176;&#207;&#182;&#161;&#165;N&#184;&#185;</comment>
+            </column>
+        </property>
+        <property name="timeCode" type="string">
+            <column name="time_code" length="1">
+                <comment>&#174;&#201;&#172;q&#176;&#207;&#182;&#161;&#165;N&#184;&#185;</comment>
             </column>
         </property>
         <property name="templateProductSeq" type="string">

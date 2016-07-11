@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/4/19 �U�� 02:15:49 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/7/11 �W�� 11:35:46 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -30,11 +30,21 @@ public class PfdKeywordReport implements java.io.Serializable {
 	private String adActionSeq;
 	private int adType;
 	private int adPv;
+	private int adPhrasePv;
+	private int adPrecisionPv;
 	private int adClk;
+	private int adPhraseClk;
+	private int adPrecisionClk;
 	private int adInvalidClk;
+	private int adPhraseInvalidClk;
+	private int adPrecisionInvalidClk;
 	private float adPvPrice;
 	private float adClkPrice;
+	private float adPhraseClkPrice;
+	private float adPrecisionClkPrice;
 	private float adInvalidClkPrice;
+	private float adPhraseInvalidClkPrice;
+	private float adPrecisionInvalidClkPrice;
 	private Date createDate;
 	private Date updateDate;
 
@@ -43,9 +53,13 @@ public class PfdKeywordReport implements java.io.Serializable {
 
 	public PfdKeywordReport(Date adPvclkDate, String pfpCustomerInfoId,
 			String keywordSeq, String adGroupSeq, String adActionSeq,
-			int adType, int adPv, int adClk, int adInvalidClk, float adPvPrice,
-			float adClkPrice, float adInvalidClkPrice, Date createDate,
-			Date updateDate) {
+			int adType, int adPv, int adPhrasePv, int adPrecisionPv, int adClk,
+			int adPhraseClk, int adPrecisionClk, int adInvalidClk,
+			int adPhraseInvalidClk, int adPrecisionInvalidClk, float adPvPrice,
+			float adClkPrice, float adPhraseClkPrice,
+			float adPrecisionClkPrice, float adInvalidClkPrice,
+			float adPhraseInvalidClkPrice, float adPrecisionInvalidClkPrice,
+			Date createDate, Date updateDate) {
 		this.adPvclkDate = adPvclkDate;
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
 		this.keywordSeq = keywordSeq;
@@ -53,11 +67,21 @@ public class PfdKeywordReport implements java.io.Serializable {
 		this.adActionSeq = adActionSeq;
 		this.adType = adType;
 		this.adPv = adPv;
+		this.adPhrasePv = adPhrasePv;
+		this.adPrecisionPv = adPrecisionPv;
 		this.adClk = adClk;
+		this.adPhraseClk = adPhraseClk;
+		this.adPrecisionClk = adPrecisionClk;
 		this.adInvalidClk = adInvalidClk;
+		this.adPhraseInvalidClk = adPhraseInvalidClk;
+		this.adPrecisionInvalidClk = adPrecisionInvalidClk;
 		this.adPvPrice = adPvPrice;
 		this.adClkPrice = adClkPrice;
+		this.adPhraseClkPrice = adPhraseClkPrice;
+		this.adPrecisionClkPrice = adPrecisionClkPrice;
 		this.adInvalidClkPrice = adInvalidClkPrice;
+		this.adPhraseInvalidClkPrice = adPhraseInvalidClkPrice;
+		this.adPrecisionInvalidClkPrice = adPrecisionInvalidClkPrice;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 	}
@@ -65,9 +89,13 @@ public class PfdKeywordReport implements java.io.Serializable {
 	public PfdKeywordReport(Date adPvclkDate, String adPvclkDevice,
 			String pfdCustomerInfoId, String pfdUserId,
 			String pfpCustomerInfoId, String keywordSeq, String adGroupSeq,
-			String adActionSeq, int adType, int adPv, int adClk,
-			int adInvalidClk, float adPvPrice, float adClkPrice,
-			float adInvalidClkPrice, Date createDate, Date updateDate) {
+			String adActionSeq, int adType, int adPv, int adPhrasePv,
+			int adPrecisionPv, int adClk, int adPhraseClk, int adPrecisionClk,
+			int adInvalidClk, int adPhraseInvalidClk,
+			int adPrecisionInvalidClk, float adPvPrice, float adClkPrice,
+			float adPhraseClkPrice, float adPrecisionClkPrice,
+			float adInvalidClkPrice, float adPhraseInvalidClkPrice,
+			float adPrecisionInvalidClkPrice, Date createDate, Date updateDate) {
 		this.adPvclkDate = adPvclkDate;
 		this.adPvclkDevice = adPvclkDevice;
 		this.pfdCustomerInfoId = pfdCustomerInfoId;
@@ -78,11 +106,21 @@ public class PfdKeywordReport implements java.io.Serializable {
 		this.adActionSeq = adActionSeq;
 		this.adType = adType;
 		this.adPv = adPv;
+		this.adPhrasePv = adPhrasePv;
+		this.adPrecisionPv = adPrecisionPv;
 		this.adClk = adClk;
+		this.adPhraseClk = adPhraseClk;
+		this.adPrecisionClk = adPrecisionClk;
 		this.adInvalidClk = adInvalidClk;
+		this.adPhraseInvalidClk = adPhraseInvalidClk;
+		this.adPrecisionInvalidClk = adPrecisionInvalidClk;
 		this.adPvPrice = adPvPrice;
 		this.adClkPrice = adClkPrice;
+		this.adPhraseClkPrice = adPhraseClkPrice;
+		this.adPrecisionClkPrice = adPrecisionClkPrice;
 		this.adInvalidClkPrice = adInvalidClkPrice;
+		this.adPhraseInvalidClkPrice = adPhraseInvalidClkPrice;
+		this.adPrecisionInvalidClkPrice = adPrecisionInvalidClkPrice;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 	}
@@ -189,6 +227,24 @@ public class PfdKeywordReport implements java.io.Serializable {
 		this.adPv = adPv;
 	}
 
+	@Column(name = "ad_phrase_pv", nullable = false)
+	public int getAdPhrasePv() {
+		return this.adPhrasePv;
+	}
+
+	public void setAdPhrasePv(int adPhrasePv) {
+		this.adPhrasePv = adPhrasePv;
+	}
+
+	@Column(name = "ad_precision_pv", nullable = false)
+	public int getAdPrecisionPv() {
+		return this.adPrecisionPv;
+	}
+
+	public void setAdPrecisionPv(int adPrecisionPv) {
+		this.adPrecisionPv = adPrecisionPv;
+	}
+
 	@Column(name = "ad_clk", nullable = false)
 	public int getAdClk() {
 		return this.adClk;
@@ -198,6 +254,24 @@ public class PfdKeywordReport implements java.io.Serializable {
 		this.adClk = adClk;
 	}
 
+	@Column(name = "ad_phrase_clk", nullable = false)
+	public int getAdPhraseClk() {
+		return this.adPhraseClk;
+	}
+
+	public void setAdPhraseClk(int adPhraseClk) {
+		this.adPhraseClk = adPhraseClk;
+	}
+
+	@Column(name = "ad_precision_clk", nullable = false)
+	public int getAdPrecisionClk() {
+		return this.adPrecisionClk;
+	}
+
+	public void setAdPrecisionClk(int adPrecisionClk) {
+		this.adPrecisionClk = adPrecisionClk;
+	}
+
 	@Column(name = "ad_invalid_clk", nullable = false)
 	public int getAdInvalidClk() {
 		return this.adInvalidClk;
@@ -205,6 +279,24 @@ public class PfdKeywordReport implements java.io.Serializable {
 
 	public void setAdInvalidClk(int adInvalidClk) {
 		this.adInvalidClk = adInvalidClk;
+	}
+
+	@Column(name = "ad_phrase_invalid_clk", nullable = false)
+	public int getAdPhraseInvalidClk() {
+		return this.adPhraseInvalidClk;
+	}
+
+	public void setAdPhraseInvalidClk(int adPhraseInvalidClk) {
+		this.adPhraseInvalidClk = adPhraseInvalidClk;
+	}
+
+	@Column(name = "ad_precision_invalid_clk", nullable = false)
+	public int getAdPrecisionInvalidClk() {
+		return this.adPrecisionInvalidClk;
+	}
+
+	public void setAdPrecisionInvalidClk(int adPrecisionInvalidClk) {
+		this.adPrecisionInvalidClk = adPrecisionInvalidClk;
 	}
 
 	@Column(name = "ad_pv_price", nullable = false, precision = 10)
@@ -225,6 +317,24 @@ public class PfdKeywordReport implements java.io.Serializable {
 		this.adClkPrice = adClkPrice;
 	}
 
+	@Column(name = "ad_phrase_clk_price", nullable = false, precision = 10)
+	public float getAdPhraseClkPrice() {
+		return this.adPhraseClkPrice;
+	}
+
+	public void setAdPhraseClkPrice(float adPhraseClkPrice) {
+		this.adPhraseClkPrice = adPhraseClkPrice;
+	}
+
+	@Column(name = "ad_precision_clk_price", nullable = false, precision = 10)
+	public float getAdPrecisionClkPrice() {
+		return this.adPrecisionClkPrice;
+	}
+
+	public void setAdPrecisionClkPrice(float adPrecisionClkPrice) {
+		this.adPrecisionClkPrice = adPrecisionClkPrice;
+	}
+
 	@Column(name = "ad_invalid_clk_price", nullable = false, precision = 10)
 	public float getAdInvalidClkPrice() {
 		return this.adInvalidClkPrice;
@@ -232,6 +342,24 @@ public class PfdKeywordReport implements java.io.Serializable {
 
 	public void setAdInvalidClkPrice(float adInvalidClkPrice) {
 		this.adInvalidClkPrice = adInvalidClkPrice;
+	}
+
+	@Column(name = "ad_phrase_invalid_clk_price", nullable = false, precision = 10)
+	public float getAdPhraseInvalidClkPrice() {
+		return this.adPhraseInvalidClkPrice;
+	}
+
+	public void setAdPhraseInvalidClkPrice(float adPhraseInvalidClkPrice) {
+		this.adPhraseInvalidClkPrice = adPhraseInvalidClkPrice;
+	}
+
+	@Column(name = "ad_precision_invalid_clk_price", nullable = false, precision = 10)
+	public float getAdPrecisionInvalidClkPrice() {
+		return this.adPrecisionInvalidClkPrice;
+	}
+
+	public void setAdPrecisionInvalidClkPrice(float adPrecisionInvalidClkPrice) {
+		this.adPrecisionInvalidClkPrice = adPrecisionInvalidClkPrice;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
