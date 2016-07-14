@@ -8,8 +8,9 @@ public enum EnumAdAgeCode {
 	D("D","35歲~44歲"),
 	E("E","45歲~54歲"),
 	F("F","55歲~64歲"),
-	G("G","65歲以上"),
-	H("H","未知");
+	G("G","65~74歲"),
+	H("H","75歲以上"),
+	I("I","未知");
 	
 	private final String code;
 	private final String name;

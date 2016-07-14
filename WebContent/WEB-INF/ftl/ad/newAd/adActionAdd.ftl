@@ -1,6 +1,8 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 
-<link href="<@s.url value="/html/css/ad/adPlugInStyle.css" />" rel="stylesheet" type="text/css" /> 
+<link href="<@s.url value="/html/css/ad/adPlugInStyle.css" />" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" />
+<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script> 
 <script language="JavaScript" src="<@s.url value="/" />html/js/ad/adActionAdd.js" ></script>
 
 <div style="display: none;">
@@ -84,6 +86,86 @@
                     </tr>
                 </tbody>
             </table>
+            <div style="clear:both;height:10px"></div>
+            <div style="padding: 8px 8px 8px 2%;<#if adType == '1' >display:none;</#if>" id="detailTitle" ><span class="t_s02">* </span><a id="detailId" style="cursor: pointer;" onclick="openDetail()" >進階設定+</a></div>
+            <div id="selectDetail" style="display:none" >
+            	<h4>廣告進階設定</h4>
+            	<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
+                <tbody>
+                    <tr>
+                        <th height="45"><span class="t_s02">* </span>廣告播放時段</th>
+                        <td>
+                        	<input type="radio" value="N" id="selTime1" name="selTime" onchange="selAllTime()" <#if timeType == "A">checked</#if> >全天播放廣告
+                        	<br/>
+                        	<input type="radio" value="Y" id="selTime2" name="selTime" onchange="selAnyTime()" <#if timeType == "S">checked</#if> >
+                        	<span id="openTimeDetail" >
+                        	<#if timeType == "A">
+                        		自訂播放時段
+                        	<#else>
+                        		<a id="detailId" style="cursor: pointer;" onclick="selectTime()" >自訂播放時段</a>
+                        	</#if>
+                        	</span>
+                        	<div style="display:none;"  id="selectTimeDiv">
+                        		<div class="noticepop" style="width:auto;"><h4>自訂播放時段</h4><div>
+                        		<table style="font-size:16px;" cellspacing="5 20 5 20" >
+                        			<thead bgcolor="#F8E0E0" >
+                        				<tr>
+	                        				<th>&nbsp;時間&nbsp;</th>
+	                        				<th>&nbsp;00:00~03:59&nbsp;</th>
+	                        				<th>&nbsp;04:00~07:59&nbsp;</th>
+	                        				<th>&nbsp;08:00~11:59&nbsp;</th>
+	                        				<th>&nbsp;12:00~15:59&nbsp;</th>
+	                        				<th>&nbsp;16:00~19:59&nbsp;</th>
+	                        				<th>&nbsp;20:00~23:59&nbsp;</th>
+                        				</tr>
+                        			</thead>
+                        			<tbody>
+                        				<#assign day = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']>
+                        				<#assign index = 1>
+                        				<#assign seq = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23']>
+                        				<#list day as selDay>
+	                        				<tr>
+	                        					<td>${selDay}</td>
+	                        					<#list seq?chunk(4) as row> 
+												<td> 
+												<#list row as cell><input type="checkbox" style="zoom:1.5" id="checkbox${index}${cell}" name="checkbox${index}${cell}" onchange="selCheckbox(${index}${cell})" ${timeCodeMap[index + cell]} /></#list>
+												</td> 
+												</#list>
+	                        				</tr>
+	                        				<#assign index = index + 1>
+                        				</#list>
+                        			</tbody>
+                        		</table>
+                        		<center><input onclick="closeBtn();" class="popbtn" type="button" value="關閉"></center>
+                        		<input type="hidden" id="timeCode" name="timeCode" />
+                        	</div>
+                       	</td>
+                    </tr>
+                    <tr>
+                        <th height="45"><span class="t_s02">* </span>廣告群組設定</th>
+                        <td>
+                           <input type="radio" value="" id="sex1" name="adActionSex" <#if adActionSex == "">checked</#if> >ALL
+                           <input type="radio" value="M" id="sex2" name="adActionSex" <#if adActionSex == "M">checked</#if> >男
+                           <input type="radio" value="F" id="sex3" name="adActionSex" <#if adActionSex == "F">checked</#if> >女
+                           <br/>
+                           <input type="radio" value="" id="age1" name="age" onclick="selAllAge()" <#if ageType == "A">checked</#if> >全部年齡
+                           <input type="radio" value="" id="age2" name="age" onclick="selAnyAge()" <#if ageType == "S">checked</#if> >自訂
+                           <select id="adActionStartAge" name="adActionStartAge" <#if ageType == "A">disabled</#if> > 
+						        <#list adActionStartAgeMap?keys as skey>
+						  		    <option value="${skey}" <#if skey == adActionStartAge>selected</#if> >${adActionStartAgeMap[skey]}</option>
+						  	    </#list>
+					      	</select>
+					      	&nbsp;&nbsp;~&nbsp;&nbsp;
+					      	<select id="adActionEndAge" name="adActionEndAge" <#if ageType == "A">disabled</#if> > 
+						        <#list adActionEndAgeMap?keys as skey>
+						  		    <option value="${skey}" <#if skey == adActionEndAge>selected</#if> >${adActionEndAgeMap[skey]}</option>
+						  	    </#list>
+					      	</select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
             <center style="margin:10px">
                 <input type="button" id="cancel" value="取 消">&nbsp; 
                 <input type="button" id="save" value="下一步! 新增分類">
