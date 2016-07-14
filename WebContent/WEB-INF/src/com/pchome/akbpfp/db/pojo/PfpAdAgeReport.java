@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/7/11 �W�� 11:35:46 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/7/14 �W�� 11:01:55 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,7 +19,7 @@ import javax.persistence.TemporalType;
 @Table(name = "pfp_ad_age_report", catalog = "akb")
 public class PfpAdAgeReport implements java.io.Serializable {
 
-	private Integer adGroupReportSeq;
+	private Integer adAgeReportSeq;
 	private Date adPvclkDate;
 	private String adPvclkDevice;
 	private String customerInfoId;
@@ -86,13 +86,13 @@ public class PfpAdAgeReport implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "ad_group_report_seq", unique = true, nullable = false)
-	public Integer getAdGroupReportSeq() {
-		return this.adGroupReportSeq;
+	@Column(name = "ad_age_report_seq", unique = true, nullable = false)
+	public Integer getAdAgeReportSeq() {
+		return this.adAgeReportSeq;
 	}
 
-	public void setAdGroupReportSeq(Integer adGroupReportSeq) {
-		this.adGroupReportSeq = adGroupReportSeq;
+	public void setAdAgeReportSeq(Integer adAgeReportSeq) {
+		this.adAgeReportSeq = adAgeReportSeq;
 	}
 
 	@Temporal(TemporalType.DATE)
