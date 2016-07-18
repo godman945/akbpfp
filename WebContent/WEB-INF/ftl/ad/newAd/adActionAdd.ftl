@@ -87,7 +87,7 @@
                 </tbody>
             </table>
             <div style="clear:both;height:10px"></div>
-            <div style="padding: 8px 8px 8px 2%;<#if adType == '1' >display:none;</#if>" id="detailTitle" ><span class="t_s02">* </span><a id="detailId" style="cursor: pointer;" onclick="openDetail()" >進階設定+</a></div>
+            <div style="padding: 8px 8px 8px 2%;<#if adType == '1' >display:none;</#if>" id="detailTitle" ><span class="t_s02">* </span><a id="detailId" style="cursor: pointer;font-size:13px;" onclick="openDetail()" >進階設定+</a></div>
             <div id="selectDetail" style="display:none" >
             	<h4>廣告進階設定</h4>
             	<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
@@ -105,18 +105,23 @@
                         		<a id="detailId" style="cursor: pointer;" onclick="selectTime()" >自訂播放時段</a>
                         	</#if>
                         	</span>
-                        	<div style="display:none;"  id="selectTimeDiv">
+                        	<div style="display:none;" id="selectTimeDiv">
                         		<div class="noticepop" style="width:auto;"><h4>自訂播放時段</h4><div>
                         		<table style="font-size:16px;" cellspacing="5 20 5 20" >
                         			<thead bgcolor="#F8E0E0" >
                         				<tr>
-	                        				<th>&nbsp;時間&nbsp;</th>
-	                        				<th>&nbsp;00:00~03:59&nbsp;</th>
-	                        				<th>&nbsp;04:00~07:59&nbsp;</th>
-	                        				<th>&nbsp;08:00~11:59&nbsp;</th>
-	                        				<th>&nbsp;12:00~15:59&nbsp;</th>
-	                        				<th>&nbsp;16:00~19:59&nbsp;</th>
-	                        				<th>&nbsp;20:00~23:59&nbsp;</th>
+	                        				<th rowspan="2" >&nbsp;時間&nbsp;</th>
+	                        				<th rowspan="2" >&nbsp;全&nbsp;<br/>&nbsp;時&nbsp;<br/>&nbsp;段&nbsp;</th>
+	                        				<th colspan="3" >&nbsp;上午&nbsp;</th>
+	                        				<th colspan="3" >&nbsp;下午&nbsp;</th>
+	                        			</tr>
+	                        			<tr>
+	                        				<th>&nbsp; 12 &nbsp;&nbsp; 1 &nbsp;&nbsp; 2 &nbsp;&nbsp; 3 &nbsp;</th>
+	                        				<th>&nbsp; 4 &nbsp;&nbsp; 5 &nbsp;&nbsp; 6 &nbsp;&nbsp; 7 &nbsp;</th>
+	                        				<th>&nbsp; 8 &nbsp;&nbsp; 9 &nbsp;&nbsp; 10 &nbsp;&nbsp; 11 &nbsp;</th>
+	                        				<th>&nbsp; 12 &nbsp;&nbsp; 1 &nbsp;&nbsp; 2 &nbsp;&nbsp; 3 &nbsp;</th>
+	                        				<th>&nbsp; 4 &nbsp;&nbsp; 5 &nbsp;&nbsp; 6 &nbsp;&nbsp; 7 &nbsp;</th>
+	                        				<th>&nbsp; 8 &nbsp;&nbsp; 9 &nbsp;&nbsp; 10 &nbsp;&nbsp; 11 &nbsp;</th>
                         				</tr>
                         			</thead>
                         			<tbody>
@@ -126,6 +131,7 @@
                         				<#list day as selDay>
 	                        				<tr>
 	                        					<td>${selDay}</td>
+	                        					<td><input type="checkbox" style="zoom:1.5" id="selAll${index}" name="selAll${index}" onchange="selAllCheckbox(${index})" /></td>
 	                        					<#list seq?chunk(4) as row> 
 												<td> 
 												<#list row as cell><input type="checkbox" style="zoom:1.5" id="checkbox${index}${cell}" name="checkbox${index}${cell}" onchange="selCheckbox(${index}${cell})" ${timeCodeMap[index + cell]} /></#list>
@@ -136,19 +142,34 @@
                         				</#list>
                         			</tbody>
                         		</table>
-                        		<center><input onclick="closeBtn();" class="popbtn" type="button" value="關閉"></center>
+                        		<center>
+	                        		<input onclick="closeBtn();" class="popbtn" type="button" value="取消">
+	                        		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                        		<input onclick="saveBtn();" class="popbtn" type="button" value="確定">
+                        		</center>
                         		<input type="hidden" id="timeCode" name="timeCode" />
                         	</div>
                        	</td>
                     </tr>
                     <tr>
-                        <th height="45"><span class="t_s02">* </span>廣告群組設定</th>
+                        <th height="35">
+                        	<span class="t_s02">* </span>性別取向設定 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif" align="absmiddle"></a><br>
+							<div id="shownotes2" style="visibility: hidden;" class="adnoticepop">
+								<h4>性別取向設定</h4>
+								<div class="adpopcont">廣告實際投放對象會依系統數據分析媒合推播廣告給您指定的性別取向對象，包含目標對象的真實性別與產品性別定位。</div>
+								<a onclick="closenots(2)" style="cursor:pointer;" class="adpopclose">關閉</a>
+							</div>
+                        </th>
                         <td>
                            <input type="radio" value="" id="sex1" name="adActionSex" <#if adActionSex == "">checked</#if> >ALL
                            <input type="radio" value="M" id="sex2" name="adActionSex" <#if adActionSex == "M">checked</#if> >男
                            <input type="radio" value="F" id="sex3" name="adActionSex" <#if adActionSex == "F">checked</#if> >女
-                           <br/>
-                           <input type="radio" value="" id="age1" name="age" onclick="selAllAge()" <#if ageType == "A">checked</#if> >全部年齡
+                        </td>
+                    </tr>
+                    <tr>
+                        <th height="35"><span class="t_s02">* </span>年齡區間設定</th>
+                        <td>
+                           <input type="radio" value="" id="age1" name="age" onclick="selAllAge()" <#if ageType == "A">checked</#if> >不分年齡
                            <input type="radio" value="" id="age2" name="age" onclick="selAnyAge()" <#if ageType == "S">checked</#if> >自訂
                            <select id="adActionStartAge" name="adActionStartAge" <#if ageType == "A">disabled</#if> > 
 						        <#list adActionStartAgeMap?keys as skey>

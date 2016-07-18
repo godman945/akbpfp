@@ -142,6 +142,16 @@
 		window.location.replace($("#backPage").val());
 		//$(location).attr('href',$("#backPage").val());
 	});
+	
+	$("#adActionStartAge,#adActionEndAge").change(function(){
+		var startAge = $("#adActionStartAge").val();
+		var endAge = $("#adActionEndAge").val();
+		
+		//檢查年齡區間是否有間隔5歲以上
+		if((parseInt(endAge) - parseInt(startAge)) < 5){
+			alert("提醒您，族群年齡區間需間隔5歲以上");
+		}
+	});
 });
 
 function opennots(id) {
@@ -217,16 +227,30 @@ function selectTime(){
 	    );
 }
 
+function saveBtn(){
+	$('#selectTimeDiv').html($("#fancybox-content").html());
+	parent.$.fancybox.close();
+}
+
 function closeBtn(){
 	//$('#selectTimeDiv').html($("#fancybox-content").html());
 	parent.$.fancybox.close();
 }
 
 function selCheckbox(number){
-	$("#checkbox" + number).click();
-	if($("#checkbox" + number).prop("checked")){
-		$("#checkbox" + number).attr("checked","checked");
+	if($("#fancybox-content [name=checkbox" + number + "]").prop("checked")){
+		$("#fancybox-content [name=checkbox" + number + "]").attr("checked","checked");
 	} else {
-		$("#checkbox" + number).removeAttr("checked");
+		$("#fancybox-content [name=checkbox" + number + "]").removeAttr("checked");
+	}
+}
+
+function selAllCheckbox(number){
+	if($("#fancybox-content [name=selAll" + number + "]").prop("checked")){
+		$("#fancybox-content [name=selAll" + number + "]").attr("checked","checked");
+		$("#fancybox-content [name*=checkbox" + number + "]").attr("checked","checked");
+	} else {
+		$("#fancybox-content [name=selAll" + number + "]").removeAttr("checked");
+		$("#fancybox-content [name*=checkbox" + number + "]").removeAttr("checked");
 	}
 }
