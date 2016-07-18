@@ -174,7 +174,7 @@
 							</div>
                         </th>
                         <td>
-                           <input type="radio" value="" id="sex1" name="adActionSex" <#if adActionSex == "">checked</#if> >ALL
+                           <input type="radio" value="" id="sex1" name="adActionSex" <#if adActionSex == "">checked</#if> >不分性別
                            <input type="radio" value="M" id="sex2" name="adActionSex" <#if adActionSex == "M">checked</#if> >男
                            <input type="radio" value="F" id="sex3" name="adActionSex" <#if adActionSex == "F">checked</#if> >女
                         </td>
