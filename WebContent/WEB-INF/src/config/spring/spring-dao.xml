@@ -83,6 +83,10 @@
 	<bean id="AdOsReportDAO" class="com.pchome.akbpfp.db.dao.report.AdOsReportDAO">
         <property name="sessionFactory" ref="sessionFactory_report" />
     </bean>
+    
+    <bean id="AdTimeReportDAO" class="com.pchome.akbpfp.db.dao.report.AdTimeReportDAO">
+        <property name="sessionFactory" ref="sessionFactory_report" />
+    </bean>
 
     <!-- Adm -->
     <bean id="AdmFreeActionDAO" class="com.pchome.akbpfp.db.dao.freeAction.AdmFreeActionDAO">

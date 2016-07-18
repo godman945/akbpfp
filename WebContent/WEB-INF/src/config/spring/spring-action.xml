@@ -176,6 +176,13 @@
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
     </bean>
 
+	<bean id="ReportAdTimeAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdTimeAction" scope="prototype">
+	 	<property name="adTimeReportService" ref="AdTimeReportService" />
+	 	<property name="adGroupService" ref="PfpAdGroupService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+    </bean>
+
     <!-- Ad New -->
     <bean id="AdActionAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdActionAddAction" scope="prototype" >
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 

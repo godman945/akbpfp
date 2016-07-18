@@ -84,6 +84,10 @@
         <property name="adOsReportDAO" ref="AdOsReportDAO" />
     </bean>
 
+	<bean id="AdTimeReportService" class="com.pchome.akbpfp.db.service.report.AdTimeReportService"> 
+        <property name="adTimeReportDAO" ref="AdTimeReportDAO" />
+    </bean>
+
 	<!-- Adm -->
 	<bean id="AdmFreeActionService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeActionService">
         <property name="dao" ref="AdmFreeActionDAO" />
