@@ -279,11 +279,11 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 		}
 
 		if(StringUtils.isNotEmpty(searchTime) && StringUtils.equals(searchTime, "W") ){
-			hql.append(" group by DAYOFWEEK(r.ad_pvclk_date)");
-			hql.append(" order by DAYOFWEEK(r.ad_pvclk_date)");
+			hql.append(" group by r.ad_action_seq, r.ad_group_seq, DAYOFWEEK(r.ad_pvclk_date)");
+			hql.append(" order by r.ad_action_seq, r.ad_group_seq, DAYOFWEEK(r.ad_pvclk_date)");
 		} else {
-			hql.append(" group by r.time_code");
-			hql.append(" order by r.time_code");
+			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.time_code");
+			hql.append(" order by r.ad_action_seq, r.ad_group_seq, r.time_code");
 		}
 		
 		sqlParams.put("sql", hql);
