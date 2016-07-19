@@ -184,12 +184,14 @@ function closeDetail(){
 function selAllTime(){
 	$("#openTimeDetail").html('自訂播放時段');
 	$("[id*=checkbox]").attr("checked","checked");
+	$("[id*=selAll]").attr("checked","checked");
 }
 
 //選擇自訂時段播放
 function selAnyTime(){
 	$("#openTimeDetail").html('<a id="detailId" style="cursor: pointer;" onclick="selectTime()" >自訂播放時段</a>');
 	$("[id*=checkbox]").removeAttr("checked");
+	$("[id*=selAll]").removeAttr("checked");
 }
 
 //選擇全部年齡
@@ -252,5 +254,15 @@ function selAllCheckbox(number){
 	} else {
 		$("#fancybox-content [name=selAll" + number + "]").removeAttr("checked");
 		$("#fancybox-content [name*=checkbox" + number + "]").removeAttr("checked");
+	}
+}
+
+function selAllTimeCheckbox(number){
+	if($("#fancybox-content [name=selAllTime" + number + "]").prop("checked")){
+		$("#fancybox-content [name=selAllTime" + number + "]").attr("checked","checked");
+		$("#fancybox-content [name*=checkbox][name$=" + number + "]").attr("checked","checked");
+	} else {
+		$("#fancybox-content [name=selAllTime" + number + "]").removeAttr("checked");
+		$("#fancybox-content [name*=checkbox][name$=" + number + "]").removeAttr("checked");
 	}
 }
