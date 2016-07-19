@@ -113,7 +113,7 @@
 			}
 			
 			var timeString = "";
-			$("[id*=checkbox]").each(function(){
+			$("[id*=checkbox]").not("[name*=selAll]").each(function(){
 				if($(this).prop("checked")){
 					timeString = timeString + "1";
 				} else {
