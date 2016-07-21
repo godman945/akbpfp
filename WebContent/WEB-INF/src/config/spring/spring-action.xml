@@ -182,6 +182,13 @@
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
     </bean>
+    
+    <bean id="ReportAdAgesexAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdAgesexAction" scope="prototype">
+	 	<property name="adAgesexReportService" ref="AdAgesexReportService" />
+	 	<property name="adGroupService" ref="PfpAdGroupService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+    </bean>
 
     <!-- Ad New -->
     <bean id="AdActionAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdActionAddAction" scope="prototype" >

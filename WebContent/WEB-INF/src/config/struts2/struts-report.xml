@@ -364,5 +364,37 @@
             <result type="tiles" name="success">report.flashData</result>
         </action>
         
+        <!--report adAgesex-->
+        <action name="reportAdAgesexDownload" class="ReportAdAgesexAction">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="reportPrivilegeInterceptor" />
+      		<result name="success" type="stream">   
+             	<param name="contentType">application/octet-stream</param>   
+             	<param name="contentDisposition">   
+                    attachment;filename="${downloadFileName}"  
+                </param>   
+                <param name="inputName">downloadFileStream</param> 
+            </result>  
+      	</action>
+		
+		<action name="reportAdAgesex" class="ReportAdAgesexAction">
+            <interceptor-ref name="loginCheckStack" />
+            <interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="redirectAction" name="none">summary</result>
+            <result type="tiles" name="success">.report.adAgesex</result>
+        </action>
+        
+        <action name="reportAdAgesexAjaxTable" class="ReportAdAgesexAction">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="tiles" name="success">report.ajaxTable.adAgesex</result>
+        </action>
+		
+		<action name="reportAdAgesexAjaxChart" class="ReportAdAgesexAction" method="flashDataDownLoad">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="tiles" name="success">report.flashData</result>
+        </action>
+        
     </package>
 </struts>

@@ -59,3 +59,9 @@
         <div class="submn"><a href="<@s.url value="/reportAdTime.html" />">廣告播放時段成效</a></div>
   </@s.else>
   
+  <@s.if test="%{#rUri.indexOf('/reportAdAgesex.') != -1}">
+        <div class="submn"><a href="<@s.url value="/reportAdAgesex.html" />" style="text-decoration:none"><b>廣告族群成效</b></a></div>
+  </@s.if>
+  <@s.else>
+        <div class="submn"><a href="<@s.url value="/reportAdAgesex.html" />">廣告族群成效</a></div>
+  </@s.else>
