@@ -40,7 +40,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 
 							//每日廣告成效 (數量及加總)
 							try {
-								sqlParams = getTimeCountHQLStr(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+								sqlParams = getTimeCountHQLStr(searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -217,7 +217,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		return result;
 	}
 
-	private HashMap<String, Object> getTimeCountHQLStr(final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
+	private HashMap<String, Object> getTimeCountHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
@@ -254,7 +254,11 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 			sqlParams.put("searchStr", searchStr);
 		}
 
-		hql.append(" group by r.ad_pvclk_date");
+		if(StringUtils.isNotEmpty(searchAgesex) && StringUtils.equals(searchAgesex, "A") ){
+			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.age_code");
+		} else {
+			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.sex");
+		}
 		sqlParams.put("sql", hql);
 
 		return sqlParams;
@@ -307,7 +311,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 			hql.append(" order by r.ad_action_seq, r.ad_group_seq, r.age_code");
 		} else {
 			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.sex");
-			hql.append(" order by r.ad_action_seq, r.ad_group_seq, r.sex");
+			hql.append(" order by r.ad_action_seq, r.ad_group_seq, r.sex desc");
 		}
 		
 		sqlParams.put("sql", hql);

@@ -17,7 +17,9 @@
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.tablesorter.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.blockUI.js"></script>
 	<script language="JavaScript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+	<script language="JavaScript" src="https://code.highcharts.com/highcharts-3d.js"></script>
 	<script language="JavaScript" src="http://code.highcharts.com/modules/exporting.js"></script>
+	<script src="http://code.highcharts.com/themes/grid-light.js"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/report/<@t.getAsString name="jsName" />" ></script>
 

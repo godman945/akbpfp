@@ -389,10 +389,12 @@ function showHighChart(){
     if($('#fadSearchAgesex').val() == 'S'){
     	$('#hcharts_bx').highcharts({
     		chart: {
-    			plotBackgroundColor: null,
-    			plotBorderWidth: null,
-    			plotShadow: false,
-    			type: 'pie'
+    			type: 'pie',
+    			options3d: {
+                    enabled: true,
+                    alpha: 50,
+                    beta: 0
+                }
     		},
     		title: {
     			text: "性別",
@@ -409,7 +411,8 @@ function showHighChart(){
     		plotOptions: {
     			pie: {
     				allowPointSelect: true,
-    				cursor: 'pointer',
+                    cursor: 'pointer',
+                    depth: 50,
     				dataLabels: {
     					enabled: true,
     					format: '<b>{point.name}</b>: {point.percentage:.2f} %'

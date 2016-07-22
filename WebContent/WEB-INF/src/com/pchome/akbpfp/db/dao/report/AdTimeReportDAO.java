@@ -41,7 +41,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 
 							//每日廣告成效 (數量及加總)
 							try {
-								sqlParams = getTimeCountHQLStr(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+								sqlParams = getTimeCountHQLStr(searchTime, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -193,7 +193,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 		return result;
 	}
 
-	private HashMap<String, Object> getTimeCountHQLStr(final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
+	private HashMap<String, Object> getTimeCountHQLStr(final String searchTime, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
@@ -230,7 +230,12 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			sqlParams.put("searchStr", searchStr);
 		}
 
-		hql.append(" group by r.ad_pvclk_date");
+		if(StringUtils.isNotEmpty(searchTime) && StringUtils.equals(searchTime, "W") ){
+			hql.append(" group by r.ad_action_seq, r.ad_group_seq, DAYOFWEEK(r.ad_pvclk_date)");
+		} else {
+			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.time_code");
+		}
+		
 		sqlParams.put("sql", hql);
 
 		return sqlParams;
