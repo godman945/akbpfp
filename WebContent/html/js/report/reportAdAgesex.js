@@ -406,7 +406,9 @@ function showHighChart(){
     			}
     		},
     		tooltip: {
-    			pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+    			pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>',
+    			backgroundColor: "#FFFFFF",
+                borderWidth: 1
     		},
     		plotOptions: {
     			pie: {
@@ -473,7 +475,9 @@ function showHighChart(){
             },
             tooltip: {
                 valueSuffix: ' %',
-                valueDecimals: 2
+                valueDecimals: 2,
+                backgroundColor: "#FFFFFF",
+                borderWidth: 1
             },
             plotOptions: {
                 bar: {
