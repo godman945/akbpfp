@@ -1,6 +1,9 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
+<script src="http://code.highcharts.com/themes/grid-light.js"></script>
+<script language="JavaScript" src="https://code.highcharts.com/highcharts-3d.js"></script>
+
 <span style="float:left"> 
 <table border="0" cellspacing="3" cellpadding="0" class="srchtb"> 
   <tr> 
