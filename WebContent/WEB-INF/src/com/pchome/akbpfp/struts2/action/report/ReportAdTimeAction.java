@@ -68,7 +68,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 	private String adType="";// 廣告類型,活動,群組,關鍵字
 	private String adSearchWay="";//文字搜尋方式,包含,開頭,全部
 	private String searchText="";//搜尋文字
-	private String adShowWay="2";//廣告顯示位址,一般,內容
+	private String adShowWay="0";//廣告顯示位址,一般,內容
 	private String searchId="";//廣告id ,某活動,某群組id
 	
 	private String charPic="";//圖表格式

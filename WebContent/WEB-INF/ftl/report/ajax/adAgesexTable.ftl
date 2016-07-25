@@ -11,9 +11,7 @@
 	   <td>
 		    <select id="adShowWay"> 
 		        <#list adShowWayMap?keys as skey>
-		        	<#if skey == '2'>
 		  		    <option value="${skey}">${adShowWayMap[skey]}</option>
-		  		    </#if>
 		  	    </#list>
 	      	</select>
 	    </td>

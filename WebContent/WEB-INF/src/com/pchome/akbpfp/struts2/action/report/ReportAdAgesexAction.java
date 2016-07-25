@@ -70,7 +70,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 	private String adType="";// 廣告類型,活動,群組,關鍵字
 	private String adSearchWay="";//文字搜尋方式,包含,開頭,全部
 	private String searchText="";//搜尋文字
-	private String adShowWay="2";//廣告顯示位址,一般,內容
+	private String adShowWay="0";//廣告顯示位址,一般,內容
 	private String searchId="";//廣告id ,某活動,某群組id
 	
 	private String charPic="";//圖表格式
@@ -236,19 +236,37 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		}
 
 		if(StringUtils.equals(searchAgesex, "S")){
-			dataList.add((sexM/total)*100);
-			dataList.add((sexF/total)*100);
-			dataList.add((sexN/total)*100);
+			if(total != 0){
+				dataList.add((sexM/total)*100);
+				dataList.add((sexF/total)*100);
+				dataList.add((sexN/total)*100);
+			} else {
+				dataList.add(new Double(0));
+				dataList.add(new Double(0));
+				dataList.add(new Double(0));
+			}
 		} else {
-			dataList.add((ageA/total)*100);
-			dataList.add((ageB/total)*100);
-			dataList.add((ageC/total)*100);
-			dataList.add((ageD/total)*100);
-			dataList.add((ageE/total)*100);
-			dataList.add((ageF/total)*100);
-			dataList.add((ageG/total)*100);
-			dataList.add((ageH/total)*100);
-			dataList.add((ageI/total)*100);
+			if(total != 0){
+				dataList.add((ageA/total)*100);
+				dataList.add((ageB/total)*100);
+				dataList.add((ageC/total)*100);
+				dataList.add((ageD/total)*100);
+				dataList.add((ageE/total)*100);
+				dataList.add((ageF/total)*100);
+				dataList.add((ageG/total)*100);
+				dataList.add((ageH/total)*100);
+				dataList.add((ageI/total)*100);	
+			} else {
+				dataList.add(new Double(0));
+				dataList.add(new Double(0));
+				dataList.add(new Double(0));
+				dataList.add(new Double(0));
+				dataList.add(new Double(0));
+				dataList.add(new Double(0));
+				dataList.add(new Double(0));
+				dataList.add(new Double(0));
+				dataList.add(new Double(0));
+			}
 		}
 		
 		JSONArray array = new JSONArray(dataList);

@@ -412,13 +412,13 @@ function showHighChart(){
     		},
     		plotOptions: {
     			pie: {
-    				allowPointSelect: true,
+    				allowPointSelect: false,
                     cursor: 'pointer',
                     depth: 50,
     				dataLabels: {
     					enabled: true,
-    					format: '<b>{point.name}</b>: {point.percentage:.2f} %'
-    				}
+    					connectorWidth: 0,
+    					format: '<b style="color:{point.color}">{point.name}</b><b style="color:{point.color}">: {point.percentage:.2f} %</b>'    				}
     			}
     		},
     		series: [{
@@ -470,6 +470,7 @@ function showHighChart(){
                 	text: null
                 },
                 labels: {
+                	format: '{value}%',
                     overflow: 'justify'
                 }
             },
