@@ -40,7 +40,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 
 							//每日廣告成效 (數量及加總)
 							try {
-								sqlParams = getTimeCountHQLStr(searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+								sqlParams = getAgesexCountHQLStr(searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -50,7 +50,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 
 							//每日廣告成效 (資料)
 							try {
-								sqlParams = getTimeHQLStr(searchAgesex, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+								sqlParams = getAgesexHQLStr(searchAgesex, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -60,7 +60,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 
 							//每日廣告成效 (圖表)
 							try {
-								sqlParams = getTimeChartHQLStr(searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+								sqlParams = getAgesexChartHQLStr(searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -217,7 +217,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		return result;
 	}
 
-	private HashMap<String, Object> getTimeCountHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
+	private HashMap<String, Object> getAgesexCountHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
@@ -264,7 +264,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		return sqlParams;
 	}
 
-	private HashMap<String, Object> getTimeHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
+	private HashMap<String, Object> getAgesexHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
@@ -320,7 +320,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 	}
 
 
-	private HashMap<String, Object> getTimeChartHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
+	private HashMap<String, Object> getAgesexChartHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
