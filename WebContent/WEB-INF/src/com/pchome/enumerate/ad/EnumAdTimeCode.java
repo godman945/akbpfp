@@ -2,12 +2,12 @@ package com.pchome.enumerate.ad;
 
 public enum EnumAdTimeCode {
 
-	A("A","0-3"),
-	B("B","4-7"),
-	C("C","8-11"),
-	D("D","12-15"),
-	E("E","16-19"),
-	F("F","20-23");
+	A("A","0-3時"),
+	B("B","4-7時"),
+	C("C","8-11時"),
+	D("D","12-15時"),
+	E("E","16-19時"),
+	F("F","20-23時");
 	
 	private final String code;
 	private final String name;
