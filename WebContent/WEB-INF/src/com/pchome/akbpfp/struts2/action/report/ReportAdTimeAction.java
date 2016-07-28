@@ -7,6 +7,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
 
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
@@ -107,20 +109,39 @@ public class ReportAdTimeAction extends BaseReportAction {
 
 		List<AdTimeReportVO> resultData = adTimeReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_TIME_CHART.getTextValue(),searchTime,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
 
-		Map<Date,Float> flashDataMap = new HashMap<Date,Float>();
-
-		double pv = 0;
-		double click = 0;
-		double cost = 0;
-		double invClick = 0;
-		double ctr = 0;
-		double costAvg = 0;
+		List<Double> dataList = new ArrayList<Double>();
+		
+		//星期
+		String week = "";
+		double sun = 0;		//星期日
+		double mon = 0;		//星期一
+		double tue = 0;		//星期二
+		double wed = 0;		//星期三
+		double thu = 0;		//星期四
+		double fri = 0;		//星期五
+		double sat = 0;		//星期六
+		
+		//時段
+		String timeCode = "";
+		double timeA = 0;		//0-3
+		double timeB = 0;		//4-7
+		double timeC = 0;		//8-11
+		double timeD = 0;		//12-15
+		double timeE = 0;		//16-19
+		double timeF = 0;		//20-23
 
 		for (int i=0; i<resultData.size(); i++) {
 
 			AdTimeReportVO vo = resultData.get(i);
+			double pv = 0;
+			double click = 0;
+			double cost = 0;
+			double invClick = 0;
+			double ctr = 0;
+			double costAvg = 0;
 
-			Date reportDate = vo.getReportDate();
+			week = vo.getWeek();
+			timeCode = vo.getTime();
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
@@ -136,22 +157,90 @@ public class ReportAdTimeAction extends BaseReportAction {
 				costAvg = cost / click;
 			}
 
+			double data = 0;
 			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) pv));
+				data = pv;
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) click));
+				data = click;
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) ctr));
+				data = ctr;
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) invClick));
+				data = invClick;
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) costAvg));
+				data = costAvg;
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) cost));
+				data = cost;
 			}
+			
+			if(StringUtils.equals(searchTime, "T")){
+				switch(timeCode) {
+				case "B":
+					timeB = data;
+					break;
+				case "C":
+					timeC = data;
+					break;
+				case "D":
+					timeD = data;
+					break;
+				case "E":
+					timeE = data;
+					break;
+				case "F":
+					timeF = data;
+					break;
+				default:
+					timeA = data;
+					break;
+				}
+			} else {
+				switch(week) {
+				case "1":
+					sun = data;
+					break;
+				case "2":
+					mon = data;
+					break;
+				case "3":
+					tue = data;
+					break;
+				case "4":
+					wed = data;
+					break;
+				case "5":
+					thu = data;
+					break;
+				case "6":
+					fri = data;
+					break;
+				default:
+					sat = data;
+					break;
+				}
+			}
+			
 		}
 
-		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
+		if(StringUtils.equals(searchTime, "T")){
+			dataList.add(timeA);
+			dataList.add(timeB);
+			dataList.add(timeC);
+			dataList.add(timeD);
+			dataList.add(timeE);
+			dataList.add(timeF);
+		} else {
+			dataList.add(sun);
+			dataList.add(mon);
+			dataList.add(tue);
+			dataList.add(wed);
+			dataList.add(thu);
+			dataList.add(fri);
+			dataList.add(sat);
+		}
+		
+		JSONArray array = new JSONArray(dataList);
+		
+		flashData = array.toString();
 
 		return SUCCESS;
 	}

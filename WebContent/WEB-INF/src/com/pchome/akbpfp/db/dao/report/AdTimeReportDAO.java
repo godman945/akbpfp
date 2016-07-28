@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,7 +60,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 
 							//每日廣告成效 (圖表)
 							try {
-								sqlParams = getTimeChartHQLStr(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+								sqlParams = getTimeChartHQLStr(searchTime, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -165,15 +164,17 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 
 								Object[] objArray = (Object[]) dataList.get(i);
 
-								Date reportDate = (Date) objArray[0];
-								BigDecimal pv = (BigDecimal) objArray[1];
-								BigDecimal click = (BigDecimal) objArray[2];
-								Double cost = (Double) objArray[3];
-								BigDecimal invClick = (BigDecimal) objArray[4];
+								String weekCode = objArray[0].toString();
+								String timeCode = objArray[1].toString();
+								BigDecimal pv = (BigDecimal) objArray[2];
+								BigDecimal click = (BigDecimal) objArray[3];
+								Double cost = (Double) objArray[4];
+								BigDecimal invClick = (BigDecimal) objArray[5];
 
 								AdTimeReportVO vo = new AdTimeReportVO();
 
-								vo.setReportDate(reportDate);
+								vo.setWeek(weekCode);
+								vo.setTime(timeCode);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
@@ -297,12 +298,13 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 	}
 
 
-	private HashMap<String, Object> getTimeChartHQLStr(final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
+	private HashMap<String, Object> getTimeChartHQLStr(final String searchTime, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
 		hql.append("select");
-		hql.append(" r.ad_pvclk_date,");
+		hql.append(" DAYOFWEEK(r.ad_pvclk_date),");
+		hql.append(" r.time_code,");
 		hql.append(" sum(r.ad_pv), ");
 		hql.append(" sum(r.ad_clk), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_time_report 的時候，已經減過無效點擊金額了，所以不用再減
@@ -335,8 +337,13 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			sqlParams.put("searchStr", searchStr);
 		}
 
-		hql.append(" group by r.ad_pvclk_date");
-		hql.append(" order by r.ad_pvclk_date");
+		if(StringUtils.isNotEmpty(searchTime) && StringUtils.equals(searchTime, "W") ){
+			hql.append(" group by DAYOFWEEK(r.ad_pvclk_date)");
+			hql.append(" order by DAYOFWEEK(r.ad_pvclk_date)");
+		} else {
+			hql.append(" group by r.time_code");
+			hql.append(" order by r.time_code");
+		}
 		sqlParams.put("sql", hql);
 
 		return sqlParams;

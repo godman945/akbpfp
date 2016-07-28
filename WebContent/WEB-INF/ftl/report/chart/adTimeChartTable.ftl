@@ -1,11 +1,6 @@
 <table width="100%" border="0" cellpadding="8" cellspacing="1" bgcolor="#FFFFFF" class="tb01"> 
   <tr> 
     <th>
-                       圖表格式：
-      	<select id="selectChartPic"> 
-      		<option value="lineChart" selected>趨勢圖</option> 
-      		<option value="barChart">直條圖</option> 
-      	</select>
                      度量:
       	<select id="selectChartType"> 
       		<option value="pv">曝光數</option> 

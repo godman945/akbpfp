@@ -369,18 +369,12 @@ function showHighChart(){
 	var dateArray = startDate.split("-");
 	
 	//圖表格式
-	var selectPic = $("#selectChartPic").val();
-	var chartPic = "";
-	var fontColor = "#ff5353";
-	switch(selectPic){
-		case "lineChart":
-			chartPic = "";
-			fontColor = "#ff5353";
-			break;
-		case "barChart":
-			chartPic = "column";
-			fontColor = "#519ae0";
-			break;
+	var searchTime = $("#searchTime").val();
+	var xAxisArray;
+	if(searchTime == "T"){
+		xAxisArray = ['0-3時','4-7時','8-11時','12-15時','16-19時','20-23時'];
+	} else {
+		xAxisArray = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
 	}
 	
 	//度量
@@ -426,7 +420,7 @@ function showHighChart(){
 	
 	// ---預設樣式----
     Highcharts.setOptions({
-    	colors: [fontColor],
+    	colors: ["#519ae0"],
         
     	symbols:['circle'],
        	lang: {
@@ -448,13 +442,13 @@ function showHighChart(){
 
 	$('#hcharts_bx').highcharts({  
 		chart: {
-	        type: chartPic 
+	        type: "column" 
 	    },	
 	    
 	    title: {
 	        text: titleName,
 	        style: {
-	        	color: fontColor,
+	        	color: "#519ae0",
 	        	fontWeight: 'bold',
 	        	fontFamily: '"微軟正黑體", Microsoft JhengHei, Arial, Helvetica, sans-serif, verdana'
 	        	//fontSize:'11px'
@@ -468,15 +462,10 @@ function showHighChart(){
 	    },
 	    
 	    xAxis: {
-	        crosshair: true,
-			type: 'datetime',
-			dateTimeLabelFormats:{
-				
-	            day: '%m/%d',
-	            week:'%m/%d',
-	            month:'%m/%d'
-	            
-			}
+	    	categories: xAxisArray,
+            title: {
+                text: null
+            }
 		},
 	    yAxis: {
 	        title: {
@@ -498,18 +487,13 @@ function showHighChart(){
 	        shared: true,
 	        borderColor:'#909090',
 	        borderWidth: 1,
-	        valueDecimals: decimals,
-	        dateTimeLabelFormats:{		
-	            day:"%A, %m/%d, %Y" 
-			}
+	        valueDecimals: decimals
 	    },
 	    
 	    series: [{
 	        name: selectTypeName,
 	        data: dataArray,
-	        lineWidth: 2,
-	        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
-	        pointInterval: 24 * 3600 * 1000
+	        lineWidth: 2
 	        
 	    }],
 	    legend: { //選單
