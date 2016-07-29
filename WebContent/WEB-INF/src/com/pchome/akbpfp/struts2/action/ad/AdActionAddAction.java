@@ -201,18 +201,25 @@ public class AdActionAddAction extends BaseCookieAction{
 			//將時間數字轉換二進位字串
 			mon = Integer.toBinaryString(pfpAdAction.getAdActionMonTime());
 			mon = String.format("%024d",new BigInteger(mon));
+			mon = reversionString(mon);
 			tue = Integer.toBinaryString(pfpAdAction.getAdActionTueTime());
 			tue = String.format("%024d",new BigInteger(tue));
+			tue = reversionString(tue);
 			wed = Integer.toBinaryString(pfpAdAction.getAdActionWedTime());
 			wed = String.format("%024d",new BigInteger(wed));
+			wed = reversionString(wed);
 			thu = Integer.toBinaryString(pfpAdAction.getAdActionThuTime());
 			thu = String.format("%024d",new BigInteger(thu));
+			thu = reversionString(thu);
 			fri = Integer.toBinaryString(pfpAdAction.getAdActionFriTime());
 			fri = String.format("%024d",new BigInteger(fri));
+			fri = reversionString(fri);
 			sat = Integer.toBinaryString(pfpAdAction.getAdActionSatTime());
 			sat = String.format("%024d",new BigInteger(sat));
+			sat = reversionString(sat);
 			sun = Integer.toBinaryString(pfpAdAction.getAdActionSunTime());
 			sun = String.format("%024d",new BigInteger(sun));
+			sun = reversionString(sun);
 			
 		} else {
 			adActionSeq = "";
@@ -366,13 +373,13 @@ public class AdActionAddAction extends BaseCookieAction{
 		pfpAdAction.setAdActionStartAge(Integer.parseInt(adActionStartAge));
 		pfpAdAction.setAdActionEndAge(Integer.parseInt(adActionEndAge));
 		
-		String mon = timeCode.substring(0,24);
-		String tue = timeCode.substring(24,48);
-		String wed = timeCode.substring(48,72);
-		String thu = timeCode.substring(72,96);
-		String fri = timeCode.substring(96,120);
-		String sat = timeCode.substring(120,144);
-		String sun = timeCode.substring(144);
+		String mon = reversionString(timeCode.substring(0,24));
+		String tue = reversionString(timeCode.substring(24,48));
+		String wed = reversionString(timeCode.substring(48,72));
+		String thu = reversionString(timeCode.substring(72,96));
+		String fri = reversionString(timeCode.substring(96,120));
+		String sat = reversionString(timeCode.substring(120,144));
+		String sun = reversionString(timeCode.substring(144));
 		pfpAdAction.setAdActionMonTime(Integer.parseInt(mon, 2));
 		pfpAdAction.setAdActionTueTime(Integer.parseInt(tue, 2));
 		pfpAdAction.setAdActionWedTime(Integer.parseInt(wed, 2));
@@ -383,6 +390,17 @@ public class AdActionAddAction extends BaseCookieAction{
 
 		pfpAdActionService.savePfpAdAction(pfpAdAction);
 		return SUCCESS;
+	}
+
+	private String reversionString(String timeString){
+		
+		String time = "";
+		String[] timeArray = timeString.split("");
+		for(int i=0;i<timeArray.length;i++){
+			time = timeArray[i] + time;
+		}
+		
+		return time;
 	}
 
 	
