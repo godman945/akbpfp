@@ -90,6 +90,8 @@ function checkGift(){
 				$("#showMoney").text("此序號不可在儲值時使用");
 			}else if(response.giftStatus == "notUsed"){
 				$("#showMoney").text("已參加過該活動，請勿再輸入該活動序號");
+			}else if(response.giftStatus == "errStyle"){
+				$("#showMoney").text("此序號不可在儲值時使用");
 			}else if(response.giftStatus == null){
 				$("#showMoney").text("此序號不存在，請輸入正確序號");
 			}else if(response.giftStatus == "unused"){
