@@ -117,76 +117,76 @@
 	                        			</tr>
 	                        			<tr>
 	                        				<th align="center">
-	                        					<span style="width:22%; display:inline-block;">12</span>
-												<span style="width:22%; display:inline-block;">1</span>
-												<span style="width:22%; display:inline-block;">2</span>
-												<span style="width:22%; display:inline-block;">3</span>
+	                        					<span style="width:21%; display:inline-block;">12</span>
+												<span style="width:21%; display:inline-block;">1</span>
+												<span style="width:21%; display:inline-block;">2</span>
+												<span style="width:21%; display:inline-block;">3</span>
 		                        				<br/>
 		                        				<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime00" name="selAllTime00" onchange="selAllTimeCheckbox('00')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime01" name="selAllTime01" onchange="selAllTimeCheckbox('01')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime02" name="selAllTime02" onchange="selAllTimeCheckbox('02')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime03" name="selAllTime03" onchange="selAllTimeCheckbox('03')" />
+			                        				<input type="checkbox" id="selAllTime00" name="selAllTime00" onchange="selAllTimeCheckbox('00')" />
+			                        				<input type="checkbox"  id="selAllTime01" name="selAllTime01" onchange="selAllTimeCheckbox('01')" />
+			                        				<input type="checkbox"  id="selAllTime02" name="selAllTime02" onchange="selAllTimeCheckbox('02')" />
+			                        				<input type="checkbox"  id="selAllTime03" name="selAllTime03" onchange="selAllTimeCheckbox('03')" />
 		                        				</div>
 	                        				</th>
 	                        				<th align="center">
-	                        					<span style="width:22%; display:inline-block;">4</span>
-												<span style="width:22%; display:inline-block;">5</span>
-												<span style="width:22%; display:inline-block;">6</span>
-												<span style="width:22%; display:inline-block;">7</span>
+	                        					<span style="width:21%; display:inline-block;">4</span>
+												<span style="width:21%; display:inline-block;">5</span>
+												<span style="width:21%; display:inline-block;">6</span>
+												<span style="width:21%; display:inline-block;">7</span>
 	                        					<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime04" name="selAllTime04" onchange="selAllTimeCheckbox('04')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime05" name="selAllTime05" onchange="selAllTimeCheckbox('05')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime06" name="selAllTime06" onchange="selAllTimeCheckbox('06')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime07" name="selAllTime07" onchange="selAllTimeCheckbox('07')" />
+			                        				<input type="checkbox"  id="selAllTime04" name="selAllTime04" onchange="selAllTimeCheckbox('04')" />
+			                        				<input type="checkbox"  id="selAllTime05" name="selAllTime05" onchange="selAllTimeCheckbox('05')" />
+			                        				<input type="checkbox"  id="selAllTime06" name="selAllTime06" onchange="selAllTimeCheckbox('06')" />
+			                        				<input type="checkbox"  id="selAllTime07" name="selAllTime07" onchange="selAllTimeCheckbox('07')" />
 		                        				</div>
 	                        				</th>
 	                        				<th align="center">
-	                        					<span style="width:22%; display:inline-block;">8</span>
-												<span style="width:22%; display:inline-block;">9</span>
-												<span style="width:22%; display:inline-block;">10</span>
-												<span style="width:22%; display:inline-block;">11</span>
+	                        					<span style="width:21%; display:inline-block;">8</span>
+												<span style="width:21%; display:inline-block;">9</span>
+												<span style="width:21%; display:inline-block;">10</span>
+												<span style="width:21%; display:inline-block;">11</span>
 	                        					<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime08" name="selAllTime08" onchange="selAllTimeCheckbox('08')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime09" name="selAllTime09" onchange="selAllTimeCheckbox('09')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime10" name="selAllTime10" onchange="selAllTimeCheckbox('10')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime11" name="selAllTime11" onchange="selAllTimeCheckbox('11')" />
+			                        				<input type="checkbox"  id="selAllTime08" name="selAllTime08" onchange="selAllTimeCheckbox('08')" />
+			                        				<input type="checkbox"  id="selAllTime09" name="selAllTime09" onchange="selAllTimeCheckbox('09')" />
+			                        				<input type="checkbox"  id="selAllTime10" name="selAllTime10" onchange="selAllTimeCheckbox('10')" />
+			                        				<input type="checkbox"  id="selAllTime11" name="selAllTime11" onchange="selAllTimeCheckbox('11')" />
 		                        				</div>
 	                        				</th>
 	                        				<th align="center">
-	                        					<span style="width:22%; display:inline-block;">12</span>
-												<span style="width:22%; display:inline-block;">1</span>
-												<span style="width:22%; display:inline-block;">2</span>
-												<span style="width:22%; display:inline-block;">3</span>
+	                        					<span style="width:21%; display:inline-block;">12</span>
+												<span style="width:21%; display:inline-block;">1</span>
+												<span style="width:21%; display:inline-block;">2</span>
+												<span style="width:21%; display:inline-block;">3</span>
 	                        					<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime12" name="selAllTime12" onchange="selAllTimeCheckbox('12')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime13" name="selAllTime13" onchange="selAllTimeCheckbox('13')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime14" name="selAllTime14" onchange="selAllTimeCheckbox('14')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime15" name="selAllTime15" onchange="selAllTimeCheckbox('15')" />
+			                        				<input type="checkbox"  id="selAllTime12" name="selAllTime12" onchange="selAllTimeCheckbox('12')" />
+			                        				<input type="checkbox"  id="selAllTime13" name="selAllTime13" onchange="selAllTimeCheckbox('13')" />
+			                        				<input type="checkbox"  id="selAllTime14" name="selAllTime14" onchange="selAllTimeCheckbox('14')" />
+			                        				<input type="checkbox"  id="selAllTime15" name="selAllTime15" onchange="selAllTimeCheckbox('15')" />
 		                        				</div>
 	                        				</th>
 	                        				<th align="center">
-	                        					<span style="width:22%; display:inline-block;">4</span>
-												<span style="width:22%; display:inline-block;">5</span>
-												<span style="width:22%; display:inline-block;">6</span>
-												<span style="width:22%; display:inline-block;">7</span>
+	                        					<span style="width:21%; display:inline-block;">4</span>
+												<span style="width:21%; display:inline-block;">5</span>
+												<span style="width:21%; display:inline-block;">6</span>
+												<span style="width:21%; display:inline-block;">7</span>
 	                        					<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime16" name="selAllTime16" onchange="selAllTimeCheckbox('16')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime17" name="selAllTime17" onchange="selAllTimeCheckbox('17')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime18" name="selAllTime18" onchange="selAllTimeCheckbox('18')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime19" name="selAllTime19" onchange="selAllTimeCheckbox('19')" />
+			                        				<input type="checkbox"  id="selAllTime16" name="selAllTime16" onchange="selAllTimeCheckbox('16')" />
+			                        				<input type="checkbox"  id="selAllTime17" name="selAllTime17" onchange="selAllTimeCheckbox('17')" />
+			                        				<input type="checkbox"  id="selAllTime18" name="selAllTime18" onchange="selAllTimeCheckbox('18')" />
+			                        				<input type="checkbox"  id="selAllTime19" name="selAllTime19" onchange="selAllTimeCheckbox('19')" />
 		                        				</div>
 	                        				</th>
 	                        				<th align="center">
-	                        					<span style="width:22%; display:inline-block;">8</span>
-												<span style="width:22%; display:inline-block;">9</span>
-												<span style="width:22%; display:inline-block;">10</span>
-												<span style="width:22%; display:inline-block;">11</span>
+	                        					<span style="width:21%; display:inline-block;">8</span>
+												<span style="width:21%; display:inline-block;">9</span>
+												<span style="width:21%; display:inline-block;">10</span>
+												<span style="width:21%; display:inline-block;">11</span>
 	                        					<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime20" name="selAllTime20" onchange="selAllTimeCheckbox('20')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime21" name="selAllTime21" onchange="selAllTimeCheckbox('21')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime22" name="selAllTime22" onchange="selAllTimeCheckbox('22')" />
-			                        				<input type="checkbox" style="zoom:1.5" id="selAllTime23" name="selAllTime23" onchange="selAllTimeCheckbox('23')" />
+			                        				<input type="checkbox"  id="selAllTime20" name="selAllTime20" onchange="selAllTimeCheckbox('20')" />
+			                        				<input type="checkbox"  id="selAllTime21" name="selAllTime21" onchange="selAllTimeCheckbox('21')" />
+			                        				<input type="checkbox"  id="selAllTime22" name="selAllTime22" onchange="selAllTimeCheckbox('22')" />
+			                        				<input type="checkbox"  id="selAllTime23" name="selAllTime23" onchange="selAllTimeCheckbox('23')" />
 		                        				</div>
 	                        				</th>
                         				</tr>
@@ -198,10 +198,10 @@
                         				<#list day as selDay>
 	                        				<tr>
 	                        					<td align="center">${selDay}</td>
-	                        					<td align="center"><input type="checkbox" style="zoom:1.5" id="selAll${index}" name="selAll${index}" onchange="selAllCheckbox(${index})" /></td>
+	                        					<td align="center"><input type="checkbox"  id="selAll${index}" name="selAll${index}" onchange="selAllCheckbox(${index})" /></td>
 	                        					<#list seq?chunk(4) as row> 
 												<td align="center"> 
-												<#list row as cell><input type="checkbox" style="zoom:1.5" id="checkbox${index}${cell}" name="checkbox${index}${cell}" onchange="selCheckbox(${index}${cell})" ${timeCodeMap[index + cell]} /></#list>
+												<#list row as cell><input type="checkbox"  id="checkbox${index}${cell}" name="checkbox${index}${cell}" onchange="selCheckbox(${index}${cell})" ${timeCodeMap[index + cell]} /></#list>
 												</td> 
 												</#list>
 	                        				</tr>
