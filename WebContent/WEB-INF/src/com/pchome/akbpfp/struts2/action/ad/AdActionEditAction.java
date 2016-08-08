@@ -66,6 +66,7 @@ public class AdActionEditAction extends BaseCookieAction{
 	private String timeCode;
 	private String timeType;
 	private Map<String,String> timeCodeMap;
+	private String openDetail;
 	
 	public String adActionEdit() throws Exception{
 		log.info("adActionEdit => adActionSeq = " + adActionSeq);
@@ -111,6 +112,7 @@ public class AdActionEditAction extends BaseCookieAction{
 		
 		ageType = "A";
 		timeType = "A";
+		openDetail = "N";
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		adActionName = pfpAdAction.getAdActionName();
@@ -133,7 +135,7 @@ public class AdActionEditAction extends BaseCookieAction{
 		
 		adActionStartAge = String.valueOf(pfpAdAction.getAdActionStartAge());
 		adActionEndAge = String.valueOf(pfpAdAction.getAdActionEndAge());
-		if(!StringUtils.equals("0", adActionStartAge) && !StringUtils.equals("99", adActionEndAge)){
+		if(!StringUtils.equals("0", adActionStartAge) || !StringUtils.equals("99", adActionEndAge)){
 			ageType = "S";
 		}
 		
@@ -194,6 +196,10 @@ public class AdActionEditAction extends BaseCookieAction{
 					timeCodeMap.put(key, " ");
 				}
 			}
+		}
+		
+		if(StringUtils.equals(timeType, "S") || StringUtils.isNotEmpty(adActionSex) || StringUtils.equals(ageType, "S")){
+			openDetail = "Y";
 		}
 		
 		return SUCCESS;
@@ -549,4 +555,9 @@ public class AdActionEditAction extends BaseCookieAction{
 	public String getTimeType() {
 		return timeType;
 	}
+
+	public String getOpenDetail() {
+		return openDetail;
+	}
+	
 }

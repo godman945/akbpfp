@@ -126,7 +126,7 @@ $(function(){
 	});
 
 	//flash chart reload
-	$('#selectChartType').change(function(){
+	$('#reloadFlash').click(function(){
 	   showHighChart();
 	});
 });

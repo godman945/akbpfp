@@ -100,8 +100,15 @@
                 </tbody>
             </table>
             <div style="clear:both;height:10px"></div>
-            <div style="padding: 8px 8px 8px 2%;<#if adType?string == '1' >display:none;</#if>" id="detailTitle" ><span class="t_s02">* </span><a id="detailId" style="cursor: pointer;font-size:13px;" onclick="openDetail()" >進階設定+</a></div>
-            <div id="selectDetail" style="display:none" >
+            <div style="padding: 8px 8px 8px 2%;<#if adType?string == '1' >display:none;</#if>" id="detailTitle" >
+            	<span class="t_s02">* </span>
+            	<#if openDetail == 'N' >
+            		<a id="detailId" style="cursor: pointer;font-size:13px;" onclick="openDetail()" >進階設定+</a>
+            	<#else>
+            		<a id="detailId" style="cursor: pointer;font-size:13px;" onclick="closeDetail()" >進階設定-</a>
+            	</#if>
+            </div>
+            <div id="selectDetail" <#if openDetail == 'N' > style="display:none" </#if> >
             	<h4>廣告進階設定</h4>
             	<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
                 <tbody>

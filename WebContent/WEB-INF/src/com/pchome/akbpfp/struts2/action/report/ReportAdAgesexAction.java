@@ -237,9 +237,12 @@ public class ReportAdAgesexAction extends BaseReportAction {
 
 		if(StringUtils.equals(searchAgesex, "S")){
 			if(total != 0){
-				dataList.add((sexM/total)*100);
-				dataList.add((sexF/total)*100);
-				dataList.add((sexN/total)*100);
+				sexM = Double.parseDouble(String.format("%.2f",(sexM/total)*100));
+				sexF = Double.parseDouble(String.format("%.2f",(sexF/total)*100));
+				sexN = 100 - sexM - sexF;
+				dataList.add(sexM);
+				dataList.add(sexF);
+				dataList.add(sexN);
 			} else {
 				dataList.add(new Double(0));
 				dataList.add(new Double(0));

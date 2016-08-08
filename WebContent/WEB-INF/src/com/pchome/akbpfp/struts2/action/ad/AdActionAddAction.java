@@ -21,6 +21,7 @@ import java.util.Map;
 
 
 
+
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 
@@ -80,6 +81,7 @@ public class AdActionAddAction extends BaseCookieAction{
 	private String timeCode;
 	private String timeType;
 	private Map<String,String> timeCodeMap;
+	private String openDetail;
 
 	public String adActionAdd() throws Exception{
 		log.info("adActionAdd => adActionSeq = " + adActionSeq);
@@ -155,6 +157,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		adActionStartAge = "0";
 		adActionEndAge = "99";
 		adActionSex = "";
+		openDetail = "N";
 		
 		//設定播放時間初始化
 		String mon = "111111111111111111111111";
@@ -190,7 +193,7 @@ public class AdActionAddAction extends BaseCookieAction{
 			tmpRemain = (int)pfpCustomerInfo.getRemain();
 			adActionStartAge = String.valueOf(pfpAdAction.getAdActionStartAge());
 			adActionEndAge = String.valueOf(pfpAdAction.getAdActionEndAge());
-			if(!StringUtils.equals("0", adActionStartAge) && !StringUtils.equals("99", adActionEndAge)){
+			if(!StringUtils.equals("0", adActionStartAge) || !StringUtils.equals("99", adActionEndAge)){
 				ageType = "S";
 			}
 			
@@ -247,6 +250,10 @@ public class AdActionAddAction extends BaseCookieAction{
 					timeCodeMap.put(key, " ");
 				}
 			}
+		}
+		
+		if(StringUtils.equals(timeType, "S") || StringUtils.isNotEmpty(adActionSex) || StringUtils.equals(ageType, "S")){
+			openDetail = "Y";
 		}
 		
 		return SUCCESS;
@@ -602,6 +609,10 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public String getTimeType() {
 		return timeType;
+	}
+
+	public String getOpenDetail() {
+		return openDetail;
 	}
 	
 }
