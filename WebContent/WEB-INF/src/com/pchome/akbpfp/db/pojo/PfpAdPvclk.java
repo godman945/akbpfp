@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/4/19 �U�� 02:15:49 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/7/14 �W�� 11:01:55 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -35,6 +35,9 @@ public class PfpAdPvclk implements java.io.Serializable {
 	private int adType;
 	private Date adPvclkDate;
 	private int adPvclkTime;
+	private String sex;
+	private String ageCode;
+	private String timeCode;
 	private String templateProductSeq;
 	private String templateAdSeq;
 	private String adPvclkPropClassify;
@@ -97,14 +100,14 @@ public class PfpAdPvclk implements java.io.Serializable {
 			String pfbxCustomerInfoId, String pfbxPositionId,
 			String pfdCustomerInfoId, String pfdUserId, Integer payType,
 			String adGroupSeq, String adActionSeq, int adType,
-			Date adPvclkDate, int adPvclkTime, String templateProductSeq,
-			String templateAdSeq, String adPvclkPropClassify, String adUrl,
-			String styleNo, int adPv, int adClk, int adInvalidClk,
-			float adPvPrice, float adClkPrice, float adInvalidClkPrice,
-			String adPvclkDevice, String adPvclkOs, String adPvclkBrand,
-			String adPvclkArea, float adActionControlPrice,
-			float adActionMaxPrice, Date adPvclkCreateTime,
-			Date adPvclkUpdateTime) {
+			Date adPvclkDate, int adPvclkTime, String sex, String ageCode,
+			String timeCode, String templateProductSeq, String templateAdSeq,
+			String adPvclkPropClassify, String adUrl, String styleNo, int adPv,
+			int adClk, int adInvalidClk, float adPvPrice, float adClkPrice,
+			float adInvalidClkPrice, String adPvclkDevice, String adPvclkOs,
+			String adPvclkBrand, String adPvclkArea,
+			float adActionControlPrice, float adActionMaxPrice,
+			Date adPvclkCreateTime, Date adPvclkUpdateTime) {
 		this.pfpAd = pfpAd;
 		this.customerInfoId = customerInfoId;
 		this.pfbxCustomerInfoId = pfbxCustomerInfoId;
@@ -117,6 +120,9 @@ public class PfpAdPvclk implements java.io.Serializable {
 		this.adType = adType;
 		this.adPvclkDate = adPvclkDate;
 		this.adPvclkTime = adPvclkTime;
+		this.sex = sex;
+		this.ageCode = ageCode;
+		this.timeCode = timeCode;
 		this.templateProductSeq = templateProductSeq;
 		this.templateAdSeq = templateAdSeq;
 		this.adPvclkPropClassify = adPvclkPropClassify;
@@ -257,6 +263,33 @@ public class PfpAdPvclk implements java.io.Serializable {
 
 	public void setAdPvclkTime(int adPvclkTime) {
 		this.adPvclkTime = adPvclkTime;
+	}
+
+	@Column(name = "sex", length = 1)
+	public String getSex() {
+		return this.sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	@Column(name = "age_code", length = 1)
+	public String getAgeCode() {
+		return this.ageCode;
+	}
+
+	public void setAgeCode(String ageCode) {
+		this.ageCode = ageCode;
+	}
+
+	@Column(name = "time_code", length = 1)
+	public String getTimeCode() {
+		return this.timeCode;
+	}
+
+	public void setTimeCode(String timeCode) {
+		this.timeCode = timeCode;
 	}
 
 	@Column(name = "template_product_seq", nullable = false, length = 20)

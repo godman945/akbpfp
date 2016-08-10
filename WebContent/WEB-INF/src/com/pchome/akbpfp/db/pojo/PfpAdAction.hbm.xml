@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016/4/19 ?U?? 02:15:50 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/7/14 ?W?? 11:01:56 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdAction" table="pfp_ad_action" catalog="akb">
         <id name="adActionSeq" type="string">
@@ -43,6 +43,21 @@
                 <comment>&#188;s&#167;i&#181;&#178;&#167;&#244;&#164;&#233;&#180;&#193;</comment>
             </column>
         </property>
+        <property name="adActionSex" type="string">
+            <column name="ad_action_sex" length="1">
+                <comment>&#169;&#202;&#167;O</comment>
+            </column>
+        </property>
+        <property name="adActionStartAge" type="int">
+            <column name="ad_action_start_age" not-null="true">
+                <comment>&#188;&#189;&#169;&#241;&#166;~&#196;&#214;&#164;U&#173;&#173;</comment>
+            </column>
+        </property>
+        <property name="adActionEndAge" type="int">
+            <column name="ad_action_end_age" not-null="true">
+                <comment>&#188;&#189;&#169;&#241;&#166;~&#196;&#214;&#164;W&#173;&#173;</comment>
+            </column>
+        </property>
         <property name="adActionMax" type="float">
             <column name="ad_action_max" precision="10" not-null="true">
                 <comment>&#168;C&#164;&#233;&#185;w&#186;&#226;&#164;W&#173;&#173;</comment>
@@ -56,6 +71,41 @@
         <property name="adActionStatus" type="int">
             <column name="ad_action_status" not-null="true">
                 <comment>&#188;s&#167;i&#170;&#172;&#186;A</comment>
+            </column>
+        </property>
+        <property name="adActionMonTime" type="int">
+            <column name="ad_action_mon_time" not-null="true">
+                <comment>&#172;P&#180;&#193;&#164;@&#188;&#189;&#169;&#241;&#174;&#201;&#172;q</comment>
+            </column>
+        </property>
+        <property name="adActionTueTime" type="int">
+            <column name="ad_action_tue_time" not-null="true">
+                <comment>&#172;P&#180;&#193;&#164;G&#188;&#189;&#169;&#241;&#174;&#201;&#172;q</comment>
+            </column>
+        </property>
+        <property name="adActionWedTime" type="int">
+            <column name="ad_action_wed_time" not-null="true">
+                <comment>&#172;P&#180;&#193;&#164;T&#188;&#189;&#169;&#241;&#174;&#201;&#172;q</comment>
+            </column>
+        </property>
+        <property name="adActionThuTime" type="int">
+            <column name="ad_action_thu_time" not-null="true">
+                <comment>&#172;P&#180;&#193;&#165;|&#188;&#189;&#169;&#241;&#174;&#201;&#172;q</comment>
+            </column>
+        </property>
+        <property name="adActionFriTime" type="int">
+            <column name="ad_action_fri_time" not-null="true">
+                <comment>&#172;P&#180;&#193;&#164;&#173;&#188;&#189;&#169;&#241;&#174;&#201;&#172;q</comment>
+            </column>
+        </property>
+        <property name="adActionSatTime" type="int">
+            <column name="ad_action_sat_time" not-null="true">
+                <comment>&#172;P&#180;&#193;&#164;&#187;&#188;&#189;&#169;&#241;&#174;&#201;&#172;q</comment>
+            </column>
+        </property>
+        <property name="adActionSunTime" type="int">
+            <column name="ad_action_sun_time" not-null="true">
+                <comment>&#172;P&#180;&#193;&#164;&#233;&#188;&#189;&#169;&#241;&#174;&#201;&#172;q</comment>
             </column>
         </property>
         <property name="aid" type="string">

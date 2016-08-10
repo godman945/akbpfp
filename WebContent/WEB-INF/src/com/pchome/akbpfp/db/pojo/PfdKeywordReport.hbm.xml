@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016/4/19 ?U?? 02:15:50 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/7/14 ?W?? 11:01:56 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfdKeywordReport" table="pfd_keyword_report" catalog="akb">
         <id name="keywordReportSeq" type="java.lang.Integer">
@@ -55,17 +55,47 @@
         </property>
         <property name="adPv" type="int">
             <column name="ad_pv" not-null="true">
-                <comment>&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adPhrasePv" type="int">
+            <column name="ad_phrase_pv" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adPrecisionPv" type="int">
+            <column name="ad_precision_pv" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#188;s&#167;i&#195;n&#165;&#250;&#188;&#198;</comment>
             </column>
         </property>
         <property name="adClk" type="int">
             <column name="ad_clk" not-null="true">
-                <comment>&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adPhraseClk" type="int">
+            <column name="ad_phrase_clk" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adPrecisionClk" type="int">
+            <column name="ad_precision_clk" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;</comment>
             </column>
         </property>
         <property name="adInvalidClk" type="int">
             <column name="ad_invalid_clk" not-null="true">
-                <comment>&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adPhraseInvalidClk" type="int">
+            <column name="ad_phrase_invalid_clk" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;</comment>
+            </column>
+        </property>
+        <property name="adPrecisionInvalidClk" type="int">
+            <column name="ad_precision_invalid_clk" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;</comment>
             </column>
         </property>
         <property name="adPvPrice" type="float">
@@ -75,12 +105,32 @@
         </property>
         <property name="adClkPrice" type="float">
             <column name="ad_clk_price" precision="10" not-null="true">
-                <comment>&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adPhraseClkPrice" type="float">
+            <column name="ad_phrase_clk_price" precision="10" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adPrecisionClkPrice" type="float">
+            <column name="ad_precision_clk_price" precision="10" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#188;s&#167;i&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
             </column>
         </property>
         <property name="adInvalidClkPrice" type="float">
             <column name="ad_invalid_clk_price" precision="10" not-null="true">
-                <comment>&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+                <comment>&#188;s&#170;x&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adPhraseInvalidClkPrice" type="float">
+            <column name="ad_phrase_invalid_clk_price" precision="10" not-null="true">
+                <comment>&#181;&#252;&#178;&#213;&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
+            </column>
+        </property>
+        <property name="adPrecisionInvalidClkPrice" type="float">
+            <column name="ad_precision_invalid_clk_price" precision="10" not-null="true">
+                <comment>&#186;&#235;&#183;&#199;&#164;&#241;&#185;&#239;&#181;L&#174;&#196;&#194;I&#192;&#187;&#188;&#198;&#193;`&#182;O&#165;&#206;</comment>
             </column>
         </property>
         <property name="createDate" type="timestamp">

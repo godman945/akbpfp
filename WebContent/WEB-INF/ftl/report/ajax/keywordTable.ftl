@@ -67,7 +67,7 @@ ${page}/${totalPage}
 
 <br>
 
-<#if (AdKeywordReportVO?size > 0) > 
+<#if (AdKeywordReportVO?exists) > 
 <div style="overflow-x:auto;width:100%">
 <table id="excerptTable" border="0" cellpadding="0" cellspacing="1" class="tablesorter" > 
 
@@ -198,7 +198,7 @@ ${page}/${totalPage}
    	</tfoot>
  
 </table> 
-
+</div>
 <#else>
 <div style="clear:both;line-height:30px;text-align:right;font-size:15px"></div> 
 <div style="clear:both;line-height:30px;text-align:left;font-size:12px"></div>
@@ -217,7 +217,7 @@ ${page}/${totalPage}
   
 </table> 
 </#if>
-</div>
+
 <form id="excerptFrom" name="excerptFrom" action="reportKeywordDownload.html" method="post">
 	<input type="hidden" id="formPage" name="page" value="${page}">	
 	<input type="hidden" id="fpageSize" name="pageSize" value="${pageSize}">

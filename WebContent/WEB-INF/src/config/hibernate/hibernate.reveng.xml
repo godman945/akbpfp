@@ -65,6 +65,8 @@
 	<table-filter match-name="pfp_trans_detail" match-catalog="akb" />
 	<table-filter match-name="pfp_user" match-catalog="akb" />
 	<table-filter match-name="pfp_user_member_ref" match-catalog="akb" />
+	<table-filter match-name="pfp_ad_time_report" match-catalog="akb" />
+	<table-filter match-name="pfp_ad_age_report" match-catalog="akb" />
 	<table-filter match-name="sequence" match-catalog="akb" />
 	<table-filter match-name="pfbx_size" match-catalog="akb"></table-filter>
 

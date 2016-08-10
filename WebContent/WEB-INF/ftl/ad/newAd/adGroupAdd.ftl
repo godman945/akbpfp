@@ -61,7 +61,7 @@
 	            </tbody>
 	        </table>
 	        <center style="margin:10px">
-	            <input type="button" id="cancel" value="取消">&nbsp; 
+	            <input type="button" id="cancel" value="上一步">&nbsp; 
 	            <input type="button" id="save" value="下一步! 製作廣告"> &nbsp; 
 	 		</center>
 	    </div>

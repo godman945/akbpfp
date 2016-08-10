@@ -1,8 +1,11 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -54,6 +57,17 @@ public class AdActionEditAction extends BaseCookieAction{
 	private EnumAdType[] adTypeList;
 	private EnumAdDevice[] adDeviceList;
 
+	private Map<String,String> adActionStartAgeMap;
+	private Map<String,String> adActionEndAgeMap;
+	private String ageType;
+	private String adActionStartAge;
+	private String adActionEndAge;
+	private String adActionSex;
+	private String timeCode;
+	private String timeType;
+	private Map<String,String> timeCodeMap;
+	private String openDetail;
+	
 	public String adActionEdit() throws Exception{
 		log.info("adActionEdit => adActionSeq = " + adActionSeq);
 		log.info("Referer = " + request.getHeader("Referer"));
@@ -89,6 +103,17 @@ public class AdActionEditAction extends BaseCookieAction{
 			}
 		}
 
+		//設定年齡下拉選單
+		adActionStartAgeMap = new LinkedHashMap<String,String>();
+		adActionEndAgeMap = new LinkedHashMap<String,String>();
+		adActionStartAgeMap.put("0", "18歲以下");
+		getAgeMap();
+		adActionEndAgeMap.put("99", "75歲以上");
+		
+		ageType = "A";
+		timeType = "A";
+		openDetail = "N";
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		adActionName = pfpAdAction.getAdActionName();
 		adActionDesc = pfpAdAction.getAdActionDesc();
@@ -107,6 +132,75 @@ public class AdActionEditAction extends BaseCookieAction{
 		
 		adTypeList = EnumAdType.values();
 		adDeviceList = EnumAdDevice.values();
+		
+		adActionStartAge = String.valueOf(pfpAdAction.getAdActionStartAge());
+		adActionEndAge = String.valueOf(pfpAdAction.getAdActionEndAge());
+		if(!StringUtils.equals("0", adActionStartAge) || !StringUtils.equals("99", adActionEndAge)){
+			ageType = "S";
+		}
+		
+		adActionSex = "";
+		if(StringUtils.isNotEmpty(pfpAdAction.getAdActionSex())){
+			adActionSex = pfpAdAction.getAdActionSex();
+		}
+		
+		//設定播放時間初始化
+		String mon = "111111111111111111111111";
+		String tue = "111111111111111111111111";
+		String wed = "111111111111111111111111";
+		String thu = "111111111111111111111111";
+		String fri = "111111111111111111111111";
+		String sat = "111111111111111111111111";
+		String sun = "111111111111111111111111";
+		
+		//將時間數字轉換二進位字串
+		mon = Integer.toBinaryString(pfpAdAction.getAdActionMonTime());
+		mon = String.format("%024d",new BigInteger(mon));
+		mon = reversionString(mon);
+		tue = Integer.toBinaryString(pfpAdAction.getAdActionTueTime());
+		tue = String.format("%024d",new BigInteger(tue));
+		tue = reversionString(tue);
+		wed = Integer.toBinaryString(pfpAdAction.getAdActionWedTime());
+		wed = String.format("%024d",new BigInteger(wed));
+		wed = reversionString(wed);
+		thu = Integer.toBinaryString(pfpAdAction.getAdActionThuTime());
+		thu = String.format("%024d",new BigInteger(thu));
+		thu = reversionString(thu);
+		fri = Integer.toBinaryString(pfpAdAction.getAdActionFriTime());
+		fri = String.format("%024d",new BigInteger(fri));
+		fri = reversionString(fri);
+		sat = Integer.toBinaryString(pfpAdAction.getAdActionSatTime());
+		sat = String.format("%024d",new BigInteger(sat));
+		sat = reversionString(sat);
+		sun = Integer.toBinaryString(pfpAdAction.getAdActionSunTime());
+		sun = String.format("%024d",new BigInteger(sun));
+		sun = reversionString(sun);
+		
+		if(mon.indexOf("0") >= 0 || tue.indexOf("0") >= 0 || wed.indexOf("0") >= 0 || 
+				thu.indexOf("0") >= 0 || fri.indexOf("0") >= 0 || sat.indexOf("0") >= 0 || 
+				sun.indexOf("0") >= 0){
+			timeType = "S";
+		}
+		
+		timeCodeMap = new LinkedHashMap<String,String>();
+		Object[][] object = {mon.split(""),tue.split(""),wed.split(""),thu.split(""),fri.split(""),sat.split(""),sun.split("")};
+		
+		for(int i=0;i<7;i++){
+			for(int j=0;j<24;j++){
+				String key = String.format("%01d",i+1) + String.format("%02d",j);
+				String code = (String) object[i][j+1];
+				
+				if(StringUtils.equals(code, "1")){
+					timeCodeMap.put(key, "checked");
+				} else {
+					timeCodeMap.put(key, " ");
+				}
+			}
+		}
+		
+		if(StringUtils.equals(timeType, "S") || StringUtils.isNotEmpty(adActionSex) || StringUtils.equals(ageType, "S")){
+			openDetail = "Y";
+		}
 		
 		return SUCCESS;
 	}
@@ -234,6 +328,27 @@ public class AdActionEditAction extends BaseCookieAction{
 			}
 		}
 		
+		if(StringUtils.isNotEmpty(adActionSex)){
+			pfpAdAction.setAdActionSex(adActionSex);
+		}
+		pfpAdAction.setAdActionStartAge(Integer.parseInt(adActionStartAge));
+		pfpAdAction.setAdActionEndAge(Integer.parseInt(adActionEndAge));
+		
+		String mon = reversionString(timeCode.substring(0,24));
+		String tue = reversionString(timeCode.substring(24,48));
+		String wed = reversionString(timeCode.substring(48,72));
+		String thu = reversionString(timeCode.substring(72,96));
+		String fri = reversionString(timeCode.substring(96,120));
+		String sat = reversionString(timeCode.substring(120,144));
+		String sun = reversionString(timeCode.substring(144));
+		pfpAdAction.setAdActionMonTime(Integer.parseInt(mon, 2));
+		pfpAdAction.setAdActionTueTime(Integer.parseInt(tue, 2));
+		pfpAdAction.setAdActionWedTime(Integer.parseInt(wed, 2));
+		pfpAdAction.setAdActionThuTime(Integer.parseInt(thu, 2));
+		pfpAdAction.setAdActionFriTime(Integer.parseInt(fri, 2));
+		pfpAdAction.setAdActionSatTime(Integer.parseInt(sat, 2));
+		pfpAdAction.setAdActionSunTime(Integer.parseInt(sun, 2));
+		
 		pfpAdAction.setUserId(super.getUser_id());
 		pfpAdAction.setPfpCustomerInfo(pfpCustomerInfo);
 		pfpAdAction.setAdActionUpdateTime(new Date());
@@ -242,6 +357,24 @@ public class AdActionEditAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	private String reversionString(String timeString){
+		
+		String time = "";
+		String[] timeArray = timeString.split("");
+		for(int i=0;i<timeArray.length;i++){
+			time = timeArray[i] + time;
+		}
+		
+		return time;
+	}
+	
+	private void getAgeMap(){
+		for(int i=18;i<=75;i++){
+			adActionStartAgeMap.put(String.valueOf(i),i + "歲");
+			adActionEndAgeMap.put(String.valueOf(i),i + "歲");
+		}
+	}
+	
 	public void setPfpCustomerInfoService(
 			PfpCustomerInfoService pfpCustomerInfoService) {
 		this.pfpCustomerInfoService = pfpCustomerInfoService;
@@ -369,6 +502,62 @@ public class AdActionEditAction extends BaseCookieAction{
 
 	public EnumAdDevice[] getAdDeviceList() {
 		return adDeviceList;
+	}
+
+	public String getAdActionStartAge() {
+		return adActionStartAge;
+	}
+
+	public void setAdActionStartAge(String adActionStartAge) {
+		this.adActionStartAge = adActionStartAge;
+	}
+
+	public String getAdActionEndAge() {
+		return adActionEndAge;
+	}
+
+	public void setAdActionEndAge(String adActionEndAge) {
+		this.adActionEndAge = adActionEndAge;
+	}
+
+	public Map<String, String> getAdActionStartAgeMap() {
+		return adActionStartAgeMap;
+	}
+
+	public Map<String, String> getAdActionEndAgeMap() {
+		return adActionEndAgeMap;
+	}
+
+	public String getAgeType() {
+		return ageType;
+	}
+
+	public void setAgeType(String ageType) {
+		this.ageType = ageType;
+	}
+	
+	public String getAdActionSex() {
+		return adActionSex;
+	}
+
+	public void setAdActionSex(String adActionSex) {
+		this.adActionSex = adActionSex;
+	}
+
+	public void setTimeCode(String timeCode) {
+		this.timeCode = timeCode;
+	}
+
+	public Map<String, String> getTimeCodeMap() {
+		return timeCodeMap;
+	}
+
+	public String getTimeType() {
+		return timeType;
+	}
+
+	public String getOpenDetail() {
+		return openDetail;
 	}
 	
 }

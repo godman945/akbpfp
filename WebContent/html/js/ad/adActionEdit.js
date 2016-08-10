@@ -103,7 +103,33 @@
 	$('#save').click(function(){
 		//取得驗證回傳值
 		if($("#modifyForm").valid() == 1){
+			var startAge = $("#adActionStartAge").val();
+			var endAge = $("#adActionEndAge").val();
+			
+			//檢查年齡區間是否有間隔5歲以上
+			if((parseInt(endAge) - parseInt(startAge)) < 5){
+				alert("提醒您，族群年齡區間需間隔5歲以上");
+				return false;
+			}
+			
+			var timeString = "";
+			$("[id*=checkbox]").not("[name*=selAll]").each(function(){
+				if($(this).prop("checked")){
+					timeString = timeString + "1";
+				} else {
+					timeString = timeString + "0";
+				}
+			});
+			
+			//檢查自訂播放時段是否至少勾選一個
+			if(timeString.indexOf("1") < 0){
+				alert("提醒您，自訂播放時段至少要選擇一個時間");
+				return false;
+			}
 			// form submit
+			$("#adActionStartAge").removeAttr("disabled");
+			$("#adActionEndAge").removeAttr("disabled");
+			$("#timeCode").val(timeString);
 			$("#adType").removeAttr("disabled");
 			$("#adDevice").removeAttr("disabled");
 			$("#modifyForm").submit();
@@ -115,6 +141,16 @@
 		$("#modifyForm")[0].reset();
 		window.location.replace($("#backPage").val());
 		//$(location).attr('href',$("#backPage").val());
+	});
+	
+	$("#adActionStartAge,#adActionEndAge").change(function(){
+		var startAge = $("#adActionStartAge").val();
+		var endAge = $("#adActionEndAge").val();
+		
+		//檢查年齡區間是否有間隔5歲以上
+		if((parseInt(endAge) - parseInt(startAge)) < 5){
+			alert("提醒您，族群年齡區間需間隔5歲以上");
+		}
 	});
 });
 
@@ -128,4 +164,105 @@ function closenots(id) {
 
 function cleanEndDate() {
 	$("#adActionEndDate").val("");
+}
+
+//開啟進階設定
+function openDetail(){
+	$("#detailId").html("進階設定-");
+	$("#detailId").attr("onclick","closeDetail()");
+	$("#selectDetail").show();
+}
+
+//關閉進階設定
+function closeDetail(){
+	$("#detailId").html("進階設定+");
+	$("#detailId").attr("onclick","openDetail()");
+	$("#selectDetail").hide();
+}
+
+//選擇全時段播放
+function selAllTime(){
+	$("#openTimeDetail").html('自訂播放時段');
+	$("[id*=checkbox]").attr("checked","checked");
+	$("[id*=selAll]").attr("checked","checked");
+}
+
+//選擇自訂時段播放
+function selAnyTime(){
+	$("#openTimeDetail").html('<a id="detailId" style="cursor: pointer;" onclick="selectTime()" >自訂播放時段</a>');
+	$("[id*=checkbox]").removeAttr("checked");
+	$("[id*=selAll]").removeAttr("checked");
+}
+
+//選擇全部年齡
+function selAllAge(){
+	$("#adActionStartAge").attr("disabled","disabled");
+	$("#adActionEndAge").attr("disabled","disabled");
+	$("#adActionStartAge").val("0");
+	$("#adActionEndAge").val("99");
+}
+
+//選擇自訂年齡
+function selAnyAge(){
+	$("#adActionStartAge").removeAttr("disabled");
+	$("#adActionEndAge").removeAttr("disabled");
+}
+
+function selectTime(){
+	 $.fancybox(
+	    		$('#selectTimeDiv').html(),
+	    		{
+	    			'modal'             : true,
+	    			'autoDimensions'	: false,
+	    			'width'         	: 'auto',
+	    			'height'        	: 'auto',
+	    			'autoSize'			: true,
+	    			'autoHeight'		: true,
+	    			'autoScale'			: true,
+	    			'transitionIn'		: 'none',
+	    			'transitionOut'		: 'none',
+	    			'padding'			: 0,
+	    			'overlayOpacity'    : .75,
+	    			'overlayColor'      : '#fff',
+	    			'scrolling'			: 'no'
+	    		}
+	    );
+}
+
+function saveBtn(){
+	$('#selectTimeDiv').html($("#fancybox-content").html());
+	parent.$.fancybox.close();
+}
+
+function closeBtn(){
+	//$('#selectTimeDiv').html($("#fancybox-content").html());
+	parent.$.fancybox.close();
+}
+
+function selCheckbox(number){
+	if($("#fancybox-content [name=checkbox" + number + "]").prop("checked")){
+		$("#fancybox-content [name=checkbox" + number + "]").attr("checked","checked");
+	} else {
+		$("#fancybox-content [name=checkbox" + number + "]").removeAttr("checked");
+	}
+}
+
+function selAllCheckbox(number){
+	if($("#fancybox-content [name=selAll" + number + "]").prop("checked")){
+		$("#fancybox-content [name=selAll" + number + "]").attr("checked","checked");
+		$("#fancybox-content [name*=checkbox" + number + "]").attr("checked","checked");
+	} else {
+		$("#fancybox-content [name=selAll" + number + "]").removeAttr("checked");
+		$("#fancybox-content [name*=checkbox" + number + "]").removeAttr("checked");
+	}
+}
+
+function selAllTimeCheckbox(number){
+	if($("#fancybox-content [name=selAllTime" + number + "]").prop("checked")){
+		$("#fancybox-content [name=selAllTime" + number + "]").attr("checked","checked");
+		$("#fancybox-content [name*=checkbox][name$=" + number + "]").attr("checked","checked");
+	} else {
+		$("#fancybox-content [name=selAllTime" + number + "]").removeAttr("checked");
+		$("#fancybox-content [name*=checkbox][name$=" + number + "]").removeAttr("checked");
+	}
 }
