@@ -185,7 +185,6 @@ function selAllTime(){
 	$("#openTimeDetail").html('自訂播放時段');
 	$("[id*=checkbox]").attr("checked","checked");
 	$("[id*=selAll]").attr("checked","checked");
-	selectTime();
 }
 
 //選擇自訂時段播放
@@ -193,6 +192,7 @@ function selAnyTime(){
 	$("#openTimeDetail").html('<a id="detailId" style="cursor: pointer;" onclick="selectTime()" >自訂播放時段</a>');
 	$("[id*=checkbox]").removeAttr("checked");
 	$("[id*=selAll]").removeAttr("checked");
+	selectTime();
 }
 
 //選擇全部年齡
