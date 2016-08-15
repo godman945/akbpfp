@@ -328,12 +328,62 @@ public class AdActionEditAction extends BaseCookieAction{
 			}
 		}
 		
+		String oldSex = pfpAdAction.getAdActionSex();
 		if(StringUtils.isNotEmpty(adActionSex)){
 			pfpAdAction.setAdActionSex(adActionSex);
 		}
+		
+		//性別改變記錄log
+		if(!StringUtils.equals(oldSex, adActionSex)){
+			String accesslogMessage_sex = "性別取向異動：" + getSexName(oldSex) + " => " + getSexName(adActionSex);
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_sex, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+		}
+		
+		int oldStartAge = pfpAdAction.getAdActionStartAge();
+		int oldEndAge = pfpAdAction.getAdActionEndAge();
+		
 		pfpAdAction.setAdActionStartAge(Integer.parseInt(adActionStartAge));
 		pfpAdAction.setAdActionEndAge(Integer.parseInt(adActionEndAge));
 		
+		//年齡區間改變記錄log
+		if(!StringUtils.equals(String.valueOf(oldStartAge), adActionStartAge) || !StringUtils.equals(String.valueOf(oldEndAge), adActionEndAge)){
+			String accesslogMessage_age = "年齡區間異動：" + getAgeNote(oldStartAge,oldEndAge) + " => " + getAgeNote(Integer.parseInt(adActionStartAge),Integer.parseInt(adActionEndAge));
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_age, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+		}
+		
+		//設定播放時間初始化
+		String oldMon = "111111111111111111111111";
+		String oldTue = "111111111111111111111111";
+		String oldWed = "111111111111111111111111";
+		String oldThu = "111111111111111111111111";
+		String oldFri = "111111111111111111111111";
+		String oldsat = "111111111111111111111111";
+		String oldSun = "111111111111111111111111";
+		
+		//將時間數字轉換二進位字串
+		oldMon = Integer.toBinaryString(pfpAdAction.getAdActionMonTime());
+		oldMon = String.format("%024d",new BigInteger(oldMon));
+		oldMon = reversionString(oldMon);
+		oldTue = Integer.toBinaryString(pfpAdAction.getAdActionTueTime());
+		oldTue = String.format("%024d",new BigInteger(oldTue));
+		oldTue = reversionString(oldTue);
+		oldWed = Integer.toBinaryString(pfpAdAction.getAdActionWedTime());
+		oldWed = String.format("%024d",new BigInteger(oldWed));
+		oldWed = reversionString(oldWed);
+		oldThu = Integer.toBinaryString(pfpAdAction.getAdActionThuTime());
+		oldThu = String.format("%024d",new BigInteger(oldThu));
+		oldThu = reversionString(oldThu);
+		oldFri = Integer.toBinaryString(pfpAdAction.getAdActionFriTime());
+		oldFri = String.format("%024d",new BigInteger(oldFri));
+		oldFri = reversionString(oldFri);
+		oldsat = Integer.toBinaryString(pfpAdAction.getAdActionSatTime());
+		oldsat = String.format("%024d",new BigInteger(oldsat));
+		oldsat = reversionString(oldsat);
+		oldSun = Integer.toBinaryString(pfpAdAction.getAdActionSunTime());
+		oldSun = String.format("%024d",new BigInteger(oldSun));
+		oldSun = reversionString(oldSun);
+		
+		//新時間設定寫入
 		String mon = reversionString(timeCode.substring(0,24));
 		String tue = reversionString(timeCode.substring(24,48));
 		String wed = reversionString(timeCode.substring(48,72));
@@ -348,6 +398,19 @@ public class AdActionEditAction extends BaseCookieAction{
 		pfpAdAction.setAdActionFriTime(Integer.parseInt(fri, 2));
 		pfpAdAction.setAdActionSatTime(Integer.parseInt(sat, 2));
 		pfpAdAction.setAdActionSunTime(Integer.parseInt(sun, 2));
+		
+		//播放時間改變記錄log
+		if(!StringUtils.equals(oldMon, timeCode.substring(0,24)) || !StringUtils.equals(oldTue, timeCode.substring(24,48)) ||
+				!StringUtils.equals(oldWed, timeCode.substring(48,72)) || !StringUtils.equals(oldThu, timeCode.substring(72,96)) ||
+				!StringUtils.equals(oldFri, timeCode.substring(96,120)) || !StringUtils.equals(oldsat, timeCode.substring(120,144)) ||
+				!StringUtils.equals(oldSun, timeCode.substring(144))){
+			String accesslogMessage_time = "廣告播放時段異動：";
+			accesslogMessage_time += getTimeNote(oldMon,oldTue,oldWed,oldThu,oldFri,oldsat,oldSun);
+			accesslogMessage_time += " => ";
+			accesslogMessage_time += getTimeNote(timeCode.substring(0,24),timeCode.substring(24,48),timeCode.substring(48,72),timeCode.substring(72,96),timeCode.substring(96,120),timeCode.substring(120,144),timeCode.substring(144));
+			
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_time, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+		}
 		
 		pfpAdAction.setUserId(super.getUser_id());
 		pfpAdAction.setPfpCustomerInfo(pfpCustomerInfo);
@@ -373,6 +436,133 @@ public class AdActionEditAction extends BaseCookieAction{
 			adActionStartAgeMap.put(String.valueOf(i),i + "歲");
 			adActionEndAgeMap.put(String.valueOf(i),i + "歲");
 		}
+	}
+	
+	private String getSexName(String sex){
+		
+		String sexName = "不分性別";
+		
+		switch (sex) {
+		case "M":
+			sexName = "男性";
+			break;
+		case "F":
+			sexName = "女性";
+			break;
+		default:
+			sexName = "不分性別";
+			break;
+		}
+		
+		
+		return sexName;
+	}
+	
+	private String getAgeNote(int startAge, int endAge){
+		String ageNote = "";
+		
+		if(startAge != 0 || endAge != 99){
+			
+			String startAgeName = "18歲以下";
+			String endAgeName = "75歲以上";
+			
+			if(startAge != 0){
+				startAgeName = String.valueOf(startAge);
+			}
+			if(endAge != 99){
+				endAgeName = String.valueOf(endAge);
+			}
+			
+			ageNote = "自訂(" + startAgeName + "-" + endAgeName + ")";
+		} else {
+			ageNote = "不分年齡";
+		}
+		
+		return ageNote;
+	}
+	
+	private String getTimeNote(String mon, String tue, String wed, String thu, String fri, String sat, String sun){
+		String timeNote = "";
+		
+		if(!StringUtils.equals(mon, "111111111111111111111111") || !StringUtils.equals(tue, "111111111111111111111111") ||
+				!StringUtils.equals(wed, "111111111111111111111111") || !StringUtils.equals(thu, "111111111111111111111111") ||
+				!StringUtils.equals(fri, "111111111111111111111111") || !StringUtils.equals(sat, "111111111111111111111111") ||
+				!StringUtils.equals(sun, "111111111111111111111111")){
+			
+			timeNote = "自訂播放時段(";
+			
+			String[] weekArray = {"星期一","星期二","星期三","星期四","星期五","星期六","星期日"};
+			String[] timeCodeArray = {mon,tue,wed,thu,fri,sat,sun};
+			
+			String weekNote = "";
+			for(int i=0;i<7;i++){
+				
+				String week = weekArray[i];
+				String timeCode = timeCodeArray[i];
+				
+				if(!StringUtils.equals(timeCode, "000000000000000000000000")){
+					if(StringUtils.isNotEmpty(weekNote)){
+						weekNote += "/";
+					}
+					weekNote += week + "：";
+					if(!StringUtils.equals(timeCode, "111111111111111111111111")){
+						weekNote += getTimeSet(timeCode);
+					} else{
+						weekNote += "全時段";
+					}
+				}
+			}
+			
+			timeNote += weekNote + ")";
+		} else {
+			timeNote = "全天候播放廣告";
+		}
+		
+		return timeNote;
+	}
+	
+	private String getTimeSet(String timeSet){
+		String setName = "";
+		String[] timeArray = {"12","1","2","3","4","5","6","7","8","9","10","11"};
+		String time1 = timeSet.substring(0, 12);
+		String time2 = timeSet.substring(12);
+		
+		if(!StringUtils.equals(time1, "000000000000")){
+			setName += "上午";
+			String[] codeArray = time1.split("");
+			String hourNote = "";
+			for(int j=0;j<12;j++){
+				String code = codeArray[j+1];
+				if(StringUtils.equals(code, "1")){
+					if(StringUtils.isNotEmpty(hourNote)){
+						hourNote += "、";
+					}
+					hourNote += timeArray[j];
+				}
+			}
+			setName += hourNote;
+		}
+		
+		if(!StringUtils.equals(time2, "000000000000")){
+			if(StringUtils.isNotEmpty(setName)){
+				setName += "；";
+			}
+			setName += "下午";
+			String[] codeArray = time2.split("");
+			String hourNote = "";
+			for(int j=0;j<12;j++){
+				String code = codeArray[j+1];
+				if(StringUtils.equals(code, "1")){
+					if(StringUtils.isNotEmpty(hourNote)){
+						hourNote += "、";
+					}
+					hourNote += timeArray[j];
+				}
+			}
+			setName += hourNote;
+		}
+		
+		return setName;
 	}
 	
 	public void setPfpCustomerInfoService(

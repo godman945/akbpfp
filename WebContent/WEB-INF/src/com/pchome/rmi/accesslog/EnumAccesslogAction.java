@@ -12,7 +12,8 @@ public enum EnumAccesslogAction {
 	AD_STATUS_MODIFY("7","廣告狀態異動"),				// 廣告狀態異動
 	AD_MONEY_MODIFY("8","廣告價格異動"),					// 廣告價格異動
 	AD_DATE_MODIFY("9","廣告走期異動"),					// 廣告走期異動
-	WARNING("10","警告訊息");							// 警告訊息
+	WARNING("10","警告訊息"),							// 警告訊息
+	PLAY_MODIFY("11","播放管理異動");					// 播放管理異動
 
 	
 	private final String action;
