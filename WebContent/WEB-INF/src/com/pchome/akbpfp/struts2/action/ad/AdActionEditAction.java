@@ -442,6 +442,10 @@ public class AdActionEditAction extends BaseCookieAction{
 	
 	private String getSexName(String sex){
 		
+		if(StringUtils.isEmpty(sex)){
+			sex = "N";
+		}
+		
 		String sexName = "不分性別";
 		
 		switch (sex) {
