@@ -185,6 +185,7 @@ function selAllTime(){
 	$("#openTimeDetail").html('自訂播放時段');
 	$("[id*=checkbox]").attr("checked","checked");
 	$("[id*=selAll]").attr("checked","checked");
+	selectTime();
 }
 
 //選擇自訂時段播放
