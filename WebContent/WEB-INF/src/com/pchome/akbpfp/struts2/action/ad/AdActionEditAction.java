@@ -330,6 +330,8 @@ public class AdActionEditAction extends BaseCookieAction{
 		
 		if(StringUtils.isNotEmpty(adActionSex)){
 			pfpAdAction.setAdActionSex(adActionSex);
+		} else {
+			pfpAdAction.setAdActionSex(null);
 		}
 		pfpAdAction.setAdActionStartAge(Integer.parseInt(adActionStartAge));
 		pfpAdAction.setAdActionEndAge(Integer.parseInt(adActionEndAge));
