@@ -331,6 +331,8 @@ public class AdActionEditAction extends BaseCookieAction{
 		String oldSex = pfpAdAction.getAdActionSex();
 		if(StringUtils.isNotEmpty(adActionSex)){
 			pfpAdAction.setAdActionSex(adActionSex);
+		} else {
+			pfpAdAction.setAdActionSex(null);
 		}
 		
 		//性別改變記錄log
