@@ -337,7 +337,7 @@ public class AdActionEditAction extends BaseCookieAction{
 		
 		//性別改變記錄log
 		if(!StringUtils.equals(oldSex, adActionSex)){
-			String accesslogMessage_sex = "性別取向異動：" + getSexName(oldSex) + " => " + getSexName(adActionSex);
+			String accesslogMessage_sex = "廣告：" + adActionName + " " + adActionSeq + "，性別取向異動：" + getSexName(oldSex) + " => " + getSexName(adActionSex);
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_sex, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 		}
 		
@@ -349,7 +349,7 @@ public class AdActionEditAction extends BaseCookieAction{
 		
 		//年齡區間改變記錄log
 		if(!StringUtils.equals(String.valueOf(oldStartAge), adActionStartAge) || !StringUtils.equals(String.valueOf(oldEndAge), adActionEndAge)){
-			String accesslogMessage_age = "年齡區間異動：" + getAgeNote(oldStartAge,oldEndAge) + " => " + getAgeNote(Integer.parseInt(adActionStartAge),Integer.parseInt(adActionEndAge));
+			String accesslogMessage_age = "廣告：" + adActionName + " " + adActionSeq + "，年齡區間異動：" + getAgeNote(oldStartAge,oldEndAge) + " => " + getAgeNote(Integer.parseInt(adActionStartAge),Integer.parseInt(adActionEndAge));
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_age, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 		}
 		
@@ -406,7 +406,7 @@ public class AdActionEditAction extends BaseCookieAction{
 				!StringUtils.equals(oldWed, timeCode.substring(48,72)) || !StringUtils.equals(oldThu, timeCode.substring(72,96)) ||
 				!StringUtils.equals(oldFri, timeCode.substring(96,120)) || !StringUtils.equals(oldsat, timeCode.substring(120,144)) ||
 				!StringUtils.equals(oldSun, timeCode.substring(144))){
-			String accesslogMessage_time = "廣告播放時段異動：";
+			String accesslogMessage_time = "廣告：" + adActionName + " " + adActionSeq + "，廣告播放時段異動：";
 			accesslogMessage_time += getTimeNote(oldMon,oldTue,oldWed,oldThu,oldFri,oldsat,oldSun);
 			accesslogMessage_time += " => ";
 			accesslogMessage_time += getTimeNote(timeCode.substring(0,24),timeCode.substring(24,48),timeCode.substring(48,72),timeCode.substring(72,96),timeCode.substring(96,120),timeCode.substring(120,144),timeCode.substring(144));
