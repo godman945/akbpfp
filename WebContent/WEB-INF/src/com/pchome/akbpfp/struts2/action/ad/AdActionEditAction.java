@@ -328,7 +328,10 @@ public class AdActionEditAction extends BaseCookieAction{
 			}
 		}
 		
-		String oldSex = pfpAdAction.getAdActionSex();
+		String oldSex = "";
+		if(pfpAdAction.getAdActionSex() != null){
+			oldSex = pfpAdAction.getAdActionSex();
+		}
 		if(StringUtils.isNotEmpty(adActionSex)){
 			pfpAdAction.setAdActionSex(adActionSex);
 		} else {
