@@ -433,10 +433,6 @@ function showHighChart(){
     			    	   name: '女性',
     			    	   y: dataArray[1],
     			    	   color: "#ff5353"
-    			       }, {
-    			    	   name: '未知',
-    			    	   y: dataArray[2],
-    			    	   color: "#AAAAAA"
     			       }]
     		}],
     		legend: { //選單
@@ -458,7 +454,7 @@ function showHighChart(){
                 text: '<b>年齡層</b>'
             },
             xAxis: {
-                categories: ['18歲(不含)以下', '18歲~24歲', '25歲~34歲', '35歲~44歲', '45歲~54歲', '55歲~64歲', '65歲~74歲', '75歲以上', '未知'],
+                categories: ['18歲(不含)以下', '18歲~24歲', '25歲~34歲', '35歲~44歲', '45歲~54歲', '55歲~64歲', '65歲~74歲', '75歲以上', '不分年齡'],
                 title: {
                     text: null
                 }

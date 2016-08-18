@@ -109,7 +109,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		String pfpAdTypeSelect = pfdUserAdAccountRef.getPfdCustomerInfo().getPfpAdtypeSelect();
 		
 		//廣告播放類型下拉選項
-		String array[] = {pfpAdTypeSelect.substring(0,1),pfpAdTypeSelect.substring(4,5),pfpAdTypeSelect.substring(8,9)};
+		String array[] = {pfpAdTypeSelect.substring(8,9),pfpAdTypeSelect.substring(0,1),pfpAdTypeSelect.substring(4,5)};
 		int number = 0;
 		adTypeMap = new LinkedHashMap<String,String>();
 		for(EnumAdType enumAdType: EnumAdType.values()){
@@ -226,7 +226,7 @@ public class AdActionAddAction extends BaseCookieAction{
 			
 		} else {
 			adActionSeq = "";
-			adType = "0";
+			adType = "2";
 			adDevice = "0";
 		}
 		

@@ -18,10 +18,9 @@ public class BaseReportAction extends BaseSSLAction {
 	//就是 ad_type 前人用這名字
 	public Map<String, String> getAdShowWayMap() {
 		Map<String, String> map = new LinkedHashMap<String, String>();
-
-		for (EnumAdType adType : EnumAdType.values()) {
-			map.put(Integer.toString(adType.getType()), adType.getChName());
-		}
+		map.put("0", "全部");
+		map.put("1", "搜尋廣告");
+		map.put("2", "聯播網廣告");
 
 		return map;
 	}

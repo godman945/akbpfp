@@ -145,7 +145,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 								}
 								vo.setAge(ageName);
 								
-								String sexName = "未知";
+								String sexName = "不分性別";
 								if(StringUtils.endsWith(sex, "M")){
 									sexName = "男性";
 								} else if(StringUtils.endsWith(sex, "F")){

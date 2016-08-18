@@ -46,15 +46,15 @@
 	                </tr>
 	                <tr id="channelTr">
 	                	<th height="35">
-							<span class="t_s02">* </span>內容廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
+							<span class="t_s02">* </span>聯播網廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
 							<div id="shownotes2" style="visibility: hidden;" class="adnoticepop">
-								<h4>內容廣告出價 說明</h4>
+								<h4>聯播網廣告出價 說明</h4>
 								<div class="adpopcont">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
 								<a onclick="closenots(2)" style="cursor:pointer;" class="adpopclose">關閉</a>
 							</div>
 	                	</th>
 	                    <td>
-	                    	<b>內容廣告出價金額NT$<input type="text" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${adGroupChannelPrice!}" maxlength="6">，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span>，系統建議出價NT$ ${sysChannelPrice!} </b>
+	                    	<b>聯播網廣告出價金額NT$<input type="text" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${adGroupChannelPrice!}" maxlength="6">，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span>，系統建議出價NT$ ${sysChannelPrice!} </b>
 	                    	<div class="exp">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
 	                    </td>
 	                </tr>

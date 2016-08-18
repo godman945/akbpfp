@@ -96,7 +96,7 @@
             	</#if>
             </div>
             <div id="selectDetail" <#if openDetail == 'N' > style="display:none" </#if> >
-            	<h4>廣告進階設定</h4>
+            	<h4>廣告進階設定 <span class="t_s01">提醒您，選擇廣告進階設定會降低廣告觸及對象，使廣告曝光進而大幅減少。</span></h4>
             	<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
                 <tbody>
                     <tr>

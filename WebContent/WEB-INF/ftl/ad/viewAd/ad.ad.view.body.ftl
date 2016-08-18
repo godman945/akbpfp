@@ -50,7 +50,7 @@
 				<tbody>
 					<tr>
 						<td>
-							<select id="searchType" name="searchType" style="width:139px;" >
+							<select id="searchType" name="searchType" style="width:150px;" >
 								<#list searchAdType as adType>
 		                        	<#if adType.type == adGroup.pfpAdAction.adType >
 		                    		<option value="${adType.type!}">${adType.typeName!}</option>

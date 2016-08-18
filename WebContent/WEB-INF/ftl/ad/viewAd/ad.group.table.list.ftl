@@ -25,7 +25,7 @@
 		<th style="width:12%">搜尋廣告出價</th>
 		</#if>
 		<#if adType == '0' || adType == '2' >
-		<th style="width:12%">內容廣告出價</th>
+		<th style="width:13%">聯播網廣告出價</th>
 		</#if>
 		<th style="width:8%">曝光數</th>
 		<th style="width:8%">點選次數</th>	

@@ -2,9 +2,9 @@ package com.pchome.enumerate.ad;
 
 public enum EnumAdType {
 	
-	AD_ALL(0,"全部","搜尋廣告+內容廣告","觸及廣告族群最廣泛"),			// 全部廣告
-	AD_SEARCH(1,"搜尋廣告","搜尋廣告","PChome找東西搜尋和搜尋夥伴"),	// 搜尋廣告
-	AD_CHANNEL(2,"內容廣告","內容廣告","PChome的合作網站聯播網");		// 內容廣告
+	AD_CHANNEL(2,"聯播網廣告","聯播網廣告","PChome的合作網站聯播網"),		// 內容廣告
+	AD_ALL(0,"全部","搜尋廣告+聯播網廣告","觸及廣告族群最廣泛"),			// 全部廣告
+	AD_SEARCH(1,"搜尋廣告","搜尋廣告","PChome找東西搜尋和搜尋夥伴");	// 搜尋廣告
 	
 	private final int type;
 	private final String chName;
