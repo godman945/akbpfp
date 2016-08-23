@@ -149,7 +149,7 @@
                  </div>
                  <div>
                  	<#if adType == '0' || adType == '2' >
-                 	<div style="color:#ff3300;width:230px;float:left;"><b>僅支援內容廣告</b></div>
+                 	<div style="color:#ff3300;width:230px;float:left;"><b>僅支援聯播網廣告</b></div>
              		<#if adDevice == '0' || adDevice == '1' >
              		<div style="width:110px;float:left;">
              			<#if channelPCSizeList?size != 0>
