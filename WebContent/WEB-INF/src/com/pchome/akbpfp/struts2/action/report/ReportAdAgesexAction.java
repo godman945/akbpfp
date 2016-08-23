@@ -187,7 +187,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 				}
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 
-				total += vo.getAdClkSum().doubleValue();
+				//total += vo.getAdClkSum().doubleValue();
 				
 				if(StringUtils.equals(searchAgesex, "S")){
 					switch(sex) {
@@ -236,6 +236,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		}
 
 		if(StringUtils.equals(searchAgesex, "S")){
+			total = sexM + sexF;
 			if(total != 0){
 				sexM = Double.parseDouble(String.format("%.2f",(sexM/total)*100));
 				//sexF = Double.parseDouble(String.format("%.2f",(sexF/total)*100));
@@ -251,15 +252,16 @@ public class ReportAdAgesexAction extends BaseReportAction {
 				//dataList.add(new Double(0));
 			}
 		} else {
+			total = ageA + ageB + ageC + ageD + ageE + ageF + ageG + ageH;
 			if(total != 0){
-				dataList.add((ageA/(total - ageI))*100);
-				dataList.add((ageB/(total - ageI))*100);
-				dataList.add((ageC/(total - ageI))*100);
-				dataList.add((ageD/(total - ageI))*100);
-				dataList.add((ageE/(total - ageI))*100);
-				dataList.add((ageF/(total - ageI))*100);
-				dataList.add((ageG/(total - ageI))*100);
-				dataList.add((ageH/(total - ageI))*100);
+				dataList.add((ageA/total)*100);
+				dataList.add((ageB/total)*100);
+				dataList.add((ageC/total)*100);
+				dataList.add((ageD/total)*100);
+				dataList.add((ageE/total)*100);
+				dataList.add((ageF/total)*100);
+				dataList.add((ageG/total)*100);
+				dataList.add((ageH/total)*100);
 				//dataList.add((ageI/total)*100);	
 			} else {
 				dataList.add(new Double(0));
