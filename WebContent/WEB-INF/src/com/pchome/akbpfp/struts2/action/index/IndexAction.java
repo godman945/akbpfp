@@ -46,6 +46,8 @@ public class IndexAction extends BaseCookieAction {
 	private String qimg = "q01";
 	private InputStream msg;	// 回傳問題的答案使用
 	private String accountType;
+	private String akbpfdServer;
+	
 	public String execute() throws Exception{
 	    //判斷登入者使否取有小天使權限或PFD切換權限
 	    boolean pfpAngelFlag= false;
@@ -522,6 +524,12 @@ public class IndexAction extends BaseCookieAction {
 	    this.accountType = accountType;
 	}
 
-	
+	public void setAkbpfdServer(String akbpfdServer) {
+		this.akbpfdServer = akbpfdServer;
+	}
+
+	public String getAkbpfdServer() {
+		return akbpfdServer;
+	}
 
 }

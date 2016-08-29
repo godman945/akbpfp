@@ -16,6 +16,7 @@
     	<property name="faqServerMain" value="${faq.server.main}" />
     	<property name="faqServerGroup" value="${faq.server.group}" />
     	<property name="faqServerSolution" value="${faq.server.solution}" />
+    	<property name="akbpfdServer" value="${akbpfd.server}" />
     </bean>
     <!-- redirect -->
     <bean id="RedirectAction" class="com.pchome.akbpfp.struts2.action.index.RedirectAction" scope="prototype" >

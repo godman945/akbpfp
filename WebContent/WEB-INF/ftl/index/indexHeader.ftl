@@ -22,6 +22,7 @@
 		<#else>
 			<a href="<@s.url value="/" />login.html">登入</a>
 		</#if>
+	．<a href="${akbpfdServer}redirect.html" target="_blank">經銷商登入</a>
 	．<a href="http://4c.pchome.com.tw/ad/" target="_blank">廣告刊登</a>．<a href="http://www.pchome.com.tw" target="_blank">PChome</a>
 	</div>
 </div>
