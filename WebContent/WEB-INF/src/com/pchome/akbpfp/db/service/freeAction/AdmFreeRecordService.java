@@ -54,4 +54,13 @@ public class AdmFreeRecordService extends BaseService<AdmFreeRecord, Integer> im
 		return list;
 	}
 	
+	public AdmFreeRecord findUserRecord(String actionId, String customerInfoId){
+		List<AdmFreeRecord> list = ((IAdmFreeRecordDAO)dao).findUserRecord(actionId, customerInfoId);
+		
+		if(list.isEmpty()){
+			return null;
+		}else{
+			return list.get(0);
+		}
+	}
 }

@@ -22,4 +22,16 @@ public class AdmFreeRecordDAO extends BaseDAO<AdmFreeRecord, Integer> implements
 		return super.getHibernateTemplate().find(hql.toString(), ob);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<AdmFreeRecord> findUserRecord(String actionId, String customerInfoId){
+		StringBuffer hql = new StringBuffer();
+		hql.append(" from AdmFreeRecord ");
+		hql.append(" where admFreeAction.actionId = ? ");
+		hql.append(" and customerInfoId = ? ");
+		hql.append(" order by recordId desc ");
+		
+		Object[] ob = new Object[]{actionId,customerInfoId};
+		
+		return super.getHibernateTemplate().find(hql.toString(), ob);
+	}
 }

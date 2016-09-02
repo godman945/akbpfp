@@ -12,11 +12,14 @@
 	<!-- apply ajax -->
     <bean id="ApplyAjax" class="com.pchome.akbpfp.struts2.ajax.apply.ApplyAjax" scope="prototype" >
     	<property name="admFreeGiftService" ref="AdmFreeGiftService" />
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="admFreeRecordService" ref="AdmFreeRecordService" />
     </bean>
     
     <!-- apply ajax -->
     <bean id="AccountAjax" class="com.pchome.akbpfp.struts2.ajax.account.AccountAjax" scope="prototype" >
     	<property name="admFreeGiftService" ref="AdmFreeGiftService" />
+    	<property name="admFreeRecordService" ref="AdmFreeRecordService" />
     </bean>
     
     <!-- account user ajax -->

@@ -8,4 +8,6 @@ import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
 
 public interface IAdmFreeRecordDAO extends IBaseDAO<AdmFreeRecord, Integer>{
 	public List<AdmFreeRecord> findAccountFree(String customerInfoId, Date startDate, Date endDate);
+	
+	public List<AdmFreeRecord> findUserRecord(String actionId, String customerInfoId);
 }

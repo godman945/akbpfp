@@ -4,7 +4,11 @@ package com.pchome.akbpfp.struts2.ajax.apply;
 import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
+import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
+import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
+import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
+import com.pchome.akbpfp.db.service.freeAction.IAdmFreeRecordService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.freeAction.EnumGiftSnoPayment;
 import com.pchome.enumerate.freeAction.EnumGiftSnoStyle;
@@ -16,6 +20,8 @@ public class ApplyAjax extends BaseCookieAction{
 
 	private static final long serialVersionUID = -5195311542239203862L;
 	private IAdmFreeGiftService admFreeGiftService;
+	private IPfpCustomerInfoService pfpCustomerInfoService;
+	private IAdmFreeRecordService admFreeRecordService;
 	
 	private String url;
 	private int urlState;
@@ -62,6 +68,22 @@ public class ApplyAjax extends BaseCookieAction{
 		AdmFreeGift admFreeGift = admFreeGiftService.findAdmFreeGiftSno(giftSno);
 
 		if(admFreeGift != null){
+			String pfpCustomerInfoId = null;
+			if(StringUtils.isNotBlank(super.getCustomer_info_id())){
+				pfpCustomerInfoId = super.getCustomer_info_id();
+			} else {
+				// 取帳戶目前狀態
+				PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfoByMmeberId(super.getId_pchome());
+				
+				if(pfpCustomerInfo != null){
+					pfpCustomerInfoId = pfpCustomerInfo.getCustomerInfoId();
+				}
+			}
+			
+			AdmFreeRecord admFreeRecord = null;
+			if(StringUtils.equals(admFreeGift.getAdmFreeAction().getShared(), "Y") && pfpCustomerInfoId != null){
+				admFreeRecord = admFreeRecordService.findUserRecord(admFreeGift.getAdmFreeAction().getActionId(), pfpCustomerInfoId);
+			}
 			
 			String today = DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH);
 			String actionEndDate = DateValueUtil.getInstance().dateToString(admFreeGift.getAdmFreeAction().getActionEndDate());
@@ -71,7 +93,7 @@ public class ApplyAjax extends BaseCookieAction{
 
 			long early = DateValueUtil.getInstance().getDateDiffDay(actionStartDate, today);
 			
-			if(admFreeGift.getGiftSnoStatus().equals(EnumGiftSnoUsed.YES.getStatus())){
+			if(admFreeGift.getGiftSnoStatus().equals(EnumGiftSnoUsed.YES.getStatus()) || admFreeRecord != null){
 			/*if(admFreeGift.getCustomerInfoId() != null ||
 					admFreeGift.getOpenDate() != null ||
 					admFreeGift.getGiftSnoStatus().equals(EnumGiftSnoUsed.YES.getStatus())){*/
@@ -150,6 +172,14 @@ public class ApplyAjax extends BaseCookieAction{
 	public String getPayment() {
 		return payment;
 	}
-	
+
+	public void setPfpCustomerInfoService(
+			IPfpCustomerInfoService pfpCustomerInfoService) {
+		this.pfpCustomerInfoService = pfpCustomerInfoService;
+	}
+
+	public void setAdmFreeRecordService(IAdmFreeRecordService admFreeRecordService) {
+		this.admFreeRecordService = admFreeRecordService;
+	}
 	
 }

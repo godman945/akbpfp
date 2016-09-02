@@ -243,8 +243,16 @@ public class ApplyAction extends BaseSSLAction{
 		if(StringUtils.isNotBlank(giftSno)){
 			// 檢查活動序號
 			admFreeGift = admFreeGiftService.findUnusedAdmFreeGiftSno(giftSno, today,EnumGiftSnoStyle.REGISTER.getStatus());
-			log.info(">>> admFreeGiftId: "+admFreeGift);
-			
+			log.info(">>> admFreeGiftSno: "+admFreeGift.getGiftSno());
+			//檢查是否為共用序號
+			if(StringUtils.equals(admFreeGift.getAdmFreeAction().getShared(), "Y") && pfpCustomerInfo != null){
+				AdmFreeRecord userRecord = admFreeRecordService.findUserRecord(admFreeGift.getAdmFreeAction().getActionId(), pfpCustomerInfo.getCustomerInfoId());
+				
+				//若使用者已經使用過該組序號不得再重複用
+				if(userRecord != null){
+					admFreeGift = null;
+				}
+			}
 		}		
 		
 		if(pfpCustomerInfo == null){
@@ -306,11 +314,16 @@ public class ApplyAction extends BaseSSLAction{
 			
 			// 更新序號使用狀態(未付款狀態先未啟用)
 			if(admFreeGift != null){
-				admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
-				admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
-				admFreeGift.setUpdateDate(today);
-				admFreeGift.setOrderId(orderId);
-				admFreeGiftService.update(admFreeGift);
+				String shared = admFreeGift.getAdmFreeAction().getShared();
+				
+				//判斷活動是不是共用序號，不是則寫入資料到該筆序號
+				if(!StringUtils.equals(shared, "Y")){
+					admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+					admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
+					admFreeGift.setUpdateDate(today);
+					admFreeGift.setOrderId(orderId);
+					admFreeGiftService.update(admFreeGift);
+				}
 			}
 			
 			// 轉址至金流儲值  		
@@ -345,11 +358,16 @@ public class ApplyAction extends BaseSSLAction{
 				pfpUserService.saveOrUpdate(user);				
 				
 				// 更新序號使用狀態
-				admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
-				admFreeGift.setOpenDate(today);
-				admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
-				admFreeGift.setUpdateDate(today);
-				admFreeGiftService.update(admFreeGift);
+				String shared = admFreeGift.getAdmFreeAction().getShared();
+				
+				//判斷活動是不是共用序號，不是則寫入資料到該筆序號
+				if(!StringUtils.equals(shared, "Y")){
+					admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+					admFreeGift.setOpenDate(today);
+					admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
+					admFreeGift.setUpdateDate(today);
+					admFreeGiftService.update(admFreeGift);
+				}
 				
 				// 參與活動記錄
 				AdmFreeRecord admFreeRecord = new AdmFreeRecord();

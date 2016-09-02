@@ -80,4 +80,18 @@ public class AdmFreeGiftDAO extends BaseDAO<AdmFreeGift, Integer> implements IAd
 		
 		return super.getHibernateTemplate().find(hql.toString(), list.toArray());
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AdmFreeGift> findAdmFreeGiftBySno(String giftSno) {
+		
+		StringBuffer hql = new StringBuffer();
+		List<Object> list = new ArrayList<Object>();
+		
+		hql.append(" from AdmFreeGift ");
+		hql.append(" where giftSno = ? ");
+			
+		list.add(giftSno);
+		
+		return super.getHibernateTemplate().find(hql.toString(), list.toArray());
+	}
 }

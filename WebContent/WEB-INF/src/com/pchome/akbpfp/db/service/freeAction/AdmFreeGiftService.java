@@ -49,4 +49,14 @@ public class AdmFreeGiftService extends BaseService<AdmFreeGift, Integer> implem
 			return list.get(0);
 		}
 	}
+	
+	public AdmFreeGift findAdmFreeGiftBySno(String giftSno) {
+		List<AdmFreeGift> list = ((IAdmFreeGiftDAO)dao).findAdmFreeGiftBySno(giftSno);
+		
+		if(list.isEmpty()){
+			return null;
+		}else{
+			return list.get(0);
+		}
+	}
 }

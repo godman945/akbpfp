@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.pchome.akbpfp.api.ControlPriceAPI;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
@@ -118,7 +120,7 @@ public class OrderAPIAction extends BaseCookieAction{
 		
 		if(order != null){
 			
-			AdmFreeGift admFreeGift = admFreeGiftService.findAdmFreeGiftSnoByOrderId(orderId);
+			AdmFreeGift admFreeGift = admFreeGiftService.findAdmFreeGiftBySno(order.getGiftSno());
 			
 			if(action.equals(EnumBillingStatus.B301.toString()) || action.equals(EnumBillingStatus.B302.toString())){
 				// 交易成功
@@ -144,10 +146,15 @@ public class OrderAPIAction extends BaseCookieAction{
 						giftMoney = admFreeGift.getAdmFreeAction().getGiftMoney();
 						
 						// 更新廣告金序號明細(寫入啟用日期)
-						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
-						admFreeGift.setOpenDate(today);
-						admFreeGift.setUpdateDate(today);
-						admFreeGiftService.update(admFreeGift);
+						String shared = admFreeGift.getAdmFreeAction().getShared();
+						
+						//判斷活動是不是共用序號，不是則寫入資料到該筆序號
+						if(!StringUtils.equals(shared, "Y")){
+							admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
+							admFreeGift.setOpenDate(today);
+							admFreeGift.setUpdateDate(today);
+							admFreeGiftService.update(admFreeGift);
+						}
 						
 						// 參與活動記錄
 						AdmFreeRecord admFreeRecord = new AdmFreeRecord();
@@ -195,6 +202,7 @@ public class OrderAPIAction extends BaseCookieAction{
 			
 			//非交易成功要修改廣告金序號明細
 			if(admFreeGift != null){
+				String shared = admFreeGift.getAdmFreeAction().getShared();
 				//非B101狀況下
 				if(!action.equals(EnumBillingStatus.B101.toString())){
 					//付款失敗情況下
@@ -203,17 +211,23 @@ public class OrderAPIAction extends BaseCookieAction{
 							action.equals(EnumBillingStatus.B405.toString()) ||action.equals(EnumBillingStatus.B406.toString()) ||
 							action.equals(EnumBillingStatus.B407.toString()) ||action.equals(EnumBillingStatus.B408.toString())){
 						// 恢復廣告金序號明細為未使用
-						admFreeGift.setCustomerInfoId(null);
-						admFreeGift.setOpenDate(null);
-						admFreeGift.setOrderId(null);
-						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
-						admFreeGift.setUpdateDate(today);
-						admFreeGiftService.update(admFreeGift);
+						//判斷活動是不是共用序號，不是則寫入資料到該筆序號
+						if(!StringUtils.equals(shared, "Y")){
+							admFreeGift.setCustomerInfoId(null);
+							admFreeGift.setOpenDate(null);
+							admFreeGift.setOrderId(null);
+							admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
+							admFreeGift.setUpdateDate(today);
+							admFreeGiftService.update(admFreeGift);
+						}
 					} else {
 						// 更新廣告金序號明細使用狀態
-						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
-						admFreeGift.setUpdateDate(today);
-						admFreeGiftService.update(admFreeGift);
+						//判斷活動是不是共用序號，不是則寫入資料到該筆序號
+						if(!StringUtils.equals(shared, "Y")){
+							admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
+							admFreeGift.setUpdateDate(today);
+							admFreeGiftService.update(admFreeGift);
+						}
 					}
 				}	
 			}

@@ -5,8 +5,7 @@ import java.util.Date;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pchome.akbpfp.api.CookieContentAPI;
-import com.pchome.akbpfp.api.CookieProccessAPI;
+
 import com.pchome.akbpfp.api.RedirectBillingAPI;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
@@ -16,7 +15,6 @@ import com.pchome.akbpfp.db.pojo.PfpOrderDetail;
 import com.pchome.akbpfp.db.pojo.PfpOrderDetailId;
 import com.pchome.akbpfp.db.pojo.PfpTransDetail;
 import com.pchome.akbpfp.db.pojo.PfpUser;
-import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
 import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.bill.IPfpTransDetailService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
@@ -107,6 +105,16 @@ public class AccountRemainAction extends BaseSSLAction{
 		
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		
+		//檢查是否為共用序號
+		if(StringUtils.equals(admFreeGift.getAdmFreeAction().getShared(), "Y") && pfpCustomerInfo != null){
+			AdmFreeRecord userRecord = admFreeRecordService.findUserRecord(admFreeGift.getAdmFreeAction().getActionId(), pfpCustomerInfo.getCustomerInfoId());
+			
+			//若使用者已經使用過該組序號不得再重複用
+			if(userRecord != null){
+				admFreeGift = null;
+			}
+		}
+		
 		//禮金序號為要儲值或無禮金序號時
 		if(admFreeGift == null || admFreeGift.getAdmFreeAction().getPayment().equals(EnumGiftSnoPayment.YES.getStatus())){
 			if(addMoney >= EnumSaveMoney.Default.getMin()){
@@ -124,11 +132,16 @@ public class AccountRemainAction extends BaseSSLAction{
 				
 				// 更新序號使用狀態(未付款狀態先未啟用)
 				if(admFreeGift != null){
-					admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
-					admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
-					admFreeGift.setUpdateDate(today);
-					admFreeGift.setOrderId(orderId);
-					admFreeGiftService.update(admFreeGift);
+					String shared = admFreeGift.getAdmFreeAction().getShared();
+					
+					//判斷活動是不是共用序號，不是則寫入資料到該筆序號
+					if(!StringUtils.equals(shared, "Y")){
+						admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
+						admFreeGift.setUpdateDate(today);
+						admFreeGift.setOrderId(orderId);
+						admFreeGiftService.update(admFreeGift);
+					}
 					
 					String dataGiftSno = admFreeGift.getGiftSno();
 					float dataGiftMoney = admFreeGift.getAdmFreeAction().getGiftMoney();
@@ -174,11 +187,16 @@ public class AccountRemainAction extends BaseSSLAction{
 			pfpCustomerInfoService.saveOrUpdate(pfpCustomerInfo);
 			
 			// 更新序號使用狀態
-			admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
-			admFreeGift.setOpenDate(today);
-			admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
-			admFreeGift.setUpdateDate(today);
-			admFreeGiftService.update(admFreeGift);
+			String shared = admFreeGift.getAdmFreeAction().getShared();
+			
+			//判斷活動是不是共用序號，不是則寫入資料到該筆序號
+			if(!StringUtils.equals(shared, "Y")){
+				admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+				admFreeGift.setOpenDate(today);
+				admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
+				admFreeGift.setUpdateDate(today);
+				admFreeGiftService.update(admFreeGift);
+			}
 			
 			// 參與活動記錄
 			AdmFreeRecord admFreeRecord = new AdmFreeRecord();

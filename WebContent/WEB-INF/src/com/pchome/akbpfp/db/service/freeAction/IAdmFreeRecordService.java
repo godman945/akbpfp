@@ -10,4 +10,5 @@ public interface IAdmFreeRecordService extends IBaseService<AdmFreeRecord, Integ
 
 	public List<AdmFreeVO> findAccountFree(String customerInfoId, String startDate, String endDate);
 	
+	public AdmFreeRecord findUserRecord(String actionId, String customerInfoId);
 }

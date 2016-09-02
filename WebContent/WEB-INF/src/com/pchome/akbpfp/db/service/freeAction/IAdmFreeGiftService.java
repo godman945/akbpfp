@@ -15,4 +15,6 @@ public interface IAdmFreeGiftService extends IBaseService<AdmFreeGift, Integer> 
 	public AdmFreeGift findAdmFreeGiftSnoByOrderId(String orderId);
 	// 確認使用者是否已有使用過該活動的序號
 	public AdmFreeGift findUsedHistory(String actionId, String customerInfoId);
+	// 依序號找廣告金序號
+	public AdmFreeGift findAdmFreeGiftBySno(String giftSno);
 }
