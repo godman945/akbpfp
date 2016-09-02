@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/7/14 �W�� 11:01:55 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/9/2 �W�� 10:32:07 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -24,6 +24,7 @@ public class AdmFreeAction implements java.io.Serializable {
 	private String actionId;
 	private String actionName;
 	private String payment;
+	private String shared;
 	private String giftStyle;
 	private float giftCondition;
 	private float giftMoney;
@@ -53,14 +54,15 @@ public class AdmFreeAction implements java.io.Serializable {
 	}
 
 	public AdmFreeAction(String actionId, String actionName, String payment,
-			String giftStyle, float giftCondition, float giftMoney,
-			Date actionStartDate, Date actionEndDate, Date inviledDate,
-			String retrievedFlag, String note, Date updateDate,
-			Date createDate, Set<AdmFreeGift> admFreeGifts,
+			String shared, String giftStyle, float giftCondition,
+			float giftMoney, Date actionStartDate, Date actionEndDate,
+			Date inviledDate, String retrievedFlag, String note,
+			Date updateDate, Date createDate, Set<AdmFreeGift> admFreeGifts,
 			Set<AdmFreeRecord> admFreeRecords) {
 		this.actionId = actionId;
 		this.actionName = actionName;
 		this.payment = payment;
+		this.shared = shared;
 		this.giftStyle = giftStyle;
 		this.giftCondition = giftCondition;
 		this.giftMoney = giftMoney;
@@ -101,6 +103,15 @@ public class AdmFreeAction implements java.io.Serializable {
 
 	public void setPayment(String payment) {
 		this.payment = payment;
+	}
+
+	@Column(name = "shared", length = 1)
+	public String getShared() {
+		return this.shared;
+	}
+
+	public void setShared(String shared) {
+		this.shared = shared;
 	}
 
 	@Column(name = "gift_style", length = 1)
