@@ -1,12 +1,16 @@
 package com.pchome.soft.depot.utils;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.Character.UnicodeBlock;
 import java.net.IDN;
 import java.net.URI;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -217,7 +221,21 @@ public class HttpUtil {
 		statusCode = client.execute(httpget).getStatusLine()
 			.getStatusCode();
 	    } catch (Exception e) {
-		log.error(e.getMessage(), e);
+	    	log.error(e.getMessage(), e);
+			URLConnection connection = new URL(url).openConnection();
+			connection.setRequestProperty("User-Agent",
+					"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+			connection.connect();
+			BufferedReader r = new BufferedReader(
+					new InputStreamReader(connection.getInputStream(), Charset.forName("UTF-8")));
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = r.readLine()) != null) {
+				sb.append(line);
+			}
+			if(sb != null){
+				statusCode = 200;
+			}
 	    } finally {
 		httpget.abort();
 		closeExpiredConns();
