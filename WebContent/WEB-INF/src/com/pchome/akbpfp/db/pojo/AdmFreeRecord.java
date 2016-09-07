@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/9/2 �W�� 10:32:07 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/9/7 �U�� 05:32:40 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -25,6 +25,7 @@ public class AdmFreeRecord implements java.io.Serializable {
 	private Integer recordId;
 	private AdmFreeAction admFreeAction;
 	private String customerInfoId;
+	private String orderId;
 	private Date recordDate;
 	private Date updateDate;
 	private Date createDate;
@@ -36,6 +37,16 @@ public class AdmFreeRecord implements java.io.Serializable {
 			Date recordDate, Date updateDate, Date createDate) {
 		this.admFreeAction = admFreeAction;
 		this.customerInfoId = customerInfoId;
+		this.recordDate = recordDate;
+		this.updateDate = updateDate;
+		this.createDate = createDate;
+	}
+
+	public AdmFreeRecord(AdmFreeAction admFreeAction, String customerInfoId,
+			String orderId, Date recordDate, Date updateDate, Date createDate) {
+		this.admFreeAction = admFreeAction;
+		this.customerInfoId = customerInfoId;
+		this.orderId = orderId;
 		this.recordDate = recordDate;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
@@ -69,6 +80,15 @@ public class AdmFreeRecord implements java.io.Serializable {
 
 	public void setCustomerInfoId(String customerInfoId) {
 		this.customerInfoId = customerInfoId;
+	}
+
+	@Column(name = "order_id", length = 20)
+	public String getOrderId() {
+		return this.orderId;
+	}
+
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
 	}
 
 	@Temporal(TemporalType.DATE)

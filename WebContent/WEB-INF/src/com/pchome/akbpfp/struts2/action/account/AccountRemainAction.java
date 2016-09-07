@@ -106,12 +106,14 @@ public class AccountRemainAction extends BaseSSLAction{
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		
 		//檢查是否為共用序號
-		if(StringUtils.equals(admFreeGift.getAdmFreeAction().getShared(), "Y") && pfpCustomerInfo != null){
-			AdmFreeRecord userRecord = admFreeRecordService.findUserRecord(admFreeGift.getAdmFreeAction().getActionId(), pfpCustomerInfo.getCustomerInfoId());
-			
-			//若使用者已經使用過該組序號不得再重複用
-			if(userRecord != null){
-				admFreeGift = null;
+		if(StringUtils.isNotBlank(giftSno)){
+			if(StringUtils.equals(admFreeGift.getAdmFreeAction().getShared(), "Y") && pfpCustomerInfo != null){
+				AdmFreeRecord userRecord = admFreeRecordService.findUserRecord(admFreeGift.getAdmFreeAction().getActionId(), pfpCustomerInfo.getCustomerInfoId());
+				
+				//若使用者已經使用過該組序號不得再重複用
+				if(userRecord != null){
+					admFreeGift = null;
+				}
 			}
 		}
 		
