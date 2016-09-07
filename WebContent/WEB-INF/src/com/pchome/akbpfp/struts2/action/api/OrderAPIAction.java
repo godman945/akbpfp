@@ -160,6 +160,7 @@ public class OrderAPIAction extends BaseCookieAction{
 						AdmFreeRecord admFreeRecord = new AdmFreeRecord();
 						admFreeRecord.setAdmFreeAction(admFreeGift.getAdmFreeAction());
 						admFreeRecord.setCustomerInfoId(customerInfo.getCustomerInfoId());
+						admFreeRecord.setOrderId(orderId);
 						admFreeRecord.setRecordDate(today);
 						admFreeRecord.setUpdateDate(today);
 						admFreeRecord.setCreateDate(today);

@@ -46,7 +46,10 @@
 	});
 	
 	$("#save").click(function(){
-		
+		var msg =$("#showMoney").text();
+		if(msg != ""){
+			return false;
+		}
 		//取得驗證回傳值
 		if($("#addMoneyForm").valid() == 1){
 			$('#addMoneyForm').submit();

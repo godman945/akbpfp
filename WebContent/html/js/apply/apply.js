@@ -167,6 +167,11 @@
 			
 			checkGiftSno();
 			
+			var msg =$("#showMoney").text();
+			if(msg != ""){
+				return false;
+			}
+			
 			if($("#registerForm").valid() == 1){
 				
 				var urlAddress = $("#urlAddress").val();
