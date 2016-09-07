@@ -1,4 +1,5 @@
-﻿$(document).ready(function(){
+﻿var freeBoolean = true;
+$(document).ready(function(){
 	
 	// validate field
 	$("#registerForm").validate({
@@ -69,8 +70,7 @@
 			
 			checkGiftSno();
 			
-			var msg =$("#showMoney").text();
-			if(msg != ""){
+			if(!freeBoolean){
 				return false;
 			}
 			
@@ -115,14 +115,19 @@ function checkGift(){
 			
 			if(response.giftStatus == "used"){
 				$("#showMoney").text("此序號已使用");
+				freeBoolean = false;
 			}else if(response.giftStatus == "expired"){
 				$("#showMoney").text("此序號逾時已失效");
+				freeBoolean = false;
 			}else if(response.giftStatus == "expired"){
 				$("#showMoney").text("此序號不可在註冊時使用");
+				freeBoolean = false;
 			}else if(response.giftStatus == "errStyle"){
 				$("#showMoney").text("此序號不可在註冊時使用");
+				freeBoolean = false;
 			}else if(response.giftStatus == null){
 				$("#showMoney").text("此序號不存在，請輸入正確序號");
+				freeBoolean = false;
 			}else if(response.giftStatus == "unused"){
 				$("#addMoney").attr("readonly", "true");
 				$("#giftSno").attr("readonly", "true");
@@ -131,6 +136,7 @@ function checkGift(){
 				$("#giftMoney").val(response.giftMoney);
 				$("#addTax").html(response.addTax);
 				$("#total").html(response.addTotal);
+				freeBoolean = true;
 				
 				if(response.payment == "N"){
 					$("#addMoneyDiv").hide();
@@ -158,6 +164,7 @@ function clearGift(){
 	var total = Math.round(1000 * 1.05);	
 	$("#addTax").html(addTax);
 	$("#total").html(total);
+	freeBoolean = true;
 }
 
 function FormatNumber(n) { 
