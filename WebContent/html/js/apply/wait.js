@@ -53,7 +53,7 @@ $(document).ready(function(){
 	// 同意條款
 	$("#accept").click(function() {
 
-		   if($("#accept").attr("checked")){
+		   if($("#accept").attr("checked")  && freeBoolean){
 			   $("#save").attr("disabled",false);
 		   }else{
 			   $("#save").attr("disabled",true);
