@@ -126,106 +126,118 @@
                         	</#if>
                         	</span>
                         	<div style="display:none;"  id="selectTimeDiv">
-                        		<div class="noticepop" style="width:auto;"><h4>自訂播放時段</h4><div>
-                        		<table style="font-size:16px;" cellspacing="5 20 5 20" >
-                        			<thead bgcolor="#F8E0E0" >
+                        		<div class="noticepop" style="width:836px;"><h4>自訂播放時段</h4><div>
+                        		<table class="tmselectpop" cellspacing="0" >
+                        			<thead >
                         				<tr>
-	                        				<th rowspan="2" align="center" >時間</th>
-	                        				<th rowspan="2" align="center" >全<br/>時<br/>段</th>
-	                        				<th colspan="3" align="center" >上午</th>
-	                        				<th colspan="3" align="center" >下午</th>
+	                        				<th class="timeall" rowspan="2" align="center" >時段全選</th>
+	                        				<th class="timeam" colspan="3" align="center" style="border-right: 1px solid #c4c4c4;">上午&nbsp;&nbsp;<u>(00:00~11:59)</u></th>
+	                        				<th class="timeam" colspan="3" align="center" >下午&nbsp;&nbsp;<u>(12:00~23:59)</u></th>
 	                        			</tr>
 	                        			<tr>
-	                        				<th align="center">
-	                        					<span style="width:21%; display:inline-block;">12</span>
-												<span style="width:21%; display:inline-block;">1</span>
-												<span style="width:21%; display:inline-block;">2</span>
-												<span style="width:21%; display:inline-block;">3</span>
-		                        				<br/>
-		                        				<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox"  id="selAllTime00" name="selAllTime00" onchange="selAllTimeCheckbox('00')" />
-			                        				<input type="checkbox"  id="selAllTime01" name="selAllTime01" onchange="selAllTimeCheckbox('01')" />
-			                        				<input type="checkbox"  id="selAllTime02" name="selAllTime02" onchange="selAllTimeCheckbox('02')" />
-			                        				<input type="checkbox"  id="selAllTime03" name="selAllTime03" onchange="selAllTimeCheckbox('03')" />
-		                        				</div>
-	                        				</th>
-	                        				<th align="center">
-	                        					<span style="width:21%; display:inline-block;">4</span>
-												<span style="width:21%; display:inline-block;">5</span>
-												<span style="width:21%; display:inline-block;">6</span>
-												<span style="width:21%; display:inline-block;">7</span>
-	                        					<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox"  id="selAllTime04" name="selAllTime04" onchange="selAllTimeCheckbox('04')" />
-			                        				<input type="checkbox"  id="selAllTime05" name="selAllTime05" onchange="selAllTimeCheckbox('05')" />
-			                        				<input type="checkbox"  id="selAllTime06" name="selAllTime06" onchange="selAllTimeCheckbox('06')" />
-			                        				<input type="checkbox"  id="selAllTime07" name="selAllTime07" onchange="selAllTimeCheckbox('07')" />
-		                        				</div>
-	                        				</th>
-	                        				<th align="center">
-	                        					<span style="width:21%; display:inline-block;">8</span>
-												<span style="width:21%; display:inline-block;">9</span>
-												<span style="width:21%; display:inline-block;">10</span>
-												<span style="width:21%; display:inline-block;">11</span>
-	                        					<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox"  id="selAllTime08" name="selAllTime08" onchange="selAllTimeCheckbox('08')" />
-			                        				<input type="checkbox"  id="selAllTime09" name="selAllTime09" onchange="selAllTimeCheckbox('09')" />
-			                        				<input type="checkbox"  id="selAllTime10" name="selAllTime10" onchange="selAllTimeCheckbox('10')" />
-			                        				<input type="checkbox"  id="selAllTime11" name="selAllTime11" onchange="selAllTimeCheckbox('11')" />
-		                        				</div>
-	                        				</th>
-	                        				<th align="center">
-	                        					<span style="width:21%; display:inline-block;">12</span>
-												<span style="width:21%; display:inline-block;">1</span>
-												<span style="width:21%; display:inline-block;">2</span>
-												<span style="width:21%; display:inline-block;">3</span>
-	                        					<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox"  id="selAllTime12" name="selAllTime12" onchange="selAllTimeCheckbox('12')" />
-			                        				<input type="checkbox"  id="selAllTime13" name="selAllTime13" onchange="selAllTimeCheckbox('13')" />
-			                        				<input type="checkbox"  id="selAllTime14" name="selAllTime14" onchange="selAllTimeCheckbox('14')" />
-			                        				<input type="checkbox"  id="selAllTime15" name="selAllTime15" onchange="selAllTimeCheckbox('15')" />
-		                        				</div>
-	                        				</th>
-	                        				<th align="center">
-	                        					<span style="width:21%; display:inline-block;">4</span>
-												<span style="width:21%; display:inline-block;">5</span>
-												<span style="width:21%; display:inline-block;">6</span>
-												<span style="width:21%; display:inline-block;">7</span>
-	                        					<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox"  id="selAllTime16" name="selAllTime16" onchange="selAllTimeCheckbox('16')" />
-			                        				<input type="checkbox"  id="selAllTime17" name="selAllTime17" onchange="selAllTimeCheckbox('17')" />
-			                        				<input type="checkbox"  id="selAllTime18" name="selAllTime18" onchange="selAllTimeCheckbox('18')" />
-			                        				<input type="checkbox"  id="selAllTime19" name="selAllTime19" onchange="selAllTimeCheckbox('19')" />
-		                        				</div>
-	                        				</th>
-	                        				<th align="center">
-	                        					<span style="width:21%; display:inline-block;">8</span>
-												<span style="width:21%; display:inline-block;">9</span>
-												<span style="width:21%; display:inline-block;">10</span>
-												<span style="width:21%; display:inline-block;">11</span>
-	                        					<div style="word-spacing: -0.25em;">
-			                        				<input type="checkbox"  id="selAllTime20" name="selAllTime20" onchange="selAllTimeCheckbox('20')" />
-			                        				<input type="checkbox"  id="selAllTime21" name="selAllTime21" onchange="selAllTimeCheckbox('21')" />
-			                        				<input type="checkbox"  id="selAllTime22" name="selAllTime22" onchange="selAllTimeCheckbox('22')" />
-			                        				<input type="checkbox"  id="selAllTime23" name="selAllTime23" onchange="selAllTimeCheckbox('23')" />
-		                        				</div>
-	                        				</th>
-                        				</tr>
+                                            <th align="center" style="border-bottom: 1px solid #c4c4c4;">
+                                            <div>
+                                                    <input type="checkbox" id="selAllTime00" name="selAllTime00" onchange="selAllTimeCheckbox('00')">
+                                                    <input type="checkbox" id="selAllTime01" name="selAllTime01" onchange="selAllTimeCheckbox('01')">
+                                                    <input type="checkbox" id="selAllTime02" name="selAllTime02" onchange="selAllTimeCheckbox('02')">
+                                                    <input type="checkbox" id="selAllTime03" name="selAllTime03" onchange="selAllTimeCheckbox('03')">
+                                                </div>
+                                                <span class="tclock01">00</span>
+                                                <span class="tclock01">01</span>
+                                                <span class="tclock01">02</span>
+                                                <span class="tclock01">03</span>
+                                                <br>
+
+                                            </th>
+                                            <th align="center" style="border-bottom: 1px solid #c4c4c4;">
+                                            <div>
+                                                    <input type="checkbox" id="selAllTime04" name="selAllTime04" onchange="selAllTimeCheckbox('04')">
+                                                    <input type="checkbox" id="selAllTime05" name="selAllTime05" onchange="selAllTimeCheckbox('05')">
+                                                    <input type="checkbox" id="selAllTime06" name="selAllTime06" onchange="selAllTimeCheckbox('06')">
+                                                    <input type="checkbox" id="selAllTime07" name="selAllTime07" onchange="selAllTimeCheckbox('07')">
+                                                </div>
+                                                <span class="tclock01">04</span>
+                                                <span class="tclock01">05</span>
+                                                <span class="tclock01">06</span>
+                                                <span class="tclock01">07</span>
+
+                                            </th>
+                                            <th align="center" style="border-right: 1px solid #c4c4c4;border-bottom: 1px solid #c4c4c4;">
+                                            <div>
+                                                    <input type="checkbox" id="selAllTime08" name="selAllTime08" onchange="selAllTimeCheckbox('08')">
+                                                    <input type="checkbox" id="selAllTime09" name="selAllTime09" onchange="selAllTimeCheckbox('09')">
+                                                    <input type="checkbox" id="selAllTime10" name="selAllTime10" onchange="selAllTimeCheckbox('10')">
+                                                    <input type="checkbox" id="selAllTime11" name="selAllTime11" onchange="selAllTimeCheckbox('11')">
+                                                </div>
+                                                <span class="tclock01">08</span>
+                                                <span class="tclock01">09</span>
+                                                <span class="tclock01">10</span>
+                                                <span class="tclock01">11</span>
+
+                                            </th>
+                                            <th align="center" style="border-bottom: 1px solid #c4c4c4;">
+                                            <div>
+                                                    <input type="checkbox" id="selAllTime12" name="selAllTime12" onchange="selAllTimeCheckbox('12')">
+                                                    <input type="checkbox" id="selAllTime13" name="selAllTime13" onchange="selAllTimeCheckbox('13')">
+                                                    <input type="checkbox" id="selAllTime14" name="selAllTime14" onchange="selAllTimeCheckbox('14')">
+                                                    <input type="checkbox" id="selAllTime15" name="selAllTime15" onchange="selAllTimeCheckbox('15')">
+                                                </div>
+                                                <span class="tclock02">12</span>
+                                                <span class="tclock02">13</span>
+                                                <span class="tclock02">14</span>
+                                                <span class="tclock02">15</span>
+
+                                            </th>
+                                            <th align="center" style="border-bottom: 1px solid #c4c4c4;">
+                                            <div>
+                                                    <input type="checkbox" id="selAllTime16" name="selAllTime16" onchange="selAllTimeCheckbox('16')">
+                                                    <input type="checkbox" id="selAllTime17" name="selAllTime17" onchange="selAllTimeCheckbox('17')">
+                                                    <input type="checkbox" id="selAllTime18" name="selAllTime18" onchange="selAllTimeCheckbox('18')">
+                                                    <input type="checkbox" id="selAllTime19" name="selAllTime19" onchange="selAllTimeCheckbox('19')">
+                                                </div>
+                                                <span class="tclock02">16</span>
+                                                <span class="tclock02">17</span>
+                                                <span class="tclock02">18</span>
+                                                <span class="tclock02">19</span>
+
+                                            </th>
+                                            <th align="center" style="border-bottom: 1px solid #c4c4c4;">
+                                             <div>
+                                                    <input type="checkbox" id="selAllTime20" name="selAllTime20" onchange="selAllTimeCheckbox('20')">
+                                                    <input type="checkbox" id="selAllTime21" name="selAllTime21" onchange="selAllTimeCheckbox('21')">
+                                                    <input type="checkbox" id="selAllTime22" name="selAllTime22" onchange="selAllTimeCheckbox('22')">
+                                                    <input type="checkbox" id="selAllTime23" name="selAllTime23" onchange="selAllTimeCheckbox('23')">
+                                                </div>
+                                                <span class="tclock02">20</span>
+                                                <span class="tclock02">21</span>
+                                                <span class="tclock02">22</span>
+                                                <span class="tclock02">23</span>
+
+                                            </th>
+                                        </tr>
                         			</thead>
                         			<tbody>
                         				<#assign day = ['星期一','星期二','星期三','星期四','星期五','星期六','星期日']>
                         				<#assign index = 1>
+                        				<#assign index2 = 0>
                         				<#assign seq = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23']>
                         				<#list day as selDay>
 	                        				<tr>
-	                        					<td align="center">${selDay}</td>
-	                        					<td align="center"><input type="checkbox"  id="selAll${index}" name="selAll${index}" onchange="selAllCheckbox(${index})" /></td>
+	                        					<td align="center">
+	                        						<input type="checkbox"  id="selAll${index}" name="selAll${index}" onchange="selAllCheckbox(${index})" />
+	                        						${selDay}
+	                        					</td>
 	                        					<#list seq?chunk(4) as row> 
-												<td align="center"> 
-												<#list row as cell><input type="checkbox"  id="checkbox${index}${cell}" name="checkbox${index}${cell}" onchange="selCheckbox(${index}${cell})" ${timeCodeMap[index + cell]} /></#list>
+												<td align="center" class="<#if index2/4 <= 2><#if index%2 == 1>time_ambg01<#else>time_ambg02</#if><#else><#if index%2 == 1>time_pmbg01<#else>time_pmbg02</#if></#if>"> 
+												<#list row as cell>
+													<input type="checkbox"  id="checkbox${index}${cell}" name="checkbox${index}${cell}" onchange="selCheckbox(${index}${cell})" ${timeCodeMap[index + cell]} />
+													<#assign index2 = index2 + 1>
+												</#list>
 												</td> 
 												</#list>
 	                        				</tr>
 	                        				<#assign index = index + 1>
+	                        				<#assign index2 = 0>
                         				</#list>
                         			</tbody>
                         		</table>

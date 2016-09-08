@@ -57,16 +57,16 @@ h2 span{font-size:12px;color:#626262;font-weight:normal;margin-left:5px}
 .cal img{margin:5px 0 0 0}
 
 .cala{
-	position: absolute;
-	z-index: 10;
-	margin: 0;
-	width: 95%;
-	text-align: right;
-	font-size: 13px;
-	color: #666;
-	font-weight: normal;
-	left: 18px;
-	top: 189px;
+    position: absolute;
+    z-index: 10;
+    margin: 0;
+    width: 95%;
+    text-align: right;
+    font-size: 13px;
+    color: #666;
+    font-weight: normal;
+    left: 18px;
+    top: 189px;
 }
 .cala input{width:150px;}
 .cala img{margin:5px 0 0 0}
@@ -141,7 +141,7 @@ text-align:left;}
 .adpreview h1{font-size:15px;color:#000;margin:0;line-heighgt:23px}
 .adpreview .ads{font-size:11px;color:#999}
 .boxpreview h5{color: #888888;font-size: 15px; line-height: 26px; margin: 0 auto;text-align: center;
-	font-weight:bold}
+    font-weight:bold}
 .boxpreview h5 a{font-size:12px;font-weight:400;}
 .pages{float:right;line-height:44px;}
 .pages a{font-size:13px;margin:0 5px;}
@@ -194,7 +194,7 @@ margin:0;
     border: 1px solid #ffa511;
     border-radius: 5px 5px 5px 5px;
     padding-bottom: 10px;
-	cursor: default;}
+    cursor: default;}
 .noticepop h4{ background: url(../img/nvbbg.gif) repeat-x scroll 0 0 transparent;border-radius: 5px 5px 0 0;
     color: #FFFFFF;
     font-size: 15px;
@@ -247,7 +247,7 @@ background-position:0 27px;}
 }
 .tb_calendar td {
 font-weight:bold;}
-.tb_calendar td a{ 
+.tb_calendar td a{
 background:#e6e5e5;
 display:block;
 text-decoration:none;
@@ -376,16 +376,16 @@ width:180px;border:1px solid #BCBBB8}
     margin: 0;
     position: relative;
     text-align: right;
-	right:0px;
-	top:3px;
-	float: right;width: 200px;
+    right:0px;
+    top:3px;
+    float: right;width: 200px;
     z-index: 10;
 }*/
 .adnav .cala input{width: 150px;}
 .adnav .cala img{margin: 5px 0 0;}
 .adtab{list-style: none;
     margin: 0;padding: 0;height: 32px;width: 550px;float: left;
-	*position:relative;
+    *position:relative;
 }
 .adtab li{float: left;}
 .adtab li a{
@@ -397,8 +397,8 @@ width:180px;border:1px solid #BCBBB8}
     text-align: center;
     text-decoration: none;
     width: 180px;
-	background:url(../img/adlistbg2.gif) repeat-x top left;border: 1px solid #BCBBB8;
-	text-decoration:underline;
+    background:url(../img/adlistbg2.gif) repeat-x top left;border: 1px solid #BCBBB8;
+    text-decoration:underline;
 }
 .adtab li a.active{
 text-decoration:none; border-left: 1px solid #BCBBB8;
@@ -422,41 +422,41 @@ background:url(../img/detailtab_bg1.gif) no-repeat center right;}
 .detailtab li a.active img{margin-right:5px;border:none;}
 /********/
 
-/****報表表格****/	
+/****報表表格****/
 /* tables */
 table.tablesorter {
-	font-family:arial;
-	background-color: #CDCDCD;
-	margin:10px 0pt 15px;
-	font-size: 10pt;
-	width: 100%;
-	text-align: center;
+    font-family:arial;
+    background-color: #CDCDCD;
+    margin:10px 0pt 15px;
+    font-size: 10pt;
+    width: 100%;
+    text-align: center;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-	background:url(../img/gthbg.gif) #eee top repeat-x;font-size:13px;line-height:25px;
-	font-size: 10pt;
-	padding: 4px;
+    background:url(../img/gthbg.gif) #eee top repeat-x;font-size:13px;line-height:25px;
+    font-size: 10pt;
+    padding: 4px;
 }
 table.tablesorter thead tr .header {
-	background-image: url(../img/bg.gif);
-	background-repeat: no-repeat;
-	background-position: center right;
-	cursor: pointer;
-	padding-right:10px;
+    background-image: url(../img/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+    padding-right:10px;
 }
 table.tablesorter tbody td {
-	color: #3D3D3D;
-	padding: 4px;
-	background-color: #FFF;
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
 }
 table.tablesorter tbody tr.odd td {
-	background-color:#F0F0F6;
+    background-color:#F0F0F6;
 }
 table.tablesorter thead tr .headerSortUp {
-	background-image: url(../img/asc.gif);
+    background-image: url(../img/asc.gif);
 }
 table.tablesorter thead tr .headerSortDown {
-	background-image: url(../img/desc.gif);
+    background-image: url(../img/desc.gif);
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
 background-color: #e0e0e0;
@@ -468,8 +468,8 @@ background-color: #e0e0e0;
 margin:0 auto;
     min-width:460px;
     width: 94%;
-	min-height:380px;
-}	
+    min-height:380px;
+}
 .boxpreview .btnview {
     width: 100%;
 }
@@ -514,7 +514,7 @@ border:1px solid #BCBBB8}
     margin:10px auto;
     padding: 5px;
     width: 460px;
-	clear:both;border: 1px solid #BCBBB8;
+    clear:both;border: 1px solid #BCBBB8;
 }
 .rstli img {
     border: 0 solid #FFFFFF;
@@ -552,12 +552,12 @@ border:1px solid #BCBBB8}
     font-weight: normal;
     line-height: 16px;
     margin: 0;
-	text-align:left;
+    text-align:left;
 }
 /**/
 .ADsys_text{background:#FFFFFF;
     padding: 4px 0;border: 1px solid #BCBBB8;}
-	.ADsys_text span {
+    .ADsys_text span {
     display: block;
     padding: 4px 8px;
 }
@@ -594,24 +594,24 @@ text-decoration:none}
 .notsbg{position:relative;width:100px;margin:0 auto}
 .notsbg img{ cursor:pointer;}
 .nots_info01{
-	background: url(../img/bg_msg01.gif) no-repeat top left;
-	height: 98px;
-	line-height: 18px;
-	padding: 5px 25px 0 ;
-	width: 225px;
-	text-align: left;font-size:12px;
-	position: absolute; top: -10px; left: 94px;
-	z-index:200;}
+    background: url(../img/bg_msg01.gif) no-repeat top left;
+    height: 98px;
+    line-height: 18px;
+    padding: 5px 25px 0 ;
+    width: 225px;
+    text-align: left;font-size:12px;
+    position: absolute; top: -10px; left: 94px;
+    z-index:200;}
 .nots_info02{
-	background: url(../img/bg_msg02.gif) no-repeat top left;
-	height: 98px;
-	line-height: 18px;
-	padding: 8px 20px 0;
-	width: 225px;
-	text-align: left;
-	position: absolute; top: -10px; left: 94px;
-	z-index:200;}
-	
+    background: url(../img/bg_msg02.gif) no-repeat top left;
+    height: 98px;
+    line-height: 18px;
+    padding: 8px 20px 0;
+    width: 225px;
+    text-align: left;
+    position: absolute; top: -10px; left: 94px;
+    z-index:200;}
+
 /*20130628新增*/
 .tbg td{background:url(../img/gthbg.gif);font-weight:bold;height:25px;}
 .cala01{ float:right;width: 250px;text-align: right;font-size: 13px;color:#666;font-weight: normal;}
@@ -680,14 +680,14 @@ text-decoration:none}
 .okbox .adboxdv img{max-width:210px;max-height:180px;vertical-align: middle;margin: -4px 0 0 0;}
 .okbox .adboxdv:hover img{transform:rotate(0deg) scale(1.1);transition:0.4s;-webkit-transform:rotate(0deg) scale(1.1);-webkit-transition:0.4s;-moz-transform:rotate(0deg) scale(1.1);-moz-transition:0.4s;  }
 .okbox .adboxdv:after {content : ".";font-size : 0;-webkit-text-size-adjust : none;}
-.okbox .adboxdv .adinf{display:none; position:absolute;z-index:10;background: #000;width:100%;height: 30px;line-hegiht:30px;color: #fff;bottom:-1px;left:0;filter:alpha(opacity=70); -moz-opacity:0.7; -khtml-opacity: 0.7; opacity: 0.7;line-height: 30px;}  
+.okbox .adboxdv .adinf{display:none; position:absolute;z-index:10;background: #000;width:100%;height: 30px;line-hegiht:30px;color: #fff;bottom:-1px;left:0;filter:alpha(opacity=70); -moz-opacity:0.7; -khtml-opacity: 0.7; opacity: 0.7;line-height: 30px;}
 .okbox .adboxdv:hover .adinf{display:block;}
 .okbox .adboxdv:hover .adinf a{color:#FFF}
-.okbox>.addel{position:absolute;top: 185px;right: 2px;background:url(../img/aduplodimg.png) 0 -120px;cursor:pointer;width:30px;	height:30px;text-indent:-9999px}  
+.okbox>.addel{position:absolute;top: 185px;right: 2px;background:url(../img/aduplodimg.png) 0 -120px;cursor:pointer;width:30px; height:30px;text-indent:-9999px}
 /*失敗*/
 .failbox .adboxdv{border-top:1px solid #eee;font-weight: bolder;font-size: 12px;}
-.failbox .adboxdv .adinf{width:100%;position:absolute;z-index:10;background:#ff4545;height: 30px;color:#fff;bottom:-1px;left:0;text-align:center;line-height: 30px;}         
-.failbox>.addel{ position:absolute; top: 2px; right: -3px;background:url(../img/aduplodimg.png) 0 0;cursor:pointer;width:30px;height:30px; text-indent:-9999px}   
+.failbox .adboxdv .adinf{width:100%;position:absolute;z-index:10;background:#ff4545;height: 30px;color:#fff;bottom:-1px;left:0;text-align:center;line-height: 30px;}
+.failbox>.addel{ position:absolute; top: 2px; right: -3px;background:url(../img/aduplodimg.png) 0 0;cursor:pointer;width:30px;height:30px; text-indent:-9999px}
 .failbox>.adboxdv>span:first-child{display:block;width: 87%;margin:auto;overflow:hidden;padding: 6px 5px;}
 /*廣告明細*/
 .adreportdv {overflow: hidden; text-overflow: ellipsis;word-break: break-all;min-width: 350px;min-height:40px;max-height:150px;font: 400 13px/16px Verdana,微軟正黑體;overflow:hidden;display:table; display:block\9;}
@@ -705,9 +705,21 @@ text-decoration:none}
 
 
 
+/*自訂播放時段POPUP*/
+.tmselectpop{font-size:18px; margin: 15px auto;border:1px solid #c4c4c4;}
+.tmselectpop input[type=checkbox]{ cursor: pointer;width: 16px;height: 16px;margin:0 5px;}
 
-
-
+.tmselectpop tbody td{ padding: 10px 0px;
+    height: 20px;}
+.tmselectpop .tclock01{ color: #df7e41; font-size: 15px;width:21%; display:inline-block;}
+.tmselectpop .tclock02{ color: #dd9800; font-size: 15px;width:21%; display:inline-block;}
+.tmselectpop .timeall{ background: #eae6dd;font-weight: normal;border-bottom: 1px solid #c4c4c4;border-right: 1px solid #c4c4c4;    padding: 0 10px;}
+.tmselectpop .timeam,.tmselectpop .timepm{ font-weight: normal;padding:8px 0;}
+.tmselectpop .timeam u,.tmselectpop .timepm u{ text-decoration: none; font-size: 14px;}
+.time_ambg01{ background: #eda273;border-right: 1px solid #FFF;    border-bottom: 1px solid #f4cb91;}
+.time_pmbg01{ background: #f8d17b;border-right: 1px solid #FFF;    border-bottom: 1px solid #f4e296;}
+.time_ambg02{ background: #edb37f;border-right: 1px solid #FFF;    border-bottom: 1px solid #f4cb91;}
+.time_pmbg02{ background: #f8db88;background: #f8d17b;border-right: 1px solid #FFF;    border-bottom: 1px solid #f4e296;}
 /*------------------------------------------*/
 
 /*20150918new*/
