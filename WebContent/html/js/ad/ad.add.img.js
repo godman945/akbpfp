@@ -495,8 +495,8 @@ function chkUrl(valObj, msgObj){
 	msgObj.css("color","");
 	msgObj.text("");
 	
-	if ((val == "") ||
-			(val.indexOf("show.pchome.com.tw") == 0)) {
+	if ((val == "")) {
+			/* || (val.indexOf("show.pchome.com.tw") == 0)) {*/
 		msgObj.css("color","red");
 		msgObj.text("請輸入廣告連結網址");
 		return false;

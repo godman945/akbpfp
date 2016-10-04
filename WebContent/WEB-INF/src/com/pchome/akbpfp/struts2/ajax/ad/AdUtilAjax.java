@@ -85,7 +85,8 @@ public class AdUtilAjax extends BaseCookieAction{
 			    	passUrl = passUrl.substring(0, passUrl.indexOf(".com") + 4);
 			    }
 			    
-			    if(akbPfpServer.equals(url) || (akbPfpServer.substring(0, akbPfpServer.length() -1).equals(url))){
+			    if(url.indexOf(akbPfpServer) == 0){
+			    //if(akbPfpServer.equals(url) || (akbPfpServer.substring(0, akbPfpServer.length() -1).equals(url))){
 			    	urlState = 200;
 			    } else if("www.mjholly.com".equals(passUrl)){
 			    	urlState = 200;
