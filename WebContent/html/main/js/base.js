@@ -1,5 +1,5 @@
 $(function(){
-	window.open ("http://help.pchome.com.tw/notice/nid.html?nidx=407&btype=1");
+	window.location.replace("http://help.pchome.com.tw/notice/nid.html?nidx=407&btype=1");
 var nav = $('.nav');
 var navTop = nav.offset().top+700;//超過多少才會出現BAR
 var navHeight = nav.height();
