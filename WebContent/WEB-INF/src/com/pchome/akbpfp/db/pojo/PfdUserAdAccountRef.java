@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/9/7 �U�� 05:32:40 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/10/24 �U�� 12:22:48 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,18 +25,20 @@ public class PfdUserAdAccountRef implements java.io.Serializable {
 	private PfdUser pfdUser;
 	private PfdCustomerInfo pfdCustomerInfo;
 	private String pfpPayType;
+	private String proof;
 
 	public PfdUserAdAccountRef() {
 	}
 
 	public PfdUserAdAccountRef(PfpUser pfpUser,
 			PfpCustomerInfo pfpCustomerInfo, PfdUser pfdUser,
-			PfdCustomerInfo pfdCustomerInfo, String pfpPayType) {
+			PfdCustomerInfo pfdCustomerInfo, String pfpPayType, String proof) {
 		this.pfpUser = pfpUser;
 		this.pfpCustomerInfo = pfpCustomerInfo;
 		this.pfdUser = pfdUser;
 		this.pfdCustomerInfo = pfdCustomerInfo;
 		this.pfpPayType = pfpPayType;
+		this.proof = proof;
 	}
 
 	@Id
@@ -97,6 +99,15 @@ public class PfdUserAdAccountRef implements java.io.Serializable {
 
 	public void setPfpPayType(String pfpPayType) {
 		this.pfpPayType = pfpPayType;
+	}
+
+	@Column(name = "proof", nullable = false, length = 20)
+	public String getProof() {
+		return this.proof;
+	}
+
+	public void setProof(String proof) {
+		this.proof = proof;
 	}
 
 }

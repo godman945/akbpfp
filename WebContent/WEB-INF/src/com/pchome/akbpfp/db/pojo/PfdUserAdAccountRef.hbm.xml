@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016/9/7 ?U?? 05:32:41 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/10/24 ?U?? 12:22:48 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef" table="pfd_user_ad_account_ref" catalog="akb">
         <id name="refId" type="java.lang.Integer">
@@ -31,6 +31,11 @@
         <property name="pfpPayType" type="string">
             <column name="pfp_pay_type" length="1" not-null="true">
                 <comment>&#165;I&#180;&#218;&#164;&#232;&#166;&#161;:1&#185;w&#165;I 2&#171;&#225;&#165;I</comment>
+            </column>
+        </property>
+        <property name="proof" type="string">
+            <column name="proof" length="20" not-null="true">
+                <comment>&#187;&#221;&#173;n&#188;&#203;&#177;i&#164;&#163;? Y.&#173;n , ''&#164;&#163;&#173;n</comment>
             </column>
         </property>
     </class>
