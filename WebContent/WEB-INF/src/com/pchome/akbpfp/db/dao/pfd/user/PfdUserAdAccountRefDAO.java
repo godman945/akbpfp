@@ -52,13 +52,14 @@ public class PfdUserAdAccountRefDAO extends BaseDAO <PfdUserAdAccountRef, String
 	
 	public void saveOrUpdatePfdUserAdAccountRef(PfdUserAdAccountRefVO pfdUserAdAccountRefVO){
 		final StringBuffer sql = new StringBuffer()
-		.append("INSERT INTO pfd_user_ad_account_ref(ref_id,pfd_customer_info_id,pfd_user_id,pfp_customer_info_id,pfp_user_id,pfp_pay_type) ")
+		.append("INSERT INTO pfd_user_ad_account_ref(ref_id,pfd_customer_info_id,pfd_user_id,pfp_customer_info_id,pfp_user_id,pfp_pay_type,proof) ")
 		.append("VALUES ( :refId")
 		.append(", :pfdCustomerInfoId")
 		.append(", :pfdUserId")
 		.append(", :pfpCustomerInfoId")
 		.append(", :pfpUserId")
-		.append(", :pfpPayType)");
+		.append(", :pfpPayType")
+		.append(", :proof)");
 		
 		Session session = getSession();
         session.createSQLQuery(sql.toString())
@@ -68,6 +69,7 @@ public class PfdUserAdAccountRefDAO extends BaseDAO <PfdUserAdAccountRef, String
         		.setString("pfpCustomerInfoId", pfdUserAdAccountRefVO.getPfpCustomerInfoId())
         		.setString("pfpUserId", pfdUserAdAccountRefVO.getPfpUserId())
         		.setString("pfpPayType", pfdUserAdAccountRefVO.getPfpPayType())
+        		.setString("proof", pfdUserAdAccountRefVO.getProof())
         		.executeUpdate();
         session.flush();
 	}

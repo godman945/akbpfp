@@ -276,6 +276,7 @@ public class ApplyAction extends BaseSSLAction{
 				pfdUserAdAccountRefVO.setPfpCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
 				pfdUserAdAccountRefVO.setPfpUserId(user.getUserId());
 				pfdUserAdAccountRefVO.setPfpPayType("1");
+				pfdUserAdAccountRefVO.setProof("");
 				pfdUserAdAccountRefService.savePfdUserAdAccountRef(pfdUserAdAccountRefVO);
 				
 				//負責業務員設定

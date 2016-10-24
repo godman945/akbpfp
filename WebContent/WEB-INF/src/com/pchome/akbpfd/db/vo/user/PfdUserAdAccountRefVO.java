@@ -10,6 +10,7 @@ public class PfdUserAdAccountRefVO {
 	private String pfpCustomerInfoId;
 	private String pfpUserId;
 	private String pfpPayType;
+	private String proof;
 	public Integer getRefId() {
 		return refId;
 	}
@@ -45,6 +46,12 @@ public class PfdUserAdAccountRefVO {
 	}
 	public void setPfpPayType(String pfpPayType) {
 		this.pfpPayType = pfpPayType;
+	}
+	public String getProof() {
+		return proof;
+	}
+	public void setProof(String proof) {
+		this.proof = proof;
 	}
 	
 }
