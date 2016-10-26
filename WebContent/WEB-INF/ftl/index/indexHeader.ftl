@@ -17,7 +17,7 @@
 <script>
     $(document).ready(function() {
         // Add smooth scrolling to all links in navbar + footer link
-        $(".navbar a, footer a[href='#top']").on('click', function(event) {
+        $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
             // Make sure this.hash has a value before overriding default behavior
             if (this.hash !== "") {
                 // Prevent default anchor click behavior
@@ -344,7 +344,7 @@
 	</div>
 
 	<footer class="container-fluid text-center">
-		<a href="#top" title="To Top" class="gotop">
+		<a href="#myPage" title="To Top" class="gotop">
 			<span class="glyphicon glyphicon-triangle-top"></span><br>TOP
 		</a>
 		<p>著作權保護 | 網路家庭版權所有、轉載必究 ‧Copyright PChome Online | HiNet 主機代管．本站已依網站內容分級處理<br>PChome Online and PChome are trademarks of PChome Online Inc.</p>
