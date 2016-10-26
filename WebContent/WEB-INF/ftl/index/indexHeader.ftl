@@ -4,8 +4,8 @@
 <#assign startDate = ("2015-03-18 00:00:00")?date("yyyy-MM-dd HH:mm:ss")> 
 <#assign endDate = ("2015-05-11 23:59:59")?date("yyyy-MM-dd HH:mm:ss")> 
 
-<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/style.css" />
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/style.css" />
 
 
 <#if (today?date >= startDate?date) && (today?date <= endDate?date)>
