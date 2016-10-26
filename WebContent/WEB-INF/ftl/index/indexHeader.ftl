@@ -11,7 +11,7 @@
 <#if (today?date >= startDate?date) && (today?date <= endDate?date)>
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/layout_motherday.css" />
 <#else>
-    <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/layout.css" />
+    <!--<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/layout.css" />-->
 </#if>
 <nav class="navbar navbar-default navbar-fixed-top">
 
