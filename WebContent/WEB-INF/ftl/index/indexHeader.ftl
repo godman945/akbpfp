@@ -29,7 +29,7 @@
                 // Using jQuery's animate() method to add smooth page scroll
                 // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
                 $('html, body').animate({
-                    scrollTop: $(hash).offset().top
+                    window.location.hash = hash;
                 }, 900, function() {
 
                     // Add hash (#) to URL when done scrolling (default click behavior)
@@ -57,7 +57,7 @@
 
 <nav class="navbar navbar-default navbar-fixed-top">
 
-    <div class="container-fluid nopadding">
+    <div id="myPage" class="container-fluid nopadding">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
@@ -157,7 +157,7 @@
 		<img src="html/main/img/pchomelogo.png" alt="" class="titlogo">
 		<h1>聯播網廣告</h1>
 		<p>免費曝光，點擊計費；只要<span>$500</span>即可刊登，行銷推廣商品好伙伴！</p>
-		<a class="buybtn" href="#">立即刊登廣告<span class="glyphicon glyphicon-menu-right"></span></a>
+		<a class="buybtn" href="/redirect.html">立即刊登廣告<span class="glyphicon glyphicon-menu-right"></span></a>
 		<h4><span>免</span>開戶費<em>‧</em><span>免</span>設定費<em>‧</em><span>免</span>服務費</h4>
 		</td></tr>
 	</tbody></table>
