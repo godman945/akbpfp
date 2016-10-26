@@ -89,7 +89,7 @@
 
 
 
-<div id="header">
+<!-- <div id="header">
 		<div id="header-top">
 			<a href="<@s.url value="/" />redirect.html"><img src="<@s.url value="/" />html/main/img/top_ad_20140301up.png" border="0" alt="儲三千送一千"></a>
 			<a href="<@s.url value="/" />redirect.html"><img src="<@s.url value="/" />html/main/img/logo_tt.gif" border="0" class="logo_tt"></a>
@@ -101,18 +101,18 @@
 			<img src="<@s.url value="/" />html/main/img/tt_pp2.png" class="tt_pp">
 			<a href="/click.html#content" class="adevent" style="margin-top:10px;"><img src="<@s.url value="/" />html/main/img/sshot_3.png" border="0"></a>		
 		</div>
-	</div>
+	</div> -->
 
 <div class="videobg">
 	<div id="videolayer" style="opacity: 0.092;"><div class="mbYTP_wrapper" id="wrapper_mbYTP_video" style="position: absolute; z-index: 0; min-width: 100%; min-height: 100%; left: 0px; top: 0px; overflow: hidden; opacity: 0;"><iframe id="mbYTP_video" class="playerBox" style="position: absolute; z-index: 0; width: 100%; height: 100%; top: 0px; left: 0px; overflow: hidden; opacity: 1;" frameborder="0" allowfullscreen="1" title="YouTube video player" width="640" height="360" src="https://www.youtube.com/embed/mdII7PQ3ItA?autoplay=0&amp;modestbranding=1&amp;controls=0&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1&amp;version=3&amp;playerapiid=mbYTP_video&amp;origin=file%3A%2F%2Ffile-svr&amp;allowfullscreen=true&amp;wmode=transparent&amp;iv_load_policy=3&amp;html5=1&amp;widgetid=1"></iframe><div class="YTPOverlay" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></div></div></div>
 	<!--<video id="video" autoplay="" loop="" class="hide-in-mobile"><source data-src="street1694.mp4" type="video/mp4" src="street1694.mp4"></video> -->
-	<div class="photobg show-in-mobile" style="opacity: 0.092;"><img src="main/img/videobg.jpg"></div>
+	<div class="photobg show-in-mobile" style="opacity: 0.092;"><img src="html/main/img/videobg.jpg"></div>
 </div>
 
 <div id="title" class="title text-center" style="opacity: -2.02667;">
 	<table>
 		<tbody><tr><td>
-		<img src="main/img/pchomelogo.png" alt="" class="titlogo">
+		<img src="html/main/img/pchomelogo.png" alt="" class="titlogo">
 		<h1>聯播網廣告</h1>
 		<p>免費曝光，點擊計費；只要<span>$500</span>即可刊登，行銷推廣商品好伙伴！</p>
 		<a class="buybtn" href="#">立即刊登廣告<span class="glyphicon glyphicon-menu-right"></span></a>
@@ -130,20 +130,20 @@
 		<div class="row stepbox">
 			<div class="col-sm-4">
 				<span class="glyphicon glyphicon-menu-right"></span>
-				<div class="stepicon"><img src="main/img/stepicon1.png"></div>
+				<div class="stepicon"><img src="html/main/img/stepicon1.png"></div>
 				<h3>建立聯播網廣告</h3>
 				<h5>可自由新增與編輯優質廣告內容。</h5>
 				<span class="glyphicon glyphicon-menu-down"></span>
 			</div>
 			<div class="col-sm-4">
 				<span class="glyphicon glyphicon-menu-right"></span>
-				<div class="stepicon"><img src="main/img/stepicon2.png"></div>
+				<div class="stepicon"><img src="html/main/img/stepicon2.png"></div>
 				<h3>選擇廣告形式</h3>
 				<h5>可選擇搜尋廣告與聯播網廣告兩種廣告形式。</h5>
 				<span class="glyphicon glyphicon-menu-down"></span>
 			</div>
 			<div class="col-sm-4">
-				<div class="stepicon"><img src="main/img/stepicon3.png"></div>
+				<div class="stepicon"><img src="html/main/img/stepicon3.png"></div>
 				<h3>PChome大流量，客戶找上門</h3>
 				<h5>大數據分析比對，聯播網廣告有效展示。</h5>
 			</div>
@@ -159,8 +159,8 @@
 
 		<h5>PChome集團聯播網廣告<span class="glyphicon glyphicon-menu-right"></span>結合PChome集團資源吸引準客戶目光</h5>
 		<div class="row row1">
-			<div class="col-sm-12"><img src="main/img/imp-img1.png"></div>
-			<div class="col-sm-12"><img src="main/img/imp-img2.png"></div>
+			<div class="col-sm-12"><img src="html/main/img/imp-img1.png"></div>
+			<div class="col-sm-12"><img src="html/main/img/imp-img2.png"></div>
 		</div>
 		<br>
 		<br>
@@ -169,11 +169,11 @@
 		<div class="row row2" style="max-width:1020px;margin:auto">
 			<div class="col-sm-6 col-sx-12">
 				<p class="lft">網友在PChome找東西搜尋關鍵字!</p>
-				<img src="main/img/imp-img3.png">
+				<img src="html/main/img/imp-img3.png">
 			</div>
 			<div class="col-sm-6 col-sx-12">
 				<p class="rht">您的關鍵字廣告將在此曝光!</p>
-				<img src="main/img/imp-img4.png"></div>
+				<img src="html/main/img/imp-img4.png"></div>
 		</div>
 		<br>
 		<br>
@@ -181,33 +181,33 @@
 		<h5>PChome聯播網合作夥伴們<span class="glyphicon glyphicon-menu-right"></span>眾網齊發，吸引最大化消費者目光。</h5>     
 		<div class="row row3" style="max-width:1100px;margin:auto">
 			<div class="col-sm-12">
-				<img src="main/img/L-managertoday.png">
-				<img src="main/img/L-teepr.png">
-				<img src="main/img/L-igamer.png">
-				<img src="main/img/L-bnext.png">
-				<img src="main/img/L-mamaclub.png">
-				<img src="main/img/L-juksy.png">
+				<img src="html/main/img/L-managertoday.png">
+				<img src="html/main/img/L-teepr.png">
+				<img src="html/main/img/L-igamer.png">
+				<img src="html/main/img/L-bnext.png">
+				<img src="html/main/img/L-mamaclub.png">
+				<img src="html/main/img/L-juksy.png">
 
-				<img src="main/img/L-nownews.png">
-				<img src="main/img/L-123kubo.png">
-				<img src="main/img/L-dodocook.png">
-				<img src="main/img/L-youthwant.png">
-				<img src="main/img/L-roodo.png">
-				<img src="main/img/L-eznewlife.png">
+				<img src="html/main/img/L-nownews.png">
+				<img src="html/main/img/L-123kubo.png">
+				<img src="html/main/img/L-dodocook.png">
+				<img src="html/main/img/L-youthwant.png">
+				<img src="html/main/img/L-roodo.png">
+				<img src="html/main/img/L-eznewlife.png">
 				
-				<img src="main/img/L-5678news.png">
-				<img src="main/img/L-PTT.png">
-				<img src="main/img/L-weatherrisk.png">
-				<img src="main/img/L-iguang.png">
-				<img src="main/img/L-ck101.png">
-				<img src="main/img/L-ithome.png">
+				<img src="html/main/img/L-5678news.png">
+				<img src="html/main/img/L-PTT.png">
+				<img src="html/main/img/L-weatherrisk.png">
+				<img src="html/main/img/L-iguang.png">
+				<img src="html/main/img/L-ck101.png">
+				<img src="html/main/img/L-ithome.png">
 				
-				<img src="main/img/L-jkf.png">
-				<img src="main/img/L-moneydj.png">
-				<img src="main/img/L-cool3c.png">
-				<img src="main/img/L-healthnews.png">
-				<img src="main/img/L-ytower.png">
-				<img src="main/img/L-plurk.png">
+				<img src="html/main/img/L-jkf.png">
+				<img src="html/main/img/L-moneydj.png">
+				<img src="html/main/img/L-cool3c.png">
+				<img src="html/main/img/L-healthnews.png">
+				<img src="html/main/img/L-ytower.png">
+				<img src="html/main/img/L-plurk.png">
 			</div>
 			<span>More...
 		</span></div>
@@ -222,21 +222,21 @@
 		<div class="row text-center paymentbox">
 			<div class="col-sm-4 col-sx-12 slideanim slide">
 				<div class="box">
-					<img src="main/img/fee1icon.png">
+					<img src="html/main/img/fee1icon.png">
 					<h3>廣告曝光免費</h3>
 					<p>關鍵字廣告享有免費大量曝光，未被網友點擊時，不需支付任何廣告費用。</p>
 				</div>
 			</div>
 			<div class="col-sm-4 col-sx-12 slideanim slide">
 				<div class="box">
-					<img src="main/img/fee2icon.png">
+					<img src="html/main/img/fee2icon.png">
 					<h3>廣告點擊收費</h3>
 					<p>關鍵字廣告是以廣告點擊計費！當網友點擊您的廣告，才需支付廣告費用。</p>
 				</div>
 			</div>
 			<div class="col-sm-4 col-sx-12 slideanim slide">
 				<div class="box">
-					<img src="main/img/fee3icon.png">
+					<img src="html/main/img/fee3icon.png">
 					<h3>預算設定</h3>
 					<p>你可自行設定每月廣告金額、每次點擊金額。有效控制預算，創造最大效益，完全不用擔心預算太少，無法買廣告作曝光。</p>
 				</div>
@@ -310,7 +310,6 @@
 
 </div>
 <div id="video" class="player mb_YTPlayer" data-property="{videoURL:'https://www.youtube.com/watch?v=mdII7PQ3ItA',containment:'#videolayer', showControls:false, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}" style="display: none;">videobg</div>
-
 
 
 </#if>
