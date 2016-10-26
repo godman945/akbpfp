@@ -6,7 +6,7 @@
 
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/style.css" />
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/bootstarp.min.css" />
-<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/base.css" />
+
 
 <#if (today?date >= startDate?date) && (today?date <= endDate?date)>
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/layout_motherday.css" />
