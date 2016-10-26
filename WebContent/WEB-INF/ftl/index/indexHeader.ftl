@@ -13,30 +13,42 @@
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/layout.css" />
 </#if>
 
-<div class="topbar">
-	<div class="logo"><a href="http://www.pchome.com.tw/" target="_blank"><img src="<@s.url value="/" />html/main/img/logo_pchome.gif" border="0"></a><a href="http://4c.pchome.com.tw/ad/" target="_blank"><img src="<@s.url value="/" />html/main/img/logo_index.gif" border="0"></a><a href="<@s.url value="/" />" border="0"><img src="<@s.url value="/" />html/main/img/logo_pro.gif" alt="付費刊登" border="0"></a></div>
-	<div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-left">
-                    <li><a href="#step">刊登秘訣</a></li>
-                    <li><a href="#impression">全站曝光</a></li>
-                    <li><a href="#fee">收費/付款</a></li>
-                    <li><a href="#advantage">廣告優勢</a></li>
-                    <li><a href="http://show.pchome.com.tw/faq.html" target="_blank">熱門問答</a></li>
+<nav class="navbar navbar-default navbar-fixed-top">
 
-			        <div class="login">
-			            <#if id_pchome?exists>
-							<img src="<@s.url value="/" />html/main/img/icon_bb.gif" hspace="3" align="absmiddle">
-							<b>${id_pchome}</b> 您好 ( <a href="<@s.url value="/" />logout.html" muse_scanned="true">登出</a> )
-						<#else>
-							<a href="<@s.url value="/" />login.html">登入</a>
-						</#if>
-						．<a href="${akbpfdServer}redirect.html" target="_blank">經銷商登入</a>
-						．<a href="http://4c.pchome.com.tw/ad/" target="_blank">廣告刊登</a>．<a href="http://www.pchome.com.tw" target="_blank">PChome</a>
-			        </div>
-                </ul>
+    <div class="container-fluid nopadding">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="http://www.pchome.com.tw/" target="_blank"><img src="<@s.url value="/" />html/main/img/logo_pchome.gif" border="0"></a><a href="http://4c.pchome.com.tw/ad/" target="_blank"><img src="<@s.url value="/" />html/main/img/logo_index.gif" border="0"></a><a href="<@s.url value="/" />" border="0"><img src="<@s.url value="/" />html/main/img/logo_pro.gif" alt="付費刊登" border="0"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-left">
+                 <li><a href="#step">刊登秘訣</a></li>
+                <li><a href="#impression">全站曝光</a></li>
+                <li><a href="#fee">收費/付款</a></li>
+                <li><a href="#advantage">廣告優勢</a></li>
+                <li><a href="http://show.pchome.com.tw/faq.html" target="_blank">熱門問答</a></li>
+
+		        <div class="login">
+		            <#if id_pchome?exists>
+						<img src="<@s.url value="/" />html/main/img/icon_bb.gif" hspace="3" align="absmiddle">
+						<b>${id_pchome}</b> 您好 ( <a href="<@s.url value="/" />logout.html" muse_scanned="true">登出</a> )
+					<#else>
+						<a href="<@s.url value="/" />login.html">登入</a>
+					</#if>
+					．<a href="${akbpfdServer}redirect.html" target="_blank">經銷商登入</a>
+					．<a href="http://4c.pchome.com.tw/ad/" target="_blank">廣告刊登</a>．<a href="http://www.pchome.com.tw" target="_blank">PChome</a>
+		        </div>
+            </ul>
+        </div>
     </div>
-	
-</div>
+</nav>
+
+
+
 
 <div id="top" style="width:100%;">
 
