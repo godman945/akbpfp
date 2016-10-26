@@ -6,7 +6,7 @@
 	
 	<script type="text/javascript" src="http://rmi.pchome.com.tw/rmiservice/pv.html?t=pfp:pv_pfp_index"></script>
 	<script type="text/javascript" src="http://adcl.pchome.com.tw:80/getAd2JS.html?type=16&channel=keyword&encoding=Utf8"></script>
-		<div id="header">
+		<!-- <div id="header">
 		<div class="nav" style="display:none;">
 			<ul id="topNavi">
 				<li><a class="newp selected" href="<@s.url value="/" />index.html#content"></a></li>
@@ -30,4 +30,4 @@
 		<div id="content" style="background:url(<@s.url value="/" />html/main/img/cont01.png) top center no-repeat;height:600px">
 		</div>
 	</div>
-</div>
+</div> -->
