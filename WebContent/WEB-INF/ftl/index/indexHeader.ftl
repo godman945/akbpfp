@@ -13,7 +13,7 @@
 <#else>
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/layout.css" />
 </#if>
-
+<script type="text/javascript" src="<@s.url value="/" />html/main/js/bootstrap.min.js"></script>
 <nav class="navbar navbar-default navbar-fixed-top">
 
     <div class="container-fluid nopadding">
