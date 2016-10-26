@@ -157,7 +157,7 @@
 		<img src="html/main/img/pchomelogo.png" alt="" class="titlogo">
 		<h1>聯播網廣告</h1>
 		<p>免費曝光，點擊計費；只要<span>$500</span>即可刊登，行銷推廣商品好伙伴！</p>
-		<a class="buybtn" href="/redirect.html">立即刊登廣告<span class="glyphicon glyphicon-menu-right"></span></a>
+		<a class="buybtn" href="<@s.url value="/" />redirect.html">立即刊登廣告<span class="glyphicon glyphicon-menu-right"></span></a>
 		<h4><span>免</span>開戶費<em>‧</em><span>免</span>設定費<em>‧</em><span>免</span>服務費</h4>
 		</td></tr>
 	</tbody></table>
