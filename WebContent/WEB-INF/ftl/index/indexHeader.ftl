@@ -59,8 +59,8 @@
 <script>
     var myPlayer;
     jQuery(function () {
-        myPlayer = jQuery("#mbYTP_video").YTPlayer();
-        $("#mbYTP_video").YTPApplyFilters({brightness: 80});
+        myPlayer = jQuery("#video").YTPlayer();
+        $("#video").YTPApplyFilters({brightness: 80});
     });
 </script>
 
