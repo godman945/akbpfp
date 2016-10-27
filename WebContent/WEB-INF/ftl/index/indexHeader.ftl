@@ -340,14 +340,14 @@
 				<p>免費大量曝光 廣告觸角延伸到更廣客層。</p>
 			</div>
 		</div>
-		<a class="buybtn" href="#">立即購買<span class="glyphicon glyphicon-menu-right"></span>聯播網廣告</a>
+		<a class="buybtn" href="<@s.url value="/" />redirect.html">立即購買<span class="glyphicon glyphicon-menu-right"></span>聯播網廣告</a>
 	</div>
 
 	<footer class="container-fluid text-center">
 		<a href="#myPage" title="To Top" class="gotop">
 			<span class="glyphicon glyphicon-triangle-top"></span><br>TOP
 		</a>
-		<p>著作權保護 | 網路家庭版權所有、轉載必究 ‧Copyright PChome Online | HiNet 主機代管．本站已依網站內容分級處理<br>PChome Online and PChome are trademarks of PChome Online Inc.</p>
+		<p><a href="http://www.pchome.com.tw/copyright.html" >著作權保護</a> | 網路家庭版權所有、轉載必究 ‧Copyright PChome Online | HiNet 主機代管．本站已依網站內容分級處理<br>PChome Online and PChome are trademarks of PChome Online Inc.</p>
 	</footer>
 
 </div>
