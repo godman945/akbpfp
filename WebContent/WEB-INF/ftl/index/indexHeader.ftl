@@ -147,7 +147,7 @@
 
 <div class="videobg">
 	<div id="videolayer" style="opacity: 0.092;"><div class="mbYTP_wrapper" id="wrapper_mbYTP_video" style="position: absolute; z-index: 0; min-width: 100%; min-height: 100%; left: 0px; top: 0px; overflow: hidden; opacity: 0;">
-		<iframe id="mbYTP_video" class="playerBox" style="position: absolute; z-index: 0; width: 100%; height: 100%; top: 0px; left: 0px; overflow: hidden; opacity: 1;" frameborder="0" allowfullscreen="1" title="YouTube video player" width="640" height="360" src="https://www.youtube.com/embed/mdII7PQ3ItA&autoplay=1?amp;modestbranding=1&amp;controls=0&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1&amp;version=3&amp;playerapiid=mbYTP_video&amp;origin=file%3A%2F%2Ffile-svr&amp;allowfullscreen=true&amp;wmode=transparent&amp;iv_load_policy=3&amp;html5=1&amp;widgetid=1"></iframe>
+		<iframe id="mbYTP_video" class="playerBox" style="position: absolute; z-index: 0; width: 100%; height: 100%; top: 0px; left: 0px; overflow: hidden; opacity: 1;" frameborder="0" allowfullscreen="1" title="YouTube video player" width="640" height="360" src="https://www.youtube.com/embed/mdII7PQ3ItA?autoplay=1&amp;modestbranding=1&amp;controls=0&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1&amp;version=3&amp;playerapiid=mbYTP_video&amp;origin=file%3A%2F%2Ffile-svr&amp;allowfullscreen=true&amp;wmode=transparent&amp;iv_load_policy=3&amp;html5=1&amp;widgetid=1"></iframe>
 	<div class="YTPOverlay" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;"></div></div></div>
 	<!--<video id="video" autoplay="" loop="" class="hide-in-mobile"><source data-src="street1694.mp4" type="video/mp4" src="street1694.mp4"></video> -->
 	<div class="photobg show-in-mobile" style="opacity: 0.092;"><img src="html/img/videobg.jpg"></div>
