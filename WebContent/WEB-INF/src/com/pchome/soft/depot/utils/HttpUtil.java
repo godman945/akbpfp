@@ -220,26 +220,14 @@ public class HttpUtil {
 		
 		statusCode = client.execute(httpget).getStatusLine()
 			.getStatusCode();
+		
+		if(statusCode == HttpStatus.SC_FORBIDDEN){
+			statusCode = getURLConnectionStatus(url);
+		}
+		
 	    } catch (Exception e) {
 	    	log.error(e.getMessage(), e);
-	    	try {
-	    		URLConnection connection = new URL(url).openConnection();
-	    		connection.setRequestProperty("User-Agent",
-	    				"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
-	    		connection.connect();
-	    		BufferedReader r = new BufferedReader(
-	    				new InputStreamReader(connection.getInputStream(), Charset.forName("UTF-8")));
-	    		StringBuilder sb = new StringBuilder();
-	    		String line;
-	    		while ((line = r.readLine()) != null) {
-	    			sb.append(line);
-	    		}
-	    		if(sb != null){
-	    			statusCode = 200;
-	    		}
-	    	} catch (Exception a) {
-	    		statusCode = HttpStatus.SC_NOT_FOUND;
-	    	}
+	    	statusCode = getURLConnectionStatus(url);
 	    } finally {
 		httpget.abort();
 		closeExpiredConns();
@@ -250,6 +238,32 @@ public class HttpUtil {
 	return statusCode;
     }
 
+    private int getURLConnectionStatus(String url){
+    	
+    	int statusCode = HttpStatus.SC_NOT_FOUND;
+    	
+    	try {
+    		URLConnection connection = new URL(url).openConnection();
+    		connection.setRequestProperty("User-Agent",
+    				"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
+    		connection.connect();
+    		BufferedReader r = new BufferedReader(
+    				new InputStreamReader(connection.getInputStream(), Charset.forName("UTF-8")));
+    		StringBuilder sb = new StringBuilder();
+    		String line;
+    		while ((line = r.readLine()) != null) {
+    			sb.append(line);
+    		}
+    		if(sb != null){
+    			statusCode = 200;
+    		}
+    	} catch (Exception a) {
+    		statusCode = HttpStatus.SC_NOT_FOUND;
+    	}
+    	
+    	return statusCode;
+    }
+    
     private void configureClient() throws NoSuchAlgorithmException,
 	    KeyManagementException {
 
