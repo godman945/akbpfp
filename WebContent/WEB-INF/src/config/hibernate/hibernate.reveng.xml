@@ -20,6 +20,7 @@
 	<table-filter match-name="pfd_bonus_detail" match-catalog="akb" />
 	<table-filter match-name="pfd_bonus_item" match-catalog="akb" />
 	<table-filter match-name="pfd_bonus_set" match-catalog="akb" />
+	<table-filter match-name="pfd_board" match-catalog="akb" />
 	<table-filter match-name="pfd_contract" match-catalog="akb" />
 	<table-filter match-name="pfd_customer_info" match-catalog="akb" />
 	<table-filter match-name="pfd_fixed_bonus_detail"

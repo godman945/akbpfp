@@ -45,6 +45,7 @@
                 <value>com.pchome.akbpfp.db.pojo.PfdBonusDetail</value>       
                 <value>com.pchome.akbpfp.db.pojo.PfdBonusItem</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdBonusSet</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdBoard</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdContract</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdCustomerInfo</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail</value>
@@ -138,6 +139,7 @@
                 <value>com.pchome.akbpfp.db.pojo.PfdBonusDetail</value>       
                 <value>com.pchome.akbpfp.db.pojo.PfdBonusItem</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdBonusSet</value>
+                <value>com.pchome.akbpfp.db.pojo.PfdBoard</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdContract</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdCustomerInfo</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail</value>

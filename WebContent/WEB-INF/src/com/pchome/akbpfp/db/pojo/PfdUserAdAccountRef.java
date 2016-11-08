@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/10/24 �U�� 12:22:48 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/11/8 �W�� 10:57:23 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
