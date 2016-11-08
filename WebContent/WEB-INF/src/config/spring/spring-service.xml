@@ -61,6 +61,10 @@
    	<bean id="PfpBoardService" class="com.pchome.akbpfp.db.service.board.PfpBoardService">
         <property name="dao" ref="PfpBoardDAO" /> 
     </bean>
+    
+    <bean id="PfdBoardService" class="com.pchome.akbpfp.db.service.board.PfdBoardService">
+        <property name="dao" ref="PfdBoardDAO" /> 
+    </bean>
    
 	<!-- report -->
     <bean id="AdActionReportService" class="com.pchome.akbpfp.db.service.report.AdActionReportService"> 

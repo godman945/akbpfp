@@ -57,6 +57,10 @@
     <bean id="PfpBoardDAO" class="com.pchome.akbpfp.db.dao.board.PfpBoardDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    
+    <bean id="PfdBoardDAO" class="com.pchome.akbpfp.db.dao.board.PfdBoardDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 
 	<!-- pfb Size -->
 	<bean id="PfbxSizeDAO" class="com.pchome.akbpfp.db.dao.pfbx.PfbxSizeDAO">
