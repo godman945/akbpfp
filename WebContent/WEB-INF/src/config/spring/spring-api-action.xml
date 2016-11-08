@@ -22,7 +22,8 @@
 		<property name="boardProvider" ref="BoardProviderProxy" />
 		<property name="controlPriceAPI" ref="ControlPriceAPI" />
 		<property name="channelId" value="${billing.channel.id}" /> 
-		<property name="password" value="${billing.password}" /> 
+		<property name="password" value="${billing.password}" />
+		<property name="pfdBoardService" ref="PfdBoardService" /> 
 		
     </bean>
 

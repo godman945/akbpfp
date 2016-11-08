@@ -16,6 +16,7 @@ import com.pchome.akbpfp.db.pojo.PfpOrder;
 import com.pchome.akbpfp.db.pojo.PfpTransDetail;
 import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.bill.IPfpTransDetailService;
+import com.pchome.akbpfp.db.service.board.IPfdBoardService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeRecordService;
@@ -46,7 +47,9 @@ public class OrderAPIAction extends BaseCookieAction{
 	private IAdmFreeRecordService admFreeRecordService;
 	private IPfpTransDetailService transDetailService;
 	//private IAdmRecognizeRecordService admRecognizeRecordService;
+	
 	private IBoardProvider boardProvider;
+	private IPfdBoardService pfdBoardService;
 	private ControlPriceAPI controlPriceAPI;
 	
 	private String channelId;
@@ -189,12 +192,18 @@ public class OrderAPIAction extends BaseCookieAction{
 					
 					// 刪除帳戶餘額不足公告
 					boardProvider.delete(customerInfo.getCustomerInfoId(), EnumCategory.REMAIN_NOT_ENOUGH);
+					
+					// pfd刪除帳戶餘額不足公告
+					pfdBoardService.deletePfdBoardByDeleteId(customerInfo.getCustomerInfoId());
 				}
 				
 				if(customerInfo.getRemain() > 300){
 					
 					// 刪除帳戶餘額偏低公告
 					boardProvider.delete(customerInfo.getCustomerInfoId(), EnumCategory.REMAIN_TOO_LOW);
+					
+					// pfd刪除帳戶餘額偏低公告
+					pfdBoardService.deletePfdBoardByDeleteId(customerInfo.getCustomerInfoId());
 				}
 				
 				// 重算調控金額
@@ -410,6 +419,10 @@ public class OrderAPIAction extends BaseCookieAction{
 
 	public void setTransDetailService(IPfpTransDetailService transDetailService) {
 		this.transDetailService = transDetailService;
+	}
+
+	public void setPfdBoardService(IPfdBoardService pfdBoardService) {
+		this.pfdBoardService = pfdBoardService;
 	}
 
 	public static void main(String age[]) throws Exception{

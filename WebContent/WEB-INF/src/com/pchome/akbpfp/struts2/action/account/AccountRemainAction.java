@@ -6,6 +6,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 
+
+
 import com.pchome.akbpfp.api.RedirectBillingAPI;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
@@ -17,6 +19,7 @@ import com.pchome.akbpfp.db.pojo.PfpTransDetail;
 import com.pchome.akbpfp.db.pojo.PfpUser;
 import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.bill.IPfpTransDetailService;
+import com.pchome.akbpfp.db.service.board.IPfdBoardService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeRecordService;
@@ -35,6 +38,8 @@ import com.pchome.enumerate.freeAction.EnumGiftSnoUsed;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.trans.EnumTransType;
 import com.pchome.rmi.accesslog.EnumAccesslogAction;
+import com.pchome.rmi.board.IBoardProvider;
+import com.pchome.rmi.mailbox.EnumCategory;
 import com.pchome.soft.depot.utils.CookieUtil;
 import com.pchome.soft.depot.utils.EncodeUtil;
 
@@ -50,6 +55,8 @@ public class AccountRemainAction extends BaseSSLAction{
 	private IAdmFreeGiftService admFreeGiftService;
 	private IAdmFreeRecordService admFreeRecordService;
 	private IPfpTransDetailService transDetailService;
+	private IBoardProvider boardProvider;
+	private IPfdBoardService pfdBoardService;
 	
 	private String billingProductId;
 	private String billingProductName;
@@ -212,6 +219,24 @@ public class AccountRemainAction extends BaseSSLAction{
 			
 			this.createTransDetail(pfpCustomerInfo,admFreeGift.getAdmFreeAction().getGiftMoney());
 			
+			if(remaim > 3){
+				
+				// 刪除帳戶餘額不足公告
+				boardProvider.delete(pfpCustomerInfo.getCustomerInfoId(), EnumCategory.REMAIN_NOT_ENOUGH);
+				
+				// pfd刪除帳戶餘額不足公告
+				pfdBoardService.deletePfdBoardByDeleteId(pfpCustomerInfo.getCustomerInfoId());
+			}
+			
+			if(remaim > 300){
+				
+				// 刪除帳戶餘額偏低公告
+				boardProvider.delete(pfpCustomerInfo.getCustomerInfoId(), EnumCategory.REMAIN_TOO_LOW);
+				
+				// pfd刪除帳戶餘額偏低公告
+				pfdBoardService.deletePfdBoardByDeleteId(pfpCustomerInfo.getCustomerInfoId());
+			}
+			
 			return "summary";
 		}
 		
@@ -344,6 +369,14 @@ public class AccountRemainAction extends BaseSSLAction{
 
 	public void setGiftMoney(float giftMoney) {
 		this.giftMoney = giftMoney;
+	}
+
+	public void setBoardProvider(IBoardProvider boardProvider) {
+		this.boardProvider = boardProvider;
+	}
+
+	public void setPfdBoardService(IPfdBoardService pfdBoardService) {
+		this.pfdBoardService = pfdBoardService;
 	}
 
 //	public void setDefaultPrice(float defaultPrice) {

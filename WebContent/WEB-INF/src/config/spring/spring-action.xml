@@ -81,7 +81,9 @@
 		<property name="admFreeRecordService" ref="AdmFreeRecordService" />
 		<property name="transDetailService" ref="PfpTransDetailService" />
 		<property name="billingProductId" value="${billing.product.save.id}" />
-		<property name="billingProductName" value="${billing.product.save.name}" />		
+		<property name="billingProductName" value="${billing.product.save.name}" />
+		<property name="boardProvider" ref="BoardProviderProxy" />
+		<property name="pfdBoardService" ref="PfdBoardService" />		
     </bean>   
     
     <!-- account invite user -->
