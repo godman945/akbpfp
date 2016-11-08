@@ -1,18 +1,26 @@
 package com.pchome.akbpfp.struts2.action.account;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.pchome.akbpfp.db.pojo.PfdBoard;
+import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
+import com.pchome.akbpfp.db.service.board.IPfdBoardService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.vo.account.AccountVO;
 import com.pchome.akbpfp.struts2.BaseSSLAction;
 import com.pchome.enumerate.account.EnumAccountIndustry;
 import com.pchome.enumerate.account.EnumAccountStatus;
 import com.pchome.enumerate.account.EnumPfdAccountPayType;
+import com.pchome.enumerate.pfd.EnumPfdBoardType;
+import com.pchome.enumerate.pfd.EnumPfdUserPrivilege;
 import com.pchome.rmi.board.EnumBoardType;
 import com.pchome.rmi.board.IBoardProvider;
 import com.pchome.rmi.mailbox.EnumCategory;
@@ -22,6 +30,7 @@ public class AccountInfoAction extends BaseSSLAction{
 	
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private IBoardProvider boardProvider;
+	private IPfdBoardService pfdBoardService;
 	
 	private PfpCustomerInfo pfpCustomerInfo;
 	private AccountVO accountVO;
@@ -87,6 +96,8 @@ public class AccountInfoAction extends BaseSSLAction{
 					StringUtils.isNotBlank(industry.trim()) && StringUtils.isNotBlank(urlAddress.trim()) &&
 					StringUtils.isNotBlank(status.trim())){
 				
+				String oldStatus = pfpCustomerInfo.getStatus();
+				
 				pfpCustomerInfo.setCategory(category.trim());
 				pfpCustomerInfo.setCustomerInfoTitle(accountTitle.trim());
 				
@@ -104,7 +115,7 @@ public class AccountInfoAction extends BaseSSLAction{
 				pfpCustomerInfo.setUpdateDate(new Date());
 				
 				// 公告通知及刪除
-				if(EnumAccountStatus.CLOSE.getStatus().equals(status)){
+				if(EnumAccountStatus.CLOSE.getStatus().equals(status) && !StringUtils.equals(EnumAccountStatus.CLOSE.getStatus(), oldStatus)){
 
 					boardProvider.add(pfpCustomerInfo.getCustomerInfoId(), 
 										EnumCategory.ACCOUNT_CLOSED.getBoardContent(),
@@ -112,11 +123,56 @@ public class AccountInfoAction extends BaseSSLAction{
 										EnumBoardType.ACCOUNT, 
 										EnumCategory.ACCOUNT_CLOSED,
 										null);
+					
+					// pfd經銷商也要發公告
+					Set<PfdUserAdAccountRef> set = pfpCustomerInfo.getPfdUserAdAccountRefs();
+					if(set.size() > 0){
+						List<PfdUserAdAccountRef> list = new ArrayList<PfdUserAdAccountRef>(set);
+						String pfdCustomerInfoId = list.get(0).getPfdCustomerInfo().getCustomerInfoId();
+						String pfdUserId = list.get(0).getPfdUser().getUserId();
+						
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+
+						Date now = new Date();
+						Date startDate = sdf.parse(sdf.format(now));
+						Calendar c = Calendar.getInstance();
+						c.add(Calendar.MONTH, 6);
+						Date endDate = sdf.parse(sdf.format(c.getTime()));
+						
+						String content = "廣告帳戶 <a href=\"./adAccountList.html\">" + pfpCustomerInfo.getCustomerInfoTitle() + "</a> 已被關閉，故無法播放廣告。如要繼續播出廣告，請重新開啟此帳戶狀態。";
+
+						PfdBoard board = new PfdBoard();
+						board.setBoardType(EnumPfdBoardType.REMIND.getType());
+						board.setBoardContent(content);
+						board.setPfdCustomerInfoId(pfdCustomerInfoId);
+						board.setIsSysBoard("n");
+						board.setPfdUserId(pfdUserId);
+						board.setStartDate(startDate);
+						board.setEndDate(endDate);
+						board.setHasUrl("n");
+						board.setUrlAddress(null);
+						board.setDeleteId(pfpCustomerInfo.getCustomerInfoId() + "/close");
+						
+						//觀看權限(總管理者/帳戶管理/行政管理)
+						String msgPrivilege = EnumPfdUserPrivilege.ROOT_USER.getPrivilege() + "||" + EnumPfdUserPrivilege.ACCOUNT_MANAGER.getPrivilege()
+								 + "||" + EnumPfdUserPrivilege.REPORT_MANAGER.getPrivilege() + "||" + EnumPfdUserPrivilege.SALES_MANAGER.getPrivilege();
+						board.setMsgPrivilege(msgPrivilege);
+						
+						board.setUpdateDate(now);
+						board.setCreateDate(now);
+
+						pfdBoardService.save(board);
+						
+					}
+					
 				}
 				
 				if(EnumAccountStatus.START.getStatus().equals(status)){
 					
 					boardProvider.delete(pfpCustomerInfo.getCustomerInfoId(), EnumCategory.ACCOUNT_CLOSED);
+					
+					//pfd經銷商公告也要刪除
+					pfdBoardService.deletePfdBoardByDeleteId(pfpCustomerInfo.getCustomerInfoId() + "/close");
 				}
 				
 				pfpCustomerInfoService.saveOrUpdateWithAccesslog(pfpCustomerInfo, super.getId_pchome(), super.getUser_id(), request.getRemoteAddr());
@@ -183,6 +239,10 @@ public class AccountInfoAction extends BaseSSLAction{
 
 	public EnumPfdAccountPayType[] getPayType() {
 		return payType;
+	}
+
+	public void setPfdBoardService(IPfdBoardService pfdBoardService) {
+		this.pfdBoardService = pfdBoardService;
 	}
 	
 }
