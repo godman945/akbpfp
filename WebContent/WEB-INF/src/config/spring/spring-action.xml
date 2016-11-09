@@ -66,6 +66,7 @@
     <bean id="AccountInfoAction" class="com.pchome.akbpfp.struts2.action.account.AccountInfoAction" scope="prototype" >
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
     	<property name="boardProvider" ref="BoardProviderProxy" />
+    	<property name="pfdBoardService" ref="PfdBoardService" />
     </bean>
 
     <!-- account add money -->
