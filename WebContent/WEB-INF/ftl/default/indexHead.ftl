@@ -15,9 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
     <@t.insertAttribute name="css" />
-	<script language="javascript" src="<@s.url value="/" />html/main/js/jquery.min.js"></script>
-	<script type="text/javascript" src="<@s.url value="/" />html/main/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="<@s.url value="/" />html/main/js/YTPlayer/jquery.mb.YTPlayer.min.js"></script>
+	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery-1.8.3.min.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery-common.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.blockUI.js"></script>
     <@t.insertAttribute name="js" />	
