@@ -1,6 +1,5 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-	<script type="text/javascript" src="<@s.url value="/" />html/main/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<@s.url value="/" />html/main/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<@s.url value="/" />html/main/js/YTPlayer/jquery.mb.YTPlayer.min.js"></script>
 	
