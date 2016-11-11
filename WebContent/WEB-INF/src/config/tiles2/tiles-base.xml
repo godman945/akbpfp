@@ -31,6 +31,21 @@
     
     <definition name="default.page" template="/ftl/default/page.ftl" />
     
+    <!-- default layout template for index -->
+    <definition name="default.index.layout" template="/ftl/default/layout.ftl">
+    	<put-attribute name="head" value="default.indexHead" />
+        <put-attribute name="header" value="default.header" />
+        <put-attribute name="menu" value="default.menu" />
+        <put-attribute name="body" value="default.body" />
+        <put-attribute name="footer" value="default.footer" />
+        <put-attribute name="forie10" value="/ftl/default/layoutForIE10.ftl" />
+    </definition>
+    
+    <definition name="default.indexHead" template="/ftl/default/indexHead.ftl" >
+    	<put-attribute name="css" value="" />
+        <put-attribute name="js" value="" />
+    </definition>
+    
     <!-- error -->
     <definition name=".error.error" extends="default.layout" >
         <put-attribute name="body" value="/ftl/error/errorBody.ftl" />
