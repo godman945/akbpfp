@@ -365,5 +365,5 @@
 </div>
 <div id="video" class="player mb_YTPlayer" data-property="{videoURL:'https://www.youtube.com/watch?v=mdII7PQ3ItA',containment:'#videolayer', showControls:false, autoPlay:true, loop:true, mute:true, startAt:0, opacity:1, addRaster:true, quality:'default'}" style="display: none;">videobg</div>
 
-
 </#if>
+</div>
