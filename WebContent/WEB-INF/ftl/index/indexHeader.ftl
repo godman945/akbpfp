@@ -102,7 +102,7 @@
 
 
 
-<div id="myPage" style="width:100%;">
+<div style="width:100%;">
 
 <#if (today?date >= startDate?date) && (today?date <= endDate?date)>
 
