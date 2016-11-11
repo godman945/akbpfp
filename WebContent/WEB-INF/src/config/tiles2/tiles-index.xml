@@ -5,7 +5,7 @@
 
 <tiles-definitions>
     <!-- index -->
-    <definition name="index.index" extends="default.layout" >
+    <definition name="index.index" extends="default.index.layout" >
     	<put-attribute name="menu" value="" />
     	<put-attribute name="header" value="/ftl/index/indexHeader.ftl" />
         <put-attribute name="body" value="/ftl/index/indexBody.ftl" />
