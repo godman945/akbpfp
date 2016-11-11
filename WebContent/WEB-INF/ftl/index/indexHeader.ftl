@@ -39,11 +39,6 @@
             } // End if
         });
 
-		$(".changeTag").click(function(){
-			$(".changeTag").removeClass("active");
-			$(this).addClass("active");
-		});
-
         $(window).scroll(function() {
             $(".slideanim").each(function() {
                 var pos = $(this).offset().top;
@@ -82,10 +77,10 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-left">
-                <li class="changeTag" ><a href="#step">刊登秘訣</a></li>
-                <li class="changeTag" ><a href="#impression">全站曝光</a></li>
-                <li class="changeTag" ><a href="#fee">收費/付款</a></li>
-                <li class="changeTag" ><a href="#advantage">廣告優勢</a></li>
+                <li><a href="#step">刊登秘訣</a></li>
+                <li><a href="#impression">全站曝光</a></li>
+                <li><a href="#fee">收費/付款</a></li>
+                <li><a href="#advantage">廣告優勢</a></li>
                 <li><a href="http://show.pchome.com.tw/faq.html" target="_blank">熱門問答</a></li>
                 <li><a href="http://4c.pchome.com.tw/campaign/2016/EMBA5/" target="_blank">AD學院</a></li>
 
