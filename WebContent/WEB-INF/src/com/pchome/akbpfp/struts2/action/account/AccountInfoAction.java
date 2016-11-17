@@ -146,7 +146,7 @@ public class AccountInfoAction extends BaseSSLAction{
 						board.setBoardContent(content);
 						board.setPfdCustomerInfoId(pfdCustomerInfoId);
 						board.setIsSysBoard("n");
-						board.setPfdUserId(pfdUserId);
+						//board.setPfdUserId(pfdUserId);
 						board.setStartDate(startDate);
 						board.setEndDate(endDate);
 						board.setHasUrl("n");
@@ -154,8 +154,7 @@ public class AccountInfoAction extends BaseSSLAction{
 						board.setDeleteId(pfpCustomerInfo.getCustomerInfoId() + "/close");
 						
 						//觀看權限(總管理者/帳戶管理/行政管理)
-						String msgPrivilege = EnumPfdUserPrivilege.ROOT_USER.getPrivilege() + "||" + EnumPfdUserPrivilege.ACCOUNT_MANAGER.getPrivilege()
-								 + "||" + EnumPfdUserPrivilege.REPORT_MANAGER.getPrivilege() + "||" + EnumPfdUserPrivilege.SALES_MANAGER.getPrivilege();
+						String msgPrivilege = EnumPfdUserPrivilege.ROOT_USER.getPrivilege() + "||" + EnumPfdUserPrivilege.ACCOUNT_MANAGER.getPrivilege();
 						board.setMsgPrivilege(msgPrivilege);
 						
 						board.setUpdateDate(now);
@@ -163,6 +162,23 @@ public class AccountInfoAction extends BaseSSLAction{
 
 						pfdBoardService.save(board);
 						
+						//給行政管理/業務管理看的公告
+	            		PfdBoard board2 = new PfdBoard();
+	            		board2.setBoardType(EnumPfdBoardType.REMIND.getType());
+						board2.setBoardContent("廣告帳戶 <span style=\"color:#1d5ed6;\">" + pfpCustomerInfo.getCustomerInfoTitle() + "</span> 已被關閉，故無法播放廣告。如要繼續播出廣告，請重新開啟此帳戶狀態。");
+						board2.setPfdCustomerInfoId(pfdCustomerInfoId);
+						board2.setIsSysBoard("n");
+						board2.setPfdUserId(pfdUserId);
+						board2.setStartDate(startDate);
+						board2.setEndDate(endDate);
+						board2.setHasUrl("n");
+						board2.setUrlAddress(null);
+						board2.setDeleteId(pfpCustomerInfo.getCustomerInfoId() + "/close");
+						board2.setMsgPrivilege(EnumPfdUserPrivilege.REPORT_MANAGER.getPrivilege() + "||" + EnumPfdUserPrivilege.SALES_MANAGER.getPrivilege());
+						board2.setUpdateDate(now);
+						board2.setCreateDate(now);
+
+						pfdBoardService.save(board2);
 					}
 					
 				}
