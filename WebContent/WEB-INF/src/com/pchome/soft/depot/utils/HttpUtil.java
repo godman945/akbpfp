@@ -118,6 +118,9 @@ public class HttpUtil {
     // Add URL RealUrl code 2014/10/15 alex
     public synchronized String getRealUrl(String urlPath) throws Exception {
 	log.info("getRealUrl start>>>"+urlPath);
+	
+	String returnUrl = "";
+	
 	if(StringUtils.isEmpty(urlPath) || urlPath.length()<1 ){
 //	    return null;
 	}
@@ -130,7 +133,14 @@ public class HttpUtil {
 	 }else{
 	     path = enCode(url.getPath());
 	 }
-	return "http://"+urlDomain+path;
+	
+	if(urlPath.indexOf("https://") == 0){
+		returnUrl = "https://";
+	} else {
+		returnUrl = "http://";
+	}
+	
+	return returnUrl+urlDomain+path;
     }
     
     public synchronized String convertRealUrl(String urlPath) throws Exception {
@@ -205,6 +215,7 @@ public class HttpUtil {
      * @throws Exception 
      */
     public synchronized int getStatusCode(String url) throws Exception {
+    	log.info(">>>>>>>>>>>>>>url=" + url);
 	int statusCode = HttpStatus.SC_NOT_FOUND;
 	url = getRealUrl(url);
 	if (StringUtils.isNotEmpty(url)) {
@@ -243,7 +254,13 @@ public class HttpUtil {
     	int statusCode = HttpStatus.SC_NOT_FOUND;
     	
     	try {
-    		URLConnection connection = new URL(url).openConnection();
+    		String httpUrl = "http://";
+    		
+    		if(url.indexOf("https://") == 0){
+    			httpUrl += url.substring(8);
+    		}
+    		
+    		URLConnection connection = new URL(httpUrl).openConnection();
     		connection.setRequestProperty("User-Agent",
     				"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11");
     		connection.connect();
