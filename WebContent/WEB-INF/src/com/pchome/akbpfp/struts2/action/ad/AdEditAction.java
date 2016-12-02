@@ -392,13 +392,14 @@ public class AdEditAction extends BaseCookieAction{
 			if(adDetailId != null && adDetailId.equals("real_url")) {
 				adDetailSeq[0] = pfpAdDetails.get(i).getAdDetailSeq();
 				String deCodeUrl = pfpAdDetails.get(i).getAdDetailContent();
-				try {
+				/*try {
 				    deCodeUrl = HttpUtil.getInstance().convertRealUrl(deCodeUrl);
 				}
 				catch (Exception e) {
 				    log.error(deCodeUrl, e);
 				}
-				adDetailContent[0] = deCodeUrl.replaceAll("http://", "");
+				adDetailContent[0] = deCodeUrl.replaceAll("http://", "");*/
+				adDetailContent[0] = deCodeUrl;
 			} else if(adDetailId != null && adDetailId.equals("img")) {
 				adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();
 				String imgFilename = pfpAdDetails.get(i).getAdDetailContent();

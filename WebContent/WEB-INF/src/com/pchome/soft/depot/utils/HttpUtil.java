@@ -155,7 +155,9 @@ public class HttpUtil {
 	String path = "";
 	if(url.getQuery()!= null){
 	    path = deCode(url.getPath()+"?"+url.getQuery());
-	}else{
+	} else if(url.getRef() != null){ 		//2016-12-02 增加
+		 path = enCode(url.getPath()+"#"+url.getRef());
+	 } else{
 	    path = deCode(url.getPath());
 	}
 	return getUnicode(url.getHost()) + path;
