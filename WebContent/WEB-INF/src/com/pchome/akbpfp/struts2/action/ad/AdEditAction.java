@@ -281,8 +281,9 @@ public class AdEditAction extends BaseCookieAction{
 			    if(pfpAdDetail.getAdDetailId().equals("real_url") && !StringUtils.isBlank(adDetailContent[i])) {
 				 if(adDetailContent[i].indexOf("http") < 0 ) {
 				     adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
+				     adDetailContent[i] = "http://" + adDetailContent[i];
 				    }else{
-				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+				    	adDetailContent[i] = adDetailContent[i];
 				    }
 				 adDetailContent[i] = adDetailContent[i].trim();
 			    }
@@ -399,7 +400,11 @@ public class AdEditAction extends BaseCookieAction{
 				    log.error(deCodeUrl, e);
 				}
 				adDetailContent[0] = deCodeUrl.replaceAll("http://", "");*/
-				adDetailContent[0] = deCodeUrl;
+				 if(deCodeUrl.indexOf("http") < 0 ) {
+					 adDetailContent[0] = "http://" + deCodeUrl;
+				 } else {
+					 adDetailContent[0] = deCodeUrl;
+				 }
 			} else if(adDetailId != null && adDetailId.equals("img")) {
 				adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();
 				String imgFilename = pfpAdDetails.get(i).getAdDetailContent();
