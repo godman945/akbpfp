@@ -130,7 +130,9 @@ public class HttpUtil {
 	String path = "";
 	if(url.getQuery()!= null){
 	    path = enCode(url.getPath()+"?"+url.getQuery());
-	 }else{
+	 } else if(url.getRef() != null){ 		//2016-12-02 增加
+		 path = enCode(url.getPath()+"#"+url.getRef());
+	 } else{
 	     path = enCode(url.getPath());
 	 }
 	
