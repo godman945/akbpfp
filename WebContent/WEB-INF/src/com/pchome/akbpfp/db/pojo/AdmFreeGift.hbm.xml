@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016/11/8 ?W?? 10:57:23 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2016/12/7 ?W?? 10:39:39 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.AdmFreeGift" table="adm_free_gift" catalog="akb">
         <id name="giftId" type="java.lang.Integer">

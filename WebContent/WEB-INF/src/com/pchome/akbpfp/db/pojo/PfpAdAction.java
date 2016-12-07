@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/11/8 �W�� 10:57:23 by Hibernate Tools 3.4.0.CR1
+// Generated 2016/12/7 �W�� 10:39:38 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -37,6 +37,7 @@ public class PfpAdAction implements java.io.Serializable {
 	private int adActionStartAge;
 	private int adActionEndAge;
 	private float adActionMax;
+	private String changeMax;
 	private float adActionControlPrice;
 	private int adActionStatus;
 	private int adActionMonTime;
@@ -90,11 +91,11 @@ public class PfpAdAction implements java.io.Serializable {
 			String adActionName, String adActionDesc, Integer adType,
 			Integer adDevice, Date adActionStartDate, Date adActionEndDate,
 			String adActionSex, int adActionStartAge, int adActionEndAge,
-			float adActionMax, float adActionControlPrice, int adActionStatus,
-			int adActionMonTime, int adActionTueTime, int adActionWedTime,
-			int adActionThuTime, int adActionFriTime, int adActionSatTime,
-			int adActionSunTime, String aid, String userId,
-			Date adActionCreatTime, Date adActionUpdateTime,
+			float adActionMax, String changeMax, float adActionControlPrice,
+			int adActionStatus, int adActionMonTime, int adActionTueTime,
+			int adActionWedTime, int adActionThuTime, int adActionFriTime,
+			int adActionSatTime, int adActionSunTime, String aid,
+			String userId, Date adActionCreatTime, Date adActionUpdateTime,
 			Set<PfpAdGroup> pfpAdGroups) {
 		this.adActionSeq = adActionSeq;
 		this.pfpCustomerInfo = pfpCustomerInfo;
@@ -108,6 +109,7 @@ public class PfpAdAction implements java.io.Serializable {
 		this.adActionStartAge = adActionStartAge;
 		this.adActionEndAge = adActionEndAge;
 		this.adActionMax = adActionMax;
+		this.changeMax = changeMax;
 		this.adActionControlPrice = adActionControlPrice;
 		this.adActionStatus = adActionStatus;
 		this.adActionMonTime = adActionMonTime;
@@ -234,6 +236,15 @@ public class PfpAdAction implements java.io.Serializable {
 
 	public void setAdActionMax(float adActionMax) {
 		this.adActionMax = adActionMax;
+	}
+
+	@Column(name = "change_max", length = 1)
+	public String getChangeMax() {
+		return this.changeMax;
+	}
+
+	public void setChangeMax(String changeMax) {
+		this.changeMax = changeMax;
 	}
 
 	@Column(name = "ad_action_control_price", nullable = false, precision = 10)
