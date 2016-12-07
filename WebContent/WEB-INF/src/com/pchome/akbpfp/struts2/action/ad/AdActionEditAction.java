@@ -321,6 +321,7 @@ public class AdActionEditAction extends BaseCookieAction{
 			admAccesslogService.recordAdLog(EnumAccesslogAction.AD_MONEY_MODIFY, accesslogMessage_Money, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 			pfpAdAction.setAdActionMax(iAdActionMax);
 			pfpAdAction.setAdActionControlPrice(iAdActionMax);
+			pfpAdAction.setChangeMax("Y");
 
 			if(pfpAdAction.getAdActionStatus() == EnumStatus.Open.getStatusId()) {
 				// 重算調控金額

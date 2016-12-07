@@ -186,6 +186,7 @@ public class AdActionViewAction extends BaseSSLAction{
 				
 				adAction.setAdActionMax(adActionMax);
 				adAction.setAdActionControlPrice(adActionMax);
+				adAction.setChangeMax("Y");
 				
 				adAction.setAdActionUpdateTime(new Date());
 				pfpAdActionService.saveOrUpdate(adAction);
