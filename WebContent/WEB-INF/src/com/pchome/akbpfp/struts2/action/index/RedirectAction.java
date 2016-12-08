@@ -112,7 +112,7 @@ public class RedirectAction extends BaseCookieAction{
 			if(this.checkPfpAuthorizedPage()){
 				
 				// 確認是否該帳戶的總管理者
-				if(this.pfpUser.getPfpCustomerInfo().getMemberId().equals(super.getId_pchome().toUpperCase())){
+				if(this.pfpUser.getPfpCustomerInfo().getMemberId().equals(super.getId_pchome())){
 					// 補填帳戶資料 : 設定在struts-index.xml
 					return "authorization";
 				}else{
