@@ -281,7 +281,7 @@ public class AdEditAction extends BaseCookieAction{
 			    if(pfpAdDetail.getAdDetailId().equals("real_url") && !StringUtils.isBlank(adDetailContent[i])) {
 				 if(adDetailContent[i].indexOf("http") < 0 ) {
 				     adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
-				     adDetailContent[i] = "http://" + adDetailContent[i];
+				     //adDetailContent[i] = "http://" + adDetailContent[i];
 				    }else{
 				    	adDetailContent[i] = adDetailContent[i];
 				    }
