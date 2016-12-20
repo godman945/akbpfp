@@ -2,12 +2,12 @@ package com.pchome.akbpfp.struts2.action.manager;
 
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.pchome.akbpfp.api.CookieProccessAPI;
 import com.pchome.akbpfp.db.pojo.PfpUser;
-import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
-import com.pchome.akbpfp.db.service.user.IPfpUserMemberRefService;
 import com.pchome.akbpfp.db.service.user.IPfpUserService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.account.EnumPfpRootUser;
@@ -26,7 +26,11 @@ public class ManagerAccountAction extends BaseCookieAction{
 
 	public String execute() {
 		
-		vos = pfpProviderProxy.findPfpAccount(super.getId_pchome());
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String ip = request.getRemoteAddr();
+		log.info(">>>login  ip = " + ip);
+		
+		vos = pfpProviderProxy.findPfpAccount(super.getId_pchome(),ip);
 		
 		//log.info(" vos: "+vos.size());
 		// 無資料就導首頁

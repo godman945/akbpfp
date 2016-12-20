@@ -3,7 +3,10 @@ package com.pchome.akbpfp.struts2.action.index;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
+import org.apache.struts2.ServletActionContext;
 
 import com.pchome.akbpfp.api.CookieProccessAPI;
 import com.pchome.akbpfp.api.MemberAPI;
@@ -207,7 +210,11 @@ public class RedirectAction extends BaseCookieAction{
 	}
 	
 	private boolean checkManagerMemberId(){
-		return pfpProviderProxy.isManager(super.getId_pchome());
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String ip = request.getRemoteAddr();
+		log.info(">>>login  ip = " + ip);
+		
+		return pfpProviderProxy.isManager(super.getId_pchome(),ip);
 	}
 	
 	private void updateLoginDateTime(){		
