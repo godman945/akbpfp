@@ -262,6 +262,10 @@ public class HttpUtil {
     		
     		if(url.indexOf("https://") == 0){
     			httpUrl += url.substring(8);
+    		} else if(url.indexOf("http://") == 0){
+    			httpUrl = url;
+    		} else {
+    			httpUrl += url;
     		}
     		
     		URLConnection connection = new URL(httpUrl).openConnection();
