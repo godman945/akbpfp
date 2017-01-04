@@ -33,7 +33,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	public String  writeImg(File originalImgFile,String userImgPath,String custimerInfoid,String date,String adSeq,String fileType) throws Exception{
 	    log.info("開始處理圖片:"+adSeq);
 	    //Date date2 = new Date();
-	    BufferedImage bufferedImage = null;
+	    /*BufferedImage bufferedImage = null;
 	    if("JPG".equals(fileType.toUpperCase()) || "PNG".equals(fileType.toUpperCase())){
 	    	bufferedImage = ImageIO.read(originalImgFile);
 	    	int w = bufferedImage.getWidth();
@@ -58,7 +58,23 @@ public class CommonUtilModel extends BaseCookieAction{
             input.close();
             output1.close();
             output2.close();
-	    }
+	    }*/
+	    
+	    //2017.01.04 圖片失真，暫時先用gif處理方式
+	    
+	    File file1 = new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
+        File file2 = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
+        FileOutputStream output1 = new FileOutputStream(file1);
+        FileOutputStream output2 = new FileOutputStream(file2);
+        InputStream input = new FileInputStream(originalImgFile);
+        byte[] byt = new byte[input.available()];
+        input.read(byt);
+        output1.write(byt);
+        output2.write(byt);
+        
+        input.close();
+        output1.close();
+        output2.close();
 	    
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + fileType;
 	}
