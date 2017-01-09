@@ -117,7 +117,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	    	env.put("VAR1", "myValue");
 	    	env.remove("OTHERVAR");
 	    	env.put("VAR2", env.get("VAR1") + "suffix");
-	    	pb.directory(new File("myDir"));
+	    	pb.directory(new File(pathFile));
 			Process p = pb.start();
 		} catch (IOException e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG error ");
@@ -138,7 +138,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	    	env.put("VAR1", "myValue");
 	    	env.remove("OTHERVAR");
 	    	env.put("VAR2", env.get("VAR1") + "suffix");
-	    	pb.directory(new File("myDir"));
+	    	pb.directory(new File(pathFile));
 			Process p = pb.start();
 		} catch (IOException e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG error ");
