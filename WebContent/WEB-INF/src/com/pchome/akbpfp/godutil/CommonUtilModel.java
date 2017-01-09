@@ -115,7 +115,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	    try {
 	    	Runtime rt = Runtime.getRuntime();
 	    	Process proc = rt.exec("jpegoptim " + pathFile);
-	    	BufferedReader read = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+	    	proc.waitFor();
 	    	/*ProcessBuilder pb = new ProcessBuilder("jpegoptim " + pathFile, "myArg1", "myArg2");
 	    	Map<String, String> env = pb.environment();
 	    	env.clear();
@@ -124,7 +124,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	    	env.put("VAR2", env.get("VAR1") + "suffix");
 	    	pb.directory(new File("myDir"));
 			Process p = pb.start();*/
-		} catch (IOException e) {
+		} catch (Exception e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG error ");
 			log.info(e);
 
