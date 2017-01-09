@@ -115,15 +115,6 @@ public class CommonUtilModel extends BaseCookieAction{
 	    try {
 	    	Runtime rt = Runtime.getRuntime();
 	    	Process proc = rt.exec("/usr/bin/jpegoptim " + pathFile);
-	    	
-	    	/*ProcessBuilder pb = new ProcessBuilder("/usr/bin/jpegoptim " + pathFile, "myArg1", "myArg2");
-	    	Map<String, String> env = pb.environment();
-	    	env.clear();
-	    	env.put("VAR1", "myValue");
-	    	env.remove("OTHERVAR");
-	    	env.put("VAR2", env.get("VAR1") + "suffix");
-	    	pb.directory(new File("myDir"));
-			Process p = pb.start();*/
 		} catch (Exception e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG error ");
 			log.info(e);
@@ -137,15 +128,9 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * */
 	private void squeezePNG(String pathFile){
 	    try {
-	    	ProcessBuilder pb = new ProcessBuilder("optipng " + pathFile, "myArg1", "myArg2");
-	    	Map<String, String> env = pb.environment();
-	    	env.clear();
-	    	env.put("VAR1", "myValue");
-	    	env.remove("OTHERVAR");
-	    	env.put("VAR2", env.get("VAR1") + "suffix");
-	    	pb.directory(new File("myDir"));
-			Process p = pb.start();
-		} catch (IOException e) {
+	    	Runtime rt = Runtime.getRuntime();
+	    	Process proc = rt.exec("/usr/bin/optipng " + pathFile);
+		} catch (Exception e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG error ");
 			log.info(e);
 			e.printStackTrace();
