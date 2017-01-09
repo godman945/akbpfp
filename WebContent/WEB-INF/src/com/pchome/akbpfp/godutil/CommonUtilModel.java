@@ -79,9 +79,11 @@ public class CommonUtilModel extends BaseCookieAction{
         output2.close();
 	    
         if("JPG".equals(fileType.toUpperCase())){
+        	log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG start ");
         	this.squeezeJPG(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
         	this.squeezeJPG(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
         } else if("PNG".equals(fileType.toUpperCase())){
+        	log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG start ");
         	this.squeezePNG(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
         	this.squeezePNG(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
         }
@@ -118,7 +120,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	    	pb.directory(new File("myDir"));
 			Process p = pb.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG error ");
 			e.printStackTrace();
 		}
 	}
@@ -137,7 +139,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	    	pb.directory(new File("myDir"));
 			Process p = pb.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG error ");
 			e.printStackTrace();
 		}
 	}
