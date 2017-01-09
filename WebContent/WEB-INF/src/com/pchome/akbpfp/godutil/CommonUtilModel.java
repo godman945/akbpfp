@@ -121,6 +121,8 @@ public class CommonUtilModel extends BaseCookieAction{
 			Process p = pb.start();
 		} catch (IOException e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG error ");
+			log.info(e);
+
 			e.printStackTrace();
 		}
 	}
@@ -140,6 +142,7 @@ public class CommonUtilModel extends BaseCookieAction{
 			Process p = pb.start();
 		} catch (IOException e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG error ");
+			log.info(e);
 			e.printStackTrace();
 		}
 	}
