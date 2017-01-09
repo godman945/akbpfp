@@ -6,9 +6,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
@@ -76,6 +78,14 @@ public class CommonUtilModel extends BaseCookieAction{
         output1.close();
         output2.close();
 	    
+        if("JPG".equals(fileType.toUpperCase())){
+        	this.squeezeJPG(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
+        	this.squeezeJPG(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
+        } else if("PNG".equals(fileType.toUpperCase())){
+        	this.squeezePNG(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
+        	this.squeezePNG(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
+        }
+        
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + fileType;
 	}
 
@@ -94,6 +104,43 @@ public class CommonUtilModel extends BaseCookieAction{
             }
 	}
 
+	/**
+	 * 壓縮JPG圖檔
+	 * */
+	private void squeezeJPG(String pathFile){
+	    try {
+	    	ProcessBuilder pb = new ProcessBuilder("jpegoptim " + pathFile, "myArg1", "myArg2");
+	    	Map<String, String> env = pb.environment();
+	    	env.clear();
+	    	env.put("VAR1", "myValue");
+	    	env.remove("OTHERVAR");
+	    	env.put("VAR2", env.get("VAR1") + "suffix");
+	    	pb.directory(new File("myDir"));
+			Process p = pb.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 壓縮PNG圖檔
+	 * */
+	private void squeezePNG(String pathFile){
+	    try {
+	    	ProcessBuilder pb = new ProcessBuilder("optipng " + pathFile, "myArg1", "myArg2");
+	    	Map<String, String> env = pb.environment();
+	    	env.clear();
+	    	env.put("VAR1", "myValue");
+	    	env.remove("OTHERVAR");
+	    	env.put("VAR2", env.get("VAR1") + "suffix");
+	    	pb.directory(new File("myDir"));
+			Process p = pb.start();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * 刪除全部暫存圖片
