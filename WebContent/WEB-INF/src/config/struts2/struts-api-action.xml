@@ -28,6 +28,7 @@
      <action name="activateUser" class="InviteAPIAction" method="activateUserAction">
      		<result type="tiles" name="inviteFail">invite.fail.view</result>
      		<result type="tiles" name="expired">invite.expired.view</result>
+     		<result type="tiles" name="exist">invite.exist.view</result>
      		<result type="tiles" name="haveActivate">have.activate.view</result>
             <result type="tiles" name="success">api.redirect.view</result> 		
      </action>  

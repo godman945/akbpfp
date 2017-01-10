@@ -17,6 +17,10 @@
     	<put-attribute name="body" value="/ftl/api/have.activate.body.ftl" />
     </definition>   
     
+    <definition name="invite.exist.view" extends="invite.error.layout">
+    	<put-attribute name="body" value="/ftl/api/invite.exist.body.ftl" />
+    </definition>
+    
     <definition name="api.redirect.view" extends="invite.error.layout">
     	<put-attribute name="head" value="" />
     	<put-attribute name="css" value="" />

@@ -67,6 +67,20 @@ public class InviteAPIAction extends BaseCookieAction{
 				return "expired";
 			}
 			else{
+				// 確認信箱是否在會員中心認證過
+				String memberId = memberAPI.checkAvailableEmail(email);
+				
+				if (memberId != null) {
+					// 檢查所屬帳戶 
+					List<PfpUserMemberRef> refs = pfpUserMemberRefService.activateUserMemberRef(memberId);
+					
+					if (refs.size() > 0) {
+						//該會員帳號已是使用者
+						result = "exist";
+					}
+				}
+				
+				
 				// 返回路徑
 				String backUrl = akbPfpServer+EnumRedirectAction.PFP_INDEX.getAction(); 
 				// 成功回打路徑
