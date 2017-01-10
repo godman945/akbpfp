@@ -114,7 +114,8 @@ public class CommonUtilModel extends BaseCookieAction{
 	private void squeezeJPG(String pathFile){
 	    try {
 	    	Runtime rt = Runtime.getRuntime();
-	    	Process proc = rt.exec("/usr/bin/jpegoptim " + pathFile);
+	    	//Process proc = rt.exec("/usr/bin/jpegoptim " + pathFile);
+	    	Process proc = rt.exec("convert -verbose " + pathFile + " -strip -quality 95 " + pathFile);
 		} catch (Exception e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG error ");
 			log.info(e);
@@ -129,7 +130,8 @@ public class CommonUtilModel extends BaseCookieAction{
 	private void squeezePNG(String pathFile){
 	    try {
 	    	Runtime rt = Runtime.getRuntime();
-	    	Process proc = rt.exec("/usr/bin/optipng " + pathFile);
+	    	//Process proc = rt.exec("/usr/bin/optipng " + pathFile);
+	    	Process proc = rt.exec("convert -verbose " + pathFile + " -strip -quality 95 " + pathFile);
 		} catch (Exception e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG error ");
 			log.info(e);
