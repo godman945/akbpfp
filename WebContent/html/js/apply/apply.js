@@ -149,7 +149,8 @@ $(document).ready(function(){
 	// 生日 
 	$("#memberBirthday").datepicker({
 		changeYear : true,
-		changeMonth : true
+		changeMonth : true,
+		yearRange: "1915:-10"
     });
 				
 	// 郵遞區號
