@@ -6,7 +6,10 @@ public enum EnumAdCannelMobileSize {
 	adp_201507210001("1", "300", "250"),
 	
 	//2016/05/04	新增加尺寸
-	adp_201601210001("16", "320", "480");
+	adp_201601210001("16", "320", "480"),
+	
+	//2017/05/05	新增加尺寸
+	adp_201601210002("17", "336", "280");
 	
 	private final String name;
 	private final String widh;
