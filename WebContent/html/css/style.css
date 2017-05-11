@@ -106,7 +106,7 @@ text-align:left;}
 .gbtn a{float:left;background:url(../img/btnbg.gif) no-repeat;width:62px;line-height:27px;height:27px;display:block;text-align:center;color:#ff0000;font-size:12px;text-decoration:none;margin:0 2px}
 .gbtn a:hover{background:url(../img/btnbg_over.gif) no-repeat;color:#555;padding-top:1px;height:26px;}
 
-.grtba{background:#f4f2ee;padding:10px}
+.grtba{background:#f4f2ee;padding:2px 10px 10px 10px}
 .grtba .srchtb{background:#e4e3e0;border:5px #e4e3e0 solid}
 /*.grtba .srchtb input{width:400px;}
 */
@@ -725,3 +725,128 @@ text-decoration:none}
 /*20150918new*/
 /*#selectChartType{ width: 152px; height: 32px; line-height: 32px; background: #fff; margin: 0;font-family: 微軟正黑體,arial; font-size: 16px;}
 #reloadFlash{ height: 32px; line-height: 32px;font-family: 微軟正黑體,arial; font-size: 16px;}*/
+
+
+
+
+
+
+
+/*20170502*/
+.pkwdh{width:40px;text-align:right}
+.wsh_typ_select{width:500px;line-height:33px}
+.inner_box{border:1px solid #bcbbb8;display:table;height:100%}
+.outter_box .lf_slinx{display:table-cell;height:100%;position:relative;width:100%}
+.lf_slinx .fill{padding:8px;width:100%;box-sizing:border-box;cursor:default;display:inline-block;font-weight:400;margin:0;position:relative;vertical-align:middle}.inner_box input[placeholder]{text-overflow:ellipsis}
+.lf_slinx .fill .rst{background:0 0;border:0;margin:0;outline:0;padding:0;width:100%}
+.outter_box .rt_btn{display:table-cell;position:inherit;white-space:nowrap;width:100%}
+.tgt_brws_but:focus{outline:none}
+.tgt_brws_but,.tgt_brws_but:before{display:inline-block;vertical-align:middle}
+.tgt_brws_but{background:0 0;border:none;color:#4b4f56;cursor:pointer;font-weight:700;height:100%;padding:0 8px 0 0;position:relative;font-size:14px;font-family:微軟正黑體,arial}
+.bt_slctall em,.tgt_brws_but em{font-style:normal;color: #1d5ed6}
+.tgt_brws_but:before{background:#bcbbb8;content:'';height:1.1em;margin:0 7px 0 0;width:1px}
+/*.tgt_brws_but:hover{color:#f30}*/
+.uiSctWTLayer{position:absolute;width: 498px; max-height: 256px}
+.sdft{box-shadow:0 1px 8px rgba(0,0,0,.25);float:left;height:inherit}
+.ui_slctOutter{background:#fff;overflow-x:hidden;overflow-y:auto;position:relative;height:224px;width:498px;z-index: 100}
+.clearfix{zoom:1}
+.idxBx{background:rgba(100,100,100,.4);padding-right:1px}
+ul.idxBx{list-style-type:none;margin:0;padding:0}
+ul.idxBx li{height:31px;line-height:32px}
+.listem_culm01{cursor:pointer;background:#fff;border-bottom:1px solid #e8e2e2;color:#666;font-size:13px;position:relative}
+.listem_culm01:hover{background:#f4f2ee}
+.s_mrow{display:table;width:100%;border-collapse:separate;border-spacing:0}
+.s_inent{display:table-cell;float:left;position:relative}
+.aw_dwn,.aw_right,.ic_trarw{position:absolute}
+.aw_right{right:0;top:6px}
+.aw_dwn{right:0;top:7px}
+.ic_trarw{background-position-y:4px;background-repeat:no-repeat;border-right:1px solid #e9eaed;height:14px;padding:2px 1px 2px 0;width:14px}
+.aw_dwn:before,.aw_right:before{content:"";display:block;height:0;position:absolute;width:0}
+.aw_right:before{border:5px solid transparent;border-left-color:#aaa;left:2px;top:4px}
+.aw_dwn:before{border:5px solid transparent;border-top-color:#aaa;left:0;top:5px}
+.cntxt{display:table-cell;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;font-weight:700;padding-left:8px;vertical-align:top}
+.rfloat{float:right}
+.bt_slctall,.rmcx{display:table-cell}
+.bt_slctall{font-weight:700;padding-left:12px;vertical-align:top;visibility:collapse;white-space:nowrap;color: #1d5ed6}
+.rmcx{padding:0 12px;vertical-align:middle}
+.rmcx_icon{display:block;height:14px;width:14px}
+.listem_culm01 .rmcx_icon,.listem_culm01:hover .rmcx_icon,.listem_culm02 .rmcx_icon,.listem_culm02:hover .rmcx_icon{background-image:url(../img/sp_pfp_navifun.png);background-repeat:no-repeat;background-size:auto}
+.bt_slctall .box{font-style:normal}
+.listem_culm01:hover .bt_slctall{visibility:visible}
+.rt_slct_fd:hover .bt_slctall{text-decoration:underline}
+.listem_culm01 .rmcx_icon{background-position:-18px -1px}
+.listem_culm02 .rmcx_icon{background-position:-18px -18px}
+.listem_culm01:hover .rmcx_icon{background-position:-1px -1px}
+.listem_culm02:hover .rmcx_icon{background-position:-1px -18px}
+
+
+
+.inxrltbox{border:1px solid #bcbbb8;border-bottom:none;padding:8px 0;width:498px}.showinxrltLayer{max-height:264px;overflow-y:auto}ul.clasf_area{list-style-type:none;margin:0;padding:0}
+.clasf_area li ul{margin:0;padding: 0}
+.bol01{padding:6px 30px 6px 10px;position:relative}
+.bol01:before{background:#e8e2e2;content:'';display:block;height:1px;left:10px;position:absolute;right:10px;top:0}
+.clasf_area:first-child .bol01:before{content:none}
+.lstbox{font-weight:bold;padding:6px 0 6px 8px;position:relative}
+.listxt{overflow:hidden;padding-right:50px;text-overflow:ellipsis;white-space:nowrap;font-weight: bold}
+.lstbox:hover{background:#f4f2ee}
+.grp_slt{background:#f4f2ee}
+.grp_slt .bol01 .cnrl_hb{display:block;position:absolute}
+/*.grp_slt:hover{background:#f4f2ee}
+.grp_slt:hover .bol01 .cnrl_hb{display:block;position:absolute}*/
+
+
+.bol01:hover{background:#f4f2ee}
+.cnrl_hb{position:absolute;right:20px;top:10px}
+.clasf_area .cnrl_hb{display:none}
+.clasf_area .lstbox{margin-left:22px}
+.clasf_area .lstbox:hover .cnrl_hb{display:block;position:absolute}
+.clasf_area .bol01:hover .cnrl_hb{display:block;position:absolute}
+.clasf_area .bultit,.clasf_area .bularw{color:inherit}
+.clasf_area .bultit:hover{text-decoration:underline}
+.bultit{cursor:pointer}
+.bol02{color:#ff0707}
+.bol02 .bol03{color:#191919}
+.hidnbt i:focus{outline:none}
+.hidnbt{background:none;border:0;position:relative;vertical-align:middle;cursor:pointer}
+.rmicpo{left:50%;position:absolute;top:50%;margin-left: -6px; margin-top: -6px;}
+.sp_pfpimg{background-image:url(../img/sp_pfp_navifun.png);background-size:auto;background-repeat:no-repeat;display:inline-block;height:16px;width:16px}
+.sp_pfpimg.ic_rmvxl{width:12px;height:12px;background-position:-15px -47px}
+.sp_pfpimg.ic_rmvxd{width:12px;height:12px;background-position:-28px -47px}
+.clasf_area button .ic_rmvxl:hover{width:12px;height:12px;background-position:-28px -47px}
+.accessible_elem{clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);height:1px;overflow:hidden;position:absolute;white-space:nowrap;width:1px}
+.clasf_area button{margin:0;outline:0}
+.t_s02 input{color: #1d5ed6;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
