@@ -69,6 +69,8 @@
 	<table-filter match-name="pfp_ad_time_report" match-catalog="akb" />
 	<table-filter match-name="pfp_ad_age_report" match-catalog="akb" />
 	<table-filter match-name="sequence" match-catalog="akb" />
-	<table-filter match-name="pfbx_size" match-catalog="akb"></table-filter>
+	<table-filter match-name="pfp_ad_specific_website" match-catalog="akb" />
+	<table-filter match-name="pfbx_size" match-catalog="akb" />
+	<table-filter match-name="pfbx_website_category" match-catalog="akb" />
 
 </hibernate-reverse-engineering>

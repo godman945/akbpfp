@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2016/12/7 ?W?? 10:39:39 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2017/5/11 ?W?? 10:06:13 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdAction" table="pfp_ad_action" catalog="akb">
         <id name="adActionSeq" type="string">
@@ -43,6 +43,12 @@
                 <comment>&#188;s&#167;i&#181;&#178;&#167;&#244;&#164;&#233;&#180;&#193;</comment>
             </column>
         </property>
+        <property name="adSpecificPlayType" type="string">
+            <column name="ad_specific_play_type" length="1" not-null="true">
+                <comment>&#171;&#252;&#169;w&#188;&#189;&#169;&#241;&#170;&#172;&#186;A 0:&#169;&#202;&#167;O/&#166;~&#196;&#214; 1:&#186;&#244;&#175;&#184;
+                2:&#168;&#252;&#178;&#179;</comment>
+            </column>
+        </property>
         <property name="adActionSex" type="string">
             <column name="ad_action_sex" length="1">
                 <comment>&#169;&#202;&#167;O</comment>
@@ -56,6 +62,22 @@
         <property name="adActionEndAge" type="int">
             <column name="ad_action_end_age" not-null="true">
                 <comment>&#188;&#189;&#169;&#241;&#166;~&#196;&#214;&#164;W&#173;&#173;</comment>
+            </column>
+        </property>
+        <property name="adPvLimitStyle" type="string">
+            <column name="ad_pv_limit_style" length="1" not-null="true">
+                <comment>&#195;n&#165;&#250;&#173;&#173;&#168;&#238;&#177;&#248;&#165;&#243; 0:&#164;&#163;&#173;&#173;&#168;&#238; 1:&#172;&#161;&#176;&#202;
+                2:&#164;&#192;&#195;&#254; 3:&#169;&#250;&#178;&#211;</comment>
+            </column>
+        </property>
+        <property name="adPvLimitPeriod" type="string">
+            <column name="ad_pv_limit_period" length="1" not-null="true">
+                <comment>&#195;n&#165;&#250;&#173;&#173;&#168;&#238;&#182;g&#180;&#193; 0:&#164;&#163;&#173;&#173;&#168;&#238; 1:&#164;&#233; 2:&#182;g 3:&#164;&#235;</comment>
+            </column>
+        </property>
+        <property name="adPvLimitAmount" type="int">
+            <column name="ad_pv_limit_amount" not-null="true">
+                <comment>&#195;n&#165;&#250;&#173;&#173;&#168;&#238;&#188;&#198;&#182;q</comment>
             </column>
         </property>
         <property name="adActionMax" type="float">
@@ -133,6 +155,14 @@
                 <comment>&#188;s&#167;i&#172;&#161;&#176;&#202;&#173;&#215;&#167;&#239;&#174;&#201;&#182;&#161;</comment>
             </column>
         </property>
+        <set name="pfpAdSpecificWebsites" table="pfp_ad_specific_website" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ad_action_seq" length="20" not-null="true">
+                    <comment>&#188;s&#167;i&#172;&#161;&#176;&#202;</comment>
+                </column>
+            </key>
+            <one-to-many class="com.pchome.akbpfp.db.pojo.PfpAdSpecificWebsite" />
+        </set>
         <set name="pfpAdGroups" table="pfp_ad_group" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ad_action_seq" length="20" not-null="true">

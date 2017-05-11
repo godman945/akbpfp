@@ -92,9 +92,14 @@
                 <value>com.pchome.akbpfp.db.pojo.PfpReport</value>
                 <value>com.pchome.akbpfp.db.pojo.PfpSyspriceRate</value>
                 <value>com.pchome.akbpfp.db.pojo.PfpTransDetail</value>
-				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpAdAgeReport</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpAdTimeReport</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpAdSpecificWebsite</value>
+				
+				<!-- PFB pojo -->
+				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
+				<value>com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory</value>
+				
 	            <!-- Sequence pojo -->
                 <value>com.pchome.akbpfp.db.pojo.Sequence</value>                
             </list>

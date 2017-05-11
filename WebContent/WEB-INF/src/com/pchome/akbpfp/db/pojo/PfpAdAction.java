@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2016/12/7 �W�� 10:39:38 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/5/11 �W�� 10:06:11 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -33,9 +33,13 @@ public class PfpAdAction implements java.io.Serializable {
 	private Integer adDevice;
 	private Date adActionStartDate;
 	private Date adActionEndDate;
+	private String adSpecificPlayType;
 	private String adActionSex;
 	private int adActionStartAge;
 	private int adActionEndAge;
+	private String adPvLimitStyle;
+	private String adPvLimitPeriod;
+	private int adPvLimitAmount;
 	private float adActionMax;
 	private String changeMax;
 	private float adActionControlPrice;
@@ -51,6 +55,8 @@ public class PfpAdAction implements java.io.Serializable {
 	private String userId;
 	private Date adActionCreatTime;
 	private Date adActionUpdateTime;
+	private Set<PfpAdSpecificWebsite> pfpAdSpecificWebsites = new HashSet<PfpAdSpecificWebsite>(
+			0);
 	private Set<PfpAdGroup> pfpAdGroups = new HashSet<PfpAdGroup>(0);
 
 	public PfpAdAction() {
@@ -58,8 +64,10 @@ public class PfpAdAction implements java.io.Serializable {
 
 	public PfpAdAction(String adActionSeq, PfpCustomerInfo pfpCustomerInfo,
 			String adActionName, String adActionDesc, Date adActionStartDate,
-			Date adActionEndDate, int adActionStartAge, int adActionEndAge,
-			float adActionMax, float adActionControlPrice, int adActionStatus,
+			Date adActionEndDate, String adSpecificPlayType,
+			int adActionStartAge, int adActionEndAge, String adPvLimitStyle,
+			String adPvLimitPeriod, int adPvLimitAmount, float adActionMax,
+			float adActionControlPrice, int adActionStatus,
 			int adActionMonTime, int adActionTueTime, int adActionWedTime,
 			int adActionThuTime, int adActionFriTime, int adActionSatTime,
 			int adActionSunTime, String userId, Date adActionCreatTime,
@@ -70,8 +78,12 @@ public class PfpAdAction implements java.io.Serializable {
 		this.adActionDesc = adActionDesc;
 		this.adActionStartDate = adActionStartDate;
 		this.adActionEndDate = adActionEndDate;
+		this.adSpecificPlayType = adSpecificPlayType;
 		this.adActionStartAge = adActionStartAge;
 		this.adActionEndAge = adActionEndAge;
+		this.adPvLimitStyle = adPvLimitStyle;
+		this.adPvLimitPeriod = adPvLimitPeriod;
+		this.adPvLimitAmount = adPvLimitAmount;
 		this.adActionMax = adActionMax;
 		this.adActionControlPrice = adActionControlPrice;
 		this.adActionStatus = adActionStatus;
@@ -90,12 +102,15 @@ public class PfpAdAction implements java.io.Serializable {
 	public PfpAdAction(String adActionSeq, PfpCustomerInfo pfpCustomerInfo,
 			String adActionName, String adActionDesc, Integer adType,
 			Integer adDevice, Date adActionStartDate, Date adActionEndDate,
-			String adActionSex, int adActionStartAge, int adActionEndAge,
-			float adActionMax, String changeMax, float adActionControlPrice,
-			int adActionStatus, int adActionMonTime, int adActionTueTime,
-			int adActionWedTime, int adActionThuTime, int adActionFriTime,
-			int adActionSatTime, int adActionSunTime, String aid,
-			String userId, Date adActionCreatTime, Date adActionUpdateTime,
+			String adSpecificPlayType, String adActionSex,
+			int adActionStartAge, int adActionEndAge, String adPvLimitStyle,
+			String adPvLimitPeriod, int adPvLimitAmount, float adActionMax,
+			String changeMax, float adActionControlPrice, int adActionStatus,
+			int adActionMonTime, int adActionTueTime, int adActionWedTime,
+			int adActionThuTime, int adActionFriTime, int adActionSatTime,
+			int adActionSunTime, String aid, String userId,
+			Date adActionCreatTime, Date adActionUpdateTime,
+			Set<PfpAdSpecificWebsite> pfpAdSpecificWebsites,
 			Set<PfpAdGroup> pfpAdGroups) {
 		this.adActionSeq = adActionSeq;
 		this.pfpCustomerInfo = pfpCustomerInfo;
@@ -105,9 +120,13 @@ public class PfpAdAction implements java.io.Serializable {
 		this.adDevice = adDevice;
 		this.adActionStartDate = adActionStartDate;
 		this.adActionEndDate = adActionEndDate;
+		this.adSpecificPlayType = adSpecificPlayType;
 		this.adActionSex = adActionSex;
 		this.adActionStartAge = adActionStartAge;
 		this.adActionEndAge = adActionEndAge;
+		this.adPvLimitStyle = adPvLimitStyle;
+		this.adPvLimitPeriod = adPvLimitPeriod;
+		this.adPvLimitAmount = adPvLimitAmount;
 		this.adActionMax = adActionMax;
 		this.changeMax = changeMax;
 		this.adActionControlPrice = adActionControlPrice;
@@ -123,6 +142,7 @@ public class PfpAdAction implements java.io.Serializable {
 		this.userId = userId;
 		this.adActionCreatTime = adActionCreatTime;
 		this.adActionUpdateTime = adActionUpdateTime;
+		this.pfpAdSpecificWebsites = pfpAdSpecificWebsites;
 		this.pfpAdGroups = pfpAdGroups;
 	}
 
@@ -202,6 +222,15 @@ public class PfpAdAction implements java.io.Serializable {
 		this.adActionEndDate = adActionEndDate;
 	}
 
+	@Column(name = "ad_specific_play_type", nullable = false, length = 1)
+	public String getAdSpecificPlayType() {
+		return this.adSpecificPlayType;
+	}
+
+	public void setAdSpecificPlayType(String adSpecificPlayType) {
+		this.adSpecificPlayType = adSpecificPlayType;
+	}
+
 	@Column(name = "ad_action_sex", length = 1)
 	public String getAdActionSex() {
 		return this.adActionSex;
@@ -227,6 +256,33 @@ public class PfpAdAction implements java.io.Serializable {
 
 	public void setAdActionEndAge(int adActionEndAge) {
 		this.adActionEndAge = adActionEndAge;
+	}
+
+	@Column(name = "ad_pv_limit_style", nullable = false, length = 1)
+	public String getAdPvLimitStyle() {
+		return this.adPvLimitStyle;
+	}
+
+	public void setAdPvLimitStyle(String adPvLimitStyle) {
+		this.adPvLimitStyle = adPvLimitStyle;
+	}
+
+	@Column(name = "ad_pv_limit_period", nullable = false, length = 1)
+	public String getAdPvLimitPeriod() {
+		return this.adPvLimitPeriod;
+	}
+
+	public void setAdPvLimitPeriod(String adPvLimitPeriod) {
+		this.adPvLimitPeriod = adPvLimitPeriod;
+	}
+
+	@Column(name = "ad_pv_limit_amount", nullable = false)
+	public int getAdPvLimitAmount() {
+		return this.adPvLimitAmount;
+	}
+
+	public void setAdPvLimitAmount(int adPvLimitAmount) {
+		this.adPvLimitAmount = adPvLimitAmount;
 	}
 
 	@Column(name = "ad_action_max", nullable = false, precision = 10)
@@ -364,6 +420,16 @@ public class PfpAdAction implements java.io.Serializable {
 
 	public void setAdActionUpdateTime(Date adActionUpdateTime) {
 		this.adActionUpdateTime = adActionUpdateTime;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpAdAction")
+	public Set<PfpAdSpecificWebsite> getPfpAdSpecificWebsites() {
+		return this.pfpAdSpecificWebsites;
+	}
+
+	public void setPfpAdSpecificWebsites(
+			Set<PfpAdSpecificWebsite> pfpAdSpecificWebsites) {
+		this.pfpAdSpecificWebsites = pfpAdSpecificWebsites;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpAdAction")

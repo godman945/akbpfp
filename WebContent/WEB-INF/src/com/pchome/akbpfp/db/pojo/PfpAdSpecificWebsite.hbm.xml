@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017/5/11 ?W?? 10:06:13 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.pchome.akbpfp.db.pojo.PfpAdSpecificWebsite" table="pfp_ad_specific_website" catalog="akb">
+        <id name="specificWebsiteSeq" type="string">
+            <column name="specific_website_seq" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="pfpAdAction" class="com.pchome.akbpfp.db.pojo.PfpAdAction" fetch="select">
+            <column name="ad_action_seq" length="20" not-null="true">
+                <comment>&#188;s&#167;i&#172;&#161;&#176;&#202;</comment>
+            </column>
+        </many-to-one>
+        <many-to-one name="pfbxWebsiteCategory" class="com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory" fetch="select">
+            <column name="website_ref" not-null="true">
+                <comment>&#186;&#244;&#175;&#184;&#164;&#192;&#195;&#254;</comment>
+            </column>
+        </many-to-one>
+    </class>
+</hibernate-mapping>
