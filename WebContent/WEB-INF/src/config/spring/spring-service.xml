@@ -149,6 +149,10 @@
     <bean id="PfpAdGiftService" class="com.pchome.akbpfp.db.service.ad.PfpAdGiftService">
         <property name="dao" ref="PfpAdGiftDAO" />  
     </bean>
+    
+    <bean id="PfbxWebsiteCategoryService" class="com.pchome.akbpfp.db.service.ad.PfbxWebsiteCategoryService">
+        <property name="dao" ref="PfbxWebsiteCategoryDAO" />  
+    </bean>
 
     <bean id="PfpTransDetailService" class="com.pchome.akbpfp.db.service.bill.PfpTransDetailService">
         <property name="dao" ref="PfpTransDetailDAO" />
