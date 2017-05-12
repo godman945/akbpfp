@@ -61,6 +61,7 @@ public class AdActionAddAction extends BaseCookieAction{
 	private float remain;
 	private int tmpRemain;
 	private String backPage;
+	private String adSpecificPlayType;
 
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
@@ -104,6 +105,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		adActionMax = "";
 		remain = pfpCustomerInfo.getRemain();
 		tmpRemain = (int)remain;
+		adSpecificPlayType = "0";
 		
 		PfdUserAdAccountRef pfdUserAdAccountRef = pfdUserAdAccountRefService.findPfdUserAdAccountRef(super.getCustomer_info_id());
 		String pfpAdTypeSelect = pfdUserAdAccountRef.getPfdCustomerInfo().getPfpAdtypeSelect();
@@ -223,6 +225,8 @@ public class AdActionAddAction extends BaseCookieAction{
 			sun = Integer.toBinaryString(pfpAdAction.getAdActionSunTime());
 			sun = String.format("%024d",new BigInteger(sun));
 			sun = reversionString(sun);
+			
+			adSpecificPlayType = pfpAdAction.getAdSpecificPlayType();
 			
 		} else {
 			adActionSeq = "";
@@ -613,6 +617,14 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public String getOpenDetail() {
 		return openDetail;
+	}
+
+	public String getAdSpecificPlayType() {
+		return adSpecificPlayType;
+	}
+
+	public void setAdSpecificPlayType(String adSpecificPlayType) {
+		this.adSpecificPlayType = adSpecificPlayType;
 	}
 	
 }

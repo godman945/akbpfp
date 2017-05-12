@@ -255,6 +255,22 @@
 			alert("提醒您，族群年齡區間需間隔5歲以上");
 		}
 	});
+	
+	$.ajax({
+        url: "getPfbxWebsiteCategory.html",
+        type: "POST",
+        dataType: "json",
+        success: function (response) {
+
+        },
+        error: function (response) {
+
+        }
+    }).done(function (response) {
+        var categoryObj = JSON.parse(response);
+        console.log(categoryObj);
+        appendCategory("website",categoryObj);
+    });
 });
 
 function opennots(id) {
@@ -368,5 +384,66 @@ function selAllTimeCheckbox(number){
 	} else {
 		$("#fancybox-content [name=selAllTime" + number + "]").removeAttr("checked");
 		$("#fancybox-content [name*=checkbox][name$=" + number + "]").removeAttr("checked");
+	}
+}
+
+function openWebsite(type) {
+	if(type == '1'){
+		$("#websiteButton").attr("onclick","openWebsite('2')");
+		$("#websiteData").show();
+	} else {
+		$("#websiteButton").attr("onclick","openWebsite('1')");
+		$("#websiteData").hide();
+	}
+}
+
+function appendCategory(specificType,data) {
+	for (var keys in data) {
+		var tag = '<li class="listem_culm01" id="' + specificType + 'Li_' + data[keys][0].code.substring(0,parseInt(data[keys][0].level)*5)  + '_' + data[keys][0].level + '" ';
+		
+		if(data[keys][0].level != "1"){
+			tag += ' style="display: none;" ';
+		}
+		
+		tag += ' >';
+		tag += '<div class="s_mrow" role="presentation">';
+		
+		if(data[keys][0].children == "Y"){
+			tag += '<div class="s_inent level' + data[keys][0].level + '" onclick="openLi(\'' + specificType + '\',\'' + data[keys][0].code.substring(0,parseInt(data[keys][0].level)*5) + '\',\'' + data[keys][0].level + '\',\'open\')">';
+			tag += '<div class="ic_trarw aw_right" ></div>';
+		} else {
+			tag += '<div class="s_inent level' + data[keys][0].level + '" >';
+			tag += '<div class="" ></div>';
+		}
+		
+		tag += '</div>';
+		tag += '<div class="cntxt">' + data[keys][0].name + '</div>';
+		if(data[keys][0].children == "Y"){
+			tag += '<div class="rt_slct_fd" role="presentation">';
+			tag += '<div class="bt_slctall"><em class="box" data-intl-hash="c2d5cea683a1a8c723b69414447d3dd4" data-intl-translation="選擇全部" data-intl-trid="">選擇全部</em></div>';
+			tag += '<div class="rmcx"><span class="rmcx_icon"></span></div>';
+			tag += '</div>';
+		} else {
+			tag += '<div class="rmcx"><span class="rmcx_icon"></span></div>';
+		}
+		tag += '</li>';
+		$("#" + specificType + "Ui").append(tag);
+	}
+}
+
+function openLi(specificType,code,level,type){
+	var levelNumber = parseInt(level) +1;
+	if(type == "open"){
+		$("li[id^=" + specificType + "Li_" + code + "][id$=_" + levelNumber + "]").show();
+		$($("li[id=" + specificType + "Li_" + code + "_" + level + "]").children().children().children("[class='ic_trarw aw_right']")[0]).attr("class","ic_trarw aw_dwn");
+		$($("li[id=" + specificType + "Li_" + code + "_" + level + "]").children().children("[class*='s_inent level']")[0]).attr("onclick","openLi('" + specificType + "','" + code + "','" + level + "','close')");
+	} else {
+		$("li[id^=" + specificType + "Li_" + code + "]").not("[id=" + specificType + "Li_" + code + "_" + level + "]").each(function() {
+			$(this).hide();
+			$(this).html($(this).html().replace(/close/g, "open"));
+			$($(this).children().children().children("[class='ic_trarw aw_dwn']")[0]).attr("class","ic_trarw aw_right");
+		});
+		$($("li[id=" + specificType + "Li_" + code + "_" + level + "]").children().children().children("[class='ic_trarw aw_dwn']")[0]).attr("class","ic_trarw aw_right");
+		$($("li[id=" + specificType + "Li_" + code + "_" + level + "]").children().children("[class*='s_inent level']")[0]).attr("onclick","openLi('" + specificType + "','" + code + "','" + level + "','open')");
 	}
 }

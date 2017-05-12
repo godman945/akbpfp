@@ -77,6 +77,7 @@
     <bean id="AdActionAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdActionAjax" scope="prototype" >
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
     	<property name="pfpAdActionService" ref="PfpAdActionService" />
+    	<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" />
     </bean>
     
     <bean id="AdActionViewAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdActionViewAjax" scope="prototype" >

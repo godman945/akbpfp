@@ -3,12 +3,18 @@ package com.pchome.akbpfp.struts2.ajax.ad;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONObject;
 
 import com.opensymphony.oscache.util.StringUtil;
+import com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
+import com.pchome.akbpfp.db.service.ad.IPfbxWebsiteCategoryService;
 import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -18,12 +24,16 @@ public class AdActionAjax extends BaseCookieAction{
 	
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private PfpAdActionService pfpAdActionService;
+	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
 	
 	private String customerInfoId;
 	private String adActionMax;
 	private InputStream msg;
 	private String adActionName;
 	private String adActionSeq;
+	
+	 //網址回傳json格式字串
+    private String result;
 	
 	public String closeAdActionAjax() throws Exception{
 		
@@ -94,13 +104,27 @@ public class AdActionAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 
-	public void setPfpCustomerInfoService(
-			PfpCustomerInfoService pfpCustomerInfoService) {
+	public String getPfbxWebsiteCategoryAll(){
+		
+		Map<String, List<Map<String, String>>> pfbxWebsiteCategoryListMap = new LinkedHashMap<String, List<Map<String, String>>>();
+		pfbxWebsiteCategoryListMap = pfbxWebsiteCategoryService.getAllOrderByCode();
+		
+		JSONObject jsonObjectJacky = new JSONObject(pfbxWebsiteCategoryListMap);
+        result = jsonObjectJacky.toString();
+		
+		return SUCCESS;
+	}
+	
+	public void setPfpCustomerInfoService(PfpCustomerInfoService pfpCustomerInfoService) {
 		this.pfpCustomerInfoService = pfpCustomerInfoService;
 	}
 
 	public void setPfpAdActionService(PfpAdActionService pfpAdActionService) {
 		this.pfpAdActionService = pfpAdActionService;
+	}
+
+	public void setPfbxWebsiteCategoryService(IPfbxWebsiteCategoryService pfbxWebsiteCategoryService) {
+		this.pfbxWebsiteCategoryService = pfbxWebsiteCategoryService;
 	}
 
 	public void setCustomerInfoId(String customerInfoId) {
@@ -121,6 +145,14 @@ public class AdActionAjax extends BaseCookieAction{
 
 	public void setAdActionSeq(String adActionSeq) {
 		this.adActionSeq = adActionSeq;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 
 }

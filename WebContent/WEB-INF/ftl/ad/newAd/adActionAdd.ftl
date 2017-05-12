@@ -4,6 +4,12 @@
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" />
 <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script> 
 <script language="JavaScript" src="<@s.url value="/" />html/js/ad/adActionAdd.js" ></script>
+<style type="text/css">
+.level1 {width: 23px; height: 32px;}
+.level2 {width: 38px; height: 32px;}
+.level3 {width: 53px; height: 32px;}
+.level4 {width: 68px; height: 32px;}
+</style>
 
 <div style="display: none;">
 	<img id="calImg" src="<@s.url value="/html/img/"/>icon_cal.gif" alt="Popup" class="trigger">
@@ -53,7 +59,9 @@
                     </tr>
                 </tbody>
             </table>
-            <div style="clear:both;height:10px"></div>
+		</div>
+        <div style="clear:both;height:20px"></div>
+        <div class="grtba">
             <h4>廣告走期及花費設定</h4>
             <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
                 <tbody>
@@ -86,17 +94,20 @@
                     </tr>
                 </tbody>
             </table>
-            <div style="clear:both;height:10px"></div>
-            <div style="padding: 8px 8px 8px 2%;<#if adType?string == '1' >display:none;</#if>" id="detailTitle" >
-            	<span class="t_s02">* </span>
-            	<#if openDetail == 'N' >
-            		<a id="detailId" style="cursor: pointer;font-size:13px;" onclick="openDetail()" >進階設定+</a>
-            	<#else>
-            		<a id="detailId" style="cursor: pointer;font-size:13px;" onclick="closeDetail()" >進階設定-</a>
-            	</#if>
-            </div>
-            <div id="selectDetail" <#if openDetail == 'N' > style="display:none" </#if> >
-            	<h4>廣告進階設定 <span class="t_s01">提醒您，選擇廣告進階設定會降低廣告觸及對象，使廣告曝光進而大幅減少。</span></h4>
+        </div>
+        <div style="clear:both;height:20px"></div>
+        <div style="padding: 8px 8px 8px 2%;<#if adType?string == '1' >display:none;</#if>" id="detailTitle" >
+        	<span class="t_s02">* </span>
+        	<#if openDetail == 'N' >
+        		<a id="detailId" style="cursor: pointer;font-size:13px;" onclick="openDetail()" >進階設定+</a>
+        	<#else>
+        		<a id="detailId" style="cursor: pointer;font-size:13px;" onclick="closeDetail()" >進階設定-</a>
+        	</#if>
+        </div>
+        
+        <div id="selectDetail" <#if openDetail == 'N' > style="display:none" </#if> >
+        	<div class="grtba">
+            	<h4>廣告時段 <span class="t_s01">提醒您，選擇廣告進階設定會降低廣告觸及對象，使廣告曝光進而大幅減少。</span></h4>
             	<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
                 <tbody>
                     <tr>
@@ -237,47 +248,78 @@
                         	</div>
                        	</td>
                     </tr>
-                    <tr>
-                        <th height="35">
-                        	<span class="t_s02">* </span>性別取向設定 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif" align="absmiddle"></a><br>
-							<div id="shownotes2" style="visibility: hidden;" class="adnoticepop">
-								<h4>性別取向設定</h4>
-								<div class="adpopcont">廣告實際投放對象會依系統數據分析媒合推播廣告給您指定的性別取向對象，包含目標對象的真實性別與產品性別定位。</div>
-								<a onclick="closenots(2)" style="cursor:pointer;" class="adpopclose">關閉</a>
-							</div>
-                        </th>
-                        <td>
-                           <input type="radio" value="" id="sex1" name="adActionSex" <#if adActionSex == "">checked</#if> >不分性別
-                           <input type="radio" value="M" id="sex2" name="adActionSex" <#if adActionSex == "M">checked</#if> >男
-                           <input type="radio" value="F" id="sex3" name="adActionSex" <#if adActionSex == "F">checked</#if> >女
-                        </td>
-                    </tr>
-                    <tr>
-                        <th height="35"><span class="t_s02">* </span>年齡區間設定</th>
-                        <td>
-                           <input type="radio" value="" id="age1" name="age" onclick="selAllAge()" <#if ageType == "A">checked</#if> >不分年齡
-                           <input type="radio" value="" id="age2" name="age" onclick="selAnyAge()" <#if ageType == "S">checked</#if> >自訂
-                           <select id="adActionStartAge" name="adActionStartAge" <#if ageType == "A">disabled</#if> > 
-						        <#list adActionStartAgeMap?keys as skey>
-						  		    <option value="${skey}" <#if skey == adActionStartAge>selected</#if> >${adActionStartAgeMap[skey]}</option>
-						  	    </#list>
-					      	</select>
-					      	&nbsp;&nbsp;~&nbsp;&nbsp;
-					      	<select id="adActionEndAge" name="adActionEndAge" <#if ageType == "A">disabled</#if> > 
-						        <#list adActionEndAgeMap?keys as skey>
-						  		    <option value="${skey}" <#if skey == adActionEndAge>selected</#if> >${adActionEndAgeMap[skey]}</option>
-						  	    </#list>
-					      	</select>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
             </div>
-            <center style="margin:10px">
-                <input type="button" id="cancel" value="取 消">&nbsp; 
-                <input type="button" id="save" value="下一步! 新增分類">
-            </center>
+            <div style="clear:both;height:20px"></div>
+            <div class="grtba">
+            	<h4>廣告指定投放</h4>
+	            <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
+	            	<tbody>
+	            		<tr>
+	                        <th height="70" Rowspan="2">
+	                        	指定廣告受眾性別/年齡
+	                        </th>
+	                        <td height="35">
+	                           <input type="radio" value="" id="sex1" name="adActionSex" <#if adActionSex == "">checked</#if> >不分性別
+	                           <input type="radio" value="M" id="sex2" name="adActionSex" <#if adActionSex == "M">checked</#if> >男
+	                           <input type="radio" value="F" id="sex3" name="adActionSex" <#if adActionSex == "F">checked</#if> >女
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <td height="35">
+	                           <input type="radio" value="" id="age1" name="age" onclick="selAllAge()" <#if ageType == "A">checked</#if> >不分年齡
+	                           <input type="radio" value="" id="age2" name="age" onclick="selAnyAge()" <#if ageType == "S">checked</#if> >自訂
+	                           <select id="adActionStartAge" name="adActionStartAge" <#if ageType == "A">disabled</#if> > 
+							        <#list adActionStartAgeMap?keys as skey>
+							  		    <option value="${skey}" <#if skey == adActionStartAge>selected</#if> >${adActionStartAgeMap[skey]}</option>
+							  	    </#list>
+						      	</select>
+						      	&nbsp;&nbsp;~&nbsp;&nbsp;
+						      	<select id="adActionEndAge" name="adActionEndAge" <#if ageType == "A">disabled</#if> > 
+							        <#list adActionEndAgeMap?keys as skey>
+							  		    <option value="${skey}" <#if skey == adActionEndAge>selected</#if> >${adActionEndAgeMap[skey]}</option>
+							  	    </#list>
+						      	</select>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                    	<th height="35">
+	                        	指定投放網站類型
+	                        </th>
+	                        <td>
+	                        	<div class="wsh_typ_select">
+                            		<div class="outter_box">
+                            			<div class="inner_box">
+                            				<span class="lf_slinx" autocomplete="off" autocorrect="off">
+                            					<label class="fill">
+                            					<input type="text" class="rst" aria-autocomplete="list" aria-expanded="false" aria-owns="js_mh" role="combobox" placeholder="選擇投放網站類型" autocomplete="off" autocorrect="off" value=""></label>
+                            				</span>
+                            				<div class="rt_btn">
+                            					<span id="websiteButton" class="tgt_brws_but" onclick="openWebsite('1')" ><em>瀏覽</em></span>
+                            				</div>
+                            			</div>
+                            		</div>
+                            	</div>
+                            	<div id="websiteData" class="uiSctWTLayer" style="width: 449px; max-height: 256px;display:block;display:none">
+	                            	<div class="ui_slctOutter sdft clearfix">
+		                            	<div class="slstcont">
+		                            		<ul id="websiteUi" class="idxBx">
+		                            			
+		                            		</ul>
+		                            	</div>
+	                            	</div>
+                            	</div>
+	                        </td>
+	                    </tr>
+	            	</tbody>
+	            </table>
+            </div>
         </div>
+        <center style="margin:10px">
+            <input type="button" id="cancel" value="取 消">&nbsp; 
+            <input type="button" id="save" value="下一步! 新增分類">
+        </center>
         <#if aid??>
         <input type="hidden" id="aid" name="aid" value="${aid!}">
         </#if>
