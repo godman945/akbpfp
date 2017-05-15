@@ -288,28 +288,40 @@
 	                        	指定投放網站類型
 	                        </th>
 	                        <td>
-	                        	<div class="wsh_typ_select">
-                            		<div class="outter_box">
-                            			<div class="inner_box">
-                            				<span class="lf_slinx" autocomplete="off" autocorrect="off">
-                            					<label class="fill">
-                            					<input type="text" class="rst" aria-autocomplete="list" aria-expanded="false" aria-owns="js_mh" role="combobox" placeholder="選擇投放網站類型" autocomplete="off" autocorrect="off" value=""></label>
-                            				</span>
-                            				<div class="rt_btn">
-                            					<span id="websiteButton" class="tgt_brws_but" onclick="openWebsite('1')" ><em>瀏覽</em></span>
-                            				</div>
-                            			</div>
-                            		</div>
-                            	</div>
-                            	<div id="websiteData" class="uiSctWTLayer" style="width: 449px; max-height: 256px;display:block;display:none">
-	                            	<div class="ui_slctOutter sdft clearfix">
-		                            	<div class="slstcont">
-		                            		<ul id="websiteUi" class="idxBx">
-		                            			
-		                            		</ul>
+	                        	<div style="float:left">
+		                        	<div class="wsh_typ_select">
+	                            		<div class="outter_box">
+	                            			<div class="inner_box">
+	                            				<span class="lf_slinx" autocomplete="off" autocorrect="off">
+	                            					<label class="fill">
+	                            					<input type="text" class="rst" aria-autocomplete="list" aria-expanded="false" aria-owns="js_mh" role="combobox" placeholder="選擇投放網站類型" autocomplete="off" autocorrect="off" value=""></label>
+	                            				</span>
+	                            				<div class="rt_btn">
+	                            					<span id="websiteButton" class="tgt_brws_but" onclick="openWebsite('1')" ><em>瀏覽</em></span>
+	                            				</div>
+	                            			</div>
+	                            		</div>
+	                            	</div>
+	                            	<div id="websiteData" class="uiSctWTLayer" style="width: 449px; max-height: 256px;display:block;display:none">
+		                            	<div class="ui_slctOutter sdft clearfix">
+			                            	<div class="slstcont">
+			                            		<ul id="websiteUi" class="idxBx">
+			                            			
+			                            		</ul>
+			                            	</div>
 		                            	</div>
 	                            	</div>
-                            	</div>
+								</div>
+								<div style="width:50px;float:left;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+	                        	<div style="display:none;float:left" id="websiteAddDiv">
+									<div>
+										<div class="inxrltbox" style="border-bottom:1px solid #bcbbb8">
+											<div class="showinxrltLayer" id="websiteAdd" >
+												
+											</div>
+										</div>
+									</div>
+								</div>
 	                        </td>
 	                    </tr>
 	            	</tbody>
