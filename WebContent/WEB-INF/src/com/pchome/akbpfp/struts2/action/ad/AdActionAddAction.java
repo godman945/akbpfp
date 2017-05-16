@@ -2,8 +2,10 @@ package com.pchome.akbpfp.struts2.action.ad;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -22,18 +24,34 @@ import java.util.Map;
 
 
 
+
+
+
+
+
+
+
+
+import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory;
 import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
+import com.pchome.akbpfp.db.pojo.PfpAdSpecificWebsite;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
+import com.pchome.akbpfp.db.service.ad.IPfbxWebsiteCategoryService;
+import com.pchome.akbpfp.db.service.ad.IPfpAdSpecificWebsiteService;
 import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfd.user.IPfdUserAdAccountRefService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdDevice;
+import com.pchome.enumerate.ad.EnumAdPvLimitPeriod;
+import com.pchome.enumerate.ad.EnumAdPvLimitStyle;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
@@ -61,12 +79,13 @@ public class AdActionAddAction extends BaseCookieAction{
 	private float remain;
 	private int tmpRemain;
 	private String backPage;
-	private String adSpecificPlayType;
 
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdActionService pfpAdActionService;
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
+	private IPfpAdSpecificWebsiteService pfpAdSpecificWebsiteService;
+	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
 	
 	private Map<String,String> adTypeMap;
 	private String adAllDevice;
@@ -83,6 +102,17 @@ public class AdActionAddAction extends BaseCookieAction{
 	private String timeType;
 	private Map<String,String> timeCodeMap;
 	private String openDetail;
+	
+	private String adSpecificPlayType;
+	private String adPvLimitStyle;
+	private String adPvLimitPeriod;
+	private String adPvLimitAmount;
+	private String pvLimitSelect;
+	private String[] websiteAddCategory;
+	private String oldWebsiteCategory;
+	
+	private Map<String,String> adPvLimitStyleMap;
+	private Map<String,String> adPvLimitPeriodMap;
 
 	public String adActionAdd() throws Exception{
 		log.info("adActionAdd => adActionSeq = " + adActionSeq);
@@ -106,6 +136,11 @@ public class AdActionAddAction extends BaseCookieAction{
 		remain = pfpCustomerInfo.getRemain();
 		tmpRemain = (int)remain;
 		adSpecificPlayType = "0";
+		adPvLimitStyle = "0";
+		adPvLimitPeriod = "0";
+		adPvLimitAmount = "0";
+		pvLimitSelect = "N";
+		oldWebsiteCategory = "";
 		
 		PfdUserAdAccountRef pfdUserAdAccountRef = pfdUserAdAccountRefService.findPfdUserAdAccountRef(super.getCustomer_info_id());
 		String pfpAdTypeSelect = pfdUserAdAccountRef.getPfdCustomerInfo().getPfpAdtypeSelect();
@@ -151,6 +186,8 @@ public class AdActionAddAction extends BaseCookieAction{
 		//設定年齡下拉選單
 		adActionStartAgeMap = new LinkedHashMap<String,String>();
 		adActionEndAgeMap = new LinkedHashMap<String,String>();
+		adPvLimitStyleMap = new LinkedHashMap<String,String>();
+		adPvLimitPeriodMap = new LinkedHashMap<String,String>();
 		adActionStartAgeMap.put("0", "18歲以下");
 		getAgeMap();
 		adActionEndAgeMap.put("99", "75歲以上");
@@ -160,6 +197,19 @@ public class AdActionAddAction extends BaseCookieAction{
 		adActionEndAge = "99";
 		adActionSex = "";
 		openDetail = "N";
+		
+		//曝光頻率限制下拉選項
+		for(EnumAdPvLimitStyle enumAdPvLimitStyle: EnumAdPvLimitStyle.values()){
+			if(!StringUtils.equals(enumAdPvLimitStyle.getStyle(), "0")){
+				adPvLimitStyleMap.put(enumAdPvLimitStyle.getStyle(), "針對此" + enumAdPvLimitStyle.getName());
+			}
+		}
+		
+		for(EnumAdPvLimitPeriod enumAdPvLimitPeriod: EnumAdPvLimitPeriod.values()){
+			if(!StringUtils.equals(enumAdPvLimitPeriod.getPeriod(), "0")){
+				adPvLimitPeriodMap.put(enumAdPvLimitPeriod.getPeriod(), enumAdPvLimitPeriod.getName());
+			}
+		}
 		
 		//設定播放時間初始化
 		String mon = "111111111111111111111111";
@@ -227,6 +277,19 @@ public class AdActionAddAction extends BaseCookieAction{
 			sun = reversionString(sun);
 			
 			adSpecificPlayType = pfpAdAction.getAdSpecificPlayType();
+			adPvLimitStyle = pfpAdAction.getAdPvLimitStyle();
+			adPvLimitPeriod = pfpAdAction.getAdPvLimitPeriod();
+			adPvLimitAmount = String.valueOf(pfpAdAction.getAdPvLimitAmount());
+			
+			if(!StringUtils.equals(EnumAdPvLimitStyle.NO_STYLE_LIMIT.getStyle(), pfpAdAction.getAdPvLimitStyle())){
+				pvLimitSelect = "Y";
+			}
+			
+			oldWebsiteCategory = "";
+			Set<PfpAdSpecificWebsite> fpAdSpecificWebsiteSet = pfpAdAction.getPfpAdSpecificWebsites();
+			for(PfpAdSpecificWebsite pfpAdSpecificWebsite:fpAdSpecificWebsiteSet){
+				oldWebsiteCategory += pfpAdSpecificWebsite.getPfbxWebsiteCategory().getId() + ",";
+			}
 			
 		} else {
 			adActionSeq = "";
@@ -256,7 +319,8 @@ public class AdActionAddAction extends BaseCookieAction{
 			}
 		}
 		
-		if(StringUtils.equals(timeType, "S") || StringUtils.isNotEmpty(adActionSex) || StringUtils.equals(ageType, "S")){
+		if(StringUtils.equals(timeType, "S") || StringUtils.isNotEmpty(adActionSex) || StringUtils.equals(ageType, "S") || StringUtils.equals(pvLimitSelect, "Y") ||
+				StringUtils.isNotEmpty(oldWebsiteCategory)){
 			openDetail = "Y";
 		}
 		
@@ -355,6 +419,16 @@ public class AdActionAddAction extends BaseCookieAction{
 			}
 		}
 
+		if (StringUtils.equals(pvLimitSelect, "Y") && StringUtils.isEmpty(adPvLimitAmount)) {
+			message = "請輸入曝光頻率限制次數！";
+			return INPUT;
+		}
+		
+		if(StringUtils.equals(adSpecificPlayType, "2") && websiteAddCategory.length == 0){
+			message = "請選擇投放網站類型！";
+			return INPUT;
+		}
+		
 		PfpAdAction pfpAdAction = new PfpAdAction();
 		if(StringUtils.isNotEmpty(adActionSeq)) {
 			pfpAdAction = pfpAdActionService.getPfpAdActionBySeq(adActionSeq);
@@ -376,13 +450,7 @@ public class AdActionAddAction extends BaseCookieAction{
 			pfpAdAction.setAdActionStatus(EnumStatus.UnDone.getStatusId());		// 新增廣告時，status 設定為未完成
 		}
 		pfpAdAction.setAdType(Integer.parseInt(adType));
-		pfpAdAction.setAdDevice(Integer.parseInt(adDevice));
-		
-		if(StringUtils.isNotEmpty(adActionSex)){
-			pfpAdAction.setAdActionSex(adActionSex);
-		}
-		pfpAdAction.setAdActionStartAge(Integer.parseInt(adActionStartAge));
-		pfpAdAction.setAdActionEndAge(Integer.parseInt(adActionEndAge));
+		pfpAdAction.setAdDevice(Integer.parseInt(adDevice));	
 		
 		String mon = reversionString(timeCode.substring(0,24));
 		String tue = reversionString(timeCode.substring(24,48));
@@ -399,7 +467,57 @@ public class AdActionAddAction extends BaseCookieAction{
 		pfpAdAction.setAdActionSatTime(Integer.parseInt(sat, 2));
 		pfpAdAction.setAdActionSunTime(Integer.parseInt(sun, 2));
 
+		if(StringUtils.equals(pvLimitSelect, "Y")){
+			pfpAdAction.setAdPvLimitStyle(adPvLimitStyle);
+			pfpAdAction.setAdPvLimitPeriod(adPvLimitPeriod);
+			pfpAdAction.setAdPvLimitAmount(Integer.parseInt(adPvLimitAmount));
+		} else {
+			pfpAdAction.setAdPvLimitStyle("0");
+			pfpAdAction.setAdPvLimitPeriod("0");
+			pfpAdAction.setAdPvLimitAmount(0);
+		}
+		
+		
+		List<PfpAdSpecificWebsite> pfpAdSpecificWebsiteList = pfpAdSpecificWebsiteService.findPfpAdSpecificWebsiteByAdActionSeq(pfpAdAction.getAdActionSeq());
+		for(PfpAdSpecificWebsite pfpAdSpecificWebsite:pfpAdSpecificWebsiteList){
+			pfpAdSpecificWebsiteService.delete(pfpAdSpecificWebsite);
+		}
+		
+		List<PfpAdSpecificWebsite> addPfpAdSpecificWebsiteList = new ArrayList<PfpAdSpecificWebsite>();
+		
+		if(StringUtils.equals(adSpecificPlayType, "0")){
+			
+			if(StringUtils.isNotEmpty(adActionSex)){
+				pfpAdAction.setAdActionSex(adActionSex);
+			}
+			pfpAdAction.setAdActionStartAge(Integer.parseInt(adActionStartAge));
+			pfpAdAction.setAdActionEndAge(Integer.parseInt(adActionEndAge));
+		} else if(StringUtils.equals(adSpecificPlayType, "1")){
+			
+			pfpAdAction.setAdActionStartAge(0);
+			pfpAdAction.setAdActionEndAge(99);
+			pfpAdAction.setAdActionSex(null);
+			
+			Map<String, PfbxWebsiteCategory> PfbxWebsiteCategoryMap = new LinkedHashMap<String, PfbxWebsiteCategory>();
+			PfbxWebsiteCategoryMap = pfbxWebsiteCategoryService.getPfbxWebsiteCategoryMap();
+			for(String id:websiteAddCategory){
+				if(PfbxWebsiteCategoryMap.get(id) != null){
+					PfpAdSpecificWebsite pfpAdSpecificWebsite = new PfpAdSpecificWebsite();
+					String specificWebsiteSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_SPECIFIC_WEBSITE, "_");
+					pfpAdSpecificWebsite.setSpecificWebsiteSeq(specificWebsiteSeq);
+					pfpAdSpecificWebsite.setPfbxWebsiteCategory(PfbxWebsiteCategoryMap.get(id));
+					pfpAdSpecificWebsite.setPfpAdAction(pfpAdAction);
+					addPfpAdSpecificWebsiteList.add(pfpAdSpecificWebsite);
+				}
+			}
+		}
+		
 		pfpAdActionService.savePfpAdAction(pfpAdAction);
+		
+		for(PfpAdSpecificWebsite websiteData:addPfpAdSpecificWebsiteList){
+			pfpAdSpecificWebsiteService.saveOrUpdate(websiteData);
+		}
+		
 		return SUCCESS;
 	}
 
@@ -434,9 +552,16 @@ public class AdActionAddAction extends BaseCookieAction{
 		this.sequenceService = sequenceService;
 	}
 	
-	public void setPfdUserAdAccountRefService(
-			IPfdUserAdAccountRefService pfdUserAdAccountRefService) {
+	public void setPfdUserAdAccountRefService(IPfdUserAdAccountRefService pfdUserAdAccountRefService) {
 		this.pfdUserAdAccountRefService = pfdUserAdAccountRefService;
+	}
+
+	public void setPfpAdSpecificWebsiteService(IPfpAdSpecificWebsiteService pfpAdSpecificWebsiteService) {
+		this.pfpAdSpecificWebsiteService = pfpAdSpecificWebsiteService;
+	}
+
+	public void setPfbxWebsiteCategoryService(IPfbxWebsiteCategoryService pfbxWebsiteCategoryService) {
+		this.pfbxWebsiteCategoryService = pfbxWebsiteCategoryService;
 	}
 
 	public String getAdActionSeq() {
@@ -625,6 +750,50 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public void setAdSpecificPlayType(String adSpecificPlayType) {
 		this.adSpecificPlayType = adSpecificPlayType;
+	}
+
+	public String getAdPvLimitStyle() {
+		return adPvLimitStyle;
+	}
+
+	public void setAdPvLimitStyle(String adPvLimitStyle) {
+		this.adPvLimitStyle = adPvLimitStyle;
+	}
+
+	public String getAdPvLimitPeriod() {
+		return adPvLimitPeriod;
+	}
+
+	public void setAdPvLimitPeriod(String adPvLimitPeriod) {
+		this.adPvLimitPeriod = adPvLimitPeriod;
+	}
+
+	public String getAdPvLimitAmount() {
+		return adPvLimitAmount;
+	}
+
+	public void setAdPvLimitAmount(String adPvLimitAmount) {
+		this.adPvLimitAmount = adPvLimitAmount;
+	}
+
+	public Map<String, String> getAdPvLimitStyleMap() {
+		return adPvLimitStyleMap;
+	}
+
+	public Map<String, String> getAdPvLimitPeriodMap() {
+		return adPvLimitPeriodMap;
+	}
+
+	public String getPvLimitSelect() {
+		return pvLimitSelect;
+	}
+
+	public void setWebsiteAddCategory(String[] websiteAddCategory) {
+		this.websiteAddCategory = websiteAddCategory;
+	}
+
+	public String getOldWebsiteCategory() {
+		return oldWebsiteCategory;
 	}
 	
 }

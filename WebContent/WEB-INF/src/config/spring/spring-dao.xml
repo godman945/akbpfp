@@ -170,6 +170,10 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
+    <bean id="PfpAdSpecificWebsiteDAO" class="com.pchome.akbpfp.db.dao.ad.PfpAdSpecificWebsiteDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
     <bean id="PfbxWebsiteCategoryDAO" class="com.pchome.akbpfp.db.dao.ad.PfbxWebsiteCategoryDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>

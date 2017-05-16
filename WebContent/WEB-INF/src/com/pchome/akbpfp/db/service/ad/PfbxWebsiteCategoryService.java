@@ -85,4 +85,18 @@ public class PfbxWebsiteCategoryService extends BaseService<PfbxWebsiteCategory,
 		return map;
 	}
 
+	@Override
+	public Map<String,PfbxWebsiteCategory> getPfbxWebsiteCategoryMap(){
+		
+		Map<String, PfbxWebsiteCategory> map = new LinkedHashMap<String, PfbxWebsiteCategory>();
+		List<PfbxWebsiteCategory> dataList = ((IPfbxWebsiteCategoryDAO)dao).loadAll();
+		
+		if(!dataList.isEmpty()){
+			for(PfbxWebsiteCategory data:dataList){
+				map.put(data.getId().toString(), data);
+			}
+		}
+		
+		return map;
+	}
 }

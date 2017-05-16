@@ -8,4 +8,6 @@ import com.pchome.akbpfp.db.service.IBaseService;
 
 public interface IPfbxWebsiteCategoryService extends IBaseService<PfbxWebsiteCategory, String> {
 	public Map<String, List<Map<String, String>>> getAllOrderByCode();
+	
+	public Map<String,PfbxWebsiteCategory> getPfbxWebsiteCategoryMap();
 }

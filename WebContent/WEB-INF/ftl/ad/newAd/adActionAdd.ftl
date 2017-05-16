@@ -97,17 +97,20 @@
         </div>
         <div style="clear:both;height:20px"></div>
         <div style="padding: 8px 8px 8px 2%;<#if adType?string == '1' >display:none;</#if>" id="detailTitle" >
-        	<span class="t_s02">* </span>
-        	<#if openDetail == 'N' >
-        		<a id="detailId" style="cursor: pointer;font-size:13px;" onclick="openDetail()" >進階設定+</a>
-        	<#else>
-        		<a id="detailId" style="cursor: pointer;font-size:13px;" onclick="closeDetail()" >進階設定-</a>
-        	</#if>
+        	<span class="t_s02">* 
+	        	<#if openDetail == 'N' >
+	        		<input type="button" id="detailId" style="cursor: pointer;font-size:13px;" onclick="openDetail()" value="進階設定 +" />
+	        		<em id="detailMsg" style="padding: 0 15px;font-style:normal;display:none;">提醒您，選擇廣告進階設定會降低廣告觸及對象，使廣告曝光進而大幅減少。</em>
+	        	<#else>
+	        		<input type="button" id="detailId" style="cursor: pointer;font-size:13px;" onclick="closeDetail()" value="進階設定 -" />
+	        		<em id="detailMsg" style="padding: 0 15px;font-style:normal">提醒您，選擇廣告進階設定會降低廣告觸及對象，使廣告曝光進而大幅減少。</em>
+	        	</#if>
+        	</span>
         </div>
         
         <div id="selectDetail" <#if openDetail == 'N' > style="display:none" </#if> >
         	<div class="grtba">
-            	<h4>廣告時段 <span class="t_s01">提醒您，選擇廣告進階設定會降低廣告觸及對象，使廣告曝光進而大幅減少。</span></h4>
+            	<h4>廣告時段</h4>
             	<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
                 <tbody>
                     <tr>
@@ -258,7 +261,7 @@
 	            	<tbody>
 	            		<tr>
 	                        <th height="70" Rowspan="2">
-	                        	指定廣告受眾性別/年齡
+	                        	<input type="radio" value="" id="adSpecificPlayType1" name="adSpecificPlayType" <#if adSpecificPlayType == "0">checked</#if> >指定廣告受眾性別/年齡
 	                        </th>
 	                        <td height="35">
 	                           <input type="radio" value="" id="sex1" name="adActionSex" <#if adActionSex == "">checked</#if> >不分性別
@@ -285,7 +288,7 @@
 	                    </tr>
 	                    <tr>
 	                    	<th height="35">
-	                        	指定投放網站類型
+	                        	<input type="radio" value="" id="adSpecificPlayType2" name="adSpecificPlayType" <#if adSpecificPlayType == "1">checked</#if> >指定投放網站類型
 	                        </th>
 	                        <td>
 	                        	<div style="float:left">
@@ -294,7 +297,7 @@
 	                            			<div class="inner_box">
 	                            				<span class="lf_slinx" autocomplete="off" autocorrect="off">
 	                            					<label class="fill">
-	                            					<input type="text" class="rst" aria-autocomplete="list" aria-expanded="false" aria-owns="js_mh" role="combobox" placeholder="選擇投放網站類型" autocomplete="off" autocorrect="off" value=""></label>
+	                            					<input type="text" class="rst" aria-autocomplete="list" aria-expanded="false" aria-owns="js_mh" role="combobox" placeholder="選擇投放網站類型" autocomplete="off" autocorrect="off" value="" readonly></label>
 	                            				</span>
 	                            				<div class="rt_btn">
 	                            					<span id="websiteButton" class="tgt_brws_but" onclick="openWebsite('1')" ><em>瀏覽</em></span>
@@ -327,10 +330,41 @@
 	            	</tbody>
 	            </table>
             </div>
+	        <div style="clear:both;height:20px"></div>
+	        <div class="grtba">
+	        	<h4>廣告曝光頻率</h4>
+		        <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
+		        	<tbody>
+		        		<tr>
+	                        <th height="45"><span class="t_s02">* </span>曝光頻率限制</th>
+	                        <td>
+	                        	<input type="radio" value="N" id="pvLimitSelect1" name="pvLimitSelect" onchange="selNoLimit()" <#if pvLimitSelect == "N">checked</#if> >無曝光頻率限制 
+	                        	<br/>
+	                        	<input type="radio" value="Y" id="pvLimitSelect2" name="pvLimitSelect" onchange="selAnyLimit()" <#if pvLimitSelect == "Y">checked</#if> >
+	                        	<select id="adPvLimitStyle" name="adPvLimitStyle" <#if pvLimitSelect == "N">disabled</#if> > 
+							        <#list adPvLimitStyleMap?keys as skey>
+							  		    <option value="${skey}" <#if skey == adPvLimitStyle>selected</#if> >${adPvLimitStyleMap[skey]}</option>
+							  	    </#list>
+						      	</select>
+						      	&nbsp;&nbsp;
+						      	<select id="adPvLimitPeriod" name="adPvLimitPeriod" <#if pvLimitSelect == "N">disabled</#if> > 
+							        <#list adPvLimitPeriodMap?keys as skey>
+							  		    <option value="${skey}" <#if skey == adPvLimitPeriod>selected</#if> >${adPvLimitPeriodMap[skey]}</option>
+							  	    </#list>
+						      	</select>
+						      	&nbsp;&nbsp;
+						      	曝光給同一廣告受眾
+						      	<input type="text" class="pkwdh" id="adPvLimitAmount" name="adPvLimitAmount" maxlength="11" value="${adPvLimitAmount!}" <#if pvLimitSelect == "N">disabled</#if> />
+						      	次
+	                        </td>
+	                    </tr>
+		        	</tbody>
+		        </table>
+	        </div>
         </div>
         <center style="margin:10px">
             <input type="button" id="cancel" value="取 消">&nbsp; 
-            <input type="button" id="save" value="下一步! 新增分類">
+            <input type="button" id="save" style="color: #1d5ed6" value="繼 續">
         </center>
         <#if aid??>
         <input type="hidden" id="aid" name="aid" value="${aid!}">
@@ -347,3 +381,4 @@
 </div>
 <div id="introDialog" style="display:none"></div>
 <input type="hidden" id="messageId" value="${message!!}">
+<input type = id="oldwebsiteCategory" value="${oldWebsiteCategory!}" />

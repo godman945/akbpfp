@@ -14,7 +14,8 @@ public enum EnumSequenceTableName {
 	PFP_AD_GROUP("pfp_ad_group","ag"), // 廣告分類
 	PFP_AD_KEYWORD("pfp_ad_keyword","ak"), // 關鍵字廣告
 	PFP_AD_KEYWORD_PVCLK("pfp_ad_keyword_pvclk","akpv"), // 關鍵字廣告瀏覽點擊數
-	PFP_AD_PVCLK("pfp_ad_pvclk","adpv"); // 廣告瀏覽點擊數
+	PFP_AD_PVCLK("pfp_ad_pvclk","adpv"), // 廣告瀏覽點擊數
+	PFP_AD_SPECIFIC_WEBSITE("pfp_ad_specific_website","aasw");
 	
 	private String snoName;
 	private String charName;
