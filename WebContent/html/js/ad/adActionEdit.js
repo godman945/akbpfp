@@ -1,4 +1,8 @@
-﻿$(document).ready(function(){
+﻿var websiteCategoryObj = null;
+
+
+
+$(document).ready(function(){
     
 	initDate();
 
@@ -65,6 +69,9 @@
 				digits: true,
 				min: 100,
 				max: 999999
+			},
+			adPvLimitAmount: {
+				digits: true
 			}
 		},
 		messages: {
@@ -89,6 +96,9 @@
 				digits: "每日預算只能填寫數字.",
 				min: "為讓您的廣告有足夠曝光量，每日預算至少為NT$100",
 				max: "每日預算最多為NT$999,999"
+			},
+			adPvLimitAmount: {
+				digits: "曝光頻率限制次數只能填寫數字."
 			}
 		}
 	});
@@ -126,6 +136,20 @@
 				alert("提醒您，自訂播放時段至少要選擇一個時間");
 				return false;
 			}
+			
+			if($("#adSpecificPlayType2").prop("checked")){
+				
+				var checkSelect = false;
+				$("[name=websiteAddCategory]").each(function(){
+					checkSelect = true;
+				});
+				
+				if(!checkSelect){
+					alert("提醒您，指定投放網站類型至少要選擇一種類型");
+					return false;
+				}
+			} 
+			
 			// form submit
 			$("#adActionStartAge").removeAttr("disabled");
 			$("#adActionEndAge").removeAttr("disabled");
@@ -152,6 +176,25 @@
 			alert("提醒您，族群年齡區間需間隔5歲以上");
 		}
 	});
+	
+	$.ajax({
+        url: "getPfbxWebsiteCategory.html",
+        type: "POST",
+        dataType: "json",
+        success: function (response) {
+
+        },
+        error: function (response) {
+
+        }
+    }).done(function (response) {
+        var categoryObj = JSON.parse(response);
+        websiteCategoryObj = categoryObj;
+        //console.log(categoryObj);
+        appendCategory("website",categoryObj);
+        appendAddSort("website",categoryObj);
+        loadCheckCategory("website");
+    });
 });
 
 function opennots(id) {
@@ -168,16 +211,18 @@ function cleanEndDate() {
 
 //開啟進階設定
 function openDetail(){
-	$("#detailId").html("進階設定-");
+	$("#detailId").val("進階設定 -");
 	$("#detailId").attr("onclick","closeDetail()");
 	$("#selectDetail").show();
+	$("#detailMsg").show();
 }
 
 //關閉進階設定
 function closeDetail(){
-	$("#detailId").html("進階設定+");
+	$("#detailId").val("進階設定 +");
 	$("#detailId").attr("onclick","openDetail()");
 	$("#selectDetail").hide();
+	$("#detailMsg").hide();
 }
 
 //選擇全時段播放
@@ -207,6 +252,21 @@ function selAllAge(){
 function selAnyAge(){
 	$("#adActionStartAge").removeAttr("disabled");
 	$("#adActionEndAge").removeAttr("disabled");
+}
+
+//無曝光頻率限制 
+function selNoLimit(){
+	$("#adPvLimitStyle").attr("disabled","disabled");
+	$("#adPvLimitPeriod").attr("disabled","disabled");
+	$("#adPvLimitAmount").attr("disabled","disabled");
+	$("#adPvLimitAmount").val("0");
+}
+
+//曝光頻率限制 
+function selAnyLimit(){
+	$("#adPvLimitStyle").removeAttr("disabled");
+	$("#adPvLimitPeriod").removeAttr("disabled");
+	$("#adPvLimitAmount").removeAttr("disabled");
 }
 
 function selectTime(){
@@ -266,4 +326,229 @@ function selAllTimeCheckbox(number){
 		$("#fancybox-content [name=selAllTime" + number + "]").removeAttr("checked");
 		$("#fancybox-content [name*=checkbox][name$=" + number + "]").removeAttr("checked");
 	}
+}
+
+function openWebsite(type) {
+	if(type == '1'){
+		$("#websiteButton").attr("onclick","openWebsite('2')");
+		$("#websiteData").show();
+	} else {
+		$("#websiteButton").attr("onclick","openWebsite('1')");
+		$("#websiteData").hide();
+	}
+}
+
+//增加下拉選單資料
+function appendCategory(specificType,data) {
+	for (var keys in data) {
+		var tag = '<li class="listem_culm01" id="' + specificType + 'Li_' + data[keys][0].code.substring(0,parseInt(data[keys][0].level)*5)  + '_' + data[keys][0].level + '" ';
+		
+		if(data[keys][0].level != "1"){
+			tag += ' style="display: none;" ';
+		}
+		
+		tag += ' ' + specificType + 'code="' + data[keys][0].code + '" >';
+		tag += '<div class="s_mrow" role="presentation">';
+		
+		if(data[keys][0].children == "Y"){
+			tag += '<div class="s_inent level' + data[keys][0].level + '" onclick="openLi(\'' + specificType + '\',\'' + data[keys][0].code.substring(0,parseInt(data[keys][0].level)*5) + '\',\'' + data[keys][0].level + '\',\'open\')">';
+			tag += '<div class="ic_trarw aw_right" ></div>';
+		} else {
+			tag += '<div class="s_inent level' + data[keys][0].level + '" >';
+			tag += '<div class="" ></div>';
+		}
+		
+		tag += '</div>';
+		tag += '<div class="cntxt">' + data[keys][0].name + '</div>';
+		if(data[keys][0].children == "Y"){
+			tag += '<div class="rt_slct_fd" role="presentation" id="' + specificType + '_' + data[keys][0].id + '" onclick="checkCategory(\'' + specificType + '\',\'' + data[keys][0].code.substring(0,parseInt(data[keys][0].level)*5) + '\',\'' + data[keys][0].level + '\',\'pick\')" >';
+			tag += '<div class="bt_slctall"><em class="box" data-intl-hash="c2d5cea683a1a8c723b69414447d3dd4" data-intl-translation="選擇全部" data-intl-trid="">選擇全部</em></div>';
+			tag += '<div class="rmcx"><span class="rmcx_icon"></span></div>';
+			tag += '</div>';
+		} else {
+			tag += '<div class="rmcx" id="' + specificType + '_' + data[keys][0].id + '" onclick="checkCategory(\'' + specificType + '\',\'' + data[keys][0].code.substring(0,parseInt(data[keys][0].level)*5) + '\',\'' + data[keys][0].level + '\',\'pick\')" ><span class="rmcx_icon"></span></div>';
+		}
+		tag += '</li>';
+		$("#" + specificType + "Ui").append(tag);
+	}
+}
+
+//點選箭頭動作
+function openLi(specificType,code,level,type){
+	var levelNumber = parseInt(level) +1;
+	
+	if(($("li[id=" + specificType + "Li_" + code + "_" + level + "]").attr("class")).indexOf("listem_culm02") < 0){
+		if(type == "open"){
+			$("li[id^=" + specificType + "Li_" + code + "][id$=_" + levelNumber + "]").show();
+			$($("li[id=" + specificType + "Li_" + code + "_" + level + "]").children().children().children("[class='ic_trarw aw_right']")[0]).attr("class","ic_trarw aw_dwn");
+			$($("li[id=" + specificType + "Li_" + code + "_" + level + "]").children().children("[class*='s_inent level']")[0]).attr("onclick","openLi('" + specificType + "','" + code + "','" + level + "','close')");
+		} else {
+			$("li[id^=" + specificType + "Li_" + code + "]").not("[id=" + specificType + "Li_" + code + "_" + level + "]").each(function() {
+				$(this).hide();
+				$(this).html($(this).html().replace(/close/g, "open"));
+				$($(this).children().children().children("[class='ic_trarw aw_dwn']")[0]).attr("class","ic_trarw aw_right");
+			});
+			$($("li[id=" + specificType + "Li_" + code + "_" + level + "]").children().children().children("[class='ic_trarw aw_dwn']")[0]).attr("class","ic_trarw aw_right");
+			$($("li[id=" + specificType + "Li_" + code + "_" + level + "]").children().children("[class*='s_inent level']")[0]).attr("onclick","openLi('" + specificType + "','" + code + "','" + level + "','open')");
+		}
+	}
+}
+
+//建立右方選定目錄
+function appendAddSort(specificType,data){
+	
+	var level01Name = "";
+	var level02Name = "";
+	var level03Name = "";
+	var level04Name = "";
+	
+	$("#" + specificType + "Add").append('<ul class="clasf_area" id="' + specificType + 'AddLu"></ul>');
+	
+	
+	for (var keys in data) {
+		
+		if(data[keys][0].level == '1'){
+			level01Name = data[keys][0].name;
+		} else if(data[keys][0].level == '2'){
+			level02Name = data[keys][0].name;
+		} else if(data[keys][0].level == '3'){
+			level03Name = data[keys][0].name;
+		} else if(data[keys][0].level == '4'){
+			level04Name = data[keys][0].name;
+		}
+		
+		if(data[keys][0].children == "Y"){
+			var tag = '<ul class="clasf_area" id="' + specificType + 'AddLu_' + data[keys][0].code.substring(0,parseInt(data[keys][0].level)*5)  + '_' + data[keys][0].level + '" style="display: none;" >';
+			tag += '<li class="bol01 bol02">';
+			
+			if(parseInt(data[keys][0].level) >= 1){
+				tag += '<span>' + level01Name + '</span>';
+			}
+			
+			if(parseInt(data[keys][0].level) >= 2){
+				tag += '<span class="bularw bol03"> &gt; </span><span>' + level02Name + '</span>';
+			}
+			
+			if(parseInt(data[keys][0].level) >= 3){
+				tag += '<span class="bularw bol03"> &gt; </span><span>' + level03Name + '</span>';
+			}
+			
+			if(parseInt(data[keys][0].level) >= 4){
+				tag += '<span class="bularw bol03"> &gt; </span><span>' + level04Name + '</span>';
+			}
+			
+			tag += '<button class="hidnbt cnrl_hb" type="button" style="height: 12px; width: 12px;" onclick="removeAddCategoryList(\'' + specificType + 'AddLu_' + data[keys][0].code.substring(0,parseInt(data[keys][0].level)*5)  + '_' + data[keys][0].level + '\')" >';
+			tag += '<span class="accessible_elem"><em class="box">關閉</em></span><i aria-hidden="true" class="rmicpo sp_pfpimg ic_rmvxl" size="12" alt=""></i></button>';
+			tag += '</li>';
+			tag += '</lu>';
+			
+			$("#" + specificType + "Add").append(tag);
+		}
+		
+	}
+}
+
+//點選類別方框動作
+function checkCategory(specificType,code,level,type){
+	var addCode = $("li[id=" + specificType + "Li_" + code + "_" + level + "]").attr(specificType + "code");
+	
+	if(type == "pick"){
+		$("li[id=" + specificType + "Li_" + code + "_" + level + "]").attr("class","listem_culm01 listem_culm02");
+		$("li[id=" + specificType + "Li_" + code + "_" + level + "]").html($("li[id=" + specificType + "Li_" + code + "_" + level + "]").html().replace(/pick/g, "unPick"));
+		
+		$("li[id^=" + specificType + "Li_" + code + "]").not("[id=" + specificType + "Li_" + code + "_" + level + "]").each(function() {
+			$(this).hide();
+			$(this).html($(this).html().replace(/close/g, "open"));
+			$($(this).children().children().children("[class='ic_trarw aw_dwn']")[0]).attr("class","ic_trarw aw_right");
+		});
+		$($("li[id=" + specificType + "Li_" + code + "_" + level + "]").children().children().children("[class^='ic_trarw aw_']")[0]).attr("class","ic_trarw aw_right");
+		if(($("li[id=" + specificType + "Li_" + code + "_" + level + "]").html()).indexOf("ic_trarw aw_") > 0){
+			$($("li[id=" + specificType + "Li_" + code + "_" + level + "]").children().children("[class*='s_inent level']")[0]).attr("onclick","openLi('" + specificType + "','" + code + "','" + level + "','open')");
+		}
+		
+		var categoryData = null;
+		if(specificType == "website"){
+			categoryData = websiteCategoryObj[addCode];
+		}
+		
+		//var tag = '<li id="' + specificType + 'Add_' + categoryData[0].code + '" name="' + specificType + 'AddCategory" value="' + categoryData[0].id +  '" >';
+		// += '<lu>';
+		//tag += '<div>';
+		var tag = '<li class="lstbox" id="' + specificType + 'Add_' + categoryData[0].code + '" >';
+		tag += '<div class="listxt">' + categoryData[0].name + '</div>';
+		tag += '<button class="hidnbt cnrl_hb" type="button" style="height: 12px; width: 12px;" onclick="removeAddCategory(\'' + specificType + '\',\'' + addCode + '\')" >';
+		tag += '<span class="accessible_elem"><em class="box">關閉</em></span><i aria-hidden="true" class="rmicpo sp_pfpimg ic_rmvxl" size="12" alt=""></i></button>';
+		tag += '<input type="hidden" name="' + specificType + 'AddCategory" value="' + categoryData[0].id +  '" />';
+		tag += '</li>';
+		//tag += '</div>';
+		//tag += '</lu>';
+		//tag += '</li>';
+		
+		if(level != "1"){
+			var levelNumber = parseInt(level) -1;
+			$("#" + specificType + "AddLu_" + code.substring(0,levelNumber*5) + "_" + levelNumber).show();
+			$("#" + specificType + "AddLu_" + code.substring(0,levelNumber*5) + "_" + levelNumber).append(tag);
+		} else {
+			$("#" + specificType + "AddLu").show();
+			$("#" + specificType + "AddLu").append(tag);
+		}
+		
+		$("#" + specificType + "AddDiv").show();
+	} else {
+		$("li[id=" + specificType + "Li_" + code + "_" + level + "]").attr("class","listem_culm01");
+		$("li[id=" + specificType + "Li_" + code + "_" + level + "]").html($("li[id=" + specificType + "Li_" + code + "_" + level + "]").html().replace(/unPick/g, "pick"));
+		
+		removeAddData(specificType,addCode);
+	}
+}
+
+//移除已選擇的類別
+function removeAddCategory(specificType,addCode){
+	
+	$("li[" + specificType + "code=" + addCode + "]").attr("class","listem_culm01");
+	$("li[" + specificType + "code=" + addCode + "]").html($("li[" + specificType + "code=" + addCode + "]").html().replace(/unPick/g, "pick"));
+	
+	
+	removeAddData(specificType,addCode);
+}
+
+//移除資料連動
+function removeAddData(specificType,addCode){
+	var parentId = $($("#" + specificType + "Add_" + addCode).parent()[0]).attr("id");
+	$("#" + specificType + "Add_" + addCode).remove();
+	var nothing = true;
+	
+	$("[id=" + parentId + "] li").not("[class='bol01 bol02']").each(function() {
+		nothing = false;
+	});
+	
+	if(nothing){
+		$("[id=" + parentId + "]").hide();
+	}
+	
+	nothing = true;
+	$("[name=" + specificType + "AddCategory]").each(function() {
+		nothing = false;
+	});
+	
+	if(nothing){
+		$("#" + specificType + "AddDiv").hide();
+	}
+}
+
+//移除目錄下所選擇的全部類別
+function removeAddCategoryList(id){
+	$("[id=" + id + "] li").not("[class='bol01 bol02']").each(function() {
+		$("[id=" + $(this).attr("id") + "] button").trigger('click');
+	});
+}
+
+function loadCheckCategory(specificType){
+	var checkId = $("#old" + specificType + "Category").val();
+	
+	var checkIdArray = checkId.split(",");
+	for(var i=0;i<checkIdArray.length;i++){
+		$("[id=" + specificType + "_" + checkIdArray[i] + "]").trigger('click');
+	}
+	
 }

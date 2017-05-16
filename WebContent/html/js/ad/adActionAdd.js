@@ -203,7 +203,7 @@ $(document).ready(function(){
 			},
 			adPvLimitAmount: {
 				digits: "曝光頻率限制次數只能填寫數字."
-			},
+			}
 		}
 	});
 	
@@ -241,6 +241,20 @@ $(document).ready(function(){
 				alert("提醒您，自訂播放時段至少要選擇一個時間");
 				return false;
 			}
+			
+			if($("#adSpecificPlayType2").prop("checked")){
+				
+				var checkSelect = false;
+				$("[name=websiteAddCategory]").each(function(){
+					checkSelect = true;
+				});
+				
+				if(!checkSelect){
+					alert("提醒您，指定投放網站類型至少要選擇一種類型");
+					return false;
+				}
+			} 
+			
 			// form submit
 			$("#adActionStartAge").removeAttr("disabled");
 			$("#adActionEndAge").removeAttr("disabled");

@@ -424,7 +424,7 @@ public class AdActionAddAction extends BaseCookieAction{
 			return INPUT;
 		}
 		
-		if(StringUtils.equals(adSpecificPlayType, "2") && websiteAddCategory.length == 0){
+		if(StringUtils.equals(adSpecificPlayType, "2") && websiteAddCategory == null){
 			message = "請選擇投放網站類型！";
 			return INPUT;
 		}
@@ -477,7 +477,7 @@ public class AdActionAddAction extends BaseCookieAction{
 			pfpAdAction.setAdPvLimitAmount(0);
 		}
 		
-		
+		pfpAdAction.setAdSpecificPlayType(adSpecificPlayType);
 		List<PfpAdSpecificWebsite> pfpAdSpecificWebsiteList = pfpAdSpecificWebsiteService.findPfpAdSpecificWebsiteByAdActionSeq(pfpAdAction.getAdActionSeq());
 		for(PfpAdSpecificWebsite pfpAdSpecificWebsite:pfpAdSpecificWebsiteList){
 			pfpAdSpecificWebsiteService.delete(pfpAdSpecificWebsite);
@@ -506,7 +506,6 @@ public class AdActionAddAction extends BaseCookieAction{
 					String specificWebsiteSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_SPECIFIC_WEBSITE, "_");
 					pfpAdSpecificWebsite.setSpecificWebsiteSeq(specificWebsiteSeq);
 					pfpAdSpecificWebsite.setPfbxWebsiteCategory(PfbxWebsiteCategoryMap.get(id));
-					pfpAdSpecificWebsite.setPfpAdAction(pfpAdAction);
 					addPfpAdSpecificWebsiteList.add(pfpAdSpecificWebsite);
 				}
 			}
@@ -515,6 +514,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		pfpAdActionService.savePfpAdAction(pfpAdAction);
 		
 		for(PfpAdSpecificWebsite websiteData:addPfpAdSpecificWebsiteList){
+			websiteData.setPfpAdAction(pfpAdAction);
 			pfpAdSpecificWebsiteService.saveOrUpdate(websiteData);
 		}
 		
@@ -786,6 +786,10 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public String getPvLimitSelect() {
 		return pvLimitSelect;
+	}
+
+	public void setPvLimitSelect(String pvLimitSelect) {
+		this.pvLimitSelect = pvLimitSelect;
 	}
 
 	public void setWebsiteAddCategory(String[] websiteAddCategory) {

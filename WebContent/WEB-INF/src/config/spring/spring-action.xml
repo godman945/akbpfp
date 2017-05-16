@@ -254,6 +254,9 @@
     	<property name="pfpAdActionService" ref="PfpAdActionService" /> 
     	<property name="admAccesslogService" ref="AdmAccesslogService" /> 
     	<property name="controlPriceAPI" ref="ControlPriceAPI" />
+    	<property name="pfpAdSpecificWebsiteService" ref="PfpAdSpecificWebsiteService" />
+    	<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" /> 
+    	<property name="sequenceService" ref="SequenceService" />
     </bean>
 
     <bean id="AdGroupEditAction" class="com.pchome.akbpfp.struts2.action.ad.AdGroupEditAction" scope="prototype" >

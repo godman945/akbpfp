@@ -261,7 +261,7 @@
 	            	<tbody>
 	            		<tr>
 	                        <th height="70" Rowspan="2">
-	                        	<input type="radio" value="" id="adSpecificPlayType1" name="adSpecificPlayType" <#if adSpecificPlayType == "0">checked</#if> >指定廣告受眾性別/年齡
+	                        	<input type="radio" value="0" id="adSpecificPlayType1" name="adSpecificPlayType" <#if adSpecificPlayType == "0">checked</#if> >指定廣告受眾性別/年齡
 	                        </th>
 	                        <td height="35">
 	                           <input type="radio" value="" id="sex1" name="adActionSex" <#if adActionSex == "">checked</#if> >不分性別
@@ -288,7 +288,7 @@
 	                    </tr>
 	                    <tr>
 	                    	<th height="35">
-	                        	<input type="radio" value="" id="adSpecificPlayType2" name="adSpecificPlayType" <#if adSpecificPlayType == "1">checked</#if> >指定投放網站類型
+	                        	<input type="radio" value="1" id="adSpecificPlayType2" name="adSpecificPlayType" <#if adSpecificPlayType == "1">checked</#if> >指定投放網站類型
 	                        </th>
 	                        <td>
 	                        	<div style="float:left">
@@ -362,7 +362,7 @@
 		        </table>
 	        </div>
         </div>
-        <center style="margin:10px">
+        <center style="margin:25px 10px 20px 10px">
             <input type="button" id="cancel" value="取 消">&nbsp; 
             <input type="button" id="save" style="color: #1d5ed6" value="繼 續">
         </center>
@@ -381,4 +381,4 @@
 </div>
 <div id="introDialog" style="display:none"></div>
 <input type="hidden" id="messageId" value="${message!!}">
-<input type = id="oldwebsiteCategory" value="${oldWebsiteCategory!}" />
+<input type="hidden" id="oldwebsiteCategory" value="${oldWebsiteCategory!}" />

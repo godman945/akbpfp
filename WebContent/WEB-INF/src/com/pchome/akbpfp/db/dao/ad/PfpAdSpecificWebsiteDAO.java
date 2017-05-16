@@ -10,7 +10,7 @@ public class PfpAdSpecificWebsiteDAO extends BaseDAO<PfpAdSpecificWebsite,String
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<PfpAdSpecificWebsite> findPfpAdSpecificWebsiteByAdActionSeq(String adActionSeq) throws Exception{
-		String sql = "from PfpAdSpecificWebsite where PfpAdAction.adActionSeq = ? ";
+		String sql = "from PfpAdSpecificWebsite where pfpAdAction.adActionSeq = ? ";
 		return super.getHibernateTemplate().find(sql, adActionSeq);
 	}
 	
