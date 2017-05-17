@@ -298,6 +298,36 @@ $(document).ready(function(){
         appendAddSort("website",categoryObj);
         loadCheckCategory("website");
     });
+	
+	$("#adSpecificPlayType1").click(function(){
+		$("[name=adActionSex]").removeAttr("disabled");
+		$("[name=age]").removeAttr("disabled");
+		if($("#age2").prop("checked")){
+			$("#adActionStartAge").removeAttr("disabled");
+			$("#adActionEndAge").removeAttr("disabled");
+		}
+		$("#websiteButton").attr("onclick","openWebsite('1')");
+		$("#websiteData").hide();
+		$("#websiteAddDiv").hide();
+	});
+	
+	$("#adSpecificPlayType2").click(function(){
+		if($(this).prop("checked")){
+			$("[name=adActionSex]").attr("disabled","disabled");
+			$("[name=age]").attr("disabled","disabled");
+			$("#adActionStartAge").attr("disabled","disabled");
+			$("#adActionEndAge").attr("disabled","disabled");
+			
+			nothing = false;
+			$("[name=websiteAddCategory]").each(function() {
+				nothing = true;
+			});
+			
+			if(nothing){
+				$("#websiteAddDiv").show();
+			}
+		}
+	});
 });
 
 function opennots(id) {
@@ -432,12 +462,14 @@ function selAllTimeCheckbox(number){
 }
 
 function openWebsite(type) {
-	if(type == '1'){
-		$("#websiteButton").attr("onclick","openWebsite('2')");
-		$("#websiteData").show();
-	} else {
-		$("#websiteButton").attr("onclick","openWebsite('1')");
-		$("#websiteData").hide();
+	if($("#adSpecificPlayType2").prop("checked")){
+		if(type == '1'){
+			$("#websiteButton").attr("onclick","openWebsite('2')");
+			$("#websiteData").show();
+		} else {
+			$("#websiteButton").attr("onclick","openWebsite('1')");
+			$("#websiteData").hide();
+		}
 	}
 }
 

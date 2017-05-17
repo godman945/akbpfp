@@ -264,22 +264,22 @@
 	                        	<input type="radio" value="0" id="adSpecificPlayType1" name="adSpecificPlayType" <#if adSpecificPlayType == "0">checked</#if> >指定廣告受眾性別/年齡
 	                        </th>
 	                        <td height="35">
-	                           <input type="radio" value="" id="sex1" name="adActionSex" <#if adActionSex == "">checked</#if> >不分性別
-	                           <input type="radio" value="M" id="sex2" name="adActionSex" <#if adActionSex == "M">checked</#if> >男
-	                           <input type="radio" value="F" id="sex3" name="adActionSex" <#if adActionSex == "F">checked</#if> >女
+	                           <input type="radio" value="" id="sex1" name="adActionSex" <#if adActionSex == "">checked</#if> <#if adSpecificPlayType != "0">disabled</#if> >不分性別
+	                           <input type="radio" value="M" id="sex2" name="adActionSex" <#if adActionSex == "M">checked</#if> <#if adSpecificPlayType != "0">disabled</#if> >男
+	                           <input type="radio" value="F" id="sex3" name="adActionSex" <#if adActionSex == "F">checked</#if> <#if adSpecificPlayType != "0">disabled</#if> >女
 	                        </td>
 	                    </tr>
 	                    <tr>
 	                        <td height="35">
-	                           <input type="radio" value="" id="age1" name="age" onclick="selAllAge()" <#if ageType == "A">checked</#if> >不分年齡
-	                           <input type="radio" value="" id="age2" name="age" onclick="selAnyAge()" <#if ageType == "S">checked</#if> >自訂
-	                           <select id="adActionStartAge" name="adActionStartAge" <#if ageType == "A">disabled</#if> > 
+	                           <input type="radio" value="" id="age1" name="age" onclick="selAllAge()" <#if ageType == "A">checked</#if> <#if adSpecificPlayType != "0">disabled</#if> >不分年齡
+	                           <input type="radio" value="" id="age2" name="age" onclick="selAnyAge()" <#if ageType == "S">checked</#if> <#if adSpecificPlayType != "0">disabled</#if> >自訂
+	                           <select id="adActionStartAge" name="adActionStartAge" <#if ageType == "A" || adSpecificPlayType != "0" >disabled</#if> > 
 							        <#list adActionStartAgeMap?keys as skey>
 							  		    <option value="${skey}" <#if skey == adActionStartAge>selected</#if> >${adActionStartAgeMap[skey]}</option>
 							  	    </#list>
 						      	</select>
 						      	&nbsp;&nbsp;~&nbsp;&nbsp;
-						      	<select id="adActionEndAge" name="adActionEndAge" <#if ageType == "A">disabled</#if> > 
+						      	<select id="adActionEndAge" name="adActionEndAge" <#if ageType == "A"  || adSpecificPlayType != "0" >disabled</#if> > 
 							        <#list adActionEndAgeMap?keys as skey>
 							  		    <option value="${skey}" <#if skey == adActionEndAge>selected</#if> >${adActionEndAgeMap[skey]}</option>
 							  	    </#list>
