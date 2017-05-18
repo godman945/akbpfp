@@ -10,4 +10,6 @@ public interface IPfpSyspriceRateDAO extends IBaseDAO<PfpSyspriceRate, String>{
 	public List<Object> getPoolSyspriceRate(String date) throws Exception;
 		
 	public List<Object> getSyspriceRate(String date) throws Exception;
+	
+	public float getNewSyspriceRate(String date) throws Exception;
 }

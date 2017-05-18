@@ -3,8 +3,10 @@ package com.pchome.akbpfp.db.dao.sysprice;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.expression.spel.ast.Selection;
 
 import com.pchome.akbpfp.api.AsidRateUtile;
 import com.pchome.akbpfp.db.dao.BaseDAO;
@@ -47,6 +49,27 @@ public class PfpSyspriceRateDAO extends BaseDAO<PfpSyspriceRate, String> impleme
 		return super.getHibernateTemplate().find(hql.toString(), sdf.parse(date));
 	}
 	
+	@SuppressWarnings("unchecked")
+	public float getNewSyspriceRate(String date) throws Exception{
+		
+		float syspriceRate = 0;
+		StringBuffer hql = new StringBuffer();
+		
+		hql.append(" select sum(ad_clk)/sum(ad_clk_price)/count(distinct ad_seq) ");
+		hql.append(" from pfp_ad_report ");
+		hql.append(" where ad_pvclk_date = '" + date + "' "); 
+		
+		String sql = hql.toString();
+		Query query = this.getSession().createSQLQuery(sql);
+		List<Object> list = query.list();
+		if(!list.isEmpty()){
+			if(list.get(0).toString() != null){
+				syspriceRate = Float.parseFloat(list.get(0).toString());
+			}
+		}
+		
+		return syspriceRate;
+	}
 	
 	public static void main(String arg[]) throws Exception{
 

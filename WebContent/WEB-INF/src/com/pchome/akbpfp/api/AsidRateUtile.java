@@ -80,7 +80,16 @@ public class AsidRateUtile {
 				
 				
 				try {
-				
+					
+					//20170518改用新的
+					onePriceImp = pfpSyspriceRateService.getNewSyspriceRate(keepDate);
+					
+					//規則：		一支廣告一天的 pv / 一天平均點擊費用   / 一天總pv
+					//公式簡化：	一天的總點擊數 / 一天的總花費  / 一天總播出廣告數量
+					
+					
+					
+					/*  舊的不用了   20170518
 					//用系統價來當作價格區間
 					for(float x=sysprice;x>0;x--){
 						totalPrice+=x;
@@ -117,7 +126,7 @@ public class AsidRateUtile {
 					
 					     //onePriceImp=(float) (totalImp / (adNum*totalPrice));
 					     onePriceImp=(float) (totalImp / (totalPrice));
-					}
+					}*/
 					
 					log.info("onePriceImp="+onePriceImp);
 				
@@ -165,7 +174,9 @@ public class AsidRateUtile {
 			if(onePriceImp==0){
 				rate=0;
 			}else{
-				rate=((onePriceImp*userPrice)/totalImp)*100;
+				//rate=((onePriceImp*userPrice)/totalImp)*100;
+				//已經除過 撥出總imp ，所以這裡不再除
+				rate=(onePriceImp*userPrice)*100;
 			}
 		
 		}catch(Exception e){

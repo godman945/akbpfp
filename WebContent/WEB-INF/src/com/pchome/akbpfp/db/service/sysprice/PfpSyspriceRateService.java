@@ -17,4 +17,8 @@ public class PfpSyspriceRateService extends BaseService <PfpSyspriceRate,String>
 		
 		return ((PfpSyspriceRateDAO)dao).getSyspriceRate(date);
 	}
+	
+	public float getNewSyspriceRate(String date) throws Exception {
+		return ((PfpSyspriceRateDAO)dao).getNewSyspriceRate(date);
+	}
 }
