@@ -10,6 +10,7 @@
 .level2 {width: 38px; height: 32px;}
 .level3 {width: 53px; height: 32px;}
 .level4 {width: 68px; height: 32px;}
+.selectTop:hover{text-decoration:underline}
 </style>
 
 <div style="display: none;">
@@ -304,7 +305,16 @@
                         	<input type="radio" value="1" id="adSpecificPlayType2" name="adSpecificPlayType" <#if adSpecificPlayType == "1">checked</#if> >指定投放網站類型
                         </th>
                         <td>
-                        	<div style="float:left">
+                        	<div style="display:none;" id="websiteAddDiv">
+								<div>
+									<div class="inxrltbox" >
+										<div class="showinxrltLayer" id="websiteAdd" >
+											
+										</div>
+									</div>
+								</div>
+							</div>
+                        	<div>
 	                        	<div class="wsh_typ_select">
                             		<div class="outter_box">
                             			<div class="inner_box">
@@ -322,21 +332,24 @@
 	                            	<div class="ui_slctOutter sdft clearfix">
 		                            	<div class="slstcont">
 		                            		<ul id="websiteUi" class="idxBx">
-		                            			
+		                            			<li style="background:#fff;border-bottom:1px solid #e8e2e2;">
+														<div class="s_mrow" role="presentation">
+															<div class="cntxt">
+																網站類型
+															</div>
+															<div class="bt_slctall selectTop" style="visibility:inherit;cursor: pointer;padding-right:8px;" onclick="specificSelectAll('website')" >
+																<em class="box">選擇全部</em>
+															</div>
+															|
+															<div class="bt_slctall selectTop" style="visibility:inherit;cursor: pointer;padding-right:8px;" onclick="specificRemoveAll('website')" >
+																<em class="box">取消</em>
+															</div>
+														</div>
+													</li>
 		                            		</ul>
 		                            	</div>
 	                            	</div>
                             	</div>
-							</div>
-							<div style="width:50px;float:left;" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                        	<div style="display:none;float:left" id="websiteAddDiv">
-								<div>
-									<div class="inxrltbox" style="border-bottom:1px solid #bcbbb8">
-										<div class="showinxrltLayer" id="websiteAdd" >
-											
-										</div>
-									</div>
-								</div>
 							</div>
                         </td>
                     </tr>

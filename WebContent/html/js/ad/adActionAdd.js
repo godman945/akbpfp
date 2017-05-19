@@ -254,6 +254,11 @@ $(document).ready(function(){
 					return false;
 				}
 			} 
+
+			if($("#pvLimitSelect2").prop("checked") && parseInt($("#adPvLimitAmount").val()) <= 0){
+				alert("曝光頻率限制須至少一次");
+				return false;
+			}
 			
 			// form submit
 			$("#adActionStartAge").removeAttr("disabled");
@@ -554,7 +559,7 @@ function appendAddSort(specificType,data){
 		
 		if(data[keys][0].children == "Y"){
 			var tag = '<ul class="clasf_area" id="' + specificType + 'AddLu_' + data[keys][0].code.substring(0,parseInt(data[keys][0].level)*5)  + '_' + data[keys][0].level + '" style="display: none;" >';
-			tag += '<li class="bol01 bol02">';
+			tag += '<li class="bol01 bol02" id="' + specificType + 'TitleLi_' + data[keys][0].code.substring(0,parseInt(data[keys][0].level)*5) + '" >';
 			
 			if(parseInt(data[keys][0].level) >= 1){
 				tag += '<span>' + level01Name + '</span>';
@@ -629,6 +634,8 @@ function checkCategory(specificType,code,level,type){
 		}
 		
 		$("#" + specificType + "AddDiv").show();
+		
+		$('li[id^="' + specificType + 'TitleLi_' + code + '"] button').trigger('click');
 	} else {
 		$("li[id=" + specificType + "Li_" + code + "_" + level + "]").attr("class","listem_culm01");
 		$("li[id=" + specificType + "Li_" + code + "_" + level + "]").html($("li[id=" + specificType + "Li_" + code + "_" + level + "]").html().replace(/unPick/g, "pick"));
@@ -686,4 +693,22 @@ function loadCheckCategory(specificType){
 		$("[id=" + specificType + "_" + checkIdArray[i] + "]").trigger('click');
 	}
 	
+}
+
+//選擇全部
+function specificSelectAll(specificType){
+	$("li[id^=" + specificType + "Li_][id$=_1]").each(function(){
+		if($(this).attr("class") == "listem_culm01"){
+			$($(this).children().children()[2]).trigger('click');
+		}
+	});
+}
+
+//取消全部
+function specificRemoveAll(specificType){
+	$("li[id^=" + specificType + "Li_]").each(function(){
+		if($(this).attr("class") == "listem_culm01 listem_culm02"){
+			$($(this).children().children()[2]).trigger('click');
+		}
+	});
 }
