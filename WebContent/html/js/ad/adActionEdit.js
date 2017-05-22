@@ -71,6 +71,7 @@ $(document).ready(function(){
 				max: 999999
 			},
 			adPvLimitAmount: {
+				required: true,
 				digits: true
 			}
 		},
@@ -98,6 +99,7 @@ $(document).ready(function(){
 				max: "每日預算最多為NT$999,999"
 			},
 			adPvLimitAmount: {
+				required:  "請填寫曝光頻率限制次數.",
 				digits: "曝光頻率限制次數只能填寫數字."
 			}
 		}
