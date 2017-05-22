@@ -11,7 +11,7 @@ public class PfbxWebsiteCategoryDAO extends BaseDAO<PfbxWebsiteCategory,String> 
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<PfbxWebsiteCategory> getAllOrderByCode() {
-		String sql = "from PfbxWebsiteCategory order by code ";
+		String sql = "from PfbxWebsiteCategory where level = '1' order by code ";
 		return super.getHibernateTemplate().find(sql);
 	}
 
