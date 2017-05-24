@@ -72,5 +72,6 @@
 	<table-filter match-name="pfp_ad_specific_website" match-catalog="akb" />
 	<table-filter match-name="pfbx_size" match-catalog="akb" />
 	<table-filter match-name="pfbx_website_category" match-catalog="akb" />
+	<table-filter match-name="pfp_ad_website_report" match-catalog="akb" />
 
 </hibernate-reverse-engineering>

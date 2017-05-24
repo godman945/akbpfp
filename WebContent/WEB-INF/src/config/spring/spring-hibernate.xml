@@ -95,6 +95,7 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpAdAgeReport</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpAdTimeReport</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpAdSpecificWebsite</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpAdWebsiteReport</value>
 				
 				<!-- PFB pojo -->
 				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
@@ -195,6 +196,7 @@
                 <value>com.pchome.akbpfp.db.pojo.PfpAdAgeReport</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpAdTimeReport</value> 
 				<value>com.pchome.akbpfp.db.pojo.PfpAdSpecificWebsite</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpAdWebsiteReport</value>
 				
 				<!-- PFB pojo -->
 				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>

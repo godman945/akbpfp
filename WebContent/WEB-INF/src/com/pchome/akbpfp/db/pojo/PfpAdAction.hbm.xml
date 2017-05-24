@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2017/5/11 ?W?? 10:06:13 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2017/5/24 ?W?? 10:13:50 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdAction" table="pfp_ad_action" catalog="akb">
         <id name="adActionSeq" type="string">
@@ -72,7 +72,7 @@
         </property>
         <property name="adPvLimitPeriod" type="string">
             <column name="ad_pv_limit_period" length="1" not-null="true">
-                <comment>&#195;n&#165;&#250;&#173;&#173;&#168;&#238;&#182;g&#180;&#193; 0:&#164;&#163;&#173;&#173;&#168;&#238; 1:&#164;&#233; 2:&#182;g 3:&#164;&#235;</comment>
+                <comment>&#195;n&#165;&#250;&#173;&#173;&#168;&#238;&#182;g&#180;&#193; 0:&#164;&#163;&#173;&#173;&#168;&#238; D:&#164;&#233; W:&#182;g M:&#164;&#235;</comment>
             </column>
         </property>
         <property name="adPvLimitAmount" type="int">
