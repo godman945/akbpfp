@@ -95,6 +95,10 @@
     <bean id="AdAgesexReportService" class="com.pchome.akbpfp.db.service.report.AdAgesexReportService"> 
         <property name="adAgesexReportDAO" ref="AdAgesexReportDAO" />
     </bean>
+    
+    <bean id="AdWebsiteReportService" class="com.pchome.akbpfp.db.service.report.AdWebsiteReportService"> 
+        <property name="adWebsiteReportDAO" ref="AdWebsiteReportDAO" />
+    </bean>
 
 	<!-- Adm -->
 	<bean id="AdmFreeActionService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeActionService">
