@@ -65,3 +65,10 @@
   <@s.else>
         <div class="submn"><a href="<@s.url value="/reportAdAgesex.html" />">廣告族群成效</a></div>
   </@s.else>
+  
+  <@s.if test="%{#rUri.indexOf('/reportAdWebsite.') != -1}">
+        <div class="submn"><a href="<@s.url value="/reportAdWebsite.html" />" style="text-decoration:none"><b>網站類型成效</b></a></div>
+  </@s.if>
+  <@s.else>
+        <div class="submn"><a href="<@s.url value="/reportAdWebsite.html" />">網站類型成效</a></div>
+  </@s.else>

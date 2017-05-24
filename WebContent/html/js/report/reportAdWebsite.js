@@ -479,6 +479,7 @@ function showHighChart(){
 	        }]
 	    },
 	    tooltip: {
+	    	headerFormat: '<span style="font-size: 12px">{point.key}</span><br/>',
 	        valueSuffix: selectSuffix,
 	        shared: true,
 	        borderColor:'#909090',
