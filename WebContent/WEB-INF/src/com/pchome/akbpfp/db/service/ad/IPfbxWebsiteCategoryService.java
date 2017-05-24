@@ -10,4 +10,6 @@ public interface IPfbxWebsiteCategoryService extends IBaseService<PfbxWebsiteCat
 	public Map<String, List<Map<String, String>>> getAllOrderByCode();
 	
 	public Map<String,PfbxWebsiteCategory> getPfbxWebsiteCategoryMap();
+	
+	public Map<String,String> getPfbxWebsiteCategoryNameMap();
 }

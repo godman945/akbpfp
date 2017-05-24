@@ -396,5 +396,37 @@
             <result type="tiles" name="success">report.flashData</result>
         </action>
         
+        <!--report adWebsite-->
+        <action name="reportAdWebsiteDownload" class="ReportAdWebsiteAction">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="reportPrivilegeInterceptor" />
+      		<result name="success" type="stream">   
+             	<param name="contentType">application/octet-stream</param>   
+             	<param name="contentDisposition">   
+                    attachment;filename="${downloadFileName}"  
+                </param>   
+                <param name="inputName">downloadFileStream</param> 
+            </result>  
+      	</action>
+		
+		<action name="reportAdWebsite" class="ReportAdWebsiteAction">
+            <interceptor-ref name="loginCheckStack" />
+            <interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="redirectAction" name="none">summary</result>
+            <result type="tiles" name="success">.report.adWebsite</result>
+        </action>
+        
+        <action name="reportAdWebsiteAjaxTable" class="ReportAdWebsiteAction">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="tiles" name="success">report.ajaxTable.adWebsite</result>
+        </action>
+		
+		<action name="reportAdWebsiteAjaxChart" class="ReportAdWebsiteAction" method="flashDataDownLoad">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="tiles" name="success">report.flashData</result>
+        </action>
+        
     </package>
 </struts>

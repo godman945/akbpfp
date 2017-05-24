@@ -257,4 +257,22 @@
 		<put-attribute name="chartTable" value="report.chartTable.adAgesex" />
 	</definition>
     
+    <!-- .report.adWebsite  -->
+    <definition name="report.ajaxTable.adWebsite" template="/ftl/report/ajax/adWebsiteTable.ftl" /> 
+	<definition name="report.chartTable.adWebsite" template="/ftl/report/chart/adWebsiteChartTable.ftl" />
+	 
+    <definition name=".report.adWebsite" extends="default.report.layout" >
+    	<put-attribute name="header" value="report.header.adWebsite" />
+        <put-attribute name="body" value="report.body.adWebsite" />
+    </definition>
+	
+	<definition name="report.header.adWebsite" extends="report.header" >
+       <put-attribute name="jsName" value="reportAdWebsite.js" />
+    </definition>
+	   
+    <definition name="report.body.adWebsite" extends="report.body" >
+    	<put-attribute name="reportTable" value="report.ajaxTable.adWebsite" />
+		<put-attribute name="chartTable" value="report.chartTable.adWebsite" />
+	</definition>
+    
 </tiles-definitions>

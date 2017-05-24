@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.pchome.akbpfp.db.dao.ad.IPfbxWebsiteCategoryDAO;
 import com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory;
 import com.pchome.akbpfp.db.service.BaseService;
@@ -94,6 +96,22 @@ public class PfbxWebsiteCategoryService extends BaseService<PfbxWebsiteCategory,
 		if(!dataList.isEmpty()){
 			for(PfbxWebsiteCategory data:dataList){
 				map.put(data.getId().toString(), data);
+			}
+		}
+		
+		return map;
+	}
+	
+	@Override
+	public Map<String,String> getPfbxWebsiteCategoryNameMap(){
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		List<PfbxWebsiteCategory> dataList = ((IPfbxWebsiteCategoryDAO)dao).loadAll();
+		
+		if(!dataList.isEmpty()){
+			for(PfbxWebsiteCategory data:dataList){
+				if(data.getLevel() == 1){
+					map.put(data.getCode(), data.getName());
+				}
 			}
 		}
 		
