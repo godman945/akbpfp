@@ -184,7 +184,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 
 	public ReportAdWebsiteAction() {
 
-		reportTitle="廣告網站類型成效";
+		reportTitle="網站類型成效";
 		
 		downloadFlag="no";
 
