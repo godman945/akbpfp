@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2017/5/24 �W�� 10:13:49 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/5/26 �W�� 09:41:24 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;

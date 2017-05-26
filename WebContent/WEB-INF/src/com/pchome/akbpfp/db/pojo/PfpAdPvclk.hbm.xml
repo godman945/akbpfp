@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2017/5/24 ?W?? 10:13:50 by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 2017/5/26 ?W?? 09:41:24 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="com.pchome.akbpfp.db.pojo.PfpAdPvclk" table="pfp_ad_pvclk" catalog="akb">
         <id name="adPvclkSeq" type="java.lang.Integer">
@@ -92,6 +92,16 @@
         <property name="adPvclkPropClassify" type="string">
             <column name="ad_pvclk_prop_classify" length="100" not-null="true">
                 <comment>&#169;&#202;&#189;&#232;&#164;&#192;&#195;&#254;</comment>
+            </column>
+        </property>
+        <property name="adPvclkWebsiteClassify" type="string">
+            <column name="ad_pvclk_website_classify" length="20">
+                <comment>&#186;&#244;&#175;&#184;&#169;&#202;&#189;&#232;&#164;&#192;&#195;&#254;</comment>
+            </column>
+        </property>
+        <property name="adPvclkAudienceClassify" type="string">
+            <column name="ad_pvclk_audience_classify" length="20">
+                <comment>&#168;&#252;&#178;&#179;&#169;&#202;&#189;&#232;&#164;&#192;&#195;&#254;</comment>
             </column>
         </property>
         <property name="adUrl" type="string">

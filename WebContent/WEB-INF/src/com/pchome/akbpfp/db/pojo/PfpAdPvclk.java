@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2017/5/24 �W�� 10:13:49 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/5/26 �W�� 09:41:24 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -41,6 +41,8 @@ public class PfpAdPvclk implements java.io.Serializable {
 	private String templateProductSeq;
 	private String templateAdSeq;
 	private String adPvclkPropClassify;
+	private String adPvclkWebsiteClassify;
+	private String adPvclkAudienceClassify;
 	private String adUrl;
 	private String styleNo;
 	private int adPv;
@@ -102,10 +104,11 @@ public class PfpAdPvclk implements java.io.Serializable {
 			String adGroupSeq, String adActionSeq, int adType,
 			Date adPvclkDate, int adPvclkTime, String sex, String ageCode,
 			String timeCode, String templateProductSeq, String templateAdSeq,
-			String adPvclkPropClassify, String adUrl, String styleNo, int adPv,
-			int adClk, int adInvalidClk, float adPvPrice, float adClkPrice,
-			float adInvalidClkPrice, String adPvclkDevice, String adPvclkOs,
-			String adPvclkBrand, String adPvclkArea,
+			String adPvclkPropClassify, String adPvclkWebsiteClassify,
+			String adPvclkAudienceClassify, String adUrl, String styleNo,
+			int adPv, int adClk, int adInvalidClk, float adPvPrice,
+			float adClkPrice, float adInvalidClkPrice, String adPvclkDevice,
+			String adPvclkOs, String adPvclkBrand, String adPvclkArea,
 			float adActionControlPrice, float adActionMaxPrice,
 			Date adPvclkCreateTime, Date adPvclkUpdateTime) {
 		this.pfpAd = pfpAd;
@@ -126,6 +129,8 @@ public class PfpAdPvclk implements java.io.Serializable {
 		this.templateProductSeq = templateProductSeq;
 		this.templateAdSeq = templateAdSeq;
 		this.adPvclkPropClassify = adPvclkPropClassify;
+		this.adPvclkWebsiteClassify = adPvclkWebsiteClassify;
+		this.adPvclkAudienceClassify = adPvclkAudienceClassify;
 		this.adUrl = adUrl;
 		this.styleNo = styleNo;
 		this.adPv = adPv;
@@ -317,6 +322,24 @@ public class PfpAdPvclk implements java.io.Serializable {
 
 	public void setAdPvclkPropClassify(String adPvclkPropClassify) {
 		this.adPvclkPropClassify = adPvclkPropClassify;
+	}
+
+	@Column(name = "ad_pvclk_website_classify", length = 20)
+	public String getAdPvclkWebsiteClassify() {
+		return this.adPvclkWebsiteClassify;
+	}
+
+	public void setAdPvclkWebsiteClassify(String adPvclkWebsiteClassify) {
+		this.adPvclkWebsiteClassify = adPvclkWebsiteClassify;
+	}
+
+	@Column(name = "ad_pvclk_audience_classify", length = 20)
+	public String getAdPvclkAudienceClassify() {
+		return this.adPvclkAudienceClassify;
+	}
+
+	public void setAdPvclkAudienceClassify(String adPvclkAudienceClassify) {
+		this.adPvclkAudienceClassify = adPvclkAudienceClassify;
 	}
 
 	@Column(name = "ad_url", nullable = false, length = 1000)
