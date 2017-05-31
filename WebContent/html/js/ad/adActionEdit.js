@@ -69,10 +69,6 @@ $(document).ready(function(){
 				digits: true,
 				min: 100,
 				max: 999999
-			},
-			adPvLimitAmount: {
-				required: true,
-				digits: true
 			}
 		},
 		messages: {
@@ -97,10 +93,6 @@ $(document).ready(function(){
 				digits: "每日預算只能填寫數字.",
 				min: "為讓您的廣告有足夠曝光量，每日預算至少為NT$100",
 				max: "每日預算最多為NT$999,999"
-			},
-			adPvLimitAmount: {
-				required:  "請填寫曝光頻率限制次數.",
-				digits: "曝光頻率限制次數只能填寫數字."
 			}
 		}
 	});
@@ -152,9 +144,25 @@ $(document).ready(function(){
 				}
 			} 
 			
-			if($("#pvLimitSelect2").prop("checked") && parseInt($("#adPvLimitAmount").val()) <= 0){
-				alert("曝光頻率限制須至少一次");
-				return false;
+			if($("#pvLimitSelect2").prop("checked")){
+				
+				var re = /^[0-9]*$/;
+				var adPvLimitAmount = $("#adPvLimitAmount").val();
+				
+				if(!re.test(adPvLimitAmount)){
+					alert("曝光頻率限制次數只能填寫數字");
+					return false;
+				}
+				
+				if(adPvLimitAmount == ""){
+					alert("曝光頻率限制須至少一次");
+					return false;
+				}
+				
+				if(parseInt($("#adPvLimitAmount").val()) <= 0){
+					alert("曝光頻率限制須至少一次");
+					return false;
+				}
 			}
 			
 			// form submit

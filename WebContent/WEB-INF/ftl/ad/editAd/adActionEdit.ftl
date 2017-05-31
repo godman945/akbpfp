@@ -379,8 +379,9 @@
 						  	    </#list>
 					      	</select>
 					      	&nbsp;&nbsp;
-					      	曝光給同一廣告受眾次數
+					      	曝光給同一廣告受眾
 					      	<input type="text" class="pkwdh" id="adPvLimitAmount" name="adPvLimitAmount" maxlength="11" value="${adPvLimitAmount!}" <#if pvLimitSelect == "N">disabled</#if> />
+					      	次
                         </td>
                     </tr>
 	        	</tbody>
