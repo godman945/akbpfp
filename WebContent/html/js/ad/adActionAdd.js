@@ -322,6 +322,7 @@ $(document).ready(function(){
 			$("#adActionEndAge").removeAttr("disabled");
 		}
 		$("#websiteButton").attr("onclick","openWebsite('1')");
+		$("#websiteButton").html("<em>瀏覽</em>");
 		$("#websiteData").hide();
 		$("#websiteAddDiv").hide();
 	});
@@ -480,9 +481,11 @@ function openWebsite(type) {
 	if($("#adSpecificPlayType2").prop("checked")){
 		if(type == '1'){
 			$("#websiteButton").attr("onclick","openWebsite('2')");
+			$("#websiteButton").html("<em>關閉</em>");
 			$("#websiteData").show();
 		} else {
 			$("#websiteButton").attr("onclick","openWebsite('1')");
+			$("#websiteButton").html("<em>瀏覽</em>");
 			$("#websiteData").hide();
 		}
 	}
