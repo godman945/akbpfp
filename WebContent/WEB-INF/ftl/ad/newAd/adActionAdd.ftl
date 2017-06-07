@@ -301,8 +301,8 @@
 									</div>
 								</div>
 	                        	<div>
-		                        	<div class="wsh_typ_select">
-	                            		<div class="outter_box">
+		                        	<div id="test" class="wsh_typ_select">
+	                            		<div id="websiteOutterBox" class="outter_box">
 	                            			<div class="inner_box">
 	                            				<span class="lf_slinx" autocomplete="off" autocorrect="off">
 	                            					<label class="fill">
