@@ -67,7 +67,8 @@ public class PfpTransDetailService extends BaseService <PfpTransDetail, String> 
 				}
 				
 				if(detail.getTransType().equals(EnumTransType.SPEND_COST.getTypeId()) ||
-						detail.getTransType().equals(EnumTransType.REFUND.getTypeId())){
+						detail.getTransType().equals(EnumTransType.REFUND.getTypeId()) ||
+						detail.getTransType().equals(EnumTransType.LATER_REFUND.getTypeId())){
 					vo.setAdSpentMoney(detail.getTransPrice());
 					totalAdSpentMoney += detail.getTransPrice();
 				}

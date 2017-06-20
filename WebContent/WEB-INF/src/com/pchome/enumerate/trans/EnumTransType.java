@@ -8,7 +8,9 @@ public enum EnumTransType {
 	REFUND("4","帳戶儲值退款","-"),
 	GIFT("5","禮金贈送","+"),
 	FEEDBACK_MONEY("6","回饋金","+"),
-	LATER_SAVE("7","P幣加值","+");
+	LATER_SAVE("7","P幣加值","+"),
+	GIFT_FEEDBACK_RETRIEVE("8","禮金&回饋金到期回收","-"),
+	LATER_REFUND("9","P幣退款","-");
 	
 	private final String typeId;
 	private final String chName;
