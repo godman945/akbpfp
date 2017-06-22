@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2017/5/26 �W�� 09:41:24 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/6/22 �W�� 10:22:48 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -29,6 +29,7 @@ public class PfpAd implements java.io.Serializable {
 	private String adArea;
 	private String adStyle;
 	private String templateProductSeq;
+	private String adAssignTadSeq;
 	private int adStatus;
 	private String adCategorySeq;
 	private Date adSendVerifyTime;
@@ -66,18 +67,20 @@ public class PfpAd implements java.io.Serializable {
 
 	public PfpAd(String adSeq, PfpAdGroup pfpAdGroup, String adClass,
 			String adArea, String adStyle, String templateProductSeq,
-			int adStatus, String adCategorySeq, Date adSendVerifyTime,
-			Date adSysVerifyTime, Date adUserVerifyTime, String adVerifyUser,
-			String adVerifyRejectReason, float adSearchPrice,
-			float adChannelPrice, Date adCreateTime, Date adUpdateTime,
-			Set<PfpAdInvalid> pfpAdInvalids, Set<PfpAdRate> pfpAdRates,
-			Set<PfpAdDetail> pfpAdDetails, Set<PfpAdPvclk> pfpAdPvclks) {
+			String adAssignTadSeq, int adStatus, String adCategorySeq,
+			Date adSendVerifyTime, Date adSysVerifyTime, Date adUserVerifyTime,
+			String adVerifyUser, String adVerifyRejectReason,
+			float adSearchPrice, float adChannelPrice, Date adCreateTime,
+			Date adUpdateTime, Set<PfpAdInvalid> pfpAdInvalids,
+			Set<PfpAdRate> pfpAdRates, Set<PfpAdDetail> pfpAdDetails,
+			Set<PfpAdPvclk> pfpAdPvclks) {
 		this.adSeq = adSeq;
 		this.pfpAdGroup = pfpAdGroup;
 		this.adClass = adClass;
 		this.adArea = adArea;
 		this.adStyle = adStyle;
 		this.templateProductSeq = templateProductSeq;
+		this.adAssignTadSeq = adAssignTadSeq;
 		this.adStatus = adStatus;
 		this.adCategorySeq = adCategorySeq;
 		this.adSendVerifyTime = adSendVerifyTime;
@@ -149,6 +152,15 @@ public class PfpAd implements java.io.Serializable {
 
 	public void setTemplateProductSeq(String templateProductSeq) {
 		this.templateProductSeq = templateProductSeq;
+	}
+
+	@Column(name = "ad_assign_tad_seq", length = 20)
+	public String getAdAssignTadSeq() {
+		return this.adAssignTadSeq;
+	}
+
+	public void setAdAssignTadSeq(String adAssignTadSeq) {
+		this.adAssignTadSeq = adAssignTadSeq;
 	}
 
 	@Column(name = "ad_status", nullable = false)

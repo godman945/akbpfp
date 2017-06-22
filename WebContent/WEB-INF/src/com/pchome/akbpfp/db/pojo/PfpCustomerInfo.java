@@ -1,6 +1,6 @@
 package com.pchome.akbpfp.db.pojo;
 
-// Generated 2017/5/26 �W�� 09:41:24 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/6/22 �W�� 10:22:48 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -52,6 +52,7 @@ public class PfpCustomerInfo implements java.io.Serializable {
 	private Date blackTime;
 	private Date createDate;
 	private Date updateDate;
+	private Set<PfpRefundOrder> pfpRefundOrders = new HashSet<PfpRefundOrder>(0);
 	private Set<PfpAdClick> pfpAdClicks = new HashSet<PfpAdClick>(0);
 	private Set<PfpTransDetail> pfpTransDetails = new HashSet<PfpTransDetail>(0);
 	private Set<AdmRecognizeRecord> admRecognizeRecords = new HashSet<AdmRecognizeRecord>(
@@ -109,7 +110,8 @@ public class PfpCustomerInfo implements java.io.Serializable {
 			float totalLaterSpend, float totalLaterRetrieve, String recognize,
 			String authorizedPage, String black, String blackReason,
 			Date blackTime, Date createDate, Date updateDate,
-			Set<PfpAdClick> pfpAdClicks, Set<PfpTransDetail> pfpTransDetails,
+			Set<PfpRefundOrder> pfpRefundOrders, Set<PfpAdClick> pfpAdClicks,
+			Set<PfpTransDetail> pfpTransDetails,
 			Set<AdmRecognizeRecord> admRecognizeRecords,
 			Set<PfpOrder> pfpOrders,
 			Set<PfdUserAdAccountRef> pfdUserAdAccountRefs,
@@ -145,6 +147,7 @@ public class PfpCustomerInfo implements java.io.Serializable {
 		this.blackTime = blackTime;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
+		this.pfpRefundOrders = pfpRefundOrders;
 		this.pfpAdClicks = pfpAdClicks;
 		this.pfpTransDetails = pfpTransDetails;
 		this.admRecognizeRecords = admRecognizeRecords;
@@ -436,6 +439,15 @@ public class PfpCustomerInfo implements java.io.Serializable {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpCustomerInfo")
+	public Set<PfpRefundOrder> getPfpRefundOrders() {
+		return this.pfpRefundOrders;
+	}
+
+	public void setPfpRefundOrders(Set<PfpRefundOrder> pfpRefundOrders) {
+		this.pfpRefundOrders = pfpRefundOrders;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpCustomerInfo")
