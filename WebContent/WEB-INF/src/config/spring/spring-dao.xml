@@ -20,6 +20,10 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
+    <bean id="PfpRefundOrderDAO" class="com.pchome.akbpfp.db.dao.order.PfpRefundOrderDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
     <bean id="SequenceDAO" class="com.pchome.akbpfp.db.dao.sequence.SequenceDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>

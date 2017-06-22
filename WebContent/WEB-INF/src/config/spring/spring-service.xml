@@ -25,6 +25,10 @@
     <bean id="PfpOrderDetailService" class="com.pchome.akbpfp.db.service.order.PfpOrderDetailService">
         <property name="dao" ref="PfpOrderDetailDAO" />      
     </bean>
+    
+    <bean id="PfpRefundOrderService" class="com.pchome.akbpfp.db.service.order.PfpRefundOrderService">
+        <property name="dao" ref="PfpRefundOrderDAO" />      
+    </bean>
        
     <bean id="SequenceService" class="com.pchome.akbpfp.db.service.sequence.SequenceService">
         <property name="dao" ref="SequenceDAO" />
