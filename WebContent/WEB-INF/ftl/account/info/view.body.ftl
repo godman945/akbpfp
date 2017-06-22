@@ -3,7 +3,7 @@
 <div class="cont">
 <h2>
     <div class="cal">
-    	<#if changeStatusFlag=="N"><span class="t_s01" style="font-size:14px;margin: 0px 10px 0px 0px;"><b>帳戶申請退款中無法修改帳戶資料</b></span></#if>
+    	<#if changeStatusFlag=="N"><span class="t_s01" style="font-size:14px;margin: 0px 10px 0px 0px;"><b>申請退款期間無法修改帳戶資料</b></span></#if>
     	<input type="button" id="modify" value="修改帳戶資料" style="width:110px;" <#if changeStatusFlag=="N">disabled</#if> >
     </div>
     <img src="<@s.url value="/" />html/img/iconcr.gif" hspace="2" vspace="12" align="absmiddle" />帳戶資訊
