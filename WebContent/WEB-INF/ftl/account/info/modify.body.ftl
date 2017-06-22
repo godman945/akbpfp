@@ -19,9 +19,9 @@
 	    <th height="35"><span class="t_s02">*</span> 帳戶狀態</th>
 	    <td>
 	    	<#if pfpCustomerInfo.status !="2">
-	    	<input type="radio" id="open" name="status" value="1" <#if pfpCustomerInfo.status=="1">checked</#if> />
+	    	<input type="radio" id="open" name="status" value="1" <#if pfpCustomerInfo.status=="1">checked</#if> <#if changeStatusFlag=="N">disabled</#if> />
 	    	開啟　
-	    	<input type="radio" id="close" name="status" value="0" <#if pfpCustomerInfo.status=="0">checked</#if> />
+	    	<input type="radio" id="close" name="status" value="0" <#if pfpCustomerInfo.status=="0">checked</#if> <#if changeStatusFlag=="N">disabled</#if> />
 	    	關閉
 	    	<#else>
 	    	停權

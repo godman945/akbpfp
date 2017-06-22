@@ -67,6 +67,7 @@
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
     	<property name="boardProvider" ref="BoardProviderProxy" />
     	<property name="pfdBoardService" ref="PfdBoardService" />
+    	<property name="pfpRefundOrderService" ref="PfpRefundOrderService" />
     </bean>
 
     <!-- account add money -->

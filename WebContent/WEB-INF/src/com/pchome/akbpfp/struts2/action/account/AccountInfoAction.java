@@ -12,13 +12,16 @@ import org.apache.commons.lang.StringUtils;
 import com.pchome.akbpfp.db.pojo.PfdBoard;
 import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
+import com.pchome.akbpfp.db.pojo.PfpRefundOrder;
 import com.pchome.akbpfp.db.service.board.IPfdBoardService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
+import com.pchome.akbpfp.db.service.order.IPfpRefundOrderService;
 import com.pchome.akbpfp.db.vo.account.AccountVO;
 import com.pchome.akbpfp.struts2.BaseSSLAction;
 import com.pchome.enumerate.account.EnumAccountIndustry;
 import com.pchome.enumerate.account.EnumAccountStatus;
 import com.pchome.enumerate.account.EnumPfdAccountPayType;
+import com.pchome.enumerate.order.EnumRefundOrderStatus;
 import com.pchome.enumerate.pfd.EnumPfdBoardType;
 import com.pchome.enumerate.pfd.EnumPfdUserPrivilege;
 import com.pchome.rmi.board.EnumBoardType;
@@ -31,6 +34,7 @@ public class AccountInfoAction extends BaseSSLAction{
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private IBoardProvider boardProvider;
 	private IPfdBoardService pfdBoardService;
+	private IPfpRefundOrderService pfpRefundOrderService;
 	
 	private PfpCustomerInfo pfpCustomerInfo;
 	private AccountVO accountVO;
@@ -44,6 +48,7 @@ public class AccountInfoAction extends BaseSSLAction{
 	private String urlAddress;
 	private String status;
 	private EnumPfdAccountPayType[] payType = EnumPfdAccountPayType.values();
+	private String changeStatusFlag;
 	
 	public String execute() throws Exception{
 		
@@ -60,6 +65,14 @@ public class AccountInfoAction extends BaseSSLAction{
 		
 		for(EnumAccountIndustry industry:EnumAccountIndustry.values()){
 			industryList.add(industry.getName());
+		}
+		
+		//判斷有無尚未退款的退款單
+		changeStatusFlag = "Y";
+		List<PfpRefundOrder> notRefundList = pfpRefundOrderService.findPfpRefundOrder(super.getCustomer_info_id(), EnumRefundOrderStatus.NOT_REFUND.getStatus());
+		
+		if(!notRefundList.isEmpty()){
+			changeStatusFlag = "N";
 		}
 		
 		return SUCCESS;
@@ -91,6 +104,10 @@ public class AccountInfoAction extends BaseSSLAction{
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		
 		if(pfpCustomerInfo != null){
+			
+			if(StringUtils.isBlank(status)){
+				status = pfpCustomerInfo.getStatus();
+			}
 			
 			if(StringUtils.isNotBlank(category.trim()) && StringUtils.isNotBlank(accountTitle.trim()) &&
 					StringUtils.isNotBlank(industry.trim()) && StringUtils.isNotBlank(urlAddress.trim()) &&
@@ -206,6 +223,10 @@ public class AccountInfoAction extends BaseSSLAction{
 		this.boardProvider = boardProvider;
 	}
 	
+	public void setPfpRefundOrderService(IPfpRefundOrderService pfpRefundOrderService) {
+		this.pfpRefundOrderService = pfpRefundOrderService;
+	}
+	
 	public PfpCustomerInfo getPfpCustomerInfo() {
 		return pfpCustomerInfo;
 	}
@@ -259,6 +280,9 @@ public class AccountInfoAction extends BaseSSLAction{
 
 	public void setPfdBoardService(IPfdBoardService pfdBoardService) {
 		this.pfdBoardService = pfdBoardService;
+	}
+	public String getChangeStatusFlag() {
+		return changeStatusFlag;
 	}
 	
 }
