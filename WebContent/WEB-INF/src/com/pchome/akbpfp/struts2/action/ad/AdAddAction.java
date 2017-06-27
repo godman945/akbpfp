@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
 import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.api.ControlPriceAPI;
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
@@ -67,6 +68,7 @@ import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.depot.utils.HttpUtil;
+import com.pchome.soft.depot.utils.SpringZipCompress;
 
 
 public class AdAddAction extends BaseCookieAction{
@@ -740,79 +742,99 @@ public class AdAddAction extends BaseCookieAction{
 	    	File originalImgFile = file;
     		String fileType = fileuploadFileName.substring(fileuploadFileName.lastIndexOf(".") + 1);
     		
-    		BufferedImage bufferedImage = ImageIO.read(originalImgFile);
-    		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    		if(StringUtils.equals("zip", fileType)){
+    			
+    			adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+    			
+				//建立路徑
+				log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
+				log.info(">>>2.path>>"+customerImgFile.getPath());
+				log.info(customerImgFile.exists());
+				if(!customerImgFile.exists()){
+				    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
+				    customerImgFile.mkdirs();
+				}
+				
+				SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
+				SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
+				
+				result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\" "+ "}";
+    		} else {
+    			BufferedImage bufferedImage = ImageIO.read(originalImgFile);
+        		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-    		//2015.8.11 tim  上傳非圖像檔處理
-    		if(bufferedImage == null){
-    		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-    		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\" "+ "}";
-    			continue;
-    		}
-    		//String test = Integer.toString((int) Math.round(new Double(file.length())/new Double(1024)));
-    		baos.flush();
-    		baos.close();
-	    	
-	    	//取得檔案的MD5
-	    	MessageDigest md = MessageDigest.getInstance("MD5");
-	        FileInputStream fis = new FileInputStream(file);
-	     
-	        byte[] dataBytes = new byte[1024];
-	     
-	        int nread = 0;
-	        while ((nread = fis.read(dataBytes)) != -1) {
-	            md.update(dataBytes, 0, nread);
-	        };
-	        byte[] mdbytes = md.digest();
-	        StringBuffer sb = new StringBuffer();
-	        for (int i = 0; i < mdbytes.length; i++) {
-	            sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
-	        }
-	        fis.close();
-	        imgMD5 = sb.toString();
-    		
-	        List<PfpAdDetail> pfpadDetailList = pfpAdDetailService.getPfpAdDetailsForAdGroup(customerInfoId, adGroupSeq, "MD5", imgMD5);
-	        
-	        if(!pfpadDetailList.isEmpty()){
-	        	imgRepeat = "yes";
-	        }
-	        
-	        //建立圖片
-    		log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
-    		log.info(">>>2.path>>"+customerImgFile.getPath());
-    		log.info(customerImgFile.exists());
-    		if(!customerImgFile.exists()){
-    		    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
-    		    customerImgFile.mkdirs();
-    		}
-    		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date));
-    		if(!customerImgFileDateFile.exists()){
-    		    customerImgFileDateFile.mkdirs();
-    		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original");
-    		    customerImgFileOriginalDateFile.mkdirs();
-    		    customerImgFileTemporalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal");
-    		    if(!customerImgFileTemporalDateFile.exists()){
-    		        customerImgFileTemporalDateFile.mkdirs();
-    		    }
-    		}else{
-    		    fileSize = String.valueOf(file.length() / 1024);
-    		}
-
-            imgWidth = String.valueOf(bufferedImage.getWidth());
-            imgHeight = String.valueOf(bufferedImage.getHeight());
-
-            while(StringUtils.isBlank(adSeq)) {
-        		try {
+        		//2015.8.11 tim  上傳非圖像檔處理
+        		if(bufferedImage == null){
         		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+        		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\" "+ "}";
+        			continue;
         		}
-        		catch (Exception e) {
-        		    log.error(e.getMessage());
-                    Thread.sleep(100);
+        		//String test = Integer.toString((int) Math.round(new Double(file.length())/new Double(1024)));
+        		baos.flush();
+        		baos.close();
+    	    	
+    	    	//取得檔案的MD5
+    	    	MessageDigest md = MessageDigest.getInstance("MD5");
+    	        FileInputStream fis = new FileInputStream(file);
+    	     
+    	        byte[] dataBytes = new byte[1024];
+    	     
+    	        int nread = 0;
+    	        while ((nread = fis.read(dataBytes)) != -1) {
+    	            md.update(dataBytes, 0, nread);
+    	        };
+    	        byte[] mdbytes = md.digest();
+    	        StringBuffer sb = new StringBuffer();
+    	        for (int i = 0; i < mdbytes.length; i++) {
+    	            sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
+    	        }
+    	        fis.close();
+    	        imgMD5 = sb.toString();
+        		
+    	        List<PfpAdDetail> pfpadDetailList = pfpAdDetailService.getPfpAdDetailsForAdGroup(customerInfoId, adGroupSeq, "MD5", imgMD5);
+    	        
+    	        if(!pfpadDetailList.isEmpty()){
+    	        	imgRepeat = "yes";
+    	        }
+    	        
+    	        //建立圖片
+        		log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
+        		log.info(">>>2.path>>"+customerImgFile.getPath());
+        		log.info(customerImgFile.exists());
+        		if(!customerImgFile.exists()){
+        		    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
+        		    customerImgFile.mkdirs();
         		}
-            }
-            commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
+        		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date));
+        		if(!customerImgFileDateFile.exists()){
+        		    customerImgFileDateFile.mkdirs();
+        		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original");
+        		    customerImgFileOriginalDateFile.mkdirs();
+        		    customerImgFileTemporalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal");
+        		    if(!customerImgFileTemporalDateFile.exists()){
+        		        customerImgFileTemporalDateFile.mkdirs();
+        		    }
+        		}else{
+        		    fileSize = String.valueOf(file.length() / 1024);
+        		}
 
-    		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\" "+ "}";
+                imgWidth = String.valueOf(bufferedImage.getWidth());
+                imgHeight = String.valueOf(bufferedImage.getHeight());
+
+                while(StringUtils.isBlank(adSeq)) {
+            		try {
+            		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+            		}
+            		catch (Exception e) {
+            		    log.error(e.getMessage());
+                        Thread.sleep(100);
+            		}
+                }
+                commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
+
+        		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\" "+ "}";
+    		}
+    		
 	    }
 
 	    return SUCCESS;

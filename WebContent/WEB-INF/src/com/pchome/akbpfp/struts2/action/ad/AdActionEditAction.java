@@ -394,34 +394,6 @@ public class AdActionEditAction extends BaseCookieAction{
 			}
 		}
 		
-		String oldSex = "";
-		if(pfpAdAction.getAdActionSex() != null){
-			oldSex = pfpAdAction.getAdActionSex();
-		}
-		if(StringUtils.isNotEmpty(adActionSex)){
-			pfpAdAction.setAdActionSex(adActionSex);
-		} else {
-			pfpAdAction.setAdActionSex(null);
-		}
-		
-		//性別改變記錄log
-		if(!StringUtils.equals(oldSex, adActionSex)){
-			String accesslogMessage_sex = "廣告：" + adActionName + " " + adActionSeq + "，性別取向異動：" + getSexName(oldSex) + " => " + getSexName(adActionSex);
-			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_sex, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-		}
-		
-		int oldStartAge = pfpAdAction.getAdActionStartAge();
-		int oldEndAge = pfpAdAction.getAdActionEndAge();
-		
-		pfpAdAction.setAdActionStartAge(Integer.parseInt(adActionStartAge));
-		pfpAdAction.setAdActionEndAge(Integer.parseInt(adActionEndAge));
-		
-		//年齡區間改變記錄log
-		if(!StringUtils.equals(String.valueOf(oldStartAge), adActionStartAge) || !StringUtils.equals(String.valueOf(oldEndAge), adActionEndAge)){
-			String accesslogMessage_age = "廣告：" + adActionName + " " + adActionSeq + "，年齡區間異動：" + getAgeNote(oldStartAge,oldEndAge) + " => " + getAgeNote(Integer.parseInt(adActionStartAge),Integer.parseInt(adActionEndAge));
-			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_age, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-		}
-		
 		//設定播放時間初始化
 		String oldMon = "111111111111111111111111";
 		String oldTue = "111111111111111111111111";
@@ -482,19 +454,26 @@ public class AdActionEditAction extends BaseCookieAction{
 			
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_time, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 		}
-		
-		pfpAdAction.setUserId(super.getUser_id());
-		pfpAdAction.setPfpCustomerInfo(pfpCustomerInfo);
-		pfpAdAction.setAdActionUpdateTime(new Date());
 
-		if(StringUtils.equals(pvLimitSelect, "Y")){
-			pfpAdAction.setAdPvLimitStyle(adPvLimitStyle);
-			pfpAdAction.setAdPvLimitPeriod(adPvLimitPeriod);
-			pfpAdAction.setAdPvLimitAmount(Integer.parseInt(adPvLimitAmount));
-		} else {
-			pfpAdAction.setAdPvLimitStyle("0");
-			pfpAdAction.setAdPvLimitPeriod("0");
-			pfpAdAction.setAdPvLimitAmount(0);
+		String oldAdSpecificPlayType = pfpAdAction.getAdSpecificPlayType();
+		String oldSex = null;
+		if(pfpAdAction.getAdActionSex() != null){
+			oldSex = pfpAdAction.getAdActionSex();
+		}
+		int oldStartAge = pfpAdAction.getAdActionStartAge();
+		int oldEndAge = pfpAdAction.getAdActionEndAge();
+		
+		//性別改變記錄log
+		if(!StringUtils.equals(oldSex, adActionSex)){
+			String accesslogMessage_sex = "廣告：" + adActionName + " " + adActionSeq + "，性別取向異動：" + getSexName(oldSex) + " => " + getSexName(adActionSex);
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_sex, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+		}
+		
+		
+		//年齡區間改變記錄log
+		if(!StringUtils.equals(String.valueOf(oldStartAge), adActionStartAge) || !StringUtils.equals(String.valueOf(oldEndAge), adActionEndAge)){
+			String accesslogMessage_age = "廣告：" + adActionName + " " + adActionSeq + "，年齡區間異動：" + getAgeNote(oldStartAge,oldEndAge) + " => " + getAgeNote(Integer.parseInt(adActionStartAge),Integer.parseInt(adActionEndAge));
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_age, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 		}
 		
 		pfpAdAction.setAdSpecificPlayType(adSpecificPlayType);
@@ -509,6 +488,8 @@ public class AdActionEditAction extends BaseCookieAction{
 			
 			if(StringUtils.isNotEmpty(adActionSex)){
 				pfpAdAction.setAdActionSex(adActionSex);
+			} else {
+				pfpAdAction.setAdActionSex(null);
 			}
 			pfpAdAction.setAdActionStartAge(Integer.parseInt(adActionStartAge));
 			pfpAdAction.setAdActionEndAge(Integer.parseInt(adActionEndAge));
@@ -530,6 +511,20 @@ public class AdActionEditAction extends BaseCookieAction{
 				}
 			}
 		}
+		
+		if(StringUtils.equals(pvLimitSelect, "Y")){
+			pfpAdAction.setAdPvLimitStyle(adPvLimitStyle);
+			pfpAdAction.setAdPvLimitPeriod(adPvLimitPeriod);
+			pfpAdAction.setAdPvLimitAmount(Integer.parseInt(adPvLimitAmount));
+		} else {
+			pfpAdAction.setAdPvLimitStyle("0");
+			pfpAdAction.setAdPvLimitPeriod("0");
+			pfpAdAction.setAdPvLimitAmount(0);
+		}
+		
+		pfpAdAction.setUserId(super.getUser_id());
+		pfpAdAction.setPfpCustomerInfo(pfpCustomerInfo);
+		pfpAdAction.setAdActionUpdateTime(new Date());
 		
 		pfpAdActionService.savePfpAdAction(pfpAdAction);
 		
