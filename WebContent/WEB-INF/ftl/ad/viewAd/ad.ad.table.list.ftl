@@ -41,7 +41,7 @@
 				</#if>
 				</td>
 		        <td height="35" class="td02" > 
-		        	<#if "IMG" == vo.adStyle>
+		        	<#if "IMG" == vo.adStyle && "N" == vo.html5Tag>
  						<div class="adreportdv">
 							<span class="adboxdvimg"><a href="${vo.realUrl!}" target="_blank"><img src="${vo.originalImg!}" /></a></span>
 				        	<span class="adboxdvinf">
@@ -50,6 +50,18 @@
 						            <i>尺寸</i><b>${vo.imgWidth!} x ${vo.imgHeight!}</b><br>
 						            <span>${vo.showUrl!}</span><br>
 						            <a class="fancy" style="cursor:pointer" onclick="preview('${vo.originalImg!}')" alt="預覽">預覽</a>
+					            </span>
+				        	</span>
+			        	</div>
+			        <#elseif "IMG" == vo.adStyle && "Y" == vo.html5Tag>
+			        	<div class="adreportdv">
+			        		<span class="adboxdvimg">${vo.zipTitle!}</span>
+				        	<span class="adboxdvinf">
+						        <span>
+						        	<b>${vo.title!}</b><br>
+						            <i>尺寸</i><b>${vo.imgWidth!} x ${vo.imgHeight!}</b><br>
+						            <span>${vo.showUrl!}</span><br>
+						            <a class="fancy" style="cursor:pointer" onclick="preViewHtml5('${vo.imgWidth!}','${vo.imgHeight!}','${vo.originalImg!}')" alt="預覽">預覽</a>
 					            </span>
 				        	</span>
 			        	</div>

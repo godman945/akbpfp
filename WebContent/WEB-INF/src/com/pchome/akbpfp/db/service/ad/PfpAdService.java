@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.pchome.akbpfp.db.dao.ad.PfpAdDAO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
@@ -196,6 +198,12 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 					}
 				}
 
+				String html5Tag = "N";
+				if(StringUtils.equals("c_x05_po_tad_0059", pfpAd.getAdAssignTadSeq())){
+					html5Tag = "Y";
+				}
+				adAdViewVO.setHtml5Tag(html5Tag);
+				
 				for (PfpAdDetail pfpAdDetail: pfpAd.getPfpAdDetails()) {
 				    if ("real_url".equals(pfpAdDetail.getAdDetailId())) {
 				        adAdViewVO.setRealUrl(pfpAdDetail.getAdDetailContent());
@@ -203,18 +211,33 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				    if ("title".equals(pfpAdDetail.getAdDetailId())) {
 				        adAdViewVO.setTitle(pfpAdDetail.getAdDetailContent());
 				    }
-                    if ("img".equals(pfpAdDetail.getAdDetailId())) {
-                        adAdViewVO.setImg(pfpAdDetail.getAdDetailContent());
-                        if(adAdViewVO.getImg().indexOf("original") == -1){
-                        	if(adAdViewVO.getImg().lastIndexOf("/") >= 0){
-                        		imgFilename = adAdViewVO.getImg().substring(adAdViewVO.getImg().lastIndexOf("/"));
-                        		adAdViewVO.setOriginalImg(adAdViewVO.getImg().replace(imgFilename, "/original" + imgFilename));	
-                        	}
-                        	adAdViewVO.setOriginalImg(adAdViewVO.getImg());
-                        } else {
-                        	adAdViewVO.setOriginalImg(adAdViewVO.getImg());
-                        }
-                    }
+				    
+				    if(StringUtils.equals("Y", html5Tag)){
+				    	if ("img".equals(pfpAdDetail.getAdDetailId())) {
+				    		adAdViewVO.setOriginalImg(adAdViewVO.getImg());
+				    	}
+				    	if("zip".equals(pfpAdDetail.getAdDetailId())){
+				    		adAdViewVO.setZipTitle(pfpAdDetail.getAdDetailId());
+				    	}
+				    	if("size".equals(pfpAdDetail.getAdDetailId())){
+				    		String[] sizeArray = pfpAdDetail.getAdDetailId().split("x");
+				    		adAdViewVO.setImgWidth(sizeArray[0].trim());
+				    		adAdViewVO.setImgHeight(sizeArray[1].trim());
+				    	}
+				    } else {
+				    	if ("img".equals(pfpAdDetail.getAdDetailId())) {
+	                        adAdViewVO.setImg(pfpAdDetail.getAdDetailContent());
+	                        if(adAdViewVO.getImg().indexOf("original") == -1){
+	                        	if(adAdViewVO.getImg().lastIndexOf("/") >= 0){
+	                        		imgFilename = adAdViewVO.getImg().substring(adAdViewVO.getImg().lastIndexOf("/"));
+	                        		adAdViewVO.setOriginalImg(adAdViewVO.getImg().replace(imgFilename, "/original" + imgFilename));	
+	                        	}
+	                        	adAdViewVO.setOriginalImg(adAdViewVO.getImg());
+	                        } else {
+	                        	adAdViewVO.setOriginalImg(adAdViewVO.getImg());
+	                        }
+	                    }
+				    }
 				}
 
 				adAdViewVOs.add(adAdViewVO);

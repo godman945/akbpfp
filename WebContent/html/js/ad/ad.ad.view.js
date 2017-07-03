@@ -153,3 +153,20 @@ function preview(img) {
         'scrolling':'no'
     });
 }
+
+function preViewHtml5(width,height,imgSrc){
+	$.fancybox({
+        'href':'<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>',
+        'width': width,
+		'height': height,
+        'autoSize':true,
+        'autoHeight':true,
+        'autoScale':true,
+        'transitionIn':'none',
+        'transitionOut':'none',
+        'padding':0,
+        'overlayOpacity':.75,
+        'overlayColor':'#fff',
+        'scrolling':'no'
+    });
+}

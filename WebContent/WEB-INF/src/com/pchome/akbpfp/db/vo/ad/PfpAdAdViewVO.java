@@ -26,6 +26,8 @@ public class PfpAdAdViewVO {
 	private String imgHeight = "";
 	private String showUrl = "";
 	private String title = "";
+	private String html5Tag = "";
+	private String zipTitle = "";
 
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -176,6 +178,18 @@ public class PfpAdAdViewVO {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public String getHtml5Tag() {
+		return html5Tag;
+	}
+	public void setHtml5Tag(String html5Tag) {
+		this.html5Tag = html5Tag;
+	}
+	public String getZipTitle() {
+		return zipTitle;
+	}
+	public void setZipTitle(String zipTitle) {
+		this.zipTitle = zipTitle;
 	}
     
 }

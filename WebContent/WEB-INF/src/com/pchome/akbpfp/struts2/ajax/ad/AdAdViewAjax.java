@@ -15,6 +15,9 @@ import java.util.Map;
 
 
 
+
+import org.apache.commons.lang.StringUtils;
+
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -78,10 +81,12 @@ public class AdAdViewAjax extends BaseCookieAction{
 			if(adAdViewVO != null && adAdViewVO.size() > 0){
 				totalSize = adAdViewVO.size();		
 				for(PfpAdAdViewVO vo:adAdViewVO){
-					Map<String,String> imgmap = new HashMap<String,String>();
-					imgmap = getImgSize(vo.getOriginalImg());
-					vo.setImgWidth(imgmap.get("imgWidth"));
-					vo.setImgHeight(imgmap.get("imgHeight"));
+					if(StringUtils.equals("N", vo.getHtml5Tag())){
+						Map<String,String> imgmap = new HashMap<String,String>();
+						imgmap = getImgSize(vo.getOriginalImg());
+						vo.setImgWidth(imgmap.get("imgWidth"));
+						vo.setImgHeight(imgmap.get("imgHeight"));
+					}
 					
 					if("IMG".equals(vo.getAdStyle())){
 						String showUrl = vo.getRealUrl();

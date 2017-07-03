@@ -354,7 +354,7 @@ function preViewHtml5(imgName,width,height,imgSrc){
 	$.each($(fileArray), function( index, file ) {
 		if(imgName == file.name){
 			
-		    $("#preDiv").prepend('<a href="' + $("#adLinkURL").val() + '" target="_blank"><iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe></a>');
+		    $("#preDiv").prepend('<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>');
 		    $.fancybox(
 		    		$('#preDiv').html(),
 		    		{
