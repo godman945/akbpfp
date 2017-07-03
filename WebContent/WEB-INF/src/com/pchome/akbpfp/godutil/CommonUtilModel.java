@@ -249,7 +249,7 @@ public class CommonUtilModel extends BaseCookieAction{
 			
 			imageVO.setImgWidth(imgWidth);
 		    imageVO.setImgHeight(imgHeight);
-	    	imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\original\\"+adSeq+"\\index.html");
+	    	imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\original\\"+adSeq+"\\index.htm");
 	    }
 	    
 	    return imageVO;
