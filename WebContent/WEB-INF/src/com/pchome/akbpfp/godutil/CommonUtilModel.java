@@ -213,7 +213,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	    log.info(">>>>>"+userImgPath+custimerInfoid+"/"+date+"/temporal/");
 	    ImageVO imageVO = new ImageVO();
 	    
-	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"/index.html");
+	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"/index.htm");
 	    if(folder.exists()){
 	    	
 	    	String imgWidth ="0";
