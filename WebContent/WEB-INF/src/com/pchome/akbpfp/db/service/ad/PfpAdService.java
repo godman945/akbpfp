@@ -214,13 +214,14 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				    
 				    if(StringUtils.equals("Y", html5Tag)){
 				    	if ("img".equals(pfpAdDetail.getAdDetailId())) {
-				    		adAdViewVO.setOriginalImg(adAdViewVO.getImg());
+				    		adAdViewVO.setImg(pfpAdDetail.getAdDetailContent());
+				    		adAdViewVO.setOriginalImg(pfpAdDetail.getAdDetailContent());
 				    	}
 				    	if("zip".equals(pfpAdDetail.getAdDetailId())){
-				    		adAdViewVO.setZipTitle(pfpAdDetail.getAdDetailId());
+				    		adAdViewVO.setZipTitle(pfpAdDetail.getAdDetailContent());
 				    	}
 				    	if("size".equals(pfpAdDetail.getAdDetailId())){
-				    		String[] sizeArray = pfpAdDetail.getAdDetailId().split("x");
+				    		String[] sizeArray = pfpAdDetail.getAdDetailContent().split("x");
 				    		adAdViewVO.setImgWidth(sizeArray[0].trim());
 				    		adAdViewVO.setImgHeight(sizeArray[1].trim());
 				    	}
