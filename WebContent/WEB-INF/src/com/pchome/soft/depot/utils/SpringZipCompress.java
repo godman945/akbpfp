@@ -198,12 +198,21 @@ public class SpringZipCompress {
 				//輸出文件路徑信息
 				log.info(outPath);
 				
-				out = new FileOutputStream(outPath);
-				byte[] buf1 = new byte[1024];
-				int len;
-				while((len=in.read(buf1))>0){
-					out.write(buf1,0,len);
+				if(zipEntryName.endsWith("/")){
+					//判斷路徑是否存在,不存在則創建文件路徑
+					File zipPathFile = new File(outPath);
+					if(!zipPathFile.exists()){
+						zipPathFile.mkdirs();
+					}
+				} else {
+					out = new FileOutputStream(outPath);
+					byte[] buf1 = new byte[1024];
+					int len;
+					while((len=in.read(buf1))>0){
+						out.write(buf1,0,len);
+					}
 				}
+				
 				out.flush();
 				out.close();
 			}

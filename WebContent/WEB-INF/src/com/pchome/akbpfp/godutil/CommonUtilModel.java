@@ -17,6 +17,10 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 
 public class CommonUtilModel extends BaseCookieAction{
@@ -145,13 +149,31 @@ public class CommonUtilModel extends BaseCookieAction{
 	public void deleteAllTemporalImg(String userImgPath,String custimerInfoid,String date) throws Exception{
 	    log.info("開始刪除全部暫存圖片");
 	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/");
-            String[] list = folder.list();
+           /* String[] list = folder.list();
             for(int i = 0; i < list.length; i++){
         	File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
         	file.delete();
-            }
+            }*/
+	    File[] files = folder.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            deleteAll(files[i]);
+        }
 	}
 
+	public void deleteAll(File path) {
+        if (!path.exists()) {
+            return;
+        }
+        if (path.isFile()) {
+            path.delete();
+            return;
+        }
+        File[] files = path.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            deleteAll(files[i]);
+        }
+        path.delete();
+    }
 
 	/**
 	 * 1.建立此次上傳圖檔
@@ -166,7 +188,8 @@ public class CommonUtilModel extends BaseCookieAction{
 	    ImageVO imageVO = new ImageVO();
 	    for(int i = 0; i < list.length; i++){
 		File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
-		if(adSeq.equals(file.getName().substring(0,file.getName().indexOf(".")))){
+		if(file.getName().indexOf(adSeq) != -1){
+		//if(adSeq.equals(file.getName().substring(0,file.getName().indexOf(".")))){
 			String imgType = file.getName().substring(file.getName().indexOf(".") + 1);
 			BufferedImage bufferedImage = ImageIO.read(file);
 		    imageVO.setImgWidth(String.valueOf(bufferedImage.getWidth()));
@@ -185,7 +208,54 @@ public class CommonUtilModel extends BaseCookieAction{
 	    return imageVO;
 	}
 
-
+	public ImageVO createAdHtml5(String userImgPath,String custimerInfoid,String date,String adSeq) throws Exception{
+		log.info("開始產生廣告圖片(html5):"+adSeq);
+	    log.info(">>>>>"+userImgPath+custimerInfoid+"/"+date+"/temporal/");
+	    ImageVO imageVO = new ImageVO();
+	    
+	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"/index.html");
+	    if(folder.exists()){
+	    	
+	    	String imgWidth ="0";
+		    String imgHeight ="0";
+	    	
+	    	Document doc = Jsoup.parse(folder, "UTF-8");
+			String docHtml = doc.html();
+	    	
+			Elements metaTag = doc.select("meta[name=ad.size],meta[content]");
+			if(!metaTag.isEmpty()){
+				String content = metaTag.attr("content");
+				content = content.replaceAll(";", "");
+				
+				String[] contentArray = content.split(",");
+				try {
+					for(String size:contentArray){
+						if(size.indexOf("width=") != -1){
+							imgWidth = size.replaceAll("width=", "").trim();
+						}
+						if(size.indexOf("height=") != -1){
+							imgHeight = size.replaceAll("height=", "").trim();
+						}
+					}
+					
+					//驗證長、寬是否為數字
+					Integer intWidth = Integer.parseInt(imgWidth);
+					Integer intHeight = Integer.parseInt(imgHeight);
+				} catch(Exception error) {
+					imgWidth = "0";
+					imgHeight = "0";
+				}
+			}
+			
+			imageVO.setImgWidth(imgWidth);
+		    imageVO.setImgHeight(imgHeight);
+	    	imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\original\\"+adSeq+"\\index.html");
+	    }
+	    
+	    return imageVO;
+	}
+	
+	
     public String getDecimalFormat1(String data) throws Exception{
 //	for (EnumCommon enumData : EnumCommon.values()) {
 //	    if(data.getClass().getName().equals(enumData.getStatusDesc())){

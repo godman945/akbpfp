@@ -60,7 +60,7 @@ $(document).ready(function(){
 	    	seqArray.push(jsonObj.adSeq);
 	    	//呼叫建立畫面
 	
-	    	createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq,jsonObj.imgMD5,jsonObj.imgRepeat);
+	    	createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq,jsonObj.imgMD5,jsonObj.imgRepeat,jsonObj.html5Repeat,jsonObj.imgSrc);
 	    }).on('fileuploadprogressall', function (e, data) {	
 	    }).on('fileuploadprocessalways', function (e, data) {
 	    	//2015.7.12  tim   由於error後不會執行fileuploaddone,所以要加unblock()
@@ -126,7 +126,7 @@ function callBlockUpload(){
 //建立圖片Dom
 var imgIndex = 0;
 var flag = false;
-function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat) {
+function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat, html5Repeat, imgSrc) {
 	
 	if(flag == false){
 		$("#fileUploadSize").text(parseInt($("#fileUploadSize").text()) + uploadFileSize);
@@ -142,13 +142,19 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat)
 	var imgType ='no';
 	var errorMsg ='';
 	var errorTitle ='';
-	if(Math.round(file.size/1024) < 4000){
+	if(Math.round(file.size/1024) < 180){
 		imgFileSize = "yes";
 	}else{
 		errorTitle = '檔案過大!';
-		errorMsg = '檔案大小上限4000KB';
+		errorMsg = '檔案大小上限180KB';
 	}
-	$.each($("#adSizeDiv p"), function( index, obj ) {
+	
+	var sizeDiv = "adSizeDiv";
+	if(imgTypeName.toUpperCase() == "ZIP"){
+		sizeDiv = "adHtml5SizeDiv";
+	}
+	
+	$.each($("#" + sizeDiv + " p"), function( index, obj ) {
 		if($(obj).text().indexOf(width+" x "+height) >= 0){
 			imgSize = "yes";
 			imgSizeFlag = true;
@@ -157,36 +163,47 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat)
 	});
 	if(!imgSizeFlag){
 		errorTitle = '錯誤的尺寸!';
-		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a>';
+		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize(\'approveSizeDiv\');">支援規格查詢</a>';
+		if(imgTypeName.toUpperCase() == "ZIP"){
+			errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize(\'html5SizeDiv\');">html5規格查詢</a>';
+		}
 	}
-	if(imgTypeName.toUpperCase() == "PNG" || imgTypeName.toUpperCase() == "JPG" || imgTypeName.toUpperCase() == "GIF"){
+	if(imgTypeName.toUpperCase() == "PNG" || imgTypeName.toUpperCase() == "JPG" || imgTypeName.toUpperCase() == "GIF" || imgTypeName.toUpperCase() == "ZIP"){
 		imgType = "yes";
 	}else{
 		errorTitle = '錯誤的檔案類型!';
-		errorMsg = '支援的檔案類型JPG、PNG、GIF';
-	}
-	
-	if(imgRepeat == 'yes'){
-		errorTitle = '廣告圖片已存在!';
-		errorMsg = '您所上傳的廣告圖片在分類中已存在';
+		errorMsg = '支援的檔案類型JPG、PNG、GIF、ZIP';
 	}
 	
 	var thisImgRepeat = 'no';
-	$.each($("[name=imgMD5]"), function( index, obj ) {
-		if($(obj).val() == imgMD5){
-			errorTitle = '廣告圖片重複上傳!';
-			errorMsg = '您所上傳的廣告圖片在此次新增中已存在';
-			thisImgRepeat = 'yes';
-			return false;
+	if(imgTypeName.toUpperCase() == "ZIP"){
+		thisImgRepeat = 'yes';
+		if(html5Repeat == "no"){
+			errorTitle = '錯誤的HTML5格式!';
+			errorMsg = '您所上傳的HTML5格式錯誤';
 		}
-	});
+	} else {
+		if(imgRepeat == 'yes'){
+			errorTitle = '廣告圖片已存在!';
+			errorMsg = '您所上傳的廣告圖片在分類中已存在';
+		}
+		
+		$.each($("[name=imgMD5]"), function( index, obj ) {
+			if($(obj).val() == imgMD5){
+				errorTitle = '廣告圖片重複上傳!';
+				errorMsg = '您所上傳的廣告圖片在此次新增中已存在';
+				thisImgRepeat = 'yes';
+				return false;
+			}
+		});
+	}
 	
 	if (adSeq == "") {
 		errorTitle = '上傳失敗!';
 		errorMsg = '檔案空白';
 	}
 	
-	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"  && imgRepeat == "no" && thisImgRepeat == "no"){
+	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"  && imgRepeat == "no" && thisImgRepeat == "no" && html5Repeat == "no"){
 		var anyWindow = window.URL || window.webkitURL;
 		var objectUrl = anyWindow.createObjectURL(file);
 		var fileName = file.name;
@@ -217,6 +234,41 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat)
 			 '<a class="addel" style="top:240px;" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+ 
 			 '<input type="hidden" id="' + adSeq + '_title" name="imgName" value="' + fileName + '" />' + 
 			 '<input type="hidden" id="' + adSeq + '_imgMD5" name="imgMD5" value="' + imgMD5 + '" />' + 
+			 '</li>';
+		$(".aduplodul").append(a);
+	} else if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"  && imgRepeat == "no" && thisImgRepeat == "yes" && html5Repeat == "yes"){
+		var fileName = file.name;
+		var showFileName = "";
+		if(fileName.lastIndexOf(".") >= 0){
+			fileName = fileName.substring(0,fileName.lastIndexOf("."));
+		}
+		if(fileName.length > 1024){
+			fileName = fileName.substring(0,1024);
+		}
+		if(fileName.length > 8){
+			showFileName = fileName.substring(0,8) + "...";
+		} else {
+			showFileName = fileName;	
+		}
+		
+		var a =
+			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
+			 '<div class="adboxdv" >'+
+			 '<div style="background-color:#FFFFFF;margin:30px 0px 0px 0px;line-height:30px;" >'+
+			 '<h3>'+file.name+'</h3><h3>'+showFileName+'(html5)</h3>'+
+			 //'<iframe src="https://kdcl.pchome.com.tw/adshow2.html?pfbxCustomerInfoId=PFBC20160804001&positionId=PFBP201608310008&sampleId=us_201609300002&tproId=c_x03_po_tpro_0061&format=0&page=1&padHeight=292&padWidth=350&keyword=&ref=MTMzNnWYgZRHUzybhJs7lHCMfJFyUnCTelKBmzw%3D%0D%0A" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>'
+			 //'<img src="">'+
+			 '</div >'+
+			 '<p class="fancy adinf" onclick="preViewHtml5(\''+file.name+'\',\''+width+'\',\''+height+'\',\''+imgSrc+'\');" alt="預覽">預覽</p></div>'+
+			 '<ul>'+
+			 '<li><i>名稱</i><b>' + showFileName + '</b></li>' + 
+			 '<li class="'+imgSize+'"><i>尺寸</i><b>'+width+' x '+height+'</b></li>'+
+			 '<li class="'+imgFileSize+'"><i>大小</i><b>'+Math.round(file.size/1024)+'</b></li>'+
+			 '<li class="'+imgType+'"><i>格式</i><b>'+imgTypeName.toUpperCase()+'</b></li>'+
+			 '</ul>'+
+			 '<a class="addel" style="top:240px;" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+ 
+			 '<input type="hidden" id="' + adSeq + '_title" name="imgName" value="' + fileName + '" />' + 
+			 '<input type="hidden" id="' + adSeq + '_imgMD5" name="imgMD5" value="X" />' + 
 			 '</li>';
 		$(".aduplodul").append(a);
 	}else{
@@ -298,6 +350,35 @@ function preViewImg(imgName,width,height){
 	});
 }
 
+function preViewHtml5(imgName,width,height,imgSrc){
+	$.each($(fileArray), function( index, file ) {
+		if(imgName == file.name){
+			
+		    $("#preDiv").prepend('<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>');
+		    $.fancybox(
+		    		$('#preDiv').html(),
+		    		{
+		    			'autoDimensions'	: false,
+		    			'width'         	: width,
+		    			'height'        	: height,
+		    			'autoSize'			: true,
+		    			'autoHeight'		: true,
+		    			'autoScale'			: false,
+		    			'transitionIn'		: 'none',
+		    			'transitionOut'		: 'none',
+		    			'padding'			: 0,
+		    			'overlayOpacity'    : .75,
+		    			'overlayColor'      : '#fff',
+		    			'scrolling'			: 'no',
+		    			onClosed    :   function() {
+					    closePrew();
+					    }  
+		    		}
+		    );
+		}
+	});
+}
+
 //刪除欲上傳檔案
 function deleteImgDom(fileName){
 //	var index = $("#fileUploadSize").text();
@@ -342,9 +423,9 @@ function deleteImgDom(fileName){
 
 
 //點擊允許尺寸
-function approveSize(){
+function approveSize(approveSizeDiv){
 	 $.fancybox(
-	    		$('#approveSizeDiv').html(),
+	    		$('#' + approveSizeDiv).html(),
 	    		{
 	    			'modal'             : true,
 	    			'autoDimensions'	: false,

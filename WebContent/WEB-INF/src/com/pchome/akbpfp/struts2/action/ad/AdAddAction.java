@@ -18,7 +18,15 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Whitelist;
+import org.jsoup.select.Elements;
 import org.springframework.transaction.annotation.Transactional;
+
+
+
+
 
 
 
@@ -209,7 +217,7 @@ public class AdAddAction extends BaseCookieAction{
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 
 		// 新增廣告
-		addAd(pfpAdGroup);
+		addAd(pfpAdGroup,null);
 		
 		String imgDetail = "";
 		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
@@ -321,7 +329,7 @@ public class AdAddAction extends BaseCookieAction{
 		}
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 		// 新增廣告
-		addAd(pfpAdGroup);
+		addAd(pfpAdGroup,null);
 		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
 		for(int i = 0; i < adDetailID.length; i++) {
 		    adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
@@ -446,7 +454,7 @@ public class AdAddAction extends BaseCookieAction{
 	}
 
 	//新增廣告
-	private void addAd(PfpAdGroup pfpAdGroup) {
+	private void addAd(PfpAdGroup pfpAdGroup, String adAssignTadSeq) {
 		try {
 		    	log.info(">>>>> time: " + new Date());
 
@@ -459,6 +467,7 @@ public class AdAddAction extends BaseCookieAction{
 			pfpAd.setAdClass(adClass);
 			pfpAd.setAdStyle(adStyle);
 			pfpAd.setTemplateProductSeq(templateProductSeq);
+			pfpAd.setAdAssignTadSeq(adAssignTadSeq);
 			pfpAd.setAdSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
 			pfpAd.setAdChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
 			pfpAd.setAdStatus(EnumStatus.NoVerify.getStatusId());
@@ -737,6 +746,8 @@ public class AdAddAction extends BaseCookieAction{
 	    String fileSize= "0";
 	    String imgMD5 = "";
 	    String imgRepeat = "no";
+	    String html5Repeat = "no";
+	    String imgSrc = "";
 	    imgUploadPath = "";
 	    for (File file : fileupload) {
 	    	File originalImgFile = file;
@@ -758,7 +769,48 @@ public class AdAddAction extends BaseCookieAction{
 				SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
 				SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
 				
-				result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\" "+ "}";
+				//檢查index.html是否存在
+				File indexHtmlFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq + "/index.html");
+				if(indexHtmlFile.exists()){
+					Document doc = Jsoup.parse(indexHtmlFile, "UTF-8");
+					String docHtml = doc.html();
+					Elements htmlTag = doc.select("html");
+					Elements headTag = doc.select("head");
+					Elements bodyTag = doc.select("body");
+					Elements metaTag = doc.select("meta[name=ad.size],meta[content]");
+					
+					if(docHtml.indexOf("<!doctype html>") != -1 && !htmlTag.isEmpty() && !headTag.isEmpty() && !bodyTag.isEmpty() && !metaTag.isEmpty()){
+						html5Repeat = "yes";
+						imgSrc = photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq  + "/index.html";
+						String content = metaTag.attr("content");
+						content = content.replaceAll(";", "");
+						
+						String[] contentArray = content.split(",");
+						try {
+							for(String size:contentArray){
+								if(size.indexOf("width=") != -1){
+									imgWidth = size.replaceAll("width=", "").trim();
+								}
+								if(size.indexOf("height=") != -1){
+									imgHeight = size.replaceAll("height=", "").trim();
+								}
+							}
+							
+							//驗證長、寬是否為數字
+							Integer intWidth = Integer.parseInt(imgWidth);
+							Integer intHeight = Integer.parseInt(imgHeight);
+						} catch(Exception error) {
+							imgWidth = "0";
+							imgHeight = "0";
+						}
+						
+						log.info(">>>>>>>>>>>>>>>>>>>>     imgWidth = " + imgWidth);
+						log.info(">>>>>>>>>>>>>>>>>>>>     imgHeight = " + imgHeight);
+						
+					}
+				}
+				
+				result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\" " + "}";
     		} else {
     			BufferedImage bufferedImage = ImageIO.read(originalImgFile);
         		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -766,7 +818,7 @@ public class AdAddAction extends BaseCookieAction{
         		//2015.8.11 tim  上傳非圖像檔處理
         		if(bufferedImage == null){
         		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-        		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\" "+ "}";
+        		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\" " + "}";
         			continue;
         		}
         		//String test = Integer.toString((int) Math.round(new Double(file.length())/new Double(1024)));
@@ -832,7 +884,7 @@ public class AdAddAction extends BaseCookieAction{
                 }
                 commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
 
-        		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\" "+ "}";
+        		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\" " + "}";
     		}
     		
 	    }
@@ -922,8 +974,15 @@ public class AdAddAction extends BaseCookieAction{
         		adSeq = seqArray.get(i).toString();
         		String imgName = "";
         		String imgMD5 = "";
+        		String adAssignTadSeq = null;
         		
-        		imageVO = commonUtilModel.createAdImg(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
+        		if(imgMD5Map.get(adSeq + "_imgMD5") != null && StringUtils.equals(imgMD5Map.get(adSeq + "_imgMD5").toString(), "X")){
+        			imageVO = commonUtilModel.createAdHtml5(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
+        			adAssignTadSeq = "c_x05_po_tad_0059";
+        		} else {
+        			imageVO = commonUtilModel.createAdImg(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
+        		}
+        		
         		String adPoolSeq = "";
         		for (EnumAdSize enumAdSize : EnumAdSize.values()) {
         		    if (imageVO.getImgWidth().equals(enumAdSize.getWidh())  && imageVO.getImgHeight().equals(enumAdSize.getHeight())) {
@@ -935,7 +994,7 @@ public class AdAddAction extends BaseCookieAction{
         		    result = "error";
         		    return SUCCESS;
         		}
-        		addAd(pfpAdGroup);
+        		addAd(pfpAdGroup,adAssignTadSeq);
         		String path = imageVO.getImgPath().replace("\\", "/");
         		
         		path = path.replace("/export/home/webuser/akb/pfp/", "");
@@ -970,10 +1029,17 @@ public class AdAddAction extends BaseCookieAction{
         		}
         		saveAdDetail(imgName,EnumAdDetail.title.name(), adPoolSeq,EnumAdDetail.define_ad_seq_title.getAdDetailName());
         		
-        		if(imgMD5Map.get(adSeq + "_imgMD5") != null){
+        		if(imgMD5Map.get(adSeq + "_imgMD5") != null && !StringUtils.equals(imgMD5Map.get(adSeq + "_imgMD5").toString(), "X")){
         			imgMD5 = imgMD5Map.get(adSeq + "_imgMD5").toString();	
+        			saveAdDetail(imgMD5,"MD5", adPoolSeq,null);
         		}
-        		saveAdDetail(imgMD5,"MD5", adPoolSeq,null);
+        		
+        		if(StringUtils.equals(imgMD5Map.get(adSeq + "_imgMD5").toString(), "X")){
+        			String zip = imgName + ".zip<br/>" + imgName + "(html5)";
+        			saveAdDetail(zip,"zip", adPoolSeq,null);
+        			String size = imageVO.getImgWidth() + " x " + imageVO.getImgHeight();
+        			saveAdDetail(size,"size", adPoolSeq,null);
+        		}
     	    }
     	}
 

@@ -325,13 +325,14 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 	
 	public void saveOrUpdatePfpAd(PfpAd pfpAd) throws Exception{
 		final StringBuffer sql = new StringBuffer()
-		.append("INSERT INTO pfp_ad(ad_seq, ad_group_seq, ad_class, ad_area, ad_style, template_product_seq, ad_status, ad_send_verify_time, ad_search_price, ad_channel_price, ad_create_time, ad_update_time) ")
+		.append("INSERT INTO pfp_ad(ad_seq, ad_group_seq, ad_class, ad_area, ad_style, template_product_seq, ad_assign_tad_seq, ad_status, ad_send_verify_time, ad_search_price, ad_channel_price, ad_create_time, ad_update_time) ")
 		.append("VALUES ( :ad_seq")
 		.append(", :ad_group_seq")
 		.append(", :ad_class")
 		.append(", :ad_area")
 		.append(", :ad_style")
 		.append(", :template_product_seq")
+		.append(", :ad_assign_tad_seq")
 		.append(", :ad_status")
 		.append(", :ad_send_verify_time")
 		.append(", :ad_search_price")
@@ -348,6 +349,7 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
         	.setString("ad_area", pfpAd.getAdArea())
         	.setString("ad_style", pfpAd.getAdStyle())
         	.setString("template_product_seq", pfpAd.getTemplateProductSeq())
+        	.setString("ad_assign_tad_seq", pfpAd.getAdAssignTadSeq())
         	.setInteger("ad_status", pfpAd.getAdStatus())
         	.setTimestamp("ad_send_verify_time", pfpAd.getAdSendVerifyTime())
         	.setFloat("ad_search_price", pfpAd.getAdSearchPrice())
