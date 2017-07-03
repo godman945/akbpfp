@@ -782,6 +782,7 @@ public class AdAddAction extends BaseCookieAction{
 					if(docHtml.indexOf("<!doctype html>") != -1 && !htmlTag.isEmpty() && !headTag.isEmpty() && !bodyTag.isEmpty() && !metaTag.isEmpty()){
 						html5Repeat = "yes";
 						imgSrc = photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq  + "/index.html";
+						imgSrc = imgSrc.replace("/export/home/webuser/akb/pfp/", "");
 						String content = metaTag.attr("content");
 						content = content.replaceAll(";", "");
 						
