@@ -782,8 +782,12 @@ public class AdAddAction extends BaseCookieAction{
 					if(docHtml.indexOf("<!doctype html>") != -1 && !htmlTag.isEmpty() && !headTag.isEmpty() && !bodyTag.isEmpty() && !metaTag.isEmpty()){
 						html5Repeat = "yes";
 						
+						//將index.html改為index.htm
 			            File indexHtmFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq + "/index.htm");
 			            indexHtmlFile.renameTo(indexHtmFile);
+			            File indexHtmlFile2 = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq + "/index.html");
+			            File indexHtmFile2 = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq + "/index.htm");
+			            indexHtmlFile2.renameTo(indexHtmFile2);
 						
 						imgSrc = photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq  + "/index.htm";
 						imgSrc = imgSrc.replace("/export/home/webuser/akb/pfp/", "");
