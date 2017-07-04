@@ -148,6 +148,27 @@ function preViewImg(objectUrl,width,height){
     );
 }
 
+function preViewHtml5(width,height,imgSrc){
+	
+	 $.fancybox(
+			 '<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>',
+	    		{
+	    			'autoDimensions'	: false,
+	    			'width'         	: width,
+	    			'height'        	: height,
+	    			'autoSize'			: true,
+	    			'autoHeight'		: true,
+	    			'autoScale'			: false,
+	    			'transitionIn'		: 'none',
+	    			'transitionOut'		: 'none',
+	    			'padding'			: 0,
+	    			'overlayOpacity'    : .75,
+	    			'overlayColor'      : '#fff',
+	    			'scrolling'			: 'no'
+	    		}
+	    );
+}
+
 //關閉預覽
 function closePrew(){
 	$("#preDiv").empty();

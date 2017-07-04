@@ -76,8 +76,13 @@
                 <ul id="AG" class="aduplodul">
                 	<li class="okbox" style="padding: 0 0 20px 0;" id="${adDetailSeq[1]!}">
                 		<div class="adboxdv">
-                			<img src="<@s.url value="/" />${imgFile!}" >
-                			<p class="fancy adinf" onclick="preViewImg('${imgFile!}','${imgWidth!}','${imgHeight!}');" alt="預覽">預覽</p>
+                			<#if html5Flag == 'Y' >
+                				<p>${zipTitle!}</p>
+                				<p class="fancy adinf" onclick="preViewHtml5('${imgWidth!}','${imgHeight!}','${imgFile!}');" alt="預覽">預覽</p>
+                			<#else>
+	                			<img src="<@s.url value="/" />${imgFile!}" >
+	                			<p class="fancy adinf" onclick="preViewImg('${imgFile!}','${imgWidth!}','${imgHeight!}');" alt="預覽">預覽</p>
+                			</#if>
                 		</div>
                 		<ul>
                 			<li><i>名稱</i><b>${imgTitle!}</b></li>

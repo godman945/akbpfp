@@ -77,6 +77,8 @@ public class AdEditAction extends BaseCookieAction{
 	private String imgHeight = "";
 	private String imgSize = "";
 	private String imgTypeName = "";
+	private String html5Flag;
+	private String zipTitle = "";
 	
 	private String photoTmpPath;
 	private String photoPath;
@@ -364,6 +366,11 @@ public class AdEditAction extends BaseCookieAction{
 		adGroupStatus = pfpAd.getPfpAdGroup().getAdGroupStatus();
 		adActionStatus = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
 		adType = pfpAd.getPfpAdGroup().getPfpAdAction().getAdType().toString();
+		html5Flag = "N";
+		String adAssignTadSeq = pfpAd.getAdAssignTadSeq();
+		if(StringUtils.equals("c_x05_po_tad_0059", adAssignTadSeq)){
+			html5Flag = "Y";
+		}
 
 		// ad Status
 		for(EnumStatus status:EnumStatus.values()){
@@ -406,20 +413,25 @@ public class AdEditAction extends BaseCookieAction{
 					 adDetailContent[0] = deCodeUrl;
 				 }
 			} else if(adDetailId != null && adDetailId.equals("img")) {
-				adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();
-				String imgFilename = pfpAdDetails.get(i).getAdDetailContent();
-				imgFilename = imgFilename.substring(imgFilename.lastIndexOf("/"));
-				if(pfpAdDetails.get(i).getAdDetailContent().indexOf("original") == -1){
-					adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent().replace(imgFilename, "/original" + imgFilename);	
-				}else {
+				if(StringUtils.equals("Y", html5Flag)){
 					adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
-				}
-				getImgSize(adDetailContent[1]);
-				if(adDetailContent[1].indexOf("display:none") > 0) {
-					adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
-					imgFile = "";
-				} else {
 					imgFile = adDetailContent[1];
+				} else {
+					adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();
+					String imgFilename = pfpAdDetails.get(i).getAdDetailContent();
+					imgFilename = imgFilename.substring(imgFilename.lastIndexOf("/"));
+					if(pfpAdDetails.get(i).getAdDetailContent().indexOf("original") == -1){
+						adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent().replace(imgFilename, "/original" + imgFilename);	
+					}else {
+						adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
+					}
+					getImgSize(adDetailContent[1]);
+					if(adDetailContent[1].indexOf("display:none") > 0) {
+						adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
+						imgFile = "";
+					} else {
+						imgFile = adDetailContent[1];
+					}
 				}
 			} else if(adDetailId != null && adDetailId.equals("title")){
 				adDetailTitleSeq = pfpAdDetails.get(i).getAdDetailSeq();
@@ -427,6 +439,14 @@ public class AdEditAction extends BaseCookieAction{
 				if(imgTitle.length() > 8){
 					imgTitle = imgTitle.substring(0, 8) + "...";
 				}
+			} else if(adDetailId != null && adDetailId.equals("size")){
+				String[] sizeArray = pfpAdDetails.get(i).getAdDetailContent().split("x");
+				imgWidth = sizeArray[0].trim();
+				imgHeight = sizeArray[1].trim();
+				imgSize = "180K以下";
+				imgTypeName = "ZIP";
+			} else if(adDetailId != null && adDetailId.equals("zip")){
+				zipTitle = pfpAdDetails.get(i).getAdDetailContent();
 			}
 		}
 
@@ -1132,6 +1152,14 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setAdKeywordPrecisionOpen(String adKeywordPrecisionOpen) {
 		this.adKeywordPrecisionOpen = adKeywordPrecisionOpen;
+	}
+
+	public String getHtml5Flag() {
+		return html5Flag;
+	}
+
+	public String getZipTitle() {
+		return zipTitle;
 	}
 
 }
