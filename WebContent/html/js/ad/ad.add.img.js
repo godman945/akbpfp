@@ -180,7 +180,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		thisImgRepeat = 'yes';
 		if(html5Repeat == "no"){
 			errorTitle = '錯誤的HTML5格式!';
-			errorMsg = '您所上傳的HTML5格式錯誤';
+			errorMsg = '您所上傳的HTML5格式錯誤<a id="errAdImg" name="errAdImg" onclick="approveSize(\'html5SizeDiv\');">html5規格查詢</a>';
 		}
 	} else {
 		if(imgRepeat == 'yes'){

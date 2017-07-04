@@ -769,9 +769,12 @@ public class AdAddAction extends BaseCookieAction{
 				SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
 				SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
 				
+				int FileAmount = checkFileAmount(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
+				log.info(">>>>>>>>>>>>>>>>>>>>>   FileAmount  = " + FileAmount);
+				
 				//檢查index.html是否存在
 				File indexHtmlFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq + "/index.html");
-				if(indexHtmlFile.exists()){
+				if(indexHtmlFile.exists() && FileAmount <= 40){
 					Document doc = Jsoup.parse(indexHtmlFile, "UTF-8");
 					String docHtml = doc.html();
 					Elements htmlTag = doc.select("html");
@@ -1063,6 +1066,25 @@ public class AdAddAction extends BaseCookieAction{
     	return SUCCESS;
     }
 
+	/**
+	 * 檢查檔案數
+	 * */
+	private int checkFileAmount(String path){
+		int amount = 0;
+		File checkFlie = new File(path);
+		File[] files = checkFlie.listFiles(); //獲取資料夾下面的所有檔
+		for (File f : files) {
+			//判斷是否為資料夾
+			if (f.isDirectory()) {
+				amount += checkFileAmount(f.getPath()); //如果是資料夾，檢查該資料夾內檔案數
+			} else {
+				amount++;
+			}
+		}
+
+		return amount;
+	}
+	
 	public List<PfbxSize> getSearchPCSizeList() {
 		return searchPCSizeList;
 	}
