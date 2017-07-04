@@ -638,7 +638,7 @@ function preview(img) {
     });
 }
 
-function preViewHtml5(width,height,imgSrc){
+function previewHtml5(width,height,imgSrc){
 	
 	 $.fancybox(
 			 '<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>',
