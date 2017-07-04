@@ -557,6 +557,27 @@ function preview(img) {
     });
 }
 
+function previewHtml5(width,height,imgSrc){
+	
+	 $.fancybox(
+			 '<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>',
+	    		{
+	    			'autoDimensions'	: false,
+	    			'width'         	: width,
+	    			'height'        	: height,
+	    			'autoSize'			: true,
+	    			'autoHeight'		: true,
+	    			'autoScale'			: false,
+	    			'transitionIn'		: 'none',
+	    			'transitionOut'		: 'none',
+	    			'padding'			: 0,
+	    			'overlayOpacity'    : .75,
+	    			'overlayColor'      : '#fff',
+	    			'scrolling'			: 'no'
+	    		}
+	    );
+}
+
 function showHighChart(){
 	//----關鍵字專用----
 	var widDataArray;
