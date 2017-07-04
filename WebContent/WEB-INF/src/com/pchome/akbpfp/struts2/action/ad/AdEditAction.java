@@ -414,6 +414,7 @@ public class AdEditAction extends BaseCookieAction{
 				 }
 			} else if(adDetailId != null && adDetailId.equals("img")) {
 				if(StringUtils.equals("Y", html5Flag)){
+					adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();
 					adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
 					imgFile = adDetailContent[1];
 				} else {
