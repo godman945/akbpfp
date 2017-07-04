@@ -77,7 +77,7 @@
                 	<li class="okbox" style="padding: 0 0 20px 0;" id="${adDetailSeq[1]!}">
                 		<div class="adboxdv">
                 			<#if html5Flag == 'Y' >
-                				<p>${zipTitle!}</p>
+                				<div style="background-color:#FFFFFF;margin:50px 0px 0px 0px;line-height:40px;font-size:16px;" >${zipTitle!}</div>
                 				<p class="fancy adinf" onclick="preViewHtml5('${imgWidth!}','${imgHeight!}','${imgFile!}');" alt="預覽">預覽</p>
                 			<#else>
 	                			<img src="<@s.url value="/" />${imgFile!}" >

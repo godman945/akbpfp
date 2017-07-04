@@ -254,10 +254,8 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
 			 '<div class="adboxdv" >'+
-			 '<div style="background-color:#FFFFFF;margin:30px 0px 0px 0px;line-height:30px;" >'+
-			 '<h3>'+file.name+'</h3><h3>'+showFileName+'(html5)</h3>'+
-			 //'<iframe src="https://kdcl.pchome.com.tw/adshow2.html?pfbxCustomerInfoId=PFBC20160804001&positionId=PFBP201608310008&sampleId=us_201609300002&tproId=c_x03_po_tpro_0061&format=0&page=1&padHeight=292&padWidth=350&keyword=&ref=MTMzNnWYgZRHUzybhJs7lHCMfJFyUnCTelKBmzw%3D%0D%0A" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>'
-			 //'<img src="">'+
+			 '<div style="background-color:#FFFFFF;margin:50px 0px 0px 0px;line-height:40px;font-size:16px;" >'+
+			 file.name+'<br/>'+showFileName+'(html5)'+
 			 '</div >'+
 			 '<p class="fancy adinf" onclick="preViewHtml5(\''+file.name+'\',\''+width+'\',\''+height+'\',\''+imgSrc+'\');" alt="預覽">預覽</p></div>'+
 			 '<ul>'+
