@@ -456,25 +456,20 @@ public class AdActionEditAction extends BaseCookieAction{
 		}
 
 		String oldAdSpecificPlayType = pfpAdAction.getAdSpecificPlayType();
+		String oldPlayTypeMessage = "";
+		
+		if(StringUtils.equals("1", oldAdSpecificPlayType)){
+			oldPlayTypeMessage += "指定廣告受眾性別/年齡：";
+		} else {
+			oldPlayTypeMessage += "指定投放網站類型：";
+		}
+		
 		String oldSex = null;
 		if(pfpAdAction.getAdActionSex() != null){
 			oldSex = pfpAdAction.getAdActionSex();
 		}
 		int oldStartAge = pfpAdAction.getAdActionStartAge();
 		int oldEndAge = pfpAdAction.getAdActionEndAge();
-		
-		//性別改變記錄log
-		if(!StringUtils.equals(oldSex, adActionSex)){
-			String accesslogMessage_sex = "廣告：" + adActionName + " " + adActionSeq + "，性別取向異動：" + getSexName(oldSex) + " => " + getSexName(adActionSex);
-			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_sex, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-		}
-		
-		
-		//年齡區間改變記錄log
-		if(!StringUtils.equals(String.valueOf(oldStartAge), adActionStartAge) || !StringUtils.equals(String.valueOf(oldEndAge), adActionEndAge)){
-			String accesslogMessage_age = "廣告：" + adActionName + " " + adActionSeq + "，年齡區間異動：" + getAgeNote(oldStartAge,oldEndAge) + " => " + getAgeNote(Integer.parseInt(adActionStartAge),Integer.parseInt(adActionEndAge));
-			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_age, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-		}
 		
 		pfpAdAction.setAdSpecificPlayType(adSpecificPlayType);
 		List<PfpAdSpecificWebsite> pfpAdSpecificWebsiteList = pfpAdSpecificWebsiteService.findPfpAdSpecificWebsiteByAdActionSeq(pfpAdAction.getAdActionSeq());
@@ -512,14 +507,63 @@ public class AdActionEditAction extends BaseCookieAction{
 			}
 		}
 		
+		String accesslogMessage_playType = "廣告：" + adActionName + " " + adActionSeq + "，";
+		if(StringUtils.equals(oldAdSpecificPlayType, adSpecificPlayType)){
+			accesslogMessage_playType += getPlayTypeNote(oldAdSpecificPlayType) + "：";
+			if(StringUtils.equals("0", oldAdSpecificPlayType)){
+				boolean checklog = false;
+				if(!StringUtils.equals(oldSex, adActionSex)){
+					checklog = true;
+				}
+				if(!StringUtils.equals(String.valueOf(oldStartAge), adActionStartAge) || !StringUtils.equals(String.valueOf(oldEndAge), adActionEndAge)){
+					checklog = true;
+				}
+				if(checklog){
+					accesslogMessage_playType += getSexName(oldSex) + "、" + getAgeNote(oldStartAge,oldEndAge) + " => " + getSexName(adActionSex) + "、" + getAgeNote(Integer.parseInt(adActionStartAge),Integer.parseInt(adActionEndAge));
+					admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_playType, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+				}
+			} else if(StringUtils.equals("1", oldAdSpecificPlayType)){
+				accesslogMessage_playType += getSpecificWebsiteNote(pfpAdSpecificWebsiteList) + " => " + getSpecificWebsiteNote(addPfpAdSpecificWebsiteList);
+				admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_playType, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			}
+		} else {
+			accesslogMessage_playType += "廣告指定投放：" + getPlayTypeNote(oldAdSpecificPlayType) + "：";
+			if(StringUtils.equals("0", oldAdSpecificPlayType)){
+				accesslogMessage_playType += getSexName(oldSex) + "、" + getAgeNote(oldStartAge,oldEndAge);
+			} else if(StringUtils.equals("1", oldAdSpecificPlayType)){
+				accesslogMessage_playType += getSpecificWebsiteNote(pfpAdSpecificWebsiteList);
+			}
+			accesslogMessage_playType += " => " + getPlayTypeNote(adSpecificPlayType) + "：";
+			if(StringUtils.equals("0", adSpecificPlayType)){
+				accesslogMessage_playType += getSexName(adActionSex) + "、" + getAgeNote(Integer.parseInt(adActionStartAge),Integer.parseInt(adActionEndAge));
+			} else if(StringUtils.equals("1", adSpecificPlayType)){
+				accesslogMessage_playType += getSpecificWebsiteNote(addPfpAdSpecificWebsiteList);
+			}
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_playType, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+		}
+		
+		String oldPvLimitStyle = pfpAdAction.getAdPvLimitStyle();
+		String oldPvLimitPeriod = pfpAdAction.getAdPvLimitPeriod();
+		Integer oldPvLimitAmount = pfpAdAction.getAdPvLimitAmount();
+		
 		if(StringUtils.equals(pvLimitSelect, "Y")){
 			pfpAdAction.setAdPvLimitStyle(adPvLimitStyle);
 			pfpAdAction.setAdPvLimitPeriod(adPvLimitPeriod);
 			pfpAdAction.setAdPvLimitAmount(Integer.parseInt(adPvLimitAmount));
+			
+			if(!StringUtils.equals(oldPvLimitStyle, adPvLimitStyle) || !StringUtils.equals(oldPvLimitPeriod, adPvLimitPeriod) || oldPvLimitAmount != Integer.parseInt(adPvLimitAmount)){
+				String accesslogMessage_pvLimit = "廣告：" + adActionName + " " + adActionSeq + "，曝光頻率限制： " + getPvLimitNote(oldPvLimitStyle,oldPvLimitPeriod,oldPvLimitAmount) + " => " + getPvLimitNote(adPvLimitStyle,adPvLimitPeriod,Integer.parseInt(adPvLimitAmount));
+				admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_pvLimit, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			}
 		} else {
 			pfpAdAction.setAdPvLimitStyle("0");
 			pfpAdAction.setAdPvLimitPeriod("0");
 			pfpAdAction.setAdPvLimitAmount(0);
+			
+			if(!StringUtils.equals(oldPvLimitStyle, "0") || !StringUtils.equals(oldPvLimitPeriod, "0") || oldPvLimitAmount != 0){
+				String accesslogMessage_pvLimit = "廣告：" + adActionName + " " + adActionSeq + "，曝光頻率限制： " + getPvLimitNote(oldPvLimitStyle,oldPvLimitPeriod,oldPvLimitAmount) + " => 無限制";
+				admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_pvLimit, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			}
 		}
 		
 		pfpAdAction.setUserId(super.getUser_id());
@@ -683,6 +727,58 @@ public class AdActionEditAction extends BaseCookieAction{
 		}
 		
 		return setName;
+	}
+	
+	private String getPlayTypeNote(String adSpecificPlayType){
+		String playTypeNote = "";
+		
+		if(StringUtils.equals("0", adSpecificPlayType)){
+			playTypeNote = "指定廣告受眾性別/年齡";
+		} else if(StringUtils.equals("1", adSpecificPlayType)){
+			playTypeNote = "指定投放網站類型";
+		}
+		
+		return playTypeNote;
+	}
+	
+	private String getSpecificWebsiteNote(List<PfpAdSpecificWebsite> list) {
+		String specificWebsiteNote = "";
+		
+		if(!list.isEmpty()){
+			for(PfpAdSpecificWebsite data:list){
+				specificWebsiteNote += data.getPfbxWebsiteCategory().getName() + "、";
+			}
+		} else {
+			specificWebsiteNote = "未指定類別、";
+		}
+		
+		specificWebsiteNote = specificWebsiteNote.substring(0, specificWebsiteNote.length()-1);
+		return specificWebsiteNote;
+	}
+	
+	private String getPvLimitNote(String pvLimitStyle, String pvLimitPeriod, Integer pvLimitAmount){
+		String pvLimitNote = "";
+		
+		if(StringUtils.equals(EnumAdPvLimitStyle.NO_STYLE_LIMIT.getStyle(), pvLimitStyle) && 
+				StringUtils.equals(EnumAdPvLimitPeriod.NO_PREIOD_LIMIT.getPeriod(), pvLimitPeriod) && pvLimitAmount == 0){
+			pvLimitNote = "無限制";
+		} else {
+			for(EnumAdPvLimitStyle enumAdPvLimitStyle:EnumAdPvLimitStyle.values()){
+				if(StringUtils.equals(enumAdPvLimitStyle.getStyle(),pvLimitStyle)){
+					pvLimitNote += "針對此" + enumAdPvLimitStyle.getName() + "；";
+					break;
+				}
+			}
+			for(EnumAdPvLimitPeriod enumAdPvLimitPeriod:EnumAdPvLimitPeriod.values()){
+				if(StringUtils.equals(enumAdPvLimitPeriod.getPeriod(),pvLimitPeriod)){
+					pvLimitNote += enumAdPvLimitPeriod.getName() + "；";
+					break;
+				}
+			}
+			pvLimitNote += "曝光給同一廣告受眾" + pvLimitAmount.toString() + "次";
+		}
+		
+		return pvLimitNote;
 	}
 	
 	public void setPfpCustomerInfoService(PfpCustomerInfoService pfpCustomerInfoService) {
