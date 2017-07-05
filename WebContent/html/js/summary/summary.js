@@ -455,6 +455,27 @@ function preview(img) {
     });
 }
 
+function preViewHtml5(width,height,imgSrc){
+	
+	 $.fancybox(
+			 '<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>',
+	    		{
+	    			'autoDimensions'	: false,
+	    			'width'         	: width,
+	    			'height'        	: height,
+	    			'autoSize'			: true,
+	    			'autoHeight'		: true,
+	    			'autoScale'			: false,
+	    			'transitionIn'		: 'none',
+	    			'transitionOut'		: 'none',
+	    			'padding'			: 0,
+	    			'overlayOpacity'    : .75,
+	    			'overlayColor'      : '#fff',
+	    			'scrolling'			: 'no'
+	    		}
+	    );
+}
+
 //明細按鈕(展開/隱藏)
 function toggleTd(tdClass){
 	var number = $("." + tdClass + "Th").attr("colspan");

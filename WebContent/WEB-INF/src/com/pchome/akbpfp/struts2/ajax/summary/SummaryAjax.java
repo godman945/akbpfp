@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.pchome.akbpfp.db.service.ad.IPfpAdDetailService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdPvclkService;
 import com.pchome.akbpfp.db.vo.ad.AdLayerVO;
@@ -74,9 +76,11 @@ public class SummaryAjax extends BaseCookieAction{
 					                        	AdData.setOriginalImg(AdData.getImg());
 					                        }
 					                        
-					                        imgmap = getImgSize(AdData.getOriginalImg());
-					                        AdData.setImgWidth(imgmap.get("imgWidth"));
-					                        AdData.setImgHeight(imgmap.get("imgHeight"));
+					                        if(StringUtils.equals("N", AdData.getHtml5Tag())){
+					                        	imgmap = getImgSize(AdData.getOriginalImg());
+					                        	AdData.setImgWidth(imgmap.get("imgWidth"));
+					                        	AdData.setImgHeight(imgmap.get("imgHeight"));
+					                        }
 										} else if("real_url".equals(pfpAdDetail.getAdDetailId())){
 											AdData.setRealUrl(pfpAdDetail.getAdDetailContent());
 											String showUrl = pfpAdDetail.getAdDetailContent();
@@ -92,6 +96,12 @@ public class SummaryAjax extends BaseCookieAction{
 							            	AdData.setShowUrl(showUrl);
 										} else if("title".equals(pfpAdDetail.getAdDetailId())){
 											AdData.setTitle(pfpAdDetail.getAdDetailContent());
+										} else if("zip".equals(pfpAdDetail.getAdDetailId())){
+											AdData.setZipTitle(pfpAdDetail.getAdDetailContent());
+										} else if("size".equals(pfpAdDetail.getAdDetailId())){
+											String[] sizeArray = pfpAdDetail.getAdDetailContent().split("x");
+											AdData.setImgWidth(sizeArray[0].trim());
+											AdData.setImgHeight(sizeArray[1].trim());
 										}
 									}	
 								}

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.pchome.akbpfp.db.dao.ad.IPfpAdActionDAO;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdPvclkDAO;
 import com.pchome.akbpfp.db.dao.ad.PfpAdActionDAO;
@@ -207,6 +209,11 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 		    				statusId = pfpAd.getAdStatus();
 		    				adLayerVO.setTemplateNo(pfpAd.getTemplateProductSeq());
 		    				adLayerVO.setAdStyle(pfpAd.getAdStyle());
+		    				String html5Flag = "N";
+		    				if(StringUtils.equals("c_x05_po_tad_0059", pfpAd.getAdAssignTadSeq())){
+		    					html5Flag = "Y";
+		    				}
+		    				adLayerVO.setHtml5Tag(html5Flag);
 		            	}
 					}
 					adLayerVO.setStatusId(statusId);
