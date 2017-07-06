@@ -205,6 +205,11 @@ public class SpringZipCompress {
 						zipPathFile.mkdirs();
 					}
 				} else {
+					File outPutFile = new File(outPath);
+					File zipPathFile = new File(outPath.substring(0, outPath.lastIndexOf("/")));
+					if(!zipPathFile.exists()){
+						zipPathFile.mkdirs();
+					}
 					out = new FileOutputStream(outPath);
 					byte[] buf1 = new byte[1024];
 					int len;
@@ -219,14 +224,22 @@ public class SpringZipCompress {
 			
 			
 		} catch (Exception e) {
-			out.flush();
-			out.close();
+			if(out != null){
+				out.flush();
+				out.close();
+			}
 			e.printStackTrace();
 		} finally {
-			in.close();
-			out.flush();
-			out.close();
-			zip.close();
+			if(in != null){
+				in.close();
+			}
+			if(out != null){
+				out.flush();
+				out.close();
+			}
+			if(zip != null){
+				zip.close();
+			}
 		}
 		log.info("******************解壓完畢********************");
 	}
