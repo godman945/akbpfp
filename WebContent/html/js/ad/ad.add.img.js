@@ -154,20 +154,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		sizeDiv = "adHtml5SizeDiv";
 	}
 	
-	$.each($("#" + sizeDiv + " p"), function( index, obj ) {
-		if($(obj).text().indexOf(width+" x "+height) >= 0){
-			imgSize = "yes";
-			imgSizeFlag = true;
-			return false;
-		}
-	});
-	if(!imgSizeFlag){
-		errorTitle = '錯誤的尺寸!';
-		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize(\'approveSizeDiv\');">支援規格查詢</a>';
-		if(imgTypeName.toUpperCase() == "ZIP"){
-			errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize(\'html5SizeDiv\');">html5規格查詢</a>';
-		}
-	}
 	if(imgTypeName.toUpperCase() == "PNG" || imgTypeName.toUpperCase() == "JPG" || imgTypeName.toUpperCase() == "GIF" || imgTypeName.toUpperCase() == "ZIP"){
 		imgType = "yes";
 	}else{
@@ -196,6 +182,21 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 				return false;
 			}
 		});
+	}
+	
+	$.each($("#" + sizeDiv + " p"), function( index, obj ) {
+		if($(obj).text().indexOf(width+" x "+height) >= 0){
+			imgSize = "yes";
+			imgSizeFlag = true;
+			return false;
+		}
+	});
+	if(!imgSizeFlag){
+		errorTitle = '錯誤的尺寸!';
+		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize(\'approveSizeDiv\');">支援規格查詢</a>';
+		if(imgTypeName.toUpperCase() == "ZIP"){
+			errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" onclick="approveSize(\'html5SizeDiv\');">html5規格查詢</a>';
+		}
 	}
 	
 	if (adSeq == "") {
