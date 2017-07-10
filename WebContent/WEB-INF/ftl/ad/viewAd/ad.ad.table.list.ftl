@@ -61,7 +61,7 @@
 						        	<b>${vo.title!}</b><br>
 						            <i>尺寸</i><b>${vo.imgWidth!} x ${vo.imgHeight!}</b><br>
 						            <span>${vo.showUrl!}</span><br>
-						            <a class="fancy" style="cursor:pointer" onclick="preViewHtml5('${vo.imgWidth!}','${vo.imgHeight!}','${vo.originalImg!}','<@s.url value="/" />${vo.realUrl!}')" alt="預覽">預覽</a>
+						            <a class="fancy" style="cursor:pointer" onclick="preViewHtml5('${vo.imgWidth!}','${vo.imgHeight!}','${vo.originalImg!}','${vo.realUrl!}')" alt="預覽">預覽</a>
 					            </span>
 				        	</span>
 			        	</div>

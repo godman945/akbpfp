@@ -157,7 +157,7 @@ function preview(img) {
 function preViewHtml5(width,height,imgSrc,realUrl){
 	
 	 $.fancybox(
-			 '<a href="' + realUrl + '" target="_blank"><div style="width:' + width + 'px;height:' + height + 'px;"></div></a><iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>',
+			 '<a href="' + realUrl + '" target="_blank"><div style="width:' + width + 'px;height:' + height + 'px;"><iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe></div></a>',
 	    		{
 	    			'autoDimensions'	: false,
 	    			'width'         	: width,
