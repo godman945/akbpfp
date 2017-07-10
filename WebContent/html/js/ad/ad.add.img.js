@@ -60,7 +60,7 @@ $(document).ready(function(){
 	    	seqArray.push(jsonObj.adSeq);
 	    	//呼叫建立畫面
 	
-	    	createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq,jsonObj.imgMD5,jsonObj.imgRepeat,jsonObj.html5Repeat,jsonObj.imgSrc);
+	    	createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq,jsonObj.imgMD5,jsonObj.imgRepeat,jsonObj.html5Repeat,jsonObj.imgSrc,jsonObj.errorMsg);
 	    }).on('fileuploadprogressall', function (e, data) {	
 	    }).on('fileuploadprocessalways', function (e, data) {
 	    	//2015.7.12  tim   由於error後不會執行fileuploaddone,所以要加unblock()
@@ -126,7 +126,7 @@ function callBlockUpload(){
 //建立圖片Dom
 var imgIndex = 0;
 var flag = false;
-function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat, html5Repeat, imgSrc) {
+function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat, html5Repeat, imgSrc, zipErrorMsg) {
 	
 	if(flag == false){
 		$("#fileUploadSize").text(parseInt($("#fileUploadSize").text()) + uploadFileSize);
@@ -180,7 +180,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		thisImgRepeat = 'yes';
 		if(html5Repeat == "no"){
 			errorTitle = '錯誤的HTML5格式!';
-			errorMsg = '您所上傳的HTML5格式錯誤<a id="errAdImg" name="errAdImg" onclick="approveSize(\'html5SizeDiv\');">html5規格查詢</a>';
+			errorMsg = '您所上傳的HTML5 ' + zipErrorMsg + ' <a id="errAdImg" name="errAdImg" onclick="approveSize(\'html5SizeDiv\');">html5規格查詢</a>';
 		}
 	} else {
 		if(imgRepeat == 'yes'){
