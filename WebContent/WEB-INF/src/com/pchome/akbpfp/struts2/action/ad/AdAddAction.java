@@ -790,7 +790,12 @@ public class AdAddAction extends BaseCookieAction{
 					Elements htmlTag = doc.select("html");
 					Elements headTag = doc.select("head");
 					Elements bodyTag = doc.select("body");
-					Elements metaTag = doc.select("meta[name=ad.size],meta[content]");
+					Elements metaTag = doc.select("meta[name=ad.size][content]");
+					
+					log.info(">>>>>>>>>>>>>>>>>>>>     htmlTag = " + !htmlTag.isEmpty());
+					log.info(">>>>>>>>>>>>>>>>>>>>     headTag = " + !headTag.isEmpty());
+					log.info(">>>>>>>>>>>>>>>>>>>>     bodyTag = " + !bodyTag.isEmpty());
+					log.info(">>>>>>>>>>>>>>>>>>>>     metaTag = " + !metaTag.isEmpty());
 					
 					if(docHtml.indexOf("<!doctype html>") != -1 && !htmlTag.isEmpty() && !headTag.isEmpty() && !bodyTag.isEmpty() && !metaTag.isEmpty()){
 						html5Repeat = "yes";
@@ -830,7 +835,22 @@ public class AdAddAction extends BaseCookieAction{
 						log.info(">>>>>>>>>>>>>>>>>>>>     imgHeight = " + imgHeight);
 						
 					} else {
-							errorMsg = "與規範不符";
+						if(docHtml.indexOf("<!doctype html>") == -1){
+							errorMsg = "&lt;!DOCTYPE html&gt;宣告錯誤";
+						}
+						if(htmlTag.isEmpty()){
+							errorMsg = "&lt;html&gt;標籤錯誤";
+						}
+						if(headTag.isEmpty()){
+							errorMsg = "&lt;head&gt;標籤錯誤";
+						}
+						if(bodyTag.isEmpty()){
+							errorMsg = "&lt;body&gt;標籤錯誤";
+						}
+						if(metaTag.isEmpty()){
+							errorMsg = "&lt;meta&gt;標籤錯誤";
+						}
+						//errorMsg = "與規範不符";
 					}
 				}
 				
