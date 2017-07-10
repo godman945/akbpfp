@@ -249,7 +249,11 @@ public class CommonUtilModel extends BaseCookieAction{
 			
 			imageVO.setImgWidth(imgWidth);
 		    imageVO.setImgHeight(imgHeight);
-	    	imageVO.setImgPath(folder.getPath().replaceAll("\\\\", "\\\\\\\\"));
+		    
+		    String indexHtmFilePath = folder.getPath().replaceAll("/", "\\\\\\\\");
+		    indexHtmFilePath = indexHtmFilePath.replace("temporal", "original");
+		    indexHtmFilePath = indexHtmFilePath.replaceAll("\\\\", "/");
+	    	imageVO.setImgPath(indexHtmFilePath.substring(0, indexHtmFilePath.lastIndexOf("/")) + "/index.htm");
 	    }
 	    
 	    return imageVO;
