@@ -216,10 +216,11 @@ public class SpringZipCompress {
 					while((len=in.read(buf1))>0){
 						out.write(buf1,0,len);
 					}
+					
+					out.flush();
+					out.close();
 				}
 				
-				out.flush();
-				out.close();
 			}
 			
 			

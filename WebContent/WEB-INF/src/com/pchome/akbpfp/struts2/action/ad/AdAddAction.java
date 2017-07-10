@@ -774,7 +774,7 @@ public class AdAddAction extends BaseCookieAction{
 				
 				//檢查index.html是否存在
 				String errorMsg = "";
-				File indexHtmlFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq + "/index.html");
+				File indexHtmlFile = new File(getIndexHtmlPath(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq));
 				
 				if(!indexHtmlFile.exists()){
 					errorMsg = "HTML檔名錯誤";
@@ -801,13 +801,14 @@ public class AdAddAction extends BaseCookieAction{
 						html5Repeat = "yes";
 						
 						//將index.html改為index.htm
-			            File indexHtmFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq + "/index.htm");
+			            File indexHtmFile = new File(indexHtmlFile.getPath().substring(0, indexHtmlFile.getPath().lastIndexOf("\\")) + "/index.htm");
 			            indexHtmlFile.renameTo(indexHtmFile);
-			            File indexHtmlFile2 = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq + "/index.html");
-			            File indexHtmFile2 = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq + "/index.htm");
+			            File indexHtmlFile2 = new File(getIndexHtmlPath(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq));
+			            File indexHtmFile2 = new File(indexHtmlFile2.getPath().substring(0, indexHtmlFile.getPath().lastIndexOf("\\")) + "/index.htm");
 			            indexHtmlFile2.renameTo(indexHtmFile2);
 						
-						imgSrc = photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq  + "/index.htm";
+			            log.info(">>>>>>>>>>>>>>>>>>>>     indexHtmFile2.getPath() = " + indexHtmFile2.getPath());
+						imgSrc = indexHtmFile2.getPath().replaceAll("\\\\", "/");
 						imgSrc = imgSrc.replace("/export/home/webuser/akb/pfp/", "");
 						String content = metaTag.attr("content");
 						content = content.replaceAll(";", "");
@@ -1115,6 +1116,26 @@ public class AdAddAction extends BaseCookieAction{
 		}
 
 		return amount;
+	}
+	
+	private String getIndexHtmlPath(String path){
+		String indexPath = "";
+		
+		File checkFlie = new File(path);
+		File[] files = checkFlie.listFiles(); //獲取資料夾下面的所有檔
+		for (File f : files) {
+			//判斷是否為資料夾
+			if (f.isDirectory()) {
+				indexPath = getIndexHtmlPath(f.getPath()); //如果是資料夾，檢查該資料夾內檔案
+			} else {
+				if(f.getPath().indexOf("index.htm") != -1){
+					indexPath = f.getPath();
+					break;
+				}
+			}
+		}
+		
+		return indexPath;
 	}
 	
 	public List<PfbxSize> getSearchPCSizeList() {

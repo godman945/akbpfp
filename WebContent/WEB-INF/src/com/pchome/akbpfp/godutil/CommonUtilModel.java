@@ -213,7 +213,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	    log.info(">>>>>"+userImgPath+custimerInfoid+"/"+date+"/temporal/");
 	    ImageVO imageVO = new ImageVO();
 	    
-	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"/index.htm");
+	    File folder = new File(getIndexHtmlPath(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq));
 	    if(folder.exists()){
 	    	
 	    	String imgWidth ="0";
@@ -222,7 +222,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	    	Document doc = Jsoup.parse(folder, "UTF-8");
 			String docHtml = doc.html();
 	    	
-			Elements metaTag = doc.select("meta[name=ad.size],meta[content]");
+			Elements metaTag = doc.select("meta[name=ad.size][content]");
 			if(!metaTag.isEmpty()){
 				String content = metaTag.attr("content");
 				content = content.replaceAll(";", "");
@@ -249,10 +249,30 @@ public class CommonUtilModel extends BaseCookieAction{
 			
 			imageVO.setImgWidth(imgWidth);
 		    imageVO.setImgHeight(imgHeight);
-	    	imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\original\\"+adSeq+"\\index.htm");
+	    	imageVO.setImgPath(folder.getPath().replaceAll("\\\\", "\\\\\\\\"));
 	    }
 	    
 	    return imageVO;
+	}
+	
+	private String getIndexHtmlPath(String path){
+		String indexPath = "";
+		
+		File checkFlie = new File(path);
+		File[] files = checkFlie.listFiles(); //獲取資料夾下面的所有檔
+		for (File f : files) {
+			//判斷是否為資料夾
+			if (f.isDirectory()) {
+				indexPath = getIndexHtmlPath(f.getPath()); //如果是資料夾，檢查該資料夾內檔案
+			} else {
+				if(f.getPath().indexOf("index.htm") != -1){
+					indexPath = f.getPath();
+					break;
+				}
+			}
+		}
+		
+		return indexPath;
 	}
 	
 	
