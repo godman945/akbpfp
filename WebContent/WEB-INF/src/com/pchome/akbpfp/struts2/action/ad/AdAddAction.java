@@ -810,7 +810,7 @@ public class AdAddAction extends BaseCookieAction{
 			            indexHtmlFile2.renameTo(indexHtmFile2);
 						
 			            log.info(">>>>>>>>>>>>>>>>>>>>     indexHtmFile2.getPath() = " + indexHtmFile2.getPath());
-						imgSrc = indexHtmFile2.getPath().replaceAll("\\\\", "/");
+						imgSrc = indexHtmFile2.getPath().replaceAll("\\\\\\\\", "/");
 						imgSrc = imgSrc.replace("/export/home/webuser/akb/pfp/", "");
 						String content = metaTag.attr("content");
 						content = content.replaceAll(";", "");

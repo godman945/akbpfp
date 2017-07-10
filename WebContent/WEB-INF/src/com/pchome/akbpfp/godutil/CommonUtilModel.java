@@ -252,7 +252,7 @@ public class CommonUtilModel extends BaseCookieAction{
 		    
 		    String indexHtmFilePath = folder.getPath().replaceAll("/", "\\\\\\\\");
 		    indexHtmFilePath = indexHtmFilePath.replace("temporal", "original");
-		    indexHtmFilePath = indexHtmFilePath.replaceAll("\\\\", "/");
+		    indexHtmFilePath = indexHtmFilePath.replaceAll("\\\\\\\\", "/");
 	    	imageVO.setImgPath(indexHtmFilePath.substring(0, indexHtmFilePath.lastIndexOf("/")) + "/index.htm");
 	    }
 	    
