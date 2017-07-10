@@ -108,7 +108,7 @@ public class AdReportService implements IAdReportService {
 							htmlCode += "<b>" + title + "</b><br>";
 						}
 						htmlCode += "<i>尺寸</i><b>" + imgWidth + " x " + imgHeight + "</b><br>";
-						htmlCode += ("<span>" + showUrl + "</span><br><a style=\"cursor:pointer\" onclick=\"previewHtml5('" + imgWidth + "','" + imgHeight + "','" + img + "')\">預覽</a>");
+						htmlCode += ("<span>" + showUrl + "</span><br><a style=\"cursor:pointer\" onclick=\"previewHtml5('" + imgWidth + "','" + imgHeight + "','" + img + ",'" + realUrl + "')\">預覽</a>");
 						htmlCode += "</span></span></div>";
 					} else {
 						File picture = null;

@@ -557,10 +557,13 @@ function preview(img) {
     });
 }
 
-function previewHtml5(width,height,imgSrc){
+function previewHtml5(width,height,imgSrc,realUrl){
 	
 	 $.fancybox(
-			 '<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>',
+			 '<div style="position:absolute;z-index:10;border:0px;background:none;width:' + width + 'px;height:' + height + 'px;">' + 
+			 '<a href="' + realUrl + '" target="_blank" style="display:block;width:' + width + 'px;height:' + height + 'px;"><img src="html/img/blank.gif" style="width:' + width + 'px;height:' + height + 'px;border:0px;"></a>'
+			 + '</div>'
+			 + '<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>',
 	    		{
 	    			'autoDimensions'	: false,
 	    			'width'         	: width,
