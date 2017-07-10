@@ -801,12 +801,12 @@ public class AdAddAction extends BaseCookieAction{
 						html5Repeat = "yes";
 						
 						//將index.html改為index.htm
-						String indexHtmFilePath = indexHtmlFile.getPath().replaceAll("/", "\\\\\\\\");
-			            File indexHtmFile = new File(indexHtmFilePath.substring(0, indexHtmFilePath.lastIndexOf("\\")) + "/index.htm");
+						String indexHtmFilePath = indexHtmlFile.getPath().replaceAll("\\\\\\\\", "/");
+			            File indexHtmFile = new File(indexHtmFilePath.substring(0, indexHtmFilePath.lastIndexOf("/")) + "/index.htm");
 			            indexHtmlFile.renameTo(indexHtmFile);
 			            File indexHtmlFile2 = new File(getIndexHtmlPath(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq));
-			            String indexHtmFile2Path = indexHtmlFile2.getPath().replaceAll("/", "\\\\\\\\");
-			            File indexHtmFile2 = new File(indexHtmFile2Path.substring(0, indexHtmFile2Path.lastIndexOf("\\")) + "/index.htm");
+			            String indexHtmFile2Path = indexHtmlFile2.getPath().replaceAll("\\\\\\\\", "/");
+			            File indexHtmFile2 = new File(indexHtmFile2Path.substring(0, indexHtmFile2Path.lastIndexOf("/")) + "/index.htm");
 			            indexHtmlFile2.renameTo(indexHtmFile2);
 						
 			            log.info(">>>>>>>>>>>>>>>>>>>>     indexHtmFile2.getPath() = " + indexHtmFile2.getPath());
