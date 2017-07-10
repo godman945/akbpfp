@@ -352,7 +352,13 @@ function preViewHtml5(imgName,width,height,imgSrc){
 	$.each($(fileArray), function( index, file ) {
 		if(imgName == file.name){
 			
-		    $("#preDiv").prepend('<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>');
+			var showHtml5 = '';
+			showHtml5 += '<div style="position:absolute;z-index:10;border:0px;background:none;width:' + width + 'px;height:' + height + 'px;">';
+			showHtml5 += '<a href="javascript: void(0)" style="display:block;width:' + width + 'px;height:' + height + 'px;background-color:transparent;"><img src="html/img/blank.gif" style="width:' + width + 'px;height:' + height + 'px;border:0px;"></a>';
+			showHtml5 += '</div>';
+			showHtml5 += '<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>';
+			
+		    $("#preDiv").prepend(showHtml5);
 		    $.fancybox(
 		    		$('#preDiv').html(),
 		    		{
