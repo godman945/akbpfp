@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -213,6 +214,9 @@ public class CommonUtilModel extends BaseCookieAction{
 	    log.info(">>>>>"+userImgPath+custimerInfoid+"/"+date+"/temporal/");
 	    ImageVO imageVO = new ImageVO();
 	    
+	    //覆寫檔案至original
+	    saveOriginalFile(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq);
+	    
 	    File folder = new File(getIndexHtmlPath(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq));
 	    if(folder.exists()){
 	    	
@@ -253,6 +257,7 @@ public class CommonUtilModel extends BaseCookieAction{
 		    String indexHtmFilePath = folder.getPath().replaceAll("/", "\\\\\\\\");
 		    indexHtmFilePath = indexHtmFilePath.replace("temporal", "original");
 		    indexHtmFilePath = indexHtmFilePath.replaceAll("\\\\\\\\", "/");
+		    indexHtmFilePath = indexHtmFilePath.replaceAll("\\\\", "/");
 	    	imageVO.setImgPath(indexHtmFilePath.substring(0, indexHtmFilePath.lastIndexOf("/")) + "/index.htm");
 	    }
 	    
@@ -279,6 +284,58 @@ public class CommonUtilModel extends BaseCookieAction{
 		return indexPath;
 	}
 	
+	private void saveOriginalFile(String path) throws IOException{
+		
+		String originalPath = path.replace("temporal", "original");
+		
+		//判斷路徑是否存在,不存在則創建文件路徑
+		File pathFile = new File(originalPath);
+		if(!pathFile.exists()){
+			pathFile.mkdirs();
+		}
+		
+		File temporalFlie = new File(path);
+		File[] files = temporalFlie.listFiles(); //獲取資料夾下面的所有檔
+		for (File f : files) {
+			//判斷是否為資料夾
+			if (f.isDirectory()) {
+				String filePath = f.getPath();
+				filePath.replace("temporal", "original");
+				
+				File disectory = new File(filePath);
+				if(!disectory.exists()){
+					disectory.mkdirs();
+				}
+				
+				saveOriginalFile(f.getPath()); //如果是資料夾，檢查該資料夾內檔案
+			} else {
+				InputStream input = null;
+				OutputStream output = null;
+				
+				String newFilePath = f.getPath();
+				newFilePath = newFilePath.replace("temporal", "original");
+				
+				try{
+					input = new FileInputStream(f);
+		            output = new FileOutputStream(new File(newFilePath));        
+		            byte[] buf = new byte[1024];        
+		            int bytesRead;        
+		            while ((bytesRead = input.read(buf)) > 0) {
+		               output.write(buf, 0, bytesRead);
+		            }
+					
+		            input.close();
+			        output.close();
+				} catch(Exception e){
+					input.close();
+			        output.close();
+				} finally {
+			        input.close();
+			        output.close();
+			    }
+			}
+		}
+	}
 	
     public String getDecimalFormat1(String data) throws Exception{
 //	for (EnumCommon enumData : EnumCommon.values()) {

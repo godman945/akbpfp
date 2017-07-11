@@ -766,15 +766,15 @@ public class AdAddAction extends BaseCookieAction{
 				    customerImgFile.mkdirs();
 				}
 				
-				SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
-				SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
+				//SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
+				SpringZipCompress.getInstance().openZip(fileuploadFileName,file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
 				
 				int FileAmount = checkFileAmount(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
 				log.info(">>>>>>>>>>>>>>>>>>>>>   FileAmount  = " + FileAmount);
 				
 				//檢查index.html是否存在
 				String errorMsg = "";
-				File indexHtmlFile = new File(getIndexHtmlPath(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq));
+				File indexHtmlFile = new File(getIndexHtmlPath(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq));
 				
 				if(!indexHtmlFile.exists()){
 					errorMsg = "HTML檔名錯誤";
@@ -802,15 +802,18 @@ public class AdAddAction extends BaseCookieAction{
 						
 						//將index.html改為index.htm
 						String indexHtmFilePath = indexHtmlFile.getPath().replaceAll("\\\\\\\\", "/");
+						indexHtmFilePath = indexHtmFilePath.replaceAll("\\\\", "/");
+						log.info(">>>>>>>>>>>>>>>>>>>>     indexHtmFilePath = " + indexHtmFilePath);
+						
 			            File indexHtmFile = new File(indexHtmFilePath.substring(0, indexHtmFilePath.lastIndexOf("/")) + "/index.htm");
 			            indexHtmlFile.renameTo(indexHtmFile);
-			            File indexHtmlFile2 = new File(getIndexHtmlPath(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq));
-			            String indexHtmFile2Path = indexHtmlFile2.getPath().replaceAll("\\\\\\\\", "/");
-			            File indexHtmFile2 = new File(indexHtmFile2Path.substring(0, indexHtmFile2Path.lastIndexOf("/")) + "/index.htm");
-			            indexHtmlFile2.renameTo(indexHtmFile2);
+			           // File indexHtmlFile2 = new File(getIndexHtmlPath(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq));
+			           // String indexHtmFile2Path = indexHtmlFile2.getPath().replaceAll("\\\\\\\\", "/");
+			           // File indexHtmFile2 = new File(indexHtmFile2Path.substring(0, indexHtmFile2Path.lastIndexOf("/")) + "/index.htm");
+			           // indexHtmlFile2.renameTo(indexHtmFile2);
 						
-			            log.info(">>>>>>>>>>>>>>>>>>>>     indexHtmFile2.getPath() = " + indexHtmFile2.getPath());
-						imgSrc = indexHtmFile2.getPath().replaceAll("\\\\\\\\", "/");
+						imgSrc = indexHtmFile.getPath().replaceAll("\\\\\\\\", "/");
+						imgSrc = imgSrc.replaceAll("\\\\", "/");
 						imgSrc = imgSrc.replace("/export/home/webuser/akb/pfp/", "");
 						String content = metaTag.attr("content");
 						content = content.replaceAll(";", "");
@@ -1086,6 +1089,8 @@ public class AdAddAction extends BaseCookieAction{
         			saveAdDetail(zip,"zip", adPoolSeq,null);
         			String size = imageVO.getImgWidth() + " x " + imageVO.getImgHeight();
         			saveAdDetail(size,"size", adPoolSeq,null);
+        			String zipFile = photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq + "/" + imgName + ".zip";
+        			saveAdDetail(zipFile,"zipFile", adPoolSeq,null);
         		}
     	    }
     	}

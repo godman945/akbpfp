@@ -171,7 +171,7 @@ public class SpringZipCompress {
 		return new ByteArrayInputStream(fos.toByteArray());
 	}
 
-	public void openZip(File zipFile,String path) throws IOException {
+	public void openZip(String zipName, File zipFile,String path) throws IOException {
 		
 		//判斷路徑是否存在,不存在則創建文件路徑
 		File pathFile = new File(path);
@@ -184,12 +184,29 @@ public class SpringZipCompress {
 		OutputStream out = null;
 		
 		try {
+			
+			in = new FileInputStream(zipFile);
+			out = new FileOutputStream(new File(path + "/" + zipName));
+			
+			byte[] buf = new byte[1024];        
+            int bytesRead;        
+            while ((bytesRead = in.read(buf)) > 0) {
+            	out.write(buf, 0, bytesRead);
+            }
+            
+            in.close();
+            out.flush();
+			out.close();
+			
+			in = null;
+			out = null;
+			
 			zip = new ZipFile(zipFile);
 			for(Enumeration entries = zip.entries();entries.hasMoreElements();){
 				ZipEntry entry = (ZipEntry)entries.nextElement();
 				String zipEntryName = entry.getName();
 				in = zip.getInputStream(entry);
-				String outPath = (path + "/" + zipEntryName).replaceAll("\\*", "/");;
+				String outPath = (path + "/" + zipEntryName).replaceAll("\\*", "/");
 				
 				//判斷文件全路徑是否为文件夾,如果是上面已經上傳,不需要解壓
 				if(new File(outPath).isDirectory()){
@@ -205,7 +222,6 @@ public class SpringZipCompress {
 						zipPathFile.mkdirs();
 					}
 				} else {
-					File outPutFile = new File(outPath);
 					File zipPathFile = new File(outPath.substring(0, outPath.lastIndexOf("/")));
 					if(!zipPathFile.exists()){
 						zipPathFile.mkdirs();
