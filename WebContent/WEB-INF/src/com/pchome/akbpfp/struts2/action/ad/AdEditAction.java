@@ -448,6 +448,11 @@ public class AdEditAction extends BaseCookieAction{
 				imgTypeName = "ZIP";
 			} else if(adDetailId != null && adDetailId.equals("zip")){
 				zipTitle = pfpAdDetails.get(i).getAdDetailContent();
+				zipTitle = zipTitle.replace("(html5)", "");
+				if(zipTitle.length() > 8){
+					zipTitle = zipTitle.substring(0, 8) + "...";
+				}
+				zipTitle = zipTitle + "(html5)";
 			}
 		}
 
