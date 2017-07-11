@@ -195,6 +195,12 @@
 	<div style="height:400px;overflow:auto;">
     <table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
         <tbody>
+        	<tr>
+                <th height="20">大小上限</th>
+                <td>
+                 180 KB 
+              </td>
+            </tr>
             <tr>
               <th height="20">html5素材呎吋</th>
               <td>
@@ -265,9 +271,9 @@
             <tr>
             	<th>安全性審核</th>
                 <td>
-                	不可使用跨domain載入的檔案。<br/>
-                	1. 不可使用.json的檔案。 <br/>
-					2. 不建議使用jQuery的檔案。因為於行動裝置上會有性能不佳的情況。不必要的檔案k數：大多數的函數庫功能是不需要的。
+                	1. 不可使用跨domain載入的檔案。<br/>
+					2. 不可使用.json的檔案。 <br/>
+					3. 不建議使用jQuery的檔案。因為於行動裝置上會有性能不佳的情況。不必要的檔案k數：大多數的函數庫功能是不需要的。
                 </td>
             </tr>
             <tr>
