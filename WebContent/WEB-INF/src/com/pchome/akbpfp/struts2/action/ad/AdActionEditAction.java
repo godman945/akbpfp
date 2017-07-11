@@ -512,7 +512,7 @@ public class AdActionEditAction extends BaseCookieAction{
 			accesslogMessage_playType += getPlayTypeNote(oldAdSpecificPlayType) + "：";
 			if(StringUtils.equals("0", oldAdSpecificPlayType)){
 				boolean checklog = false;
-				if(!StringUtils.equals(oldSex, adActionSex)){
+				if(!StringUtils.equals(oldSex, adActionSex) && !(oldSex == null && StringUtils.isEmpty(adActionSex))){
 					checklog = true;
 				}
 				if(!StringUtils.equals(String.valueOf(oldStartAge), adActionStartAge) || !StringUtils.equals(String.valueOf(oldEndAge), adActionEndAge)){
