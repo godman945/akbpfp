@@ -145,7 +145,7 @@ public class AdEditAction extends BaseCookieAction{
 			//log.info("pfpAdDetails.get(i).getAdDetailContent() = " + pfpAdDetails.get(i).getAdDetailContent());
 			String adDetailId = pfpAdDetails.get(i).getAdDetailId();
 			if(adDetailId != null && adDetailId.equals("img")) {
-				adDetailSeq[0] = pfpAdDetails.get(i).getAdDetailSeq();;
+				adDetailSeq[0] = pfpAdDetails.get(i).getAdDetailSeq();
 				adDetailContent[0] = pfpAdDetails.get(i).getAdDetailContent() + "?" + RandomStringUtils.randomAlphanumeric(10);
 				if(adDetailContent[0].indexOf("display:none") > 0) {
 					adDetailContent[0] = pfpAdDetails.get(i).getAdDetailContent();

@@ -255,7 +255,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
 			 '<div class="adboxdv" >'+
 			 '<div style="background-color:#FFFFFF;margin:50px 0px 0px 0px;line-height:40px;font-size:16px;" >'+
-			 file.name+'<br/>'+showFileName+'(html5)'+
+			 showFileName+'(html5)'+
 			 '</div >'+
 			 '<p class="fancy adinf" onclick="preViewHtml5(\''+file.name+'\',\''+width+'\',\''+height+'\',\''+imgSrc+'\');" alt="預覽">預覽</p></div>'+
 			 '<ul>'+

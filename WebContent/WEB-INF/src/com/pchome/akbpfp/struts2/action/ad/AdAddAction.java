@@ -1085,7 +1085,7 @@ public class AdAddAction extends BaseCookieAction{
         		}
         		
         		if(StringUtils.equals(imgMD5Map.get(adSeq + "_imgMD5").toString(), "X")){
-        			String zip = imgName + ".zip<br/>" + imgName + "(html5)";
+        			String zip = imgName + "(html5)";
         			saveAdDetail(zip,"zip", adPoolSeq,null);
         			String size = imageVO.getImgWidth() + " x " + imageVO.getImgHeight();
         			saveAdDetail(size,"size", adPoolSeq,null);
