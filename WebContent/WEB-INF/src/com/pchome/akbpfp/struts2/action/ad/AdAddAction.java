@@ -1090,6 +1090,7 @@ public class AdAddAction extends BaseCookieAction{
         			String size = imageVO.getImgWidth() + " x " + imageVO.getImgHeight();
         			saveAdDetail(size,"size", adPoolSeq,null);
         			String zipFile = photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq + "/" + imgName + ".zip";
+        			zipFile = zipFile.replace("/export/home/webuser/akb/pfp/", "");
         			saveAdDetail(zipFile,"zipFile", adPoolSeq,null);
         		}
     	    }
