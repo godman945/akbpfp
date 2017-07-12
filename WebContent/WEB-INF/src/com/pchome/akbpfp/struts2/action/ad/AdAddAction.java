@@ -911,7 +911,9 @@ public class AdAddAction extends BaseCookieAction{
         		if(!customerImgFileDateFile.exists()){
         		    customerImgFileDateFile.mkdirs();
         		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original");
-        		    customerImgFileOriginalDateFile.mkdirs();
+        		    if(!customerImgFileOriginalDateFile.exists()){
+        		    	customerImgFileOriginalDateFile.mkdirs();
+        		    }
         		    customerImgFileTemporalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal");
         		    if(!customerImgFileTemporalDateFile.exists()){
         		        customerImgFileTemporalDateFile.mkdirs();
