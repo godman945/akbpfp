@@ -767,6 +767,10 @@ public class AdAddAction extends BaseCookieAction{
 				}
 				
 				//SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
+				File originalPathFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
+				if(!originalPathFile.exists()){
+					originalPathFile.mkdirs();
+				}
 				SpringZipCompress.getInstance().openZip(fileuploadFileName,file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
 				
 				int FileAmount = checkFileAmount(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
