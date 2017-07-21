@@ -49,7 +49,7 @@
 						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br>
 							<a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize('approveSizeDiv');">支援規格查詢</a>
 							<#if adType == '0' || adType == '2' >
-							<br/><a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize('html5SizeDiv');">html5規格查詢</a>
+							<br/><a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize('html5SizeDiv');">HTML5規格查詢</a>
 							</#if>
 						</th>
 						<td style="background:#f9f9f9;">
@@ -202,7 +202,7 @@
               </td>
             </tr>
             <tr>
-              <th height="20">html5素材呎吋</th>
+              <th height="20">HTML5素材呎吋</th>
               <td>
                	<div id="adHtml5SizeDiv">
 	                 <div>

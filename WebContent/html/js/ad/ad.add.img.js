@@ -165,7 +165,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		errorTitle = '錯誤的尺寸!';
 		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize(\'approveSizeDiv\');">支援規格查詢</a>';
 		if(imgTypeName.toUpperCase() == "ZIP"){
-			errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize(\'html5SizeDiv\');">html5規格查詢</a>';
+			errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize(\'html5SizeDiv\');">HTML5規格查詢</a>';
 		}
 	}
 	if(imgTypeName.toUpperCase() == "PNG" || imgTypeName.toUpperCase() == "JPG" || imgTypeName.toUpperCase() == "GIF" || imgTypeName.toUpperCase() == "ZIP"){
@@ -180,7 +180,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		thisImgRepeat = 'yes';
 		if(html5Repeat == "no"){
 			errorTitle = '錯誤的HTML5格式!';
-			errorMsg = '您所上傳的HTML5 ' + zipErrorMsg + ' <a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize(\'html5SizeDiv\');">html5規格查詢</a>';
+			errorMsg = '您所上傳的HTML5 ' + zipErrorMsg + ' <a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize(\'html5SizeDiv\');">HTML5規格查詢</a>';
 		}
 	} else {
 		if(imgRepeat == 'yes'){
