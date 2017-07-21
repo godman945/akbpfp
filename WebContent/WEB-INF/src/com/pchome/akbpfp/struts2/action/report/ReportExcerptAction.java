@@ -182,7 +182,7 @@ public class ReportExcerptAction extends BaseReportAction {
 		} else if (adType.equals(EnumReport.ADTYPE_AD.getTextValue())) {
 			System.out.println(">>>>> 444");
 			resultData_ad = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE_CHART.getTextValue(),
-					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+					searchId, "", searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
 		}
 		
 		Map<Date,Float> flashDataMap=new HashMap<Date,Float>();
@@ -798,11 +798,11 @@ public class ReportExcerptAction extends BaseReportAction {
 			}
 
 			//搜尋結果
-			List<AdReportVO> resultSumData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE_COUNT.getTextValue(), searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+			List<AdReportVO> resultSumData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE_COUNT.getTextValue(), searchId, "", searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
 
 			totalPageSize = resultSumData.size();
 
-			List<AdReportVO> resultData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue(), searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+			List<AdReportVO> resultData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue(), searchId, "", searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
 
 			if (resultSumData!=null && resultSumData.size()>0) {
 				resultSumDataTrans_ad(resultSumData);

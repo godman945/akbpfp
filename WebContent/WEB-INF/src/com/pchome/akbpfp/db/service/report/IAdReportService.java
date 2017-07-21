@@ -6,6 +6,6 @@ import com.pchome.akbpfp.db.dao.report.AdReportVO;
 
 public interface IAdReportService {
 
-	public List<AdReportVO> loadReportDate(String sqlType, String adGroupSeq, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String startDate, String endDate, int page, int pageSize) throws Exception;
+	public List<AdReportVO> loadReportDate(String sqlType, String adGroupSeq, String adSeq, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String startDate, String endDate, int page, int pageSize) throws Exception;
 
 }

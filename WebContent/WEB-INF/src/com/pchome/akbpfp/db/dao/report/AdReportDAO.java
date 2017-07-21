@@ -25,7 +25,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdReport;
 public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdReportDAO {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
-	public List<AdReportVO> getReportList(final String sqlType, final String adGroupSeq, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate, final int page, final int pageSize){
+	public List<AdReportVO> getReportList(final String sqlType, final String adGroupSeq, final String adSeq, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate, final int page, final int pageSize){
 
 		List<AdReportVO> result = (List<AdReportVO> ) getHibernateTemplate().execute(
 				new HibernateCallback<List<AdReportVO> >() {
@@ -43,7 +43,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							//廣告明細成效 (數量及加總)
 							//hqlStr = getAdReportCountSQL(adGroupSeq, adSearchWay, adShowWay, adPvclkDevice, searchText, customerInfoId, startDate, endDate);
 							try {
-								sqlParams = getAdReportCountSQL(adGroupSeq, adSearchWay, adShowWay, adPvclkDevice, searchText, customerInfoId, startDate, endDate);
+								sqlParams = getAdReportCountSQL(adGroupSeq, adSeq, adSearchWay, adShowWay, adPvclkDevice, searchText, customerInfoId, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -55,7 +55,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							//廣告明細成效 (資料)
 							//hqlStr = getAdReportDataSQL(adGroupSeq, adSearchWay, adShowWay, adPvclkDevice, searchText, customerInfoId, startDate, endDate);
 							try {
-								sqlParams = getAdReportDataSQL(adGroupSeq, adSearchWay, adShowWay, adPvclkDevice, searchText, customerInfoId, startDate, endDate);
+								sqlParams = getAdReportDataSQL(adGroupSeq, adSeq, adSearchWay, adShowWay, adPvclkDevice, searchText, customerInfoId, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -67,7 +67,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							//廣告明細成效 (圖表)
 							//hqlStr = getAdReportChartSQL(adGroupSeq, adSearchWay, adShowWay, adPvclkDevice, searchText, customerInfoId, startDate, endDate);
 							try {
-								sqlParams = getAdReportChartSQL(adGroupSeq, adSearchWay, adShowWay, adPvclkDevice, searchText, customerInfoId, startDate, endDate);
+								sqlParams = getAdReportChartSQL(adGroupSeq, adSeq, adSearchWay, adShowWay, adPvclkDevice, searchText, customerInfoId, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -226,7 +226,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		return result;
 	}
 
-	private HashMap<String, Object> getAdReportCountSQL(final String adGroupSeq, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String searchText,
+	private HashMap<String, Object> getAdReportCountSQL(final String adGroupSeq, final String adSeq, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String searchText,
 			final String customerInfoId, final String startDate, final String endDate) throws ParseException {
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
@@ -247,11 +247,16 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		sqlParams.put("startDate", sdf.parse(startDate));
 		sqlParams.put("endDate", sdf.parse(endDate));
 
+		if (StringUtils.isNotBlank(adSeq)) {
+			hql.append(" and r.ad_seq = :adSeq");
+			sqlParams.put("adSeq", adSeq);
+		}
+
 		if (StringUtils.isNotBlank(adGroupSeq)) {
 			hql.append(" and r.ad_group_seq = :adGroupSeq");
 			sqlParams.put("adGroupSeq", adGroupSeq);
 		}
-
+		
 		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
 			hql.append(" and r.ad_type = :adShowWay");
 			sqlParams.put("adShowWay", Integer.parseInt(adShowWay));
@@ -280,7 +285,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		return sqlParams;
 	}
 
-	private HashMap<String, Object> getAdReportDataSQL(final String adGroupSeq, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String searchText,
+	private HashMap<String, Object> getAdReportDataSQL(final String adGroupSeq, final String adSeq, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String searchText,
 			final String customerInfoId, final String startDate, final String endDate) throws ParseException {
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
@@ -312,6 +317,11 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 			hql.append(" and r.ad_group_seq = :adGroupSeq");
 			sqlParams.put("adGroupSeq", adGroupSeq);
 		}
+		
+		if (StringUtils.isNotBlank(adSeq)) {
+			hql.append(" and r.ad_seq = :adSeq");
+			sqlParams.put("adSeq", adSeq);
+		}
 
 		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
 			hql.append(" and r.ad_type = :adShowWay");
@@ -331,20 +341,29 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 			sqlParams.put("searchStr", searchStr);
 		}
 
-		hql.append(" group by r.ad_seq");
+		if(StringUtils.isNotBlank(adSeq)) {
+			hql.append(" group by r.ad_pvclk_date");
+		} else {
+			hql.append(" group by r.ad_seq");
+		}
+		
 		if(StringUtils.isNotBlank(adPvclkDevice)) {
 			hql.append(" , r.ad_pvclk_device");
 		}
 		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
 			hql.append(" , r.ad_type");
 		}
-		hql.append(" order by r.ad_seq desc");
+		if(StringUtils.isNotBlank(adSeq)) {
+			hql.append(" order by r.ad_pvclk_date ");
+		} else {
+			hql.append(" order by r.ad_seq desc");
+		}
 		sqlParams.put("sql", hql);
 
 		return sqlParams;
 	}
 
-	private HashMap<String, Object> getAdReportChartSQL(final String adGroupSeq, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String searchText,
+	private HashMap<String, Object> getAdReportChartSQL(final String adGroupSeq, final String adSeq, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String searchText,
 			final String customerInfoId, final String startDate, final String endDate) throws ParseException{
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
@@ -370,6 +389,11 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		if (StringUtils.isNotBlank(adGroupSeq)) {
 			hql.append(" and r.ad_group_seq = :adGroupSeq");
 			sqlParams.put("adGroupSeq", adGroupSeq);
+		}
+		
+		if (StringUtils.isNotBlank(adSeq)) {
+			hql.append(" and r.ad_seq = :adSeq");
+			sqlParams.put("adSeq", adSeq);
 		}
 
 		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {

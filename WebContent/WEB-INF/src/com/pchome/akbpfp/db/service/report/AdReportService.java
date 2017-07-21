@@ -29,9 +29,9 @@ public class AdReportService implements IAdReportService {
 	}
 
 	@Override
-    public List<AdReportVO> loadReportDate(String sqlType, String adGroupSeq, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId,String startDate, String endDate,int page,int pageSize) throws Exception {
+    public List<AdReportVO> loadReportDate(String sqlType, String adGroupSeq, String adSeq, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId,String startDate, String endDate,int page,int pageSize) throws Exception {
 
-		List<AdReportVO> dataList = adReportDAO.getReportList(sqlType, adGroupSeq, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+		List<AdReportVO> dataList = adReportDAO.getReportList(sqlType, adGroupSeq, adSeq, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
 
 		//補上預覽 html code
 		if (sqlType.trim().equals(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue())){
@@ -154,8 +154,8 @@ public class AdReportService implements IAdReportService {
 
 				adReportVO.setAdPreview(htmlCode);
 
-				String adSeq = adReportVO.getAdSeq();
-				List<PfpAdDetail> adPropertiesList = pfpAdDetailDAO.getPfpAdDetails(null, adSeq, null, null);
+				String adSeqCode = adReportVO.getAdSeq();
+				List<PfpAdDetail> adPropertiesList = pfpAdDetailDAO.getPfpAdDetails(null, adSeqCode, null, null);
 				for (int k=0; k<adPropertiesList.size(); k++) {
 					PfpAdDetail adDetail = adPropertiesList.get(k);
 					String adPropertiesName = adDetail.getAdDetailId();

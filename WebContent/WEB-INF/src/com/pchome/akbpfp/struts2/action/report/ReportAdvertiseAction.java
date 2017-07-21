@@ -44,8 +44,11 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	//private String[] align_data = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right", "right"};
 	//private String[] align_sum = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right", "right"};
 	// 20140318： 隱藏 "無效點選次數" 欄位
-	private String[] align_data = {"center", "left", "left", "left", "center", "center", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "left", "left", "center", "center", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "left", "left", "left", "center", "center", "right", "right", "right", "right", "right", "center"};
+	private String[] align_sum = {"center", "center", "left", "left", "center", "center", "right", "right", "right", "right", "right", "center"};
+	
+	private String[] align_data2 = {"center", "center", "center", "right", "right", "right", "right", "right"};
+	private String[] align_sum2 = {"center", "center", "center", "right", "right", "right", "right", "right"};
 
 
 	private IAdReportService adReportService=null;
@@ -80,6 +83,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	private String searchText="";//搜尋文字
 	private String adShowWay="";//廣告顯示位址,一般,內容
 	private String searchId="";//廣告id ,某活動,某群組id
+	private String searchAdseq="";
 	
 	private String charPic="";//圖表格式
 	private String charType="";//度量
@@ -94,6 +98,10 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	private String flashData;//flash chart json data
 	
 	private String reportTitle;
+	
+	private String stepStr = "";
+	
+	private String adName = "";
 
 	public String flashDataDownLoad() throws Exception {
 
@@ -114,7 +122,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		log.info(">>> customerInfoId = " + customerInfoId);
 
 		List<AdReportVO> resultData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE_CHART.getTextValue(),
-				searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate,-1,-1);
+				searchId, searchAdseq, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate,-1,-1);
 		System.out.println("resultData.size() = " + resultData.size());
 
 		Map<Date,Float> flashDataMap=new HashMap<Date,Float>();
@@ -297,26 +305,34 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 		tableHeadList.addFirst("裝置");
 		tableHeadList.addFirst("類型");
-		tableHeadList.addFirst("廣告");
-		tableHeadList.addFirst("分類");
-
-		if(downloadFlag.equals("yes")){
-			tableHeadList.addFirst("實際連結");
-			tableHeadList.addFirst("顯示連結");
-			tableHeadList.addFirst("廣告內容");
-			tableHeadList.addFirst("廣告名稱");
+		if(StringUtils.isNotBlank(searchAdseq)){
+			tableHeadList.addFirst("日期");
 		} else {
-			tableHeadList.addFirst("廣告明細");
+			tableHeadList.addFirst("廣告");
+			tableHeadList.addFirst("分類");
+			
+			if(downloadFlag.equals("yes")){
+				tableHeadList.addFirst("實際連結");
+				tableHeadList.addFirst("顯示連結");
+				tableHeadList.addFirst("廣告內容");
+				tableHeadList.addFirst("廣告名稱");
+			} else {
+				tableHeadList.addFirst("廣告明細");
+			}
+			tableHeadList.addFirst("狀態");
 		}
-		tableHeadList.addFirst("狀態");
+		
+		if(StringUtils.isBlank(searchAdseq) && !downloadFlag.equals("yes")){
+			tableHeadList.addLast("每日成效");
+		}
 
 		List<AdReportVO> resultSumData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE_COUNT.getTextValue(),
-				searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+				searchId, searchAdseq, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
 
 		int totalDataSize = resultSumData.size();
 
 		List<AdReportVO> resultData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue(),
-				searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+				searchId, searchAdseq, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
 
 		this.totalPage = (totalDataSize/pageSize);
 
@@ -345,13 +361,23 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 		String filename="廣告明細成效報表_" + dformat.format(new Date()) + FILE_TYPE;
 
+		if(StringUtils.isNotBlank(searchAdseq)){
+			filename="廣告明細成效->每日花費報表_" + dformat.format(new Date()) + FILE_TYPE;
+		}
+		
 		StringBuffer content=new StringBuffer();
 
 		PfpCustomerInfo customerInfo = customerInfoService.findCustomerInfo(super.getCustomer_info_id());
 
 		content.append("帳戶," + customerInfo.getCustomerInfoTitle());
 		content.append("\n\n");
-		content.append("報表名稱,PChome 廣告明細成效");
+		if(StringUtils.isNotBlank(searchAdseq)){
+			content.append("報表名稱,PChome 廣告明細成效->每日花費報表");
+			content.append("\n\n");
+			content.append("廣告明細," + adName);
+		} else {
+			content.append("報表名稱,PChome 廣告明細成效");
+		}
 		content.append("\n\n");
 		content.append("廣告方式," + getAdShowWayMap().get(adShowWay));
 		content.append("\n\n");
@@ -364,15 +390,24 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		}
 		content.append("\n");
 
+		int percentageSeat = 12;
+		int moneySeat1 = 13;
+		int moneySeat2 = 14;
+		if(StringUtils.isNotBlank(searchAdseq)){
+			percentageSeat = 5;
+			moneySeat1 = 6;
+			moneySeat2 = 7;
+		}
+		
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
 				if(s == null){
 					s = " ";
 				}
-				if(dataNumber == 13 || dataNumber == 14){
+				if(dataNumber == moneySeat1 || dataNumber == moneySeat2){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataNumber == 12){
+				} else if(dataNumber == percentageSeat){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -387,9 +422,9 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 13 || dataTotalNumber == 14){
+				if(dataTotalNumber == moneySeat1 || dataTotalNumber == moneySeat1){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataTotalNumber == 12){
+				} else if(dataTotalNumber == percentageSeat){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -421,13 +456,15 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		tableDataTotalList.add("");
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
 		tableDataTotalList.add("");
-		tableDataTotalList.add("");
-		tableDataTotalList.add("");
-		tableDataTotalList.add("");
-		if(downloadFlag.equals("yes")){
+		if(StringUtils.isBlank(searchAdseq)){
 			tableDataTotalList.add("");
 			tableDataTotalList.add("");
 			tableDataTotalList.add("");
+			if(downloadFlag.equals("yes")){
+				tableDataTotalList.add("");
+				tableDataTotalList.add("");
+				tableDataTotalList.add("");
+			}
 		}
 
 		double t_pv = 0; //總曝光數
@@ -477,6 +514,10 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				}
 			}
 		}
+		
+		if(StringUtils.isBlank(searchAdseq) && !downloadFlag.equals("yes")){
+			tableDataTotalList.add("");
+		}
 	}
 
 	private void resultDataTrans(List<AdReportVO> resultData) {
@@ -491,6 +532,13 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		int adStatus = 0;
 		String adDevice = "";
 		String adType = "";
+		String adPvclkDate = "";
+		adName = "";
+		
+		StringBuffer stepStrBuffer=new StringBuffer();
+		stepStrBuffer.append("<a href=\"reportAdvertise.html\">廣告明細成效</a>");
+		stepStrBuffer.append("&nbsp; >> &nbsp;");
+		stepStrBuffer.append("每日花費：");
 
 		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
@@ -513,6 +561,8 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			adPreview = adReportVO.getAdPreview();
 			adDevice = adReportVO.getAdDevice();
 			adType = adReportVO.getAdType();
+			adPvclkDate = adReportVO.getAdPvclkDate();
+			adName = adReportVO.getTitle();
 
 			pv = new Double(adReportVO.getAdPvSum());
 			click = new Double(adReportVO.getAdClkSum());
@@ -637,21 +687,28 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			
 			if(downloadFlag.equals("yes")){
 
-				tableInDataList.addLast(alter);
-				tableInDataList.addLast(adReportVO.getTitle());
-				tableInDataList.addLast(adReportVO.getContent());
-				tableInDataList.addLast(adReportVO.getShowUrl());
-				tableInDataList.addLast(adReportVO.getRealUrl());
-				tableInDataList.addLast(adGroupName);
-				tableInDataList.addLast(adActionName);
+				if(StringUtils.isNotBlank(searchAdseq)){
+					tableInDataList.addLast(adPvclkDate);
+				} else {
+					tableInDataList.addLast(alter);
+					tableInDataList.addLast(adReportVO.getTitle());
+					tableInDataList.addLast(adReportVO.getContent());
+					tableInDataList.addLast(adReportVO.getShowUrl());
+					tableInDataList.addLast(adReportVO.getRealUrl());
+					tableInDataList.addLast(adGroupName);
+					tableInDataList.addLast(adActionName);
+				}
 				tableInDataList.addLast(adType);
 				tableInDataList.addLast(adDevice);
 			} else {
-
-				tableInDataList.addLast("<img src=\"./html/img/" + icon + "\" alt=\"" + alter + "\" title=\"" + alter + "\">");
-				tableInDataList.addLast(adPreview);
-				tableInDataList.addLast(adGroupName);
-				tableInDataList.addLast(adActionName);
+				if(StringUtils.isNotBlank(searchAdseq)){
+					tableInDataList.addLast(adPvclkDate);
+				} else {
+					tableInDataList.addLast("<img src=\"./html/img/" + icon + "\" alt=\"" + alter + "\" title=\"" + alter + "\">");
+					tableInDataList.addLast(adPreview);
+					tableInDataList.addLast(adGroupName);
+					tableInDataList.addLast(adActionName);
+				}
 				tableInDataList.addLast(adType);
 				tableInDataList.addLast(adDevice);
 			}
@@ -676,7 +733,17 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				}
 			}
 
+			if(StringUtils.isBlank(searchAdseq) && !downloadFlag.equals("yes")){
+				String detailQuery = "<a style=\"cursor:pointer\" onclick=\"detailQuery('" + pfpAd.getAdSeq() + "')\" >查看</a>";
+				tableInDataList.addLast(detailQuery);
+			}
+			
 			tableDataList.addLast(tableInDataList);
+		}
+		
+		stepStrBuffer.append(adName);
+		if(StringUtils.isNotBlank(searchAdseq)){
+			stepStr = stepStrBuffer.toString();
 		}
 	}
 
@@ -861,6 +928,14 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		return align_sum;
 	}
 
+	public String[] getAlign_data2() {
+		return align_data2;
+	}
+
+	public String[] getAlign_sum2() {
+		return align_sum2;
+	}
+
 	public String getCharPic() {
 		return charPic;
 	}
@@ -876,4 +951,17 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	public void setCharType(String charType) {
 		this.charType = charType;
 	}
+
+	public String getSearchAdseq() {
+		return searchAdseq;
+	}
+
+	public void setSearchAdseq(String searchAdseq) {
+		this.searchAdseq = searchAdseq;
+	}
+
+	public String getStepStr() {
+		return stepStr;
+	}
+	
 }

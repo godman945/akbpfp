@@ -9,6 +9,6 @@ import com.pchome.akbpfp.db.pojo.PfpAdReport;
 
 public interface IAdReportDAO extends IBaseDAO<PfpAdReport, Integer> {
 	
-	public List<AdReportVO> getReportList(String sqlType, String adGroupId, String searchText, String adSearchWay, String adPvclkDevice, String adType, String customerInfoId, String startDate, String endDate, int page, int pageSize);
+	public List<AdReportVO> getReportList(String sqlType, String adGroupId, String adSeq, String searchText, String adSearchWay, String adPvclkDevice, String adType, String customerInfoId, String startDate, String endDate, int page, int pageSize);
 	
 }

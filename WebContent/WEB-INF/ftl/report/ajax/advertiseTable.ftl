@@ -66,7 +66,7 @@ ${page}/${totalPage}
 </span> 
 
 <br>
-
+<div style="clear:both;line-height:30px;text-align:left;font-size:12px">${stepStr}</div>
 <#if (tableDataList?size > 0) > 
 
 <table id="excerptTable" width="100%" border="0" cellpadding="0" cellspacing="1" class="tablesorter" > 
@@ -80,36 +80,67 @@ ${page}/${totalPage}
 	</thead>
      
      <tbody>
-     <#list tableDataList as td>
-         <#assign index = 0>
-		 <tr height="30">
-		<#list td as tdin>
-			<#if index = 9 || index = 10>
-				<td align="${align_data[index]}">NT$ ${tdin}</td>	
-			<#elseif index = 8>
-				<td align="${align_data[index]}">${tdin}%</td>
-			<#else>	
-				<td align="${align_data[index]}">${tdin}</td>
-			</#if>
-			<#assign index = index + 1>
- 		</#list>
- 	    </tr>
- 	</#list>
+     <#if searchAdseq != ''>
+     	<#list tableDataList as td>
+	         <#assign index = 0>
+			 <tr height="30">
+			<#list td as tdin>
+				<#if index = 6 || index = 7>
+					<td align="${align_data2[index]}">NT$ ${tdin}</td>	
+				<#elseif index = 5>
+					<td align="${align_data2[index]}">${tdin}%</td>
+				<#else>	
+					<td align="${align_data2[index]}">${tdin}</td>
+				</#if>
+				<#assign index = index + 1>
+	 		</#list>
+	 	    </tr>
+	 	</#list>
+     <#else>
+	     <#list tableDataList as td>
+	         <#assign index = 0>
+			 <tr height="30">
+			<#list td as tdin>
+				<#if index = 9 || index = 10>
+					<td align="${align_data[index]}">NT$ ${tdin}</td>	
+				<#elseif index = 8>
+					<td align="${align_data[index]}">${tdin}%</td>
+				<#else>	
+					<td align="${align_data[index]}">${tdin}</td>
+				</#if>
+				<#assign index = index + 1>
+	 		</#list>
+	 	    </tr>
+	 	</#list>
+	</#if>
  	</tbody>
 
  	<tfoot>
  	<tr height="35">
 	    <#assign index2 = 0>
-   		<#list tableDataTotalList as th>
-			<#if index2 = 9 || index2 = 10>
-				<th height="30" align="${align_sum[index2]}">NT$ ${th}</th>	
-			<#elseif index2 = 8>
-				<th height="30" align="${align_sum[index2]}">${th}%</th>
-			<#else>	
-				<th height="30" align="${align_sum[index2]}">${th}</th>
-			</#if>
-			<#assign index2 = index2 + 1>
-    	</#list>
+	    <#if searchAdseq != ''>
+	    	<#list tableDataTotalList as th>
+				<#if index2 = 6 || index2 = 7>
+					<th height="30" align="${align_sum2[index2]}">NT$ ${th}</th>	
+				<#elseif index2 = 5>
+					<th height="30" align="${align_sum2[index2]}">${th}%</th>
+				<#else>	
+					<th height="30" align="${align_sum2[index2]}">${th}</th>
+				</#if>
+				<#assign index2 = index2 + 1>
+	    	</#list>
+	    <#else>
+	   		<#list tableDataTotalList as th>
+				<#if index2 = 9 || index2 = 10>
+					<th height="30" align="${align_sum[index2]}">NT$ ${th}</th>	
+				<#elseif index2 = 8>
+					<th height="30" align="${align_sum[index2]}">${th}%</th>
+				<#else>	
+					<th height="30" align="${align_sum[index2]}">${th}</th>
+				</#if>
+				<#assign index2 = index2 + 1>
+	    	</#list>
+    	</#if>
    	</tr> 
    	</tfoot>
 
@@ -148,5 +179,5 @@ ${page}/${totalPage}
 	<input type="hidden" id="fsearchId" name="searchId" value="${searchId}">
 	<input type="hidden" id="downloadFlag" name="downloadFlag" value="yes">
 	<input type="hidden" id="contentPath" name="contentPath" value="<@s.url value="/html/img/"/>">
-	
+	<input type="hidden" id="fsearchAdseq" name="searchAdseq" value="${searchAdseq}">
 </form>

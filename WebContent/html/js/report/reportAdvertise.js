@@ -144,7 +144,8 @@ function ready(){
 			7 : { sorter: 'fancyNumber' },
 			8 : { sorter: 'fancyNumber' },
 			9 : { sorter: 'rangesort' },
-			10 : { sorter: 'rangesort' }
+			10 : { sorter: 'rangesort' },
+			11 : { sorter: false }
 		}
 	});
 
@@ -516,6 +517,7 @@ function showHighChart(){
 }
 
 function initJsonData(){
+	$('#fsearchAdseq').val("");
 	json_data = {
 		"page": $('#formPage').val(),
 		"pageSize": $('#fpageSize').val(),
@@ -574,6 +576,75 @@ function ajaxFormSubmit(){
 
 	//$('#reportTableOut').unblock();
 
+	showHighChart();
+}
+
+function detailQuery(adSeq) {
+	$('#downloadFlag').val("no");
+	json_data = {
+		"page": $('#formPage').val(),
+		"pageSize": $('#fpageSize').val(),
+		"totalPage": $('#ftotalPage').val(),
+		"optionSelect": $('#foptionSelect').val(),
+		"optionNotSelect": $('#foptionNotSelect').val(),
+		"startDate": $('#fstartDate').val(),
+		"endDate": $('#fendDate').val(),
+		"adPvclkDevice": $('#fadPvclkDevice').val(),
+		"adType": $('#fadType').val(),
+		"adSearchWay": $('#fadSearchWay').val(),
+		"adShowWay": $('#fadShowWay').val(),
+		"searchText": $('#fsearchText').val(),
+		"searchId": $('#fsearchId').val(),
+		"downloadFlag": $('#downloadFlag').val(),
+		"searchAdseq": adSeq
+	};
+	
+	$('#reportTableOut').block({
+		message: "<img src='html/img/LoadingWait.gif' />",
+		css: {
+			padding: 0,
+			margin: 0,
+			width: '50%',
+			top: '40%',
+			left: '35%',
+			textAlign: 'center',
+			color: '#000',
+			border: '3px solid #aaa',
+			backgroundColor: '#fff',
+			cursor: 'wait'
+		}
+	});
+
+	$.ajax({
+		type: "post",
+		url: reportAjaxActionPath,
+		data: json_data,
+		timeout: 30000,
+		error: function(xhr){
+			$('#reportTableOut').unblock();
+			alert('Ajax request 發生錯誤');
+			
+		},
+		success: function(response){
+			$('#reportTableOut').unblock();
+			$('#reportTable').html(response);
+
+			ready();
+			
+			$("#excerptTable").tablesorter({
+				headers: {
+					0 : { sorter: false },
+					4 : { sorter: 'fancyNumber' },
+					5 : { sorter: 'fancyNumber' },
+					6 : { sorter: 'fancyNumber' },
+					6 : { sorter: 'rangesort' },
+					7 : { sorter: 'rangesort' }
+				}
+			});
+			
+		}
+	});
+	
 	showHighChart();
 }
 
