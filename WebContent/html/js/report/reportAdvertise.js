@@ -10,6 +10,7 @@ $(function(){
 
 	//flash data
 	ready();
+	tablesorter1();
 
 	//日期區間選擇
 	$('#seDateSelect').click(function(){
@@ -132,22 +133,6 @@ $(function(){
 //ajax id  重新榜定
 function ready(){
 	//sort table plugin
-	$.tablesorter.defaults.widgets = ['zebra'];
-	//$.tablesorter.defaults.sortList = [[0,0]];
-	//$("#excerptTable").tablesorter();
-
-	$("#excerptTable").tablesorter({
-		headers: {
-			0 : { sorter: false },
-			//5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'fancyNumber' },
-			9 : { sorter: 'rangesort' },
-			10 : { sorter: 'rangesort' },
-			11 : { sorter: false }
-		}
-	});
 
 	//日期區間內容
 	$('#IT_dateRange').attr("value", $('#fstartDate').val() + "~" + $('#fendDate').val());
@@ -571,6 +556,7 @@ function ajaxFormSubmit(){
 			$('#reportTable').html(response);
 
 			ready();
+			tablesorter1();
 		}
 	});
 
@@ -631,21 +617,45 @@ function detailQuery(adSeq) {
 
 			ready();
 			
-			$("#excerptTable").tablesorter({
-				headers: {
-					0 : { sorter: 'text' },
-					4 : { sorter: 'fancyNumber' },
-					5 : { sorter: 'fancyNumber' },
-					6 : { sorter: 'fancyNumber' },
-					6 : { sorter: 'rangesort' },
-					7 : { sorter: 'rangesort' }
-				}
-			});
+			tablesorter2();
 			
 		}
 	});
 	
 	showHighChart();
+}
+
+function tablesorter1(){
+	$.tablesorter.defaults.widgets = ['zebra'];
+	//$.tablesorter.defaults.sortList = [[0,0]];
+	//$("#excerptTable").tablesorter();
+
+	$("#excerptTable").tablesorter({
+		headers: {
+			0 : { sorter: false },
+			//5 : { sorter: 'fancyNumber' },
+			6 : { sorter: 'fancyNumber' },
+			7 : { sorter: 'fancyNumber' },
+			8 : { sorter: 'fancyNumber' },
+			9 : { sorter: 'rangesort' },
+			10 : { sorter: 'rangesort' },
+			11 : { sorter: false }
+		}
+	});
+}
+
+function tablesorter2(){
+	$.tablesorter.defaults.widgets = ['zebra'];
+	
+	$("#excerptTable").tablesorter({
+		headers: {
+			4 : { sorter: 'fancyNumber' },
+			5 : { sorter: 'fancyNumber' },
+			6 : { sorter: 'fancyNumber' },
+			6 : { sorter: 'rangesort' },
+			7 : { sorter: 'rangesort' }
+		}
+	});
 }
 
 //搜尋執行
