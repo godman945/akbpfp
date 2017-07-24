@@ -633,7 +633,6 @@ function detailQuery(adSeq) {
 			
 			$("#excerptTable").tablesorter({
 				headers: {
-					0 : { sorter: false },
 					4 : { sorter: 'fancyNumber' },
 					5 : { sorter: 'fancyNumber' },
 					6 : { sorter: 'fancyNumber' },
