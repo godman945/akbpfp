@@ -317,7 +317,13 @@ function adIdSearch(adType, adId){
 }
 
 //顯示open flash
-function showHighChart(){
+function showHighChart(adSeq){
+	
+	var searchAdSeq = "Null";
+	if(adSeq != null){
+		searchAdSeq = adSeq;
+	}
+	
 	var dataArray;
 	$.ajax({
 		url : highChartActionPath,
@@ -334,7 +340,8 @@ function showHighChart(){
 			"charPic" : $('#selectChartPic').val(),
 			"charType" : $('#selectChartType').val(),
 			"searchId" : $('#fsearchId').val(),
-			"searchText" : $('#searchText').val()
+			"searchText" : $('#searchText').val(),
+			"searchAdseq" : searchAdSeq
 		},
 		success : function(respone) {
 			console.log(respone);
@@ -562,7 +569,7 @@ function ajaxFormSubmit(){
 
 	//$('#reportTableOut').unblock();
 
-	showHighChart();
+	showHighChart(null);
 }
 
 function detailQuery(adSeq) {
@@ -622,7 +629,7 @@ function detailQuery(adSeq) {
 		}
 	});
 	
-	showHighChart();
+	showHighChart(adSeq);
 }
 
 function tablesorter1(){

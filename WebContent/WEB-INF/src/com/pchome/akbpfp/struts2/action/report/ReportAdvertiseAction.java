@@ -118,6 +118,10 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			searchText="";
 		}
 
+		if(searchAdseq.equals("Null")){
+			searchAdseq = "";
+		}
+		
 		String customerInfoId = super.getCustomer_info_id();
 		log.info(">>> customerInfoId = " + customerInfoId);
 
