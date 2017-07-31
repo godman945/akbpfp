@@ -273,19 +273,34 @@ function ready(){
 	$('#btnSearchDo').click(function(){
 		searchDo();
 		//document.excerptFrom.submit();
-		ajaxFormSubmit();
+		var searchAdseq = $("#fsearchAdseq").val();
+		if(searchAdseq != ""){
+			detailQuery(searchAdseq);
+		} else {
+			ajaxFormSubmit();
+		}
 	});
 	
 	$("#adShowWay, #adPvclkDevice, #adSearchWay").change(function(){
     	searchDo();
-    	ajaxFormSubmit();
+    	var searchAdseq = $("#fsearchAdseq").val();
+		if(searchAdseq != ""){
+			detailQuery(searchAdseq);
+		} else {
+			ajaxFormSubmit();
+		}
    });
 
 	//重置 result
 	$('#btnSearchReset').click(function(){
 		serachReset();
 		searchDo();
-    	ajaxFormSubmit();
+		var searchAdseq = $("#fsearchAdseq").val();
+		if(searchAdseq != ""){
+			detailQuery(searchAdseq);
+		} else {
+			ajaxFormSubmit();
+		}
 	});
 
 	//活動標籤
@@ -293,7 +308,12 @@ function ready(){
 		serachReset();
 		searchDo();
 		//document.excerptFrom.submit();
-		ajaxFormSubmit();
+		var searchAdseq = $("#fsearchAdseq").val();
+		if(searchAdseq != ""){
+			detailQuery(searchAdseq);
+		} else {
+			ajaxFormSubmit();
+		}
 	});
 
 	//群組標籤
@@ -304,7 +324,12 @@ function ready(){
 		document.excerptFrom.searchId.value = "";
 		//searchDo();
 		//document.excerptFrom.submit();
-		ajaxFormSubmit();
+		var searchAdseq = $("#fsearchAdseq").val();
+		if(searchAdseq != ""){
+			detailQuery(searchAdseq);
+		} else {
+			ajaxFormSubmit();
+		}
 	});
 }
 
@@ -313,7 +338,12 @@ function adIdSearch(adType, adId){
 	document.excerptFrom.searchId.value = adId;
 	document.excerptFrom.adType.value = adType;
 	//document.excerptFrom.submit();
-	ajaxFormSubmit();
+	var searchAdseq = $("#fsearchAdseq").val();
+	if(searchAdseq != ""){
+		detailQuery(searchAdseq);
+	} else {
+		ajaxFormSubmit();
+	}
 }
 
 //顯示open flash
