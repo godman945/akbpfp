@@ -540,7 +540,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		adName = "";
 		
 		StringBuffer stepStrBuffer=new StringBuffer();
-		stepStrBuffer.append("<a href=\"reportAdvertise.html\">廣告明細成效</a>");
+		stepStrBuffer.append("<a href=\"javascript:void(0);\" onclick=\"ajaxFormSubmit();\" >廣告明細成效</a>");
 		stepStrBuffer.append("&nbsp; >> &nbsp;");
 		stepStrBuffer.append("每日花費：");
 
