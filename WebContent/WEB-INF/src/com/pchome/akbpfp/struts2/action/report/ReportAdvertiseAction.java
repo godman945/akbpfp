@@ -398,9 +398,9 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		int moneySeat1 = 13;
 		int moneySeat2 = 14;
 		if(StringUtils.isNotBlank(searchAdseq)){
-			percentageSeat = 5;
-			moneySeat1 = 6;
-			moneySeat2 = 7;
+			percentageSeat = 6;
+			moneySeat1 = 7;
+			moneySeat2 = 8;
 		}
 		
 		for(LinkedList<String> sl:tableDataList){
