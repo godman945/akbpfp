@@ -426,7 +426,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == moneySeat1 || dataTotalNumber == moneySeat1){
+				if(dataTotalNumber == moneySeat1 || dataTotalNumber == moneySeat2){
 					content.append("\"NT$ " + s + "\"");
 				} else if(dataTotalNumber == percentageSeat){
 					content.append("\"" + s + "%\"");
