@@ -360,6 +360,7 @@ public class AdEditAction extends BaseCookieAction{
 			
 		}
 		if(StringUtils.isNotBlank(detailAccesslogMessage)){
+			detailAccesslogMessage = detailAccesslogMessage.substring(0,detailAccesslogMessage.length() -1);
 			addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：" + detailAccesslogMessage);
 		}
 
@@ -623,7 +624,7 @@ public class AdEditAction extends BaseCookieAction{
 			pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
 			
 			if(checkDetailChange(oldRealUrl,adLinkURL.trim())){
-				addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：廣告連結網址；"); 
+				addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：廣告連結網址"); 
 			 }
 		}
 
