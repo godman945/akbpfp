@@ -281,7 +281,12 @@ public class AdEditAction extends BaseCookieAction{
 					} else {
 						if(StringUtils.isBlank(adDetailContent[0])) {
 							imgDetail = "img/public/na.gif\" style=\"display:none";
+							String oldImgDteail = pfpAdDetail.getAdDetailContent();
 							pfpAdDetail.setAdDetailContent(imgDetail);
+							pfpAdDetail.setAdDetailContent(imgDetail);
+							if(checkDetailChange(oldImgDteail,imgDetail)){
+								 detailAccesslogMessage += "修改：廣告圖片；";
+							 }
 						}
 					}
 				} catch (Exception ex) {
