@@ -232,6 +232,7 @@ public class AdEditAction extends BaseCookieAction{
 		String imgDetail = "";
 		String detailLAccesslogTitle = "廣告：" + pfpAdGroup.getPfpAdAction().getAdActionName() + "；" + pfpAdGroup.getAdGroupName() + "；" + adSeq + "==>";
 		addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "送出審核");
+		String detailAccesslogMessage = "";
 		for(int i = 0; i < adDetailSeq.length; i++) {
 			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailSeq[i]);
 			// 此為防止圖檔沒有資料的時候，會出現錯誤的漏洞，直接新建一筆資料
@@ -248,8 +249,6 @@ public class AdEditAction extends BaseCookieAction{
 				pfpAdDetail.setAdDetailCreateTime(new Date());
 				pfpAdDetail.setAdDetailUpdateTime(new Date());
 			}
-
-			String detailAccesslogMessage = "";
 			
 			if(pfpAdDetail.getAdDetailId().equals("img")) {
 				try {
@@ -276,7 +275,7 @@ public class AdEditAction extends BaseCookieAction{
 						String oldImgDteail = pfpAdDetail.getAdDetailContent();
 						pfpAdDetail.setAdDetailContent(imgDetail);
 						if(checkDetailChange(oldImgDteail,imgDetail)){
-							 detailAccesslogMessage += "修改：廣告圖片；";
+							 detailAccesslogMessage += "廣告圖片；";
 						 }
 					} else {
 						if(StringUtils.isBlank(adDetailContent[0])) {
@@ -285,7 +284,7 @@ public class AdEditAction extends BaseCookieAction{
 							pfpAdDetail.setAdDetailContent(imgDetail);
 							pfpAdDetail.setAdDetailContent(imgDetail);
 							if(checkDetailChange(oldImgDteail,imgDetail)){
-								 detailAccesslogMessage += "修改：廣告圖片；";
+								 detailAccesslogMessage += "廣告圖片；";
 							 }
 						}
 					}
@@ -303,7 +302,7 @@ public class AdEditAction extends BaseCookieAction{
 				 adDetailContent[i] = adDetailContent[i].trim();
 				 
 				 if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
-					 detailAccesslogMessage += "修改：廣告連結網址；";
+					 detailAccesslogMessage += "廣告連結網址；";
 				 }
 				 
 			    }
@@ -328,7 +327,7 @@ public class AdEditAction extends BaseCookieAction{
 				    adDetailContent[i] = adDetailContent[i].trim();
 				    
 				    if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
-						 detailAccesslogMessage += "修改：廣告顯示網址；";
+						 detailAccesslogMessage += "廣告顯示網址；";
 					}
 				}
 				if(pfpAdDetail.getAdDetailId().equals("title") ) {
@@ -336,7 +335,7 @@ public class AdEditAction extends BaseCookieAction{
 					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
 					
 					if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
-						 detailAccesslogMessage += "修改：廣告標題；";
+						 detailAccesslogMessage += "廣告標題；";
 					}
 				}
 				if(pfpAdDetail.getAdDetailId().equals("content") ) {
@@ -344,7 +343,7 @@ public class AdEditAction extends BaseCookieAction{
 					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
 					
 					if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
-						 detailAccesslogMessage += "修改：廣告內容；";
+						 detailAccesslogMessage += "廣告內容；";
 					}
 				}
 				pfpAdDetail.setAdDetailContent(adDetailContent[i]);
@@ -358,10 +357,10 @@ public class AdEditAction extends BaseCookieAction{
 			    pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
 			}
 			
-			if(StringUtils.isNotBlank(detailAccesslogMessage)){
-				addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + detailAccesslogMessage);
-			}
 			
+		}
+		if(StringUtils.isNotBlank(detailAccesslogMessage)){
+			addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：" + detailAccesslogMessage);
 		}
 
 		// 新增關鍵字
