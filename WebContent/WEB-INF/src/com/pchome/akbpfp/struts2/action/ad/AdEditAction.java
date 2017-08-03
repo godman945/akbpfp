@@ -230,6 +230,8 @@ public class AdEditAction extends BaseCookieAction{
 		editAd();
 
 		String imgDetail = "";
+		String detailLAccesslogTitle = "廣告：" + pfpAdGroup.getPfpAdAction().getAdActionName() + "；" + pfpAdGroup.getAdGroupName() + "；" + adSeq + "==>";
+		addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "送出審核");
 		for(int i = 0; i < adDetailSeq.length; i++) {
 			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailSeq[i]);
 			// 此為防止圖檔沒有資料的時候，會出現錯誤的漏洞，直接新建一筆資料
@@ -247,6 +249,8 @@ public class AdEditAction extends BaseCookieAction{
 				pfpAdDetail.setAdDetailUpdateTime(new Date());
 			}
 
+			String detailAccesslogMessage = "";
+			
 			if(pfpAdDetail.getAdDetailId().equals("img")) {
 				try {
 					log.info(imgFile);
@@ -269,7 +273,11 @@ public class AdEditAction extends BaseCookieAction{
 						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
 						log.info("---------------imgName=" + adFile.getName());
 						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
+						String oldImgDteail = pfpAdDetail.getAdDetailContent();
 						pfpAdDetail.setAdDetailContent(imgDetail);
+						if(checkDetailChange(oldImgDteail,imgDetail)){
+							 detailAccesslogMessage += "修改：廣告圖片；";
+						 }
 					} else {
 						if(StringUtils.isBlank(adDetailContent[0])) {
 							imgDetail = "img/public/na.gif\" style=\"display:none";
@@ -284,10 +292,15 @@ public class AdEditAction extends BaseCookieAction{
 				 if(adDetailContent[i].indexOf("http") < 0 ) {
 				     adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
 				     //adDetailContent[i] = "http://" + adDetailContent[i];
-				    }else{
-				    	adDetailContent[i] = adDetailContent[i];
-				    }
+			     }else{
+			    	adDetailContent[i] = adDetailContent[i];
+			     }
 				 adDetailContent[i] = adDetailContent[i].trim();
+				 
+				 if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
+					 detailAccesslogMessage += "修改：廣告連結網址；";
+				 }
+				 
 			    }
 //				if(adDetailContent[i] != null && !adDetailContent[i].equals(pfpAdDetail.getAdDetailContent())) {
 //					if(pfpAdDetail.getAdDetailId().equals("real_url")) {
@@ -299,24 +312,37 @@ public class AdEditAction extends BaseCookieAction{
 //					    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
 //					    }
 //					}
-					if(pfpAdDetail.getAdDetailId().equals("show_url")) {
-//						String tmpHttp = adDetailContent[i];
-//						if(adDetailContent[i].indexOf("http") == 0 || adDetailContent[i].indexOf("file") == 0) {
-//							adDetailContent[i] = tmpHttp.substring(tmpHttp.indexOf("://") + 3);
-//						}
-					    if(adDetailContent[i].indexOf("http://") < 0 ) {
-						adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
-					    }else{
-						adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-					    }
-					    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
-					    adDetailContent[i] = adDetailContent[i].trim();
+				if(pfpAdDetail.getAdDetailId().equals("show_url")) {
+						
+				    if(adDetailContent[i].indexOf("http://") < 0 ) {
+					adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
+				    }else{
+					adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+				    }
+				    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
+				    adDetailContent[i] = adDetailContent[i].trim();
+				    
+				    if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
+						 detailAccesslogMessage += "修改：廣告顯示網址；";
 					}
-					if(pfpAdDetail.getAdDetailId().equals("title") || pfpAdDetail.getAdDetailId().equals("content") ) {
-						adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
-						adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
+				}
+				if(pfpAdDetail.getAdDetailId().equals("title") ) {
+					adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
+					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
+					
+					if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
+						 detailAccesslogMessage += "修改：廣告標題；";
 					}
-					pfpAdDetail.setAdDetailContent(adDetailContent[i]);
+				}
+				if(pfpAdDetail.getAdDetailId().equals("content") ) {
+					adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
+					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
+					
+					if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
+						 detailAccesslogMessage += "修改：廣告內容；";
+					}
+				}
+				pfpAdDetail.setAdDetailContent(adDetailContent[i]);
 //				}
 			}
 
@@ -326,6 +352,11 @@ public class AdEditAction extends BaseCookieAction{
 			} else {
 			    pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
 			}
+			
+			if(StringUtils.isNotBlank(detailAccesslogMessage)){
+				addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + detailAccesslogMessage);
+			}
+			
 		}
 
 		// 新增關鍵字
@@ -344,7 +375,7 @@ public class AdEditAction extends BaseCookieAction{
 			}
 			String accesslogAction_Stauts = EnumAccesslogAction.AD_STATUS_MODIFY.getMessage();
 			String accesslogMessage_Status = accesslogAction_Stauts + ":" + adGroupSeq + ",廣告分類狀態異動:" + oldStatus + "=>" + EnumStatus.Open.getStatusDesc();
-			admAccesslogService.recordAdLog(EnumAccesslogAction.AD_STATUS_MODIFY, accesslogMessage_Status, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			addAccesslog(EnumAccesslogAction.AD_STATUS_MODIFY, accesslogMessage_Status);
 			pfpAdGroup.setAdGroupStatus(4);
 		}
 		pfpAdGroupService.save(pfpAdGroup);
@@ -578,11 +609,18 @@ public class AdEditAction extends BaseCookieAction{
 		// 修改廣告
 		editAd();
 		String adImgPoolSeq = "";
+		String detailLAccesslogTitle = "廣告：" + pfpAdGroup.getPfpAdAction().getAdActionName() + "；" + pfpAdGroup.getAdGroupName() + "；" + adSeq + "==>";
+		addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "送出審核");
 		if(adDetailSeq[0] != null && adDetailSeq[0] != ""){
 			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailSeq[0]);
 			adImgPoolSeq = pfpAdDetail.getAdPoolSeq();
+			String oldRealUrl = pfpAdDetail.getAdDetailContent();
 			pfpAdDetail.setAdDetailContent(adLinkURL.trim());
 			pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
+			
+			if(checkDetailChange(oldRealUrl,adLinkURL.trim())){
+				addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：廣告連結網址；"); 
+			 }
 		}
 
 		//修改名稱
@@ -617,7 +655,8 @@ public class AdEditAction extends BaseCookieAction{
 			}
 			String accesslogAction_Stauts = EnumAccesslogAction.AD_STATUS_MODIFY.getMessage();
 			String accesslogMessage_Status = accesslogAction_Stauts + ":" + adGroupSeq + ",廣告分類狀態異動:" + oldStatus + "=>" + EnumStatus.Open.getStatusDesc();
-			admAccesslogService.recordAdLog(EnumAccesslogAction.AD_STATUS_MODIFY, accesslogMessage_Status, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			addAccesslog(EnumAccesslogAction.AD_STATUS_MODIFY, accesslogMessage_Status);
+			//admAccesslogService.recordAdLog(EnumAccesslogAction.AD_STATUS_MODIFY, accesslogMessage_Status, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 			pfpAdGroup.setAdGroupStatus(4);
 		}
 		pfpAdGroupService.save(pfpAdGroup);
@@ -830,6 +869,18 @@ public class AdEditAction extends BaseCookieAction{
 				is.close();
 			}
 		}
+	}
+	
+	private void addAccesslog(EnumAccesslogAction enumAccesslogAction,String accesslogMessage) throws Exception{
+		admAccesslogService.recordAdLog(enumAccesslogAction, accesslogMessage, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+	}
+	
+	private boolean checkDetailChange(String oldDetail, String newDetail){
+		boolean clk = false;
+		if(!StringUtils.equals(oldDetail, newDetail)){
+			clk = true;
+		}
+		return clk;
 	}
 	
 	public void setPfpCustomerInfoService(PfpCustomerInfoService pfpCustomerInfoService) {
