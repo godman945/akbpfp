@@ -231,7 +231,7 @@ public class AdEditAction extends BaseCookieAction{
 
 		String imgDetail = "";
 		String detailLAccesslogTitle = "廣告：" + pfpAdGroup.getPfpAdAction().getAdActionName() + "；" + pfpAdGroup.getAdGroupName() + "；" + adSeq + "==>";
-		addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "送出審核");
+		addAccesslog(EnumAccesslogAction.AD_STATUS_MODIFY, detailLAccesslogTitle + "送出審核");
 		String detailAccesslogMessage = "";
 		for(int i = 0; i < adDetailSeq.length; i++) {
 			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailSeq[i]);
@@ -615,7 +615,7 @@ public class AdEditAction extends BaseCookieAction{
 		editAd();
 		String adImgPoolSeq = "";
 		String detailLAccesslogTitle = "廣告：" + pfpAdGroup.getPfpAdAction().getAdActionName() + "；" + pfpAdGroup.getAdGroupName() + "；" + adSeq + "==>";
-		addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "送出審核");
+		addAccesslog(EnumAccesslogAction.AD_STATUS_MODIFY, detailLAccesslogTitle + "送出審核");
 		if(adDetailSeq[0] != null && adDetailSeq[0] != ""){
 			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailSeq[0]);
 			adImgPoolSeq = pfpAdDetail.getAdPoolSeq();
