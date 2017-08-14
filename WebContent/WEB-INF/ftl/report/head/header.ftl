@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>PChome 關鍵字廣告</title>
+    <title>PChome 聯播網廣告</title>
 
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/style.css" />
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/datePicker/jquery-ui-1.9.2.custom.min.css" />
@@ -33,7 +33,7 @@
 
 <!-- header start -->
 <div class="topbar">
-	<div class="logo"><a href="http://www.pchome.com.tw/" target="_blank"><img src="<@s.url value="/" />html/main/img/logo_pchome.gif" border="0"></a><a href="http://4c.pchome.com.tw/ad/" target="_blank"><img src="<@s.url value="/" />html/main/img/logo_index.gif" border="0"></a><a href="<@s.url value="/" />" border="0"><img src="<@s.url value="/" />html/main/img/logo_pro.gif" alt="付費刊登" border="0"></a></div>
+	<div class="logo"><a href="http://show.pchome.com.tw/" target="_blank"><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
  	<div class="login">
  		<#if id_pchome?exists && user_id?exists>
  			<img src="<@s.url value="/" />html/img/icon_bb.gif" hspace="3" align="absmiddle" />

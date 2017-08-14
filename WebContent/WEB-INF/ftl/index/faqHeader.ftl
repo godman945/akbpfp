@@ -7,7 +7,7 @@
 
 <div class="topbar">
 	<div class="logo">
-		<a href="http://www.pchome.com.tw/" muse_scanned="true"><img src="<@s.url value="/" />html/main/img/logo_pchome.gif" border="0"></a><a href="http://classifieds.pchome.com.tw/" target="_blank" muse_scanned="true"><img src="<@s.url value="/" />html/main/img/logo_index.gif" border="0"></a><a href="./" border="0" muse_scanned="true"><img src="<@s.url value="/" />html/main/img/logo_pro.gif" alt="付費刊登" border="0"></a>
+		<a href="http://show.pchome.com.tw/" target="_blank"><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a>
 	</div>
 	<div class="login">
  		<#if id_pchome?exists>
