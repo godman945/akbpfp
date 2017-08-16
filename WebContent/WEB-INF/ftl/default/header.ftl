@@ -21,7 +21,7 @@
  		-->
  		<#if id_pchome?exists>
  			<img src="<@s.url value="/" />html/img/icon_bb.gif" hspace="3" align="absmiddle" />
-        	<b>${id_pchome}</b> 您好999 ( <a href="<@s.url value="/" />logout.html">登出</a> )
+        	<b>${id_pchome}</b> 您好 ( <a href="<@s.url value="/" />logout.html">登出</a> )
  		<#else>
  			<a href="<@s.url value="/" />login.html">登入</a>
  		</#if>
