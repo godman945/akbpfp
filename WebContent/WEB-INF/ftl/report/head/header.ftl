@@ -33,7 +33,7 @@
 
 <!-- header start -->
 <div class="topbar">
-	<div class="logo"><a href="http://show.pchome.com.tw/" target="_blank"><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
+	<div class="logo"><a href="http://show.pchome.com.tw/" target=""><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
  	<div class="login">
  		<#if id_pchome?exists && user_id?exists>
  			<img src="<@s.url value="/" />html/img/icon_bb.gif" hspace="3" align="absmiddle" />
@@ -41,7 +41,7 @@
  		<#else>
  			<a href="<@s.url value="/" />login.html">登入</a>
  		</#if>
- 		．<a href="http://4c.pchome.com.tw/ad/" target="_blank">廣告刊登</a>．<a href="http://www.pchome.com.tw" target="_blank">PChome</a>
+ 		．<a href="http://4c.pchome.com.tw/ad/" target="">廣告刊登</a>．<a href="http://www.pchome.com.tw" target="">PChome</a>
  	</div>
 </div>
 <!-- header end -->

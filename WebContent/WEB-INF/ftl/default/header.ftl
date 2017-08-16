@@ -8,7 +8,7 @@
 
 <!-- header start -->
 <div class="topbar">
-    <div class="logo"><a href="http://show.pchome.com.tw/" target="_blank"><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
+    <div class="logo"><a href="http://show.pchome.com.tw/" target=""><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
 	<#-- 判斷今天超過檢查時間了沒；沒超過，顯示字串；超過，不顯示字串 -->
 	<#if today?date < checkDate?date> 
 		<@s.if test="%{#uri.indexOf('/apply') > -1 || #uri.indexOf('/clause') > -1}">
@@ -21,11 +21,11 @@
  		-->
  		<#if id_pchome?exists>
  			<img src="<@s.url value="/" />html/img/icon_bb.gif" hspace="3" align="absmiddle" />
-        	<b>${id_pchome}</b> 您好 ( <a href="<@s.url value="/" />logout.html">登出</a> )
+        	<b>${id_pchome}</b> 您好999 ( <a href="<@s.url value="/" />logout.html">登出</a> )
  		<#else>
  			<a href="<@s.url value="/" />login.html">登入</a>
  		</#if>
- 	．<a href="http://4c.pchome.com.tw/ad/" target="_blank">廣告刊登</a>．<a href="http://www.pchome.com.tw" target="_blank">PChome</a>
+ 	．<a href="http://4c.pchome.com.tw/ad/" target="">廣告刊登</a>．<a href="http://www.pchome.com.tw" target="">PChome</a>
  	</div>
 </div>
 <!-- header end -->

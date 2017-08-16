@@ -73,7 +73,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div class="logo"><a href="http://show.pchome.com.tw/" target="_blank"><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
+            <div class="logo"><a href="http://show.pchome.com.tw/" target=""><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-left">
@@ -92,7 +92,8 @@
 						<a href="<@s.url value="/" />login.html">登入</a>
 					</#if>
 					<!-- ．<a href="${akbpfdServer}redirect.html" target="_blank">經銷商登入</a>
-						 ．<a href="http://4c.pchome.com.tw/ad/" target="_blank">廣告刊登</a>．<a href="http://www.pchome.com.tw" target="_blank">PChome</a> -->
+						 ．<a href="http://4c.pchome.com.tw/ad/" target="">廣告刊登</a>．<a href="http://www.pchome.com.tw" target="">PChome</a> -->
+					．<a href="http://www.pchome.com.tw" target="">PChome</a>
 		        </div>
             </ul>
         </div>

@@ -16,7 +16,7 @@
 <!-- footer start -->
 <div class="footer">
 ．<a href="http://www.pchome.com.tw/" target="_blank">PChome</a>
-．<a href="http://4c.pchome.com.tw/ad/" target="_blank">廣告刊登</a>
+．<a href="http://4c.pchome.com.tw/ad/" target="">廣告刊登</a>
 ．<a href="faq.html?qid=2&fid=4" target="_blank">約定條款</a> 
 ．<a href="faq.html?fid=4&qid=5" target="_blank">刊登規範</a> 
 ．<a href="http://faq.pchome.com.tw/service/user_reply.html?ch=show" target="_blank">客服中心</a> 

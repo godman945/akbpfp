@@ -16,7 +16,7 @@
 		<div class="footerWrapper">
 			<address>
 			．<a href="http://www.pchome.com.tw" target="_blank" muse_scanned="true">PChome</a>
-			．<a href="http://4c.pchome.com.tw/ad/" target="_blank" muse_scanned="true">廣告刊登</a>
+			．<a href="http://4c.pchome.com.tw/ad/" target="" muse_scanned="true">廣告刊登</a>
 			．<a href="<@s.url value="/" />faq.html?qid=2&fid=4" target="_blank" muse_scanned="true">約定條款</a>
 			．<a href="<@s.url value="/" />faq.html?fid=4&qid=5" target="_blank" muse_scanned="true">刊登規範</a>
 			．<a href="http://faq.pchome.com.tw/service/user_reply.html?ch=show" target="_blank" muse_scanned="true">客服中心</a>
