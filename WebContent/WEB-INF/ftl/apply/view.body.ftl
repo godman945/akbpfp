@@ -38,17 +38,18 @@
 	    	</select>
 		</td>
 	</tr>
-	<tr>
-  		<th height="35"><span class="t_s02">* </span>廣告連結位址</th>
-  		<td>
-	  		<input type="radio" id="urlY" name="urlYN" value="1" checked /> 
-	    	<#if buAccountVO?exists>
-			<#else>
-				<input type="text" id="urlAddress" name="urlAddress" value="${accountVO.urlAddress!}" autocomplete="off" maxlength="500" style="width:300px" /><br />
-			</#if>
-	    	<input type="hidden" id="urlMsg" />
-		</td>
-	</tr>
+	<#if buAccountVO?exists>
+		<#else>
+		<tr>
+  			<th height="35"><span class="t_s02">* </span>廣告連結位址</th>
+  				<td>
+	  				<input type="radio" id="urlY" name="urlYN" value="1" checked /> 
+					<input type="text" id="urlAddress" name="urlAddress" value="${buAccountVO.buUrl!}" autocomplete="off" maxlength="500" style="width:300px" /><br />
+					<input type="text" id="urlAddress" name="urlAddress" value="${accountVO.urlAddress!}" autocomplete="off" maxlength="500" style="width:300px" /><br />
+		    		<input type="hidden" id="urlMsg" />
+				</td>
+		</tr>
+	</#if>
 </tbody>
 </table>
             
@@ -59,13 +60,13 @@
 
 <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 <tbody>
-	<tr>
-		<th height="35"><span class="t_s02">* </span>姓名<br></th>
-		<#if buAccountVO?exists>
-			<#else>
+	<#if buAccountVO?exists>
+		<#else>
+			<tr>
+				<th height="35"><span class="t_s02">* </span>姓名<br></th>
 				<td><input type="text" id="memberName" name="memberName" value="${accountVO.memberVO.memberName!}" autocomplete="off"  style="width:100px" /></td>
-		</#if>
-	</tr>
+			</tr>
+	</#if>
 	<tr>
 		<th height="35"><span class="t_s02">* </span>性別</th>
 		<td>
