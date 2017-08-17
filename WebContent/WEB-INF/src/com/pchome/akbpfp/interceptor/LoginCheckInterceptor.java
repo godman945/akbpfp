@@ -346,5 +346,4 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		this.rutenName = rutenName;
 	}
 
-
 }

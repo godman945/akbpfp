@@ -82,8 +82,8 @@
             <result type="redirect" name="redirectHTTPS">${redirectUrl}</result>            
             <result type="redirect" name="sysNotify">http://help.pchome.com.tw/notice/nid.html?nidx=382&amp;btype=1</result><!-- 導址公告頁網址 -->
             
-            <result type="redirect" name="buApply">${redirectUrl}</result>
-            <result type="redirect" name="bulogin">${redirectUrl}</result>
+            <result type="redirect" name="buApply">${buApplyUrl}</result>
+            <result type="redirect" name="bulogin">${buSummaryUrl}</result>
             
         </global-results>
         

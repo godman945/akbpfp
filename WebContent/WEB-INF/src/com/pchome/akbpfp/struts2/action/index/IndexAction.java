@@ -48,6 +48,11 @@ public class IndexAction extends BaseCookieAction {
 	private String accountType;
 	private String akbpfdServer;
 	
+	private String buApplyUrl;
+	private String buSummaryUrl;
+	
+	
+	
 	public String execute() throws Exception{
 	    //判斷登入者使否取有小天使權限或PFD切換權限
 	    boolean pfpAngelFlag= false;
@@ -530,6 +535,21 @@ public class IndexAction extends BaseCookieAction {
 
 	public String getAkbpfdServer() {
 		return akbpfdServer;
+	}
+	public String getBuApplyUrl() {
+		return buApplyUrl;
+	}
+
+	public void setBuApplyUrl(String buApplyUrl) {
+		this.buApplyUrl = buApplyUrl;
+	}
+
+	public String getBuSummaryUrl() {
+		return buSummaryUrl;
+	}
+
+	public void setBuSummaryUrl(String buSummaryUrl) {
+		this.buSummaryUrl = buSummaryUrl;
 	}
 
 }
