@@ -60,9 +60,9 @@
 
 <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 <tbody>
-		<tr>
-			<th height="35" <#if buAccountVO?exists>style="display:none;"</#if>><span class="t_s02">* </span>姓名<br></th>
-			<td <#if buAccountVO?exists>style="display:none;"</#if>><input type="text" id="memberName" name="memberName" value="${accountVO.memberVO.memberName!}" autocomplete="off"  style="width:100px" /></td>
+		<tr <#if buAccountVO?exists>style="display:none;"</#if>>
+			<th height="35"><span class="t_s02">* </span>姓名<br></th>
+			<td><input type="text" id="memberName" name="memberName" value="${accountVO.memberVO.memberName!}" autocomplete="off"  style="width:100px" /></td>
 		</tr>
 	<tr>
 		<th height="35"><span class="t_s02">* </span>性別</th>
