@@ -2,8 +2,6 @@ package com.pchome.enumerate.bu;
 
 public enum EnumBuType {
 
-	BU_TYPE_PCSTORE("pcstore","PFDU20160414003"),
-	BU_TYPE_RUTEN("ruten","PFDU20160414003"),
 	BU_NAME("buName","buName"),
 	BU_ID("buId","buId"),
 	BU_PFD_CUSTOMER("pfdc","pfdc"),

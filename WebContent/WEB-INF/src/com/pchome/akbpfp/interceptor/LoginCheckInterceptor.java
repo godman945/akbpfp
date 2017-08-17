@@ -56,6 +56,11 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	private PfdUserMemberRefService pfdUserMemberRefService;
 	private PfpBuService pfpBuService;
 	
+	private String pfdc;
+	private String pfdu;
+	private String pcstoreName;
+	private String rutenName;
+	
 	/**
 	 * 登入判斷
 	 */
@@ -79,11 +84,11 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 			
 			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 				return "index";
-			}else if(buName.equals(EnumBuType.BU_TYPE_PCSTORE.getKey()) && !pfdc.equals(EnumBuType.BU_TYPE_PCSTORE.getValue())){
+			}else if(buName.equals(pcstoreName) && !pfdc.equals(this.pfdc)){
 				return "index";
-			}else if(buName.equals(EnumBuType.BU_TYPE_RUTEN.getKey()) && !pfdc.equals(EnumBuType.BU_TYPE_PCSTORE.getValue())){
+			}else if(buName.equals(rutenName) && !pfdc.equals(this.pfdc)){
 				return "index";
-			}else if(!buName.equals(EnumBuType.BU_TYPE_RUTEN.getKey()) && !buName.equals(EnumBuType.BU_TYPE_PCSTORE.getKey())){
+			}else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
 				return "index";
 			}
 			
@@ -307,6 +312,38 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 
 	public void setPfpBuService(PfpBuService pfpBuService) {
 		this.pfpBuService = pfpBuService;
+	}
+
+	public String getPfdc() {
+		return pfdc;
+	}
+
+	public void setPfdc(String pfdc) {
+		this.pfdc = pfdc;
+	}
+
+	public String getPfdu() {
+		return pfdu;
+	}
+
+	public void setPfdu(String pfdu) {
+		this.pfdu = pfdu;
+	}
+
+	public String getPcstoreName() {
+		return pcstoreName;
+	}
+
+	public void setPcstoreName(String pcstoreName) {
+		this.pcstoreName = pcstoreName;
+	}
+
+	public String getRutenName() {
+		return rutenName;
+	}
+
+	public void setRutenName(String rutenName) {
+		this.rutenName = rutenName;
 	}
 
 

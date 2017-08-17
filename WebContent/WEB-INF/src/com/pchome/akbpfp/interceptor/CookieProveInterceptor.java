@@ -53,6 +53,11 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 	private SequenceService sequenceService;
 	
 	private String memberServer;
+	private String pfdc;
+	private String pfdu;
+	private String pcstoreName;
+	private String rutenName;
+	
 	/**
 	 * 檢查 id_pchome 是否被更改過
 	 */
@@ -80,13 +85,13 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 				result = invocation.invoke();
 				return result;
-			}else if(buName.equals(EnumBuType.BU_TYPE_PCSTORE.getKey()) && !pfdc.equals(EnumBuType.BU_TYPE_PCSTORE.getValue())){
+			}else if(buName.equals(pcstoreName) && !pfdc.equals(this.pfdc)){
 				result = invocation.invoke();
 				return result;
-			}else if(buName.equals(EnumBuType.BU_TYPE_RUTEN.getKey()) && !pfdc.equals(EnumBuType.BU_TYPE_PCSTORE.getValue())){
+			}else if(buName.equals(rutenName) && !pfdc.equals(this.pfdc)){
 				result = invocation.invoke();
 				return result;
-			}else if(!buName.equals(EnumBuType.BU_TYPE_RUTEN.getKey()) && !buName.equals(EnumBuType.BU_TYPE_PCSTORE.getKey())){
+			}else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
 				result = invocation.invoke();
 				return result;
 			}
@@ -293,6 +298,38 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 
 	public void setSequenceService(SequenceService sequenceService) {
 		this.sequenceService = sequenceService;
+	}
+
+	public String getPfdc() {
+		return pfdc;
+	}
+
+	public void setPfdc(String pfdc) {
+		this.pfdc = pfdc;
+	}
+
+	public String getPfdu() {
+		return pfdu;
+	}
+
+	public void setPfdu(String pfdu) {
+		this.pfdu = pfdu;
+	}
+
+	public String getPcstoreName() {
+		return pcstoreName;
+	}
+
+	public void setPcstoreName(String pcstoreName) {
+		this.pcstoreName = pcstoreName;
+	}
+
+	public String getRutenName() {
+		return rutenName;
+	}
+
+	public void setRutenName(String rutenName) {
+		this.rutenName = rutenName;
 	}
 	
 }
