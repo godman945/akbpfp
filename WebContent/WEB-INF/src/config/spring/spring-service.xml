@@ -215,4 +215,9 @@
     <bean id="AdmChannelAccountService" class="com.pchome.akbpfp.db.service.adm.channel.AdmChannelAccountService">
              <property name="dao" ref="AdmChannelAccountDAO" />
     </bean>
+    
+    <!-- pfpbu -->
+    <bean id="PfpBuService" class="com.pchome.akbpfp.db.service.bu.PfpBuService">
+             <property name="dao" ref="PfpBuDAO" />
+    </bean>
 </beans>

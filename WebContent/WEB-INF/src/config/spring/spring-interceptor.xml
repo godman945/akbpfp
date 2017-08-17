@@ -16,11 +16,18 @@
         <property name="cookieProccessAPI" ref="CookieProccessAPI" />
         <property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
         <property name="pfdUserMemberRefService" ref="PfdUserMemberRefService" />
+        <property name="pfpBuService" ref="PfpBuService" />
     </bean>
     
     <!-- Cookie Prove Interceptor -->
     <bean id="CookieProveInterceptor" class="com.pchome.akbpfp.interceptor.CookieProveInterceptor" scope="prototype" >
         <property name="cookieUtils" ref="CookieFunctionUtils" />
+        <property name="pfpBuService" ref="PfpBuService" />
+        <property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+        <property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" />
+        <property name="cookieProccessAPI" ref="CookieProccessAPI" />
+        <property name="memberServer" value="${member.server}" />
+        <property name="sequenceService" ref="SequenceService" />   
     </bean>
     
     <!-- Root Privilege Interceptor -->

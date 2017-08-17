@@ -9,22 +9,24 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.pchome.akbpfp.db.pojo.PfpTransDetail;
 import com.pchome.akbpfd.db.vo.user.PfdUserAdAccountRefVO;
 import com.pchome.akbpfp.api.MemberAPI;
 import com.pchome.akbpfp.api.RedirectBillingAPI;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
+import com.pchome.akbpfp.db.pojo.PfpBuAccount;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.pojo.PfpOrder;
 import com.pchome.akbpfp.db.pojo.PfpOrderDetail;
 import com.pchome.akbpfp.db.pojo.PfpOrderDetailId;
+import com.pchome.akbpfp.db.pojo.PfpTransDetail;
 import com.pchome.akbpfp.db.pojo.PfpUser;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRefId;
 import com.pchome.akbpfp.db.service.accesslog.IAdmAccesslogService;
 import com.pchome.akbpfp.db.service.adm.channel.IAdmChannelAccountService;
 import com.pchome.akbpfp.db.service.bill.IPfpTransDetailService;
+import com.pchome.akbpfp.db.service.bu.IPfpBuService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeRecordService;
@@ -35,6 +37,7 @@ import com.pchome.akbpfp.db.service.sequence.SequenceService;
 import com.pchome.akbpfp.db.service.user.IPfpUserMemberRefService;
 import com.pchome.akbpfp.db.service.user.IPfpUserService;
 import com.pchome.akbpfp.db.vo.account.AccountVO;
+import com.pchome.akbpfp.db.vo.account.BuAccountVO;
 import com.pchome.akbpfp.db.vo.adm.channel.AdmChannelAccountVO;
 import com.pchome.akbpfp.db.vo.member.MemberVO;
 import com.pchome.akbpfp.struts2.BaseSSLAction;
@@ -57,6 +60,8 @@ import com.pchome.rmi.accesslog.EnumAccesslogAction;
 
 public class ApplyAction extends BaseSSLAction{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private MemberAPI memberAPI;
 	private IPfpCustomerInfoService pfpCustomerInfoService;
 	private SequenceService sequenceService;
@@ -71,9 +76,11 @@ public class ApplyAction extends BaseSSLAction{
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private IAdmChannelAccountService admChannelAccountService;
 	private IPfpTransDetailService transDetailService;
-
+	private IPfpBuService pfpBuService;
+	
 	private EnumBillingStatus[] enumBillingStatus  = EnumBillingStatus.values();
 	private AccountVO accountVO;
+	private BuAccountVO buAccountVO;
 	
 	private MemberVO memberVO;
 	private String category;
@@ -98,7 +105,9 @@ public class ApplyAction extends BaseSSLAction{
 	private List<String> industryList;
 	private String billingService;	
 	private String channelId;						// 金流訂單查詢	
-	private String accountId;						// 帳戶編號
+	private String accountId;					// 帳戶編號
+	private String pfdc;	
+	private String pfdu;
 	
 	
 	public String execute() throws Exception{
@@ -154,6 +163,13 @@ public class ApplyAction extends BaseSSLAction{
 			this.accountVO.setMemberVO(memberVO);
 			this.accountVO.setGiftMoney(0);
 			
+			// BU資料
+			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(userMemberId);
+			PfpBuAccount pfpBuAccount = pfpBuAccountList.get(0);
+			this.buAccountVO = new BuAccountVO();
+			buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
+			buAccountVO.setBuId(pfpBuAccount.getBuId());
+			
 		}
 		// 帳戶申請中
 		else if(pfpCustomerInfo.getStatus().equals(EnumAccountStatus.APPLY.getStatus())) {
@@ -189,6 +205,10 @@ public class ApplyAction extends BaseSSLAction{
 		}		
 		
 		log.info(" result = "+result);
+		
+		
+		
+		
 		
 		return result;
 	}
@@ -256,7 +276,6 @@ public class ApplyAction extends BaseSSLAction{
 		}		
 		
 		if(pfpCustomerInfo == null){
-			
 			// 建立新帳戶
 			pfpCustomerInfo = this.createNewCustomerInfo();
 			
@@ -268,28 +287,25 @@ public class ApplyAction extends BaseSSLAction{
 			
 			// 一般申請 PFP 帳戶的使用者要設定經銷商為PCHOME經銷商
 			if("normal".equals(userStyle)){
-				//經銷商設定
-				PfdUserAdAccountRefVO pfdUserAdAccountRefVO = new PfdUserAdAccountRefVO();
-				pfdUserAdAccountRefVO.setRefId(pfdUserAdAccountRefService.getNewRefId());
-				pfdUserAdAccountRefVO.setPfdCustomerInfoId("PFDC20140520001");
-				pfdUserAdAccountRefVO.setPfdUserId("PFDU20140520001");
-				pfdUserAdAccountRefVO.setPfpCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
-				pfdUserAdAccountRefVO.setPfpUserId(user.getUserId());
-				pfdUserAdAccountRefVO.setPfpPayType("1");
-				pfdUserAdAccountRefVO.setProof("");
-				pfdUserAdAccountRefService.savePfdUserAdAccountRef(pfdUserAdAccountRefVO);
-				
-				//負責業務員設定
-				DateFormat dmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				log.info(dmt.format(new Date()));
-				AdmChannelAccountVO admChannelAccountVO = new AdmChannelAccountVO();
-				admChannelAccountVO.setMemberId("portalpfb");
-				admChannelAccountVO.setAccountId(pfpCustomerInfo.getCustomerInfoId());
-				admChannelAccountVO.setChannelCategory("0");
-				admChannelAccountVO.setCreateDate(dmt.format(new Date()));
-				admChannelAccountVO.setUpdateDate(dmt.format(new Date()));
-				
-				admChannelAccountService.InsertData(admChannelAccountVO);
+				List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(userMemberId);
+				if(pfpBuAccountList.size() > 0){
+					log.info(">>> PCHOME BU PFD PROCESS:"+userMemberId);
+					PfpBuAccount pfpBuAccount = pfpBuAccountList.get(0);
+					this.buAccountVO = new BuAccountVO();
+					buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
+					buAccountVO.setBuId(pfpBuAccount.getBuId());
+					
+					String pfpId = pfpCustomerInfo.getCustomerInfoId();
+					String userId = user.getUserId();
+					//經銷商設定
+					processPfdUser(pfpId,userId,this.pfdc,this.pfdu);
+				}else{
+					log.info(">>> PCHOME PFD PROCESS:"+userMemberId);
+					//經銷商設定
+					processPfdUser(pfpCustomerInfo.getCustomerInfoId(),user.getUserId(),"PFDC20140520001","PFDU20140520001");
+					//負責業務員設定
+					processBussinessUser(pfpCustomerInfo);
+				}
 			}
 			
 		}
@@ -394,6 +410,43 @@ public class ApplyAction extends BaseSSLAction{
 		
 		return result;
 	}
+	
+	
+	/**
+	 * 經銷商設定
+	 * */
+	public boolean processPfdUser(String pfpId,String userId,String pfdc,String pfdu) throws Exception{
+		PfdUserAdAccountRefVO pfdUserAdAccountRefVO = new PfdUserAdAccountRefVO();
+		pfdUserAdAccountRefVO.setRefId(pfdUserAdAccountRefService.getNewRefId());
+		pfdUserAdAccountRefVO.setPfdCustomerInfoId(pfdc);
+		pfdUserAdAccountRefVO.setPfdUserId(pfdu);
+		pfdUserAdAccountRefVO.setPfpCustomerInfoId(pfpId);
+		pfdUserAdAccountRefVO.setPfpUserId(userId);
+		pfdUserAdAccountRefVO.setPfpPayType("1");
+		pfdUserAdAccountRefVO.setProof("");
+		pfdUserAdAccountRefService.savePfdUserAdAccountRef(pfdUserAdAccountRefVO);
+		return true;
+	}
+	
+	
+	
+	/**
+	 * 負責業務員設定
+	 * */
+	public boolean processBussinessUser(PfpCustomerInfo pfpCustomerInfo) throws Exception{
+		DateFormat dmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		log.info(dmt.format(new Date()));
+		AdmChannelAccountVO admChannelAccountVO = new AdmChannelAccountVO();
+		admChannelAccountVO.setMemberId("portalpfb");
+		admChannelAccountVO.setAccountId(pfpCustomerInfo.getCustomerInfoId());
+		admChannelAccountVO.setChannelCategory("0");
+		admChannelAccountVO.setCreateDate(dmt.format(new Date()));
+		admChannelAccountVO.setUpdateDate(dmt.format(new Date()));
+		
+		admChannelAccountService.InsertData(admChannelAccountVO);
+		return true;
+	}
+	
 	
 	/**
 	 * 訂單查詢
@@ -841,6 +894,30 @@ public class ApplyAction extends BaseSSLAction{
 	}
 	public void setTransDetailService(IPfpTransDetailService transDetailService) {
 		this.transDetailService = transDetailService;
+	}
+	public IPfpBuService getPfpBuService() {
+		return pfpBuService;
+	}
+	public void setPfpBuService(IPfpBuService pfpBuService) {
+		this.pfpBuService = pfpBuService;
+	}
+	public BuAccountVO getBuAccountVO() {
+		return buAccountVO;
+	}
+	public void setBuAccountVO(BuAccountVO buAccountVO) {
+		this.buAccountVO = buAccountVO;
+	}
+	public String getPfdc() {
+		return pfdc;
+	}
+	public void setPfdc(String pfdc) {
+		this.pfdc = pfdc;
+	}
+	public String getPfdu() {
+		return pfdu;
+	}
+	public void setPfdu(String pfdu) {
+		this.pfdu = pfdu;
 	}
 
 }

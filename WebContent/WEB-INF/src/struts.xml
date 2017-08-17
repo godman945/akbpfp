@@ -12,6 +12,7 @@
     <include file="config/struts2/struts-account.xml" />
     <include file="config/struts2/struts-ad.xml"/>        
     <include file="config/struts2/struts-api-action.xml"/>
+    <include file="config/struts2/struts-api-pfp.xml"/>
     <include file="config/struts2/struts-apply.xml"/>    
     <include file="config/struts2/struts-base.xml" />
     <include file="config/struts2/struts-bill.xml"/>

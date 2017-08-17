@@ -8,7 +8,7 @@
        <!-- <property name="hibernate.connection.password">1qa2ws</property> -->
        <!-- <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/akb</property> --> 
        <!-- <property name="hibernate.connection.username">webuser</property> -->
-        <property name="hibernate.connection.url">jdbc:mysql://kdstg.mypchome.com.tw:3306/akb</property>
+        <property name="hibernate.connection.url">jdbc:mysql://kddbdev.mypchome.com.tw:3306/akb</property>
        	<property name="hibernate.connection.username">keyword</property>
        	<property name="hibernate.connection.password">K1y0nLine</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>

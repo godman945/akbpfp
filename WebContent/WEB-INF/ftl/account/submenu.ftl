@@ -23,25 +23,36 @@
 </a></div>
 </#if>
 
-<div class="submn"><a href="<@s.url value="/" />accountUsers.html">
-	<@s.if test="%{#uri.indexOf('/accountUsers') > -1 ||
-					#uri.indexOf('/accountUserInvite') > -1 ||
-					#uri.indexOf('/accountAdmModify') > -1 ||
-					#uri.indexOf('/accountUserModify') > -1 ||
-					#uri.indexOf('/accountUserSerach') > -1}">
-        <b>帳戶使用者管理</b>
-    </@s.if>
-    <@s.else>
-       	帳戶使用者管理
-    </@s.else>
-</a></div>
 
-<div class="submn"><a href="<@s.url value="/" />accountContent.html">
-	<@s.if test="%{#uri.indexOf('/accountContent') > -1}">
-        <b>修改個人資料</b>
-    </@s.if>
-    <@s.else>
-       	修改個人資料
-    </@s.else>
-</a></div>
+<#if buAccountVO?exists>
+	<#else>
+		<div class="submn"><a href="<@s.url value="/" />accountUsers.html">
+		<@s.if test="%{#uri.indexOf('/accountUsers') > -1 ||
+						#uri.indexOf('/accountUserInvite') > -1 ||
+						#uri.indexOf('/accountAdmModify') > -1 ||
+						#uri.indexOf('/accountUserModify') > -1 ||
+						#uri.indexOf('/accountUserSerach') > -1}">
+	        <b>帳戶使用者管理</b>
+	    </@s.if>
+	    <@s.else>
+	       	帳戶使用者管理
+	    </@s.else>
+		</a></div>
+</#if>
+
+
+
+<#if buAccountVO?exists>
+	<#else>
+		<div class="submn"><a href="<@s.url value="/" />accountContent.html">
+		<@s.if test="%{#uri.indexOf('/accountContent') > -1}">
+	        <b>修改個人資料</b>
+	    </@s.if>
+	    <@s.else>
+	       	修改個人資料
+	    </@s.else>
+	</a>	
+</#if>
+
+</div>
 <!-- submenu end -->

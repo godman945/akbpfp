@@ -11,12 +11,15 @@ import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.pojo.PfdBoard;
 import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
+import com.pchome.akbpfp.db.pojo.PfpBuAccount;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.pojo.PfpRefundOrder;
 import com.pchome.akbpfp.db.service.board.IPfdBoardService;
+import com.pchome.akbpfp.db.service.bu.IPfpBuService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.order.IPfpRefundOrderService;
 import com.pchome.akbpfp.db.vo.account.AccountVO;
+import com.pchome.akbpfp.db.vo.account.BuAccountVO;
 import com.pchome.akbpfp.struts2.BaseSSLAction;
 import com.pchome.enumerate.account.EnumAccountIndustry;
 import com.pchome.enumerate.account.EnumAccountStatus;
@@ -35,9 +38,11 @@ public class AccountInfoAction extends BaseSSLAction{
 	private IBoardProvider boardProvider;
 	private IPfdBoardService pfdBoardService;
 	private IPfpRefundOrderService pfpRefundOrderService;
+	private IPfpBuService pfpBuService;
 	
 	private PfpCustomerInfo pfpCustomerInfo;
 	private AccountVO accountVO;
+	private BuAccountVO buAccountVO;
 	private List<String> industryList;
 	
 	private String category;
@@ -59,6 +64,13 @@ public class AccountInfoAction extends BaseSSLAction{
 		
 		// 取帳戶資料
 		pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
+		List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(pfpCustomerInfo.getMemberId());
+		if(pfpBuAccountList.size() > 0){
+			PfpBuAccount pfpBuAccount = pfpBuAccountList.get(0);
+			this.buAccountVO = new BuAccountVO();
+			buAccountVO.setBuId(pfpBuAccount.getBuId());
+			buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
+		}
 		
 		// 讀取產業類別資料
 		industryList = new ArrayList<String>();
@@ -284,5 +296,26 @@ public class AccountInfoAction extends BaseSSLAction{
 	public String getChangeStatusFlag() {
 		return changeStatusFlag;
 	}
+
+
+	public IPfpBuService getPfpBuService() {
+		return pfpBuService;
+	}
+
+
+	public void setPfpBuService(IPfpBuService pfpBuService) {
+		this.pfpBuService = pfpBuService;
+	}
+
+
+	public BuAccountVO getBuAccountVO() {
+		return buAccountVO;
+	}
+
+
+	public void setBuAccountVO(BuAccountVO buAccountVO) {
+		this.buAccountVO = buAccountVO;
+	}
+	
 	
 }

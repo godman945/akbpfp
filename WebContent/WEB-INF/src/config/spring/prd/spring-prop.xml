@@ -13,7 +13,8 @@
             	<value>classpath:config/prop/prd/prd.billing.product.properties</value>
                 <value>classpath:config/prop/prd/prd.jdbc.properties</value>
                 <value>classpath:config/prop/prd/prd.rmi.properties</value>
-                <value>classpath:config/prop/prd/prd.server.properties</value>                   		
+                <value>classpath:config/prop/prd/prd.server.properties</value>
+                <value>classpath:config/prop/prd/prd.buInfo.properties</value>                		
             </list>
         </property>
     </bean>

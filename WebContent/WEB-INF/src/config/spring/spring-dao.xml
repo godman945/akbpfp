@@ -208,4 +208,9 @@
     <bean id="AdmChannelAccountDAO" class="com.pchome.akbpfp.db.dao.adm.channel.AdmChannelAccountDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    
+     <!-- pfpbu -->
+    <bean id="PfpBuDAO" class="com.pchome.akbpfp.db.dao.bu.PfpBuDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 </beans>

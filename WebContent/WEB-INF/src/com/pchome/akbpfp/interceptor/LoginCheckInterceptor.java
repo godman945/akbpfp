@@ -2,31 +2,39 @@ package com.pchome.akbpfp.interceptor;
 
 
 
+import java.security.interfaces.RSAPrivateKey;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.ServletActionContext;
+import org.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.pchome.akbpfd.db.service.user.PfdUserMemberRefService;
 import com.pchome.akbpfp.api.CookieProccessAPI;
 import com.pchome.akbpfp.db.pojo.PfdUserMemberRef;
+import com.pchome.akbpfp.db.pojo.PfpBuAccount;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.pojo.PfpUser;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
+import com.pchome.akbpfp.db.service.bu.PfpBuService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.user.PfpUserMemberRefService;
 import com.pchome.akbpfp.db.service.user.PfpUserService;
+import com.pchome.akbpfp.db.vo.account.AccountVO;
 import com.pchome.enumerate.account.EnumAccountStatus;
 import com.pchome.enumerate.account.EnumPfpRootUser;
+import com.pchome.enumerate.bu.EnumBuType;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.cookie.EnumCookiePfpKey;
 import com.pchome.enumerate.pfd.EnumPfdUserPrivilege;
@@ -34,27 +42,70 @@ import com.pchome.enumerate.privilege.EnumPrivilegeModel;
 import com.pchome.enumerate.user.EnumUserStatus;
 import com.pchome.soft.depot.utils.CookieStringToMap;
 import com.pchome.soft.depot.utils.CookieUtil;
+import com.pchome.soft.depot.utils.RSAUtils;
 
 public class LoginCheckInterceptor extends AbstractInterceptor{
 
-    	private static final long serialVersionUID = 1L;
-	protected final Log log = LogFactory.getLog(this.getClass());
-	private PfpUserService pfpUserService;
+    private static final long serialVersionUID = 1L;
+    protected final Log log = LogFactory.getLog(this.getClass());
+    
+    private PfpUserService pfpUserService;
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private CookieProccessAPI cookieProccessAPI;
 	private PfpUserMemberRefService pfpUserMemberRefService;
 	private PfdUserMemberRefService pfdUserMemberRefService;
+	private PfpBuService pfpBuService;
+	
 	/**
 	 * 登入判斷
 	 */
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception{
-		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
-		String pcId = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
-		//log.info("pcId: " + pcId);
+		/*BU LOGIN START*/
+		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
+		if(StringUtils.isNotBlank(buKey)){
+			log.info(">>>>>> CALL BU LOGIN API IP:"+request.getRemoteAddr());
+			
+			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
+			byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
+			JSONObject buInfoJson = new JSONObject(new String(decBytes));
+			
+			String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
+			String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
+			String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
+			String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
+			
+			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
+				return "index";
+			}else if(buName.equals(EnumBuType.BU_TYPE_PCSTORE.getKey()) && !pfdc.equals(EnumBuType.BU_TYPE_PCSTORE.getValue())){
+				return "index";
+			}else if(buName.equals(EnumBuType.BU_TYPE_RUTEN.getKey()) && !pfdc.equals(EnumBuType.BU_TYPE_PCSTORE.getValue())){
+				return "index";
+			}else if(!buName.equals(EnumBuType.BU_TYPE_RUTEN.getKey()) && !buName.equals(EnumBuType.BU_TYPE_PCSTORE.getKey())){
+				return "index";
+			}
+			
+			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
+			PfpBuAccount pfpBuAccount =  pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+			if(pfpBuAccount != null){
+				AccountVO accountVO = pfpCustomerInfoService.existentAccount(pfpBuAccount.getPcId());
+				if(accountVO != null){
+					if(pfpBuAccount.getPfpStatus() == 0){
+						pfpBuAccount.setPfpStatus(1);
+						pfpBuAccount.setUpdateDate(new Date());
+						pfpBuService.saveOrUpdate(pfpBuAccount);
+					}
+					return "bulogin";
+				}else{
+					return "buApply";
+				}
+			}
+		}
+		/*BU LOGIN END*/
 		
+		String pcId = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		log.info("userData: " + userData);
 		
@@ -250,8 +301,13 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	    this.pfdUserMemberRefService = pfdUserMemberRefService;
 	}
 
+	public PfpBuService getPfpBuService() {
+		return pfpBuService;
+	}
 
-
+	public void setPfpBuService(PfpBuService pfpBuService) {
+		this.pfpBuService = pfpBuService;
+	}
 
 
 }

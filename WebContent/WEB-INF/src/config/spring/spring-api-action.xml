@@ -43,4 +43,12 @@
 	<bean id="LifeCheckAPIAction" class="com.pchome.akbpfp.struts2.action.api.LifeCheckAPIAction" scope="prototype" >
     	<property name="admAPI" ref="APIProviderProxy" />
     </bean>
+    
+    <bean id="pchomeBuApi" class="com.pchome.akbpfp.api.PchomeBuAPI" scope="prototype" >
+    	<property name="pfpBuService" ref="PfpBuService" /> 
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="sequenceService" ref="SequenceService" />
+    	<property name="bu_ip" value="${bu.ip}" />
+	</bean>
+    
 </beans>

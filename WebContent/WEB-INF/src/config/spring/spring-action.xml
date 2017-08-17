@@ -49,7 +49,10 @@
 		<property name="billingProductId" value="${billing.product.save.id}" />
 		<property name="billingProductName" value="${billing.product.save.name}" />
 		<property name="billingService" value="${billing.service}" />	
-		<property name="channelId" value="${billing.channel.id}" />	     	
+		<property name="channelId" value="${billing.channel.id}" />	  
+		<property name="pfpBuService" ref="PfpBuService" />
+		<property name="pfdc" value="${bu.pfd.customer.info.id}" />
+		<property name="pfdu" value="${bu.pfd.user.id}" />
     </bean>
     
     <bean id="AuthorizationAction" class="com.pchome.akbpfp.struts2.action.apply.AuthorizationAction" scope="prototype" >
@@ -68,6 +71,7 @@
     	<property name="boardProvider" ref="BoardProviderProxy" />
     	<property name="pfdBoardService" ref="PfdBoardService" />
     	<property name="pfpRefundOrderService" ref="PfpRefundOrderService" />
+    	<property name="pfpBuService" ref="PfpBuService" /> 
     </bean>
 
     <!-- account add money -->
