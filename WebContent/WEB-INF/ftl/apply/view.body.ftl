@@ -43,7 +43,6 @@
   		<td>
 	  		<input type="radio" id="urlY" name="urlYN" value="1" checked /> 
 	    	<#if buAccountVO?exists>
-				<input type="text" id="urlAddress" name="urlAddress" value="${buAccountVO.buUrl!}" autocomplete="off" maxlength="500" style="width:300px" /><br />
 			<#else>
 				<input type="text" id="urlAddress" name="urlAddress" value="${accountVO.urlAddress!}" autocomplete="off" maxlength="500" style="width:300px" /><br />
 			</#if>
@@ -63,7 +62,6 @@
 	<tr>
 		<th height="35"><span class="t_s02">* </span>姓名<br></th>
 		<#if buAccountVO?exists>
-				<td><input type="text" id="memberName" name="memberName" value="${buAccountVO.buId!}" autocomplete="off"  style="width:100px" /></td>
 			<#else>
 				<td><input type="text" id="memberName" name="memberName" value="${accountVO.memberVO.memberName!}" autocomplete="off"  style="width:100px" /></td>
 		</#if>
