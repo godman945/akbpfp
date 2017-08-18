@@ -165,11 +165,12 @@ public class ApplyAction extends BaseSSLAction{
 			
 			// BU資料
 			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(userMemberId);
-			PfpBuAccount pfpBuAccount = pfpBuAccountList.get(0);
-			this.buAccountVO = new BuAccountVO();
-			buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
-			buAccountVO.setBuId(pfpBuAccount.getBuId());
-			
+			if(pfpBuAccountList.size() > 0){
+				PfpBuAccount pfpBuAccount = pfpBuAccountList.get(0);
+				this.buAccountVO = new BuAccountVO();
+				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
+				buAccountVO.setBuId(pfpBuAccount.getBuId());
+			}
 		}
 		// 帳戶申請中
 		else if(pfpCustomerInfo.getStatus().equals(EnumAccountStatus.APPLY.getStatus())) {
