@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.struts2.action.account;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pchome.akbpfp.api.RedirectBillingAPI;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
+import com.pchome.akbpfp.db.pojo.PfpBuAccount;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.pojo.PfpOrder;
 import com.pchome.akbpfp.db.pojo.PfpOrderDetail;
@@ -20,6 +22,7 @@ import com.pchome.akbpfp.db.pojo.PfpUser;
 import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.bill.IPfpTransDetailService;
 import com.pchome.akbpfp.db.service.board.IPfdBoardService;
+import com.pchome.akbpfp.db.service.bu.IPfpBuService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeGiftService;
 import com.pchome.akbpfp.db.service.freeAction.IAdmFreeRecordService;
@@ -28,6 +31,7 @@ import com.pchome.akbpfp.db.service.order.PfpOrderService;
 import com.pchome.akbpfp.db.service.sequence.SequenceService;
 import com.pchome.akbpfp.db.service.user.PfpUserService;
 import com.pchome.akbpfp.db.vo.account.AccountVO;
+import com.pchome.akbpfp.db.vo.account.BuAccountVO;
 import com.pchome.akbpfp.struts2.BaseSSLAction;
 import com.pchome.enumerate.apply.EnumSaveMoney;
 import com.pchome.enumerate.billing.EnumBillingStatus;
@@ -57,6 +61,7 @@ public class AccountRemainAction extends BaseSSLAction{
 	private IPfpTransDetailService transDetailService;
 	private IBoardProvider boardProvider;
 	private IPfdBoardService pfdBoardService;
+	private IPfpBuService pfpBuService;
 	
 	private String billingProductId;
 	private String billingProductName;
@@ -66,6 +71,7 @@ public class AccountRemainAction extends BaseSSLAction{
 	
 	private String billingUrl;
 	private AccountVO accountVO;
+	private BuAccountVO buAccountVO;
 	private float addMoney = 0;
 //	private float addTax = 0;			// 稅自行吸收, 所以無實值扣稅問題
 	
@@ -81,6 +87,15 @@ public class AccountRemainAction extends BaseSSLAction{
 		
 		// 取帳戶資料
 		accountVO = pfpCustomerInfoService.getAccountVO(super.getCustomer_info_id());
+		List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(accountVO.getMemberId());
+		if(pfpBuAccountList.size() > 0){
+			PfpBuAccount pfpBuAccount = pfpBuAccountList.get(0);
+			this.buAccountVO = new BuAccountVO();
+			buAccountVO.setBuId(pfpBuAccount.getBuId());
+			buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
+		}
+		
+		
 		// 預設資料
 		accountVO.setAddMoney(EnumSaveMoney.Default.getPrice());
 		accountVO.setAddTax(EnumSaveMoney.Default.getTaxMoney());	
@@ -377,6 +392,22 @@ public class AccountRemainAction extends BaseSSLAction{
 
 	public void setPfdBoardService(IPfdBoardService pfdBoardService) {
 		this.pfdBoardService = pfdBoardService;
+	}
+
+	public IPfpBuService getPfpBuService() {
+		return pfpBuService;
+	}
+
+	public void setPfpBuService(IPfpBuService pfpBuService) {
+		this.pfpBuService = pfpBuService;
+	}
+
+	public BuAccountVO getBuAccountVO() {
+		return buAccountVO;
+	}
+
+	public void setBuAccountVO(BuAccountVO buAccountVO) {
+		this.buAccountVO = buAccountVO;
 	}
 
 //	public void setDefaultPrice(float defaultPrice) {

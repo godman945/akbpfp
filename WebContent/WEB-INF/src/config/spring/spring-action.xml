@@ -91,7 +91,8 @@
 		<property name="billingProductId" value="${billing.product.save.id}" />
 		<property name="billingProductName" value="${billing.product.save.name}" />
 		<property name="boardProvider" ref="BoardProviderProxy" />
-		<property name="pfdBoardService" ref="PfdBoardService" />		
+		<property name="pfdBoardService" ref="PfdBoardService" />
+		<property name="pfpBuService" ref="PfpBuService" />	
     </bean>   
     
     <!-- account invite user -->
