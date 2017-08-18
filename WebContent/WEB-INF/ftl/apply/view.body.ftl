@@ -42,8 +42,11 @@
   		<th height="35"><span class="t_s02">* </span>廣告連結位址</th>
   			<td>
 	  			<input type="radio" id="urlY" name="urlYN" value="1" checked /> 
-				<input type="text" id="urlAddress" name="urlAddress" value="${buAccountVO.buUrl!}" autocomplete="off" maxlength="500" style="width:300px" /><br />
-				<input type="text" id="urlAddress" name="urlAddress" value="${accountVO.urlAddress!}" autocomplete="off" maxlength="500" style="width:300px" /><br />
+	  			<#if buAccountVO?exists>
+	  				<input type="text" id="urlAddress" name="urlAddress" value="${buAccountVO.buUrl!}" autocomplete="off" maxlength="500" style="width:300px" /><br />
+	  				<#else>
+	  				<input type="text" id="urlAddress" name="urlAddress" value="${accountVO.urlAddress!}" autocomplete="off" maxlength="500" style="width:300px" /><br />
+				</#if>
 		   		<input type="hidden" id="urlMsg" />
 			</td>
 		</tr>
@@ -59,7 +62,12 @@
 <tbody>
 		<tr <#if buAccountVO?exists>style="display:none;"</#if>>
 			<th height="35"><span class="t_s02">* </span>姓名<br></th>
-			<td><input type="text" id="memberName" name="memberName" value="${accountVO.memberVO.memberName!}" autocomplete="off"  style="width:100px" /></td>
+			<#if buAccountVO?exists>
+				<td><input type="text" id="memberName" name="memberName" value="${buAccountVO.buId!}" autocomplete="off"  style="width:100px" /></td>
+				<#else>
+				<td><input type="text" id="memberName" name="memberName" value="${accountVO.memberVO.memberName!}" autocomplete="off"  style="width:100px" /></td>
+			</#if>
+			
 		</tr>
 	<tr>
 		<th height="35"><span class="t_s02">* </span>性別</th>
