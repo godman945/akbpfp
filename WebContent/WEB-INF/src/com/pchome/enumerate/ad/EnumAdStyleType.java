@@ -6,7 +6,7 @@ public enum EnumAdStyleType {
 	AD_STYLE_MULTIMEDIA_PIC("IMG", 0),
 	AD_STYLE_MULTIMEDIA_TEXT_PIC("TMG", 0),
 	AD_STYLE_VIDEO("VIDEO", 1);
-	
+
 	private final String key;
 	private final int type;
 	
