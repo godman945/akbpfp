@@ -1,6 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-
-// Generated 2017/6/22 �W�� 10:22:48 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/8/21 �W�� 10:28:10 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -49,22 +48,17 @@ public class PfpOrderDetailId implements java.io.Serializable {
 			return false;
 		PfpOrderDetailId castOther = (PfpOrderDetailId) other;
 
-		return ((this.getOrderId() == castOther.getOrderId()) || (this
-				.getOrderId() != null && castOther.getOrderId() != null && this
-				.getOrderId().equals(castOther.getOrderId())))
-				&& ((this.getProductId() == castOther.getProductId()) || (this
-						.getProductId() != null
-						&& castOther.getProductId() != null && this
-						.getProductId().equals(castOther.getProductId())));
+		return ((this.getOrderId() == castOther.getOrderId()) || (this.getOrderId() != null
+				&& castOther.getOrderId() != null && this.getOrderId().equals(castOther.getOrderId())))
+				&& ((this.getProductId() == castOther.getProductId()) || (this.getProductId() != null
+						&& castOther.getProductId() != null && this.getProductId().equals(castOther.getProductId())));
 	}
 
 	public int hashCode() {
 		int result = 17;
 
-		result = 37 * result
-				+ (getOrderId() == null ? 0 : this.getOrderId().hashCode());
-		result = 37 * result
-				+ (getProductId() == null ? 0 : this.getProductId().hashCode());
+		result = 37 * result + (getOrderId() == null ? 0 : this.getOrderId().hashCode());
+		result = 37 * result + (getProductId() == null ? 0 : this.getProductId().hashCode());
 		return result;
 	}
 

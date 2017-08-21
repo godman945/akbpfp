@@ -1,6 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-
-// Generated 2017/6/22 �W�� 10:22:48 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/8/21 �W�� 10:28:10 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -49,8 +48,7 @@ public class PfpPrivilegeModelMenuRefId implements java.io.Serializable {
 			return false;
 		PfpPrivilegeModelMenuRefId castOther = (PfpPrivilegeModelMenuRefId) other;
 
-		return (this.getModelId() == castOther.getModelId())
-				&& (this.getMenuId() == castOther.getMenuId());
+		return (this.getModelId() == castOther.getModelId()) && (this.getMenuId() == castOther.getMenuId());
 	}
 
 	public int hashCode() {
