@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/8/21 �W�� 10:28:10 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/8/21 �U�� 01:20:59 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -55,6 +55,7 @@ public class PfpCustomerInfo implements java.io.Serializable {
 	private Set<PfpAdClick> pfpAdClicks = new HashSet<PfpAdClick>(0);
 	private Set<PfpTransDetail> pfpTransDetails = new HashSet<PfpTransDetail>(0);
 	private Set<AdmRecognizeRecord> admRecognizeRecords = new HashSet<AdmRecognizeRecord>(0);
+	private Set<AdmFeedbackRecord> admFeedbackRecords = new HashSet<AdmFeedbackRecord>(0);
 	private Set<PfpOrder> pfpOrders = new HashSet<PfpOrder>(0);
 	private Set<PfdUserAdAccountRef> pfdUserAdAccountRefs = new HashSet<PfdUserAdAccountRef>(0);
 	private Set<PfpAdAction> pfpAdActions = new HashSet<PfpAdAction>(0);
@@ -101,8 +102,9 @@ public class PfpCustomerInfo implements java.io.Serializable {
 			float totalLaterAddMoney, float totalLaterSpend, float totalLaterRetrieve, String recognize,
 			String authorizedPage, String black, String blackReason, Date blackTime, Date createDate, Date updateDate,
 			Set<PfpRefundOrder> pfpRefundOrders, Set<PfpAdClick> pfpAdClicks, Set<PfpTransDetail> pfpTransDetails,
-			Set<AdmRecognizeRecord> admRecognizeRecords, Set<PfpOrder> pfpOrders,
-			Set<PfdUserAdAccountRef> pfdUserAdAccountRefs, Set<PfpAdAction> pfpAdActions, Set<PfpUser> pfpUsers) {
+			Set<AdmRecognizeRecord> admRecognizeRecords, Set<AdmFeedbackRecord> admFeedbackRecords,
+			Set<PfpOrder> pfpOrders, Set<PfdUserAdAccountRef> pfdUserAdAccountRefs, Set<PfpAdAction> pfpAdActions,
+			Set<PfpUser> pfpUsers) {
 		this.customerInfoId = customerInfoId;
 		this.customerInfoTitle = customerInfoTitle;
 		this.category = category;
@@ -138,6 +140,7 @@ public class PfpCustomerInfo implements java.io.Serializable {
 		this.pfpAdClicks = pfpAdClicks;
 		this.pfpTransDetails = pfpTransDetails;
 		this.admRecognizeRecords = admRecognizeRecords;
+		this.admFeedbackRecords = admFeedbackRecords;
 		this.pfpOrders = pfpOrders;
 		this.pfdUserAdAccountRefs = pfdUserAdAccountRefs;
 		this.pfpAdActions = pfpAdActions;
@@ -463,6 +466,15 @@ public class PfpCustomerInfo implements java.io.Serializable {
 
 	public void setAdmRecognizeRecords(Set<AdmRecognizeRecord> admRecognizeRecords) {
 		this.admRecognizeRecords = admRecognizeRecords;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpCustomerInfo")
+	public Set<AdmFeedbackRecord> getAdmFeedbackRecords() {
+		return this.admFeedbackRecords;
+	}
+
+	public void setAdmFeedbackRecords(Set<AdmFeedbackRecord> admFeedbackRecords) {
+		this.admFeedbackRecords = admFeedbackRecords;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpCustomerInfo")

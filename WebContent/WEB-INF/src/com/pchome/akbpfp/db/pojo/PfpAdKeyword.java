@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/8/21 �W�� 10:28:10 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/8/21 �U�� 01:20:59 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -39,6 +39,7 @@ public class PfpAdKeyword implements java.io.Serializable {
 	private Date adKeywordCreateTime;
 	private Date adKeywordUpdateTime;
 	private Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks = new HashSet<PfpAdKeywordPvclk>(0);
+	private Set<PfpAdKeywordInvalid> pfpAdKeywordInvalids = new HashSet<PfpAdKeywordInvalid>(0);
 	private Set<PfpAdRank> pfpAdRanks = new HashSet<PfpAdRank>(0);
 
 	public PfpAdKeyword() {
@@ -71,7 +72,8 @@ public class PfpAdKeyword implements java.io.Serializable {
 			float adKeywordSearchPhrasePrice, float adKeywordSearchPrecisionPrice, float adKeywordChannelPrice,
 			float adKeywordOrder, float adKeywordPhraseOrder, float adKeywordPrecisionOrder, int adKeywordOpen,
 			int adKeywordPhraseOpen, int adKeywordPrecisionOpen, int adKeywordStatus, Date adKeywordCreateTime,
-			Date adKeywordUpdateTime, Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks, Set<PfpAdRank> pfpAdRanks) {
+			Date adKeywordUpdateTime, Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks,
+			Set<PfpAdKeywordInvalid> pfpAdKeywordInvalids, Set<PfpAdRank> pfpAdRanks) {
 		this.adKeywordSeq = adKeywordSeq;
 		this.pfpAdGroup = pfpAdGroup;
 		this.adKeyword = adKeyword;
@@ -89,6 +91,7 @@ public class PfpAdKeyword implements java.io.Serializable {
 		this.adKeywordCreateTime = adKeywordCreateTime;
 		this.adKeywordUpdateTime = adKeywordUpdateTime;
 		this.pfpAdKeywordPvclks = pfpAdKeywordPvclks;
+		this.pfpAdKeywordInvalids = pfpAdKeywordInvalids;
 		this.pfpAdRanks = pfpAdRanks;
 	}
 
@@ -248,6 +251,15 @@ public class PfpAdKeyword implements java.io.Serializable {
 
 	public void setPfpAdKeywordPvclks(Set<PfpAdKeywordPvclk> pfpAdKeywordPvclks) {
 		this.pfpAdKeywordPvclks = pfpAdKeywordPvclks;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpAdKeyword")
+	public Set<PfpAdKeywordInvalid> getPfpAdKeywordInvalids() {
+		return this.pfpAdKeywordInvalids;
+	}
+
+	public void setPfpAdKeywordInvalids(Set<PfpAdKeywordInvalid> pfpAdKeywordInvalids) {
+		this.pfpAdKeywordInvalids = pfpAdKeywordInvalids;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpAdKeyword")

@@ -42,15 +42,19 @@
                 <value>com.pchome.akbpfp.db.pojo.PfdAdGroupReport</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdAdReport</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdApplyForBusiness</value>
-                <value>com.pchome.akbpfp.db.pojo.PfdBonusDetail</value>       
+                <!-- DB不存在此table 20170821
+	                <value>com.pchome.akbpfp.db.pojo.PfdBonusDetail</value>
+	                <value>com.pchome.akbpfp.db.pojo.PfdBonusSet</value>
+	                <value>com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail</value>
+	                <value>com.pchome.akbpfp.db.pojo.PfdMonthTotalBonus</value>  
+                 -->
                 <value>com.pchome.akbpfp.db.pojo.PfdBonusItem</value>
-                <value>com.pchome.akbpfp.db.pojo.PfdBonusSet</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdBoard</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdContract</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdCustomerInfo</value>
-                <value>com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail</value>
+                
                 <value>com.pchome.akbpfp.db.pojo.PfdKeywordReport</value>   
-                <value>com.pchome.akbpfp.db.pojo.PfdMonthTotalBonus</value>              
+                            
                 <value>com.pchome.akbpfp.db.pojo.PfdUser</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdUserMemberRef</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef</value>    
@@ -144,14 +148,19 @@
                 <value>com.pchome.akbpfp.db.pojo.PfdAdGroupReport</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdAdReport</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdApplyForBusiness</value>
-                <value>com.pchome.akbpfp.db.pojo.PfdBonusDetail</value>       
+                
+                <!-- DB不存在此table 20170821
+                 <value>com.pchome.akbpfp.db.pojo.PfdBonusDetail</value>
+                 <value>com.pchome.akbpfp.db.pojo.PfdBonusSet</value>
+                 <value>com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail</value>
+                 <value>com.pchome.akbpfp.db.pojo.PfdMonthTotalBonus</value> 
+                 -->
+                
+                   
                 <value>com.pchome.akbpfp.db.pojo.PfdBonusItem</value>
-                <value>com.pchome.akbpfp.db.pojo.PfdBonusSet</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdBoard</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdContract</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdCustomerInfo</value>
-                <value>com.pchome.akbpfp.db.pojo.PfdFixedBonusDetail</value>
-                <value>com.pchome.akbpfp.db.pojo.PfdMonthTotalBonus</value>              
                 <value>com.pchome.akbpfp.db.pojo.PfdKeywordReport</value>   
                 <value>com.pchome.akbpfp.db.pojo.PfdUser</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdUserMemberRef</value>

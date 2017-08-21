@@ -144,5 +144,11 @@
 		match-catalog="akb_video">
 	</table-filter>
 	<table-filter match-name="pfp_ad_gift" match-catalog="akb_video"></table-filter>
+	<table-filter match-name="adm_feedback_record"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfp_ad_keyword_invalid"
+		match-catalog="akb_video">
+	</table-filter>
 
 </hibernate-reverse-engineering>
