@@ -2,6 +2,7 @@
 
 
 $(document).ready(function(){
+	
 	var firstAdType = $("#adType").val();
 	var firstAdDevice = $("#adDeviceSelect").val();
 	var firstObj;
@@ -60,10 +61,12 @@ $(document).ready(function(){
 		$.each(Obj, function(key, value) { 
 			$("#adDevice").append('<option value='+ key+'>' + value + '</option>');
 		});
+		
+		changeAdStyle();
+		
 	});
 	
 	initDate();
-
 	
 	function initDate() {
 
@@ -345,6 +348,19 @@ $(document).ready(function(){
 		}
 	});
 });
+
+
+//變更廣告播放類型時變更對應廣告樣式
+function changeAdStyle(){
+	$("#adStyle option").each(function(){
+		if($("#adType").val() == "1" && $(this).val() == "1"){
+			$(this).css('display','none');
+		}else{
+			$(this).css('display','');
+		}
+	});
+}
+
 
 function opennots(id) {
 	$("#shownotes"+id).css("visibility", "visible");

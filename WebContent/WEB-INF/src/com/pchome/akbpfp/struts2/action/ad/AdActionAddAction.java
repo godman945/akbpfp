@@ -7,31 +7,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -52,6 +27,7 @@ import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdDevice;
 import com.pchome.enumerate.ad.EnumAdPvLimitPeriod;
 import com.pchome.enumerate.ad.EnumAdPvLimitStyle;
+import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
@@ -86,8 +62,10 @@ public class AdActionAddAction extends BaseCookieAction{
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private IPfpAdSpecificWebsiteService pfpAdSpecificWebsiteService;
 	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
-	
+	//key:0  搜尋廣告+聯播網廣告(觸及廣告族群最廣泛),1 搜尋廣告(PChome找東西搜尋和搜尋夥伴),2 聯播網廣告(PChome的合作網站聯播網)
 	private Map<String,String> adTypeMap;
+	private Map<String,Integer> adStyleTypeMap;
+	
 	private String adAllDevice;
 	private String adSearchDevice;
 	private String adChannelDevice;
@@ -154,6 +132,12 @@ public class AdActionAddAction extends BaseCookieAction{
 				adTypeMap.put(String.valueOf(enumAdType.getType()), enumAdType.getTypeName() + "(" + enumAdType.getExplanation() + ")");
 			}
 			number++;
+		}
+		//廣告樣式下拉選單
+		adStyleTypeMap = new LinkedHashMap<String,Integer>();
+		for(EnumAdStyleType enumAdStyleType: EnumAdStyleType.values()){
+			adStyleTypeMap.put(enumAdStyleType.getKey(), enumAdStyleType.getType());
+			adStyleTypeMap.put(enumAdStyleType.getKey(), enumAdStyleType.getType());
 		}
 		
 		//廣告播放裝置下拉選項
@@ -799,5 +783,10 @@ public class AdActionAddAction extends BaseCookieAction{
 	public String getOldWebsiteCategory() {
 		return oldWebsiteCategory;
 	}
+
+	public Map<String, Integer> getAdStyleTypeMap() {
+		return adStyleTypeMap;
+	}
+
 	
 }

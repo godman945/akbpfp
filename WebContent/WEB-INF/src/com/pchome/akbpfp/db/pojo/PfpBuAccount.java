@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/8/21 �U�� 01:20:59 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/8/21 �U�� 03:11:50 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -21,7 +21,6 @@ public class PfpBuAccount implements java.io.Serializable {
 	private Integer id;
 	private String buId;
 	private String pcId;
-	private String pfpCustomerId;
 	private String pfdCustomerId;
 	private String buName;
 	private String buUrl;
@@ -32,11 +31,10 @@ public class PfpBuAccount implements java.io.Serializable {
 	public PfpBuAccount() {
 	}
 
-	public PfpBuAccount(String buId, String pcId, String pfpCustomerId, String pfdCustomerId, String buName,
-			String buUrl, int pfpStatus, Date updateDate, Date createDate) {
+	public PfpBuAccount(String buId, String pcId, String pfdCustomerId, String buName, String buUrl, int pfpStatus,
+			Date updateDate, Date createDate) {
 		this.buId = buId;
 		this.pcId = pcId;
-		this.pfpCustomerId = pfpCustomerId;
 		this.pfdCustomerId = pfdCustomerId;
 		this.buName = buName;
 		this.buUrl = buUrl;
@@ -75,15 +73,6 @@ public class PfpBuAccount implements java.io.Serializable {
 		this.pcId = pcId;
 	}
 
-	@Column(name = "pfp_customer_id", nullable = false, length = 20)
-	public String getPfpCustomerId() {
-		return this.pfpCustomerId;
-	}
-
-	public void setPfpCustomerId(String pfpCustomerId) {
-		this.pfpCustomerId = pfpCustomerId;
-	}
-
 	@Column(name = "pfd_customer_id", nullable = false, length = 20)
 	public String getPfdCustomerId() {
 		return this.pfdCustomerId;
@@ -102,7 +91,7 @@ public class PfpBuAccount implements java.io.Serializable {
 		this.buName = buName;
 	}
 
-	@Column(name = "bu_url", nullable = false, length = 1024)
+	@Column(name = "bu_url", nullable = false, length = 2048)
 	public String getBuUrl() {
 		return this.buUrl;
 	}

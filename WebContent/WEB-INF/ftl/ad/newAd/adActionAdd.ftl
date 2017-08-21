@@ -49,6 +49,18 @@
                         </td>
                     </tr>
                     <tr>
+                        <th height="35"><span class="t_s02">* </span>廣告樣式</th>
+                        <td>
+                        	<select id="adStyle" name="adStyle">
+                        		<#if adStyleTypeMap?exists>
+                        			<#list adStyleTypeMap?keys as skey>
+                        					<option value="${adStyleTypeMap[skey]}" >${skey}</option>
+                        			</#list>
+								</#if>
+		                    </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <th height="35"><span class="t_s02">* </span>廣告播放裝置</th>
                         <td>
                         	<select id="adDevice" name="adDevice">
