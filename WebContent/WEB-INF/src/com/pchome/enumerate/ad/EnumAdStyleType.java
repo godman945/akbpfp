@@ -5,26 +5,27 @@ public enum EnumAdStyleType {
 	AD_STYLE_MULTIMEDIA("多媒體廣告", 0,"MEDIA"),
 	AD_STYLE_VIDEO("影音廣告", 1,"VIDEO");
 
-	private final String key;
-	private final int type;
+	private final String type;
+	private final int value;
 	private final String typeName;
 	
-	private EnumAdStyleType(String key, int type,String typeName){
-		this.key = key;
+	private EnumAdStyleType(String type, int value,String  typeName){
 		this.type = type;
+		this.value = value;
 		this.typeName = typeName;
 	}
 
-	public String getKey() {
-		return key;
+	public String getType() {
+		return type;
 	}
 
-	public int getType() {
-		return type;
+	public int getValue() {
+		return value;
 	}
 
 	public String getTypeName() {
 		return typeName;
 	}
+
 
 }
