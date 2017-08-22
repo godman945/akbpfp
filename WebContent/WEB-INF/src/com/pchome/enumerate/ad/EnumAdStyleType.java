@@ -3,7 +3,7 @@ package com.pchome.enumerate.ad;
 public enum EnumAdStyleType {
 	
 	AD_STYLE_MULTIMEDIA("多媒體廣告", 0,"MEDIA"),
-	AD_STYLE_VIDEO("影音廣告", 1,"VEDIO");
+	AD_STYLE_VIDEO("影音廣告", 1,"VIDEO");
 
 	private final String key;
 	private final int type;
