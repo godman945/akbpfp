@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pchome.akbpfp.struts2.BaseSSLAction;
-import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.utils.EnumStatus;
 
 public class BaseReportAction extends BaseSSLAction {
@@ -18,7 +18,7 @@ public class BaseReportAction extends BaseSSLAction {
 	//就是 ad_type 前人用這名字
 	public Map<String, String> getAdShowWayMap() {
 		Map<String, String> map = new LinkedHashMap<String, String>();
-		map.put("0", "全部");
+		map.put("0", "全部播放類型");
 		map.put("1", "搜尋廣告");
 		map.put("2", "聯播網廣告");
 
@@ -62,7 +62,7 @@ public class BaseReportAction extends BaseSSLAction {
 
 	public Map<String, String> getAdPvclkDeviceMap() {
 		Map<String, String> map = new LinkedHashMap<String, String>();
-		map.put("", "裝置");
+		map.put("", "全部裝置");
 		map.put("PC", "電腦");
 		map.put("mobile", "行動裝置");
 		return map;
@@ -75,6 +75,16 @@ public class BaseReportAction extends BaseSSLAction {
 		map.put("Android", "Android");
 		map.put("Windows", "Windows");
 		map.put("", "其他");
+		return map;
+	}
+	
+	public Map<String,String> getAdStyleTypeMap(){
+		Map<String, String> map = new LinkedHashMap<String, String>();
+		map.put("", "全部廣告樣式");
+		for(EnumAdStyleType enumAdStyleType:EnumAdStyleType.values()){
+			map.put(enumAdStyleType.getTypeName(), enumAdStyleType.getType());
+		}
+		
 		return map;
 	}
 }
