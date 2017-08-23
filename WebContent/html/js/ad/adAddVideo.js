@@ -16,6 +16,7 @@ function adVideoUrlCheck(){
 	if(!regx.test($("#videoUrl").val())){
 		var result = {'result':false,'msg':'網址格式錯誤'};
 		saveAdAddVideo(result);
+		return false;
 	}
 	
 	$.ajax({
