@@ -141,7 +141,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		}else{
 			String[] timeArray = resultStr.split(":");
 			if(timeArray.length == 1){
-				seconds = Integer.parseInt(timeArray[0]);
+				seconds = Integer.parseInt(resultStr);
 			}else if(timeArray.length == 2){
 				seconds = Integer.parseInt(timeArray[0]) * 60 + Integer.parseInt(timeArray[1]);
 			}else if(timeArray.length == 3){
