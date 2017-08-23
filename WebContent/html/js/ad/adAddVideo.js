@@ -29,5 +29,7 @@ function adVideoUrlCheck(){
 		error: function(xtl) {
 			//alert("系統繁忙，請稍後再試！");
 		}
+	}).done(function (response) {
+		console.log(response);
 	});
 }
