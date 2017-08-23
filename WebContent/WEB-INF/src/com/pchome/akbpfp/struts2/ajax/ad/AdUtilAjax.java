@@ -12,28 +12,23 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.soft.depot.utils.HttpUtil;
 public class AdUtilAjax extends BaseCookieAction{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -5195311542239203862L;
-	
 	// get data
 	private String url;
 	private String q;
-	
 	// return data
 	private InputStream msg;
 	private int urlState;
 	private String result;
-	
 	private String akbPfpServer;
+	private String adVideoUrl;
 	
 	public String checkAdUrl() throws Exception{
 	    	log.info("checkAdUrl");
@@ -123,6 +118,22 @@ public class AdUtilAjax extends BaseCookieAction{
 	    return SUCCESS;
 	}
 
+	
+	//檢查影音廣告網址
+	public String chkVideoUrl() throws Exception{
+		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --get-duration " + adVideoUrl });
+		String videoSec = IOUtils.toString(process.getInputStream(),"UTF-8");
+		JSONObject json = new JSONObject();
+		json.put("ALEX", "AAAAAAAAAAa");
+		json.put("url", adVideoUrl);
+		json.put("time", videoSec);
+		this.result = json.toString();
+		this.msg = new ByteArrayInputStream(json.toString().getBytes());
+		return SUCCESS;
+	}
+	
+	
+	
 	// get data
 	public void setUrl(String url) {
 		this.url = url;
@@ -147,6 +158,14 @@ public class AdUtilAjax extends BaseCookieAction{
 
 	public void setAkbPfpServer(String akbPfpServer) {
 		this.akbPfpServer = akbPfpServer;
+	}
+
+	public String getAdVideoUrl() {
+		return adVideoUrl;
+	}
+
+	public void setAdVideoUrl(String adVideoUrl) {
+		this.adVideoUrl = adVideoUrl;
 	}
 
 }
