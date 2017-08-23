@@ -70,6 +70,7 @@
 				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
 				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
 				<td class="td02">
+					${vo.adOperatingRule!}
 					<#if vo.adActionStatus != 9>
 						<a href="adGroupAdd.html?adActionSeq=${vo.adActionSeq!}">新增分類</a><br>
 					</#if>

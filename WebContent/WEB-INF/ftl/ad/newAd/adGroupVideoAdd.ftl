@@ -11,7 +11,7 @@
 			<div class="cal">帳戶名稱：${customer_info_title!}</div>
 			<img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">新增分類
 		</h2>
-		<div class="steps">輸入廣告基本設定 &gt; <b>建立分類及出價</b>  &gt; 製作廣告及關鍵字設定  &gt; 廣告完成 </div>
+		<div class="steps">輸入廣告基本設定 &gt; <b>建立分類及出價</b>  &gt; 製作影音廣告  &gt; 廣告完成 </div>
 		<div class="grtba">
 			<h4>分類</h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
@@ -23,7 +23,7 @@
 	            </tbody>
 	        </table>
 	        <div style="clear:both;height:10px"></div>
-	        <h4>分類出價<span class="t_s01">(分類出價是指：您願意支付每次點擊廣告的最高金額！最低出價NT$3)</span> </h4>
+	        <h4>分類出價<span class="t_s01"></span> </h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 	        	<tbody>
 	        		<tr id="searchTr">
@@ -46,7 +46,7 @@
 	                </tr>
 	                <tr id="channelTr">
 	                	<th height="35">
-							<span class="t_s02">* </span>聯播網廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
+							<span class="t_s02">* </span>影音廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
 							<div id="shownotes2" style="visibility: hidden;" class="adnoticepop">
 								<h4>聯播網廣告出價 說明</h4>
 								<div class="adpopcont">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
@@ -54,8 +54,20 @@
 							</div>
 	                	</th>
 	                    <td>
-	                    	<b>系統建議出價NT$<input type="text" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${sysChannelPrice!}" maxlength="6">，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span></b>
-	                    	<div class="exp">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
+	                    	<select id="adPriceType" name="adPriceType">
+                        		<#if pfpAdPriceTypeVOList?exists>
+                        			<#list pfpAdPriceTypeVOList as pfpAdPriceTypeVO>
+                        					<option value="${pfpAdPriceTypeVO.type!}" >${pfpAdPriceTypeVO.typeName!}</option>
+                        			</#list>
+								</#if>
+		                    </select>
+		                    <div class="msg"></div>
+	                    	<br>
+	                    		<div class="errMsg"></div>
+	                    	<br>
+		                    	<b>系統建議出價NT$<input type="number" min="0" step="0.1" id="adPrice" name="adPrice" style="width:50px" maxlength="6" >，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span></b>
+	                    		<div class="exp">出價金額會決定廣告播出率。系統會依每次影片的競價結果分析出最佳的播出率，實際支付的廣告收視費用，會小於或等於您的出價金額。</div>
+	                    	
 	                    </td>
 	                </tr>
 	            </tbody>

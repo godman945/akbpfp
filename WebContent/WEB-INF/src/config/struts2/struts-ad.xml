@@ -91,6 +91,7 @@
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
 		<result type="tiles" name="success">.ad.group.add</result>
+		<result type="tiles" name="success_video">.ad.group.video.add</result>
 		<result type="redirectAction" name="notOwner">
 			<param name="actionName">adActionView</param>  
 		</result>
@@ -103,6 +104,12 @@
 			<param name="actionName">adAdAdd</param>  
 			<param name="adGroupSeq">${adGroupSeq}</param>
 		</result>
+		
+		<result type="redirectAction" name="success">
+			<param name="actionName">adAdAdd</param>  
+			<param name="adGroupSeq">${adGroupSeq}</param>
+		</result>
+		
 		<result type="tiles" name="input">.ad.group.add</result>
     </action>
 
@@ -147,11 +154,12 @@
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
 		<result type="tiles" name="success">.ad.ad.add</result>
+		<result type="tiles" name="adVideoAdd">.ad.video.add</result>
 		<result type="redirectAction" name="notOwner">
 			<param name="actionName">adActionView</param>  
 		</result>
     </action>
-
+    
 	<action name="doAdAdAddTxt" class="AdAddAction" method="doAdAdAddTxt">
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
@@ -286,6 +294,16 @@
             <param name="inputName">msg</param>
         </result>
 	</action>
+
+	<action name="chkVideoUrl" class="AdUtilAjax" method="chkVideoUrl">
+		<interceptor-ref name="loginCheckStack" />
+		<interceptor-ref name="adPrivilegeInterceptor" />
+       	<result type="json" name="success">
+			<param name="noCache">true</param>
+			<param name="contentType">text/html</param>
+		</result>
+	</action>
+
 
 	<action name="getAdGroup" class="AdGroupAjax" method="getAdGroup">
 		<interceptor-ref name="loginCheckStack" />

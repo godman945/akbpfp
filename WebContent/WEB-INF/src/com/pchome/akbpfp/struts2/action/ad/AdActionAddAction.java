@@ -55,7 +55,9 @@ public class AdActionAddAction extends BaseCookieAction{
 	private float remain;
 	private int tmpRemain;
 	private String backPage;
-
+	private String adOperatingRule;
+	
+	
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdActionService pfpAdActionService;
@@ -119,6 +121,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		adPvLimitAmount = "0";
 		pvLimitSelect = "N";
 		oldWebsiteCategory = "";
+		adOperatingRule = "0";
 		
 		PfdUserAdAccountRef pfdUserAdAccountRef = pfdUserAdAccountRefService.findPfdUserAdAccountRef(super.getCustomer_info_id());
 		String pfpAdTypeSelect = pfdUserAdAccountRef.getPfdCustomerInfo().getPfpAdtypeSelect();
@@ -136,8 +139,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		//廣告樣式下拉選單
 		adStyleTypeMap = new LinkedHashMap<String,Integer>();
 		for(EnumAdStyleType enumAdStyleType: EnumAdStyleType.values()){
-			adStyleTypeMap.put(enumAdStyleType.getKey(), enumAdStyleType.getType());
-			adStyleTypeMap.put(enumAdStyleType.getKey(), enumAdStyleType.getType());
+			adStyleTypeMap.put(enumAdStyleType.getType(), enumAdStyleType.getValue());
 		}
 		
 		//廣告播放裝置下拉選項
@@ -312,10 +314,17 @@ public class AdActionAddAction extends BaseCookieAction{
 	}
 
 	public String doAdActionAdd() throws Exception {
+		
+		
 		log.info("doAdActionAdd => adActionSeq = " + adActionSeq);
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
 
+		if(StringUtils.isBlank(adOperatingRule)) {
+			message = "廣告類型不可為空！";
+			return INPUT;
+		}
+		
 		if(StringUtils.isEmpty(customerInfoId)) {
 			message = "請登入！";
 			return INPUT;
@@ -421,6 +430,7 @@ public class AdActionAddAction extends BaseCookieAction{
 			pfpAdAction.setAdActionSeq(adActionSeq);
 			pfpAdAction.setAdActionCreatTime(new Date());
 		}
+		
 		pfpAdAction.setAdActionName(adActionName);
 		pfpAdAction.setAdActionDesc(adActionName);
 		pfpAdAction.setAdActionStartDate(ActionStartDate);
@@ -432,6 +442,11 @@ public class AdActionAddAction extends BaseCookieAction{
 		pfpAdAction.setAdActionUpdateTime(new Date());
 		if(pfpAdActionService.getAdGroupCounts(adActionSeq) <= 0) {
 			pfpAdAction.setAdActionStatus(EnumStatus.UnDone.getStatusId());		// 新增廣告時，status 設定為未完成
+		}
+		if(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getValue() == Integer.parseInt(adOperatingRule)){
+			pfpAdAction.setAdOperatingRule(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName());
+		}else if(EnumAdStyleType.AD_STYLE_VIDEO.getValue() == Integer.parseInt(adOperatingRule)){
+			pfpAdAction.setAdOperatingRule(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName());
 		}
 		pfpAdAction.setAdType(Integer.parseInt(adType));
 		pfpAdAction.setAdDevice(Integer.parseInt(adDevice));	
@@ -788,5 +803,12 @@ public class AdActionAddAction extends BaseCookieAction{
 		return adStyleTypeMap;
 	}
 
-	
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
+
 }

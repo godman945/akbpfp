@@ -106,7 +106,19 @@
 		}
 	});
 	
+	
+	
+	
+	
 	$('#save').click(function(){
+
+		if($("#adOperatingRule").val() == 'VIDEO'){
+			var result = checkVideoErrMsg();
+			if(!result.flag){
+				return false
+			}
+		}
+		
 		//取得驗證回傳值
 		if($("#modifyForm").valid() == 1){
 			// form submit
@@ -114,6 +126,24 @@
 		}
 	});
 });
+
+
+function checkVideoErrMsg(){
+	var adPrice = $("#adPrice").val();
+	if($("#adPriceType").val() == 0){
+		if(adPrice < 0.5){
+			$(".errMsg").text('出價不得低於系統接受的最低單次收視出價 NT$0.5');
+			return {"flag":false};
+		}
+	}else if($("#adPriceType").val() == 1){
+		if(adPrice < 65){
+			$(".errMsg").text('出價不得低於系統接受的最低千次曝光出價 NT$65');
+			return {"flag":false};
+		}
+	}
+	$(".errMsg").text('');
+	return {"flag":true};
+}
 
 function opennots(id) {
 	$("#shownotes"+id).css("visibility", "visible");

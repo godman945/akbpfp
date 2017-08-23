@@ -57,6 +57,10 @@
     <definition name=".ad.group.add" extends="ad.layout">
         <put-attribute name="body" value="/ftl/ad/newAd/adGroupAdd.ftl" />
     </definition>
+    
+    <definition name=".ad.group.video.add" extends="ad.layout">
+        <put-attribute name="body" value="/ftl/ad/newAd/adGroupVideoAdd.ftl" />
+    </definition>
 
     <definition name=".ad.group.view" extends="ad.layout">
         <put-attribute name="body" value=".ad.group.body" />
@@ -69,7 +73,19 @@
     <definition name=".ad.ad.add" extends="ad.nocss.layout">
         <put-attribute name="body" value=".ad.ad.add.body" />
     </definition>
-
+    
+    
+    <definition name=".ad.video.add" extends="ad.nocss.layout">
+         <put-attribute name="body" value=".ad.advideo.add.body" />
+    </definition>
+    
+    <definition name=".ad.advideo.add.body" template="/ftl/ad/newAd/adAdAdd.ftl">
+    	<put-attribute name="adAddVideo" value="/ftl/ad/newAd/adAdVideoAdd.ftl" />
+    </definition>
+    
+    
+    
+    
     <definition name=".ad.ad.add.body" template="/ftl/ad/newAd/adAdAdd.ftl">
     	<put-attribute name="adTxt" value="/ftl/ad/newAd/adAdAddTxt.ftl" />
     	<put-attribute name="adTmg" value="/ftl/ad/newAd/adAdAddTmg.ftl" />

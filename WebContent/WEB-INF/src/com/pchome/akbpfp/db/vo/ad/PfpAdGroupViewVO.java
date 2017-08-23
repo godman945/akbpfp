@@ -7,6 +7,7 @@ public class PfpAdGroupViewVO {
 	private String adGroupSeq = "";
 	private String adGroupName = "";
 	private String adGroupType = "";
+	private String adOperatingRule = "";
 	private int adGroupSearchPriceType = 0;
 	private float adGroupSearchPrice = 0;
 	private float adGroupChannelPrice = 0;
@@ -150,4 +151,11 @@ public class PfpAdGroupViewVO {
 	public void setAdDevice(String adDevice) {
 		this.adDevice = adDevice;
 	}
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
+	
 }

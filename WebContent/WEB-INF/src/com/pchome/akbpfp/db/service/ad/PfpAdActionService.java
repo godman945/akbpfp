@@ -72,6 +72,7 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 				PfpAdActionViewVO adActionViewVO = new PfpAdActionViewVO();
 				adActionViewVO.setAdActionSeq(pfpAdAction.getAdActionSeq());
 				adActionViewVO.setAdActionName(pfpAdAction.getAdActionName());
+				adActionViewVO.setAdOperatingRule(pfpAdAction.getAdOperatingRule());
 	
 				// 廣告類型
 				for(EnumAdType type:EnumAdType.values()){

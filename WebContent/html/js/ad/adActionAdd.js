@@ -62,8 +62,13 @@ $(document).ready(function(){
 			$("#adDevice").append('<option value='+ key+'>' + value + '</option>');
 		});
 		
-		changeAdStyle();
+		changeMappingAdStyle();
 		
+	});
+	
+	
+	$("#adStyle").change(function(){
+		$("#adOperatingRule").val($("#adStyle").val());
 	});
 	
 	initDate();
@@ -351,12 +356,15 @@ $(document).ready(function(){
 
 
 //變更廣告播放類型時變更對應廣告樣式
-function changeAdStyle(){
+function changeMappingAdStyle(){
 	$("#adStyle option").each(function(){
 		if($("#adType").val() == "1" && $(this).val() == "1"){
 			$(this).css('display','none');
+			$(this).attr("selected",false);
 		}else{
 			$(this).css('display','');
+			$(this).attr("selected",true);
+			$("#adOperatingRule").val($("#adStyle").val());
 		}
 	});
 }

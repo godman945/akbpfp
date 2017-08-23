@@ -1,7 +1,9 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +16,10 @@ import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
 import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
+import com.pchome.akbpfp.db.vo.ad.PfpAdPriceTypeVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdPriceType;
+import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -32,6 +37,10 @@ public class AdGroupAddAction extends BaseCookieAction{
 	private String message = "";
 	private String adActionSeq;
 	private String adActionName;
+	private String adOperatingRule;
+	private String adPrice;
+	private String adPriceType;
+	
 	private int adActionMax;	//每日預算
 
 	private String adGroupSeq;
@@ -43,29 +52,19 @@ public class AdGroupAddAction extends BaseCookieAction{
 	private String adGroupChannelPrice;		//內容廣告出價
 	private String AdAsideRate;				//播放率
 	private String backPage;				// 取消的返回頁面
-	
 	private String showSearchPrice;			//顯示搜尋廣告設定
 	private String showChannelPrice;		//顯示內容廣告設定
+	LinkedList<PfpAdPriceTypeVO> pfpAdPriceTypeVOList; 
 	
-	public void setAdActionMax(int adActionMax) {
-		this.adActionMax = adActionMax;
-	}
-
-	public void setBackPage(String backPage) {
-		this.backPage = backPage;
-	}
-
 	private String sysPriceAdPoolSeq;       //廣告建議價取得 pool from api prop 注入
-
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdActionService pfpAdActionService;
 	private PfpAdGroupService pfpAdGroupService;
-	
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 
 	public String adGroupAdd() throws Exception {
-		System.out.println("AdGroupAdd => adActionSeq = " + adActionSeq + "; adGroupSeq = " + adGroupSeq);
+		log.info("AdGroupAdd => adActionSeq = " + adActionSeq + "; adGroupSeq = " + adGroupSeq);
 		String adCustomerInfoId = "";
 		String referer = request.getHeader("Referer");
 		
@@ -120,7 +119,7 @@ public class AdGroupAddAction extends BaseCookieAction{
 			adActionName  = pfpAdAction.getAdActionName();
 			adActionMax = (int)pfpAdAction.getAdActionMax();
 			adCustomerInfoId = pfpAdAction.getPfpCustomerInfo().getCustomerInfoId();
-	
+			adOperatingRule = pfpAdAction.getAdOperatingRule();
 			adGroupName = chkAdGroupName(adActionName);
 			adGroupSearchPrice = defSearchPrice;		//一開始沒有關鍵字，所以預設為3元，等廣告建完有關鍵字，再去呼叫api更新
 			sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
@@ -174,7 +173,20 @@ public class AdGroupAddAction extends BaseCookieAction{
 		//log.info("backPage = " + backPage);
 
 		AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(Float.parseFloat(adGroupChannelPrice)));
-		return SUCCESS;
+		
+		if(StringUtils.isNotBlank(adOperatingRule) && adOperatingRule.equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName())){
+			pfpAdPriceTypeVOList = new LinkedList<>();
+			for(EnumAdPriceType enumAdPriceType: EnumAdPriceType.values()){
+				PfpAdPriceTypeVO pfpAdPriceTypeVO = new PfpAdPriceTypeVO();
+				pfpAdPriceTypeVO.setType(enumAdPriceType.getType());
+				pfpAdPriceTypeVO.setTypeName(enumAdPriceType.getTypeName());
+				pfpAdPriceTypeVO.setPrice(enumAdPriceType.getPrice());
+				pfpAdPriceTypeVOList.add(pfpAdPriceTypeVO);
+			}
+			return "success_video";
+		}else{
+			return SUCCESS;
+		}
 	}
 
 	private String chkAdGroupName(String adGroupName) {
@@ -214,31 +226,54 @@ public class AdGroupAddAction extends BaseCookieAction{
 			}
 		}
 
-		if (StringUtils.isEmpty(adGroupSearchPriceType)) {
-			message = "請選擇找東西廣告出價";
+		
+		if(StringUtils.isBlank(adOperatingRule)){
+			message = "廣告類型不可為空";
 			return INPUT;
-		} else {
-			//一開始沒有關鍵字，所以建議出價跟預設出價相同，等廣告建完有關鍵字，再去呼叫api更新
-			if(adGroupSearchPriceType.equals("1")) {
-				adGroupSearchPrice = defSearchPrice;
-			} else if(adGroupSearchPriceType.equals("2")) {
-				log.info("adGroupSearchPrice = " + adGroupSearchPrice);
-			} else {
-				message = "請選擇找東西廣告出價";
+		}
+		
+		if(!adOperatingRule.equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName()) && !adOperatingRule.equals(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName())){
+			message = "廣告類型錯誤";
+			return INPUT;
+		}
+		
+		//影音上稿檢查
+		if(adOperatingRule.equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName())){
+			if(StringUtils.isBlank(adPrice)){
+				message = "影音廣告出價不可為空";
 				return INPUT;
 			}
 		}
 		
-		if (StringUtils.isEmpty(adGroupChannelPrice)) {
-			message = "請輸入PChome頻道廣告出價！";
-			return INPUT;
-		} else {
-			adGroupChannelPrice = adGroupChannelPrice.trim();
-			if (adGroupChannelPrice.length() > 6) {
-				message = "PChome頻道廣告出價不可超過 6 位數！";
+		//多媒體上稿檢查
+		if(adOperatingRule.equals(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName())){
+			if (StringUtils.isEmpty(adGroupSearchPriceType)) {
+				message = "請選擇找東西廣告出價";
 				return INPUT;
+			} else {
+				//一開始沒有關鍵字，所以建議出價跟預設出價相同，等廣告建完有關鍵字，再去呼叫api更新
+				if(adGroupSearchPriceType.equals("1")) {
+					adGroupSearchPrice = defSearchPrice;
+				} else if(adGroupSearchPriceType.equals("2")) {
+					log.info("adGroupSearchPrice = " + adGroupSearchPrice);
+				} else {
+					message = "請選擇找東西廣告出價";
+					return INPUT;
+				}
+			}
+			
+			if (StringUtils.isEmpty(adGroupChannelPrice)) {
+				message = "請輸入PChome頻道廣告出價！";
+				return INPUT;
+			} else {
+				adGroupChannelPrice = adGroupChannelPrice.trim();
+				if (adGroupChannelPrice.length() > 6) {
+					message = "PChome頻道廣告出價不可超過 6 位數！";
+					return INPUT;
+				}
 			}
 		}
+		
 		
 		PfpAdGroup pfpAdGroup = new PfpAdGroup();
 		if(StringUtils.isNotBlank(adGroupSeq)) {
@@ -252,9 +287,27 @@ public class AdGroupAddAction extends BaseCookieAction{
 			pfpAdGroup.setAdGroupCreateTime(new Date());
 		}
 		pfpAdGroup.setAdGroupName(adGroupName);
-		pfpAdGroup.setAdGroupSearchPriceType(Integer.parseInt(adGroupSearchPriceType));
-		pfpAdGroup.setAdGroupSearchPrice(Float.parseFloat(adGroupSearchPrice));
-		pfpAdGroup.setAdGroupChannelPrice(Float.parseFloat(adGroupChannelPrice));
+		if(adOperatingRule.equals(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName())){
+			pfpAdGroup.setAdGroupSearchPriceType(Integer.parseInt(adGroupSearchPriceType));
+			pfpAdGroup.setAdGroupSearchPrice(Float.parseFloat(adGroupSearchPrice));
+			pfpAdGroup.setAdGroupChannelPrice(Float.parseFloat(adGroupChannelPrice));
+			pfpAdGroup.setAdGroupPriceType(EnumAdPriceType.AD_PRICE_CPC.getDbTypeName());
+			
+			
+		}
+		if(adOperatingRule.equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName())){
+			pfpAdGroup.setAdGroupSearchPriceType(1);
+			pfpAdGroup.setAdGroupSearchPrice(3);
+			pfpAdGroup.setAdGroupChannelPrice(Float.parseFloat(adPrice));
+			
+			for(EnumAdPriceType enumAdPriceType: EnumAdPriceType.values()){
+				if(Integer.parseInt(adPriceType) == enumAdPriceType.getType()){
+					pfpAdGroup.setAdGroupPriceType(enumAdPriceType.getDbTypeName());
+					break;
+				}
+			}
+		}
+		
 		pfpAdGroup.setAdGroupStatus(EnumStatus.UnDone.getStatusId());	// 新增廣告分類時，status 設定為未完成
 		pfpAdGroup.setAdGroupUpdateTime(new Date());
 		
@@ -264,7 +317,9 @@ public class AdGroupAddAction extends BaseCookieAction{
 		pfpAdGroupService.savePfpAdGroup(pfpAdGroup);
 
 		//系統價更新
-		syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, Float.valueOf(adGroupChannelPrice));
+		syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, pfpAdGroup.getAdGroupChannelPrice());
+		
+		
 		
 		return SUCCESS;
 	}
@@ -385,4 +440,45 @@ public class AdGroupAddAction extends BaseCookieAction{
 		return showChannelPrice;
 	}
 
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
+	public void setAdActionMax(int adActionMax) {
+		this.adActionMax = adActionMax;
+	}
+
+	public void setBackPage(String backPage) {
+		this.backPage = backPage;
+	}
+
+	public LinkedList<PfpAdPriceTypeVO> getPfpAdPriceTypeVOList() {
+		return pfpAdPriceTypeVOList;
+	}
+
+	public void setPfpAdPriceTypeVOList(LinkedList<PfpAdPriceTypeVO> pfpAdPriceTypeVOList) {
+		this.pfpAdPriceTypeVOList = pfpAdPriceTypeVOList;
+	}
+
+	public String getAdPrice() {
+		return adPrice;
+	}
+
+	public void setAdPrice(String adPrice) {
+		this.adPrice = adPrice;
+	}
+
+	public String getAdPriceType() {
+		return adPriceType;
+	}
+
+	public void setAdPriceType(String adPriceType) {
+		this.adPriceType = adPriceType;
+	}
+	
+	
+	
 }
