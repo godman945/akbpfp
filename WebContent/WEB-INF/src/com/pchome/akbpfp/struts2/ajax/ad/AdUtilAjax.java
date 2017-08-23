@@ -129,6 +129,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --get-duration " + adVideoUrl });
 		String resultStr = IOUtils.toString(process.getInputStream(),"UTF-8");
 		log.info(">>>>resultStr:"+resultStr);
+		
 		JSONObject json = new JSONObject();
 		int seconds = 0;
 		if(StringUtils.isBlank(resultStr)){
@@ -158,7 +159,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		}
 		
 		json.put("result", true);
-		json.put("msg", "秒數:"+seconds);
+		json.put("msg", "秒數:"+resultStr);
 		this.result = json.toString();
 		this.msg = new ByteArrayInputStream(json.toString().getBytes());
 		return SUCCESS;
