@@ -123,6 +123,8 @@ public class AdUtilAjax extends BaseCookieAction{
 	public String chkVideoUrl() throws Exception{
 		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --get-duration " + adVideoUrl });
 		String resultStr = IOUtils.toString(process.getInputStream(),"UTF-8");
+		log.info(">>>>resultStr:"+resultStr);
+		
 		JSONObject json = new JSONObject();
 		json.put("ALEX", "AAAAAAAAAAa");
 		json.put("url", adVideoUrl);
