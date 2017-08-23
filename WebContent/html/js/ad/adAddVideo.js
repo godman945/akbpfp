@@ -2,7 +2,7 @@
 	
 	
 	$('#save').click(function(){
-		
+		adVideoUrlCheck();
 	});
 });
 
