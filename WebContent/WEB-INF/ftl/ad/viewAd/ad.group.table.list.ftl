@@ -87,7 +87,7 @@
 				<td>${vo.adActionName!}</td>
 				<td class="td02">
 				<#if vo.adGroupStatus != 9 >
-					<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}">製作新廣告</a><br>
+					<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}&adOperatingRule=${vo.adOperatingRule!}">製作新廣告</a><br>
 					<#if adType != '2'>
 					<a href="adKeywordAdd.html?adGroupSeq=${vo.adGroupSeq!}">新增關鍵字</a><br>
 					</#if>

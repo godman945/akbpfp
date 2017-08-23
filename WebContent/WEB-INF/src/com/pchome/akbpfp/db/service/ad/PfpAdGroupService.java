@@ -156,7 +156,9 @@ public class PfpAdGroupService extends BaseService<PfpAdGroup,String> implements
 				adGroupViewVO.setAdActionName(pfpAdGroup.getPfpAdAction().getAdActionName());
 				adGroupViewVO.setAdActionMax(pfpAdGroup.getPfpAdAction().getAdActionMax());
 				adGroupViewVO.setAdGroupSeq(pfpAdGroup.getAdGroupSeq());						
-				adGroupViewVO.setAdGroupName(pfpAdGroup.getAdGroupName());				
+				adGroupViewVO.setAdGroupName(pfpAdGroup.getAdGroupName());
+				adGroupViewVO.setAdOperatingRule(pfpAdGroup.getPfpAdAction().getAdOperatingRule());
+				
 				
 				//裝置
 				for(EnumAdDevice adDevice:EnumAdDevice.values()){

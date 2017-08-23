@@ -21,7 +21,6 @@
 	    </tr>
   	</table>
 </span>
-
 </h2>
 <div id="latestBoardList" style="height:120px;height:110px\9;overflow:auto"></div>
 

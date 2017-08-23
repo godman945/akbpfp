@@ -71,6 +71,7 @@ import com.pchome.enumerate.ad.EnumAdSearchMobileSize;
 import com.pchome.enumerate.ad.EnumAdSearchPCSize;
 import com.pchome.enumerate.ad.EnumAdSize;
 import com.pchome.enumerate.ad.EnumAdStyle;
+import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -91,7 +92,7 @@ public class AdAddAction extends BaseCookieAction{
 	private String adActionName;
 	private String adGroupSeq;
 	private String adGroupName;
-
+	private String adOperatingRule;
 	private String adSeq;
 	private String adClass;
 	private String adStyle;
@@ -151,6 +152,9 @@ public class AdAddAction extends BaseCookieAction{
 	private String adKeywordPhraseOpen;		//詞組比對
 	private String adKeywordPrecisionOpen;	//精準比對
 	
+	
+	
+	//新增廣告
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
 		String referer = request.getHeader("Referer");
@@ -167,35 +171,47 @@ public class AdAddAction extends BaseCookieAction{
 			}
 		}
 
-		saveAndNew = "";
-		if(adStyle == null)		adStyle = "TMG";
-
+		
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 		adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 		adGroupName  = pfpAdGroup.getAdGroupName();
 		adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
+		
+		//多媒體廣告
+		if(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName().equals(adOperatingRule)){
+			saveAndNew = "";
+			if(adStyle == null)		adStyle = "TMG";
 
-		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
-		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
-		String adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
-		if(!customerInfoId.equals(adCustomerInfoId)) {
-			return "notOwner";
-		}
-			
-		// 取出分類所屬關鍵字
-		pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
-		// 取出分類所屬排除關鍵字
-		pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, pfpCustomerInfo.getCustomerInfoId());
+			PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
+			String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
+			String adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
+			if(!customerInfoId.equals(adCustomerInfoId)) {
+				return "notOwner";
+			}
+				
+			// 取出分類所屬關鍵字
+			pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
+			// 取出分類所屬排除關鍵字
+			pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, pfpCustomerInfo.getCustomerInfoId());
 
-		// 上傳圖片暫存檔名(亂數產生)
-		ulTmpName = RandomStringUtils.randomAlphanumeric(30);
-		imgFile = "";
+			// 上傳圖片暫存檔名(亂數產生)
+			ulTmpName = RandomStringUtils.randomAlphanumeric(30);
+			imgFile = "";
 
-		if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
-			adHiddenType = "YES";
+			if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
+				adHiddenType = "YES";
+			}
+			return SUCCESS;
 		}
 		
-		return SUCCESS;
+		//影音廣告
+		if(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName().equals(adOperatingRule)){
+			adOperatingRule = pfpAdGroup.getPfpAdAction().getAdOperatingRule();
+			adStyle = adOperatingRule;
+			return "adVideoAdd";
+		}
+		
+		return "notOwner";
 	}
 
 	// 新增圖文式廣告
@@ -1532,6 +1548,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setAdKeywordPrecisionOpen(String adKeywordPrecisionOpen) {
 		this.adKeywordPrecisionOpen = adKeywordPrecisionOpen;
+	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
 	}
 
 }

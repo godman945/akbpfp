@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/8/21 �U�� 03:11:50 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/8/22 �U�� 02:42:42 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -25,6 +25,7 @@ public class PfpAdActionReport implements java.io.Serializable {
 	private String adActionSeq;
 	private String payType;
 	private int adType;
+	private String adOperatingRule;
 	private String adClkPriceType;
 	private int adPv;
 	private int adVpv;
@@ -42,15 +43,16 @@ public class PfpAdActionReport implements java.io.Serializable {
 	}
 
 	public PfpAdActionReport(Date adPvclkDate, String adPvclkDevice, String customerInfoId, String adActionSeq,
-			String payType, int adType, String adClkPriceType, int adPv, int adVpv, int adClk, int adView,
-			int adInvalidClk, float adClkPrice, float adInvalidClkPrice, float adActionMaxPrice, int adActionCount,
-			Date createDate, Date updateDate) {
+			String payType, int adType, String adOperatingRule, String adClkPriceType, int adPv, int adVpv, int adClk,
+			int adView, int adInvalidClk, float adClkPrice, float adInvalidClkPrice, float adActionMaxPrice,
+			int adActionCount, Date createDate, Date updateDate) {
 		this.adPvclkDate = adPvclkDate;
 		this.adPvclkDevice = adPvclkDevice;
 		this.customerInfoId = customerInfoId;
 		this.adActionSeq = adActionSeq;
 		this.payType = payType;
 		this.adType = adType;
+		this.adOperatingRule = adOperatingRule;
 		this.adClkPriceType = adClkPriceType;
 		this.adPv = adPv;
 		this.adVpv = adVpv;
@@ -130,6 +132,15 @@ public class PfpAdActionReport implements java.io.Serializable {
 
 	public void setAdType(int adType) {
 		this.adType = adType;
+	}
+
+	@Column(name = "ad_operating_rule", nullable = false, length = 5)
+	public String getAdOperatingRule() {
+		return this.adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
 	}
 
 	@Column(name = "ad_clk_price_type", nullable = false, length = 3)

@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/8/21 �U�� 03:11:50 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/8/22 �U�� 02:42:42 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -29,6 +29,7 @@ public class PfdAdReport implements java.io.Serializable {
 	private String adActionSeq;
 	private String templateProductSeq;
 	private int adType;
+	private String adOperatingRule;
 	private String adClkPriceType;
 	private int adPv;
 	private int adVpv;
@@ -44,8 +45,9 @@ public class PfdAdReport implements java.io.Serializable {
 	}
 
 	public PfdAdReport(Date adPvclkDate, String pfpCustomerInfoId, String adSeq, String adGroupSeq, String adActionSeq,
-			String templateProductSeq, int adType, String adClkPriceType, int adPv, int adVpv, int adClk, int adView,
-			int adInvalidClk, float adClkPrice, float adInvalidClkPrice, Date createDate, Date updateDate) {
+			String templateProductSeq, int adType, String adOperatingRule, String adClkPriceType, int adPv, int adVpv,
+			int adClk, int adView, int adInvalidClk, float adClkPrice, float adInvalidClkPrice, Date createDate,
+			Date updateDate) {
 		this.adPvclkDate = adPvclkDate;
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
 		this.adSeq = adSeq;
@@ -53,6 +55,7 @@ public class PfdAdReport implements java.io.Serializable {
 		this.adActionSeq = adActionSeq;
 		this.templateProductSeq = templateProductSeq;
 		this.adType = adType;
+		this.adOperatingRule = adOperatingRule;
 		this.adClkPriceType = adClkPriceType;
 		this.adPv = adPv;
 		this.adVpv = adVpv;
@@ -67,8 +70,8 @@ public class PfdAdReport implements java.io.Serializable {
 
 	public PfdAdReport(Date adPvclkDate, String adPvclkDevice, String pfdCustomerInfoId, String pfdUserId,
 			String pfpCustomerInfoId, String adSeq, String adGroupSeq, String adActionSeq, String templateProductSeq,
-			int adType, String adClkPriceType, int adPv, int adVpv, int adClk, int adView, int adInvalidClk,
-			float adClkPrice, float adInvalidClkPrice, Date createDate, Date updateDate) {
+			int adType, String adOperatingRule, String adClkPriceType, int adPv, int adVpv, int adClk, int adView,
+			int adInvalidClk, float adClkPrice, float adInvalidClkPrice, Date createDate, Date updateDate) {
 		this.adPvclkDate = adPvclkDate;
 		this.adPvclkDevice = adPvclkDevice;
 		this.pfdCustomerInfoId = pfdCustomerInfoId;
@@ -79,6 +82,7 @@ public class PfdAdReport implements java.io.Serializable {
 		this.adActionSeq = adActionSeq;
 		this.templateProductSeq = templateProductSeq;
 		this.adType = adType;
+		this.adOperatingRule = adOperatingRule;
 		this.adClkPriceType = adClkPriceType;
 		this.adPv = adPv;
 		this.adVpv = adVpv;
@@ -192,6 +196,15 @@ public class PfdAdReport implements java.io.Serializable {
 
 	public void setAdType(int adType) {
 		this.adType = adType;
+	}
+
+	@Column(name = "ad_operating_rule", nullable = false, length = 5)
+	public String getAdOperatingRule() {
+		return this.adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
 	}
 
 	@Column(name = "ad_clk_price_type", nullable = false, length = 3)

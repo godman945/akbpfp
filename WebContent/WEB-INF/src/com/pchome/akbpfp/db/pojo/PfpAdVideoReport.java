@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/8/21 �U�� 03:11:50 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/8/22 �U�� 02:42:42 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -32,14 +32,14 @@ public class PfpAdVideoReport implements java.io.Serializable {
 	private int adPv;
 	private int adClk;
 	private int adView;
-	private int adVedioPlay;
-	private int adVedioMusic;
-	private int adVedioReplay;
-	private int adVedioProcess25;
-	private int adVedioProcess50;
-	private int adVedioProcess75;
-	private int adVedioProcess100;
-	private int adVedioUniq;
+	private int adVideoPlay;
+	private int adVideoMusic;
+	private int adVideoReplay;
+	private int adVideoProcess25;
+	private int adVideoProcess50;
+	private int adVideoProcess75;
+	private int adVideoProcess100;
+	private int adVideoUniq;
 	private Date createDate;
 	private Date updateDate;
 
@@ -48,8 +48,8 @@ public class PfpAdVideoReport implements java.io.Serializable {
 
 	public PfpAdVideoReport(Date adVideoDate, int adVideoTime, String pfdCustomerInfoId, String customerInfoId,
 			String adSeq, String templateProductSeq, String adPriceType, float adPrice, String adPvclkDevice, int adVpv,
-			int adPv, int adClk, int adView, int adVedioPlay, int adVedioMusic, int adVedioReplay, int adVedioProcess25,
-			int adVedioProcess50, int adVedioProcess75, int adVedioProcess100, int adVedioUniq, Date createDate,
+			int adPv, int adClk, int adView, int adVideoPlay, int adVideoMusic, int adVideoReplay, int adVideoProcess25,
+			int adVideoProcess50, int adVideoProcess75, int adVideoProcess100, int adVideoUniq, Date createDate,
 			Date updateDate) {
 		this.adVideoDate = adVideoDate;
 		this.adVideoTime = adVideoTime;
@@ -64,14 +64,14 @@ public class PfpAdVideoReport implements java.io.Serializable {
 		this.adPv = adPv;
 		this.adClk = adClk;
 		this.adView = adView;
-		this.adVedioPlay = adVedioPlay;
-		this.adVedioMusic = adVedioMusic;
-		this.adVedioReplay = adVedioReplay;
-		this.adVedioProcess25 = adVedioProcess25;
-		this.adVedioProcess50 = adVedioProcess50;
-		this.adVedioProcess75 = adVedioProcess75;
-		this.adVedioProcess100 = adVedioProcess100;
-		this.adVedioUniq = adVedioUniq;
+		this.adVideoPlay = adVideoPlay;
+		this.adVideoMusic = adVideoMusic;
+		this.adVideoReplay = adVideoReplay;
+		this.adVideoProcess25 = adVideoProcess25;
+		this.adVideoProcess50 = adVideoProcess50;
+		this.adVideoProcess75 = adVideoProcess75;
+		this.adVideoProcess100 = adVideoProcess100;
+		this.adVideoUniq = adVideoUniq;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 	}
@@ -206,76 +206,76 @@ public class PfpAdVideoReport implements java.io.Serializable {
 		this.adView = adView;
 	}
 
-	@Column(name = "ad_vedio_play", nullable = false)
-	public int getAdVedioPlay() {
-		return this.adVedioPlay;
+	@Column(name = "ad_video_play", nullable = false)
+	public int getAdVideoPlay() {
+		return this.adVideoPlay;
 	}
 
-	public void setAdVedioPlay(int adVedioPlay) {
-		this.adVedioPlay = adVedioPlay;
+	public void setAdVideoPlay(int adVideoPlay) {
+		this.adVideoPlay = adVideoPlay;
 	}
 
-	@Column(name = "ad_vedio_music", nullable = false)
-	public int getAdVedioMusic() {
-		return this.adVedioMusic;
+	@Column(name = "ad_video_music", nullable = false)
+	public int getAdVideoMusic() {
+		return this.adVideoMusic;
 	}
 
-	public void setAdVedioMusic(int adVedioMusic) {
-		this.adVedioMusic = adVedioMusic;
+	public void setAdVideoMusic(int adVideoMusic) {
+		this.adVideoMusic = adVideoMusic;
 	}
 
-	@Column(name = "ad_vedio_replay", nullable = false)
-	public int getAdVedioReplay() {
-		return this.adVedioReplay;
+	@Column(name = "ad_video_replay", nullable = false)
+	public int getAdVideoReplay() {
+		return this.adVideoReplay;
 	}
 
-	public void setAdVedioReplay(int adVedioReplay) {
-		this.adVedioReplay = adVedioReplay;
+	public void setAdVideoReplay(int adVideoReplay) {
+		this.adVideoReplay = adVideoReplay;
 	}
 
-	@Column(name = "ad_vedio_process_25", nullable = false)
-	public int getAdVedioProcess25() {
-		return this.adVedioProcess25;
+	@Column(name = "ad_video_process_25", nullable = false)
+	public int getAdVideoProcess25() {
+		return this.adVideoProcess25;
 	}
 
-	public void setAdVedioProcess25(int adVedioProcess25) {
-		this.adVedioProcess25 = adVedioProcess25;
+	public void setAdVideoProcess25(int adVideoProcess25) {
+		this.adVideoProcess25 = adVideoProcess25;
 	}
 
-	@Column(name = "ad_vedio_process_50", nullable = false)
-	public int getAdVedioProcess50() {
-		return this.adVedioProcess50;
+	@Column(name = "ad_video_process_50", nullable = false)
+	public int getAdVideoProcess50() {
+		return this.adVideoProcess50;
 	}
 
-	public void setAdVedioProcess50(int adVedioProcess50) {
-		this.adVedioProcess50 = adVedioProcess50;
+	public void setAdVideoProcess50(int adVideoProcess50) {
+		this.adVideoProcess50 = adVideoProcess50;
 	}
 
-	@Column(name = "ad_vedio_process_75", nullable = false)
-	public int getAdVedioProcess75() {
-		return this.adVedioProcess75;
+	@Column(name = "ad_video_process_75", nullable = false)
+	public int getAdVideoProcess75() {
+		return this.adVideoProcess75;
 	}
 
-	public void setAdVedioProcess75(int adVedioProcess75) {
-		this.adVedioProcess75 = adVedioProcess75;
+	public void setAdVideoProcess75(int adVideoProcess75) {
+		this.adVideoProcess75 = adVideoProcess75;
 	}
 
-	@Column(name = "ad_vedio_process_100", nullable = false)
-	public int getAdVedioProcess100() {
-		return this.adVedioProcess100;
+	@Column(name = "ad_video_process_100", nullable = false)
+	public int getAdVideoProcess100() {
+		return this.adVideoProcess100;
 	}
 
-	public void setAdVedioProcess100(int adVedioProcess100) {
-		this.adVedioProcess100 = adVedioProcess100;
+	public void setAdVideoProcess100(int adVideoProcess100) {
+		this.adVideoProcess100 = adVideoProcess100;
 	}
 
-	@Column(name = "ad_vedio_uniq", nullable = false)
-	public int getAdVedioUniq() {
-		return this.adVedioUniq;
+	@Column(name = "ad_video_uniq", nullable = false)
+	public int getAdVideoUniq() {
+		return this.adVideoUniq;
 	}
 
-	public void setAdVedioUniq(int adVedioUniq) {
-		this.adVedioUniq = adVedioUniq;
+	public void setAdVideoUniq(int adVideoUniq) {
+		this.adVideoUniq = adVideoUniq;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

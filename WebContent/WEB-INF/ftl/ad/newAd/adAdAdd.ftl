@@ -3,17 +3,20 @@
 
 <link href="<@s.url value="/html/css/ad/adPlugInStyle.css" />" rel="stylesheet" type="text/css" /> 
 <#if adStyle == "TXT">
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTxt.js" ></script>
+	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTxt.js" ></script>
 <#elseif adStyle == "TMG">
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmg.js?t=20141124" ></script>
+	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmg.js?t=20141124" ></script>
+<#elseif adStyle == "VIDEO">
+	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddVideo.js?t=20170823" ></script>
 </#if>
-
 
 <div class="cont">
 <#if adStyle == "TXT">
     <form method="post" id="modifyForm" name="modifyForm" action="doAdAdAddTxt.html">
 <#elseif adStyle == "TMG">
     <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
+<#elseif adStyle == "VIDEO">
+	<form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
 </#if>
 		<h1 class="adtitle">廣告：${adActionName!} > 分類：${adGroupName!}</h1>
 		<h2>
@@ -22,12 +25,13 @@
 		</h2>
 		<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
 		<ul class="admenuul">
-            <li class="m01"><a href="adAddImg.html?adGroupSeq=${adGroupSeq!}" onClick="return(chkLeave())">圖像廣告</a></li>
-            <li class="m02"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}" class="active" onClick="return(chkLeave())">圖文廣告</a></li>
-            <!-- <li class="m03"><a href="#">影音廣告</a></li>-->
+			<#if adStyle == "VIDEO">
+					<li class="m03"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}&adOperatingRule=VIDEO" class="active" onClick="return(chkLeave())">影音廣告</a></li>
+				<#else>
+					<li class="m01"><a href="adAddImg.html?adGroupSeq=${adGroupSeq!}&adOperatingRule=MEDIA" onClick="return(chkLeave())">圖像廣告</a></li>
+		            <li class="m02"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}&adOperatingRule=MEDIA" class="active" onClick="return(chkLeave())">圖文廣告</a></li>
+			</#if>
         </ul>
-        
-        
         
 		<div class="grtba">
 			<h4 style="display:none;">建立廣告</h4>
@@ -64,17 +68,19 @@
 <!-- adTmg start -->
 <@t.insertAttribute name="adTmg" />
 <!-- adTmg end -->
+<#elseif adStyle == "VIDEO">
+<@t.insertAttribute name="adAddVideo" />
 </#if>
  
 		</div>
 
 		<#if adStyle == "TXT" || adStyle == "TMG">
-		<!-- adKeyword start -->
-		<div id=keywordBody>
-		<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adKeywordAdd.js" ></script>
-		<@t.insertAttribute name="adKeyword" />
-		</div>
-		<!-- adKeyword end -->
+			<!-- adKeyword start -->
+				<div id=keywordBody>
+				<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adKeywordAdd.js" ></script>
+				<@t.insertAttribute name="adKeyword" />
+				</div>
+			<!-- adKeyword end -->
 		</#if>
 		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
 		<center style="margin-top:10px;">

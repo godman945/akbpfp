@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/8/21 �U�� 03:11:50 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/8/22 �U�� 02:42:42 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,11 +28,11 @@ public class PfpAdVideo implements java.io.Serializable {
 	private String templateProductSeq;
 	private String adPriceType;
 	private String adPvclkDevice;
-	private int adVedioPlay;
-	private int adVedioMusic;
-	private int adVedioReplay;
-	private int adVedioProcess;
-	private int adVedioProcessAmount;
+	private int adVideoPlay;
+	private int adVideoMusic;
+	private int adVideoReplay;
+	private int adVideoProcess;
+	private int adVideoProcessAmount;
 	private Date createDate;
 	private Date updateDate;
 
@@ -40,8 +40,8 @@ public class PfpAdVideo implements java.io.Serializable {
 	}
 
 	public PfpAdVideo(Date adVideoDate, int adVideoTime, String pfdCustomerInfoId, String customerInfoId, String adSeq,
-			int adType, String templateProductSeq, String adPriceType, String adPvclkDevice, int adVedioPlay,
-			int adVedioMusic, int adVedioReplay, int adVedioProcess, int adVedioProcessAmount, Date createDate,
+			int adType, String templateProductSeq, String adPriceType, String adPvclkDevice, int adVideoPlay,
+			int adVideoMusic, int adVideoReplay, int adVideoProcess, int adVideoProcessAmount, Date createDate,
 			Date updateDate) {
 		this.adVideoDate = adVideoDate;
 		this.adVideoTime = adVideoTime;
@@ -52,11 +52,11 @@ public class PfpAdVideo implements java.io.Serializable {
 		this.templateProductSeq = templateProductSeq;
 		this.adPriceType = adPriceType;
 		this.adPvclkDevice = adPvclkDevice;
-		this.adVedioPlay = adVedioPlay;
-		this.adVedioMusic = adVedioMusic;
-		this.adVedioReplay = adVedioReplay;
-		this.adVedioProcess = adVedioProcess;
-		this.adVedioProcessAmount = adVedioProcessAmount;
+		this.adVideoPlay = adVideoPlay;
+		this.adVideoMusic = adVideoMusic;
+		this.adVideoReplay = adVideoReplay;
+		this.adVideoProcess = adVideoProcess;
+		this.adVideoProcessAmount = adVideoProcessAmount;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 	}
@@ -155,49 +155,49 @@ public class PfpAdVideo implements java.io.Serializable {
 		this.adPvclkDevice = adPvclkDevice;
 	}
 
-	@Column(name = "ad_vedio_play", nullable = false)
-	public int getAdVedioPlay() {
-		return this.adVedioPlay;
+	@Column(name = "ad_video_play", nullable = false)
+	public int getAdVideoPlay() {
+		return this.adVideoPlay;
 	}
 
-	public void setAdVedioPlay(int adVedioPlay) {
-		this.adVedioPlay = adVedioPlay;
+	public void setAdVideoPlay(int adVideoPlay) {
+		this.adVideoPlay = adVideoPlay;
 	}
 
-	@Column(name = "ad_vedio_music", nullable = false)
-	public int getAdVedioMusic() {
-		return this.adVedioMusic;
+	@Column(name = "ad_video_music", nullable = false)
+	public int getAdVideoMusic() {
+		return this.adVideoMusic;
 	}
 
-	public void setAdVedioMusic(int adVedioMusic) {
-		this.adVedioMusic = adVedioMusic;
+	public void setAdVideoMusic(int adVideoMusic) {
+		this.adVideoMusic = adVideoMusic;
 	}
 
-	@Column(name = "ad_vedio_replay", nullable = false)
-	public int getAdVedioReplay() {
-		return this.adVedioReplay;
+	@Column(name = "ad_video_replay", nullable = false)
+	public int getAdVideoReplay() {
+		return this.adVideoReplay;
 	}
 
-	public void setAdVedioReplay(int adVedioReplay) {
-		this.adVedioReplay = adVedioReplay;
+	public void setAdVideoReplay(int adVideoReplay) {
+		this.adVideoReplay = adVideoReplay;
 	}
 
-	@Column(name = "ad_vedio_process", nullable = false)
-	public int getAdVedioProcess() {
-		return this.adVedioProcess;
+	@Column(name = "ad_video_process", nullable = false)
+	public int getAdVideoProcess() {
+		return this.adVideoProcess;
 	}
 
-	public void setAdVedioProcess(int adVedioProcess) {
-		this.adVedioProcess = adVedioProcess;
+	public void setAdVideoProcess(int adVideoProcess) {
+		this.adVideoProcess = adVideoProcess;
 	}
 
-	@Column(name = "ad_vedio_process_amount", nullable = false)
-	public int getAdVedioProcessAmount() {
-		return this.adVedioProcessAmount;
+	@Column(name = "ad_video_process_amount", nullable = false)
+	public int getAdVideoProcessAmount() {
+		return this.adVideoProcessAmount;
 	}
 
-	public void setAdVedioProcessAmount(int adVedioProcessAmount) {
-		this.adVedioProcessAmount = adVedioProcessAmount;
+	public void setAdVideoProcessAmount(int adVideoProcessAmount) {
+		this.adVideoProcessAmount = adVideoProcessAmount;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
