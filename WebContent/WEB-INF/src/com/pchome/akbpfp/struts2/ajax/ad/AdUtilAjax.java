@@ -127,7 +127,7 @@ public class AdUtilAjax extends BaseCookieAction{
 	 * */
 	public String chkVideoUrl() throws Exception{
 		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --get-duration " + adVideoUrl });
-		String resultStr = IOUtils.toString(process.getInputStream(),"UTF-8");
+		String resultStr = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
 		log.info(">>>>resultStr:"+resultStr);
 		
 		JSONObject json = new JSONObject();
@@ -141,7 +141,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		}else{
 			String[] timeArray = resultStr.split(":");
 			if(timeArray.length == 1){
-				seconds = Integer.parseInt(resultStr);
+				seconds = Integer.parseInt(timeArray[0]);
 			}else if(timeArray.length == 2){
 				seconds = Integer.parseInt(timeArray[0]) * 60 + Integer.parseInt(timeArray[1]);
 			}else if(timeArray.length == 3){
