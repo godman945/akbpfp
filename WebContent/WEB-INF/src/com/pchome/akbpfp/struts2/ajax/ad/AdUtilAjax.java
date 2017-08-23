@@ -150,7 +150,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			log.info(">>>>video totoal seconds:"+seconds);
 		}
 		
-		if(seconds  >= EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue() ){
+		if(seconds  > EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue() ){
 			json.put("result", false);
 			json.put("msg", "影片長度不得超過30秒，請重新上傳30秒以內的影片。");
 			this.result = json.toString();
