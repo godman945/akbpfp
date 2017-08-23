@@ -1,7 +1,8 @@
 ﻿$(document).ready(function(){
+	
+	
 	$('#save').click(function(){
-		var result = adVideoUrlCheck();
-		console.log(result);
+		
 	});
 });
 
@@ -13,10 +14,10 @@ function adVideoUrlCheck(){
 	console.log($("#videoUrl").val());
 	console.log(regx.test($("#videoUrl").val()));
 	if(!regx.test($("#videoUrl").val())){
-		return {'result':false,'msg':'網址格式錯誤'}
+		var result = {'result':false,'msg':'網址格式錯誤'};
+		saveAdAddVideo(result);
 	}
 	
-	var result;
 	$.ajax({
 		url: "chkVideoUrl.html",
 		data:{
@@ -24,13 +25,18 @@ function adVideoUrlCheck(){
 		},
 		type:"POST",
 		dataType:"JSON",
-		success:function(response, status){
-			console.log(response);
+		success:function(result, status){
+//			console.log(response);
 		},
 		error: function(xtl) {
 			//alert("系統繁忙，請稍後再試！");
 		}
-	}).done(function (response) {
-		console.log(response);
+	}).done(function (result) {
+		saveAdAddVideo(result);
 	});
+}
+
+
+function saveAdAddVideo(result){
+	console.log(result);
 }
