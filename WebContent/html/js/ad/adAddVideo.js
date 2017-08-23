@@ -16,6 +16,7 @@ function adVideoUrlCheck(){
 		return {'result':false,'msg':'網址格式錯誤'}
 	}
 	
+	var result;
 	$.ajax({
 		url: "chkVideoUrl.html",
 		data:{
@@ -24,12 +25,12 @@ function adVideoUrlCheck(){
 		type:"POST",
 		dataType:"JSON",
 		success:function(response, status){
-			return response
+			console.log(response);
 		},
 		error: function(xtl) {
 			//alert("系統繁忙，請稍後再試！");
 		}
 	}).done(function (response) {
-		return response
+		console.log(response);
 	});
 }
