@@ -16,6 +16,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdVideoCondition;
 import com.pchome.soft.depot.utils.HttpUtil;
 public class AdUtilAjax extends BaseCookieAction{
 
@@ -119,16 +120,45 @@ public class AdUtilAjax extends BaseCookieAction{
 	}
 
 	
-	//檢查影音廣告網址
+	/**
+	 * 檢查影音廣告網址
+	 * 1.根據回傳時間格式轉換秒數
+	 * 2.影片格式目前開放30秒以下才可通過
+	 * */
 	public String chkVideoUrl() throws Exception{
 		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --get-duration " + adVideoUrl });
 		String resultStr = IOUtils.toString(process.getInputStream(),"UTF-8");
 		log.info(">>>>resultStr:"+resultStr);
-		
 		JSONObject json = new JSONObject();
-		json.put("ALEX", "AAAAAAAAAAa");
-		json.put("url", adVideoUrl);
-		json.put("time", resultStr);
+		int seconds = 0;
+		if(StringUtils.isBlank(resultStr)){
+			json.put("result", false);
+			json.put("msg", "無此影片資訊");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			return SUCCESS;
+		}else{
+			String[] timeArray = resultStr.split(":");
+			if(timeArray.length == 1){
+				seconds = Integer.parseInt(timeArray[0]);
+			}else if(timeArray.length == 2){
+				seconds = Integer.parseInt(timeArray[0]) *60 + Integer.parseInt(timeArray[1]);
+			}else if(timeArray.length == 3){
+				seconds = Integer.parseInt(timeArray[0]) * 60 * 60 + Integer.parseInt(timeArray[1]) * 60 + Integer.parseInt(timeArray[2]);
+			}
+			log.info(">>>>video totoal seconds:"+seconds);
+		}
+		
+		if(seconds  >= EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue() ){
+			json.put("result", false);
+			json.put("msg", "影片長度不得超過30秒，請重新上傳30秒以內的影片。");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			return SUCCESS;
+		}
+		
+		json.put("result", true);
+		json.put("msg", "秒數:"+seconds);
 		this.result = json.toString();
 		this.msg = new ByteArrayInputStream(json.toString().getBytes());
 		return SUCCESS;
