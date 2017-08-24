@@ -21,6 +21,8 @@ public class AdAgesexReportVO {
 	private BigInteger count; //資料筆數(用於計算平均每日花費上限)
 	private String adDevice; //裝置
 	private String adType;	 //廣告類型
+	private String adOperatingRule;		//廣告樣式
+	private String adClkPriceType;		//廣告計費方式
 
 	public Date getReportDate() {
 		return reportDate;
@@ -116,6 +118,22 @@ public class AdAgesexReportVO {
 
 	public void setAdType(String adType) {
 		this.adType = adType;
+	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
+
+	public String getAdClkPriceType() {
+		return adClkPriceType;
+	}
+
+	public void setAdClkPriceType(String adClkPriceType) {
+		this.adClkPriceType = adClkPriceType;
 	}
 	
 }

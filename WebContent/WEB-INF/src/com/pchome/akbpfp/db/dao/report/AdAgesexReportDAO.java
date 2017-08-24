@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
@@ -16,6 +17,8 @@ import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pchome.enumerate.ad.EnumAdAgeCode;
+import com.pchome.enumerate.ad.EnumAdPriceType;
+import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.akbpfp.db.dao.BaseDAO;
@@ -25,7 +28,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdAgeReport;
 public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implements IAdAgesexReportDAO {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-	public List<AdAgesexReportVO> getReportList(final String sqlType, final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate, final int page, final int pageSize) throws Exception{
+	public List<AdAgesexReportVO> getReportList(final String sqlType, final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String adOperatingRule, final String startDate, final String endDate, final int page, final int pageSize) throws Exception{
 
 		List<AdAgesexReportVO> result = (List<AdAgesexReportVO>) getHibernateTemplate().execute(
 				new HibernateCallback<List<AdAgesexReportVO>>() {
@@ -40,7 +43,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 
 							//每日廣告成效 (數量及加總)
 							try {
-								sqlParams = getAgesexCountHQLStr(searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+								sqlParams = getAgesexCountHQLStr(searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -50,7 +53,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 
 							//每日廣告成效 (資料)
 							try {
-								sqlParams = getAgesexHQLStr(searchAgesex, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+								sqlParams = getAgesexHQLStr(searchAgesex, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -60,7 +63,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 
 							//每日廣告成效 (圖表)
 							try {
-								sqlParams = getAgesexChartHQLStr(searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+								sqlParams = getAgesexChartHQLStr(searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate);
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -113,6 +116,13 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_AGESEX.getTextValue())) {
 
+							Map<String,String> adStyleTypeMap = new HashMap<String,String>();
+							Map<String,String> adPriceTypeMap = new HashMap<String,String>();
+							Map<Integer,String> adTypeMap = new HashMap<Integer,String>();
+							adStyleTypeMap = getAdStyleTypeMap();
+							adPriceTypeMap = getAdPriceTypeMap();
+							adTypeMap = getAdType();
+							
 							for (int i=0; i<dataList.size(); i++) {
 
 								Object[] objArray = (Object[]) dataList.get(i);
@@ -132,6 +142,9 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 								String adActionSeq = objArray[7].toString();
 								String adGroupSeq = objArray[8].toString();
 								String adDevice = objArray[9].toString();
+								String adOperatingRuleCode = objArray[10].toString();
+								String adClkPriceType = objArray[11].toString();
+								Integer adType = Integer.parseInt(objArray[12].toString());
 
 								AdAgesexReportVO vo = new AdAgesexReportVO();
 
@@ -170,6 +183,10 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 								} else {
 									vo.setAdDevice("全部");
 								}
+								
+								vo.setAdOperatingRule(adStyleTypeMap.get(adOperatingRuleCode));
+								vo.setAdClkPriceType(adPriceTypeMap.get(adClkPriceType));
+								vo.setAdType(adTypeMap.get(adType));
 								
 								resultData.add(vo);
 
@@ -217,13 +234,13 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		return result;
 	}
 
-	private HashMap<String, Object> getAgesexCountHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
+	private HashMap<String, Object> getAgesexCountHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String adOperatingRule, final String startDate, final String endDate) throws ParseException{
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
 		hql.append("select");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum(r.ad_clk), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");					// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_time_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price) ");
@@ -254,6 +271,11 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 			sqlParams.put("searchStr", searchStr);
 		}
 
+		if (StringUtils.isNotBlank(adOperatingRule)) {
+			hql.append(" and r.ad_operating_rule = :adOperatingRule ");
+			sqlParams.put("adOperatingRule", adOperatingRule);
+		}
+		
 		if(StringUtils.isNotEmpty(searchAgesex) && StringUtils.equals(searchAgesex, "A") ){
 			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.age_code");
 		} else {
@@ -264,7 +286,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		return sqlParams;
 	}
 
-	private HashMap<String, Object> getAgesexHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
+	private HashMap<String, Object> getAgesexHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String adOperatingRule, final String startDate, final String endDate) throws ParseException{
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
@@ -272,13 +294,16 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		hql.append(" r.age_code,");
 		hql.append(" r.sex,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum(r.ad_clk), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_time_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
 		hql.append(" r.ad_action_seq, ");
 		hql.append(" r.ad_group_seq, ");
-		hql.append(" r.ad_pvclk_device ");
+		hql.append(" r.ad_pvclk_device, ");
+		hql.append(" r.ad_operating_rule, ");
+		hql.append(" r.ad_clk_price_type, ");
+		hql.append(" r.ad_type ");
 		hql.append(" from pfp_ad_age_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");
@@ -306,12 +331,17 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 			sqlParams.put("searchStr", searchStr);
 		}
 
+		if (StringUtils.isNotBlank(adOperatingRule)) {
+			hql.append(" and r.ad_operating_rule = :adOperatingRule ");
+			sqlParams.put("adOperatingRule", adOperatingRule);
+		}
+		
 		if(StringUtils.isNotEmpty(searchAgesex) && StringUtils.equals(searchAgesex, "A") ){
-			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.age_code");
-			hql.append(" order by r.ad_action_seq, r.ad_group_seq, r.age_code");
+			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.age_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+			hql.append(" order by r.ad_action_seq, r.ad_group_seq, r.age_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
 		} else {
-			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.sex");
-			hql.append(" order by r.ad_action_seq, r.ad_group_seq, r.sex desc");
+			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.sex, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+			hql.append(" order by r.ad_action_seq, r.ad_group_seq, r.sex desc, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
 		}
 		
 		sqlParams.put("sql", hql);
@@ -320,7 +350,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 	}
 
 
-	private HashMap<String, Object> getAgesexChartHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) throws ParseException{
+	private HashMap<String, Object> getAgesexChartHQLStr(final String searchAgesex, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String adOperatingRule, final String startDate, final String endDate) throws ParseException{
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
@@ -328,7 +358,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		hql.append(" r.age_code,");
 		hql.append(" r.sex,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum(r.ad_clk), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");					// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_time_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price) ");
@@ -359,6 +389,11 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 			sqlParams.put("searchStr", searchStr);
 		}
 
+		if (StringUtils.isNotBlank(adOperatingRule)) {
+			hql.append(" and r.ad_operating_rule = :adOperatingRule ");
+			sqlParams.put("adOperatingRule", adOperatingRule);
+		}
+		
 		if(StringUtils.isNotEmpty(searchAgesex) && StringUtils.equals(searchAgesex, "A") ){
 			hql.append(" group by r.age_code");
 			hql.append(" order by r.age_code");
@@ -382,5 +417,35 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 			searchStr = searchText;
 		}
 		return searchStr;
+	}
+	
+	private Map<String,String> getAdStyleTypeMap(){
+		Map<String,String> adStyleTypeMap = new HashMap<String,String>();
+		
+		for(EnumAdStyleType enumAdStyleType:EnumAdStyleType.values()){
+			adStyleTypeMap.put(enumAdStyleType.getTypeName(), enumAdStyleType.getType());
+		}
+		
+		return adStyleTypeMap;
+	}
+	
+	private Map<String,String> getAdPriceTypeMap(){
+		Map<String,String> adPriceTypeMap = new HashMap<String,String>();
+		
+		for(EnumAdPriceType enumAdPriceType:EnumAdPriceType.values()){
+			adPriceTypeMap.put(enumAdPriceType.getDbTypeName(), enumAdPriceType.getTypeName());
+		}
+		
+		return adPriceTypeMap;
+	}
+	
+	private Map<Integer,String> getAdType(){
+		Map<Integer,String> adTypeMap = new HashMap<Integer,String>();
+		
+		for(EnumAdType enumAdType:EnumAdType.values()){
+			adTypeMap.put(enumAdType.getType(), enumAdType.getTypeName());
+		}
+		
+		return adTypeMap;
 	}
 }

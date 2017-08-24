@@ -16,6 +16,14 @@
 	      	</select>
 	    </td>
 		
+		<td>
+		    <select id="adOperatingRule"> 
+		        <#list adStyleTypeMap?keys as skey>
+		  		    <option value="${skey}">${adStyleTypeMap[skey]}</option>
+		  	    </#list>
+	      	</select>
+	    </td>
+		
 	   <td>
 	   		<select id="searchAgesex">
 	   			<option value="A">年齡</option>
@@ -96,9 +104,9 @@ ${page}/${totalPage}
          <#assign index = 0>
 		 <tr height="30">
 		<#list td as tdin>
-			<#if index = 8 || index = 9>
+			<#if index = 11 || index = 12 || index = 13>
 				<td align="${align_data[index]}">NT$ ${tdin}</td>	
-			<#elseif index = 7>
+			<#elseif index = 10>
 				<td align="${align_data[index]}">${tdin}%</td>
 			<#else>	
 				<td align="${align_data[index]}">${tdin}</td>
@@ -113,9 +121,9 @@ ${page}/${totalPage}
  	<tr height="35">
 	    <#assign index2 = 0>
    		<#list tableDataTotalList as th>
-			<#if index2 = 8 || index2 = 9>
+			<#if index2 = 11 || index2 = 12 || index2 = 13>
 				<th height="30" align="${align_sum[index2]}">NT$ ${th}</th>	
-			<#elseif index2 = 7>
+			<#elseif index2 = 10>
 				<th height="30" align="${align_sum[index2]}">${th}%</th>
 			<#else>	
 				<th height="30" align="${align_sum[index2]}">${th}</th>
@@ -158,6 +166,7 @@ ${page}/${totalPage}
 	<input type="hidden" id="fadSearchWay" name="adSearchWay" value="${adSearchWay}">
 	<input type="hidden" id="fadShowWay" name="adShowWay" value="${adShowWay}">
 	<input type="hidden" id="fadSearchAgesex" name="searchAgesex" value="${searchAgesex}">
+	<input type="hidden" id="fadOperatingRule" name="adOperatingRule" value="${adOperatingRule}">
 	<input type="hidden" id="fsearchText" name="searchText" value="${searchText}">
 	<input type="hidden" id="fsearchId" name="searchId" value="${searchId}">
 	<input type="hidden" id="downloadFlag" name="downloadFlag" value="yes">

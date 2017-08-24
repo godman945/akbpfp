@@ -140,11 +140,12 @@ function ready(){
 		headers: {
 			0 : { sorter: false },
 			//4 : { sorter: 'fancyNumber' },
-			5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'rangesort' },
-			9 : { sorter: 'rangesort' }
+			8 : { sorter: 'fancyNumber' },
+			9 : { sorter: 'fancyNumber' },
+			10 : { sorter: 'fancyNumber' },
+			11 : { sorter: 'rangesort' },
+			12 : { sorter: 'rangesort' },
+			13 : { sorter: 'rangesort' }
 		}
 	});
 
@@ -253,6 +254,7 @@ function ready(){
 	var searchText = document.excerptFrom.searchText.value;
 	var adShowWay = document.excerptFrom.adShowWay.value;
 	var searchAgesex = document.excerptFrom.searchAgesex.value;
+	var adOperatingRule = document.excerptFrom.adOperatingRule.value;
 
 	$("#searchText").attr("value", searchText);
 
@@ -291,6 +293,13 @@ function ready(){
 		}
 	});
 	
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == adOperatingRule) {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
 	//搜尋動作 Do
 	$('#btnSearchDo').click(function(){
 		searchDo();
@@ -298,7 +307,7 @@ function ready(){
 		ajaxFormSubmit();		
 	});
 	
-	$("#adShowWay, #adPvclkDevice, #adSearchWay, #searchAgesex").change(function(){
+	$("#adShowWay, #adPvclkDevice, #adSearchWay, #searchAgesex, #adOperatingRule").change(function(){
     	searchDo();
     	ajaxFormSubmit();
    });
@@ -357,7 +366,8 @@ function showHighChart(){
 			"charType" : $('#selectChartType').val(),
 			"searchId" : $('#fsearchId').val(),
 			"searchText" : $('#searchText').val(),
-			"searchAgesex" : $('#fadSearchAgesex').val()
+			"searchAgesex" : $('#fadSearchAgesex').val(),
+			"adOperatingRule" : $('#fadOperatingRule').val()
 		},
 		success : function(respone) {
 			console.log(respone);
@@ -516,7 +526,8 @@ function initJsonData(){
 		"searchText": $('#fsearchText').val(),
 		"searchId": $('#fsearchId').val(),
 		"downloadFlag": $('#downloadFlag').val(),
-		"searchAgesex": $('#fadSearchAgesex').val()
+		"searchAgesex": $('#fadSearchAgesex').val(),
+		"adOperatingRule": $('#fadOperatingRule').val()
 	};
 }
 
@@ -568,6 +579,7 @@ function searchDo(){
 	document.excerptFrom.searchText.value = $('#searchText').val();
 	document.excerptFrom.adShowWay.value = $('#adShowWay').val();
 	document.excerptFrom.searchAgesex.value = $('#searchAgesex').val();
+	document.excerptFrom.adOperatingRule.value = $('#adOperatingRule').val();
 	document.excerptFrom.searchId.value = "";
 	document.excerptFrom.formPage.value = "1";
 }
@@ -605,6 +617,13 @@ function serachReset(){
 
 	$("#searchAgesex").children().each(function(){
 		if ($(this).val() == "A") {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == "") {
 			//jQuery給法
 			$(this).attr("selected", "true"); //或是給selected也可
 		}

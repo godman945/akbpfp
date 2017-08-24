@@ -7,6 +7,6 @@ import com.pchome.akbpfp.db.pojo.PfpAdAgeReport;
 
 public interface IAdAgesexReportDAO extends IBaseDAO<PfpAdAgeReport, Integer> {
 	
-	public List<AdAgesexReportVO> getReportList(String sqlType, String searchAgesex, String searchText, String adSearchWay, String adPvclkDevice, String adType, String customerInfoId, String startDate, String endDate, int page, int pageSize) throws Exception;
+	public List<AdAgesexReportVO> getReportList(String sqlType, String searchAgesex, String searchText, String adSearchWay, String adPvclkDevice, String adType, String customerInfoId, String adOperatingRule, String startDate, String endDate, int page, int pageSize) throws Exception;
 
 }
