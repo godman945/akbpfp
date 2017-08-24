@@ -140,11 +140,12 @@ function ready(){
 		headers: {
 			0 : { sorter: false },
 			//4 : { sorter: 'fancyNumber' },
-			5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'rangesort' },
-			9 : { sorter: 'rangesort' }
+			8 : { sorter: 'fancyNumber' },
+			9 : { sorter: 'fancyNumber' },
+			10 : { sorter: 'fancyNumber' },
+			11 : { sorter: 'rangesort' },
+			12 : { sorter: 'rangesort' },
+			13 : { sorter: 'rangesort' }
 		}
 	});
 
@@ -253,6 +254,7 @@ function ready(){
 	var searchText = document.excerptFrom.searchText.value;
 	var adShowWay = document.excerptFrom.adShowWay.value;
 	var searchWebsiteCode = document.excerptFrom.searchWebsiteCode.value;
+	var adOperatingRule = document.excerptFrom.adOperatingRule.value;
 
 	$("#searchText").attr("value", searchText);
 
@@ -291,6 +293,13 @@ function ready(){
 		}
 	});
 	
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == adOperatingRule) {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
 	//搜尋動作 Do
 	$('#btnSearchDo').click(function(){
 		searchDo();
@@ -298,7 +307,7 @@ function ready(){
 		ajaxFormSubmit();		
 	});
 	
-	$("#adShowWay, #adPvclkDevice, #adSearchWay, #searchWebsiteCode").change(function(){
+	$("#adShowWay, #adPvclkDevice, #adSearchWay, #searchWebsiteCode, #adOperatingRule").change(function(){
     	searchDo();
     	ajaxFormSubmit();
    });
@@ -358,7 +367,8 @@ function showHighChart(){
 			"charType" : $('#selectChartType').val(),
 			"searchId" : $('#fsearchId').val(),
 			"searchText" : $('#searchText').val(),
-			"searchWebsiteCode" : $('#fadSearchWebsiteCode').val()
+			"searchWebsiteCode" : $('#fadSearchWebsiteCode').val(),
+			"adOperatingRule" : $('#fadOperatingRule').val()
 		},
 		success : function(respone) {
 			console.log(respone);
@@ -386,14 +396,14 @@ function showHighChart(){
 			selectSuffix = "次";
 			break;
 		case "ctr":
-			titleName = "點選率(%)";
-			selectTypeName = "點選率";
+			titleName = "互動率(%)";
+			selectTypeName = "互動率";
 			selectSuffix = "%";
 			decimals = 2;
 			break;
 		case "click":
-			titleName = "點選次數(次)";
-			selectTypeName = "點選次數";
+			titleName = "互動數(次)";
+			selectTypeName = "互動數";
 			selectSuffix = "次";
 			break;
 		case "invalid":
@@ -402,8 +412,14 @@ function showHighChart(){
 			selectSuffix = "次";
 			break;
 		case "avgCost":
-			titleName = "平均點選費用(NT$)";
-			selectTypeName = "平均點選費用";
+			titleName = "單次互動費用(NT$)";
+			selectTypeName = "單次互動費用";
+			selectSuffix = "元";
+			decimals = 2;
+			break;
+		case "kiloCost":
+			titleName = "千次曝光費用(NT$)";
+			selectTypeName = "千次曝光費用";
 			selectSuffix = "元";
 			decimals = 2;
 			break;
@@ -521,7 +537,8 @@ function initJsonData(){
 		"searchText": $('#fsearchText').val(),
 		"searchId": $('#fsearchId').val(),
 		"downloadFlag": $('#downloadFlag').val(),
-		"searchWebsiteCode": $('#fadSearchWebsiteCode').val()
+		"searchWebsiteCode": $('#fadSearchWebsiteCode').val(),
+		"adOperatingRule": $('#fadOperatingRule').val()
 	};
 }
 
@@ -573,6 +590,7 @@ function searchDo(){
 	document.excerptFrom.searchText.value = $('#searchText').val();
 	document.excerptFrom.adShowWay.value = $('#adShowWay').val();
 	document.excerptFrom.searchWebsiteCode.value = $('#searchWebsiteCode').val();
+	document.excerptFrom.adOperatingRule.value = $('#adOperatingRule').val();
 	document.excerptFrom.searchId.value = "";
 	document.excerptFrom.formPage.value = "1";
 }
@@ -609,6 +627,13 @@ function serachReset(){
 	});
 
 	$("#searchWebsiteCode").children().each(function(){
+		if ($(this).val() == "") {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
+	$("#adOperatingRule").children().each(function(){
 		if ($(this).val() == "") {
 			//jQuery給法
 			$(this).attr("selected", "true"); //或是給selected也可

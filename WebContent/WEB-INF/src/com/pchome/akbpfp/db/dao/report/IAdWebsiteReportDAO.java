@@ -7,6 +7,6 @@ import com.pchome.akbpfp.db.pojo.PfpAdWebsiteReport;
 
 public interface IAdWebsiteReportDAO extends IBaseDAO<PfpAdWebsiteReport, Integer> {
 	
-	public List<AdWebsiteReportVO> getReportList(String sqlType, String searchWebsiteCode, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String startDate, String endDate, int page, int pageSize) throws Exception;
+	public List<AdWebsiteReportVO> getReportList(String sqlType, String searchWebsiteCode, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String adOperatingRule, String startDate, String endDate, int page, int pageSize) throws Exception;
 
 }

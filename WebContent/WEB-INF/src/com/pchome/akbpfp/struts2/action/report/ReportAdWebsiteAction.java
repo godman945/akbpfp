@@ -38,8 +38,8 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 	private LinkedList<String> tableHeadList =null; //頁面table head
 
 	// 欄位
-	private String[] align_data = {"center", "center", "center", "center", "center", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "center", "center", "center", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
 
 	private LinkedList<LinkedList<String>> tableDataList =null; // 頁面 table data
 	private LinkedList<String> tableDataTotalList =null; //頁面全部加總table total foot
@@ -74,6 +74,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 	private String searchText="";//搜尋文字
 	private String adShowWay="0";//廣告顯示位址,一般,內容
 	private String searchId="";//廣告id ,某活動,某群組id
+	private String adOperatingRule;//廣告樣式
 	
 	private String charPic="";//圖表格式
 	private String charType="";//度量
@@ -110,10 +111,14 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			searchText = "";
 		}
 
+		if(adOperatingRule.equals("Null")) {
+			adOperatingRule = "";
+		}
+		
 		String customerInfoId = super.getCustomer_info_id();
 		log.info(">>> customerInfoId = " + customerInfoId);
 
-		List<AdWebsiteReportVO> resultData = adWebsiteReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_WEBSITE_CHART.getTextValue(),searchWebsiteCode,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+		List<AdWebsiteReportVO> resultData = adWebsiteReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_WEBSITE_CHART.getTextValue(),searchWebsiteCode,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 		List<String> titleDataList = new ArrayList<String>();
 		List<Double> dataList = new ArrayList<Double>();
@@ -127,10 +132,9 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			double invClick = 0;
 			double ctr = 0;
 			double costAvg = 0;
+			double kiloCost = 0;
 			String websiteCategoryName = "";
 
-			/*week = vo.getWeek();
-			timeCode = vo.getTime();*/
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
@@ -142,14 +146,19 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 				websiteCategoryName = "未分類";
 			}
 			
-			//點選率 = 點選次數 / 曝光數
+			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
 				ctr = (click / pv) * 100;
 			}
 
-			//平均點選費用 = 總費用 / 總點選次數
+			//單次互動費用 = 總費用 / 總互動次數
 			if (cost>0 && click>0) {
 				costAvg = cost / click;
+			}
+
+			//千次曝光費用 = 總費用*1000 / 曝光數
+			if(cost>0 && pv>0){
+				 kiloCost = (cost * 1000) / pv;
 			}
 
 			double data = 0;
@@ -163,7 +172,9 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 				data = invClick;
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 				data = costAvg;
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+				data = kiloCost;
+            } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 				data = cost;
 			}
 			
@@ -190,11 +201,12 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 
 		tableHeadNameMap=new HashMap<String,String>();
 		tableHeadNameMap.put("曝光數", EnumReport.REPORT_CHART_TYPE_PV.getTextValue());
-		tableHeadNameMap.put("點選次數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
-		tableHeadNameMap.put("點選率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
+		tableHeadNameMap.put("互動數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
+		tableHeadNameMap.put("互動率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
 		// 20140318： 隱藏 "無效點選次數" 欄位
 		//tableHeadNameMap.put("無效點選次數", EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue());
-		tableHeadNameMap.put("平均點選費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
 		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
 		
 		optionSelect="";
@@ -202,7 +214,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 
 		//optionSelect="曝光數,點選率(%),點選次數,無效點選次數,平均點選費用,費用";
 		// 20140318： 隱藏 "無效點選次數" 欄位
-		optionSelect="曝光數,點選次數,點選率,平均點選費用,費用";
+		optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
 
 		tableHeadShowList=new LinkedList<String>();
 
@@ -283,6 +295,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		log.info("adType="+adType);
 		log.info("adSearchWay="+adSearchWay);
 		log.info("adShowWay="+adShowWay);
+		log.info("adOperatingRule="+adOperatingRule);
 
 		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
 
@@ -310,16 +323,19 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		}
 
 		tableHeadList.addFirst("裝置");
+		tableHeadList.addFirst("計價方式");
+		tableHeadList.addFirst("廣告樣式");
+		tableHeadList.addFirst("播放類型");
 		tableHeadList.addFirst("網站分類");
 		tableHeadList.addFirst("分類");
 		tableHeadList.addFirst("廣告");
 		tableHeadList.addFirst("狀態");
 
-		List<AdWebsiteReportVO> resultSumData = adWebsiteReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_WEBSITE_COUNT.getTextValue(), searchWebsiteCode, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+		List<AdWebsiteReportVO> resultSumData = adWebsiteReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_WEBSITE_COUNT.getTextValue(), searchWebsiteCode, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 		int totalPageSize = resultSumData.size();
 
-		List<AdWebsiteReportVO> resultData = adWebsiteReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_WEBSITE.getTextValue(), searchWebsiteCode, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+		List<AdWebsiteReportVO> resultData = adWebsiteReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_WEBSITE.getTextValue(), searchWebsiteCode, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 
 		totalPage = totalPageSize/pageSize;
 
@@ -354,8 +370,22 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		content.append("\n\n");
 		content.append("報表名稱,PChome 網站類型成效");
 		content.append("\n\n");
-		content.append("廣告方式," + getAdShowWayMap().get(adShowWay));
-		content.append("\n\n");
+		content.append("播放類型," + getAdShowWayMap().get(adShowWay));
+		content.append("\n");
+		content.append("廣告樣式," + getAdStyleTypeMap().get(adOperatingRule));
+		content.append("\n");
+		String searchWebsiteName = "全部類型";
+		if(StringUtils.isNotEmpty(searchWebsiteCode)){
+			searchWebsiteName = getWebsiteCategoryMap().get(searchWebsiteCode);
+		}
+		content.append("網站類型," + searchWebsiteName);
+		content.append("\n");
+		content.append("裝置," + getAdPvclkDeviceMap().get(adPvclkDevice));
+		content.append("\n");
+		content.append("搜尋條件," + getAdSearchWayMap().get(adSearchWay));
+		content.append("\n");
+		content.append("搜尋內容," + searchText);
+		content.append("\n");
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
 
@@ -368,9 +398,9 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
-				if(dataNumber == 9 || dataNumber == 10){
+				if(dataNumber == 12 || dataNumber == 13|| dataNumber == 14){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataNumber == 8){
+				} else if(dataNumber == 11){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -385,9 +415,9 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 9 || dataTotalNumber == 10){
+				if(dataTotalNumber == 12 || dataTotalNumber == 13|| dataTotalNumber == 14){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataTotalNumber == 8){
+				} else if(dataTotalNumber == 11){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -419,12 +449,16 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
+		tableDataTotalList.add("");
+		tableDataTotalList.add("");
+		tableDataTotalList.add("");
 
 		double t_pv = 0; //總曝光數
-		double t_click = 0; //總點選次數
-		double t_ctr = 0; //點選率
+		double t_click = 0; //總互動數
+		double t_ctr = 0; //互動率
 		double t_invalid = 0; //無效點選次數
-		double t_costAvg = 0; //平均點選費用
+		double t_costAvg = 0; //單次互動費用
+		double t_kiloCost = 0;	//千次曝光費用
 		double t_cost = 0; //總費用
 
 		//加總
@@ -438,14 +472,19 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
 
-		//點選率 = 總點選次數 / 總曝光數
+		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
 		}
 
-		//平均點選費用 = 總費用 / 總點選次數
+		//單次互動費用 = 總費用 / 總互動次數
 		if (t_cost>0 && t_click>0) {
 			t_costAvg = t_cost / t_click;
+		}
+		
+		//千次曝光費用 = 總費用*1000 / 曝光數
+		if(t_cost>0 && t_pv>0){
+			t_kiloCost = (t_cost * 1000) / t_pv;
 		}
 		
 		if (!tableHeadShowList.isEmpty()) {
@@ -462,6 +501,8 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 					tableDataTotalList.addLast(intFormat.format(t_invalid));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_costAvg));
+				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 					tableDataTotalList.addLast(intFormat.format(t_cost));
 				}
@@ -505,19 +546,25 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			double invClick = vo.getAdInvClkSum().doubleValue();
 			double ctr = 0;
 			double costAvg = 0;
+			double kiloCost = 0;
 			String adDevice = vo.getAdDevice();
-			String adType = vo.getAdType();
-			/*String week = vo.getWeek();
-			String time = vo.getTime();*/
+			String adTypeName = vo.getAdType();
+			String adOperatingRuleName = vo.getAdOperatingRule();
+			String adClkPriceTypeName = vo.getAdClkPriceType();
 
-			//點選率 = 點選次數 / 曝光數
+			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
 				ctr = (click / pv) * 100;
 			}
 
-			//平均點選費用 = 總費用 / 總點選次數
+			//單次互動費用 = 總費用 / 總互動次數
 			if (cost>0 && click>0) {
 				costAvg = cost / click;
+			}
+
+			//千次曝光費用 = 總費用*1000 / 曝光數
+			if(cost>0 && pv>0){
+				kiloCost = (cost * 1000) / pv;
 			}
 
 
@@ -574,6 +621,9 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 				tableInDataList.addLast("未分類");
 			}
 			
+			tableInDataList.addLast(adTypeName);
+			tableInDataList.addLast(adOperatingRuleName);
+			tableInDataList.addLast(adClkPriceTypeName);
 			tableInDataList.addLast(adDevice);
 
 			if(!tableHeadShowList.isEmpty()){
@@ -590,6 +640,8 @@ public class ReportAdWebsiteAction extends BaseReportAction {
  						tableInDataList.addLast(intFormat.format(invClick));
  					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(costAvg));
+					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 						tableInDataList.addLast(intFormat.format(cost));
 					}
@@ -809,6 +861,14 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 
 	public Map<String, String> getReportWebsiteCategoryMap() {
 		return reportWebsiteCategoryMap;
+	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
 	}
 
 }
