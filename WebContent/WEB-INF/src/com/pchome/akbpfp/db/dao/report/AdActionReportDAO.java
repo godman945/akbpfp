@@ -154,8 +154,8 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								String adActionSeq = (String) objArray[7];
 								String adDevice = (String) objArray[8];
 								String adOperatingRuleCode = objArray[9].toString();
-								//String adClkPriceType = objArray[10].toString();
-								Integer adType = Integer.parseInt(objArray[10].toString());
+								String adClkPriceType = objArray[10].toString();
+								Integer adType = Integer.parseInt(objArray[11].toString());
 
 								AdActionReportVO vo = new AdActionReportVO();
 
@@ -179,7 +179,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								}
 
 								vo.setAdOperatingRule(adStyleTypeMap.get(adOperatingRuleCode));
-								//vo.setAdClkPriceType(adPriceTypeMap.get(adClkPriceType));
+								vo.setAdClkPriceType(adPriceTypeMap.get(adClkPriceType));
 								vo.setAdType(adTypeMap.get(adType));
 								
 								resultData.add(vo);
@@ -477,7 +477,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		hql.append(" r.ad_action_seq, ");
 		hql.append(" r.ad_pvclk_device, ");
 		hql.append(" r.ad_operating_rule, ");
-		//hql.append(" r.ad_clk_price_type, ");
+		hql.append(" r.ad_clk_price_type, ");
 		hql.append(" r.ad_type ");
 		hql.append(" from pfp_ad_action_report as r ");
 		hql.append(" where 1 = 1 ");
@@ -514,7 +514,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 			sqlParams.put("adOperatingRule", adOperatingRule);
 		}
 		
-		hql.append(" group by r.ad_action_seq, r.ad_type, r.ad_operating_rule");
+		hql.append(" group by r.ad_action_seq, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
 		/*if(StringUtils.isNotBlank(adPvclkDevice)) {
 			hql.append(" , r.ad_pvclk_device");
 		}
@@ -523,7 +523,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 			hql.append(" , r.ad_type ");
 		}*/
 		
-		hql.append(" order by r.ad_action_seq desc, r.ad_type, r.ad_operating_rule");
+		hql.append(" order by r.ad_action_seq desc, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
 		sqlParams.put("sql", hql);
 
 		return sqlParams;
