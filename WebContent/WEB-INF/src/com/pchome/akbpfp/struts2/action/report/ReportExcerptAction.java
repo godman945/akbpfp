@@ -173,7 +173,7 @@ public class ReportExcerptAction extends BaseReportAction {
 				   adType.equals(EnumReport.DETAIL_ACTIVITY.getTextValue())) {
 			System.out.println(">>>>> 222");
 			resultData_ad_group = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),
-					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 		} else if (adType.equals(EnumReport.ADTYPE_KEYWORD.getTextValue())) {
 			System.out.println(">>>>> 333");
@@ -677,12 +677,12 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			//搜尋結果
 			List<AdGroupReportVO> resultSumData = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue(),
-					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 			totalPageSize = resultSumData.size();
 
 			List<AdGroupReportVO> resultData = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue(),
-					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 
 			if (resultSumData!=null && resultSumData.size()>0) {
 				resultSumDataTrans_ad_group(resultSumData);
