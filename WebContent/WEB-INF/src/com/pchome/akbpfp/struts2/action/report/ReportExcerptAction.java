@@ -89,6 +89,7 @@ public class ReportExcerptAction extends BaseReportAction {
 	private String searchText=""; //搜尋文字
 	private String adShowWay=""; //全部,搜尋廣告,聯播廣告
 	private String searchId=""; //廣告id,分類id,廣告明細id,關鍵字id
+	private String adOperatingRule;//廣告樣式
 
 	private String stepStr="";//頁面顯示,目前位址,廣告活動-->act01-->
 	
@@ -165,7 +166,7 @@ public class ReportExcerptAction extends BaseReportAction {
 		if (adType.equals(EnumReport.ADTYPE_ACTIVITY.getTextValue())) {
 
 			resultData_ad_action = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),
-					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 			System.out.println(">>>>> 111");
 		} else if (adType.equals(EnumReport.ADTYPE_GROUP.getTextValue()) ||
 				   adType.equals(EnumReport.DETAIL_GROUP.getTextValue()) ||
@@ -622,12 +623,12 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			//搜尋結果
 			List<AdActionReportVO> resultSumData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue(),
-					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 			totalPageSize = resultSumData.size();
 
 			List<AdActionReportVO> resultData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue(),
-					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 
 			if (resultSumData!=null && resultSumData.size()>0) {
 				resultSumDataTrans_ad_action(resultSumData);
@@ -2359,6 +2360,14 @@ public class ReportExcerptAction extends BaseReportAction {
 
 	public AdKeywordReportVO getAdKeywordReportDataTotal() {
 		return AdKeywordReportDataTotal;
+	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
 	}
 	
 }

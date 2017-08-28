@@ -104,7 +104,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 		log.info(">>> customerInfoId = " + customerInfoId);
 
 		List<AdActionReportVO> resultData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_DAILY_CHART.getTextValue(),
-				searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate,-1,-1);
+				searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, null, startDate, endDate,-1,-1);
 
 		Map<Date, Float> flashDataMap = new HashMap<Date, Float>();
 
@@ -303,12 +303,12 @@ public class ReportAdDailyAction extends BaseReportAction {
 		tableHeadList.addFirst("日期");
 
 		List<AdActionReportVO> resultSumData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_DAILY_COUNT.getTextValue(),
-				searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+				searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, null, startDate, endDate, -1, -1);
 
 		totalPageSize=resultSumData.size();
 
 		List<AdActionReportVO> resultData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_DAILY.getTextValue(),
-				searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+				searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, null, startDate, endDate, page, pageSize);
 
 		if(resultSumData.size()>0){
 			resultSumDataTrans(resultSumData);

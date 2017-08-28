@@ -14,6 +14,14 @@
 	    </td>
 
 	   <td>
+	       <select id="adOperatingRule"> 
+	           <#list adStyleTypeMap?keys as skey>
+	  		       <option value="${skey}">${adStyleTypeMap[skey]}</option>
+	  	       </#list>
+	  	   </select>
+	   </td>
+
+	   <td>
 		    <select id="adPvclkDevice"> 
 		        <#list adPvclkDeviceMap?keys as skey>
 		  		    <option value="${skey}">${adPvclkDeviceMap[skey]}</option>
@@ -84,9 +92,9 @@ ${page}/${totalPage}
          <#assign index = 0>
 		 <tr height="30">
 		<#list td as tdin>
-			<#if index = 5 || index = 9 || index = 10>
+			<#if index = 6 || index = 10 || index = 11|| index = 12>
 				<td align="${align_data[index]}">NT$ ${tdin}</td>	
-			<#elseif index = 8>
+			<#elseif index = 9>
 				<td align="${align_data[index]}">${tdin}%</td>
 			<#else>	
 				<td align="${align_data[index]}">${tdin}</td>
@@ -101,9 +109,9 @@ ${page}/${totalPage}
  	<tr height="35">
 	    <#assign index2 = 0>
    		<#list tableDataTotalList as th>
-			<#if index2 = 9 || index2 = 10>
+			<#if index2 = 10 || index2 = 11 || index2 = 12>
 				<th height="30" align="${align_sum[index2]}">NT$ ${th}</th>	
-			<#elseif index2 = 8>
+			<#elseif index2 = 9>
 				<th height="30" align="${align_sum[index2]}">${th}%</th>
 			<#else>	
 				<th height="30" align="${align_sum[index2]}">${th}</th>
@@ -147,6 +155,7 @@ ${page}/${totalPage}
 	<input type="hidden" id="fadShowWay" name="adShowWay" value="${adShowWay}">
 	<input type="hidden" id="fsearchText" name="searchText" value="${searchText}">
 	<input type="hidden" id="fsearchId" name="searchId" value="${searchId}">
+	<input type="hidden" id="fadOperatingRule" name="adOperatingRule" value="${adOperatingRule}">
 	<input type="hidden" id="downloadFlag" name="downloadFlag" value="yes">
 	<input type="hidden" id="contentPath" name="contentPath" value="<@s.url value="/html/img/"/>">
 	

@@ -13,8 +13,8 @@ public class AdActionReportService implements IAdActionReportService {
 		this.adActionReportDAO = adActionReportDAO;
 	}
 
-	public List<AdActionReportVO> loadReportDate(String sqlType, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String startDate, String endDate,
+	public List<AdActionReportVO> loadReportDate(String sqlType, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String adOperatingRule, String startDate, String endDate,
 			int page,int pageSize) {
-		return adActionReportDAO.getReportList(sqlType,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+		return adActionReportDAO.getReportList(sqlType,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 	}
 }

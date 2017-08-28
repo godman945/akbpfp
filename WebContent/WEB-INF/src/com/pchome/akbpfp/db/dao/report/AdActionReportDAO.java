@@ -17,6 +17,8 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pchome.enumerate.ad.EnumAdPriceType;
+import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.akbpfp.db.dao.BaseDAO;
@@ -25,7 +27,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdActionReport;
 @Transactional
 public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> implements IAdActionReportDAO {
 
-	public List<AdActionReportVO> getReportList(final String sqlType, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate, final int page, final int pageSize) {
+	public List<AdActionReportVO> getReportList(final String sqlType, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String adOperatingRule, final String startDate, final String endDate, final int page, final int pageSize) {
 
 		List<AdActionReportVO> result = (List<AdActionReportVO>) getHibernateTemplate().execute(
 				new HibernateCallback<List<AdActionReportVO>>() {
@@ -40,21 +42,21 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 
 							//總廣告成效 -> 報表類型:廣告 (數量及加總)
 							//廣告成效 (數量及加總)
-							sqlParams = getAdActionReportCountSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+							sqlParams = getAdActionReportCountSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate);
 							//hqlStr = getAdActionReportCountSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
 
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue())) {
 
 							//總廣告成效 -> 報表類型:廣告 (資料)
 							//廣告成效 (資料)
-							sqlParams = getAdActionReportDataSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+							sqlParams = getAdActionReportDataSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate);
 							//hqlStr = getAdActionReportDataSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
 
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue())) {
 
 							//總廣告成效 -> 報表類型:廣告 (圖表)
 							//廣告成效 (圖表)
-							sqlParams = getAdActionReportChartSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
+							sqlParams = getAdActionReportChartSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate);
 							//hqlStr = getAdActionReportChartSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
 
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_DAILY_COUNT.getTextValue())) {
@@ -132,6 +134,13 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue())) {
 
+							Map<String,String> adStyleTypeMap = new HashMap<String,String>();
+							Map<String,String> adPriceTypeMap = new HashMap<String,String>();
+							Map<Integer,String> adTypeMap = new HashMap<Integer,String>();
+							adStyleTypeMap = getAdStyleTypeMap();
+							adPriceTypeMap = getAdPriceTypeMap();
+							adTypeMap = getAdType();
+							
 							for (int i=0; i<dataList.size(); i++) {
 
 								Object[] objArray = (Object[]) dataList.get(i);
@@ -144,7 +153,9 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								BigInteger count = new BigInteger(String.valueOf(objArray[6]));
 								String adActionSeq = (String) objArray[7];
 								String adDevice = (String) objArray[8];
-								String adType = String.valueOf(objArray[9]);
+								String adOperatingRuleCode = objArray[9].toString();
+								//String adClkPriceType = objArray[10].toString();
+								Integer adType = Integer.parseInt(objArray[10].toString());
 
 								AdActionReportVO vo = new AdActionReportVO();
 
@@ -167,15 +178,9 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 									vo.setAdDevice("全部");
 								}
 
-								if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
-									for(EnumAdType enumAdType:EnumAdType.values()){
-										if(Integer.parseInt(adType) == enumAdType.getType()){
-											vo.setAdType(enumAdType.getChName());
-										}
-									}
-								} else {
-									vo.setAdType("全部");
-								}
+								vo.setAdOperatingRule(adStyleTypeMap.get(adOperatingRuleCode));
+								//vo.setAdClkPriceType(adPriceTypeMap.get(adClkPriceType));
+								vo.setAdType(adTypeMap.get(adType));
 								
 								resultData.add(vo);
 
@@ -389,7 +394,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 * @return String
 	 * @throws Exception
 	 */
-	private HashMap<String, Object> getAdActionReportCountSQL(final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice,	final String customerInfoId, final String startDate, final String endDate) {
+	private HashMap<String, Object> getAdActionReportCountSQL(final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String adOperatingRule, final String startDate, final String endDate) {
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
@@ -429,10 +434,15 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 			sqlParams.put("searchStr", searchStr);
 		}
 
-		hql.append(" group by r.ad_action_seq");
-		if(StringUtils.isNotBlank(adPvclkDevice)) {
-			hql.append(" , r.ad_pvclk_device");
+		if (StringUtils.isNotBlank(adOperatingRule)) {
+			hql.append(" and r.ad_operating_rule = :adOperatingRule ");
+			sqlParams.put("adOperatingRule", adOperatingRule);
 		}
+		
+		hql.append(" group by r.ad_action_seq");
+		/*if(StringUtils.isNotBlank(adPvclkDevice)) {
+			hql.append(" , r.ad_pvclk_device");
+		}*/
 		sqlParams.put("sql", hql);
 
 		return sqlParams;
@@ -451,7 +461,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 * @return String
 	 * @throws Exception
 	 */
-	private HashMap<String, Object> getAdActionReportDataSQL(final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) {
+	private HashMap<String, Object> getAdActionReportDataSQL(final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String adOperatingRule, final String startDate, final String endDate) {
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
@@ -466,6 +476,8 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 //		hql.append(" count(r.ad_action_report_seq), ");
 		hql.append(" r.ad_action_seq, ");
 		hql.append(" r.ad_pvclk_device, ");
+		hql.append(" r.ad_operating_rule, ");
+		//hql.append(" r.ad_clk_price_type, ");
 		hql.append(" r.ad_type ");
 		hql.append(" from pfp_ad_action_report as r ");
 		hql.append(" where 1 = 1 ");
@@ -497,16 +509,21 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 			sqlParams.put("searchStr", searchStr);
 		}
 
-		hql.append(" group by r.ad_action_seq");
-		if(StringUtils.isNotBlank(adPvclkDevice)) {
+		if (StringUtils.isNotBlank(adOperatingRule)) {
+			hql.append(" and r.ad_operating_rule = :adOperatingRule ");
+			sqlParams.put("adOperatingRule", adOperatingRule);
+		}
+		
+		hql.append(" group by r.ad_action_seq, r.ad_type, r.ad_operating_rule");
+		/*if(StringUtils.isNotBlank(adPvclkDevice)) {
 			hql.append(" , r.ad_pvclk_device");
 		}
 
 		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
 			hql.append(" , r.ad_type ");
-		}
+		}*/
 		
-		hql.append(" order by r.ad_action_seq desc");
+		hql.append(" order by r.ad_action_seq desc, r.ad_type, r.ad_operating_rule");
 		sqlParams.put("sql", hql);
 
 		return sqlParams;
@@ -525,7 +542,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 * @return String
 	 * @throws Exception
 	 */
-	private HashMap<String, Object> getAdActionReportChartSQL(final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String startDate, final String endDate) {
+	private HashMap<String, Object> getAdActionReportChartSQL(final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String adOperatingRule, final String startDate, final String endDate) {
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
@@ -569,10 +586,15 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 			sqlParams.put("searchStr", searchStr);
 		}
 
-		hql.append(" group by r.ad_pvclk_date");
-		if(StringUtils.isNotBlank(adPvclkDevice)) {
-			hql.append(" , r.ad_pvclk_device");
+		if (StringUtils.isNotBlank(adOperatingRule)) {
+			hql.append(" and r.ad_operating_rule = :adOperatingRule ");
+			sqlParams.put("adOperatingRule", adOperatingRule);
 		}
+		
+		hql.append(" group by r.ad_pvclk_date");
+		/*if(StringUtils.isNotBlank(adPvclkDevice)) {
+			hql.append(" , r.ad_pvclk_device");
+		}*/
 		hql.append(" order by r.ad_pvclk_date");
 		sqlParams.put("sql", hql);
 
@@ -782,6 +804,26 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		return searchStr;
 	}
 
+	private Map<String,String> getAdStyleTypeMap(){
+		Map<String,String> adStyleTypeMap = new HashMap<String,String>();
+		
+		for(EnumAdStyleType enumAdStyleType:EnumAdStyleType.values()){
+			adStyleTypeMap.put(enumAdStyleType.getTypeName(), enumAdStyleType.getType());
+		}
+		
+		return adStyleTypeMap;
+	}
+	
+	private Map<String,String> getAdPriceTypeMap(){
+		Map<String,String> adPriceTypeMap = new HashMap<String,String>();
+		
+		for(EnumAdPriceType enumAdPriceType:EnumAdPriceType.values()){
+			adPriceTypeMap.put(enumAdPriceType.getDbTypeName(), enumAdPriceType.getTypeName());
+		}
+		
+		return adPriceTypeMap;
+	}
+	
 	private Map<Integer,String> getAdType(){
 		Map<Integer,String> adTypeMap = new HashMap<Integer,String>();
 		
