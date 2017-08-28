@@ -288,7 +288,11 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 			sqlParams.put("adOperatingRule", adOperatingRule);
 		}
 		
-		hql.append(" group by r.ad_seq");
+		if(StringUtils.isNotBlank(adSeq)) {
+			hql.append(" group by r.ad_seq, r.ad_pvclk_date");
+		} else {
+			hql.append(" group by r.ad_seq");
+		}
 		/*if(StringUtils.isNotBlank(adPvclkDevice)) {
 			hql.append(" , r.ad_pvclk_device");
 		}*/
