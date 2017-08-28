@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 
 import com.opensymphony.oscache.util.StringUtil;
-import com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfbxWebsiteCategoryService;
@@ -22,6 +21,7 @@ import com.pchome.enumerate.utils.EnumStatus;
 
 public class AdActionAjax extends BaseCookieAction{
 	
+	private static final long serialVersionUID = 1L;
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private PfpAdActionService pfpAdActionService;
 	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
@@ -31,7 +31,6 @@ public class AdActionAjax extends BaseCookieAction{
 	private InputStream msg;
 	private String adActionName;
 	private String adActionSeq;
-	private String adVideoUrl;
 	
 	 //網址回傳json格式字串
     private String result;
@@ -104,16 +103,7 @@ public class AdActionAjax extends BaseCookieAction{
 		msg = new ByteArrayInputStream(adAction.getBytes());
 		return SUCCESS;
 	}
-	
-	//檢查影音廣告網址
-	public String chkVideoUrl() throws Exception{
-		JSONObject json = new JSONObject();
-		json.put("ALEX", "AAAAAAAAAAa");
-		json.put("url", adVideoUrl);
-        result = json.toString();
-        return SUCCESS;
-	}
-	
+
 	public String getPfbxWebsiteCategoryAll(){
 		
 		Map<String, List<Map<String, String>>> pfbxWebsiteCategoryListMap = new LinkedHashMap<String, List<Map<String, String>>>();
@@ -163,14 +153,6 @@ public class AdActionAjax extends BaseCookieAction{
 
 	public void setResult(String result) {
 		this.result = result;
-	}
-
-	public String getAdVideoUrl() {
-		return adVideoUrl;
-	}
-
-	public void setAdVideoUrl(String adVideoUrl) {
-		this.adVideoUrl = adVideoUrl;
 	}
 
 }
