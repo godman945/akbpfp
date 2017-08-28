@@ -31,6 +31,8 @@ public class AdReportVO {
 	private String customerInfoId; //帳號
 	private String adDevice;
 	private String adType;
+	private String adOperatingRule;		//廣告樣式
+	private String adClkPriceType;		//廣告計費方式
 
 	public String getAdSeq() {
 		return adSeq;
@@ -230,6 +232,22 @@ public class AdReportVO {
 
 	public void setAdType(String adType) {
 		this.adType = adType;
+	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
+
+	public String getAdClkPriceType() {
+		return adClkPriceType;
+	}
+
+	public void setAdClkPriceType(String adClkPriceType) {
+		this.adClkPriceType = adClkPriceType;
 	}
 	
 }

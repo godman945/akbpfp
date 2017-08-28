@@ -13,6 +13,14 @@
 	      	</select>
 	    </td>
 
+		<td>
+		    <select id="adOperatingRule"> 
+		        <#list adStyleTypeMap?keys as skey>
+		  		    <option value="${skey}">${adStyleTypeMap[skey]}</option>
+		  	    </#list>
+	      	</select>
+	    </td>
+
 	   <td>
 		    <select id="adPvclkDevice"> 
 		        <#list adPvclkDeviceMap?keys as skey>
@@ -85,9 +93,9 @@ ${page}/${totalPage}
 	         <#assign index = 0>
 			 <tr height="30">
 			<#list td as tdin>
-				<#if index = 6 || index = 7>
+				<#if index = 8 || index = 9 || index = 10>
 					<td align="${align_data2[index]}">NT$ ${tdin}</td>	
-				<#elseif index = 5>
+				<#elseif index = 7>
 					<td align="${align_data2[index]}">${tdin}%</td>
 				<#else>	
 					<td align="${align_data2[index]}">${tdin}</td>
@@ -101,9 +109,9 @@ ${page}/${totalPage}
 	         <#assign index = 0>
 			 <tr height="30">
 			<#list td as tdin>
-				<#if index = 9 || index = 10>
+				<#if index = 11 || index = 12 || index = 13>
 					<td align="${align_data[index]}">NT$ ${tdin}</td>	
-				<#elseif index = 8>
+				<#elseif index = 10>
 					<td align="${align_data[index]}">${tdin}%</td>
 				<#else>	
 					<td align="${align_data[index]}">${tdin}</td>
@@ -120,9 +128,9 @@ ${page}/${totalPage}
 	    <#assign index2 = 0>
 	    <#if searchAdseq != ''>
 	    	<#list tableDataTotalList as th>
-				<#if index2 = 6 || index2 = 7>
+				<#if index2 = 8 || index2 = 9 || index2 = 10>
 					<th height="30" align="${align_sum2[index2]}">NT$ ${th}</th>	
-				<#elseif index2 = 5>
+				<#elseif index2 = 7>
 					<th height="30" align="${align_sum2[index2]}">${th}%</th>
 				<#else>	
 					<th height="30" align="${align_sum2[index2]}">${th}</th>
@@ -131,9 +139,9 @@ ${page}/${totalPage}
 	    	</#list>
 	    <#else>
 	   		<#list tableDataTotalList as th>
-				<#if index2 = 9 || index2 = 10>
+				<#if index2 = 11 || index2 = 12  || index2 = 13>
 					<th height="30" align="${align_sum[index2]}">NT$ ${th}</th>	
-				<#elseif index2 = 8>
+				<#elseif index2 = 10>
 					<th height="30" align="${align_sum[index2]}">${th}%</th>
 				<#else>	
 					<th height="30" align="${align_sum[index2]}">${th}</th>
@@ -177,6 +185,7 @@ ${page}/${totalPage}
 	<input type="hidden" id="fadShowWay" name="adShowWay" value="${adShowWay}">
 	<input type="hidden" id="fsearchText" name="searchText" value="${searchText}">
 	<input type="hidden" id="fsearchId" name="searchId" value="${searchId}">
+	<input type="hidden" id="fadOperatingRule" name="adOperatingRule" value="${adOperatingRule}">
 	<input type="hidden" id="downloadFlag" name="downloadFlag" value="yes">
 	<input type="hidden" id="contentPath" name="contentPath" value="<@s.url value="/html/img/"/>">
 	<input type="hidden" id="fsearchAdseq" name="searchAdseq" value="${searchAdseq}">
