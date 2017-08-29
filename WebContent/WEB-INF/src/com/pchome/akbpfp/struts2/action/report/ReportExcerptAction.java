@@ -635,7 +635,11 @@ public class ReportExcerptAction extends BaseReportAction {
 		if(adType.equals(EnumReport.ADTYPE_KEYWORD.getTextValue())){
 			tableHeadList.addFirst("狀態");
 		} else {
-			tableHeadList.addFirst("計價方式");
+			if(adType.equals(EnumReport.ADTYPE_ACTIVITY.getTextValue())){
+				tableHeadList.addFirst("走期");
+			} else {
+				tableHeadList.addFirst("計價方式");
+			}
 			tableHeadList.addFirst("狀態");
 			tableHeadList.addFirst("廣告樣式");
 		}
@@ -1578,7 +1582,14 @@ public class ReportExcerptAction extends BaseReportAction {
 			tableInDataList.addLast(adType);
 			tableInDataList.addLast(adOperatingRuleName);
 			tableInDataList.addLast(getAdStatusMap().get(Integer.toString(adActionStatus)));
-			tableInDataList.addLast(adClkPriceTypeName);
+			
+			if (adActionEndDate.equals("3000-12-31")) {
+				adActionEndDate = "永久";
+			}
+
+			String adDate = adActionStartDate + " ~ " + adActionEndDate;
+
+			tableInDataList.addLast(adDate);
 			tableInDataList.addLast(adDevice);
 
 			if(!tableHeadShowList.isEmpty()){

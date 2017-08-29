@@ -315,7 +315,6 @@ public class ReportCampaginAction extends BaseReportAction {
 
 		tableHeadList.addFirst("裝置");
 		tableHeadList.addFirst("走期");
-		tableHeadList.addFirst("計價方式");
 		tableHeadList.addFirst("廣告樣式");
 		tableHeadList.addFirst("播放類型");
 		tableHeadList.addFirst("廣告");
@@ -384,9 +383,9 @@ public class ReportCampaginAction extends BaseReportAction {
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
-				if(dataNumber == 8 ||dataNumber == 12 || dataNumber == 13 || dataNumber == 14){
+				if(dataNumber == 7 ||dataNumber == 11 || dataNumber == 12 || dataNumber == 13){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataNumber == 11){
+				} else if(dataNumber == 10){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -401,9 +400,9 @@ public class ReportCampaginAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 12 || dataTotalNumber == 13|| dataTotalNumber == 14){
+				if(dataTotalNumber == 11 || dataTotalNumber == 12 || dataTotalNumber == 13){
 					content.append("\"NT$ " + s + "\"");
-				} else if(dataTotalNumber == 11){
+				} else if(dataTotalNumber == 10){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -434,7 +433,6 @@ public class ReportCampaginAction extends BaseReportAction {
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("");
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
-		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
@@ -539,7 +537,6 @@ public class ReportCampaginAction extends BaseReportAction {
 				String adDevice = vo.getAdDevice();
 				String adType = vo.getAdType();
 				String adOperatingRuleName = vo.getAdOperatingRule();
-				String adClkPriceTypeName = vo.getAdClkPriceType();
 	
 				//互動率 = 互動次數 / 曝光數
 				if (pv>0 && click>0) {
@@ -599,7 +596,6 @@ public class ReportCampaginAction extends BaseReportAction {
 				tableInDataList.addLast(adActionName);
 				tableInDataList.addLast(adType);
 				tableInDataList.addLast(adOperatingRuleName);
-				tableInDataList.addLast(adClkPriceTypeName);
 				
 				if (adActionEndDate.equals("3000-12-31")) {
 					adActionEndDate = "永久";
