@@ -466,8 +466,14 @@ function saveData() {
 		return false;
 	}
 	
-	if($("#errMsg").text() != "" && $("#errMsg").text() != "上傳成功"){
-		return false;
+	if($("#errMsg").text() != ""){
+		if($("#errMsg").text() != "上傳成功"){
+			var position = $('#fileButton').offset();  
+			var x = position.left;  
+			var y = position.top;  
+			window.scrollTo(x,y);
+			return false;
+		}
 	}
 	
 	
