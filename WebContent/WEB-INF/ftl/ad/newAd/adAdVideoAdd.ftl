@@ -17,7 +17,6 @@
                             <input type="hidden" id="adDetailContent" name="adDetailContent">
                             <input type="text" class="inputPlaceholderTmg" id="adVideoURL" name="adVideoURL" style="width:96%;" placeholder="請輸入YouTube影片網址" maxlength=""><br>
                             <span id="adVideoURLMsg" name="adVideoURLMsg" style="color: rgb(255, 0, 0);"></span><span style="float:right;margin-right: 3%" id="adVideoUrlWordController">已輸入0字，剩<div id="checkWord" style="display:inline;">1024</div>字</span>
-                   			<div id="adVideoURLErrMsg" style="color:red;"></div>
 						<td style="" rowspan="5" width="50%">
                             <!--播放預覽start-->
 
@@ -142,18 +141,6 @@
 	                               	<div id="errMsg" style="text-align:-webkit-left;"></div>
 	                               	<input type="file" serialize id="fileupload" name="fileupload" onchange="previewImage(this)" style="display:none ;" multiple="" >
                               </span>
-
-                              <!--<div style="float:left;text-align:left;">
-                                    <input type="hidden" id="adDetailID" name="adDetailID" value="img">
-                                    <input type="hidden" id="adDetailName" name="adDetailName" value="廣告圖片">
-                                    <input type="hidden" id="adDetailContent" name="adDetailContent" value="">
-
-                                    <input type="file" id="uploadFile" name="uploadFile" onchange="previewImage(this)">
-                                    <span id="chkFile" name="chkFile" style="color:red;size:5"></span>
-                                    <input type="button" name="delImg" id="delImg" value="刪除圖片" onclick="deleteImage();" />-->
-                                    <input type="hidden" id="imgType" name="imgType" value="">
-                                    <div style="color:red;display:none;" id="sizeCheckDiv">請檢查檔案大小是否大於1024KB</div>
-                                    <div style="color:red;display:none;" id="uploadCheckDiv">請上傳一個檔案</div>
                         </td>
                         
                     </tr>

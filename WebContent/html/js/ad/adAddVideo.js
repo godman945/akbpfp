@@ -59,7 +59,7 @@
 	//檢查廣告網址blur事件
 	$("#adVideoURL").blur(function() {
 		if($("#adVideoURL").val() == ""){
-			$("#adVideoURLErrMsg").text('請輸入影片網址');
+			$("#adVideoURLMsg").text('請輸入影片網址');
 			console.log('請輸入影片網址');
 			return false;
 		}
@@ -68,11 +68,11 @@
 		console.log($("#adVideoURL").val());
 		console.log(regx.test($("#adVideoURL").val()));
 		if(!regx.test($("#adVideoURL").val())){
-			$("#adVideoURLErrMsg").text('網址格式錯誤');
+			$("#adVideoURLMsg").text('網址格式錯誤');
 			return false;
 		}
 		
-		$("#adVideoURLErrMsg").text('');
+		$("#adVideoURLMsg").text('');
 		
 		$.ajax({
 			url: "chkVideoUrl.html",
@@ -444,7 +444,7 @@ function saveData() {
 	
 	//廣告影片網址不可為空
 	if($("#adVideoURL").val() == ""){
-		$("#adVideoURLErrMsg").text('請輸入影片網址');
+		$("#adVideoURLMsg").text('請輸入影片網址');
 		var position = $('#adVideoURL').offset();  
 		var x = position.left;  
 		var y = position.top;  
@@ -462,9 +462,8 @@ function saveData() {
 		return false;
 	}
 	
-	if($("#adVideoURLErrMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
-		
-		console.log($("#adVideoURLErrMsg").text());
+	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
+		console.log($("#adVideoURLMsg").text());
 		console.log($("#chkLinkURL").text());
 		
 		return false;
