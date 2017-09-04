@@ -216,7 +216,7 @@
     	<property name="pfpAdActionService" ref="PfpAdActionService" />
     	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" /> 
     	<property name="pfpAdSpecificWebsiteService" ref="PfpAdSpecificWebsiteService" />
-    	<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" /> 
+    	<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" />
     </bean>
 
     <bean id="AdGroupAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdGroupAddAction" scope="prototype" >

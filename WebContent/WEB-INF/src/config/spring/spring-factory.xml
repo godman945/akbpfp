@@ -9,6 +9,21 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
     
+    
+    <bean id="aadAddProcess" class="com.pchome.akbpfp.factory.ad.AadAddProcess" scope="prototype" >
+   		<property name="adDoAddMediaProcess" ref="adDoAddMediaProcess" />
+    </bean>
+    
+    
+    <bean id="adDoAddMediaProcess" class="com.pchome.akbpfp.struts2.action.ad.AdDoAddMediaProcess" scope="prototype" >
+    	<property name="pfpOrderService" ref="PfpOrderService" />
+    </bean>
+    
+    
+    
+    
+    
+    
 <!-- 
     <bean id="OrderCost" class="com.pchome.akbpfp.factory.bill.OrderCost" scope="prototype" >
    		<property name="pfpOrderService" ref="PfpOrderService" />

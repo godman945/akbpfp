@@ -98,6 +98,7 @@ public class AdAddAction extends BaseCookieAction{
 	private String adStyle;
 	private String[] adDetailID;
 	private String[] adDetailContent;
+	private String videoPicId;
 	private String adDetailSeq;
 	private String adPoolSeq;
 	private String templateProductSeq;
@@ -332,6 +333,153 @@ public class AdAddAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	/*
+	 * 儲存影音上稿資料
+	 * 
+	 * */
+	public String doAdAdAddVideo() throws Exception {
+//		log.info("doAdAdAddTmg => adGroupSeq = " + adGroupSeq + "; saveAndNew = '" + saveAndNew + "'");
+		System.out.println("9999999999999999999999999999");
+		System.out.println("AAAAAA");
+		System.out.println(photoPath);
+		System.out.println(photoTmpPath);
+		
+		
+		if(videoPicId != null){
+			String[] videoPicArray = videoPicId.split(",");
+			for (String str : videoPicArray) {
+				System.out.println(str);
+			}
+		}
+		
+		
+		
+//		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+		result = "AAA";
+//		// 新增廣告
+//		addAd(pfpAdGroup,null);
+//		
+//		String imgDetail = "";
+//		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
+//		for(int i = 0; i < adDetailID.length; i++) {
+//		    if(i == 0 && adStyle.equals("TMG")) {
+//			try {
+//			    if(StringUtils.isNotBlank(imgFile)) {
+//				File iPath = new File(photoPath);		// 圖片的存放路徑
+//				File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
+//				if(!iPath.exists())			iPath.mkdirs();
+//				if(!iTmpPath.exists())		iTmpPath.mkdirs();
+//						String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
+//						File adFile = null;	// 上傳圖片的檔名
+//						if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
+//							adFile = new File(photoPath, adSeq + "." + fileType);
+//						}else {
+//							adFile = new File(photoPath, adSeq + ".jpg");
+//						}
+//						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
+//						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
+//
+//						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
+//					} else {
+//						if(StringUtils.isBlank(adDetailContent[0])) {
+//							imgDetail = "img/public/na.gif\" style=\"display:none";
+//						}
+//					}
+//				} catch (Exception ex) {
+//					log.info("ex : " + ex);
+//				}
+//
+//			}
+//
+//			adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+//			List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, adDetailID[i], null, adPoolSeq);
+//			String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+//			if(adDetailID[i].equals("real_url")) {
+//				if(adDetailContent[i].indexOf("http") < 0 ) {
+//					adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
+//				}else{
+//				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+//				}
+//			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+//			    	adDetailContent[i] = adDetailContent[i].trim();
+//			}
+//			if(adDetailID[i].equals("show_url")) {
+//			    if(adDetailContent[i].indexOf("http://") < 0 ) {
+//				adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
+//			    }else{
+//				adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+//			    }
+////			    adDetailContent[i] = (HttpUtil.getInstance().getRealUrl(adDetailContent[i]).replace("http://", ""));
+//			    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
+//			    adDetailContent[i] = adDetailContent[i].trim();
+//			}
+//
+//			if(adDetailID[i].equals("title") || adDetailID[i].equals("content") ) {
+//				adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
+//				adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
+//			}
+//			
+//			String detailContent = i == 0?imgDetail:adDetailContent[i];
+//			pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
+//			pfpAdDetailVO.setAdSeq(adSeq);
+//			pfpAdDetailVO.setAdPoolSeq(adPoolSeq);
+//			pfpAdDetailVO.setAdDetailId(adDetailID[i]);
+//			pfpAdDetailVO.setAdDetailContent(detailContent);
+//			if(adDetailID[i].equals("img") || adDetailID[i].equals("title") || adDetailID[i].equals("content")) {
+//			    pfpAdDetailVO.setVerifyFlag("y");
+//			} else {
+//			    pfpAdDetailVO.setVerifyFlag("n");
+//			}
+//			pfpAdDetailVO.setDefineAdSeq(defineAdSeq);
+//			pfpAdDetailVO.setAdDetailCreateTime(new Date());
+//			pfpAdDetailVO.setAdDetailUpdateTime(new Date());
+//			pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
+//		}
+//
+//		// 新增關鍵字
+//		addKeywords(pfpAdGroup);
+//		//新增排除關鍵字
+//		addExcludeKeywords(pfpAdGroup);
+//
+//		// 開啟廣告分類
+//		pfpAdGroup.setAdGroupStatus(4);
+//		pfpAdGroupService.save(pfpAdGroup);
+//
+//		// 是否為 "儲存後再新增廣告"
+//		if(saveAndNew != null && saveAndNew.equals("save+new")) {
+//		    result = "saveNew";
+//		} else {
+//		    result = "saveOK";
+//		}
+//		msg = new ByteArrayInputStream(result.getBytes());
+////		return INPUT;
+//		return SUCCESS;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//1.
+		return SUCCESS;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 新增文字式廣告
 	@Transactional
 	public String doAdAdAddTxt() throws Exception {
@@ -1556,6 +1704,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setAdOperatingRule(String adOperatingRule) {
 		this.adOperatingRule = adOperatingRule;
+	}
+
+	public String getVideoPicId() {
+		return videoPicId;
+	}
+
+	public void setVideoPicId(String videoPicId) {
+		this.videoPicId = videoPicId;
 	}
 
 }
