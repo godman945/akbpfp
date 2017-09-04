@@ -88,10 +88,6 @@
 				//alert("系統繁忙，請稍後再試！");
 			}
 		}).done(function (result) {
-			console.log(result);
-			console.log(result.result);
-			console.log(result.msg);
-			
 			if(result.result == true){
 				$("#adVideoURLMsg").css('color','green');
 				$("#adVideoURLMsg").text('影片網址確認正確');
@@ -461,11 +457,15 @@ function saveData() {
 	}
 	
 	
-	if($("#adVideoURLErrMsg").text() != "" || $("#chkLinkURL").text() != "網址確認正確"){
-		
+	if($("#adVideoURLErrMsg").css('color') != "green" && $("#chkLinkURL").css('color') != "green"){
+		console.log('請確認資料!!');
+		return false;
 	}
 	
 	
+	console.log('資料OK');
+	
+	return false;
 	callBlock();
 	$.ajax({
 		url : "adAddVideoSaveAjax.html",
