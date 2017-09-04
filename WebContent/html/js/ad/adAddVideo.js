@@ -463,9 +463,19 @@ function saveData() {
 	}
 	
 	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
-		console.log($("#adVideoURLMsg").text());
-		console.log($("#chkLinkURL").text());
+		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
+			var position = $('#adVideoURL').offset();  
+			var x = position.left;  
+			var y = position.top;  
+			window.scrollTo(x,y);
+		}
 		
+		if($("#chkLinkURL").text() != "網址確認正確"){
+			var position = $('#adLinkURL').offset();  
+			var x = position.left;  
+			var y = position.top;  
+			window.scrollTo(x,y);
+		}
 		return false;
 	}
 	
@@ -478,7 +488,6 @@ function saveData() {
 			return false;
 		}
 	}
-	
 	
 	console.log('資料OK');
 	
