@@ -463,6 +463,10 @@ function saveData() {
 	}
 	
 	if($("#adVideoURLErrMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
+		
+		console.log($("#adVideoURLErrMsg").text());
+		console.log($("#chkLinkURL").text());
+		
 		return false;
 	}
 	
