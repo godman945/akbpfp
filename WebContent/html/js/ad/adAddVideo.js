@@ -456,7 +456,8 @@ function saveData() {
 		return false;
 	}
 	
-	
+	console.log($("#adVideoURLErrMsg").css('color'));
+	console.log($("#chkLinkURL").css('color'));
 	if($("#adVideoURLErrMsg").css('color') != "green" && $("#chkLinkURL").css('color') != "green"){
 		console.log('請確認資料!!');
 		return false;
