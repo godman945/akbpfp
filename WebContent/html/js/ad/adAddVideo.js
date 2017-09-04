@@ -445,21 +445,28 @@ function saveData() {
 	//廣告影片網址不可為空
 	if($("#adVideoURL").val() == ""){
 		$("#adVideoURLErrMsg").text('請輸入影片網址');
-		console.log('請輸入影片網址');
+		var position = $('#adVideoURL').offset();  
+		var x = position.left;  
+		var y = position.top;  
+		window.scrollTo(x,y);
 		return false;
 	}
 	
 	//廣告連結網址不可為空
 	if($("#adLinkURL").val() == ""){
 		$("#chkLinkURL").text('請輸入影片網址');
-		console.log('請輸入影片網址');
+		var position = $('#adLinkURL').offset();  
+		var x = position.left;  
+		var y = position.top;  
+		window.scrollTo(x,y);
 		return false;
 	}
 	
-	console.log($("#adVideoURLErrMsg").css('color'));
-	console.log($("#chkLinkURL").css('color'));
-	if($("#adVideoURLErrMsg").text() != "影片網址確認正確" && $("#chkLinkURL").text() != "網址確認正確"){
-		console.log('請確認資料!!');
+	if($("#adVideoURLErrMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
+		return false;
+	}
+	
+	if($("#errMsg").text() != "" && $("#errMsg").text() != "上傳成功"){
 		return false;
 	}
 	
