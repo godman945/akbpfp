@@ -91,7 +91,14 @@
 			console.log(result);
 			console.log(result.result);
 			console.log(result.msg);
-//			saveAdAddVideo(result);
+			
+			if(result.result == true){
+				$("#adVideoURLMsg").css('color','green');
+				$("#adVideoURLMsg").text('影片網址確認正確');
+			}else{
+				$("#adVideoURLMsg").css('color','red');
+				$("#adVideoURLMsg").text(result.msg);
+			}
 		});
 	});
 	
