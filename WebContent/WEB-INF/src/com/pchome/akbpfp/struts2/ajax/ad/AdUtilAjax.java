@@ -130,11 +130,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		String resultStr = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
 		
 		
-		log.info(">>>>process:"+process.toString());
-		
-		
-		log.info(">>>>process:"+IOUtils.toString(process.getInputStream(),"UTF-8"));
-		
+		log.info(">>>>process:"+IOUtils.toString(process.getErrorStream(),"UTF-8"));
 		log.info(">>>>resultStr:"+resultStr);
 		
 		JSONObject json = new JSONObject();
