@@ -58,7 +58,6 @@
 	
 	//檢查廣告網址blur事件
 	$("#adVideoURL").blur(function() {
-		
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLErrMsg").text('請輸入影片網址');
 			console.log('請輸入影片網址');
@@ -78,7 +77,7 @@
 		$.ajax({
 			url: "chkVideoUrl.html",
 			data:{
-				adVideoUrl: $("#videoUrl").val()
+				adVideoUrl: $("#adVideoURL").val()
 			},
 			type:"POST",
 			dataType:"JSON",
