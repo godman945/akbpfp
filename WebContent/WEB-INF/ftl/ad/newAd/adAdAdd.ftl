@@ -7,7 +7,7 @@
 <#elseif adStyle == "TMG">
 	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmg.js?t=20141124" ></script>
 <#elseif adStyle == "VIDEO">
-	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddVideo.js?t=20170823" ></script>
+	<@t.insertAttribute name="includeJs" />
 </#if>
 
 <div class="cont">
