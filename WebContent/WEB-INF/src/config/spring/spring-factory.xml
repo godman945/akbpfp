@@ -13,11 +13,11 @@
     <bean id="aadAddProcess" class="com.pchome.akbpfp.factory.ad.AadAddProcess" scope="prototype" >
    		<property name="adDoAddMediaProcess" ref="adDoAddMediaProcess" />
     </bean>
-     -->
+     
     
     <bean id="adDoAddMediaProcess" class="com.pchome.akbpfp.struts2.action.ad.AdDoAddMediaProcess" scope="prototype" >
     	<property name="pfpOrderService" ref="PfpOrderService" />
-    </bean>
+    </bean>-->
     
     
     
