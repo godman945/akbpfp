@@ -10,7 +10,6 @@ function newAd() {
 	location.href = "adAdAdd.html?adGroupSeq=${adGroupSeq!}";
 }
 </script>
-${adActionName!}
 <div class="cont">
  	<!--進度條start-->
         <div class="speedbar grtba">
