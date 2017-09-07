@@ -326,11 +326,6 @@ public class AdAddAction extends BaseCookieAction{
 		try{
 			log.info(">>>>>> doAdAdAddVideo adGroupSeq:"+adGroupSeq);
 			
-			if(true){
-				result = "success";
-				return SUCCESS;
-			}
-			
 			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 			templateProductSeq = EnumAdStyle.VIDEO.getTproSeq();
 //			 新增廣告
@@ -416,10 +411,10 @@ public class AdAddAction extends BaseCookieAction{
 					customerImgFile.delete();
 				}
 			}
-			result = "SUCCESS";
+			result = "success";
 			return SUCCESS;
 		}catch(Exception e){
-			result = "ERR";
+			result = "error";
 			return SUCCESS;
 		}
 	}
