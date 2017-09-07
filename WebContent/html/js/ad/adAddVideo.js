@@ -297,7 +297,8 @@ function previewImage(file) {
 				}
 			})
 			$($(this).children()[2]).remove();
-	 })
+		})
+		$(".picSeq").remove();
 	}
 	
 //	$('#imghead').attr('src','');
@@ -426,22 +427,6 @@ function preView(obj){
 
 //儲存廣告
 function saveData() {
-//	$("#modifyForm").attr('action','doAdAdAddVideo.html');
-//	$("#modifyForm").submit();
-	
-	
-	var videoPic = "";
-	$(".picSeq").each(function(){
-		if(this.value != ""){
-			videoPic = videoPic+this.value+",";
-		}
-	});
-	
-	if(videoPic != ""){
-		videoPic = videoPic.substring(0,videoPic.length - 1);
-	}
-	
-	
 	//廣告影片網址不可為空
 	if($("#adVideoURL").val() == ""){
 		$("#adVideoURLMsg").text('請輸入影片網址');
@@ -479,35 +464,45 @@ function saveData() {
 		return false;
 	}
 	
-	if($("#errMsg").text() != ""){
-		if($("#errMsg").text() != "上傳成功"){
-			var position = $('#fileButton').offset();  
-			var x = position.left;  
-			var y = position.top;  
-			window.scrollTo(x,y);
-			return false;
-		}
+	if($("#errMsg").text() != "" && $("#errMsg").text() != "上傳成功"){
+		var position = $('#fileButton').offset();  
+		var x = position.left;  
+		var y = position.top;  
+		window.scrollTo(x,y);
+		return false;
 	}
 	
 	console.log('資料OK');
 	
-	return false;
+	var videoPic = "";
+	$(".picSeq").each(function(){
+		if(this.value != ""){
+			var format = $($($($($(this).parent()).children()[1]).children()[3]).children()[1]).text();
+			var size = $($($($($(this).parent()).children()[1]).children()[1]).children()[1]).text();
+			size = size.replace(" x ","_");
+			videoPic = videoPic+this.value+"."+format+"."+size+",";
+			console.log(videoPic);
+		}
+	});
+	
+	if(videoPic != ""){
+		videoPic = videoPic.substring(0,videoPic.length - 1);
+	}
+	
 	callBlock();
+	
+//	$("#modifyForm").submit();
 	$.ajax({
 		url : "adAddVideoSaveAjax.html",
 		type : "POST",
 		dataType:'json',
 		data : {
-			//"videoPic":JSON.stringify('PIC1,PIC2'),
 			"videoPicId":videoPic,
-//			"seqArray" : map,
-//			"adGroupSeq": $("#adGroupSeq").val(),
-//			"adLinkURL" : $("#adLinkURL").val(),
-//			"keywords" : JSON.stringify(keyWordArray),
-//			"excludeKeywords" : JSON.stringify(excludeKeywordULArray),
-//			"adKeywordOpen" : $("#adKeywordOpen").attr("checked"),
-//			"adKeywordPhraseOpen" : $("#adKeywordPhraseOpen").attr("checked"),
-//			"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked")
+			"adGroupSeq":$("#adGroupSeq").val(),
+			"adStyle":$("#adStyle").val(),
+			"adClass":$("#adClass").val(),
+			"adVideoURL":$("#adVideoURL").val(),
+			"adLinkURL":$("#adLinkURL").val(),
 		},
 		success : function(respone) {
 			console.log(respone);

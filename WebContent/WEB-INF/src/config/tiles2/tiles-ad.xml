@@ -156,10 +156,15 @@
 	    <definition name=".ad.video.add" extends="ad.nocss.layout">
 	         <put-attribute name="body" value=".ad.advideo.add.body" />
 	    </definition>
+
 	    <definition name=".ad.advideo.add.body" template="/ftl/ad/newAd/adAdAdd.ftl">
 	    	<put-attribute name="includeJs" value="/ftl/ad/newAd/ad.add.video.js.ftl" />
 	    	<put-attribute name="adAddVideo" value="/ftl/ad/newAd/adAdVideoAdd.ftl" />
 	    </definition>
+	    
+	    <definition name=".ad.add.video.finish" extends="ad.layout">
+        	<put-attribute name="body" value="/ftl/ad/newAd/adAddVideoFinish.ftl" />
+    	</definition>
     <!-- 影音廣告  END-->
     
     <!-- 圖片廣告-->
@@ -188,9 +193,6 @@
     	<put-attribute name="adTmg" value="/ftl/ad/editAd/adAdImg.ftl" />
     	<put-attribute name="adKeyword" value="/ftl/ad/newAd/adAdAddKeyword.ftl" />
 	</definition>
-	<definition name=".ad.add.video.finish" extends="ad.layout">
-        <put-attribute name="body" value="/ftl/ad/newAd/adAddVideoFinish.ftl" />
-    </definition>
     <!-- 圖片廣告 End -->
      
     

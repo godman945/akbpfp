@@ -16,7 +16,7 @@
 <#elseif adStyle == "TMG">
     <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
 <#elseif adStyle == "VIDEO">
-	<form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
+	<form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddVideo.html">
 </#if>
 		<h1 class="adtitle">廣告：${adActionName!} > 分類：${adGroupName!}</h1>
 		<h2>
@@ -33,33 +33,35 @@
 			</#if>
         </ul>
         
-		<div class="grtba">
-			<h4 style="display:none;">建立廣告</h4>
-			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">
-				<tbody>
-					<tr>
-						<th height="35"><span class="t_s02">* </span>選擇廣告分類</th>
-						<td>
-							<select id="adClass" name="adClass">
-								<option value="0">選擇分類</option>
-								<option value="1" selected>分類1</option>
-								<option value="2">分類2</option>
-								<option value="3">分類3</option>
-								<option value="4">分類4</option>
-								<option value="5">分類5</option>
-								<option value="6">分類6</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<th height="35"><span class="t_s02">* </span>廣告樣式</th>
-						<td>
-							<input type="radio" id="adStyle" name="adStyle" value="TXT" onclick="setAdStyle(this.value);" <#if adStyle == "TXT">checked</#if>>文字廣告
-							<input type="radio" id="adStyle" name="adStyle" value="TMG" onclick="setAdStyle(this.value);" <#if adStyle == "TMG">checked</#if>>圖文廣告
-						</td>
-					</tr>
-				</tbody>
-			</table>
+        <#if adStyle != "VIDEO">
+			<div class="grtba">
+				<h4 style="display:none;">建立廣告</h4>
+				<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">
+					<tbody>
+						<tr>
+							<th height="35"><span class="t_s02">* </span>選擇廣告分類</th>
+							<td>
+								<select id="adClass" name="adClass">
+									<option value="0">選擇分類</option>
+									<option value="1" selected>分類1</option>
+									<option value="2">分類2</option>
+									<option value="3">分類3</option>
+									<option value="4">分類4</option>
+									<option value="5">分類5</option>
+									<option value="6">分類6</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th height="35"><span class="t_s02">* </span>廣告樣式</th>
+							<td>
+								<input type="radio" id="adStyle" name="adStyle" value="TXT" onclick="setAdStyle(this.value);" <#if adStyle == "TXT">checked</#if>>文字廣告
+								<input type="radio" id="adStyle" name="adStyle" value="TMG" onclick="setAdStyle(this.value);" <#if adStyle == "TMG">checked</#if>>圖文廣告
+							</td>
+						</tr>
+					</tbody>
+				</table>
+		</#if>
 <#if adStyle == "TXT">
 <!-- adTxt start -->
 <@t.insertAttribute name="adTxt" />

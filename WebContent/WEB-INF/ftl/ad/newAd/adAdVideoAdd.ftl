@@ -255,5 +255,7 @@
 	</div>
 </div>
 
-<input type="text" id"adGroupSeq" value="${adGroupSeq!}">
-<input type="text" id"adOperatingRule" value="${adOperatingRule!}">
+<input type="text" id="adGroupSeq" value="${adGroupSeq!}">
+<input type="text" id="adOperatingRule" value="${adOperatingRule!}">
+<input type="text" id="adStyle" value="${adStyle!}">
+<input type="text" id="adClass" value="1">

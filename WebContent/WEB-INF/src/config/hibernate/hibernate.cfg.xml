@@ -3,7 +3,7 @@
 		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory name="adbpfp">
+    <session-factory name="akb_video">
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
        <!-- <property name="hibernate.connection.password">1qa2ws</property> -->
        <!-- <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/akb</property> --> 
@@ -12,5 +12,6 @@
        	<property name="hibernate.connection.username">keyword</property>
        	<property name="hibernate.connection.password">K1y0nLine</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.default_catalog">akb_video</property>
     </session-factory>
 </hibernate-configuration>

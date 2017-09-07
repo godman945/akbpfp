@@ -20,24 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 import org.springframework.transaction.annotation.Transactional;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.api.ControlPriceAPI;
@@ -99,6 +83,7 @@ public class AdAddAction extends BaseCookieAction{
 	private String[] adDetailID;
 	private String[] adDetailContent;
 	private String videoPicId;
+	private String adVideoURL;
 	private String adDetailSeq;
 	private String adPoolSeq;
 	private String templateProductSeq;
@@ -337,138 +322,102 @@ public class AdAddAction extends BaseCookieAction{
 	 * 儲存影音上稿資料
 	 * 
 	 * */
-	public String doAdAdAddVideo() throws Exception {
-//		log.info("doAdAdAddTmg => adGroupSeq = " + adGroupSeq + "; saveAndNew = '" + saveAndNew + "'");
-		System.out.println("9999999999999999999999999999");
-		System.out.println("AAAAAA");
-		System.out.println(photoPath);
-		System.out.println(photoTmpPath);
-		
-		
-		if(videoPicId != null){
-			String[] videoPicArray = videoPicId.split(",");
-			for (String str : videoPicArray) {
-				System.out.println(str);
+	public String doAdAdAddVideo() {
+		try{
+			log.info(">>>>>> doAdAdAddVideo adGroupSeq:"+adGroupSeq);
+			
+			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+			templateProductSeq = EnumAdStyle.VIDEO.getTproSeq();
+//			 新增廣告
+//			addAd(pfpAdGroup,null);
+			
+			// 取得廣告ad
+			adSeq = "ad_201709070036";
+			PfpAd pfpAd = pfpAdService.get(adSeq);
+			
+			File customerImgFile = null;
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+			
+			//1.儲存上傳圖片
+			String originalPath = photoDbPathNew+super.getCustomer_info_id()+"\\"+sdf.format(date)+"\\original";
+			String temporalPath = photoDbPathNew+super.getCustomer_info_id()+"\\"+sdf.format(date)+"\\temporal";
+			if(StringUtils.isNotBlank(videoPicId)){
+				String[] videoPicArray = videoPicId.split(",");
+				int pinIndex = 0;
+				for (String str : videoPicArray) {
+					pinIndex += 1;
+					String pic[] = str.split("\\.");
+					System.out.println(str);
+					String picName = pic[0]+"."+pic[1];
+					
+					customerImgFile = new File(originalPath+"\\"+picName);
+					File originalRenameFile  = new File(originalPath+"\\"+adSeq+"_"+pinIndex+"."+pic[1]);
+					if(originalRenameFile.exists()){
+						originalRenameFile.delete();
+					}
+					customerImgFile.renameTo(originalRenameFile);
+					
+					customerImgFile = new File(temporalPath+"\\"+picName);
+					File temporalRenameFile = new File(temporalPath+"\\"+adSeq+"_"+pinIndex+"."+pic[1]);
+					if(temporalRenameFile.exists()){
+						temporalRenameFile.delete();
+					}
+					customerImgFile.renameTo(temporalRenameFile);
+					
+					adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+					PfpAdDetail pfpAdDetail = new PfpAdDetail();
+					pfpAdDetail.setAdDetailSeq(adDetailSeq);
+					pfpAdDetail.setAdDetailId("img_"+pic[2]);
+					pfpAdDetail.setPfpAd(pfpAd);
+					pfpAdDetail.setAdDetailContent("img/user/"+super.getCustomer_info_id()+"/"+sdf.format(date)+"/"+"original"+"/"+adSeq+"_"+pinIndex+"."+pic[1]);
+					pfpAdDetail.setAdPoolSeq(EnumAdStyle.VIDEO.getAdPoolSeq());
+					pfpAdDetail.setDefineAdSeq(EnumAdStyle.VIDEO.getTadSeq());
+					pfpAdDetail.setVerifyFlag("y");
+					pfpAdDetail.setVerifyStatus("n");
+					pfpAdDetail.setAdDetailUpdateTime(date);
+					pfpAdDetail.setAdDetailCreateTime(date);
+					pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
+				}
 			}
+			
+			//2.儲存影片網址與影片連結網址
+			saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),"","");
+			saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),"","");
+			
+			//3.儲存影片下載狀態與位置
+			saveAdDetail("尚未下載" ,"mp4","","");
+			saveAdDetail("尚未下載" ,"webcam","","");
+			saveAdDetail("尚未下載" ,"video_status","","");
+			
+			System.out.println("***********************************");
+			
+			//清空使用者上傳過而不使用的圖
+			File folder = new File(originalPath);
+			String[] list = folder.list();
+			for (String fileName : list) {
+				String[] fileNameArray = fileName.split("_");
+				if(fileNameArray.length == 2){
+					customerImgFile = new File(originalPath+"\\"+fileName);
+					customerImgFile.delete();
+				}
+			}
+			folder = new File(temporalPath);
+			list = folder.list();
+			for (String fileName : list) {
+				String[] fileNameArray = fileName.split("_");
+				if(fileNameArray.length == 2){
+					customerImgFile = new File(temporalPath+"\\"+fileName);
+					customerImgFile.delete();
+				}
+			}
+			result = "SUCCESS";
+			return SUCCESS;
+		}catch(Exception e){
+			result = "ERR";
+			return SUCCESS;
 		}
 		
-		
-		
-//		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-		result = "AAA";
-//		// 新增廣告
-//		addAd(pfpAdGroup,null);
-//		
-//		String imgDetail = "";
-//		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
-//		for(int i = 0; i < adDetailID.length; i++) {
-//		    if(i == 0 && adStyle.equals("TMG")) {
-//			try {
-//			    if(StringUtils.isNotBlank(imgFile)) {
-//				File iPath = new File(photoPath);		// 圖片的存放路徑
-//				File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
-//				if(!iPath.exists())			iPath.mkdirs();
-//				if(!iTmpPath.exists())		iTmpPath.mkdirs();
-//						String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
-//						File adFile = null;	// 上傳圖片的檔名
-//						if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
-//							adFile = new File(photoPath, adSeq + "." + fileType);
-//						}else {
-//							adFile = new File(photoPath, adSeq + ".jpg");
-//						}
-//						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
-//						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
-//
-//						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
-//					} else {
-//						if(StringUtils.isBlank(adDetailContent[0])) {
-//							imgDetail = "img/public/na.gif\" style=\"display:none";
-//						}
-//					}
-//				} catch (Exception ex) {
-//					log.info("ex : " + ex);
-//				}
-//
-//			}
-//
-//			adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
-//			List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, adDetailID[i], null, adPoolSeq);
-//			String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-//			if(adDetailID[i].equals("real_url")) {
-//				if(adDetailContent[i].indexOf("http") < 0 ) {
-//					adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
-//				}else{
-//				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-//				}
-//			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-//			    	adDetailContent[i] = adDetailContent[i].trim();
-//			}
-//			if(adDetailID[i].equals("show_url")) {
-//			    if(adDetailContent[i].indexOf("http://") < 0 ) {
-//				adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
-//			    }else{
-//				adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-//			    }
-////			    adDetailContent[i] = (HttpUtil.getInstance().getRealUrl(adDetailContent[i]).replace("http://", ""));
-//			    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
-//			    adDetailContent[i] = adDetailContent[i].trim();
-//			}
-//
-//			if(adDetailID[i].equals("title") || adDetailID[i].equals("content") ) {
-//				adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
-//				adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
-//			}
-//			
-//			String detailContent = i == 0?imgDetail:adDetailContent[i];
-//			pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
-//			pfpAdDetailVO.setAdSeq(adSeq);
-//			pfpAdDetailVO.setAdPoolSeq(adPoolSeq);
-//			pfpAdDetailVO.setAdDetailId(adDetailID[i]);
-//			pfpAdDetailVO.setAdDetailContent(detailContent);
-//			if(adDetailID[i].equals("img") || adDetailID[i].equals("title") || adDetailID[i].equals("content")) {
-//			    pfpAdDetailVO.setVerifyFlag("y");
-//			} else {
-//			    pfpAdDetailVO.setVerifyFlag("n");
-//			}
-//			pfpAdDetailVO.setDefineAdSeq(defineAdSeq);
-//			pfpAdDetailVO.setAdDetailCreateTime(new Date());
-//			pfpAdDetailVO.setAdDetailUpdateTime(new Date());
-//			pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
-//		}
-//
-//		// 新增關鍵字
-//		addKeywords(pfpAdGroup);
-//		//新增排除關鍵字
-//		addExcludeKeywords(pfpAdGroup);
-//
-//		// 開啟廣告分類
-//		pfpAdGroup.setAdGroupStatus(4);
-//		pfpAdGroupService.save(pfpAdGroup);
-//
-//		// 是否為 "儲存後再新增廣告"
-//		if(saveAndNew != null && saveAndNew.equals("save+new")) {
-//		    result = "saveNew";
-//		} else {
-//		    result = "saveOK";
-//		}
-//		msg = new ByteArrayInputStream(result.getBytes());
-////		return INPUT;
-//		return SUCCESS;
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//1.
-		return SUCCESS;
 	}
 	
 	
@@ -620,11 +569,10 @@ public class AdAddAction extends BaseCookieAction{
 	//新增廣告
 	private void addAd(PfpAdGroup pfpAdGroup, String adAssignTadSeq) {
 		try {
-		    	log.info(">>>>> time: " + new Date());
-
-		    	if(adSeq == null || StringUtils.isBlank(adSeq)){
-		    	    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-		    	}
+			log.info(">>>>> time: " + new Date());
+			if(adSeq == null || StringUtils.isBlank(adSeq)){
+				adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+			}
 			PfpAd pfpAd = new PfpAd();
 			pfpAd.setAdSeq(adSeq);
 			pfpAd.setPfpAdGroup(pfpAdGroup);
@@ -1712,6 +1660,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setVideoPicId(String videoPicId) {
 		this.videoPicId = videoPicId;
+	}
+
+	public String getAdVideoURL() {
+		return adVideoURL;
+	}
+
+	public void setAdVideoURL(String adVideoURL) {
+		this.adVideoURL = adVideoURL;
 	}
 
 }

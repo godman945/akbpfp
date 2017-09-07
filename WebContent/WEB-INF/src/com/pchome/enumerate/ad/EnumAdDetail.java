@@ -10,7 +10,8 @@ public enum EnumAdDetail {
 	define_ad_seq_real_url("dad_201303070014", 20),
 	define_ad_seq_img("dad_201303070010", 20),
 	define_ad_seq_title("dad_201303070011", 20),
-	real_url("real_url", 1024);
+	real_url("real_url", 1024),
+	video_url("video_url", 2048);
 	
 	private final String AdDetailName;
 	private final int maxlength;
