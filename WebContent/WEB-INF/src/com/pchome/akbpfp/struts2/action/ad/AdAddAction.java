@@ -329,10 +329,10 @@ public class AdAddAction extends BaseCookieAction{
 			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 			templateProductSeq = EnumAdStyle.VIDEO.getTproSeq();
 //			 新增廣告
-//			addAd(pfpAdGroup,null);
+			addAd(pfpAdGroup,null);
 			
 			// 取得廣告ad
-			adSeq = "ad_201709070036";
+//			adSeq = "ad_201709070036";
 			PfpAd pfpAd = pfpAdService.get(adSeq);
 			
 			File customerImgFile = null;
