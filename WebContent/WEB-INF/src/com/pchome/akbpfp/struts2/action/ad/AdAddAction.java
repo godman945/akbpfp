@@ -342,6 +342,9 @@ public class AdAddAction extends BaseCookieAction{
 			//1.儲存上傳圖片
 			String originalPath = photoDbPathNew+super.getCustomer_info_id()+"\\"+sdf.format(date)+"\\original";
 			String temporalPath = photoDbPathNew+super.getCustomer_info_id()+"\\"+sdf.format(date)+"\\temporal";
+			
+			log.info(">>>>originalPath:"+originalPath);
+			
 			if(StringUtils.isNotBlank(videoPicId)){
 				String[] videoPicArray = videoPicId.split(",");
 				int pinIndex = 0;
