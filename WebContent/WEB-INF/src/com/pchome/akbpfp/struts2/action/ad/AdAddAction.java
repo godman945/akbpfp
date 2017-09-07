@@ -340,8 +340,8 @@ public class AdAddAction extends BaseCookieAction{
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			
 			//1.儲存上傳圖片
-			String originalPath = photoDbPathNew+super.getCustomer_info_id()+"\\"+sdf.format(date)+"\\original";
-			String temporalPath = photoDbPathNew+super.getCustomer_info_id()+"\\"+sdf.format(date)+"\\temporal";
+			String originalPath = photoDbPathNew+super.getCustomer_info_id()+"/"+sdf.format(date)+"/original";
+			String temporalPath = photoDbPathNew+super.getCustomer_info_id()+"/"+sdf.format(date)+"/temporal";
 			
 			log.info(">>>>originalPath:"+originalPath);
 			
@@ -354,15 +354,15 @@ public class AdAddAction extends BaseCookieAction{
 					System.out.println(str);
 					String picName = pic[0]+"."+pic[1];
 					
-					customerImgFile = new File(originalPath+"\\"+picName);
-					File originalRenameFile  = new File(originalPath+"\\"+adSeq+"_"+pinIndex+"."+pic[1]);
+					customerImgFile = new File(originalPath+"/"+picName);
+					File originalRenameFile  = new File(originalPath+"/"+adSeq+"_"+pinIndex+"."+pic[1]);
 					if(originalRenameFile.exists()){
 						originalRenameFile.delete();
 					}
 					customerImgFile.renameTo(originalRenameFile);
 					
-					customerImgFile = new File(temporalPath+"\\"+picName);
-					File temporalRenameFile = new File(temporalPath+"\\"+adSeq+"_"+pinIndex+"."+pic[1]);
+					customerImgFile = new File(temporalPath+"/"+picName);
+					File temporalRenameFile = new File(temporalPath+"/"+adSeq+"_"+pinIndex+"."+pic[1]);
 					if(temporalRenameFile.exists()){
 						temporalRenameFile.delete();
 					}
@@ -393,15 +393,13 @@ public class AdAddAction extends BaseCookieAction{
 			saveAdDetail("尚未下載" ,"webcam","","");
 			saveAdDetail("0" ,"video_status","","");
 			
-			System.out.println("***********************************");
-			
 			//清空使用者上傳過而不使用的圖
 			File folder = new File(originalPath);
 			String[] list = folder.list();
 			for (String fileName : list) {
 				String[] fileNameArray = fileName.split("_");
 				if(fileNameArray.length == 2){
-					customerImgFile = new File(originalPath+"\\"+fileName);
+					customerImgFile = new File(originalPath+"/"+fileName);
 					customerImgFile.delete();
 				}
 			}
@@ -410,7 +408,7 @@ public class AdAddAction extends BaseCookieAction{
 			for (String fileName : list) {
 				String[] fileNameArray = fileName.split("_");
 				if(fileNameArray.length == 2){
-					customerImgFile = new File(temporalPath+"\\"+fileName);
+					customerImgFile = new File(temporalPath+"/"+fileName);
 					customerImgFile.delete();
 				}
 			}
