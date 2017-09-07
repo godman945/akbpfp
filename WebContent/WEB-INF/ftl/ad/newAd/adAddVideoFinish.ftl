@@ -44,56 +44,35 @@ ${adActionName!}
 					<th width="12%" style="width:20%">播放裝置</th>
 					<td width="34%">${adDeviceName!}</td>
 				</tr>
+				
+				
 				<tr>
-					<th style="width:20%" height="35">廣告走期</th>
+					<th style="width:20%" height="35">廣告樣式</th>
+					<td width="34%">影音廣告</td>
+					<th width="12%" style="width:20%">廣告走期</th>
 					<td width="34%">${adActionStartDate!} ~ ${selAdActionEndDate!}</td>
-					<th width="12%" style="width:20%">每日預算</th>
-					<td width="34%">${adActionMax!}元</td>
+				</tr>
+				
+				<tr>
+					<th style="width:20%" height="35">每日預算</th>
+					<td width="34%" colspan= "3">${adActionMax!}元</td>
 				</tr>
 			</tbody>
 		</table>
 		<h4>分類</h4>
 		<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb01">
-			<#if adType == "0" >
-				<tr>
-					<th width="20%" height="48">分類名稱</th>
-					<th width="20%" height="48">搜尋廣告出價</th>
-					<th width="20%" height="48">關鍵字組數</th>
-					<th width="20%" height="48">內容廣告出價</th>
-					<th width="20%" height="48">廣告明細</th>
-				</tr>
-				<tr>
-					<td width="20%" height="48">${adGroupName!}</td>
-					<td width="20%" height="48">${adGroupSearchPriceType!}<br><a href="adGroupView.html?adActionSeq=${adActionSeq!}">修改出價設定</a></td>
-					<td width="20%" height="48">${pfpAdKeywordList?size}組<br><a href="adKeywordView.html?adGroupSeq=${adGroupSeq!}">修改關鍵字出價</a></td>
-					<td width="20%" height="48">NT$${adGroupChannelPrice!}<br><a href="adGroupView.html?adActionSeq=${adActionSeq!}">修改出價</a></td>
-					<td width="20%" height="48">${pfpAdList?size!}則<br><a href="adAdView.html?adGroupSeq=${adGroupSeq!}">檢視廣告明細</a></td>
-				</tr>
-			<#elseif adType == "1">
-				<tr>
-					<th width="25%" height="48">分類名稱</th>
-					<th width="25%" height="48">搜尋廣告出價</th>
-					<th width="25%" height="48">關鍵字組數</th>
-					<th width="25%" height="48">廣告明細</th>
-				</tr>
-				<tr>
-					<td width="25%" height="48">${adGroupName!}</td>
-					<td width="25%" height="48">${adGroupSearchPriceType!}<br><a href="adGroupView.html?adActionSeq=${adActionSeq!}">修改出價設定</a></td>
-					<td width="25%" height="48">${pfpAdKeywordList?size}組<br><a href="adKeywordView.html?adGroupSeq=${adGroupSeq!}">修改關鍵字出價</a></td>
-					<td width="25%" height="48">${pfpAdList?size!}則<br><a href="adAdView.html?adGroupSeq=${adGroupSeq!}">檢視廣告明細</a></td>
-				</tr>
-			<#elseif adType == "2">
-				<tr>
-					<th width="34%" height="48">分類名稱</th>
-					<th width="33%" height="48">內容廣告出價</th>
-					<th width="33%" height="48">廣告明細</th>
-				</tr>
-				<tr>
-					<td width="34%" height="48">${adGroupName!}</td>
-					<td width="33%" height="48">NT$${adGroupChannelPrice!}<br><a href="adGroupView.html?adActionSeq=${adActionSeq!}">修改出價</a></td>
-					<td width="33%" height="48">${pfpAdList?size!}則<br><a href="adAdView.html?adGroupSeq=${adGroupSeq!}">檢視廣告明細</a></td>
-				</tr>
-			</#if>
+			<tr>
+				<th width="" height="48">分類名稱</th>
+				<th width="" height="48">計價方式</th>
+				<th width="" height="48">廣告出價</th>
+				<th width="" height="48">廣告明細</th>
+			</tr>
+			<tr>
+				<td width="" height="48">${adGroupName!}</td>
+				<td width="" height="48">${adGroupPriceType!}</td>
+				<td width="" height="48">NT$${adGroupChannelPrice!}<br><a href="adGroupView.html?adActionSeq=${adActionSeq!}">修改出價</a></td>
+				<td width="" height="48">${pfpAdList?size!}則<br><a href="adAdView.html?adGroupSeq=${adGroupSeq!}">檢視廣告明細</a></td>
+			</tr>
 		</table>
 	</div>
 	<center style="margin-top:10px;">

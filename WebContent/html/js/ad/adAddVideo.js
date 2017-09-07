@@ -428,49 +428,49 @@ function preView(obj){
 //儲存廣告
 function saveData() {
 	//廣告影片網址不可為空
-	if($("#adVideoURL").val() == ""){
-		$("#adVideoURLMsg").text('請輸入影片網址');
-		var position = $('#adVideoURL').offset();  
-		var x = position.left;  
-		var y = position.top;  
-		window.scrollTo(x,y);
-		return false;
-	}
-	
-	//廣告連結網址不可為空
-	if($("#adLinkURL").val() == ""){
-		$("#chkLinkURL").text('請輸入影片網址');
-		var position = $('#adLinkURL').offset();  
-		var x = position.left;  
-		var y = position.top;  
-		window.scrollTo(x,y);
-		return false;
-	}
-	
-	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
-		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
-			var position = $('#adVideoURL').offset();  
-			var x = position.left;  
-			var y = position.top;  
-			window.scrollTo(x,y);
-		}
-		
-		if($("#chkLinkURL").text() != "網址確認正確"){
-			var position = $('#adLinkURL').offset();  
-			var x = position.left;  
-			var y = position.top;  
-			window.scrollTo(x,y);
-		}
-		return false;
-	}
-	
-	if($("#errMsg").text() != "" && $("#errMsg").text() != "上傳成功"){
-		var position = $('#fileButton').offset();  
-		var x = position.left;  
-		var y = position.top;  
-		window.scrollTo(x,y);
-		return false;
-	}
+//	if($("#adVideoURL").val() == ""){
+//		$("#adVideoURLMsg").text('請輸入影片網址');
+//		var position = $('#adVideoURL').offset();  
+//		var x = position.left;  
+//		var y = position.top;  
+//		window.scrollTo(x,y);
+//		return false;
+//	}
+//	
+//	//廣告連結網址不可為空
+//	if($("#adLinkURL").val() == ""){
+//		$("#chkLinkURL").text('請輸入影片網址');
+//		var position = $('#adLinkURL').offset();  
+//		var x = position.left;  
+//		var y = position.top;  
+//		window.scrollTo(x,y);
+//		return false;
+//	}
+//	
+//	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
+//		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
+//			var position = $('#adVideoURL').offset();  
+//			var x = position.left;  
+//			var y = position.top;  
+//			window.scrollTo(x,y);
+//		}
+//		
+//		if($("#chkLinkURL").text() != "網址確認正確"){
+//			var position = $('#adLinkURL').offset();  
+//			var x = position.left;  
+//			var y = position.top;  
+//			window.scrollTo(x,y);
+//		}
+//		return false;
+//	}
+//	
+//	if($("#errMsg").text() != "" && $("#errMsg").text() != "上傳成功"){
+//		var position = $('#fileButton').offset();  
+//		var x = position.left;  
+//		var y = position.top;  
+//		window.scrollTo(x,y);
+//		return false;
+//	}
 	
 	console.log('資料OK');
 	
@@ -508,7 +508,7 @@ function saveData() {
 			console.log(respone);
 			$('body').unblock();
 			if(respone == "success"){
-//				$(location).attr( 'href' , 'adAddFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
+				$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
 			} else {
 //				alert(respone);
 			}

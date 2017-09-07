@@ -197,10 +197,10 @@
         	</result>
      	</action>
      	
-     	<action name="doAdAdAddVideo" class="AdAddAction" method="doAdAdAddVideo">
+     	<action name="adAddVideoFinish" class="AdFinishAction" method="adAddVideoFinish">
       		<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="adPrivilegeInterceptor" />
-       		<result type="tiles" name="success">.ad.add.finish</result>
+       		<result type="tiles" name="success">.ad.add.video.finish</result>
      	</action>
     <!-- 影音上稿  END-->
 

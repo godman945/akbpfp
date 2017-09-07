@@ -326,6 +326,11 @@ public class AdAddAction extends BaseCookieAction{
 		try{
 			log.info(">>>>>> doAdAdAddVideo adGroupSeq:"+adGroupSeq);
 			
+			if(true){
+				result = "success";
+				return SUCCESS;
+			}
+			
 			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 			templateProductSeq = EnumAdStyle.VIDEO.getTproSeq();
 //			 新增廣告
@@ -388,7 +393,7 @@ public class AdAddAction extends BaseCookieAction{
 			//3.儲存影片下載狀態與位置
 			saveAdDetail("尚未下載" ,"mp4","","");
 			saveAdDetail("尚未下載" ,"webcam","","");
-			saveAdDetail("尚未下載" ,"video_status","","");
+			saveAdDetail("0" ,"video_status","","");
 			
 			System.out.println("***********************************");
 			
@@ -417,17 +422,7 @@ public class AdAddAction extends BaseCookieAction{
 			result = "ERR";
 			return SUCCESS;
 		}
-		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	// 新增文字式廣告
 	@Transactional
