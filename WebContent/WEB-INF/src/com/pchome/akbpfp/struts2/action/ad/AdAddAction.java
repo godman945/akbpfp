@@ -387,6 +387,7 @@ public class AdAddAction extends BaseCookieAction{
 					saveAdDetail("尚未下載" ,"webcam","","");
 					saveAdDetail("0" ,"video_status","","");
 					
+					adSeq = null;
 				}
 			}
 			//清空使用者上傳過而不使用的圖
