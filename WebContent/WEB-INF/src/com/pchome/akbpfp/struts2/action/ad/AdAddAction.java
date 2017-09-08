@@ -366,7 +366,7 @@ public class AdAddAction extends BaseCookieAction{
 					adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
 					PfpAdDetail pfpAdDetail = new PfpAdDetail();
 					pfpAdDetail.setAdDetailSeq(adDetailSeq);
-					pfpAdDetail.setAdDetailId("img_"+pic[2]);
+					pfpAdDetail.setAdDetailId("img");
 					pfpAdDetail.setPfpAd(pfpAd);
 					pfpAdDetail.setAdDetailContent("img/user/"+super.getCustomer_info_id()+"/"+sdf.format(date)+"/"+"original"+"/"+adSeq+"."+pic[1]);
 					pfpAdDetail.setAdPoolSeq(EnumAdStyle.VIDEO.getAdPoolSeq());
@@ -376,18 +376,19 @@ public class AdAddAction extends BaseCookieAction{
 					pfpAdDetail.setAdDetailUpdateTime(date);
 					pfpAdDetail.setAdDetailCreateTime(date);
 					pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
+					
+					
+					//2.儲存影片網址與影片連結網址
+					saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),"","");
+					saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),"","");
+					
+					//3.儲存影片下載狀態與位置
+					saveAdDetail("尚未下載" ,"mp4","","");
+					saveAdDetail("尚未下載" ,"webcam","","");
+					saveAdDetail("0" ,"video_status","","");
+					
 				}
 			}
-			
-			//2.儲存影片網址與影片連結網址
-			saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),"","");
-			saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),"","");
-			
-			//3.儲存影片下載狀態與位置
-			saveAdDetail("尚未下載" ,"mp4","","");
-			saveAdDetail("尚未下載" ,"webcam","","");
-			saveAdDetail("0" ,"video_status","","");
-			
 			//清空使用者上傳過而不使用的圖
 //			File folder = new File(originalPath);
 //			String[] list = folder.list();
