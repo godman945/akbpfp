@@ -328,13 +328,6 @@ public class AdAddAction extends BaseCookieAction{
 			
 			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 			templateProductSeq = EnumAdStyle.VIDEO.getTproSeq();
-//			 新增廣告
-			addAd(pfpAdGroup,null);
-			
-			// 取得廣告ad
-//			adSeq = "ad_201709070036";
-			PfpAd pfpAd = pfpAdService.get(adSeq);
-			
 			File customerImgFile = null;
 			Date date = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -347,22 +340,24 @@ public class AdAddAction extends BaseCookieAction{
 			
 			if(StringUtils.isNotBlank(videoPicId)){
 				String[] videoPicArray = videoPicId.split(",");
-				int pinIndex = 0;
 				for (String str : videoPicArray) {
-					pinIndex += 1;
+//					 新增廣告
+					addAd(pfpAdGroup,null);
+					PfpAd pfpAd = pfpAdService.get(adSeq);
+					
 					String pic[] = str.split("\\.");
 					System.out.println(str);
 					String picName = pic[0]+"."+pic[1];
 					
 					customerImgFile = new File(originalPath+"/"+picName);
-					File originalRenameFile  = new File(originalPath+"/"+adSeq+"_"+pinIndex+"."+pic[1]);
+					File originalRenameFile  = new File(originalPath+"/"+adSeq+"."+pic[1]);
 					if(originalRenameFile.exists()){
 						originalRenameFile.delete();
 					}
 					customerImgFile.renameTo(originalRenameFile);
 					
 					customerImgFile = new File(temporalPath+"/"+picName);
-					File temporalRenameFile = new File(temporalPath+"/"+adSeq+"_"+pinIndex+"."+pic[1]);
+					File temporalRenameFile = new File(temporalPath+"/"+adSeq+"."+pic[1]);
 					if(temporalRenameFile.exists()){
 						temporalRenameFile.delete();
 					}
@@ -373,7 +368,7 @@ public class AdAddAction extends BaseCookieAction{
 					pfpAdDetail.setAdDetailSeq(adDetailSeq);
 					pfpAdDetail.setAdDetailId("img_"+pic[2]);
 					pfpAdDetail.setPfpAd(pfpAd);
-					pfpAdDetail.setAdDetailContent("img/user/"+super.getCustomer_info_id()+"/"+sdf.format(date)+"/"+"original"+"/"+adSeq+"_"+pinIndex+"."+pic[1]);
+					pfpAdDetail.setAdDetailContent("img/user/"+super.getCustomer_info_id()+"/"+sdf.format(date)+"/"+"original"+"/"+adSeq+"."+pic[1]);
 					pfpAdDetail.setAdPoolSeq(EnumAdStyle.VIDEO.getAdPoolSeq());
 					pfpAdDetail.setDefineAdSeq(EnumAdStyle.VIDEO.getTadSeq());
 					pfpAdDetail.setVerifyFlag("y");
@@ -394,24 +389,24 @@ public class AdAddAction extends BaseCookieAction{
 			saveAdDetail("0" ,"video_status","","");
 			
 			//清空使用者上傳過而不使用的圖
-			File folder = new File(originalPath);
-			String[] list = folder.list();
-			for (String fileName : list) {
-				String[] fileNameArray = fileName.split("_");
-				if(fileNameArray.length == 2){
-					customerImgFile = new File(originalPath+"/"+fileName);
-					customerImgFile.delete();
-				}
-			}
-			folder = new File(temporalPath);
-			list = folder.list();
-			for (String fileName : list) {
-				String[] fileNameArray = fileName.split("_");
-				if(fileNameArray.length == 2){
-					customerImgFile = new File(temporalPath+"/"+fileName);
-					customerImgFile.delete();
-				}
-			}
+//			File folder = new File(originalPath);
+//			String[] list = folder.list();
+//			for (String fileName : list) {
+//				String[] fileNameArray = fileName.split("_");
+//				if(fileNameArray.length == 2){
+//					customerImgFile = new File(originalPath+"/"+fileName);
+//					customerImgFile.delete();
+//				}
+//			}
+//			folder = new File(temporalPath);
+//			list = folder.list();
+//			for (String fileName : list) {
+//				String[] fileNameArray = fileName.split("_");
+//				if(fileNameArray.length == 2){
+//					customerImgFile = new File(temporalPath+"/"+fileName);
+//					customerImgFile.delete();
+//				}
+//			}
 			result = "success";
 			return SUCCESS;
 		}catch(Exception e){
