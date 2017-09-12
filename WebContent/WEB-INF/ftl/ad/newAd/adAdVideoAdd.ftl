@@ -415,10 +415,15 @@
                     </tr>
                 </tbody>
             </table>
-			
-			<!--上傳訊息start 預設圖-->
-			<ul id="AG" class="aduplodul" style="width: 96%; padding-left: 25px;">
-                <!--[if !IE 9]> -->
+			<div id="notSuppotDiv" style="display:none;">
+                	您的瀏覽器不支援唷! 請更換IE10以上或其它瀏覽器
+                <img src="http://show.pchome.com.tw/html/main/img/tt_pp2.png" class="tt_pp">
+            </div>
+
+			<!--上傳訊息start 上傳後顯示-->
+			<div class="aduplodulbg">
+				<ul id="AG" class="aduplodul" style="width: 96%; padding-left: 25px;">
+			       <!--[if !IE 9]> -->
 	                <li class="okbox" id=""><div class="adboxdv"><img id="imghead_1" src="<@s.url value="/" />html/img/upl9090.gif"></div><ul style="padding-top: 5px"><li class=""><b style="font-size: 18px;text-align:center;margin-top: 30px;">300 x 250</b></li></ul></li>
 	                <li class="okbox" id=""><div class="adboxdv"><img id="imghead_2" src="<@s.url value="/" />html/img/upl9090.gif"></div><ul style="padding-top: 5px"><li class=""><b style="font-size: 18px;text-align:center;margin-top: 30px;">300 x 600</b></li></ul></li>
 	                <li class="okbox" id=""><div class="adboxdv"><img id="imghead_3" src="<@s.url value="/" />html/img/upl9090.gif"></div><ul style="padding-top: 5px"><li class=""><b style="font-size: 18px;text-align:center;margin-top: 30px;">320 x 480</b></li></ul></li>
@@ -427,8 +432,11 @@
             	<!--[if IE 9]>
             		<img id="" style="" src="http://static.ettoday.net/images/1744/1744834.jpg">
             	<![endif]-->
-            </ul>
-			<span class="t_s01">提醒您，於網路中張貼或散佈色情圖片是觸法行為，違者可處二年以下有期徒刑、拘役或併科三萬元以下罰金</span>
+			                </ul>
+			            </div>
+			<!--上傳訊息end-->
+			 <span class="t_s01">提醒您，於網路中張貼或散佈色情圖片是觸法行為，違者可處二年以下有期徒刑、拘役或併科三萬元以下罰金</span>
+        	</div>
 
 
 <div id="approveSizeDiv" style="display:none;">

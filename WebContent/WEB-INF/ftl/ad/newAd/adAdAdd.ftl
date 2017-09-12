@@ -23,7 +23,11 @@
 			<div class="cal">帳戶名稱：${customer_info_title!}</div>
 			<img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">新增廣告
 		</h2>
-		<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
+		<#if adStyle == "VIDEO">
+				<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告</b>  &gt; 廣告完成 </div>
+			<#else>
+				<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
+		</#if>
 		<ul class="admenuul">
 			<#if adStyle == "VIDEO">
 					<li class="m03"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}&adOperatingRule=VIDEO" class="active" onClick="return(chkLeave())">影音廣告</a></li>
@@ -61,7 +65,7 @@
 						</tr>
 					</tbody>
 				</table>
-		</#if>
+			</#if>
 <#if adStyle == "TXT">
 <!-- adTxt start -->
 <@t.insertAttribute name="adTxt" />
@@ -71,10 +75,10 @@
 <@t.insertAttribute name="adTmg" />
 <!-- adTmg end -->
 <#elseif adStyle == "VIDEO">
+<div class="grtba">
 <@t.insertAttribute name="adAddVideo" />
 </#if>
  
-		</div>
 
 		<#if adStyle == "TXT" || adStyle == "TMG">
 			<!-- adKeyword start -->
