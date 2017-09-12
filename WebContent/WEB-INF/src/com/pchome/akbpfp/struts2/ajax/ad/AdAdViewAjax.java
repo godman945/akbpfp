@@ -155,6 +155,73 @@ public class AdAdViewAjax extends BaseCookieAction{
 		return imgmap;
 	}
 
+	public String adAdVideoViewTableAjax() throws Exception{
+		int type = Integer.parseInt(searchType);
+		long allAdActionViews = 0;
+		for(EnumAdType adType:EnumAdType.values()){
+			if(adType.getType() == type){
+				allAdActionViews = pfpAdService.getPfpAdCount(super.getCustomer_info_id(), 
+																adGroupSeq, 
+																keyword);
+				adAdViewVO = pfpAdService.getAdAdView(super.getCustomer_info_id(), 
+																adGroupSeq, 
+																keyword, 
+																adType, 
+																DateValueUtil.getInstance().stringToDate(startDate), 
+																DateValueUtil.getInstance().stringToDate(endDate),
+																pageNo, 
+																pageSize);
+			}
+		}
+
+		if(allAdActionViews > 0) {
+			totalCount = allAdActionViews;
+			pageCount = (int) Math.ceil(((float)totalCount / pageSize));
+
+			if(adAdViewVO != null && adAdViewVO.size() > 0){
+				totalSize = adAdViewVO.size();		
+				for(PfpAdAdViewVO vo:adAdViewVO){
+					if(StringUtils.equals("N", vo.getHtml5Tag())){
+						Map<String,String> imgmap = new HashMap<String,String>();
+						imgmap = getImgSize(vo.getOriginalImg());
+						vo.setImgWidth(imgmap.get("imgWidth"));
+						vo.setImgHeight(imgmap.get("imgHeight"));
+					}
+					
+					String showUrl = vo.getRealUrl();
+					showUrl = showUrl.replaceAll("http://", "");
+					showUrl = showUrl.replaceAll("https://", "");
+					if(showUrl.lastIndexOf(".com/") != -1){
+						showUrl = showUrl.substring(0, showUrl.lastIndexOf(".com/") + 4);
+					}
+					if(showUrl.lastIndexOf(".tw/") != -1){
+						showUrl = showUrl.substring(0, showUrl.lastIndexOf(".tw/") + 3);
+					}
+					vo.setShowUrl(showUrl);
+					
+					totalPv += vo.getAdPv();
+					totalClk += vo.getAdClk();		
+					totalCost += vo.getAdClkPrice();
+					totalInvalidClk += vo.getInvalidClk();
+				}
+				
+				if(totalClk > 0 || totalPv > 0){
+					totalClkRate = (float)totalClk / (float)totalPv*100;
+				}
+				
+				if(totalCost > 0 || totalClk > 0){
+					totalAvgCost = (float)totalCost / (float)totalClk;	
+				}
+			}
+		}
+		
+		// 查詢日期寫進cookie
+		this.setChooseDate(startDate, endDate);
+		
+		return SUCCESS;
+	}
+	
+	
 	public void setPfpAdService(IPfpAdService pfpAdService) {
 		this.pfpAdService = pfpAdService;
 	}

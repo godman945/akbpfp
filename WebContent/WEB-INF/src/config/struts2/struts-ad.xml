@@ -202,6 +202,33 @@
 			<interceptor-ref name="adPrivilegeInterceptor" />
        		<result type="tiles" name="success">.ad.add.video.finish</result>
      	</action>
+     	
+     	<action name="adAdVideoView" class="AdAdViewAction" method="adAdVideoView">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">ad.ad.video.view</result>
+    	</action>
+    	
+    	
+    	<action name="adAdVideoViewTable" class="AdAdViewAjax" method="adAdVideoViewTableAjax">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">ad.ad.video.table</result>
+	    </action>
+	    
+	    
+	   <action name="adAdEditVideo" class="AdEditAction" method="adAdEditVideo">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">51200</param>
+			</interceptor-ref>
+			<result type="redirectAction" name="input">
+				<param name="actionName">adAdVideoView</param>  
+				<param name="adGroupSeq">${adGroupSeq}</param>
+			</result>
+			<result type="tiles" name="success">.ad.ad.vodeo.edit</result>
+    	</action>
     <!-- 影音上稿  END-->
 
 	<action name="adAdEdit" class="AdEditAction" method="AdAdEdit">

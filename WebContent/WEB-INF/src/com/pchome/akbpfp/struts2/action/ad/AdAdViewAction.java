@@ -46,6 +46,7 @@ public class AdAdViewAction extends BaseCookieAction{
 	private String status;
 	private String groupMaxPrice;
 	private String adType;
+	private String adOperatingRule;
 	
 	public String execute() throws Exception{
 		
@@ -134,6 +135,31 @@ public class AdAdViewAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
+	
+	/**
+	 * 
+	 * */
+	public String adAdVideoView() throws Exception{
+		searchAdType = EnumAdType.values();
+		adGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
+		startDate = this.getChoose_start_date();											
+		endDate = this.getChoose_end_date();
+		enumBoardType = EnumBoardType.values();
+		board = pfpBoardService.findAccountRemainBoard(EnumBoardType.FINANCE, 
+														super.getCustomer_info_id(), 
+														EnumCategory.REMAIN_NOT_ENOUGH);
+		adType = adGroup.getPfpAdAction().getAdType().toString();
+		
+		return SUCCESS;
+	}
+	
+	
+	
+	
+	
+	
+	
 	public void setPfpAdGroupService(IPfpAdGroupService pfpAdGroupService) {
 		this.pfpAdGroupService = pfpAdGroupService;
 	}
@@ -208,6 +234,14 @@ public class AdAdViewAction extends BaseCookieAction{
 
 	public void setAdType(String adType) {
 		this.adType = adType;
+	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
 	}
 	
 }
