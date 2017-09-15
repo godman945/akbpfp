@@ -217,7 +217,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 
 		hql.append("select");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk when r.ad_clk_price_type = 'CPM' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_time_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price) ");
@@ -272,7 +272,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 		hql.append(" DAYOFWEEK(r.ad_pvclk_date),");
 		hql.append(" r.time_code,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk when r.ad_clk_price_type = 'CPM' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_time_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
@@ -336,7 +336,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 		hql.append(" DAYOFWEEK(r.ad_pvclk_date),");
 		hql.append(" r.time_code,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk when r.ad_clk_price_type = 'CPM' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_time_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price) ");

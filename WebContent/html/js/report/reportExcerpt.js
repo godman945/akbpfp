@@ -4,7 +4,7 @@ var json_data;
 //一開始執行
 //jQuery(document).ready(function() {
 jQuery(window).load(function() {
-
+	
     //flash chart
 	showHighChart();
 
@@ -139,7 +139,18 @@ jQuery(window).load(function() {
 
 //ajax id  重新榜定
 function ready(){
-    
+	if($("#excerptTable").children().length > 1){
+		var node = document.createElement("a");
+		node.style.float = 'left';
+		node.style.marginTop = '7px';
+		var img = document.createElement("img");
+		img.src='./html/img/question.gif';
+		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
+		node.appendChild(img);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[7].append(node)
+	}
+	
+	
 	//sort table plugin
     $.tablesorter.defaults.widgets = ['zebra'];
     //$.tablesorter.defaults.sortList = [[0,0]];
@@ -379,6 +390,7 @@ function ready(){
 
 
 //單一 ajax table a href call ad search
+//總廣告成效-分類
 function adIdSearch(adType, adId){
 	var adPvclkDevice = null;
 	if($('#adPvclkDevice').val()) {

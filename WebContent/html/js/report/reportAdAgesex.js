@@ -133,6 +133,17 @@ $(function(){
 
 //ajax id  重新榜定
 function ready(){
+	if($("#excerptTable").children().length > 1){
+		var node = document.createElement("a");
+		node.style.float = 'left';
+		node.style.marginTop = '7px';
+		var img = document.createElement("img");
+		img.src='./html/img/question.gif';
+		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
+		node.appendChild(img);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[9].append(node)
+	}
+	
 	//sort table plugin
 	$.tablesorter.defaults.widgets = ['zebra'];
 

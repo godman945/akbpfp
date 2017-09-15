@@ -37,7 +37,8 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 
 						String hqlStr = "";
                         HashMap<String, Object> sqlParams = new HashMap<String, Object>();
-
+                        
+                        //報表下方總計
 						if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue())) {
 
 							//總廣告成效 -> 報表類型:廣告 (數量及加總)
@@ -398,7 +399,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 
 		hql.append("select ");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk when r.ad_clk_price_type = 'CPM' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_action_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price) ");
@@ -465,7 +466,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 
 		hql.append("select ");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk when r.ad_clk_price_type = 'CPM' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_action_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
@@ -546,7 +547,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		hql.append("select");
 		hql.append(" r.ad_pvclk_date,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk WHEN r.ad_clk_price_type = 'CPM' THEN r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_action_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
@@ -617,7 +618,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 
 		hql.append("select");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk when r.ad_clk_price_type = 'CPM' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_action_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price) ");
@@ -677,7 +678,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		hql.append("select");
 		hql.append(" r.ad_pvclk_date,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk when r.ad_clk_price_type = 'CPM' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_action_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
@@ -748,7 +749,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		hql.append("select");
 		hql.append(" r.ad_pvclk_date,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk when r.ad_clk_price_type = 'CPM' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_action_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price) ");

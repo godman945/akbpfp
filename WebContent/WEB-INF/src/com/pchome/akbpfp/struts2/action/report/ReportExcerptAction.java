@@ -527,8 +527,8 @@ public class ReportExcerptAction extends BaseReportAction {
 		String customerInfoId=super.getCustomer_info_id();
 		log.info(">>> customerInfoId = " + customerInfoId);
 
-		tableHeadList=new LinkedList<String>();//table head
-		tableDataList=new LinkedList<LinkedList<String>>();//table data
+		tableHeadList = new LinkedList<String>();//table head
+		tableDataList = new LinkedList<LinkedList<String>>();//table data
 
 		//自訂欄位選擇
 		if(StringUtils.isNotEmpty(optionSelect)){
