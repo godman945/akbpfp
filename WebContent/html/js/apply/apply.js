@@ -288,7 +288,7 @@ function clearGift(){
 	$("#addMoney").removeAttr("readonly");
 	$("#giftSno").removeAttr("readonly");
 	$("#addMoneyDiv").show();
-	$("#addMoney").val("1000");
+	$("#addMoney").val("3000");
 	var addTax = Math.round(1000 * 0.05);
 	var total = Math.round(1000 * 1.05);	
 	$("#addTax").html(addTax);
