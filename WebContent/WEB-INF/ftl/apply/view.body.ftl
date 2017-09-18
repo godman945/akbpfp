@@ -127,7 +127,7 @@
 <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 <tbody>
 	<tr>
-        <th height="35"><span class="t_s02">* </span>首次儲值金額<br><span id="first" name="first" class="t_s01"> (首次儲值金額最少為新台幣$3000)</span></th>
+        <th height="35"><span class="t_s02">* </span>首次儲值金額<br><span id="first" name="first" class="t_s01"> (首次儲值金額最少為新台幣$500)</span></th>
         <td>NT$
           	<input type="text" id="addMoney" name="addMoney" value="${accountVO.addMoney!}" autocomplete="off" maxlength="6" style="width:50px" <#if accountVO.giftSno??>readonly</#if> />		
         </td>
