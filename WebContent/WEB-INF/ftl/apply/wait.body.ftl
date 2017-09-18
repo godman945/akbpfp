@@ -192,4 +192,3 @@ chosen link or button. -->
 <script type="text/javascript"
   src="//www.googleadservices.com/pagead/conversion_async.js">
 </script>
-alex:${accountVO.addMoney!}
