@@ -15,7 +15,7 @@ $(document).ready(function(){
 			addMoney: {
 				required: "請填寫儲值金額.",
 				digits: "儲值金額只能填寫數字.",
-				min: "儲值金額至少要500元."
+				min: "儲值金額至少要3000元."
 			}
 		}
 	});
