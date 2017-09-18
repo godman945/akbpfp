@@ -1,4 +1,4 @@
-﻿var freeBoolean = true;
+﻿﻿var freeBoolean = true;
 $(document).ready(function(){
 
 	// 同意條款
@@ -54,7 +54,7 @@ $(document).ready(function(){
 			addMoney: {
 				required: true,
 				digits: true,
-				min: 500
+				min: 3000
 			}
 		},
 		messages: {
@@ -117,7 +117,7 @@ $(document).ready(function(){
 		
 		var addMoney = $("#addMoney").val();
 		
-		if(addMoney >= 500){
+		if(addMoney >= 3000){
 			var addTax = Math.round(addMoney * 0.05);
 			var total = Math.round(addMoney * 1.05);
 			
