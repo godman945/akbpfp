@@ -270,7 +270,7 @@ function checkGift(){
 				
 				if(response.payment == "N"){
 					$("#addMoneyDiv").hide();
-					$("#addMoney").val("1000");
+					$("#addMoney").val("3000");
 				}
 			}
 		},
