@@ -8,14 +8,14 @@ $(document).ready(function(){
 			addMoney: {
 				required: true,
 				digits: true,
-				min: 500
+				min: 3000
 			}
 		},
 		messages: {
 			addMoney: {
 				required: "請填寫儲值金額.",
 				digits: "儲值金額只能填寫數字.",
-				min: "儲值金額至少要500元."
+				min: "儲值金額至少要3000元."
 			}
 		}
 	});
@@ -24,7 +24,7 @@ $(document).ready(function(){
 		
 		var addMoney = $("#addMoney").val();
 		
-		if(addMoney >= 500){
+		if(addMoney >= 3000){
 			var addTax = Math.round(addMoney * 0.05);
 			var total = Math.round(addMoney * 1.05);
 			

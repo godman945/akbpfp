@@ -2,7 +2,7 @@ package com.pchome.enumerate.apply;
 
 public enum EnumSaveMoney {
 
-	Default(1000,5,500,0);			// 預設
+	Default(3000,5,500,0);			// 預設
 	
 	private final float price;		// 儲值金額
 	private final float taxPercent;	// 扣稅百分比
