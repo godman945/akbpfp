@@ -209,6 +209,11 @@
 		<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
     </bean>
+    
+   	<bean id="ReportVideoPerformanceAction" class="com.pchome.akbpfp.struts2.action.report.ReportVideoPerformanceAction" scope="prototype">
+    	<property name="adVideoPerformanceReportService" ref="AdVideoPerformanceReportService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+    </bean>
     <!-- Ad New -->
     <bean id="AdActionAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdActionAddAction" scope="prototype" >
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 

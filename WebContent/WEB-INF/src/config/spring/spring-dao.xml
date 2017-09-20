@@ -103,6 +103,11 @@
 	<bean id="AdWebsiteReportDAO" class="com.pchome.akbpfp.db.dao.report.AdWebsiteReportDAO">
         <property name="sessionFactory" ref="sessionFactory_report" />
     </bean>
+    
+    <bean id="AdVideoPerformanceReportDAO" class="com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportDAO">
+        <property name="sessionFactory" ref="sessionFactory_report" />
+    </bean>
+    
     <!-- Adm -->
     <bean id="AdmFreeActionDAO" class="com.pchome.akbpfp.db.dao.freeAction.AdmFreeActionDAO">
         <property name="sessionFactory" ref="sessionFactory" />

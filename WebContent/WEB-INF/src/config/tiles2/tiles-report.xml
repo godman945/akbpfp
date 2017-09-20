@@ -274,5 +274,24 @@
     	<put-attribute name="reportTable" value="report.ajaxTable.adWebsite" />
 		<put-attribute name="chartTable" value="report.chartTable.adWebsite" />
 	</definition>
+	
+	
+	<!--.report.video.performance -->
+    <definition name=".report.videoPerformance" extends="default.report.layout" >
+		<put-attribute name="header" value="report.header.video.performance" />
+        <put-attribute name="body" value="report.body.video.performance" />
+    </definition>
+ 	
+ 	<definition name="report.header.video.performance" extends="report.header" >
+       <put-attribute name="jsName" value="reportAdVideoPerformance.js" />
+    </definition>
+ 	
+ 	<definition name="report.body.video.performance" extends="report.body" >
+    	<put-attribute name="reportTable" value="report.ajaxTable.video.performance" />
+		<put-attribute name="chartTable" value="report.chartTable.video.performance" />
+	</definition>
+    
+    <definition name="report.ajaxTable.video.performance" template="/ftl/report/ajax/adVideoPerformanceTable.ftl" />
+    <definition name="report.chartTable.video.performance" template="/ftl/report/chart/adVideoPerformanceChartTable.ftl" />
     
 </tiles-definitions>

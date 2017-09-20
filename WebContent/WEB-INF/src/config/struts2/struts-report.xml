@@ -428,5 +428,38 @@
             <result type="tiles" name="success">report.flashData</result>
         </action>
         
+        <!-- 影音成效報表 -->
+        <action name="reportVideoPerformance" class="ReportVideoPerformanceAction">
+           <interceptor-ref name="loginCheckStack" />
+            <interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="redirectAction" name="none">summary</result>
+            <result type="tiles" name="success">.report.videoPerformance</result>
+        </action>
+        
+        <action name="reportVideoPerformanceAjaxChart" class="ReportVideoPerformanceAction" method="flashDataDownLoad">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="tiles" name="success">report.flashData</result>
+        </action>
+        
+        <action name="reportVideoPerformanceAjaxTable" class="ReportVideoPerformanceAction">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="tiles" name="success">report.ajaxTable.video.performance</result>
+        </action>
+        
+         <action name="reportVideoPerformanceDownload" class="ReportVideoPerformanceAction">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="reportPrivilegeInterceptor" />
+      		<result name="success" type="stream">   
+             	<param name="contentType">application/octet-stream</param>   
+             	<param name="contentDisposition">   
+                    attachment;filename="${downloadFileName}"  
+                </param>   
+                <param name="inputName">downloadFileStream</param> 
+            </result>  
+      	</action>
+        
+        
     </package>
 </struts>

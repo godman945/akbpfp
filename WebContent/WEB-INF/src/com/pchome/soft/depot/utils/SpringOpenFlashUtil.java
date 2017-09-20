@@ -246,6 +246,14 @@ public class SpringOpenFlashUtil {
 			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTRINVALID.getTextValue())) {
 			scale = 0;
+		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())) {
+			scale = 2;
+		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())) {
+			scale = 2;
+		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
+			scale = 2;
+		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())) {
+			scale = 2;
 		}
 		//x 軸兩日期間所相差的天數
 		long maxValueX = DateValueUtil.getInstance().getDateDiffDay(startDate, endDate);

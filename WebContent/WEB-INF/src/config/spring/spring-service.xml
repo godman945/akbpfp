@@ -104,6 +104,10 @@
         <property name="adWebsiteReportDAO" ref="AdWebsiteReportDAO" />
     </bean>
 
+  	<bean id="AdVideoPerformanceReportService" class="com.pchome.akbpfp.db.service.report.AdVideoPerformanceReportService"> 
+        <property name="adVideoPerformanceReportDAO" ref="AdVideoPerformanceReportDAO" />
+    </bean>
+    
 	<!-- Adm -->
 	<bean id="AdmFreeActionService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeActionService">
         <property name="dao" ref="AdmFreeActionDAO" />
