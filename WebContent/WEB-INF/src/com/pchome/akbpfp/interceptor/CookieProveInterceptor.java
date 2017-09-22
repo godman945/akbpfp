@@ -85,13 +85,15 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 				result = invocation.invoke();
 				return result;
-			}else if(buName.equals(pcstoreName) && !pfdc.equals(this.pfdc)){
+			}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.pfdu)){
 				result = invocation.invoke();
 				return result;
-			}else if(buName.equals(rutenName) && !pfdc.equals(this.pfdc)){
-				result = invocation.invoke();
-				return result;
-			}else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
+			}
+//			else if(buName.equals(rutenName) && !pfdc.equals(this.pfdu)){
+//				result = invocation.invoke();
+//				return result;
+//			}
+			else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
 				result = invocation.invoke();
 				return result;
 			}
