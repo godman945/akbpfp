@@ -112,6 +112,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 				}
 			}else{
 				String pcId = createBuUser(buInfoJson);
+				log.info(">>>>>bu pcId:"+pcId);
 				if(StringUtils.isNotBlank(pcId)){
 					createBuCookie(pcId,response,false,null);
 				}
@@ -190,6 +191,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 	 * 建立BU使用者資料
 	 * */
 	public String createBuUser(JSONObject buInfoJson) throws Exception{
+		log.info(">>>>>>>>>>create bu");
 		String buId = buInfoJson.getString("buId");
 		String pfdc = buInfoJson.getString("pfdc");
 		String url = buInfoJson.getString("url");
