@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/9/6 �W�� 09:25:21 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/9/22 �W�� 10:31:43 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -131,7 +131,7 @@ public class PfpAd implements java.io.Serializable {
 		this.adArea = adArea;
 	}
 
-	@Column(name = "ad_style", nullable = false, length = 3)
+	@Column(name = "ad_style", nullable = false, length = 5)
 	public String getAdStyle() {
 		return this.adStyle;
 	}

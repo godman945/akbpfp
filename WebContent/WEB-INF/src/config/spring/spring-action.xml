@@ -237,6 +237,7 @@
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
 		<property name="sequenceService" ref="SequenceService" />
     	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="pfpAdVideoSourceService" ref="PfpAdVideoSourceService" /> 
     	<property name="pfpAdService" ref="PfpAdService" />
     	<property name="pfpAdDetailService" ref="PfpAdDetailService" />
     	<property name="pfpAdKeywordService" ref="PfpAdKeywordService" />

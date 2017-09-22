@@ -150,5 +150,6 @@
 	<table-filter match-name="pfp_ad_keyword_invalid"
 		match-catalog="akb_video">
 	</table-filter>
+	<table-filter match-name="pfp_ad_video_source" match-catalog="akb_video"></table-filter>
 
 </hibernate-reverse-engineering>

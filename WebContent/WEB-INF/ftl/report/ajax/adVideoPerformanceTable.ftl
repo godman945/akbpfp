@@ -4,7 +4,6 @@
 <span style="float:left"> 
 <table border="0" cellspacing="3" cellpadding="0" class="srchtb"> 
   <tr> 
-	  
 	   <td>
 		    <select id="adPriceType"> 
 		        <#list adPriceTypeMap?keys as skey>

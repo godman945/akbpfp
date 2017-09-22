@@ -116,6 +116,21 @@
     <bean id="AdmRecognizeRecordDAO" class="com.pchome.akbpfp.db.dao.recognize.AdmRecognizeRecordDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+        <bean id="AdmFreeGiftDAO" class="com.pchome.akbpfp.db.dao.freeAction.AdmFreeGiftDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>  
+    
+    <bean id="AdmFreeRecordDAO" class="com.pchome.akbpfp.db.dao.freeAction.AdmFreeRecordDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>  
+    
+    <bean id="AdmManagerDetailDAO" class="com.pchome.akbpfp.db.dao.manager.AdmManagerDetailDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="AdmChannelAccountDAO" class="com.pchome.akbpfp.db.dao.adm.channel.AdmChannelAccountDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
 
     <!-- AD -->
     <bean id="PfpAdDAO" class="com.pchome.akbpfp.db.dao.ad.PfpAdDAO">
@@ -198,19 +213,7 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
   
-    <bean id="AdmFreeGiftDAO" class="com.pchome.akbpfp.db.dao.freeAction.AdmFreeGiftDAO">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>  
-    
-    <bean id="AdmFreeRecordDAO" class="com.pchome.akbpfp.db.dao.freeAction.AdmFreeRecordDAO">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>  
-    
-    <bean id="AdmManagerDetailDAO" class="com.pchome.akbpfp.db.dao.manager.AdmManagerDetailDAO">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-    
-    <bean id="AdmChannelAccountDAO" class="com.pchome.akbpfp.db.dao.adm.channel.AdmChannelAccountDAO">
+    <bean id="PfpAdVideoSourceDAO" class="com.pchome.akbpfp.db.dao.advideo.PfpAdVideoSourceDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     

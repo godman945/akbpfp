@@ -9,10 +9,8 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -36,6 +34,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpAdExcludeKeyword;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
+import com.pchome.akbpfp.db.pojo.PfpAdVideoSource;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.DefineAdService;
 import com.pchome.akbpfp.db.service.ad.PfpAdDetailService;
@@ -43,6 +42,7 @@ import com.pchome.akbpfp.db.service.ad.PfpAdExcludeKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.ad.PfpAdKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdService;
+import com.pchome.akbpfp.db.service.advideo.IPfpAdVideoSourceService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfbx.IPfbSizeService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
@@ -120,6 +120,9 @@ public class AdAddAction extends BaseCookieAction{
 	private DefineAdService defineAdService;
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private IPfbSizeService pfbSizeService;
+	
+	private IPfpAdVideoSourceService pfpAdVideoSourceService;
+	
 	//廣告支援尺寸表
 	private List<PfbxSize> searchPCSizeList = new ArrayList<PfbxSize>();
 	private List<PfbxSize> searchMobileSizeList = new ArrayList<PfbxSize>();
@@ -329,7 +332,6 @@ public class AdAddAction extends BaseCookieAction{
 	public String doAdAdAddVideo() {
 		try{
 			log.info(">>>>>> doAdAdAddVideo adGroupSeq:"+adGroupSeq);
-			
 			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 			templateProductSeq = EnumAdStyle.VIDEO.getTproSeq();
 			File customerImgFile = null;
@@ -340,14 +342,19 @@ public class AdAddAction extends BaseCookieAction{
 			String originalPath = photoDbPathNew+super.getCustomer_info_id()+"/"+sdf.format(date)+"/original";
 			String temporalPath = photoDbPathNew+super.getCustomer_info_id()+"/"+sdf.format(date)+"/temporal";
 			
-//			String originalPath = "D:/home/webuser/akb/pfp/img/user/AC2013071700001/20170913/original";
-//			String temporalPath = "D:/home/webuser/akb/pfp/img/user/AC2013071700001/20170913/temporal";
-			
-			
 			log.info(">>>>originalPath:"+originalPath);
 			JSONArray picInfoArray = new JSONArray(videoPicId[0].toString());
-			
 			JSONObject picInfoJson = null;
+			
+			//檢查是否有下載過的影片
+			String videpSeq = "";
+			PfpAdVideoSource pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(null);
+			if(pfpAdVideoSource == null){
+				videpSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_VIDEO_SOURCE, "_");
+			}else{
+				videpSeq = pfpAdVideoSource.getAdVideoSeq();
+			}
+			
 			for(EnumAdVideoSizeAddEnum enumAdVideoSizeAddEnum: EnumAdVideoSizeAddEnum.values()){
 				boolean sizeFlag = false;
 				for (int i =0; i<picInfoArray.length(); i++) {
@@ -1657,6 +1664,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setAdVideoURL(String adVideoURL) {
 		this.adVideoURL = adVideoURL;
+	}
+
+	public IPfpAdVideoSourceService getPfpAdVideoSourceService() {
+		return pfpAdVideoSourceService;
+	}
+
+	public void setPfpAdVideoSourceService(IPfpAdVideoSourceService pfpAdVideoSourceService) {
+		this.pfpAdVideoSourceService = pfpAdVideoSourceService;
 	}
 
 }

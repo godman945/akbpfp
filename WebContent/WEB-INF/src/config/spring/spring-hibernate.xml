@@ -102,7 +102,7 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpAdWebsiteReport</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpRefundOrder</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpBuAccount</value>
-				
+				<value>com.pchome.akbpfp.db.pojo.PfpAdVideoSource</value>
 				<!-- PFB pojo -->
 				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
 				<value>com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory</value>
@@ -209,7 +209,7 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpAdSpecificWebsite</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpAdWebsiteReport</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpRefundOrder</value>
-				
+				<value>com.pchome.akbpfp.db.pojo.PfpAdVideoSource</value>
 				<!-- PFB pojo -->
 				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
 				<value>com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory</value>               
