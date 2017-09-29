@@ -9,7 +9,7 @@
   ga('send', 'pageview');
 
 </script>
-
+ 
 <script type="text/javascript" src="http://adcl.pchome.com.tw:80/getAd2JS.html?type=24&channel=keyword&encoding=Utf8"></script>
 
 </div>
