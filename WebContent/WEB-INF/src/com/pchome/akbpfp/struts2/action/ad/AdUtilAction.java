@@ -124,7 +124,7 @@ public class AdUtilAction extends BaseCookieAction{
 							cutFile.delete();
 						
 						ImageUtil imgResizeUtil = new ImageUtil();
-						imgResizeUtil.resizeImage(resizeFile, tmpFile, 90, imgType);	
+						imgResizeUtil.resizeImage(resizeFile, tmpFile, 250, imgType);	
 					}
 					imgFile = tmpFile.getAbsolutePath();
 					imgFile = imgFile.indexOf("\\") > 0?imgFile.replaceAll("\\\\", "/"):imgFile;
