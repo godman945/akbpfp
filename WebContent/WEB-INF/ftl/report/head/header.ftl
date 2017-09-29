@@ -41,7 +41,7 @@
  		<#else>
  			<a href="<@s.url value="/" />login.html">登入</a>
  		</#if>
- 		．<a href="http://4c.pchome.com.tw/ad/" target="">廣告刊登</a>．<a href="http://www.pchome.com.tw" target="">PChome</a>
+ 		．<a href="http://www.pchome.com.tw" target="">PChome</a>
  	</div>
 </div>
 <!-- header end -->
