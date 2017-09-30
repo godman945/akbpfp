@@ -70,7 +70,7 @@ public class AdUtilAction extends BaseCookieAction{
 				
 				if(imgWidth.intValue() < 250 || imgHeight.intValue() < 250){
 					log.info("-------------test=");
-					result = "notSize";
+					result = "errorSize";
 				    return SUCCESS;
 				}
 				

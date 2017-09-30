@@ -67,7 +67,7 @@ function initPage() {
 		parent.document.getElementById("chkFile").style.color = "red";
 		parent.document.getElementById("chkFile").innerText = "系統問題，請與服務人員聯絡，謝謝您！";
 		parent.document.getElementById("chkFile").textContent = "系統問題，請與服務人員聯絡，謝謝您！";
-	} else if(msg == "notSize") {
+	} else if(msg == "errorSize") {
 	var imghead  = parent.document.getElementById("imghead");
 		var previewImg  = parent.document.getElementById("previewImg");
 		var uploadFile  = parent.document.getElementById("uploadFile");
