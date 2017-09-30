@@ -67,6 +67,13 @@ public class AdUtilAction extends BaseCookieAction{
 					result = "notSize";
 				    return SUCCESS;
 				}
+				
+				if(imgWidth.intValue() < 250 || imgHeight.intValue() < 250){
+					log.info("-------------test=");
+					result = "notSize";
+				    return SUCCESS;
+				}
+				
 
 				// 存放截圖的暫存目錄
 				File iCutPath = new File(photoTmpPath + "cut/");
