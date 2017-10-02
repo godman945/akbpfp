@@ -84,11 +84,13 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 			
 			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 				return "index";
-			}else if(buName.equals(pcstoreName) && !pfdc.equals(this.pfdc)){
+			}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.pfdu)){
 				return "index";
-			}else if(buName.equals(rutenName) && !pfdc.equals(this.pfdc)){
-				return "index";
-			}else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
+			}
+//			else if(buName.equals(rutenName) && !pfdc.equals(this.pfdc)){
+//				return "index";
+//			}
+			else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
 				return "index";
 			}
 			

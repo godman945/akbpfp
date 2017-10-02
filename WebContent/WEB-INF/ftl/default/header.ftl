@@ -25,7 +25,7 @@
  		<#else>
  			<a href="<@s.url value="/" />login.html">登入</a>
  		</#if>
- 	．<a href="http://www.pchome.com.tw" target="">PChome</a>
+ 		．<a href="http://www.pchome.com.tw" target="">PChome</a>
  	</div>
 </div>
 <!-- header end -->
