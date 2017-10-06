@@ -77,7 +77,7 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="#">刊登秘訣</a></li>
+                <li><a href="#step">刊登秘訣</a></li>
                 <li><a href="#impression">全站曝光</a></li>
                 <li><a href="#fee">收費/付款</a></li>
                 <li><a href="#advantage">廣告優勢</a></li>
