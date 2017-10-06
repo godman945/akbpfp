@@ -78,12 +78,12 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="#step">刊登秘訣</a></li>
-                <li><a href="#impression">全站曝光</a></li>
-                <li><a href="#fee">收費/付款</a></li>
+                <li><a href="#impression">廣告版位</a></li>
+                <li><a href="#fee">計費方式</a></li>
                 <li><a href="#advantage">廣告優勢</a></li>
-                <li><a href="http://show.pchome.com.tw/faq.html" target="_blank">熱門問答</a></li>
-                <li><a href="http://4c.pchome.com.tw/campaign/2016/emba/" target="_blank">AD學院</a></li>
-
+                <li><a href="http://show.pchome.com.tw/faq.html" target="_blank">新手上路</a></li>
+                <li><a href="http://4c.pchome.com.tw/campaign/2016/emba/" target="_blank">EMBA行銷講座</a></li>
+				<li><a href="http://4c.pchome.com.tw/ad/" target="_blank">專人諮詢</a></li>
 		        <div class="login">
 		            <#if id_pchome?exists>
 						<!-- <img src="<@s.url value="/" />html/main/img/icon_bb.gif" hspace="3" align="absmiddle"> -->
