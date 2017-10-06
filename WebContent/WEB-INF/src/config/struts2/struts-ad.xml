@@ -188,7 +188,7 @@
 		<result type="tiles" name="input">.ad.ad.add</result>
     </action>
     
-    <!-- 影音上稿  START-->
+    <!-- 影音廣告  START-->
    		<action name="adAddVideoSaveAjax" class="AdAddAction" method="doAdAdAddVideo">
       		<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="adPrivilegeInterceptor" />
@@ -229,7 +229,15 @@
 			</result>
 			<result type="tiles" name="success">.ad.ad.vodeo.edit</result>
     	</action>
-    <!-- 影音上稿  END-->
+    	
+    	
+    	<action name="adVideoPreview" class="AdAddAction" method="videoPreview">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">.ad.ad.vodeo.preview</result>
+    	</action>
+    	
+    <!-- 影音廣告  END-->
 
 	<action name="adAdEdit" class="AdEditAction" method="AdAdEdit">
 		<interceptor-ref name="loginCheckStack" />

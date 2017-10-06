@@ -236,3 +236,36 @@
 .pc970250_1img img {  padding-left: 170px;  height: 98px;  max-width: 130px;}
 .iframe_style_pc970250_1img {display: block; position: absolute; margin: 0 auto;}
 .iframe_style_pc970250_1img iframe{ width: 175px; height: 98px; padding-left: 40px;}
+
+
+
+/*20170929 新增廣告*/
+
+.aduplodul_p{margin:0;padding: 0;width: 100%;margin:auto;overflow: hidden;font: 400 13px/22px Verdana,微軟正黑體;}
+.aduplodul_p>li,.aduplodul .adboxdv{overflow:hidden;display:block;width:210px;}
+.aduplodul_p>li{ float:left;  list-style:none; height:280px;  margin: 10px 0px 10px 10px; position:relative;background:#FFF;}
+.aduplodul_p>li>ul{display:block; margin:auto;width:95%;color: #000;overflow: hidden;/* height: 100px;max-height: 125px; */padding: 0;}
+.aduplodul_p>li>ul>li{width: 90%;margin: auto; list-style:none;color: #000;overflow: hidden; text-overflow: ellipsis; word-break: break-all; }
+.aduplodul_p>li>em{display:block;color:#ff4545;margin:auto;text-align:center;line-height: 45px;font-size: 19px;font-style: normal;font-weight: bold;}
+.aduplodul_p>li>ul>li>i{  float: left;   width: 36px;font-style:normal;  display: block;  color: #888;}
+.aduplodul_p>li>ul>li>b{font-weight:400;display: block;}
+.aduplodul_p>li>ul>li:first-child>b{font-weight:600;}
+.aduplodul_p>li>ul>li.no>b{color:#F00;}
+.aduplodul_p>li>ul>li.yes>b:after{content :"";padding-left:10px;background:url(../img/aduplodimg.png) 0 -38px;cursor:pointer;width: 20px;height: 30px;position: absolute;}
+.aduplodul_p>li>ul>li.no>b:after{content : "";padding-left:10px;background:url(../img/aduplodimg.png) 0 -78px;cursor:pointer;width: 20px;height: 30px;position: absolute;}
+.aduplodul_p>li>ul>li.name>b{ display: -webkit-box;  -webkit-line-clamp: 2; -webkit-box-orient: vertical; max-height: 45px; overflow: hidden;}
+.aduplodul_p>li.okbox{border:1px solid #ccc;}
+.aduplodul_p>li.failbox{border:1px solid #ff4545;}
+.adboxdv>span>i{color:#F00;font-style:normal;}
+
+
+
+.aduplodul_v {width: 100%; margin: auto; overflow: hidden; }
+.aduplodul_v .v_box{  border:1px solid #ccc;background-color: #fff;float: left;margin-right: 8px; margin-bottom: 10px;}
+.aduplodul_v .v_preview {padding: 10px;background-color: #fff;}
+.aduplodul_v span {border-bottom: 1px solid ##eaeaea;font-size: 15px; color: #000; margin: auto; display: block; padding: 8px;background-color: #eee;text-align: center;}
+.box_a_style { height: 460px;width: 230px; text-align: center;  display: table-cell; vertical-align: middle; }
+.box_a_style img { width: 100%;text-align: center; vertical-align: middle  }
+
+.box_b_style { height: 330px;width: 390px;text-align: center;  display: table-cell; vertical-align: middle; }
+.box_b_style img { width: 100% ; }

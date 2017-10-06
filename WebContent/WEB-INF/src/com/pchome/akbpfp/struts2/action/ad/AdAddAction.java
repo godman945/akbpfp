@@ -1,10 +1,12 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
@@ -76,7 +78,7 @@ public class AdAddAction extends BaseCookieAction{
 	private static final long serialVersionUID = 1L;
 
 	private String message = "";
-
+	private String previewHtml = "";
 	private String adActionName;
 	private String adGroupSeq;
 	private String adGroupName;
@@ -1053,6 +1055,69 @@ public class AdAddAction extends BaseCookieAction{
 
 	    return SUCCESS;
 	}
+	
+	
+	/**
+	 * 預覽影音
+	 * */
+	public String videoPreview() throws Exception{
+		System.out.println("影音預覽");
+		String tad = FileUtils.readFileToString(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"), "UTF-8");
+//		System.out.println(tad);
+		
+		FileReader fr = new FileReader(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"));	
+		BufferedReader br =  new BufferedReader(fr);
+		
+		
+		StringBuffer str = new StringBuffer();
+		String sCurrentLine;
+		String video = "https://r3---sn-un57en7s.googlevideo.com/videoplayback?ipbits=0&signature=E2AEF5238A65089DAE6EE0DCD0C456B271EA7612.3EEF465E8204CDC55C39C45C72C61322C0018DB7&itag=18&ratebypass=yes&gir=yes&dur=41.540&expire=1507276189&pl=22&ip=211.20.188.44&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&ei=PeHWWduzHZWkqAHrnZPoBg&id=o-AC9rDdFjBhIUNwxDWDA0nhwRzVP6OSBCwj76ccB_RL0y&initcwndbps=1092500&key=yt6&lmt=1503570514296390&clen=3688325&requiressl=yes&mime=video%2Fmp4&mm=31&mn=sn-un57en7s&ms=au&mt=1507254407&mv=m&source=youtube";
+		while ((sCurrentLine = br.readLine()) != null) {
+			if(sCurrentLine.indexOf("PoolSeq") >= 0){
+				continue;
+			}
+			if(sCurrentLine.indexOf("DiffCompany") >= 0){
+				continue;
+			}
+			if(StringUtils.isBlank(sCurrentLine)){
+				continue;
+			}
+			if(sCurrentLine.indexOf("<!DOCTYPE html>") >= 0){
+				continue;
+			}
+			if(sCurrentLine.indexOf("pcvideo_action_test.js") >= 0){
+				continue;
+			}
+			if(sCurrentLine.indexOf("html:") >= 0 || sCurrentLine.indexOf("html>") >= 0 || sCurrentLine.indexOf("head>") >= 0 || sCurrentLine.indexOf("body>") >= 0 || sCurrentLine.indexOf("<meta charset=\"utf-8\">") >= 0){
+				continue;
+			}
+			
+			if(sCurrentLine.indexOf("<#dad_201303070014>") >= 0){
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070014>", "http://www.pchome.com.tw/");
+			}
+			if(sCurrentLine.indexOf("<#dad_201303070015>") >= 0){
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070015>", video);
+			}
+			if(sCurrentLine.indexOf("<#dad_201303070016>") >= 0){
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070016>", video);
+			}
+			if(sCurrentLine.indexOf("<#dad_201303070017>") >= 0){
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", video);
+			}
+			if(sCurrentLine.indexOf("<#dad_201303070018>") >= 0){
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", video);
+			}
+			str = str.append(sCurrentLine+"\r\n");
+		}
+		System.out.println("***************************************");
+		System.out.println(str);
+		previewHtml = str.toString();
+		br.close();	
+		fr.close();
+		result = "success";
+		return SUCCESS;
+	}
+	
 
 	/**
 	 * 儲存資料
@@ -1672,6 +1737,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setPfpAdVideoSourceService(IPfpAdVideoSourceService pfpAdVideoSourceService) {
 		this.pfpAdVideoSourceService = pfpAdVideoSourceService;
+	}
+
+	public String getPreviewHtml() {
+		return previewHtml;
+	}
+
+	public void setPreviewHtml(String previewHtml) {
+		this.previewHtml = previewHtml;
 	}
 
 }

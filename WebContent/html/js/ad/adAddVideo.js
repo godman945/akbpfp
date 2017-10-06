@@ -231,6 +231,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		if(file.name == fileData.name){
 			imgRepeatFlag = true;
 			errorTitle = "廣告圖片已存在!"
+				errorMsg = '您所上傳的廣告圖片在此次新增中已存在';
 			return;
 		}
 	})
@@ -254,22 +255,22 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		var anyWindow = window.URL || window.webkitURL;
 		var objectUrl = anyWindow.createObjectURL(file);
 		var a =
-			 '<li class="okbox" style="padding: 0 0 20px 0;height:270px;"  id="'+adSeq+'">'+
+			 '<li class="okbox" style="padding: 0 0 20px 0;width: 18.5%; "  id="'+adSeq+'">'+
 			 '<div class="adboxdv" >'+
 			 '<img src="'+objectUrl+'">'+
 			 '<p class="fancy adinf" onclick="preViewImg(\''+file.name+'\',\''+width+'\',\''+height+'\');" alt="預覽">預覽</p></div>'+
-			 '<ul style="height:110px;">'+
-			 '<li><input type="radio" style="float:left;margin-top:5px;"  name="'+width+height+'" checked onclick="clickSizePic(this,\''+width+'\',\''+height+'\')"><i>名稱</i><b>' + showFileName + '</b></li>' + 
+			 '<ul style="margin-top: 5px;margin-left: -5px;">'+
+			 '<li><input type="radio" style="visibility:visible;float: left;display: block;"  name="'+width+height+'" checked onclick="clickSizePic(this,\''+width+'\',\''+height+'\')"><i>名稱</i><b>' + showFileName + '</b></li>' + 
 			 '<li style="margin-left:30px;" class="'+imgSize+'"><i>尺寸</i><b>'+width+' x '+height+'</b></li>'+
 			 '<li style="margin-left:30px;" class="'+imgFileSize+'"><i>大小</i><b>'+fileSize+'</b></li>'+
 			 '<li style="margin-left:30px;" class="'+imgType+'"><i>格式</i><b>'+imgTypeName.toUpperCase()+'</b></li>'+
 			 '</ul>'+
-			 '<a class="addel" style="top:265px;" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+ 
+			 '<a class="addel" style="top:275px;" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+ 
 			 '<input type="hidden" id="' + adSeq + '_title" name="imgName" value="' + fileName + '" />' + 
 			 '<input type="hidden" id="' + adSeq + '_imgMD5" name="imgMD5" value="' + imgMD5 + '" />' + 
 			 '<input type="hidden" id="' + adSeq + '_format" value="' + imgTypeName + '" />' +
 			 '</li>';
-		$(".aduplodul").append(a);
+		$(".aduplodul_p").append(a);
 		
 		
 		
@@ -287,18 +288,17 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 						
 						if(!checkFlag && index == 1 && radioName == width+height && $($(this).children()[1]).text() == width+' x '+height){
 							$(this).attr('class','no');
-							$(this).children()[1].append('	尺寸重複，僅能選取一張');
+							var data = $($(this).children()[1]).html("<br>");
+							$(this).children()[1].append('尺寸重複，僅能選擇一款。');
+							$(data).prepend(width+" x "+height);
 						}
 					})
 					}
 			})
 		})
-		
-		
-		
 	}else if(imgSize == "no" || imgFileSize == "no" || imgType == "no" || imgRepeatFlag){
 		var a =
-			'<li class="failbox" style="padding: 20px 0 0 0;height:270px;" id="'+adSeq+'">'+  
+			'<li class="failbox" style="padding: 20px 0 0 0;width: 18.5%;" id="'+adSeq+'">'+  
 			'<a class="addel" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+
 		    '<em style="line-height:27px;font-size:23px;">'+errorTitle+'</em>'+
 		    '<em style="line-height:23px;font-size:15px;">請重新上傳檔案</em>'+
@@ -312,7 +312,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		    '<span><i>說明：</i>'+errorMsg+'</span>'+
 		    '</div>'+
 		    '</li>';
-		$(".aduplodul").append($(a));
+		$(".aduplodul_p").append($(a));
 	}
 	imgIndex = imgIndex +1
 	if(imgIndex == uploadFileSize){
@@ -352,9 +352,21 @@ function clickSizePic(obj,width,height){
 						checkFlag = $(this).children()[0].checked;
 						radioName = $(this).children()[0].name;
 					}
-					if(!checkFlag && index == 1 && radioName == obj.name && $($(this).children()[1]).text() == width+' x '+height){
+					
+					if(!checkFlag  && index == 1 && radioName == obj.name){
+						//$($(this).children()[1]).empty();
+						console.log(this);
+						console.log(checkFlag);
+						console.log(radioName);
+						console.log($(this).children()[1]);
+					}
+					
+					if(!checkFlag && index == 1 && radioName == obj.name){
+						$($(this).children()[1]).empty();
 						$(this).attr('class','no');
-						$(this).children()[1].append('	尺寸重複，僅能選取一張');
+						var data = $($(this).children()[1]).html("<br>");
+						$(this).children()[1].append('尺寸重複，僅能選擇一款。');
+						$(data).prepend(width+" x "+height);
 					}
 				})
 			}

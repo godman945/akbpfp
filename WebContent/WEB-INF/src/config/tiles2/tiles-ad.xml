@@ -187,15 +187,13 @@
 	    	<put-attribute name="page" value="default.page" />
 	    </definition>   
     	
-    	
     	<definition name=".ad.ad.vodeo.edit" extends="ad.layout">
 	        <put-attribute name="body" value=".ad.ad.video.edit.body" />
 	    </definition>
+
 		<definition name=".ad.ad.video.edit.body" template="/ftl/ad/editAd/adAdEditVideo.ftl">
 	    	<put-attribute name="includeJs" value="/ftl/ad/editAd/ad.edit.video.js.ftl" />
 	    </definition>
-    	
-    	
     	
     	<definition name=".ad.video.add" extends="ad.nocss.layout">
 	         <put-attribute name="body" value=".ad.advideo.add.body" />
@@ -206,12 +204,8 @@
 	    	<put-attribute name="adAddVideo" value="/ftl/ad/newAd/adAdVideoAdd.ftl" />
 	    </definition>
     	
-    	
-    	
-    	
-    	
-    	
-    	
+    	<definition name=".ad.ad.vodeo.preview" template="/ftl/ad/newAd/ad.video.preview.ftl">
+	    </definition>
     <!-- 影音廣告  END-->
     
     <!-- 圖片廣告-->
