@@ -1071,7 +1071,7 @@ public class AdAddAction extends BaseCookieAction{
 		
 		StringBuffer str = new StringBuffer();
 		String sCurrentLine;
-		String video = "https://r3---sn-un57en7s.googlevideo.com/videoplayback?ipbits=0&signature=E2AEF5238A65089DAE6EE0DCD0C456B271EA7612.3EEF465E8204CDC55C39C45C72C61322C0018DB7&itag=18&ratebypass=yes&gir=yes&dur=41.540&expire=1507276189&pl=22&ip=211.20.188.44&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&ei=PeHWWduzHZWkqAHrnZPoBg&id=o-AC9rDdFjBhIUNwxDWDA0nhwRzVP6OSBCwj76ccB_RL0y&initcwndbps=1092500&key=yt6&lmt=1503570514296390&clen=3688325&requiressl=yes&mime=video%2Fmp4&mm=31&mn=sn-un57en7s&ms=au&mt=1507254407&mv=m&source=youtube";
+		String video = "https://r3---sn-un57sn7s.googlevideo.com/videoplayback?ipbits=0&clen=3688325&mime=video%2Fmp4&requiressl=yes&ratebypass=yes&mt=1507277300&mv=m&ms=au&dur=41.540&gir=yes&key=yt6&signature=DF6308DB5926AB611B70F7344012EDF2ADF73223.0AC26C4538026335924156A80505FCBCFE2F617B&mn=sn-un57sn7s&itag=18&id=o-ALtmN8LuYKvVKbEKsojjlRU1BRNIw-GnlEs4w6FU1awU&expire=1507299006&mm=31&ei=XjrXWde5LJa_qAHWp7TADg&ip=211.20.188.44&lmt=1503570514296390&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&source=youtube&initcwndbps=883750&pl=22";
 		while ((sCurrentLine = br.readLine()) != null) {
 			if(sCurrentLine.indexOf("PoolSeq") >= 0){
 				continue;
