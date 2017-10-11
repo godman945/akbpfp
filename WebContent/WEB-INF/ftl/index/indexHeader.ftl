@@ -83,7 +83,7 @@
                 <li><a href="#advantage">廣告優勢</a></li>
                 <li><a href="http://show.pchome.com.tw/faq.html" target="_blank">新手上路</a></li>
                 <li><a href="http://4c.pchome.com.tw/campaign/2016/emba/" target="_blank">EMBA行銷講座</a></li>
-				<li><a href="http://4c.pchome.com.tw/index.html#cnform" target="_blank">專人諮詢</a></li>
+				<li><a href="http://4c.pchome.com.tw/index.html" target="_blank">專人諮詢</a></li>
 		        <div class="login">
 		            <#if id_pchome?exists>
 						<!-- <img src="<@s.url value="/" />html/main/img/icon_bb.gif" hspace="3" align="absmiddle"> -->
