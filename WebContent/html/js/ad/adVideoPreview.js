@@ -1,0 +1,3 @@
+﻿var showadscript = '<script type=text/javascript src=adVideoPreview.html></script>';
+console.log(showadscript);
+document.write('<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+pad_width+'" height="'+pad_height+'" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html"></iframe>');

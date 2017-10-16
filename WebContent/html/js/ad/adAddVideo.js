@@ -66,6 +66,11 @@ $(document).ready(function(){
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLMsg").text('請輸入影片網址');
 			console.log('請輸入影片網址');
+			
+			/**測試影片預覽用*/
+			$("#preViewArea").empty();
+			autoPreview();
+			appendVideoPreview();
 			return false;
 		}
 		
@@ -108,6 +113,8 @@ $(document).ready(function(){
 		});
 	});
 	
+	
+	var fileFinishSize = 0;
 	//存入上傳後的圖片陣列
 	$(function () {
 	    $('#fileupload').fileupload({
@@ -122,7 +129,8 @@ $(document).ready(function(){
 	        dataType: 'json',
 	        async: false,
 	    }).on('fileuploadadd', function (e, data) {
-	    	uploadFileSize = data.originalFiles.length
+	    	uploadFileSize = data.originalFiles.length;
+	    	fileFinishSize = uploadFileSize;
 	    	if(uploadFileSize > 10){
 	    		alert("一次最多只能上傳10個檔案!!");
 	    		return false;
@@ -133,9 +141,17 @@ $(document).ready(function(){
 	    	index = index + 1;
 	    	$("#fileUploadIndex").text(index);
 	    	//呼叫建立畫面
-	    	createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq,jsonObj.imgMD5,jsonObj.imgRepeat,jsonObj.html5Repeat,jsonObj.imgSrc,jsonObj.errorMsg);
-	    	fileArray.push(data.files[0]);
-	    	seqArray.push(jsonObj.adSeq);
+	    	var result = createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq,jsonObj.imgMD5,jsonObj.imgRepeat,jsonObj.html5Repeat,jsonObj.imgSrc,jsonObj.errorMsg);
+	    	if(result){
+	    		fileArray.push(data.files[0]);
+		    	seqArray.push(jsonObj.adSeq);
+	    	}
+	    	
+	    	fileFinishSize = fileFinishSize - 1;
+	    	if(fileFinishSize == 0){
+		    	/**建立預覽圖*/
+		    	appendVideoPreview();
+	    	}
 	    }).on('fileuploadprogressall', function (e, data) {	
 	    }).on('fileuploadprocessalways', function (e, data) {
 	    	//2015.7.12  tim   由於error後不會執行fileuploaddone,所以要加unblock()
@@ -144,11 +160,6 @@ $(document).ready(function(){
 	    	}
 	    })
 	});
-	
-	
-	
-	
-	
 });
 
 
@@ -174,7 +185,7 @@ function callBlockUpload(){
 var imgIndex = 0;
 var flag = false;
 function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat, html5Repeat, imgSrc, zipErrorMsg) {
-	
+	var result = null;
 	if(flag == false){
 		$("#fileUploadSize").text(parseInt($("#fileUploadSize").text()) + uploadFileSize);
 		flag = true;
@@ -190,8 +201,8 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	var errorMsg ='';
 	var errorTitle ='';
 	
-	$.each($("#adSizeDiv p"), function( index, obj ) {
-		if($(obj).text().indexOf(width+" x "+height) >= 0){
+	$("#videoSize").children().each(function(index,obj) {
+		if((width+height) == $(obj).text()){
 			imgSize = "yes";
 			imgSizeFlag = true;
 			return false;
@@ -226,13 +237,14 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		errorMsg = '檔案空白';
 	}
 	
+	
 	//檢核重複上傳
 	fileArray.forEach(function(fileData,index) {
 		if(file.name == fileData.name){
 			imgRepeatFlag = true;
 			errorTitle = "廣告圖片已存在!"
-				errorMsg = '您所上傳的廣告圖片在此次新增中已存在';
-			return;
+			errorMsg = '您所上傳的廣告圖片在此次新增中已存在';
+			return false;
 		}
 	})
 	
@@ -252,51 +264,56 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	}
 	
 	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes" && imgRepeatFlag == false){
+		result = true;
+
+		if(width == 310 && height == 390){
+			width = "950";
+			height = "390";
+		}else if(width == 579 && height == 250){
+			width = "970";
+			height = "250";
+		}
+		
 		var anyWindow = window.URL || window.webkitURL;
 		var objectUrl = anyWindow.createObjectURL(file);
+		var readoName = width+height;
+		
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;width: 18.5%; "  id="'+adSeq+'">'+
 			 '<div class="adboxdv" >'+
 			 '<img src="'+objectUrl+'">'+
 			 '<p class="fancy adinf" onclick="preViewImg(\''+file.name+'\',\''+width+'\',\''+height+'\');" alt="預覽">預覽</p></div>'+
 			 '<ul style="margin-top: 5px;margin-left: -5px;">'+
-			 '<li><input type="radio" style="visibility:visible;float: left;display: block;"  name="'+width+height+'" checked onclick="clickSizePic(this,\''+width+'\',\''+height+'\')"><i>名稱</i><b>' + showFileName + '</b></li>' + 
+			 '<li><input type="radio" style="visibility:visible;float: left;display: block;"  name="'+readoName+'" checked onclick="clickSizePic(\''+showFileName+'\',\''+width+'\',\''+height+'\')"><i>名稱</i><b>' + showFileName + '</b></li>' + 
 			 '<li style="margin-left:30px;" class="'+imgSize+'"><i>尺寸</i><b>'+width+' x '+height+'</b></li>'+
 			 '<li style="margin-left:30px;" class="'+imgFileSize+'"><i>大小</i><b>'+fileSize+'</b></li>'+
 			 '<li style="margin-left:30px;" class="'+imgType+'"><i>格式</i><b>'+imgTypeName.toUpperCase()+'</b></li>'+
 			 '</ul>'+
-			 '<a class="addel" style="top:275px;" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+ 
+			 '<a class="addel" style="top:275px;" onclick="deleteImgDom(\''+adSeq+'\',\''+file.name+'\')">丟</a>'+ 
 			 '<input type="hidden" id="' + adSeq + '_title" name="imgName" value="' + fileName + '" />' + 
 			 '<input type="hidden" id="' + adSeq + '_imgMD5" name="imgMD5" value="' + imgMD5 + '" />' + 
 			 '<input type="hidden" id="' + adSeq + '_format" value="' + imgTypeName + '" />' +
 			 '</li>';
 		$(".aduplodul_p").append(a);
 		
-		
-		
-		
 		$("#AG").children().each(function(index,value){
-			var checkFlag = true;
-			var radioName = null;
-			$(this).children().each(function(index,value){
-				if(index ==1){
-					$(this).children().each(function(index,value){
-						if(index == 0){
-							checkFlag = $(this).children()[0].checked;
-							radioName = $(this).children()[0].name;
-						}
-						
-						if(!checkFlag && index == 1 && radioName == width+height && $($(this).children()[1]).text() == width+' x '+height){
-							$(this).attr('class','no');
-							var data = $($(this).children()[1]).html("<br>");
-							$(this).children()[1].append('尺寸重複，僅能選擇一款。');
-							$(data).prepend(width+" x "+height);
-						}
-					})
-					}
+			var checkFlag = false;
+			$(value.getElementsByTagName("ul")).children().each(function(index,obj){
+				if(index == 0 && readoName == $(obj).children()[0].name && $($(obj).children()[2]).text() != showFileName){
+					checkFlag = true;
+				}
+				
+				if(checkFlag && index == 1){
+					$(this).attr('class','no');
+					var data = $($(this).children()[1]).html("<br>");
+					$(this).children()[1].append('尺寸重複，僅能選擇一款。');
+					$(data).prepend(width+" x "+height);
+				}
+				
 			})
 		})
 	}else if(imgSize == "no" || imgFileSize == "no" || imgType == "no" || imgRepeatFlag){
+		result = false;
 		var a =
 			'<li class="failbox" style="padding: 20px 0 0 0;width: 18.5%;" id="'+adSeq+'">'+  
 			'<a class="addel" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+
@@ -331,47 +348,55 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		imgIndex  = 0;
 		flag = false;
 	}
+	return result;
 }
 
-function clickSizePic(obj,width,height){
-	var ulObj = $($(obj).parent()).parent();
-	var liObj = $(ulObj).children()[1];
-	$(liObj).attr('class','yes');
-	
-	var text =  $($(liObj).children()[1]).text();
-	text = text.replace("	尺寸重複，僅能選取一張","");
-	$($(liObj).children()[1]).text(text);
-	
+function clickSizePic(showFileName,width,height){
+	console.log(showFileName);
 	$("#AG").children().each(function(index,value){
-		var checkFlag = true;
+		var flag = null;
+		var ulObj = null;
 		var radioName = null;
-		$(this).children().each(function(index,value){
-			if(index ==1){
-				$(this).children().each(function(index,value){
-					if(index == 0){
-						checkFlag = $(this).children()[0].checked;
-						radioName = $(this).children()[0].name;
-					}
-					
-					if(!checkFlag  && index == 1 && radioName == obj.name){
-						//$($(this).children()[1]).empty();
-						console.log(this);
-						console.log(checkFlag);
-						console.log(radioName);
-						console.log($(this).children()[1]);
-					}
-					
-					if(!checkFlag && index == 1 && radioName == obj.name){
-						$($(this).children()[1]).empty();
-						$(this).attr('class','no');
-						var data = $($(this).children()[1]).html("<br>");
-						$(this).children()[1].append('尺寸重複，僅能選擇一款。');
-						$(data).prepend(width+" x "+height);
-					}
-				})
+		$(value.getElementsByTagName("ul")).children().each(function(index,obj){
+			radioName = $(obj).children()[0].name;
+			var name = $($(obj).children()[2]).text();
+			ulObj = $(obj).parent();
+			if(showFileName == name && radioName == (width+height)){
+				flag = true;
+			}else if(radioName == (width+height)){
+				flag = false;
+			}
+			return false;
+		})
+		
+		if(flag == null){
+			return true;
+		}
+		
+		$(ulObj).children().each(function(index,obj){
+			var width = radioName.substring(0,3);
+			var height = radioName.substring(3,radioName.length);
+			
+			if(flag){
+				if(index == 1){
+					$(obj).attr('class','yes');
+					var data = $(obj).innerHtml = '<i>尺寸</i><b>'+width+' x '+height+'</b>';
+					$(obj).empty();
+					$(obj).append(data);
+				}
+			}else{
+				if(index == 1){
+					$(obj).attr('class','no');
+					var data = $(obj).innerHtml = '<i>尺寸</i><b>'+width+' x '+height+'<br>尺寸重複，僅能選擇一款。</b>';
+					$(obj).empty();
+					$(obj).append(data);
+				}
 			}
 		})
 	})
+	
+	/**變更影片底圖*/
+	appendVideoPreview();
 }
 
 function saveAdAddVideo(result){
@@ -383,18 +408,70 @@ function fileLoad(){
 	$("#fileupload").click();
 }
 
+//重新決定redio圖片
+function changeRedioPanel(obj){
+	var deleteBannerFlag = true;
+	var redioName = null;
+	var text = null; 
+	$(obj.getElementsByTagName("ul")).children().each(function(index,value){
+		if(index == 0){
+			redioName = $(value).children()[0].name;
+		}
+		if(index == 1){
+			text = $($(value).children()[1]).text();
+		}
+		if($(value).attr('class') == 'no'){
+			deleteBannerFlag = false;
+			return false;
+		}
+	});
+	
+	//挑選一張圖片變更正確
+	var changeFlag = false;
+	if(deleteBannerFlag){
+		$("#AG").children().each(function(index,value){
+			$(value.getElementsByTagName("ul")).children().each(function(index,obj){
+				if(index == 0 && redioName == $(obj).children()[0].name){
+					changeFlag = true;
+					$($(obj).children()[0]).attr("checked",true);
+				}
+				if(changeFlag){
+					if(index == 1){
+						$(obj).attr('class','yes');
+						$($(obj).children()[1]).text(text);
+					}
+				}
+			});
+			if(changeFlag){
+				return false;
+			}
+		});
+	}
+	/**變更影片底圖*/
+	appendVideoPreview();
+}
+
 //刪除欲上傳檔案
-function deleteImgDom(fileName){
-//	var index = $("#fileUploadSize").text();
-	$.each($(".aduplodul li"), function( index, obj ) {
+function deleteImgDom(fileName,file){
+	var picIndexTotal = 0;
+	$.each($(".aduplodul_p li"), function( index, obj ) {
 		if(fileName == obj.id){
 			$(this).remove();
-			$.each($(fileArray), function( index, file ) {
-				if(fileName == file.name){
+			changeRedioPanel(this);
+			fileArray.forEach(function(fileData,index) {
+				if(file == fileData.name){
 					fileArray.splice(index, 1);
 					return false;
 				}
-			});
+			})
+			
+			return false;
+		}
+	});
+	
+	$.each($(fileArray), function( index, file ) {
+		if(fileName == file.name){
+			fileArray.splice(index, 1);
 			return false;
 		}
 	});
@@ -405,16 +482,8 @@ function deleteImgDom(fileName){
 			return false;
 		}
 	});
+	//判斷是否刪除最後一張尺寸圖
 	
-	successCount = 0;
-	failCount = 0;
-	$.each($("#AG").children() , function( index, liObj ) {
-		if($(liObj).attr("class") == "failbox"){
-			failCount = failCount + 1;
-		}else if($(liObj).attr("class") == "okbox"){
-			successCount = successCount + 1;
-		}
-	})
 }
 
 //點擊預覽
@@ -517,7 +586,8 @@ function saveData() {
 	});
 	
 	callBlock();
-	console.log(videoPic);
+	
+	
 //	$("#modifyForm").submit();
 	$.ajax({
 		url : "adAddVideoSaveAjax.html",
@@ -592,3 +662,75 @@ function callBlock(){
 		}
 	});
 }
+
+
+
+
+/*動態新增影片預覽*/
+var iframeInfoMap = new Object();
+function autoPreview(){
+	iframeInfoMap["iframe"+0] = {width:300,height:250};
+	iframeInfoMap["iframe"+1] = {width:336,height:280};
+	iframeInfoMap["iframe"+2] = {width:640,height:390};
+	
+	$.each(iframeInfoMap, function(key, obj) {
+		var a = 
+			'<div class="v_box">'+
+			   '<div class="">'+
+			      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" />'+obj.width+'x'+obj.height+'</span>'+
+			   '</div>'+
+			   '<div  class="v_preview box_a_style">'+
+			   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true"' +
+				'src="adVideoPreview.html?picPath='+obj.picPath+'"></iframe>';
+			   '</div>'+
+			'</div>';
+			$("#preViewArea").append(a);
+	});
+}
+
+function appendVideoPreview(){
+	$("#AG input[type=radio]").each(function(index,radioObj){
+		if(radioObj.checked){
+			var createPreViewVideoExist = false;
+			var createPreViewCheckboxObj = null;
+			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
+			
+			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
+				var size = checkboxObj.id.replace("checkbox_","");
+				if(size == radioObj.name){
+					createPreViewCheckboxObj = checkboxObj;
+					createPreViewVideoExist = true;
+				}
+			});
+			
+			if(!createPreViewVideoExist){
+				var width = radioObj.name.substring(0,3);
+				var height = radioObj.name.substring(3,radioObj.name.length);
+				var a = 
+				'<div class="v_box">'+
+				   '<div class="">'+
+				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+width+height+'" />'+width+'x'+height+'</span>'+
+				   '</div>'+
+				   '<div  class="v_preview box_a_style">'+
+				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
+					'src="adVideoPreview.html?picPath='+imgSrc+'"></iframe>';
+				   '</div>'+
+				'</div>';
+				$("#preViewArea").append(a);
+				
+			}else{
+				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
+				var style = head.children[2];
+				var data = style.innerHTML;				
+				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
+				data = data.replace(imgStr,'background-image:url('+imgSrc+')');
+				head.removeChild(style);
+				var css = document.createElement("style");
+				css.type = "text/css";
+				css.innerHTML = data;
+				head.insertBefore(css, head.childNodes[3]);
+			}
+		}
+	});
+}
+

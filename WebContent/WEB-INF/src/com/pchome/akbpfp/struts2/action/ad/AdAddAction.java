@@ -12,7 +12,9 @@ import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -62,6 +64,7 @@ import com.pchome.enumerate.ad.EnumAdSize;
 import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.ad.EnumAdVideoSize;
 import com.pchome.enumerate.ad.EnumAdVideoSizeAddEnum;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -76,7 +79,6 @@ public class AdAddAction extends BaseCookieAction{
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-
 	private String message = "";
 	private String previewHtml = "";
 	private String adActionName;
@@ -130,6 +132,11 @@ public class AdAddAction extends BaseCookieAction{
 	private List<PfbxSize> searchMobileSizeList = new ArrayList<PfbxSize>();
 	private List<PfbxSize> channelPCSizeList = new ArrayList<PfbxSize>();
 	private List<PfbxSize> channelMobileSizeList = new ArrayList<PfbxSize>();
+	
+	//影音廣告支援尺寸
+	private Map<String,String> adVideoSizeMap;
+	
+	
 	//圖片上傳位置
 	private String imgUploadPath;
 	private ControlPriceAPI controlPriceAPI;
@@ -201,6 +208,11 @@ public class AdAddAction extends BaseCookieAction{
 		
 		//影音廣告
 		if(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName().equals(adOperatingRule)){
+			this.adVideoSizeMap = new HashMap<String, String>();
+			for(EnumAdVideoSize enumAdVideoSize : EnumAdVideoSize.values()){
+				adVideoSizeMap.put(enumAdVideoSize.name(), enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight());
+			}
+			System.out.println(adVideoSizeMap);
 			adOperatingRule = pfpAdGroup.getPfpAdAction().getAdOperatingRule();
 			adStyle = adOperatingRule;
 			return "adVideoAdd";
@@ -1071,7 +1083,7 @@ public class AdAddAction extends BaseCookieAction{
 		
 		StringBuffer str = new StringBuffer();
 		String sCurrentLine;
-		String video = "https://r3---sn-un57sn7s.googlevideo.com/videoplayback?ipbits=0&clen=3688325&mime=video%2Fmp4&requiressl=yes&ratebypass=yes&mt=1507277300&mv=m&ms=au&dur=41.540&gir=yes&key=yt6&signature=DF6308DB5926AB611B70F7344012EDF2ADF73223.0AC26C4538026335924156A80505FCBCFE2F617B&mn=sn-un57sn7s&itag=18&id=o-ALtmN8LuYKvVKbEKsojjlRU1BRNIw-GnlEs4w6FU1awU&expire=1507299006&mm=31&ei=XjrXWde5LJa_qAHWp7TADg&ip=211.20.188.44&lmt=1503570514296390&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&source=youtube&initcwndbps=883750&pl=22";
+		String video = "https://r2---sn-un57en7l.googlevideo.com/videoplayback?ratebypass=yes&clen=2486396&dur=34.133&mime=video%2Fmp4&key=yt6&gir=yes&mm=31&ip=211.20.188.44&mn=sn-un57en7l&pl=21&itag=18&mt=1508116650&mv=u&ms=au&signature=5B125F17E8E5D5C5348171A6D9D49DAB4356F1E9.392DA0266B3400ABE6C4E5BFDBA3C4955A3CE1A3&expire=1508138701&id=o-AEVXNw6hNLpnX5LTaPZxQyybnKR6DBiVTedmHN1AOCng&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&lmt=1508042359017398&ipbits=0&source=youtube&ei=bQrkWcXDCYumgAPN-bPAAg&requiressl=yes";
 		while ((sCurrentLine = br.readLine()) != null) {
 			if(sCurrentLine.indexOf("PoolSeq") >= 0){
 				continue;
@@ -1745,6 +1757,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setPreviewHtml(String previewHtml) {
 		this.previewHtml = previewHtml;
+	}
+
+	public Map<String, String> getAdVideoSizeMap() {
+		return adVideoSizeMap;
+	}
+
+	public void setAdVideoSizeMap(Map<String, String> adVideoSizeMap) {
+		this.adVideoSizeMap = adVideoSizeMap;
 	}
 
 }

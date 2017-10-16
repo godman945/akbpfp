@@ -105,46 +105,16 @@
             </span>
         <div style="clear:both;margin:15px auto;border-bottom: dotted 1px #ccc;"></div>
           <span style="margin-left: 10px;font-size: 14px;">請勾選您想要的廣告版型與尺寸</span>
-            <span style="font-size: 14px;margin-top: 5px;margin-left: 10px;display: block; color: #1d5ed6"><input type="checkbox" name="checkbox" id="checkbox" />選擇全部</span>
+            <span  style="font-size: 14px;margin-top: 5px;margin-left: 10px;display: block; color: #1d5ed6">
+            	<input type="checkbox" name="checkbox" id="checkbox" />選擇全部</span>
                 <div class="aduplodul_v">
-                <div style="padding: 10px">
+                <div id="preViewArea" style="padding: 10px">
                  
-                 
-                 <div class="v_box">
-                    <div class="">
-                        <span><input type="checkbox" name="checkbox" id="checkbox">950x390</span>
-                     </div>
-                     <div class="v_preview box_a_style">
-                        <script language="javascript">
-						   pad_width=950;
-						   pad_height=390;
-						</script>
-                        <script id="pcadscript" language="javascript" src='html/js/ad/adVideoPreview.js'></script>
-                     </div>
-                </div>
-                 
-                 <div class="v_box">
-                    <div class="">
-                        <span><input type="checkbox" name="checkbox" id="checkbox" />320x480</span>
-                     </div>
-                     <div class="v_preview box_a_style">
-                     	<script language="javascript">
-						   pad_width=320;
-						   pad_height=480;
-						</script>
-                     	<script id="pcadscript" language="javascript" src='html/js/ad/adVideoPreview.js'></script>
-                     </div>
-                </div>
-
-  
+                   
                 </div>
                 </div>
         </div>
 		<!--上傳預覽區塊_影音end-->
-            
-            
-            
-            
             
             <!--上傳預覽區塊start-->
 	        <div class="grtba">
@@ -236,9 +206,12 @@
 	                   
 	                    <div style="width:110px;float:left;">
 	                            <p>300 x 250</p>
+	                            <p>336 x 280</p>
+	                            <p>640 x 390</p>
 	                            <p>300 x 600</p>
 	                            <p>320 x 480</p>
-	                            <p>970 x 250</p>
+	                            <p>310 x 390</p>
+	                            <p>579 x 250</p>
 	                    </div>
 	                    <div style="width:120px;float:left;">
 	                    </div>
@@ -267,3 +240,12 @@
 <input type="hidden" id="adOperatingRule" value="${adOperatingRule!}">
 <input type="hidden" id="adStyle" value="${adStyle!}">
 <input type="hidden" id="adClass" value="1">
+
+
+<div id="videoSize" style="display:none;">
+	<#list adVideoSizeMap?keys as key>
+		<#if key?index_of("BANNER") == 0 >
+			<p>${adVideoSizeMap[key]}</p>	
+		</#if>
+	</#list>
+</div>
