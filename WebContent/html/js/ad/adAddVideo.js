@@ -59,7 +59,6 @@ $(document).ready(function(){
 		}
 	});
 	
-	var adPreviewVideoData = null;
 	var videoUrl = null;
 	//檢查廣告網址blur事件
 	$("#adVideoURL").blur(function() {
@@ -214,6 +213,8 @@ $(document).ready(function(){
 	});
 	
 });
+var adPreviewVideoData = null;
+
 
 //檢查是否取消全部勾選
 function checkVideo(obj){
