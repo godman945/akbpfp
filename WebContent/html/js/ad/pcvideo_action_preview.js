@@ -71,7 +71,7 @@
 					if(iframeUrl[1] != "undefined"){
 						adbg = iframeUrl[1];
 					}
-					console.log(document.getElementById("alex"));
+					console.log(document.getElementById("alex").value);
 					
 					
 					
