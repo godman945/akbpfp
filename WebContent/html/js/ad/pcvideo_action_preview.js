@@ -92,10 +92,6 @@
 			};
 		}
 		
-		
-		
-		
-		
 		/*重新播放*/
 		function ReplayHandler(video){
 			if(video == null || video == undefined){
@@ -119,8 +115,6 @@
 			adlinkbtn2.style.display='none';
 			video.play();
 		}
-		
-		
 		
 		/*點擊開始播放*/
 		function PlayHandler(video){

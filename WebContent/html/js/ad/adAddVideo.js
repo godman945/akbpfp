@@ -1,5 +1,4 @@
-﻿
-var fileArray =[];
+﻿var fileArray =[];
 var seqArray = [];
 $(document).ready(function(){
 	$('#save').click(function(){
@@ -24,7 +23,6 @@ $(document).ready(function(){
 		}
 	});
 	
-	
 	//影片連結檢查
 	var adLinkUrlWord = 1024;
 	$('#adLinkURL').bind('keyup', function() {
@@ -38,12 +36,12 @@ $(document).ready(function(){
 			$("#spanAdLinkURL").css('color','red');
 		}
 		
-		$("#alex").attr("src","http://localhost:8080/akbpfp/videoad_01.jsp?width=300&height=168");
+		//$("#alex").attr("src","http://localhost:8080/akbpfp/videoad_01.jsp?width=300&height=168");
 	});
-	
 	
 	//檢查網址blur事件
 	$("#adLinkURL").blur(function() {
+		if($("#adLinkURL").length > 0 && $("#adLinkURL").val() != ""){
 			$.ajax({
 			type: "POST",
 			url: "checkAdUrl.html",
@@ -58,6 +56,7 @@ $(document).ready(function(){
 				$("#chkLinkURL").css('color','green');
 			}
 		});
+		}
 	});
 	
 	var videoUrl = null;
@@ -142,9 +141,22 @@ $(document).ready(function(){
 	    	$("#fileUploadIndex").text(index);
 	    	//呼叫建立畫面
 	    	var result = createImgObjDom(data.files[0],jsonObj.imgWidth,jsonObj.imgHeight,jsonObj.fileSize,jsonObj.adSeq,jsonObj.imgMD5,jsonObj.imgRepeat,jsonObj.html5Repeat,jsonObj.imgSrc,jsonObj.errorMsg);
-	    	if(result){
+	    	
+	    	if(result.result){
 	    		fileArray.push(data.files[0]);
 		    	seqArray.push(jsonObj.adSeq);
+		    	
+		    	//建立影音廣告尺寸選項
+		    	var addOptionFlag = true 
+		    	$("#adViseoSize").children().each(function(index,obj) {
+		    		if(obj.value == (result.width+result.height)){
+		    			addOptionFlag = false;
+		    			return false;
+		    		}
+		    	});
+		    	if(addOptionFlag){
+		    		$("#adViseoSize").append('<option value="'+result.width+result.height+'">'+result.width+" x "+result.height+'</option>');
+		    	}
 	    	}
 	    	
 	    	fileFinishSize = fileFinishSize - 1;
@@ -160,8 +172,65 @@ $(document).ready(function(){
 	    	}
 	    })
 	});
+	
+	
+	//點擊選取全部尺寸
+	$("#adViseoSize").on('change', function() {
+		var optionSize = this.value;
+		if(optionSize == 0){
+			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
+				var div = $($($(checkboxObj).parent()).parent()).parent();
+				$(div).css('display','');
+			});
+		}else{
+			/*取消選擇全部*/
+			$("#checkboxAll").attr('checked',false);
+			/*隱藏非選擇的影音尺寸，所有勾選取消*/
+			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
+				$(checkboxObj).attr('checked',false);
+				var size = checkboxObj.id.replace('checkbox_','');
+				var div = $($($(checkboxObj).parent()).parent()).parent();
+				if(size != optionSize){
+					$(div).css('display','none');
+				}else{
+					$(div).css('display','');
+				}
+			});
+		}
+	});
+	
+	
+	/*全部尺寸*/
+	$("#checkboxAll").on('change', function() {
+		if(this.checked){
+			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
+				$(checkboxObj).attr('checked',true);
+			});
+		}else{
+			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
+				$(checkboxObj).attr('checked',false);
+			});
+		}
+	});
+	
 });
 
+//檢查是否取消全部勾選
+function checkVideo(obj){
+	if(!obj.checked){
+		var flag = true;
+		$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
+			if(checkboxObj.checked == false){
+				flag = false
+				return false;
+			}
+		});
+	}
+	
+	if(!flag){
+		$("#checkboxAll").attr('checked',false);
+	}
+}
 
 function callBlockUpload(){
 	$("body").block({
@@ -348,11 +417,12 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		imgIndex  = 0;
 		flag = false;
 	}
+	
+	var result = {result:result,width:width,height:height};
 	return result;
 }
 
 function clickSizePic(showFileName,width,height){
-	console.log(showFileName);
 	$("#AG").children().each(function(index,value){
 		var flag = null;
 		var ulObj = null;
@@ -453,9 +523,12 @@ function changeRedioPanel(obj){
 
 //刪除欲上傳檔案
 function deleteImgDom(fileName,file){
-	var picIndexTotal = 0;
-	$.each($(".aduplodul_p li"), function( index, obj ) {
+	var deleteSize = null;
+	$.each($(".aduplodul_p li"), function(index,obj) {
 		if(fileName == obj.id){
+			if($(this).attr('class') == 'okbox'){
+				deleteSize = $($($(this).children()[1]).children()[0]).children()[0].name;
+			}
 			$(this).remove();
 			changeRedioPanel(this);
 			fileArray.forEach(function(fileData,index) {
@@ -464,7 +537,6 @@ function deleteImgDom(fileName,file){
 					return false;
 				}
 			})
-			
 			return false;
 		}
 	});
@@ -482,8 +554,36 @@ function deleteImgDom(fileName,file){
 			return false;
 		}
 	});
+
 	//判斷是否刪除最後一張尺寸圖
+	var previewobj = null;
+	$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
+		var size = checkboxObj.id.replace('checkbox_','');
+		if(size == deleteSize){
+			previewobj = $($($(checkboxObj).parent()).parent().parent()[0]);
+		}
+	});
 	
+	var picIndexTotal = 0;
+	$("#AG").children().each(function(index,value){
+		var obj = value;
+		$($(value).children("ul")).children().each(function(index,value){
+			if($(obj).attr('class') == 'okbox' && index == 0 && $(value).children()[0].name == deleteSize){
+				var text = $(value).children()[0].name;
+				picIndexTotal = picIndexTotal + 1;
+			}
+		});
+	});
+	
+	if(picIndexTotal == 0){
+		$(previewobj).empty();
+		$("#adViseoSize").children().each(function(index,obj) {
+    		if(obj.value == deleteSize){
+    			obj.remove(index);
+    			return false;
+    		}
+    	});
+	}
 }
 
 //點擊預覽
@@ -516,106 +616,6 @@ function preViewImg(imgName,width,height){
 		}
 	});
 }
-
-//儲存廣告
-function saveData() {
-	
-//	//廣告影片網址不可為空
-//	if($("#adVideoURL").val() == ""){
-//		$("#adVideoURLMsg").text('請輸入影片網址');
-//		var position = $('#adVideoURL').offset();  
-//		var x = position.left;  
-//		var y = position.top;  
-//		window.scrollTo(x,y);
-//		return false;
-//	}
-//	
-//	//廣告連結網址不可為空
-//	if($("#adLinkURL").val() == ""){
-//		$("#chkLinkURL").text('請輸入影片網址');
-//		var position = $('#adLinkURL').offset();  
-//		var x = position.left;  
-//		var y = position.top;  
-//		window.scrollTo(x,y);
-//		return false;
-//	}
-//	
-//	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
-//		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
-//			var position = $('#adVideoURL').offset();  
-//			var x = position.left;  
-//			var y = position.top;  
-//			window.scrollTo(x,y);
-//		}
-//		
-//		if($("#chkLinkURL").text() != "網址確認正確"){
-//			var position = $('#adLinkURL').offset();  
-//			var x = position.left;  
-//			var y = position.top;  
-//			window.scrollTo(x,y);
-//		}
-//		return false;
-//	}
-//	
-//	if($("#errMsg").text() != "" && $("#errMsg").text() != "上傳成功"){
-//		var position = $('#fileButton').offset();  
-//		var x = position.left;  
-//		var y = position.top;  
-//		window.scrollTo(x,y);
-//		return false;
-//	}
-	
-	console.log('資料OK');
-	
-	
-	
-	
-	var videoPic = [];
-	$('#AG li input[type=radio]').each(function(){
-		var checked = $(this).attr('checked');
-		if(checked == 'checked'){
-			var sizeObj = $($($(this).parent()).parent()).children()[1];
-			var adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
-			sizeObj = $($(sizeObj).children()[1]).text();
-			var map = new Object();
-			map["size"] = sizeObj.replace(" x ","");
-			map["adSeq"] = adSeq;
-			map["format"] = $("#"+adSeq+"_format").val();
-			videoPic.push(map);
-		}
-	});
-	
-	callBlock();
-	
-	
-//	$("#modifyForm").submit();
-	$.ajax({
-		url : "adAddVideoSaveAjax.html",
-		type : "POST",
-		dataType:'json',
-		data : {
-			"videoPicId":JSON.stringify(videoPic),
-			"adGroupSeq":$("#adGroupSeq").val(),
-			"adStyle":$("#adStyle").val(),
-			"adClass":$("#adClass").val(),
-			"adVideoURL":$("#adVideoURL").val(),
-			"adLinkURL":$("#adLinkURL").val(),
-		},
-		success : function(respone) {
-			console.log(respone);
-			$('body').unblock();
-			if(respone == "success"){
-				$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
-			} else {
-//				alert(respone);
-			}
-		}
-	});
-}
-
-
-
-
 
 //點擊允許尺寸
 function approveSize(approveSizeDiv){
@@ -663,9 +663,6 @@ function callBlock(){
 	});
 }
 
-
-
-
 /*動態新增影片預覽*/
 var iframeInfoMap = new Object();
 function autoPreview(){
@@ -677,7 +674,7 @@ function autoPreview(){
 		var a = 
 			'<div class="v_box">'+
 			   '<div class="">'+
-			      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" />'+obj.width+'x'+obj.height+'</span>'+
+			      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
 			   '</div>'+
 			   '<div  class="v_preview box_a_style">'+
 			   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true"' +
@@ -709,7 +706,7 @@ function appendVideoPreview(){
 				var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
-				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+width+height+'" />'+width+'x'+height+'</span>'+
+				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+width+height+'" checked onclick="checkVideo(this)"/>'+width+'x'+height+'</span>'+
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
 				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
@@ -734,3 +731,118 @@ function appendVideoPreview(){
 	});
 }
 
+//儲存廣告
+function saveData() {
+	
+//	//廣告影片網址不可為空
+//	if($("#adVideoURL").val() == ""){
+//		$("#adVideoURLMsg").text('請輸入影片網址');
+//		var position = $('#adVideoURL').offset();  
+//		var x = position.left;  
+//		var y = position.top;  
+//		window.scrollTo(x,y);
+//		return false;
+//	}
+//	
+//	//廣告連結網址不可為空
+//	if($("#adLinkURL").val() == ""){
+//		$("#chkLinkURL").text('請輸入影片網址');
+//		var position = $('#adLinkURL').offset();  
+//		var x = position.left;  
+//		var y = position.top;  
+//		window.scrollTo(x,y);
+//		return false;
+//	}
+//	
+//	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
+//		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
+//			var position = $('#adVideoURL').offset();  
+//			var x = position.left;  
+//			var y = position.top;  
+//			window.scrollTo(x,y);
+//		}
+//		
+		if($("#chkLinkURL").text() != "網址確認正確"){
+			var position = $('#adLinkURL').offset();  
+			var x = position.left;  
+			var y = position.top;  
+			window.scrollTo(x,y);
+			return false;
+		}
+//	}
+//	
+//	if($("#errMsg").text() != "" && $("#errMsg").text() != "上傳成功"){
+//		var position = $('#fileButton').offset();  
+//		var x = position.left;  
+//		var y = position.top;  
+//		window.scrollTo(x,y);
+//		return false;
+//	}
+	
+	console.log('資料OK');
+	
+	var videoDetailMap = [];
+	$('#AG li input[type=radio]').each(function(){
+		var checked = $(this).attr('checked');
+		if(checked == 'checked'){
+			var sizeObj = $($($(this).parent()).parent()).children()[1];
+			var adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
+			sizeObj = $($(sizeObj).children()[1]).text();
+			sizeObj = sizeObj.replace(" x ","");
+			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
+				var size = checkboxObj.id.replace('checkbox_','');
+				if(checkboxObj.checked && size == sizeObj){
+					var map = new Object();
+					map["size"] = sizeObj;
+					map["adSeq"] = adSeq;
+					map["format"] = $("#"+adSeq+"_format").val();
+					videoDetailMap.push(map);
+					return false;
+				}else if(checkboxObj.checked){
+					var map = new Object();
+					map["size"] = size;
+					map["adSeq"] = "";
+					map["format"] = "";
+					videoDetailMap.push(map);
+				}
+			});
+		}
+	});
+	
+	callBlock();
+	
+	
+	console.log(videoDetailMap);
+	console.log($("#adGroupSeq").val());
+	console.log($("#adStyle").val());
+	console.log($("#adClass").val());
+	console.log($("#adVideoURL").val());
+	console.log($("#adLinkURL").val());
+	
+	
+	
+	
+//	$("#modifyForm").submit();
+	$.ajax({
+		url : "adAddVideoSaveAjax.html",
+		type : "POST",
+		dataType:'json',
+		data : {
+			"videoDetailMap":JSON.stringify(videoDetailMap),
+			"adGroupSeq":$("#adGroupSeq").val(),
+			"adStyle":$("#adStyle").val(),
+			"adClass":$("#adClass").val(),
+			"adVideoURL":$("#adVideoURL").val(),
+			"adLinkURL":$("#adLinkURL").val(),
+		},
+		success : function(respone) {
+			console.log(respone);
+			$('body').unblock();
+			if(respone == "success"){
+				$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
+			} else {
+//				alert(respone);
+			}
+		}
+	});
+}

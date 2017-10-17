@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/9/22 �W�� 10:31:43 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/10/17 �U�� 12:13:37 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,7 +19,8 @@ public class PfpAdVideoSource implements java.io.Serializable {
 	private String adVideoSeq;
 	private String adVideoName;
 	private Integer adVideoSecond;
-	private String adVideoPath;
+	private String adVideoWebmPath;
+	private String adVideoMp4Path;
 	private int adVideoStatus;
 	private String adVideoUrl;
 	private Date updateDate;
@@ -28,22 +29,21 @@ public class PfpAdVideoSource implements java.io.Serializable {
 	public PfpAdVideoSource() {
 	}
 
-	public PfpAdVideoSource(String adVideoSeq, String adVideoPath, int adVideoStatus, String adVideoUrl,
-			Date updateDate, Date createDate) {
+	public PfpAdVideoSource(String adVideoSeq, int adVideoStatus, String adVideoUrl, Date updateDate, Date createDate) {
 		this.adVideoSeq = adVideoSeq;
-		this.adVideoPath = adVideoPath;
 		this.adVideoStatus = adVideoStatus;
 		this.adVideoUrl = adVideoUrl;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
 
-	public PfpAdVideoSource(String adVideoSeq, String adVideoName, Integer adVideoSecond, String adVideoPath,
-			int adVideoStatus, String adVideoUrl, Date updateDate, Date createDate) {
+	public PfpAdVideoSource(String adVideoSeq, String adVideoName, Integer adVideoSecond, String adVideoWebmPath,
+			String adVideoMp4Path, int adVideoStatus, String adVideoUrl, Date updateDate, Date createDate) {
 		this.adVideoSeq = adVideoSeq;
 		this.adVideoName = adVideoName;
 		this.adVideoSecond = adVideoSecond;
-		this.adVideoPath = adVideoPath;
+		this.adVideoWebmPath = adVideoWebmPath;
+		this.adVideoMp4Path = adVideoMp4Path;
 		this.adVideoStatus = adVideoStatus;
 		this.adVideoUrl = adVideoUrl;
 		this.updateDate = updateDate;
@@ -79,13 +79,22 @@ public class PfpAdVideoSource implements java.io.Serializable {
 		this.adVideoSecond = adVideoSecond;
 	}
 
-	@Column(name = "ad_video_path", nullable = false, length = 2048)
-	public String getAdVideoPath() {
-		return this.adVideoPath;
+	@Column(name = "ad_video_webm_path", length = 2048)
+	public String getAdVideoWebmPath() {
+		return this.adVideoWebmPath;
 	}
 
-	public void setAdVideoPath(String adVideoPath) {
-		this.adVideoPath = adVideoPath;
+	public void setAdVideoWebmPath(String adVideoWebmPath) {
+		this.adVideoWebmPath = adVideoWebmPath;
+	}
+
+	@Column(name = "ad_video_mp4_path", length = 2048)
+	public String getAdVideoMp4Path() {
+		return this.adVideoMp4Path;
+	}
+
+	public void setAdVideoMp4Path(String adVideoMp4Path) {
+		this.adVideoMp4Path = adVideoMp4Path;
 	}
 
 	@Column(name = "ad_video_status", nullable = false)
@@ -107,7 +116,7 @@ public class PfpAdVideoSource implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date", nullable = false, length = 0)
+	@Column(name = "update_date", nullable = false, length = 19)
 	public Date getUpdateDate() {
 		return this.updateDate;
 	}
@@ -117,7 +126,7 @@ public class PfpAdVideoSource implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 0)
+	@Column(name = "create_date", nullable = false, length = 19)
 	public Date getCreateDate() {
 		return this.createDate;
 	}

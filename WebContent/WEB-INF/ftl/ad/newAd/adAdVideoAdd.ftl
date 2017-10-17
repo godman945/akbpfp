@@ -97,16 +97,15 @@
        <div style="height: 20px"></div>     
                  <div class="grtba" style="display:block;">
           <h4>選擇廣告版型與尺寸</h4>
-        <span style="font-size: 14px;margin-top: 15px;margin-bottom: 10px; float: right; display: block;">廣告尺寸：<select id="adType" name="adType">
-             <option value="0">全部尺寸</option>
-             <option value="1">300x250</option>
-             <option value="2">336x280</option>
+        <span style="font-size: 14px;margin-top: 15px;margin-bottom: 10px; float: right; display: block;">廣告尺寸：
+        	<select id="adViseoSize" name="adViseoSize">
+             	<option value="0">全部尺寸</option>
             </select>
             </span>
         <div style="clear:both;margin:15px auto;border-bottom: dotted 1px #ccc;"></div>
           <span style="margin-left: 10px;font-size: 14px;">請勾選您想要的廣告版型與尺寸</span>
             <span  style="font-size: 14px;margin-top: 5px;margin-left: 10px;display: block; color: #1d5ed6">
-            	<input type="checkbox" name="checkbox" id="checkbox" />選擇全部</span>
+            	<input type="checkbox" name="checkboxAll" id="checkboxAll" checked/>選擇全部</span>
                 <div class="aduplodul_v">
                 <div id="preViewArea" style="padding: 10px">
                  
@@ -116,22 +115,6 @@
         </div>
 		<!--上傳預覽區塊_影音end-->
             
-            <!--上傳預覽區塊start-->
-	        <div class="grtba">
-	            <h4>選擇廣告版型與尺寸</h4>
-	            <span style="font-size: 14px;margin-top: 15px;margin-bottom: 10px; float: right; display: block;">廣告尺寸：<select id="adType" name="adType">
-	             <option value="0">全部尺寸</option>
-	             <option value="1">300x250</option>
-	             <option value="2">336x280</option>
-	            </select>
-	            </span>
-	            <div style="clear:both;margin: auto;border-bottom: dotted 1px #ccc;"></div>
-	            <div style="padding: 40px">
-	            <span style="font-size: 13px;line-height: 30px; text-align: center; color: red; clear: both;display: block;">請先輸入您的影片網址與上傳Banner廣告圖</span>
-	            <span style="font-size: 13px;line-height: 30px;  text-align: center; clear: both;display: block;"">若您沒有上傳任何Banner廣告圖，則僅支援300x250、336x280、640x390 三種影音廣告尺寸。</span>
-	            </div>
-	        </div>
-			<!--上傳預覽區塊end-->
             
             
             

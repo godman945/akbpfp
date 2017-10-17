@@ -118,7 +118,6 @@ public class AdUtilAjax extends BaseCookieAction{
 	    this.result = theString;
 	    return SUCCESS;
 	}
-
 	
 	/**
 	 * 檢查影音廣告網址
@@ -126,31 +125,36 @@ public class AdUtilAjax extends BaseCookieAction{
 	 * 2.影片格式目前開放30秒以下才可通過
 	 * */
 	public String chkVideoUrl() throws Exception{
-		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --get-duration " + adVideoUrl });
+		
+		//取得影片播放網址
+		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adVideoUrl });
 		String resultStr = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
-		log.info(">>>>url:"+adVideoUrl);
-		log.info(">>>>resultStr:"+resultStr);
+		log.info(">>>>> resultStr:"+resultStr);
 		
 		JSONObject json = new JSONObject();
-		int seconds = 0;
-		if(StringUtils.isBlank(resultStr)){
+		if(resultStr.indexOf("ERROR") >= 0){
 			json.put("result", false);
-			json.put("msg", "無此影片資訊");
+			json.put("msg", "錯誤的影片連結");
 			this.result = json.toString();
 			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			log.error(">>>>>>"+result.toString());
 			return SUCCESS;
-		}else{
-			String[] timeArray = resultStr.split(":");
-			if(timeArray.length == 1){
-				seconds = Integer.parseInt(timeArray[0]);
-			}else if(timeArray.length == 2){
-				seconds = Integer.parseInt(timeArray[0]) * 60 + Integer.parseInt(timeArray[1]);
-			}else if(timeArray.length == 3){
-				seconds = Integer.parseInt(timeArray[0]) * 60 * 60 + Integer.parseInt(timeArray[1]) * 60 + Integer.parseInt(timeArray[2]);
-			}
-			log.info(">>>>video totoal seconds:"+seconds);
+		}
+		if(process.waitFor() == 1){
+			json.put("result", false);
+			json.put("msg", "shell執行錯誤");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			log.error(">>>>>>"+result.toString());
+			return SUCCESS;
 		}
 		
+		resultStr = resultStr.replace("WARNING: unable to extract uploader nickname", "").trim();
+		log.info(">>>>> resultStr:"+resultStr);
+		
+		String[] videoInfoArray = resultStr.split("&");
+		String[] secArray = videoInfoArray[9].split("=");
+		int seconds =  (int)Math.floor(Double.parseDouble(secArray[1]));
 		if(seconds  > EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue() ){
 			json.put("result", false);
 			json.put("msg", "影片長度不得超過30秒，請重新上傳30秒以內的影片。");
@@ -159,8 +163,24 @@ public class AdUtilAjax extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
+		//取得影片id當作下載排程檔名
+		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --get-id " + adVideoUrl });
+		if(process.waitFor() == 1){
+			json.put("result", false);
+			json.put("msg", "shell執行錯誤");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			log.error(">>>>>>"+result.toString());
+			return SUCCESS;
+		}
+		
+		String videoNameStr = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
+		videoNameStr = videoNameStr.replace("WARNING: unable to extract uploader nickname", "").trim();
 		json.put("result", true);
-		json.put("msg", "秒數:"+resultStr);
+		json.put("msg", "秒數:"+seconds);
+		json.put("previewUrl", resultStr);
+		json.put("videoName", videoNameStr);
+		process.destroy();
 		this.result = json.toString();
 		this.msg = new ByteArrayInputStream(json.toString().getBytes());
 		return SUCCESS;
