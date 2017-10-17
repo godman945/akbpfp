@@ -84,7 +84,6 @@ $(document).ready(function(){
 		}
 		
 		$("#adVideoURLMsg").text('');
-		callBlock();
 		$.ajax({
 			url: "chkVideoUrl.html",
 			data:{
@@ -111,7 +110,6 @@ $(document).ready(function(){
 				$("#adVideoURLMsg").text(result.msg);
 			}
 		});
-		$('body').unblock();
 	});
 	
 	
@@ -668,6 +666,7 @@ function callBlock(){
 /*動態新增影片預覽*/
 var iframeInfoMap = new Object();
 function autoPreview(obj){
+	callBlock();
 	iframeInfoMap["iframe"+0] = {width:300,height:250};
 	iframeInfoMap["iframe"+1] = {width:336,height:280};
 	iframeInfoMap["iframe"+2] = {width:640,height:390};
@@ -686,6 +685,7 @@ function autoPreview(obj){
 				'</div>';
 				$("#preViewArea").append(a);
 	});
+	$('body').unblock();
 }
 
 //給iframe呼叫取得
