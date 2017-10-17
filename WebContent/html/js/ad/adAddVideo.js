@@ -96,7 +96,8 @@ $(document).ready(function(){
 			type:"POST",
 			dataType:"JSON",
 			success:function(result, status){
-				console.log(response);
+				console.log(result);
+				console.log(status);
 			},
 			error: function(xtl) {
 				//alert("系統繁忙，請稍後再試！");
