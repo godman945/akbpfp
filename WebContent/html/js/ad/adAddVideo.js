@@ -65,11 +65,7 @@ $(document).ready(function(){
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLMsg").text('請輸入影片網址');
 		}
-		
 		var regx = new RegExp(/^[hH][tT][tT][pP]([sS]?):\/\/(\S+\.)+\S{2,}$/);
-		console.log($("#adVideoURL").val());
-		console.log(regx.test($("#adVideoURL").val()));
-		
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLMsg").text('請輸入廣告網址');
 			return false;
@@ -84,7 +80,7 @@ $(document).ready(function(){
 		}
 		
 		$("#adVideoURLMsg").text('');
-		callBlock();
+		callBlockUpload("取得影片資訊中...");
 		$.ajax({
 			url: "chkVideoUrl.html",
 			data:{
@@ -136,7 +132,7 @@ $(document).ready(function(){
 	    		alert("一次最多只能上傳10個檔案!!");
 	    		return false;
 	    	}
-	    	callBlockUpload();
+	    	callBlockUpload("圖片上傳中，請稍後");
 	    }).on('fileuploaddone', function (e, data) {
 	    	var index = parseInt($("#fileUploadIndex").text());
 	    	index = index + 1;
@@ -234,9 +230,9 @@ function checkVideo(obj){
 	}
 }
 
-function callBlockUpload(){
+function callBlockUpload(msg){
 	$("body").block({
-		message: "<h3>圖片上傳中，請稍後</h3>",
+		message: "<h3>"+msg+"</h3>",
 		css: {
 			padding: 0,
 			margin: 0,
