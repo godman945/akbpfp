@@ -680,6 +680,7 @@ function autoPreview(obj){
 	
 	
 	var aa = "https://r6---sn-un57en7e.googlevideo.com/videoplayback?itag=18&ip=211.20.188.44&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&signature=4555C27FC8D26F074010239C102EDDAA71D79A3E.2BA191E9E44C61ED16F7EF0E97DB25CB8E35176C&ei=sszlWcSLE8n1qAGN76qgDQ&ms=au&ipbits=0&pl=20&mv=m&source=youtube&id=o-APw5BV0TVpuEFIER9QRbAsSHTfMVX4z4Ur7Zpfen_Pud&mm=31&expire=1508253970&clen=1300123&ratebypass=yes&dur=29.582&lmt=1445322305540800&mt=1508232296&requiressl=yes&initcwndbps=1111250&mn=sn-un57en7e&mime=video%2Fmp4&gir=yes&key=yt6";
+	aa = obj.previewUrl;
 	$.each(iframeInfoMap, function(key, obj) {
 			var a = 
 				'<div class="v_box">'+
