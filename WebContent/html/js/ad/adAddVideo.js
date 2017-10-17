@@ -672,7 +672,6 @@ function autoPreview(obj){
 	
 	var url = obj.previewUrl;
 	$.each(iframeInfoMap, function(key, obj) {
-		console.log(">>>>>>>>>>"+obj.picPath);
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -703,8 +702,6 @@ function appendVideoPreview(){
 				}
 			});
 			
-			
-			console.log(">>>>>>>>>>"+imgSrc);
 			if(!createPreViewVideoExist){
 				var url = adPreviewVideoData.previewUrl;
 				var width = radioObj.name.substring(0,3);

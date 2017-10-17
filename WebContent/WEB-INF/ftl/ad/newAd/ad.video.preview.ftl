@@ -3,4 +3,4 @@
 <script language="JavaScript" src="html/js/ad/pcvideo_action_preview.js"></script>
 ${previewHtml!}
 <input type="hidden" id="messageId" value="${message!}">
-<input type="text" id="alex" value="${adPreviewVideoBgImg!}">
+<input type="hidden" id="bgImg" value="${adPreviewVideoBgImg!}">

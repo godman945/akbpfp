@@ -77,7 +77,7 @@
 						ypos=(!ycenter)?0:(adh-adw*0.5625-30)/2;
 						vdow+="%";
 					}
-					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+document.getElementById("alex").value+")}";
+					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+document.getElementById("bgImg").value+")}";
 					this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
 					
 					this.width = 230;
@@ -137,7 +137,6 @@
 			if(video == null || video == undefined){
 				return false;
 			}
-			console.log("我暫停了");
 			var index = getIframeIndex(video);
 			clearInterval(iframeInfoMap["iframe"+index].timmer);
 			var playbtn = video.parentElement.querySelector('#video-playbtn');
@@ -190,10 +189,7 @@
 		if(!video.paused){
 			adcountdown.style.display='block';
 			adcountdown.innerHTML= "影片倒數 "+ formatSecond(ttime);
-			console.log('iframe:'+index +'目前:'+video.currentTime+'秒');
-			console.log('iframe:'+index +'目前:'+percent+'%');
 		}else{
-			console.log('我停止影片了');
 			if(ttime == 0){
 				clearInterval(iframeInfoMap["iframe"+index].timmer);
 				adcountdown.style.display='none';
