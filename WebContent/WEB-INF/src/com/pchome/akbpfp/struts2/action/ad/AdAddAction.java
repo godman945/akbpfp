@@ -88,7 +88,8 @@ public class AdAddAction extends BaseCookieAction{
 	private String[] adDetailContent;
 	private String[] videoDetailMap;
 	private String adVideoURL;
-	private static String adPreviewVideoURL;
+	private String adPreviewVideoURL;
+	private String adPreviewVideoBgImg;
 	private String adDetailSeq;
 	private String adPoolSeq;
 	private String templateProductSeq;
@@ -1089,7 +1090,9 @@ public class AdAddAction extends BaseCookieAction{
 	 * */
 	public String videoPreview() throws Exception{
 		System.out.println("影音預覽");
-		log.info(">>>>>"+adPreviewVideoURL);
+		log.info(">>>>>adPreviewVideoURL:"+adPreviewVideoURL);
+		log.info(">>>>>adPreviewVideoBgImg:"+adPreviewVideoBgImg);
+		
 		String tad = FileUtils.readFileToString(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"), "UTF-8");
 //		System.out.println(tad);
 //		if(StringUtils.isBlank(adPreviewVideoURL)){
@@ -1789,6 +1792,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setAdPreviewVideoURL(String adPreviewVideoURL) {
 		this.adPreviewVideoURL = adPreviewVideoURL;
+	}
+
+	public String getAdPreviewVideoBgImg() {
+		return adPreviewVideoBgImg;
+	}
+
+	public void setAdPreviewVideoBgImg(String adPreviewVideoBgImg) {
+		this.adPreviewVideoBgImg = adPreviewVideoBgImg;
 	}
 
 }
