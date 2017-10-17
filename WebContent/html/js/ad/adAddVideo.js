@@ -105,6 +105,7 @@ $(document).ready(function(){
 			}else{
 				$("#adVideoURLMsg").css('color','red');
 				$("#adVideoURLMsg").text(result.msg);
+				$("#preViewArea").empty();
 				$('body').unblock();
 			}
 		});
