@@ -680,7 +680,7 @@ function autoPreview(obj){
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
 				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true"' +
-				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&picPath='+obj.picPath+'"></iframe>';
+				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+obj.picPath+'"></iframe>';
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
@@ -714,7 +714,7 @@ function appendVideoPreview(){
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
 				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
-				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&picPath='+imgSrc+'"></iframe>';
+				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+imgSrc+'"></iframe>';
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
