@@ -11,6 +11,8 @@
 				var adInfo = null;
 				
 				if(video != null){
+//					console.log(this);
+//					console.log(this.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
 					var playbtn = video.parentElement.querySelector('#video-playbtn');
 					var pausebtn = video.parentElement.querySelector('#video-pausebtn');
 					var replaybtn = video.parentElement.querySelector('#video-replaybtn');

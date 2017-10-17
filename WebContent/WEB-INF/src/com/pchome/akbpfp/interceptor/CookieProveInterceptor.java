@@ -69,56 +69,58 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		HttpServletResponse response = ServletActionContext.getResponse();
 		
 		/*BU LOGIN START*/
-		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
-		if(StringUtils.isNotBlank(buKey)){
-			log.info(">>>>>> CALL BU LOGIN API IP:"+request.getRemoteAddr());
-			
-			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
-			byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
-			JSONObject buInfoJson = new JSONObject(new String(decBytes));
-			
-			String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
-			String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
-			String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
-			String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
-			
-			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
-				result = invocation.invoke();
-				return result;
-			}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.pfdu)){
-				result = invocation.invoke();
-				return result;
-			}
-//			else if(buName.equals(rutenName) && !pfdc.equals(this.pfdu)){
-//				result = invocation.invoke();
-//				return result;
-//			}
-			else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
-				result = invocation.invoke();
-				return result;
-			}
-			
-			//1.查詢資料庫是否有此資料
-			//2.存在則查詢pfp資訊是否存在
-			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
-			PfpBuAccount pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
-			if(pfpBuAccount != null){
-				PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfoByMmeberId(pfpBuAccount.getPcId());
-				if(pfpCustomerInfo != null){
-					createBuCookie(pfpBuAccount.getPcId(),response,true,pfpCustomerInfo);
+		String uri = request.getRequestURI();
+		if(uri.indexOf("buLogin") >= 0){
+			String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
+			if(StringUtils.isNotBlank(buKey)){
+				log.info(">>>>>> CALL BU LOGIN API IP:"+request.getRemoteAddr());
+				RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
+				byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
+				JSONObject buInfoJson = new JSONObject(new String(decBytes));
+				
+				String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
+				String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
+				String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
+				String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
+				
+				if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
+					result = invocation.invoke();
+					return result;
+				}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.pfdu)){
+					result = invocation.invoke();
+					return result;
+				}
+//				else if(buName.equals(rutenName) && !pfdc.equals(this.pfdu)){
+//					result = invocation.invoke();
+//					return result;
+//				}
+				else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
+					result = invocation.invoke();
+					return result;
+				}
+				
+				//1.查詢資料庫是否有此資料
+				//2.存在則查詢pfp資訊是否存在
+				List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
+				PfpBuAccount pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+				if(pfpBuAccount != null){
+					PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfoByMmeberId(pfpBuAccount.getPcId());
+					if(pfpCustomerInfo != null){
+						createBuCookie(pfpBuAccount.getPcId(),response,true,pfpCustomerInfo);
+					}else{
+						cookieProccessAPI.deleteAllCookie(response);
+						createBuCookie(pfpBuAccount.getPcId(),response,false,pfpCustomerInfo);
+					}
 				}else{
-					cookieProccessAPI.deleteAllCookie(response);
-					createBuCookie(pfpBuAccount.getPcId(),response,false,pfpCustomerInfo);
+					String pcId = createBuUser(buInfoJson);
+					log.info(">>>>>bu pcId:"+pcId);
+					if(StringUtils.isNotBlank(pcId)){
+						createBuCookie(pcId,response,false,null);
+					}
 				}
-			}else{
-				String pcId = createBuUser(buInfoJson);
-				log.info(">>>>>bu pcId:"+pcId);
-				if(StringUtils.isNotBlank(pcId)){
-					createBuCookie(pcId,response,false,null);
-				}
+				result = invocation.invoke();
+				return result;
 			}
-			result = invocation.invoke();
-			return result;
 		}
 		/*BU LOGIN END*/
 		

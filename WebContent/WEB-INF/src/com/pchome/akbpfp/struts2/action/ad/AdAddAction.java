@@ -74,9 +74,6 @@ import com.pchome.soft.depot.utils.SpringZipCompress;
 
 public class AdAddAction extends BaseCookieAction{
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 	private String message = "";
 	private String previewHtml = "";
@@ -91,6 +88,7 @@ public class AdAddAction extends BaseCookieAction{
 	private String[] adDetailContent;
 	private String[] videoDetailMap;
 	private String adVideoURL;
+	private static String adPreviewVideoURL;
 	private String adDetailSeq;
 	private String adPoolSeq;
 	private String templateProductSeq;
@@ -1091,16 +1089,20 @@ public class AdAddAction extends BaseCookieAction{
 	 * */
 	public String videoPreview() throws Exception{
 		System.out.println("影音預覽");
+		System.out.println(adPreviewVideoURL);
+		System.out.println(adGroupSeq);
 		String tad = FileUtils.readFileToString(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"), "UTF-8");
 //		System.out.println(tad);
+//		if(StringUtils.isBlank(adPreviewVideoURL)){
+//			adPreviewVideoURL = "alex";
+//		}
+		
 		
 		FileReader fr = new FileReader(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"));	
 		BufferedReader br =  new BufferedReader(fr);
 		
-		
 		StringBuffer str = new StringBuffer();
 		String sCurrentLine;
-		String video = "https://r3---sn-un57en7s.googlevideo.com/videoplayback?ei=lFzlWdzqDI-egAPAjZToCw&id=o-ALhz-Tdz07e_B9LyH-b6dZ81R4lE6acFOJe8RvCuTcSA&key=yt6&ip=211.20.188.44&ipbits=0&pl=20&signature=22C983CD1F5EBD694B064E0020437141D889ADCD.17AFD68269560FFBD6C7ACAAFEABA31571FB2268&requiressl=yes&initcwndbps=870000&ratebypass=yes&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&itag=18&expire=1508225268&mime=video%2Fmp4&source=youtube&mt=1508203563&mv=m&ms=au&lmt=1503570514296390&clen=3688325&gir=yes&mm=31&mn=sn-un57en7s&dur=41.540";
 		while ((sCurrentLine = br.readLine()) != null) {
 			if(sCurrentLine.indexOf("PoolSeq") >= 0){
 				continue;
@@ -1125,21 +1127,21 @@ public class AdAddAction extends BaseCookieAction{
 				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070014>", "http://www.pchome.com.tw/");
 			}
 			if(sCurrentLine.indexOf("<#dad_201303070015>") >= 0){
-				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070015>", video);
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070015>", adPreviewVideoURL);
 			}
 			if(sCurrentLine.indexOf("<#dad_201303070016>") >= 0){
-				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070016>", video);
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070016>", adPreviewVideoURL);
 			}
 			if(sCurrentLine.indexOf("<#dad_201303070017>") >= 0){
-				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", video);
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", adPreviewVideoURL);
 			}
 			if(sCurrentLine.indexOf("<#dad_201303070018>") >= 0){
-				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", video);
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", adPreviewVideoURL);
 			}
 			str = str.append(sCurrentLine+"\r\n");
 		}
 		System.out.println("***************************************");
-		System.out.println(str);
+//		System.out.println(str);
 		previewHtml = str.toString();
 		br.close();	
 		fr.close();
@@ -1780,6 +1782,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setAdVideoSizeMap(Map<String, String> adVideoSizeMap) {
 		this.adVideoSizeMap = adVideoSizeMap;
+	}
+
+	public String getAdPreviewVideoURL() {
+		return adPreviewVideoURL;
+	}
+
+	public void setAdPreviewVideoURL(String adPreviewVideoURL) {
+		this.adPreviewVideoURL = adPreviewVideoURL;
 	}
 
 }

@@ -64,19 +64,16 @@ $(document).ready(function(){
 	$("#adVideoURL").blur(function() {
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLMsg").text('請輸入影片網址');
-			console.log('請輸入影片網址');
-			
-			/**測試影片預覽用*/
-			$("#preViewArea").empty();
-			autoPreview();
-			appendVideoPreview();
-			return false;
 		}
 		
 		var regx = new RegExp(/^[hH][tT][tT][pP]([sS]?):\/\/(\S+\.)+\S{2,}$/);
 		console.log($("#adVideoURL").val());
 		console.log(regx.test($("#adVideoURL").val()));
-		if(!regx.test($("#adVideoURL").val())){
+		
+		if($("#adVideoURL").val() == ""){
+			$("#adVideoURLMsg").text('請輸入廣告網址');
+			return false;
+		}else if(!regx.test($("#adVideoURL").val())){
 			$("#adVideoURLMsg").text('網址格式錯誤');
 			return false;
 		}else{
@@ -97,7 +94,6 @@ $(document).ready(function(){
 			dataType:"JSON",
 			success:function(result, status){
 				console.log(result);
-				console.log(status);
 			},
 			error: function(xtl) {
 				//alert("系統繁忙，請稍後再試！");
@@ -106,6 +102,11 @@ $(document).ready(function(){
 			if(result.result == true){
 				$("#adVideoURLMsg").css('color','green');
 				$("#adVideoURLMsg").text('影片網址確認正確');
+				
+				/**測試影片預覽用*/
+				$("#preViewArea").empty();
+				autoPreview(result);
+				appendVideoPreview();
 			}else{
 				$("#adVideoURLMsg").css('color','red');
 				$("#adVideoURLMsg").text(result.msg);
@@ -666,25 +667,35 @@ function callBlock(){
 
 /*動態新增影片預覽*/
 var iframeInfoMap = new Object();
-function autoPreview(){
+function autoPreview(obj){
 	iframeInfoMap["iframe"+0] = {width:300,height:250};
 	iframeInfoMap["iframe"+1] = {width:336,height:280};
 	iframeInfoMap["iframe"+2] = {width:640,height:390};
 	
+	console.log(obj);
+	
+	
+	var aa = "https://r6---sn-un57en7e.googlevideo.com/videoplayback?itag=18&ip=211.20.188.44&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&signature=4555C27FC8D26F074010239C102EDDAA71D79A3E.2BA191E9E44C61ED16F7EF0E97DB25CB8E35176C&ei=sszlWcSLE8n1qAGN76qgDQ&ms=au&ipbits=0&pl=20&mv=m&source=youtube&id=o-APw5BV0TVpuEFIER9QRbAsSHTfMVX4z4Ur7Zpfen_Pud&mm=31&expire=1508253970&clen=1300123&ratebypass=yes&dur=29.582&lmt=1445322305540800&mt=1508232296&requiressl=yes&initcwndbps=1111250&mn=sn-un57en7e&mime=video%2Fmp4&gir=yes&key=yt6";
 	$.each(iframeInfoMap, function(key, obj) {
-		var a = 
-			'<div class="v_box">'+
-			   '<div class="">'+
-			      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
-			   '</div>'+
-			   '<div  class="v_preview box_a_style">'+
-			   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true"' +
-				'src="adVideoPreview.html?picPath='+obj.picPath+'"></iframe>';
-			   '</div>'+
-			'</div>';
-			$("#preViewArea").append(a);
+			var a = 
+				'<div class="v_box">'+
+				   '<div class="">'+
+				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
+				   '</div>'+
+				   '<div  class="v_preview box_a_style">'+
+				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true"' +
+				  'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(aa)+'"></iframe>';
+				   '</div>'+
+				'</div>';
+				$("#preViewArea").append(a);
 	});
 }
+
+//給iframe呼叫取得
+function getPreviewVideoUrl(){
+	alert("FFFF");
+}
+
 
 function appendVideoPreview(){
 	$("#AG input[type=radio]").each(function(index,radioObj){
@@ -782,6 +793,7 @@ function saveData() {
 	
 	console.log('資料OK');
 	
+	/*檢查勾選的尺寸*/
 	var videoDetailMap = [];
 	$('#AG li input[type=radio]').each(function(){
 		var checked = $(this).attr('checked');
