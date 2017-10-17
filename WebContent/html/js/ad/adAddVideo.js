@@ -738,33 +738,34 @@ function appendVideoPreview(){
 function saveData() {
 	
 //	//廣告影片網址不可為空
-//	if($("#adVideoURL").val() == ""){
-//		$("#adVideoURLMsg").text('請輸入影片網址');
-//		var position = $('#adVideoURL').offset();  
-//		var x = position.left;  
-//		var y = position.top;  
-//		window.scrollTo(x,y);
-//		return false;
-//	}
-//	
-//	//廣告連結網址不可為空
-//	if($("#adLinkURL").val() == ""){
-//		$("#chkLinkURL").text('請輸入影片網址');
-//		var position = $('#adLinkURL').offset();  
-//		var x = position.left;  
-//		var y = position.top;  
-//		window.scrollTo(x,y);
-//		return false;
-//	}
-//	
-//	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
-//		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
-//			var position = $('#adVideoURL').offset();  
-//			var x = position.left;  
-//			var y = position.top;  
-//			window.scrollTo(x,y);
-//		}
-//		
+	if($("#adVideoURL").val() == ""){
+		$("#adVideoURLMsg").text('請輸入影片網址');
+		var position = $('#adVideoURL').offset();  
+		var x = position.left;  
+		var y = position.top;  
+		window.scrollTo(x,y);
+		return false;
+	}
+	
+	//廣告連結網址不可為空
+	if($("#adLinkURL").val() == ""){
+		$("#chkLinkURL").text('請輸入影片網址');
+		var position = $('#adLinkURL').offset();  
+		var x = position.left;  
+		var y = position.top;  
+		window.scrollTo(x,y);
+		return false;
+	}
+	
+	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
+		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
+			var position = $('#adVideoURL').offset();  
+			var x = position.left;  
+			var y = position.top;  
+			window.scrollTo(x,y);
+			return false;
+		}
+		
 		if($("#chkLinkURL").text() != "網址確認正確"){
 			var position = $('#adLinkURL').offset();  
 			var x = position.left;  
@@ -772,18 +773,7 @@ function saveData() {
 			window.scrollTo(x,y);
 			return false;
 		}
-//	}
-//	
-//	if($("#errMsg").text() != "" && $("#errMsg").text() != "上傳成功"){
-//		var position = $('#fileButton').offset();  
-//		var x = position.left;  
-//		var y = position.top;  
-//		window.scrollTo(x,y);
-//		return false;
-//	}
-	
-	console.log('資料OK');
-	
+	}
 	/*檢查勾選的尺寸*/
 	var videoDetailMap = [];
 	$('#AG li input[type=radio]').each(function(){
@@ -822,10 +812,6 @@ function saveData() {
 	console.log($("#adVideoURL").val());
 	console.log($("#adLinkURL").val());
 	
-	
-	
-	
-//	$("#modifyForm").submit();
 	$.ajax({
 		url : "adAddVideoSaveAjax.html",
 		type : "POST",
