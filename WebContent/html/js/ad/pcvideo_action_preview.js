@@ -65,15 +65,6 @@
 
 					var adbg = "";
 					var poster = "../missdior.gif"
-						
-					var iframeUrl = this.src.split("?");
-					iframeUrl = iframeUrl[1].split("=");
-					if(iframeUrl[1] != "undefined"){
-						adbg = iframeUrl[1];
-					}
-					console.log(document.getElementById("alex").value);
-					
-					
 					
 					if (vdoh/adw<ratio){
 						vdow=vdoh/ratio;
@@ -86,7 +77,7 @@
 						ypos=(!ycenter)?0:(adh-adw*0.5625-30)/2;
 						vdow+="%";
 					}
-					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+adbg+")}";
+					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+document.getElementById("alex").value+")}";
 					this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
 					
 					this.width = 230;
