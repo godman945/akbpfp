@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
@@ -149,13 +151,20 @@ public class AdUtilAjax extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
-		resultStr = resultStr.replace("WARNING: unable to extract uploader nickname", "").trim();
-		log.info(">>>>> resultStr:"+resultStr);
 		
+		int seconds = 0;
 		String[] videoInfoArray = resultStr.split("&");
-		String[] secArray = videoInfoArray[9].split("=");
-		int seconds =  (int)Math.floor(Double.parseDouble(secArray[1]));
-		if(seconds  > EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue() ){
+		List<String> info = Arrays.asList(videoInfoArray);
+		for (String string : info) {
+			if(string.indexOf("dur=") >= 0){
+				videoInfoArray = string.split("=");
+				System.out.println(string);
+				seconds = (int)Math.floor(Double.parseDouble(videoInfoArray[1]));
+				break;
+			}
+		}	
+		
+		if(seconds > EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue()){
 			json.put("result", false);
 			json.put("msg", "影片長度不得超過30秒，請重新上傳30秒以內的影片。");
 			this.result = json.toString();
