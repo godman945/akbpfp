@@ -75,7 +75,6 @@ $(document).ready(function(){
 		}else{
 			videoUrl = $("#adVideoURL").val();
 			videoUrl = videoUrl.replace('watch?v=','embed/');
-			console.log(videoUrl);
 			$("#bessie").attr('src',videoUrl);
 		}
 		
@@ -89,7 +88,7 @@ $(document).ready(function(){
 			type:"POST",
 			dataType:"JSON",
 			success:function(result, status){
-				console.log(result);
+//				console.log(result);
 			},
 			error: function(xtl) {
 				//alert("系統繁忙，請稍後再試！");
@@ -673,6 +672,7 @@ function autoPreview(obj){
 	
 	var url = obj.previewUrl;
 	$.each(iframeInfoMap, function(key, obj) {
+		console.log(">>>>>>>>>>"+obj.picPath);
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -703,6 +703,8 @@ function appendVideoPreview(){
 				}
 			});
 			
+			
+			console.log(">>>>>>>>>>"+imgSrc);
 			if(!createPreViewVideoExist){
 				var url = adPreviewVideoData.previewUrl;
 				var width = radioObj.name.substring(0,3);
