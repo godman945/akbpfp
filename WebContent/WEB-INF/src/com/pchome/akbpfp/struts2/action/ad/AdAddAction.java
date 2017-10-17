@@ -1089,8 +1089,7 @@ public class AdAddAction extends BaseCookieAction{
 	 * */
 	public String videoPreview() throws Exception{
 		System.out.println("影音預覽");
-		System.out.println(adPreviewVideoURL);
-		System.out.println(adGroupSeq);
+		log.info(">>>>>"+adPreviewVideoURL);
 		String tad = FileUtils.readFileToString(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"), "UTF-8");
 //		System.out.println(tad);
 //		if(StringUtils.isBlank(adPreviewVideoURL)){
