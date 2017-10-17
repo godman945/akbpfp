@@ -151,7 +151,6 @@ public class AdUtilAjax extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
-		
 		int seconds = 0;
 		String[] videoInfoArray = resultStr.split("&");
 		List<String> info = Arrays.asList(videoInfoArray);

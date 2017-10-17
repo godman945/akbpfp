@@ -232,7 +232,3 @@
 		</#if>
 	</#list>
 </div>
-
-
-
-<input type="text" id="adPreviewVideoURL" name="adPreviewVideoURL" value="CCCCCCCCCCCCCC">

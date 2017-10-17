@@ -59,6 +59,7 @@ $(document).ready(function(){
 		}
 	});
 	
+	var adPreviewVideoData = null;
 	var videoUrl = null;
 	//檢查廣告網址blur事件
 	$("#adVideoURL").blur(function() {
@@ -98,6 +99,7 @@ $(document).ready(function(){
 			if(result.result == true){
 				$("#adVideoURLMsg").css('color','green');
 				$("#adVideoURLMsg").text('影片網址確認正確');
+				adPreviewVideoData = result;
 				/**影片預設尺寸*/
 				$("#preViewArea").empty();
 				autoPreview(result);
@@ -110,7 +112,6 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
 	
 	var fileFinishSize = 0;
 	//存入上傳後的圖片陣列
@@ -686,12 +687,6 @@ function autoPreview(obj){
 	$('body').unblock();
 }
 
-//給iframe呼叫取得
-function getPreviewVideoUrl(){
-	alert("FFFF");
-}
-
-
 function appendVideoPreview(){
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
@@ -707,7 +702,10 @@ function appendVideoPreview(){
 				}
 			});
 			
+			
+			console.log(adPreviewVideoData);
 			if(!createPreViewVideoExist){
+				var url = adPreviewVideoData.previewUrl;
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
 				var a = 
@@ -717,7 +715,7 @@ function appendVideoPreview(){
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
 				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
-					'src="adVideoPreview.html?picPath='+imgSrc+'"></iframe>';
+				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'"></iframe>';
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
