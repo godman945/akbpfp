@@ -84,7 +84,7 @@ $(document).ready(function(){
 		}
 		
 		$("#adVideoURLMsg").text('');
-		
+		callBlock();
 		$.ajax({
 			url: "chkVideoUrl.html",
 			data:{
@@ -102,18 +102,16 @@ $(document).ready(function(){
 			if(result.result == true){
 				$("#adVideoURLMsg").css('color','green');
 				$("#adVideoURLMsg").text('影片網址確認正確');
-
 				/**影片預設尺寸*/
-				callBlock();
 				$("#preViewArea").empty();
 				autoPreview(result);
 				appendVideoPreview();
-				$('body').unblock();
 			}else{
 				$("#adVideoURLMsg").css('color','red');
 				$("#adVideoURLMsg").text(result.msg);
 			}
 		});
+		$('body').unblock();
 	});
 	
 	
