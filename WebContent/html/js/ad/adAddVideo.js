@@ -738,7 +738,7 @@ function appendVideoPreview(){
 				console.log(iframe);
 				console.log($(iframe)[0]);
 				console.log($(iframe)[0].contentDocument);
-				console.log($(iframe)[0].contentDocument);
+				console.log($(iframe)[0].contentDocument.getElementsByTagName("head")[0]);
 				
 //				console.log(iframe.contentDocument);
 //				console.log(iframe.contentDocument.getElementsByTagName("head")[0]);
