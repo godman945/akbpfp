@@ -719,58 +719,34 @@ function appendVideoPreview(){
 			if(!createPreViewVideoExist){
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
-				var a = 
-				'<div class="v_box">'+
-				   '<div class="">'+
-				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+width+height+'" checked onclick="checkVideo(this)"/>'+width+'x'+height+'</span>'+
-				   '</div>'+
-				   '<div  class="v_preview box_a_style">'+
-				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
-				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+imgSrc+'"></iframe>';
-				   '</div>'+
-				'</div>';
-				$("#preViewArea").append(a);
 				
-				$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
-					var size = checkboxObj.id.replace("checkbox_","");
-					if(size == (width+height)){
-						console.log(checkboxObj.parentElement);
-						console.log(checkboxObj.parentElement.parentElement.parentElement);
-						console.log(checkboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].getElementsByTagName("head")[0]);
-						
-//						var head = checkboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
-//						console.log(head);
-					}
-				});
-				
-				
-//				var iframe = $("#preViewArea").children()[($("#preViewArea").children().length) - 1];
-//				iframe = $($(iframe).children()[1]).children()[0];
-//				
-//				console.log(iframe);
-//				console.log($(iframe)[0]);
-//				console.log($(iframe)[0].contentDocument);
-//				console.log($(iframe)[0].contentDocument.getElementsByTagName("head")[0]);
-//				
-////				console.log(iframe.contentDocument);
-////				console.log(iframe.contentDocument.getElementsByTagName("head")[0]);
-//				iframe.onload = function(){
-//					console.log("SSSSSSSSSSs");
-//					console.log(iframe.document);
-//				}
-//				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
-//				var style = head.children[0];
-//				var data = style.innerHTML;				
-//				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
-//				data = data.replace(imgStr,'background-image:url('+imgSrc+')');
-//				head.removeChild(style);
-//				var css = document.createElement("style");
-//				css.type = "text/css";
-//				css.innerHTML = data;
-//				head.insertBefore(css, head.childNodes[3]);
-				
-				
-				
+				 var ifrm = document.createElement("iframe");
+			        ifrm.setAttribute("src", "adVideoPreview.html?adPreviewVideoURL="+encodeURIComponent(url)+"&adPreviewVideoBgImg="+imgSrc);
+			        ifrm.style.width = width;
+			        ifrm.style.height = height;
+			        ifrm.style.height = height;
+			        ifrm.style.scrolling = "no";
+			        ifrm.style.frameborder = "0";
+			        ifrm.style.marginwidth = "0";
+			        ifrm.style.marginheight = "0";
+			        ifrm.style.vspace = "0";
+			        ifrm.id="pchome8044_ad_frame1";
+			        	
+			        $("#preViewArea").append(ifrm);
+			        	
+			        	
+			        	
+//				var a = 
+//				'<div class="v_box">'+
+//				   '<div class="">'+
+//				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+width+height+'" checked onclick="checkVideo(this)"/>'+width+'x'+height+'</span>'+
+//				   '</div>'+
+//				   '<div  class="v_preview box_a_style">'+
+//				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
+//				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+imgSrc+'"></iframe>';
+//				   '</div>'+
+//				'</div>';
+//				$("#preViewArea").append(a);
 			}else{
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 				var style = head.children[0];
