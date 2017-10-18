@@ -736,8 +736,9 @@ function appendVideoPreview(){
 				var iframe = $("#preViewArea").children()[($("#preViewArea").children().length) - 1];
 				iframe = $($(iframe).children()[1]).children()[0];
 				console.log(iframe);
-				
+				console.log(iframe.document);
 				iframe.onload = function(){
+					console.log("SSSSSSSSSSs");
 					console.log(iframe.document);
 				}
 				
