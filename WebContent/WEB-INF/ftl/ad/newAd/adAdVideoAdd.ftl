@@ -232,3 +232,7 @@
 		</#if>
 	</#list>
 </div>
+
+
+
+<img id="bgImg" width="50" height="50" src="blob:http://alex.pchome.com.tw:8080/66f19855-16c2-4580-ba36-df035c8952da">
