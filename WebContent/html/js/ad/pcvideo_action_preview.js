@@ -221,20 +221,3 @@
 			}
 		}
 	}
-	
-	
-	
-
-	
-//	this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
-//	console.log("GG:"+document.getElementById("bgImg").value);
-	
-//	css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+bgimg+")}";
-//	console.log(window.document.body);
-//	console.log(window.document.head);
-	
-	
-	
-	
-	
-	

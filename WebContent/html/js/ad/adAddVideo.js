@@ -313,8 +313,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		errorTitle = '上傳失敗!';
 		errorMsg = '檔案空白';
 	}
-	
-	
 	//檢核重複上傳
 	fileArray.forEach(function(fileData,index) {
 		if(file.name == fileData.name){
@@ -324,7 +322,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			return false;
 		}
 	})
-	
 	
 	var fileName = file.name;
 	var showFileName = "";
@@ -680,7 +677,6 @@ function autoPreview(objData){
 	
 	var url = objData.previewUrl;
 	$.each(iframeInfoMap, function(key, obj) {
-		console.log(":SSSS-3");
 		var a = 
 			'<div class="v_box">'+
 			   '<div class="">'+
@@ -713,20 +709,10 @@ function appendVideoPreview(){
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
 				if(size == radioObj.name){
-					console.log(size);
 					createPreViewCheckboxObj = checkboxObj;
 					createPreViewVideoExist = true;
 				}
 			});
-			
-			
-			console.log(imgSrc);
-			console.log(createPreViewVideoExist);
-			
-			
-			console.log(":SSSS-1");
-			
-			
 			
 			if(!createPreViewVideoExist){
 				var width = radioObj.name.substring(0,3);
@@ -760,45 +746,45 @@ function appendVideoPreview(){
 
 //儲存廣告
 function saveData() {
-	
+//	
 //	//廣告影片網址不可為空
-	if($("#adVideoURL").val() == ""){
-		$("#adVideoURLMsg").text('請輸入影片網址');
-		var position = $('#adVideoURL').offset();  
-		var x = position.left;  
-		var y = position.top;  
-		window.scrollTo(x,y);
-		return false;
-	}
-	
-	//廣告連結網址不可為空
-	if($("#adLinkURL").val() == ""){
-		$("#chkLinkURL").text('請輸入影片網址');
-		var position = $('#adLinkURL').offset();  
-		var x = position.left;  
-		var y = position.top;  
-		window.scrollTo(x,y);
-		return false;
-	}
-	
-	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
-		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
-			var position = $('#adVideoURL').offset();  
-			var x = position.left;  
-			var y = position.top;  
-			window.scrollTo(x,y);
-			return false;
-		}
-		
-		if($("#chkLinkURL").text() != "網址確認正確"){
-			var position = $('#adLinkURL').offset();  
-			var x = position.left;  
-			var y = position.top;  
-			window.scrollTo(x,y);
-			return false;
-		}
-	}
-	/*檢查勾選的尺寸*/
+//	if($("#adVideoURL").val() == ""){
+//		$("#adVideoURLMsg").text('請輸入影片網址');
+//		var position = $('#adVideoURL').offset();  
+//		var x = position.left;  
+//		var y = position.top;  
+//		window.scrollTo(x,y);
+//		return false;
+//	}
+//	
+//	//廣告連結網址不可為空
+//	if($("#adLinkURL").val() == ""){
+//		$("#chkLinkURL").text('請輸入影片網址');
+//		var position = $('#adLinkURL').offset();  
+//		var x = position.left;  
+//		var y = position.top;  
+//		window.scrollTo(x,y);
+//		return false;
+//	}
+//	
+//	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
+//		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
+//			var position = $('#adVideoURL').offset();  
+//			var x = position.left;  
+//			var y = position.top;  
+//			window.scrollTo(x,y);
+//			return false;
+//		}
+//		
+//		if($("#chkLinkURL").text() != "網址確認正確"){
+//			var position = $('#adLinkURL').offset();  
+//			var x = position.left;  
+//			var y = position.top;  
+//			window.scrollTo(x,y);
+//			return false;
+//		}
+//	}
+//	/*檢查勾選的尺寸*/
 	var videoDetailMap = [];
 	$('#AG li input[type=radio]').each(function(){
 		var checked = $(this).attr('checked');
@@ -826,6 +812,11 @@ function saveData() {
 			});
 		}
 	});
+	
+	console.log(videoDetailMap);
+	
+	
+	return false;
 	
 	callBlock();
 	
@@ -856,6 +847,10 @@ function saveData() {
 			} else {
 //				alert(respone);
 			}
+		},
+		error: function(xtl) {
+			$('body').unblock();
+			alert("系統繁忙，請稍後再試！");
 		}
 	});
 }
