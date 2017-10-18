@@ -699,6 +699,9 @@ function autoPreview(objData){
 
 //影片存在建立預覽
 function appendVideoPreview(){
+	
+	console.log("SSSS");
+	
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
 			var url = adPreviewVideoData.previewUrl;
