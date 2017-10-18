@@ -158,8 +158,8 @@ $(document).ready(function(){
 	    	}
 	    	
 	    	fileFinishSize = fileFinishSize - 1;
-	    	if(fileFinishSize == 0){
-//	    	if(fileFinishSize == 0 && adPreviewVideoData != null){
+//	    	if(fileFinishSize == 0){
+	    	if(fileFinishSize == 0 && adPreviewVideoData != null){
 		    	/**建立預覽圖*/
 		    	appendVideoPreview();
 	    	}
