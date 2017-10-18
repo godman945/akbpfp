@@ -372,7 +372,7 @@ public class AdAddAction extends BaseCookieAction{
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
 				adVideoSize = picInfoJson.getString("size");
 				for(EnumAdVideoSize enumAdVideoSize: EnumAdVideoSize.values()){
-					if(adVideoSize.equals(enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight())){
+					if(adVideoSize.equals(enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight()) && enumAdVideoSize.getType().equals("BANNER")){
 						isBannerSize = true;
 						break;
 					}
