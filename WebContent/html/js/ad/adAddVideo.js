@@ -64,9 +64,6 @@ $(document).ready(function(){
 	$("#adVideoURL").blur(function() {
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLMsg").text('請輸入影片網址');
-			/**影片預設尺寸*/
-			$("#preViewArea").empty();
-			appendVideoPreview();
 			return false;
 		}
 		var regx = new RegExp(/^[hH][tT][tT][pP]([sS]?):\/\/(\S+\.)+\S{2,}$/);
@@ -104,7 +101,7 @@ $(document).ready(function(){
 				adPreviewVideoData = result;
 				/**影片預設尺寸*/
 				$("#preViewArea").empty();
-				autoPreview(result);
+//				autoPreview(result);
 				appendVideoPreview();
 			}else{
 				$("#adVideoURLMsg").css('color','red');
