@@ -731,22 +731,28 @@ function appendVideoPreview(){
 				'</div>';
 				$("#preViewArea").append(a);
 				
+				$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
+					var size = checkboxObj.id.replace("checkbox_","");
+					if(size == (width+height)){
+						console.log(checkboxObj);
+					}
+				});
 				
-				var iframe = $("#preViewArea").children()[($("#preViewArea").children().length) - 1];
-				iframe = $($(iframe).children()[1]).children()[0];
 				
-				console.log(iframe);
-				console.log($(iframe)[0]);
-				console.log($(iframe)[0].contentDocument);
-				console.log($(iframe)[0].contentDocument.getElementsByTagName("head")[0]);
-				
-//				console.log(iframe.contentDocument);
-//				console.log(iframe.contentDocument.getElementsByTagName("head")[0]);
-				iframe.onload = function(){
-					console.log("SSSSSSSSSSs");
-					console.log(iframe.document);
-				}
-				
+//				var iframe = $("#preViewArea").children()[($("#preViewArea").children().length) - 1];
+//				iframe = $($(iframe).children()[1]).children()[0];
+//				
+//				console.log(iframe);
+//				console.log($(iframe)[0]);
+//				console.log($(iframe)[0].contentDocument);
+//				console.log($(iframe)[0].contentDocument.getElementsByTagName("head")[0]);
+//				
+////				console.log(iframe.contentDocument);
+////				console.log(iframe.contentDocument.getElementsByTagName("head")[0]);
+//				iframe.onload = function(){
+//					console.log("SSSSSSSSSSs");
+//					console.log(iframe.document);
+//				}
 //				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 //				var style = head.children[0];
 //				var data = style.innerHTML;				
