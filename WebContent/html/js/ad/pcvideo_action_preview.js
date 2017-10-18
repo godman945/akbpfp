@@ -78,7 +78,7 @@
 						vdow+="%";
 					}
 					
-					var bgimg = document.getElementById("bgImg").src != "undefined" ? document.getElementById("bgImg").src : "";
+					var bgimg = document.getElementById("bgImg").value != "undefined" ? document.getElementById("bgImg").value : "";
 					console.log("bgimg>>>>"+bgimg);
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+bgimg+")}";
