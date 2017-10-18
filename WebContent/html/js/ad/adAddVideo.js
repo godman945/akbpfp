@@ -704,7 +704,7 @@ function appendVideoPreview(){
 					createPreViewVideoExist = true;
 				}
 			});
-			
+
 			if(!createPreViewVideoExist){
 				console.log("createPreViewVideoExist");
 				var width = radioObj.name.substring(0,3);
@@ -716,7 +716,7 @@ function appendVideoPreview(){
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
 				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
-				   'src="adVideoPreview.html?'+encodeURIComponent('adPreviewVideoURL='+url+'&adPreviewVideoBgImg='+imgSrc)+'"></iframe>';
+				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+encodeURIComponent(imgSrc)+'"></iframe>';
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
