@@ -78,7 +78,7 @@
 						vdow+="%";
 					}
 					
-					console.log(">>>>>>>>>>>>>>>>>"+location.href);
+					console.log(location.href);
 					var bgimg = document.getElementById("bgImg").value != "undefined" ? document.getElementById("bgImg").value : "";
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+bgimg+")}";
 					
