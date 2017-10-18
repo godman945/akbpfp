@@ -35,8 +35,6 @@ $(document).ready(function(){
 			$("#spanAdLinkURL").text('已輸入'+$("#adLinkURL").val().length+'字，超過'+wordLength+'字');
 			$("#spanAdLinkURL").css('color','red');
 		}
-		
-		//$("#alex").attr("src","http://localhost:8080/akbpfp/videoad_01.jsp?width=300&height=168");
 	});
 	
 	//檢查網址blur事件
@@ -101,8 +99,8 @@ $(document).ready(function(){
 				adPreviewVideoData = result;
 				/**影片預設尺寸*/
 				$("#preViewArea").empty();
-				autoPreview(result);
 				appendVideoPreview();
+				autoPreview(result);
 				$('body').unblock();
 			}else{
 				$("#adVideoURLMsg").css('color','red');
