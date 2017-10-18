@@ -716,37 +716,23 @@ function appendVideoPreview(){
 			
 			console.log(imgSrc);
 			console.log(createPreViewVideoExist);
+			
+			
+			
 			if(!createPreViewVideoExist){
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
-				
-				 var ifrm = document.createElement("iframe");
-			        ifrm.setAttribute("src", "adVideoPreview.html?adPreviewVideoURL="+encodeURIComponent(url)+"&adPreviewVideoBgImg="+imgSrc);
-			        ifrm.style.width = width;
-			        ifrm.style.height = height;
-			        ifrm.style.height = height;
-			        ifrm.style.scrolling = "no";
-			        ifrm.style.frameborder = "0";
-			        ifrm.style.marginwidth = "0";
-			        ifrm.style.marginheight = "0";
-			        ifrm.style.vspace = "0";
-			        ifrm.id="pchome8044_ad_frame1";
-			        	
-			        $("#preViewArea").append(ifrm);
-			        	
-			        	
-			        	
-//				var a = 
-//				'<div class="v_box">'+
-//				   '<div class="">'+
-//				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+width+height+'" checked onclick="checkVideo(this)"/>'+width+'x'+height+'</span>'+
-//				   '</div>'+
-//				   '<div  class="v_preview box_a_style">'+
-//				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
-//				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+imgSrc+'"></iframe>';
-//				   '</div>'+
-//				'</div>';
-//				$("#preViewArea").append(a);
+				var a = 
+				'<div class="v_box">'+
+				   '<div class="">'+
+				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+width+height+'" checked onclick="checkVideo(this)"/>'+width+'x'+height+'</span>'+
+				   '</div>'+
+				   '<div  class="v_preview box_a_style">'+
+				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
+				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+imgSrc+'"></iframe>';
+				   '</div>'+
+				'</div>';
+				$("#preViewArea").append(a);
 			}else{
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 				var style = head.children[0];
