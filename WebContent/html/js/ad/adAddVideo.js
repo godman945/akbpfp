@@ -681,7 +681,7 @@ function autoPreview(objData){
 	$.each(iframeInfoMap, function(key, obj) {
 		
 		
-		console.log(":SSSS");
+		console.log(":SSSS-3");
 		
 		var a = 
 			'<div class="v_box">'+
@@ -724,6 +724,9 @@ function appendVideoPreview(){
 			
 			console.log(imgSrc);
 			console.log(createPreViewVideoExist);
+			
+			
+			console.log(":SSSS-1");
 			
 			
 			
