@@ -232,6 +232,8 @@
     	
     	
     	<action name="adVideoPreview" class="AdAddAction" method="videoPreview">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
 			<result type="tiles" name="success">.ad.ad.vodeo.preview</result>
     	</action>
     	
