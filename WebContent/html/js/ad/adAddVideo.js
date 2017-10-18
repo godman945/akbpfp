@@ -100,7 +100,7 @@ $(document).ready(function(){
 				/**影片預設尺寸*/
 				$("#preViewArea").empty();
 				appendVideoPreview();
-				autoPreview(result);
+//				autoPreview(result);
 				$('body').unblock();
 			}else{
 				$("#adVideoURLMsg").css('color','red');
