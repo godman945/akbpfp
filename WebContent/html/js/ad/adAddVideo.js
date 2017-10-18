@@ -716,7 +716,7 @@ function appendVideoPreview(){
 			
 			console.log(imgSrc);
 			console.log(createPreViewVideoExist);
-			console.log($("#preViewArea").length);
+			console.log($("#preViewArea").children().length);
 			
 			
 			
@@ -735,7 +735,7 @@ function appendVideoPreview(){
 				'</div>';
 				$("#preViewArea").append(a);
 				
-				console.log($("#preViewArea").length);
+				console.log($("#preViewArea").children().length);
 				
 			}else{
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
