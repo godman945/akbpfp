@@ -691,8 +691,8 @@ function autoPreview(obj){
 function appendVideoPreview(){
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
-//			var url = adPreviewVideoData.previewUrl;
-			var url = 'https://r6---sn-un57sn7z.googlevideo.com/videoplayback?itag=18&lmt=1445322305540800&id=o-AEmWaOw8NciOKLtRpBSNpaPYc-Ze6JN8CM5_8EkgPWDW&ei=xLvmWcz_CYnYqAH5iq7YBg&ms=au&mt=1508293487&gir=yes&mv=m&dur=29.582&source=youtube&pl=21&ip=211.20.188.44&key=yt6&signature=7E530F9297C1F7D038CACBBC0E159EBD58620268.34B60A773627350B2D678EBC1F3F5330148A603F&mm=31&mn=sn-un57sn7z&initcwndbps=1025000&expire=1508315172&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&clen=1300123&requiressl=yes&mime=video%2Fmp4&ipbits=0&ratebypass=yes';
+			var url = adPreviewVideoData.previewUrl;
+//			var url = 'https://r6---sn-un57sn7z.googlevideo.com/videoplayback?itag=18&lmt=1445322305540800&id=o-AEmWaOw8NciOKLtRpBSNpaPYc-Ze6JN8CM5_8EkgPWDW&ei=xLvmWcz_CYnYqAH5iq7YBg&ms=au&mt=1508293487&gir=yes&mv=m&dur=29.582&source=youtube&pl=21&ip=211.20.188.44&key=yt6&signature=7E530F9297C1F7D038CACBBC0E159EBD58620268.34B60A773627350B2D678EBC1F3F5330148A603F&mm=31&mn=sn-un57sn7z&initcwndbps=1025000&expire=1508315172&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&clen=1300123&requiressl=yes&mime=video%2Fmp4&ipbits=0&ratebypass=yes';
 			var createPreViewVideoExist = false;
 			var createPreViewCheckboxObj = null;
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
