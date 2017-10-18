@@ -735,7 +735,7 @@ function appendVideoPreview(){
 				console.log(head);
 				
 				
-				var style = head.children[1];
+				var style = head.children[0];
 				var data = style.innerHTML;				
 				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
 				data = data.replace(imgStr,'background-image:url('+imgSrc+')');
