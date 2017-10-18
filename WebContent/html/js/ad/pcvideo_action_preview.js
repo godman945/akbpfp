@@ -1,6 +1,3 @@
-	$(document).ready(function(){
-		console.log(document.getElementById("bgImg"));
-	})
 	var iframeArray = window.parent.document.getElementsByTagName("iframe");
 	var scrollTop = window.parent.parent.document.body.scrollTop || window.parent.parent.document.documentElement.scrollTop;
 	var timeVideo;
@@ -169,6 +166,13 @@
 		}
 		
 	}, false);
+	
+	
+	console.log(document.getElementById("bgImg"));
+	
+	
+	
+	
 	
 	/*影片時間格式*/
 	function formatSecond(secs) {          
