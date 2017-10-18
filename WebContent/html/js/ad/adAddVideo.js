@@ -168,7 +168,7 @@ $(document).ready(function(){
 	    	fileFinishSize = fileFinishSize - 1;
 	    	if(fileFinishSize == 0 && adPreviewVideoData != null){
 		    	/**建立預覽圖*/
-		    	appendVideoPreview();
+//		    	appendVideoPreview();
 	    	}
 	    }).on('fileuploadprogressall', function (e, data) {	
 	    }).on('fileuploadprocessalways', function (e, data) {
@@ -697,7 +697,6 @@ function autoPreview(objData){
 
 //影片存在建立預覽
 function appendVideoPreview(){
-	
 	if($("#AG").children().length == 0){
 		return false;
 	}
