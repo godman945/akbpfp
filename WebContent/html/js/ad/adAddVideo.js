@@ -99,7 +99,6 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").css('color','green');
 					$("#adVideoURLMsg").text('影片網址確認正確');
 					adPreviewVideoData = result;
-					console.log(adPreviewVideoData);
 					/**影片預設尺寸*/
 					if(adPreviewVideoData != null){
 						$("#preViewArea").empty();
@@ -167,7 +166,6 @@ $(document).ready(function(){
 	    	}
 	    	
 	    	fileFinishSize = fileFinishSize - 1;
-	    	console.log(adPreviewVideoData);
 	    	if(fileFinishSize == 0 && adPreviewVideoData != null){
 		    	/**建立預覽圖*/
 		    	appendVideoPreview();
@@ -699,19 +697,12 @@ function autoPreview(objData){
 
 //影片存在建立預覽
 function appendVideoPreview(){
-	
-	
-	
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
 			var url = adPreviewVideoData.previewUrl;
 			var createPreViewVideoExist = false;
 			var createPreViewCheckboxObj = null;
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
-			
-			console.log("SSSS");
-			console.log(imgSrc);
-			
 			
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
@@ -737,6 +728,9 @@ function appendVideoPreview(){
 				$("#preViewArea").append(a);
 			}else{
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
+				console.log(head);
+				
+				
 				var style = head.children[1];
 				var data = style.innerHTML;				
 				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
