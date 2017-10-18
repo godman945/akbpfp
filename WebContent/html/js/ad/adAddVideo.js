@@ -717,7 +717,7 @@ function appendVideoPreview(){
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
 				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
-				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+encodeURIComponent(imgSrc)+'"></iframe>';
+				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+encodeURIComponent("blob:http://showstg.pchome.com.tw/37559ab4-e861-4a4f-8c08-a4cdb7e67b27")+'"></iframe>';
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
