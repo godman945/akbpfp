@@ -80,10 +80,6 @@ $(document).ready(function(){
 		if(videoUrl != $("#adVideoURL").val()){
 			$("#adVideoURLMsg").text('');
 			callBlockUpload("取得影片資訊中...");
-			
-			
-			console.log("ALEX");
-			
 			$.ajax({
 				url: "chkVideoUrl.html",
 				data:{
@@ -683,6 +679,10 @@ function autoPreview(objData){
 	
 	var url = objData.previewUrl;
 	$.each(iframeInfoMap, function(key, obj) {
+		
+		
+		console.log(":SSSS");
+		
 		var a = 
 			'<div class="v_box">'+
 			   '<div class="">'+
