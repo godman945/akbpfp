@@ -64,7 +64,6 @@ $(document).ready(function(){
 	$("#adVideoURL").blur(function() {
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLMsg").text('請輸入影片網址');
-			return false;
 		}
 		var regx = new RegExp(/^[hH][tT][tT][pP]([sS]?):\/\/(\S+\.)+\S{2,}$/);
 		if($("#adVideoURL").val() == ""){
@@ -691,6 +690,10 @@ function autoPreview(obj){
 function appendVideoPreview(){
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
+			var url = adPreviewVideoData.previewUrl;
+			
+			console.log(url);
+			
 			var createPreViewVideoExist = false;
 			var createPreViewCheckboxObj = null;
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
@@ -713,7 +716,7 @@ function appendVideoPreview(){
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
 				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
-				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(imgSrc)+'&adPreviewVideoBgImg='+imgSrc+'"></iframe>';
+				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+imgSrc+'"></iframe>';
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
