@@ -691,12 +691,12 @@ function appendVideoPreview(){
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
 			var url = adPreviewVideoData.previewUrl;
-			
-			console.log(url);
-			
 			var createPreViewVideoExist = false;
 			var createPreViewCheckboxObj = null;
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
+			
+			console.log(imgSrc);
+			
 			
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
@@ -707,6 +707,7 @@ function appendVideoPreview(){
 			});
 			
 			if(!createPreViewVideoExist){
+				console.log("createPreViewVideoExist");
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
 				var a = 
@@ -722,6 +723,7 @@ function appendVideoPreview(){
 				$("#preViewArea").append(a);
 				
 			}else{
+				console.log("createPreViewVideoNotExist");
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 				var style = head.children[2];
 				var data = style.innerHTML;				
