@@ -743,7 +743,6 @@ function appendVideoPreview(){
 
 //儲存廣告
 function saveData() {
-	
 	//廣告影片網址不可為空
 	if($("#adVideoURL").val() == ""){
 		$("#adVideoURLMsg").text('請輸入影片網址');
@@ -810,40 +809,79 @@ function saveData() {
 		}
 	});
 	
-//	console.log(videoDetailMap);
-//	console.log($("#adGroupSeq").val());
-//	console.log($("#adStyle").val());
-//	console.log($("#adClass").val());
-//	console.log($("#adVideoURL").val());
-//	console.log($("#adLinkURL").val());
-//	return false;
+	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
+	if(confirm(alt)) {
+		$.blockUI({
+		    message: "<h1>製作新廣告中，請稍後...</h1>",
+		    css: {
+	            width: '500px',
+	            height: '65px',
+	            opacity: .9,
+	            border:         '3px solid #aaa',
+	            backgroundColor:'#fff',
+	            textAlign:      'center',
+	            cursor:         'wait',
+	            '-webkit-border-radius': '10px',
+	            '-moz-border-radius':    '10px'
+	        },
+	        fadeIn: 1000, 
+	        timeout:   200, 
+	        onBlock: function() {
+	    		$.ajax({
+				url : "adAddVideoSaveAjax.html",
+				type : "POST",
+				dataType:'json',
+				data : {
+					"videoDetailMap":JSON.stringify(videoDetailMap),
+					"adGroupSeq":$("#adGroupSeq").val(),
+					"adStyle":$("#adStyle").val(),
+					"adClass":$("#adClass").val(),
+					"adVideoURL":$("#adVideoURL").val(),
+					"adLinkURL":$("#adLinkURL").val(),
+				},
+				success : function(respone) {
+					console.log(respone);
+					if(respone == "success"){
+						$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
+					} else {
+						alert(respone);
+					}
+				},
+				error: function(xtl) {
+					alert("系統繁忙，請稍後再試！");
+				}
+			});
+	        }
+		});
+		
+		
+//		callBlock();
+//		$.ajax({
+//			url : "adAddVideoSaveAjax.html",
+//			type : "POST",
+//			dataType:'json',
+//			data : {
+//				"videoDetailMap":JSON.stringify(videoDetailMap),
+//				"adGroupSeq":$("#adGroupSeq").val(),
+//				"adStyle":$("#adStyle").val(),
+//				"adClass":$("#adClass").val(),
+//				"adVideoURL":$("#adVideoURL").val(),
+//				"adLinkURL":$("#adLinkURL").val(),
+//			},
+//			success : function(respone) {
+//				console.log(respone);
+//				if(respone == "success"){
+//					$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
+//				} else {
+//					alert(respone);
+//				}
+//				$('body').unblock();
+//			},
+//			error: function(xtl) {
+//				$('body').unblock();
+//				alert("系統繁忙，請稍後再試！");
+//			}
+//		});
+	}
 	
-	callBlock();
-	
-	$.ajax({
-		url : "adAddVideoSaveAjax.html",
-		type : "POST",
-		dataType:'json',
-		data : {
-			"videoDetailMap":JSON.stringify(videoDetailMap),
-			"adGroupSeq":$("#adGroupSeq").val(),
-			"adStyle":$("#adStyle").val(),
-			"adClass":$("#adClass").val(),
-			"adVideoURL":$("#adVideoURL").val(),
-			"adLinkURL":$("#adLinkURL").val(),
-		},
-		success : function(respone) {
-			console.log(respone);
-			if(respone == "success"){
-				$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
-			} else {
-				alert(respone);
-			}
-			$('body').unblock();
-		},
-		error: function(xtl) {
-			$('body').unblock();
-			alert("系統繁忙，請稍後再試！");
-		}
-	});
 }
