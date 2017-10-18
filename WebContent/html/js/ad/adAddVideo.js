@@ -736,6 +736,8 @@ function appendVideoPreview(){
 					if(size == (width+height)){
 						console.log(checkboxObj.parentElement);
 						console.log(checkboxObj.parentElement.parentElement.parentElement);
+						console.log(checkboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0]);
+						console.log(checkboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument);
 						
 //						var head = checkboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 //						console.log(head);
