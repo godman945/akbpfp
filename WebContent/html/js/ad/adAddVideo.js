@@ -80,6 +80,10 @@ $(document).ready(function(){
 		if(videoUrl != $("#adVideoURL").val()){
 			$("#adVideoURLMsg").text('');
 			callBlockUpload("取得影片資訊中...");
+			
+			
+			console.log("ALEX");
+			
 			$.ajax({
 				url: "chkVideoUrl.html",
 				data:{
