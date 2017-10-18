@@ -691,8 +691,6 @@ function autoPreview(objData){
 	});
 }
 
-
-
 //影片存在建立預覽
 function appendVideoPreview(){
 	if($("#AG").children().length == 0){
@@ -746,45 +744,45 @@ function appendVideoPreview(){
 
 //儲存廣告
 function saveData() {
-//	
-//	//廣告影片網址不可為空
-//	if($("#adVideoURL").val() == ""){
-//		$("#adVideoURLMsg").text('請輸入影片網址');
-//		var position = $('#adVideoURL').offset();  
-//		var x = position.left;  
-//		var y = position.top;  
-//		window.scrollTo(x,y);
-//		return false;
-//	}
-//	
-//	//廣告連結網址不可為空
-//	if($("#adLinkURL").val() == ""){
-//		$("#chkLinkURL").text('請輸入影片網址');
-//		var position = $('#adLinkURL').offset();  
-//		var x = position.left;  
-//		var y = position.top;  
-//		window.scrollTo(x,y);
-//		return false;
-//	}
-//	
-//	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
-//		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
-//			var position = $('#adVideoURL').offset();  
-//			var x = position.left;  
-//			var y = position.top;  
-//			window.scrollTo(x,y);
-//			return false;
-//		}
-//		
-//		if($("#chkLinkURL").text() != "網址確認正確"){
-//			var position = $('#adLinkURL').offset();  
-//			var x = position.left;  
-//			var y = position.top;  
-//			window.scrollTo(x,y);
-//			return false;
-//		}
-//	}
-//	/*檢查勾選的尺寸*/
+	
+	//廣告影片網址不可為空
+	if($("#adVideoURL").val() == ""){
+		$("#adVideoURLMsg").text('請輸入影片網址');
+		var position = $('#adVideoURL').offset();  
+		var x = position.left;  
+		var y = position.top;  
+		window.scrollTo(x,y);
+		return false;
+	}
+	
+	//廣告連結網址不可為空
+	if($("#adLinkURL").val() == ""){
+		$("#chkLinkURL").text('請輸入影片網址');
+		var position = $('#adLinkURL').offset();  
+		var x = position.left;  
+		var y = position.top;  
+		window.scrollTo(x,y);
+		return false;
+	}
+	
+	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
+		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
+			var position = $('#adVideoURL').offset();  
+			var x = position.left;  
+			var y = position.top;  
+			window.scrollTo(x,y);
+			return false;
+		}
+		
+		if($("#chkLinkURL").text() != "網址確認正確"){
+			var position = $('#adLinkURL').offset();  
+			var x = position.left;  
+			var y = position.top;  
+			window.scrollTo(x,y);
+			return false;
+		}
+	}
+	/*檢查勾選的尺寸*/
 	var videoDetailMap = [];
 	$('#AG li input[type=radio]').each(function(){
 		var checked = $(this).attr('checked');
@@ -814,18 +812,14 @@ function saveData() {
 	});
 	
 	console.log(videoDetailMap);
-	
-	
-	return false;
-	
-	callBlock();
-	
-	console.log(videoDetailMap);
 	console.log($("#adGroupSeq").val());
 	console.log($("#adStyle").val());
 	console.log($("#adClass").val());
 	console.log($("#adVideoURL").val());
 	console.log($("#adLinkURL").val());
+	return false;
+	
+	callBlock();
 	
 	$.ajax({
 		url : "adAddVideoSaveAjax.html",
@@ -841,12 +835,12 @@ function saveData() {
 		},
 		success : function(respone) {
 			console.log(respone);
-			$('body').unblock();
 			if(respone == "success"){
 				$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
 			} else {
-//				alert(respone);
+				alert(respone);
 			}
+			$('body').unblock();
 		},
 		error: function(xtl) {
 			$('body').unblock();
