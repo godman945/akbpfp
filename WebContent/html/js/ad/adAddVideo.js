@@ -734,9 +734,9 @@ function appendVideoPreview(){
 				
 				console.log()
 				var iframe = $("#preViewArea").children()[($("#preViewArea").children().length) - 1];
-				console.log($($(iframe).children()[1]).children()[0]);
-				console.log(($($(iframe).children()[1]).children()[0])[0].contentDocument);
-				console.log($($(iframe).children()[1]).children()[0].contentDocument);
+				iframe = $($(iframe).children()[1]).children()[0];
+				console.log(iframe);
+				console.log(iframe.contentDocument);
 				
 //				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 //				var style = head.children[0];
