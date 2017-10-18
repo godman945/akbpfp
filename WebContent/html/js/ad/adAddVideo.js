@@ -700,7 +700,7 @@ function autoPreview(objData){
 //影片存在建立預覽
 function appendVideoPreview(){
 	
-	console.log("SSSS");
+	
 	
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
@@ -708,6 +708,10 @@ function appendVideoPreview(){
 			var createPreViewVideoExist = false;
 			var createPreViewCheckboxObj = null;
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
+			
+			console.log("SSSS");
+			console.log(imgSrc);
+			
 			
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
