@@ -733,16 +733,19 @@ function appendVideoPreview(){
 				
 				
 				
-				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
-				var style = head.children[0];
-				var data = style.innerHTML;				
-				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
-				data = data.replace(imgStr,'background-image:url('+imgSrc+')');
-				head.removeChild(style);
-				var css = document.createElement("style");
-				css.type = "text/css";
-				css.innerHTML = data;
-				head.insertBefore(css, head.childNodes[3]);
+				var iframe = $("#preViewArea").children()[$("#preViewArea").children().length];
+				console.log(iframe);
+				
+//				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
+//				var style = head.children[0];
+//				var data = style.innerHTML;				
+//				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
+//				data = data.replace(imgStr,'background-image:url('+imgSrc+')');
+//				head.removeChild(style);
+//				var css = document.createElement("style");
+//				css.type = "text/css";
+//				css.innerHTML = data;
+//				head.insertBefore(css, head.childNodes[3]);
 				
 				
 				
