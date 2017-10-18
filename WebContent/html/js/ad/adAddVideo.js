@@ -115,9 +115,10 @@ $(document).ready(function(){
 					$("#preViewArea").empty();
 					$('body').unblock();
 				}
+				appendVideoPreview();
 			});
 		}
-		appendVideoPreview();
+		
 	});
 	
 	var fileFinishSize = 0;
