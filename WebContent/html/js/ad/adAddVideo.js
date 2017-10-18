@@ -103,6 +103,13 @@ $(document).ready(function(){
 						autoPreview(result);
 						console.log("SSSSSSSSSSSSSSSSSSSSs");
 						appendVideoPreview();
+						
+						$("#preViewArea").empty();
+						autoPreview(result);
+						appendVideoPreview();
+						
+						
+						
 					}
 					$('body').unblock();
 				}else{
