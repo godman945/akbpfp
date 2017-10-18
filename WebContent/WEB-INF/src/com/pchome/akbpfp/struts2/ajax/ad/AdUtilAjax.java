@@ -134,17 +134,9 @@ public class AdUtilAjax extends BaseCookieAction{
 		log.info(">>>>> resultStr:"+resultStr);
 		
 		JSONObject json = new JSONObject();
-		if(resultStr.indexOf("ERROR") >= 0){
+		if(resultStr.indexOf("ERROR") >= 0 || process.waitFor() == 1){
 			json.put("result", false);
 			json.put("msg", "錯誤的影片連結");
-			this.result = json.toString();
-			this.msg = new ByteArrayInputStream(json.toString().getBytes());
-			log.error(">>>>>>"+result.toString());
-			return SUCCESS;
-		}
-		if(process.waitFor() == 1){
-			json.put("result", false);
-			json.put("msg", "shell執行錯誤");
 			this.result = json.toString();
 			this.msg = new ByteArrayInputStream(json.toString().getBytes());
 			log.error(">>>>>>"+result.toString());

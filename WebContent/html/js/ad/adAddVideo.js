@@ -156,6 +156,7 @@ $(document).ready(function(){
 	    	}
 	    	
 	    	fileFinishSize = fileFinishSize - 1;
+	    	console.log(adPreviewVideoData);
 	    	if(fileFinishSize == 0 && adPreviewVideoData != null){
 		    	/**建立預覽圖*/
 		    	appendVideoPreview();
