@@ -734,21 +734,42 @@ function appendVideoPreview(){
 				$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 					var size = checkboxObj.id.replace("checkbox_","");
 					if(size == (width+height)){
-						var head = checkboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
+						console.log(checkboxObj.parentElement);
+						console.log(checkboxObj.parentElement.parentElement.parentElement);
 						
-						console.log(head);
-						
-						var style = head.children[0];
-//						var data = style.innerHTML;				
-//						var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
-//						data = data.replace(imgStr,'background-image:url('+imgSrc+')');
-//						head.removeChild(style);
-//						var css = document.createElement("style");
-//						css.type = "text/css";
-//						css.innerHTML = data;
-//						head.insertBefore(css, head.childNodes[3]);
+//						var head = checkboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
+//						console.log(head);
 					}
 				});
+				
+				
+//				var iframe = $("#preViewArea").children()[($("#preViewArea").children().length) - 1];
+//				iframe = $($(iframe).children()[1]).children()[0];
+//				
+//				console.log(iframe);
+//				console.log($(iframe)[0]);
+//				console.log($(iframe)[0].contentDocument);
+//				console.log($(iframe)[0].contentDocument.getElementsByTagName("head")[0]);
+//				
+////				console.log(iframe.contentDocument);
+////				console.log(iframe.contentDocument.getElementsByTagName("head")[0]);
+//				iframe.onload = function(){
+//					console.log("SSSSSSSSSSs");
+//					console.log(iframe.document);
+//				}
+//				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
+//				var style = head.children[0];
+//				var data = style.innerHTML;				
+//				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
+//				data = data.replace(imgStr,'background-image:url('+imgSrc+')');
+//				head.removeChild(style);
+//				var css = document.createElement("style");
+//				css.type = "text/css";
+//				css.innerHTML = data;
+//				head.insertBefore(css, head.childNodes[3]);
+				
+				
+				
 			}else{
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 				var style = head.children[0];
