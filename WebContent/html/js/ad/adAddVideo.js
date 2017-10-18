@@ -736,6 +736,9 @@ function appendVideoPreview(){
 				iframe = $($(iframe).children()[1]).children()[0];
 				
 				console.log(iframe);
+				
+				console.log(iframe.getElementsByTagName("head")[0]);
+				
 				console.log(iframe.contentDocument);
 				console.log(iframe.contentDocument.getElementsByTagName("head")[0]);
 				iframe.onload = function(){
