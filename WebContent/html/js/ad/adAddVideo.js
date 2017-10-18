@@ -716,10 +716,6 @@ function appendVideoPreview(){
 			
 			console.log(imgSrc);
 			console.log(createPreViewVideoExist);
-			console.log($("#preViewArea").children().length);
-			
-			
-			
 			if(!createPreViewVideoExist){
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
@@ -734,12 +730,6 @@ function appendVideoPreview(){
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
-				
-				console.log($("#preViewArea").children().length);
-				
-				
-				console.log(($("#preViewArea").children()).getElementsByTagName("iframe"));
-				
 			}else{
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 				var style = head.children[0];
