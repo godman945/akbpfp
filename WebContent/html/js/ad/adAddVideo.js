@@ -104,7 +104,7 @@ $(document).ready(function(){
 					if(adPreviewVideoData != null){
 						$("#preViewArea").empty();
 						autoPreview(result);
-						appendVideoPreview();
+//						appendVideoPreview();
 					}
 					$('body').unblock();
 				}else{
