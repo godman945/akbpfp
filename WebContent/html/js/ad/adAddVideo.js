@@ -61,14 +61,17 @@ $(document).ready(function(){
 	//檢查廣告網址blur事件
 	$("#adVideoURL").blur(function() {
 		if($("#adVideoURL").val() == ""){
+			$("#adVideoURLMsg").css('color','red');
 			$("#adVideoURLMsg").text('請輸入影片網址');
 			return false;
 		}
 		var regx = new RegExp(/^[hH][tT][tT][pP]([sS]?):\/\/(\S+\.)+\S{2,}$/);
 		if($("#adVideoURL").val() == ""){
+			$("#adVideoURLMsg").css('color','red');
 			$("#adVideoURLMsg").text('請輸入廣告網址');
 			return false;
 		}else if(!regx.test($("#adVideoURL").val())){
+			$("#adVideoURLMsg").css('color','red');
 			$("#adVideoURLMsg").text('網址格式錯誤');
 			return false;
 		}
@@ -100,16 +103,12 @@ $(document).ready(function(){
 					/**影片預設尺寸*/
 					if(adPreviewVideoData != null){
 						$("#preViewArea").empty();
-						autoPreview(result);
-						console.log("SSSSSSSSSSSSSSSSSSSSs");
+//						autoPreview(result);
+//						console.log("SSSSSSSSSSSSSSSSSSSSs");
+//						appendVideoPreview();
+//						$("#preViewArea").empty();
+//						autoPreview(result);
 						appendVideoPreview();
-						
-						$("#preViewArea").empty();
-						autoPreview(result);
-						appendVideoPreview();
-						
-						
-						
 					}
 					$('body').unblock();
 				}else{
