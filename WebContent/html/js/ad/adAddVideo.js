@@ -239,10 +239,9 @@ function checkVideo(obj){
 		$("#checkboxAll").attr('checked',false);
 	}
 }
-
 function callBlockUpload(msg){
 	$("body").block({
-		message: "<h3>"+msg+"</h3>",
+		message: "<h3>"+msg+"</h3>"+"<img src='html/img/LoadingWait.gif' />",
 		css: {
 			padding: 0,
 			margin: 0,
@@ -811,13 +810,13 @@ function saveData() {
 		}
 	});
 	
-	console.log(videoDetailMap);
-	console.log($("#adGroupSeq").val());
-	console.log($("#adStyle").val());
-	console.log($("#adClass").val());
-	console.log($("#adVideoURL").val());
-	console.log($("#adLinkURL").val());
-	return false;
+//	console.log(videoDetailMap);
+//	console.log($("#adGroupSeq").val());
+//	console.log($("#adStyle").val());
+//	console.log($("#adClass").val());
+//	console.log($("#adVideoURL").val());
+//	console.log($("#adLinkURL").val());
+//	return false;
 	
 	callBlock();
 	
