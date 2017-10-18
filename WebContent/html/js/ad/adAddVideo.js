@@ -695,8 +695,7 @@ function appendVideoPreview(){
 			var createPreViewCheckboxObj = null;
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
 			
-			console.log(imgSrc);
-			console.log(adPreviewVideoData);
+			console.log(String(imgSrc));
 			
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
@@ -710,7 +709,6 @@ function appendVideoPreview(){
 				console.log("createPreViewVideoExist");
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
-				var paramater = encodeURIComponent('?adPreviewVideoURL='+url+'&adPreviewVideoBgImg='+imgSrc);
 				var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -718,7 +716,7 @@ function appendVideoPreview(){
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
 				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
-				   'src="adVideoPreview.html'+paramater+'"></iframe>';
+				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+String(imgSrc)+'"></iframe>';
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
