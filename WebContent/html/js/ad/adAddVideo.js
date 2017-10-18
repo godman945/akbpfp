@@ -63,13 +63,6 @@ $(document).ready(function(){
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLMsg").css('color','red');
 			$("#adVideoURLMsg").text('請輸入影片網址');
-			
-			
-			$("#preViewArea").empty();
-			autoPreview(null);
-			appendVideoPreview();
-			
-			
 			return false;
 		}
 		var regx = new RegExp(/^[hH][tT][tT][pP]([sS]?):\/\/(\S+\.)+\S{2,}$/);
@@ -173,9 +166,9 @@ $(document).ready(function(){
 	    	}
 	    	
 	    	fileFinishSize = fileFinishSize - 1;
-	    	if(fileFinishSize == 0 && adPreviewVideoData != null){
+	    	if(fileFinishSize == 0){
 		    	/**建立預覽圖*/
-//		    	appendVideoPreview();
+		    	appendVideoPreview();
 	    	}
 	    }).on('fileuploadprogressall', function (e, data) {	
 	    }).on('fileuploadprocessalways', function (e, data) {
@@ -712,10 +705,7 @@ function appendVideoPreview(){
 	
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
-//			var url = adPreviewVideoData.previewUrl;
-			
-			var url ="https://r6---sn-un57sn7z.googlevideo.com/videoplayback?ip=211.20.188.44&pl=21&mt=1508320070&mv=m&ei=viPnWaiGAYHOqAGnq6oQ&ms=au&mm=31&mn=sn-un57sn7z&id=o-AHG8f5VLyvPSl7RNcMkzxYQ7ahZmZVowkLi9Cv6ZJEOM&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&clen=1300123&ipbits=0&initcwndbps=1326250&requiressl=yes&source=youtube&dur=29.582&lmt=1445322305540800&gir=yes&signature=576C5D958430195839AFACBE151065921AA95480.603B566F0607D637ADBEA03A56D28EDBB8C5187C&key=yt6&mime=video%2Fmp4&expire=1508341790&itag=18&ratebypass=yes";
-			
+			var url = adPreviewVideoData.previewUrl;
 			var createPreViewVideoExist = false;
 			var createPreViewCheckboxObj = null;
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;

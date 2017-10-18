@@ -1,7 +1,15 @@
-	var iframeArray = window.parent.document.getElementsByTagName("iframe");
+	var iframeArrayData = window.parent.document.getElementsByTagName("iframe");
+	var iframeArray =  [];
+	for(var i = 0; i< iframeArrayData.length; i++){
+		if(iframeArrayData[i].id == "pchome8044_ad_frame1"){
+			iframeArray.push(iframeArrayData[i]);
+		}
+	}
+	
 	var scrollTop = window.parent.parent.document.body.scrollTop || window.parent.parent.document.documentElement.scrollTop;
 	var timeVideo;
 	var iframeInfoMap = new Object();
+	
 	/*廣告行為資訊*/
 	document.addEventListener('DOMContentLoaded', function () {
 		for(var i = 0; i< iframeArray.length; i++){
@@ -78,11 +86,8 @@
 						vdow+="%";
 					}
 					
-					var bgimg = document.getElementById("bgImg").value != "undefined" ? document.getElementById("bgImg").value : "";
-					console.log("location.href>>>>"+location.href);
-					console.log("bgimg>>>>"+bgimg);
-					
-					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+bgimg+")}";
+					var bgimg = this.src.split("&adPreviewVideoBgImg=");
+					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+bgimg[1]+")}";
 					this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
 					this.width = 230;
 					this.height = adh;
@@ -165,6 +170,7 @@
 		
 	}, false);
 	
+	
 	/*影片時間格式*/
 	function formatSecond(secs) {          
         var min = Math.floor(secs / 60);
@@ -214,4 +220,21 @@
 				return i;
 			}
 		}
-	}	
+	}
+	
+	
+	
+
+	
+//	this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
+//	console.log("GG:"+document.getElementById("bgImg").value);
+	
+//	css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+bgimg+")}";
+//	console.log(window.document.body);
+//	console.log(window.document.head);
+	
+	
+	
+	
+	
+	
