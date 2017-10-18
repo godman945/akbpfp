@@ -117,6 +117,7 @@ $(document).ready(function(){
 				}
 			});
 		}
+		appendVideoPreview();
 	});
 	
 	var fileFinishSize = 0;
