@@ -697,6 +697,11 @@ function autoPreview(objData){
 
 //影片存在建立預覽
 function appendVideoPreview(){
+	
+	if($("#AG").children().length == 0){
+		return false;
+	}
+	
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
 			var url = adPreviewVideoData.previewUrl;
