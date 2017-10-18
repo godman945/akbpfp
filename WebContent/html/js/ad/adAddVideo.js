@@ -735,6 +735,8 @@ function appendVideoPreview(){
 					var size = checkboxObj.id.replace("checkbox_","");
 					if(size == (width+height)){
 						console.log(checkboxObj);
+						var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
+						console.log(head);
 					}
 				});
 				
