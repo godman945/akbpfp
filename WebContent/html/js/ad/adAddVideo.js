@@ -714,7 +714,11 @@ function appendVideoPreview(){
 			});
 			
 			
+			console.log(imgSrc);
 			console.log(createPreViewVideoExist);
+			console.log($("#preViewArea").length);
+			
+			
 			
 			if(!createPreViewVideoExist){
 				var width = radioObj.name.substring(0,3);
@@ -730,11 +734,11 @@ function appendVideoPreview(){
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
+				
+				console.log($("#preViewArea").length);
+				
 			}else{
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
-				console.log(head);
-				
-				
 				var style = head.children[0];
 				var data = style.innerHTML;				
 				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
