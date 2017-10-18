@@ -96,13 +96,11 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").css('color','green');
 					$("#adVideoURLMsg").text('影片網址確認正確');
 					adPreviewVideoData = result;
+					console.log(adPreviewVideoData);
 					/**影片預設尺寸*/
 					if(adPreviewVideoData != null){
 						$("#preViewArea").empty();
 						autoPreview(result);
-						
-						
-						
 						console.log("SSSSSSSSSSSSSSSSSSSSs");
 						appendVideoPreview();
 					}
