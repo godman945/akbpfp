@@ -679,10 +679,7 @@ function autoPreview(objData){
 	
 	var url = objData.previewUrl;
 	$.each(iframeInfoMap, function(key, obj) {
-		
-		
 		console.log(":SSSS-3");
-		
 		var a = 
 			'<div class="v_box">'+
 			   '<div class="">'+
@@ -740,7 +737,7 @@ function appendVideoPreview(){
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
 				   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true"' +
-				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+"A01"+'"></iframe>';
+				   'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+imgSrc+'"></iframe>';
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
