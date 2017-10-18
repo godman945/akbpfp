@@ -707,10 +707,14 @@ function appendVideoPreview(){
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
 				if(size == radioObj.name){
+					console.log(size);
 					createPreViewCheckboxObj = checkboxObj;
 					createPreViewVideoExist = true;
 				}
 			});
+			
+			
+			console.log(createPreViewVideoExist);
 			
 			if(!createPreViewVideoExist){
 				var width = radioObj.name.substring(0,3);
