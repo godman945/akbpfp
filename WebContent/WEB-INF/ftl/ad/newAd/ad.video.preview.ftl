@@ -4,3 +4,5 @@
 ${previewHtml!}
 <input type="hidden" id="messageId" value="${message!}">
 <input type="hidden" id="bgImg" value="${adPreviewVideoBgImg!}">
+<img src="${adPreviewVideoBgImg!}" height="42" width="42">
+<img src=${adPreviewVideoBgImg!} height="42" width="42">
