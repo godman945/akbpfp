@@ -696,6 +696,7 @@ function appendVideoPreview(){
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
 			
 			console.log(imgSrc.toString());
+			console.log(imgSrc.innerHtml);
 			
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
