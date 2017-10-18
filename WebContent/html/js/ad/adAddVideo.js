@@ -73,40 +73,46 @@ $(document).ready(function(){
 			return false;
 		}
 		
-		$("#adVideoURLMsg").text('');
-		callBlockUpload("取得影片資訊中...");
-		$.ajax({
-			url: "chkVideoUrl.html",
-			data:{
-				adVideoUrl: $("#adVideoURL").val()
-			},
-			type:"POST",
-			dataType:"JSON",
-			success:function(result, status){
-//				console.log(result);
-			},
-			error: function(xtl) {
-				//alert("系統繁忙，請稍後再試！");
-			}
-		}).done(function (result) {
-			if(result.result == true){
-				$("#adVideoURLMsg").css('color','green');
-				$("#adVideoURLMsg").text('影片網址確認正確');
-				adPreviewVideoData = result;
-				/**影片預設尺寸*/
-				if(adPreviewVideoData != null){
-					$("#preViewArea").empty();
-					autoPreview(result);
-					appendVideoPreview();
+		//相同網址不再重複檢查
+		if(videoUrl != $("#adVideoURL").val()){
+			$("#adVideoURLMsg").text('');
+			callBlockUpload("取得影片資訊中...");
+			$.ajax({
+				url: "chkVideoUrl.html",
+				data:{
+					adVideoUrl: $("#adVideoURL").val()
+				},
+				type:"POST",
+				dataType:"JSON",
+				success:function(result, status){
+//					console.log(result);
+				},
+				error: function(xtl) {
+					//alert("系統繁忙，請稍後再試！");
 				}
-				$('body').unblock();
-			}else{
-				$("#adVideoURLMsg").css('color','red');
-				$("#adVideoURLMsg").text(result.msg);
-				$("#preViewArea").empty();
-				$('body').unblock();
-			}
-		});
+			}).done(function (result) {
+				if(result.result == true){
+					videoUrl = $("#adVideoURL").val();
+					$("#adVideoURLMsg").css('color','green');
+					$("#adVideoURLMsg").text('影片網址確認正確');
+					adPreviewVideoData = result;
+					/**影片預設尺寸*/
+					if(adPreviewVideoData != null){
+						$("#preViewArea").empty();
+						autoPreview(result);
+						appendVideoPreview();
+					}
+					$('body').unblock();
+				}else{
+					adPreviewVideoData = null;
+					videoUrl = null;
+					$("#adVideoURLMsg").css('color','red');
+					$("#adVideoURLMsg").text(result.msg);
+					$("#preViewArea").empty();
+					$('body').unblock();
+				}
+			});
+		}
 	});
 	
 	var fileFinishSize = 0;
@@ -697,9 +703,6 @@ function appendVideoPreview(){
 			
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
-				if(size == "300250" || size == "336280" || size == "640390"){
-					return true;
-				}
 				if(size == radioObj.name){
 					createPreViewCheckboxObj = checkboxObj;
 					createPreViewVideoExist = true;
