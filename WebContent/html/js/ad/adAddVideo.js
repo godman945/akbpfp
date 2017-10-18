@@ -100,6 +100,10 @@ $(document).ready(function(){
 					if(adPreviewVideoData != null){
 						$("#preViewArea").empty();
 						autoPreview(result);
+						
+						
+						
+						console.log("SSSSSSSSSSSSSSSSSSSSs");
 						appendVideoPreview();
 					}
 					$('body').unblock();
