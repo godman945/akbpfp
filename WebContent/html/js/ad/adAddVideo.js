@@ -71,10 +71,6 @@ $(document).ready(function(){
 		}else if(!regx.test($("#adVideoURL").val())){
 			$("#adVideoURLMsg").text('網址格式錯誤');
 			return false;
-		}else{
-			videoUrl = $("#adVideoURL").val();
-			videoUrl = videoUrl.replace('watch?v=','embed/');
-			$("#bessie").attr('src',videoUrl);
 		}
 		
 		$("#adVideoURLMsg").text('');
@@ -98,9 +94,11 @@ $(document).ready(function(){
 				$("#adVideoURLMsg").text('影片網址確認正確');
 				adPreviewVideoData = result;
 				/**影片預設尺寸*/
-				$("#preViewArea").empty();
-				appendVideoPreview();
-				autoPreview(result);
+				if(adPreviewVideoData != null){
+					$("#preViewArea").empty();
+					autoPreview(result);
+					appendVideoPreview();
+				}
 				$('body').unblock();
 			}else{
 				$("#adVideoURLMsg").css('color','red');
@@ -213,7 +211,6 @@ $(document).ready(function(){
 	
 });
 var adPreviewVideoData = null;
-
 
 //檢查是否取消全部勾選
 function checkVideo(obj){
@@ -665,15 +662,12 @@ function callBlock(){
 
 /*動態新增影片預覽*/
 var iframeInfoMap = new Object();
-function autoPreview(obj){
+function autoPreview(objData){
 	iframeInfoMap["iframe"+0] = {width:300,height:250};
 	iframeInfoMap["iframe"+1] = {width:336,height:280};
 	iframeInfoMap["iframe"+2] = {width:640,height:390};
 	
-	var url = obj.previewUrl;
-	
-	
-	
+	var url = objData.previewUrl;
 	$.each(iframeInfoMap, function(key, obj) {
 			var a = 
 				'<div class="v_box">'+
@@ -689,28 +683,29 @@ function autoPreview(obj){
 	});
 }
 
+
+
+//影片存在建立預覽
 function appendVideoPreview(){
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
 			var url = adPreviewVideoData.previewUrl;
-//			var url = 'https://r6---sn-un57sn7z.googlevideo.com/videoplayback?itag=18&lmt=1445322305540800&id=o-AEmWaOw8NciOKLtRpBSNpaPYc-Ze6JN8CM5_8EkgPWDW&ei=xLvmWcz_CYnYqAH5iq7YBg&ms=au&mt=1508293487&gir=yes&mv=m&dur=29.582&source=youtube&pl=21&ip=211.20.188.44&key=yt6&signature=7E530F9297C1F7D038CACBBC0E159EBD58620268.34B60A773627350B2D678EBC1F3F5330148A603F&mm=31&mn=sn-un57sn7z&initcwndbps=1025000&expire=1508315172&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&clen=1300123&requiressl=yes&mime=video%2Fmp4&ipbits=0&ratebypass=yes';
 			var createPreViewVideoExist = false;
 			var createPreViewCheckboxObj = null;
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
 			
-			console.log(imgSrc);
-			console.log(url);
-			
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
+				if(size == "300250" || size == "336280" || size == "640390"){
+					return true;
+				}
 				if(size == radioObj.name){
 					createPreViewCheckboxObj = checkboxObj;
 					createPreViewVideoExist = true;
 				}
 			});
-
+			
 			if(!createPreViewVideoExist){
-				console.log("createPreViewVideoExist");
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
 				var a = 
@@ -726,9 +721,8 @@ function appendVideoPreview(){
 				$("#preViewArea").append(a);
 				
 			}else{
-				console.log("createPreViewVideoNotExist");
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
-				var style = head.children[2];
+				var style = head.children[1];
 				var data = style.innerHTML;				
 				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
 				data = data.replace(imgStr,'background-image:url('+imgSrc+')');
