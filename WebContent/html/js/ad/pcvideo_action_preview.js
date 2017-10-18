@@ -77,6 +77,9 @@
 						ypos=(!ycenter)?0:(adh-adw*0.5625-30)/2;
 						vdow+="%";
 					}
+					
+					console.log(">>>>>>>>>>>>>>>>>"+document.getElementById("bgImg").value);
+					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+document.getElementById("bgImg").value+")}";
 					this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
 					
