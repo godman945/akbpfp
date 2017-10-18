@@ -1,5 +1,6 @@
 ﻿var fileArray =[];
 var seqArray = [];
+var adPreviewVideoData = null;
 $(document).ready(function(){
 	$('#save').click(function(){
 		saveData();
@@ -166,7 +167,7 @@ $(document).ready(function(){
 	    	}
 	    	
 	    	fileFinishSize = fileFinishSize - 1;
-	    	if(fileFinishSize == 0){
+	    	if(fileFinishSize == 0 && adPreviewVideoData != null){
 		    	/**建立預覽圖*/
 		    	appendVideoPreview();
 	    	}
@@ -220,7 +221,7 @@ $(document).ready(function(){
 	});
 	
 });
-var adPreviewVideoData = null;
+
 
 //檢查是否取消全部勾選
 function checkVideo(obj){
