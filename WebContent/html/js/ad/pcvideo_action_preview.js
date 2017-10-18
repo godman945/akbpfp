@@ -78,7 +78,7 @@
 						vdow+="%";
 					}
 					
-					console.log(local.href);
+					console.log(window.location.href);
 					var bgimg = document.getElementById("bgImg").src != "undefined" ? document.getElementById("bgImg").src : "";
 					console.log(document.getElementById("bgImg"));
 					console.log("bgimg>>>>>>>"+bgimg);
