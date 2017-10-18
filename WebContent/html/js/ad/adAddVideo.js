@@ -702,15 +702,11 @@ function autoPreview(objData){
 
 //影片存在建立預覽
 function appendVideoPreview(){
-	
-	
-	
+	var url = adPreviewVideoData.previewUrl;
 	
 	iframeInfoMap["iframe"+0] = {width:300,height:250};
 	iframeInfoMap["iframe"+1] = {width:336,height:280};
 	iframeInfoMap["iframe"+2] = {width:640,height:390};
-	
-	var url = objData.previewUrl;
 	$.each(iframeInfoMap, function(key, obj) {
 			var a = 
 				'<div class="v_box">'+
@@ -728,7 +724,6 @@ function appendVideoPreview(){
 	
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
-			var url = adPreviewVideoData.previewUrl;
 			var createPreViewVideoExist = false;
 			var createPreViewCheckboxObj = null;
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
