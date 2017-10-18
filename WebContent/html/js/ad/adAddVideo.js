@@ -736,8 +736,10 @@ function appendVideoPreview(){
 				var iframe = $("#preViewArea").children()[($("#preViewArea").children().length) - 1];
 				iframe = $($(iframe).children()[1]).children()[0];
 				console.log(iframe);
-				console.log(iframe.document);
-				console.log(iframe.document.getElementsByTagName("head")[0]);
+				
+				iframe.onload = function(){
+					console.log(iframe.document);
+				}
 				
 //				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 //				var style = head.children[0];
