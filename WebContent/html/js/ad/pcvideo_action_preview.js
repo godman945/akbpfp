@@ -1,3 +1,6 @@
+	$(document).ready(function(){
+		console.log(document.getElementById("bgImg"));
+	})
 	var iframeArray = window.parent.document.getElementsByTagName("iframe");
 	var scrollTop = window.parent.parent.document.body.scrollTop || window.parent.parent.document.documentElement.scrollTop;
 	var timeVideo;
@@ -84,7 +87,6 @@
 					console.log("bgimg>>>>>>>"+bgimg);
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+bgimg+")}";
-					
 					this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
 					
 					this.width = 230;

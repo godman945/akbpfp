@@ -115,7 +115,6 @@ $(document).ready(function(){
 					$("#preViewArea").empty();
 					$('body').unblock();
 				}
-				appendVideoPreview();
 			});
 		}
 		
