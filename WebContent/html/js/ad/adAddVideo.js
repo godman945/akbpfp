@@ -104,7 +104,7 @@ $(document).ready(function(){
 					if(adPreviewVideoData != null){
 						$("#preViewArea").empty();
 						autoPreview(result);
-//						appendVideoPreview();
+						appendVideoPreview();
 					}
 					$('body').unblock();
 				}else{
@@ -728,7 +728,7 @@ function appendVideoPreview(){
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
-				
+				alert("DDDDDDDDDDDDDDDDDDDDDDD");
 			}else{
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 				var style = head.children[1];

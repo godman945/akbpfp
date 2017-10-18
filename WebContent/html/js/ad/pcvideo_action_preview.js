@@ -80,7 +80,6 @@
 					
 					console.log(window.location.href);
 					var bgimg = document.getElementById("bgImg").src != "undefined" ? document.getElementById("bgImg").src : "";
-					console.log(document.getElementById("bgImg"));
 					console.log("bgimg>>>>>>>"+bgimg);
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+bgimg+")}";
@@ -166,13 +165,6 @@
 		}
 		
 	}, false);
-	
-	
-	console.log(document.getElementById("bgImg"));
-	
-	
-	
-	
 	
 	/*影片時間格式*/
 	function formatSecond(secs) {          
