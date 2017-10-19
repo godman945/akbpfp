@@ -160,11 +160,8 @@ public class AdAdViewAjax extends BaseCookieAction{
 		long allAdActionViews = 0;
 		for(EnumAdType adType:EnumAdType.values()){
 			if(adType.getType() == type){
-				allAdActionViews = pfpAdService.getPfpAdCount(super.getCustomer_info_id(), 
-																adGroupSeq, 
-																keyword);
-				adAdViewVO = pfpAdService.getAdAdView(super.getCustomer_info_id(), 
-																adGroupSeq, 
+				allAdActionViews = pfpAdService.getPfpAdCount(super.getCustomer_info_id(),adGroupSeq,keyword);
+				adAdViewVO = pfpAdService.getAdAdView(super.getCustomer_info_id(), adGroupSeq, 
 																keyword, 
 																adType, 
 																DateValueUtil.getInstance().stringToDate(startDate), 

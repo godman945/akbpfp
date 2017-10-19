@@ -35,7 +35,7 @@
                              <table border="0" cellspacing="0" cellpadding="0">
                             	<tbody>
 									<tr>
-                                       <td width="100" align="center" valign="middle" style="background-color: #ebebeb">
+                                       <td width="100" align="center" valign="middle">
                                        	<input type="button" style="display:block; clear: both " id="fileButton" name="fileButton" value="瀏覽檔案" onclick="fileLoad()">
 	                               		<div id="errMsg" style="text-align:-webkit-left;"></div>
 	                               		<input type="file" serialize id="fileupload" name="fileupload"  style="display:none ;" multiple="" >
@@ -47,16 +47,16 @@
                                                 <td style="line-height: 10px;font-size: 13px;color:red">若要播放以下尺寸的影音廣告，請上傳所搭配的Banner廣告圖尺寸一張。</td>
                                               </tr>
                                               <tr>
-                                                <td style="line-height: 10px;font-size: 13px">300x600：需上傳 300x600 Banner廣告圖 (<a href="#" target="_blank">範例</a>)</td>
+                                                <td style="line-height: 10px;font-size: 13px">300x600：需上傳 300x600 Banner廣告圖 (<a href="#" onclick="showBanner('banner300600');">範例</a>)</td>
                                               </tr>
                                               <tr>
-                                                <td style="line-height: 10px;font-size: 13px">320x480：需上傳 320x480 Banner廣告圖 (<a href="#" target="_blank">範例</a>)</td>
+                                                <td style="line-height: 10px;font-size: 13px">320x480：需上傳 320x480 Banner廣告圖 (<a href="#" onclick="showBanner('banner320480');">範例</a>)</td>
                                               </tr>
                                               <tr>
-                                                <td style="line-height: 10px;font-size: 13px">950x390：需上傳 310x390 Banner廣告圖 (<a href="#" target="_blank">範例</a>)</td>
+                                                <td style="line-height: 10px;font-size: 13px">950x390：需上傳 310x390 Banner廣告圖 (<a href="#" onclick="showBanner('banner950390');">範例</a>)</td>
                                               </tr>
                                               <tr>
-                                                <td style="line-height: 10px;font-size: 13px">970x250：需上傳 579x250 Banner廣告圖 (<a href="#" target="_blank">範例</a>)</td>
+                                                <td style="line-height: 10px;font-size: 13px">970x250：需上傳 579x250 Banner廣告圖 (<a href="#" onclick="showBanner('banner970250');">範例</a>)</td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -102,9 +102,9 @@
              	<option value="0">全部尺寸</option>
             </select>
             </span>
-        <div style="clear:both;margin:15px auto;border-bottom: dotted 1px #ccc;"></div>
-          <span style="margin-left: 10px;font-size: 14px;">請勾選您想要的廣告版型與尺寸</span>
-            <span  style="font-size: 14px;margin-top: 5px;margin-left: 10px;display: block; color: #1d5ed6">
+        <div style="clear:both;margin:15px auto;border-bottom:dotted 1px #ccc;"></div>
+            <span class="adVideoCheckArea" style="margin-left: 10px;font-size:14px;display:none;">請勾選您想要的廣告版型與尺寸</span>
+            <span class="adVideoCheckArea" style="font-size: 14px;margin-top: 5px;margin-left: 10px;display: block; color: #1d5ed6;display:none;">
             	<input type="checkbox" name="checkboxAll" id="checkboxAll" checked/>選擇全部</span>
                 <div class="aduplodul_v">
                 <div id="preViewArea" style="padding: 10px">
@@ -112,6 +112,8 @@
                    
                 </div>
                 </div>
+            <span style="font-size: 13px;line-height: 30px; text-align: center; color: red; clear: both;display: block;">請先輸入您的影片網址與上傳Banner廣告圖</span>
+            <span style="font-size: 13px;line-height: 30px;  text-align: center; clear: both;display: block;"">若您沒有上傳任何Banner廣告圖，則僅支援300x250、336x280、640x390 三種影音廣告尺寸。</span>
         </div>
 		<!--上傳預覽區塊_影音end-->
             
@@ -232,3 +234,102 @@
 		</#if>
 	</#list>
 </div>
+
+<!-- 300x600 Banner廣告圖 說明   START-->
+<div  style="display:none;">
+	   	<table id="banner300600" border="0" align="center" cellpadding="1" cellspacing="0">
+		  <tbody>
+		    <tr>
+		      <td bgcolor="#CDCDCD"><table border="0" cellspacing="0" cellpadding="8">
+		        <tbody>
+		          <tr>
+		            <td align="center" bgcolor="#E7E7E7" style="font-size: 15px;">影音廣告 - 300x600 
+		            	<span style="color: #1064cd">範例說明</span>
+		            </td>
+		          </tr>
+		          <tr>
+		            <td align="center" bgcolor="#FFFFFF" style="font-size: 15px;">需上傳300x600的Banner廣告圖，請參照以下指示製作素材。</td>
+		          </tr>
+		          <tr>
+		            <td align="center" bgcolor="#FFFFFF"><img src="html/img/300600_size_p.gif" width="400" height="640" alt=""/></td>
+		          </tr>
+		        </tbody>
+		      </table></td>
+		    </tr>
+		  </tbody>
+		</table>
+</div>
+<!-- 300x600 Banner廣告圖 說明   END-->
+
+<!-- 320x480 Banner廣告圖 說明   START-->
+<div  style="display:none;">
+<table id="banner320480" border="0" align="center" cellpadding="1" cellspacing="0">
+  <tbody>
+    <tr>
+      <td bgcolor="#CDCDCD"><table border="0" cellspacing="0" cellpadding="8">
+        <tbody>
+          <tr>
+			  <td align="center" bgcolor="#E7E7E7" style="font-size: 15px;">影音廣告 - 320x480 <span style="color: #1064cd">範例說明</span></td>
+          </tr>
+          <tr>
+            <td align="center" bgcolor="#FFFFFF" style="font-size: 15px;">需上傳320x480的Banner廣告圖，請參照以下指示製作素材。</td>
+          </tr>
+          <tr>
+            <td align="center" bgcolor="#FFFFFF"><img src="html/img/320480_size_p.gif" width="410" height="530" alt=""/></td>
+          </tr>
+        </tbody>
+      </table></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- 320x480 Banner廣告圖 說明   END-->
+
+<!-- 950x390 Banner廣告圖 說明   START-->
+<div  style="display:none;">
+<table id="banner950390" border="0" align="center" cellpadding="1" cellspacing="0">
+  <tbody>
+    <tr>
+      <td bgcolor="#CDCDCD"><table border="0" cellspacing="0" cellpadding="8">
+        <tbody>
+          <tr>
+            <td align="center" bgcolor="#E7E7E7" style="font-size: 15px;">影音廣告 - 950x390 <span style="color: #1064cd">範例說明</span></td>
+          </tr>
+          <tr>
+            <td align="center" bgcolor="#FFFFFF" style="font-size: 15px;">需上傳310x390的Banner廣告圖，請參照以下指示製作素材。</td>
+          </tr>
+          <tr>
+            <td align="center" bgcolor="#FFFFFF"><img src="html/img/950390_size_p.gif" width="1030" height="450" alt=""/></td>
+          </tr>
+        </tbody>
+      </table></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- 950x390 Banner廣告圖 說明   END-->
+
+<!-- 970x250 Banner廣告圖 說明   START-->
+<div  style="display:none;">
+   	<table id="banner970250" border="0" align="center" cellpadding="1" cellspacing="0">
+	  <tbody>
+	    <tr>
+	      <td bgcolor="#CDCDCD"><table border="0" cellspacing="0" cellpadding="8">
+	        <tbody>
+	          <tr>
+	            <td align="center" bgcolor="#E7E7E7" style="font-size: 15px;">影音廣告 - 970x250 <span style="color: #1064cd">範例說明</span>
+	            </td>
+	          </tr>
+	          <tr>
+	            <td align="center" bgcolor="#FFFFFF" style="font-size: 15px;">需上傳597x250的Banner廣告圖，請參照以下指示製作素材。</td>
+	          </tr>
+	          <tr>
+	            <td align="center" bgcolor="#FFFFFF"><img src="html/img/970250_size_p.gif" width="1050" height="315" alt=""/></td>
+	          </tr>
+	        </tbody>
+	      </table></td>
+	    </tr>
+	  </tbody>
+	</table>
+</div>
+<!-- 970x250 Banner廣告圖 說明   END-->

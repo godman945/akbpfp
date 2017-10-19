@@ -688,6 +688,8 @@ function autoPreview(objData){
 			'</div>';
 			$("#preViewArea").append(a);
 	});
+	
+	$(".adVideoCheckArea").css('display','');
 }
 
 //影片存在建立預覽
@@ -739,6 +741,22 @@ function appendVideoPreview(){
 			}
 		}
 	});
+}
+
+
+//跳窗banner
+function showBanner(showId){
+	$.fancybox(
+    		$('#' + showId).html(),
+    		{
+    			'autoDimensions'	: false,
+    			'width'        		: 'auto',
+    			'height'        	: 'auto',
+    			'autoSize'			: true,
+    			'autoHeight'		: true,
+    			'autoScale'			: true
+    		}
+	);
 }
 
 //儲存廣告
@@ -853,35 +871,5 @@ function saveData() {
 			});
 	        }
 		});
-		
-		
-//		callBlock();
-//		$.ajax({
-//			url : "adAddVideoSaveAjax.html",
-//			type : "POST",
-//			dataType:'json',
-//			data : {
-//				"videoDetailMap":JSON.stringify(videoDetailMap),
-//				"adGroupSeq":$("#adGroupSeq").val(),
-//				"adStyle":$("#adStyle").val(),
-//				"adClass":$("#adClass").val(),
-//				"adVideoURL":$("#adVideoURL").val(),
-//				"adLinkURL":$("#adLinkURL").val(),
-//			},
-//			success : function(respone) {
-//				console.log(respone);
-//				if(respone == "success"){
-//					$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
-//				} else {
-//					alert(respone);
-//				}
-//				$('body').unblock();
-//			},
-//			error: function(xtl) {
-//				$('body').unblock();
-//				alert("系統繁忙，請稍後再試！");
-//			}
-//		});
 	}
-	
 }
