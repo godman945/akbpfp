@@ -365,6 +365,9 @@ public class AdAddAction extends BaseCookieAction{
 			
 			//檢查是否有下載過的影片
 			PfpAdVideoSource pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adVideoURL);
+			log.info(">>>>>>>>>>>>>>>pfpAdVideoSource:"+pfpAdVideoSource == null);
+			
+			
 			//根據尺寸建立明細
 			for (int i = 0; i<adDetailInfoArray.length(); i++) {
 				String adVideoSize = "";
@@ -431,8 +434,7 @@ public class AdAddAction extends BaseCookieAction{
 					pfpAdVideoSource = new PfpAdVideoSource();
 					pfpAdVideoSource.setAdVideoSeq(videpSeq);
 					pfpAdVideoSource.setAdVideoStatus(0);
-					String v ="https://www.youtube.com/watch?v=s5J0Gxq7S7E";
-					pfpAdVideoSource.setAdVideoUrl(v);
+					pfpAdVideoSource.setAdVideoUrl(adVideoURL);
 					pfpAdVideoSource.setCreateDate(date);
 					pfpAdVideoSource.setUpdateDate(date);
 					pfpAdVideoSourceService.saveOrUpdate(pfpAdVideoSource);
