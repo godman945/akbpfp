@@ -365,9 +365,6 @@ public class AdAddAction extends BaseCookieAction{
 			
 			//檢查是否有下載過的影片
 			PfpAdVideoSource pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adVideoURL);
-			log.info(">>>>>>>>>>>>>>>pfpAdVideoSource:"+pfpAdVideoSource == null);
-			
-			
 			//根據尺寸建立明細
 			for (int i = 0; i<adDetailInfoArray.length(); i++) {
 				String adVideoSize = "";
@@ -409,7 +406,7 @@ public class AdAddAction extends BaseCookieAction{
 				if(isBannerSize){
 					pfpAdDetail.setAdDetailContent("img/user/"+super.getCustomer_info_id()+"/"+sdf.format(date)+"/"+"original"+"/"+adSeq+"."+picInfoJson.getString("format"));	
 				}else{
-					pfpAdDetail.setAdDetailContent("");
+					pfpAdDetail.setAdDetailContent("無背景圖");
 				}
 				pfpAdDetail.setAdPoolSeq(EnumAdStyle.VIDEO.getAdPoolSeq());
 				pfpAdDetail.setDefineAdSeq(EnumAdStyle.VIDEO.getTadSeq());
