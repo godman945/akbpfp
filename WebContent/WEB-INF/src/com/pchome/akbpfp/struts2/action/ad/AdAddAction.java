@@ -64,6 +64,7 @@ import com.pchome.enumerate.ad.EnumAdSize;
 import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.ad.EnumAdVideoDownloadStatus;
 import com.pchome.enumerate.ad.EnumAdVideoSize;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -432,15 +433,20 @@ public class AdAddAction extends BaseCookieAction{
 					pfpAdVideoSource.setAdVideoSeq(videpSeq);
 					pfpAdVideoSource.setAdVideoStatus(0);
 					pfpAdVideoSource.setAdVideoUrl(adVideoURL);
-					pfpAdVideoSource.setAdVideoWebmPath("");
-					pfpAdVideoSource.setAdVideoMp4Path("");
+					pfpAdVideoSource.setAdVideoWebmPath("尚未下載");
+					pfpAdVideoSource.setAdVideoMp4Path("尚未下載");
 					pfpAdVideoSource.setCreateDate(date);
 					pfpAdVideoSource.setUpdateDate(date);
 					pfpAdVideoSourceService.saveOrUpdate(pfpAdVideoSource);
 				}else{
-					saveAdDetail(pfpAdVideoSource.getAdVideoMp4Path() ,"mp4","","");
-					saveAdDetail(pfpAdVideoSource.getAdVideoWebmPath() ,"webcam","","");
-					saveAdDetail(String.valueOf(pfpAdVideoSource.getAdVideoStatus()) ,"video_status","","");
+					for (EnumAdVideoDownloadStatus enumAdVideoDownloadStatus : EnumAdVideoDownloadStatus.values()) {
+						if(pfpAdVideoSource.getAdVideoStatus() == enumAdVideoDownloadStatus.getStatus()){
+							saveAdDetail(pfpAdVideoSource.getAdVideoMp4Path() ,"mp4","","");
+							saveAdDetail(pfpAdVideoSource.getAdVideoWebmPath() ,"webcam","","");
+							saveAdDetail(enumAdVideoDownloadStatus.getDownloadValue() ,"video_status","","");
+							break;
+						}
+					}
 				}
 				adSeq = null;
 			}
