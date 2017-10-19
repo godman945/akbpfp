@@ -432,6 +432,8 @@ public class AdAddAction extends BaseCookieAction{
 					pfpAdVideoSource.setAdVideoSeq(videpSeq);
 					pfpAdVideoSource.setAdVideoStatus(0);
 					pfpAdVideoSource.setAdVideoUrl(adVideoURL);
+					pfpAdVideoSource.setAdVideoWebmPath("");
+					pfpAdVideoSource.setAdVideoMp4Path("");
 					pfpAdVideoSource.setCreateDate(date);
 					pfpAdVideoSource.setUpdateDate(date);
 					pfpAdVideoSourceService.saveOrUpdate(pfpAdVideoSource);
