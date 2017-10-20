@@ -91,6 +91,7 @@ public class AdAddAction extends BaseCookieAction{
 	private String adVideoURL;
 	private String adPreviewVideoURL;
 	private String adPreviewVideoBgImg;
+	private String videoTime;
 	private String adDetailSeq;
 	private String adPoolSeq;
 	private String templateProductSeq;
@@ -424,9 +425,10 @@ public class AdAddAction extends BaseCookieAction{
 				
 				//3.儲存影片下載狀態與位置明細
 				if(pfpAdVideoSource == null){
-					saveAdDetail("尚未下載" ,"mp4","","");
-					saveAdDetail("尚未下載" ,"webcam","","");
+					saveAdDetail("尚未下載" ,"mp4_path","","");
+					saveAdDetail("尚未下載" ,"webcam_path","","");
 					saveAdDetail("尚未下載" ,"video_status","","");
+					saveAdDetail(videoTime ,"video_seconds","","");
 					
 					String videpSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_VIDEO_SOURCE, "_");
 					pfpAdVideoSource = new PfpAdVideoSource();
@@ -444,6 +446,7 @@ public class AdAddAction extends BaseCookieAction{
 							saveAdDetail(pfpAdVideoSource.getAdVideoMp4Path() ,"mp4","","");
 							saveAdDetail(pfpAdVideoSource.getAdVideoWebmPath() ,"webm","","");
 							saveAdDetail(enumAdVideoDownloadStatus.getDownloadValue() ,"video_status","","");
+							saveAdDetail(videoTime ,"video_seconds","","");
 							break;
 						}
 					}
@@ -1101,7 +1104,6 @@ public class AdAddAction extends BaseCookieAction{
 		log.info(">>>>>adPreviewVideoBgImg:"+adPreviewVideoBgImg);
 		
 		String tad = FileUtils.readFileToString(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"), "UTF-8");
-//		System.out.println(tad);
 //		if(StringUtils.isBlank(adPreviewVideoURL)){
 //			adPreviewVideoURL = "alex";
 //		}
@@ -1807,6 +1809,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setAdPreviewVideoBgImg(String adPreviewVideoBgImg) {
 		this.adPreviewVideoBgImg = adPreviewVideoBgImg;
+	}
+
+	public String getVideoTime() {
+		return videoTime;
+	}
+
+	public void setVideoTime(String videoTime) {
+		this.videoTime = videoTime;
 	}
 
 }

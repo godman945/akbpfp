@@ -11,6 +11,7 @@ import com.pchome.akbpfp.db.dao.ad.PfpAdDAO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.service.BaseService;
+import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
@@ -257,6 +258,16 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 	@Override
     public List<PfpAd> validAdAd(String adGroupSeq) throws Exception{
 		return ((PfpAdDAO)dao).validAdAd(adGroupSeq);
+	}
+
+	
+	/*
+	 * 取得影音廣告明細
+	 * */
+	public List<PfpAdAdViewVO> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
+		List<Object> lisObj = ((PfpAdDAO)dao).getAdAdVideoDetailView(pfpAdAdViewConditionVO);
+		
+		return null;
 	}
 
 

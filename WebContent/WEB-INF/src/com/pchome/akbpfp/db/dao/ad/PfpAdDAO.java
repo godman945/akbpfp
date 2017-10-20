@@ -18,6 +18,7 @@ import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
+import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.enumerate.utils.EnumStatus;
 
 public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
@@ -938,5 +939,21 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 
 		
 		return super.getHibernateTemplate().find(hql.toString(),adGroupSeq,EnumStatus.Close.getStatusId());
+	}
+	
+	
+	
+	
+	public List<Object> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
+		
+		StringBuffer sql = new StringBuffer();
+		
+		
+		
+		
+		
+		
+		
+		return null;
 	}
 }
