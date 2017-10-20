@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/10/17 �U�� 12:13:37 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/10/20 �U�� 04:59:33 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -17,8 +17,6 @@ import javax.persistence.TemporalType;
 public class PfpAdVideoSource implements java.io.Serializable {
 
 	private String adVideoSeq;
-	private String adVideoName;
-	private Integer adVideoSecond;
 	private String adVideoWebmPath;
 	private String adVideoMp4Path;
 	private int adVideoStatus;
@@ -37,11 +35,9 @@ public class PfpAdVideoSource implements java.io.Serializable {
 		this.createDate = createDate;
 	}
 
-	public PfpAdVideoSource(String adVideoSeq, String adVideoName, Integer adVideoSecond, String adVideoWebmPath,
-			String adVideoMp4Path, int adVideoStatus, String adVideoUrl, Date updateDate, Date createDate) {
+	public PfpAdVideoSource(String adVideoSeq, String adVideoWebmPath, String adVideoMp4Path, int adVideoStatus,
+			String adVideoUrl, Date updateDate, Date createDate) {
 		this.adVideoSeq = adVideoSeq;
-		this.adVideoName = adVideoName;
-		this.adVideoSecond = adVideoSecond;
 		this.adVideoWebmPath = adVideoWebmPath;
 		this.adVideoMp4Path = adVideoMp4Path;
 		this.adVideoStatus = adVideoStatus;
@@ -59,24 +55,6 @@ public class PfpAdVideoSource implements java.io.Serializable {
 
 	public void setAdVideoSeq(String adVideoSeq) {
 		this.adVideoSeq = adVideoSeq;
-	}
-
-	@Column(name = "ad_video_name", length = 20)
-	public String getAdVideoName() {
-		return this.adVideoName;
-	}
-
-	public void setAdVideoName(String adVideoName) {
-		this.adVideoName = adVideoName;
-	}
-
-	@Column(name = "ad_video_second")
-	public Integer getAdVideoSecond() {
-		return this.adVideoSecond;
-	}
-
-	public void setAdVideoSecond(Integer adVideoSecond) {
-		this.adVideoSecond = adVideoSecond;
 	}
 
 	@Column(name = "ad_video_webm_path", length = 2048)

@@ -21,8 +21,9 @@
 		}); 
 });
 
-
+//default查詢廣告明細資料
 function findTableView(){
+	
 	var date = $("#IT_dateRange").val().split("~");
 	var startDate = date[0];
 	var endDate = date[1];

@@ -163,23 +163,9 @@ public class AdUtilAjax extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
-		//取得影片id當作下載排程檔名
-//		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --get-id " + adVideoUrl });
-//		if(process.waitFor() == 1){
-//			json.put("result", false);
-//			json.put("msg", "shell執行錯誤");
-//			this.result = json.toString();
-//			this.msg = new ByteArrayInputStream(json.toString().getBytes());
-//			log.error(">>>>>>"+result.toString());
-//			return SUCCESS;
-//		}
-//		
-//		String videoNameStr = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
-//		videoNameStr = videoNameStr.replace("WARNING: unable to extract uploader nickname", "").trim();
 		json.put("result", true);
-		json.put("msg", "秒數:"+seconds);
+		json.put("videoTime", seconds);
 		json.put("previewUrl", resultStr);
-//		json.put("videoName", videoNameStr);
 		process.destroy();
 		this.result = json.toString();
 		this.msg = new ByteArrayInputStream(json.toString().getBytes());
@@ -187,8 +173,6 @@ public class AdUtilAjax extends BaseCookieAction{
 	}
 	
 	
-	
-	// get data
 	public void setUrl(String url) {
 		this.url = url;
 	}
@@ -197,7 +181,6 @@ public class AdUtilAjax extends BaseCookieAction{
 		this.q = q;
 	}
 
-	// return data
 	public InputStream getMsg() {
 		return msg;
 	}
