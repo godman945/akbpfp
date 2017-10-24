@@ -1105,15 +1105,11 @@ public class AdAddAction extends BaseCookieAction{
 		log.info(">>>>>adPreviewVideoURL:"+adPreviewVideoURL);
 		log.info(">>>>>adPreviewVideoBgImg:"+adPreviewVideoBgImg);
 		
-		String tad = FileUtils.readFileToString(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"), "UTF-8");
-//		if(StringUtils.isBlank(adPreviewVideoURL)){
-//			adPreviewVideoURL = "alex";
-//		}
-		
-		
+		if(adPreviewVideoURL.indexOf("/home/webuser/akb") >=0){
+			adPreviewVideoURL = adPreviewVideoURL.replaceAll("/home/webuser/akb", "");
+		}
 		FileReader fr = new FileReader(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"));	
 		BufferedReader br =  new BufferedReader(fr);
-		
 		StringBuffer str = new StringBuffer();
 		String sCurrentLine;
 		while ((sCurrentLine = br.readLine()) != null) {
