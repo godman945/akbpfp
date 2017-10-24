@@ -462,6 +462,8 @@ public class AdAddAction extends BaseCookieAction{
 		}
 	}
 	
+
+
 	// 新增文字式廣告
 	@Transactional
 	public String doAdAdAddTxt() throws Exception {

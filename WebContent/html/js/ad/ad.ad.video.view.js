@@ -1,5 +1,4 @@
 ﻿﻿﻿$(document).ready(function(){
-
 	$.ajax({ 
 		type: "GET", 
 		url: "/pfp/html/js/ad/ad.ad.view.js", 
@@ -178,3 +177,7 @@ function preViewHtml5(width,height,imgSrc,realUrl){
 	    		}
 	    );
 }
+
+
+
+

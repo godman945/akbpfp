@@ -16,7 +16,7 @@
 <thead>
 	<tr>
 		<th width="50"><a href="#" onclick="checkAll()">全選</a></th>
-		<th>廣告明細</th>
+		<th width="200" colspan="2" rowspan="2">影片明細</th>
 		<th>狀態</th>
 		<th>計價方式</th>
 		<th>曝光數</th>	
@@ -29,57 +29,64 @@
 	</tr>
 </thead>
 <tbody>
-	<#if adAdViewVO?exists>
-	    <#list adAdViewVO as vo>
+	<#if pfpAdAdVideoViewVOList?exists>
+		<#assign sumPV = 0>
+		<#assign sumView = 0>
+		<#assign sumViewRatings = 0>
+		<#assign sumCost = 0>
+		<#assign sumSingleAdViewCost = 0>
+		<#assign sumThousandsCost = 0>
+	    <#list pfpAdAdVideoViewVOList as pfpAdAdVideoViewVO>
+	    	<#assign sumPV = sumPV + pfpAdAdVideoViewVO.adPvSum ?number>
+	    	<#assign sumView = sumView + pfpAdAdVideoViewVO.sumAdView ?number>
+	    	<#assign sumViewRatings = (sumView / sumPV * 100) ? string("0.##")>
+	    	<#assign sumCost = sumCost + pfpAdAdVideoViewVO.costSum ? number>
+			<#assign sumSingleAdViewCost = (sumCost / sumView) ? string("0.##")>
+			<#assign sumThousandsCost = (sumCost / sumPV * 1000) ? string("0.##")>
 			<tr>
 				<td>
-				<#if vo.adStatus == 4 || vo.adStatus == 9>
-			        <input type="checkbox" id="chkY_${vo_index!}" name="chkY" value="${vo.adSeq!}"/>
+				<#if pfpAdAdVideoViewVO.actionStatus == "4" || pfpAdAdVideoViewVO.actionStatus == "9">
+			        <input type="checkbox" id="chkY_${pfpAdAdVideoViewVO_index!}" name="chkY" value="${pfpAdAdVideoViewVO.adSeq!}"/>
 				<#else>
-			        <input type="checkbox" id="chkN_${vo_index!}" name="chkN" disabled/>
+			       <input type="checkbox" id="chkN_${pfpAdAdVideoViewVO_index!}" name="chkN" disabled/>
 				</#if>
 				</td>
-		        <td height="35" class="td02" > 
-					<div class="adreportdv">
-			       		<span>
-				        	<iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe>
-				        </span>
-							<span class="adboxdvimg"><a href="${vo.realUrl!}" target="_blank"><img src="${vo.originalImg!}" /></a></span>
-						       	<span class="adboxdvinf">
-									<span>
-							        	<b>${vo.title!}</b><br>
-							            <i>尺寸</i><b>${vo.imgWidth!} x ${vo.imgHeight!}</b><br>
-							            <span>${vo.showUrl!}</span><br>
-							            <a class="fancy" style="cursor:pointer" onclick="preview('${vo.originalImg!}')" alt="預覽">預覽</a>
-									</span>
-					    	</span>
+				<td>
+					<div style="padding: 8px;width:80px;height:auto;margin: 0 auto">
+						<img src="${pfpAdAdVideoViewVO.imgPath!}" width="80">
 					</div>
-		        </td>
+				</td>
+				<td style=" text-align: left; line-height: 20px; padding: 10px;">
+						${pfpAdAdVideoViewVO.adActionName!}<br>
+						尺寸 ${pfpAdAdVideoViewVO.adWidth!} x ${pfpAdAdVideoViewVO.adHeight!}<br>
+						時間 00:${pfpAdAdVideoViewVO.videoSeconds!}<br>
+					  	<a href="#" target="_blank">${pfpAdAdVideoViewVO.realUrl!}</a><br>
+					  	<a class="fancy" style="cursor:pointer" onclick="preview('${vo.originalImg!}')" alt="預覽">點我預覽</a><br>
+				</td>
+				
 		        <td class="td03">
-		        ${vo.adStatusDesc!}
-		        <#if vo.adStatus == 3 || vo.adStatus == 6>
-		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${vo.adRejectReason!}">
+		        ${pfpAdAdVideoViewVO.adStatusDesc!}
+		        <#if pfpAdAdVideoViewVO.adStatus == 3 || pfpAdAdVideoViewVO.adStatus == 6>
+		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${pfpAdAdVideoViewVO.adRejectReason!}">
 		        </#if>
 		        </td>
-				<td class="td01">${vo.adPv?string('#,###')!}</td>				
-				<td class="td01">${vo.adClk?string('#,###')!}</td>
-				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
-				<!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->
-				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
-				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
-				<td>${vo.adActionName!}</td>
-				<td>${vo.adGroupName!}</td>
+				<td class="td01">${pfpAdAdVideoViewVO.priceType}</td>	
+				<td class="td01">${pfpAdAdVideoViewVO.adPvSum?string('#,###')!}</td>
+				<td class="td01">${pfpAdAdVideoViewVO.sumAdView}</td>
+				<td class="td01">${pfpAdAdVideoViewVO.adViewRatings}%</td>		
+				<td class="td01">NT$ ${pfpAdAdVideoViewVO.singleAdViewCost}</td>
+				<td class="td01">NT$ ${pfpAdAdVideoViewVO.thousandsCost}</td>		
+				<td class="td01">NT$ ${pfpAdAdVideoViewVO.costSum}</td>
 				<td class="td02">
-					<#if vo.adStatus != 9>
-						<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}">製作新廣告</a><br>
+					<#if pfpAdAdVideoViewVO.actionStatus != "9">
+						<a href="adAdAdd.html?adGroupSeq=${pfpAdAdVideoViewVO.adGroupSeq!}">製作新廣告</a><br>
 					</#if>
-					<a href="adAdEditVideo.html?adSeq=${vo.adSeq!}">修改</a><br>
-					<#if vo.adStatus != 2 && vo.adStatus != 13>	
-						<#if vo.adStatus == 0 || vo.adStatus == 1 || vo.adStatus == 3 || vo.adStatus == 6 >
-							<a href="#" onclick="closeAdAdStatus('${vo.adSeq!}','10')">關閉</a>
+					<a href="adAdEditVideo.html?adSeq=${pfpAdAdVideoViewVO.adSeq!}">修改</a><br>
+					<#if pfpAdAdVideoViewVO.actionStatus != "2" && pfpAdAdVideoViewVO.actionStatus != "13">	
+						<#if pfpAdAdVideoViewVO.actionStatus == "0" || pfpAdAdVideoViewVO.actionStatus == "1" || pfpAdAdVideoViewVO.actionStatus == "3" || pfpAdAdVideoViewVO.actionStatus == "6" >
+							<a href="#" onclick="closeAdAdStatus('${pfpAdAdVideoViewVO.adSeq!}','10')">關閉</a>
 						</#if>
 					</#if>
-					
 				</td>
 			</tr>
 	    </#list>
@@ -92,25 +99,68 @@
 	</#if>
 </tbody>
 	<tr class="tbg">
-		<td colspan="3">總計：${totalSize!}筆</td>
-		<td class="td01">${totalPv?string('#,###')!}</td>
-		<td class="td01">${totalClk?string('#,###')!}</td>		
-		<td class="td01">${totalClkRate?string('#.##')!}%</td>
-		<!--<td class="td01">${totalInvalidClk?string('#.##')!}</td>-->
-		<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
-		<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td colspan="5">總計：${totalSize!}筆</td>
+		<td class="td01">${sumPV?string('#,###')!}</td>
+		<td class="td01">${sumView?string('#,###')!}</td>		
+		<td class="td01">${sumViewRatings!}%</td>
+		<td class="td01">NT$ ${sumSingleAdViewCost!}</td>
+		<td class="td01">NT$ ${sumThousandsCost!}</td>
+		<td class="td01">NT$ ${sumCost?string('#,###')!}</td>
+		<td class="td01"></td>
 	</tr>
 </table>
 <input type="hidden" id="adAdSeq" name="adAdSeq" />
 <input type="hidden" id="status" name="status" />
 </form>
 
+
+
+
+
+	<div class="grtba" style="display:block;">
+				        	<div style="clear:both;margin:15px auto;border-bottom:dotted 1px #ccc;"></div>
+				            <span class="adVideoCheckArea" style="margin-left: 10px;font-size:14px;display:none;">請勾選您想要的廣告版型與尺寸</span>
+				            <span class="adVideoCheckArea" style="font-size: 14px;margin-top: 5px;margin-left: 10px;display: block; color: #1d5ed6;display:none;">
+				            	<input type="checkbox" name="checkboxAll" id="checkboxAll" checked/>選擇全部</span>
+				                <div class="aduplodul_v">
+				                <div id="preViewArea" style="padding: 10px">
+				                  
+				                  
+				                  
+				                  		<div class="v_box">
+		   <div  class="v_preview box_a_style">
+		   <iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width=500 height=500 allowtransparency="true" allowfullscreen="true"
+		   src="adVideoPreview.html?adPreviewVideoURL=/home/webuser/akb/pfp/img/video/2017_10_20/adv_201710200001.mp4&adPreviewVideoBgImg="></iframe>
+		   </div>
+		</div>
+				                  
+				                  
+				                  
+				                  
+				                  
+				                  
+				                </div>
+				                </div>
+       					 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <span style="padding:10px;display:block">
 	<input type="button" name="stop" onClick="modifyAdStatus('9')" value="暫 停" /> &nbsp; 
 	<input type="button" name="start" onClick="modifyAdStatus('4')" value="開 啟" /> &nbsp;
 	<input type="button" name="close" onClick="modifyAdStatus('10')" value="關 閉" /> &nbsp;          
 </span>
-
+  

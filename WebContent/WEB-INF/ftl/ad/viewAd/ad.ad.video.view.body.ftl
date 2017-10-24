@@ -1,6 +1,5 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-<script language="JavaScript" src="http://kdadm.pchome.com.tw/html/js/kernel/pcadshowstg.js"></script>
 <div class="cont">
 	<#if board?exists>
 		<#list enumBoardType as types>

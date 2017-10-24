@@ -936,24 +936,81 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		hql.append(" from PfpAd ");
 		hql.append(" where pfpAdGroup.adGroupSeq = ? ");
 		hql.append(" and adStatus != ? ");
-
-		
 		return super.getHibernateTemplate().find(hql.toString(),adGroupSeq,EnumStatus.Close.getStatusId());
 	}
 	
-	
-	
-	
 	public List<Object> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
-		
 		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT ar.ad_group_seq, ");
+		sql.append(" ar.ad_seq, ");
+		sql.append(" ar.ad_clk_price_type, ");
+		sql.append(" TRUNCATE(SUM(ar.ad_pv),0)ad_pv, ");
+		sql.append(" TRUNCATE(SUM(ar.ad_clk_price),2)cost, ");
+		sql.append(" TRUNCATE(SUM((CASE ");
+		sql.append(" WHEN ar.ad_clk_price_type = 'CPC' THEN ar.ad_clk ");
+		sql.append(" ELSE ar.ad_view ");
+		sql.append(" END)),0), ");
+		sql.append(" TRUNCATE((SUM(ar.ad_view) / SUM(ar.ad_pv)) * 100, 2) ad_view_ratings, ");
+		sql.append(" TRUNCATE(SUM(ar.ad_clk_price) / SUM(ar.ad_view),2), ");
+		sql.append(" TRUNCATE(SUM(ar.ad_clk_price) / (SUM(ar.ad_pv) / 1000), 2)thousands_cost, ");
+		sql.append(" d.ad_status, ");
+		sql.append(" (SELECT dt.ad_detail_content ");
+		sql.append(" FROM pfp_ad_detail dt ");
+		sql.append(" WHERE dt.ad_seq = ar.ad_seq ");
+		sql.append(" AND dt.ad_detail_id ='img')img, ");
+		sql.append(" IFNULL((SELECT dt.ad_detail_content ");
+		sql.append(" FROM pfp_ad_detail dt ");
+		sql.append(" WHERE dt.ad_seq = ar.ad_seq ");
+		sql.append(" AND dt.ad_detail_id ='video_size'),'')video_size, ");
+		sql.append(" IFNULL((SELECT dt.ad_detail_content ");
+		sql.append(" FROM pfp_ad_detail dt ");
+		sql.append(" WHERE dt.ad_seq = ar.ad_seq ");
+		sql.append(" AND dt.ad_detail_id ='mp4'),'')mp4, ");
+		sql.append(" IFNULL((SELECT dt.ad_detail_content ");
+		sql.append(" FROM pfp_ad_detail dt ");
+		sql.append(" WHERE dt.ad_seq = ar.ad_seq ");
+		sql.append(" AND dt.ad_detail_id ='webm'),'')webm, ");
+		sql.append(" IFNULL((SELECT dt.ad_detail_content ");
+		sql.append(" FROM pfp_ad_detail dt ");
+		sql.append(" WHERE dt.ad_seq = ar.ad_seq ");
+		sql.append(" AND dt.ad_detail_id ='video_seconds'),'')video_seconds, ");
+		sql.append(" (SELECT aa.ad_action_name ");
+		sql.append(" FROM pfp_ad_action aa, ");
+		sql.append(" pfp_ad_group ag ");
+		sql.append(" WHERE ag.ad_group_seq = ar.ad_group_seq ");
+		sql.append(" AND ag.ad_action_seq = aa.ad_action_seq)ad_action_name, ");
+		sql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq = ar.ad_seq and dt.ad_detail_id ='real_url')real_url ");
+		sql.append(" FROM pfp_ad_report ar, ");
+		sql.append(" pfp_ad d ");
+		sql.append(" where ar.ad_group_seq  = :agSeq ");
+		sql.append(" AND ar.ad_pvclk_date BETWEEN :startDate AND :endDate ");
+		sql.append(" AND d.ad_seq = ar.ad_seq ");
+		sql.append(" GROUP BY ad_group_seq, ");
+		sql.append(" ad_seq ");
+		sql.append(" LIMIT :limit, :max ");	
 		
+		Query query =  super.getSession().createSQLQuery(sql.toString());
+		query.setParameter("agSeq", pfpAdAdViewConditionVO.getAdGroupSeq());
+		query.setParameter("startDate", pfpAdAdViewConditionVO.getStartDate());
+		query.setParameter("endDate", pfpAdAdViewConditionVO.getEndDate());
+		query.setParameter("limit", pfpAdAdViewConditionVO.getLimit());
+		query.setParameter("max", pfpAdAdViewConditionVO.getMax());
+		return query.list();
+	}
+
+	public int getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" SELECT ar.ad_seq ");	
+		sql.append(" FROM pfp_ad_report ar ");	
+		sql.append(" WHERE ar.ad_group_seq = :agSeq ");	
+		sql.append(" and ar.ad_pvclk_date BETWEEN :startDate AND :endDate ");
+		sql.append(" GROUP BY ad_group_seq, ");	
+		sql.append(" ad_seq ");	
 		
-		
-		
-		
-		
-		
-		return null;
+		Query query =  super.getSession().createSQLQuery(sql.toString());
+		query.setParameter("agSeq", pfpAdAdViewConditionVO.getAdGroupSeq());
+		query.setParameter("startDate", pfpAdAdViewConditionVO.getStartDate());
+		query.setParameter("endDate", pfpAdAdViewConditionVO.getEndDate());
+		return query.list().size();
 	}
 }

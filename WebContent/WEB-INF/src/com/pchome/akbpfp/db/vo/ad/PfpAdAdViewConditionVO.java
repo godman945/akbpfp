@@ -9,6 +9,9 @@ public class PfpAdAdViewConditionVO {
 	private String endDate;
 	private int page;
 	private int pageSize;
+	private int limit;
+	private int max;
+	
 
 	public String getCustomerInfoId() {
 		return customerInfoId;
@@ -73,4 +76,22 @@ public class PfpAdAdViewConditionVO {
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
+
+	public int getLimit() {
+		return limit;
+	}
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+
+	public int getMax() {
+		return max;
+	}
+
+	public void setMax(int max) {
+		this.max = max;
+	}
+	
+	
 }

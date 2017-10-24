@@ -5,23 +5,21 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-
-
-
-
-
 import org.apache.commons.lang.StringUtils;
 
+import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
+import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewVO;
+import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.report.EnumReport;
 import com.pchome.soft.util.DateValueUtil;
 
 public class AdAdViewAjax extends BaseCookieAction{
@@ -39,7 +37,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private String startDate;
 	private String endDate;
 	private List<PfpAdAdViewVO> adAdViewVO;
-
+	List<PfpAdAdVideoViewVO> pfpAdAdVideoViewVOList;
 	private int pageNo = 1;       				// 初始化目前頁數
 	private int pageSize = 20;     				// 初始化每頁幾筆
 	private int pageCount = 0;    				// 初始化共幾頁
@@ -156,75 +154,28 @@ public class AdAdViewAjax extends BaseCookieAction{
 	}
 
 	public String adAdVideoViewTableAjax() throws Exception{
+		PfpAdAdViewConditionVO pfpAdAdViewConditionVO = new PfpAdAdViewConditionVO();
+		pfpAdAdViewConditionVO.setCustomerInfoId(super.getCustomer_info_id());
+		pfpAdAdViewConditionVO.setAdGroupSeq(adGroupSeq);
+		pfpAdAdViewConditionVO.setKeyword(keyword);
+		pfpAdAdViewConditionVO.setAdType(adType);
+		pfpAdAdViewConditionVO.setStartDate(startDate);
+		pfpAdAdViewConditionVO.setEndDate(endDate);
+		pfpAdAdViewConditionVO.setPage(pageNo);
+		pfpAdAdViewConditionVO.setPageSize(pageSize);
+		int limit = (pageNo - 1) * pageSize;
+		int max = pageNo * pageSize;
+		pfpAdAdViewConditionVO.setLimit(limit);
+		pfpAdAdViewConditionVO.setMax(max);
+		
 		//1.取得廣告明細總數
-		long totalSize = pfpAdService.getPfpAdCount(super.getCustomer_info_id(),adGroupSeq,keyword);
+		totalSize = pfpAdService.getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
 		//2.取得廣告明細
-		pfpAdService.getAdAdVideoDetailView(null);
-		
-		
-		
-		
-		
-		
-//		int type = Integer.parseInt(searchType);
-//		long allAdActionViews = 0;
-//		for(EnumAdType adType:EnumAdType.values()){
-//			if(adType.getType() == type){
-//				allAdActionViews = pfpAdService.getPfpAdCount(super.getCustomer_info_id(),adGroupSeq,keyword);
-//				adAdViewVO = pfpAdService.getAdAdView(super.getCustomer_info_id(), adGroupSeq, 
-//																keyword, 
-//																adType, 
-//																DateValueUtil.getInstance().stringToDate(startDate), 
-//																DateValueUtil.getInstance().stringToDate(endDate),
-//																pageNo, 
-//																pageSize);
-//			}
-//		}
-
-//		if(allAdActionViews > 0) {
-//			totalCount = allAdActionViews;
-//			pageCount = (int) Math.ceil(((float)totalCount / pageSize));
-//
-//			if(adAdViewVO != null && adAdViewVO.size() > 0){
-//				totalSize = adAdViewVO.size();		
-//				for(PfpAdAdViewVO vo:adAdViewVO){
-//					if(StringUtils.equals("N", vo.getHtml5Tag())){
-//						Map<String,String> imgmap = new HashMap<String,String>();
-//						imgmap = getImgSize(vo.getOriginalImg());
-//						vo.setImgWidth(imgmap.get("imgWidth"));
-//						vo.setImgHeight(imgmap.get("imgHeight"));
-//					}
-//					
-//					String showUrl = vo.getRealUrl();
-//					showUrl = showUrl.replaceAll("http://", "");
-//					showUrl = showUrl.replaceAll("https://", "");
-//					if(showUrl.lastIndexOf(".com/") != -1){
-//						showUrl = showUrl.substring(0, showUrl.lastIndexOf(".com/") + 4);
-//					}
-//					if(showUrl.lastIndexOf(".tw/") != -1){
-//						showUrl = showUrl.substring(0, showUrl.lastIndexOf(".tw/") + 3);
-//					}
-//					vo.setShowUrl(showUrl);
-//					
-//					totalPv += vo.getAdPv();
-//					totalClk += vo.getAdClk();		
-//					totalCost += vo.getAdClkPrice();
-//					totalInvalidClk += vo.getInvalidClk();
-//				}
-//				
-//				if(totalClk > 0 || totalPv > 0){
-//					totalClkRate = (float)totalClk / (float)totalPv*100;
-//				}
-//				
-//				if(totalCost > 0 || totalClk > 0){
-//					totalAvgCost = (float)totalCost / (float)totalClk;	
-//				}
-//			}
-//		}
-		
+		if(totalSize > 0){
+			pfpAdAdVideoViewVOList = pfpAdService.getAdAdVideoDetailView(pfpAdAdViewConditionVO);	
+		}
 		// 查詢日期寫進cookie
 		this.setChooseDate(startDate, endDate);
-		
 		return SUCCESS;
 	}
 	
@@ -315,6 +266,14 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	public void setAdType(String adType) {
 		this.adType = adType;
+	}
+
+	public List<PfpAdAdVideoViewVO> getPfpAdAdVideoViewVOList() {
+		return pfpAdAdVideoViewVOList;
+	}
+
+	public void setPfpAdAdVideoViewVOList(List<PfpAdAdVideoViewVO> pfpAdAdVideoViewVOList) {
+		this.pfpAdAdVideoViewVOList = pfpAdAdVideoViewVOList;
 	}	
 	
 }

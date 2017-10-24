@@ -384,6 +384,40 @@ public class AdEditAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	
+	
+	/*
+	 * 儲存影音上稿資料
+	 * 
+	 * */
+	public String doAdAdEditVideo() {
+		try{
+			System.out.println(adSeq);
+			System.out.println(adLinkURL);
+			List<PfpAdDetail> pfpAdDetailList = pfpAdDetailService.getPfpAdDetailByAdSeq(adSeq);
+			for (PfpAdDetail pfpAdDetail : pfpAdDetailList) {
+				if(pfpAdDetail.getAdDetailId().equals("real_url")){
+					pfpAdDetail.setAdDetailContent(adLinkURL);
+					pfpAdDetail.setAdDetailUpdateTime(new Date());
+					break;
+				}
+			}
+			result = "success";
+			return SUCCESS;
+		}catch(Exception e){
+			e.getMessage();
+			result = "error";
+			return SUCCESS;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	//圖像廣告
 	public String AdAdEditImg() throws Exception {
 		log.info("AdAdEditImg => adSeq = " + adSeq);
