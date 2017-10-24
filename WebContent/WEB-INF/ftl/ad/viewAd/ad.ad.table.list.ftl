@@ -40,6 +40,7 @@
 			        <input type="checkbox" id="chkN_${vo_index!}" name="chkN" disabled/>
 				</#if>
 				</td>
+				
 		        <td height="35" class="td02" > 
 		        	<#if "IMG" == vo.adStyle && "N" == vo.html5Tag>
  						<div class="adreportdv">
