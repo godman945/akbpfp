@@ -139,45 +139,39 @@ function tableSorter(){
 	});
 }
 
-function preview(img) {
-    $.fancybox({
-        'href':img,
-        'autoSize':true,
-        'autoHeight':true,
-        'autoScale':true,
-        'transitionIn':'none',
-        'transitionOut':'none',
-        'padding':0,
-        'overlayOpacity':.75,
-        'overlayColor':'#fff',
-        'scrolling':'no'
-    });
-}
 
-function preViewHtml5(width,height,imgSrc,realUrl){
+//點擊預覽影片
+function previewVideo(width,height,img,url) {
 	
-	 $.fancybox(
-			 '<div style="position:absolute;z-index:10;border:0px;background:none;width:' + width + 'px;height:' + height + 'px;">' + 
-			 '<a href="' + realUrl + '" target="_blank" style="display:block;width:' + width + 'px;height:' + height + 'px;"><img src="html/img/blank.gif" style="width:' + width + 'px;height:' + height + 'px;border:0px;"></a>'
-			 + '</div>'
-			 + '<iframe src="' + imgSrc + '" width="' + width + '" height="' + height + '"  allowtransparency="true" frameborder="0" scrolling="no" ></iframe>',
-	    		{
-	    			'autoDimensions'	: false,
-	    			'width'         	: width,
-	    			'height'        	: height,
-	    			'autoSize'			: true,
-	    			'autoHeight'		: true,
-	    			'autoScale'			: false,
-	    			'transitionIn'		: 'none',
-	    			'transitionOut'		: 'none',
-	    			'padding'			: 0,
-	    			'overlayOpacity'    : .75,
-	    			'overlayColor'      : '#fff',
-	    			'scrolling'			: 'no'
-	    		}
-	    );
+	$("#videoSize").text(width+" x " +height);
+//	url = "http://showstg.pchome.com.tw/pfp/img/video/2017_10_20/adv_201710200001.mp4";
+	var a = 
+		'<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg='+img+'"></iframe>';
+	$("#preViewArea").append(a);
+	
+    $.fancybox(
+    		$('#previewVideoDiv').html(),
+    		{
+    			
+    			'autoDimensions'	: false,
+    			'width'         	: 250,
+    			'height'        	: 550,
+    			'autoSize'			: true,
+    			'autoHeight'		: true,
+    			'autoScale'			: false,
+    			'transitionIn'		: 'none',
+    			'transitionOut'		: 'none',
+    			'padding'			: 0,
+    			'overlayOpacity'    : .75,
+    			'overlayColor'      : '#fff',
+    			'scrolling'			: 'no',
+    			onClosed    :   function() {
+			    closePrew();
+			    }  
+    		}
+    );
 }
 
-
-
-
+function closePrew(){
+	$("#preViewArea").empty();
+}

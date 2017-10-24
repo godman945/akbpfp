@@ -53,7 +53,7 @@
 				</td>
 				<td>
 					<div style="padding: 8px;width:80px;height:auto;margin: 0 auto">
-						<img src="${pfpAdAdVideoViewVO.imgPath!}" width="80">
+						<a class="fancy" style="cursor:pointer" onclick="previewVideo('${pfpAdAdVideoViewVO.adWidth!}','${pfpAdAdVideoViewVO.adHeight!}','${pfpAdAdVideoViewVO.imgPath!}','${pfpAdAdVideoViewVO.mp4Path!}')" alt="預覽">點我預覽</a><br>
 					</div>
 				</td>
 				<td style=" text-align: left; line-height: 20px; padding: 10px;">
@@ -61,9 +61,7 @@
 						尺寸 ${pfpAdAdVideoViewVO.adWidth!} x ${pfpAdAdVideoViewVO.adHeight!}<br>
 						時間 00:${pfpAdAdVideoViewVO.videoSeconds!}<br>
 					  	<a href="#" target="_blank">${pfpAdAdVideoViewVO.realUrl!}</a><br>
-					  	<a class="fancy" style="cursor:pointer" onclick="preview('${vo.originalImg!}')" alt="預覽">點我預覽</a><br>
-					  	影片位置:${pfpAdAdVideoViewVO.mp4Path!}<br>
-						影片底圖:${pfpAdAdVideoViewVO.imgPath!}
+					  	
 				</td>
 				
 		        <td class="td03">
@@ -118,42 +116,14 @@
 
 
 
-
-	  <div class="grtba" style="display:block;">
-				        	<div style="clear:both;margin:15px auto;border-bottom:dotted 1px #ccc;"></div>
-				            <span class="adVideoCheckArea" style="margin-left: 10px;font-size:14px;display:none;">請勾選您想要的廣告版型與尺寸</span>
-				            <span class="adVideoCheckArea" style="font-size: 14px;margin-top: 5px;margin-left: 10px;display: block; color: #1d5ed6;display:none;">
-				            	<input type="checkbox" name="checkboxAll" id="checkboxAll" checked/>選擇全部</span>
-				                <div class="aduplodul_v">
-				                <div id="preViewArea" style="padding: 10px">
-				                  
-				                  
-				                  
-				                  		<div class="v_box">
-		   <div  class="v_preview box_a_style">
-		   <iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width=500 height=500 allowtransparency="true" allowfullscreen="true"
-		   src="adVideoPreview.html?adPreviewVideoURL=/home/webuser/akb/pfp/img/video/2017_10_20/adv_201710190006.mp4&adPreviewVideoBgImg=img/user/AC2013071700001/20171019/original/ad_201710190029.jpg"></iframe>
-		   </div>
-		</div>
-				              
-				                  
-            
-				                  
-				                  
-				                </div>
-				                </div>
-       					 </div>
-
-
-
-
-
-
-
-
-
-
-
+<div id="previewVideoDiv" style="display:none;">
+<div class="aduplodul_v">
+   <div class="v_box">
+      <div class=""><span id="videoSize"></span></div>
+      <div id="preViewArea" class="v_preview box_a_style"></div>
+   </div>
+</div>
+</div>
 
 
 
