@@ -238,9 +238,13 @@ public class AdAddAction extends BaseCookieAction{
 		}
 
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-
 		// 新增廣告
 		addAd(pfpAdGroup,null);
+		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String originalPath = photoDbPathNew+super.getCustomer_info_id()+"/"+sdf.format(date)+"/original";
+		String temporalPath = photoDbPathNew+super.getCustomer_info_id()+"/"+sdf.format(date)+"/temporal";
 		
 		String imgDetail = "";
 		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
@@ -262,7 +266,7 @@ public class AdAddAction extends BaseCookieAction{
 						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
 						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
 
-						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
+						imgDetail = originalPath+"/" + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
 					} else {
 						if(StringUtils.isBlank(adDetailContent[0])) {
 							imgDetail = "img/public/na.gif\" style=\"display:none";
