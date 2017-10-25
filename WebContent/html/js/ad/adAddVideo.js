@@ -800,32 +800,38 @@ function saveData() {
 	}
 	/*檢查勾選的尺寸*/
 	var videoDetailMap = [];
-	$('#AG li input[type=radio]').each(function(){
-		var checked = $(this).attr('checked');
-		if(checked == 'checked'){
-			var sizeObj = $($($(this).parent()).parent()).children()[1];
-			var adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
-			sizeObj = $($(sizeObj).children()[1]).text();
-			sizeObj = sizeObj.replace(" x ","");
-			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
-				var size = checkboxObj.id.replace('checkbox_','');
-				if(checkboxObj.checked && size == sizeObj){
-					var map = new Object();
-					map["size"] = sizeObj;
-					map["adSeq"] = adSeq;
-					map["format"] = $("#"+adSeq+"_format").val();
-					videoDetailMap.push(map);
-					return false;
-				}else if(checkboxObj.checked){
-					var map = new Object();
-					map["size"] = size;
-					map["adSeq"] = "";
-					map["format"] = "";
-					videoDetailMap.push(map);
-				}
-			});
-		}
+	
+	
+	$('#preViewArea input[type=checkbox]').each(function(){
+		console.log(this);
 	});
+	
+//	$('#AG li input[type=radio]').each(function(){
+//		var checked = $(this).attr('checked');
+//		if(checked == 'checked'){
+//			var sizeObj = $($($(this).parent()).parent()).children()[1];
+//			var adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
+//			sizeObj = $($(sizeObj).children()[1]).text();
+//			sizeObj = sizeObj.replace(" x ","");
+//			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
+//				var size = checkboxObj.id.replace('checkbox_','');
+//				if(checkboxObj.checked && size == sizeObj){
+//					var map = new Object();
+//					map["size"] = sizeObj;
+//					map["adSeq"] = adSeq;
+//					map["format"] = $("#"+adSeq+"_format").val();
+//					videoDetailMap.push(map);
+//					return false;
+//				}else if(checkboxObj.checked){
+//					var map = new Object();
+//					map["size"] = size;
+//					map["adSeq"] = "";
+//					map["format"] = "";
+//					videoDetailMap.push(map);
+//				}
+//			});
+//		}
+//	});
 	
 	
 	
