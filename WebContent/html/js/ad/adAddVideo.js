@@ -815,23 +815,24 @@ function saveData() {
 					adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
 					sizeObj = $($(sizeObj).children()[1]).text();
 					sizeObj = sizeObj.replace(" x ","");
-					
-					console.log(size+":"+sizeObj);
 					if(size == sizeObj){
 						flag = true;
 						return false;
 					}
 				}
 			});
+			var map = new Object();
 			if(!flag){
-				console.log("default size:"+size);
-				console.log("default adSeq:"+"");
+				map["size"] = size;
+				map["adSeq"] = "";
+				map["format"] = "";
+				videoDetailMap.push(map);
 			}else{
-				console.log("banner size:"+size);
-				console.log("banner adSeq:"+adSeq);
+				map["size"] = size;
+				map["adSeq"] = adSeq;
+				map["format"] = $("#"+adSeq+"_format").val();
+				videoDetailMap.push(map);
 			}
-			
-			
 		}
 	});
 	
