@@ -810,23 +810,33 @@ function saveData() {
 			var size = this.id.replace("checkbox_","");
 			console.log(size);
 			
+			var sizeObj = null;
+			var adSeq = null;
 			$('#AG li input[type=radio]').each(function(){
 				if(radioChecked = 'checked'){
-					var sizeObj = $($($(this).parent()).parent()).children()[1];
-					var adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
+					sizeObj = $($($(this).parent()).parent()).children()[1];
+					adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
 					sizeObj = $($(sizeObj).children()[1]).text();
 					sizeObj = sizeObj.replace(" x ","");
 					
 					console.log("adSeq:"+adSeq);
-					console.log("AG size"+sizeObj);
+					console.log("AG size:"+sizeObj);
 					
 					if(size == sizeObj){
-						console.log("尺寸正確");
-					}else{
-						console.log("尺寸錯誤");
+						return false;
 					}
 				}
 			});
+			console.log(size+" 是否預設:"+flag);
+			if(flag){
+				console.log("banner size:"+size);
+				console.log("banner adSeq:"+"");
+			}else{
+				console.log("banner size:"+size);
+				console.log("banner adSeq:"+adSeq);
+			}
+			
+			
 		}
 	});
 	
