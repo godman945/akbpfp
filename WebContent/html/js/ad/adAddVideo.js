@@ -815,6 +815,8 @@ function saveData() {
 					adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
 					sizeObj = $($(sizeObj).children()[1]).text();
 					sizeObj = sizeObj.replace(" x ","");
+					
+					console.log(size+":"+sizeObj);
 					if(size == sizeObj){
 						flag = true;
 						return false;
