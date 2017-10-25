@@ -803,7 +803,31 @@ function saveData() {
 	
 	
 	$('#preViewArea input[type=checkbox]').each(function(){
-		console.log(this);
+		var flag = false; 
+		var checked = $(this).attr('checked');
+		console.log(checked);
+		if(checked){
+			var size = this.id.replace("checkbox_","");
+			console.log(size);
+			
+			$('#AG li input[type=radio]').each(function(){
+				if(radioChecked = 'checked'){
+					var sizeObj = $($($(this).parent()).parent()).children()[1];
+					var adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
+					sizeObj = $($(sizeObj).children()[1]).text();
+					sizeObj = sizeObj.replace(" x ","");
+					
+					console.log("adSeq:"+adSeq);
+					console.log("AG size"+sizeObj);
+					
+					if(size == sizeObj){
+						console.log("尺寸正確");
+					}else{
+						console.log("尺寸錯誤");
+					}
+				}
+			});
+		}
 	});
 	
 //	$('#AG li input[type=radio]').each(function(){
