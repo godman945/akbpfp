@@ -805,11 +805,8 @@ function saveData() {
 	$('#preViewArea input[type=checkbox]').each(function(){
 		var flag = false; 
 		var checked = $(this).attr('checked');
-		console.log(checked);
 		if(checked){
 			var size = this.id.replace("checkbox_","");
-			console.log(size);
-			
 			var sizeObj = null;
 			var adSeq = null;
 			$('#AG li input[type=radio]').each(function(){
@@ -818,11 +815,8 @@ function saveData() {
 					adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
 					sizeObj = $($(sizeObj).children()[1]).text();
 					sizeObj = sizeObj.replace(" x ","");
-					
-					console.log("adSeq:"+adSeq);
-					console.log("AG size:"+sizeObj);
-					
 					if(size == sizeObj){
+						flag = true;
 						return false;
 					}
 				}
