@@ -836,41 +836,6 @@ function saveData() {
 		}
 	});
 	
-//	$('#AG li input[type=radio]').each(function(){
-//		var checked = $(this).attr('checked');
-//		if(checked == 'checked'){
-//			var sizeObj = $($($(this).parent()).parent()).children()[1];
-//			var adSeq = $($($($(this).parent()).parent()).parent()).attr("id");
-//			sizeObj = $($(sizeObj).children()[1]).text();
-//			sizeObj = sizeObj.replace(" x ","");
-//			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
-//				var size = checkboxObj.id.replace('checkbox_','');
-//				if(checkboxObj.checked && size == sizeObj){
-//					var map = new Object();
-//					map["size"] = sizeObj;
-//					map["adSeq"] = adSeq;
-//					map["format"] = $("#"+adSeq+"_format").val();
-//					videoDetailMap.push(map);
-//					return false;
-//				}else if(checkboxObj.checked){
-//					var map = new Object();
-//					map["size"] = size;
-//					map["adSeq"] = "";
-//					map["format"] = "";
-//					videoDetailMap.push(map);
-//				}
-//			});
-//		}
-//	});
-	
-	
-	
-	
-	console.log(videoDetailMap);
-	return false;
-	
-	
-	
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
 		$.blockUI({
