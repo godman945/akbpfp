@@ -823,10 +823,9 @@ function saveData() {
 					}
 				}
 			});
-			console.log(size+" 是否預設:"+flag);
-			if(flag){
-				console.log("banner size:"+size);
-				console.log("banner adSeq:"+"");
+			if(!flag){
+				console.log("default size:"+size);
+				console.log("default adSeq:"+"");
 			}else{
 				console.log("banner size:"+size);
 				console.log("banner adSeq:"+adSeq);
