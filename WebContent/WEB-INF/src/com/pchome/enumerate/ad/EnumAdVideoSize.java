@@ -6,8 +6,8 @@ public enum EnumAdVideoSize {
     	DEFAULT_640390("640","390","DEFAULT"),
 		BANNER_300600("300", "600","BANNER"),
     	BANNER_320480("320", "480","BANNER"),
-    	BANNER_950390("310", "390","BANNER"),
-    	BANNER_970250("579", "250","BANNER");
+    	BANNER_950390("950", "390","BANNER"),
+    	BANNER_970250("970", "250","BANNER");
     	
 	private final String widh;
 	private final String height;
