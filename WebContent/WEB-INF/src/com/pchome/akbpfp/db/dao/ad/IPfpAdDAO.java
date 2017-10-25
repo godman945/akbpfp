@@ -31,7 +31,7 @@ public interface IPfpAdDAO extends IBaseDAO<PfpAd,String>{
 	
 	public List<Object> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception;
 	
-	public int getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception;
+	public List<Object> getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception;
 	
 	/**
 	 * (舊版)查詢廣告分類資料，由 pfp_ad_report 統計資料

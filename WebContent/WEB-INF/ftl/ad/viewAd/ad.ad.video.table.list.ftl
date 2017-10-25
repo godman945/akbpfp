@@ -30,19 +30,7 @@
 </thead>
 <tbody>
 	<#if pfpAdAdVideoViewVOList?exists>
-		<#assign sumPV = 0>
-		<#assign sumView = 0>
-		<#assign sumViewRatings = 0>
-		<#assign sumCost = 0>
-		<#assign sumSingleAdViewCost = 0>
-		<#assign sumThousandsCost = 0>
 	    <#list pfpAdAdVideoViewVOList as pfpAdAdVideoViewVO>
-	    	<#assign sumPV = sumPV + pfpAdAdVideoViewVO.adPvSum ?number>
-	    	<#assign sumView = sumView + pfpAdAdVideoViewVO.sumAdView ?number>
-	    	<#assign sumViewRatings = (sumView / sumPV * 100) ? string("0.##")>
-	    	<#assign sumCost = sumCost + pfpAdAdVideoViewVO.costSum ? number>
-			<#assign sumSingleAdViewCost = (sumCost / sumView) ? string("0.##")>
-			<#assign sumThousandsCost = (sumCost / sumPV * 1000) ? string("0.##")>
 			<tr>
 				<td>
 				<#if pfpAdAdVideoViewVO.actionStatus == "4" || pfpAdAdVideoViewVO.actionStatus == "9">

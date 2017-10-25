@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.db.service.ad;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -267,7 +268,8 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 	 * 取得影音廣告明細總數
 	 * */
 	public int getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
-		return ((PfpAdDAO)dao).getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
+		List<Object> lisObj =  ((PfpAdDAO)dao).getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
+		return ((BigInteger)lisObj.get(0)).intValue();
 	}
 	
 	/*

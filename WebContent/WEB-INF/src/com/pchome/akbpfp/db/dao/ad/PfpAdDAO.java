@@ -8,15 +8,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
-import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
-import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.enumerate.utils.EnumStatus;
@@ -941,52 +940,53 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 	
 	public List<Object> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" SELECT ar.ad_group_seq, ");
-		sql.append(" ar.ad_seq, ");
-		sql.append(" ar.ad_clk_price_type, ");
-		sql.append(" TRUNCATE(SUM(ar.ad_pv),0)ad_pv, ");
-		sql.append(" TRUNCATE(SUM(ar.ad_clk_price),2)cost, ");
-		sql.append(" TRUNCATE(SUM((CASE ");
-		sql.append(" WHEN ar.ad_clk_price_type = 'CPC' THEN ar.ad_clk ");
-		sql.append(" ELSE ar.ad_view ");
-		sql.append(" END)),0), ");
-		sql.append(" TRUNCATE((SUM(ar.ad_view) / SUM(ar.ad_pv)) * 100, 2) ad_view_ratings, ");
-		sql.append(" TRUNCATE(SUM(ar.ad_clk_price) / SUM(ar.ad_view),2), ");
-		sql.append(" TRUNCATE(SUM(ar.ad_clk_price) / (SUM(ar.ad_pv) / 1000), 2)thousands_cost, ");
-		sql.append(" d.ad_status, ");
-		sql.append(" (SELECT dt.ad_detail_content ");
-		sql.append(" FROM pfp_ad_detail dt ");
-		sql.append(" WHERE dt.ad_seq = ar.ad_seq ");
-		sql.append(" AND dt.ad_detail_id ='img')img, ");
-		sql.append(" IFNULL((SELECT dt.ad_detail_content ");
-		sql.append(" FROM pfp_ad_detail dt ");
-		sql.append(" WHERE dt.ad_seq = ar.ad_seq ");
-		sql.append(" AND dt.ad_detail_id ='video_size'),'')video_size, ");
-		sql.append(" IFNULL((SELECT dt.ad_detail_content ");
-		sql.append(" FROM pfp_ad_detail dt ");
-		sql.append(" WHERE dt.ad_seq = ar.ad_seq ");
-		sql.append(" AND dt.ad_detail_id ='mp4'),'')mp4, ");
-		sql.append(" IFNULL((SELECT dt.ad_detail_content ");
-		sql.append(" FROM pfp_ad_detail dt ");
-		sql.append(" WHERE dt.ad_seq = ar.ad_seq ");
-		sql.append(" AND dt.ad_detail_id ='webm'),'')webm, ");
-		sql.append(" IFNULL((SELECT dt.ad_detail_content ");
-		sql.append(" FROM pfp_ad_detail dt ");
-		sql.append(" WHERE dt.ad_seq = ar.ad_seq ");
-		sql.append(" AND dt.ad_detail_id ='video_seconds'),'')video_seconds, ");
-		sql.append(" (SELECT aa.ad_action_name ");
-		sql.append(" FROM pfp_ad_action aa, ");
-		sql.append(" pfp_ad_group ag ");
-		sql.append(" WHERE ag.ad_group_seq = ar.ad_group_seq ");
-		sql.append(" AND ag.ad_action_seq = aa.ad_action_seq)ad_action_name, ");
-		sql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq = ar.ad_seq and dt.ad_detail_id ='real_url')real_url ");
-		sql.append(" FROM pfp_ad_report ar, ");
-		sql.append(" pfp_ad d ");
-		sql.append(" where ar.ad_group_seq  = :agSeq ");
-		sql.append(" AND ar.ad_pvclk_date BETWEEN :startDate AND :endDate ");
-		sql.append(" AND d.ad_seq = ar.ad_seq ");
-		sql.append(" GROUP BY ad_group_seq, ");
-		sql.append(" ad_seq ");
+		sql.append(" select  ");	
+		sql.append(" ad.ad_group_seq, ");	
+		sql.append(" ad.ad_seq, ");	
+		sql.append(" ag.ad_group_price_type, ");	
+		sql.append(" IFNULL(TRUNCATE(SUM(ar.ad_pv),0),0)ad_pv, ");	
+		sql.append(" IFNULL(TRUNCATE(SUM(ar.ad_clk_price),2),0)cost, ");	
+		sql.append(" IFNULL(TRUNCATE(SUM((CASE ");	 
+		sql.append(" WHEN ar.ad_clk_price_type = 'CPC' THEN ar.ad_clk ");	 
+		sql.append(" ELSE ar.ad_view ");	 
+		sql.append(" END)),0),0)ad_view, ");	
+		sql.append(" IFNULL(TRUNCATE((SUM(ar.ad_view) / SUM(ar.ad_pv)) * 100, 2),0) ad_view_ratings, ");	
+		sql.append(" IFNULL(TRUNCATE(SUM(ar.ad_clk_price) / SUM(ar.ad_view),2),0), ");	
+		sql.append(" IFNULL(TRUNCATE(SUM(ar.ad_clk_price) / (SUM(ar.ad_pv) / 1000), 2),0)thousands_cost, ");	
+		sql.append(" ad.ad_status, ");	
+		sql.append(" IFNULL((SELECT dt.ad_detail_content ");	 
+		sql.append(" FROM pfp_ad_detail dt ");	 
+		sql.append(" WHERE dt.ad_seq = ad.ad_seq  ");	
+		sql.append(" AND dt.ad_detail_id ='img'),'')img, ");	
+		sql.append(" IFNULL((SELECT dt.ad_detail_content ");	 
+		sql.append(" FROM pfp_ad_detail dt ");	 
+		sql.append(" WHERE dt.ad_seq = ad.ad_seq  ");	
+		sql.append(" AND dt.ad_detail_id ='video_size'),'')video_size, ");	 
+		sql.append(" IFNULL((SELECT dt.ad_detail_content ");	 
+		sql.append(" FROM pfp_ad_detail dt ");	 
+		sql.append(" WHERE dt.ad_seq = ad.ad_seq  ");	
+		sql.append(" AND dt.ad_detail_id ='mp4'),'')mp4,  ");	
+		sql.append(" IFNULL((SELECT dt.ad_detail_content ");	 
+		sql.append(" FROM pfp_ad_detail dt ");	 
+		sql.append(" WHERE dt.ad_seq = ad.ad_seq  ");	
+		sql.append(" AND dt.ad_detail_id ='webm'),'')webm, ");	 
+		sql.append(" IFNULL((SELECT dt.ad_detail_content ");	 
+		sql.append(" FROM pfp_ad_detail dt ");	 
+		sql.append(" WHERE dt.ad_seq = ad.ad_seq  ");	
+		sql.append(" AND dt.ad_detail_id ='video_seconds'),'')video_seconds, ");	 
+		sql.append(" (SELECT aa.ad_action_name ");	 
+		sql.append(" FROM pfp_ad_action aa ");	
+		sql.append(" WHERE ag.ad_action_seq = aa.ad_action_seq)ad_action_name, ");	 
+		sql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq = ad.ad_seq and dt.ad_detail_id ='real_url')real_url ");	 
+		sql.append(" from ");	
+		sql.append(" pfp_ad ad ");	
+		sql.append(" left join pfp_ad_report ar on ar.ad_seq = ad.ad_seq, ");	
+		sql.append(" pfp_ad_group ag ");	
+		sql.append(" where ");	 
+		sql.append(" ag.ad_group_seq = :agSeq ");
+		sql.append(" and ag.ad_group_seq = ad.ad_group_seq ");
+		sql.append(" and DATE_FORMAT(ad.ad_create_time,'%Y-%m-%d') >= :startDate and DATE_FORMAT(ad.ad_create_time,'%Y-%m-%d') <= :endDate ");	
+		sql.append(" group by ad_seq ");	
 		sql.append(" LIMIT :limit, :max ");	
 		
 		Query query =  super.getSession().createSQLQuery(sql.toString());
@@ -998,19 +998,19 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		return query.list();
 	}
 
-	public int getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
+	public List<Object> getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" SELECT ar.ad_seq ");	
-		sql.append(" FROM pfp_ad_report ar ");	
-		sql.append(" WHERE ar.ad_group_seq = :agSeq ");	
-		sql.append(" and ar.ad_pvclk_date BETWEEN :startDate AND :endDate ");
-		sql.append(" GROUP BY ad_group_seq, ");	
-		sql.append(" ad_seq ");	
+		sql.append(" select  ");
+		sql.append(" count(ad.ad_seq) ");
+		sql.append(" from ");
+		sql.append(" pfp_ad ad ");
+		sql.append(" where ad.ad_group_seq = :agSeq ");
+		sql.append(" and DATE_FORMAT(ad.ad_create_time,'%Y-%m-%d') >= :startDate and DATE_FORMAT(ad.ad_create_time,'%Y-%m-%d') <= :endDate ");
 		
 		Query query =  super.getSession().createSQLQuery(sql.toString());
 		query.setParameter("agSeq", pfpAdAdViewConditionVO.getAdGroupSeq());
 		query.setParameter("startDate", pfpAdAdViewConditionVO.getStartDate());
 		query.setParameter("endDate", pfpAdAdViewConditionVO.getEndDate());
-		return query.list().size();
+		return query.list();
 	}
 }
