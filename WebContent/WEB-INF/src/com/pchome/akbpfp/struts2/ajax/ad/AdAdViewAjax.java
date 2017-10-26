@@ -216,7 +216,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 				org.json.JSONArray jsonArray = new org.json.JSONArray(result);
 				for (int i = 0; i < jsonArray.length(); i++) {
 					JSONObject json = (JSONObject) jsonArray.get(i);
-					PfpAdAdVideoViewVO pfpAdAdVideoViewVO = (PfpAdAdVideoViewVO) JSONObject.toBean(json, PfpAdAdVideoViewVO.class);
+					PfpAdAdVideoViewVO pfpAdAdVideoViewVO = (PfpAdAdVideoViewVO) JSONObject.toBean(JSONObject.fromObject(json.toString()), PfpAdAdVideoViewVO.class);
 					pfpAdAdVideoViewVOList.add(pfpAdAdVideoViewVO);
 				}
 				adViewVideoDetailResultFlag = false;
