@@ -173,11 +173,7 @@
     
 	    <definition name="ad.ad.video.view.head" extends="ad.head" >
 	    	<put-attribute name="css" value="/ftl/ad/viewAd/ad.ad.video.view.css.ftl" />
-	    	<put-attribute name="js" value="ad.ad.video.view.js" />
-	    </definition>
-	    
-	    <definition name="ad.ad.video.view.js" extends="ad.action.view.js">
-	    	<put-attribute name="jsName" value="ad.ad.video.view.js?t=123" />
+	    	<put-attribute name="js" value="/ftl/ad/viewAd/ad.ad.video.view.js.ftl" />
 	    </definition>
 	    
 	    <definition name="ad.ad.video.view.body" template="/ftl/ad/viewAd/ad.ad.video.view.body.ftl">

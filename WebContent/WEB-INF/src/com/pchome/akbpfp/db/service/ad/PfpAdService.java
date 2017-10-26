@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.db.service.ad;
 
-import java.math.BigInteger;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,17 +13,17 @@ import com.pchome.akbpfp.db.dao.ad.PfpAdDAO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.service.BaseService;
+import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewSumVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
+import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
-import freemarker.template.utility.DateUtil;
-
 public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdService{
-
+	
 	public List<PfpAd> getAllPfpAds() throws Exception{
 		return ((PfpAdDAO)dao).loadAll();
 	}
@@ -267,10 +268,34 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 	/*
 	 * 取得影音廣告明細總數
 	 * */
-	public int getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
+	public PfpAdAdVideoViewSumVO getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
 		List<Object> lisObj =  ((PfpAdDAO)dao).getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
-		return ((BigInteger)lisObj.get(0)).intValue();
+		int totalSize = lisObj.size();
+		int sumAdView = 0;
+		int sumPv = 0;
+		double sumCost = 0;
+		for (Object object : lisObj) {
+			Object[] objArray = (Object[]) object;
+			sumPv = sumPv + Integer.valueOf(objArray[0].toString());
+			sumCost = sumCost + Double.valueOf(objArray[1].toString());
+			sumAdView = sumAdView + Integer.valueOf(objArray[2].toString());
+		}
+		
+		double adViewRatings = ((double)sumAdView / (double)sumPv) * 100;
+		double singleAdViewCost = (double)sumCost / (double)sumAdView;
+		double thousandsCost = (double)sumCost / ((double)sumPv / 1000);
+		
+		PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO = new PfpAdAdVideoViewSumVO();		
+		pfpAdAdVideoViewSumVO.setTotalSize(totalSize);
+		pfpAdAdVideoViewSumVO.setAdPvSum(sumPv);
+		pfpAdAdVideoViewSumVO.setAdViewSum(sumAdView);
+		pfpAdAdVideoViewSumVO.setAdViewRatings(adViewRatings);
+		pfpAdAdVideoViewSumVO.setSingleAdViewCost(singleAdViewCost);
+		pfpAdAdVideoViewSumVO.setThousandsCost(thousandsCost);
+		pfpAdAdVideoViewSumVO.setCostSum(sumCost);
+		return pfpAdAdVideoViewSumVO;
 	}
+	
 	
 	/*
 	 * 取得影音廣告明細

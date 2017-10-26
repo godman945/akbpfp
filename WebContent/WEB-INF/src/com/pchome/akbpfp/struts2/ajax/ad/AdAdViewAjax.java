@@ -12,6 +12,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
+import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewSumVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
@@ -27,7 +28,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private static final long serialVersionUID = 1L;
 
 	private IPfpAdService pfpAdService;
-	
+	private PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO;
 	private String adGroupSeq;
 	private String keyword;
 	private String searchType;
@@ -39,7 +40,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private int pageSize = 20;     				// 初始化每頁幾筆
 	private int pageCount = 0;    				// 初始化共幾頁
 	private long totalCount = 0;   				// 初始化共幾筆
-	
 	private int totalSize = 0;						
 	private int totalPv = 0;						
 	private int totalClk = 0;						
@@ -166,7 +166,10 @@ public class AdAdViewAjax extends BaseCookieAction{
 		pfpAdAdViewConditionVO.setMax(max);
 		
 		//1.取得廣告明細總數
-		totalSize = pfpAdService.getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
+		pfpAdAdVideoViewSumVO = pfpAdService.getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
+		totalSize = pfpAdAdVideoViewSumVO.getTotalSize();
+		pageCount = (int) Math.ceil(((double)totalSize / (double)pageSize));
+		
 		//2.取得廣告明細
 		if(totalSize > 0){
 			pfpAdAdVideoViewVOList = pfpAdService.getAdAdVideoDetailView(pfpAdAdViewConditionVO);	
@@ -271,6 +274,14 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	public void setPfpAdAdVideoViewVOList(List<PfpAdAdVideoViewVO> pfpAdAdVideoViewVOList) {
 		this.pfpAdAdVideoViewVOList = pfpAdAdVideoViewVOList;
+	}
+
+	public PfpAdAdVideoViewSumVO getPfpAdAdVideoViewSumVO() {
+		return pfpAdAdVideoViewSumVO;
+	}
+
+	public void setPfpAdAdVideoViewSumVO(PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO) {
+		this.pfpAdAdVideoViewSumVO = pfpAdAdVideoViewSumVO;
 	}	
 	
 }
