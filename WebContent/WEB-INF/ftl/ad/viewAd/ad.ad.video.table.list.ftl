@@ -48,7 +48,8 @@
 						${pfpAdAdVideoViewVO.adActionName!}<br>
 						尺寸 ${pfpAdAdVideoViewVO.adWidth!} x ${pfpAdAdVideoViewVO.adHeight!}<br>
 						時間 00:${pfpAdAdVideoViewVO.videoSeconds!}<br>
-					  	<a href="#" target="_blank">${pfpAdAdVideoViewVO.realUrl!}</a><br>
+					  	<a href="#" target="_blank">${pfpAdAdVideoViewVO.realUrl!}</a><br><br>
+					  	banner：<#if pfpAdAdVideoViewVO.imgPath =='無背景圖'>系統預設<#else><img src="${pfpAdAdVideoViewVO.imgPath}" width="50" height="50"></#if>
 				</td>
 				
 		        <td class="td03">
