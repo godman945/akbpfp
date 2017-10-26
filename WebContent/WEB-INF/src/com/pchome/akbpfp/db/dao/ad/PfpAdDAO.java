@@ -977,7 +977,7 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" (SELECT aa.ad_action_name ");	 
 		sql.append(" FROM pfp_ad_action aa ");	
 		sql.append(" WHERE ag.ad_action_seq = aa.ad_action_seq)ad_action_name, ");	 
-		sql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq = ad.ad_seq and dt.ad_detail_id ='real_url')real_url ");	 
+		sql.append(" IFNULL((select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq = ad.ad_seq and dt.ad_detail_id ='real_url'),'')real_url ");	 
 		sql.append(" from ");	
 		sql.append(" pfp_ad ad ");	
 		sql.append(" left join pfp_ad_report ar on ar.ad_seq = ad.ad_seq, ");	
