@@ -1113,17 +1113,11 @@ public class AdAddAction extends BaseCookieAction{
 		//1.傳入youtube網址轉為預覽網址
 		String youtubePreviewUrl = "";
 		PfpAdVideoSource pfpAdVideoSource = null;
-		if(adPreviewVideoURL.indexOf("youtube") >= 0){
+		if(adPreviewVideoURL.indexOf("googlevideo.com") < 0){
 			Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adPreviewVideoURL });
 			youtubePreviewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
 			pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adPreviewVideoURL);
 		}
-		
-		//2.傳入網址已經為youtube播放格式
-//		String pfpPreviewUrl = "";
-//		if(adPreviewVideoURL.indexOf("/home/webuser/akb") >=0){
-//			pfpPreviewUrl = adPreviewVideoURL.replaceAll("/home/webuser/akb", "");
-//		}
 		
 		//開始組版
 		FileReader fr = new FileReader(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"));	
