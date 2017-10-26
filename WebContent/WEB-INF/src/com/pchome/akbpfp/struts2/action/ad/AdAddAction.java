@@ -1117,6 +1117,7 @@ public class AdAddAction extends BaseCookieAction{
 			Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adPreviewVideoURL });
 			youtubePreviewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
 			pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adPreviewVideoURL);
+			process.destroy();
 		}
 		
 		//開始組版

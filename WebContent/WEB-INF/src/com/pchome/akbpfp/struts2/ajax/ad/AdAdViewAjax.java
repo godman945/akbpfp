@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.data.threadprocess.PfpThreadProcess;
@@ -38,6 +39,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	private IPfpAdService pfpAdService;
 	private PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO;
+	private String previewUrl;
 	private String adGroupSeq;
 	private String keyword;
 	private String searchType;
@@ -215,8 +217,16 @@ public class AdAdViewAjax extends BaseCookieAction{
 				for (int i = 0; i < jsonArray.length(); i++) {
 					org.json.JSONObject json =  (org.json.JSONObject) jsonArray.get(i);
 					PfpAdAdVideoViewVO pfpAdAdVideoViewVO = (PfpAdAdVideoViewVO) JSONObject.toBean(JSONObject.fromObject(json.toString()), PfpAdAdVideoViewVO.class);
+					if(i==0){
+						previewUrl = pfpAdAdVideoViewVO.getVideoUrl();
+					}
 					pfpAdAdVideoViewVOList.add(pfpAdAdVideoViewVO);
 				}
+				
+				//預先將預覽網址取得
+				Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + previewUrl });
+				previewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
+				process.destroy();
 				adViewVideoDetailResultFlag = false;
 			}
 		}
@@ -334,6 +344,15 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	public void setPfpAdAdVideoViewSumVO(PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO) {
 		this.pfpAdAdVideoViewSumVO = pfpAdAdVideoViewSumVO;
-	}	
+	}
+
+	public String getPreviewUrl() {
+		return previewUrl;
+	}
+
+	public void setPreviewUrl(String previewUrl) {
+		this.previewUrl = previewUrl;
+	}
+
 	
 }
