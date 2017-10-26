@@ -5,12 +5,18 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.pchome.akbpfp.data.threadprocess.PfpThreadProcess;
+import com.pchome.akbpfp.data.threadprocess.ThreadServiceBean;
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewSumVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewVO;
@@ -18,7 +24,10 @@ import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.thread.EnumAdThreadType;
 import com.pchome.soft.util.DateValueUtil;
+
+import net.sf.json.JSONObject;
 
 public class AdAdViewAjax extends BaseCookieAction{
 	
@@ -35,7 +44,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private String startDate;
 	private String endDate;
 	private List<PfpAdAdViewVO> adAdViewVO;
-	List<PfpAdAdVideoViewVO> pfpAdAdVideoViewVOList;
+	private List<PfpAdAdVideoViewVO> pfpAdAdVideoViewVOList;
 	private int pageNo = 1;       				// 初始化目前頁數
 	private int pageSize = 20;     				// 初始化每頁幾筆
 	private int pageCount = 0;    				// 初始化共幾頁
@@ -165,15 +174,69 @@ public class AdAdViewAjax extends BaseCookieAction{
 		pfpAdAdViewConditionVO.setLimit(limit);
 		pfpAdAdViewConditionVO.setMax(max);
 		
-		//1.取得廣告明細總數
-		pfpAdAdVideoViewSumVO = pfpAdService.getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
-		totalSize = pfpAdAdVideoViewSumVO.getTotalSize();
-		pageCount = (int) Math.ceil(((double)totalSize / (double)pageSize));
 		
-		//2.取得廣告明細
-		if(totalSize > 0){
-			pfpAdAdVideoViewVOList = pfpAdService.getAdAdVideoDetailView(pfpAdAdViewConditionVO);	
+		
+		/**多執行緒*/
+		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
+		ThreadServiceBean threadServiceBean = new ThreadServiceBean();
+		threadServiceBean.setPfpAdService(pfpAdService);
+		JSONObject conditionJson = JSONObject.fromObject(pfpAdAdViewConditionVO);
+		
+		//第一條執行緒查詢總數
+		boolean adViewVideoCountResultFlag = true;
+		Future<String> pfpThreadProcessAdViewVideoCountResult = null;
+		PfpThreadProcess pfpThreadProcessAdViewVideoCount = new PfpThreadProcess(conditionJson,EnumAdThreadType.AD_VIEW_VIDEO_COUNT,threadServiceBean);
+		pfpThreadProcessAdViewVideoCountResult = executor.submit(pfpThreadProcessAdViewVideoCount);
+		
+		//第二條執行緒查詢總數
+		boolean adViewVideoDetailResultFlag = true;
+		Future<String> pfpThreadProcessAdViewVideoDetailResult = null;
+		PfpThreadProcess pfpThreadProcessAdViewVideoDetail = new PfpThreadProcess(conditionJson,EnumAdThreadType.AD_VIEW_VIDEO_DETAIL,threadServiceBean);
+		pfpThreadProcessAdViewVideoDetailResult = executor.submit(pfpThreadProcessAdViewVideoDetail);
+		
+		
+		//1.第一條執行緒查詢總數結果
+		while (adViewVideoCountResultFlag) {
+			if (pfpThreadProcessAdViewVideoCountResult.isDone()) {
+				String result = pfpThreadProcessAdViewVideoCountResult.get();
+				log.info(">>>>>>>>pfpThreadProcessAdViewVideoCountResult:"+pfpThreadProcessAdViewVideoCountResult);
+				this.pfpAdAdVideoViewSumVO = (PfpAdAdVideoViewSumVO) JSONObject.toBean(JSONObject.fromObject(result), PfpAdAdVideoViewSumVO.class);
+				totalSize = pfpAdAdVideoViewSumVO.getTotalSize();
+				pageCount = (int) Math.ceil(((double)totalSize / (double)pageSize));
+				adViewVideoCountResultFlag = false;
+			}
 		}
+		
+		//2.第二條執行緒查詢明細結果
+		this.pfpAdAdVideoViewVOList = new ArrayList<>();
+		while (adViewVideoDetailResultFlag) {
+			if (pfpThreadProcessAdViewVideoDetailResult.isDone()) {
+				String result = pfpThreadProcessAdViewVideoDetailResult.get();
+				log.info(">>>>>>>>pfpThreadProcessAdViewVideoDetailResult:"+pfpThreadProcessAdViewVideoCountResult);
+				org.json.JSONArray jsonArray = new org.json.JSONArray(result);
+				for (int i = 0; i < jsonArray.length(); i++) {
+					JSONObject json = (JSONObject) jsonArray.get(i);
+					PfpAdAdVideoViewVO pfpAdAdVideoViewVO = (PfpAdAdVideoViewVO) JSONObject.toBean(json, PfpAdAdVideoViewVO.class);
+					pfpAdAdVideoViewVOList.add(pfpAdAdVideoViewVO);
+				}
+				adViewVideoDetailResultFlag = false;
+			}
+		}
+		
+		//3.執行緒全部執行完畢
+		if(!adViewVideoCountResultFlag && !adViewVideoDetailResultFlag){
+			executor.shutdown();
+		}
+		
+//		//1.取得廣告明細總數
+//		pfpAdAdVideoViewSumVO = pfpAdService.getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
+//		totalSize = pfpAdAdVideoViewSumVO.getTotalSize();
+//		pageCount = (int) Math.ceil(((double)totalSize / (double)pageSize));
+//		
+//		//2.取得廣告明細
+//		if(totalSize > 0){
+//			pfpAdAdVideoViewVOList = pfpAdService.getAdAdVideoDetailView(pfpAdAdViewConditionVO);	
+//		}
 		// 查詢日期寫進cookie
 		this.setChooseDate(startDate, endDate);
 		return SUCCESS;
