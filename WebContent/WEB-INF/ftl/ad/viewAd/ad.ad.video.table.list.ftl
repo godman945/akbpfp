@@ -49,7 +49,6 @@
 						尺寸 ${pfpAdAdVideoViewVO.adWidth!} x ${pfpAdAdVideoViewVO.adHeight!}<br>
 						時間 00:${pfpAdAdVideoViewVO.videoSeconds!}<br>
 					  	<a href="#" target="_blank">${pfpAdAdVideoViewVO.realUrl!}</a><br>
-					  	
 				</td>
 				
 		        <td class="td03">
@@ -85,25 +84,21 @@
 		</td>
 	</tr>
 	</#if>
-</tbody>
+</tbody
 	<tr class="tbg">
 		<td colspan="5">總計：${totalSize!}筆</td>
-		<td class="td01">${sumPV?string('#,###')!}</td>
-		<td class="td01">${sumView?string('#,###')!}</td>		
-		<td class="td01">${sumViewRatings!}%</td>
-		<td class="td01">NT$ ${sumSingleAdViewCost!}</td>
-		<td class="td01">NT$ ${sumThousandsCost!}</td>
-		<td class="td01">NT$ ${sumCost?string('#,###')!}</td>
+		<td class="td01">${pfpAdAdVideoViewSumVO.adPvSum?string('#,###')!}</td>
+		<td class="td01">${pfpAdAdVideoViewSumVO.adViewSum?string('#,###')!}</td>		
+		<td class="td01">${pfpAdAdVideoViewSumVO.adViewRatings?string('0.##')!}%</td>
+		<td class="td01">NT$ ${pfpAdAdVideoViewSumVO.singleAdViewCost?string('0.##')!}</td>
+		<td class="td01">NT$ ${pfpAdAdVideoViewSumVO.thousandsCost?string('0.##')!}</td>
+		<td class="td01">NT$ ${pfpAdAdVideoViewSumVO.costSum?string('0.##')!}</td>
 		<td class="td01"></td>
 	</tr>
 </table>
 <input type="hidden" id="adAdSeq" name="adAdSeq" />
 <input type="hidden" id="status" name="status" />
 </form>
-
-
-
-
 <div id="previewVideoDiv" style="display:none;">
 <div class="aduplodul_v">
    <div class="v_box">

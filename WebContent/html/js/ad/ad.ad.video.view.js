@@ -33,6 +33,7 @@ function findTableView(){
 	var adGroupSeq = $("#adGroupSeq").val();
 	var adType = $("#adType").val();
 	var adOperatingRule = $("#adOperatingRule").val();
+	callBlockUpload();
 	$.ajax({
 		url: "adAdVideoViewTable.html",
 		data:{
@@ -51,7 +52,8 @@ function findTableView(){
 		success:function(response, status){
 			$("#tableList").html(response);	
 			page();
-			 tableSorter();
+			tableSorter();
+			$('body').unblock();
 		},
 		error: function(xtl) {
 			alert("系統繁忙，請稍後再試！");
@@ -166,8 +168,27 @@ function previewVideo(width,height,img,url) {
 			    }  
     		}
     );
+    $("#fancybox-wrap").css('height',500)
 }
 
 function closePrew(){
 	$("#preViewArea").empty();
+}
+
+function callBlockUpload(){
+	$('body').block({
+		message: "<img src='html/img/LoadingWait.gif' />",
+		css: {
+			padding: 0,
+			margin: 0,
+			width: '50%',
+			top: '40%',
+			left: '35%',
+			textAlign: 'center',
+			color: '#000',
+			border: '3px solid #aaa',
+			backgroundColor: '#fff',
+			cursor: 'wait'
+		}
+	});
 }
