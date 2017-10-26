@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
@@ -124,7 +126,6 @@ public class AdAddAction extends BaseCookieAction{
 	private DefineAdService defineAdService;
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private IPfbSizeService pfbSizeService;
-	
 	private IPfpAdVideoSourceService pfpAdVideoSourceService;
 	
 	//廣告支援尺寸表
@@ -1101,15 +1102,30 @@ public class AdAddAction extends BaseCookieAction{
 	
 	/**
 	 * 預覽影音
+	 * 1.傳入為直接可播網址 -->上稿界面
+	 * 2.傳入youtube網址 -->其他呼叫(上稿已完畢)
+	 * 3.上稿完畢本機備用影片上尚未下載則使用網址播放
 	 * */
 	public String videoPreview() throws Exception{
-		System.out.println("影音預覽");
 		log.info(">>>>>adPreviewVideoURL:"+adPreviewVideoURL);
 		log.info(">>>>>adPreviewVideoBgImg:"+adPreviewVideoBgImg);
 		
-		if(adPreviewVideoURL.indexOf("/home/webuser/akb") >=0){
-			adPreviewVideoURL = adPreviewVideoURL.replaceAll("/home/webuser/akb", "");
+		//1.傳入youtube網址轉為預覽網址
+		String youtubePreviewUrl = "";
+		PfpAdVideoSource pfpAdVideoSource = null;
+		if(adPreviewVideoURL.indexOf("youtube") >= 0){
+			Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adPreviewVideoURL });
+			youtubePreviewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
+			pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adPreviewVideoURL);
 		}
+		
+		//2.傳入網址已經為youtube播放格式
+//		String pfpPreviewUrl = "";
+//		if(adPreviewVideoURL.indexOf("/home/webuser/akb") >=0){
+//			pfpPreviewUrl = adPreviewVideoURL.replaceAll("/home/webuser/akb", "");
+//		}
+		
+		//開始組版
 		FileReader fr = new FileReader(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"));	
 		BufferedReader br =  new BufferedReader(fr);
 		StringBuffer str = new StringBuffer();
@@ -1137,22 +1153,50 @@ public class AdAddAction extends BaseCookieAction{
 			if(sCurrentLine.indexOf("<#dad_201303070014>") >= 0){
 				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070014>", "http://www.pchome.com.tw/");
 			}
+			
 			if(sCurrentLine.indexOf("<#dad_201303070015>") >= 0){
-				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070015>", adPreviewVideoURL);
+				if(StringUtils.isNotBlank(youtubePreviewUrl)){
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070015>", youtubePreviewUrl);
+				}else{
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070015>", adPreviewVideoURL);
+				}
 			}
 			if(sCurrentLine.indexOf("<#dad_201303070016>") >= 0){
-				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070016>", adPreviewVideoURL);
+				if(StringUtils.isNotBlank(youtubePreviewUrl)){
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070016>", youtubePreviewUrl);
+				}else{
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070016>", adPreviewVideoURL);
+				}
 			}
+			
+			//備用mp4影片
 			if(sCurrentLine.indexOf("<#dad_201303070017>") >= 0){
-				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", adPreviewVideoURL);
+				if(StringUtils.isNotBlank(youtubePreviewUrl)){
+					//mp4已經下載完畢
+					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") > 0){
+						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", pfpAdVideoSource.getAdVideoMp4Path().replaceAll("/home/webuser/akb", ""));
+					}else{
+						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", youtubePreviewUrl);
+					}
+				}else{
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", adPreviewVideoURL);
+				}
 			}
+			//備用webm影片
 			if(sCurrentLine.indexOf("<#dad_201303070018>") >= 0){
-				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", adPreviewVideoURL);
+				if(StringUtils.isNotBlank(youtubePreviewUrl)){
+					//webm已經下載完畢
+					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") > 0){
+						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", pfpAdVideoSource.getAdVideoWebmPath().replaceAll("/home/webuser/akb", ""));
+					}else{
+						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", youtubePreviewUrl);
+					}
+				}else{
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", adPreviewVideoURL);
+				}
 			}
 			str = str.append(sCurrentLine+"\r\n");
 		}
-		System.out.println("***************************************");
-//		System.out.println(str);
 		previewHtml = str.toString();
 		br.close();	
 		fr.close();

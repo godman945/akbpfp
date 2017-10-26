@@ -42,7 +42,7 @@
 				<td>
 					<div style="padding: 8px;width:80px;height:auto;margin: 0 auto">
 						
-					<a class="fancy" style="cursor:pointer" onclick="previewVideo('${pfpAdAdVideoViewVO.adWidth!}','${pfpAdAdVideoViewVO.adHeight!}','${pfpAdAdVideoViewVO.imgPath!}','${pfpAdAdVideoViewVO.mp4Path!}')" alt="預覽">點我預覽</a><br>
+					<a class="fancy" style="cursor:pointer" onclick="previewVideo('${pfpAdAdVideoViewVO.adWidth!}','${pfpAdAdVideoViewVO.adHeight!}','${pfpAdAdVideoViewVO.imgPath!}','${pfpAdAdVideoViewVO.videoUrl!}')" alt="預覽">點我預覽</a><br>
 					
 					
 					</div>

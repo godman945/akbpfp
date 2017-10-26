@@ -174,8 +174,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 		pfpAdAdViewConditionVO.setLimit(limit);
 		pfpAdAdViewConditionVO.setMax(max);
 		
-		
-		
 		/**多執行緒*/
 		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
 		ThreadServiceBean threadServiceBean = new ThreadServiceBean();
@@ -228,15 +226,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 			executor.shutdown();
 		}
 		
-//		//1.取得廣告明細總數
-//		pfpAdAdVideoViewSumVO = pfpAdService.getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
-//		totalSize = pfpAdAdVideoViewSumVO.getTotalSize();
-//		pageCount = (int) Math.ceil(((double)totalSize / (double)pageSize));
-//		
-//		//2.取得廣告明細
-//		if(totalSize > 0){
-//			pfpAdAdVideoViewVOList = pfpAdService.getAdAdVideoDetailView(pfpAdAdViewConditionVO);	
-//		}
 		// 查詢日期寫進cookie
 		this.setChooseDate(startDate, endDate);
 		return SUCCESS;

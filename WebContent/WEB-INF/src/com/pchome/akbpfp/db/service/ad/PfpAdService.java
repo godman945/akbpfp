@@ -333,6 +333,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 			pfpAdAdVideoViewVO.setVideoSeconds(objArray[14].toString());
 			pfpAdAdVideoViewVO.setAdActionName(objArray[15].toString());
 			pfpAdAdVideoViewVO.setRealUrl(objArray[16].toString());
+			pfpAdAdVideoViewVO.setVideoUrl(objArray[17].toString());
 			
 			for(EnumStatus status:EnumStatus.values()){
 				if(status.getStatusId() == Integer.valueOf(objArray[9].toString())){

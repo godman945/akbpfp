@@ -42,7 +42,8 @@ public class PfpAdAdVideoViewVO {
 	private String webmPath = "";
 	//影片秒數
 	private String videoSeconds = "";
-	
+	//影片網址
+	private String videoUrl = "";
 
 	public String getAdGroupSeq() {
 		return adGroupSeq;
@@ -219,6 +220,14 @@ public class PfpAdAdVideoViewVO {
 
 	public void setRealUrl(String realUrl) {
 		this.realUrl = realUrl;
+	}
+
+	public String getVideoUrl() {
+		return videoUrl;
+	}
+
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
 	}
 
 }
