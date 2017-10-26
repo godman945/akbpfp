@@ -41,7 +41,12 @@
 				</td>
 				<td>
 					<div style="padding: 8px;width:80px;height:auto;margin: 0 auto">
-						<a class="fancy" style="cursor:pointer" onclick="previewVideo('${pfpAdAdVideoViewVO.adWidth!}','${pfpAdAdVideoViewVO.adHeight!}','${pfpAdAdVideoViewVO.imgPath!}','${pfpAdAdVideoViewVO.mp4Path!}')" alt="預覽">點我預覽</a><br>
+						
+					
+					<div id="preViewArea" class="v_preview box_a_style">
+						<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${pfpAdAdVideoViewVO.adWidth!}" height="${pfpAdAdVideoViewVO.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL=${pfpAdAdVideoViewVO.mp4Path!}&adPreviewVideoBgImg=${pfpAdAdVideoViewVO.imgPath}"></iframe>
+					</div>
+					
 					</div>
 				</td>
 				<td style=" text-align: left; line-height: 20px; padding: 10px;">
@@ -49,7 +54,8 @@
 						尺寸 ${pfpAdAdVideoViewVO.adWidth!} x ${pfpAdAdVideoViewVO.adHeight!}<br>
 						時間 00:${pfpAdAdVideoViewVO.videoSeconds!}<br>
 					  	<a href="#" target="_blank">${pfpAdAdVideoViewVO.realUrl!}</a><br>
-					  	<#if pfpAdAdVideoViewVO.imgPath =='無背景圖'>banner:無底圖<#else><img src="${pfpAdAdVideoViewVO.imgPath}" width="50" height="50"></#if>
+					  	<a class="fancy" style="cursor:pointer" onclick="previewVideo('${pfpAdAdVideoViewVO.adWidth!}','${pfpAdAdVideoViewVO.adHeight!}','${pfpAdAdVideoViewVO.imgPath!}','${pfpAdAdVideoViewVO.mp4Path!}')" alt="預覽">點我預覽</a><br>
+						<#if pfpAdAdVideoViewVO.imgPath =='無背景圖'>banner:無底圖<#else><img src="${pfpAdAdVideoViewVO.imgPath}" width="50" height="50"></#if>
 				</td>
 				
 		        <td class="td03">
