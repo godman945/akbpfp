@@ -1117,11 +1117,6 @@ public class AdAddAction extends BaseCookieAction{
 			Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adPreviewVideoURL });
 			youtubePreviewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
 			pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adPreviewVideoURL);
-			
-			log.info(pfpAdVideoSource == null);
-			if(pfpAdVideoSource != null){
-				log.info(pfpAdVideoSource.getAdVideoMp4Path());
-			}
 		}
 		
 		//開始組版
@@ -1170,6 +1165,12 @@ public class AdAddAction extends BaseCookieAction{
 			
 			//備用mp4影片
 			if(sCurrentLine.indexOf("<#dad_201303070017>") >= 0){
+				
+				log.info(">>>>>>>>>mp4");
+				log.info(">>>>>>>>>youtubePreviewUrl:"+youtubePreviewUrl);
+				log.info(">>>>>>>>>getAdVideoMp4Path:"+pfpAdVideoSource.getAdVideoMp4Path());
+				log.info(">>>>>>>>>getAdVideoMp4Path().indexOf:"+pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video"));
+				
 				if(StringUtils.isNotBlank(youtubePreviewUrl)){
 					//mp4已經下載完畢
 					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") > 0){
