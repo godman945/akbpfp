@@ -598,6 +598,13 @@
 				<param name="actionName">adAdView</param>  
 				<param name="adGroupSeq">${adGroupSeq}</param>  
 			</result>
+			
+			<result type="redirectAction" name="adAdVideoView">
+				<param name="actionName">adAdVideoView</param>  
+				<param name="adGroupSeq">${adGroupSeq}</param>  
+			</result>
+			
+			
     	</action>
     	
     	<!-- 圖片廣告 -->

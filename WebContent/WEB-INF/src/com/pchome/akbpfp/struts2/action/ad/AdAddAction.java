@@ -445,9 +445,9 @@ public class AdAddAction extends BaseCookieAction{
 				}else{
 					for (EnumAdVideoDownloadStatus enumAdVideoDownloadStatus : EnumAdVideoDownloadStatus.values()) {
 						if(pfpAdVideoSource.getAdVideoStatus() == enumAdVideoDownloadStatus.getStatus()){
-							saveAdDetail(pfpAdVideoSource.getAdVideoMp4Path() ,"mp4","","");
+							saveAdDetail(pfpAdVideoSource.getAdVideoMp4Path() ,"mp4_path","","");
 							saveAdDetail(pfpAdVideoSource.getAdVideoWebmPath() ,"webm","","");
-							saveAdDetail(enumAdVideoDownloadStatus.getDownloadValue() ,"video_status","","");
+							saveAdDetail(enumAdVideoDownloadStatus.getDownloadValue() ,"webcam_path","","");
 							saveAdDetail(videoTime ,"video_seconds","","");
 							break;
 						}

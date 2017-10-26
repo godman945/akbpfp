@@ -109,9 +109,6 @@ function updateAdAdStatus(){
 }
 
 function closeAdAdStatus(adAdSeq, status){
-	
-	//$("#chkN_"+id).attr('checked', true);
-	//$("#chkN_"+id).val(adActionSeq);
 	$("#adAdSeq").val(adAdSeq.toString());
 	$("#status").val(status);
 	
@@ -119,7 +116,6 @@ function closeAdAdStatus(adAdSeq, status){
 		'showCloseButton' :false,
 		'href'     :'closeAdAdMsg.html' 		                    
 	});
-
 }
 
 function tableSorter(){

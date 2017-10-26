@@ -965,11 +965,11 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" IFNULL((SELECT dt.ad_detail_content ");	 
 		sql.append(" FROM pfp_ad_detail dt ");	 
 		sql.append(" WHERE dt.ad_seq = ad.ad_seq  ");	
-		sql.append(" AND dt.ad_detail_id ='mp4'),'')mp4,  ");	
+		sql.append(" AND dt.ad_detail_id ='mp4_path'),'')mp4,  ");	
 		sql.append(" IFNULL((SELECT dt.ad_detail_content ");	 
 		sql.append(" FROM pfp_ad_detail dt ");	 
 		sql.append(" WHERE dt.ad_seq = ad.ad_seq  ");	
-		sql.append(" AND dt.ad_detail_id ='webm'),'')webm, ");	 
+		sql.append(" AND dt.ad_detail_id ='webm_path'),'')webm, ");	 
 		sql.append(" IFNULL((SELECT dt.ad_detail_content ");	 
 		sql.append(" FROM pfp_ad_detail dt ");	 
 		sql.append(" WHERE dt.ad_seq = ad.ad_seq  ");	
@@ -984,9 +984,11 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" pfp_ad_group ag ");	
 		sql.append(" where ");	 
 		sql.append(" ag.ad_group_seq = :agSeq ");
+		sql.append(" and ad.ad_status != 10 ");
 		sql.append(" and ag.ad_group_seq = ad.ad_group_seq ");
 		sql.append(" and DATE_FORMAT(ad.ad_create_time,'%Y-%m-%d') >= :startDate and DATE_FORMAT(ad.ad_create_time,'%Y-%m-%d') <= :endDate ");	
-		sql.append(" group by ad_seq ");	
+		sql.append(" group by ad_seq ");
+		sql.append(" order by ad.ad_update_time DESC ");
 		sql.append(" LIMIT :limit, :max ");	
 		
 		Query query =  super.getSession().createSQLQuery(sql.toString());
@@ -1005,6 +1007,7 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" from ");
 		sql.append(" pfp_ad ad ");
 		sql.append(" where ad.ad_group_seq = :agSeq ");
+		sql.append(" and ad.ad_status != 10 ");
 		sql.append(" and DATE_FORMAT(ad.ad_create_time,'%Y-%m-%d') >= :startDate and DATE_FORMAT(ad.ad_create_time,'%Y-%m-%d') <= :endDate ");
 		
 		Query query =  super.getSession().createSQLQuery(sql.toString());

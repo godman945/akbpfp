@@ -70,17 +70,13 @@ public class AdAdViewAction extends BaseCookieAction{
 		
 		String[] adAdSeqs = adAdSeq.split(",");
 		int statusId = Integer.parseInt(status);
-		
+		String adOperatingRule = "";
 		for(int i=0;i<adAdSeqs.length;i++){
-			
-			//log.info(" adGroupSeqs[i] = "+adGroupSeqs[i]);
-			
+//			//log.info(" adGroupSeqs[i] = "+adGroupSeqs[i]);
 			PfpAd ad = pfpAdService.getPfpAdBySeq(adAdSeqs[i]);
-			
+			adOperatingRule = ad.getPfpAdGroup().getPfpAdAction().getAdOperatingRule();
 			//log.info(" adGroup = "+adGroup);
-			
 			if(ad != null && StringUtils.isNotBlank(status)){
-				
 				StringBuffer msg = new StringBuffer();
 				msg.append("狀態異動：");
 				msg.append("檢視廣告 ==> ");
@@ -115,7 +111,6 @@ public class AdAdViewAction extends BaseCookieAction{
 				pfpAdService.saveOrUpdateWithCommit(ad);
 				
 				adGroupSeq = ad.getPfpAdGroup().getAdGroupSeq();
-				
 			}
 		}	
 		
@@ -132,6 +127,10 @@ public class AdAdViewAction extends BaseCookieAction{
 			}
 		}
 		
+		
+		if(adOperatingRule.equals("VIDEO")){
+			return "adAdVideoView";
+		}
 		return SUCCESS;
 	}
 	
