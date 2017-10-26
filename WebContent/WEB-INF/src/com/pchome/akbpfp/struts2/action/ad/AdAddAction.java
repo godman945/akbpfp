@@ -1165,15 +1165,9 @@ public class AdAddAction extends BaseCookieAction{
 			
 			//備用mp4影片
 			if(sCurrentLine.indexOf("<#dad_201303070017>") >= 0){
-				
-				log.info(">>>>>>>>>mp4");
-				log.info(">>>>>>>>>youtubePreviewUrl:"+youtubePreviewUrl);
-				log.info(">>>>>>>>>getAdVideoMp4Path:"+pfpAdVideoSource.getAdVideoMp4Path());
-				log.info(">>>>>>>>>getAdVideoMp4Path().indexOf:"+pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video"));
-				
 				if(StringUtils.isNotBlank(youtubePreviewUrl)){
 					//mp4已經下載完畢
-					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") > 0){
+					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") >= 0){
 						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", pfpAdVideoSource.getAdVideoMp4Path().replaceAll("/home/webuser/akb", ""));
 					}else{
 						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", youtubePreviewUrl);
@@ -1186,7 +1180,7 @@ public class AdAddAction extends BaseCookieAction{
 			if(sCurrentLine.indexOf("<#dad_201303070018>") >= 0){
 				if(StringUtils.isNotBlank(youtubePreviewUrl)){
 					//webm已經下載完畢
-					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") > 0){
+					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") >= 0){
 						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", pfpAdVideoSource.getAdVideoWebmPath().replaceAll("/home/webuser/akb", ""));
 					}else{
 						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", youtubePreviewUrl);
