@@ -431,7 +431,7 @@ public class AdAddAction extends BaseCookieAction{
 				//3.儲存影片下載狀態與位置明細
 				if(pfpAdVideoSource == null){
 					saveAdDetail("尚未下載" ,"mp4_path",pool,EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
-					saveAdDetail("尚未下載" ,"webcam_path","",EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
+					saveAdDetail("尚未下載" ,"webcam_path",pool,EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
 					saveAdDetail(adVideoURL ,"mp4_url",pool,EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
 					saveAdDetail(adVideoURL ,"webm_url",pool,EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
 					saveAdDetail("尚未下載" ,"video_status",pool,"");
