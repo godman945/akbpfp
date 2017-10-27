@@ -62,7 +62,7 @@ import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.ad.EnumAdVideoDownloadStatus;
-import com.pchome.enumerate.ad.EnumAdVideoSize;
+import com.pchome.enumerate.ad.EnumAdVideoSizePoolType;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
@@ -203,7 +203,7 @@ public class AdAddAction extends BaseCookieAction{
 		//影音廣告
 		if(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName().equals(adOperatingRule)){
 			this.adVideoSizeMap = new HashMap<String, String>();
-			for(EnumAdVideoSize enumAdVideoSize : EnumAdVideoSize.values()){
+			for(EnumAdVideoSizePoolType enumAdVideoSize : EnumAdVideoSizePoolType.values()){
 				adVideoSizeMap.put(enumAdVideoSize.name(), enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight());
 			}
 			System.out.println(adVideoSizeMap);
@@ -338,6 +338,13 @@ public class AdAddAction extends BaseCookieAction{
 	 * 
 	 * */
 	public String doAdAdAddVideo() {
+		
+//		300x250       adp_201507210001
+//		300x600       adp_201709190001
+//		320x480       adp_201601210001
+//		336x280       adp_201601210002
+//		970x250       adp_201601210003
+		
 		try{
 			log.info(">>>>>> doAdAdAddVideo adGroupSeq:"+adGroupSeq);
 			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
@@ -367,12 +374,14 @@ public class AdAddAction extends BaseCookieAction{
 				boolean isBannerSize = false;
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
 				adVideoSize = picInfoJson.getString("size");
-				
-				for(EnumAdVideoSize enumAdVideoSize: EnumAdVideoSize.values()){
+				String pool = "";
+				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
 					isBannerSize = true;
 					if(enumAdVideoSize.getType().equals("DEFAULT") && adVideoSize.equals(enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight())){
 						isBannerSize = false;
-						break;
+					}
+					if(adVideoSize.equals(enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight())){
+						pool = enumAdVideoSize.getPoolType();
 					}
 				}
 				
@@ -406,7 +415,7 @@ public class AdAddAction extends BaseCookieAction{
 				}else{
 					pfpAdDetail.setAdDetailContent("無背景圖");
 				}
-				pfpAdDetail.setAdPoolSeq(EnumAdStyle.VIDEO.getAdPoolSeq());
+				pfpAdDetail.setAdPoolSeq(pool);
 				pfpAdDetail.setDefineAdSeq(EnumAdDetail.define_ad_seq_img.getAdDetailName());
 				pfpAdDetail.setVerifyFlag("y");
 				pfpAdDetail.setVerifyStatus("n");
@@ -415,18 +424,18 @@ public class AdAddAction extends BaseCookieAction{
 				pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
 				
 				//2.儲存影片網址、影片連結網址、影片尺寸明細
-				saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),"",EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
-				saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),"","");
-				saveAdDetail(adVideoSize ,"video_size","","");
+				saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),pool,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
+				saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),pool,"");
+				saveAdDetail(adVideoSize ,"video_size",pool,"");
 				
 				//3.儲存影片下載狀態與位置明細
 				if(pfpAdVideoSource == null){
-					saveAdDetail("尚未下載" ,"mp4_path","",EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
+					saveAdDetail("尚未下載" ,"mp4_path",pool,EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
 					saveAdDetail("尚未下載" ,"webcam_path","",EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
-					saveAdDetail(adVideoURL ,"mp4_url","",EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
-					saveAdDetail(adVideoURL ,"webm_url","",EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
-					saveAdDetail("尚未下載" ,"video_status","","");
-					saveAdDetail(videoTime ,"video_seconds","","");
+					saveAdDetail(adVideoURL ,"mp4_url",pool,EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
+					saveAdDetail(adVideoURL ,"webm_url",pool,EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
+					saveAdDetail("尚未下載" ,"video_status",pool,"");
+					saveAdDetail(videoTime ,"video_seconds",pool,"");
 					String videpSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_VIDEO_SOURCE, "_");
 					pfpAdVideoSource = new PfpAdVideoSource();
 					pfpAdVideoSource.setAdVideoSeq(videpSeq);
@@ -440,12 +449,12 @@ public class AdAddAction extends BaseCookieAction{
 				}else{
 					for (EnumAdVideoDownloadStatus enumAdVideoDownloadStatus : EnumAdVideoDownloadStatus.values()) {
 						if(pfpAdVideoSource.getAdVideoStatus() == enumAdVideoDownloadStatus.getStatus()){
-							saveAdDetail(pfpAdVideoSource.getAdVideoMp4Path() ,"mp4_path","",EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
-							saveAdDetail(pfpAdVideoSource.getAdVideoWebmPath() ,"webm_path","",EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
-							saveAdDetail(enumAdVideoDownloadStatus.getDownloadValue() ,"video_status","","");
+							saveAdDetail(pfpAdVideoSource.getAdVideoMp4Path() ,"mp4_path",pool,EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
+							saveAdDetail(pfpAdVideoSource.getAdVideoWebmPath() ,"webm_path",pool,EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
+							saveAdDetail(enumAdVideoDownloadStatus.getDownloadValue() ,"video_status",pool,"");
 							saveAdDetail(videoTime ,"video_seconds","","");
-							saveAdDetail(adVideoURL ,"mp4_url","",EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
-							saveAdDetail(adVideoURL ,"webm_url","",EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
+							saveAdDetail(adVideoURL ,"mp4_url",pool,EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
+							saveAdDetail(adVideoURL ,"webm_url",pool,EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
 							break;
 						}
 					}
