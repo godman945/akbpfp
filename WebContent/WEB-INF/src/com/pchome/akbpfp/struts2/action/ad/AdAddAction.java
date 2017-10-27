@@ -453,7 +453,7 @@ public class AdAddAction extends BaseCookieAction{
 			result = "success";
 			return SUCCESS;
 		}catch(Exception e){
-			log.error(e.getMessage());
+			e.printStackTrace();
 			result = "error";
 			return SUCCESS;
 		}
