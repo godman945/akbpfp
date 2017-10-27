@@ -103,17 +103,6 @@
 <input type="hidden" id="adAdSeq" name="adAdSeq" />
 <input type="hidden" id="status" name="status" />
 </form>
-<div id="previewVideoDiv" style="display:none;">
-<div class="aduplodul_v">
-   <div class="v_box">
-      <div class=""><span id="videoSize"></span></div>
-      <div id="preViewArea" class="v_preview box_a_style"></div>
-   </div>
-</div>
-</div>
-
-
-
 
 <span style="padding:10px;display:block">
 	<input type="button" name="stop" onClick="modifyAdStatus('9')" value="暫 停" /> &nbsp; 
