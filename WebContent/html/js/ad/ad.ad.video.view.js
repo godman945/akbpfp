@@ -127,27 +127,19 @@ function tableSorter(){
 
 //點擊預覽影片
 function previewVideo(width,height,img,url) {
-//	$("#videoSize").text(width+" x " +height);
+	$("#videoSize").text(width+" x " +height);
 //	url = "http://showstg.pchome.com.tw/pfp/img/video/2017_10_20/adv_201710200001.mp4";
-//	var preview = 
-//	'<div id="previewVideoDiv" >'+
-//	'<div class="aduplodul_v">'+
-//	   '<div class="v_box">'+
-//	      '<div class=""><span id="videoSize">'+width+' x '+height+'  </span></div>'+
-//	      '<div id="preViewArea" class="v_preview box_a_style"><iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+img+'"></iframe></div>'+
-//	   '</div>'+
-//	'</div>'+
-//	'</div>';
+	var preview = 
+	'<div id="previewVideoDiv" >'+
+	'<div class="aduplodul_v">'+
+	   '<div class="v_box">'+
+	      '<div class=""><span id="videoSize">'+width+' x '+height+'  </span></div>'+
+	      '<div id="preViewArea" class="v_preview box_a_style"><iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+img+'"></iframe></div>'+
+	   '</div>'+
+	'</div>'+
+	'</div>';
     $.fancybox(
-//    		preview,
-    		'<div id="previewVideoDiv" >'+
-    		'<div class="aduplodul_v">'+
-    		   '<div class="v_box">'+
-    		      '<div class=""><span id="videoSize">'+width+' x '+height+'  </span></div>'+
-    		      '<div id="preViewArea" class="v_preview box_a_style"><iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+img+'"></iframe></div>'+
-    		   '</div>'+
-    		'</div>'+
-    		'</div>',
+    		preview,
     		{
     			
     			'autoDimensions'	: false,
