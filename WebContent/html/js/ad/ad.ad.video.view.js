@@ -141,7 +141,7 @@ function previewVideo(width,height,img,url) {
 	'</div>'+
 	'</div>';
     $.fancybox(
-    		$('#previewVideoDiv').html(),
+    		a,
     		{
     			
     			'autoDimensions'	: false,
