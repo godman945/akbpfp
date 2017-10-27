@@ -407,7 +407,7 @@ public class AdAddAction extends BaseCookieAction{
 					pfpAdDetail.setAdDetailContent("無背景圖");
 				}
 				pfpAdDetail.setAdPoolSeq(EnumAdStyle.VIDEO.getAdPoolSeq());
-				pfpAdDetail.setDefineAdSeq(EnumAdStyle.VIDEO.getTadSeq());
+				pfpAdDetail.setDefineAdSeq(EnumAdDetail.define_ad_seq_img.getAdDetailName());
 				pfpAdDetail.setVerifyFlag("y");
 				pfpAdDetail.setVerifyStatus("n");
 				pfpAdDetail.setAdDetailUpdateTime(date);
@@ -415,17 +415,18 @@ public class AdAddAction extends BaseCookieAction{
 				pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
 				
 				//2.儲存影片網址、影片連結網址、影片尺寸明細
-				saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),"","");
+				saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),"",EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
 				saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),"","");
 				saveAdDetail(adVideoSize ,"video_size","","");
 				
 				//3.儲存影片下載狀態與位置明細
 				if(pfpAdVideoSource == null){
-					saveAdDetail("尚未下載" ,"mp4_path","","");
-					saveAdDetail("尚未下載" ,"webcam_path","","");
+					saveAdDetail("尚未下載" ,"mp4_path","",EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
+					saveAdDetail("尚未下載" ,"webcam_path","",EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
+					saveAdDetail(adVideoURL ,"mp4_url","",EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
+					saveAdDetail(adVideoURL ,"webm_url","",EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
 					saveAdDetail("尚未下載" ,"video_status","","");
 					saveAdDetail(videoTime ,"video_seconds","","");
-					
 					String videpSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_VIDEO_SOURCE, "_");
 					pfpAdVideoSource = new PfpAdVideoSource();
 					pfpAdVideoSource.setAdVideoSeq(videpSeq);
