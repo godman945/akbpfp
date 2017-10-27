@@ -1,17 +1,14 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,8 +16,6 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
@@ -79,7 +74,7 @@ public class AdAddAction extends BaseCookieAction{
 
 	private static final long serialVersionUID = 1L;
 	private String message = "";
-	private String previewHtml = "";
+	
 	private String adActionName;
 	private String adGroupSeq;
 	private String adGroupName;
@@ -91,8 +86,8 @@ public class AdAddAction extends BaseCookieAction{
 	private String[] adDetailContent;
 	private String[] videoDetailMap;
 	private String adVideoURL;
-	private String adPreviewVideoURL;
-	private String adPreviewVideoBgImg;
+	
+	
 	private String videoTime;
 	private String adDetailSeq;
 	private String adPoolSeq;
@@ -147,10 +142,8 @@ public class AdAddAction extends BaseCookieAction{
 	private String adLinkURL;
 	private String photoDbPathNew;
 	private String adHiddenType;	//已建立的分類關鍵字欄位隱藏設定
-	
 	private String adType;			//廣告類型
 	private String adDevice;		//廣告播放裝置
-	
 	private String adKeywordOpen;			//廣泛比對
 	private String adKeywordPhraseOpen;		//詞組比對
 	private String adKeywordPrecisionOpen;	//精準比對
@@ -1100,104 +1093,7 @@ public class AdAddAction extends BaseCookieAction{
 	}
 	
 	
-	/**
-	 * 預覽影音
-	 * 1.傳入為直接可播網址 -->上稿界面
-	 * 2.傳入youtube網址 -->其他呼叫(上稿已完畢)
-	 * 3.上稿完畢本機備用影片上尚未下載則使用網址播放
-	 * */
-	public String videoPreview() throws Exception{
-		log.info(">>>>>adPreviewVideoURL:"+adPreviewVideoURL);
-		log.info(">>>>>adPreviewVideoBgImg:"+adPreviewVideoBgImg);
-		
-		//1.傳入youtube網址轉為預覽網址
-		String youtubePreviewUrl = "";
-		PfpAdVideoSource pfpAdVideoSource = null;
-		if(adPreviewVideoURL.indexOf("googlevideo.com") < 0){
-			Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adPreviewVideoURL });
-			youtubePreviewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
-			pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adPreviewVideoURL);
-			process.destroy();
-		}
-		
-		//開始組版
-		FileReader fr = new FileReader(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"));	
-		BufferedReader br =  new BufferedReader(fr);
-		StringBuffer str = new StringBuffer();
-		String sCurrentLine;
-		while ((sCurrentLine = br.readLine()) != null) {
-			if(sCurrentLine.indexOf("PoolSeq") >= 0){
-				continue;
-			}
-			if(sCurrentLine.indexOf("DiffCompany") >= 0){
-				continue;
-			}
-			if(StringUtils.isBlank(sCurrentLine)){
-				continue;
-			}
-			if(sCurrentLine.indexOf("<!DOCTYPE html>") >= 0){
-				continue;
-			}
-			if(sCurrentLine.indexOf("pcvideo_action_test.js") >= 0){
-				continue;
-			}
-			if(sCurrentLine.indexOf("html:") >= 0 || sCurrentLine.indexOf("html>") >= 0 || sCurrentLine.indexOf("head>") >= 0 || sCurrentLine.indexOf("body>") >= 0 || sCurrentLine.indexOf("<meta charset=\"utf-8\">") >= 0){
-				continue;
-			}
-			
-			if(sCurrentLine.indexOf("<#dad_201303070014>") >= 0){
-				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070014>", "http://www.pchome.com.tw/");
-			}
-			
-			if(sCurrentLine.indexOf("<#dad_201303070015>") >= 0){
-				if(StringUtils.isNotBlank(youtubePreviewUrl)){
-					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070015>", youtubePreviewUrl);
-				}else{
-					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070015>", adPreviewVideoURL);
-				}
-			}
-			if(sCurrentLine.indexOf("<#dad_201303070016>") >= 0){
-				if(StringUtils.isNotBlank(youtubePreviewUrl)){
-					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070016>", youtubePreviewUrl);
-				}else{
-					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070016>", adPreviewVideoURL);
-				}
-			}
-			
-			//備用mp4影片
-			if(sCurrentLine.indexOf("<#dad_201303070017>") >= 0){
-				if(StringUtils.isNotBlank(youtubePreviewUrl)){
-					//mp4已經下載完畢
-					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") >= 0){
-						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", pfpAdVideoSource.getAdVideoMp4Path().replaceAll("/home/webuser/akb", ""));
-					}else{
-						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", youtubePreviewUrl);
-					}
-				}else{
-					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", adPreviewVideoURL);
-				}
-			}
-			//備用webm影片
-			if(sCurrentLine.indexOf("<#dad_201303070018>") >= 0){
-				if(StringUtils.isNotBlank(youtubePreviewUrl)){
-					//webm已經下載完畢
-					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") >= 0){
-						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", pfpAdVideoSource.getAdVideoWebmPath().replaceAll("/home/webuser/akb", ""));
-					}else{
-						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", youtubePreviewUrl);
-					}
-				}else{
-					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", adPreviewVideoURL);
-				}
-			}
-			str = str.append(sCurrentLine+"\r\n");
-		}
-		previewHtml = str.toString();
-		br.close();	
-		fr.close();
-		result = "success";
-		return SUCCESS;
-	}
+	
 	
 
 	/**
@@ -1818,36 +1714,12 @@ public class AdAddAction extends BaseCookieAction{
 		this.pfpAdVideoSourceService = pfpAdVideoSourceService;
 	}
 
-	public String getPreviewHtml() {
-		return previewHtml;
-	}
-
-	public void setPreviewHtml(String previewHtml) {
-		this.previewHtml = previewHtml;
-	}
-
 	public Map<String, String> getAdVideoSizeMap() {
 		return adVideoSizeMap;
 	}
 
 	public void setAdVideoSizeMap(Map<String, String> adVideoSizeMap) {
 		this.adVideoSizeMap = adVideoSizeMap;
-	}
-
-	public String getAdPreviewVideoURL() {
-		return adPreviewVideoURL;
-	}
-
-	public void setAdPreviewVideoURL(String adPreviewVideoURL) {
-		this.adPreviewVideoURL = adPreviewVideoURL;
-	}
-
-	public String getAdPreviewVideoBgImg() {
-		return adPreviewVideoBgImg;
-	}
-
-	public void setAdPreviewVideoBgImg(String adPreviewVideoBgImg) {
-		this.adPreviewVideoBgImg = adPreviewVideoBgImg;
 	}
 
 	public String getVideoTime() {

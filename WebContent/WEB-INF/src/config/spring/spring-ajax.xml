@@ -93,6 +93,7 @@
     </bean>  
     
     <bean id="AdAdViewAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdAdViewAjax" scope="prototype" >
+	    <property name="jdbcEnvironment" value="${jdbc.driverUrl}" />
 	    <property name="pfpAdService" ref="PfpAdService" /> 
     </bean> 
 </beans>

@@ -237,7 +237,6 @@
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
 		<property name="sequenceService" ref="SequenceService" />
     	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
-    	<property name="pfpAdVideoSourceService" ref="PfpAdVideoSourceService" /> 
     	<property name="pfpAdService" ref="PfpAdService" />
     	<property name="pfpAdDetailService" ref="PfpAdDetailService" />
     	<property name="pfpAdKeywordService" ref="PfpAdKeywordService" />
@@ -329,6 +328,7 @@
     	<property name="pfpAdService" ref="PfpAdService" />
     	<property name="pfpBoardService" ref="PfpBoardService" />
     	<property name="admAccesslogService" ref="AdmAccesslogService" />
+    	<property name="pfpAdVideoSourceService" ref="PfpAdVideoSourceService" /> 
     </bean>
 
     <bean id="AdKeywordViewAction" class="com.pchome.akbpfp.struts2.action.ad.AdKeywordViewAction" scope="prototype" >

@@ -70,7 +70,7 @@
 				<td class="td01">NT$ ${pfpAdAdVideoViewVO.costSum}</td>
 				<td class="td02">
 					<#if pfpAdAdVideoViewVO.actionStatus != "9">
-						<a href="adAdAdd.html?adGroupSeq=${pfpAdAdVideoViewVO.adGroupSeq!}">製作新廣告</a><br>
+						<a href="adAdAdd.html?adGroupSeq=${pfpAdAdVideoViewVO.adGroupSeq!}&adOperatingRule=VIDEO">製作新廣告</a><br>
 					</#if>
 					<a href="adAdEditVideo.html?adSeq=${pfpAdAdVideoViewVO.adSeq!}">修改</a><br>
 					<#if pfpAdAdVideoViewVO.actionStatus != "2" && pfpAdAdVideoViewVO.actionStatus != "13">	

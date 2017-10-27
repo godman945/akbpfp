@@ -48,14 +48,13 @@
 			        <input type="checkbox" id="chkN_${vo_index!}" name="chkN" disabled/>
 				</#if>	
 				</td>
-		        <td height="35" class="td02">
+		        <td height="35" class="td02" style="width:100px;">
 	        	<#if vo.adGroupStatus != 9 >
 					<#if vo.adOperatingRule?exists && vo.adOperatingRule=="VIDEO">
 						<a href="adAdVideoView.html?adGroupSeq=${vo.adGroupSeq!}&groupMaxPrice=${groupMaxPrice!}">${vo.adGroupName!}</a>
 						<#else>
 						<a href="adAdView.html?adGroupSeq=${vo.adGroupSeq!}&groupMaxPrice=${groupMaxPrice!}">${vo.adGroupName!}</a>
 					</#if>
-	        		
 				<#else>
 			        ${vo.adGroupName!}
 				</#if>		        	
@@ -90,11 +89,13 @@
 				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
 				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
 				<td>${vo.adActionName!}</td>
-				<td class="td02">
+				<td class="td02" style="width:80px;">
 				<#if vo.adGroupStatus != 9 >
 					<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}&adOperatingRule=${vo.adOperatingRule!}">製作新廣告</a><br>
 					<#if adType != '2'>
-					<a href="adKeywordAdd.html?adGroupSeq=${vo.adGroupSeq!}">新增關鍵字</a><br>
+						<#if vo.adOperatingRule?exists && vo.adOperatingRule!="VIDEO">
+							<a href="adKeywordAdd.html?adGroupSeq=${vo.adGroupSeq!}">新增關鍵字</a><br>
+						</#if>
 					</#if>
 				</#if>				
 					<a href="adGroupEdit.html?backPage=adAdAdd&adGroupSeq=${vo.adGroupSeq!}">修改</a>

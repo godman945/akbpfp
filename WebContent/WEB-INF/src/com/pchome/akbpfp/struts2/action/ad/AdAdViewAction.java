@@ -1,17 +1,23 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
+import com.pchome.akbpfp.db.pojo.PfpAdVideoSource;
 import com.pchome.akbpfp.db.pojo.PfpBoard;
 import com.pchome.akbpfp.db.service.accesslog.IAdmAccesslogService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
+import com.pchome.akbpfp.db.service.advideo.IPfpAdVideoSourceService;
 import com.pchome.akbpfp.db.service.board.IPfpBoardService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdType;
@@ -31,7 +37,7 @@ public class AdAdViewAction extends BaseCookieAction{
 	private IPfpAdService pfpAdService;
 	private IPfpBoardService pfpBoardService;
 	private IAdmAccesslogService admAccesslogService;
-	
+	private IPfpAdVideoSourceService pfpAdVideoSourceService;
 	private LinkedHashMap<String,String> dateSelectMap; // 查詢日期頁面顯示
 	private String startDate;							// 開始日期
 	private String endDate;								// 結束日期
@@ -47,6 +53,11 @@ public class AdAdViewAction extends BaseCookieAction{
 	private String groupMaxPrice;
 	private String adType;
 	private String adOperatingRule;
+	private String adPreviewVideoURL;
+	private String previewHtml = "";
+	private String adPreviewVideoBgImg;
+	
+	
 	
 	public String execute() throws Exception{
 		
@@ -155,7 +166,103 @@ public class AdAdViewAction extends BaseCookieAction{
 	
 	
 	
-	
+	/**
+	 * 預覽影音
+	 * 1.傳入為直接可播網址 -->上稿界面
+	 * 2.傳入youtube網址 -->其他呼叫(上稿已完畢)
+	 * 3.上稿完畢本機備用影片上尚未下載則使用網址播放
+	 * */
+	public String videoPreview() throws Exception{
+		log.info(">>>>>adPreviewVideoURL:"+adPreviewVideoURL);
+		log.info(">>>>>adPreviewVideoBgImg:"+adPreviewVideoBgImg);
+		
+		//1.傳入youtube網址轉為預覽網址
+		String youtubePreviewUrl = "";
+		PfpAdVideoSource pfpAdVideoSource = null;
+		if(adPreviewVideoURL.indexOf("googlevideo.com") < 0){
+			Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adPreviewVideoURL });
+			youtubePreviewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
+			pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adPreviewVideoURL);
+			process.destroy();
+		}
+		
+		//開始組版
+		FileReader fr = new FileReader(new File("/home/webuser/akb/adm/data/tad/c_x05_mo_tad_0080.def"));	
+		BufferedReader br =  new BufferedReader(fr);
+		StringBuffer str = new StringBuffer();
+		String sCurrentLine;
+		while ((sCurrentLine = br.readLine()) != null) {
+			if(sCurrentLine.indexOf("PoolSeq") >= 0){
+				continue;
+			}
+			if(sCurrentLine.indexOf("DiffCompany") >= 0){
+				continue;
+			}
+			if(StringUtils.isBlank(sCurrentLine)){
+				continue;
+			}
+			if(sCurrentLine.indexOf("<!DOCTYPE html>") >= 0){
+				continue;
+			}
+			if(sCurrentLine.indexOf("pcvideo_action_test.js") >= 0){
+				continue;
+			}
+			if(sCurrentLine.indexOf("html:") >= 0 || sCurrentLine.indexOf("html>") >= 0 || sCurrentLine.indexOf("head>") >= 0 || sCurrentLine.indexOf("body>") >= 0 || sCurrentLine.indexOf("<meta charset=\"utf-8\">") >= 0){
+				continue;
+			}
+			
+			if(sCurrentLine.indexOf("<#dad_201303070014>") >= 0){
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070014>", "http://www.pchome.com.tw/");
+			}
+			
+			if(sCurrentLine.indexOf("<#dad_201303070015>") >= 0){
+				if(StringUtils.isNotBlank(youtubePreviewUrl)){
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070015>", youtubePreviewUrl);
+				}else{
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070015>", adPreviewVideoURL);
+				}
+			}
+			if(sCurrentLine.indexOf("<#dad_201303070016>") >= 0){
+				if(StringUtils.isNotBlank(youtubePreviewUrl)){
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070016>", youtubePreviewUrl);
+				}else{
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070016>", adPreviewVideoURL);
+				}
+			}
+			
+			//備用mp4影片
+			if(sCurrentLine.indexOf("<#dad_201303070017>") >= 0){
+				if(StringUtils.isNotBlank(youtubePreviewUrl)){
+					//mp4已經下載完畢
+					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") >= 0){
+						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", pfpAdVideoSource.getAdVideoMp4Path().replaceAll("/home/webuser/akb", ""));
+					}else{
+						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", youtubePreviewUrl);
+					}
+				}else{
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070017>", adPreviewVideoURL);
+				}
+			}
+			//備用webm影片
+			if(sCurrentLine.indexOf("<#dad_201303070018>") >= 0){
+				if(StringUtils.isNotBlank(youtubePreviewUrl)){
+					//webm已經下載完畢
+					if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoMp4Path().indexOf("/home/webuser/akb/pfp/img/video") >= 0){
+						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", pfpAdVideoSource.getAdVideoWebmPath().replaceAll("/home/webuser/akb", ""));
+					}else{
+						sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", youtubePreviewUrl);
+					}
+				}else{
+					sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", adPreviewVideoURL);
+				}
+			}
+			str = str.append(sCurrentLine+"\r\n");
+		}
+		previewHtml = str.toString();
+		br.close();	
+		fr.close();
+		return SUCCESS;
+	}
 	
 	
 	
@@ -241,6 +348,38 @@ public class AdAdViewAction extends BaseCookieAction{
 
 	public void setAdOperatingRule(String adOperatingRule) {
 		this.adOperatingRule = adOperatingRule;
+	}
+
+	public String getAdPreviewVideoURL() {
+		return adPreviewVideoURL;
+	}
+
+	public void setAdPreviewVideoURL(String adPreviewVideoURL) {
+		this.adPreviewVideoURL = adPreviewVideoURL;
+	}
+
+	public String getPreviewHtml() {
+		return previewHtml;
+	}
+
+	public void setPreviewHtml(String previewHtml) {
+		this.previewHtml = previewHtml;
+	}
+
+	public String getAdPreviewVideoBgImg() {
+		return adPreviewVideoBgImg;
+	}
+
+	public void setAdPreviewVideoBgImg(String adPreviewVideoBgImg) {
+		this.adPreviewVideoBgImg = adPreviewVideoBgImg;
+	}
+
+	public IPfpAdVideoSourceService getPfpAdVideoSourceService() {
+		return pfpAdVideoSourceService;
+	}
+
+	public void setPfpAdVideoSourceService(IPfpAdVideoSourceService pfpAdVideoSourceService) {
+		this.pfpAdVideoSourceService = pfpAdVideoSourceService;
 	}
 	
 }

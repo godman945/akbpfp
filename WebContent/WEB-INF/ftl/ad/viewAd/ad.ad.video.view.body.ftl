@@ -41,7 +41,7 @@
 	
 	<div class="grtba borderbox" >
 		<div>
-			<a href="adAdAdd.html?adGroupSeq=${adGroup.adGroupSeq!}" class="addbtn"><img src="<@s.url value="/" />html/img/btnadd4.gif" border="0"></a>				
+			<a href="adAdAdd.html?adGroupSeq=${adGroup.adGroupSeq!}&adOperatingRule=VIDEO" class="addbtn"><img src="<@s.url value="/" />html/img/btnadd4.gif" border="0"></a>
 		</div>
 		
 		<div style="clear:both">
@@ -72,4 +72,3 @@
 </div> 
 <input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroup.adGroupSeq!}" />
 <input type="hidden" id="adType" name="adType" value="${adType!}" />
-<input type="hidden" id="adOperatingRule" name="adOperatingRule" value="${adGroup.pfpAdAction.adOperatingRule!}" />

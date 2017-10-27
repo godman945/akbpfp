@@ -58,7 +58,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private float totalAvgCost = 0;
 	private int totalCost = 0;
 	private int totalInvalidClk = 0;
-	
+	private String jdbcEnvironment;
 	private String adType;
 	
 	public String adAdViewTableAjax() throws Exception{
@@ -199,7 +199,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 		while (adViewVideoCountResultFlag) {
 			if (pfpThreadProcessAdViewVideoCountResult.isDone()) {
 				String result = pfpThreadProcessAdViewVideoCountResult.get();
-				log.info(">>>>>>>>pfpThreadProcessAdViewVideoCountResult:"+pfpThreadProcessAdViewVideoCountResult);
 				this.pfpAdAdVideoViewSumVO = (PfpAdAdVideoViewSumVO) JSONObject.toBean(JSONObject.fromObject(result), PfpAdAdVideoViewSumVO.class);
 				totalSize = pfpAdAdVideoViewSumVO.getTotalSize();
 				pageCount = (int) Math.ceil(((double)totalSize / (double)pageSize));
@@ -212,7 +211,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 		while (adViewVideoDetailResultFlag) {
 			if (pfpThreadProcessAdViewVideoDetailResult.isDone()) {
 				String result = pfpThreadProcessAdViewVideoDetailResult.get();
-				log.info(">>>>>>>>pfpThreadProcessAdViewVideoDetailResult:"+pfpThreadProcessAdViewVideoCountResult);
 				org.json.JSONArray jsonArray = new org.json.JSONArray(result);
 				for (int i = 0; i < jsonArray.length(); i++) {
 					org.json.JSONObject json =  (org.json.JSONObject) jsonArray.get(i);
@@ -224,9 +222,11 @@ public class AdAdViewAjax extends BaseCookieAction{
 				}
 				
 				//預先將預覽網址取得
-				Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + previewUrl });
-				previewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
-				process.destroy();
+				if(jdbcEnvironment.indexOf("kddbm") >=0){
+					Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + previewUrl });
+					previewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
+					process.destroy();
+				}
 				adViewVideoDetailResultFlag = false;
 			}
 		}
@@ -352,6 +352,14 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	public void setPreviewUrl(String previewUrl) {
 		this.previewUrl = previewUrl;
+	}
+
+	public String getJdbcEnvironment() {
+		return jdbcEnvironment;
+	}
+
+	public void setJdbcEnvironment(String jdbcEnvironment) {
+		this.jdbcEnvironment = jdbcEnvironment;
 	}
 
 	

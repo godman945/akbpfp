@@ -1,23 +1,7 @@
 ﻿﻿﻿$(document).ready(function(){
-	$.ajax({ 
-		type: "GET", 
-		url: "/pfp/html/js/ad/ad.ad.view.js", 
-		dataType: "text", 
-		cache:false, 
-		ifModified :true 
-		}); 
 	
 	
-	$.ajax({ 
-		type: "GET", 
-		url: "/pfp/html/js/ad/ad.ad.view.js", 
-		dataType: "text", 
-		beforeSend :function(xmlHttp){ 
-		xmlHttp.setRequestHeader("If-Modified-Since","0"); 
-		xmlHttp.setRequestHeader("Cache-Control","no-cache"); 
 
-		} 
-		}); 
 });
 
 //default查詢廣告明細資料
@@ -50,15 +34,16 @@ function findTableView(){
 		type:"post",
 		dataType:"html",
 		success:function(response, status){
+			$('body').unblock();
 			$("#tableList").html(response);	
 			page();
 			tableSorter();
-			$('body').unblock();
 		},
 		error: function(xtl) {
+			$('body').unblock();
 			alert("系統繁忙，請稍後再試！");
 		}
-	});
+	})
 	
 }
 
@@ -176,19 +161,37 @@ function closePrew(){
 }
 
 function callBlockUpload(){
-	$('body').block({
-		message: "<img src='html/img/LoadingWait.gif' />",
-		css: {
-			padding: 0,
-			margin: 0,
-			width: '50%',
-			top: '40%',
-			left: '35%',
-			textAlign: 'center',
-			color: '#000',
-			border: '3px solid #aaa',
-			backgroundColor: '#fff',
-			cursor: 'wait'
-		}
-	});
+//	$('body').block({
+//		message: "<img src='html/img/LoadingWait.gif' />",
+//		css: {
+//			padding: 0,
+//			margin: 0,
+//			width: '50%',
+//			top: '40%',
+//			left: '35%',
+//			textAlign: 'center',
+//			color: '#000',
+//			border: '3px solid #aaa',
+//			backgroundColor: '#fff',
+//			cursor: 'wait'
+//		}
+//	});
+	
+	
+	  $('body').block({
+	        message: "<img src='html/img/LoadingWait.gif' />",
+	        css: {
+	            padding: 0,
+	            margin: 0,
+	            width: '50%',
+	            top: '40%',
+	            left: '35%',
+	            textAlign: 'center',
+	            color: '#000',
+	            border: '3px solid #aaa',
+	            backgroundColor: '#fff',
+	            cursor: 'wait'
+	        }
+	    });
+	  $($('.blockUI')[1]).css('height',1024)
 }
