@@ -34,16 +34,18 @@ function findTableView(){
 		type:"post",
 		dataType:"html",
 		success:function(response, status){
-			$('body').unblock();
-			$("#tableList").html(response);	
-			page();
-			tableSorter();
+			
 		},
 		error: function(xtl) {
 			$('body').unblock();
 			alert("系統繁忙，請稍後再試！");
 		}
-	})
+	}).done(function (response) {
+		$('body').unblock();
+		$("#tableList").html(response);	
+		page();
+		tableSorter();
+    });
 	
 }
 
@@ -133,7 +135,7 @@ function previewVideo(width,height,img,url) {
 //	$("#preViewArea").append(a);
 	
     $.fancybox(
-    		$('#preViewArea').append('<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+img+'"></iframe>'),
+    		a,
     		{
     			
     			'autoDimensions'	: false,
