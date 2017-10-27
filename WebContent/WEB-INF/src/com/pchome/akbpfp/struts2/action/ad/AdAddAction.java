@@ -440,10 +440,12 @@ public class AdAddAction extends BaseCookieAction{
 				}else{
 					for (EnumAdVideoDownloadStatus enumAdVideoDownloadStatus : EnumAdVideoDownloadStatus.values()) {
 						if(pfpAdVideoSource.getAdVideoStatus() == enumAdVideoDownloadStatus.getStatus()){
-							saveAdDetail(pfpAdVideoSource.getAdVideoMp4Path() ,"mp4_path","","");
-							saveAdDetail(pfpAdVideoSource.getAdVideoWebmPath() ,"webm_path","","");
+							saveAdDetail(pfpAdVideoSource.getAdVideoMp4Path() ,"mp4_path","",EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
+							saveAdDetail(pfpAdVideoSource.getAdVideoWebmPath() ,"webm_path","",EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
 							saveAdDetail(enumAdVideoDownloadStatus.getDownloadValue() ,"video_status","","");
 							saveAdDetail(videoTime ,"video_seconds","","");
+							saveAdDetail(adVideoURL ,"mp4_url","",EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
+							saveAdDetail(adVideoURL ,"webm_url","",EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
 							break;
 						}
 					}
