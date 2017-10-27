@@ -234,6 +234,7 @@
     </bean>
 
     <bean id="AdAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdAddAction" scope="prototype" >
+    	<property name="pfpAdVideoSourceService" ref="PfpAdVideoSourceService" /> 
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
 		<property name="sequenceService" ref="SequenceService" />
     	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 

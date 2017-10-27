@@ -800,8 +800,6 @@ function saveData() {
 	}
 	/*檢查勾選的尺寸*/
 	var videoDetailMap = [];
-	
-	
 	$('#preViewArea input[type=checkbox]').each(function(){
 		var flag = false; 
 		var checked = $(this).attr('checked');
@@ -835,6 +833,7 @@ function saveData() {
 			}
 		}
 	});
+	
 	
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
