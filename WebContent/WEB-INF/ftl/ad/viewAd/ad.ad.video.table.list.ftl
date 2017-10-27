@@ -111,4 +111,4 @@
 </span>
   
 
-<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="230" height="460" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D_DllbWlt4aY&amp;adPreviewVideoBgImg=img/user/AC2013071700001/20171026/original/ad_201710260107.jpg"></iframe>
+<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="230" height="460" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL=${previewUrl!}&adPreviewVideoBgImg=img/user/AC2013071700001/20171026/original/ad_201710260107.jpg"></iframe>
