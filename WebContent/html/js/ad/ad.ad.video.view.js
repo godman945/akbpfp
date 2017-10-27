@@ -1,4 +1,4 @@
-﻿﻿﻿$(document).ready(function(){
+﻿﻿﻿﻿$(document).ready(function(){
 	
 	
 
@@ -127,7 +127,7 @@ function tableSorter(){
 
 //點擊預覽影片
 function previewVideo(width,height,img,url) {
-	
+	callBlockUpload();
 	$("#videoSize").text(width+" x " +height);
 //	url = "http://showstg.pchome.com.tw/pfp/img/video/2017_10_20/adv_201710200001.mp4";
 	var preview = 
@@ -160,7 +160,8 @@ function previewVideo(width,height,img,url) {
 			    }  
     		}
     );
-    $("#fancybox-wrap").css('height',500)
+    $("#fancybox-wrap").css('height',500);
+    $('body').unblock();
 }
 
 function closePrew(){
@@ -168,23 +169,6 @@ function closePrew(){
 }
 
 function callBlockUpload(){
-//	$('body').block({
-//		message: "<img src='html/img/LoadingWait.gif' />",
-//		css: {
-//			padding: 0,
-//			margin: 0,
-//			width: '50%',
-//			top: '40%',
-//			left: '35%',
-//			textAlign: 'center',
-//			color: '#000',
-//			border: '3px solid #aaa',
-//			backgroundColor: '#fff',
-//			cursor: 'wait'
-//		}
-//	});
-	
-	
 	  $('body').block({
 	        message: "<img src='html/img/LoadingWait.gif' />",
 	        css: {
