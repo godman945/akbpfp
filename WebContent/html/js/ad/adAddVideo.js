@@ -732,6 +732,13 @@ function appendVideoPreview(){
 				
 				console.log('>>>>>>>>>>>>>2');
 				
+				var head2 = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
+				console.log(head2);
+				
+				
+				
+				
+				
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
 				var style = head.children[0];
 				var data = style.innerHTML;				
