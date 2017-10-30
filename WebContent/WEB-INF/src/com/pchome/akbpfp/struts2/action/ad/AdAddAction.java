@@ -431,7 +431,7 @@ public class AdAddAction extends BaseCookieAction{
 				//3.儲存影片下載狀態與位置明細
 				if(pfpAdVideoSource == null){
 					saveAdDetail("尚未下載" ,"mp4_path",pool,EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
-					saveAdDetail("尚未下載" ,"webcam_path",pool,EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
+					saveAdDetail("尚未下載" ,"webm_path",pool,EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
 					saveAdDetail(adVideoURL ,"mp4_url",pool,EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
 					saveAdDetail(adVideoURL ,"webm_url",pool,EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
 					saveAdDetail("尚未下載" ,"video_status",pool,"");
@@ -638,78 +638,57 @@ public class AdAddAction extends BaseCookieAction{
 
 	// 新增關鍵字
 	private void addKeywords(PfpAdGroup pfpAdGroup) {
-	    try {
-		if(keywords.length == 0){
-		    return;
+		    try {
+			if(keywords.length == 0){
+			    return;
+			}
+			List<String> adKeywords = this.checkKeywords(adGroupSeq, keywords);
+			if(!adKeywords.isEmpty()){
+			    for(String keyword:adKeywords){
+				String adKeywordSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_KEYWORD, "_");
+				PfpAdKeyword pfpAdKeyword = new PfpAdKeyword();
+				pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
+				pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
+				pfpAdKeyword.setAdKeyword(keyword);
+				//廣泛比對設定
+				if(StringUtils.isNotBlank(adKeywordOpen)){
+					pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+					pfpAdKeyword.setAdKeywordOpen(1);
+				} else {
+					pfpAdKeyword.setAdKeywordSearchPrice(0);
+					pfpAdKeyword.setAdKeywordOpen(0);
+				}
+				//詞組比對設定
+				if(StringUtils.isNotBlank(adKeywordPhraseOpen)){
+					pfpAdKeyword.setAdKeywordSearchPhrasePrice(pfpAdGroup.getAdGroupSearchPrice());
+					pfpAdKeyword.setAdKeywordPhraseOpen(1);
+				} else {
+					pfpAdKeyword.setAdKeywordSearchPhrasePrice(0);
+					pfpAdKeyword.setAdKeywordPhraseOpen(0);
+				}
+				//精準比對設定
+				if(StringUtils.isNotBlank(adKeywordPrecisionOpen)){
+					pfpAdKeyword.setAdKeywordSearchPrecisionPrice(pfpAdGroup.getAdGroupSearchPrice());
+					pfpAdKeyword.setAdKeywordPrecisionOpen(1);
+				} else {
+					pfpAdKeyword.setAdKeywordSearchPrecisionPrice(0);
+					pfpAdKeyword.setAdKeywordPrecisionOpen(0);
+				}
+				pfpAdKeyword.setAdKeywordChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
+				pfpAdKeyword.setAdKeywordOrder(0);
+				pfpAdKeyword.setAdKeywordPhraseOrder(0);
+				pfpAdKeyword.setAdKeywordPrecisionOrder(0);
+				pfpAdKeyword.setAdKeywordStatus(EnumStatus.Open.getStatusId());
+				pfpAdKeyword.setAdKeywordCreateTime(new Date());
+				pfpAdKeyword.setAdKeywordUpdateTime(new Date());
+				pfpAdKeywordService.saveOrUpdate(pfpAdKeyword);
+				syspriceOperaterAPI.addKeywordSysprice(keyword, pfpAdGroup.getAdGroupSearchPrice());
+			    }
+			}
+	
+		} catch(Exception ex) {
+		    log.info("Exception(addKeywords) : " + ex);
 		}
-		List<String> adKeywords = this.checkKeywords(adGroupSeq, keywords);
-		if(!adKeywords.isEmpty()){
-		    for(String keyword:adKeywords){
-			String adKeywordSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_KEYWORD, "_");
-			PfpAdKeyword pfpAdKeyword = new PfpAdKeyword();
-			pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
-			pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
-			pfpAdKeyword.setAdKeyword(keyword);
-			//廣泛比對設定
-			if(StringUtils.isNotBlank(adKeywordOpen)){
-				pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
-				pfpAdKeyword.setAdKeywordOpen(1);
-			} else {
-				pfpAdKeyword.setAdKeywordSearchPrice(0);
-				pfpAdKeyword.setAdKeywordOpen(0);
-			}
-			//詞組比對設定
-			if(StringUtils.isNotBlank(adKeywordPhraseOpen)){
-				pfpAdKeyword.setAdKeywordSearchPhrasePrice(pfpAdGroup.getAdGroupSearchPrice());
-				pfpAdKeyword.setAdKeywordPhraseOpen(1);
-			} else {
-				pfpAdKeyword.setAdKeywordSearchPhrasePrice(0);
-				pfpAdKeyword.setAdKeywordPhraseOpen(0);
-			}
-			//精準比對設定
-			if(StringUtils.isNotBlank(adKeywordPrecisionOpen)){
-				pfpAdKeyword.setAdKeywordSearchPrecisionPrice(pfpAdGroup.getAdGroupSearchPrice());
-				pfpAdKeyword.setAdKeywordPrecisionOpen(1);
-			} else {
-				pfpAdKeyword.setAdKeywordSearchPrecisionPrice(0);
-				pfpAdKeyword.setAdKeywordPrecisionOpen(0);
-			}
-			pfpAdKeyword.setAdKeywordChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
-			pfpAdKeyword.setAdKeywordOrder(0);
-			pfpAdKeyword.setAdKeywordPhraseOrder(0);
-			pfpAdKeyword.setAdKeywordPrecisionOrder(0);
-			pfpAdKeyword.setAdKeywordStatus(EnumStatus.Open.getStatusId());
-			pfpAdKeyword.setAdKeywordCreateTime(new Date());
-			pfpAdKeyword.setAdKeywordUpdateTime(new Date());
-			pfpAdKeywordService.saveOrUpdate(pfpAdKeyword);
-			syspriceOperaterAPI.addKeywordSysprice(keyword, pfpAdGroup.getAdGroupSearchPrice());
-		    }
-		}
-
-//		if(keywords != null && keywords.length > 0) {
-//		    for(int i = 0; i < keywords.length; i++) {
-//			List<PfpAdKeyword> KWExist = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, keywords[i], null, null, "10");
-//			    //log.info("keywords["+i+"] = " + keywords[i] + "; existCount =" + KWExist.size());
-//			if(KWExist.size() == 0) {
-//			    String adKeywordSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_KEYWORD, "_");
-//			    PfpAdKeyword pfpAdKeyword = new PfpAdKeyword();
-//			    pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
-//			    pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
-//			    pfpAdKeyword.setAdKeyword(keywords[i]);
-//			    pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
-//			    pfpAdKeyword.setAdKeywordChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
-//			    pfpAdKeyword.setAdKeywordOrder(0);
-//			    pfpAdKeyword.setAdKeywordStatus(EnumStatus.Open.getStatusId());
-//			    pfpAdKeyword.setAdKeywordCreateTime(new Date());
-//			    pfpAdKeyword.setAdKeywordUpdateTime(new Date());
-//			    pfpAdKeywordService.savePfpAdKeyword(pfpAdKeyword);
-//			    syspriceOperaterAPI.addKeywordSysprice(keywords[i], pfpAdGroup.getAdGroupSearchPrice());
-//			  }
-//		    }
-//		}
-	} catch(Exception ex) {
-	    log.info("Exception(addKeywords) : " + ex);
-	}
 	}
 
 
