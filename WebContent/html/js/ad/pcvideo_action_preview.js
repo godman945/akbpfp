@@ -72,7 +72,7 @@
 					var ypos;
 
 					var adbg = "";
-					var poster = "../missdior.gif"
+					var poster = "img/video/missdior.gif"
 					
 					if (vdoh/adw<ratio){
 						vdow=vdoh/ratio;
@@ -86,8 +86,7 @@
 						vdow+="%";
 					}
 					
-					var bgimg = this.src.split("&adPreviewVideoBgImg=");
-					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}.adbg{background-image:url("+bgimg[1]+")}";
+					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
 					this.width = 230;
 					this.height = adh;
