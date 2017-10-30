@@ -739,8 +739,15 @@ function appendVideoPreview(){
 				console.log(data);
 				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
 				console.log(imgStr);
-				data = data.replace(imgStr,'background-image:url('+imgSrc+')');
+				data = data.replace(imgStr,'background-image:url('+imgSrc+')')+"}";
 				console.log(data);
+				
+				head.removeChild(style);
+				var css = document.createElement("style");
+				css.type = "text/css";
+				css.innerHTML = data;
+				head.insertBefore(css, head.childNodes[1]);
+				
 				
 //				console.log(head2[1]);
 //				console.log(head2[1].adbg);
