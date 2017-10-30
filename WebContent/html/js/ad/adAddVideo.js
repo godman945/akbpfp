@@ -731,18 +731,32 @@ function appendVideoPreview(){
 			}else{
 				
 				console.log('>>>>>>>>>>>>>2');
-				var head2 = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head");
-				console.log(head2[0]);
+//				var head2 = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head");
+//				console.log(head2[0]);
 				
-				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
-				var style = head[1];
-				console.log(style);
-				var data = style.innerHTML;	
+				var adbox = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.querySelector('.adbox');
+				console.log(adbox);
+				
+				console.log(createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument);
+				
+//				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
+				
+//				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
+//				var style = head[1];
+//				console.log(style);
+				
+				
+				
+//				console.log(style.style.);
+				
+				
+				
+//				var data = style.innerHTML;	
+////				console.log(data);
+//				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
+////				console.log(imgStr);
+//				data = data.replace(imgStr,'background-image:url('+imgSrc+')')+"}";
 //				console.log(data);
-				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
-//				console.log(imgStr);
-				data = data.replace(imgStr,'background-image:url('+imgSrc+')')+"}";
-				console.log(data);
 				
 //				head2.removeChild(style);
 //				var css = document.createElement("style");
