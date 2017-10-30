@@ -733,7 +733,7 @@ function appendVideoPreview(){
 				console.log('>>>>>>>>>>>>>2');
 				
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
-				var style = headp[0];
+				var style = head[0];
 				var data = style.innerHTML;	
 				console.log(data);
 				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
