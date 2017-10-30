@@ -156,13 +156,14 @@
 		}
 		
 		/*點擊聲音，true為關閉聲音*/
+		var voice = 0;
 		function VideoSound(flag,videoSoundoffObj,videoSoundOnObj,video){
-			
-			console.log('聲音測試--------');
-			
+			voice = voice + 0.1;
+			console.log('聲音測試--------'+voice);
 			console.log(video.muted);
+			console.log(video.volume);
 			video.muted = true;
-			
+			video.volume = voice;
 			
 			if(flag){
 				videoSoundOnObj.style.display='none';
