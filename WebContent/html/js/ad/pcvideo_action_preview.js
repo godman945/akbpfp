@@ -160,8 +160,8 @@
 			
 			console.log('聲音測試--------');
 			
-			console.log($(video).prop('muted'));
-			$(video).prop('muted', true);
+			console.log(video.muted);
+			video.muted = true;
 			
 			
 			if(flag){
