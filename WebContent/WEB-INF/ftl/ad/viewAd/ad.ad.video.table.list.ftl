@@ -42,7 +42,7 @@
 				<td>
 					<div style="padding: 8px;height:auto;margin: 0 auto">
 						
-						<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${pfpAdAdVideoViewVO.adWidth!}" height="${pfpAdAdVideoViewVO.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL=${previewUrl!}&adPreviewVideoBgImg=img/user/AC2013071700001/20171026/original/ad_201710260107.jpg"></iframe>
+						<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${pfpAdAdVideoViewVO.adWidth!}" height="${pfpAdAdVideoViewVO.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL=${previewUrl!}&adPreviewVideoBgImg=${pfpAdAdVideoViewVO.imgPath!}"></iframe>
 						
 					  <!-- <a class="fancy" style="cursor:pointer" onclick="previewVideo('${pfpAdAdVideoViewVO.adWidth!}','${pfpAdAdVideoViewVO.adHeight!}','${pfpAdAdVideoViewVO.imgPath!}','${previewUrl!}')" alt="預覽">點我預覽</a><br> -->
 					
@@ -111,8 +111,3 @@
 	<input type="button" name="start" onClick="modifyAdStatus('4')" value="開 啟" /> &nbsp;
 	<input type="button" name="close" onClick="modifyAdStatus('10')" value="關 閉" /> &nbsp;          
 </span>
-  
-
-
-
-<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="230" height="460" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL=${previewUrl!}&adPreviewVideoBgImg=img/user/AC2013071700001/20171026/original/ad_201710260107.jpg"></iframe>
