@@ -5,7 +5,7 @@
 <link href="<@s.url value="/html/css/fancybox/jquery.fancybox-1.3.4.css" />" rel="stylesheet" type="text/css" /> 
 <script src="<@s.url value="/" />html/js/fileupload/jquery.ui.widget.js"></script>
 <script src="<@s.url value="/" />html/js/fileupload/load-image.all.min.js"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddVideo.js?t=20170823" ></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/ad/ad.add.video.js?t=20170823" ></script>
 <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js?t=20170823" ></script>
 <script language="JavaScript" src="<@s.url value="/" />html/js/fileupload/jquery.fileupload.js"></script>
 <script language="JavaScript" src="<@s.url value="/" />html/js/fileupload/jquery.fileupload-process.js"></script>

@@ -56,6 +56,7 @@ public class AdAdViewAction extends BaseCookieAction{
 	private String adPreviewVideoURL;
 	private String previewHtml = "";
 	private String adPreviewVideoBgImg;
+	private String realUrl;
 	
 	
 	
@@ -175,6 +176,7 @@ public class AdAdViewAction extends BaseCookieAction{
 	public String videoPreview() throws Exception{
 		log.info(">>>>>adPreviewVideoURL:"+adPreviewVideoURL);
 		log.info(">>>>>adPreviewVideoBgImg:"+adPreviewVideoBgImg);
+		log.info(">>>>>realUrl:"+realUrl);
 		
 		//1.傳入youtube網址轉為預覽網址
 		String youtubePreviewUrl = "";
@@ -216,7 +218,7 @@ public class AdAdViewAction extends BaseCookieAction{
 			}
 
 			if(sCurrentLine.indexOf("<#dad_201303070014>") >= 0){
-				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070014>", "http://www.pchome.com.tw/");
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070014>", realUrl);
 			}
 			
 			if(sCurrentLine.indexOf("<#dad_201303070015>") >= 0){
@@ -384,6 +386,14 @@ public class AdAdViewAction extends BaseCookieAction{
 
 	public void setPfpAdVideoSourceService(IPfpAdVideoSourceService pfpAdVideoSourceService) {
 		this.pfpAdVideoSourceService = pfpAdVideoSourceService;
+	}
+
+	public String getRealUrl() {
+		return realUrl;
+	}
+
+	public void setRealUrl(String realUrl) {
+		this.realUrl = realUrl;
 	}
 	
 }

@@ -161,7 +161,10 @@ public class AdAdViewAjax extends BaseCookieAction{
 		return imgmap;
 	}
 
-	public String adAdVideoViewTableAjax() throws Exception{
+	/**
+	 * 影音廣告明細
+	 * */
+	public  String adAdVideoViewTableAjax() throws Exception{
 		PfpAdAdViewConditionVO pfpAdAdViewConditionVO = new PfpAdAdViewConditionVO();
 		pfpAdAdViewConditionVO.setCustomerInfoId(super.getCustomer_info_id());
 		pfpAdAdViewConditionVO.setAdGroupSeq(adGroupSeq);
@@ -177,7 +180,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 		pfpAdAdViewConditionVO.setMax(max);
 		
 		/**多執行緒*/
-		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(3);
+		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(500);
 		ThreadServiceBean threadServiceBean = new ThreadServiceBean();
 		threadServiceBean.setPfpAdService(pfpAdService);
 		JSONObject conditionJson = JSONObject.fromObject(pfpAdAdViewConditionVO);
