@@ -159,14 +159,9 @@
 		function VideoSound(flag,videoSoundoffObj,videoSoundOnObj,video){
 			console.log('聲音測試--------');
 			video.muted = false;
-			 var vol = video.volume;
-			    vol += value;
-			    if (vol >= 0 && vol <= 1) {
-			        video.volume = vol;
-			    } else {
-			        video.volume = (vol < 0) ? 0 : 1;                        
-			    }
-			
+			var vol = video.volume;
+			 
+			video.volume = 0.5;
 			
 			
 			    
