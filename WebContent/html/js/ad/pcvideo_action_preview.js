@@ -164,7 +164,7 @@
 			}else {
 				video.muted = false;
 				console.log(video.volume);
-				video.volume = 0.2;
+				video.volume = 0.1;
 				videoSoundOnObj.style.display='block';
 				videoSoundoffObj.style.display='none';
 				var index = getIframeIndex(video);
