@@ -731,14 +731,16 @@ function appendVideoPreview(){
 			}else{
 				
 				console.log('>>>>>>>>>>>>>2');
+				var head2 = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head");
+				console.log(head2);
 				
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
 				var style = head[1];
 				console.log(style);
 				var data = style.innerHTML;	
-				console.log(data);
+//				console.log(data);
 				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
-				console.log(imgStr);
+//				console.log(imgStr);
 				data = data.replace(imgStr,'background-image:url('+imgSrc+')')+"}";
 				console.log(data);
 				
