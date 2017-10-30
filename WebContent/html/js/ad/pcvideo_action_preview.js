@@ -161,7 +161,7 @@
 			video.muted = false;
 			var vol = video.volume;
 			 
-			video.volume = 0.5;
+			video.volume = 0.2;
 			
 			
 			    
