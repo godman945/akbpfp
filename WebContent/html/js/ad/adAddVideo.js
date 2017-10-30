@@ -733,7 +733,10 @@ function appendVideoPreview(){
 				console.log('>>>>>>>>>>>>>2');
 				
 				var head2 = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
-				console.log(head2);
+				console.log(head2[0]);
+				
+				console.log(head2[1]);
+				console.log(head2[2]);
 				
 				
 				
