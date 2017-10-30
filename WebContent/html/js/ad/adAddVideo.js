@@ -732,25 +732,29 @@ function appendVideoPreview(){
 				
 				console.log('>>>>>>>>>>>>>2');
 				
-				var head2 = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
-				
-				console.log(head2[1]);
-				
-				
-				console.log(head2[1].adbg);
-				
-				
-				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
-				var style = head.children[0];
-				var data = style.innerHTML;				
-				console.log(head);
+				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
+				var style = headp[0];
+				var data = style.innerHTML;	
+				console.log(data);
 				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
+				console.log(imgStr);
 				data = data.replace(imgStr,'background-image:url('+imgSrc+')');
-				head.removeChild(style);
-				var css = document.createElement("style");
-				css.type = "text/css";
-				css.innerHTML = data;
-				head.insertBefore(css, head.childNodes[3]);
+				
+				console.log(data);
+				
+//				console.log(head2[1]);
+//				console.log(head2[1].adbg);
+//				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head")[0];
+//				var style = head.children[0];
+//				var data = style.innerHTML;				
+//				console.log(head);
+//				var imgStr = data.substring(data.indexOf("background-image:url("),data.length - 1);
+//				data = data.replace(imgStr,'background-image:url('+imgSrc+')');
+//				head.removeChild(style);
+//				var css = document.createElement("style");
+//				css.type = "text/css";
+//				css.innerHTML = data;
+//				head.insertBefore(css, head.childNodes[3]);
 			}
 		}
 	});
