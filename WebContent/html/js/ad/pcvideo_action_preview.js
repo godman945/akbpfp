@@ -156,14 +156,25 @@
 		}
 		
 		/*點擊聲音，true為關閉聲音*/
-		var voice = 0;
 		function VideoSound(flag,videoSoundoffObj,videoSoundOnObj,video){
-			voice = voice + 0.1;
 			console.log('聲音測試--------'+voice);
-			console.log(video.muted);
-			console.log(video.volume);
-			video.muted = true;
-			video.volume = voice;
+			video.muted = false;
+			 var vol = video.volume;
+			    vol += value;
+			    if (vol >= 0 && vol <= 1) {
+			        video.volume = vol;
+			    } else {
+			        video.volume = (vol < 0) ? 0 : 1;                        
+			    }
+			
+			
+			
+			    
+			
+//			console.log(video.muted);
+//			console.log(video.volume);
+//			video.muted = true;
+//			video.volume = voice;
 			
 			if(flag){
 				videoSoundOnObj.style.display='none';
