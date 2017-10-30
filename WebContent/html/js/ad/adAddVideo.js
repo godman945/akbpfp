@@ -743,7 +743,8 @@ function appendVideoPreview(){
 				var adbg = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.querySelector('.adbg');
 				console.log(adbg);
 				
-				$(adbg).css('background','123.jpg');
+				
+				$(adbg).css('background-image','url('+imgSrc+')');
 				
 				
 				
