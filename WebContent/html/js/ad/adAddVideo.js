@@ -740,6 +740,11 @@ function appendVideoPreview(){
 				$(adbox).css('background-image','123.jpg');
 				
 				
+				var adbg = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.querySelector('.adbg');
+				console.log(adbg);
+				
+				$(adbg).css('background-image','123.jpg');
+				
 				
 				
 //				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
