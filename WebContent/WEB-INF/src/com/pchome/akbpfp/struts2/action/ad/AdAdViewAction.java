@@ -211,6 +211,10 @@ public class AdAdViewAction extends BaseCookieAction{
 				continue;
 			}
 			
+			if(sCurrentLine.indexOf("<#dad_201303070010>") >= 0){
+				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070010>", adPreviewVideoBgImg);
+			}
+
 			if(sCurrentLine.indexOf("<#dad_201303070014>") >= 0){
 				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070014>", "http://www.pchome.com.tw/");
 			}
