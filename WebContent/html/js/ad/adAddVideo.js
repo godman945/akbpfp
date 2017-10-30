@@ -732,7 +732,7 @@ function appendVideoPreview(){
 				
 				console.log('>>>>>>>>>>>>>2');
 				var head2 = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("head");
-				console.log(head2);
+				console.log(head2[0]);
 				
 				var head = createPreViewCheckboxObj.parentElement.parentElement.parentElement.getElementsByTagName("iframe")[0].contentDocument.getElementsByTagName("style");
 				var style = head[1];
@@ -744,11 +744,11 @@ function appendVideoPreview(){
 				data = data.replace(imgStr,'background-image:url('+imgSrc+')')+"}";
 				console.log(data);
 				
-				head.removeChild(style);
-				var css = document.createElement("style");
-				css.type = "text/css";
-				css.innerHTML = data;
-				head.insertBefore(css, head.childNodes[1]);
+//				head2.removeChild(style);
+//				var css = document.createElement("style");
+//				css.type = "text/css";
+//				css.innerHTML = data;
+//				head2.insertBefore(css, head2.childNodes[1]);
 				
 				
 //				console.log(head2[1]);
