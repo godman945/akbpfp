@@ -19,6 +19,7 @@ function findTableView(){
 	var adOperatingRule = $("#adOperatingRule").val();
 	callBlockUpload();
 	$.ajax({
+		async: false,
 		url: "adAdVideoViewTable.html",
 		data:{
 			 "adGroupSeq": adGroupSeq,
