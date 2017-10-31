@@ -56,7 +56,7 @@ public class AdAdViewAction extends BaseCookieAction{
 	private String adPreviewVideoURL;
 	private String previewHtml = "";
 	private String adPreviewVideoBgImg;
-	private String realUrl;
+	private String realUrl = "http://pchome.com.tw";
 	
 	
 	
