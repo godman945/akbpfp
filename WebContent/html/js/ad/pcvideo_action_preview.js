@@ -55,6 +55,9 @@
 					
 					var css = document.createElement("style");
 					css.type = "text/css";
+					this.height = this.height - 30;
+					console.log('>>>>>>>>>>>>>this.height:'+this.height);
+					
 					
 					var adratio = this.height / this.width;
 					var adw = 230;
@@ -85,6 +88,12 @@
 						ypos=(!ycenter)?0:(adh-adw*0.5625-30)/2;
 						vdow+="%";
 					}
+					
+					
+					if(){
+						
+					}
+					
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
