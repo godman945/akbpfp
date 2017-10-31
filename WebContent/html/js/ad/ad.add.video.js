@@ -675,6 +675,9 @@ function autoPreview(objData){
 	iframeInfoMap["iframe"+2] = {width:640,height:390};
 	
 	var url = objData.previewUrl;
+	
+	console.log('url:'+url);
+	
 	$.each(iframeInfoMap, function(key, obj) {
 		var a = 
 			'<div class="v_box">'+
