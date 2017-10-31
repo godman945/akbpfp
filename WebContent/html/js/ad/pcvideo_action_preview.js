@@ -55,7 +55,7 @@
 					
 					var css = document.createElement("style");
 					css.type = "text/css";
-					this.height = this.height - 30;
+//					this.height = this.height - 30;
 					console.log('>>>>>>>>>>>>>this.height:'+this.height);
 					
 					
