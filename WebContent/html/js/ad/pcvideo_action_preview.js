@@ -60,7 +60,7 @@
 					
 					
 					var adratio = this.height / this.width;
-					var adw = 230;
+					var adw = 250;
 					
 					var adh = adw * adratio;
 					console.log('>>>>>>>>>>>>>adh:'+adh);
