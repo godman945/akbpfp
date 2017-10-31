@@ -90,9 +90,6 @@
 					}
 					
 					
-					if(){
-						
-					}
 					
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
