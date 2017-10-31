@@ -60,10 +60,10 @@
 					var adw = 230;
 					
 					var adh = adw * adratio;
-
+					console.log('>>>>>>>>>>>>>adh:'+adh);
 					var barh = 30
 					var vdow;
-					var vdoh = adh-barh;
+					var vdoh = adh - barh;
 					var ratio = 0.5625;
 
 					var xcenter=false;
