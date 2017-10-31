@@ -1,4 +1,3 @@
-
 //一開始執行
 $(function(){
 	//flash chart

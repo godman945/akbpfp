@@ -26,7 +26,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" 	SUM(vr.ad_pv), "); 
 		sql.append(" 	SUM(vr.ad_view), "); 
 		sql.append(" 	TRUNCATE(( SUM(vr.ad_view) / SUM(vr.ad_pv) ) * 100, 2)  ad_view_ratings, "); 
-		sql.append(" 	TRUNCATE(SUM(vr.ad_price) / SUM(vr.ad_view),2), "); 
+		sql.append(" 	IFNULL(TRUNCATE(SUM(vr.ad_price) / SUM(vr.ad_view),2),0), "); 
 		sql.append(" 	TRUNCATE(SUM(vr.ad_price) / ( SUM(vr.ad_pv) / 1000 ), 2)thousands_cost, "); 
 		sql.append(" 	SUM(vr.ad_price), "); 
 		sql.append(" 	SUM(vr.ad_video_process_25), "); 
@@ -117,7 +117,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append("	SUM(vr.ad_pv), "); 
 		sql.append(" 	SUM(vr.ad_view), "); 
 		sql.append(" 	TRUNCATE((SUM(vr.ad_view) / SUM(vr.ad_pv)) * 100, 2) ad_view_ratings, "); 
-		sql.append(" 	TRUNCATE(SUM(vr.ad_price) / SUM(vr.ad_view),2), "); 
+		sql.append(" 	IFNULL(TRUNCATE(SUM(vr.ad_price) / SUM(vr.ad_view),2),0), "); 
 		sql.append(" 	TRUNCATE(SUM(vr.ad_price) / (SUM(vr.ad_pv) / 1000), 2)thousands_cost, "); 
 		sql.append(" 	SUM(vr.ad_price), "); 
 		sql.append(" 	SUM(vr.ad_video_uniq), "); 

@@ -107,39 +107,9 @@ ${page}/${totalPage}
 	
 		</thead>
 		<tbody>
-				<#assign sumPV = 0>
-				<#assign sumView = 0>
-				<#assign sumCost = 0>
-				<#assign sumVideoProvess25 = 0>
-				<#assign sumVideoProvess50 = 0>
-				<#assign sumVideoProvess75 = 0>
-				<#assign sumVideoProvess100 = 0>
-				<#assign sumClick = 0>
-				<#assign sumVideoUniq = 0>
-				<#assign sumMusic = 0>
-				<#assign sumReplay = 0>
-				<#assign sumViewRatings = 0>
-				<#assign sumThousandsCost = 0>
-				<#assign sumSingleAdViewCost = 0>
-				<#assign sumVideoProcess100Ratings = 0>
 		    <#list adVideoPerformanceReportVOList as adVideoPerformanceReportVO>
-				<#assign sumPV = sumPV + adVideoPerformanceReportVO.adPvSum ?number>
-				<#assign sumView = sumView + adVideoPerformanceReportVO.adViewSum ?number>
-				<#assign sumCost = sumCost + adVideoPerformanceReportVO.costSum ?number>
-				<#assign sumVideoProvess25 = sumVideoProvess25 + adVideoPerformanceReportVO.adVideoProcess25Sum ?number>
-				<#assign sumVideoProvess50 = sumVideoProvess50 + adVideoPerformanceReportVO.adVideoProcess50Sum ?number>
-				<#assign sumVideoProvess75 = sumVideoProvess75 + adVideoPerformanceReportVO.adVideoProcess75Sum ?number>
-				<#assign sumVideoProvess100 = sumVideoProvess100 + adVideoPerformanceReportVO.adVideoProcess100Sum ?number>
-				<#assign sumClick = sumClick + adVideoPerformanceReportVO.adClkSum ?number>
-				<#assign sumVideoUniq = sumVideoUniq + adVideoPerformanceReportVO.adVideoUniqSum ?number>
-				<#assign sumMusic = sumMusic + adVideoPerformanceReportVO.adVideoMusicSum ?number>
-				<#assign sumReplay = sumReplay + adVideoPerformanceReportVO.adVideoReplaySum ?number>
-				<#assign sumViewRatings = (sumView / sumPV * 100) ? string("0.##")>
-				<#assign sumThousandsCost = (sumCost / sumPV * 1000) ? string("0.##")>
-				<#assign sumSingleAdViewCost = (sumCost / sumView) ? string("0.##")>
-				<#assign sumVideoProcess100Ratings = (sumVideoProvess100 / sumView * 100) ? string("0.##")>
 		     	<tr height="30">
-					<#if adVideoPerformanceReportVO.adStatus == "2" >
+					<#if adVideoPerformanceReportVO.adStatus == "4" >
 						<td><img src="http://show.pchome.com.tw/html/img/icon_adopen.gif" alt="開啟" title="開啟"></td>
 						<#else>
 						<td><img src="http://show.pchome.com.tw/html/img/icon_adclose.gif" alt="關閉" title="關閉"></td>

@@ -16,6 +16,7 @@ import com.pchome.akbpfp.db.dao.report.AdKeywordReportVO;
 import com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportVO;
 import com.pchome.akbpfp.db.service.report.IAdVideoPerformanceReportService;
 import com.pchome.akbpfp.db.vo.report.ReportQueryConditionVO;
+import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
 import com.pchome.soft.util.DateValueUtil;
@@ -227,6 +228,18 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		log.info(">>>>>> startDate = " + startDate);
 		log.info(">>>>>> endDate = " + endDate);
 
+		if (StringUtils.isEmpty(adType)) {
+			adType = EnumReport.ADTYPE_ACTIVITY.getTextValue();
+		}
+
+		if (StringUtils.isEmpty(adSearchWay)) {
+			adSearchWay = EnumReport.ADSEARCH_INCLUDE.getTextValue();
+		}
+
+//		if (StringUtils.isEmpty(adShowWay)) {
+//			adShowWay = Integer.toString(EnumAdType.AD_ALL.getType());
+//		}
+		
 		
 		if(downloadFlag.trim().equals("yes")){
 			makeDownloadReportData();
