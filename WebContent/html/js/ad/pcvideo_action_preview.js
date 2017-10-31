@@ -89,13 +89,13 @@
 						vdow+="%";
 					}
 					
-					
-					
-					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
-					this.width = 230;
+					this.width = 250;
 					this.height = adh;
+					
+					var alex5 = this.contentDocument.body.children[0].contentWindow.document.querySelector('.adbg');
+					console.log(alex5);
 				}
 			};
 		}
