@@ -60,7 +60,7 @@
 					
 					
 					var adratio = this.height / this.width;
-					var adw = 250;
+					var adw = 230;
 					
 					var adh = adw * adratio;
 					console.log('>>>>>>>>>>>>>adh:'+adh);
@@ -91,10 +91,10 @@
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
-					this.width = 250;
+					this.width = 230;
 					this.height = adh;
 					
-					var alex5 = this.contentDocument.body.children[0].contentWindow.document.querySelector('.adbg');
+					var alex5 = this.contentDocument.body.children[0].querySelector('.adbg');
 					console.log(alex5);
 				}
 			};
