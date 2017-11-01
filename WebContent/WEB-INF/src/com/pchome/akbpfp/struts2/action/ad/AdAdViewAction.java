@@ -184,7 +184,10 @@ public class AdAdViewAction extends BaseCookieAction{
 		
 		//1.傳入youtube網址轉為預覽網址
 		PfpAdVideoSource pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adPreviewVideoURL);
-		if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoStatus() == 1 && StringUtils.isNotBlank(pfpAdVideoSource.getMp4Url()) && StringUtils.isNotBlank(pfpAdVideoSource.getWebmUrl())){
+		if(adPreviewVideoURL.indexOf("googlevideo.com") >= 0){
+			mp4Url = adPreviewVideoURL;
+			webmUrl = adPreviewVideoURL;
+		}else if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoStatus() == 1 && StringUtils.isNotBlank(pfpAdVideoSource.getMp4Url()) && StringUtils.isNotBlank(pfpAdVideoSource.getWebmUrl())){
 			mp4Url = pfpAdVideoSource.getMp4Url();
 			webmPath = pfpAdVideoSource.getMp4Url();
 			mp4Path = pfpAdVideoSource.getAdVideoMp4Path();
