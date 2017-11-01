@@ -189,13 +189,12 @@ public class AdAdViewAction extends BaseCookieAction{
 			webmUrl = adPreviewVideoURL;
 		}else if(pfpAdVideoSource != null && pfpAdVideoSource.getAdVideoStatus() == 1 && StringUtils.isNotBlank(pfpAdVideoSource.getMp4Url()) && StringUtils.isNotBlank(pfpAdVideoSource.getWebmUrl())){
 			mp4Url = pfpAdVideoSource.getMp4Url();
-			webmPath = pfpAdVideoSource.getMp4Url();
 			mp4Path = pfpAdVideoSource.getAdVideoMp4Path();
 			webmPath = pfpAdVideoSource.getAdVideoWebmPath();
+			webmUrl = pfpAdVideoSource.getWebmUrl();
 		}else{
 			Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adPreviewVideoURL });
 			mp4Url = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
-			
 			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 43 -g " + adPreviewVideoURL });
 			webmUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
 			process.destroy();
