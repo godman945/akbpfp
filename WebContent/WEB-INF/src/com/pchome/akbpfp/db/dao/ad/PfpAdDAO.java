@@ -940,7 +940,6 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 	
 	public List<Object> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
 		StringBuffer sql = new StringBuffer();
-		sql.append("select a.*,s.webm_url,s.mp4_url from( ");	
 		sql.append(" select  ");	
 		sql.append(" ad.ad_group_seq, ");	
 		sql.append(" ad.ad_seq, ");	
@@ -995,8 +994,6 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" group by ad_seq ");
 		sql.append(" order by ad.ad_update_time DESC ");
 		sql.append(" LIMIT :limit, :max ");	
-		sql.append(" )a,pfp_ad_video_source s ");	
-		sql.append(" where a.video_url = s.ad_video_url ");	
 		Query query =  super.getSession().createSQLQuery(sql.toString());
 		query.setParameter("agSeq", pfpAdAdViewConditionVO.getAdGroupSeq());
 		query.setParameter("startDate", pfpAdAdViewConditionVO.getStartDate());

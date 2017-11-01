@@ -44,11 +44,6 @@ public class PfpAdAdVideoViewVO {
 	private String videoSeconds = "";
 	//影片網址
 	private String videoUrl = "";
-	//webm影片播放網址
-	private String webmUrl = "";
-	//mp4影片播放網址
-	private String mp4Url = "";
-	
 
 	public String getAdGroupSeq() {
 		return adGroupSeq;
@@ -234,22 +229,4 @@ public class PfpAdAdVideoViewVO {
 	public void setVideoUrl(String videoUrl) {
 		this.videoUrl = videoUrl;
 	}
-
-	public String getWebmUrl() {
-		return webmUrl;
-	}
-
-	public void setWebmUrl(String webmUrl) {
-		this.webmUrl = webmUrl;
-	}
-
-	public String getMp4Url() {
-		return mp4Url;
-	}
-
-	public void setMp4Url(String mp4Url) {
-		this.mp4Url = mp4Url;
-	}
-
-
 }
