@@ -288,7 +288,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 		if(sumAdView != 0 || sumPv != 0){
 			adViewRatings =	((double)sumAdView / (double)sumPv) * 100;
 			thousandsCost = (double)sumCost / ((double)sumPv / 1000);
-			if(sumCost >=0 && sumAdView >=0){
+			if(sumCost >0 && sumAdView >0){
 				singleAdViewCost = (double)sumCost / (double)sumAdView;
 			}
 		}
