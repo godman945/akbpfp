@@ -367,6 +367,8 @@ public class AdAddAction extends BaseCookieAction{
 				boolean isBannerSize = false;
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
 				adVideoSize = picInfoJson.getString("size");
+				String adSize = adVideoSize.substring(0, 3)+"_"+adVideoSize.substring(3, adVideoSize.length());
+				
 				String pool = "";
 				String templateAdSeq = "";
 				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
@@ -421,7 +423,7 @@ public class AdAddAction extends BaseCookieAction{
 				//2.儲存影片網址、影片連結網址、影片尺寸明細
 				saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),pool,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
 				saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),pool,"");
-				saveAdDetail(adVideoSize ,"video_size",pool,"");
+				saveAdDetail(adSize ,"video_size",pool,"");
 				
 				//3.儲存影片下載狀態與位置明細
 				if(pfpAdVideoSource == null){
