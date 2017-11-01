@@ -456,6 +456,11 @@ public class AdAddAction extends BaseCookieAction{
 				}
 				adSeq = null;
 			}
+			
+			// 開啟廣告分類
+			pfpAdGroup.setAdGroupStatus(4);
+			pfpAdGroupService.save(pfpAdGroup);
+			
 			result = "success";
 			return SUCCESS;
 		}catch(Exception e){
