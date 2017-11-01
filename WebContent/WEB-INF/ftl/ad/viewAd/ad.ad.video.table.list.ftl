@@ -41,14 +41,14 @@
 				</td>
 				<td>
 					<div style="padding: 8px;height:auto;margin: 0 auto">
-						<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${pfpAdAdVideoViewVO.adWidth!}" height="${pfpAdAdVideoViewVO.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL=${pfpAdAdVideoViewVO.videoUrl!}&adPreviewVideoBgImg=${pfpAdAdVideoViewVO.imgPath!}&realUrl=${pfpAdAdVideoViewVO.realUrl!}"></iframe>
+						<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${pfpAdAdVideoViewVO.adWidth!}" height="${pfpAdAdVideoViewVO.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoPreview.html?adPreviewVideoURL=${pfpAdAdVideoViewVO.mp4Url!}&adPreviewVideoBgImg=${pfpAdAdVideoViewVO.imgPath!}&realUrl=${pfpAdAdVideoViewVO.realUrl!}"></iframe>
 					</div>
 				</td>
 				<td style=" text-align: left; line-height: 20px; padding: 10px;">
 						${pfpAdAdVideoViewVO.adActionName!}<br>
 						尺寸 ${pfpAdAdVideoViewVO.adWidth!} x ${pfpAdAdVideoViewVO.adHeight!}<br>
 						時間 00:${pfpAdAdVideoViewVO.videoSeconds!}<br>
-					  	<a href="#" target="_blank" src="${pfpAdAdVideoViewVO.realUrl!}">${pfpAdAdVideoViewVO.mp4Url!}</a><br>
+					  	<a href="#" target="_blank" src="${pfpAdAdVideoViewVO.realUrl!}">${pfpAdAdVideoViewVO.realUrl!}</a><br>
 				</td>
 				
 		        <td class="td03">
