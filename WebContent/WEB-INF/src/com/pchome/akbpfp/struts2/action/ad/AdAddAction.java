@@ -338,13 +338,6 @@ public class AdAddAction extends BaseCookieAction{
 	 * 
 	 * */
 	public String doAdAdAddVideo() {
-		
-//		300x250       adp_201507210001
-//		300x600       adp_201709190001
-//		320x480       adp_201601210001
-//		336x280       adp_201601210002
-//		970x250       adp_201601210003
-		
 		try{
 			log.info(">>>>>> doAdAdAddVideo adGroupSeq:"+adGroupSeq);
 			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
@@ -375,6 +368,7 @@ public class AdAddAction extends BaseCookieAction{
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
 				adVideoSize = picInfoJson.getString("size");
 				String pool = "";
+				String templateAdSeq = "";
 				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
 					isBannerSize = true;
 					if(enumAdVideoSize.getType().equals("DEFAULT") && adVideoSize.equals(enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight())){
@@ -382,10 +376,11 @@ public class AdAddAction extends BaseCookieAction{
 					}
 					if(adVideoSize.equals(enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight())){
 						pool = enumAdVideoSize.getPoolType();
+						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
 					}
 				}
 				
-				addAd(pfpAdGroup,null);
+				addAd(pfpAdGroup,templateAdSeq);
 				PfpAd pfpAd = pfpAdService.get(adSeq);
 				
 				//變更暫存圖片檔名為此次上傳名細序號
