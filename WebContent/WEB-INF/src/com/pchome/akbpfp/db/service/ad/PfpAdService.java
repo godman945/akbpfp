@@ -287,8 +287,10 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 		double thousandsCost = 0;
 		if(sumAdView != 0 || sumPv != 0){
 			adViewRatings =	((double)sumAdView / (double)sumPv) * 100;
-			singleAdViewCost = (double)sumCost / (double)sumAdView;
 			thousandsCost = (double)sumCost / ((double)sumPv / 1000);
+			if(sumCost >=0 && sumAdView >=0){
+				singleAdViewCost = (double)sumCost / (double)sumAdView;
+			}
 		}
 		PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO = new PfpAdAdVideoViewSumVO();		
 		pfpAdAdVideoViewSumVO.setTotalSize(totalSize);
@@ -298,19 +300,6 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 		pfpAdAdVideoViewSumVO.setSingleAdViewCost(singleAdViewCost);
 		pfpAdAdVideoViewSumVO.setThousandsCost(thousandsCost);
 		pfpAdAdVideoViewSumVO.setCostSum(sumCost);
-		
-		
-		
-		log.info(">>>>>>>>>totalSize:"+totalSize);
-		log.info(">>>>>>>>>sumPv:"+sumPv);
-		log.info(">>>>>>>>>sumAdView:"+sumAdView);
-		log.info(">>>>>>>>>adViewRatings:"+adViewRatings);
-		log.info(">>>>>>>>>singleAdViewCost:"+singleAdViewCost);
-		log.info(">>>>>>>>>thousandsCost:"+thousandsCost);
-		log.info(">>>>>>>>>sumCost:"+sumCost);
-		
-		
-		
 		return pfpAdAdVideoViewSumVO;
 	}
 	
