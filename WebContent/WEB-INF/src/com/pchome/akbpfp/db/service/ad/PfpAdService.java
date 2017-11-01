@@ -300,19 +300,6 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 		pfpAdAdVideoViewSumVO.setSingleAdViewCost(singleAdViewCost);
 		pfpAdAdVideoViewSumVO.setThousandsCost(thousandsCost);
 		pfpAdAdVideoViewSumVO.setCostSum(sumCost);
-		
-		
-		
-		log.info(">>>>>>>>>totalSize:"+totalSize);
-		log.info(">>>>>>>>>sumPv:"+sumPv);
-		log.info(">>>>>>>>>sumAdView:"+sumAdView);
-		log.info(">>>>>>>>>adViewRatings:"+adViewRatings);
-		log.info(">>>>>>>>>singleAdViewCost:"+singleAdViewCost);
-		log.info(">>>>>>>>>thousandsCost:"+thousandsCost);
-		log.info(">>>>>>>>>sumCost:"+sumCost);
-		
-		
-		
 		return pfpAdAdVideoViewSumVO;
 	}
 	
