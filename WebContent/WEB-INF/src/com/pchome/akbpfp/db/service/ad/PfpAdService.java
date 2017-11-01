@@ -301,13 +301,13 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 		
 		
 		
-		log.debug(">>>>>>>>>totalSize:"+totalSize);
-		log.debug(">>>>>>>>>sumPv:"+sumPv);
-		log.debug(">>>>>>>>>sumAdView:"+sumAdView);
-		log.debug(">>>>>>>>>adViewRatings:"+adViewRatings);
-		log.debug(">>>>>>>>>singleAdViewCost:"+singleAdViewCost);
-		log.debug(">>>>>>>>>thousandsCost:"+thousandsCost);
-		log.debug(">>>>>>>>>sumCost:"+sumCost);
+		log.info(">>>>>>>>>totalSize:"+totalSize);
+		log.info(">>>>>>>>>sumPv:"+sumPv);
+		log.info(">>>>>>>>>sumAdView:"+sumAdView);
+		log.info(">>>>>>>>>adViewRatings:"+adViewRatings);
+		log.info(">>>>>>>>>singleAdViewCost:"+singleAdViewCost);
+		log.info(">>>>>>>>>thousandsCost:"+thousandsCost);
+		log.info(">>>>>>>>>sumCost:"+sumCost);
 		
 		
 		
