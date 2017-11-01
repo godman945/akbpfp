@@ -48,7 +48,7 @@
 						${pfpAdAdVideoViewVO.adActionName!}<br>
 						尺寸 ${pfpAdAdVideoViewVO.adWidth!} x ${pfpAdAdVideoViewVO.adHeight!}<br>
 						時間 00:${pfpAdAdVideoViewVO.videoSeconds!}<br>
-					  	<a href="#" target="_blank">${pfpAdAdVideoViewVO.realUrl!}</a><br>
+					  	<a href="#" target="_blank" src="${pfpAdAdVideoViewVO.realUrl!}">${pfpAdAdVideoViewVO.mp4Url!}</a><br>
 				</td>
 				
 		        <td class="td03">

@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/10/20 �U�� 04:59:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -19,6 +19,8 @@ public class PfpAdVideoSource implements java.io.Serializable {
 	private String adVideoSeq;
 	private String adVideoWebmPath;
 	private String adVideoMp4Path;
+	private String webmUrl;
+	private String mp4Url;
 	private int adVideoStatus;
 	private String adVideoUrl;
 	private Date updateDate;
@@ -35,11 +37,13 @@ public class PfpAdVideoSource implements java.io.Serializable {
 		this.createDate = createDate;
 	}
 
-	public PfpAdVideoSource(String adVideoSeq, String adVideoWebmPath, String adVideoMp4Path, int adVideoStatus,
-			String adVideoUrl, Date updateDate, Date createDate) {
+	public PfpAdVideoSource(String adVideoSeq, String adVideoWebmPath, String adVideoMp4Path, String webmUrl,
+			String mp4Url, int adVideoStatus, String adVideoUrl, Date updateDate, Date createDate) {
 		this.adVideoSeq = adVideoSeq;
 		this.adVideoWebmPath = adVideoWebmPath;
 		this.adVideoMp4Path = adVideoMp4Path;
+		this.webmUrl = webmUrl;
+		this.mp4Url = mp4Url;
 		this.adVideoStatus = adVideoStatus;
 		this.adVideoUrl = adVideoUrl;
 		this.updateDate = updateDate;
@@ -73,6 +77,24 @@ public class PfpAdVideoSource implements java.io.Serializable {
 
 	public void setAdVideoMp4Path(String adVideoMp4Path) {
 		this.adVideoMp4Path = adVideoMp4Path;
+	}
+
+	@Column(name = "webm_url", length = 1024)
+	public String getWebmUrl() {
+		return this.webmUrl;
+	}
+
+	public void setWebmUrl(String webmUrl) {
+		this.webmUrl = webmUrl;
+	}
+
+	@Column(name = "mp4_url", length = 1024)
+	public String getMp4Url() {
+		return this.mp4Url;
+	}
+
+	public void setMp4Url(String mp4Url) {
+		this.mp4Url = mp4Url;
 	}
 
 	@Column(name = "ad_video_status", nullable = false)

@@ -224,12 +224,12 @@ public class AdAdViewAjax extends BaseCookieAction{
 					pfpAdAdVideoViewVOList.add(pfpAdAdVideoViewVO);
 				}
 				
-				//預先將預覽網址取得
-				if(jdbcEnvironment.indexOf("kddbm") >=0){
-					Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + previewUrl });
-					previewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
-					process.destroy();
-				}
+//				//預先將預覽網址取得
+//				if(jdbcEnvironment.indexOf("kddbm") >=0){
+//					Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + previewUrl });
+//					previewUrl = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
+//					process.destroy();
+//				}
 				adViewVideoDetailResultFlag = false;
 			}
 		}

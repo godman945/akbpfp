@@ -29,7 +29,7 @@ public class PfpThreadProcess implements Callable<String> {
 		
 	}
 
-	public String call() throws Exception {
+	public synchronized String call() throws Exception {
 		//影音廣告明細總數
 		if(enumAdThreadType.equals(EnumAdThreadType.AD_VIEW_VIDEO_COUNT)){
 			PfpAdAdViewConditionVO pfpAdAdViewConditionVO = (PfpAdAdViewConditionVO) JSONObject.toBean(this.conditionJson, PfpAdAdViewConditionVO.class);
