@@ -35,9 +35,6 @@ public class PfpThreadProcess implements Callable<String> {
 			PfpAdAdViewConditionVO pfpAdAdViewConditionVO = (PfpAdAdViewConditionVO) JSONObject.toBean(this.conditionJson, PfpAdAdViewConditionVO.class);
 			IPfpAdService pfpAdService = this.threadServiceBean.getPfpAdService();
 			PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO = pfpAdService.getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
-			
-			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>"+pfpAdAdVideoViewSumVO);
-			
 			JSONObject result = JSONObject.fromObject(pfpAdAdVideoViewSumVO);
 			return result.toString();
 			
