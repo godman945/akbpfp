@@ -395,10 +395,17 @@ public class AdEditAction extends BaseCookieAction{
 			System.out.println(adSeq);
 			System.out.println(adLinkURL);
 			List<PfpAdDetail> pfpAdDetailList = pfpAdDetailService.getPfpAdDetailByAdSeq(adSeq);
+			Date date = new Date();
 			for (PfpAdDetail pfpAdDetail : pfpAdDetailList) {
 				if(pfpAdDetail.getAdDetailId().equals("real_url")){
 					pfpAdDetail.setAdDetailContent(adLinkURL);
-					pfpAdDetail.setAdDetailUpdateTime(new Date());
+					pfpAdDetail.setAdDetailUpdateTime(date);
+					
+					PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
+					pfpAd.setAdStatus(EnumStatus.NoVerify.getStatusId());
+					pfpAd.setAdSendVerifyTime(date);
+					pfpAd.setAdUpdateTime(date);
+					pfpAdService.updatePfpAd(pfpAd);
 					break;
 				}
 			}
