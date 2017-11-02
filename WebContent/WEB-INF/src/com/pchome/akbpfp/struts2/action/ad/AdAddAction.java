@@ -381,7 +381,7 @@ public class AdAddAction extends BaseCookieAction{
 						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
 					}
 				}
-				
+				log.info("isBannerSize-------------------------"+isBannerSize);
 				addAd(pfpAdGroup,templateAdSeq);
 				PfpAd pfpAd = pfpAdService.get(adSeq);
 				
