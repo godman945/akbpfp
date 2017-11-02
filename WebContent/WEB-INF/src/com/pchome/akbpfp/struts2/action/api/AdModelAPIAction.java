@@ -1,13 +1,9 @@
 package com.pchome.akbpfp.struts2.action.api;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import org.apache.commons.io.IOUtils;
 
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.rmi.api.IAPIProvider;
@@ -19,6 +15,10 @@ public class AdModelAPIAction extends BaseCookieAction{
 	private String tproNo;
 	private String adNo;
 	private InputStream returnAdHtml;			// 回傳廣告
+	
+	private String adPreviewVideoURL;
+	private String adPreviewVideoBgImg="";
+	private String realUrl = "";
 	
 	/**
 	 * 吐Html廣告
@@ -35,6 +35,22 @@ public class AdModelAPIAction extends BaseCookieAction{
 	    return SUCCESS;
 	}
 	
+	
+	/**
+	 * 吐影音廣告
+	 */
+	public String adModelVideoAction() throws Exception{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+	    Date date = new Date();
+	    String adHtml = admAPI.getAdVideoContent(adPreviewVideoURL,adPreviewVideoBgImg,realUrl);
+	    log.info(adHtml);
+	    returnAdHtml = new ByteArrayInputStream(adHtml.getBytes("UTF-8"));
+	    return SUCCESS;
+	}
+	
+	
+	
+	
 	public void setAdmAPI(IAPIProvider admAPI) {
 		this.admAPI = admAPI;
 	}
@@ -49,6 +65,20 @@ public class AdModelAPIAction extends BaseCookieAction{
 
 	public void setAdNo(String adNo) {
 		this.adNo = adNo;
+	}
+
+	public void setAdPreviewVideoURL(String adPreviewVideoURL) {
+		this.adPreviewVideoURL = adPreviewVideoURL;
+	}
+
+
+	public void setAdPreviewVideoBgImg(String adPreviewVideoBgImg) {
+		this.adPreviewVideoBgImg = adPreviewVideoBgImg;
+	}
+
+
+	public void setRealUrl(String realUrl) {
+		this.realUrl = realUrl;
 	}
 
 }

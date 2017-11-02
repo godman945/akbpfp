@@ -29,9 +29,6 @@ import com.pchome.soft.util.DateValueUtil;
 
 public class AdAdViewAction extends BaseCookieAction{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private IPfpAdGroupService pfpAdGroupService;
 	private IPfpAdService pfpAdService;
@@ -53,7 +50,7 @@ public class AdAdViewAction extends BaseCookieAction{
 	private String groupMaxPrice;
 	private String adType;
 	private String adOperatingRule;
-	private String adPreviewVideoURL;
+	private String adPreviewVideoURL="";
 	private String previewHtml = "";
 	private String adPreviewVideoBgImg="";
 	private String realUrl = "";
