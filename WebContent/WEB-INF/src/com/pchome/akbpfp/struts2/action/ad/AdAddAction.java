@@ -372,9 +372,6 @@ public class AdAddAction extends BaseCookieAction{
 				String templateAdSeq = "";
 				
 				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
-					log.info("**********>"+(enumAdVideoSize.getWidh()+"_"+enumAdVideoSize.getHeight()));
-					log.info("**********>"+enumAdVideoSize.getType().equals("DEFAULT"));
-					log.info("**********>"+adSize.equals(enumAdVideoSize.getWidh()+"_"+enumAdVideoSize.getHeight()));
 					if(enumAdVideoSize.getType().equals("DEFAULT") && adSize.equals(enumAdVideoSize.getWidh()+"_"+enumAdVideoSize.getHeight())){
 						isBannerSize = false;
 					}
@@ -422,6 +419,9 @@ public class AdAddAction extends BaseCookieAction{
 				pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
 				
 				//2.儲存影片網址、影片連結網址、影片尺寸明細
+				if(adLinkURL.indexOf("http") < 0){
+					adLinkURL = "http://"+adLinkURL;
+				}
 				saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),pool,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
 				saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),pool,"");
 				saveAdDetail(adSize ,"video_size",pool,"");

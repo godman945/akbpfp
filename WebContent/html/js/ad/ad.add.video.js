@@ -41,10 +41,11 @@ $(document).ready(function(){
 	//檢查網址blur事件
 	$("#adLinkURL").blur(function() {
 		if($("#adLinkURL").length > 0 && $("#adLinkURL").val() != ""){
+			var urlParts = $("#adLinkURL").val().replace('http://','').replace('https://','').split(/[/?#]/);
 			$.ajax({
 			type: "POST",
 			url: "checkAdUrl.html",
-			data: { url: $("#adLinkURL").val()},
+			data: { url: urlParts},
 		}).done(function(msg) {
 			if(msg == 'false'){
 				$("#chkLinkURL").text('');
