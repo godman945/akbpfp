@@ -368,10 +368,11 @@ public class AdAddAction extends BaseCookieAction{
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
 				adVideoSize = picInfoJson.getString("size");
 				String adSize = adVideoSize.substring(0, 3)+"_"+adVideoSize.substring(3, adVideoSize.length());
-				
+				log.info("**********************adSize-------------------------"+adSize);
 				String pool = "";
 				String templateAdSeq = "";
 				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
+					
 					isBannerSize = true;
 					if(enumAdVideoSize.getType().equals("DEFAULT") && adVideoSize.equals(enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight())){
 						isBannerSize = false;
@@ -381,7 +382,7 @@ public class AdAddAction extends BaseCookieAction{
 						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
 					}
 				}
-				log.info("isBannerSize-------------------------"+isBannerSize);
+				log.info("**********************isBannerSize-------------------------"+isBannerSize);
 				addAd(pfpAdGroup,templateAdSeq);
 				PfpAd pfpAd = pfpAdService.get(adSeq);
 				
