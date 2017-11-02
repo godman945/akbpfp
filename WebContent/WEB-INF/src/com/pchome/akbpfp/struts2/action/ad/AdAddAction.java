@@ -364,14 +364,14 @@ public class AdAddAction extends BaseCookieAction{
 			//根據尺寸建立明細
 			for (int i = 0; i<adDetailInfoArray.length(); i++) {
 				String adVideoSize = "";
-				boolean isBannerSize = false;
+				boolean isBannerSize = true;
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
 				adVideoSize = picInfoJson.getString("size");
 				String adSize = adVideoSize.substring(0, 3)+"_"+adVideoSize.substring(3, adVideoSize.length());
 				String pool = "";
 				String templateAdSeq = "";
+				
 				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
-					isBannerSize = true;
 					log.info("**********>"+(enumAdVideoSize.getWidh()+"_"+enumAdVideoSize.getHeight()));
 					log.info("**********>"+enumAdVideoSize.getType().equals("DEFAULT"));
 					log.info("**********>"+adSize.equals(enumAdVideoSize.getWidh()+"_"+enumAdVideoSize.getHeight()));
