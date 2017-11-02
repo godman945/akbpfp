@@ -94,8 +94,8 @@
 					this.width = 230;
 					this.height = adh;
 					
-					var alex5 = this.contentDocument.body.children[0].querySelector('.adbg');
-					console.log(alex5);
+					//var alex5 = this.contentDocument.body.children[0].querySelector('.adbg');
+					//console.log(alex5);
 				}
 			};
 		}
