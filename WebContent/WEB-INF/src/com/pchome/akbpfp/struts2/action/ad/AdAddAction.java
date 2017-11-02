@@ -376,8 +376,11 @@ public class AdAddAction extends BaseCookieAction{
 					
 					log.info("********************><><<><><><><"+enumAdVideoSize.getWidh()+"_"+enumAdVideoSize.getHeight());
 					log.info("********************><><<><><><><Type:"+enumAdVideoSize.getType());
-					
+					log.info("********************><><<><><><><:"+enumAdVideoSize.getType().equals("DEFAULT"));
+					log.info("********************><><<><><><><:"+adVideoSize.equals(enumAdVideoSize.getWidh()+"_"+enumAdVideoSize.getHeight()));
 					if(enumAdVideoSize.getType().equals("DEFAULT") && adVideoSize.equals(enumAdVideoSize.getWidh()+"_"+enumAdVideoSize.getHeight())){
+						log.info("********************><><<><><><><AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa:");
+						
 						isBannerSize = false;
 					}
 					if(adVideoSize.equals(enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight())){
