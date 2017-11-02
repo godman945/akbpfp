@@ -326,8 +326,9 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 			pfpAdAdVideoViewVO.setActionStatus(objArray[9].toString());
 			pfpAdAdVideoViewVO.setImgPath(objArray[10].toString());
 			if(StringUtils.isNotBlank(objArray[11].toString())){
-				String adWidth = objArray[11].toString().substring(0, 3);
-				String adHeight = objArray[11].toString().substring(3, objArray[11].toString().length());
+				String adVideoSizeArray[] = objArray[11].toString().split("_");
+				String adWidth = adVideoSizeArray[0];
+				String adHeight = adVideoSizeArray[1];
 				pfpAdAdVideoViewVO.setAdWidth(adWidth);
 				pfpAdAdVideoViewVO.setAdHeight(adHeight);
 			}
