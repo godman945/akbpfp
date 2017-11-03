@@ -468,7 +468,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += vo.getAdPriceSum().doubleValue();
+			t_cost += Math.round(vo.getAdPriceSum().doubleValue());
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
 

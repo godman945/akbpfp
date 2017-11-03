@@ -128,7 +128,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 		List<AdReportVO> resultData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE_CHART.getTextValue(),
 				searchId, searchAdseq, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate,-1,-1);
-		System.out.println("resultData.size() = " + resultData.size());
 
 		Map<Date,Float> flashDataMap=new HashMap<Date,Float>();
 
@@ -510,7 +509,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 			t_pv += new Double(adReportVO.getAdPvSum());
 			t_click += new Double(adReportVO.getAdClkSum());
-			t_cost += new Double(adReportVO.getAdPriceSum());
+			t_cost += Math.round(new Double(adReportVO.getAdPriceSum()));
 			t_invalid += new Double(adReportVO.getAdInvClkSum());
 		}
 

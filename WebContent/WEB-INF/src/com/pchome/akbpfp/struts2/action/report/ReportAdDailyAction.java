@@ -430,7 +430,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += new Double(vo.getAdPriceSum());
+			t_cost += Math.round(new Double(vo.getAdPriceSum()));
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
 
@@ -504,7 +504,9 @@ public class ReportAdDailyAction extends BaseReportAction {
 			}
 
 			//單次互動費用 = 總費用 / 總互動次數
-			if (cost>0 && click>0) {
+			if(click == 0){
+				costAvg = cost;
+			}else{
 				costAvg = cost / click;
 			}
 

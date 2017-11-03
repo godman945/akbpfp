@@ -365,7 +365,7 @@ function showHighChart(){
 			"searchText" : $('#searchText').val()
 		},
 		success : function(respone) {
-			console.log(respone);
+			//console.log(respone);
 			dataArray = respone;
 		}
 	});
@@ -427,6 +427,13 @@ function showHighChart(){
 			selectTypeName = "費用";
 			selectSuffix = "元";
 			break;
+			
+		case "kiloCost":
+			titleName = "千次曝光費用(NT$)";
+			selectTypeName = "千次曝光費用";
+			selectSuffix = "元";
+			break;
+			
 	}
 	
 	// ---預設樣式----

@@ -167,21 +167,17 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			resultData_ad_action = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),
 					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
-			System.out.println(">>>>> 111");
 		} else if (adType.equals(EnumReport.ADTYPE_GROUP.getTextValue()) ||
 				   adType.equals(EnumReport.DETAIL_GROUP.getTextValue()) ||
 				   adType.equals(EnumReport.DETAIL_ACTIVITY.getTextValue())) {
-			System.out.println(">>>>> 222");
 			resultData_ad_group = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),
 					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 		} else if (adType.equals(EnumReport.ADTYPE_KEYWORD.getTextValue())) {
-			System.out.println(">>>>> 333");
 			resultData_kw = adKeywordReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),
 					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
 
 		} else if (adType.equals(EnumReport.ADTYPE_AD.getTextValue())) {
-			System.out.println(">>>>> 444");
 			resultData_ad = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE_CHART.getTextValue(),
 					searchId, "", searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 		}
@@ -654,12 +650,13 @@ public class ReportExcerptAction extends BaseReportAction {
 			//第一欄位
 			tableHeadList.addFirst("廣告");
 
-			//搜尋結果
+			//搜尋總計結果
 			List<AdActionReportVO> resultSumData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue(),
 					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 			totalPageSize = resultSumData.size();
 
+			//搜尋明細結果
 			List<AdActionReportVO> resultData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue(),
 					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 
@@ -1134,7 +1131,7 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += new Double(vo.getAdPriceSum());
+			t_cost += Math.round(new Double(vo.getAdPriceSum()));
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
 
@@ -1204,7 +1201,7 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += vo.getAdPriceSum().doubleValue();
+			t_cost += Math.round(vo.getAdPriceSum().doubleValue());
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
 
@@ -1295,7 +1292,7 @@ public class ReportExcerptAction extends BaseReportAction {
 			//廣泛比對
 			t_pv += new Double(keywordReportVO.getKwPvSum());
 			t_click += new Double(keywordReportVO.getKwClkSum());
-			t_cost += new Double(keywordReportVO.getKwPriceSum());
+			t_cost += Math.round(new Double(keywordReportVO.getKwPriceSum()));
 			t_invalid += new Double(keywordReportVO.getKwInvClkSum());
 			
 			//詞組比對
@@ -1464,7 +1461,7 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			t_pv += new Double(vo.getAdPvSum());
 			t_click += new Double(vo.getAdClkSum());
-			t_cost += new Double(vo.getAdPriceSum());
+			t_cost += Math.round(new Double(vo.getAdPriceSum()));
 			t_invalid += new Double(vo.getAdInvClkSum());
 		}
 

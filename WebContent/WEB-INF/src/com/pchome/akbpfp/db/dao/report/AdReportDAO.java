@@ -135,12 +135,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							String adOperatingRuleCode = null;
 							String adClkPriceType = null;
 							Integer adType = 0;
-							String adVideoSecs = "";
-							String adVideoWidth= "";
-							String adVideoHeight= "";
-							String adVideoUrl= "";
-							String adVideoImg= "";
-							
+							String adActioName = "";
 							for (int i=0; i<dataList.size(); i++) {
 
 								objArray = (Object[]) dataList.get(i);
@@ -159,21 +154,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adOperatingRuleCode = ObjectTransUtil.getInstance().getObjectToString(objArray[11]);
 								adClkPriceType = ObjectTransUtil.getInstance().getObjectToString(objArray[12]);
 								adType = Integer.parseInt(objArray[13].toString());
-
-								
-								
-								
-								String videoSize[] = ObjectTransUtil.getInstance().getObjectToString(objArray[14]).split("_");
-								if(videoSize.length == 2){
-									adVideoWidth = videoSize[0];
-									adVideoHeight = videoSize[1];
-								}else{
-									adVideoWidth ="";
-									adVideoHeight ="";
-								}
-								adVideoSecs = ObjectTransUtil.getInstance().getObjectToString(objArray[15]);
-								adVideoUrl= ObjectTransUtil.getInstance().getObjectToString(objArray[16]);
-								adVideoImg= ObjectTransUtil.getInstance().getObjectToString(objArray[17]);
+								adActioName = ObjectTransUtil.getInstance().getObjectToString(objArray[14]);
 								adReportVO = new AdReportVO();
 								adReportVO.setAdPvSum(adPvSum.toString());
 								adReportVO.setAdClkSum(adClkSum.toString());
@@ -185,7 +166,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adReportVO.setAdSeq(adSeq);
 								adReportVO.setTemplateProductSeq(templateProductSeq);
 								adReportVO.setCustomerInfoId(customerInfoId);
-								
+								adReportVO.setAdActionName(adActioName);
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
 									if("PC".equals(adDevice)){
 										adReportVO.setAdDevice("電腦");
@@ -341,10 +322,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" r.ad_operating_rule, ");
 		hql.append(" r.ad_clk_price_type, ");
 		hql.append(" r.ad_type, ");
-		hql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq  = r.ad_seq  and dt.ad_detail_id = 'video_size')video_size, ");
-		hql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq  = r.ad_seq  and dt.ad_detail_id = 'video_seconds')video_seconds, ");
-		hql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq  = r.ad_seq  and dt.ad_detail_id = 'video_url')video_url, ");
-		hql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq  = r.ad_seq  and dt.ad_detail_id = 'img')img ");
+		hql.append(" ( select aa.ad_action_name from pfp_ad_group g,pfp_ad_action aa where g.ad_group_seq  = r.ad_group_seq and g.ad_action_seq = aa.ad_action_seq)ad_action_name ");
 		hql.append(" from pfp_ad_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id = :customerInfoId");

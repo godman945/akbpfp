@@ -665,7 +665,7 @@ public class ReportKeywordAction extends BaseReportAction {
 			//廣泛比對
 			t_pv += new Double(keywordReportVO.getKwPvSum());
 			t_click += new Double(keywordReportVO.getKwClkSum());
-			t_cost += new Double(keywordReportVO.getKwPriceSum());
+			t_cost += Math.round(new Double(keywordReportVO.getKwPriceSum()));
 			t_invalid += new Double(keywordReportVO.getKwInvClkSum());
 			
 			//詞組比對

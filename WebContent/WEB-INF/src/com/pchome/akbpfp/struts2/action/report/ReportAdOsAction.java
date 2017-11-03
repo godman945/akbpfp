@@ -396,7 +396,7 @@ public class ReportAdOsAction extends BaseReportAction {
 		for (AdOsReportVO adosreportvo: resultSumData) {
 			t_pv += Double.parseDouble(adosreportvo.getAdPvSum());
 			t_click += Double.parseDouble(adosreportvo.getAdClkSum());
-			t_cost += Double.parseDouble(adosreportvo.getAdClkPriceSum());
+			t_cost += Math.round(Double.parseDouble(adosreportvo.getAdClkPriceSum()));
 			t_invalid += Double.parseDouble(adosreportvo.getAdInvalidClkSum());
 		}
 
