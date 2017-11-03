@@ -135,7 +135,12 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							String adOperatingRuleCode = null;
 							String adClkPriceType = null;
 							Integer adType = 0;
-
+							String adVideoSecs = "";
+							String adVideoWidth= "";
+							String adVideoHeight= "";
+							String adVideoUrl= "";
+							String adVideoImg= "";
+							
 							for (int i=0; i<dataList.size(); i++) {
 
 								objArray = (Object[]) dataList.get(i);
@@ -155,8 +160,21 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adClkPriceType = ObjectTransUtil.getInstance().getObjectToString(objArray[12]);
 								adType = Integer.parseInt(objArray[13].toString());
 
+								
+								
+								
+								String videoSize[] = ObjectTransUtil.getInstance().getObjectToString(objArray[14]).split("_");
+								if(videoSize.length == 2){
+									adVideoWidth = videoSize[0];
+									adVideoHeight = videoSize[1];
+								}else{
+									adVideoWidth ="";
+									adVideoHeight ="";
+								}
+								adVideoSecs = ObjectTransUtil.getInstance().getObjectToString(objArray[15]);
+								adVideoUrl= ObjectTransUtil.getInstance().getObjectToString(objArray[16]);
+								adVideoImg= ObjectTransUtil.getInstance().getObjectToString(objArray[17]);
 								adReportVO = new AdReportVO();
-
 								adReportVO.setAdPvSum(adPvSum.toString());
 								adReportVO.setAdClkSum(adClkSum.toString());
 								adReportVO.setAdPriceSum(adPriceSum.toString());
@@ -167,6 +185,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adReportVO.setAdSeq(adSeq);
 								adReportVO.setTemplateProductSeq(templateProductSeq);
 								adReportVO.setCustomerInfoId(customerInfoId);
+								
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
 									if("PC".equals(adDevice)){
 										adReportVO.setAdDevice("電腦");
@@ -309,8 +328,8 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 
 		hql.append("select ");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_report 的時候，已經減過無效點擊數了，所以不用再減
-		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");
+		hql.append(" sum(r.ad_clk_price), ");		
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" r.ad_pvclk_date, ");
 		hql.append(" r.ad_action_seq, ");
@@ -321,9 +340,12 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" r.ad_pvclk_device, ");
 		hql.append(" r.ad_operating_rule, ");
 		hql.append(" r.ad_clk_price_type, ");
-		hql.append(" r.ad_type ");
+		hql.append(" r.ad_type, ");
+		hql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq  = r.ad_seq  and dt.ad_detail_id = 'video_size')video_size, ");
+		hql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq  = r.ad_seq  and dt.ad_detail_id = 'video_seconds')video_seconds, ");
+		hql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq  = r.ad_seq  and dt.ad_detail_id = 'video_url')video_url, ");
+		hql.append(" (select dt.ad_detail_content from pfp_ad_detail dt where dt.ad_seq  = r.ad_seq  and dt.ad_detail_id = 'img')img ");
 		hql.append(" from pfp_ad_report as r ");
-		hql.append("	left outer join (select distinct ad_seq from pfp_ad_detail) as pad on (r.ad_seq = pad.ad_seq)");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id = :customerInfoId");
 		hql.append(" and r.ad_pvclk_date >= :startDate");
