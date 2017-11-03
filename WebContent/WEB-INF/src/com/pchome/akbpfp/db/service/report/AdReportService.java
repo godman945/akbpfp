@@ -13,6 +13,7 @@ import com.pchome.akbpfp.db.dao.ad.PfpAdDetailDAO;
 import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdReportDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
+import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.enumerate.report.EnumReport;
 
 public class AdReportService implements IAdReportService {
@@ -32,7 +33,6 @@ public class AdReportService implements IAdReportService {
     public List<AdReportVO> loadReportDate(String sqlType, String adGroupSeq, String adSeq, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String adOperatingRule, String startDate, String endDate,int page,int pageSize) throws Exception {
 
 		List<AdReportVO> dataList = adReportDAO.getReportList(sqlType, adGroupSeq, adSeq, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
-
 		//補上預覽 html code
 		if (sqlType.trim().equals(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue())){
 		    List<PfpAdDetail> pfpAdDetailList = null;
@@ -43,10 +43,10 @@ public class AdReportService implements IAdReportService {
 		    String adSize = null;
 		    String html5Title = null;
 		    String html5Flag = "N";
-
+		    String videoSeconds = null;
+		    String videoUrl = null;
 			for (int i=0; i<dataList.size(); i++) {
 				AdReportVO adReportVO = dataList.get(i);
-
 				pfpAdDetailList = pfpAdDetailDAO.getPfpAdDetailByAdSeq(adReportVO.getAdSeq());
 	            realUrl = null;
 	            img = null;
@@ -55,7 +55,18 @@ public class AdReportService implements IAdReportService {
 	            adSize = null;
 			    html5Title = null;
 			    html5Flag = "N";
+			    videoSeconds = null;
+			    videoUrl = null;
 				for (PfpAdDetail pfpAdDetail: pfpAdDetailList) {
+					if("video_seconds".equals(pfpAdDetail.getAdDetailId())){
+						videoSeconds = pfpAdDetail.getAdDetailContent();
+					}
+					if("video_url".equals(pfpAdDetail.getAdDetailId())){
+						videoUrl = pfpAdDetail.getAdDetailContent();
+					}
+					if("video_size".equals(pfpAdDetail.getAdDetailId())){
+						adSize = pfpAdDetail.getAdDetailContent();
+					}
                     if ("real_url".equals(pfpAdDetail.getAdDetailId())) {
                         realUrl = pfpAdDetail.getAdDetailContent();
                     }
@@ -146,10 +157,29 @@ public class AdReportService implements IAdReportService {
 						htmlCode += ("<span>" + showUrl + "</span><br><a style=\"cursor:pointer\" onclick=\"preview('" + img + "')\">預覽</a>");
 						htmlCode += "</span></span></div>";
 					}
-					
 					adReportVO.setContent("尺寸：" + imgWidth + " x " + imgHeight);
-				} else {
-					htmlCode = "<span><iframe height=\"120\" width=\"350\" src=\"adModel.html?adNo=" + adReportVO.getAdSeq() + "&tproNo=tpro_201406300001\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" frameborder=\"0\" align=\"ceneter\" class=\"akb_iframe\"></iframe></span>";
+				}else if("VIDEO".equals(adStyle)){
+					String size[] = adSize.split("_");
+					String width = "";
+					String height =  "";
+					String adPreviewVideoBgImg = img;
+					String adPreviewVideoURL = videoUrl;
+					if(size.length == 2){
+						width = size[0];
+						height = size[1];	
+					}
+					videoSeconds = videoSeconds.length() ==2 ?videoSeconds : "0"+videoSeconds;
+					htmlCode = "<div style=\"display:flex;\"><div> ";
+					htmlCode = htmlCode + "<iframe class=\"akb_iframe\" scrolling=\"no\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" vspace=\"0\" hspace=\"0\" id=\"pchome8044_ad_frame1\" width=\""+width+"\" height=\""+height+"\" allowtransparency=\"true\" allowfullscreen=\"true\" src=\"adVideoModel.html?adPreviewVideoURL="+adPreviewVideoURL+"&adPreviewVideoBgImg=http://showstg.pchome.com.tw/pfp/"+adPreviewVideoBgImg+"&realUrl="+realUrl+"\"></iframe>";
+					htmlCode = htmlCode + "</div><div style=\" text-align: left; line-height: 20px; padding: 10px;margin-top:25%;\">";
+					htmlCode = htmlCode + adReportVO.getAdActionName()+"<br>";
+					htmlCode = htmlCode + "尺寸 "+width+" x "+height+"<br>";
+					htmlCode = htmlCode + "時間 00:"+videoSeconds+"<br>";
+					htmlCode = htmlCode + "<a href=\""+realUrl+"\" target=\"_blank\" >"+realUrl;
+					htmlCode = htmlCode+"</div></div>";
+				
+				}else {
+					htmlCode =  "<span><iframe height=\"120\" width=\"350\" src=\"adModel.html?adNo=" + adReportVO.getAdSeq() + "&tproNo=tpro_201406300001\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" frameborder=\"0\" align=\"ceneter\" class=\"akb_iframe\"></iframe></span>";
 				}
 
 				adReportVO.setAdPreview(htmlCode);
@@ -175,4 +205,5 @@ public class AdReportService implements IAdReportService {
 
 		return dataList;
 	}
+	
 }
