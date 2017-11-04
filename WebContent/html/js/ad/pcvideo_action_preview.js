@@ -91,21 +91,11 @@
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					
-//					console.log(this);
-//					console.log(this.contentDocument);
-					console.log(this.contentDocument.childNodes[0]);
-					
 					console.log(this.contentDocument.childNodes[0].getElementsByTagName("head")[0]);
-					
-					this.contentDocument.children[0].getElementsByTagName("head")[0].appendChild(css);
-					
-					
+					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 					
 					this.width = 230;
 					this.height = adh;
-					
-					//var alex5 = this.contentDocument.body.children[0].querySelector('.adbg');
-					//console.log(alex5);
 				}
 			};
 		}
