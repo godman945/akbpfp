@@ -92,7 +92,7 @@
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 					
-					var adbg = this.contentDocument.body.childNodes[0].contentWindow.document.querySelector('.adbg');
+					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					console.log(adbg);
 					this.width = 230;
 					this.height = adh;
