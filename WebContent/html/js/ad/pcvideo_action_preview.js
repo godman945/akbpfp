@@ -96,12 +96,8 @@
 					
 					
 					
-//					adbg.setAttribute("style", "height:250px");
-					
-					console.log(adbg);
-					
-					console.log(adbg.style.background);
-					
+					adbg.setAttribute("style", "background");
+					console.log(adbg.style);
 					
 					this.width = 230;
 					this.height = adh;
