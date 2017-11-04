@@ -59,6 +59,9 @@
 					if(this.width == 950){
 						this.width = 950 - 310;
 					}
+					if(this.width == 970){
+						this.width = 950 - 579;
+					}
 					
 					var adratio = this.height / this.width;
 					
