@@ -63,7 +63,7 @@
 						adratio = this.width / this.height;
 					}
 						
-					var adw = 250;
+					var adw = 300;
 					var adh = adw * adratio;
 					
 					var barh = 30
