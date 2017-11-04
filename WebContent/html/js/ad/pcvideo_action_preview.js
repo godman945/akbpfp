@@ -56,7 +56,13 @@
 					var css = document.createElement("style");
 					css.type = "text/css";
 					
-					var adratio = this.height / this.width;
+					var adratio = null;
+					if(this.width > this.height){
+						adratio = this.height / this.width;
+					}else{
+						adratio = this.width / this.height;
+					}
+						
 					var adw = 250;
 					var adh = adw * adratio;
 					
