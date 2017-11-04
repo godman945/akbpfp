@@ -92,9 +92,9 @@
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 					
-					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
-					adbg.setAttribute("style", "background-image: url('')");
-					console.log(adbg);
+//					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
+//					adbg.setAttribute("style", "background-image: url('')");
+//					console.log(adbg);
 					this.width = 230;
 					this.height = adh;
 				}
