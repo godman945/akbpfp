@@ -93,12 +93,8 @@
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
-					
-					document.body.style.backgroundImage = "url('')";
-					
-					adbg.setAttribute("style", "background");
-					console.log(adbg.style.backgroundImage);
-					
+					adbg.setAttribute("style", "background-image: url('')");
+					console.log(adbg);
 					this.width = 230;
 					this.height = adh;
 				}
