@@ -94,10 +94,10 @@
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					
-					
+					document.body.style.backgroundImage = "url('')";
 					
 					adbg.setAttribute("style", "background");
-					console.log(adbg.style);
+					console.log(adbg.style.backgroundImage);
 					
 					this.width = 230;
 					this.height = adh;
