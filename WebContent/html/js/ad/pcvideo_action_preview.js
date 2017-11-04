@@ -93,8 +93,7 @@
 					
 					console.log(this);
 					console.log(this.contentDocument);
-					console.log(this.contentDocument.children[0]);
-					console.log(this.contentDocument.children[0].getElementsByTagName("head"));
+					console.log(this.contentDocument.childNodes);
 					
 					
 					
