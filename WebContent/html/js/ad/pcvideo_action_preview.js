@@ -70,7 +70,7 @@
 					var ypos;
 
 					var adbg = "";
-					var poster = "img/video/missdior.gif"
+					//var poster = "img/video/missdior.gif"
 					
 					if (vdoh/adw<ratio){
 						vdow=vdoh/ratio;
@@ -89,8 +89,8 @@
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					adbg.setAttribute("style", "background-color:black;");
-					this.width = 230;
-					this.height = adh;
+//					this.width = 230;
+//					this.height = adh;
 				}
 			};
 		}
