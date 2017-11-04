@@ -55,10 +55,11 @@
 					
 					var css = document.createElement("style");
 					css.type = "text/css";
-					this.height = this.height - 30;
+					
 					var adratio = this.height / this.width;
 					var adw = 230;
 					var adh = adw * adratio;
+					
 					var barh = 30
 					var vdow;
 					var vdoh = adh - barh;
