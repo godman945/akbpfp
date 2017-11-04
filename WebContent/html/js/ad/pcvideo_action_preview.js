@@ -100,7 +100,7 @@
 					
 					console.log(adbg);
 					
-					console.log(adbg.getAttribute('background'));
+					console.log(adbg.style.background);
 					
 					
 					this.width = 230;
