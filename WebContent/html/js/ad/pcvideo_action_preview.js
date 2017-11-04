@@ -55,20 +55,14 @@
 					
 					var css = document.createElement("style");
 					css.type = "text/css";
-//					this.height = this.height - 30;
-					//console.log('>>>>>>>>>>>>>this.height:'+this.height);
-					
-					
+					this.height = this.height - 30;
 					var adratio = this.height / this.width;
 					var adw = 230;
-					
 					var adh = adw * adratio;
-				//	console.log('>>>>>>>>>>>>>adh:'+adh);
 					var barh = 30
 					var vdow;
 					var vdoh = adh - barh;
 					var ratio = 0.5625;
-
 					var xcenter=false;
 					var ycenter=true;
 					var xpos;
