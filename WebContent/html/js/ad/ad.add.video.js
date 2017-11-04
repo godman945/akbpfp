@@ -41,7 +41,7 @@ $(document).ready(function(){
 	//檢查網址blur事件
 	$("#adLinkURL").blur(function() {
 		if($("#adLinkURL").length > 0 && $("#adLinkURL").val() != ""){
-			var urlParts = $("#adLinkURL").val().replace('http://','').replace('https://','').split(/[/?#]/);
+			var urlParts = $("#adLinkURL").val().replace('http://','').replace('https://','');
 			$.ajax({
 			type: "POST",
 			url: "checkAdUrl.html",
