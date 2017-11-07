@@ -85,8 +85,6 @@
 						adh = adw * adratio;
 					}
 					
-					
-					
 					var barh = 30
 					var vdow;
 					var vdoh = adh - barh;
@@ -111,7 +109,7 @@
 					}
 					imgWidth = adw - vdow;
 					
-					if(this.width == 100.77){
+					if(adw == 100.77){
 						vdow = 100.77;
 					}
 					
