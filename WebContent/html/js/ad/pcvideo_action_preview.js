@@ -80,9 +80,9 @@
 					var adh = null;
 					if(this.width == 100.77){
 						adh = this.height;
+						adw = 100.77;
 					}else{
 						adh = adw * adratio;
-						adw = 100.77;
 					}
 					
 					
