@@ -95,13 +95,14 @@
 					var xpos;
 					var ypos;
 					
-					if (vdoh/adw<ratio){
-						vdow=vdoh/ratio;
+					if (vdoh/adw < ratio){
+						vdow= vdoh / ratio;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
 						ypos=0;
 						imgWidth = adw - vdow;
 						vdow+="px";
 					}else{
+						console.log('this.width:'+this.width);
 						vdow=100;
 						imgWidth = adw - vdow;
 						xpos=0
