@@ -63,12 +63,14 @@
 					}
 					
 					if(this.width == 970){
-						var v = 970 - 579;
-						var p = 970 - v;
-						var vt = v / 970;
-						var pt = p / 970;
-						this.width = 250 * vt;
-						adw = this.width
+//						var v = 970 - 579;
+//						var p = 970 - v;
+//						var vt = v / 970;
+//						var pt = p / 970;
+//						this.width = 250 * vt;
+//						adw = this.width
+//						adw = this.width
+						this.width = 100.77;
 						this.height = 64.43;
 						console.log('-----------------'+this.width);
 					}
