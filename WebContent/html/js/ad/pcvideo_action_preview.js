@@ -80,15 +80,6 @@
 					var ypos;
 
 					var adbg = "";
-					/*
-					if(this.width == 640){
-						this.height = 390 * 0.2631;
-					}else if(this.width == 391){
-						this.height = 250 * 0.2577;
-					}else{
-						
-					}
-					*/
 					
 					
 					if (vdoh/adw<ratio){
@@ -107,7 +98,15 @@
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
-					adbg.setAttribute("style", "background-color:black;");
+					
+					if(this.height = 102.63){
+						adbg.setAttribute("style", "background-size:188.8px 64.42px");
+					}
+					if(this.height = 64.43){
+						adbg.setAttribute("style", "background-size:121px 102.63px");
+					}
+					
+					
 					
 					this.width = adw;
 					this.height = adh;
