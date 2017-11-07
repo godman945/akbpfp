@@ -70,6 +70,9 @@
 						var pt = p / 970;
 						
 						this.width = 250 * vt;
+						
+						console.log('970 w:'+250 * vt);
+						
 						this.height = 64.43;
 					}
 					
