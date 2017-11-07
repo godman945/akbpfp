@@ -77,14 +77,7 @@
 					
 					var adratio = this.height / this.width;
 					
-					var adh = null;
-//					if(this.width == 100.77){
-//						adh = this.height;
-//						adw = 100.77;
-//					}else{
-						adh = adw * adratio;
-//					}
-					
+					var	adh = adw * adratio;
 					var barh = 30
 					var vdow;
 					var vdoh = adh - barh;
@@ -106,8 +99,6 @@
 							console.log('vdow:'+vdoh / ratio);
 							vdow = "100.77px";
 						}
-						
-						
 					}else{
 						vdow=100;
 						xpos=0
@@ -131,6 +122,7 @@
 					console.log('imgWidth:'+imgWidth);
 					
 					var imgHeight = this.height;
+					var imgWidth = this.height;
 					adbg.setAttribute("style", "background-size:250px "+imgHeight+"px");
 					/*
 					if(this.height == 102.63){
