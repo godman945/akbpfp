@@ -57,11 +57,10 @@
 					css.type = "text/css";
 					var adw = 250;
 					var imgWidth;
-					if(this.width == 950){
-						this.width = 250;
-						this.height = 102.63;
-					}
-					
+//					if(this.width == 950){
+//						this.width = 250;
+//						this.height = 102.63;
+//					}
 //					if(this.width == 970){
 ////						var v = 970 - 579;
 ////						var p = 970 - v;
