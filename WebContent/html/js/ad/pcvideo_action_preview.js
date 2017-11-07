@@ -27,8 +27,10 @@
 					var videoCountdown = video.parentElement.parentElement.parentElement.querySelector('#video-countdown');
 					var videoIconbox = video.parentElement.parentElement.parentElement.querySelector('.video-iconbox');
 					var videoBtn = video.parentElement.querySelector('.video-btn');
+					var adlinkbtn1 = video.parentElement.parentElement.parentElement.parentElement.querySelector('#ad-linkbtn');
+					var adlinkbtn2 = video.parentElement.querySelector('#video-linkbtn');
 					
-					
+					adlinkbtn1.setAttribute("style", "opacity:1;position:absolute");
 					playbtn.addEventListener('click', function() {
 						PlayHandler(video);
 					});
@@ -69,23 +71,16 @@
 						videoCountdown.setAttribute("style", "margin-top:-10px;font-size:6px;");
 						videoIconbox.setAttribute("style", "margin-top:-10px;");
 						videoBtn.setAttribute("style", "margin-top:-10px;");
+						pausebtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
+						replaybtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
 						playbtn.setAttribute("style", "width:35px;margin-left:-35px");
-						pausebtn.setAttribute("style", "width:35px;margin-left:-35px");
-						
-						
-//						videoBtn.setAttribute("style", "width:35px;margin-left:-35px");
-//						replaybtn.setAttribute("style", "width:35px;margin-left:-35px");
-//						pausebtn.setAttribute("style", "width:35px;margin-left:-35px");
-//						playbtn.setAttribute("style", "width:35px;margin-left:-35px");
 					}else if(this.width == 950 && this.height == 390) {
 						barh = 7.9;
 						videoCountdown.setAttribute("style", "margin-top:-10px;font-size:6px;");
 						videoIconbox.setAttribute("style", "margin-top:-10px;");
 						pausebtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
-						playbtn.setAttribute("style", "width:35px;margin-left:-35px");
-//						videoBtn.setAttribute("style", "width:35px;margin-left:-35px");
-//						replaybtn.setAttribute("style", "width:35px;margin-left:-35px");
-						
+						replaybtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
+						playbtn.setAttribute("style", "width:35px;margin-left:-35px;position:absolute;");
 						
 					}
 					var vdow;
