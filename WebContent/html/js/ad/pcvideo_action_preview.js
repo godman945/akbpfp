@@ -26,6 +26,9 @@
 					var videoSoundoff = video.parentElement.parentElement.parentElement.querySelector('#video-soundoff');
 					var videoSoundOn = video.parentElement.parentElement.parentElement.querySelector('#video-soundon');
 					
+					var videoCountdown = video.parentElement.parentElement.parentElement.querySelector('#video-countdown');
+					var videoIconbox = video.parentElement.parentElement.parentElement.querySelector('.video-iconbox');
+					
 					playbtn.addEventListener('click', function() {
 						PlayHandler(video);
 					});
@@ -63,7 +66,11 @@
 					if(this.width == 970 && this.height == 250){
 						barh = 7.7304;
 					}else if(this.width == 950 && this.height == 390) {
-						barh = 4.955;
+						barh = 7.9;
+						
+						videoCountdown.setAttribute("style", "margin-top:-10px;");
+						videoIconbox.setAttribute("style", "margin-top:-10px;"); 
+						
 					}
 					var vdow;
 					var vdoh = adh - barh;
