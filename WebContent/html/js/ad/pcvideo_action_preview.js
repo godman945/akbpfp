@@ -82,6 +82,7 @@
 						adh = this.height;
 					}else{
 						adh = adw * adratio;
+						adw = 100.77;
 					}
 					
 					
@@ -96,7 +97,7 @@
 					var ypos;
 					
 					if (vdoh/adw < ratio){
-						vdow= vdoh / ratio;
+						vdow = vdoh / ratio;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
 						ypos=0;
 						imgWidth = adw - vdow;
