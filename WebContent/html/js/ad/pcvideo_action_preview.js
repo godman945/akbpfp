@@ -60,7 +60,15 @@
 						this.width = 950 - 310;
 					}
 					if(this.width == 970){
+						console.log('---------970--------');
+						
 						this.width = 950 - 579;
+						this.height = 950 - 579;
+						
+						
+						console.log('this.height:'+this.height);
+						console.log('this.width:'+this.width);
+						
 					}
 					
 					var adratio = this.height / this.width;
@@ -107,8 +115,10 @@
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					adbg.setAttribute("style", "background-color:black;");
 					
+					this.width = adw;
+					this.height = adh;
 					
-					
+					/*
 					if(this.width == 640){
 						this.width = adw;
 						this.height = 390 * 0.2631;
@@ -116,10 +126,9 @@
 						this.width = adw;
 						this.height = 250 * 0.2577;
 					}else{
-						this.width = adw;
-						this.height = adh;
-					}
 					
+					}
+					*/
 				}
 			};
 		}
