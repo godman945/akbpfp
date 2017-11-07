@@ -70,15 +70,15 @@
 						videoIconbox.setAttribute("style", "margin-top:-10px;");
 						videoBtn.setAttribute("style", "margin-top:-10px;");
 						videoBtn.setAttribute("style", "width:35px;margin-left:-35px");
-						pausebtn.setAttribute("style", "width:35px;margin-left:-35px");
 						replaybtn.setAttribute("style", "width:35px;margin-left:-35px");
+						pausebtn.setAttribute("style", "width:35px;margin-left:-35px");
 					}else if(this.width == 950 && this.height == 390) {
 						barh = 7.9;
 						videoCountdown.setAttribute("style", "margin-top:-10px;font-size:6px;");
 						videoIconbox.setAttribute("style", "margin-top:-10px;");
 						videoBtn.setAttribute("style", "width:35px;margin-left:-35px");
-						pausebtn.setAttribute("style", "width:35px;margin-left:-35px");
 						replaybtn.setAttribute("style", "width:35px;margin-left:-35px");
+						pausebtn.setAttribute("style", "width:35px;margin-left:-35px");
 						
 					}
 					var vdow;
