@@ -101,16 +101,23 @@
 						vdow = vdoh / ratio;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
 						ypos=0;
-						imgWidth = adw - vdow;
 						vdow+="px";
 					}else{
 						console.log('vdoh/adw > ratio-------------');
 						vdow=100;
-						imgWidth = adw - vdow;
 						xpos=0
 						ypos=(!ycenter)?0:(adh-adw*0.5625-30)/2;
 						vdow+="%";
 					}
+					imgWidth = adw - vdow;
+					
+					if(this.width == 100.77){
+						vdow = 100.77;
+					}
+					
+					
+					
+					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 					
