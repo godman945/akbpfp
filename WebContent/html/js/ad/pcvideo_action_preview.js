@@ -97,7 +97,7 @@
 					
 					
 					var imgWidth = 250 - vdow;
-					
+					console.log('vdow:'+vdow);
 					console.log('imgWidth:'+imgWidth);
 					
 					var imgHeight = this.height;
