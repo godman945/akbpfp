@@ -82,10 +82,6 @@
 					var imgHeight;
 					
 					
-					
-					
-					
-					
 					if (vdoh/adw < ratio){
 						vdow = vdoh / ratio;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
@@ -99,15 +95,18 @@
 							vdow = "100.77px";
 							vdoh = 34.42;
 							imgWidth = adw - 100.77;
-						}else	if(this.width == 950 && this.height == 390){
+							imgHeight = adh;
+						}else if(this.width == 950 && this.height == 390){
 							console.log('vdoh:'+vdoh);
 							console.log('ratio:'+ratio);
 							console.log('vdow:'+vdoh / ratio);
 							imgWidth = adw - 168;
+							imgHeight = adh;
 							vdow = "168.25px";
 							vdoh = 72;
 						}else{
 							imgWidth = 250;
+							imgHeight = adh;
 						}
 						
 					}else{
@@ -124,7 +123,7 @@
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					
 					console.log('imgWidth:'+imgWidth);
-					var imgHeight = this.height;
+					
 	
 					
 					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px");
