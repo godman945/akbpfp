@@ -94,12 +94,18 @@
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					
+					
+					
+					var imgWidth = adw - vdow;
+					var imgHeight = this.height;
+					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px");
+					/*
 					if(this.height == 102.63){
 						adbg.setAttribute("style", "background-size:188.8px 64.42px");
 					}else	if(this.height == 64.43){
 						adbg.setAttribute("style", "background-size:121px 102.63px");
 					}
-					
+					*/
 					
 					this.width = adw;
 					this.height = adh;
