@@ -73,7 +73,7 @@
 //						this.width = 250;
 //						this.height = 64.43;
 //						console.log('-----------------'+this.width);
-					}
+//					}
 					
 					var adratio = this.height / this.width;
 					
@@ -82,7 +82,7 @@
 //						adh = this.height;
 //						adw = 100.77;
 //					}else{
-//						adh = adw * adratio;
+						adh = adw * adratio;
 //					}
 					
 					var barh = 30
