@@ -22,12 +22,12 @@
 					var playbtn = video.parentElement.querySelector('#video-playbtn');
 					var pausebtn = video.parentElement.querySelector('#video-pausebtn');
 					var replaybtn = video.parentElement.querySelector('#video-replaybtn');
-					
 					var videoSoundoff = video.parentElement.parentElement.parentElement.querySelector('#video-soundoff');
 					var videoSoundOn = video.parentElement.parentElement.parentElement.querySelector('#video-soundon');
-					
 					var videoCountdown = video.parentElement.parentElement.parentElement.querySelector('#video-countdown');
 					var videoIconbox = video.parentElement.parentElement.parentElement.querySelector('.video-iconbox');
+					var videoBtn = video.parentElement.querySelector('.video-btn');
+					
 					
 					playbtn.addEventListener('click', function() {
 						PlayHandler(video);
@@ -66,10 +66,15 @@
 					var barh = 30;
 					if(this.width == 970 && this.height == 250){
 						barh = 7.7304;
+						videoCountdown.setAttribute("style", "margin-top:-10px;font-size:6px;");
+						videoIconbox.setAttribute("style", "margin-top:-10px;");
+						videoBtn.setAttribute("style", "margin-top:-10px;");
+						videoBtn.setAttribute("style", "width:35px;margin-left:-35px");
 					}else if(this.width == 950 && this.height == 390) {
 						barh = 7.9;
 						videoCountdown.setAttribute("style", "margin-top:-10px;font-size:6px;");
-						videoIconbox.setAttribute("style", "margin-top:-10px;"); 
+						videoIconbox.setAttribute("style", "margin-top:-10px;");
+						videoBtn.setAttribute("style", "width:35px;margin-left:-35px");
 					}
 					var vdow;
 					var vdoh = adh - barh;
