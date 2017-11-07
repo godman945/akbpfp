@@ -69,7 +69,7 @@
 						barh = 7.9;
 						
 						videoCountdown.setAttribute("style", "margin-top:-10px;");
-						videoIconbox.setAttribute("style", "margin-top:-10px;"); 
+						videoIconbox.setAttribute("style", "margin-top:-10px;font-size:6px;"); 
 						
 					}
 					var vdow;
