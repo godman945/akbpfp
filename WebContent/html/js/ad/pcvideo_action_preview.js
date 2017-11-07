@@ -66,10 +66,8 @@
 					}
 					
 					var adratio = this.height / this.width;
-					
 					var adw = 250;
 					var adh = adw * adratio;
-					
 					var barh = 30
 					var vdow;
 					var vdoh = adh - barh;
@@ -78,9 +76,6 @@
 					var ycenter=true;
 					var xpos;
 					var ypos;
-
-					var adbg = "";
-					
 					
 					if (vdoh/adw<ratio){
 						vdow=vdoh/ratio;
@@ -99,13 +94,11 @@
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					
-					if(this.height = 102.63){
+					if(this.height == 102.63){
 						adbg.setAttribute("style", "background-size:188.8px 64.42px");
-					}
-					if(this.height = 64.43){
+					}else	if(this.height == 64.43){
 						adbg.setAttribute("style", "background-size:121px 102.63px");
 					}
-					
 					
 					
 					this.width = adw;
