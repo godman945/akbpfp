@@ -62,19 +62,16 @@
 						this.width = 250;
 						this.height = 102.63;
 					}
-					console.log('-----------------'+this.width);
+					
 					if(this.width == 970){
 						var v = 970 - 579;
 						var p = 970 - v;
-						
 						var vt = v / 970;
 						var pt = p / 970;
-						
 						this.width = 250 * vt;
-						
 						console.log('970 w:'+250 * vt);
-						
 						this.height = 64.43;
+						console.log('-----------------'+this.width);
 					}
 					
 					var adratio = this.height / this.width;
