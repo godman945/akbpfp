@@ -80,7 +80,7 @@
 						playbtn.setAttribute("style", "width:35px;margin-left:-35px");
 //						videoBtn.setAttribute("style", "width:35px;margin-left:-35px");
 //						replaybtn.setAttribute("style", "width:35px;margin-left:-35px");
-						pausebtn.setAttribute("style", "width:35px;margin-left:-35px");
+//						pausebtn.setAttribute("style", "width:35px;margin-left:-35px");
 						
 					}
 					var vdow;
