@@ -189,8 +189,12 @@
 			var playbtn = video.parentElement.querySelector('#video-playbtn');
 			var pausebtn = video.parentElement.querySelector('#video-pausebtn');
 			var adcountdown = video.parentElement.parentElement.parentElement.querySelector('#video-countdown');
+			var adlinkbtn1 = video.parentElement.parentElement.parentElement.parentElement.querySelector('#ad-linkbtn');
+			var adlinkbtn2 = video.parentElement.querySelector('#video-linkbtn');
 			pausebtn.style.display='block';
 			adcountdown.style.display='block';
+			adlinkbtn1.style.opacity=1;
+			adlinkbtn2.style.display='block';
 			video.pause();
 		}
 		
