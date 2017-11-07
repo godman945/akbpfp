@@ -78,7 +78,17 @@
 					var ypos;
 
 					var adbg = "";
-					//var poster = "img/video/missdior.gif"
+					
+					if(this.width == 640){
+						this.height = 390 * 0.2631;
+					}else if(this.width == 391){
+						this.height = 250 * 0.2577;
+					}else{
+						this.width = adw;
+						this.height = adh;
+					}
+					
+					
 					
 					if (vdoh/adw<ratio){
 						vdow=vdoh/ratio;
@@ -97,16 +107,6 @@
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					adbg.setAttribute("style", "background-color:black;");
-					if(this.width == 950){
-						this.height = 390 * 0.2631;
-					}else if(this.width == 970){
-						this.height = 250 * 0.2577;
-					}else{
-						this.width = adw;
-						this.height = adh;
-					}
-					
-					
 				}
 			};
 		}
