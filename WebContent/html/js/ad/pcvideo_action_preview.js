@@ -95,13 +95,24 @@
 					var ypos;
 					
 					if (vdoh/adw < ratio){
-						console.log('vdoh/adw < ratio-------------');
+						
+						if(this.width == 970 && this.height == 250){
+							console.log('vdoh:'+vdoh);
+							console.log('ratio'+ratio);
+							console.log('vdow'+vdoh / ratio);
+						}
+						
+						
+						
 						vdow = vdoh / ratio;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
 						ypos=0;
 						vdow+="px";
+						
+						
+						
+						
 					}else{
-						console.log('vdoh/adw > ratio-------------');
 						vdow=100;
 						xpos=0
 						ypos=(!ycenter)?0:(adh-adw*0.5625-30)/2;
