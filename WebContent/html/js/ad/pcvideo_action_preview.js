@@ -75,8 +75,6 @@
 					
 					var adratio = this.height / this.width;
 					
-					
-					
 					var adh = adw * adratio;
 					var barh = 30
 					var vdow;
@@ -108,7 +106,7 @@
 					console.log('imgWidth:'+imgWidth);
 					
 					var imgHeight = this.height;
-					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px");
+					adbg.setAttribute("style", "background-size:250px "+imgHeight+"px");
 					/*
 					if(this.height == 102.63){
 						adbg.setAttribute("style", "background-size:188.8px 64.42px");
