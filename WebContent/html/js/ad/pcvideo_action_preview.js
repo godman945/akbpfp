@@ -115,7 +115,7 @@
 					}
 					*/
 					
-					this.width = adw;
+					this.width = 250;
 					this.height = adh;
 					
 					/*
