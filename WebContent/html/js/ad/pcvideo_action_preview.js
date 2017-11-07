@@ -99,6 +99,14 @@
 							console.log('vdow:'+vdoh / ratio);
 							vdow = "100.77px";
 						}
+						
+						if(this.width == 950 && this.height == 390){
+							console.log('vdoh:'+vdoh);
+							console.log('ratio:'+ratio);
+							console.log('vdow:'+vdoh / ratio);
+							vdow = "168.25px";
+						}
+						
 					}else{
 						vdow=100;
 						xpos=0
@@ -123,6 +131,9 @@
 					
 					var imgHeight = this.height;
 					var imgWidth = this.height;
+					
+	
+					
 					adbg.setAttribute("style", "background-size:250px "+imgHeight+"px");
 					/*
 					if(this.height == 102.63){
