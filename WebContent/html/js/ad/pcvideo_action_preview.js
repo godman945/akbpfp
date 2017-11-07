@@ -58,7 +58,6 @@
 					var adw = 250;
 					var imgWidth;
 					if(this.width == 950){
-						
 						this.width = 250;
 						this.height = 102.63;
 					}
@@ -96,6 +95,7 @@
 						vdow+="px";
 					}else{
 						vdow=100;
+						imgWidth = adw - vdow;
 						xpos=0
 						ypos=(!ycenter)?0:(adh-adw*0.5625-30)/2;
 						vdow+="%";
@@ -106,7 +106,7 @@
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					
-				//	console.log('imgWidth:'+imgWidth);
+					console.log('imgWidth:'+imgWidth);
 					
 					var imgHeight = this.height;
 					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px");
