@@ -264,7 +264,7 @@
 .aduplodul_v .v_box{  border:1px solid #ccc;background-color: #fff;float: left;margin-right: 8px; margin-bottom: 10px;}
 .aduplodul_v .v_preview {padding: 10px;background-color: #fff;}
 .aduplodul_v span {border-bottom: 1px solid ##eaeaea;font-size: 15px; color: #000; margin: auto; display: block; padding: 8px;background-color: #eee;text-align: center;}
-.box_a_style { height: 460px;width: 230px; text-align: center;  display: table-cell; vertical-align: middle; }
+.box_a_style { height: 500px;width: 230px; text-align: center;  display: table-cell; vertical-align: middle; }
 .box_a_style img { width: 100%;text-align: center; vertical-align: middle  }
 
 .box_b_style { height: 330px;width: 390px;text-align: center;  display: table-cell; vertical-align: middle; }
