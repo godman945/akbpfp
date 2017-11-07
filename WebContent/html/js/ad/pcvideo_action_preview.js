@@ -55,27 +55,9 @@
 					
 					var css = document.createElement("style");
 					css.type = "text/css";
-					var adw = 250;
-					var imgWidth;
-//					if(this.width == 950){
-//						this.width = 250;
-//						this.height = 102.63;
-//					}
-//					if(this.width == 970){
-////						var v = 970 - 579;
-////						var p = 970 - v;
-////						var vt = v / 970;
-////						var pt = p / 970;
-////						this.width = 250 * vt;
-////						adw = this.width
-////						adw = this.width
-//						this.width = 250;
-//						this.height = 64.43;
-//						console.log('-----------------'+this.width);
-//					}
 					
 					var adratio = this.height / this.width;
-					
+					var adw = 250;
 					var	adh = adw * adratio;
 					var barh = 30
 					var vdow;
@@ -85,7 +67,8 @@
 					var ycenter=true;
 					var xpos;
 					var ypos;
-					
+					var imgWidth;
+					var imgHeight;
 					if (vdoh/adw < ratio){
 						vdow = vdoh / ratio;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
@@ -97,6 +80,7 @@
 							console.log('ratio:'+ratio);
 							console.log('vdow:'+vdoh / ratio);
 							vdow = "100.77px";
+							vdoh = 34.42;
 						}
 						
 						if(this.width == 950 && this.height == 390){
@@ -104,6 +88,7 @@
 							console.log('ratio:'+ratio);
 							console.log('vdow:'+vdoh / ratio);
 							vdow = "168.25px";
+							vdoh = 72;
 						}
 						
 					}else{
