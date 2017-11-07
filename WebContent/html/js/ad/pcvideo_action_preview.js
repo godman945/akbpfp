@@ -81,7 +81,7 @@
 						barh = 7.9;
 						videoCountdown.setAttribute("style", "margin-top:-10px;font-size:6px;");
 						videoIconbox.setAttribute("style", "margin-top:-10px;");
-						pausebtn.setAttribute("style", "width:35px;margin-left:-35px");
+						pausebtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
 						playbtn.setAttribute("style", "width:35px;margin-left:-35px");
 //						videoBtn.setAttribute("style", "width:35px;margin-left:-35px");
 //						replaybtn.setAttribute("style", "width:35px;margin-left:-35px");
