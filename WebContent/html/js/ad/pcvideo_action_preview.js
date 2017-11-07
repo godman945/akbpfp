@@ -96,7 +96,10 @@
 					
 					
 					
-					var imgWidth = adw - vdow;
+					var imgWidth = 250 - vdow;
+					
+					console.log('imgWidth:'+imgWidth);
+					
 					var imgHeight = this.height;
 					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px");
 					/*
