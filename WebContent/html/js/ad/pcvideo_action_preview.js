@@ -56,7 +56,7 @@
 					var css = document.createElement("style");
 					css.type = "text/css";
 					var adw = 250;
-					
+					var imgWidth;
 					if(this.width == 950){
 						
 						this.width = 250;
@@ -87,7 +87,7 @@
 					var ycenter=true;
 					var xpos;
 					var ypos;
-					var imgWidth;
+					
 					if (vdoh/adw<ratio){
 						vdow=vdoh/ratio;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
@@ -100,7 +100,7 @@
 						ypos=(!ycenter)?0:(adh-adw*0.5625-30)/2;
 						vdow+="%";
 					}
-					
+					adw = 250;
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 					
