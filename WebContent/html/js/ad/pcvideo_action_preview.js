@@ -57,18 +57,12 @@
 					css.type = "text/css";
 					
 					if(this.width == 950){
-						this.width = 950 - 310;
+						this.width = 250;
+						this.height = 102.63;
 					}
 					if(this.width == 970){
-						console.log('---------970--------');
-						
 						this.width = 250;
 						this.height = 64.43;
-						
-						
-						console.log('this.height:'+this.height);
-						console.log('this.width:'+this.width);
-						
 					}
 					
 					var adratio = this.height / this.width;
