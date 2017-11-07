@@ -55,18 +55,25 @@
 					
 					var css = document.createElement("style");
 					css.type = "text/css";
+					var adw = 250;
 					
 					if(this.width == 950){
+						
 						this.width = 250;
 						this.height = 102.63;
 					}
 					if(this.width == 970){
-						this.width = 250;
+						var v = 970 - 579;
+						var p = 970 - w;
+						
+						var vt = v / 970;
+						var pt = p / 970;
+						
+						this.width = 250 * vt;
 						this.height = 64.43;
 					}
 					
 					var adratio = this.height / this.width;
-					var adw = 250;
 					var adh = adw * adratio;
 					var barh = 30
 					var vdow;
