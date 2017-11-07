@@ -62,8 +62,8 @@
 					if(this.width == 970){
 						console.log('---------970--------');
 						
-						this.width = 950 - 579;
-						this.height = 250;
+						this.width = 250;
+						this.height = 950 - 579;
 						
 						
 						console.log('this.height:'+this.height);
