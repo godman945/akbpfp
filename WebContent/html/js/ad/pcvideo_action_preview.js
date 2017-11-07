@@ -62,28 +62,28 @@
 						this.height = 102.63;
 					}
 					
-					if(this.width == 970){
-//						var v = 970 - 579;
-//						var p = 970 - v;
-//						var vt = v / 970;
-//						var pt = p / 970;
-//						this.width = 250 * vt;
-//						adw = this.width
-//						adw = this.width
-						this.width = 250;
-						this.height = 64.43;
-						console.log('-----------------'+this.width);
+//					if(this.width == 970){
+////						var v = 970 - 579;
+////						var p = 970 - v;
+////						var vt = v / 970;
+////						var pt = p / 970;
+////						this.width = 250 * vt;
+////						adw = this.width
+////						adw = this.width
+//						this.width = 250;
+//						this.height = 64.43;
+//						console.log('-----------------'+this.width);
 					}
 					
 					var adratio = this.height / this.width;
 					
 					var adh = null;
-					if(this.width == 100.77){
-						adh = this.height;
-						adw = 100.77;
-					}else{
-						adh = adw * adratio;
-					}
+//					if(this.width == 100.77){
+//						adh = this.height;
+//						adw = 100.77;
+//					}else{
+//						adh = adw * adratio;
+//					}
 					
 					var barh = 30
 					var vdow;
@@ -109,9 +109,9 @@
 					}
 					imgWidth = adw - vdow;
 					
-					if(adw == 100.77){
-						vdow = 100.77;
-					}
+//					if(adw == 100.77){
+//						vdow = 100.77;
+//					}
 					
 					
 					
