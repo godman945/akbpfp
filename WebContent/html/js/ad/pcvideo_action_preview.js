@@ -76,11 +76,12 @@
 					var ycenter=true;
 					var xpos;
 					var ypos;
-					
+					var imgWidth;
 					if (vdoh/adw<ratio){
 						vdow=vdoh/ratio;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
 						ypos=0;
+						imgWidth = adw - vdow;
 						vdow+="px";
 					}else{
 						vdow=100;
@@ -94,10 +95,6 @@
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					
-					
-					
-					var imgWidth = 250 - vdow;
-					console.log('vdow:'+vdow);
 					console.log('imgWidth:'+imgWidth);
 					
 					var imgHeight = this.height;
