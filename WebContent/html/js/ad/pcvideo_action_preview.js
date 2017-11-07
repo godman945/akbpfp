@@ -58,11 +58,9 @@
 					
 					if(this.width == 950){
 						this.width = 950 - 310;
-						this.height = 390 * 0.2631;
 					}
 					if(this.width == 970){
 						this.width = 950 - 579;
-						this.height = 250 * 0.2577;
 					}
 					
 					var adratio = this.height / this.width;
@@ -99,8 +97,16 @@
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					adbg.setAttribute("style", "background-color:black;");
-					this.width = adw;
-					this.height = adh;
+					if(this.width == 950){
+						this.height = 390 * 0.2631;
+					}else if(this.width == 970){
+						this.height = 250 * 0.2577;
+					}else{
+						this.width = adw;
+						this.height = adh;
+					}
+					
+					
 				}
 			};
 		}
