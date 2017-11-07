@@ -62,15 +62,14 @@
 					var adratio = this.height / this.width;
 					var adw = 250;
 					var	adh = adw * adratio;
+					
 					var barh = 30;
 					if(this.width == 970 && this.height == 250){
 						barh = 7.7304;
 					}else if(this.width == 950 && this.height == 390) {
 						barh = 7.9;
-						
-						videoCountdown.setAttribute("style", "margin-top:-10px;");
-						videoIconbox.setAttribute("style", "margin-top:-10px;font-size:6px;"); 
-						
+						videoCountdown.setAttribute("style", "margin-top:-10px;font-size:6px;");
+						videoIconbox.setAttribute("style", "margin-top:-10px;"); 
 					}
 					var vdow;
 					var vdoh = adh - barh;
@@ -81,6 +80,11 @@
 					var ypos;
 					var imgWidth;
 					var imgHeight;
+					
+					
+					
+					
+					
 					
 					if (vdoh/adw < ratio){
 						vdow = vdoh / ratio;
@@ -94,14 +98,16 @@
 							console.log('vdow:'+vdoh / ratio);
 							vdow = "100.77px";
 							vdoh = 34.42;
-						}
-						
-						if(this.width == 950 && this.height == 390){
+							imgWidth = adw - 100.77;
+						}else	if(this.width == 950 && this.height == 390){
 							console.log('vdoh:'+vdoh);
 							console.log('ratio:'+ratio);
 							console.log('vdow:'+vdoh / ratio);
+							imgWidth = adw - 168;
 							vdow = "168.25px";
 							vdoh = 72;
+						}else{
+							imgWidth = 250;
 						}
 						
 					}else{
@@ -110,14 +116,7 @@
 						ypos=(!ycenter)?0:(adh-adw*0.5625-30)/2;
 						vdow+="%";
 					}
-					imgWidth = adw - vdow;
-					
-//					if(adw == 100.77){
-//						vdow = 100.77;
-//					}
-					
-					
-					
+//					imgWidth = adw - vdow;
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
@@ -125,13 +124,10 @@
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					
 					console.log('imgWidth:'+imgWidth);
-					
 					var imgHeight = this.height;
-					var imgWidth = this.height;
-					
 	
 					
-					adbg.setAttribute("style", "background-size:250px "+imgHeight+"px");
+					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px");
 					/*
 					if(this.height == 102.63){
 						adbg.setAttribute("style", "background-size:188.8px 64.42px");
