@@ -62,6 +62,7 @@
 						this.width = 250;
 						this.height = 102.63;
 					}
+					console.log('-----------------'+this.width);
 					if(this.width == 970){
 						var v = 970 - 579;
 						var p = 970 - w;
