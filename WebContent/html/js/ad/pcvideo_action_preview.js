@@ -70,7 +70,7 @@
 //						this.width = 250 * vt;
 //						adw = this.width
 //						adw = this.width
-						this.width = 100.77;
+						this.width = 250;
 						this.height = 64.43;
 						console.log('-----------------'+this.width);
 					}
@@ -97,13 +97,14 @@
 					var ypos;
 					
 					if (vdoh/adw < ratio){
+						console.log('vdoh/adw < ratio-------------');
 						vdow = vdoh / ratio;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
 						ypos=0;
 						imgWidth = adw - vdow;
 						vdow+="px";
 					}else{
-						console.log('this.width:'+this.width);
+						console.log('vdoh/adw > ratio-------------');
 						vdow=100;
 						imgWidth = adw - vdow;
 						xpos=0
