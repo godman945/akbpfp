@@ -69,12 +69,15 @@
 						var vt = v / 970;
 						var pt = p / 970;
 						this.width = 250 * vt;
-						console.log('970 w:'+250 * vt);
+						adw = this.width
 						this.height = 64.43;
 						console.log('-----------------'+this.width);
 					}
 					
 					var adratio = this.height / this.width;
+					
+					
+					
 					var adh = adw * adratio;
 					var barh = 30
 					var vdow;
