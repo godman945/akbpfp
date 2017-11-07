@@ -674,9 +674,7 @@ function autoPreview(objData){
 	iframeInfoMap["iframe"+0] = {width:300,height:250};
 	iframeInfoMap["iframe"+1] = {width:336,height:280};
 	iframeInfoMap["iframe"+2] = {width:640,height:390};
-	
 	var url = objData.previewUrl;
-	
 	console.log('url:'+url);
 	
 	$.each(iframeInfoMap, function(key, obj) {
