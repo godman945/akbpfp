@@ -95,21 +95,17 @@
 					var ypos;
 					
 					if (vdoh/adw < ratio){
-						
-						if(this.width == 970 && this.height == 250){
-							console.log('vdoh:'+vdoh);
-							console.log('ratio'+ratio);
-							console.log('vdow'+vdoh / ratio);
-						}
-						
-						
-						
 						vdow = vdoh / ratio;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
 						ypos=0;
 						vdow+="px";
 						
-						
+						if(this.width == 970 && this.height == 250){
+							console.log('vdoh:'+vdoh);
+							console.log('ratio:'+ratio);
+							console.log('vdow:'+vdoh / ratio);
+							vdow = "100.77px";
+						}
 						
 						
 					}else{
