@@ -77,7 +77,15 @@
 					
 					var adratio = this.height / this.width;
 					
-					var adh = adw * adratio;
+					var adh = null;
+					if(this.width == 100.77){
+						adh = this.height;
+					}else{
+						adh = adw * adratio;
+					}
+					
+					
+					
 					var barh = 30
 					var vdow;
 					var vdoh = adh - barh;
