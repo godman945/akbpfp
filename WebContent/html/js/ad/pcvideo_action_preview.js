@@ -29,7 +29,8 @@
 					var videoBtn = video.parentElement.querySelector('.video-btn');
 					var adlinkbtn1 = video.parentElement.parentElement.parentElement.parentElement.querySelector('#ad-linkbtn');
 					var adlinkbtn2 = video.parentElement.querySelector('#video-linkbtn');
-					
+					var videoControlbar = video.parentElement.parentElement.parentElement.querySelector('.video-controlbar');
+
 					adlinkbtn1.setAttribute("style", "opacity:1;position:absolute");
 					playbtn.addEventListener('click', function() {
 						PlayHandler(video);
@@ -68,23 +69,7 @@
 					var	adh = adw * adratio;
 					
 					var barh = 30;
-					if(this.width == 970 && this.height == 250){
-						barh = 7.7304;
-						videoCountdown.setAttribute("style", "margin-top:-10px;font-size:6px;");
-						videoIconbox.setAttribute("style", "margin-top:-10px;");
-						videoBtn.setAttribute("style", "margin-top:-10px;");
-						pausebtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
-						replaybtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
-						playbtn.setAttribute("style", "width:35px;margin-left:-35px");
-					}else if(this.width == 950 && this.height == 390) {
-						barh = 7.9;
-						videoCountdown.setAttribute("style", "margin-top:-10px;font-size:6px;");
-						videoIconbox.setAttribute("style", "margin-top:-10px;");
-						pausebtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
-						replaybtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
-						playbtn.setAttribute("style", "width:35px;margin-left:-35px;position:absolute;");
-						
-					}
+					
 					var vdow;
 					var vdoh = adh - barh;
 					var ratio = 0.5625;
@@ -94,62 +79,67 @@
 					var ypos;
 					var imgWidth;
 					var imgHeight;
+					var specialTemplate = false;
+					
+					if((this.width == 970 && this.height == 250) || this.width == 950 && this.height == 390){
+						specialTemplate = true;
+					}
 					
 					
-					if (vdoh/adw < ratio){
+					//1.原始尺寸換算預覽寬高
+					var previewRatio = adw / this.width;
+					var previewHeight =  previewRatio * this.height;
+					
+					
+					var barhRatio = barh / this.height;
+					barh = previewHeight * barhRatio;
+					
+					//3.計算視頻16:9位置大小 
+					if(specialTemplate){
+						//計算字幕高度
+						vdoh = previewHeight - barh;
 						vdow = vdoh / ratio;
+						imgWidth = adw - vdow;
+						imgHeight = previewHeight;
 						xpos=(!xcenter)?0:(adw-vdow)/2;
 						ypos=0;
 						vdow+="px";
 						
-						if(this.width == 970 && this.height == 250){
-							console.log('vdoh:'+vdoh);
-							console.log('ratio:'+ratio);
-							console.log('vdow:'+vdoh / ratio);
-							vdow = "100.77px";
-							vdoh = 34.42;
-							imgWidth = adw - 100.77;
-							imgHeight = adh;
-						}else if(this.width == 950 && this.height == 390){
-							console.log('vdoh:'+vdoh);
-							console.log('ratio:'+ratio);
-							console.log('vdow:'+vdoh / ratio);
-							imgWidth = adw - 168;
-							imgHeight = adh;
-							vdow = "168.25px";
-							vdoh = 72;
+						if(navigator.userAgent.match("Safari")){
+							videoCountdown.setAttribute("style", "margin-top:-10px;-webkit-transform:scale(0.45);");
 						}else{
-							imgWidth = 250;
-							imgHeight = adh;
+							videoCountdown.setAttribute("style", "margin-top:-10px;font-size:6px;");
 						}
 						
+						if(this.width == 970 && this.height == 250){
+							videoIconbox.setAttribute("style", "margin-top:-30px;");
+						}else{
+							videoIconbox.setAttribute("style", "margin-top:-10px;");
+						}
+						
+						videoBtn.setAttribute("style", "margin-top:-10px;");
+						pausebtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
+						replaybtn.setAttribute("style", "width:35px;margin-left:-35px;display:none");
+						playbtn.setAttribute("style", "width:35px;margin-left:-35px");
+						videoControlbar.setAttribute("style", "height:"+barh+"px;");
 					}else{
-						vdow=100;
-						xpos=0
-						ypos=(!ycenter)?0:(adh-adw*0.5625-30)/2;
-						vdow+="%";
+						imgWidth = adw;
+						imgHeight = previewHeight;
+						vdow = 100;
+						xpos = 0
+						ypos = (!ycenter) ?0 : (adh-adw*0.5625-30) / 2;
+						vdow +="%";
 					}
-//					imgWidth = adw - vdow;
+					
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
-					
-					console.log('imgWidth:'+imgWidth);
-					
+					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px");
 	
 					
-					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px");
-					/*
-					if(this.height == 102.63){
-						adbg.setAttribute("style", "background-size:188.8px 64.42px");
-					}else	if(this.height == 64.43){
-						adbg.setAttribute("style", "background-size:121px 102.63px");
-					}
-					*/
-					
-					this.width = 250;
+					this.width = adw;
 					this.height = adh;
 					
 					adlinkbtn1.style.opacity=1;
