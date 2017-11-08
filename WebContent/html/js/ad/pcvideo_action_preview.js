@@ -58,6 +58,8 @@
 						VideoSound(true,videoSoundoffObj,videoSoundOnObj,video);
 					});
 					
+					video.load();
+					
 					var css = document.createElement("style");
 					css.type = "text/css";
 					
