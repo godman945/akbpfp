@@ -152,17 +152,9 @@
 					this.width = 250;
 					this.height = adh;
 					
-					/*
-					if(this.width == 640){
-						this.width = adw;
-						this.height = 390 * 0.2631;
-					}else if(this.width == 391){
-						this.width = adw;
-						this.height = 250 * 0.2577;
-					}else{
-					
-					}
-					*/
+					adlinkbtn1.style.opacity=1;
+					adlinkbtn2.style.display='block';
+					video.load();
 				}
 			};
 		}
