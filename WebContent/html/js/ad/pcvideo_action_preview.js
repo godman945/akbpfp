@@ -113,6 +113,7 @@
 						
 						if(this.width == 970 && this.height == 250){
 							videoIconbox.setAttribute("style", "margin-top:-30px;");
+							videoSoundoff.setAttribute("style", "margin-left:-125px;position:fixed;margin-top:25px;");
 						}else{
 							videoIconbox.setAttribute("style", "margin-top:-10px;");
 						}

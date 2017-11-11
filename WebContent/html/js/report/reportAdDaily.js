@@ -365,7 +365,7 @@ function showHighChart(){
 			"searchText" : $('#searchText').val()
 		},
 		success : function(respone) {
-			//console.log(respone);
+//			console.log(respone);
 			dataArray = respone;
 		}
 	});

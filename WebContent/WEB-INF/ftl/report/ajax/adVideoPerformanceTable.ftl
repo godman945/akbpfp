@@ -84,7 +84,7 @@ ${page}/${totalPage}
 				<th width="200" colspan="2" rowspan="2">影片明細</th>
 				<th width="100" rowspan="2">計價方式</th>
 				<th width="50" rowspan="2">裝置</th>
-				<th width="80" rowspan="2">廣告尺寸</th>
+				<th width="80" rowspan="2">廣告</th>
 				<th width="80" rowspan="2">曝光數</th>
 				<th width="80" rowspan="2">收視數</th>
 				<th width="80" rowspan="2">收視率</th>
@@ -115,10 +115,10 @@ ${page}/${totalPage}
 						<td><img src="http://show.pchome.com.tw/html/img/icon_adclose.gif" alt="關閉" title="關閉"></td>
 					</#if>
 		            <td>
-			  	    <div style="padding: 8px;width:80px;height:auto;margin: 0 auto"><img src="http://showstg.pchome.com.tw/pfp/${adVideoPerformanceReportVO.adImg!}" width="80"></div></td>
+		            <iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${adVideoPerformanceReportVO.templateProductWidth!}" height="${adVideoPerformanceReportVO.templateProductHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=${adVideoPerformanceReportVO.videoUrl!}&adPreviewVideoBgImg=http://showstg.pchome.com.tw/pfp/${adVideoPerformanceReportVO.adImg!}&realUrl=${adVideoPerformanceReportVO.adLinkUrl!}"></iframe>
+			  	   
 					<td style=" text-align: left; line-height: 20px; padding: 10px; ">${adVideoPerformanceReportVO.adGroupName!}<br>${adVideoPerformanceReportVO.templateProductWidth!}x${adVideoPerformanceReportVO.templateProductHeight!}<br>00:30<br>
-					  	<a href="#" target="_blank">${adVideoPerformanceReportVO.videoUrl!}</a><br>
-						<span class="table_preview_btn"><a href="#">預覽</a></span>
+					  	<a href="#" target="_blank">${adVideoPerformanceReportVO.adLinkUrl!}</a><br>
 					</td>
 					<td><#if adVideoPerformanceReportVO.adPriceType == 'CPM'>千次曝光出價<#else>單次收視出價</#if><br>${adVideoPerformanceReportVO.adPriceType!}</td>
 					<td>全部</td>
@@ -152,21 +152,21 @@ ${page}/${totalPage}
 			    <th height="30" align=""><#if adPriceType =="">全部<#else>${adPriceType}</#if></th>
 			    <th height="30" align=""><#if adPvclkDevice =="">全部<#else>${adPvclkDevice}</#if></th>
 			    <th height="30" align=""><#if adSize =="">全部<#else>${width} x ${height}</#if></th>
-			    <th height="30" align="right">${sumPV!}</th>
-			    <th height="30" align="right">${sumView!}</th>
-			    <th height="30" align="right">${sumViewRatings!}%</th>
-			    <th height="30" align="right">NT$ ${sumSingleAdViewCost!}</th>
-			    <th height="30" align="right">${sumThousandsCost!}%</th>
-			    <th height="30" align="right">NT$ ${sumCost!}</th>
-			    <th height="30" align="right">${sumVideoProvess25!}</th>
-			   	<th height="30" align="right">${sumVideoProvess50!}</th>
-			    <th height="30" align="right">${sumVideoProvess75!}</th>
-			    <th height="30" align="right">${sumVideoProvess100!}</th>
-			    <th height="30" align="right">${sumVideoProcess100Ratings!}%</th>
-			    <th height="30" align="right">${sumClick}</th>
-			    <th height="30" align="right">${sumVideoUniq}</th>
-			    <th height="30" align="right">${sumMusic}</th>
-			    <th height="30" align="right">${sumReplay}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adPvSum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewSum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewRatings!}%</th>
+			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.singleAdViewCost!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.thousandsCost!}</th>
+			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.costSum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess25Sum!}</th>
+			   	<th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess50Sum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess75Sum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Sum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Ratings!}%</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adClkSum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoUniqSum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoMusicSum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoReplaySum!}</th>
 			</tr>    
 	   	</tfoot>
 	</table> 
