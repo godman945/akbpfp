@@ -88,6 +88,11 @@ public class ReportAdGroupAction extends BaseReportAction {
 	
 	private String reportTitle;
 
+	private NumberFormat intFormat = new DecimalFormat("###,###,###,###");
+	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+	
 	public String flashDataDownLoad() throws Exception {
 
 		//查詢日期寫進 cookie
@@ -475,12 +480,6 @@ public class ReportAdGroupAction extends BaseReportAction {
 	private void resultDataTrans(List<AdGroupReportVO> resultData) throws Exception {
 
 		LinkedList<String> tableInDataList;
-
-        NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 
 		long nowTime = new Date().getTime();
 

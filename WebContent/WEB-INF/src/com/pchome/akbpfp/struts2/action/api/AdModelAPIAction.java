@@ -43,7 +43,7 @@ public class AdModelAPIAction extends BaseCookieAction{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 	    Date date = new Date();
 	    String adHtml = admAPI.getAdVideoContent(adPreviewVideoURL,adPreviewVideoBgImg,realUrl);
-	    log.info(adHtml);
+//	    log.info(adHtml);
 	    returnAdHtml = new ByteArrayInputStream(adHtml.getBytes("UTF-8"));
 	    return SUCCESS;
 	}

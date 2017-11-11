@@ -8,7 +8,7 @@ import com.pchome.akbpfp.db.vo.report.ReportQueryConditionVO;
 
 public interface IAdVideoPerformanceReportDAO extends IBaseDAO<PfpAdVideoReport, Integer> {
 	
-	public List<Object> getReportList(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
+	public List<Object> getReportDataList(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
 	
-	public List<Object> getReportChartList(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
+	public List<Object> getReportCount(ReportQueryConditionVO reportQueryConditionVO,String type) throws Exception;
 }

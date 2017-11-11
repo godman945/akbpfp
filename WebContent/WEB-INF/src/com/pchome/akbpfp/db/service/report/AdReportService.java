@@ -164,14 +164,26 @@ public class AdReportService implements IAdReportService {
 					String height =  "";
 					String adPreviewVideoBgImg = img;
 					String adPreviewVideoURL = videoUrl;
+					String style = "";
 					if(size.length == 2){
 						width = size[0];
-						height = size[1];	
+						height = size[1];
+						if(Integer.parseInt(size[1]) == 480){
+							style = "margin-top:35%;";
+						}else if(Integer.parseInt(size[1]) == 600){
+							style = "margin-top:49.1%;";
+						}else if(Integer.parseInt(size[0]) >= 900){
+							style = "";
+						}else if(Integer.parseInt(size[0]) == 640){
+							style = "margin-top:11%;";
+						}else{
+							style = "margin-top:17%;";
+						}
 					}
 					videoSeconds = videoSeconds.length() ==2 ?videoSeconds : "0"+videoSeconds;
 					htmlCode = "<div style=\"display:flex;\"><div> ";
 					htmlCode = htmlCode + "<iframe class=\"akb_iframe\" scrolling=\"no\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" vspace=\"0\" hspace=\"0\" id=\"pchome8044_ad_frame1\" width=\""+width+"\" height=\""+height+"\" allowtransparency=\"true\" allowfullscreen=\"true\" src=\"adVideoModel.html?adPreviewVideoURL="+adPreviewVideoURL+"&adPreviewVideoBgImg=http://showstg.pchome.com.tw/pfp/"+adPreviewVideoBgImg+"&realUrl="+realUrl+"\"></iframe>";
-					htmlCode = htmlCode + "</div><div style=\" text-align: left; line-height: 20px; padding: 10px;margin-top:25%;\">";
+					htmlCode = htmlCode + "</div><div style=\" text-align: left; line-height: 20px; padding: 10px;"+style+"\">";
 					htmlCode = htmlCode + adReportVO.getAdActionName()+"<br>";
 					htmlCode = htmlCode + "尺寸 "+width+" x "+height+"<br>";
 					htmlCode = htmlCode + "時間 00:"+videoSeconds+"<br>";
@@ -196,6 +208,8 @@ public class AdReportService implements IAdReportService {
 						adReportVO.setContent(adPropertiesValue);
 					} else if (adPropertiesName.equals("real_url")) {
 						adReportVO.setRealUrl(adPropertiesValue);
+						adReportVO.setAdGroupName(adDetail.getPfpAd().getPfpAdGroup().getAdGroupName());
+						adReportVO.setAdGroupStatus(adDetail.getPfpAd().getPfpAdGroup().getAdGroupStatus());
 					} else if (adPropertiesName.equals("show_url")) {
 						adReportVO.setShowUrl(adPropertiesValue);
 					}

@@ -15,7 +15,7 @@ public class AdReportVO {
 
 	private String adGroupSeq; //廣告分類序號
 	private String adGroupName; //廣告分類名稱
-	private String adGroupStatus; //廣告分類狀態
+	private int adGroupStatus; //廣告分類狀態
 
 	private String adActionSeq; //廣告活動序號
 	private String adActionName; //廣告活動名稱
@@ -146,11 +146,12 @@ public class AdReportVO {
 		this.adStatus = adStatus;
 	}
 
-	public String getAdGroupStatus() {
+
+	public int getAdGroupStatus() {
 		return adGroupStatus;
 	}
 
-	public void setAdGroupStatus(String adGroupStatus) {
+	public void setAdGroupStatus(int adGroupStatus) {
 		this.adGroupStatus = adGroupStatus;
 	}
 

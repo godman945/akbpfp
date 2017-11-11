@@ -7,7 +7,9 @@ import com.pchome.akbpfp.db.vo.report.ReportQueryConditionVO;
 
 public interface IAdVideoPerformanceReportService {
 	
-	public List<AdVideoPerformanceReportVO> loadReportDate(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
+	public List<AdVideoPerformanceReportVO> loadReportDateList(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
+	
+	public AdVideoPerformanceReportVO loadReportDateSum(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
 	
 	public List<AdVideoPerformanceReportVO> loadReportChart(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
 

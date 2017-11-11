@@ -563,7 +563,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 			t_cost += Math.round(vo.getAdPriceSum().doubleValue());
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-
+		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
@@ -634,6 +634,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 
 			double pv = vo.getAdPvSum().doubleValue();
 			double click = vo.getAdClkSum().doubleValue();
+			
 			double cost = vo.getAdPriceSum().doubleValue();
 			double invClick = vo.getAdInvClkSum().doubleValue();
 			double ctr = 0;

@@ -11,6 +11,8 @@ public class AdVideoPerformanceReportVO {
 	private String adImg;
 	//分類名稱
 	private String adGroupName;
+	//分類名稱
+	private String adActionName;
 	//尺寸寬度
 	private String templateProductWidth;
 	//尺寸高度
@@ -47,14 +49,14 @@ public class AdVideoPerformanceReportVO {
 	private String adVideoProcess100Ratings;
 	//點選次數總數
 	private String adClkSum;
-	//收視人數總數
+	//收視人數總數(不重複)
 	private String adVideoUniqSum;
 	//聲音開啟次數總數
 	private String adVideoMusicSum;
 	//重播次數總數
 	private String adVideoReplaySum;
-	
-	
+	//影片秒數
+	private String adVideoSec;
 	
 	public Date getReportDate() {
 		return reportDate;
@@ -206,6 +208,18 @@ public class AdVideoPerformanceReportVO {
 	}
 	public void setAdLinkUrl(String adLinkUrl) {
 		this.adLinkUrl = adLinkUrl;
+	}
+	public String getAdActionName() {
+		return adActionName;
+	}
+	public void setAdActionName(String adActionName) {
+		this.adActionName = adActionName;
+	}
+	public String getAdVideoSec() {
+		return adVideoSec;
+	}
+	public void setAdVideoSec(String adVideoSec) {
+		this.adVideoSec = adVideoSec;
 	}
 	
 }

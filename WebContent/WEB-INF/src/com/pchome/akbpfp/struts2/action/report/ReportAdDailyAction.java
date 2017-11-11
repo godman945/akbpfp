@@ -68,23 +68,22 @@ public class ReportAdDailyAction extends BaseReportAction {
 	private String searchText = "";//搜尋文字
 	private String adShowWay = "";//廣告顯示位址,一般,內容
 	private String searchId = "";//廣告id ,某活動,某群組id
-
 	private String stepStr = "";//頁面顯示,目前位址,廣告活動-->act01-->
-
 	private String charPic="";//圖表格式
 	private String charType="";//度量
 	
 	//download report 
 	private String downloadFlag = "";//download report 旗標
-
 	private InputStream downloadFileStream;//下載報表的 input stream
-
 	private String downloadFileName;//下載顯示名
-
 	private String flashData;//flash chart json data
-
 	private String reportTitle;
-
+	
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	NumberFormat intFormat = new DecimalFormat("###,###,###,###");
+	NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+	
+	
 	public String flashDataDownLoad() throws Exception {
 
 		//查詢日期寫進 cookie
@@ -108,16 +107,17 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 		Map<Date, Float> flashDataMap = new HashMap<Date, Float>();
 
-		double pv = 0;
-		double click = 0;
-		double cost = 0;
-		double invClick = 0;
-		double ctr = 0;
-		double costAvg = 0;
-		double kiloCost = 0;
+	
 
 		for (int i=0; i<resultData.size(); i++) {
-
+			double pv = 0;
+			double click = 0;
+			double cost = 0;
+			double invClick = 0;
+			double ctr = 0;
+			double costAvg = 0;
+			double kiloCost = 0;
+			
 			AdActionReportVO vo = resultData.get(i);
 
 			Date reportDate = vo.getReportDate();
@@ -127,34 +127,32 @@ public class ReportAdDailyAction extends BaseReportAction {
 			invClick = vo.getAdInvClkSum().doubleValue();
 
 			//互動率 = 互動次數 / 曝光數
-			if (pv>0 && click>0) {
-				ctr = (click / pv) * 100;
-			}
+			ctr = (click / pv) * 100;
 
 			//單次互動費用 = 總費用 / 總互動次數
-			if (cost>0 && click>0) {
+			if(click == 0){
+				costAvg = cost;
+			}else{
 				costAvg = cost / click;
 			}
 
 			//千次曝光費用 = 總費用*1000 / 曝光數
-			if(cost>0 && pv>0){
-				 kiloCost = (cost * 1000) / pv;
-			}
-
+			kiloCost = (cost * 1000) / pv;
+			
 			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) pv));
+				flashDataMap.put(reportDate, new Float((float)pv));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) click));
+				flashDataMap.put(reportDate, new Float((float)click));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) ctr));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(ctr)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) invClick));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(invClick)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) costAvg));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(costAvg)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) kiloCost));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(kiloCost)));
             } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) cost));
+            	flashDataMap.put(reportDate, new Float(doubleFormat.format(cost)));
 			}
 		}
 
@@ -425,29 +423,28 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 		//加總
 		for (int i=0; i<resultSumData.size(); i++) {
-
 			AdActionReportVO vo = resultSumData.get(i);
-
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
+			
+			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>"+vo.getAdPriceSum());
+			
 			t_cost += Math.round(new Double(vo.getAdPriceSum()));
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
 
 		//互動率 = 總互動次數 / 總曝光數
-		if (t_pv>0 && t_click>0) {
-			t_ctr = (t_click / t_pv) * 100;
-		}
+		t_ctr = (t_click / t_pv) * 100;
 
 		//單次互動費用 = 總費用 / 總互動次數
-		if (t_cost>0 && t_click>0) {
+		if (t_click == 0) {
+			t_costAvg = t_cost;
+		}else{
 			t_costAvg = t_cost / t_click;
 		}
 		
 		//千次曝光費用 = 總費用*1000 / 曝光數
-		if(t_cost>0 && t_pv>0){
-			t_kiloCost = (t_cost * 1000) / t_pv;
-		}
+		t_kiloCost = (t_cost * 1000) / t_pv;
 		
 		if (!tableHeadShowList.isEmpty()) {
 			String mapKey;
@@ -476,11 +473,6 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 		LinkedList<String> tableInDataList;
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
-
 		for (int i=0; i<resultData.size(); i++) {
 
 			tableInDataList = new LinkedList<String>();
@@ -490,6 +482,8 @@ public class ReportAdDailyAction extends BaseReportAction {
 			String reportDate = dateFormat.format(vo.getReportDate());
 			double pv = vo.getAdPvSum().doubleValue();
 			double click = vo.getAdClkSum().doubleValue();
+			System.out.println(vo.getAdPriceSum());
+			System.out.println("-------------");
 			double cost = new Double(vo.getAdPriceSum());
 			double invClick = vo.getAdInvClkSum().doubleValue();
 			double ctr = 0;
@@ -499,9 +493,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 			String adType = vo.getAdType();
 
 			//互動率 = 互動次數 / 曝光數
-			if (pv>0 && click>0) {
-				ctr = (click / pv) * 100;
-			}
+			ctr = (click / pv) * 100;
 
 			//單次互動費用 = 總費用 / 總互動次數
 			if(click == 0){
@@ -511,9 +503,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 			}
 
 			//千次曝光費用 = 總費用*1000 / 曝光數
-			if(cost>0 && pv>0){
-				kiloCost = (cost * 1000) / pv;
-			}
+			kiloCost = (cost * 1000) / pv;
 
 			tableInDataList.addLast(reportDate);
 			tableInDataList.addLast(adType);

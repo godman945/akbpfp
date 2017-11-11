@@ -16,21 +16,20 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.pchome.enumerate.ad.EnumAdType;
-import com.pchome.enumerate.report.EnumReport;
-import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdActionDAO;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdDAO;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdGroupDAO;
 import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
-import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdReportService;
-import com.pchome.soft.util.DateValueUtil;
+import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
+import com.pchome.soft.util.DateValueUtil;
 
 public class ReportAdvertiseAction extends BaseReportAction {
 
@@ -41,14 +40,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	private LinkedList<LinkedList<String>> tableDataList =null; // 頁面 table data
 	private LinkedList<String> tableDataTotalList =null; //頁面全部加總table total foot
 
-	//private String[] align_data = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right", "right"};
-	//private String[] align_sum = {"center", "center", "left", "left", "center", "right", "right", "right", "right", "right", "right"};
-	// 20140318： 隱藏 "無效點選次數" 欄位
-	private String[] align_data = {"center", "left", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "center"};
-	private String[] align_sum = {"center", "center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "center"};
-	
-	private String[] align_data2 = {"center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
-	private String[] align_sum2 = {"center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
 
 
 	private IAdReportService adReportService=null;
@@ -148,7 +139,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			Date reportDate = dateFormat.parse(adReportVO.getReportDate());
 			pv = Double.parseDouble(adReportVO.getAdPvSum());
 			click = Double.parseDouble(adReportVO.getAdClkSum());
-			cost = Double.parseDouble(adReportVO.getAdPriceSum());
+			cost = Math.round(Double.parseDouble(adReportVO.getAdPriceSum()));
 			invClick = Double.parseDouble(adReportVO.getAdInvClkSum());
 
 			//互動率 = 互動次數 / 曝光數
@@ -315,7 +306,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		if(downloadFlag.trim().equals("yes")){
 			page=-1;
 		}
-
+		
 		tableHeadList.addFirst("裝置");
 		tableHeadList.addFirst("計價方式");
 		tableHeadList.addFirst("廣告樣式");
@@ -325,7 +316,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		} else {
 			tableHeadList.addFirst("廣告");
 			tableHeadList.addFirst("分類");
-			
 			if(downloadFlag.equals("yes")){
 				tableHeadList.addFirst("實際連結");
 				tableHeadList.addFirst("顯示連結");
@@ -370,6 +360,9 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		return SUCCESS;
 	}
 
+	/**
+	 * 點擊下載報表
+	 * */
 	private void makeDownloadReportData() throws Exception {
 
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddhhmmss");
@@ -389,6 +382,8 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		if(StringUtils.isNotBlank(searchAdseq)){
 			content.append("報表名稱,PChome 廣告明細成效->每日花費報表");
 			content.append("\n\n");
+			PfpAd pfpAd = pfpAdDAO.get(searchAdseq);
+			adName = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName();
 			content.append("廣告明細," + adName);
 		} else {
 			content.append("報表名稱,PChome 廣告明細成效");
@@ -512,7 +507,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			t_cost += Math.round(new Double(adReportVO.getAdPriceSum()));
 			t_invalid += new Double(adReportVO.getAdInvClkSum());
 		}
-
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
@@ -563,23 +557,25 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		String adActionName = "";
 		String adGroupName = "";
 		int adActionStatus = 0;
-		int adGroupStatus = 0;
 		int adStatus = 0;
 		String adDevice = "";
 		String adType = "";
 		String adPvclkDate = "";
 		adName = "";
 		
+		/*廣告明細成效第二層*/
 		StringBuffer stepStrBuffer=new StringBuffer();
 		stepStrBuffer.append("<a href=\"javascript:void(0);\" onclick=\"ajaxFormSubmit();\" >廣告明細成效</a>");
 		stepStrBuffer.append("&nbsp; >> &nbsp;");
-		stepStrBuffer.append("每日花費：");
+		stepStrBuffer.append("每日花費： ");
 
 		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
 
 		for (int i=0; i<resultData.size(); i++) {
-
+			
+			AdReportVO adReportVO = resultData.get(i);
+			
 			double pv = 0;
 			double click = 0;
 			double cost = 0;
@@ -587,8 +583,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			double ctr = 0;
 			double costAvg = 0;
 			double kiloCost = 0;
-
-			AdReportVO adReportVO = resultData.get(i);
 
 			tableInDataList = new LinkedList<String>();
 
@@ -604,6 +598,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 			pv = new Double(adReportVO.getAdPvSum());
 			click = new Double(adReportVO.getAdClkSum());
+			
 			cost = new Double(adReportVO.getAdPriceSum());
 			invClick = new Double(adReportVO.getAdInvClkSum());
 
@@ -622,21 +617,11 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				kiloCost = (cost * 1000) / pv;
 			}
 
-
 			PfpAdAction pfpAdAction = new PfpAdAction();
 			try {
 				pfpAdAction = pfpAdActionDAO.getPfpAdActionBySeq(adReportVO.getAdActionSeq());
 				adActionName = pfpAdAction.getAdActionName();
 				adActionStatus = pfpAdAction.getAdActionStatus();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			PfpAdGroup pfpAdGroup = new PfpAdGroup();
-			try {
-				pfpAdGroup = pfpAdGroupDAO.getPfpAdGroupBySeq(adReportVO.getAdGroupSeq());
-				adGroupName = pfpAdGroup.getAdGroupName();
-				adGroupStatus = pfpAdGroup.getAdGroupStatus();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -678,53 +663,45 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			String alter = "";
 			String icon = "icon_adclose.gif";
 			if (adActionStatus == EnumStatus.Broadcast.getStatusId() &&
-				adGroupStatus == EnumStatus.Open.getStatusId() &&
+				adReportVO.getAdGroupStatus() == EnumStatus.Open.getStatusId() &&
 				adStatus == EnumStatus.Open.getStatusId()) {
-
 				alter = "走期中";
 				icon = "icon_adopen.gif";
 
 			} else if (adActionStatus == EnumStatus.Broadcast.getStatusId() &&
-						adGroupStatus == EnumStatus.Open.getStatusId() &&
-						adStatus != EnumStatus.Open.getStatusId()) {
-
-				alter = "廣告明細" + getAdStatusMap().get(Integer.toString(adStatus));;
-
-			} else if (adActionStatus == EnumStatus.Broadcast.getStatusId() &&
-						adGroupStatus != EnumStatus.Open.getStatusId() &&
-						adStatus != EnumStatus.Open.getStatusId()) {
-
-				alter = "分類" + getAdStatusMap().get(Integer.toString(adGroupStatus)) + "，廣告明細" + getAdStatusMap().get(Integer.toString(adStatus));
+					adReportVO.getAdGroupStatus() == EnumStatus.Open.getStatusId() &&
+					adStatus != EnumStatus.Open.getStatusId()) {
+					alter = "廣告明細" + getAdStatusMap().get(Integer.toString(adStatus));;
 
 			} else if (adActionStatus == EnumStatus.Broadcast.getStatusId() &&
-						adGroupStatus != EnumStatus.Open.getStatusId() &&
-						adStatus == EnumStatus.Open.getStatusId()) {
+					adReportVO.getAdGroupStatus() != EnumStatus.Open.getStatusId() &&
+					adStatus != EnumStatus.Open.getStatusId()) {
+					alter = "分類" + getAdStatusMap().get(Integer.toString(adReportVO.getAdGroupStatus())) + "，廣告明細" + getAdStatusMap().get(Integer.toString(adStatus));
 
-				alter = "分類" + getAdStatusMap().get(Integer.toString(adGroupStatus));
-
-			} else if (adActionStatus != EnumStatus.Broadcast.getStatusId() &&
-						adGroupStatus == EnumStatus.Open.getStatusId() &&
-						adStatus == EnumStatus.Open.getStatusId()) {
-
-				alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus));
+			} else if (adActionStatus == EnumStatus.Broadcast.getStatusId() &&
+					adReportVO.getAdGroupStatus() != EnumStatus.Open.getStatusId() &&
+					adStatus == EnumStatus.Open.getStatusId()) {
+					alter = "分類" + getAdStatusMap().get(Integer.toString(adReportVO.getAdGroupStatus()));
 
 			} else if (adActionStatus != EnumStatus.Broadcast.getStatusId() &&
-						adGroupStatus == EnumStatus.Open.getStatusId() &&
-						adStatus != EnumStatus.Open.getStatusId()) {
+					adReportVO.getAdGroupStatus() == EnumStatus.Open.getStatusId() &&
+					adStatus == EnumStatus.Open.getStatusId()) {
+					alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus));
 
-				alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus)) + "，廣告明細" + getAdStatusMap().get(Integer.toString(adStatus));
+			} else if (adActionStatus != EnumStatus.Broadcast.getStatusId() &&
+					adReportVO.getAdGroupStatus() == EnumStatus.Open.getStatusId() &&
+					adStatus != EnumStatus.Open.getStatusId()) {
+					alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus)) + "，廣告明細" + getAdStatusMap().get(Integer.toString(adStatus));
 			
 			} else if (adActionStatus != EnumStatus.Broadcast.getStatusId() &&
-						adGroupStatus != EnumStatus.Open.getStatusId() &&
-						adStatus == EnumStatus.Open.getStatusId()) {
-
-				alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus)) + "，分類" + getAdStatusMap().get(Integer.toString(adGroupStatus));
+					adReportVO.getAdGroupStatus() != EnumStatus.Open.getStatusId() &&
+					adStatus == EnumStatus.Open.getStatusId()) {
+					alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus)) + "，分類" + getAdStatusMap().get(Integer.toString(adReportVO.getAdGroupStatus()));
 
 			} else if (adActionStatus != EnumStatus.Broadcast.getStatusId() &&
-						adGroupStatus != EnumStatus.Open.getStatusId() &&
-						adStatus != EnumStatus.Open.getStatusId()) {
-
-				alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus)) + "，分類" + getAdStatusMap().get(Integer.toString(adGroupStatus)) + "，廣告明細" + getAdStatusMap().get(Integer.toString(adStatus));
+					adReportVO.getAdGroupStatus() != EnumStatus.Open.getStatusId() &&
+					adStatus != EnumStatus.Open.getStatusId()) {
+					alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus)) + "，分類" + getAdStatusMap().get(Integer.toString(adReportVO.getAdGroupStatus())) + "，廣告明細" + getAdStatusMap().get(Integer.toString(adStatus));
 
 			}
 			
@@ -790,8 +767,11 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			tableDataList.addLast(tableInDataList);
 		}
 		
-		stepStrBuffer.append(adName);
+		
 		if(StringUtils.isNotBlank(searchAdseq)){
+			PfpAd pfpAd = pfpAdDAO.get(searchAdseq);
+			adName = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName();
+			stepStrBuffer.append(adName);
 			stepStr = stepStrBuffer.toString();
 		}
 	}
@@ -967,22 +947,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 	public String getReportTitle() {
 		return reportTitle;
-	}
-
-	public String[] getAlign_data() {
-		return align_data;
-	}
-
-	public String[] getAlign_sum() {
-		return align_sum;
-	}
-
-	public String[] getAlign_data2() {
-		return align_data2;
-	}
-
-	public String[] getAlign_sum2() {
-		return align_sum2;
 	}
 
 	public String getCharPic() {

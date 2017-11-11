@@ -151,7 +151,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
-			invClick = vo.getAdInvClkSum().doubleValue();
+			invClick = Math.round(vo.getAdInvClkSum().doubleValue());
 
 			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
@@ -534,10 +534,10 @@ public class ReportAdTimeAction extends BaseReportAction {
 
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += Math.round(vo.getAdPriceSum().doubleValue());
+			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-
+		t_cost = Math.round(t_cost);
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
@@ -608,7 +608,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 
 			double pv = vo.getAdPvSum().doubleValue();
 			double click = vo.getAdClkSum().doubleValue();
-			double cost = vo.getAdPriceSum().doubleValue();
+			double cost = Math.round(vo.getAdPriceSum().doubleValue());
 			double invClick = vo.getAdInvClkSum().doubleValue();
 			double ctr = 0;
 			double costAvg = 0;

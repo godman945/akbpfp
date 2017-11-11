@@ -88,6 +88,9 @@ public class ReportCampaginAction extends BaseReportAction {
 	
 	private String reportTitle;
 
+	private NumberFormat intFormat = new DecimalFormat("###,###,###,###");
+	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+	
 	public String flashDataDownLoad() throws Exception {
 
 		//查詢日期寫進 cookie
@@ -135,19 +138,17 @@ public class ReportCampaginAction extends BaseReportAction {
 			count = vo.getCount().doubleValue();
 
 			//互動率 = 互動次數 / 曝光數
-			if (pv>0 && click>0) {
-				ctr = (click / pv) * 100;
-			}
+			ctr = (click / pv) * 100;
 
 			//單次互動費用 = 總費用 / 總互動次數
-			if (cost>0 && click>0) {
+			if(click == 0){
+				costAvg = cost;
+			}else{
 				costAvg = cost / click;
 			}
 
 			//千次曝光費用 = 總費用*1000 / 曝光數
-			if(cost>0 && pv>0){
-				 kiloCost = (cost * 1000) / pv;
-			}
+			kiloCost = (cost * 1000) / pv;
 
 			//計算平均每日花費上限
 			if (adActionMaxPrice>0 && count>0) {
@@ -159,17 +160,15 @@ public class ReportCampaginAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) click));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) ctr));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(ctr)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) invClick));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(invClick)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) costAvg));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) costAvg));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) kiloCost));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(costAvg)));
+			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(kiloCost)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) adActionMaxPriceAvg));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(adActionMaxPriceAvg)));
 			}
 		}
 
@@ -427,9 +426,6 @@ public class ReportCampaginAction extends BaseReportAction {
 
 	private void resultSumDataTrans(List<AdActionReportVO> resultSumData) throws Exception {
 
-		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
-
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("");
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
@@ -459,19 +455,17 @@ public class ReportCampaginAction extends BaseReportAction {
 		}
 
 		//互動率 = 總互動次數 / 總曝光數
-		if (t_pv>0 && t_click>0) {
-			t_ctr = (t_click / t_pv) * 100;
-		}
+		t_ctr = (t_click / t_pv) * 100;
 
 		//單次互動費用 = 總費用 / 總互動次數
-		if (t_cost>0 && t_click>0) {
+		if (t_click == 0) {
+			t_costAvg = t_cost;
+		}else{
 			t_costAvg = t_cost / t_click;
 		}
 		
 		//千次曝光費用 = 總費用*1000 / 曝光數
-		if(t_cost>0 && t_pv>0){
-			t_kiloCost = (t_cost * 1000) / t_pv;
-		}
+		t_kiloCost = (t_cost * 1000) / t_pv;
 		
 		if (!tableHeadShowList.isEmpty()) {
 			String mapKey;
@@ -526,6 +520,7 @@ public class ReportCampaginAction extends BaseReportAction {
 	
 				double pv = vo.getAdPvSum().doubleValue();
 				double click = vo.getAdClkSum().doubleValue();
+				System.out.println("廣告明細成效:"+vo.getAdPriceSum());
 				double cost = new Double(vo.getAdPriceSum());
 				double invClick = vo.getAdInvClkSum().doubleValue();
 				double ctr = 0;
@@ -539,19 +534,17 @@ public class ReportCampaginAction extends BaseReportAction {
 				String adOperatingRuleName = vo.getAdOperatingRule();
 	
 				//互動率 = 互動次數 / 曝光數
-				if (pv>0 && click>0) {
-					ctr = (click / pv) * 100;
-				}
+				ctr = (click / pv) * 100;
 
 				//單次互動費用 = 總費用 / 總互動次數
-				if (cost>0 && click>0) {
+				if(click == 0){
+					costAvg = cost;
+				}else{
 					costAvg = cost / click;
 				}
 
 				//千次曝光費用 = 總費用*1000 / 曝光數
-				if(cost>0 && pv>0){
-					kiloCost = (cost * 1000) / pv;
-				}
+				kiloCost = (cost * 1000) / pv;
 	
 				//計算平均每日花費上限
 				System.out.println("adActionMaxPrice = " + adActionMaxPrice);

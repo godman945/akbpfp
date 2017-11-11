@@ -137,9 +137,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							Integer adType = 0;
 							String adActioName = "";
 							for (int i=0; i<dataList.size(); i++) {
-
 								objArray = (Object[]) dataList.get(i);
-
 								adPvSum = (BigDecimal)objArray[0];
 								adClkSum = (BigDecimal)objArray[1];
 								adPriceSum = (Double)objArray[2];

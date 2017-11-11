@@ -17,6 +17,7 @@ import com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportVO;
 import com.pchome.akbpfp.db.service.report.IAdVideoPerformanceReportService;
 import com.pchome.akbpfp.db.vo.report.ReportQueryConditionVO;
 import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.ad.EnumAdVideoSizePoolType;
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
 import com.pchome.soft.util.DateValueUtil;
@@ -55,8 +56,6 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 	private int pageSize = 0;
 	//總頁數
 	private int totalPage = 0;
-	
-	
 	
 	
 	private IAdVideoPerformanceReportService adVideoPerformanceReportService;
@@ -104,8 +103,11 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 	private List<AdKeywordReportVO> AdKeywordReportVOList;
 	private AdKeywordReportVO AdKeywordReportDataTotal;
 
-	//影音成效table
+	//影音成效明細
 	private List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOList;
+	//影音成效加總
+	private AdVideoPerformanceReportVO adVideoPerformanceReportVOSum;
+	
 	/**
 	 * Chart 
 	 */
@@ -142,29 +144,31 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		log.info(">>> customerInfoId = " + customerInfoId);
 		Map<Date,Float> flashDataMap = new HashMap<Date,Float>();
 		List<AdVideoPerformanceReportVO> resultData = adVideoPerformanceReportService.loadReportChart(reportQueryConditionVO);
-		for (AdVideoPerformanceReportVO adVideoPerformanceReportVO : resultData) {
-			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdPvSum()));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEW.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdViewSum()));
-			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdViewRatings()));
-			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getSingleAdViewCost()));
-			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getThousandsCost()));
-			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getCostSum()));
-			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoProcess100Ratings()));
-			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdClkSum()));
-			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_UNIQ.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoUniqSum()));
-			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_MUSIC.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoMusicSum()));
-			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_REPLAY.getTextValue())) {
-				flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoReplaySum()));
+		if(resultData.size() > 0){
+			for (AdVideoPerformanceReportVO adVideoPerformanceReportVO : resultData) {
+				if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdPvSum()));
+				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEW.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdViewSum()));
+				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdViewRatings()));
+				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getSingleAdViewCost()));
+				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getThousandsCost()));
+				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getCostSum()));
+				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoProcess100Ratings()));
+				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdClkSum()));
+				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_UNIQ.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoUniqSum()));
+				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_MUSIC.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoMusicSum()));
+				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_REPLAY.getTextValue())) {
+					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoReplaySum()));
+				}
 			}
 		}
 		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
@@ -178,6 +182,15 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 	}
 
 	public String execute() throws Exception {
+		adSizeMap.put("", "全部尺寸");
+		for (EnumAdVideoSizePoolType enumAdVideoSizePoolType : EnumAdVideoSizePoolType.values()) {
+			adSizeMap.put(enumAdVideoSizePoolType.getWidh()+"_"+enumAdVideoSizePoolType.getHeight(), enumAdVideoSizePoolType.getWidh()+" x "+enumAdVideoSizePoolType.getHeight());
+		}
+		adPriceTypeMap.put("", "全部計價方式");
+		adPriceTypeMap.put("CPV", "單次收視出價-CPV");
+		adPriceTypeMap.put("CPM", "千次曝光出價-CPM");
+		
+		
 		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
 		String customerInfoId = super.getCustomer_info_id();
 		String startDate_cookie = this.getChoose_start_date();
@@ -198,7 +211,6 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			}
 		}
 		
-		
 		//查詢條件
 		ReportQueryConditionVO reportQueryConditionVO = new ReportQueryConditionVO();
 		reportQueryConditionVO.setAdPriceType(adPriceType);
@@ -213,16 +225,11 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		reportQueryConditionVO.setTotalPage(totalPage);
 		reportQueryConditionVO.setCustomerInfoId(super.getCustomer_info_id());
 		
-		this.adVideoPerformanceReportVOList = adVideoPerformanceReportService.loadReportDate(reportQueryConditionVO);
-		adPriceTypeMap.put("", "全部計價方式");
-		adPriceTypeMap.put("CPV", "單次收視出價-CPV");
-		adPriceTypeMap.put("CPM", "千次曝光出價-CPM");
+		//查詢明細
+		this.adVideoPerformanceReportVOList = adVideoPerformanceReportService.loadReportDateList(reportQueryConditionVO);
 		
-		adSizeMap.put("", "全部尺寸");
-		adSizeMap.put("300250", "300X250");
-		adSizeMap.put("320480", "320X480");
-		adSizeMap.put("336280", "336X280");
-		adSizeMap.put("970250", "970X250");
+		//查詢總數
+		this.adVideoPerformanceReportVOSum = adVideoPerformanceReportService.loadReportDateSum(reportQueryConditionVO);
 		
 		log.info(">>>>>> customerInfoId = " + customerInfoId);
 		log.info(">>>>>> startDate = " + startDate);
@@ -340,8 +347,8 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			sumVideoProcess100Ratings = (sumVideoProvess100 / sumView * 100);
 			
 			content.append("\n");
-			content.append("影片名稱測試_"+adVideoPerformanceReportVOList.indexOf(adVideoPerformanceReportVO)+",");
-			content.append("影片長度測試_"+adVideoPerformanceReportVOList.indexOf(adVideoPerformanceReportVO)+",");
+			content.append("影片名稱"+adVideoPerformanceReportVO.getAdActionName()+",");
+			content.append("影片長度 00:"+adVideoPerformanceReportVO.getAdVideoSec()+",");
 			content.append(adVideoPerformanceReportVO.getVideoUrl()+",");
 			content.append(adVideoPerformanceReportVO.getAdLinkUrl()+",");
 			content.append((StringUtils.isBlank(adPriceType)? "全部" : adPriceType ) + ",");
@@ -647,6 +654,14 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 
 	public void setAdSize(String adSize) {
 		this.adSize = adSize;
+	}
+
+	public AdVideoPerformanceReportVO getAdVideoPerformanceReportVOSum() {
+		return adVideoPerformanceReportVOSum;
+	}
+
+	public void setAdVideoPerformanceReportVOSum(AdVideoPerformanceReportVO adVideoPerformanceReportVOSum) {
+		this.adVideoPerformanceReportVOSum = adVideoPerformanceReportVOSum;
 	}
 	
 }
