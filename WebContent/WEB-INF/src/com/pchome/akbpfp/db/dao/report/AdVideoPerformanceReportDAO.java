@@ -36,10 +36,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" SUM(vr.ad_video_uniq),  ");
 		sql.append(" SUM(vr.ad_video_music),  ");
 		sql.append(" SUM(vr.ad_video_replay),  ");
-		sql.append(" SUM((CASE  ");
-		sql.append(" WHEN vr.ad_price_type = 'CPC' THEN vr.ad_clk  ");
-		sql.append(" ELSE vr.ad_view  ");
-		sql.append(" END)) ad_click,  ");
+		sql.append(" SUM(vr.ad_clk)ad_click,  ");
 		sql.append(" Ifnull(  ");
 		sql.append(" (SELECT d.ad_detail_content  ");
 		sql.append(" FROM pfp_ad_detail d  ");
@@ -160,7 +157,8 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append("  SUM(a.ad_video_process_50), ");
 		sql.append("  SUM(a.ad_video_process_75), ");
 		sql.append("  SUM(a.ad_video_process_100), ");
-		sql.append("  a.video_size ");
+		sql.append("  a.video_size, ");
+		sql.append("  SUM(IFNULL(ud.uniq_count,0))uniq_count ");
 		sql.append(" FROM ( ");
 		sql.append(" SELECT vr.ad_seq, ");
 		sql.append(" vr.ad_video_date, ");
@@ -200,7 +198,8 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" vr.ad_video_date, ");
 		sql.append(" video_size, ");
 		sql.append(" vr.ad_price_type ");
-		sql.append(" ORDER BY vr.ad_video_date ASC )a where 1 = 1 ");
+		sql.append(" ORDER BY vr.ad_video_date ASC )a left join adm_uniq_data ud on ud.record_date = a.ad_video_date and ud.uniq_name = a.ad_seq ");
+		sql.append(" where 1 = 1 ");
 		
 		if(StringUtils.isNotBlank(reportQueryConditionVO.getAdPriceType())){
 			sql.append(" AND a.ad_price_type = :adPriceType "); 

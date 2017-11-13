@@ -84,7 +84,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdClkSum(objArray[11].toString());
 			adVideoPerformanceReportVO.setAdVideoMusicSum(objArray[12].toString());
 			adVideoPerformanceReportVO.setAdVideoReplaySum(objArray[13].toString());
-//			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[10].toString());
+			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[20].toString());
 			adVideoPerformanceReportVOList.add(adVideoPerformanceReportVO);
 		}
 		return adVideoPerformanceReportVOList;
@@ -110,7 +110,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdVideoProcess50Sum(objArray[16].toString());
 			adVideoPerformanceReportVO.setAdVideoProcess75Sum(objArray[17].toString());
 			adVideoPerformanceReportVO.setAdVideoProcess100Sum(objArray[18].toString());
-			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[10].toString());
+			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[20].toString());
 		}
 		return adVideoPerformanceReportVO;
 	}
