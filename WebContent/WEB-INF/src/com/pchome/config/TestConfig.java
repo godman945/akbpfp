@@ -1,13 +1,8 @@
 package com.pchome.config;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
-
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 
 
@@ -44,7 +39,10 @@ public class TestConfig {
 	
 	
 	public static void main(String[] args) throws Exception{
-//		ApplicationContext context = new FileSystemXmlApplicationContext(TestConfig.path);
+		
+		ApplicationContext context = new FileSystemXmlApplicationContext(TestConfig.path);
+		context.getBean("PfpAdService");
+		
 //		PfpAdService pfpAdService = (PfpAdService) context.getBean("PfpAdService");
 //		
 //		String adGroupSeq = "ag_201709070001";
