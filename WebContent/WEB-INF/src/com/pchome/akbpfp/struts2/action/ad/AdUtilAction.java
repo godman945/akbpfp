@@ -68,12 +68,11 @@ public class AdUtilAction extends BaseCookieAction{
 				    return SUCCESS;
 				}
 				
-				//等待業務準備期，固10/11暫時停止卡關
-//				if(imgWidth.intValue() < 250 || imgHeight.intValue() < 250){
-//					log.info("-------------test=");
-//					result = "errorSize";
-//				    return SUCCESS;
-//				}
+				if(imgWidth.intValue() < 250 || imgHeight.intValue() < 250){
+					log.info("-------------test=");
+					result = "errorSize";
+				    return SUCCESS;
+				}
 				
 
 				// 存放截圖的暫存目錄
