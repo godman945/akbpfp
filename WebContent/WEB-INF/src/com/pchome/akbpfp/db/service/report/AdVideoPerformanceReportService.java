@@ -85,6 +85,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdVideoMusicSum(objArray[12].toString());
 			adVideoPerformanceReportVO.setAdVideoReplaySum(objArray[13].toString());
 			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[20].toString());
+			adVideoPerformanceReportVO.setAdVideoSec(objArray[21].toString());
 			adVideoPerformanceReportVOList.add(adVideoPerformanceReportVO);
 		}
 		return adVideoPerformanceReportVOList;

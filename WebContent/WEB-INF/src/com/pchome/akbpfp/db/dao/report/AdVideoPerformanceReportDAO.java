@@ -136,8 +136,6 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 	@Override
 	public List<Object> getReportCount(ReportQueryConditionVO reportQueryConditionVO,String type) throws Exception {
 		StringBuilder sql = new StringBuilder();
-		
-		
 		sql.append(" SELECT a.ad_seq, ");
 		sql.append("  a.ad_video_date, ");
 		sql.append("  a.ad_group_name, ");
