@@ -12,7 +12,7 @@ public class AdReportVO {
 	private String realUrl;
 	private String showUrl;
 	private String adStatus; //廣告明細狀態
-
+	private String adStatusDesc;
 	private String adGroupSeq; //廣告分類序號
 	private String adGroupName; //廣告分類名稱
 	private int adGroupStatus; //廣告分類狀態
@@ -33,6 +33,11 @@ public class AdReportVO {
 	private String adType;
 	private String adOperatingRule;		//廣告樣式
 	private String adClkPriceType;		//廣告計費方式
+	
+	//影片長度
+	private String adVideoSec;
+	//影片網址
+	private String adVideoUrl;
 	
 	public String getAdSeq() {
 		return adSeq;
@@ -249,6 +254,30 @@ public class AdReportVO {
 
 	public void setAdClkPriceType(String adClkPriceType) {
 		this.adClkPriceType = adClkPriceType;
+	}
+
+	public String getAdStatusDesc() {
+		return adStatusDesc;
+	}
+
+	public void setAdStatusDesc(String adStatusDesc) {
+		this.adStatusDesc = adStatusDesc;
+	}
+
+	public String getAdVideoUrl() {
+		return adVideoUrl;
+	}
+
+	public void setAdVideoUrl(String adVideoUrl) {
+		this.adVideoUrl = adVideoUrl;
+	}
+
+	public String getAdVideoSec() {
+		return adVideoSec;
+	}
+
+	public void setAdVideoSec(String adVideoSec) {
+		this.adVideoSec = adVideoSec;
 	}
 
 }

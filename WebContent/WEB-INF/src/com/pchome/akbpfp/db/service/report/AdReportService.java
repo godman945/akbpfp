@@ -189,7 +189,9 @@ public class AdReportService implements IAdReportService {
 					htmlCode = htmlCode + "時間 00:"+videoSeconds+"<br>";
 					htmlCode = htmlCode + "<a href=\""+realUrl+"\" target=\"_blank\" >"+realUrl;
 					htmlCode = htmlCode+"</div></div>";
-				
+					adReportVO.setContent("尺寸:"+width+"x"+height);
+					adReportVO.setAdVideoSec("00:"+videoSeconds);
+					adReportVO.setAdVideoUrl(adPreviewVideoURL);
 				}else {
 					htmlCode =  "<span><iframe height=\"120\" width=\"350\" src=\"adModel.html?adNo=" + adReportVO.getAdSeq() + "&tproNo=tpro_201406300001\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" frameborder=\"0\" align=\"ceneter\" class=\"akb_iframe\"></iframe></span>";
 				}
