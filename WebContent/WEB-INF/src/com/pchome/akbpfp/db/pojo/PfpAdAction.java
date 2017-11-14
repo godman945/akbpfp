@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/9/22 �W�� 10:31:43 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -205,7 +205,7 @@ public class PfpAdAction implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "ad_action_start_date", nullable = false, length = 0)
+	@Column(name = "ad_action_start_date", nullable = false, length = 10)
 	public Date getAdActionStartDate() {
 		return this.adActionStartDate;
 	}
@@ -215,7 +215,7 @@ public class PfpAdAction implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "ad_action_end_date", nullable = false, length = 0)
+	@Column(name = "ad_action_end_date", nullable = false, length = 10)
 	public Date getAdActionEndDate() {
 		return this.adActionEndDate;
 	}
@@ -405,7 +405,7 @@ public class PfpAdAction implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_action_creat_time", nullable = false, length = 0)
+	@Column(name = "ad_action_creat_time", nullable = false, length = 19)
 	public Date getAdActionCreatTime() {
 		return this.adActionCreatTime;
 	}
@@ -415,7 +415,7 @@ public class PfpAdAction implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_action_update_time", nullable = false, length = 0)
+	@Column(name = "ad_action_update_time", nullable = false, length = 19)
 	public Date getAdActionUpdateTime() {
 		return this.adActionUpdateTime;
 	}

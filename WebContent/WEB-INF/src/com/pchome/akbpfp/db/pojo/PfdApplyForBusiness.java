@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/9/22 �W�� 10:31:43 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -118,7 +118,7 @@ public class PfdApplyForBusiness implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "apply_for_time", nullable = false, length = 0)
+	@Column(name = "apply_for_time", nullable = false, length = 19)
 	public Date getApplyForTime() {
 		return this.applyForTime;
 	}
@@ -128,7 +128,7 @@ public class PfdApplyForBusiness implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "check_time", length = 0)
+	@Column(name = "check_time", length = 19)
 	public Date getCheckTime() {
 		return this.checkTime;
 	}
@@ -138,7 +138,7 @@ public class PfdApplyForBusiness implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "sys_pass_time", length = 0)
+	@Column(name = "sys_pass_time", length = 19)
 	public Date getSysPassTime() {
 		return this.sysPassTime;
 	}

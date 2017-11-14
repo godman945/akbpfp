@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/9/22 �W�� 10:31:43 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -93,7 +93,7 @@ public class AdmClientCountReport implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "count_date", nullable = false, length = 0)
+	@Column(name = "count_date", nullable = false, length = 10)
 	public Date getCountDate() {
 		return this.countDate;
 	}
@@ -310,7 +310,7 @@ public class AdmClientCountReport implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 0)
+	@Column(name = "create_date", nullable = false, length = 19)
 	public Date getCreateDate() {
 		return this.createDate;
 	}

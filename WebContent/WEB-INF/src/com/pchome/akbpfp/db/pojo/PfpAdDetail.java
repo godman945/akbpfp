@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/9/22 �W�� 10:31:43 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -142,7 +142,7 @@ public class PfpAdDetail implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "sys_verify_time", length = 0)
+	@Column(name = "sys_verify_time", length = 19)
 	public Date getSysVerifyTime() {
 		return this.sysVerifyTime;
 	}
@@ -152,7 +152,7 @@ public class PfpAdDetail implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "user_verify_time", length = 0)
+	@Column(name = "user_verify_time", length = 19)
 	public Date getUserVerifyTime() {
 		return this.userVerifyTime;
 	}
@@ -171,7 +171,7 @@ public class PfpAdDetail implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_detail_create_time", nullable = false, length = 0)
+	@Column(name = "ad_detail_create_time", nullable = false, length = 19)
 	public Date getAdDetailCreateTime() {
 		return this.adDetailCreateTime;
 	}
@@ -181,7 +181,7 @@ public class PfpAdDetail implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_detail_update_time", nullable = false, length = 0)
+	@Column(name = "ad_detail_update_time", nullable = false, length = 19)
 	public Date getAdDetailUpdateTime() {
 		return this.adDetailUpdateTime;
 	}

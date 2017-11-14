@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/9/22 �W�� 10:31:43 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -125,7 +125,7 @@ public class PfpAdGift implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "open_date", length = 0)
+	@Column(name = "open_date", length = 10)
 	public Date getOpenDate() {
 		return this.openDate;
 	}
@@ -153,7 +153,7 @@ public class PfpAdGift implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "ad_gift_end_date", nullable = false, length = 0)
+	@Column(name = "ad_gift_end_date", nullable = false, length = 10)
 	public Date getAdGiftEndDate() {
 		return this.adGiftEndDate;
 	}
@@ -172,7 +172,7 @@ public class PfpAdGift implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_gift_create_date", nullable = false, length = 0)
+	@Column(name = "ad_gift_create_date", nullable = false, length = 19)
 	public Date getAdGiftCreateDate() {
 		return this.adGiftCreateDate;
 	}
@@ -182,7 +182,7 @@ public class PfpAdGift implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_gift_update_date", nullable = false, length = 0)
+	@Column(name = "ad_gift_update_date", nullable = false, length = 19)
 	public Date getAdGiftUpdateDate() {
 		return this.adGiftUpdateDate;
 	}

@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/9/22 �W�� 10:31:43 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -119,7 +119,7 @@ public class PfpAdRank implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "ad_rank_date", nullable = false, length = 0)
+	@Column(name = "ad_rank_date", nullable = false, length = 10)
 	public Date getAdRankDate() {
 		return this.adRankDate;
 	}
@@ -138,7 +138,7 @@ public class PfpAdRank implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_rank_create_time", nullable = false, length = 0)
+	@Column(name = "ad_rank_create_time", nullable = false, length = 19)
 	public Date getAdRankCreateTime() {
 		return this.adRankCreateTime;
 	}
@@ -148,7 +148,7 @@ public class PfpAdRank implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "ad_rank_update_time", nullable = false, length = 0)
+	@Column(name = "ad_rank_update_time", nullable = false, length = 19)
 	public Date getAdRankUpdateTime() {
 		return this.adRankUpdateTime;
 	}

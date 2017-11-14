@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/9/22 �W�� 10:31:43 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -110,7 +110,7 @@ public class PfdContract implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "contract_date", nullable = false, length = 0)
+	@Column(name = "contract_date", nullable = false, length = 19)
 	public Date getContractDate() {
 		return this.contractDate;
 	}
@@ -120,7 +120,7 @@ public class PfdContract implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "start_date", nullable = false, length = 0)
+	@Column(name = "start_date", nullable = false, length = 19)
 	public Date getStartDate() {
 		return this.startDate;
 	}
@@ -130,7 +130,7 @@ public class PfdContract implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "end_date", nullable = false, length = 0)
+	@Column(name = "end_date", nullable = false, length = 19)
 	public Date getEndDate() {
 		return this.endDate;
 	}
@@ -140,7 +140,7 @@ public class PfdContract implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "close_date", length = 0)
+	@Column(name = "close_date", length = 19)
 	public Date getCloseDate() {
 		return this.closeDate;
 	}
@@ -204,7 +204,7 @@ public class PfdContract implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "remind_date", length = 0)
+	@Column(name = "remind_date", length = 19)
 	public Date getRemindDate() {
 		return this.remindDate;
 	}
@@ -223,7 +223,7 @@ public class PfdContract implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 0)
+	@Column(name = "create_date", nullable = false, length = 19)
 	public Date getCreateDate() {
 		return this.createDate;
 	}
@@ -233,7 +233,7 @@ public class PfdContract implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date", nullable = false, length = 0)
+	@Column(name = "update_date", nullable = false, length = 19)
 	public Date getUpdateDate() {
 		return this.updateDate;
 	}

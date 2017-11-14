@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/9/22 �W�� 10:31:43 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -156,7 +156,7 @@ public class PfpOrder implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "notify_date", length = 0)
+	@Column(name = "notify_date", length = 19)
 	public Date getNotifyDate() {
 		return this.notifyDate;
 	}
@@ -166,7 +166,7 @@ public class PfpOrder implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 0)
+	@Column(name = "create_date", nullable = false, length = 19)
 	public Date getCreateDate() {
 		return this.createDate;
 	}
@@ -176,7 +176,7 @@ public class PfpOrder implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date", nullable = false, length = 0)
+	@Column(name = "update_date", nullable = false, length = 19)
 	public Date getUpdateDate() {
 		return this.updateDate;
 	}
