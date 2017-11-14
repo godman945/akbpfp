@@ -70,6 +70,7 @@ public class SummaryAction extends BaseSSLAction{
 																DateValueUtil.getInstance().getDateForStartDateAddDay(effectSDate, 0), 
 																DateValueUtil.getInstance().getDateForStartDateAddDay(effectEDate, 0));
 
+		
 		// 共用日期
 		startDate = this.getChoose_start_date();											
 		endDate = this.getChoose_end_date();						

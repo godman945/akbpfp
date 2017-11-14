@@ -56,7 +56,7 @@
     <td><table width="100%" height="230" border="0" cellpadding="0" cellspacing="1" class="tb01">
       <tr>
         <th height="30">總曝光數</th>
-        <th height="30">總點選次數</th>
+        <th height="30">總互動數</th>
         <th height="30">總費用</th>
       </tr>
       <tr>
@@ -95,7 +95,6 @@
 </div>
 
 <div id="tableList"></div>
-
 
 </div>
 

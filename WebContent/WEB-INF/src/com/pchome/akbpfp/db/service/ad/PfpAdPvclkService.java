@@ -73,10 +73,8 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 				float clkCost = Float.parseFloat(ob[3].toString());
 				float invalidClk = Integer.parseInt(ob[4].toString());
 				float invalidClkCost = Float.parseFloat(ob[5].toString());
-
 				clk = clk - invalidClk;
 				clkCost = clkCost - invalidClkCost;
-
 				float flashDataMapValue;
 				if(chartType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())){
 	    			flashDataMapValue = pv;	

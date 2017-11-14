@@ -56,7 +56,6 @@ public class AdAdViewAction extends BaseCookieAction{
 	private String realUrl = "";
 	
 	
-	
 	public String execute() throws Exception{
 		
 		searchAdType = EnumAdType.values();
@@ -71,7 +70,7 @@ public class AdAdViewAction extends BaseCookieAction{
 														EnumCategory.REMAIN_NOT_ENOUGH);
 		
 		adType = adGroup.getPfpAdAction().getAdType().toString();
-		
+		adOperatingRule = adGroup.getPfpAdAction().getAdOperatingRule();
 		return SUCCESS;
 	}
 	

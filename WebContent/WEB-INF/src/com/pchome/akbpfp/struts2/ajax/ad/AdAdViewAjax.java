@@ -13,7 +13,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.data.threadprocess.PfpThreadProcess;
@@ -36,7 +35,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	private IPfpAdService pfpAdService;
 	private PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO;
 	private String previewUrl;
@@ -60,6 +58,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private int totalInvalidClk = 0;
 	private String jdbcEnvironment;
 	private String adType;
+	private String adOperatingRule;
 	
 	public String adAdViewTableAjax() throws Exception{
 		int type = Integer.parseInt(searchType);
@@ -122,7 +121,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 				}
 			}
 		}
-		
 		// 查詢日期寫進cookie
 		this.setChooseDate(startDate, endDate);
 		
@@ -357,6 +355,5 @@ public class AdAdViewAjax extends BaseCookieAction{
 	public void setJdbcEnvironment(String jdbcEnvironment) {
 		this.jdbcEnvironment = jdbcEnvironment;
 	}
-
 	
 }
