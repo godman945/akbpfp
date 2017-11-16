@@ -177,58 +177,65 @@ public class AdAdViewAjax extends BaseCookieAction{
 		pfpAdAdViewConditionVO.setLimit(limit);
 		pfpAdAdViewConditionVO.setMax(max);
 		
+		
+		this.pfpAdAdVideoViewSumVO = pfpAdService.getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
+		totalSize = pfpAdAdVideoViewSumVO.getTotalSize();
+		pageCount = (int) Math.ceil(((double)totalSize / (double)pageSize));
+		this.pfpAdAdVideoViewVOList = pfpAdService.getAdAdVideoDetailView(pfpAdAdViewConditionVO);
+		
+		
 		/**多執行緒*/
-		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(500);
-		ThreadServiceBean threadServiceBean = new ThreadServiceBean();
-		threadServiceBean.setPfpAdService(pfpAdService);
-		JSONObject conditionJson = JSONObject.fromObject(pfpAdAdViewConditionVO);
+//		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(500);
+//		ThreadServiceBean threadServiceBean = new ThreadServiceBean();
+//		threadServiceBean.setPfpAdService(pfpAdService);
+//		JSONObject conditionJson = JSONObject.fromObject(pfpAdAdViewConditionVO);
 		
-		//第一條執行緒查詢總數
-		boolean adViewVideoCountResultFlag = true;
-		Future<String> pfpThreadProcessAdViewVideoCountResult = null;
-		PfpThreadProcess pfpThreadProcessAdViewVideoCount = new PfpThreadProcess(conditionJson,EnumAdThreadType.AD_VIEW_VIDEO_COUNT,threadServiceBean);
-		pfpThreadProcessAdViewVideoCountResult = executor.submit(pfpThreadProcessAdViewVideoCount);
-		
-		//第二條執行緒查詢總數
-		boolean adViewVideoDetailResultFlag = true;
-		Future<String> pfpThreadProcessAdViewVideoDetailResult = null;
-		PfpThreadProcess pfpThreadProcessAdViewVideoDetail = new PfpThreadProcess(conditionJson,EnumAdThreadType.AD_VIEW_VIDEO_DETAIL,threadServiceBean);
-		pfpThreadProcessAdViewVideoDetailResult = executor.submit(pfpThreadProcessAdViewVideoDetail);
-		
-		
-		//1.第一條執行緒查詢總數結果
-		while (adViewVideoCountResultFlag) {
-			if (pfpThreadProcessAdViewVideoCountResult.isDone()) {
-				String result = pfpThreadProcessAdViewVideoCountResult.get();
-				this.pfpAdAdVideoViewSumVO = (PfpAdAdVideoViewSumVO) JSONObject.toBean(JSONObject.fromObject(result), PfpAdAdVideoViewSumVO.class);
-				totalSize = pfpAdAdVideoViewSumVO.getTotalSize();
-				pageCount = (int) Math.ceil(((double)totalSize / (double)pageSize));
-				adViewVideoCountResultFlag = false;
-			}
-		}
-		
-		//2.第二條執行緒查詢明細結果
-		this.pfpAdAdVideoViewVOList = new ArrayList<>();
-		while (adViewVideoDetailResultFlag) {
-			if (pfpThreadProcessAdViewVideoDetailResult.isDone()) {
-				String result = pfpThreadProcessAdViewVideoDetailResult.get();
-				org.json.JSONArray jsonArray = new org.json.JSONArray(result);
-				for (int i = 0; i < jsonArray.length(); i++) {
-					org.json.JSONObject json =  (org.json.JSONObject) jsonArray.get(i);
-					PfpAdAdVideoViewVO pfpAdAdVideoViewVO = (PfpAdAdVideoViewVO) JSONObject.toBean(JSONObject.fromObject(json.toString()), PfpAdAdVideoViewVO.class);
-					if(i==0){
-						previewUrl = pfpAdAdVideoViewVO.getVideoUrl();
-					}
-					pfpAdAdVideoViewVOList.add(pfpAdAdVideoViewVO);
-				}
-				adViewVideoDetailResultFlag = false;
-			}
-		}
-		
-		//3.執行緒全部執行完畢
-		if(!adViewVideoCountResultFlag && !adViewVideoDetailResultFlag){
-			executor.shutdown();
-		}
+//		//第一條執行緒查詢總數
+//		boolean adViewVideoCountResultFlag = true;
+//		Future<String> pfpThreadProcessAdViewVideoCountResult = null;
+//		PfpThreadProcess pfpThreadProcessAdViewVideoCount = new PfpThreadProcess(conditionJson,EnumAdThreadType.AD_VIEW_VIDEO_COUNT,threadServiceBean);
+//		pfpThreadProcessAdViewVideoCountResult = executor.submit(pfpThreadProcessAdViewVideoCount);
+//		
+//		//第二條執行緒查詢總數
+//		boolean adViewVideoDetailResultFlag = true;
+//		Future<String> pfpThreadProcessAdViewVideoDetailResult = null;
+//		PfpThreadProcess pfpThreadProcessAdViewVideoDetail = new PfpThreadProcess(conditionJson,EnumAdThreadType.AD_VIEW_VIDEO_DETAIL,threadServiceBean);
+//		pfpThreadProcessAdViewVideoDetailResult = executor.submit(pfpThreadProcessAdViewVideoDetail);
+//		
+//		
+//		//1.第一條執行緒查詢總數結果
+//		while (adViewVideoCountResultFlag) {
+//			if (pfpThreadProcessAdViewVideoCountResult.isDone()) {
+//				String result = pfpThreadProcessAdViewVideoCountResult.get();
+//				this.pfpAdAdVideoViewSumVO = (PfpAdAdVideoViewSumVO) JSONObject.toBean(JSONObject.fromObject(result), PfpAdAdVideoViewSumVO.class);
+//				totalSize = pfpAdAdVideoViewSumVO.getTotalSize();
+//				pageCount = (int) Math.ceil(((double)totalSize / (double)pageSize));
+//				adViewVideoCountResultFlag = false;
+//			}
+//		}
+//		
+//		//2.第二條執行緒查詢明細結果
+//		this.pfpAdAdVideoViewVOList = new ArrayList<>();
+//		while (adViewVideoDetailResultFlag) {
+//			if (pfpThreadProcessAdViewVideoDetailResult.isDone()) {
+//				String result = pfpThreadProcessAdViewVideoDetailResult.get();
+//				org.json.JSONArray jsonArray = new org.json.JSONArray(result);
+//				for (int i = 0; i < jsonArray.length(); i++) {
+//					org.json.JSONObject json =  (org.json.JSONObject) jsonArray.get(i);
+//					PfpAdAdVideoViewVO pfpAdAdVideoViewVO = (PfpAdAdVideoViewVO) JSONObject.toBean(JSONObject.fromObject(json.toString()), PfpAdAdVideoViewVO.class);
+//					if(i==0){
+//						previewUrl = pfpAdAdVideoViewVO.getVideoUrl();
+//					}
+//					pfpAdAdVideoViewVOList.add(pfpAdAdVideoViewVO);
+//				}
+//				adViewVideoDetailResultFlag = false;
+//			}
+//		}
+//		
+//		//3.執行緒全部執行完畢
+//		if(!adViewVideoCountResultFlag && !adViewVideoDetailResultFlag){
+//			executor.shutdown();
+//		}
 		
 		// 查詢日期寫進cookie
 		this.setChooseDate(startDate, endDate);
