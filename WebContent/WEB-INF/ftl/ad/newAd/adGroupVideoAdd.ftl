@@ -57,7 +57,9 @@
 	                    	<select id="adPriceType" name="adPriceType">
                         		<#if pfpAdPriceTypeVOList?exists>
                         			<#list pfpAdPriceTypeVOList as pfpAdPriceTypeVO>
+                        				<#if pfpAdPriceTypeVO.type != 2>
                         					<option value="${pfpAdPriceTypeVO.type!}" >${pfpAdPriceTypeVO.typeName!}</option>
+                        				</#if>
                         			</#list>
 								</#if>
 		                    </select>
@@ -65,7 +67,7 @@
 	                    	<br>
 	                    		<div class="errMsg"></div>
 	                    	<br>
-		                    	<b>系統建議出價NT$<input type="number" min="0" step="0.1" id="adPrice" name="adPrice" style="width:50px" maxlength="6" >，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span></b>
+		                    	<b>系統建議出價NT$<input type="number" min="0" step="0.1" id="adPrice" name="adPrice" style="width:50px" maxlength="6" >，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</b><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div></span>
 	                    		<div class="exp">出價金額會決定廣告播出率。系統會依每次影片的競價結果分析出最佳的播出率，實際支付的廣告收視費用，會小於或等於您的出價金額。</div>
 	                    	
 	                    </td>
@@ -74,7 +76,7 @@
 	        </table>
 	        <center style="margin:25px 10px 20px 10px">
 	            <input type="button" id="cancel" value="上一步">&nbsp;&nbsp;&nbsp;&nbsp; 
-	            <input type="button" id="save" style="color: #1d5ed6" value="繼 續"> &nbsp; 
+	            <input type="button" id="" style="color: #1d5ed6" value="繼 續" onclick="doAdGroupaddSubmit();"> &nbsp; 
 	 		</center>
 	    </div>
 		<input type="hidden" id="adActionSeq" name="adActionSeq" value="${adActionSeq!}">

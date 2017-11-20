@@ -13,6 +13,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdGroupViewVO;
 import com.pchome.enumerate.ad.EnumAdDevice;
+import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
@@ -138,15 +139,6 @@ public class PfpAdGroupService extends BaseService<PfpAdGroup,String> implements
 			HashMap<String, Object> pfpAdGroupReports = ((PfpAdGroupDAO)dao).getAdGroupReportByAdGroupsList(customerInfoId, adActionSeq, adGroupSeqs, enumAdType.getType(), startDate, endDate);
 	
 			for(PfpAdGroup pfpAdGroup:pfpAdGroups) {
-				//System.out.println("AdActionSeq = " + pfpAdGroup.getPfpAdAction().getAdActionSeq());
-				//System.out.println("AdActionName = " + pfpAdGroup.getPfpAdAction().getAdActionName());
-				//System.out.println("AdActionMax = " + pfpAdGroup.getPfpAdAction().getAdActionMax());
-				//System.out.println("adGroupSeq = " + pfpAdGroup.getAdGroupSeq());
-				//System.out.println("AdGroupName = " + pfpAdGroup.getAdGroupName());
-				//System.out.println("AdGroupStatus = " + pfpAdGroup.getAdGroupStatus());
-				//System.out.println("AdGroupSearchPriceType = " + pfpAdGroup.getAdGroupSearchPriceType());
-				//System.out.println("AdGroupSearchPrice = " + pfpAdGroup.getAdGroupSearchPrice());
-				//System.out.println("AdGroupChannelPrice = " + pfpAdGroup.getAdGroupChannelPrice());
 				if(adGroupViewVOs == null){
 					adGroupViewVOs = new ArrayList<PfpAdGroupViewVO>();
 				}
@@ -159,6 +151,12 @@ public class PfpAdGroupService extends BaseService<PfpAdGroup,String> implements
 				adGroupViewVO.setAdGroupName(pfpAdGroup.getAdGroupName());
 				adGroupViewVO.setAdOperatingRule(pfpAdGroup.getPfpAdAction().getAdOperatingRule());
 				
+				for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+					if(pfpAdGroup.getAdGroupPriceType().equals(enumAdPriceType.getDbTypeName())){
+						adGroupViewVO.setAdPriceTypeDesc(enumAdPriceType.getTypeName());
+						break;
+					}
+				}
 				
 				//裝置
 				for(EnumAdDevice adDevice:EnumAdDevice.values()){
@@ -208,6 +206,7 @@ public class PfpAdGroupService extends BaseService<PfpAdGroup,String> implements
 	
 						float clkRate = 0;
 						float clkPriceAvg = 0;
+						float thousandsCost = 0;
 	
 						// 點擊率
 						if(clk > 0 || pv > 0){
@@ -217,7 +216,11 @@ public class PfpAdGroupService extends BaseService<PfpAdGroup,String> implements
 						if(clkPrice > 0 || clk > 0){
 							clkPriceAvg = clkPrice / (float)clk;
 						}
-	
+						// 千次曝光費用
+						if(clkPrice > 0){
+							thousandsCost = clkPrice / ( pv / 1000);
+						}
+						adGroupViewVO.setThousandsCost(thousandsCost);
 						adGroupViewVO.setAdClkRate(clkRate);
 						adGroupViewVO.setAdClkPriceAvg(clkPriceAvg);
 					}

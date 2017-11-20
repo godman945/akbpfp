@@ -319,8 +319,6 @@ public class AdGroupAddAction extends BaseCookieAction{
 		//系統價更新
 		syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, pfpAdGroup.getAdGroupChannelPrice());
 		
-		
-		
 		return SUCCESS;
 	}
 

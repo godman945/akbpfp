@@ -18,17 +18,17 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 
-import com.pchome.enumerate.ad.EnumAdType;
-import com.pchome.enumerate.report.EnumReport;
-import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.akbpfp.db.dao.report.AdAgesexReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdAgesexReportService;
-import com.pchome.soft.util.DateValueUtil;
+import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
+import com.pchome.soft.util.DateValueUtil;
 
 public class ReportAdAgesexAction extends BaseReportAction {
 
@@ -90,6 +90,8 @@ public class ReportAdAgesexAction extends BaseReportAction {
 	
 	private String searchAgesex = "A";
 
+	private String timeName = "";
+	
 	public String flashDataDownLoad() throws Exception {
 
 		//查詢日期寫進 cookie
@@ -415,9 +417,9 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		}
 
 		tableHeadList.addFirst("裝置");
-		String timeName = "年齡";
+			this.timeName = "年齡";
 		if(StringUtils.equals("S", searchAgesex)){
-			timeName = "性別";
+			this.timeName = "性別";
 		} 
 		tableHeadList.addFirst("計價方式");
 		tableHeadList.addFirst("廣告樣式");
@@ -470,7 +472,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		content.append("\n");
 		content.append("廣告樣式," + getAdStyleTypeMap().get(adOperatingRule));
 		content.append("\n");
-		content.append("統計變項," + getAdShowWayMap().get(adShowWay));
+		content.append("統計變項," + timeName);
 		content.append("\n");
 		content.append("裝置," + getAdPvclkDeviceMap().get(adPvclkDevice));
 		content.append("\n");

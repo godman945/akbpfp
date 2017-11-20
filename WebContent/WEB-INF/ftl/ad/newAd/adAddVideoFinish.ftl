@@ -68,9 +68,14 @@ function newAd() {
 			</tr>
 			<tr>
 				<td width="" height="48">${adGroupName!}</td>
-				<td width="" height="48">${adGroupPriceType!}</td>
+				<td width="" height="48">${adGroupPriceTypeDesc!}</td>
 				<td width="" height="48">NT$${adGroupChannelPrice!}<br><a href="adGroupView.html?adActionSeq=${adActionSeq!}">修改出價</a></td>
-				<td width="" height="48">${pfpAdList?size!}則<br><a href="adAdView.html?adGroupSeq=${adGroupSeq!}">檢視廣告明細</a></td>
+				<#if adOperatingRule = 'MEDIA'>
+						<td width="" height="48">${pfpAdList?size!}則<br><a href="adAdView.html?adGroupSeq=${adGroupSeq!}">檢視廣告明細</a></td>
+				<#elseif adOperatingRule = 'VIDEO'>
+						<td width="" height="48">${pfpAdList?size!}則<br><a href="adAdVideoView.html?adGroupSeq=${adGroupSeq!}">檢視廣告明細</a></td>
+				</#if>
+				
 			</tr>
 		</table>
 	</div>

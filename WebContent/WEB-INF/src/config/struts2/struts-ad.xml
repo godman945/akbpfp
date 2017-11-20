@@ -100,16 +100,12 @@
    	<action name="doAdGroupAdd" class="AdGroupAddAction" method="doAdGroupAdd">
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
-		<result type="redirectAction" name="success">
-			<param name="actionName">adAdAdd</param>  
-			<param name="adGroupSeq">${adGroupSeq}</param>
-		</result>
 		
 		<result type="redirectAction" name="success">
 			<param name="actionName">adAdAdd</param>  
 			<param name="adGroupSeq">${adGroupSeq}</param>
+			<param name="adOperatingRule">${adOperatingRule}</param>
 		</result>
-		
 		<result type="tiles" name="input">.ad.group.add</result>
     </action>
 

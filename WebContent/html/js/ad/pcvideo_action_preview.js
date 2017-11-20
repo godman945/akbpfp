@@ -166,6 +166,11 @@
 			var adlinkbtn1 = video.parentElement.parentElement.parentElement.parentElement.querySelector('#ad-linkbtn');
 			var adlinkbtn2 = video.parentElement.querySelector('#video-linkbtn');
 			
+			var videoSoundOn = video.parentElement.parentElement.parentElement.querySelector('#video-soundon');
+			if(videoSoundOn.style.display == 'block'){
+				video.muted = false;
+				video.volume = 0.1;
+			}
 			playbtn.style.display='none';
 			pausebtn.style.display='none';
 			replaybtn.style.display='none';

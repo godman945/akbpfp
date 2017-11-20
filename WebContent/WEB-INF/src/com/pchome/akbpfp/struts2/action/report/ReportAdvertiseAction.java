@@ -312,6 +312,9 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		tableHeadList.addFirst("計價方式");
 		tableHeadList.addFirst("廣告樣式");
 		tableHeadList.addFirst("播放類型");
+		
+		
+		//根據searchAdseq判斷是否查看第二層-每日成效
 		if(StringUtils.isNotBlank(searchAdseq)){
 			tableHeadList.addFirst("日期");
 		} else {
@@ -367,7 +370,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	private void makeDownloadReportData() throws Exception {
 
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddhhmmss");
-		String filename="影音廣告成效報表_" + dformat.format(new Date()) + FILE_TYPE;
+		String filename="廣告明細成效報表_" + dformat.format(new Date()) + FILE_TYPE;
 
 		StringBuffer content = new StringBuffer();
 		//報表名稱
@@ -389,25 +392,43 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
 		
-		content.append(""
-				+ "狀態,"
-				+ "廣告名稱,"
-				+ "廣告內容,"
-				+ "影片長度,"
-				+ "顯示連結,"
-				+ "實際連結,"
-				+ "分類,"
-				+ "廣告,"
-				+ "播放類型,"
-				+ "廣告樣式,"
-				+ "計價方式,"
-				+ "裝置,"
-				+ "曝光數,"
-				+ "互動數,"
-				+ "互動率,"
-				+ "單次互動費用,"
-				+ "千次曝光費用,"
-				+ "費用");
+		//查看每日成效
+		if(StringUtils.isNotBlank(searchAdseq)){
+			content.append(""
+					+ "日期,"
+					+ "播放類型,"
+					+ "廣告樣式,"
+					+ "計價方式,"
+					+ "裝置,"
+					+ "曝光數,"
+					+ "互動數,"
+					+ "互動率,"
+					+ "單次互動費用,"
+					+ "千次曝光費用,"
+					+ "費用");
+		}else{
+			content.append(""
+					+ "狀態,"
+					+ "廣告名稱,"
+					+ "廣告內容,"
+					+ "影片長度,"
+					+ "顯示連結,"
+					+ "實際連結,"
+					+ "分類,"
+					+ "廣告,"
+					+ "播放類型,"
+					+ "廣告樣式,"
+					+ "計價方式,"
+					+ "裝置,"
+					+ "曝光數,"
+					+ "互動數,"
+					+ "互動率,"
+					+ "單次互動費用,"
+					+ "千次曝光費用,"
+					+ "費用");
+		}
+		
+		
 		
 		//列表值
 		float sumPV = 0;
@@ -432,18 +453,35 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			sumSingleAdCost = (singleCost + singleCost);
 			
 			content.append("\n");
-			content.append(adReportVO.getAdStatusDesc()+",");
-			content.append(adReportVO.getAdActionName()+",");
-			content.append(adReportVO.getContent()+",");
-			content.append(adReportVO.getAdVideoUrl()+",");
-			content.append(adReportVO.getAdVideoUrl()+",");
-			content.append(adReportVO.getRealUrl()+",");
-			content.append(adReportVO.getAdGroupName()+",");
-			content.append(adReportVO.getAdActionName()+",");
-			content.append(adReportVO.getAdType()+",");
-			content.append(adReportVO.getAdOperatingRule()+",");
-			content.append(adReportVO.getAdClkPriceType()+",");
-			content.append(adReportVO.getAdDevice()+",");
+			//searchAdseq有值查看每日成效
+			if(StringUtils.isNotBlank(searchAdseq)){
+				content.append(adReportVO.getReportDate()+",");
+				content.append(adReportVO.getAdType()+",");
+				content.append(adReportVO.getAdOperatingRuleDesc()+",");
+				content.append(adReportVO.getAdClkPriceType()+",");
+				content.append(adReportVO.getAdDevice()+",");
+			}else{
+				content.append(adReportVO.getAdStatusDesc()+",");
+				content.append(adReportVO.getAdActionName()+",");
+				content.append(adReportVO.getContent()+",");
+				if(StringUtils.isBlank(adReportVO.getAdVideoSec())){
+					content.append(",");
+				}else{
+					content.append(adReportVO.getAdVideoSec() +",");
+				}
+				if(adReportVO.getAdOperatingRule().equals("VIDEO")){
+					content.append(adReportVO.getAdVideoUrl()+",");
+				}else{
+					content.append(adReportVO.getShowUrl()+",");
+				}
+				content.append(adReportVO.getRealUrl()+",");
+				content.append(adReportVO.getAdGroupName()+",");
+				content.append(adReportVO.getAdActionName()+",");
+				content.append(adReportVO.getAdType()+",");
+				content.append(adReportVO.getAdOperatingRuleDesc()+",");
+				content.append(adReportVO.getAdClkPriceType()+",");
+				content.append(adReportVO.getAdDevice()+",");
+			}
 			content.append(adReportVO.getAdPvSum()+",");
 			content.append(adReportVO.getAdClkSum()+",");
 			content.append(df.format(clickAvg)+"%,");
@@ -453,25 +491,41 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		}
 		//總計
 		content.append("\n\n");
-		content.append(""
-				+ "總計:共"+resultData.size()+"筆"+","
-				+ ","
-				+ ","
-				+ ","
-				+ ","
-				+ ","
-				+ ","
-				+ ","
-				+ ","
-				+ ","
-				+ ","
-				+ ","
-				+ sumPV+","
-				+ sumClick+","
-				+ df.format((sumClick/sumPV)*100)+"%,"
-				+ ((int)Math.round(totalCost / sumClick))+","
-				+ Math.round(totalCost / (sumPV / 1000))+","
-				+ Math.round(totalCost));
+		if(StringUtils.isNotBlank(searchAdseq)){
+			content.append(""
+					+ "總計:共"+resultData.size()+"筆"+","
+					+ ","
+					+ ","
+					+ ","
+					+ ","
+					+ sumPV+","
+					+ sumClick+","
+					+ df.format((sumClick/sumPV)*100)+"%,"
+					+ ((int)Math.round(totalCost / sumClick))+","
+					+ Math.round(totalCost / (sumPV / 1000))+","
+					+ Math.round(totalCost));
+		}else{
+			content.append(""
+					+ "總計:共"+resultData.size()+"筆"+","
+					+ ","
+					+ ","
+					+ ","
+					+ ","
+					+ ","
+					+ ","
+					+ ","
+					+ ","
+					+ ","
+					+ ","
+					+ ","
+					+ sumPV+","
+					+ sumClick+","
+					+ df.format((sumClick/sumPV)*100)+"%,"
+					+ ((int)Math.round(totalCost / sumClick))+","
+					+ Math.round(totalCost / (sumPV / 1000))+","
+					+ Math.round(totalCost));
+		}
+		
 		downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));
 		
 		

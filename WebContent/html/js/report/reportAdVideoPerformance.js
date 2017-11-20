@@ -131,7 +131,7 @@ function ready(){
 		headers: {
 			0 : { sorter: false },
 			1 : { sorter: false },
-			2 : { sorter: 'fancyCurrency' },
+			2 : { sorter: false },
 			3 : { sorter: 'fancyCurrency' },
 			4 : { sorter: 'fancyCurrency' },
 			5 : { sorter: 'fancyNumber' },

@@ -72,3 +72,7 @@ function multipartImgUuploadSubmit(){
 		});
 	}
 }
+
+function cancerSubmit(){
+	 location.href = "adAdVideoView.html?adGroupSeq="+$('#adGroupSeq').val();
+}

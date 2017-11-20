@@ -145,7 +145,6 @@ function loadValidate(){
 }
 
 function tableSorter(){
-	
 	$("#tableView").tablesorter({
 		headers:{
 			0 : { sorter: false},
@@ -156,7 +155,9 @@ function tableSorter(){
 			9 : { sorter: 'fancyNumber' },
 			10 : { sorter: 'rangesort' },
 			11 : { sorter: 'rangesort' },
-			12: { sorter: false}
+			12 : { sorter: 'rangesort' },
+			13 : { sorter: 'rangesort' },
+			14: { sorter: false}
 			}
 	});
 }

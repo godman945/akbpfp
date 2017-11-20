@@ -31,8 +31,9 @@ public class AdReportVO {
 	private String customerInfoId; //帳號
 	private String adDevice;
 	private String adType;
-	private String adOperatingRule;		//廣告樣式
+	private String adOperatingRuleDesc;		//廣告樣式
 	private String adClkPriceType;		//廣告計費方式
+	private String adOperatingRule;
 	
 	//影片長度
 	private String adVideoSec;
@@ -278,6 +279,14 @@ public class AdReportVO {
 
 	public void setAdVideoSec(String adVideoSec) {
 		this.adVideoSec = adVideoSec;
+	}
+
+	public String getAdOperatingRuleDesc() {
+		return adOperatingRuleDesc;
+	}
+
+	public void setAdOperatingRuleDesc(String adOperatingRuleDesc) {
+		this.adOperatingRuleDesc = adOperatingRuleDesc;
 	}
 
 }

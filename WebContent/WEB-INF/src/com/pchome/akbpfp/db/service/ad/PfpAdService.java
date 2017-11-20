@@ -19,6 +19,7 @@ import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.akbpfp.godutil.CommonUtilModel;
+import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
@@ -316,7 +317,12 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 			PfpAdAdVideoViewVO pfpAdAdVideoViewVO = new PfpAdAdVideoViewVO();
 			pfpAdAdVideoViewVO.setAdGroupSeq(objArray[0].toString());
 			pfpAdAdVideoViewVO.setAdSeq(objArray[1].toString());
-			pfpAdAdVideoViewVO.setPriceType(objArray[2].toString());
+			for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+				if(enumAdPriceType.getDbTypeName().equals(objArray[2].toString())){
+					pfpAdAdVideoViewVO.setPriceTypeDesc(enumAdPriceType.getTypeName());
+					break;
+				}
+			}
 			pfpAdAdVideoViewVO.setAdPvSum(Integer.valueOf(objArray[3].toString()));
 			pfpAdAdVideoViewVO.setCostSum(objArray[4].toString());
 			pfpAdAdVideoViewVO.setSumAdView(objArray[5].toString());

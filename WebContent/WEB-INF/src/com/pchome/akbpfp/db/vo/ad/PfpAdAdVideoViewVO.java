@@ -7,7 +7,7 @@ public class PfpAdAdVideoViewVO {
 	//廣告序號
 	private String adSeq = "";
 	//價格類型
-	private String priceType = "";
+	private String priceTypeDesc = "";
 	//曝光數總和
 	private int adPvSum;
 	//互動數總和
@@ -61,14 +61,13 @@ public class PfpAdAdVideoViewVO {
 		this.adSeq = adSeq;
 	}
 
-	public String getPriceType() {
-		return priceType;
+	public String getPriceTypeDesc() {
+		return priceTypeDesc;
 	}
 
-	public void setPriceType(String priceType) {
-		this.priceType = priceType;
+	public void setPriceTypeDesc(String priceTypeDesc) {
+		this.priceTypeDesc = priceTypeDesc;
 	}
-
 
 	public int getAdPvSum() {
 		return adPvSum;

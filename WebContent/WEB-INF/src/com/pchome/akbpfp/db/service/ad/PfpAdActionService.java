@@ -12,6 +12,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdActionViewVO;
 import com.pchome.enumerate.ad.EnumAdDevice;
+import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.util.DateValueUtil;
@@ -72,7 +73,13 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 				PfpAdActionViewVO adActionViewVO = new PfpAdActionViewVO();
 				adActionViewVO.setAdActionSeq(pfpAdAction.getAdActionSeq());
 				adActionViewVO.setAdActionName(pfpAdAction.getAdActionName());
-				adActionViewVO.setAdOperatingRule(pfpAdAction.getAdOperatingRule());
+				
+				for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+					if(enumAdStyleType.getTypeName().equals(pfpAdAction.getAdOperatingRule())){
+						adActionViewVO.setAdOperatingRule(enumAdStyleType.getType());
+						break;
+					}
+				}
 	
 				// 廣告類型
 				for(EnumAdType type:EnumAdType.values()){
@@ -134,11 +141,7 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 						int clk = Integer.parseInt(obj[2].toString());
 						float clkPrice = Float.parseFloat(obj[3].toString());
 						int invalidClk = Integer.parseInt(obj[4].toString());
-						//float invalidClkPrice = Float.parseFloat(obj[5].toString());
-	
-						//clkPrice = clkPrice - invalidClkPrice;
-						//clk = clk - invalidClk;
-						
+						float thousandsCost = 0;
 	
 						adActionViewVO.setAdPv(pv);
 						adActionViewVO.setAdClk(clk);
@@ -156,8 +159,14 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 							clkPriceAvg = clkPrice / (float)clk;
 						}
 	
+						//計算千次曝光費用
+						if(clkPrice > 0){
+							thousandsCost = clkPrice / (pv / 1000);
+						}
+						
 						adActionViewVO.setAdClkRate(clkRate);
 						adActionViewVO.setAdClkPriceAvg(clkPriceAvg);
+						adActionViewVO.setThousandsCost(thousandsCost);
 					}
 				}
 				adActionViewVOs.add(adActionViewVO);

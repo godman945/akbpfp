@@ -13,8 +13,8 @@ import com.pchome.akbpfp.db.dao.ad.PfpAdDetailDAO;
 import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdReportDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
-import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.utils.EnumStatus;
 
 public class AdReportService implements IAdReportService {
 
@@ -44,11 +44,13 @@ public class AdReportService implements IAdReportService {
 		    String html5Title = null;
 		    String html5Flag = "N";
 		    String videoSeconds = null;
+		    String showUrl = null ;
 		    String videoUrl = null;
-			for (int i=0; i<dataList.size(); i++) {
+			for (int i=0; i< dataList.size(); i++) {
 				AdReportVO adReportVO = dataList.get(i);
 				pfpAdDetailList = pfpAdDetailDAO.getPfpAdDetailByAdSeq(adReportVO.getAdSeq());
-	            realUrl = null;
+				showUrl = null;
+				realUrl = null;
 	            img = null;
 	            title = null;
 	            adStyle = null;
@@ -88,14 +90,17 @@ public class AdReportService implements IAdReportService {
                     if(StringUtils.equals("c_x05_po_tad_0059", pfpAdDetail.getPfpAd().getAdAssignTadSeq())){
                     	html5Flag = "Y";
                     }
+                    if("show_url".equals(pfpAdDetail.getAdDetailId())){
+                    	showUrl = pfpAdDetail.getAdDetailContent();
+                    }
 				}
-
+				
 				String htmlCode = "";
 				if ("IMG".equals(adStyle)) {
 					//取得圖片尺寸
 					String imgWidth = "0";
 					String imgHeight = "0";
-					String showUrl = realUrl;
+					showUrl = realUrl;
 					showUrl = showUrl.replaceAll("http://", "");
 					showUrl = showUrl.replaceAll("https://", "");
 					if(showUrl.lastIndexOf(".com/") != -1){
@@ -134,10 +139,8 @@ public class AdReportService implements IAdReportService {
 								imgHeight = Integer.toString(sourceImg.getHeight());	
 							}
 						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} finally {
 							if(is != null){
@@ -180,7 +183,7 @@ public class AdReportService implements IAdReportService {
 							style = "margin-top:17%;";
 						}
 					}
-					videoSeconds = videoSeconds.length() ==2 ?videoSeconds : "0"+videoSeconds;
+					videoSeconds = videoSeconds.length() == 2 ?videoSeconds : "0"+videoSeconds;
 					htmlCode = "<div style=\"display:flex;\"><div> ";
 					htmlCode = htmlCode + "<iframe class=\"akb_iframe\" scrolling=\"no\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" vspace=\"0\" hspace=\"0\" id=\"pchome8044_ad_frame1\" width=\""+width+"\" height=\""+height+"\" allowtransparency=\"true\" allowfullscreen=\"true\" src=\"adVideoModel.html?adPreviewVideoURL="+adPreviewVideoURL+"&adPreviewVideoBgImg=http://showstg.pchome.com.tw/pfp/"+adPreviewVideoBgImg+"&realUrl="+realUrl+"\"></iframe>";
 					htmlCode = htmlCode + "</div><div style=\" text-align: left; line-height: 20px; padding: 10px;"+style+"\">";
@@ -189,13 +192,14 @@ public class AdReportService implements IAdReportService {
 					htmlCode = htmlCode + "時間 00:"+videoSeconds+"<br>";
 					htmlCode = htmlCode + "<a href=\""+realUrl+"\" target=\"_blank\" >"+realUrl;
 					htmlCode = htmlCode+"</div></div>";
-					adReportVO.setContent("尺寸:"+width+"x"+height);
-					adReportVO.setAdVideoSec("00:"+videoSeconds);
+					adReportVO.setContent("尺寸 :"+width+"x"+height);
+					adReportVO.setAdVideoSec("00 : "+videoSeconds);
 					adReportVO.setAdVideoUrl(adPreviewVideoURL);
 				}else {
 					htmlCode =  "<span><iframe height=\"120\" width=\"350\" src=\"adModel.html?adNo=" + adReportVO.getAdSeq() + "&tproNo=tpro_201406300001\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" frameborder=\"0\" align=\"ceneter\" class=\"akb_iframe\"></iframe></span>";
 				}
 
+				adReportVO.setShowUrl(showUrl);
 				adReportVO.setAdPreview(htmlCode);
 
 				String adSeqCode = adReportVO.getAdSeq();
@@ -212,6 +216,11 @@ public class AdReportService implements IAdReportService {
 						adReportVO.setRealUrl(adPropertiesValue);
 						adReportVO.setAdGroupName(adDetail.getPfpAd().getPfpAdGroup().getAdGroupName());
 						adReportVO.setAdGroupStatus(adDetail.getPfpAd().getPfpAdGroup().getAdGroupStatus());
+						for (EnumStatus enumStatus : EnumStatus.values()) {
+							if(adDetail.getPfpAd().getPfpAdGroup().getAdGroupStatus() == enumStatus.getStatusId()){
+								adReportVO.setAdStatusDesc(enumStatus.getStatusDesc());
+							}
+						}
 					} else if (adPropertiesName.equals("show_url")) {
 						adReportVO.setShowUrl(adPropertiesValue);
 					}

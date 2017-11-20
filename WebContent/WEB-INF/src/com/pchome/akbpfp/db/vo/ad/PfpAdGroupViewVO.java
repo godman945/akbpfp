@@ -24,6 +24,8 @@ public class PfpAdGroupViewVO {
 	private float adActionMax = 0;
 	private int invalidClk = 0;
 	private String adDevice;
+	private String adPriceTypeDesc;
+	private float thousandsCost;
 	
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -156,6 +158,18 @@ public class PfpAdGroupViewVO {
 	}
 	public void setAdOperatingRule(String adOperatingRule) {
 		this.adOperatingRule = adOperatingRule;
+	}
+	public String getAdPriceTypeDesc() {
+		return adPriceTypeDesc;
+	}
+	public void setAdPriceTypeDesc(String adPriceTypeDesc) {
+		this.adPriceTypeDesc = adPriceTypeDesc;
+	}
+	public float getThousandsCost() {
+		return thousandsCost;
+	}
+	public void setThousandsCost(float thousandsCost) {
+		this.thousandsCost = thousandsCost;
 	}
 	
 }

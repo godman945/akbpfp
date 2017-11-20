@@ -132,23 +132,33 @@
 	            <tr>
 	                <th height="20">影音格式</th>
 	                <td>
-	                 目前僅支援</td>
+	                 目前僅支援Youtube影片連結上稿
+	                </td>
 	            </tr>
 	            <tr>
-	                <th height="20">影片長度</th>
+	                <th height="20">影音長寬比</th>
 	                <td>
-	                 最長30秒</td>
+	               		16：9
+	               	</td>
+	            </tr>
+	           	<tr>
+	                <th height="20">影音長度</th>
+	                <td>
+	               		30秒以內
+	               	</td>
 	            </tr>
 	            <tr>
-	              <th height="20">尺寸</th>
+	              <th height="20">影音廣告尺寸</th>
 	              <td>
 	               <div id="adSizeDiv" style="height:200px;overflow:auto;">
 	                 <div>
-	                    <div style="color:#ff3300;width:230px;float:left;"><b>影片會自動帶入以下廣告尺寸播放</b></div>
 	                    <div style="width:110px;float:left;">
-	                            <p>300 x 250(電腦)</p>
-	                            <p>300 x 600(電腦)</p>
-	                            <p>336 x 280(電腦)</p>
+	                    		<p>300 x 250(電腦)</p>
+	                    		<p>300 x 600(電腦)</p>
+	                    		<p>336 x 280(電腦)</p>
+	                    		<p>640 x 390(電腦)</p>
+	                    		<p>950 x 390(電腦)</p>
+	                    		<p>320 x 480(電腦)</p>
 	                            <p>970 x 250(電腦)</p>
 	                    </div>
 	                    <div style="width:120px;float:left;">
@@ -179,20 +189,17 @@
 	                <td>JPG、PNG、GIF檔</td>
 	            </tr>
 	            <tr>
-	                <th height="20">影片長度</th>
+	                <th height="20">圖片大小上限</th>
 	                <td>
-	                	 最長30秒</td>
+	                	 180 KB
+	                </td>
 	            </tr>
 	            <tr>
 	              <th height="20">圖片大小</th>
 	              <td>
 	               <div id="adSizeDiv" style="height:200px;overflow:auto;">
 	                 <div>
-	                   
 	                    <div style="width:110px;float:left;">
-	                            <p>300 x 250</p>
-	                            <p>336 x 280</p>
-	                            <p>640 x 390</p>
 	                            <p>300 x 600</p>
 	                            <p>320 x 480</p>
 	                            <p>310 x 390</p>
@@ -321,7 +328,7 @@
 	            </td>
 	          </tr>
 	          <tr>
-	            <td align="center" bgcolor="#FFFFFF" style="font-size: 15px;">需上傳597x250的Banner廣告圖，請參照以下指示製作素材。</td>
+	            <td align="center" bgcolor="#FFFFFF" style="font-size: 15px;">需上傳579x250的Banner廣告圖，請參照以下指示製作素材。</td>
 	          </tr>
 	          <tr>
 	            <td align="center" bgcolor="#FFFFFF"><img src="html/img/970250_size_p.gif" width="1050" height="315" alt=""/></td>

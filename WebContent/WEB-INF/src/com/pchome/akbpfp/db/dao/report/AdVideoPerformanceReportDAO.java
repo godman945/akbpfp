@@ -249,7 +249,6 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 				query.setParameter("searchText", reportQueryConditionVO.getSearchText());
 			}
 		}
-		
 		return query.list();
 	}
 }

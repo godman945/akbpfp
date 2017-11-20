@@ -84,7 +84,7 @@ ${page}/${totalPage}
 				<th width="200" colspan="2" rowspan="2">影片明細</th>
 				<th width="100" rowspan="2">計價方式</th>
 				<th width="50" rowspan="2">裝置</th>
-				<th width="80" rowspan="2">廣告</th>
+				<th width="80" rowspan="2">廣告尺寸</th>
 				<th width="80" rowspan="2">曝光數</th>
 				<th width="80" rowspan="2">收視數</th>
 				<th width="80" rowspan="2">收視率</th>
@@ -125,7 +125,7 @@ ${page}/${totalPage}
 					<td align="center">${adVideoPerformanceReportVO.templateProductWidth!}x${adVideoPerformanceReportVO.templateProductHeight!}</td>
 					<td align="right">${adVideoPerformanceReportVO.adPvSum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adViewSum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adViewRatings!}%</td>
+			        <td align="right">${adVideoPerformanceReportVO.adViewRatings?number?round}%</td>
 			        <td align="right">NT$ ${adVideoPerformanceReportVO.singleAdViewCost!}</td>
 			        <td align="right">NT$ ${adVideoPerformanceReportVO.thousandsCost!}</td>
 			        <td align="right">NT$ ${adVideoPerformanceReportVO.costSum!}</td>
@@ -133,7 +133,7 @@ ${page}/${totalPage}
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess50Sum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess75Sum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Sum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Ratings!}%</td>
+			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Ratings?number?round!}%</td>
 			        <td align="right">${adVideoPerformanceReportVO.adClkSum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoUniqSum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoMusicSum!}</td>
@@ -148,13 +148,10 @@ ${page}/${totalPage}
 	 	
 	 	<tfoot>
 		 	<tr height="35">
-			    <th height="30" colspan="3"  align="">總計-所有影片	<#if adVideoPerformanceReportVOList? exists>${adVideoPerformanceReportVOList ? size}<#else>0</#if></th>
-			    <th height="30" align=""><#if adPriceType =="">全部<#else>${adPriceType}</#if></th>
-			    <th height="30" align=""><#if adPvclkDevice =="">全部<#else>${adPvclkDevice}</#if></th>
-			    <th height="30" align=""><#if adSize =="">全部<#else>${width} x ${height}</#if></th>
+			    <th height="30" colspan="6"  align="">總計-所有影片	<#if adVideoPerformanceReportVOList? exists>${adVideoPerformanceReportVOList ? size}<#else>0</#if></th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adPvSum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewSum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewRatings!}%</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewRatings?number?round!}%</th>
 			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.singleAdViewCost!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.thousandsCost!}</th>
 			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.costSum!}</th>
@@ -162,7 +159,7 @@ ${page}/${totalPage}
 			   	<th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess50Sum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess75Sum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Sum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Ratings!}%</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Ratings?number?round!}%</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adClkSum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoUniqSum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoMusicSum!}</th>

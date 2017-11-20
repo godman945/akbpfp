@@ -199,7 +199,7 @@ function loadChart(){
 			selectSuffix = "次";
 			break;
 		case "click":
-			titleName = "點選次數(次)";
+			titleName = "互動數(次)";
 			selectTypeName = "點選次數";
 			selectSuffix = "次";
 			break;

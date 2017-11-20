@@ -23,9 +23,6 @@ import com.pchome.enumerate.utils.EnumStatus;
 
 public class AdFinishAction extends BaseCookieAction{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private String message = "";
@@ -41,7 +38,7 @@ public class AdFinishAction extends BaseCookieAction{
 	private String adGroupSearchPriceType;
 	private String adGroupSearchPrice;
 	private String adGroupChannelPrice;
-	private String adGroupPriceType;
+	private String adGroupPriceTypeDesc;
 	private List<PfpAd> pfpAdList;
 	private List<PfpAdKeyword> pfpAdKeywordList;
 
@@ -57,6 +54,7 @@ public class AdFinishAction extends BaseCookieAction{
 	private String adType;
 	private String adTypeName;
 	private String adDeviceName;
+	private String adOperatingRule;
 	
 	public String AdAddFinish() throws Exception {
 	    getadDate();
@@ -135,6 +133,15 @@ public class AdFinishAction extends BaseCookieAction{
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 		adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 	
+		//收費方式
+		for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+			if(enumAdPriceType.getDbTypeName().equals(pfpAdGroup.getAdGroupPriceType())){
+				adGroupPriceTypeDesc = enumAdPriceType.getTypeName();
+				break;
+			}
+		}
+		adOperatingRule = pfpAdGroup.getPfpAdAction().getAdOperatingRule();
+		
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
 		String adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
@@ -146,8 +153,16 @@ public class AdFinishAction extends BaseCookieAction{
 		adActionMax = NumberFormat.getIntegerInstance().format(pfpAdGroup.getPfpAdAction().getAdActionMax());
 		adActionStartDate = sdf.format(pfpAdGroup.getPfpAdAction().getAdActionStartDate());
 		adGroupName  = pfpAdGroup.getAdGroupName();
+		
 		adGroupSearchPrice = Integer.toString((int)pfpAdGroup.getAdGroupSearchPrice());
-		adGroupChannelPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
+		//CPC為多媒體廣告其他為影音廣告
+		if(pfpAdGroup.getAdGroupPriceType().equals(EnumAdPriceType.AD_PRICE_CPC.getDbTypeName())){
+			adGroupChannelPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
+		}else if(pfpAdGroup.getAdGroupPriceType().equals(EnumAdPriceType.AD_PRICE_CPM.getDbTypeName())){
+			adGroupChannelPrice = String.valueOf((int)pfpAdGroup.getAdGroupChannelPrice());
+		}else if(pfpAdGroup.getAdGroupPriceType().equals(EnumAdPriceType.AD_PRICE_CPV.getDbTypeName())){
+			adGroupChannelPrice = String.valueOf(pfpAdGroup.getAdGroupChannelPrice());
+		}
 		
 		adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
 		Integer adDevice = pfpAdGroup.getPfpAdAction().getAdDevice();
@@ -194,19 +209,6 @@ public class AdFinishAction extends BaseCookieAction{
 		pfpAdList = pfpAdNotCloseList;
 		
 		pfpAdKeywordList = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
-		
-		
-//		收費方式
-		for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
-			if(enumAdPriceType.getDbTypeName().equals(pfpAdGroup.getAdGroupPriceType())){
-				adGroupPriceType = enumAdPriceType.getTypeName();
-				break;
-			}
-		}
-		
-		
-		
-		
 		
 		return SUCCESS;
 	}
@@ -329,12 +331,19 @@ public class AdFinishAction extends BaseCookieAction{
 		this.adDeviceName = adDeviceName;
 	}
 
-	public String getAdGroupPriceType() {
-		return adGroupPriceType;
+	public String getAdGroupPriceTypeDesc() {
+		return adGroupPriceTypeDesc;
 	}
 
-	public void setAdGroupPriceType(String adGroupPriceType) {
-		this.adGroupPriceType = adGroupPriceType;
+	public void setAdGroupPriceTypeDesc(String adGroupPriceTypeDesc) {
+		this.adGroupPriceTypeDesc = adGroupPriceTypeDesc;
 	}
-	
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
 }

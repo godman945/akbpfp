@@ -767,18 +767,12 @@ public class PfpAdGroupDAO extends BaseDAO<PfpAdGroup,String> implements IPfpAdG
 	@SuppressWarnings("unchecked")
 	public HashMap<String, Object> getAdGroupReportByAdGroupsList(String customerInfoId, String adActionSeq, List<String> adGroupSeqList, int adType, Date startDate, Date endDate) throws Exception{
 		Session session = getSession();
-		System.out.println("customerInfoId = " + customerInfoId);
-		System.out.println("adGroupSeq = " + adActionSeq);
-		System.out.println("adGroupSeqList = " + adGroupSeqList);
-		System.out.println("adType = " + adType);
-		System.out.println("startDate = " + startDate);
-		System.out.println("endDate = " + endDate);
 		
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 		hql.append("select adGroupSeq,");
 		hql.append(" COALESCE(sum(adPv),0), ");
-		hql.append(" COALESCE(sum(adClk),0), ");
+		hql.append(" COALESCE(sum((case when adClkPriceType = 'CPC' then adClk else adView end)),0), ");
 		hql.append(" COALESCE(sum(adClkPrice),0), ");
 		hql.append(" COALESCE(sum(adInvalidClk),0), ");
 		hql.append(" COALESCE(sum(adInvalidClkPrice),0), ");

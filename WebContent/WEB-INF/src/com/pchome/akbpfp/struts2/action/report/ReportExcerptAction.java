@@ -1519,9 +1519,9 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			tableInDataList = new LinkedList<String>();
 
-			AdActionReportVO vo = resultData.get(i);
+			AdActionReportVO adActionReportVO = resultData.get(i);
 
-			String adActionSeq = vo.getAdActionSeq();
+			String adActionSeq = adActionReportVO.getAdActionSeq();
 
 			PfpAdAction pfpAdAction =  adActionService.getPfpAdActionBySeq(adActionSeq);
 
@@ -1530,17 +1530,17 @@ public class ReportExcerptAction extends BaseReportAction {
 		    String adActionStartDate = dateFormat2.format(pfpAdAction.getAdActionStartDate());
 		    String adActionEndDate = dateFormat2.format(pfpAdAction.getAdActionEndDate());
 
-			double pv = vo.getAdPvSum().doubleValue();
-			double click = vo.getAdClkSum().doubleValue();
-			double cost = new Double(vo.getAdPriceSum());
-			double invClick = vo.getAdInvClkSum().doubleValue();
+			double pv = adActionReportVO.getAdPvSum().doubleValue();
+			double click = adActionReportVO.getAdClkSum().doubleValue();
+			double cost = new Double(adActionReportVO.getAdPriceSum());
+			double invClick = adActionReportVO.getAdInvClkSum().doubleValue();
 			double ctr = 0;
 			double costAvg = 0;
 			double kiloCost = 0;
-			String adType = vo.getAdType();
-			String adDevice = vo.getAdDevice();
-			String adOperatingRuleName = vo.getAdOperatingRule();
-			String adClkPriceTypeName = vo.getAdClkPriceType();
+			String adType = adActionReportVO.getAdType();
+			String adDevice = adActionReportVO.getAdDevice();
+			String adOperatingRuleName = adActionReportVO.getAdOperatingRuleDesc();
+			String adClkPriceTypeName = adActionReportVO.getAdClkPriceType();
 
 			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
@@ -2069,7 +2069,7 @@ public class ReportExcerptAction extends BaseReportAction {
 			double kiloCost = 0;
 			String adDevice = adReportVO.getAdDevice();
 			String adType = adReportVO.getAdType();
-			String adOperatingRuleName = adReportVO.getAdOperatingRule();
+			String adOperatingRuleName = adReportVO.getAdOperatingRuleDesc();
 			String adClkPriceTypeName = adReportVO.getAdClkPriceType();
 
 			//互動率 = 互動次數 / 曝光數
@@ -2088,9 +2088,16 @@ public class ReportExcerptAction extends BaseReportAction {
 			}
 
 			if(downloadFlag.equals("yes")){
-				tableInDataList.addLast(adReportVO.getTitle());
-				tableInDataList.addLast(adReportVO.getContent());
-				tableInDataList.addLast(adReportVO.getShowUrl());
+				if(adReportVO.getAdOperatingRule().equals("MEDIA")){
+					tableInDataList.addLast(adReportVO.getTitle());
+					tableInDataList.addLast(adReportVO.getContent());
+					tableInDataList.addLast(adReportVO.getShowUrl());
+				}else if(adReportVO.getAdOperatingRule().equals("VIDEO")){
+					tableInDataList.addLast(adReportVO.getAdActionName());
+					tableInDataList.addLast(adReportVO.getContent());
+					tableInDataList.addLast(adReportVO.getAdVideoUrl());
+				}
+				
 				tableInDataList.addLast(adReportVO.getRealUrl());
 			} else {
 				tableInDataList.addLast(adReportVO.getAdPreview());

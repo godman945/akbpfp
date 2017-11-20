@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -17,12 +18,15 @@ import com.pchome.akbpfp.db.dao.ad.PfpAdKeywordDAO;
 import com.pchome.akbpfp.db.dao.ad.PfpAdPvclkDAO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
+import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
 import com.pchome.akbpfp.db.pojo.PfpAdPvclk;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.AdLayerVO;
 import com.pchome.enumerate.ad.EnumAdLayer;
+import com.pchome.enumerate.ad.EnumAdPriceType;
+import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.enumerate.utils.EnumStatus;
 
@@ -158,6 +162,14 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 	            			PfpAdAction pfpAdAction = (PfpAdAction)dataDetails.get(seq);
 	        				// 設定廣告活動的名稱及狀態
 	        				adLayerVO.setName(pfpAdAction.getAdActionName());
+	        				adLayerVO.setAdOperatingRule(pfpAdAction.getAdOperatingRule());
+	        				
+	        				for (EnumAdType enumAdType : EnumAdType.values()) {
+								if(enumAdType.getType() == pfpAdAction.getAdType()){
+									adLayerVO.setAdType(enumAdType.getTypeName());
+									break;
+								}
+							}
 	        				statusId = pfpAdAction.getAdActionStatus();
 		            	}
 						// 顯示廣告分類
@@ -166,6 +178,12 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 		    				PfpAdGroup pfpAdGroup = (PfpAdGroup)dataDetails.get(seq);
 	        				// 設定廣告活動的名稱及狀態
 	        				adLayerVO.setName(pfpAdGroup.getAdGroupName());
+	        				for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+								if(enumAdPriceType.getDbTypeName().equals(pfpAdGroup.getAdGroupPriceType())){
+									adLayerVO.setAdPriceType(enumAdPriceType.getTypeName());
+									break;
+								}
+							}
 	        				statusId = pfpAdGroup.getAdGroupStatus();
 		            	}
 		            	// 顯示關鍵字廣告
@@ -207,11 +225,44 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 		    				statusId = pfpAd.getAdStatus();
 		    				adLayerVO.setTemplateNo(pfpAd.getTemplateProductSeq());
 		    				adLayerVO.setAdStyle(pfpAd.getAdStyle());
+		    				
+		    				//判斷廣告類行
 		    				String html5Flag = "N";
 		    				if(StringUtils.equals("c_x05_po_tad_0059", pfpAd.getAdAssignTadSeq())){
 		    					html5Flag = "Y";
+		    					adLayerVO.setHtml5Tag(html5Flag);
+		    				}else if(pfpAd.getAdStyle().equals("VIDEO")){
+		    					pfpAd.setAdStyle("VIDEO");
+		    					adLayerVO.setName(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName());
+		    					Set<PfpAdDetail> pfpAdDetails = pfpAd.getPfpAdDetails();
+		    					for (PfpAdDetail pfpAdDetail : pfpAdDetails) {
+									if(pfpAdDetail.getAdDetailId().equals("img")){
+										adLayerVO.setImg(pfpAdDetail.getAdDetailContent());	
+									}
+									if(pfpAdDetail.getAdDetailId().equals("video_url")){
+										adLayerVO.setVideoUrl(pfpAdDetail.getAdDetailContent());				
+									}
+									if(pfpAdDetail.getAdDetailId().equals("real_url")){
+										adLayerVO.setRealUrl(pfpAdDetail.getAdDetailContent());	
+									}
+									if(pfpAdDetail.getAdDetailId().equals("video_size")){
+										String size[] = pfpAdDetail.getAdDetailContent().split("_");
+										if(size.length == 2){
+											adLayerVO.setAdWidth(size[0]);
+											adLayerVO.setAdHeight(size[1]);
+										}
+									}
+									if(pfpAdDetail.getAdDetailId().equals("video_seconds")){
+										adLayerVO.setAdVideoSec(pfpAdDetail.getAdDetailContent());	
+									}
+								}
 		    				}
-		    				adLayerVO.setHtml5Tag(html5Flag);
+	        				for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+								if(enumAdPriceType.getDbTypeName().equals(pfpAd.getPfpAdGroup().getAdGroupPriceType())){
+									adLayerVO.setAdPriceType(enumAdPriceType.getTypeName());
+									break;
+								}
+							}
 		            	}
 					}
 					adLayerVO.setStatusId(statusId);
@@ -254,7 +305,7 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 						float clkRate = 0;
 						float clkCostAvg = 0;
 						float invalidClk = widInvalidClk + phrInvalidClk + preInvalidClk;
-						
+
 						// 計算點擊率
 						if(widClk > 0 || widPv > 0){
 							widClkRate = widClk / (float)widPv*100;
@@ -324,12 +375,11 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 						float clkRate = 0;
 						float clkCostAvg = 0;
 						float invalidClk = Float.parseFloat(ob[4].toString());
-						//float invalidClkCost = Float.parseFloat(ob[5].toString());
-
-						//float realClk = ((float)clk - invalidClk);
-						//float realClk = (float)clk;
-						//float realCost = clkCost - invalidClkCost;
-						//float realCost = Float.parseFloat(ob[5].toString());
+						float thousandsCost = 0;
+						
+						//計算千次曝光費用
+						thousandsCost = realCost / ((float)pv / 1000);
+						
 
 						// 計算點擊率
 						if(realClk > 0 || pv > 0){
@@ -337,7 +387,7 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 						}
 
 						// 計算平均點擊費用
-						if(realCost > 0 || realClk > 0){
+						if(realCost > 0 && realClk > 0){
 							clkCostAvg = realCost / realClk;
 						}
 
@@ -347,6 +397,7 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 						adLayerVO.setClkRate(clkRate);
 						adLayerVO.setAvgClkCost(clkCostAvg);
 						adLayerVO.setInvalidClk(invalidClk);
+						adLayerVO.setThousandsCost(thousandsCost);
 					}
 					
 					adLayerVOs.add(adLayerVO);

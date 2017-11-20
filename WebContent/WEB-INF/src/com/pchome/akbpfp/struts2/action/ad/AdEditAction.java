@@ -79,7 +79,6 @@ public class AdEditAction extends BaseCookieAction{
 	private String imgTypeName = "";
 	private String html5Flag;
 	private String zipTitle = "";
-	
 	private String photoTmpPath;
 	private String photoPath;
 	private String photoDbPath;
@@ -302,16 +301,6 @@ public class AdEditAction extends BaseCookieAction{
 				 }
 				 
 			    }
-//				if(adDetailContent[i] != null && !adDetailContent[i].equals(pfpAdDetail.getAdDetailContent())) {
-//					if(pfpAdDetail.getAdDetailId().equals("real_url")) {
-//					    if(adDetailContent[i].indexOf("http") <=0 ) {
-//						adDetailContent[i] = "http://" + adDetailContent[i];
-//					    }else{
-
-//
-//					    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-//					    }
-//					}
 				if(pfpAdDetail.getAdDetailId().equals("show_url")) {
 						
 				    if(adDetailContent[i].indexOf("http://") < 0 ) {
@@ -417,13 +406,6 @@ public class AdEditAction extends BaseCookieAction{
 			return SUCCESS;
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	//圖像廣告
 	public String AdAdEditImg() throws Exception {
@@ -912,8 +894,6 @@ public class AdEditAction extends BaseCookieAction{
 			}
 		}
 	}
-	
-	
 	
 	
 	/**

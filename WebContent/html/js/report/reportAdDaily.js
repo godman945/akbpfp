@@ -401,14 +401,14 @@ function showHighChart(){
 			selectSuffix = "次";
 			break;
 		case "ctr":
-			titleName = "點選率(%)";
-			selectTypeName = "點選率";
+			titleName = "互動率(%)";
+			selectTypeName = "互動率";
 			selectSuffix = "%";
 			decimals = 2;
 			break;
 		case "click":
-			titleName = "點選次數(次)";
-			selectTypeName = "點選次數";
+			titleName = "互動數(次)";
+			selectTypeName = "互動數";
 			selectSuffix = "次";
 			break;
 		case "invalid":
@@ -417,8 +417,8 @@ function showHighChart(){
 			selectSuffix = "次";
 			break;
 		case "avgCost":
-			titleName = "平均點選費用(NT$)";
-			selectTypeName = "平均點選費用";
+			titleName = "單次互動費用(NT$)";
+			selectTypeName = "單次互動費用";
 			selectSuffix = "元";
 			decimals = 2;
 			break;

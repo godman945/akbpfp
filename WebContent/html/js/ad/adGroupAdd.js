@@ -1,5 +1,10 @@
 ﻿$(document).ready(function(){
 	
+	$('#adPrice').bind('blur', function() {
+		console.log('ddd');
+	});
+	
+	
 	var showSearchPrice = $("#showSearchPrice").val();
 	if(showSearchPrice == "no"){
 		$("#searchTr").hide();
@@ -46,11 +51,28 @@
 			$("#adPrice").val("65");
 		}
 	})
-	
-	
 });
 
-
 function doAdGroupaddSubmit(){
-	console.log('AAA');
+	var flag = false;
+	var errMsg = '';
+	
+	if($("#adPriceType").val() == 1){
+		var cpmRex = /^[0-9]*[1-9][0-9]*$/;
+		var flag = cpmRex.test($("#adPrice").val());
+		errMsg = '只接受整數...';
+	}else if($("#adPriceType").val() == 0){
+		var cpvRex = /^-?\d+\.?\d{0,1}$/;
+		var flag = cpvRex.test($("#adPrice").val());
+		errMsg = '只接受整數或小數1位...';
+		console.log(flag);
+	}
+	if(!flag){
+		$('#errorMsg').append(errMsg);
+		setTimeout(function(){ 
+			$('#errorMsg').empty();
+		}, 1000);
+	}else{
+		$("#modifyForm").submit();
+	}
 }

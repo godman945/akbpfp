@@ -111,11 +111,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 
 						if (sqlType.trim().equals(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue())){
 
-							Map<String,String> adStyleTypeMap = new HashMap<String,String>();
-							Map<String,String> adPriceTypeMap = new HashMap<String,String>();
 							Map<Integer,String> adTypeMap = new HashMap<Integer,String>();
-							adStyleTypeMap = getAdStyleTypeMap();
-							adPriceTypeMap = getAdPriceTypeMap();
 							adTypeMap = getAdType();
 							
 							Object[] objArray = null;
@@ -153,6 +149,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adClkPriceType = ObjectTransUtil.getInstance().getObjectToString(objArray[12]);
 								adType = Integer.parseInt(objArray[13].toString());
 								adActioName = ObjectTransUtil.getInstance().getObjectToString(objArray[14]);
+								
 								adReportVO = new AdReportVO();
 								adReportVO.setAdPvSum(adPvSum.toString());
 								adReportVO.setAdClkSum(adClkSum.toString());
@@ -165,6 +162,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adReportVO.setTemplateProductSeq(templateProductSeq);
 								adReportVO.setCustomerInfoId(customerInfoId);
 								adReportVO.setAdActionName(adActioName);
+								adReportVO.setReportDate(adPvclkDate);
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
 									if("PC".equals(adDevice)){
 										adReportVO.setAdDevice("電腦");
@@ -176,11 +174,20 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								} else {
 									adReportVO.setAdDevice("全部");
 								}
-								
-								adReportVO.setAdOperatingRule(adStyleTypeMap.get(adOperatingRuleCode));
-								adReportVO.setAdClkPriceType(adPriceTypeMap.get(adClkPriceType));
+								adReportVO.setAdOperatingRule(adOperatingRuleCode);
+								for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+									if(enumAdStyleType.getTypeName().equals(adOperatingRuleCode)){
+										adReportVO.setAdOperatingRuleDesc(enumAdStyleType.getType());
+										break;
+									}
+								}
+								for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+									if(enumAdPriceType.getDbTypeName().equals(adClkPriceType)){
+										adReportVO.setAdClkPriceType(enumAdPriceType.getTypeName());
+										break;
+									}
+								}
 								adReportVO.setAdType(adTypeMap.get(adType));
-								
 								resultData.add(adReportVO);
 							}
 							
@@ -201,7 +208,6 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adReportVO.setAdClkSum(adClkSum.toString());
 								adReportVO.setAdPriceSum(adPriceSum.toString());
 								adReportVO.setAdInvClkSum(adInvClkSum.toString());
-								
 								resultData.add(adReportVO);
 							}
 

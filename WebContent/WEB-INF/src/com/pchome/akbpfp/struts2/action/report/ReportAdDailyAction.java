@@ -82,7 +82,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 	NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
-	
+	NumberFormat doubleFormat2 = new DecimalFormat("##.00");
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -144,15 +144,15 @@ public class ReportAdDailyAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float)click));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				flashDataMap.put(reportDate, new Float(doubleFormat.format(ctr)));
+				flashDataMap.put(reportDate, new Float(doubleFormat2.format(ctr)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-				flashDataMap.put(reportDate, new Float(doubleFormat.format(invClick)));
+				flashDataMap.put(reportDate, new Float(doubleFormat2.format(invClick)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float(doubleFormat.format(costAvg)));
+				flashDataMap.put(reportDate, new Float(doubleFormat2.format(costAvg)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float(doubleFormat.format(kiloCost)));
+				flashDataMap.put(reportDate, new Float(doubleFormat2.format(kiloCost)));
             } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-            	flashDataMap.put(reportDate, new Float(doubleFormat.format(cost)));
+            	flashDataMap.put(reportDate, new Float(doubleFormat2.format(cost)));
 			}
 		}
 

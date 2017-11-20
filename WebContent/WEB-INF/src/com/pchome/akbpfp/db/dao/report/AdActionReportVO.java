@@ -20,7 +20,8 @@ public class AdActionReportVO {
 	private String adType;
 	private String adOperatingRule;		//廣告樣式
 	private String adClkPriceType;		//廣告計費方式
-
+	private String adOperatingRuleDesc;	
+	
 	public String getAdActionSeq() {
 		return adActionSeq;
 	}
@@ -115,6 +116,14 @@ public class AdActionReportVO {
 
 	public void setAdClkPriceType(String adClkPriceType) {
 		this.adClkPriceType = adClkPriceType;
+	}
+
+	public String getAdOperatingRuleDesc() {
+		return adOperatingRuleDesc;
+	}
+
+	public void setAdOperatingRuleDesc(String adOperatingRuleDesc) {
+		this.adOperatingRuleDesc = adOperatingRuleDesc;
 	}
 	
 }

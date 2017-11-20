@@ -287,7 +287,7 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 		// 統計每項廣告成本
 		StringBuffer hql = new StringBuffer();
 		
-		hql.append("select adSeq, sum(adPv), sum(adClk), sum(adClkPrice), ");
+		hql.append("select adSeq, sum(adPv), sum((case when adClkPriceType ='CPC' then adClk else adView end)), sum(adClkPrice), ");
 		hql.append(" 		sum(adInvalidClk), ");	
 		hql.append(" 		sum(adInvalidClkPrice) ");
 		hql.append(" from PfpAdReport");

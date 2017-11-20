@@ -748,18 +748,11 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 	@SuppressWarnings("unchecked")
 	public HashMap<String, Object> getAdActionReportByAdActionsList(String customerInfoId, List<String> adActionSeqList, String adType, Date startDate, Date endDate) throws Exception{
 		Session session = getSession();
-		System.out.println("customerInfoId = " + customerInfoId);
-		System.out.println("adActionSeqList = " + adActionSeqList);
-		//System.out.println("adKeywordSeq = " + adKeywordSeqList);
-		//System.out.println("adKeywordType = " + adKeywordType);
-		//System.out.println("startDate = " + startDate);
-		//System.out.println("endDate = " + endDate);
-		
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 		hql.append("select adActionSeq,");
 		hql.append(" COALESCE(sum(adPv),0), ");
-		hql.append(" COALESCE(sum(adClk),0), ");
+		hql.append(" COALESCE(sum((case when adClkPriceType ='CPC' then adClk else adView end)),0), ");
 		hql.append(" COALESCE(sum(adClkPrice),0), ");
 		hql.append(" COALESCE(sum(adInvalidClk),0), ");
 		hql.append(" COALESCE(sum(adInvalidClkPrice),0) ");

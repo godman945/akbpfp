@@ -59,7 +59,6 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 							//廣告成效 (圖表)
 							sqlParams = getAdActionReportChartSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate);
 							//hqlStr = getAdActionReportChartSQL(searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate);
-
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_DAILY_COUNT.getTextValue())) {
 
 							//每日廣告成效 (數量及加總)
@@ -157,32 +156,30 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								String adOperatingRuleCode = objArray[9].toString();
 								Integer adType = Integer.parseInt(objArray[10].toString());
 
-								AdActionReportVO vo = new AdActionReportVO();
+								AdActionReportVO adActionReportVO = new AdActionReportVO();
 
-								vo.setAdPvSum(pv);
-								vo.setAdClkSum(click);
-								vo.setAdPriceSum(cost);
-								vo.setAdInvClkSum(invClick);
-								vo.setAdActionMaxPriceSum(adActionMaxPrice);
-								vo.setCount(count);
-								vo.setAdActionSeq(adActionSeq);
+								adActionReportVO.setAdPvSum(pv);
+								adActionReportVO.setAdClkSum(click);
+								adActionReportVO.setAdPriceSum(cost);
+								adActionReportVO.setAdInvClkSum(invClick);
+								adActionReportVO.setAdActionMaxPriceSum(adActionMaxPrice);
+								adActionReportVO.setCount(count);
+								adActionReportVO.setAdActionSeq(adActionSeq);
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
 									if("PC".equals(adDevice)){
-										vo.setAdDevice("電腦");
+										adActionReportVO.setAdDevice("電腦");
 									}else if("mobile".equals(adDevice)){
-										vo.setAdDevice("行動裝置");
+										adActionReportVO.setAdDevice("行動裝置");
 									} else {
-										vo.setAdDevice(adDevice);	
+										adActionReportVO.setAdDevice(adDevice);	
 									}
 								} else {
-									vo.setAdDevice("全部");
+									adActionReportVO.setAdDevice("全部");
 								}
-
-								vo.setAdOperatingRule(adStyleTypeMap.get(adOperatingRuleCode));
-								vo.setAdType(adTypeMap.get(adType));
-								
-								resultData.add(vo);
-
+								adActionReportVO.setAdOperatingRuleDesc(adStyleTypeMap.get(adOperatingRuleCode));
+								adActionReportVO.setAdOperatingRule(adOperatingRuleCode);
+								adActionReportVO.setAdType(adTypeMap.get(adType));
+								resultData.add(adActionReportVO);
 							}
 
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue())) {

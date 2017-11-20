@@ -57,7 +57,7 @@
 		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${pfpAdAdVideoViewVO.adRejectReason!}">
 		        </#if>
 		        </td>
-				<td class="td01">${pfpAdAdVideoViewVO.priceType}</td>	
+				<td class="td01">${pfpAdAdVideoViewVO.priceTypeDesc}</td>	
 				<td class="td01">${pfpAdAdVideoViewVO.adPvSum?string('#,###')!}</td>
 				<td class="td01">${pfpAdAdVideoViewVO.sumAdView}</td>
 				<td class="td01">${pfpAdAdVideoViewVO.adViewRatings}%</td>		
