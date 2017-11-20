@@ -182,7 +182,8 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" (SELECT dd.ad_detail_content ");
 		sql.append("  FROM pfp_ad_detail dd ");
 		sql.append(" WHERE dd.ad_seq = vr.ad_seq ");
-		sql.append("   AND dd.ad_detail_id = 'video_size')video_size ");
+		sql.append("   AND dd.ad_detail_id = 'video_size')video_size, ");
+		sql.append("   vr.ad_pvclk_device ");
 		sql.append(" FROM pfp_ad_video_report vr, ");
 		sql.append(" pfp_ad a, ");
 		sql.append(" pfp_ad_group g ");
