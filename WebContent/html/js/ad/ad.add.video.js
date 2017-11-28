@@ -622,16 +622,14 @@ function preViewImg(imgName,width,height){
 	});
 }
 
-//點擊允許尺寸
+//點擊支援規格查詢
 function approveSize(approveSizeDiv){
 	var height = $('#' + approveSizeDiv).height;
-	var width = $('#' + approveSizeDiv).width;
 	$.fancybox(
 	    		$('#' + approveSizeDiv).html(),
 	    		{
 	    			'modal'             : true,
 	    			'autoDimensions'	: false,
-	    			'width'        		: width,
 	    			'height'        	: height,
 	    			'autoSize'			: true,
 	    			'autoHeight'		: true,
