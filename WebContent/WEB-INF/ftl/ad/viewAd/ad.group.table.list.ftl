@@ -22,6 +22,7 @@
 				<th height="35">分類</th>
 				<th>裝置</th>
 				<th>狀態</th>
+				<th style="width:8%">計價方式</th>
 				<#if adType == '0' || adType == '1' >
 				<th style="width:12%">搜尋廣告出價</th>
 				</#if>
@@ -89,6 +90,7 @@
 				                </div>
 						</td>
 						</#if>
+						<td class="td03">${vo.adPriceTypeDesc!}</td>
 						<#if adType == '0' || adType == '2' >
 					        <td>
 						        NT$ ${vo.adGroupChannelPrice?string('#,###')!}
@@ -163,22 +165,20 @@
 	</#if>
 </tbody>
 	<tr class="tbg">
-		<#if vo.adOperatingRule?exists && vo.adOperatingRule=="MEDIA">
+		<#if adOperatingRule?exists && adOperatingRule=="MEDIA">
 			<#if adType == '0'>
-			<td colspan="6">總計：${totalSize!}筆</td>
+				<td colspan="7">總計：${totalSize!}筆</td>
 			<#else>
-			<td colspan="5">總計：${totalSize!}筆</td>
+				<td colspan="6">總計：${totalSize!}筆</td>
 			</#if>
-			<td class="td01">${totalPv?string('#,###')!}</td>
-			<td class="td01">${totalClk?string('#,###')!}</td>			
-			<td class="td01">${totalClkRate?string('#.##')!}%</td>
-			<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
-			<td class="td01">NT$ ${totalThousandsCost?string('#.##')!}</td>
-			<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
-			<td class="td01"></td>
-			<td class="td01"></td>
-		<#elseif vo.adOperatingRule?exists && vo.adOperatingRule=="VIDEO">
-			<td colspan="7">總計：${totalSize!}筆</td>
+				<td class="td01">${totalPv?string('#,###')!}</td>
+				<td class="td01">${totalClk?string('#,###')!}</td>			
+				<td class="td01">${totalClkRate?string('#.##')!}%</td>
+				<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
+				<td class="td01">NT$ ${totalThousandsCost?string('#.##')!}</td>
+				<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
+				<td class="td01"></td>
+		<#elseif adOperatingRule?exists && adOperatingRule=="VIDEO">
 			<td colspan="6">總計：${totalSize!}筆</td>
 			<td class="td01">${totalPv?string('#,###')!}</td>
 			<td class="td01">${totalClk?string('#,###')!}</td>			

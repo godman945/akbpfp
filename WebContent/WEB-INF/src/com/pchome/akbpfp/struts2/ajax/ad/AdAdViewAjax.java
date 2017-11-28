@@ -43,7 +43,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private String searchType;
 	private String startDate;
 	private String endDate;
-	private List<PfpAdAdViewVO> adAdViewVO;
+	private List<PfpAdAdViewVO> adAdViewVOList;
 	private List<PfpAdAdVideoViewVO> pfpAdAdVideoViewVOList;
 	private int pageNo = 1;       				// 初始化目前頁數
 	private int pageSize = 20;     				// 初始化每頁幾筆
@@ -54,6 +54,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private int totalClk = 0;						
 	private float totalClkRate = 0;
 	private float totalAvgCost = 0;
+	private float totalThousandsCost = 0;
 	private int totalCost = 0;
 	private int totalInvalidClk = 0;
 	private String jdbcEnvironment;
@@ -68,7 +69,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 				allAdActionViews = pfpAdService.getPfpAdCount(super.getCustomer_info_id(), 
 																adGroupSeq, 
 																keyword);
-				adAdViewVO = pfpAdService.getAdAdView(super.getCustomer_info_id(), 
+				adAdViewVOList = pfpAdService.getAdAdView(super.getCustomer_info_id(), 
 																adGroupSeq, 
 																keyword, 
 																adType, 
@@ -83,9 +84,9 @@ public class AdAdViewAjax extends BaseCookieAction{
 			totalCount = allAdActionViews;
 			pageCount = (int) Math.ceil(((float)totalCount / pageSize));
 
-			if(adAdViewVO != null && adAdViewVO.size() > 0){
-				totalSize = adAdViewVO.size();		
-				for(PfpAdAdViewVO vo:adAdViewVO){
+			if(adAdViewVOList != null && adAdViewVOList.size() > 0){
+				totalSize = adAdViewVOList.size();		
+				for(PfpAdAdViewVO vo:adAdViewVOList){
 					if(StringUtils.equals("N", vo.getHtml5Tag())){
 						Map<String,String> imgmap = new HashMap<String,String>();
 						imgmap = getImgSize(vo.getOriginalImg());
@@ -110,6 +111,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 					totalClk += vo.getAdClk();		
 					totalCost += vo.getAdClkPrice();
 					totalInvalidClk += vo.getInvalidClk();
+					this.totalThousandsCost += (float)totalCost / ((float)totalPv / 1000);
 				}
 				
 				if(totalClk > 0 || totalPv > 0){
@@ -268,7 +270,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	}
 	
 	public List<PfpAdAdViewVO> getAdAdViewVO() {
-		return adAdViewVO;
+		return adAdViewVOList;
 	}
 
 	public int getPageNo() {
@@ -361,6 +363,10 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	public void setJdbcEnvironment(String jdbcEnvironment) {
 		this.jdbcEnvironment = jdbcEnvironment;
+	}
+
+	public float getTotalThousandsCost() {
+		return totalThousandsCost;
 	}
 	
 }

@@ -28,6 +28,9 @@ public class PfpAdAdViewVO {
 	private String title = "";
 	private String html5Tag = "";
 	private String zipTitle = "";
+	private String adPriceType = "";
+	private float thousandsCost;
+	
 
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -190,6 +193,18 @@ public class PfpAdAdViewVO {
 	}
 	public void setZipTitle(String zipTitle) {
 		this.zipTitle = zipTitle;
+	}
+	public float getThousandsCost() {
+		return thousandsCost;
+	}
+	public void setThousandsCost(float thousandsCost) {
+		this.thousandsCost = thousandsCost;
+	}
+	public String getAdPriceType() {
+		return adPriceType;
+	}
+	public void setAdPriceType(String adPriceType) {
+		this.adPriceType = adPriceType;
 	}
     
 }

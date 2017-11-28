@@ -94,16 +94,15 @@ public class AdGroupViewAjax extends BaseCookieAction{
 				if(totalCost > 0 || totalClk > 0){
 					totalAvgCost = (float)totalCost / (float)totalClk;	
 				}
-				
 				if(totalCost > 0){
-					totalThousandsCost = totalAvgCost / (totalPv / 1000);
+					this.totalThousandsCost += (float)totalCost / ((float)totalPv / 1000);
 				}
 			}
 		}
 		
 		// 查詢日期寫進cookie
 		this.setChooseDate(startDate, endDate);
-			
+		System.out.println(totalThousandsCost);
 		return SUCCESS;
 	}
 	

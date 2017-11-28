@@ -426,10 +426,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 			AdActionReportVO vo = resultSumData.get(i);
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			
-			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>"+vo.getAdPriceSum());
-			
-			t_cost += Math.round(new Double(vo.getAdPriceSum()));
+			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
 
@@ -463,7 +460,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat.format(t_cost));
 				}
 			}
 		}
@@ -482,8 +479,6 @@ public class ReportAdDailyAction extends BaseReportAction {
 			String reportDate = dateFormat.format(vo.getReportDate());
 			double pv = vo.getAdPvSum().doubleValue();
 			double click = vo.getAdClkSum().doubleValue();
-			System.out.println(vo.getAdPriceSum());
-			System.out.println("-------------");
 			double cost = new Double(vo.getAdPriceSum());
 			double invClick = vo.getAdInvClkSum().doubleValue();
 			double ctr = 0;
@@ -526,11 +521,10 @@ public class ReportAdDailyAction extends BaseReportAction {
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(intFormat.format(cost));
+						tableInDataList.addLast(doubleFormat.format(cost));
 					}
 				}
 			}
-
 			tableDataList.addLast(tableInDataList);
 		}
 	}

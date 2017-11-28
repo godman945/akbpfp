@@ -140,7 +140,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			Date reportDate = dateFormat.parse(adReportVO.getReportDate());
 			pv = Double.parseDouble(adReportVO.getAdPvSum());
 			click = Double.parseDouble(adReportVO.getAdClkSum());
-			cost = Math.round(Double.parseDouble(adReportVO.getAdPriceSum()));
+			cost = Double.parseDouble(adReportVO.getAdPriceSum());
 			invClick = Double.parseDouble(adReportVO.getAdInvClkSum());
 
 			//互動率 = 互動次數 / 曝光數
@@ -444,11 +444,11 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			sumClick = sumClick + Float.valueOf(adReportVO.getAdClkSum());
 			double clickAvg = (Double.valueOf(adReportVO.getAdClkSum()) / Double.valueOf(adReportVO.getAdPvSum())) * 100;
 			totalCost = totalCost + Double.valueOf(adReportVO.getAdPriceSum());
-			double thousandsCost = Math.round(Double.parseDouble(adReportVO.getAdPriceSum()) / (Double.parseDouble(adReportVO.getAdPvSum()) / 1000));
+			double thousandsCost = Double.parseDouble(adReportVO.getAdPriceSum()) / (Double.parseDouble(adReportVO.getAdPvSum()) / 1000);
 			
 			double singleCost = 0;
 			if(Double.parseDouble(adReportVO.getAdClkSum()) != 0){
-				singleCost =  Math.round(Double.parseDouble(adReportVO.getAdPriceSum()) / Double.parseDouble(adReportVO.getAdClkSum()));
+				singleCost =  Double.parseDouble(adReportVO.getAdPriceSum()) / Double.parseDouble(adReportVO.getAdClkSum());
 			}
 			sumSingleAdCost = (singleCost + singleCost);
 			
@@ -487,7 +487,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			content.append(df.format(clickAvg)+"%,");
 			content.append(singleCost+",");
 			content.append(thousandsCost+",");
-			content.append(Math.round(Double.parseDouble(adReportVO.getAdPriceSum())));
+			content.append(Double.parseDouble(adReportVO.getAdPriceSum()));
 		}
 		//總計
 		content.append("\n\n");
@@ -500,10 +500,10 @@ public class ReportAdvertiseAction extends BaseReportAction {
 					+ ","
 					+ sumPV+","
 					+ sumClick+","
-					+ df.format((sumClick/sumPV)*100)+"%,"
-					+ ((int)Math.round(totalCost / sumClick))+","
-					+ Math.round(totalCost / (sumPV / 1000))+","
-					+ Math.round(totalCost));
+					+ df.format((sumClick / sumPV) * 100)+"%,"
+					+ (totalCost / sumClick)+","
+					+ totalCost / (sumPV / 1000)+","
+					+ totalCost);
 		}else{
 			content.append(""
 					+ "總計:共"+resultData.size()+"筆"+","
@@ -521,9 +521,9 @@ public class ReportAdvertiseAction extends BaseReportAction {
 					+ sumPV+","
 					+ sumClick+","
 					+ df.format((sumClick/sumPV)*100)+"%,"
-					+ ((int)Math.round(totalCost / sumClick))+","
-					+ Math.round(totalCost / (sumPV / 1000))+","
-					+ Math.round(totalCost));
+					+ (totalCost / sumClick)+","
+					+ totalCost / (sumPV / 1000)+","
+					+ totalCost);
 		}
 		
 		downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));

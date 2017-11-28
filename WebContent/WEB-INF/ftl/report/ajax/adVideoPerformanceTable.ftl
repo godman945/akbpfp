@@ -1,6 +1,10 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
+<script src="http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.js"></script>
+<!-- <link rel="stylesheet" href="http://jcrop-cdn.tapmodo.com/v0.9.9/css/jquery.Jcrop.css" /> -->
+
+
 <span style="float:left"> 
 <table border="0" cellspacing="3" cellpadding="0" class="srchtb"> 
   <tr> 
@@ -125,7 +129,7 @@ ${page}/${totalPage}
 					<td align="center">${adVideoPerformanceReportVO.templateProductWidth!}x${adVideoPerformanceReportVO.templateProductHeight!}</td>
 					<td align="right">${adVideoPerformanceReportVO.adPvSum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adViewSum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adViewRatings?number?round}%</td>
+			        <td align="right">${adVideoPerformanceReportVO.adViewRatings}%</td>
 			        <td align="right">NT$ ${adVideoPerformanceReportVO.singleAdViewCost!}</td>
 			        <td align="right">NT$ ${adVideoPerformanceReportVO.thousandsCost!}</td>
 			        <td align="right">NT$ ${adVideoPerformanceReportVO.costSum!}</td>
@@ -133,7 +137,7 @@ ${page}/${totalPage}
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess50Sum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess75Sum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Sum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Ratings?number?round!}%</td>
+			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Ratings!}%</td>
 			        <td align="right">${adVideoPerformanceReportVO.adClkSum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoUniqSum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoMusicSum!}</td>
@@ -151,15 +155,15 @@ ${page}/${totalPage}
 			    <th height="30" colspan="6"  align="">總計-所有影片	<#if adVideoPerformanceReportVOList? exists>${adVideoPerformanceReportVOList ? size}<#else>0</#if></th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adPvSum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewSum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewRatings?number?round!}%</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewRatings}%</th>
 			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.singleAdViewCost!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.thousandsCost!}</th>
+			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.thousandsCost!}</th>
 			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.costSum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess25Sum!}</th>
 			   	<th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess50Sum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess75Sum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Sum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Ratings?number?round!}%</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Ratings}%</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adClkSum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoUniqSum!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoMusicSum!}</th>

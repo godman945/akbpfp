@@ -151,7 +151,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
-			invClick = Math.round(vo.getAdInvClkSum().doubleValue());
+			invClick = vo.getAdInvClkSum().doubleValue();
 
 			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
@@ -537,7 +537,6 @@ public class ReportAdTimeAction extends BaseReportAction {
 			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-		t_cost = Math.round(t_cost);
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
@@ -570,7 +569,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat.format(t_cost));
 				}
 			}
 		}
@@ -608,7 +607,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 
 			double pv = vo.getAdPvSum().doubleValue();
 			double click = vo.getAdClkSum().doubleValue();
-			double cost = Math.round(vo.getAdPriceSum().doubleValue());
+			double cost = vo.getAdPriceSum().doubleValue();
 			double invClick = vo.getAdInvClkSum().doubleValue();
 			double ctr = 0;
 			double costAvg = 0;
@@ -709,7 +708,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(intFormat.format(cost));
+						tableInDataList.addLast(doubleFormat.format(cost));
 					}
 				}
 			}

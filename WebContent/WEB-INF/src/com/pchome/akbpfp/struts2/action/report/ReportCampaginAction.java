@@ -450,7 +450,7 @@ public class ReportCampaginAction extends BaseReportAction {
 
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += Math.round(new Double(vo.getAdPriceSum()));
+			t_cost += vo.getAdPriceSum();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
 
@@ -484,7 +484,7 @@ public class ReportCampaginAction extends BaseReportAction {
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat.format(t_cost));
 				}
 			}
 		}
@@ -520,8 +520,7 @@ public class ReportCampaginAction extends BaseReportAction {
 	
 				double pv = vo.getAdPvSum().doubleValue();
 				double click = vo.getAdClkSum().doubleValue();
-				System.out.println("廣告明細成效:"+vo.getAdPriceSum());
-				double cost = new Double(vo.getAdPriceSum());
+				double cost = vo.getAdPriceSum();
 				double invClick = vo.getAdInvClkSum().doubleValue();
 				double ctr = 0;
 				double costAvg = 0;
@@ -616,7 +615,7 @@ public class ReportCampaginAction extends BaseReportAction {
 						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 							tableInDataList.addLast(doubleFormat.format(kiloCost));
 						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-							tableInDataList.addLast(intFormat.format(cost));
+							tableInDataList.addLast(doubleFormat.format(cost));
 						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
 							tableInDataList.addLast(doubleFormat.format(adActionMaxPriceAvg));
 						}
