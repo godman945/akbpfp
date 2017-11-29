@@ -10,8 +10,8 @@
 
 	<span class="pages"><@t.insertAttribute name="page" /></span>			
 </div>	
-	
 <div style="clear:both;height:50%"></div>
+
 <form method="post" id="tableForm" name="tableForm" >
 <table id="tableView" class="tablesorter" width="100%" border="0" cellpadding="0" cellspacing="1">
 <thead>
@@ -43,7 +43,7 @@
 				<th>裝置</th>
 				<th>狀態</th>
 				<th style="width:8%">計價方式</th>
-				<th style="width:8%">廣告出價</th>
+				<th style="width:13%">廣告出價</th>
 				<th style="width:8%">曝光數</th>
 				<th style="width:8%">互動數<a style="float: left; margin-top: 7px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a></th>	
 				<th style="width:8%">互動率</th>
@@ -132,7 +132,7 @@
 					<td class="td03">${vo.adPriceTypeDesc!}</td>
 					<#if adType == '0' || adType == '2' >
 					        <td style="width:10%;">
-							      NT$ ${vo.adGroupChannelPrice?string('#,###')!}<br>
+							      NT$ ${vo.adGroupChannelPrice?string('#.#')!}<br>
 							                 預估播出率：${vo.adAsideRate?string('#.##')!}%<br>
 							     <input type="button" value="修改" onClick="modifyChannelPrice('${vo.adGroupSeq!}','${vo.adGroupChannelPrice!}')" />
 					        </td>

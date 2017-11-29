@@ -28,10 +28,10 @@
 		<th style="width:7%">曝光數</th>
 		<th><a style="float: left; margin-top: 7px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a>互動數</th>
 		<th>互動率</th>
-		<th>單次互動費用</th>
-		<th>千次曝光費用</th>	
+		<th style="min-width:65px;width:9%">單次互動費用</th>
+		<th style="min-width:65px;width:9%">千次曝光費用</th>	
 		<th style="min-width:65px;width:9%">費用</th>
-		<th>編輯</th>
+		<th style="min-width:65px;width:5%">編輯</th>
 	</tr>	
 </thead>
 <tbody>
@@ -71,7 +71,7 @@
 				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
 				<td class="td01">NT$ ${vo.thousandsCost?string('#.##')!}</td>
-				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
+				<td class="td01">NT$ ${vo.adClkPrice?string('#.##')!}</td>
 				<td class="td02">
 					<#if vo.adActionStatus != 9>
 						<a href="adGroupAdd.html?adActionSeq=${vo.adActionSeq!}">新增分類</a><br>
@@ -97,8 +97,8 @@
 		<td class="td01">${totalClk?string('#,###')!}</td>	
 		<td class="td01">${totalClkRate?string('#.##')!}%</td>
 		<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
-		<td class="td01">NT$ ${thousandsCost?round!}</td>
-		<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
+		<td class="td01">NT$ ${thousandsCost?string('#.##')!}</td>
+		<td class="td01">NT$ ${totalCost?string('#.##')!}</td>
 		<td></td>
 	</tr>
 </table>

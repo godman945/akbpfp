@@ -17,7 +17,7 @@ public class AdActionViewAjax extends BaseCookieAction{
 	private String searchType;
 	private String startDate;
 	private String endDate;
-	private List<PfpAdActionViewVO> adActionViewVO;
+	private List<PfpAdActionViewVO> adActionViewVOList;
 	
 	private int pageNo = 1;       				// 初始化目前頁數
 	private int pageSize = 20;     				// 初始化每頁幾筆
@@ -30,7 +30,7 @@ public class AdActionViewAjax extends BaseCookieAction{
 	private float totalClkRate = 0;
 	private float thousandsCost = 0;
 	private float totalAvgCost = 0;
-	private int totalCost = 0;
+	private float totalCost = 0;
 	private int totalInvildClk = 0;
 	
 	public String execute() throws Exception{
@@ -46,39 +46,37 @@ public class AdActionViewAjax extends BaseCookieAction{
 		long allAdActionViews = 0;
 		
 		allAdActionViews = pfpAdActionService.getPfpAdActionCount(super.getCustomer_info_id(), keyword, searchType);
-		adActionViewVO = pfpAdActionService.getAdActionView(super.getCustomer_info_id(), 
+		
+		adActionViewVOList = pfpAdActionService.getAdActionView(super.getCustomer_info_id(), 
 																	keyword, 
 																	searchType, 
 																	DateValueUtil.getInstance().stringToDate(startDate), 
 																	DateValueUtil.getInstance().stringToDate(endDate),
 																	pageNo, 
 																	pageSize);
-				
-		
 		if(allAdActionViews > 0) {
 			totalCount = allAdActionViews;
 			pageCount = (int) Math.ceil(((float)totalCount / pageSize));
-
-			if(adActionViewVO != null && adActionViewVO.size() > 0){
-				totalSize = adActionViewVO.size();		
-				for(PfpAdActionViewVO vo:adActionViewVO){
-					totalPv += vo.getAdPv();
-					totalClk += vo.getAdClk();		
-					totalCost += vo.getAdClkPrice();
-					totalInvildClk += vo.getInvalidClk();
+			if(adActionViewVOList != null && adActionViewVOList.size() > 0){
+				totalSize = adActionViewVOList.size();		
+				for(PfpAdActionViewVO pfpAdActionViewVO:adActionViewVOList){
+					
+					System.out.println(pfpAdActionViewVO.getAdClkPrice());
+					totalPv += pfpAdActionViewVO.getAdPv();
+					totalClk += pfpAdActionViewVO.getAdClk();		
+					totalCost += pfpAdActionViewVO.getAdClkPrice();
+					totalInvildClk += pfpAdActionViewVO.getInvalidClk();
 				}
-				
 				if(totalClk > 0 || totalPv > 0){
 					totalClkRate = (float)totalClk / (float)totalPv*100;
 				}
 				
 				if(totalCost > 0 || totalClk > 0){
-					totalAvgCost = (float)totalCost / (float)totalClk;	
+					totalAvgCost = (float)totalCost / (float)totalClk;
 				}
 				
-				if(totalCost > 0){
-					thousandsCost = (float)totalCost / ((float)totalPv / 1000);
-					System.out.println(thousandsCost);
+				if(totalCost > 0 ){
+					thousandsCost = (float)totalCost / ((float)totalPv * 1000);
 				}
 				
 			}
@@ -112,7 +110,7 @@ public class AdActionViewAjax extends BaseCookieAction{
 	}
 
 	public List<PfpAdActionViewVO> getAdActionViewVO() {
-		return adActionViewVO;
+		return adActionViewVOList;
 	}
 
 	public int getPageNo() {
@@ -159,7 +157,8 @@ public class AdActionViewAjax extends BaseCookieAction{
 		return totalAvgCost;
 	}
 
-	public int getTotalCost() {
+
+	public float getTotalCost() {
 		return totalCost;
 	}
 

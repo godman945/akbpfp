@@ -59,13 +59,12 @@ function doAdGroupaddSubmit(){
 	
 	if($("#adPriceType").val() == 1){
 		var cpmRex = /^[0-9]*[1-9][0-9]*$/;
-		var flag = cpmRex.test($("#adPrice").val());
+		flag = cpmRex.test($("#adPrice").val());
 		errMsg = '只接受整數...';
 	}else if($("#adPriceType").val() == 0){
 		var cpvRex = /^-?\d+\.?\d{0,1}$/;
-		var flag = cpvRex.test($("#adPrice").val());
+		flag = cpvRex.test($("#adPrice").val());
 		errMsg = '只接受整數或小數1位...';
-		console.log(flag);
 	}
 	if(!flag){
 		$('#errorMsg').append(errMsg);

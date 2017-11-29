@@ -42,7 +42,6 @@ public class AdGroupViewAjax extends BaseCookieAction{
 	private String adOperatingRule;
 	private String adPriceType;
 	private float totalThousandsCost;
-	
 	public String adGroupViewTableAjax() throws Exception{
 		int type = Integer.parseInt(searchType);
 		//List<PfpAdGroupViewVO> allAdGroupViews = null;
@@ -250,6 +249,10 @@ public class AdGroupViewAjax extends BaseCookieAction{
 
 	public float getTotalThousandsCost() {
 		return totalThousandsCost;
+	}
+
+	public String getSearchType() {
+		return searchType;
 	}
 	
 }

@@ -1508,8 +1508,7 @@ public class ReportExcerptAction extends BaseReportAction {
 		LinkedList<String> tableInDataList;
 
 		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,##0.00");
-
+		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 

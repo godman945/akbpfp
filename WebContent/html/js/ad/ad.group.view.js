@@ -104,26 +104,25 @@ function closeAdGroupStatus(adGroupSeq, status){
 
 
 function modifyChannelPrice(seq,price){
-	
 	$("#adGroupSeq").val(seq);
-	
 	$.fancybox({
-		'href'     :'modifyAdGroupChannelPriceMsg.html?adGroupSeq='+seq+'&userprice='+price		                    
+		'href'     :'modifyAdGroupChannelPriceMsg.html?adGroupSeq='+seq+'&userprice='+price     
 	});
 	
 	
 }
 
 function modifySearchPrice(seq,type){
-
 	$("#adGroupSeq").val(seq);
 	$("#searchPriceType").val(type);
-	
 	$.fancybox({
 		'href'     :'modifyAdGroupSearchPriceMsg.html?adGroupSeq='+seq		                    
 	});
 		
 }
+
+
+
 
 function tableSorter(){
 	var adType = $("#adType").val();

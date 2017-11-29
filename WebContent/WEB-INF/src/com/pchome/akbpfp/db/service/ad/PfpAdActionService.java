@@ -45,135 +45,242 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 	}
 
 	public List<PfpAdActionViewVO> getAdActionView(String customerInfoId, String keyword, String adType, Date startDate, Date endDate, int page, int pageSize) throws Exception{
-
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		// 先攔掉 SQL Injection 攻擊語法
 		customerInfoId = CommonUtils.filterSqlInjection(customerInfoId);
 		keyword = CommonUtils.filterSqlInjection(keyword);
-	
-		List<PfpAdActionViewVO> adActionViewVOs = null;
-		
 		// 查詢廣告活動
-		List<PfpAdAction> pfpAdActions = ((PfpAdActionDAO)dao).getPfpAdActionForView(customerInfoId, keyword, adType, page, pageSize);
+		List<PfpAdAction> pfpAdActionList = ((PfpAdActionDAO)dao).getPfpAdActionForView(customerInfoId, keyword, adType, page, pageSize);
 		
-		if(pfpAdActions.size() > 0) {
-			// 逐筆讀出本頁的廣告活動序號
-			List<String> adActionSeqs = new ArrayList<String>();
-			for(PfpAdAction pfpAdAction:pfpAdActions) {
-				adActionSeqs.add(pfpAdAction.getAdActionSeq());
-			}
-
-			// 依照讀出本頁的廣告活動序號，查詢關鍵字成效
-			HashMap<String, Object> pfpAdActionReports = ((PfpAdActionDAO)dao).getAdActionReportByAdActionsList(customerInfoId, adActionSeqs, adType, startDate, endDate);
-	
-			for(PfpAdAction pfpAdAction:pfpAdActions) {
-				if(adActionViewVOs == null){
-					adActionViewVOs = new ArrayList<PfpAdActionViewVO>();
-				}
-	
-				PfpAdActionViewVO adActionViewVO = new PfpAdActionViewVO();
-				adActionViewVO.setAdActionSeq(pfpAdAction.getAdActionSeq());
-				adActionViewVO.setAdActionName(pfpAdAction.getAdActionName());
-				
-				for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
-					if(enumAdStyleType.getTypeName().equals(pfpAdAction.getAdOperatingRule())){
-						adActionViewVO.setAdOperatingRule(enumAdStyleType.getType());
-						break;
-					}
-				}
-	
-				// 廣告類型
-				for(EnumAdType type:EnumAdType.values()){
-					int pfpAdType = pfpAdAction.getAdType();					
-					if(type.getType() == pfpAdType){
-						adActionViewVO.setAdType(type.getTypeName());
-					}					
-				}
-				
-				// 廣告播放裝置
-				for(EnumAdDevice device:EnumAdDevice.values()){
-					int adDevice = pfpAdAction.getAdDevice();
-					if(device.getDevType() == adDevice){
-						adActionViewVO.setAdDevice(device.getDevTypeName());
-					}
-				}
-				
-				// 廣告狀態
-				for(EnumStatus status:EnumStatus.values()){
-					int adStatus = pfpAdAction.getAdActionStatus();
-					if(status.getStatusId() == adStatus){
-						adActionViewVO.setAdActionStatus(adStatus);
-						adActionViewVO.setAdActionStatusDesc(status.getStatusDesc());
-					}
-				}
-				
-				adActionViewVO.setAdActionMax(pfpAdAction.getAdActionMax());								
-				
-				// 判斷廣告走期
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				adActionViewVO.setAdStartDate(sdf.format(pfpAdAction.getAdActionStartDate()));
-				adActionViewVO.setAdEndDate(sdf.format(pfpAdAction.getAdActionEndDate()));
-				
-				Date adStartDate = DateValueUtil.getInstance().stringToDate(adActionViewVO.getAdStartDate());
-				Date adEndDate = DateValueUtil.getInstance().stringToDate(adActionViewVO.getAdEndDate());
-	
-				if(adActionViewVO.getAdActionStatus() == EnumStatus.Open.getStatusId()){
-					
-					Date today = DateValueUtil.getInstance().getNowDateTime();
-					Date yesterday = DateValueUtil.getInstance().getDateForStartDateAddDay(DateValueUtil.getInstance().dateToString(today), -1);
-					
-					if(today.after(adStartDate) && yesterday.before(adEndDate)){ // 因為結束時間為  00:00:00 所以取昨天比較
-						adActionViewVO.setAdActionStatusDesc(EnumStatus.Broadcast.getStatusDesc());
-					}
-					else if(today.before(adStartDate)){
-						adActionViewVO.setAdActionStatusDesc(EnumStatus.Waitbroadcast.getStatusDesc());
-					}
-					else if(today.after(adEndDate)){ 
-						adActionViewVO.setAdActionStatusDesc(EnumStatus.End.getStatusDesc());
-					}
-				}
-	
-				// 依照關鍵字廣告序號，讀取、設定廣告成效，沒有廣告成效的，就不用設定了
-				if(pfpAdActionReports.size() > 0 && pfpAdActionReports.get(pfpAdAction.getAdActionSeq()) != null) {
-					Object[] obj = (Object[])pfpAdActionReports.get(pfpAdAction.getAdActionSeq());
-					if(obj != null) {
-						// 求點閱率				
-						int pv = Integer.parseInt(obj[1].toString());
-						int clk = Integer.parseInt(obj[2].toString());
-						float clkPrice = Float.parseFloat(obj[3].toString());
-						int invalidClk = Integer.parseInt(obj[4].toString());
-						float thousandsCost = 0;
-	
-						adActionViewVO.setAdPv(pv);
-						adActionViewVO.setAdClk(clk);
-						adActionViewVO.setAdClkPrice(clkPrice);
-						adActionViewVO.setInvalidClk(invalidClk);
-	
-						float clkRate = 0;
-						float clkPriceAvg = 0;
-						
-						if(clk > 0 || pv > 0){
-							clkRate = (float)clk / (float)pv*100;
-						}
-	
-						if(clkPrice > 0 || clk > 0){
-							clkPriceAvg = clkPrice / (float)clk;
-						}
-	
-						//計算千次曝光費用
-						if(clkPrice > 0){
-							thousandsCost = clkPrice / (pv / 1000);
-						}
-						
-						adActionViewVO.setAdClkRate(clkRate);
-						adActionViewVO.setAdClkPriceAvg(clkPriceAvg);
-						adActionViewVO.setThousandsCost(thousandsCost);
-					}
-				}
-				adActionViewVOs.add(adActionViewVO);
-			}
+		List<PfpAdActionViewVO> adActionViewVOList = null;
+		if(pfpAdActionList.size() > 0){
+			adActionViewVOList = new ArrayList<PfpAdActionViewVO>();
 		}
 		
-		return adActionViewVOs;	
+		for (PfpAdAction pfpAdAction : pfpAdActionList) {
+			// 逐筆讀出本頁的廣告活動序號
+			List<String> adActionSeqs = new ArrayList<String>();
+			adActionSeqs.add(pfpAdAction.getAdActionSeq());
+			
+			// 依照讀出本頁的廣告活動序號，查詢關鍵字成效
+			HashMap<String, Object> pfpAdActionReports = ((PfpAdActionDAO)dao).getAdActionReportByAdActionsList(customerInfoId, adActionSeqs, adType, startDate, endDate);
+			
+			PfpAdActionViewVO adActionViewVO = new PfpAdActionViewVO();
+			adActionViewVO.setAdActionSeq(pfpAdAction.getAdActionSeq());
+			adActionViewVO.setAdActionName(pfpAdAction.getAdActionName());
+			adActionViewVO.setAdActionMax(pfpAdAction.getAdActionMax());
+			adActionViewVO.setAdStartDate(sdf.format(pfpAdAction.getAdActionStartDate()));
+			adActionViewVO.setAdEndDate(sdf.format(pfpAdAction.getAdActionEndDate()));
+			
+			// 判斷廣告走期
+			Date adStartDate = DateValueUtil.getInstance().stringToDate(adActionViewVO.getAdStartDate());
+			Date adEndDate = DateValueUtil.getInstance().stringToDate(adActionViewVO.getAdEndDate());
+			if(adActionViewVO.getAdActionStatus() == EnumStatus.Open.getStatusId()){
+				Date today = DateValueUtil.getInstance().getNowDateTime();
+				Date yesterday = DateValueUtil.getInstance().getDateForStartDateAddDay(DateValueUtil.getInstance().dateToString(today), -1);
+				if(today.after(adStartDate) && yesterday.before(adEndDate)){ // 因為結束時間為  00:00:00 所以取昨天比較
+					adActionViewVO.setAdActionStatusDesc(EnumStatus.Broadcast.getStatusDesc());
+				}
+				else if(today.before(adStartDate)){
+					adActionViewVO.setAdActionStatusDesc(EnumStatus.Waitbroadcast.getStatusDesc());
+				}
+				else if(today.after(adEndDate)){ 
+					adActionViewVO.setAdActionStatusDesc(EnumStatus.End.getStatusDesc());
+				}
+			}
+			
+			
+			
+			// 依照關鍵字廣告序號，讀取、設定廣告成效，沒有廣告成效的，就不用設定了
+			if(pfpAdActionReports.size() > 0 && pfpAdActionReports.get(pfpAdAction.getAdActionSeq()) != null) {
+				Object[] obj = (Object[])pfpAdActionReports.get(pfpAdAction.getAdActionSeq());
+				if(obj != null) {
+					// 求點閱率				
+					int pv = Integer.parseInt(obj[1].toString());
+					int clk = Integer.parseInt(obj[2].toString());
+					float clkPrice = Float.parseFloat(obj[3].toString());
+					int invalidClk = Integer.parseInt(obj[4].toString());
+					float thousandsCost = 0;
+					adActionViewVO.setAdPv(pv);
+					adActionViewVO.setAdClk(clk);
+					adActionViewVO.setAdClkPrice(clkPrice);
+					adActionViewVO.setInvalidClk(invalidClk);
+
+					float clkRate = 0;
+					float clkPriceAvg = 0;
+					
+					if(clk > 0 && pv > 0){
+						clkRate = (float)clk / (float)pv * 100;
+					}
+
+					if(clkPrice > 0 && clk > 0){
+						clkPriceAvg = clkPrice / (float)clk;
+					}
+
+					//計算千次曝光費用
+					if(clkPrice > 0){
+						thousandsCost = clkPrice / ((float)pv * 1000);
+					}
+					adActionViewVO.setAdClkRate(clkRate);
+					adActionViewVO.setAdClkPriceAvg(clkPriceAvg);
+					adActionViewVO.setThousandsCost(thousandsCost);
+				}
+			}
+			
+			// 廣告樣式
+			for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+				if(enumAdStyleType.getTypeName().equals(pfpAdAction.getAdOperatingRule())){
+					adActionViewVO.setAdOperatingRule(enumAdStyleType.getType());
+					break;
+				}
+			}
+			// 廣告類型
+			for(EnumAdType type:EnumAdType.values()){
+				int pfpAdType = pfpAdAction.getAdType();					
+				if(type.getType() == pfpAdType){
+					adActionViewVO.setAdType(type.getTypeName());
+					break;
+				}					
+			}
+			// 廣告播放裝置
+			for(EnumAdDevice device:EnumAdDevice.values()){
+				int adDevice = pfpAdAction.getAdDevice();
+				if(device.getDevType() == adDevice){
+					adActionViewVO.setAdDevice(device.getDevTypeName());
+					break;
+				}
+			}
+			// 廣告狀態
+			for(EnumStatus status:EnumStatus.values()){
+				int adStatus = pfpAdAction.getAdActionStatus();
+				if(status.getStatusId() == adStatus){
+					adActionViewVO.setAdActionStatus(adStatus);
+					adActionViewVO.setAdActionStatusDesc(status.getStatusDesc());
+					break;
+				}
+			}
+			adActionViewVOList.add(adActionViewVO);
+		}
+		
+		
+//		if(pfpAdActionList.size() > 0) {
+//			// 逐筆讀出本頁的廣告活動序號
+//			List<String> adActionSeqs = new ArrayList<String>();
+//			for(PfpAdAction pfpAdAction:pfpAdActionList) {
+//				adActionSeqs.add(pfpAdAction.getAdActionSeq());
+//			}
+//
+//			// 依照讀出本頁的廣告活動序號，查詢關鍵字成效
+//			HashMap<String, Object> pfpAdActionReports = ((PfpAdActionDAO)dao).getAdActionReportByAdActionsList(customerInfoId, adActionSeqs, adType, startDate, endDate);
+//			
+//			for(PfpAdAction pfpAdAction:pfpAdActionList) {
+//				if(adActionViewVOList == null){
+//					adActionViewVOList = new ArrayList<PfpAdActionViewVO>();
+//				}
+//	
+//				PfpAdActionViewVO adActionViewVO = new PfpAdActionViewVO();
+//				adActionViewVO.setAdActionSeq(pfpAdAction.getAdActionSeq());
+//				adActionViewVO.setAdActionName(pfpAdAction.getAdActionName());
+//				
+//				for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+//					if(enumAdStyleType.getTypeName().equals(pfpAdAction.getAdOperatingRule())){
+//						adActionViewVO.setAdOperatingRule(enumAdStyleType.getType());
+//						break;
+//					}
+//				}
+//	
+//				// 廣告類型
+//				for(EnumAdType type:EnumAdType.values()){
+//					int pfpAdType = pfpAdAction.getAdType();					
+//					if(type.getType() == pfpAdType){
+//						adActionViewVO.setAdType(type.getTypeName());
+//					}					
+//				}
+//				
+//				// 廣告播放裝置
+//				for(EnumAdDevice device:EnumAdDevice.values()){
+//					int adDevice = pfpAdAction.getAdDevice();
+//					if(device.getDevType() == adDevice){
+//						adActionViewVO.setAdDevice(device.getDevTypeName());
+//					}
+//				}
+//				
+//				// 廣告狀態
+//				for(EnumStatus status:EnumStatus.values()){
+//					int adStatus = pfpAdAction.getAdActionStatus();
+//					if(status.getStatusId() == adStatus){
+//						adActionViewVO.setAdActionStatus(adStatus);
+//						adActionViewVO.setAdActionStatusDesc(status.getStatusDesc());
+//					}
+//				}
+//				
+//				adActionViewVO.setAdActionMax(pfpAdAction.getAdActionMax());								
+//				
+//				// 判斷廣告走期
+//				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//				adActionViewVO.setAdStartDate(sdf.format(pfpAdAction.getAdActionStartDate()));
+//				adActionViewVO.setAdEndDate(sdf.format(pfpAdAction.getAdActionEndDate()));
+//				
+//				Date adStartDate = DateValueUtil.getInstance().stringToDate(adActionViewVO.getAdStartDate());
+//				Date adEndDate = DateValueUtil.getInstance().stringToDate(adActionViewVO.getAdEndDate());
+//	
+//				if(adActionViewVO.getAdActionStatus() == EnumStatus.Open.getStatusId()){
+//					
+//					Date today = DateValueUtil.getInstance().getNowDateTime();
+//					Date yesterday = DateValueUtil.getInstance().getDateForStartDateAddDay(DateValueUtil.getInstance().dateToString(today), -1);
+//					
+//					if(today.after(adStartDate) && yesterday.before(adEndDate)){ // 因為結束時間為  00:00:00 所以取昨天比較
+//						adActionViewVO.setAdActionStatusDesc(EnumStatus.Broadcast.getStatusDesc());
+//					}
+//					else if(today.before(adStartDate)){
+//						adActionViewVO.setAdActionStatusDesc(EnumStatus.Waitbroadcast.getStatusDesc());
+//					}
+//					else if(today.after(adEndDate)){ 
+//						adActionViewVO.setAdActionStatusDesc(EnumStatus.End.getStatusDesc());
+//					}
+//				}
+//	
+//				// 依照關鍵字廣告序號，讀取、設定廣告成效，沒有廣告成效的，就不用設定了
+//				if(pfpAdActionReports.size() > 0 && pfpAdActionReports.get(pfpAdAction.getAdActionSeq()) != null) {
+//					Object[] obj = (Object[])pfpAdActionReports.get(pfpAdAction.getAdActionSeq());
+//					if(obj != null) {
+//						// 求點閱率				
+//						int pv = Integer.parseInt(obj[1].toString());
+//						int clk = Integer.parseInt(obj[2].toString());
+//						float clkPrice = Float.parseFloat(obj[3].toString());
+//						int invalidClk = Integer.parseInt(obj[4].toString());
+//						float thousandsCost = 0;
+//						adActionViewVO.setAdPv(pv);
+//						adActionViewVO.setAdClk(clk);
+//						adActionViewVO.setAdClkPrice(clkPrice);
+//						adActionViewVO.setInvalidClk(invalidClk);
+//	
+//						float clkRate = 0;
+//						float clkPriceAvg = 0;
+//						
+//						if(clk > 0 || pv > 0){
+//							clkRate = (float)clk / (float)pv * 100;
+//						}
+//	
+//						if(clkPrice > 0 || clk > 0){
+//							clkPriceAvg = clkPrice / (float)clk;
+//						}
+//	
+//						//計算千次曝光費用
+//						if(clkPrice > 0){
+//							thousandsCost = clkPrice / ((float)pv * 1000);
+//						}
+//						
+//						adActionViewVO.setAdClkRate(clkRate);
+//						adActionViewVO.setAdClkPriceAvg(clkPriceAvg);
+//						adActionViewVO.setThousandsCost(thousandsCost);
+//					}
+//				}
+//				adActionViewVOList.add(adActionViewVO);
+//			}
+//		}
+		
+		return adActionViewVOList;	
 	}
 
 	/**

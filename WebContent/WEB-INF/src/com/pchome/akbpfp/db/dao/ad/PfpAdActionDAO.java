@@ -793,13 +793,13 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 		log.info("hql  = "+ hql.toString());
 
 		// 將條件資料設定給 Query，準備 query
-		Query q = session.createQuery(hql.toString());
+		Query query = session.createQuery(hql.toString());
         for (String paramName:sqlParams.keySet()) {
         	if(!paramName.equals("sql")) {
 				if(paramName.equals("adActionSeq")) {
-					q.setParameterList("adActionSeq", adActionSeqList);
+					query.setParameterList("adActionSeq", adActionSeqList);
 				} else {
-					q.setParameter(paramName, sqlParams.get(paramName));
+					query.setParameter(paramName, sqlParams.get(paramName));
 				}
         	}
         }
@@ -807,7 +807,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 
         // 將得到的廣告成效結果，設定成 Map, 以方便用 adKeywordSeq 抓取資料
 		HashMap<String, Object> adActionSum = new HashMap<String, Object>();
-		List<Object> pfpAdActionReports = q.list();
+		List<Object> pfpAdActionReports = query.list();
 		System.out.println("pfpAdActionReports.size() = " + pfpAdActionReports.size());
 		for(Object object:pfpAdActionReports) {
 			Object[] ob = (Object[])object;

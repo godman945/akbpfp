@@ -2,7 +2,6 @@ package com.pchome.akbpfp.struts2.action.msg;
 
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
-import com.pchome.akbpfp.db.pojo.PfpAdSysprice;
 import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.sysprice.IPfpAdSyspriceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -10,17 +9,19 @@ import com.pchome.enumerate.ad.EnumAdSearchPriceType;
 
 public class AdGroupMsgAction extends BaseCookieAction{
 	
+	private static final long serialVersionUID = 1L;
 	private PfpAdGroupService pfpAdGroupService;
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private IPfpAdSyspriceService pfpAdSyspriceService;
 	private String adPoolSeq;
-	
+	private int adType;
 	private String adGroupSeq;	
 	private PfpAdGroup adGroup;
 	private float sysprice;
 	private float adAsideRate; 
 	private float userprice;
 	private String searchPriceTypeName;
+	private String adGroupPriceType;
 	
 	public String execute() throws Exception{
 		
@@ -28,18 +29,14 @@ public class AdGroupMsgAction extends BaseCookieAction{
 	}
 	
 	public String modifyAdGroupChannelPriceAction() throws Exception{
-		
-				
 		adGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-		
-		PfpAdSysprice adSysprice = pfpAdSyspriceService.getAdSysprice(adPoolSeq);
-		
 		//sysprice = adSysprice.getSysprice();
 		//建議價
 		sysprice = syspriceOperaterAPI.getAdSuggestPrice(adPoolSeq);
 		//撥出率
 		adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
-		
+		adGroupPriceType = adGroup.getAdGroupPriceType();
+		adType = adGroup.getPfpAdAction().getAdType();
 		return SUCCESS;
 	}
 	
@@ -108,6 +105,20 @@ public class AdGroupMsgAction extends BaseCookieAction{
 		return searchPriceTypeName;
 	}
 
-	
+	public String getAdGroupPriceType() {
+		return adGroupPriceType;
+	}
+
+	public void setAdGroupPriceType(String adGroupPriceType) {
+		this.adGroupPriceType = adGroupPriceType;
+	}
+
+	public int getAdType() {
+		return adType;
+	}
+
+	public void setAdType(int adType) {
+		this.adType = adType;
+	}
 	
 }

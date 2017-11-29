@@ -150,7 +150,6 @@ public class PfpAdGroupService extends BaseService<PfpAdGroup,String> implements
 				adGroupViewVO.setAdGroupSeq(pfpAdGroup.getAdGroupSeq());						
 				adGroupViewVO.setAdGroupName(pfpAdGroup.getAdGroupName());
 				adGroupViewVO.setAdOperatingRule(pfpAdGroup.getPfpAdAction().getAdOperatingRule());
-				
 				for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
 					if(pfpAdGroup.getAdGroupPriceType().equals(enumAdPriceType.getDbTypeName())){
 						adGroupViewVO.setAdPriceTypeDesc(enumAdPriceType.getTypeName());

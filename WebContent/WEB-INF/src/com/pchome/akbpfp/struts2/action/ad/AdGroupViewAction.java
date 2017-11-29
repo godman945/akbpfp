@@ -171,9 +171,8 @@ public class AdGroupViewAction extends BaseCookieAction{
 											super.getCustomer_info_id(), 
 											super.getUser_id(), 
 											super.request.getRemoteAddr());
-			
-			adGroup.setAdGroupChannelPrice(Integer.parseInt(userPrice));
-			adGroup.setAdGroupCreateTime(new Date());
+			adGroup.setAdGroupChannelPrice(Float.valueOf(userPrice));
+			adGroup.setAdGroupUpdateTime(new Date());
 			pfpAdGroupService.saveOrUpdate(adGroup);
 			
 			adActionSeq = adGroup.getPfpAdAction().getAdActionSeq();
