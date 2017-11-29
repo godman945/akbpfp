@@ -217,7 +217,7 @@ public class PfpAdGroupService extends BaseService<PfpAdGroup,String> implements
 						}
 						// 千次曝光費用
 						if(clkPrice > 0){
-							thousandsCost = clkPrice / ( (float)pv / 1000);
+							thousandsCost = clkPrice / ( (float)pv * 1000);
 						}
 						adGroupViewVO.setThousandsCost(thousandsCost);
 						adGroupViewVO.setAdClkRate(clkRate);
