@@ -212,7 +212,7 @@ public class PfpAdGroupService extends BaseService<PfpAdGroup,String> implements
 							clkRate = (float)clk / (float)pv*100;
 						}
 						// 平均點擊費用
-						if(clkPrice > 0 || clk > 0){
+						if(clkPrice > 0 && clk > 0){
 							clkPriceAvg = clkPrice / (float)clk;
 						}
 						// 千次曝光費用
