@@ -47,7 +47,7 @@
 				<td style=" text-align: left; line-height: 20px; padding: 10px;">
 						${adReportVO.adActionName!}<br>
 						尺寸 ${adReportVO.adWidth!} x ${adReportVO.adHeight!}<br>
-						時間 00:${adReportVO.adVideoSec!}<br>
+						時間 :${adReportVO.adVideoSec!}<br>
 					  	<a href="#" target="_blank" src="${adReportVO.realUrl!}">${adReportVO.realUrl!}</a><br>
 				</td>
 				

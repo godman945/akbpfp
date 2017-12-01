@@ -369,7 +369,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				adReportVO.setAdHeight(sizeArray[1]);
 			}
 			
-			String secs = objArray[17].toString();
+			String secs = objArray[16].toString();
 			if(secs.length() == 2){
 				adReportVO.setAdVideoSec("00:"+secs);
 			}else if(secs.length() == 1){
