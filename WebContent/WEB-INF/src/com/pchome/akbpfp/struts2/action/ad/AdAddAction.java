@@ -370,25 +370,14 @@ public class AdAddAction extends BaseCookieAction{
 				String adSize = adVideoSize.substring(0, 3)+"_"+adVideoSize.substring(3, adVideoSize.length());
 				String pool = "";
 				String templateAdSeq = "";
-				
-				
-				log.info(">>>>>>>>>>>>>adSize:"+adSize);
 				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
-					log.info(">>>>>>>>>>>>>>>>>>"+enumAdVideoSize.getType());
-					log.info(">>>>>>>>>>>>>>>>>>"+enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight());
 					if(enumAdVideoSize.getType().equals("DEFAULT") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight())){
 						isBannerSize = false;
 						pool = enumAdVideoSize.getPoolType();
 						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
-						
-						log.info(">>>>>>>>>>>>>>>>>>DEFAULT_OK:"+pool);
-						
-					}else if(enumAdVideoSize.getType().equals("BANNER") && adVideoSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight())){
+					}else if(enumAdVideoSize.getType().equals("BANNER") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight())){
 						pool = enumAdVideoSize.getPoolType();
 						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
-						
-						
-						log.info(">>>>>>>>>>>>>>>>>>BANNER_OK:"+pool);
 					}
 				}
 				addAd(pfpAdGroup,templateAdSeq);
