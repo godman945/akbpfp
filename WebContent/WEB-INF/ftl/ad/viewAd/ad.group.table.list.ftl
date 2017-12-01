@@ -142,7 +142,7 @@
 					<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 					<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
 					<td class="td01">NT$ ${vo.thousandsCost?string('#.##')!}</td>
-					<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
+					<td class="td01">NT$ ${vo.adClkPrice?string('#.##')!}</td>
 					<td class="td02">
 						<#if vo.adGroupStatus != 9 >
 							<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}&adOperatingRule=${vo.adOperatingRule!}">製作新廣告</a><br>
@@ -185,7 +185,7 @@
 			<td class="td01">${totalClkRate?string('#.##')!}%</td>
 			<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
 			<td class="td01">NT$ ${totalThousandsCost?string('#.##')!}</td>
-			<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
+			<td class="td01">NT$ ${totalCost?string('#.##')!}</td>
 			<td class="td01"></td>
 		</#if>
 	</tr>

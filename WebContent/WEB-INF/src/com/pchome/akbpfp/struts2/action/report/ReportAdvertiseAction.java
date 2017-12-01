@@ -2,7 +2,6 @@ package com.pchome.akbpfp.struts2.action.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -20,10 +19,8 @@ import com.pchome.akbpfp.db.dao.ad.IPfpAdActionDAO;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdDAO;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdGroupDAO;
 import com.pchome.akbpfp.db.dao.report.AdReportVO;
-import com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
-import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdReportService;
 import com.pchome.enumerate.ad.EnumAdType;
@@ -42,7 +39,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	private LinkedList<String> tableDataTotalList =null; //頁面全部加總table total foot
 
 
-	private List<AdReportVO> resultData;
+	private List<AdReportVO> adReportVOList;
 	private IAdReportService adReportService=null;
 	private IPfpCustomerInfoService customerInfoService=null;
 
@@ -340,7 +337,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 		int totalDataSize = resultSumData.size();
 
-		resultData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue(),
+		adReportVOList = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue(),
 				searchId, searchAdseq, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 
 		this.totalPage = (totalDataSize/pageSize);
@@ -350,7 +347,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		}
 
 		if (totalDataSize > 0) {
-			resultDataTrans(resultData);
+			resultDataTrans(adReportVOList);
 			resultSumDataTrans(resultSumData);
 		}
 
@@ -439,7 +436,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		
 		//列表
 		DecimalFormat df = new DecimalFormat("#.##");
-		for (AdReportVO adReportVO : resultData) {
+		for (AdReportVO adReportVO : adReportVOList) {
 			sumPV = sumPV + Float.valueOf(adReportVO.getAdPvSum());
 			sumClick = sumClick + Float.valueOf(adReportVO.getAdClkSum());
 			double clickAvg = (Double.valueOf(adReportVO.getAdClkSum()) / Double.valueOf(adReportVO.getAdPvSum())) * 100;
@@ -493,7 +490,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		content.append("\n\n");
 		if(StringUtils.isNotBlank(searchAdseq)){
 			content.append(""
-					+ "總計:共"+resultData.size()+"筆"+","
+					+ "總計:共"+adReportVOList.size()+"筆"+","
 					+ ","
 					+ ","
 					+ ","
@@ -506,7 +503,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 					+ totalCost);
 		}else{
 			content.append(""
-					+ "總計:共"+resultData.size()+"筆"+","
+					+ "總計:共"+adReportVOList.size()+"筆"+","
 					+ ","
 					+ ","
 					+ ","
@@ -677,7 +674,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 			t_pv += new Double(adReportVO.getAdPvSum());
 			t_click += new Double(adReportVO.getAdClkSum());
-			t_cost += Math.round(new Double(adReportVO.getAdPriceSum()));
+			t_cost += new Double(adReportVO.getAdPriceSum());
 			t_invalid += new Double(adReportVO.getAdInvClkSum());
 		}
 		//互動率 = 總互動次數 / 總曝光數
@@ -712,7 +709,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat.format(t_cost));
 				}
 			}
 		}
@@ -931,7 +928,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 					} else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(intFormat.format(cost));
+						tableInDataList.addLast(doubleFormat.format(cost));
 					}
 				}
 			}

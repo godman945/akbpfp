@@ -1,8 +1,108 @@
-﻿$(document).ready(function(){
+﻿var submitFlag = true;
+$(document).ready(function(){
+	$('#adPrice').keyup(function(){
+		var errMsg = '';
+		var price = $("#adPrice").val();
+		if($("#adPriceType").val() == 0){
+			var cpvRex = /^-?\d+\.?\d{0,1}$/;
+			submitFlag = cpvRex.test(price);
+			if(!submitFlag){
+				errMsg = '只接受整數或小數1位...';
+			}
+			if(price < 0.5){
+				submitFlag = false;
+				errMsg = '出價不得低於系統接受的最低單次收視出價 NT$0.5';
+			}
+		}
+		if($("#adPriceType").val() == 1){
+			var cpmRex = /^[0-9]*[1-9][0-9]*$/;
+			submitFlag = cpmRex.test(price);
+			if(!submitFlag){
+				errMsg = '只接受整數...';
+			}
+			if(price < 65){
+				submitFlag = false;
+				errMsg = '出價不得低於系統接受的最低千次曝光出價 NT$65';
+			}
+		}
+		
+		if(!submitFlag){
+			$('#errorMsg').empty();
+			$('#errorMsg').append(errMsg);
+			return false;
+		}else{
+			$('#errorMsg').empty();
+			$("#userPrice").val(price);
+		}
+		
+		$.ajax({
+			url: "adGroupSuggestPrice.html",
+			data:{
+				"userprice": $("#adPrice").val()
+			},
+			type: "post",
+			dataType: "json",
+			success: function(response, status){
+				$("#showRate").html(response.adAsideRate);
+			},
+				error: function(xtl) {
+					alert("系統繁忙，請稍後再試！");
+				}
+		 })
+	})
 	
-	$('#adPrice').bind('blur', function() {
-		console.log('ddd');
-	});
+	
+	$('#adPrice').click(function(){
+		var errMsg = '';
+		var price = $("#adPrice").val();
+		if($("#adPriceType").val() == 0){
+			var cpvRex = /^-?\d+\.?\d{0,1}$/;
+			submitFlag = cpvRex.test(price);
+			if(!submitFlag){
+				errMsg = '只接受整數或小數1位...';
+			}
+			if(price < 0.5){
+				submitFlag = false;
+				errMsg = '出價不得低於系統接受的最低單次收視出價 NT$0.5';
+			}
+		}
+		if($("#adPriceType").val() == 1){
+			var cpmRex = /^[0-9]*[1-9][0-9]*$/;
+			submitFlag = cpmRex.test(price);
+			if(!submitFlag){
+				errMsg = '只接受整數...';
+			}
+			if(price < 65){
+				submitFlag = false;
+				errMsg = '出價不得低於系統接受的最低千次曝光出價 NT$65';
+			}
+		}
+		
+		if(!submitFlag){
+			$('#errorMsg').empty();
+			$('#errorMsg').append(errMsg);
+			return false;
+		}else{
+			$('#errorMsg').empty();
+			$("#userPrice").val(price);
+		}
+		
+		$.ajax({
+			url: "adGroupSuggestPrice.html",
+			data:{
+				"userprice": $("#adPrice").val()
+			},
+			type: "post",
+			dataType: "json",
+			success: function(response, status){
+				$("#showRate").html(response.adAsideRate);
+			},
+				error: function(xtl) {
+					alert("系統繁忙，請稍後再試！");
+				}
+		 })
+	})
+	
 	
 	
 	var showSearchPrice = $("#showSearchPrice").val();
@@ -43,6 +143,7 @@
 	
 	$("#adPriceType").change(function(){
 		$(".msg").text('');
+		$('#errorMsg').empty();
 		if($(this).val() == 0){
 			$(".msg").text("當影片播超過三秒即計算為一次有效收視，系統接受最低出價NT$0.5");
 			$("#adPrice").val("0.5");
@@ -50,28 +151,31 @@
 			$(".msg").text("當影片曝光1,000次即計算為一次收費，系統接受最低出價NT$65");
 			$("#adPrice").val("65");
 		}
+		
+		$.ajax({
+			url: "adGroupSuggestPrice.html",
+			data:{
+				"userprice": $("#adPrice").val()
+			},
+			type: "post",
+			dataType: "json",
+			success: function(response, status){
+				console.log(response);
+				$("#showRate").html(response.adAsideRate);
+			},
+				error: function(xtl) {
+					alert("系統繁忙，請稍後再試！");
+				}
+		 })
+		
 	})
+	
 });
 
+
 function doAdGroupaddSubmit(){
-	var flag = false;
-	var errMsg = '';
-	
-	if($("#adPriceType").val() == 1){
-		var cpmRex = /^[0-9]*[1-9][0-9]*$/;
-		flag = cpmRex.test($("#adPrice").val());
-		errMsg = '只接受整數...';
-	}else if($("#adPriceType").val() == 0){
-		var cpvRex = /^-?\d+\.?\d{0,1}$/;
-		flag = cpvRex.test($("#adPrice").val());
-		errMsg = '只接受整數或小數1位...';
-	}
-	if(!flag){
-		$('#errorMsg').append(errMsg);
-		setTimeout(function(){ 
-			$('#errorMsg').empty();
-		}, 1000);
-	}else{
+	if(submitFlag){
 		$("#modifyForm").submit();
 	}
 }
+

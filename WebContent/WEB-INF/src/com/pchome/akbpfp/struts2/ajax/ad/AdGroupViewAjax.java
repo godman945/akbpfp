@@ -35,7 +35,7 @@ public class AdGroupViewAjax extends BaseCookieAction{
 	private int totalClk = 0;						
 	private float totalClkRate = 0;
 	private float totalAvgCost = 0;
-	private int totalCost = 0;
+	private float totalCost = 0;
 	private int totalInvalidClk = 0;
 	private String groupMaxPrice;
 	private String adType;						//廣告類別
@@ -101,7 +101,6 @@ public class AdGroupViewAjax extends BaseCookieAction{
 		
 		// 查詢日期寫進cookie
 		this.setChooseDate(startDate, endDate);
-		System.out.println(totalThousandsCost);
 		return SUCCESS;
 	}
 	
@@ -198,7 +197,8 @@ public class AdGroupViewAjax extends BaseCookieAction{
 		return totalAvgCost;
 	}
 
-	public int getTotalCost() {
+
+	public float getTotalCost() {
 		return totalCost;
 	}
 

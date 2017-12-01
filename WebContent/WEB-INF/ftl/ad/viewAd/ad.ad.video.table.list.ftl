@@ -29,14 +29,14 @@
 	</tr>
 </thead>
 <tbody>
-	<#if pfpAdAdVideoViewVOList?exists>
-	    <#list pfpAdAdVideoViewVOList as pfpAdAdVideoViewVO>
+	<#if adReportVOList?exists>
+	    <#list adReportVOList as adReportVO>
 			<tr>
 				<td>
-				<#if pfpAdAdVideoViewVO.actionStatus == "4" || pfpAdAdVideoViewVO.actionStatus == "9">
-			        <input type="checkbox" id="chkY_${pfpAdAdVideoViewVO_index!}" name="chkY" value="${pfpAdAdVideoViewVO.adSeq!}"/>
+				<#if adReportVO.adActionStatus == "4" || adReportVO.adActionStatus == "9">
+			        <input type="checkbox" id="chkY_${adReportVO_index!}" name="chkY" value="${adReportVO.adSeq!}"/>
 				<#else>
-			       <input type="checkbox" id="chkN_${pfpAdAdVideoViewVO_index!}" name="chkN" disabled/>
+			       <input type="checkbox" id="chkN_${adReportVO_index!}" name="chkN" disabled/>
 				</#if>
 				</td>
 				<td>
@@ -45,33 +45,33 @@
 					</div>
 				</td>
 				<td style=" text-align: left; line-height: 20px; padding: 10px;">
-						${pfpAdAdVideoViewVO.adActionName!}<br>
-						尺寸 ${pfpAdAdVideoViewVO.adWidth!} x ${pfpAdAdVideoViewVO.adHeight!}<br>
-						時間 00:${pfpAdAdVideoViewVO.videoSeconds!}<br>
-					  	<a href="#" target="_blank" src="${pfpAdAdVideoViewVO.realUrl!}">${pfpAdAdVideoViewVO.realUrl!}</a><br>
+						${adReportVO.adActionName!}<br>
+						尺寸 ${adReportVO.adWidth!} x ${adReportVO.adHeight!}<br>
+						時間 00:${adReportVO.adVideoSec!}<br>
+					  	<a href="#" target="_blank" src="${adReportVO.realUrl!}">${adReportVO.realUrl!}</a><br>
 				</td>
 				
 		        <td class="td03">
-		        ${pfpAdAdVideoViewVO.adStatusDesc!}
+		        ${adReportVO.adStatusDesc!}
 		        <#if pfpAdAdVideoViewVO.adStatus == 3 || pfpAdAdVideoViewVO.adStatus == 6>
-		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${pfpAdAdVideoViewVO.adRejectReason!}">
+		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${adReportVO.adRejectReason!}">
 		        </#if>
 		        </td>
-				<td class="td01">${pfpAdAdVideoViewVO.priceTypeDesc}</td>	
-				<td class="td01">${pfpAdAdVideoViewVO.adPvSum?string('#,###')!}</td>
-				<td class="td01">${pfpAdAdVideoViewVO.sumAdView}</td>
-				<td class="td01">${pfpAdAdVideoViewVO.adViewRatings}%</td>		
-				<td class="td01">NT$ ${pfpAdAdVideoViewVO.singleAdViewCost}</td>
-				<td class="td01">NT$ ${pfpAdAdVideoViewVO.thousandsCost}</td>		
-				<td class="td01">NT$ ${pfpAdAdVideoViewVO.costSum}</td>
+				<td class="td01">${adReportVO.adClkPriceType}</td>	
+				<td class="td01">${adReportVO.adPvSum?number?string('#,###')!}</td>
+				<td class="td01">${adReportVO.adClkSum?number?string('#,###')!}</td>
+				<td class="td01">${adReportVO.adClickRatings}%</td>		
+				<td class="td01">NT$ ${adReportVO.singleCost}</td>
+				<td class="td01">NT$ ${adReportVO.thousandsCost?number?string('#.##')!}</td>
+				<td class="td01">NT$ ${adReportVO.adPriceSum?number?string('#.##')!}</td>
 				<td class="td02">
 					<#if pfpAdAdVideoViewVO.actionStatus != "9">
-						<a href="adAdAdd.html?adGroupSeq=${pfpAdAdVideoViewVO.adGroupSeq!}&adOperatingRule=VIDEO">製作新廣告</a><br>
+						<a href="adAdAdd.html?adGroupSeq=${adReportVO.adGroupSeq!}&adOperatingRule=VIDEO">製作新廣告</a><br>
 					</#if>
-					<a href="adAdEditVideo.html?adSeq=${pfpAdAdVideoViewVO.adSeq!}">修改</a><br>
+					<a href="adAdEditVideo.html?adSeq=${adReportVO.adSeq!}">修改</a><br>
 					<#if pfpAdAdVideoViewVO.actionStatus != "2" && pfpAdAdVideoViewVO.actionStatus != "13">	
 						<#if pfpAdAdVideoViewVO.actionStatus == "0" || pfpAdAdVideoViewVO.actionStatus == "1" || pfpAdAdVideoViewVO.actionStatus == "3" || pfpAdAdVideoViewVO.actionStatus == "6" >
-							<a href="#" onclick="closeAdAdStatus('${pfpAdAdVideoViewVO.adSeq!}','10')">關閉</a>
+							<a href="#" onclick="closeAdAdStatus('${adReportVO.adSeq!}','10')">關閉</a>
 						</#if>
 					</#if>
 				</td>
@@ -87,12 +87,12 @@
 </tbody
 	<tr class="tbg">
 		<td colspan="5">總計：${totalSize!}筆</td>
-		<td class="td01">${pfpAdAdVideoViewSumVO.adPvSum?string('#,###')!}</td>
-		<td class="td01">${pfpAdAdVideoViewSumVO.adViewSum?string('#,###')!}</td>		
-		<td class="td01">${pfpAdAdVideoViewSumVO.adViewRatings?string('0.##')!}%</td>
-		<td class="td01">NT$ ${pfpAdAdVideoViewSumVO.singleAdViewCost?string('0.##')!}</td>
-		<td class="td01">NT$ ${pfpAdAdVideoViewSumVO.thousandsCost?string('0.##')!}</td>
-		<td class="td01">NT$ ${pfpAdAdVideoViewSumVO.costSum?string('0.##')!}</td>
+		<td class="td01">${adReportVO.adPvSum?number?string('#,###')!}</td>
+		<td class="td01">${adReportVO.adClkSum?number?string('#,###')!}</td>		
+		<td class="td01">${adReportVO.adClickRatings!}%</td>
+		<td class="td01">NT$ ${adReportVO.singleCost!}</td>
+		<td class="td01">NT$ ${adReportVO.thousandsCost?number?string('#.##')!}</td>
+		<td class="td01">NT$ ${adReportVO.adPriceSum?number?string('#.##')!}</td>
 		<td class="td01"></td>
 	</tr>
 </table>
@@ -105,21 +105,3 @@
 	<input type="button" name="start" onClick="modifyAdStatus('4')" value="開 啟" /> &nbsp;
 	<input type="button" name="close" onClick="modifyAdStatus('10')" value="關 閉" /> &nbsp;          
 </span>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

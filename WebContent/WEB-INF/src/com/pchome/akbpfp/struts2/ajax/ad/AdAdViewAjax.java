@@ -5,38 +5,27 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.pchome.akbpfp.data.threadprocess.PfpThreadProcess;
-import com.pchome.akbpfp.data.threadprocess.ThreadServiceBean;
+import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewSumVO;
-import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdType;
-import com.pchome.enumerate.thread.EnumAdThreadType;
 import com.pchome.soft.util.DateValueUtil;
-
-import net.sf.json.JSONObject;
 
 public class AdAdViewAjax extends BaseCookieAction{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
 	private IPfpAdService pfpAdService;
-	private PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO;
+	private AdReportVO adReportVO;
 	private String previewUrl;
 	private String adGroupSeq;
 	private String keyword;
@@ -44,7 +33,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private String startDate;
 	private String endDate;
 	private List<PfpAdAdViewVO> adAdViewVOList;
-	private List<PfpAdAdVideoViewVO> pfpAdAdVideoViewVOList;
+	private List<AdReportVO> adReportVOList;
 	private int pageNo = 1;       				// 初始化目前頁數
 	private int pageSize = 20;     				// 初始化每頁幾筆
 	private int pageCount = 0;    				// 初始化共幾頁
@@ -59,7 +48,6 @@ public class AdAdViewAjax extends BaseCookieAction{
 	private int totalInvalidClk = 0;
 	private String jdbcEnvironment;
 	private String adType;
-	private String adOperatingRule;
 	
 	public String adAdViewTableAjax() throws Exception{
 		int type = Integer.parseInt(searchType);
@@ -161,10 +149,11 @@ public class AdAdViewAjax extends BaseCookieAction{
 		return imgmap;
 	}
 
+	
 	/**
 	 * 影音廣告明細
 	 * */
-	public  String adAdVideoViewTableAjax() throws Exception{
+	public String adAdVideoViewTableAjax() throws Exception{
 		PfpAdAdViewConditionVO pfpAdAdViewConditionVO = new PfpAdAdViewConditionVO();
 		pfpAdAdViewConditionVO.setCustomerInfoId(super.getCustomer_info_id());
 		pfpAdAdViewConditionVO.setAdGroupSeq(adGroupSeq);
@@ -179,11 +168,12 @@ public class AdAdViewAjax extends BaseCookieAction{
 		pfpAdAdViewConditionVO.setLimit(limit);
 		pfpAdAdViewConditionVO.setMax(max);
 		
+		this.adReportVO = pfpAdService.getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
+		this.adReportVOList = pfpAdService.getAdAdVideoDetailView(pfpAdAdViewConditionVO);
 		
-		this.pfpAdAdVideoViewSumVO = pfpAdService.getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
-		totalSize = pfpAdAdVideoViewSumVO.getTotalSize();
+		totalSize = adReportVOList!= null ? adReportVOList.size() : 0;
 		pageCount = (int) Math.ceil(((double)totalSize / (double)pageSize));
-		this.pfpAdAdVideoViewVOList = pfpAdService.getAdAdVideoDetailView(pfpAdAdViewConditionVO);
+		
 		
 		
 		/**多執行緒*/
@@ -333,20 +323,12 @@ public class AdAdViewAjax extends BaseCookieAction{
 		this.adType = adType;
 	}
 
-	public List<PfpAdAdVideoViewVO> getPfpAdAdVideoViewVOList() {
-		return pfpAdAdVideoViewVOList;
+	public AdReportVO getAdReportVO() {
+		return adReportVO;
 	}
 
-	public void setPfpAdAdVideoViewVOList(List<PfpAdAdVideoViewVO> pfpAdAdVideoViewVOList) {
-		this.pfpAdAdVideoViewVOList = pfpAdAdVideoViewVOList;
-	}
-
-	public PfpAdAdVideoViewSumVO getPfpAdAdVideoViewSumVO() {
-		return pfpAdAdVideoViewSumVO;
-	}
-
-	public void setPfpAdAdVideoViewSumVO(PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO) {
-		this.pfpAdAdVideoViewSumVO = pfpAdAdVideoViewSumVO;
+	public void setAdReportVO(AdReportVO adReportVO) {
+		this.adReportVO = adReportVO;
 	}
 
 	public String getPreviewUrl() {
@@ -367,6 +349,22 @@ public class AdAdViewAjax extends BaseCookieAction{
 
 	public float getTotalThousandsCost() {
 		return totalThousandsCost;
+	}
+
+	public List<PfpAdAdViewVO> getAdAdViewVOList() {
+		return adAdViewVOList;
+	}
+
+	public void setAdAdViewVOList(List<PfpAdAdViewVO> adAdViewVOList) {
+		this.adAdViewVOList = adAdViewVOList;
+	}
+
+	public List<AdReportVO> getAdReportVOList() {
+		return adReportVOList;
+	}
+
+	public void setAdReportVOList(List<AdReportVO> adReportVOList) {
+		this.adReportVOList = adReportVOList;
 	}
 	
 }

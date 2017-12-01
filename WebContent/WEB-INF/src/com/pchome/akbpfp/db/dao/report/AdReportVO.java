@@ -35,6 +35,12 @@ public class AdReportVO {
 	private String adClkPriceType;		//廣告計費方式
 	private String adOperatingRule;
 	
+	private String adClickRatings;
+	private String thousandsCost;
+	private String singleCost;
+	private String img;
+	private String adWidth;
+	private String adHeight;
 	//影片長度
 	private String adVideoSec;
 	//影片網址
@@ -288,5 +294,54 @@ public class AdReportVO {
 	public void setAdOperatingRuleDesc(String adOperatingRuleDesc) {
 		this.adOperatingRuleDesc = adOperatingRuleDesc;
 	}
+
+	public String getAdClickRatings() {
+		return adClickRatings;
+	}
+
+	public void setAdClickRatings(String adClickRatings) {
+		this.adClickRatings = adClickRatings;
+	}
+
+	public String getThousandsCost() {
+		return thousandsCost;
+	}
+
+	public void setThousandsCost(String thousandsCost) {
+		this.thousandsCost = thousandsCost;
+	}
+
+	public String getSingleCost() {
+		return singleCost;
+	}
+
+	public void setSingleCost(String singleCost) {
+		this.singleCost = singleCost;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public String getAdWidth() {
+		return adWidth;
+	}
+
+	public void setAdWidth(String adWidth) {
+		this.adWidth = adWidth;
+	}
+
+	public String getAdHeight() {
+		return adHeight;
+	}
+
+	public void setAdHeight(String adHeight) {
+		this.adHeight = adHeight;
+	}
+
 
 }
