@@ -375,6 +375,7 @@ public class AdAddAction extends BaseCookieAction{
 					if(enumAdVideoSize.getType().equals("DEFAULT") && adSize.equals(enumAdVideoSize.getWidh()+"_"+enumAdVideoSize.getHeight())){
 						isBannerSize = false;
 					}
+					
 					if(adVideoSize.equals(enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight())){
 						pool = enumAdVideoSize.getPoolType();
 						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
