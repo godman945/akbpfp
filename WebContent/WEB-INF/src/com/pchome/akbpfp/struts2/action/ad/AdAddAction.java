@@ -378,9 +378,17 @@ public class AdAddAction extends BaseCookieAction{
 					log.info(">>>>>>>>>>>>>>>>>>"+enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight());
 					if(enumAdVideoSize.getType().equals("DEFAULT") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight())){
 						isBannerSize = false;
+						pool = enumAdVideoSize.getPoolType();
+						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+						
+						log.info(">>>>>>>>>>>>>>>>>>DEFAULT_OK:"+pool);
+						
 					}else if(enumAdVideoSize.getType().equals("BANNER") && adVideoSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight())){
 						pool = enumAdVideoSize.getPoolType();
 						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+						
+						
+						log.info(">>>>>>>>>>>>>>>>>>BANNER_OK:"+pool);
 					}
 				}
 				addAd(pfpAdGroup,templateAdSeq);
