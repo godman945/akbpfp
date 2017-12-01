@@ -332,7 +332,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 	 * */
 	public List<AdReportVO> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
 		List<Object> lisObj = ((PfpAdDAO)dao).getAdAdVideoDetailView(pfpAdAdViewConditionVO);
-		List<AdReportVO> adReportVOList = null;
+		List<AdReportVO> adReportVOList = new ArrayList<>();
 		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		boolean flag = true;
@@ -340,55 +340,41 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 		for (Object object : lisObj) {
 			Object[] objArray = (Object[]) object;
 			
-			if(flag && StringUtils.isNotBlank(objArray[7].toString())){
-				adReportVOList = new ArrayList<>();
-				flag = false;
-			}else if(StringUtils.isBlank(objArray[7].toString())){
-				break;
-			}
-			
 			AdReportVO adReportVO = new AdReportVO();
 			adReportVO.setAdPvSum(objArray[0].toString());
 			adReportVO.setAdClkSum(objArray[1].toString());
 			adReportVO.setAdPriceSum(objArray[2].toString());
 			adReportVO.setAdInvClkSum(objArray[3].toString());
-			adReportVO.setAdSeq(objArray[7].toString());
-			adReportVO.setAdOperatingRule(objArray[8].toString());
-			adReportVO.setAdActionName(objArray[10].toString());
-			adReportVO.setCustomerInfoId(objArray[11].toString());
-			adReportVO.setAdClkPriceType(objArray[12].toString());
-			adReportVO.setAdClickRatings(objArray[13].toString());
-			adReportVO.setSingleCost(objArray[14].toString());
-			adReportVO.setThousandsCost(objArray[15].toString());
-			adReportVO.setAdVideoUrl(objArray[17].toString());
-			adReportVO.setRealUrl(objArray[18].toString());
-			adReportVO.setImg(objArray[19].toString());
-			String[] sizeArray = ((String)objArray[20]).split("_");
+			adReportVO.setAdClickRatings(objArray[4].toString());
+			adReportVO.setSingleCost(objArray[5].toString());
+			adReportVO.setThousandsCost(objArray[6].toString());
+			adReportVO.setAdSeq(objArray[10].toString());
+			adReportVO.setAdOperatingRule(objArray[11].toString());
+			adReportVO.setAdActionName(objArray[13].toString());
+			adReportVO.setCustomerInfoId(objArray[14].toString());
+			adReportVO.setAdClkPriceType(objArray[15].toString());
+			adReportVO.setAdVideoUrl(objArray[18].toString());
+			adReportVO.setRealUrl(objArray[19].toString());
+			adReportVO.setImg(objArray[20].toString());
+			String[] sizeArray = ((String)objArray[21]).split("_");
 			if(sizeArray.length == 2){
 				adReportVO.setAdWidth(sizeArray[0]);
 				adReportVO.setAdHeight(sizeArray[1]);
 			}
 			
-			String secs = objArray[16].toString();
+			String secs = objArray[17].toString();
 			if(secs.length() == 2){
 				adReportVO.setAdVideoSec("00:"+secs);
 			}else if(secs.length() == 1){
 				adReportVO.setAdVideoSec("00:0"+secs);
 			}
 			
-			int adActionStatus = (Integer)objArray[4];
-			if (adActionStatus == EnumStatus.Open.getStatusId()) {
-				long _startDate = (dateFormat.parse(dateFormat2.format(objArray[5]) + " 00:00:00")).getTime();
-				long _endDate = (dateFormat.parse(dateFormat2.format(objArray[6]) + " 23:59:59")).getTime();
-				if (nowTime < _startDate) {
-					adReportVO.setAdStatusDesc(EnumStatus.Waitbroadcast.getStatusDesc());
-					adReportVO.setAdActionStatus(String.valueOf(EnumStatus.Waitbroadcast.getStatusId()));
-				} else if (nowTime > _endDate) {
-					adReportVO.setAdStatusDesc(EnumStatus.End.getStatusDesc());
-					adReportVO.setAdActionStatus(String.valueOf(EnumStatus.End.getStatusId()));
-				} else {
-					adReportVO.setAdStatusDesc(EnumStatus.Broadcast.getStatusDesc());
-					adReportVO.setAdActionStatus(String.valueOf(EnumStatus.Broadcast.getStatusId()));
+			int adActionStatus = (Integer)objArray[7];
+			for (EnumStatus enumStatus : EnumStatus.values()) {
+				if(adActionStatus == enumStatus.getStatusId()){
+					adReportVO.setAdStatusDesc(enumStatus.getStatusDesc());
+					adReportVO.setAdActionStatus(String.valueOf(objArray[7]));
+					break;
 				}
 			}
 			String adPriceType = objArray[12].toString();
@@ -400,49 +386,6 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 			}
 			adReportVOList.add(adReportVO);
 		}
-		
-		
-//		List<PfpAdAdVideoViewVO> pfpAdAdVideoViewVOList = new ArrayList<>();
-//		for (Object object : lisObj) {
-//			Object[] objArray = (Object[]) object;
-//			PfpAdAdVideoViewVO pfpAdAdVideoViewVO = new PfpAdAdVideoViewVO();
-//			pfpAdAdVideoViewVO.setAdGroupSeq(objArray[0].toString());
-//			pfpAdAdVideoViewVO.setAdSeq(objArray[1].toString());
-//			for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
-//				if(enumAdPriceType.getDbTypeName().equals(objArray[2].toString())){
-//					pfpAdAdVideoViewVO.setPriceTypeDesc(enumAdPriceType.getTypeName());
-//					break;
-//				}
-//			}
-//			pfpAdAdVideoViewVO.setAdPvSum(Integer.valueOf(objArray[3].toString()));
-//			pfpAdAdVideoViewVO.setCostSum(objArray[4].toString());
-//			pfpAdAdVideoViewVO.setSumAdView(objArray[5].toString());
-//			pfpAdAdVideoViewVO.setAdViewRatings(objArray[6].toString());
-//			pfpAdAdVideoViewVO.setSingleAdViewCost(objArray[7].toString());
-//			pfpAdAdVideoViewVO.setThousandsCost(objArray[8].toString());
-//			pfpAdAdVideoViewVO.setActionStatus(objArray[9].toString());
-//			pfpAdAdVideoViewVO.setImgPath(objArray[10].toString());
-//			if(StringUtils.isNotBlank(objArray[11].toString())){
-//				String adVideoSizeArray[] = objArray[11].toString().split("_");
-//				String adWidth = adVideoSizeArray[0];
-//				String adHeight = adVideoSizeArray[1];
-//				pfpAdAdVideoViewVO.setAdWidth(adWidth);
-//				pfpAdAdVideoViewVO.setAdHeight(adHeight);
-//			}
-//			pfpAdAdVideoViewVO.setMp4Path(objArray[12].toString());
-//			pfpAdAdVideoViewVO.setWebmPath(objArray[13].toString());
-//			pfpAdAdVideoViewVO.setVideoSeconds(objArray[14].toString());
-//			pfpAdAdVideoViewVO.setAdActionName(objArray[15].toString());
-//			pfpAdAdVideoViewVO.setRealUrl(objArray[16].toString());
-//			pfpAdAdVideoViewVO.setVideoUrl(objArray[17].toString());
-//			for(EnumStatus status:EnumStatus.values()){
-//				if(status.getStatusId() == Integer.valueOf(objArray[9].toString())){
-//					pfpAdAdVideoViewVO.setAdStatusDesc(status.getStatusRemark());
-//					break;
-//				}
-//			}
-//			pfpAdAdVideoViewVOList.add(pfpAdAdVideoViewVO);
-//		}
 		return adReportVOList;
 	}
 }
