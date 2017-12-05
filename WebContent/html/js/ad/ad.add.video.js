@@ -871,7 +871,7 @@ function saveData() {
 					"adVideoURL":$("#adVideoURL").val(),
 					"adLinkURL":$("#adLinkURL").val(),
 					"videoTime":adPreviewVideoData.videoTime,
-					"adTitle":$('#adTitle').text()
+					"adTitle":adPreviewVideoData.adTitle
 				},
 				success : function(respone) {
 //					console.log(respone);
