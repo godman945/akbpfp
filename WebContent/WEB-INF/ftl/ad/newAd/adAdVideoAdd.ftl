@@ -33,7 +33,7 @@
                     <tr>
                         <th height="35" style="width:12%;"><a name="errAdLinkURL"></a>影片標題</th>
                         <td style="min-width:50px;">
-                            <input disabled type="text" class="inputPlaceholderTmg" id="adTitle" name="adTitle" style="width:96%;" placeholder="影片標題" maxlength=""><br>
+                            <input type="text" class="inputPlaceholderTmg" id="adTitle" name="adTitle" style="width:96%;" placeholder="影片標題" maxlength=""><br>
                             <span id="chkAdTitle" name="chkAdTitle" style="color:red"></span><span style="float:right;clear: both;;margin-right: 3%" id="spanAdTitle">已輸入0字，剩17字</span>
                         </td>
                     </tr>
