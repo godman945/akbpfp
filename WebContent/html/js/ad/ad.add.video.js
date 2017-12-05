@@ -690,6 +690,12 @@ function autoPreview(objData){
 	});
 	$(".adVideoCheckArea").css('display','');
 	
+	console.log($('#adViseoSize'));
+	console.log($('#adViseoSize')[0].value == '300250');
+	
+//	if($('#adViseoSize').value){
+//		
+//	}
 	$('#adViseoSize').append('<option value="300250">300 x 250</option>');
 	$('#adViseoSize').append('<option value="336280">336 x 280</option>');
 	$('#adViseoSize').append('<option value="640390">640 x 390</option>');
