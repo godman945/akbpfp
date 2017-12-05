@@ -691,9 +691,9 @@ function autoPreview(objData){
 	$(".adVideoCheckArea").css('display','');
 	
 	console.log($('#adViseoSize'));
-	console.log($('#adViseoSize')[0]);
-	console.log($('#adViseoSize')[0].value);
-	console.log($('#adViseoSize')[0].value == '300250');
+	console.log($($('#adViseoSize')[0]).children()[0]);
+	console.log($($('#adViseoSize')[0]).children()[0].value);
+	console.log($($('#adViseoSize')[0]).children()[0].value == '300250');
 	
 //	if($('#adViseoSize').value){
 //		
