@@ -39,19 +39,19 @@ $(document).ready(function(){
 	});
 	
 	
-	//影片標題檢查
-	var adTitleWord = 14;
-	$('#adTitle').bind('keyup', function() {
-		var wordLength = adTitleWord - $("#adTitle").val().length;
-		if(wordLength >= 0){
-			$("#spanAdTitle").text('已輸入'+$("#adTitle").val().length+'字，剩'+wordLength+'字');
-			$("#spanAdTitle").css('color','');
-		}else if(wordLength < 0){
-			wordLength = Math.abs(wordLength);
-			$("#spanAdTitle").text('已輸入'+$("#adTitle").val().length+'字，超過'+wordLength+'字');
-			$("#spanAdTitle").css('color','red');
-		}
-	});
+//	//影片標題檢查
+//	var adTitleWord = 14;
+//	$('#adTitle').bind('keyup', function() {
+//		var wordLength = adTitleWord - $("#adTitle").val().length;
+//		if(wordLength >= 0){
+//			$("#spanAdTitle").text('已輸入'+$("#adTitle").val().length+'字，剩'+wordLength+'字');
+//			$("#spanAdTitle").css('color','');
+//		}else if(wordLength < 0){
+//			wordLength = Math.abs(wordLength);
+//			$("#spanAdTitle").text('已輸入'+$("#adTitle").val().length+'字，超過'+wordLength+'字');
+//			$("#spanAdTitle").css('color','red');
+//		}
+//	});
 	
 	//檢查網址blur事件
 	$("#adLinkURL").blur(function() {
@@ -116,8 +116,6 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").css('color','green');
 					$("#adVideoURLMsg").text('影片網址確認正確');
 					adPreviewVideoData = result;
-					
-					console.log(adPreviewVideoData);
 					var adTitle = adPreviewVideoData.adTitle;
 					var adTitleShow = '';
 					for (var i = 0; i < adTitle.length; i++){
@@ -895,10 +893,11 @@ function saveData() {
 					"adClass":$("#adClass").val(),
 					"adVideoURL":$("#adVideoURL").val(),
 					"adLinkURL":$("#adLinkURL").val(),
-					"videoTime":adPreviewVideoData.videoTime
+					"videoTime":adPreviewVideoData.videoTime,
+					"adTitle":$("#adTitle").val()
 				},
 				success : function(respone) {
-					console.log(respone);
+//					console.log(respone);
 					if(respone == "success"){
 						$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
 					} else {

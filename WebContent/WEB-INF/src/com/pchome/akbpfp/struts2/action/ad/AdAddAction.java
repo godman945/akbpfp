@@ -86,7 +86,7 @@ public class AdAddAction extends BaseCookieAction{
 	private String[] adDetailContent;
 	private String[] videoDetailMap;
 	private String adVideoURL;
-	
+	private String adTitle;
 	
 	private String videoTime;
 	private String adDetailSeq;
@@ -428,6 +428,7 @@ public class AdAddAction extends BaseCookieAction{
 				saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),pool,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
 				saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),pool,"");
 				saveAdDetail(adSize ,"video_size",pool,"");
+				saveAdDetail(adTitle ,"title",pool,"");
 				
 				//3.儲存影片下載狀態與位置明細
 				if(pfpAdVideoSource == null){
@@ -1725,6 +1726,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setVideoTime(String videoTime) {
 		this.videoTime = videoTime;
+	}
+
+	public String getAdTitle() {
+		return adTitle;
+	}
+
+	public void setAdTitle(String adTitle) {
+		this.adTitle = adTitle;
 	}
 
 }
