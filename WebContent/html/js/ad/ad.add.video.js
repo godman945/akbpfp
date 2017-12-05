@@ -103,7 +103,7 @@ $(document).ready(function(){
 					adPreviewVideoData = result;
 					var adTitle = adPreviewVideoData.adTitle;
 					/**影片標題*/
-					$('#adTitle').innerHTML('Youtube標題:'+adTitle);
+					$('#adTitle').html('Youtube標題:'+adTitle);
 					
 					/**影片預設尺寸*/
 					if(adPreviewVideoData != null){
@@ -118,7 +118,7 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").css('color','red');
 					$("#adVideoURLMsg").text(result.msg);
 					$("#preViewArea").empty();
-					$('#adTitle').innerHTML('');
+					$('#adTitle').empty();
 					$('body').unblock();
 				}
 			});
