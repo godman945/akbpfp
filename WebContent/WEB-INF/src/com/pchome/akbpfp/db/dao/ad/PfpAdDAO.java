@@ -961,7 +961,11 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" Ifnull((SELECT dt.ad_detail_content "); 
 		sql.append(" FROM   pfp_ad_detail dt "); 
 		sql.append(" WHERE  dt.ad_seq = a.ad_seq  ");
-		sql.append(" AND dt.ad_detail_id = 'video_size'), '')    video_size "); 
+		sql.append(" AND dt.ad_detail_id = 'video_size'), '')    video_size, ");
+		sql.append(" Ifnull((SELECT dt.ad_detail_content "); 
+		sql.append(" FROM   pfp_ad_detail dt "); 
+		sql.append(" WHERE  dt.ad_seq = a.ad_seq  ");
+		sql.append(" AND dt.ad_detail_id = 'content'), '')    video_title "); 
 		sql.append(" FROM   (SELECT Ifnull(Sum(r.ad_pv), 0), "); 
 		sql.append(" Ifnull(Sum(( CASE "); 
 		sql.append(" WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk "); 

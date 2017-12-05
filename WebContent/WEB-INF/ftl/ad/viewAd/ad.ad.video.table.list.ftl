@@ -45,9 +45,9 @@
 					</div>
 				</td>
 				<td style=" text-align: left; line-height: 20px; padding: 10px;">
-						${adReportVO.adActionName!}<br>
+						${adReportVO.content!}<br>
 						尺寸 ${adReportVO.adWidth!} x ${adReportVO.adHeight!}<br>
-						時間 :<div id='AA${adReportVO_index!}'>${adReportVO.adVideoSec!}</div><br>
+						時間 :${adReportVO.adVideoSec!}<br>
 					  	<a href="#" target="_blank" src="${adReportVO.realUrl!}">${adReportVO.realUrl!}</a><br>
 				</td>
 				

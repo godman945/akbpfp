@@ -38,25 +38,6 @@ $(document).ready(function(){
 		}
 	});
 	
-	
-	//影片標題檢查
-	var adTitleWord = 14;
-	$('#adTitle').bind('keyup', function() {
-		var wordLength = adTitleWord - $("#adTitle").val().length;
-		if(wordLength >= 0){
-			$("#spanAdTitle").text('已輸入'+$("#adTitle").val().length+'字，剩'+wordLength+'字');
-			$("#spanAdTitle").css('color','');
-			$("#chkAdTitle").text('影片標題正確');
-			$("#chkAdTitle").css('color','green');
-		}else if(wordLength < 0){
-			wordLength = Math.abs(wordLength);
-			$("#spanAdTitle").text('已輸入'+$("#adTitle").val().length+'字，超過'+wordLength+'字');
-			$("#spanAdTitle").css('color','red');
-			$("#chkAdTitle").text('影片標題超過17字...');
-			$("#chkAdTitle").css('color','red');
-		}
-	});
-	
 	//檢查網址blur事件
 	$("#adLinkURL").blur(function() {
 		if($("#adLinkURL").length > 0 && $("#adLinkURL").val() != ""){
@@ -121,30 +102,8 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").text('影片網址確認正確');
 					adPreviewVideoData = result;
 					var adTitle = adPreviewVideoData.adTitle;
-					var adTitleShow = '';
-					for (var i = 0; i < adTitle.length; i++){
-						if(i < 14){
-							adTitleShow = adTitleShow + adTitle[i];
-						}
-					}
-					if(adTitle.length > 17){
-						adTitleShow = adTitleShow + '...';
-					}
-					$('#adTitle').val(adTitleShow);
-					
-					var wordLength = adTitleWord - $("#adTitle").val().length;
-					if(wordLength >= 0){
-						$("#spanAdTitle").text('已輸入'+$("#adTitle").val().length+'字，剩'+wordLength+'字');
-						$("#spanAdTitle").css('color','');
-						$("#chkAdTitle").text('影片標題正確');
-						$("#chkAdTitle").css('color','green');
-					}else if(wordLength < 0){
-						wordLength = Math.abs(wordLength);
-						$("#spanAdTitle").text('已輸入'+$("#adTitle").val().length+'字，超過'+wordLength+'字');
-						$("#spanAdTitle").css('color','red');
-						$("#chkAdTitle").text('影片標題超過17字...');
-						$("#chkAdTitle").css('color','red');
-					}
+					/**影片標題*/
+					$('#adTitle').innerHTML('Youtube標題:'+adTitle);
 					
 					/**影片預設尺寸*/
 					if(adPreviewVideoData != null){
@@ -159,11 +118,11 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").css('color','red');
 					$("#adVideoURLMsg").text(result.msg);
 					$("#preViewArea").empty();
+					$('#adTitle').innerHTML('');
 					$('body').unblock();
 				}
 			});
 		}
-		
 	});
 	
 	var fileFinishSize = 0;
@@ -826,7 +785,7 @@ function saveData() {
 		return false;
 	}
 	
-	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確" || $("#chkAdTitle").text() != "影片標題正確"){
+	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
 		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
 			var position = $('#adVideoURL').offset();  
 			var x = position.left;  
@@ -842,15 +801,6 @@ function saveData() {
 			window.scrollTo(x,y);
 			return false;
 		}
-		
-		if($("#chkAdTitle").text() != "影片標題正確"){
-			var position = $('#adTitle').offset();  
-			var x = position.left;  
-			var y = position.top;  
-			window.scrollTo(x,y);
-			return false;
-		}
-		
 	}
 	/*檢查勾選的尺寸*/
 	var videoDetailMap = [];

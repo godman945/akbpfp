@@ -16,7 +16,8 @@
                             <input type="hidden" id="adDetailName" name="adDetailName" value="影片">
                             <input type="hidden" id="adDetailContent" name="adDetailContent">
                             <input type="text" class="inputPlaceholderTmg" id="adVideoURL" name="adVideoURL" style="width:96%;" placeholder="請輸入YouTube影片網址" maxlength=""><br>
-                            <span id="adVideoURLMsg" name="adVideoURLMsg" style="color: rgb(255, 0, 0);"></span><span style="float:right;margin-right: 3%" id="adVideoUrlWordController">已輸入0字，剩<div id="checkWord" style="display:inline;">1024</div>字</span>
+                            <span id="adVideoURLMsg" name="adVideoURLMsg" style="color: rgb(255, 0, 0);"></span><span style="float:right;margin-right: 3%" id="adVideoUrlWordController">已輸入0字，剩<div id="checkWord" style="display:inline;">1024</div>字</span><br>
+                            <div id="adTitle" name="adTitle"></div>
 						</td>
 
 					</tr>
@@ -30,6 +31,7 @@
                             <span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right;clear: both;;margin-right: 3%" id="spanAdLinkURL">已輸入0字，剩1024字</span>
                         </td>
                     </tr>
+                    <!--
                     <tr>
                         <th height="35" style="width:12%;"><a name="errAdLinkURL"></a>影片標題</th>
                         <td style="min-width:50px;">
@@ -37,6 +39,7 @@
                             <span id="chkAdTitle" name="chkAdTitle" style="color:red"></span><span style="float:right;clear: both;;margin-right: 3%" id="spanAdTitle">已輸入0字，剩17字</span>
                         </td>
                     </tr>
+                    -->
                     <tr>
                         <th height="35" style="width:12%"><a name="errAdImg"></a><span class="t_s02">* </span>Banner廣告圖<br><a href="#" target="" onclick="approveSize('bannerDiv');">支援規格查詢 </a></th><td style="min-width:200px;">
                              <table border="0" cellspacing="0" cellpadding="0">

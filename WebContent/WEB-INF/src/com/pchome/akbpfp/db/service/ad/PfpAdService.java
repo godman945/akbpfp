@@ -1,7 +1,5 @@
 package com.pchome.akbpfp.db.service.ad;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -333,10 +331,6 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 	public List<AdReportVO> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
 		List<Object> lisObj = ((PfpAdDAO)dao).getAdAdVideoDetailView(pfpAdAdViewConditionVO);
 		List<AdReportVO> adReportVOList = new ArrayList<>();
-		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		boolean flag = true;
-		long nowTime = new Date().getTime();
 		for (Object object : lisObj) {
 			Object[] objArray = (Object[]) object;
 			
@@ -356,6 +350,8 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 			adReportVO.setAdVideoUrl(objArray[18].toString());
 			adReportVO.setRealUrl(objArray[19].toString());
 			adReportVO.setImg(objArray[20].toString());
+			adReportVO.setContent(objArray[22].toString());
+			
 			String[] sizeArray = ((String)objArray[21]).split("_");
 			if(sizeArray.length == 2){
 				adReportVO.setAdWidth(sizeArray[0]);
