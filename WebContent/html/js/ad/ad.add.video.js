@@ -690,28 +690,15 @@ function autoPreview(objData){
 	});
 	$(".adVideoCheckArea").css('display','');
 	
-	console.log($('#adViseoSize'));
-	console.log($($('#adViseoSize')[0]).children()[1]);
-	
-	console.log($($('#adViseoSize')[0]).children()[1] == undefined);
-	console.log($($('#adViseoSize')[0]).children()[1] == 'undefined');
-	
-	
-	
 	if($($('#adViseoSize')[0]).children()[1] ==  undefined){
 		$('#adViseoSize').append('<option value="300250">300 x 250</option>');
 	}
-	
-	
-	
-	
-//	if($($('#adViseoSize')[0]).children()[1].value != '300250'){
-//		$('#adViseoSize').append('<option value="300250">300 x 250</option>');
-//	}else if($($('#adViseoSize')[0]).children()[2].value != '336280'){
-//		$('#adViseoSize').append('<option value="336280">336 x 280</option>');
-//	}else if($($('#adViseoSize')[0]).children()[3].value != '640390'){
-//		$('#adViseoSize').append('<option value="640390">640 x 390</option>');
-//	}
+	if($($('#adViseoSize')[0]).children()[2] ==  undefined){
+		$('#adViseoSize').append('<option value="336280">336 x 280</option>');
+	}
+	if($($('#adViseoSize')[0]).children()[3] ==  undefined){
+		$('#adViseoSize').append('<option value="640390">640 x 390</option>');
+	}
 }
 
 //影片存在建立預覽
