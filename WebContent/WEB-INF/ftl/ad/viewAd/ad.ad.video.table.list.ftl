@@ -18,7 +18,7 @@
 		<th width="50"><a href="#" onclick="checkAll()">全選</a></th>
 		<th width="200" colspan="2" rowspan="2">影片明細</th>
 		<th>狀態</th>
-		<th>計價方式</th>
+		<th width="110">計價方式</th>
 		<th>曝光數</th>	
 		<th>互動數</th>
 		<th>互動率</th>
@@ -47,7 +47,7 @@
 				<td style=" text-align: left; line-height: 20px; padding: 10px;">
 						${adReportVO.adActionName!}<br>
 						尺寸 ${adReportVO.adWidth!} x ${adReportVO.adHeight!}<br>
-						時間 :${adReportVO.adVideoSec!}<br>
+						時間 :<div id='AA${adReportVO_index!}'>${adReportVO.adVideoSec!}</div><br>
 					  	<a href="#" target="_blank" src="${adReportVO.realUrl!}">${adReportVO.realUrl!}</a><br>
 				</td>
 				

@@ -151,14 +151,13 @@
 	              <th height="20">影音廣告尺寸</th>
 	              <td>
 	               <div id="adSizeDiv" style="height:200px;">
-	                 <div style="display:flex;">
+	                 <div>
 	                    <div style="width:110px;float:left;">
 	                    		<p>300 x 250(電腦)</p>
 	                    		<p>300 x 600(電腦)</p>
 	                    		<p>336 x 280(電腦)</p>
 	                    		<p>640 x 390(電腦)</p>
 	                    		<p>950 x 390(電腦)</p>
-	                    		<p>970 x 390(電腦)</p>
 	                    		<p>970 x 250(電腦)</p>
 	                    </div>
 	                    <div style="width:120px;float:left;">

@@ -9,7 +9,7 @@
 	</span>
 
 	<span class="pages"><@t.insertAttribute name="page" /></span>			
-</div>	
+</div>
 <div style="clear:both;height:50%"></div>
 
 <form method="post" id="tableForm" name="tableForm" >

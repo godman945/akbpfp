@@ -153,10 +153,11 @@
 	    <definition name=".ad.group.video.add" extends="ad.layout">
 	        <put-attribute name="body" value="/ftl/ad/newAd/adGroupVideoAdd.ftl" />
 	    </definition>
+	    
 	    <definition name=".ad.video.add" extends="ad.nocss.layout">
 	         <put-attribute name="body" value=".ad.advideo.add.body" />
 	    </definition>
-
+	    
 	    <definition name=".ad.advideo.add.body" template="/ftl/ad/newAd/adAdAdd.ftl">
 	    	<put-attribute name="includeJs" value="/ftl/ad/newAd/ad.add.video.js.ftl" />
 	    	<put-attribute name="adAddVideo" value="/ftl/ad/newAd/adAdVideoAdd.ftl" />
@@ -190,10 +191,6 @@
 
 		<definition name=".ad.ad.video.edit.body" template="/ftl/ad/editAd/adAdEditVideo.ftl">
 	    	<put-attribute name="includeJs" value="/ftl/ad/editAd/ad.edit.video.js.ftl" />
-	    </definition>
-    	
-    	<definition name=".ad.video.add" extends="ad.nocss.layout">
-	         <put-attribute name="body" value=".ad.advideo.add.body" />
 	    </definition>
 
 	    <definition name=".ad.advideo.add.body" template="/ftl/ad/newAd/adAdAdd.ftl">

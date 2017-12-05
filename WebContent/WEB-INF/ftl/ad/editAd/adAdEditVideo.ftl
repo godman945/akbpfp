@@ -77,14 +77,12 @@
 	                 <div>
 	                    <div style="color:#ff3300;width:230px;float:left;"><b>影片會自動帶入以下廣告尺寸播放</b></div>
 	                    <div style="width:110px;float:left;">
-	    	                    <p>300 x 250(電腦)</p>
+	    	     	            <p>300 x 250(電腦)</p>
 	                    		<p>300 x 600(電腦)</p>
 	                    		<p>336 x 280(電腦)</p>
 	                    		<p>640 x 390(電腦)</p>
 	                    		<p>950 x 390(電腦)</p>
-	                    		<p>970 x 390(電腦)</p>
 	                    		<p>970 x 250(電腦)</p>
-	                    </div>
 	                    <div style="width:120px;float:left;">
 	                    		<p>300 x 250(行動裝置)</p>
 	                    		<p>320 x 480(行動裝置)</p>

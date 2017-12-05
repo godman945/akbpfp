@@ -5,19 +5,12 @@
 			iframeArray.push(iframeArrayData[i]);
 		}
 	}
-	
-	var scrollTop = window.parent.parent.document.body.scrollTop || window.parent.parent.document.documentElement.scrollTop;
-	var timeVideo;
-	var iframeInfoMap = new Object();
-	
 	/*廣告行為資訊*/
+	var iframeInfoMap = new Object();
 	document.addEventListener('DOMContentLoaded', function () {
 		for(var i = 0; i< iframeArray.length; i++){
 			iframeArray[i].onload = function(){
 				var video = this.contentDocument.body.querySelector(".home-banner");
-				var adType = (video == null) ? "MEDIA" : "VIDEO";
-				var adInfo = null;
-				
 				if(video != null){
 					var playbtn = video.parentElement.querySelector('#video-playbtn');
 					var pausebtn = video.parentElement.querySelector('#video-pausebtn');
@@ -30,8 +23,9 @@
 					var adlinkbtn1 = video.parentElement.parentElement.parentElement.parentElement.querySelector('#ad-linkbtn');
 					var adlinkbtn2 = video.parentElement.querySelector('#video-linkbtn');
 					var videoControlbar = video.parentElement.parentElement.parentElement.querySelector('.video-controlbar');
-
+					
 					adlinkbtn1.setAttribute("style", "opacity:1;position:absolute");
+					
 					playbtn.addEventListener('click', function() {
 						PlayHandler(video);
 					});
@@ -59,6 +53,13 @@
 						VideoSound(true,videoSoundoffObj,videoSoundOnObj,video);
 					});
 					
+					
+					this.addEventListener("mouseover", a1, false);
+					this.addEventListener("mouseout", a2, false);
+					
+					
+					adlinkbtn1.style.opacity=1;
+					adlinkbtn2.style.display='block';
 					video.load();
 					
 					var css = document.createElement("style");
@@ -128,26 +129,41 @@
 						imgHeight = previewHeight;
 						vdow = 100;
 						xpos = 0
-						ypos = (!ycenter) ?0 : (adh-adw*0.5625-30) / 2;
+						ypos = (!ycenter) ? 0 : (adh-adw*0.5625-30) / 2;
 						vdow +="%";
 					}
-					
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
-					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px");
-	
-					
+					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px;");
 					this.width = adw;
 					this.height = adh;
-					
-					adlinkbtn1.style.opacity=1;
-					adlinkbtn2.style.display='block';
-					video.load();
 				}
 			};
+		}
+		
+		function a1(){
+			console.log('CCCC');
+			this.tabindex="1";
+			this.onload = function(){
+				
+//				var video = this.contentDocument.body.querySelector(".home-banner");
+//				var adlinkbtn1 = video.parentElement.parentElement.parentElement.parentElement.querySelector('#ad-linkbtn');
+//				adlinkbtn1.tabindex="1";
+			}
+		}
+		function a2(){
+			this.tabindex="0";
+			console.log('DDDD');
+			
+			this.onload = function(){
+				
+//				var video = this.contentDocument.body.querySelector(".home-banner");
+//				var adlinkbtn1 = video.parentElement.parentElement.parentElement.parentElement.querySelector('#ad-linkbtn');
+//				adlinkbtn1.tabindex="0";
+			}
 		}
 		
 		/*重新播放*/
@@ -157,7 +173,7 @@
 			}
 			
 			var index = getIframeIndex(video);
-			timeVideo = setInterval('alex('+index+')',"300");
+			var timeVideo = setInterval('alex('+index+')',"300");
 			iframeInfoMap["iframe"+index] = {timmer:timeVideo};
 			
 			var playbtn = video.parentElement.querySelector('#video-playbtn');
@@ -195,10 +211,12 @@
 			replaybtn.style.display='none';
 			adlinkbtn1.style.opacity=0;
 			adlinkbtn2.style.display='none';
-			video.play();
 			var index = getIframeIndex(video);
-			timeVideo = setInterval('alex('+index+')',"300");
 			iframeInfoMap["iframe"+index] = {timmer:timeVideo};
+			video.play();
+			var timeVideo = setInterval('alex('+index+')',"300");
+			
+			
 		}
 		
 		/*點擊廣告暫停播放*/
@@ -235,7 +253,46 @@
 			}
 		}
 		
+		/*取得iframe index*/
+		function getIframeIndex(video){
+			for(var i = 0; i< iframeArray.length; i++){
+				if(iframeArray[i].contentDocument.body.querySelector(".home-banner") == video){
+					return i;
+				}
+			}
+		}
 	}, false);
+	
+	function alex(index){
+		var video = iframeArray[index].contentDocument.body.querySelector(".home-banner");
+		var adcountdown = video.parentElement.parentElement.parentElement.querySelector('#video-countdown');
+		var ttime = Math.ceil(video.duration - video.currentTime);
+		var percent = Math.ceil((video.currentTime / video.duration) * 100);
+		
+		if(!video.paused){
+			adcountdown.style.display='block';
+			var time = "影片倒數 "+ formatSecond(ttime);
+			if(adcountdown.innerHTML != time){
+				adcountdown.innerHTML= time;
+			}
+		}else if(ttime == 0){
+			var replaybtn = video.parentElement.querySelector('#video-replaybtn');
+			var pausebtn = video.parentElement.querySelector('#video-pausebtn');
+			var adlinkbtn1 = video.parentElement.parentElement.parentElement.parentElement.querySelector('#ad-linkbtn');
+			var adlinkbtn2 = video.parentElement.querySelector('#video-linkbtn');
+			
+			clearInterval(iframeInfoMap["iframe"+index].timmer);
+			adcountdown.style.display='none';
+			replaybtn.style.display='block';
+			pausebtn.style.display='none';
+			adcountdown.innerHTML= "";
+			adlinkbtn1.style.opacity=1;
+			adlinkbtn2.style.display='block';
+			video.load();
+		}else if(video.paused){
+			clearInterval(iframeInfoMap["iframe"+index].timmer);
+		}
+	}
 	
 	
 	/*影片時間格式*/
@@ -247,44 +304,3 @@
         }
         return min+' : '+sec;
     }
-
-	function alex(index){
-		var video = iframeArray[index].contentDocument.body.querySelector(".home-banner");
-		if(video == null || video == undefined){
-			clearInterval(timeVideo);
-			return false;
-		}
-		
-		var replaybtn = video.parentElement.querySelector('#video-replaybtn');
-		var pausebtn = video.parentElement.querySelector('#video-pausebtn');
-		var adcountdown = video.parentElement.parentElement.parentElement.querySelector('#video-countdown');
-		var ttime = Math.ceil(video.duration - video.currentTime);
-		var percent = Math.ceil((video.currentTime / video.duration) * 100);
-		var adlinkbtn1 = video.parentElement.parentElement.parentElement.parentElement.querySelector('#ad-linkbtn');
-		var adlinkbtn2 = video.parentElement.querySelector('#video-linkbtn');
-		
-		if(!video.paused){
-			adcountdown.style.display='block';
-			adcountdown.innerHTML= "影片倒數 "+ formatSecond(ttime);
-		}else{
-			if(ttime == 0){
-				clearInterval(iframeInfoMap["iframe"+index].timmer);
-				adcountdown.style.display='none';
-				replaybtn.style.display='block';
-				pausebtn.style.display='none';
-				adcountdown.innerHTML= "";
-				adlinkbtn1.style.opacity=1;
-				adlinkbtn2.style.display='block';
-				video.load();
-			}
-		}
-	}
-	
-	/*取得iframe index*/
-	function getIframeIndex(video){
-		for(var i = 0; i< iframeArray.length; i++){
-			if(iframeArray[i].contentDocument.body.querySelector(".home-banner") == video){
-				return i;
-			}
-		}
-	}

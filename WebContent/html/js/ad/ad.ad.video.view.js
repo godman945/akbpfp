@@ -1,8 +1,23 @@
 ﻿﻿﻿﻿$(document).ready(function(){
 	
-
-
+//	setInterval('TT()',"300");
+//	console.log($('#TT'));
+//	
+//	
+//	setInterval('BB()',"300");
+//	console.log($('#BB'));
+	
 });
+
+
+//function TT(){
+//	$('#AA3').text(new Date().getTime());
+//}
+//
+//function BB(){
+//	$('#AA2').text(new Date().getTime());
+//}
+
 
 //default查詢廣告明細資料
 function findTableView(){

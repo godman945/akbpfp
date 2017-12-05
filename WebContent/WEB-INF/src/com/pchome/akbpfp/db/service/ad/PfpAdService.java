@@ -377,7 +377,8 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 					break;
 				}
 			}
-			String adPriceType = objArray[12].toString();
+			
+			String adPriceType = objArray[15].toString();
 			for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
 				if(adPriceType.equals(enumAdPriceType.getDbTypeName())){
 					adReportVO.setAdClkPriceType(enumAdPriceType.getTypeName());

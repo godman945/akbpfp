@@ -43,7 +43,7 @@ $(document).ready(function(){
 			type: "post",
 			dataType: "json",
 			success: function(response, status){
-				$("#showRate").html(response.adAsideRate);
+				$("#showRate").html(response.adAsideRate+'%');
 			},
 				error: function(xtl) {
 					alert("系統繁忙，請稍後再試！");
@@ -95,7 +95,7 @@ $(document).ready(function(){
 			type: "post",
 			dataType: "json",
 			success: function(response, status){
-				$("#showRate").html(response.adAsideRate);
+				$("#showRate").html(response.adAsideRate+'%');
 			},
 				error: function(xtl) {
 					alert("系統繁忙，請稍後再試！");
@@ -161,7 +161,7 @@ $(document).ready(function(){
 			dataType: "json",
 			success: function(response, status){
 				console.log(response);
-				$("#showRate").html(response.adAsideRate);
+				$("#showRate").html(response.adAsideRate+'%');
 			},
 				error: function(xtl) {
 					alert("系統繁忙，請稍後再試！");

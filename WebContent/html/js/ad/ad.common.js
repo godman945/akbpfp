@@ -93,7 +93,6 @@ function ready(){
 }
 
 function checkAll(){	
-	
 	if ($("#tableView input:checkbox[name='chkY']").attr('checked')) {
 		$("#tableView input:checkbox[name='chkY']").attr('checked', false);
 	}else{
