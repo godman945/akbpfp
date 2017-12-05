@@ -38,6 +38,21 @@ $(document).ready(function(){
 		}
 	});
 	
+	
+	//影片標題檢查
+	var adTitleWord = 14;
+	$('#adTitle').bind('keyup', function() {
+		var wordLength = adTitleWord - $("#adTitle").val().length;
+		if(wordLength >= 0){
+			$("#spanAdTitle").text('已輸入'+$("#adTitle").val().length+'字，剩'+wordLength+'字');
+			$("#spanAdTitle").css('color','');
+		}else if(wordLength < 0){
+			wordLength = Math.abs(wordLength);
+			$("#spanAdTitle").text('已輸入'+$("#adTitle").val().length+'字，超過'+wordLength+'字');
+			$("#spanAdTitle").css('color','red');
+		}
+	});
+	
 	//檢查網址blur事件
 	$("#adLinkURL").blur(function() {
 		if($("#adLinkURL").length > 0 && $("#adLinkURL").val() != ""){
@@ -101,6 +116,9 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").css('color','green');
 					$("#adVideoURLMsg").text('影片網址確認正確');
 					adPreviewVideoData = result;
+					
+					console.log(adPreviewVideoData);
+					
 					/**影片預設尺寸*/
 					if(adPreviewVideoData != null){
 						$("#preViewArea").empty();
@@ -673,7 +691,6 @@ function autoPreview(objData){
 	iframeInfoMap["iframe"+1] = {width:336,height:280};
 	iframeInfoMap["iframe"+2] = {width:640,height:390};
 	var url = objData.previewUrl;
-	console.log('url:'+url);
 	
 	$.each(iframeInfoMap, function(key, obj) {
 		var a = 
