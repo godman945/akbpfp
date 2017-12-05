@@ -118,6 +118,17 @@ $(document).ready(function(){
 					adPreviewVideoData = result;
 					
 					console.log(adPreviewVideoData);
+					var adTitle = adPreviewVideoData.adTitle;
+					var adTitleShow = '';
+					for (var i = 0; i < adTitle.length; i++){
+						if(i < 14){
+							adTitleShow = adTitleShow + adTitle[i];
+						}
+					}
+					if(adTitle.length > 17){
+						adTitleShow = adTitleShow + '...';
+					}
+					$('#adTitle').val(adTitleShow);
 					
 					/**影片預設尺寸*/
 					if(adPreviewVideoData != null){
