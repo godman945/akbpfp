@@ -785,7 +785,7 @@ function saveData() {
 		return false;
 	}
 	
-	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確"){
+	if($("#adVideoURLMsg").text() != "影片網址確認正確" || $("#chkLinkURL").text() != "網址確認正確" || $('#adTitle').text() == ''){
 		if($("#adVideoURLMsg").text() != "影片網址確認正確"){
 			var position = $('#adVideoURL').offset();  
 			var x = position.left;  
@@ -871,7 +871,7 @@ function saveData() {
 					"adVideoURL":$("#adVideoURL").val(),
 					"adLinkURL":$("#adLinkURL").val(),
 					"videoTime":adPreviewVideoData.videoTime,
-					"adTitle":$("#adTitle").val()
+					"adTitle":$('#adTitle').text()
 				},
 				success : function(respone) {
 //					console.log(respone);
