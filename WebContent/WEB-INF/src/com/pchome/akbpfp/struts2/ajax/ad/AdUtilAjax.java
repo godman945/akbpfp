@@ -164,9 +164,10 @@ public class AdUtilAjax extends BaseCookieAction{
 		}
 		
 		String adTitle = resultStr.substring(0,resultStr.indexOf("http"));
+		String previewUrl = resultStr.substring(resultStr.indexOf("http"),resultStr.length());
 		json.put("result", true);
 		json.put("videoTime", seconds);
-		json.put("previewUrl", resultStr);
+		json.put("previewUrl", previewUrl);
 		json.put("adTitle", adTitle);
 		process.destroy();
 		this.result = json.toString();
