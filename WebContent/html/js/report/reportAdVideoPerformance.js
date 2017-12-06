@@ -362,7 +362,7 @@ function showHighChart(){
 			"adSize" : $('#adSize').val()
 		},
 		success : function(respone) {
-			console.log(respone);
+//			console.log(respone);
 			dataArray = respone;
 		}
 	});
@@ -607,7 +607,7 @@ function initJsonData(){
 function ajaxFormSubmit(){
 	$('#downloadFlag').val("no");
 	initJsonData();
-
+	
 	$('#reportTableOut').block({
 		message: "<img src='html/img/LoadingWait.gif' />",
 		css: {
@@ -697,3 +697,39 @@ function serachReset(){
 	
 	document.excerptFrom.searchId.value = "";
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+	$("#excerptTable tr").each(function(index,obj){
+		if(index >= 2){
+//			var d = new Date();
+			var td = $(obj).children()[1];
+			
+			var frame = $(td).children()[0];
+			
+			
+			 $(frame).load(function () {
+//				 console.log(frame);
+//				 $(td).append(frame);
+//				 console.log(this.style.display = '');
+			 });
+			
+			
+//			var frame = document.createElement("iframe");
+//			frame.setAttribute("src", "adVideoModel.html?adPreviewVideoURL=https://www.youtube.com/watch?v=ZxJv54gGw_g&adPreviewVideoBgImg=http://showstg.pchome.com.tw/pfp/img/user/AC2013071700001/20171116/original/ad_201711160015.jpg&realUrl=https://order1.kfcclub.com.tw/web/?gclid=CjwKCAiA6K_QBRA8EiwASvtjZZPYU-rVImVEnH5dRSbqOVKsN6ow401cOCiftewXFzXY_KDj1n_dFxoCdpsQAvD_BwE");
+//			frame.setAttribute("height", "600");
+//            frame.setAttribute("width", "300");
+//            frame.setAttribute("id", "pchome8044_ad_frame1");
+//            frame.setAttribute("class", "akb_iframe");
+//            frame.setAttribute("style", "display:none;scrolling:no;frameborder:0;marginwidth:0;marginheight:0;vspace:0;hspace:0;allowtransparency:true;allowfullscreen:true");
+//            $(td).append(frame);
+//           
+//            frame.addEventListener("load", function(){
+//            	console.log(this.style.display = '');
+//            }, true);
+////            $(frame).load(function () {
+////            	console.log(this.style.display = '');
+//            });
+//
+		}
+	});
+}, true);

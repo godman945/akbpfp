@@ -141,7 +141,7 @@ function ready(){
 		img.src='./html/img/question.gif';
 		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
 		node.appendChild(img);
-		$($($("#excerptTable").children()[0]).children()[0]).children()[9].append(node)
+		$($($("#excerptTable").children()[0]).children()[0]).children()[9].appendChild(node)
 	}
 	
 	

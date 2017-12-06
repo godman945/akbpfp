@@ -4,7 +4,6 @@ var json_data;
 //一開始執行
 //jQuery(document).ready(function() {
 jQuery(window).load(function() {
-	
     //flash chart
 	showHighChart();
 
@@ -139,6 +138,7 @@ jQuery(window).load(function() {
 
 //ajax id  重新榜定
 function ready(){
+	
 	if($("#excerptTable").children().length > 1){
 		var node = document.createElement("a");
 		node.style.float = 'left';
@@ -147,7 +147,8 @@ function ready(){
 		img.src='./html/img/question.gif';
 		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
 		node.appendChild(img);
-		$($($("#excerptTable").children()[0]).children()[0]).children()[7].append(node)
+		
+		$($($("#excerptTable").children()[0]).children()[0]).children()[7].appendChild(node);
 	}
 	
 	
@@ -867,7 +868,7 @@ function showHighChart(){
     		},
     	});
     } else {
-    	$('#hcharts_bx').highcharts({  
+    	$('#hcharts_bx').highcharts({
     		chart: {
     			type: chartPic 
     		},	

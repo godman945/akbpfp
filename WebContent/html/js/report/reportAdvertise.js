@@ -141,9 +141,9 @@ function ready(){
 		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
 		node.appendChild(img);
 		if($($($('#excerptTable').children()[0]).children()).children().length == 15){
-			$($($("#excerptTable").children()[0]).children()[0]).children()[9].append(node);
+			$($($("#excerptTable").children()[0]).children()[0]).children()[9].appendChild(node);
 		}else{
-			$($($("#excerptTable").children()[0]).children()[0]).children()[6].append(node);
+			$($($("#excerptTable").children()[0]).children()[0]).children()[6].appendChild(node);
 		}
 	}
 	

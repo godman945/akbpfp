@@ -57,6 +57,12 @@ public class AdVideoPerformanceReportVO {
 	private String adVideoReplaySum;
 	//影片秒數
 	private String adVideoSec;
+	//總筆數
+	private int totalSize;
+	//互動率
+	private String engagementRate;
+	//廣告序號
+	private String adSeq;
 	
 	public Date getReportDate() {
 		return reportDate;
@@ -220,6 +226,24 @@ public class AdVideoPerformanceReportVO {
 	}
 	public void setAdVideoSec(String adVideoSec) {
 		this.adVideoSec = adVideoSec;
+	}
+	public int getTotalSize() {
+		return totalSize;
+	}
+	public void setTotalSize(int totalSize) {
+		this.totalSize = totalSize;
+	}
+	public String getEngagementRate() {
+		return engagementRate;
+	}
+	public void setEngagementRate(String engagementRate) {
+		this.engagementRate = engagementRate;
+	}
+	public String getAdSeq() {
+		return adSeq;
+	}
+	public void setAdSeq(String adSeq) {
+		this.adSeq = adSeq;
 	}
 	
 }

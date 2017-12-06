@@ -184,7 +184,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 	public String execute() throws Exception {
 		adSizeMap.put("", "全部尺寸");
 		for (EnumAdVideoSizePoolType enumAdVideoSizePoolType : EnumAdVideoSizePoolType.values()) {
-			adSizeMap.put(enumAdVideoSizePoolType.getWidh()+"_"+enumAdVideoSizePoolType.getHeight(), enumAdVideoSizePoolType.getWidh()+" x "+enumAdVideoSizePoolType.getHeight());
+			adSizeMap.put(enumAdVideoSizePoolType.getRealWidth()+"_"+enumAdVideoSizePoolType.getRealHeight(), enumAdVideoSizePoolType.getRealWidth()+" x "+enumAdVideoSizePoolType.getRealHeight());
 		}
 		adPriceTypeMap.put("", "全部計價方式");
 		adPriceTypeMap.put("CPV", "單次收視出價-CPV");
@@ -211,7 +211,19 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			}
 		}
 		
-		//查詢條件
+		//分頁查詢條件
+		int rowStart = 0;
+		int rowEnd = 0;
+		if(page == 0){
+			rowStart = 0;
+			rowEnd = 20;
+			page = 1;
+			pageSize = 20;
+		}else{
+			rowStart = (page - 1) * pageSize;
+			rowEnd = pageSize;
+		}
+		
 		ReportQueryConditionVO reportQueryConditionVO = new ReportQueryConditionVO();
 		reportQueryConditionVO.setAdPriceType(adPriceType);
 		reportQueryConditionVO.setAdPvclkDevice(adPvclkDevice);
@@ -221,7 +233,8 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		reportQueryConditionVO.setStartDate(startDate);
 		reportQueryConditionVO.setEndDate(endDate);
 		reportQueryConditionVO.setPage(page);
-		reportQueryConditionVO.setPageSize(pageSize);
+		reportQueryConditionVO.setRowStart(rowStart);
+		reportQueryConditionVO.setRowEnd(rowEnd);
 		reportQueryConditionVO.setTotalPage(totalPage);
 		reportQueryConditionVO.setCustomerInfoId(super.getCustomer_info_id());
 		
@@ -230,6 +243,13 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		
 		//查詢總數
 		this.adVideoPerformanceReportVOSum = adVideoPerformanceReportService.loadReportDateSum(reportQueryConditionVO);
+		
+		//總頁數
+		totalPage = (int)Math.ceil((double)adVideoPerformanceReportVOSum.getTotalSize() / (double)pageSize);
+		
+		
+		
+		
 		
 		log.info(">>>>>> customerInfoId = " + customerInfoId);
 		log.info(">>>>>> startDate = " + startDate);

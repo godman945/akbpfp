@@ -200,3 +200,7 @@ function callBlockUpload(){
 	    });
 	  $($('.blockUI')[1]).css('height',1024)
 }
+//alert('FF1');
+document.addEventListener('DOMContentLoaded', function () {
+//	alert('FF');
+}, false);

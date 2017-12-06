@@ -27,7 +27,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" SUM(vr.ad_view),  ");
 		sql.append(" TRUNCATE((SUM(vr.ad_view) / SUM(vr.ad_pv)) * 100, 2) ad_view_ratings,  ");
 		sql.append(" Ifnull(TRUNCATE(SUM(vr.ad_price) / SUM(vr.ad_view), 2), 0),  ");
-		sql.append(" TRUNCATE(SUM(vr.ad_price) / (SUM(vr.ad_pv) / 1000), 2)thousands_cost,  ");
+		sql.append(" TRUNCATE((SUM(vr.ad_price) / (SUM(vr.ad_pv) * 1000)), 2)thousands_cost,  ");
 		sql.append(" SUM(vr.ad_price),  ");
 		sql.append(" SUM(vr.ad_video_process_25),  ");
 		sql.append(" SUM(vr.ad_video_process_50),  ");
@@ -100,8 +100,8 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 				sql.append(" AND a.ad_group_name  = :searchText ");
 			}
 		}
-		
 		sql.append(" ORDER BY a.ad_video_date DESC  ");
+		sql.append(" LIMIT :rowStart, :rowEnd  ");
 		
 		log.info(">>>>>>table list sql = " + sql.toString());
 		
@@ -130,6 +130,8 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 				query.setParameter("searchText", reportQueryConditionVO.getSearchText());
 			}
 		}
+		query.setParameter("rowStart", reportQueryConditionVO.getRowStart());
+		query.setParameter("rowEnd", reportQueryConditionVO.getRowEnd());
 		return query.list();
 	}
 
@@ -199,7 +201,6 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" vr.ad_price_type ");
 		sql.append(" ORDER BY vr.ad_video_date ASC )a left join adm_uniq_data ud on ud.record_date = a.ad_video_date and ud.uniq_name = a.ad_seq ");
 		sql.append(" where 1 = 1 ");
-		
 		if(StringUtils.isNotBlank(reportQueryConditionVO.getAdPriceType())){
 			sql.append(" AND a.ad_price_type = :adPriceType "); 
 		}
@@ -222,6 +223,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 			sql.append(" GROUP BY a.ad_video_date");
 			log.info(">>>>>>chart sql  = " + sql.toString());
 		}else{
+			sql.append(" GROUP  BY a.ad_seq ");
 			log.info(">>>>>>count sql  = " + sql.toString());
 		}
 		

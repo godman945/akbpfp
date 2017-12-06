@@ -94,7 +94,7 @@ ${page}/${totalPage}
 				<th width="80" rowspan="2">收視率</th>
 				<th width="80" rowspan="2">單次<br>收視費用</th>
 				<th width="80" rowspan="2">千次<br>曝光費用</th>
-				<th width="80" rowspan="2">費用</th>
+				<th width="90" rowspan="2">費用</th>
 				<th width="200" colspan="4">影片播放進度</th>
 				<th width="90" rowspan="2">影片<br>完整播放率</th>
 				<th width="80" rowspan="2">點選次數</th>
@@ -119,7 +119,8 @@ ${page}/${totalPage}
 						<td><img src="http://show.pchome.com.tw/html/img/icon_adclose.gif" alt="關閉" title="關閉"></td>
 					</#if>
 		            <td>
-		            <iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${adVideoPerformanceReportVO.templateProductWidth!}" height="${adVideoPerformanceReportVO.templateProductHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=${adVideoPerformanceReportVO.videoUrl!}&adPreviewVideoBgImg=http://showstg.pchome.com.tw/pfp/${adVideoPerformanceReportVO.adImg!}&realUrl=${adVideoPerformanceReportVO.adLinkUrl!}"></iframe>
+		            <!--	<input type='hidden' id="videoUrl" value="${adVideoPerformanceReportVO.videoUrl!}"> -->  
+		             <iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${adVideoPerformanceReportVO.templateProductWidth!}" height="${adVideoPerformanceReportVO.templateProductHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=${adVideoPerformanceReportVO.videoUrl!}&adPreviewVideoBgImg=http://showstg.pchome.com.tw/pfp/${adVideoPerformanceReportVO.adImg!}&realUrl=${adVideoPerformanceReportVO.adLinkUrl!}"></iframe> 
 			  	   
 					<td style=" text-align: left; line-height: 20px; padding: 10px; ">${adVideoPerformanceReportVO.adGroupName!}<br>${adVideoPerformanceReportVO.templateProductWidth!}x${adVideoPerformanceReportVO.templateProductHeight!}<br>00:${adVideoPerformanceReportVO.adVideoSec!}<br>
 					  	<a href="#" target="_blank">${adVideoPerformanceReportVO.adLinkUrl!}</a><br>
@@ -152,22 +153,22 @@ ${page}/${totalPage}
 	 	
 	 	<tfoot>
 		 	<tr height="35">
-			    <th height="30" colspan="6"  align="">總計-所有影片	<#if adVideoPerformanceReportVOList? exists>${adVideoPerformanceReportVOList ? size}<#else>0</#if></th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adPvSum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewSum!}</th>
+			    <th height="30" colspan="6"  align="">總計-所有影片	<#if adVideoPerformanceReportVOSum ? exists>${adVideoPerformanceReportVOSum.totalSize!}<#else>0</#if></th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adPvSum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewSum?number?string('#,###')!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewRatings}%</th>
 			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.singleAdViewCost!}</th>
 			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.thousandsCost!}</th>
 			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.costSum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess25Sum!}</th>
-			   	<th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess50Sum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess75Sum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Sum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess25Sum?number?string('#,###')!}</th>
+			   	<th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess50Sum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess75Sum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Sum?number?string('#,###')!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Ratings}%</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adClkSum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoUniqSum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoMusicSum!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoReplaySum!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adClkSum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoUniqSum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoMusicSum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoReplaySum?number?string('#,###')!}</th>
 			</tr>    
 	   	</tfoot>
 	</table> 

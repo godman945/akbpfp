@@ -13,6 +13,8 @@ public class ReportQueryConditionVO {
 	private int page;
 	private int pageSize;
 	private int totalPage;
+	private int rowStart = 0;
+	private int rowEnd = 0;
 
 	public String getAdPriceType() {
 		return adPriceType;
@@ -101,5 +103,22 @@ public class ReportQueryConditionVO {
 	public void setCustomerInfoId(String customerInfoId) {
 		this.customerInfoId = customerInfoId;
 	}
+
+	public int getRowStart() {
+		return rowStart;
+	}
+
+	public void setRowStart(int rowStart) {
+		this.rowStart = rowStart;
+	}
+
+	public int getRowEnd() {
+		return rowEnd;
+	}
+
+	public void setRowEnd(int rowEnd) {
+		this.rowEnd = rowEnd;
+	}
+
 
 }
