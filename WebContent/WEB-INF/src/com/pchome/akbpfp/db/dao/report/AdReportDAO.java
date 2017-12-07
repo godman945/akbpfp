@@ -355,14 +355,24 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 			hql.append(" and r.ad_pvclk_device = :adPvclkDevice");
 			sqlParams.put("adPvclkDevice", adPvclkDevice);
 		}
-
+//原有寫法會導致多於搜尋根無關的廣告被搜尋到
+//		if (StringUtils.isNotEmpty(searchText)) {
+//			String searchStr = getSearchText(searchText, adSearchWay);
+//			hql.append(" and r.ad_seq in (select distinct ad_seq from pfp_ad_detail where 1=1");
+//			hql.append(" and customer_info_id = :customerInfoId");
+//			hql.append(" and ad_detail_content like :searchStr)");
+//			sqlParams.put("searchStr", searchStr);
+//		}
+		
 		if (StringUtils.isNotEmpty(searchText)) {
 			String searchStr = getSearchText(searchText, adSearchWay);
-			hql.append(" and r.ad_seq in (select distinct ad_seq from pfp_ad_detail where 1=1");
+			hql.append(" and r.ad_seq in (select distinct ad_seq from pfp_ad_detail where 1=1 and (ad_detail_id = 'title' or  ad_detail_id = 'content') ");
 			hql.append(" and customer_info_id = :customerInfoId");
 			hql.append(" and ad_detail_content like :searchStr)");
 			sqlParams.put("searchStr", searchStr);
 		}
+		
+		
 
 		if (StringUtils.isNotBlank(adOperatingRule)) {
 			hql.append(" and r.ad_operating_rule = :adOperatingRule ");

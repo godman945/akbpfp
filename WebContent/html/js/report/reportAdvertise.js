@@ -798,7 +798,6 @@ function preview(img) {
 }
 
 function previewHtml5(width,height,imgSrc,realUrl){
-	
 	 $.fancybox(
 			 '<div style="position:absolute;z-index:10;border:0px;background:none;width:' + width + 'px;height:' + height + 'px;">' + 
 			 '<a href="' + realUrl + '" target="_blank" style="display:block;width:' + width + 'px;height:' + height + 'px;"><img src="html/img/blank.gif" style="width:' + width + 'px;height:' + height + 'px;border:0px;"></a>'

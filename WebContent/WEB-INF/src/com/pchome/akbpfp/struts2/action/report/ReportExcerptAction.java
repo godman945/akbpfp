@@ -1539,7 +1539,6 @@ public class ReportExcerptAction extends BaseReportAction {
 			String adType = adActionReportVO.getAdType();
 			String adDevice = adActionReportVO.getAdDevice();
 			String adOperatingRuleName = adActionReportVO.getAdOperatingRuleDesc();
-			String adClkPriceTypeName = adActionReportVO.getAdClkPriceType();
 
 			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
@@ -1555,7 +1554,10 @@ public class ReportExcerptAction extends BaseReportAction {
 			if(cost>0 && pv>0){
 				kiloCost = (cost * 1000) / pv;
 			}
-
+			System.out.println(pfpAdAction.getAdActionSeq());
+			System.out.println(kiloCost);
+			System.out.println("--------");
+			
 			//狀態為開啟的話必須判斷走期( 待播放 or 走期中 or 已結束 )
 			if (adActionStatus == EnumStatus.Open.getStatusId()) {
 				long startDate = (dateFormat.parse(adActionStartDate + " 00:00:00")).getTime();

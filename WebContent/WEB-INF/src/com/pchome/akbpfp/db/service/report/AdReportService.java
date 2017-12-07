@@ -46,6 +46,7 @@ public class AdReportService implements IAdReportService {
 		    String videoSeconds = null;
 		    String showUrl = null ;
 		    String videoUrl = null;
+		    String content = null;
 			for (int i=0; i< dataList.size(); i++) {
 				AdReportVO adReportVO = dataList.get(i);
 				pfpAdDetailList = pfpAdDetailDAO.getPfpAdDetailByAdSeq(adReportVO.getAdSeq());
@@ -59,6 +60,7 @@ public class AdReportService implements IAdReportService {
 			    html5Flag = "N";
 			    videoSeconds = null;
 			    videoUrl = null;
+			    content = null;
 				for (PfpAdDetail pfpAdDetail: pfpAdDetailList) {
 					if("video_seconds".equals(pfpAdDetail.getAdDetailId())){
 						videoSeconds = pfpAdDetail.getAdDetailContent();
@@ -77,6 +79,9 @@ public class AdReportService implements IAdReportService {
                     }
                     if ("title".equals(pfpAdDetail.getAdDetailId())) {
                     	title = pfpAdDetail.getAdDetailContent();
+                    }
+                    if ("content".equals(pfpAdDetail.getAdDetailId())) {
+                    	content = pfpAdDetail.getAdDetailContent();
                     }
                     if("size".equals(pfpAdDetail.getAdDetailId())){
                     	adSize = pfpAdDetail.getAdDetailContent();
@@ -187,7 +192,7 @@ public class AdReportService implements IAdReportService {
 					htmlCode = "<div style=\"display:flex;\"><div> ";
 					htmlCode = htmlCode + "<iframe class=\"akb_iframe\" scrolling=\"no\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" vspace=\"0\" hspace=\"0\" id=\"pchome8044_ad_frame1\" width=\""+width+"\" height=\""+height+"\" allowtransparency=\"true\" allowfullscreen=\"true\" src=\"adVideoModel.html?adPreviewVideoURL="+adPreviewVideoURL+"&adPreviewVideoBgImg=http://showstg.pchome.com.tw/pfp/"+adPreviewVideoBgImg+"&realUrl="+realUrl+"\"></iframe>";
 					htmlCode = htmlCode + "</div><div style=\" text-align: left; line-height: 20px; padding: 10px;"+style+"\">";
-					htmlCode = htmlCode + adReportVO.getAdActionName()+"<br>";
+					htmlCode = htmlCode + content+"<br>";
 					htmlCode = htmlCode + "尺寸 "+width+" x "+height+"<br>";
 					htmlCode = htmlCode + "時間 00:"+videoSeconds+"<br>";
 					htmlCode = htmlCode + "<a href=\""+realUrl+"\" target=\"_blank\" >"+realUrl;
