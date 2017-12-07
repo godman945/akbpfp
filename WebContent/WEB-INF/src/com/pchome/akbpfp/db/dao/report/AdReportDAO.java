@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,13 +17,14 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pchome.akbpfp.db.dao.BaseDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdReport;
 import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.depot.utils.ObjectTransUtil;
-import com.pchome.akbpfp.db.dao.BaseDAO;
-import com.pchome.akbpfp.db.pojo.PfpAdReport;
 
 @Transactional
 public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdReportDAO {
@@ -131,7 +133,9 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							String adOperatingRuleCode = null;
 							String adClkPriceType = null;
 							Integer adType = 0;
-							String adActioName = "";
+							String adGroupName = "";
+							String adActionName = "";
+							Integer adStatus = null;
 							for (int i=0; i<dataList.size(); i++) {
 								objArray = (Object[]) dataList.get(i);
 								adPvSum = (BigDecimal)objArray[0];
@@ -148,7 +152,9 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adOperatingRuleCode = ObjectTransUtil.getInstance().getObjectToString(objArray[11]);
 								adClkPriceType = ObjectTransUtil.getInstance().getObjectToString(objArray[12]);
 								adType = Integer.parseInt(objArray[13].toString());
-								adActioName = ObjectTransUtil.getInstance().getObjectToString(objArray[14]);
+								adGroupName = ObjectTransUtil.getInstance().getObjectToString(objArray[14]);
+								adStatus = ((BigInteger)objArray[15]).intValue();
+								adActionName = ObjectTransUtil.getInstance().getObjectToString(objArray[16]);
 								
 								adReportVO = new AdReportVO();
 								adReportVO.setAdPvSum(adPvSum.toString());
@@ -161,8 +167,11 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adReportVO.setAdSeq(adSeq);
 								adReportVO.setTemplateProductSeq(templateProductSeq);
 								adReportVO.setCustomerInfoId(customerInfoId);
-								adReportVO.setAdActionName(adActioName);
+								adReportVO.setAdGroupName(adGroupName);
 								adReportVO.setReportDate(adPvclkDate);
+								adReportVO.setAdStatus(String.valueOf(adStatus));
+								adReportVO.setAdActionName(adActionName);
+								
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
 									if("PC".equals(adDevice)){
 										adReportVO.setAdDevice("電腦");
@@ -187,6 +196,14 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 										break;
 									}
 								}
+								
+								for (EnumStatus enumStatus : EnumStatus.values()) {
+									if(adStatus == enumStatus.getStatusId()){
+										adReportVO.setAdStatusDesc(enumStatus.getStatusDesc());
+										break;
+									}
+								}
+								
 								adReportVO.setAdType(adTypeMap.get(adType));
 								resultData.add(adReportVO);
 							}
@@ -326,6 +343,8 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" r.ad_operating_rule, ");
 		hql.append(" r.ad_clk_price_type, ");
 		hql.append(" r.ad_type, ");
+		hql.append(" ( select g.ad_group_name from pfp_ad_group g where g.ad_group_seq  = r.ad_group_seq)ad_group_name, ");
+		hql.append(" ( select a.ad_status from pfp_ad a where a.ad_seq=r.ad_seq)ad_status, ");
 		hql.append(" ( select aa.ad_action_name from pfp_ad_group g,pfp_ad_action aa where g.ad_group_seq  = r.ad_group_seq and g.ad_action_seq = aa.ad_action_seq)ad_action_name ");
 		hql.append(" from pfp_ad_report as r ");
 		hql.append(" where 1 = 1 ");

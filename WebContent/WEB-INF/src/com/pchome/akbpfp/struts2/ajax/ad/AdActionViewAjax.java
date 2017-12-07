@@ -47,7 +47,7 @@ public class AdActionViewAjax extends BaseCookieAction{
 		
 		allAdActionViews = pfpAdActionService.getPfpAdActionCount(super.getCustomer_info_id(), keyword, searchType);
 		
-		adActionViewVOList = pfpAdActionService.getAdActionView(super.getCustomer_info_id(), 
+		this.adActionViewVOList = pfpAdActionService.getAdActionView(super.getCustomer_info_id(), 
 																	keyword, 
 																	searchType, 
 																	DateValueUtil.getInstance().stringToDate(startDate), 
@@ -60,8 +60,6 @@ public class AdActionViewAjax extends BaseCookieAction{
 			if(adActionViewVOList != null && adActionViewVOList.size() > 0){
 				totalSize = adActionViewVOList.size();		
 				for(PfpAdActionViewVO pfpAdActionViewVO:adActionViewVOList){
-					
-					System.out.println(pfpAdActionViewVO.getAdClkPrice());
 					totalPv += pfpAdActionViewVO.getAdPv();
 					totalClk += pfpAdActionViewVO.getAdClk();		
 					totalCost += pfpAdActionViewVO.getAdClkPrice();
@@ -76,9 +74,8 @@ public class AdActionViewAjax extends BaseCookieAction{
 				}
 				
 				if(totalCost > 0 ){
-					thousandsCost = (float)totalCost / ((float)totalPv * 1000);
+					thousandsCost = ((float)totalCost * 1000) / ((float)totalPv);
 				}
-				
 			}
 		}
 			

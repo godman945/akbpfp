@@ -131,6 +131,8 @@ public class AdReportService implements IAdReportService {
 						htmlCode += "<i>尺寸</i><b>" + imgWidth + " x " + imgHeight + "</b><br>";
 						htmlCode += ("<span>" + showUrl + "</span><br><a style=\"cursor:pointer\" onclick=\"previewHtml5('" + imgWidth + "','" + imgHeight + "','" + img + "','" + realUrl + "')\">預覽</a>");
 						htmlCode += "</span></span></div>";
+						
+						adReportVO.setContent(content);
 					} else {
 						File picture = null;
 						FileInputStream is = null;
@@ -152,8 +154,6 @@ public class AdReportService implements IAdReportService {
 								is.close();
 							}
 						}
-						
-						
 						//組html畫面
 						htmlCode = "<div class=\"adreportdv\">";
 						htmlCode += "<span class=\"adboxdvimg\"><a href=\"" + realUrl + "\" target=\"_blank\"><img src=\"" + img + "\" /></a></span>";
@@ -165,6 +165,7 @@ public class AdReportService implements IAdReportService {
 						htmlCode += ("<span>" + showUrl + "</span><br><a style=\"cursor:pointer\" onclick=\"preview('" + img + "')\">預覽</a>");
 						htmlCode += "</span></span></div>";
 					}
+					
 					adReportVO.setContent("尺寸：" + imgWidth + " x " + imgHeight);
 				}else if("VIDEO".equals(adStyle)){
 					String size[] = adSize.split("_");
@@ -197,39 +198,21 @@ public class AdReportService implements IAdReportService {
 					htmlCode = htmlCode + "時間 00:"+videoSeconds+"<br>";
 					htmlCode = htmlCode + "<a href=\""+realUrl+"\" target=\"_blank\" >"+realUrl;
 					htmlCode = htmlCode+"</div></div>";
+					
+					adReportVO.setTitle(content);
 					adReportVO.setContent("尺寸 :"+width+"x"+height);
 					adReportVO.setAdVideoSec("00 : "+videoSeconds);
 					adReportVO.setAdVideoUrl(adPreviewVideoURL);
 				}else {
 					htmlCode =  "<span><iframe height=\"120\" width=\"350\" src=\"adModel.html?adNo=" + adReportVO.getAdSeq() + "&tproNo=tpro_201406300001\" marginwidth=\"0\" marginheight=\"0\" scrolling=\"no\" frameborder=\"0\" align=\"ceneter\" class=\"akb_iframe\"></iframe></span>";
+					adReportVO.setContent(content);
+					adReportVO.setTitle(title);
+					
 				}
-
+				
 				adReportVO.setShowUrl(showUrl);
+				adReportVO.setRealUrl(realUrl);
 				adReportVO.setAdPreview(htmlCode);
-
-				String adSeqCode = adReportVO.getAdSeq();
-				List<PfpAdDetail> adPropertiesList = pfpAdDetailDAO.getPfpAdDetails(null, adSeqCode, null, null);
-				for (int k=0; k<adPropertiesList.size(); k++) {
-					PfpAdDetail adDetail = adPropertiesList.get(k);
-					String adPropertiesName = adDetail.getAdDetailId();
-					String adPropertiesValue = adDetail.getAdDetailContent();
-					if (adPropertiesName.equals("title")) {
-						adReportVO.setTitle(adPropertiesValue);
-					} else if (adPropertiesName.equals("content")) {
-						adReportVO.setContent(adPropertiesValue);
-					} else if (adPropertiesName.equals("real_url")) {
-						adReportVO.setRealUrl(adPropertiesValue);
-						adReportVO.setAdGroupName(adDetail.getPfpAd().getPfpAdGroup().getAdGroupName());
-						adReportVO.setAdGroupStatus(adDetail.getPfpAd().getPfpAdGroup().getAdGroupStatus());
-						for (EnumStatus enumStatus : EnumStatus.values()) {
-							if(adDetail.getPfpAd().getPfpAdGroup().getAdGroupStatus() == enumStatus.getStatusId()){
-								adReportVO.setAdStatusDesc(enumStatus.getStatusDesc());
-							}
-						}
-					} else if (adPropertiesName.equals("show_url")) {
-						adReportVO.setShowUrl(adPropertiesValue);
-					}
-				}
 			}
 		}
 

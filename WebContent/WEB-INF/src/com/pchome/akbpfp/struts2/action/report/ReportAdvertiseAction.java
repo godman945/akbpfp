@@ -459,16 +459,20 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				content.append(adReportVO.getAdDevice()+",");
 			}else{
 				content.append(adReportVO.getAdStatusDesc()+",");
-				content.append(adReportVO.getAdActionName()+",");
-				content.append(adReportVO.getContent()+",");
-				if(StringUtils.isBlank(adReportVO.getAdVideoSec())){
-					content.append(",");
-				}else{
-					content.append(adReportVO.getAdVideoSec() +",");
-				}
+				content.append(StringUtils.isBlank(adReportVO.getTitle()) ? "," : adReportVO.getTitle().trim() + ",");
+				
+//				if(StringUtils.isBlank(adReportVO.getAdVideoSec())){
+//					content.append(",");
+//				}else{
+//					content.append(adReportVO.getAdVideoSec() +",");
+//				}
 				if(adReportVO.getAdOperatingRule().equals("VIDEO")){
+					content.append(adReportVO.getContent()+",");
+					content.append(adReportVO.getAdVideoSec()+",");
 					content.append(adReportVO.getAdVideoUrl()+",");
 				}else{
+					content.append(adReportVO.getContent()+",");
+					content.append(",");
 					content.append(adReportVO.getShowUrl()+",");
 				}
 				content.append(adReportVO.getRealUrl()+",");

@@ -119,8 +119,17 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 
 					//計算千次曝光費用
 					if(clkPrice > 0){
-						thousandsCost = clkPrice / ((float)pv * 1000);
+						thousandsCost = (clkPrice / ((float)pv) * 1000);
 					}
+					
+					
+					System.out.println(adActionViewVO.getAdActionSeq());
+					System.out.println(clkPrice);
+					System.out.println(pv);
+					System.out.println(thousandsCost);
+					System.out.println("-----");
+					
+					
 					adActionViewVO.setAdClkRate(clkRate);
 					adActionViewVO.setAdClkPriceAvg(clkPriceAvg);
 					adActionViewVO.setThousandsCost(thousandsCost);

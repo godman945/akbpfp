@@ -1554,10 +1554,6 @@ public class ReportExcerptAction extends BaseReportAction {
 			if(cost>0 && pv>0){
 				kiloCost = (cost * 1000) / pv;
 			}
-			System.out.println(pfpAdAction.getAdActionSeq());
-			System.out.println(kiloCost);
-			System.out.println("--------");
-			
 			//狀態為開啟的話必須判斷走期( 待播放 or 走期中 or 已結束 )
 			if (adActionStatus == EnumStatus.Open.getStatusId()) {
 				long startDate = (dateFormat.parse(adActionStartDate + " 00:00:00")).getTime();

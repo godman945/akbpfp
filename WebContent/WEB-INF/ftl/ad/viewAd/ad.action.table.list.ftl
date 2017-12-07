@@ -71,7 +71,7 @@
 				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
 				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
 				<td class="td01">NT$ ${vo.thousandsCost?string('#.##')!}</td>
-				<td class="td01">NT$ ${vo.adClkPrice?string('#.##')!}</td>
+				<td class="td01">NT$ ${vo.adClkPrice?string('#,###.##')!}</td>
 				<td class="td02">
 					<#if vo.adActionStatus != 9>
 						<a href="adGroupAdd.html?adActionSeq=${vo.adActionSeq!}">新增分類</a><br>
@@ -96,9 +96,9 @@
 		<td class="td01">${totalPv?string('#,###')!}</td>				
 		<td class="td01">${totalClk?string('#,###')!}</td>	
 		<td class="td01">${totalClkRate?string('#.##')!}%</td>
-		<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
-		<td class="td01">NT$ ${thousandsCost?string('#.##')!}</td>
-		<td class="td01">NT$ ${totalCost?string('#.##')!}</td>
+		<td class="td01">NT$ ${totalAvgCost?string('#,###.##')!}</td>
+		<td class="td01">NT$ ${thousandsCost?string('#,###.##')!}</td>
+		<td class="td01">NT$ ${totalCost?string('#,###.##')!}</td>
 		<td></td>
 	</tr>
 </table>
