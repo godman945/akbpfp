@@ -212,10 +212,9 @@
 			adlinkbtn1.style.opacity=0;
 			adlinkbtn2.style.display='none';
 			var index = getIframeIndex(video);
-			iframeInfoMap["iframe"+index] = {timmer:timeVideo};
 			video.play();
 			var timeVideo = setInterval('alex('+index+')',"300");
-			
+			iframeInfoMap["iframe"+index] = {timmer:timeVideo};
 			
 		}
 		
