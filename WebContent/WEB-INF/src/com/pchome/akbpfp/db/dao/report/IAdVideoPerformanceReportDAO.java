@@ -10,5 +10,7 @@ public interface IAdVideoPerformanceReportDAO extends IBaseDAO<PfpAdVideoReport,
 	
 	public List<Object> getReportDataList(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
 	
-	public List<Object> getReportCount(ReportQueryConditionVO reportQueryConditionVO,String type) throws Exception;
+	public List<Object> getReportCount(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
+	
+	public List<Object> getReportChart(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
 }

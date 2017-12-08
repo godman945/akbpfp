@@ -242,8 +242,8 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		this.adVideoPerformanceReportVOList = adVideoPerformanceReportService.loadReportDateList(reportQueryConditionVO);
 		
 		//查詢總數
-		this.adVideoPerformanceReportVOSum = adVideoPerformanceReportService.loadReportDateSum(reportQueryConditionVO);
-		
+		this.adVideoPerformanceReportVOSum = adVideoPerformanceReportService.loadReportDateCount(reportQueryConditionVO);
+
 		//總頁數
 		totalPage = (int)Math.ceil((double)adVideoPerformanceReportVOSum.getTotalSize() / (double)pageSize);
 		
@@ -358,8 +358,8 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			sumVideoProcess100Ratings = (sumVideoProvess100 / sumView * 100);
 			
 			content.append("\n");
-			content.append("影片名稱"+adVideoPerformanceReportVO.getTitle()+",");
-			content.append("影片長度 00:"+adVideoPerformanceReportVO.getAdVideoSec()+",");
+			content.append(adVideoPerformanceReportVO.getTitle()+",");
+			content.append("00:"+adVideoPerformanceReportVO.getAdVideoSec()+",");
 			content.append(adVideoPerformanceReportVO.getVideoUrl()+",");
 			content.append(adVideoPerformanceReportVO.getAdLinkUrl()+",");
 			content.append((StringUtils.isBlank(adPriceType)? "全部" : adPriceType ) + ",");
