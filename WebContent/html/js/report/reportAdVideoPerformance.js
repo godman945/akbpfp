@@ -1,4 +1,5 @@
 //一開始執行
+blockBody();
 $(function(){
 	//flash chart
 	showHighChart();
@@ -121,7 +122,69 @@ $(function(){
 	$('#reloadFlash').click(function(){
 	   showHighChart();
 	});
+	
+	
+	
+$(function() {
+	}).bind("sortStart",function(e, t){
+		 blockBody();
+		 resetIframeSize();
+	 }).bind("sortEnd",function(e, t){
+		 resizeIframeInfo();
+		 setTimeout(function(){  $.unblockUI(); }, 1000);
+	 });
 });
+
+$(window).load(function(){ 
+	 $.unblockUI();
+}); 
+
+/**重新恢復原本iframe尺寸*/
+function resetIframeSize(){
+	$("#excerptTable tbody tr").each(function(index,obj){
+		var td = $(obj).children()[1];
+		var iframe = td.querySelector('.akb_iframe');
+		var div = td.querySelector('.ad_size');
+		var size = $(div).text().replace('尺寸 ','');
+		var sizeArray = size.split(' x ');
+		var width = sizeArray[0];
+		var height = sizeArray[1];
+		iframe.width = width;
+		iframe.height = height;
+	});
+}
+
+/**重新計算明細高度*/
+function resizeIframeInfo(){
+//	$("#excerptTable tbody tr").each(function(index,obj){
+//		var td = $(obj).children()[1];
+//		var iframe = td.querySelector('.akb_iframe');
+//		var adratio = iframe.height / iframe.width;
+//		var	adh = 250 * adratio;
+//		var infoDiv = $($(td).children()[0]).children()[1];
+//		$(infoDiv).css('margin-top',(adh / 2) - 45+'px');
+//	});
+}
+
+
+function blockBody(){
+	$('body').block({
+		message: "",
+		css: {
+			padding: 0,
+			margin: 0,
+			width: '100%',
+			top: '40%',
+			left: '35%',
+			textAlign: 'center',
+			color: '#000',
+			border: '3px solid #aaa',
+			backgroundColor: '#fff',
+			cursor: 'wait'
+		}
+	});
+}
+
 
 //ajax id  重新榜定
 function ready(){
@@ -129,7 +192,7 @@ function ready(){
 	$.tablesorter.defaults.widgets = ['zebra'];
 	$("#excerptTable").tablesorter({
 		headers: {
-			0 : { sorter: false },
+			0 : { sorter: 'fancyCurrency' },
 			1 : { sorter: false },
 			2 : { sorter: false },
 			3 : { sorter: 'fancyCurrency' },

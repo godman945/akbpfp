@@ -24,7 +24,11 @@
 					var adlinkbtn2 = video.parentElement.querySelector('#video-linkbtn');
 					var videoControlbar = video.parentElement.parentElement.parentElement.querySelector('.video-controlbar');
 					
-					adlinkbtn1.setAttribute("style", "opacity:1;position:absolute");
+					if(this.src.indexOf('na.gif') >=0 ){
+						adlinkbtn1.setAttribute("style", "opacity:1;position:absolute;background-color:black;");
+					}else{
+						adlinkbtn1.setAttribute("style", "opacity:1;position:absolute;");
+					}
 					
 					playbtn.addEventListener('click', function() {
 						PlayHandler(video);

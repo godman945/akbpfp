@@ -411,7 +411,7 @@ public class AdAddAction extends BaseCookieAction{
 				if(isBannerSize){
 					pfpAdDetail.setAdDetailContent("img/user/"+super.getCustomer_info_id()+"/"+sdf.format(date)+"/"+"original"+"/"+adSeq+"."+picInfoJson.getString("format"));	
 				}else{
-					pfpAdDetail.setAdDetailContent("無背景圖");
+					pfpAdDetail.setAdDetailContent("img/public/na.gif\" style=\"display:none");
 				}
 				pfpAdDetail.setAdPoolSeq(pool);
 				pfpAdDetail.setDefineAdSeq(EnumAdDetail.define_ad_seq_img.getAdDetailName());

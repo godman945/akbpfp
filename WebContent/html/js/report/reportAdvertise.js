@@ -136,7 +136,6 @@ $(function(){
 	
 	$(function() {
 	
-	
 	}).bind("sortStart",function(e, t){
 		 blockBody();
 		 resetIframeSize();
