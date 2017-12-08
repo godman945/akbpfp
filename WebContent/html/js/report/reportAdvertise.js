@@ -2,14 +2,19 @@
 var highChartActionPath="reportAdvertiseAjaxChart.html";
 var reportAjaxActionPath="reportAdvertiseAjaxTable.html";
 
+//鎖住畫面直到資料載入完畢
+blockBody();
+
+
 //一開始執行
 $(function(){
-
 	//flash chart
 	showHighChart();
 
 	//flash data
 	ready();
+	
+	//綁定排序
 	tablesorter1();
 
 	//日期區間選擇
@@ -128,7 +133,65 @@ $(function(){
 	$('#reloadFlash').click(function(){
 	   showHighChart();
 	});
+	
+	$(function() {
+	
+	
+	}).bind("sortStart",function(e, t){
+		 blockBody();
+		 resetIframeSize();
+	 }).bind("sortEnd",function(e, t){
+		 resizeIframeInfo();
+		 setTimeout(function(){  $.unblockUI(); }, 1000);
+	 });
 });
+
+$(window).load(function(){ 
+	 $.unblockUI();
+}); 
+
+function blockBody(){
+	$('body').block({
+		message: "",
+		css: {
+			padding: 0,
+			margin: 0,
+			width: '100%',
+			top: '40%',
+			left: '35%',
+			textAlign: 'center',
+			color: '#000',
+			border: '3px solid #aaa',
+			backgroundColor: '#fff',
+			cursor: 'wait'
+		}
+	});
+}
+
+/**重新恢復原本iframe尺寸*/
+function resetIframeSize(){
+	$("#excerptTable tbody tr").each(function(index,obj){
+		var td = $(obj).children()[1];
+		var iframe = td.querySelector('.akb_iframe');
+		var div = td.querySelector('.ad_size');
+		var size = $(div).text().replace('尺寸 ','');
+		var sizeArray = size.split(' x ');
+		var width = sizeArray[0];
+		var height = sizeArray[1];
+		iframe.width = width;
+		iframe.height = height;
+	});
+}
+
+/**重新計算明細高度*/
+function resizeIframeInfo(){
+	$("#excerptTable tbody tr").each(function(index,obj){
+		var td = $(obj).children()[1];
+		var iframe = td.querySelector('.akb_iframe');
+		console.log(td);
+		console.log(iframe);
+	});
+}
 
 //ajax id  重新榜定
 function ready(){
@@ -695,10 +758,29 @@ function detailQuery(adSeq) {
 }
 
 function tablesorter1(){
+	
+//	$("#excerptTable thead").addEventListener("click", function(){};
+
+//	  $(function() {
+//          $("#excerptTable").tablesorter({debug: true});
+//          $("#excerptTable").toggle(
+//            function() {
+//              alert('major asc')
+//            },
+//            function() {
+//              alert('major desc')
+//            }
+//          );
+//      });
+	
 	$.tablesorter.defaults.widgets = ['zebra'];
+	
+	
 	//$.tablesorter.defaults.sortList = [[0,0]];
 	//$("#excerptTable").tablesorter();
 
+	
+	
 	$("#excerptTable").tablesorter({
 		headers: {
 			0 : { sorter: false },
@@ -709,11 +791,12 @@ function tablesorter1(){
 			12 : { sorter: 'rangesort' },
 			13 : { sorter: 'rangesort' },
 			14 : { sorter: false }
-		}
+		},
 	});
 }
 
 function tablesorter2(){
+	
 	$.tablesorter.defaults.widgets = ['zebra'];
 	
 	$("#excerptTable").tablesorter({

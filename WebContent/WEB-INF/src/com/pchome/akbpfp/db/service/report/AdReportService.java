@@ -189,12 +189,13 @@ public class AdReportService implements IAdReportService {
 							style = "margin-top:17%;";
 						}
 					}
+					
 					videoSeconds = videoSeconds.length() == 2 ?videoSeconds : "0"+videoSeconds;
 					htmlCode = "<div style=\"display:flex;\"><div> ";
 					htmlCode = htmlCode + "<iframe class=\"akb_iframe\" scrolling=\"no\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" vspace=\"0\" hspace=\"0\" id=\"pchome8044_ad_frame1\" width=\""+width+"\" height=\""+height+"\" allowtransparency=\"true\" allowfullscreen=\"true\" src=\"adVideoModel.html?adPreviewVideoURL="+adPreviewVideoURL+"&adPreviewVideoBgImg=http://showstg.pchome.com.tw/pfp/"+adPreviewVideoBgImg+"&realUrl="+realUrl+"\"></iframe>";
 					htmlCode = htmlCode + "</div><div style=\" text-align: left; line-height: 20px; padding: 10px;"+style+"\">";
 					htmlCode = htmlCode + content+"<br>";
-					htmlCode = htmlCode + "尺寸 "+width+" x "+height+"<br>";
+					htmlCode = htmlCode + "<div class='ad_size'>尺寸 "+width+" x "+height+"</div>";
 					htmlCode = htmlCode + "時間 00:"+videoSeconds+"<br>";
 					htmlCode = htmlCode + "<a href=\""+realUrl+"\" target=\"_blank\" >"+realUrl;
 					htmlCode = htmlCode+"</div></div>";

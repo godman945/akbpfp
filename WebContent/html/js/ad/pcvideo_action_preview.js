@@ -57,7 +57,6 @@
 					this.addEventListener("mouseover", a1, false);
 					this.addEventListener("mouseout", a2, false);
 					
-					
 					adlinkbtn1.style.opacity=1;
 					adlinkbtn2.style.display='block';
 					video.load();
@@ -138,8 +137,22 @@
 					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px;");
+					
+					
+//					console.log('------------------>width:'+this.width);
+//					console.log('------------------>height:'+this.height);
+					
 					this.width = adw;
 					this.height = adh;
+					
+					
+//					
+//					console.log('------------------>adw:'+adw);
+//					console.log('------------------>adh:'+adh);
+					
+					
+					
+					
 				}
 			};
 		}
