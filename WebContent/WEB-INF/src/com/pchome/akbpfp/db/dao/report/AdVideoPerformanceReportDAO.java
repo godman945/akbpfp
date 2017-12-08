@@ -20,7 +20,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" ( ");
 		sql.append(" SELECT vr.ad_seq,  ");
 		sql.append(" a.ad_status,  ");
-		sql.append(" g.ad_group_name,  ");
+		sql.append(" Ifnull(select d.ad_detail_content from pfp_ad_detail d where ad_detail_id = content and  d.ad_seq = vr.ad_seq,''),  ");
 		sql.append(" vr.ad_price_type,  ");
 		sql.append(" vr.ad_pvclk_device,  ");
 		sql.append(" SUM(vr.ad_pv),  ");
@@ -72,12 +72,10 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" WHERE ud.record_date >= :startDate  ");
 		sql.append(" AND ud.record_date <= :endDate  ");
 		sql.append(" GROUP BY ud.uniq_name)d ON d.ad_seq = vr.ad_seq,  ");
-		sql.append(" pfp_ad a,  ");
-		sql.append(" pfp_ad_group g  ");
+		sql.append(" pfp_ad a  ");
 		sql.append(" WHERE 1 = 1  ");
 		sql.append(" AND vr.customer_info_id = :customerInfoId  ");
 		sql.append(" AND vr.ad_seq = a.ad_seq  ");
-		sql.append(" AND g.ad_group_seq = a.ad_group_seq  ");
 		sql.append(" AND vr.ad_video_date >= :startDate And vr.ad_video_date <= :endDate "); 
 		sql.append(" GROUP BY a.ad_seq  ");
 		sql.append(" )a WHERE 1 = 1 ");

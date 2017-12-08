@@ -33,7 +33,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			AdVideoPerformanceReportVO adVideoPerformanceReportVO = new AdVideoPerformanceReportVO();
 			adVideoPerformanceReportVO.setAdSeq((String) objArray[0]);
 			adVideoPerformanceReportVO.setAdStatus(objArray[1].toString());
-			adVideoPerformanceReportVO.setAdGroupName(objArray[2].toString());
+			adVideoPerformanceReportVO.setTitle(objArray[2].toString());
 			adVideoPerformanceReportVO.setAdPriceType(objArray[3].toString());
 			adVideoPerformanceReportVO.setAdPvClkDevice(objArray[4].toString());
 			adVideoPerformanceReportVO.setAdPvSum(objArray[5].toString());

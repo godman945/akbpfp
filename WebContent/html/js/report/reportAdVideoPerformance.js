@@ -193,7 +193,7 @@ function ready(){
 	$("#excerptTable").tablesorter({
 		headers: {
 			0 : { sorter: 'fancyCurrency' },
-			1 : { sorter: false },
+			1 : { sorter: 'fancyCurrency' },
 			2 : { sorter: false },
 			3 : { sorter: 'fancyCurrency' },
 			4 : { sorter: 'fancyCurrency' },

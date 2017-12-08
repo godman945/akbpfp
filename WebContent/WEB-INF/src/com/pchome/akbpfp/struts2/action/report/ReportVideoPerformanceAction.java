@@ -247,10 +247,6 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		//總頁數
 		totalPage = (int)Math.ceil((double)adVideoPerformanceReportVOSum.getTotalSize() / (double)pageSize);
 		
-		
-		
-		
-		
 		log.info(">>>>>> customerInfoId = " + customerInfoId);
 		log.info(">>>>>> startDate = " + startDate);
 		log.info(">>>>>> endDate = " + endDate);
@@ -263,11 +259,6 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			adSearchWay = EnumReport.ADSEARCH_INCLUDE.getTextValue();
 		}
 
-//		if (StringUtils.isEmpty(adShowWay)) {
-//			adShowWay = Integer.toString(EnumAdType.AD_ALL.getType());
-//		}
-		
-		
 		if(downloadFlag.trim().equals("yes")){
 			makeDownloadReportData();
 		}
@@ -367,7 +358,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			sumVideoProcess100Ratings = (sumVideoProvess100 / sumView * 100);
 			
 			content.append("\n");
-			content.append("影片名稱"+adVideoPerformanceReportVO.getAdActionName()+",");
+			content.append("影片名稱"+adVideoPerformanceReportVO.getTitle()+",");
 			content.append("影片長度 00:"+adVideoPerformanceReportVO.getAdVideoSec()+",");
 			content.append(adVideoPerformanceReportVO.getVideoUrl()+",");
 			content.append(adVideoPerformanceReportVO.getAdLinkUrl()+",");

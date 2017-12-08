@@ -9,8 +9,8 @@ public class AdVideoPerformanceReportVO {
 	private String adStatus;
 	//廣套圖片
 	private String adImg;
-	//分類名稱
-	private String adGroupName;
+	//影片名稱
+	private String title;
 	//分類名稱
 	private String adActionName;
 	//尺寸寬度
@@ -82,11 +82,11 @@ public class AdVideoPerformanceReportVO {
 	public void setAdImg(String adImg) {
 		this.adImg = adImg;
 	}
-	public String getAdGroupName() {
-		return adGroupName;
+	public String getTitle() {
+		return title;
 	}
-	public void setAdGroupName(String adGroupName) {
-		this.adGroupName = adGroupName;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getTemplateProductWidth() {
 		return templateProductWidth;
