@@ -188,8 +188,10 @@ function resizeIframeInfo(){
 	$("#excerptTable tbody tr").each(function(index,obj){
 		var td = $(obj).children()[1];
 		var iframe = td.querySelector('.akb_iframe');
-		console.log(td);
-		console.log(iframe);
+		var adratio = iframe.height / iframe.width;
+		var	adh = 250 * adratio;
+		var infoDiv = $($(td).children()[0]).children()[1];
+		$(infoDiv).css('margin-top',(adh / 2) - 45+'px');
 	});
 }
 
@@ -461,7 +463,7 @@ function showHighChart(adSeq){
 			"adOperatingRule" : $('#fadOperatingRule').val()
 		},
 		success : function(respone) {
-			console.log(respone);
+//			console.log(respone);
 			dataArray = respone;
 		}
 	});

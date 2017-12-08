@@ -203,6 +203,12 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 										break;
 									}
 								}
+								for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+									if(adOperatingRuleCode.equals(enumAdStyleType.getType())){
+										adReportVO.setAdOperatingRuleDesc(enumAdStyleType.getTypeName());
+										break;
+									}
+								}
 								
 								adReportVO.setAdType(adTypeMap.get(adType));
 								resultData.add(adReportVO);

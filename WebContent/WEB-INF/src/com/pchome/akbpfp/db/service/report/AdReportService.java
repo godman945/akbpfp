@@ -177,23 +177,14 @@ public class AdReportService implements IAdReportService {
 					if(size.length == 2){
 						width = size[0];
 						height = size[1];
-						if(Integer.parseInt(size[1]) == 480){
-							style = "margin-top:35%;";
-						}else if(Integer.parseInt(size[1]) == 600){
-							style = "margin-top:49.1%;";
-						}else if(Integer.parseInt(size[0]) >= 900){
-							style = "";
-						}else if(Integer.parseInt(size[0]) == 640){
-							style = "margin-top:11%;";
-						}else{
-							style = "margin-top:17%;";
-						}
+						double adratio = Double.parseDouble(height) / Double.parseDouble(width);
+						double adh = 250 * adratio;
+						style = "margin-top:"+ String.valueOf((adh/2) - 45) +"px;";
 					}
-					
 					videoSeconds = videoSeconds.length() == 2 ?videoSeconds : "0"+videoSeconds;
 					htmlCode = "<div style=\"display:flex;\"><div> ";
 					htmlCode = htmlCode + "<iframe class=\"akb_iframe\" scrolling=\"no\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" vspace=\"0\" hspace=\"0\" id=\"pchome8044_ad_frame1\" width=\""+width+"\" height=\""+height+"\" allowtransparency=\"true\" allowfullscreen=\"true\" src=\"adVideoModel.html?adPreviewVideoURL="+adPreviewVideoURL+"&adPreviewVideoBgImg=http://showstg.pchome.com.tw/pfp/"+adPreviewVideoBgImg+"&realUrl="+realUrl+"\"></iframe>";
-					htmlCode = htmlCode + "</div><div style=\" text-align: left; line-height: 20px; padding: 10px;"+style+"\">";
+					htmlCode = htmlCode + "</div><div style=\" word-break:break-all; text-align: left; line-height: 20px; padding: 10px;"+style+"\">";
 					htmlCode = htmlCode + content+"<br>";
 					htmlCode = htmlCode + "<div class='ad_size'>尺寸 "+width+" x "+height+"</div>";
 					htmlCode = htmlCode + "時間 00:"+videoSeconds+"<br>";

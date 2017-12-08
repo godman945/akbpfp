@@ -767,7 +767,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			adType = adReportVO.getAdType();
 			adPvclkDate = adReportVO.getAdPvclkDate();
 			adName = adReportVO.getTitle();
-			String adOperatingRuleName = adReportVO.getAdOperatingRule();
+			String adOperatingRuleName = adReportVO.getAdOperatingRuleDesc();
 			String adClkPriceTypeName = adReportVO.getAdClkPriceType();
 
 			pv = new Double(adReportVO.getAdPvSum());
