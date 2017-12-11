@@ -138,7 +138,7 @@ ${page}/${totalPage}
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess50Sum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess75Sum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Sum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Ratings!}%</td>
+			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Ratings?number?string('#,###.##')!}%</td>
 			        <td align="right">${adVideoPerformanceReportVO.adClkSum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoUniqSum!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoMusicSum!}</td>
@@ -153,22 +153,22 @@ ${page}/${totalPage}
 	 	
 	 	<tfoot>
 		 	<tr height="35">
-			    <th height="30" colspan="6"  align="">總計-所有影片	<#if adVideoPerformanceReportVOSum ? exists>${adVideoPerformanceReportVOSum.totalSize!}<#else>0</#if></th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adPvSum?number?string('#,###')!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewSum?number?string('#,###')!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adViewRatings?number?string('#,###.##')!}%</th>
-			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.singleAdViewCost?number?string('#,###.##')!}</th>
-			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.thousandsCost?number?string('#,###.##')!}</th>
-			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOSum.costSum?number?string('#,###.##')!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess25Sum?number?string('#,###')!}</th>
-			   	<th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess50Sum?number?string('#,###')!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess75Sum?number?string('#,###')!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Sum?number?string('#,###')!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoProcess100Ratings?number?string('#,###.##')!}%</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adClkSum?number?string('#,###.##')!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoUniqSum?number?string('#,###.##')!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoMusicSum?number?string('#,###.##')!}</th>
-			    <th height="30" align="right">${adVideoPerformanceReportVOSum.adVideoReplaySum?number?string('#,###.##')!}</th>
+			    <th height="30" colspan="6"  align="">總計-所有影片	<#if adVideoPerformanceReportVOSum ? exists>${adVideoPerformanceReportVOCount.totalSize!}<#else>0</#if></th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adPvSum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adViewSum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adViewRatings?number?string('#,###.##')!}%</th>
+			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOCount.singleAdViewCost?number?string('#,###.##')!}</th>
+			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOCount.thousandsCost?number?string('#,###.##')!}</th>
+			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOCount.costSum?number?string('#,###.##')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoProcess25Sum?number?string('#,###')!}</th>
+			   	<th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoProcess50Sum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoProcess75Sum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoProcess100Sum?number?string('#,###')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoProcess100Ratings?number?string('#,###.##')!}%</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adClkSum?number?string('#,###.##')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoUniqSum?number?string('#,###.##')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoMusicSum?number?string('#,###.##')!}</th>
+			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoReplaySum?number?string('#,###.##')!}</th>
 			</tr>    
 	   	</tfoot>
 	</table> 

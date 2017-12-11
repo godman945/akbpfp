@@ -57,7 +57,6 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 	//總頁數
 	private int totalPage = 0;
 	
-	
 	private IAdVideoPerformanceReportService adVideoPerformanceReportService;
 
 	private SpringOpenFlashUtil openFlashUtil=null;
@@ -106,8 +105,9 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 	//影音成效明細
 	private List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOList;
 	//影音成效加總
-	private AdVideoPerformanceReportVO adVideoPerformanceReportVOSum;
+	private List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOSum;
 	
+	private AdVideoPerformanceReportVO adVideoPerformanceReportVOCount = new AdVideoPerformanceReportVO();
 	/**
 	 * Chart 
 	 */
@@ -242,10 +242,64 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		this.adVideoPerformanceReportVOList = adVideoPerformanceReportService.loadReportDateList(reportQueryConditionVO);
 		
 		//查詢總數
+		double costSum = 0;
+		int adVideoProcess25Sum = 0;
+		int adVideoProcess50Sum = 0;
+		int adVideoProcess75Sum = 0;
+		int adVideoProcess100Sum = 0;
+		double adPvSum = 0;
+		double adViewSum = 0;
+		int adClkSum = 0;
+		int adVideoUniqSum = 0;
+		int adVideoMusicSum = 0;
+		int adVideoReplaySum = 0;
 		this.adVideoPerformanceReportVOSum = adVideoPerformanceReportService.loadReportDateCount(reportQueryConditionVO);
-
+		for (AdVideoPerformanceReportVO adVideoPerformanceReportVO : adVideoPerformanceReportVOSum) {
+			adPvSum = adPvSum + Integer.parseInt(adVideoPerformanceReportVO.getAdPvSum());
+			adViewSum = adViewSum +  Integer.parseInt(adVideoPerformanceReportVO.getAdViewSum());
+			costSum = costSum + Double.parseDouble(adVideoPerformanceReportVO.getCostSum());
+			adVideoProcess25Sum = adVideoProcess25Sum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoProcess25Sum());
+			adVideoProcess50Sum = adVideoProcess50Sum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoProcess50Sum());
+			adVideoProcess75Sum = adVideoProcess75Sum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoProcess75Sum());
+			adVideoProcess100Sum = adVideoProcess100Sum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoProcess100Sum());
+			adVideoUniqSum = adVideoUniqSum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoUniqSum());
+			adClkSum = adClkSum + Integer.parseInt(adVideoPerformanceReportVO.getAdClkSum());
+			adVideoReplaySum = adVideoReplaySum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoReplaySum());
+			adVideoMusicSum = adVideoMusicSum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoMusicSum());
+		}
+		double adViewRatings = 0;
+		double singleAdViewCost =0;
+		double thousandsCost = 0;
+		double adVideoProcess100Ratings = 0;
+		//收視率
+		adViewRatings = (adViewSum / adPvSum) * 100;
+		//單次收視費用
+		singleAdViewCost = costSum / adViewSum;
+		//千次曝光費用
+		thousandsCost = (costSum / adPvSum) * 1000;
+		//影片完整播放率
+		adVideoProcess100Ratings = ((double)adVideoProcess100Sum) / adPvSum * 100;
+		
+		
+		this.adVideoPerformanceReportVOCount.setAdPvSum(String.valueOf(adPvSum));
+		this.adVideoPerformanceReportVOCount.setAdViewSum(String.valueOf(adViewSum));
+		this.adVideoPerformanceReportVOCount.setCostSum(String.valueOf(costSum));
+		this.adVideoPerformanceReportVOCount.setAdVideoProcess25Sum(String.valueOf(adVideoProcess25Sum));
+		this.adVideoPerformanceReportVOCount.setAdVideoProcess50Sum(String.valueOf(adVideoProcess50Sum));
+		this.adVideoPerformanceReportVOCount.setAdVideoProcess75Sum(String.valueOf(adVideoProcess75Sum));
+		this.adVideoPerformanceReportVOCount.setAdVideoProcess100Sum(String.valueOf(adVideoProcess100Sum));
+		this.adVideoPerformanceReportVOCount.setAdClkSum(String.valueOf(adClkSum));
+		this.adVideoPerformanceReportVOCount.setAdVideoMusicSum(String.valueOf(adVideoMusicSum));
+		this.adVideoPerformanceReportVOCount.setAdVideoUniqSum(String.valueOf(adVideoUniqSum));
+		this.adVideoPerformanceReportVOCount.setAdVideoReplaySum(String.valueOf(adVideoReplaySum));
+		this.adVideoPerformanceReportVOCount.setAdViewRatings(String.valueOf(adViewRatings));
+		this.adVideoPerformanceReportVOCount.setSingleAdViewCost(String.valueOf(singleAdViewCost));
+		this.adVideoPerformanceReportVOCount.setThousandsCost(String.valueOf(thousandsCost));
+		this.adVideoPerformanceReportVOCount.setAdVideoProcess100Ratings(String.valueOf(adVideoProcess100Ratings));
+		this.adVideoPerformanceReportVOCount.setTotalSize(adVideoPerformanceReportVOSum.size());
+		
 		//總頁數
-		totalPage = (int)Math.ceil((double)adVideoPerformanceReportVOSum.getTotalSize() / (double)pageSize);
+		totalPage = (int)Math.ceil((double)adVideoPerformanceReportVOCount.getTotalSize() / (double)pageSize);
 		
 		log.info(">>>>>> customerInfoId = " + customerInfoId);
 		log.info(">>>>>> startDate = " + startDate);
@@ -340,7 +394,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		float sumVideoProcess100Ratings = 0;
 		
 		//列表
-		for (AdVideoPerformanceReportVO adVideoPerformanceReportVO : adVideoPerformanceReportVOList) {
+		for (AdVideoPerformanceReportVO adVideoPerformanceReportVO : adVideoPerformanceReportVOSum) {
 			sumPV = sumPV + Float.valueOf(adVideoPerformanceReportVO.getAdPvSum());
 			sumView = sumView + Float.valueOf(adVideoPerformanceReportVO.getAdViewSum());
 			sumCost = sumCost + Float.valueOf(adVideoPerformanceReportVO.getCostSum());
@@ -358,7 +412,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			sumVideoProcess100Ratings = (sumVideoProvess100 / sumView * 100);
 			
 			content.append("\n");
-			content.append(adVideoPerformanceReportVO.getTitle()+",");
+			content.append(adVideoPerformanceReportVO.getTitle().trim()  +",");
 			content.append("00:"+adVideoPerformanceReportVO.getAdVideoSec()+",");
 			content.append(adVideoPerformanceReportVO.getVideoUrl()+",");
 			content.append(adVideoPerformanceReportVO.getAdLinkUrl()+",");
@@ -384,7 +438,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		//總計
 		content.append("\n\n");
 		content.append(""
-				+ "總計:共"+adVideoPerformanceReportVOList.size()+"筆"+","
+				+ "總計:共"+adVideoPerformanceReportVOSum.size()+"筆"+","
 				+ ","
 				+ ","
 				+ ","
@@ -667,12 +721,21 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		this.adSize = adSize;
 	}
 
-	public AdVideoPerformanceReportVO getAdVideoPerformanceReportVOSum() {
+	public List<AdVideoPerformanceReportVO> getAdVideoPerformanceReportVOSum() {
 		return adVideoPerformanceReportVOSum;
 	}
 
-	public void setAdVideoPerformanceReportVOSum(AdVideoPerformanceReportVO adVideoPerformanceReportVOSum) {
+	public void setAdVideoPerformanceReportVOSum(List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOSum) {
 		this.adVideoPerformanceReportVOSum = adVideoPerformanceReportVOSum;
 	}
+
+	public AdVideoPerformanceReportVO getAdVideoPerformanceReportVOCount() {
+		return adVideoPerformanceReportVOCount;
+	}
+
+	public void setAdVideoPerformanceReportVOCount(AdVideoPerformanceReportVO adVideoPerformanceReportVOCount) {
+		this.adVideoPerformanceReportVOCount = adVideoPerformanceReportVOCount;
+	}
+
 	
 }

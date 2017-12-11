@@ -9,7 +9,7 @@ public interface IAdVideoPerformanceReportService {
 	
 	public List<AdVideoPerformanceReportVO> loadReportDateList(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
 	
-	public AdVideoPerformanceReportVO loadReportDateCount(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
+	public List<AdVideoPerformanceReportVO> loadReportDateCount(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
 	
 	public List<AdVideoPerformanceReportVO> loadReportChart(ReportQueryConditionVO reportQueryConditionVO) throws Exception;
 

@@ -11,8 +11,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -126,7 +128,7 @@ public class AdAddAction extends BaseCookieAction{
 	//廣告支援尺寸表
 	private List<PfbxSize> searchPCSizeList = new ArrayList<PfbxSize>();
 	private List<PfbxSize> searchMobileSizeList = new ArrayList<PfbxSize>();
-	private List<PfbxSize> channelPCSizeList = new ArrayList<PfbxSize>();
+	private List<PfbxSize> channelPCSizeList = null;
 	private List<PfbxSize> channelMobileSizeList = new ArrayList<PfbxSize>();
 	
 	//影音廣告支援尺寸
@@ -794,15 +796,18 @@ public class AdAddAction extends BaseCookieAction{
 	    	}
 	    }
 	    //內容廣告(電腦)尺寸列表
+	    Set<PfbxSize> pfbxSizeSet = new HashSet<>();
 	    if(Integer.parseInt(adType) == EnumAdType.AD_ALL.getType() || Integer.parseInt(adType) == EnumAdType.AD_CHANNEL.getType()){
 	    	for(EnumAdChannelPCSize enumAdChannelPCSize : EnumAdChannelPCSize.values()){
 	    		for (PfbxSize pfbxSize : pfbSizeList) {
 	    			if(String.valueOf(pfbxSize.getId()).equals(enumAdChannelPCSize.getName())){
-	    				channelPCSizeList.add(pfbxSize);
+	    				pfbxSizeSet.add(pfbxSize);
 	    		    }
 	    		}
 	    	}
 	    }
+	    channelPCSizeList = new ArrayList<>(pfbxSizeSet);
+	    
 	    //搜索廣告(行動裝置)尺寸列表(目前僅測試時打開)
 	    if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
 	    		Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_MOBILE.getDevType()){
