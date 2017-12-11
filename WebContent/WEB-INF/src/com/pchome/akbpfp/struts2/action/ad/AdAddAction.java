@@ -1100,7 +1100,7 @@ public class AdAddAction extends BaseCookieAction{
 	
 
 	/**
-	 * 儲存資料
+	 * 儲存圖像上稿資料
 	 * */
 	public String uploadImgSave() throws Exception{
     	PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
