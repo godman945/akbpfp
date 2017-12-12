@@ -120,7 +120,7 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").css('color','red');
 					$("#adVideoURLMsg").html(result.msg);
 					$("#preViewArea").empty();
-//					$('#adTitle').empty();
+					$('#adTitle').empty();
 					$('body').unblock();
 				}
 			});
