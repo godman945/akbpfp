@@ -16,7 +16,7 @@
                             <input type="hidden" id="adDetailName" name="adDetailName" value="影片">
                             <input type="hidden" id="adDetailContent" name="adDetailContent">
                             <input type="text" class="inputPlaceholderTmg" id="adVideoURL" name="adVideoURL" style="width:96%;" placeholder="請輸入YouTube影片網址" maxlength=""><br>
-                            <div id="adTitle"><div>
+                            <div id="adTitle"></div>
                             <span id="adVideoURLMsg" name="adVideoURLMsg" style="color: rgb(255, 0, 0);"></span><span style="float:right;margin-right: 3%" id="adVideoUrlWordController">已輸入0字，剩<div id="checkWord" style="display:inline;">1024</div>字</span><br>
 						</td>
 
