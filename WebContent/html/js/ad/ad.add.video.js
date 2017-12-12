@@ -96,9 +96,7 @@ $(document).ready(function(){
 					//alert("系統繁忙，請稍後再試！");
 				}
 			}).done(function (result) {
-				console.log(result);
 				if(result.result == true){
-					console.log('1>>>>>>>'+result.msg);
 					videoUrl = $("#adVideoURL").val();
 					$("#adVideoURLMsg").css('color','green');
 					$("#adVideoURLMsg").text('影片網址確認正確');
