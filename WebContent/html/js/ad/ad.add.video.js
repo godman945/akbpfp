@@ -2,6 +2,10 @@
 var seqArray = [];
 var adPreviewVideoData = null;
 $(document).ready(function(){
+	$("#adVideoURLMsg").css('color','blue');
+	$("#adVideoURLMsg").html('VVV');
+	
+	
 	$('#save').click(function(){
 		saveData();
 	});
