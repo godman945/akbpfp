@@ -96,6 +96,7 @@ $(document).ready(function(){
 					//alert("系統繁忙，請稍後再試！");
 				}
 			}).done(function (result) {
+				console.log(result);
 				if(result.result == true){
 					videoUrl = $("#adVideoURL").val();
 					$("#adVideoURLMsg").css('color','green');
