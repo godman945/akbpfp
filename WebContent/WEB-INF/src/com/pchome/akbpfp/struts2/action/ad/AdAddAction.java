@@ -10,9 +10,13 @@ import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.FileImageInputStream;
+import javax.imageio.stream.ImageInputStream;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -866,18 +870,26 @@ public class AdAddAction extends BaseCookieAction{
 				
 				result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"" + errorMsg + "\" " + "}";
     		} else {
-    			BufferedImage bufferedImage = ImageIO.read(originalImgFile);
-        		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
+    			ImageInputStream stream = new FileImageInputStream(originalImgFile);
+	   			Iterator<ImageReader> readers = ImageIO.getImageReaders(stream);
+	   			String imgFileType = "";
+	   			if (readers.hasNext()) {
+	   				ImageReader reader = readers.next();
+	   				reader.setInput(stream, true);
+	   				imgWidth = String.valueOf(reader.getWidth(0));
+	   				imgHeight = String.valueOf(reader.getHeight(0));
+	   				if(reader.getFormatName().equals("JPG") || reader.getFormatName().equals("GIF") || reader.getFormatName().equals("PNG")){
+	   					imgFileType = reader.getFormatName();
+	   				}
+	   			 }
+	   			 stream.close();
+    			
         		//2015.8.11 tim  上傳非圖像檔處理
-        		if(bufferedImage == null){
+        		if(StringUtils.isBlank(imgFileType)){
         		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
         		    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
         			continue;
         		}
-        		//String test = Integer.toString((int) Math.round(new Double(file.length())/new Double(1024)));
-        		baos.flush();
-        		baos.close();
     	    	
     	    	//取得檔案的MD5
     	    	MessageDigest md = MessageDigest.getInstance("MD5");
@@ -925,9 +937,6 @@ public class AdAddAction extends BaseCookieAction{
         		}else{
         		    fileSize = String.valueOf(file.length() / 1024);
         		}
-
-                imgWidth = String.valueOf(bufferedImage.getWidth());
-                imgHeight = String.valueOf(bufferedImage.getHeight());
 
                 while(StringUtils.isBlank(adSeq)) {
             		try {
