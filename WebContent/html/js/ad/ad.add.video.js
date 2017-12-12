@@ -114,6 +114,7 @@ $(document).ready(function(){
 					}
 					$('body').unblock();
 				}else{
+					console.log(result.msg);
 					adPreviewVideoData = null;
 					videoUrl = null;
 					$("#adVideoURLMsg").css('color','red');
