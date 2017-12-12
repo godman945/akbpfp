@@ -122,10 +122,14 @@ $(document).ready(function(){
 					console.log('2>>>>>>>'+result.msg);
 					adPreviewVideoData = null;
 					videoUrl = null;
-					$("#adVideoURLMsg").css('color','red');
-					$("#adVideoURLMsg").html(result.msg);
-					$("#preViewArea").empty();
-					$('#adTitle').empty();
+					
+					$("#adVideoURLMsg").css('color','yellow');
+					$("#adVideoURLMsg").html('CCC');
+					
+//					$("#adVideoURLMsg").css('color','red');
+//					$("#adVideoURLMsg").html(result.msg);
+//					$("#preViewArea").empty();
+//					$('#adTitle').empty();
 					$('body').unblock();
 				}
 			});
