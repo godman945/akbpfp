@@ -2,10 +2,6 @@
 var seqArray = [];
 var adPreviewVideoData = null;
 $(document).ready(function(){
-	$("#adVideoURLMsg").css('color','blue');
-	$("#adVideoURLMsg").html('VVV');
-	
-	
 	$('#save').click(function(){
 		saveData();
 	});
@@ -119,17 +115,12 @@ $(document).ready(function(){
 					}
 					$('body').unblock();
 				}else{
-					console.log('2>>>>>>>'+result.msg);
 					adPreviewVideoData = null;
 					videoUrl = null;
-					
-					$("#adVideoURLMsg").css('color','yellow');
-					$("#adVideoURLMsg").html('CCC');
-					
-//					$("#adVideoURLMsg").css('color','red');
-//					$("#adVideoURLMsg").html(result.msg);
-//					$("#preViewArea").empty();
-//					$('#adTitle').empty();
+					$("#adVideoURLMsg").css('color','red');
+					$("#adVideoURLMsg").html(result.msg);
+					$("#preViewArea").empty();
+					$('#adTitle').empty();
 					$('body').unblock();
 				}
 			});
