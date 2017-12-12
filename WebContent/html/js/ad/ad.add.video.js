@@ -98,13 +98,14 @@ $(document).ready(function(){
 			}).done(function (result) {
 				console.log(result);
 				if(result.result == true){
+					console.log('1>>>>>>>'+result.msg);
 					videoUrl = $("#adVideoURL").val();
 					$("#adVideoURLMsg").css('color','green');
 					$("#adVideoURLMsg").text('影片網址確認正確');
 					adPreviewVideoData = result;
 					var adTitle = adPreviewVideoData.adTitle;
 					/**影片標題*/
-					$('#adTitle').html('Youtube標題:'+adTitle);
+					$('#adTitle').text('Youtube標題:'+adTitle);
 					
 					/**影片預設尺寸*/
 					if(adPreviewVideoData != null){
@@ -114,7 +115,7 @@ $(document).ready(function(){
 					}
 					$('body').unblock();
 				}else{
-					console.log(result.msg);
+					console.log('2>>>>>>>'+result.msg);
 					adPreviewVideoData = null;
 					videoUrl = null;
 					$("#adVideoURLMsg").css('color','red');
