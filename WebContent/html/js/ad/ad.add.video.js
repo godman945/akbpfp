@@ -105,7 +105,7 @@ $(document).ready(function(){
 					adPreviewVideoData = result;
 					var adTitle = adPreviewVideoData.adTitle;
 					/**影片標題*/
-					$('#adTitle').html('<div style="display:inline;font-size:15px;">Youtube標題:</div>'+adTitle);
+					$('#adTitle').html('<div style="display:inline;font-size:10px;">'+adTitle+'</div>');
 					
 					/**影片預設尺寸*/
 					if(adPreviewVideoData != null){
