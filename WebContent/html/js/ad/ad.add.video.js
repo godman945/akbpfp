@@ -118,7 +118,7 @@ $(document).ready(function(){
 					adPreviewVideoData = null;
 					videoUrl = null;
 					$("#adVideoURLMsg").css('color','red');
-					$("#adVideoURLMsg").text(result.msg);
+					$("#adVideoURLMsg").html(result.msg);
 					$("#preViewArea").empty();
 					$('#adTitle').empty();
 					$('body').unblock();
