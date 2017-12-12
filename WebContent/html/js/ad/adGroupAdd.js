@@ -1,5 +1,27 @@
 ﻿var submitFlag = true;
+var adGroupNameFlag = true;
 $(document).ready(function(){
+	if($('#adGroupName').val().length > 20){
+		$('#adGroupNameMsg').text('分類名稱輸入字數已超過上限 20 字');
+		var position = $('#adGroupNameMsg').offset();  
+		var x = position.left;  
+		var y = position.top;  
+		window.scrollTo(x,y);
+		adGroupNameFlag = false;
+	}
+	
+	$('#adGroupName').keyup(function(){
+		$('#adGroupNameMsg').empty();
+		if($('#adGroupName').val().length > 20){
+			$('#adGroupNameMsg').text('分類名稱輸入字數已超過上限 20 字');
+			adGroupNameFlag = false;
+		}else{
+			$('#adGroupNameMsg').empty();
+			adGroupNameFlag = true;
+		}
+	})
+	
+	
 	$('#adPrice').keyup(function(){
 		var errMsg = '';
 		var price = $("#adPrice").val();
@@ -52,7 +74,7 @@ $(document).ready(function(){
 	})
 	
 	
-	$('#adPrice').click(function(){
+	$('#adPrice').change(function(){
 		var errMsg = '';
 		var price = $("#adPrice").val();
 		if($("#adPriceType").val() == 0){
@@ -95,6 +117,7 @@ $(document).ready(function(){
 			type: "post",
 			dataType: "json",
 			success: function(response, status){
+				console.log(response);
 				$("#showRate").html(response.adAsideRate+'%');
 			},
 				error: function(xtl) {
@@ -102,8 +125,6 @@ $(document).ready(function(){
 				}
 		 })
 	})
-	
-	
 	
 	var showSearchPrice = $("#showSearchPrice").val();
 	if(showSearchPrice == "no"){
@@ -174,7 +195,7 @@ $(document).ready(function(){
 
 
 function doAdGroupaddSubmit(){
-	if(submitFlag){
+	if(submitFlag && adGroupNameFlag){
 		$("#modifyForm").submit();
 	}
 }

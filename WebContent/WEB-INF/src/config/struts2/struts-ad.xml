@@ -101,12 +101,18 @@
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
 		
+		<result type="redirectAction" name="input">
+			<param name="actionName">adGroupAdd</param>  
+			<param name="adActionSeq">${adActionSeq}</param>
+		</result>
+		
 		<result type="redirectAction" name="success">
 			<param name="actionName">adAdAdd</param>  
 			<param name="adGroupSeq">${adGroupSeq}</param>
 			<param name="adOperatingRule">${adOperatingRule}</param>
 		</result>
-		<result type="tiles" name="input">.ad.group.add</result>
+		
+		<!--  <result type="tiles" name="input">.ad.group.add</result> -->
     </action>
 
    	<action name="adGroupEdit" class="AdGroupEditAction" method="adGroupEdit">

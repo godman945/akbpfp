@@ -15,10 +15,9 @@
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery-1.8.3.min.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery-common.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.blockUI.js"></script>
-    <@t.insertAttribute name="js" />	
-    <script language="JavaScript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+	<script language="JavaScript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
 	<script language="JavaScript" src="http://code.highcharts.com/modules/exporting.js"></script>
-    
+    <@t.insertAttribute name="js" />	
 </head>
 
 <body>

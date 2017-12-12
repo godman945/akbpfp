@@ -18,7 +18,7 @@
 	        	<tbody>
 	        		<tr>
 	                    <th height="35"><span class="t_s02">* </span>分類名稱</th>
-	                    <td><input type="text" maxlength="20" id="adGroupName" name="adGroupName" value="${adGroupName!}" maxlength="20" ></td>
+	                    	<td><input type="text" maxlength="20" id="adGroupName" name="adGroupName" value="${adGroupName!}" maxlength="20"><div style='color:red;display:inline;padding-left:5px' id='adGroupNameMsg'></div></td>
 	                </tr>
 	            </tbody>
 	        </table>
