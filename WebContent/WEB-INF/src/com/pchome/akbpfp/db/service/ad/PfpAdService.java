@@ -342,6 +342,13 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 			adReportVO.setAdClickRatings(objArray[4].toString());
 			adReportVO.setSingleCost(objArray[5].toString());
 			adReportVO.setThousandsCost(objArray[6].toString());
+			
+			
+			System.out.println(objArray[6].toString());
+			
+			
+			
+			
 			adReportVO.setAdSeq(objArray[10].toString());
 			adReportVO.setAdOperatingRule(objArray[11].toString());
 			adReportVO.setAdActionName(objArray[13].toString());

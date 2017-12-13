@@ -441,7 +441,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 		}
 		
 		//千次曝光費用 = 總費用*1000 / 曝光數
-		t_kiloCost = (t_cost * 1000) / t_pv;
+		t_kiloCost = (t_cost /t_pv ) * 1000;
 		
 		if (!tableHeadShowList.isEmpty()) {
 			String mapKey;
@@ -498,7 +498,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 			}
 
 			//千次曝光費用 = 總費用*1000 / 曝光數
-			kiloCost = (cost * 1000) / pv;
+			kiloCost = (cost  / pv ) * 1000;
 
 			tableInDataList.addLast(reportDate);
 			tableInDataList.addLast(adType);

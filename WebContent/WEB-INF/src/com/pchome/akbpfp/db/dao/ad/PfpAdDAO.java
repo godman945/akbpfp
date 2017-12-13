@@ -18,7 +18,6 @@ import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
-import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 
 public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
@@ -980,9 +979,7 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" END )) / Sum(r.ad_pv) ) * 100, 2), 0) "); 
 		sql.append(" ad_view_ratings, "); 
 		sql.append(" Ifnull(Truncate(Sum(r.ad_clk_price) / ( Sum(r.ad_pv) ), 2), 0), "); 
-		sql.append(" Ifnull(Truncate(Sum(r.ad_clk_price) / ( Sum(r.ad_pv) * 1000 ), 2) "); 
-		sql.append(" , 0) "); 
-		sql.append(" thousands_cost, "); 
+		sql.append(" ((Sum(r.ad_clk_price) /  Sum(r.ad_pv)) * 1000) thousands_cost, "); 
 		sql.append(" a.ad_status, "); 
 		sql.append(" aa.ad_action_start_date, "); 
 		sql.append(" aa.ad_action_end_date, "); 

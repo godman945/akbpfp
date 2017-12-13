@@ -2090,7 +2090,7 @@ public class ReportExcerptAction extends BaseReportAction {
 					tableInDataList.addLast(adReportVO.getContent());
 					tableInDataList.addLast(adReportVO.getShowUrl());
 				}else if(adReportVO.getAdOperatingRule().equals("VIDEO")){
-					tableInDataList.addLast(adReportVO.getAdActionName());
+					tableInDataList.addLast(adReportVO.getTitle());
 					tableInDataList.addLast(adReportVO.getContent());
 					tableInDataList.addLast(adReportVO.getAdVideoUrl());
 				}

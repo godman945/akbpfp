@@ -94,7 +94,7 @@ public class AdGroupViewAjax extends BaseCookieAction{
 					totalAvgCost = (float)totalCost / (float)totalClk;	
 				}
 				if(totalCost > 0){
-					this.totalThousandsCost += (float)totalCost / ((float)totalPv * 1000);
+					this.totalThousandsCost += ((float)totalCost / ((float)totalPv) * 1000);
 				}
 			}
 		}
