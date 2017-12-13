@@ -9,12 +9,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.utils.CommonUtils;
 
 
 public class AdUtilAction extends BaseCookieAction{
@@ -58,9 +60,9 @@ public class AdUtilAction extends BaseCookieAction{
 				
 				Integer imgWidth = 0;
 				Integer imgHeight = 0;
-				BufferedImage bufferedImage = ImageIO.read(uploadFile);
-				imgWidth = bufferedImage.getWidth();
-				imgHeight = bufferedImage.getHeight();
+				Map<String,String> imgInfo = CommonUtils.getInstance().getImgInfo(uploadFile);
+				imgWidth = Integer.parseInt(imgInfo.get("imgWidth"));
+				imgHeight = Integer.parseInt(imgInfo.get("imgHeight"));
 				
 				if(imgWidth.intValue() != imgHeight.intValue()){
 					log.info("-------------test=");

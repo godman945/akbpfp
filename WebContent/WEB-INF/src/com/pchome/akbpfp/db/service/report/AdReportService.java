@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,6 +15,7 @@ import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdReportDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.utils.CommonUtils;
 
 public class AdReportService implements IAdReportService {
 
@@ -112,29 +114,12 @@ public class AdReportService implements IAdReportService {
 						htmlCode += "</span></span></div>";
 					} else {
 						File picture = null;
-						FileInputStream is = null;
-						BufferedImage sourceImg = null;
-						try{
-							picture = new File("/home/webuser/akb/pfp/" +  img.replace("\\", "/"));
-							if(picture != null){
-								is = new FileInputStream(picture);
-								sourceImg = javax.imageio.ImageIO.read(is);
-								imgWidth = Integer.toString(sourceImg.getWidth());
-								imgHeight = Integer.toString(sourceImg.getHeight());	
-							}
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} finally {
-							if(is != null){
-								is.close();
-							}
+						picture = new File("/home/webuser/akb/pfp/" +  img.replace("\\", "/"));
+						if(picture != null){
+							Map<String,String> imgInfo = CommonUtils.getInstance().getImgInfo(picture);
+							imgWidth =  imgInfo.get("imgWidth");
+							imgHeight = imgInfo.get("imgHeight");
 						}
-						
-						
 						//組html畫面
 						htmlCode = "<div class=\"adreportdv\">";
 						htmlCode += "<span class=\"adboxdvimg\"><a href=\"" + realUrl + "\" target=\"_blank\"><img src=\"" + img + "\" /></a></span>";

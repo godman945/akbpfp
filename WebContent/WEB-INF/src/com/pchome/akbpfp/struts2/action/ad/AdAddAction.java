@@ -852,18 +852,6 @@ public class AdAddAction extends BaseCookieAction{
                 
                 result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"" + errorMsg + "\" " + "}";
             } else {
-//                BufferedImage bufferedImage = ImageIO.read(originalImgFile);
-//                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//                //2015.8.11 tim  上傳非圖像檔處理
-//                if(bufferedImage == null){
-//                    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-//                    result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
-//                    continue;
-//                }
-//                //String test = Integer.toString((int) Math.round(new Double(file.length())/new Double(1024)));
-//                baos.flush();
-//                baos.close();
-            	
             	ImageInputStream stream = new FileImageInputStream(originalImgFile);
                 Iterator<ImageReader> readers = ImageIO.getImageReaders(stream);
                 String imgFileType = "";

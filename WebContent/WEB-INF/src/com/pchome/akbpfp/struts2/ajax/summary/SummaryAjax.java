@@ -17,6 +17,7 @@ import com.pchome.akbpfp.db.vo.ad.AdLayerVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdLayer;
 import com.pchome.soft.util.DateValueUtil;
+import com.pchome.utils.CommonUtils;
 
 public class SummaryAjax extends BaseCookieAction{
 
@@ -123,35 +124,16 @@ public class SummaryAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 
-	public Map<String,String> getImgSize(String originalImg) throws IOException {
+	public Map<String,String> getImgSize(String originalImg) throws Exception {
 		Map<String,String> imgmap = new HashMap<String,String>();
-		String imgWidth = "0";
-		String imgHeight = "0";
 		File picture = null;
-		FileInputStream is = null;
-		BufferedImage sourceImg = null;
-		try{
-			picture = new File("/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/"));
-			if(picture != null){
-				is = new FileInputStream(picture);
-				sourceImg = javax.imageio.ImageIO.read(is);
-				imgWidth = Integer.toString(sourceImg.getWidth());
-				imgHeight = Integer.toString(sourceImg.getHeight());	
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if(is != null){
-				is.close();
-			}
+		String path = (originalImg.indexOf("D:/") >= 0) ? originalImg : "/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/");
+		picture = new File(path);
+		if(picture != null){
+			Map<String,String> imgInfo = CommonUtils.getInstance().getImgInfo(picture);
+			imgmap.put("imgWidth", imgInfo.get("imgWidth"));
+			imgmap.put("imgHeight", imgInfo.get("imgHeight"));
 		}
-		imgmap.put("imgWidth", imgWidth);
-		imgmap.put("imgHeight", imgHeight);
-		
 		return imgmap;
 	}
 	

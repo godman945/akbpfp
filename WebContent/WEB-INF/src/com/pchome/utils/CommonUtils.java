@@ -70,7 +70,6 @@ public class CommonUtils {
                 
                 imgInfoMap.put("imgWidth", imgWidth);
                 imgInfoMap.put("imgHeight", imgHeight);
-                System.out.println(reader.getFormatName());
                 if(reader.getFormatName().toUpperCase().equals("JPG") || reader.getFormatName().toUpperCase().equals("GIF") || reader.getFormatName().toUpperCase().equals("PNG")){
                     imgInfoMap.put("imgFileType", reader.getFormatName());
                 }

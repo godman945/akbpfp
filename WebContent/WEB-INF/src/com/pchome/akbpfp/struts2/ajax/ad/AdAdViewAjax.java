@@ -110,16 +110,12 @@ public class AdAdViewAjax extends BaseCookieAction{
 	}
 	
 	public Map<String,String> getImgSize(String originalImg) throws Exception {
-		System.out.println(">>>>>>>>>>>>>>>>>>>>originalImg:"+originalImg);
 		Map<String,String> imgmap = new HashMap<String,String>();
 		File picture = null;
 		String path = (originalImg.indexOf("D:/") >= 0) ? originalImg : "/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/");
 		picture = new File(path);
 		if(picture != null){
 			Map<String,String> imgInfo = CommonUtils.getInstance().getImgInfo(picture);
-			log.info(">>>>>>>>>>>>>>>>>>>>imgInfo:"+imgInfo);
-			log.info(">>>>>>>>>>>>>>>>>>>>imgWidth:"+imgInfo.get("imgWidth"));
-			log.info(">>>>>>>>>>>>>>>>>>>>imgHeight:"+imgInfo.get("imgHeight"));
 			imgmap.put("imgWidth", imgInfo.get("imgWidth"));
 			imgmap.put("imgHeight", imgInfo.get("imgHeight"));
 		}

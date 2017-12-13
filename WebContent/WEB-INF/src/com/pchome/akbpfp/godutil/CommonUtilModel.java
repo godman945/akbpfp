@@ -201,7 +201,6 @@ public class CommonUtilModel extends BaseCookieAction{
 	                reader.setInput(stream, true);
 	    		    imageVO.setImgWidth(String.valueOf(reader.getWidth(0)));
 	    		    imageVO.setImgHeight(String.valueOf(reader.getHeight(0)));
-	                
 	             }
 	            // 2015.08.27  先把產生縮圖註解掉 by tim
 			    /*int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
