@@ -124,6 +124,12 @@ public class AdAdViewAjax extends BaseCookieAction{
 		picture = new File(originalImg.replace("\\", "/"));
 		if(picture != null){
 			Map<String,String> imgInfo = CommonUtils.getInstance().getImgInfo(picture);
+			
+			log.info(">>>>>>>>>>>>>>>>>>>>imgInfo:"+imgInfo);
+			log.info(">>>>>>>>>>>>>>>>>>>>imgWidth:"+imgInfo.get("imgWidth"));
+			log.info(">>>>>>>>>>>>>>>>>>>>imgHeight:"+imgInfo.get("imgHeight"));
+			
+			
 			imgmap.put("imgWidth", imgInfo.get("imgWidth"));
 			imgmap.put("imgHeight", imgInfo.get("imgHeight"));
 		}
