@@ -1,10 +1,6 @@
 package com.pchome.akbpfp.struts2.ajax.ad;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,13 +16,9 @@ import com.pchome.utils.CommonUtils;
 
 public class AdAdViewAjax extends BaseCookieAction{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private IPfpAdService pfpAdService;
-	private CommonUtils commonUtils;
 	private String adGroupSeq;
 	private String keyword;
 	private String searchType;
@@ -118,18 +110,16 @@ public class AdAdViewAjax extends BaseCookieAction{
 	}
 	
 	public Map<String,String> getImgSize(String originalImg) throws Exception {
+		System.out.println(">>>>>>>>>>>>>>>>>>>>originalImg:"+originalImg);
 		Map<String,String> imgmap = new HashMap<String,String>();
 		File picture = null;
-//		picture = new File("/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/"));
-		picture = new File(originalImg.replace("\\", "/"));
+		String path = (originalImg.indexOf("D:/") >= 0) ? originalImg : "/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/");
+		picture = new File(path);
 		if(picture != null){
 			Map<String,String> imgInfo = CommonUtils.getInstance().getImgInfo(picture);
-			
 			log.info(">>>>>>>>>>>>>>>>>>>>imgInfo:"+imgInfo);
 			log.info(">>>>>>>>>>>>>>>>>>>>imgWidth:"+imgInfo.get("imgWidth"));
 			log.info(">>>>>>>>>>>>>>>>>>>>imgHeight:"+imgInfo.get("imgHeight"));
-			
-			
 			imgmap.put("imgWidth", imgInfo.get("imgWidth"));
 			imgmap.put("imgHeight", imgInfo.get("imgHeight"));
 		}
