@@ -16,7 +16,6 @@ import com.pchome.akbpfp.db.dao.report.AdKeywordReportVO;
 import com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportVO;
 import com.pchome.akbpfp.db.service.report.IAdVideoPerformanceReportService;
 import com.pchome.akbpfp.db.vo.report.ReportQueryConditionVO;
-import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.ad.EnumAdVideoSizePoolType;
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
@@ -324,11 +323,11 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 	
 	
 	private void makeDownloadReportData() throws Exception {
-
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddhhmmss");
 		String filename="影音廣告成效報表_" + dformat.format(new Date()) + FILE_TYPE;
 
 		StringBuffer content = new StringBuffer();
+		String adPriceTypeName = StringUtils.isBlank(adPriceType) ? "全部" : adPriceTypeMap.get(adPriceType);
 		//報表名稱
 		downloadFileName = new String(filename.getBytes("UTF-8"), "ISO8859-1");
 		content.append("帳戶," + super.getCustomer_info_title());
@@ -341,7 +340,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		content.append("\n");
 		content.append("日期範圍,"+startDate+"到"+endDate);
 		content.append("\n");
-		content.append("計價方式,");
+		content.append("計價方式,"+adPriceTypeName);
 		content.append("\n");
 		content.append("裝置,");
 		content.append("\n");
@@ -418,10 +417,10 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			content.append(adVideoPerformanceReportVO.getAdLinkUrl()+",");
 			content.append((StringUtils.isBlank(adPriceType)? "全部" : adPriceType ) + ",");
 			content.append((StringUtils.isBlank(adPvclkDevice)? "全部" : adPvclkDevice )+ ",");
-			content.append((StringUtils.isBlank(adSize)? "全部" : adVideoPerformanceReportVO.getTemplateProductWidth() + " x "+ adVideoPerformanceReportVO.getTemplateProductHeight())+",");
+			content.append(adVideoPerformanceReportVO.getTemplateProductWidth() + " x "+ adVideoPerformanceReportVO.getTemplateProductHeight()+",");
 			content.append(adVideoPerformanceReportVO.getAdPvSum()+",");
 			content.append(adVideoPerformanceReportVO.getAdViewSum()+",");
-			content.append(adVideoPerformanceReportVO.getAdViewRatings()+",");
+			content.append(adVideoPerformanceReportVO.getAdViewRatings()+"%,");
 			content.append("$"+adVideoPerformanceReportVO.getThousandsCost()+",");
 			content.append("$"+adVideoPerformanceReportVO.getSingleAdViewCost()+",");
 			content.append("$"+adVideoPerformanceReportVO.getCostSum()+",");
@@ -429,10 +428,10 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			content.append(adVideoPerformanceReportVO.getAdVideoUniqSum()+",");
 			content.append(adVideoPerformanceReportVO.getAdVideoMusicSum()+",");
 			content.append(adVideoPerformanceReportVO.getAdVideoReplaySum()+",");
-			content.append(adVideoPerformanceReportVO.getAdVideoProcess25Sum()+"%"+",");
-			content.append(adVideoPerformanceReportVO.getAdVideoProcess50Sum()+"%"+",");
-			content.append(adVideoPerformanceReportVO.getAdVideoProcess75Sum()+"%"+",");
-			content.append(adVideoPerformanceReportVO.getAdVideoProcess100Sum()+"%"+",");
+			content.append(adVideoPerformanceReportVO.getAdVideoProcess25Sum()+",");
+			content.append(adVideoPerformanceReportVO.getAdVideoProcess50Sum()+",");
+			content.append(adVideoPerformanceReportVO.getAdVideoProcess75Sum()+",");
+			content.append(adVideoPerformanceReportVO.getAdVideoProcess100Sum()+",");
 			content.append(adVideoPerformanceReportVO.getAdVideoProcess100Ratings()+"%");
 		}
 		//總計
@@ -455,10 +454,10 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 				+ sumVideoUniq+","
 				+ sumMusic+","
 				+ sumReplay+","
-				+ sumVideoProvess25+"%,"
-				+ sumVideoProvess50+"%,"
-				+ sumVideoProvess75+"%,"
-				+ sumVideoProvess100+"%,"
+				+ sumVideoProvess25+","
+				+ sumVideoProvess50+","
+				+ sumVideoProvess75+","
+				+ sumVideoProvess100+","
 				+ sumVideoProcess100Ratings+"%");
 		downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));
 	}
