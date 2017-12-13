@@ -843,6 +843,9 @@ public class AdEditAction extends BaseCookieAction{
 	}
 
 	private void getImgSize(String originalImg) throws Exception {
+		log.info(">>>>>>>>>>>>>>>originalImg:"+originalImg);
+		System.out.println(">>>>>>>>>>>>>>>originalImg:" + originalImg);
+		
 		String path = (originalImg.indexOf("D:/") >= 0) ? originalImg : "/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/");
 		File picture = null;
 		picture = new File(path);
