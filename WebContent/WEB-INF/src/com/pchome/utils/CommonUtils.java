@@ -67,9 +67,11 @@ public class CommonUtils {
                 reader.setInput(stream, true);
                 imgWidth = String.valueOf(reader.getWidth(0));
                 imgHeight = String.valueOf(reader.getHeight(0));
-                
                 imgInfoMap.put("imgWidth", imgWidth);
                 imgInfoMap.put("imgHeight", imgHeight);
+               
+                log.info(">>>>>>>>>>>>>>>>>>>>>>reader.getFormatName():"+reader.getFormatName());
+                
                 if(reader.getFormatName().toUpperCase().equals("JPG") || reader.getFormatName().toUpperCase().equals("GIF") || reader.getFormatName().toUpperCase().equals("PNG")){
                     imgInfoMap.put("imgFileType", reader.getFormatName());
                 }
