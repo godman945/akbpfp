@@ -845,12 +845,15 @@ public class AdEditAction extends BaseCookieAction{
 	private void getImgSize(String originalImg) throws Exception {
 		log.info(">>>>>>>>>>>>>>>originalImg:"+originalImg);
 		System.out.println(">>>>>>>>>>>>>>>originalImg:" + originalImg);
-		
 		String path = (originalImg.indexOf("D:/") >= 0) ? originalImg : "/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/");
 		File picture = null;
 		picture = new File(path);
 		if(picture != null){
+			log.info(">>>>>>>>>>>>>>>picture:"+picture);
 			Map<String,String> imgInfo = CommonUtils.getInstance().getImgInfo(picture);
+			
+			log.info(">>>>>>>>>>>>>>>imgInfo:"+imgInfo);
+			
 			imgWidth = imgInfo.get("imgWidth");
 			imgHeight = imgInfo.get("imgHeight");
 			imgTypeName = imgInfo.get("imgFileType").toUpperCase();
