@@ -69,11 +69,14 @@ public class CommonUtils {
                 imgHeight = String.valueOf(reader.getHeight(0));
                 imgInfoMap.put("imgWidth", imgWidth);
                 imgInfoMap.put("imgHeight", imgHeight);
-               
                 log.info(">>>>>>>>>>>>>>>>>>>>>>reader.getFormatName():"+reader.getFormatName());
                 
-                if(reader.getFormatName().toUpperCase().equals("JPG") || reader.getFormatName().toUpperCase().equals("GIF") || reader.getFormatName().toUpperCase().equals("PNG")){
-                    imgInfoMap.put("imgFileType", reader.getFormatName());
+                if(reader.getFormatName().toUpperCase().equals("JPEG")){
+                	imgInfoMap.put("imgFileType", "jpg");
+                }else if(reader.getFormatName().toUpperCase().equals("GIF")){
+                	imgInfoMap.put("imgFileType", "gif");
+                }else if(reader.getFormatName().toUpperCase().equals("PNG")){
+                	imgInfoMap.put("imgFileType", "png");
                 }
              }
              stream.close();
