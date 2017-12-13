@@ -206,7 +206,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	
 	$.each($("#AG [name=imgName]"), function( index, obj ) {
 		if(($(obj).val() == fileName)){
-			console.log('###########3');
 			errorTitle = '廣告圖片重複上傳!';
 			errorMsg = '您所上傳的廣告圖片在此次新增中已存在';
 			thisImgRepeat = 'yes';
