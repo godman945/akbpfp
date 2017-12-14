@@ -979,7 +979,7 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" END )) / Sum(r.ad_pv) ) * 100, 2), 0) "); 
 		sql.append(" ad_view_ratings, "); 
 		sql.append(" Ifnull(Truncate(Sum(r.ad_clk_price) / ( Sum(r.ad_pv) ), 2), 0), "); 
-		sql.append(" ((Sum(r.ad_clk_price) /  Sum(r.ad_pv)) * 1000) thousands_cost, "); 
+		sql.append(" Ifnull(((Sum(r.ad_clk_price) /  Sum(r.ad_pv)) * 1000),0) thousands_cost, "); 
 		sql.append(" a.ad_status, "); 
 		sql.append(" aa.ad_action_start_date, "); 
 		sql.append(" aa.ad_action_end_date, "); 
@@ -1009,41 +1009,10 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		query.setParameter("customerInfoId", pfpAdAdViewConditionVO.getCustomerInfoId());
 		query.setParameter("adGroupSeq", pfpAdAdViewConditionVO.getAdGroupSeq());
 		return query.list();
-		
-		
-		
-		
 	}
 
 	public List<Object> getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
 		StringBuffer sql = new StringBuffer();
-		
-//		sql.append(" SELECT Ifnull(Sum(r.ad_pv),0),  ");
-//		sql.append(" Sum(( CASE  ");
-//		sql.append(" WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk "); 
-//		sql.append(" ELSE r.ad_view "); 
-//		sql.append(" END )), "); 
-//		sql.append(" Ifnull(Sum(r.ad_clk_price),0), "); 
-//		sql.append(" Ifnull(Sum(r.ad_invalid_clk),0), "); 
-//		sql.append(" r.customer_info_id, "); 
-//		sql.append(" Ifnull(Truncate(( Sum(( CASE "); 
-//		sql.append(" WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk "); 
-//		sql.append(" ELSE r.ad_view "); 
-//		sql.append(" END )) / Sum(r.ad_pv) ) * 100, 2), 0) "); 
-//		sql.append(" ad_view_ratings, "); 
-//		sql.append(" Ifnull(Truncate(Sum(r.ad_clk_price) / ( Sum(r.ad_pv) ), 2), 0), "); 
-//		sql.append(" Ifnull(Truncate(Sum(r.ad_clk_price) / ( Sum(r.ad_pv) * 1000 ), 2), 0) "); 
-//		sql.append(" thousands_cost "); 
-//		sql.append(" FROM   pfp_ad_report AS r "); 
-//		sql.append(" WHERE  1 = 1 "); 
-//		sql.append(" and r.customer_info_id = :customerInfoId");
-//		sql.append(" and r.ad_pvclk_date >= :startDate");
-//		sql.append(" and r.ad_pvclk_date <= :endDate");
-//		sql.append(" and r.ad_group_seq = :adGroupSeq");
-//		sql.append(" GROUP  BY customer_info_id  ");
-		
-		
-		
 		sql.append(" SELECT Ifnull(Sum(r.ad_pv), 0),  ");
 		sql.append(" Ifnull(Sum(( CASE  ");
 		sql.append(" WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk  ");
