@@ -368,13 +368,20 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddhhmmss");
 		String filename="廣告明細成效報表_" + dformat.format(new Date()) + FILE_TYPE;
-
 		StringBuffer content = new StringBuffer();
 		//報表名稱
 		downloadFileName = new String(filename.getBytes("UTF-8"), "ISO8859-1");
 		content.append("帳戶," + super.getCustomer_info_title());
 		content.append("\n\n");
-		content.append("報表名稱,PChome 廣告明細成效");
+		
+		if(StringUtils.isNotBlank(searchAdseq)){
+			content.append("報表名稱,PChome 廣告明細成效->每日花費報表");
+			content.append("\n\n");
+			content.append("廣告明細,"+adReportVOList.get(0).getTitle());
+		}else{
+			content.append("報表名稱,PChome 廣告明細成效");	
+		}
+		
 		content.append("\n\n");
 		content.append("播放類型," + getAdShowWayMap().get(adShowWay));
 		content.append("\n");
@@ -461,11 +468,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				content.append(adReportVO.getAdStatusDesc()+",");
 				content.append(StringUtils.isBlank(adReportVO.getTitle()) ? "," : adReportVO.getTitle().trim() + ",");
 				
-//				if(StringUtils.isBlank(adReportVO.getAdVideoSec())){
-//					content.append(",");
-//				}else{
-//					content.append(adReportVO.getAdVideoSec() +",");
-//				}
 				if(adReportVO.getAdOperatingRule().equals("VIDEO")){
 					content.append(adReportVO.getContent()+",");
 					content.append(adReportVO.getAdVideoSec()+",");

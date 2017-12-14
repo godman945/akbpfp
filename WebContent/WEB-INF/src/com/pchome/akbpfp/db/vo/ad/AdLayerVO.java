@@ -62,8 +62,6 @@ public class AdLayerVO {
 	private String adHeight;
 	//影片網址
 	private String videoUrl;
-	//影片連結
-	private String adLinkUrl;
 	//影片秒數
 	private String adVideoSec;
 	//計價方式
@@ -356,12 +354,6 @@ public class AdLayerVO {
 	}
 	public void setVideoUrl(String videoUrl) {
 		this.videoUrl = videoUrl;
-	}
-	public String getAdLinkUrl() {
-		return adLinkUrl;
-	}
-	public void setAdLinkUrl(String adLinkUrl) {
-		this.adLinkUrl = adLinkUrl;
 	}
 	public String getAdVideoSec() {
 		return adVideoSec;

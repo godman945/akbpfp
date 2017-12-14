@@ -253,7 +253,11 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 										}
 									}
 									if(pfpAdDetail.getAdDetailId().equals("video_seconds")){
-										adLayerVO.setAdVideoSec(pfpAdDetail.getAdDetailContent());	
+										if(pfpAdDetail.getAdDetailContent().length() == 1){
+											adLayerVO.setAdVideoSec("0"+pfpAdDetail.getAdDetailContent());
+										}else{
+											adLayerVO.setAdVideoSec(pfpAdDetail.getAdDetailContent());
+										}
 									}
 								}
 		    				}
