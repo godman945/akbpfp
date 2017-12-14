@@ -127,21 +127,21 @@ ${page}/${totalPage}
 					<td><#if adVideoPerformanceReportVO.adPriceType == 'CPM'>千次曝光出價<#else>單次收視出價</#if><br>${adVideoPerformanceReportVO.adPriceType!}</td>
 					<td>全部</td>
 					<td align="center">${adVideoPerformanceReportVO.templateProductWidth!}x${adVideoPerformanceReportVO.templateProductHeight!}</td>
-					<td align="right">${adVideoPerformanceReportVO.adPvSum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adViewSum!}</td>
+					<td align="right">${adVideoPerformanceReportVO.adPvSum?number?string('#,###.##')!}</td>
+			        <td align="right">${adVideoPerformanceReportVO.adViewSum?number?string('#,###.##')!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adViewRatings}%</td>
-			        <td align="right">NT$ ${adVideoPerformanceReportVO.singleAdViewCost!}</td>
-			        <td align="right">NT$ ${adVideoPerformanceReportVO.thousandsCost!}</td>
-			        <td align="right">NT$ ${adVideoPerformanceReportVO.costSum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess25Sum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess50Sum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess75Sum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Sum!}</td>
+			        <td align="right">NT$ ${adVideoPerformanceReportVO.singleAdViewCost?number?string('#,###.##')!}</td>
+			        <td align="right">NT$ ${adVideoPerformanceReportVO.thousandsCost?number?string('#,###.##')!}</td>
+			        <td align="right">NT$ ${adVideoPerformanceReportVO.costSum?number?string('#,###.##')!}</td>
+			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess25Sum?number?string('#,###.##')!}</td>
+			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess50Sum?number?string('#,###.##')!}</td>
+			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess75Sum?number?string('#,###.##')!}</td>
+			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Sum?number?string('#,###.##')!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess100Ratings?number?string('#,###.##')!}%</td>
-			        <td align="right">${adVideoPerformanceReportVO.adClkSum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adVideoUniqSum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adVideoMusicSum!}</td>
-			        <td align="right">${adVideoPerformanceReportVO.adVideoReplaySum!}</td>
+			        <td align="right">${adVideoPerformanceReportVO.adClkSum?number?string('#,###.##')!}</td>
+			        <td align="right">${adVideoPerformanceReportVO.adVideoUniqSum?number?string('#,###.##')!}</td>
+			        <td align="right">${adVideoPerformanceReportVO.adVideoMusicSum?number?string('#,###.##')!}</td>
+			        <td align="right">${adVideoPerformanceReportVO.adVideoReplaySum?number?string('#,###.##')!}</td>
 				</tr>
 				<#assign totalPV = 0>
 				<#assign width = adVideoPerformanceReportVO.templateProductWidth>
