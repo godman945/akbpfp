@@ -226,7 +226,7 @@
 			playbtn.style.display='none';
 			pausebtn.style.display='none';
 			replaybtn.style.display='none';
-			adlinkbtn1.style.opacity=0;
+			adlinkbtn1.style.opacity = 1;
 			adlinkbtn2.style.display='none';
 			var index = getIframeIndex(video);
 			video.play();
