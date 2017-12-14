@@ -804,9 +804,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			try {
 				pfpAd = pfpAdDAO.getPfpAdBySeq(adReportVO.getAdSeq());
 				adStatus = pfpAd.getAdStatus();
-				System.out.println("AdSeq:"+adReportVO.getAdSeq());
-				System.out.println("adStatus:"+adReportVO.getAdStatus());
-				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -839,10 +836,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				log.error(e.getMessage(), e);
 			}
 			
-			System.out.println("setAdStatusDesc:"+adReportVO.getAdStatusDesc());
-			
-			System.out.println("-----------------");
-
 			//播放狀態
 			String alter = "";
 			String icon = "icon_adclose.gif";

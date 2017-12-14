@@ -99,16 +99,6 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 
 						dataList = query.list();
 
-//						Query q = session.createSQLQuery(hqlStr);
-//
-//						//page=-1 取得全部不分頁用於download
-//						if (page!=-1) {
-//							q.setFirstResult((page-1)*pageSize).setMaxResults(pageSize);
-//						}
-//
-//						List<Object> dataList = q.list();
-//						log.info(">>> dataList.size() = " + dataList.size());
-
 						List<AdReportVO> resultData = new ArrayList<AdReportVO>();
 
 						if (sqlType.trim().equals(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue())){
@@ -136,6 +126,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							String adGroupName = "";
 							String adActionName = "";
 							Integer adStatus = null;
+							Integer adGroupStatus = null;
 							for (int i=0; i<dataList.size(); i++) {
 								objArray = (Object[]) dataList.get(i);
 								adPvSum = (BigDecimal)objArray[0];
@@ -155,6 +146,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adGroupName = ObjectTransUtil.getInstance().getObjectToString(objArray[14]);
 								adStatus = ((BigInteger)objArray[15]).intValue();
 								adActionName = ObjectTransUtil.getInstance().getObjectToString(objArray[16]);
+								adGroupStatus = ((BigInteger)objArray[17]).intValue();
 								
 								adReportVO = new AdReportVO();
 								adReportVO.setAdPvSum(adPvSum.toString());
@@ -171,6 +163,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adReportVO.setReportDate(adPvclkDate);
 								adReportVO.setAdStatus(String.valueOf(adStatus));
 								adReportVO.setAdActionName(adActionName);
+								adReportVO.setAdGroupStatus(adGroupStatus);
 								
 								if(StringUtils.isNotBlank(adPvclkDevice)) {
 									if("PC".equals(adDevice)){
@@ -351,7 +344,8 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" r.ad_type, ");
 		hql.append(" ( select g.ad_group_name from pfp_ad_group g where g.ad_group_seq  = r.ad_group_seq)ad_group_name, ");
 		hql.append(" ( select a.ad_status from pfp_ad a where a.ad_seq=r.ad_seq)ad_status, ");
-		hql.append(" ( select aa.ad_action_name from pfp_ad_group g,pfp_ad_action aa where g.ad_group_seq  = r.ad_group_seq and g.ad_action_seq = aa.ad_action_seq)ad_action_name ");
+		hql.append(" ( select aa.ad_action_name from pfp_ad_group g,pfp_ad_action aa where g.ad_group_seq  = r.ad_group_seq and g.ad_action_seq = aa.ad_action_seq)ad_action_name ,");
+		hql.append(" ( select g.ad_group_status from pfp_ad_group g where g.ad_group_seq  = r.ad_group_seq)ad_group_status ");
 		hql.append(" from pfp_ad_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id = :customerInfoId");
