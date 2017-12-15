@@ -53,6 +53,18 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(objArray[20].toString());
 			adVideoPerformanceReportVO.setAdLinkUrl(objArray[21].toString());
 			adVideoPerformanceReportVO.setVideoUrl(objArray[22].toString());
+			String device = "";
+			if(StringUtils.isBlank(reportQueryConditionVO.getAdPvclkDevice())){
+				device = "全部";
+			}else{
+				if(reportQueryConditionVO.getAdPvclkDevice().equals("PC")){
+					device = "電腦";
+				}
+				if(reportQueryConditionVO.getAdPvclkDevice().equals("mobile")){
+					device = "行動裝置";
+				}
+			}
+			adVideoPerformanceReportVO.setDevice(device);
 			if(StringUtils.isNotBlank(objArray[23].toString())){
 				String size[] = objArray[23].toString().split("_");
 				if(size.length == 2){

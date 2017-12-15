@@ -125,7 +125,7 @@ ${page}/${totalPage}
 					  	<a href="#" target="_blank">${adVideoPerformanceReportVO.adLinkUrl!}</a><br>
 					</td>
 					<td><#if adVideoPerformanceReportVO.adPriceType == 'CPM'>千次曝光出價<#else>單次收視出價</#if><br>${adVideoPerformanceReportVO.adPriceType!}</td>
-					<td>全部</td>
+					<td>${adVideoPerformanceReportVO.device!}</td>
 					<td align="center">${adVideoPerformanceReportVO.templateProductWidth!}x${adVideoPerformanceReportVO.templateProductHeight!}</td>
 					<td align="right">${adVideoPerformanceReportVO.adPvSum?number?string('#,###.##')!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adViewSum?number?string('#,###.##')!}</td>

@@ -63,6 +63,8 @@ public class AdVideoPerformanceReportVO {
 	private String engagementRate;
 	//廣告序號
 	private String adSeq;
+	//裝置
+	private String device;
 	
 	public Date getReportDate() {
 		return reportDate;
@@ -244,6 +246,12 @@ public class AdVideoPerformanceReportVO {
 	}
 	public void setAdSeq(String adSeq) {
 		this.adSeq = adSeq;
+	}
+	public String getDevice() {
+		return device;
+	}
+	public void setDevice(String device) {
+		this.device = device;
 	}
 	
 }
