@@ -74,7 +74,11 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			}
 			adVideoPerformanceReportVO.setAdActionName(objArray[24].toString());
 			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[26].toString());
-			adVideoPerformanceReportVO.setAdVideoSec(objArray[27].toString());
+			String sec = objArray[27].toString();
+			if(sec.length() == 1){
+				sec= "0"+sec;
+			}
+			adVideoPerformanceReportVO.setAdVideoSec(sec);
 			adVideoPerformanceReportVOList.add(adVideoPerformanceReportVO);
 		}
 		return adVideoPerformanceReportVOList;

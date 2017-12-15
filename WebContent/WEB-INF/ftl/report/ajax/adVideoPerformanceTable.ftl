@@ -121,8 +121,8 @@ ${page}/${totalPage}
 		            <td>
 		             <iframe src="adVideoModel.html?adPreviewVideoURL=${adVideoPerformanceReportVO.videoUrl!}&adPreviewVideoBgImg=<#if adVideoPerformanceReportVO.adImg = 'img/public/na.gif" style="display:none'><#else>http://showstg.pchome.com.tw/pfp/${adVideoPerformanceReportVO.adImg!}</#if>&realUrl=${adVideoPerformanceReportVO.adLinkUrl!}" class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${adVideoPerformanceReportVO.templateProductWidth!}" height="${adVideoPerformanceReportVO.templateProductHeight!}" allowtransparency="true" allowfullscreen="true"></iframe> 
 					</td>
-					<td  style="text-align:left; line-height: 20px; padding: 10px;width:50px;word-wrap:break-word;">${adVideoPerformanceReportVO.title!}<br>${adVideoPerformanceReportVO.templateProductWidth!}x${adVideoPerformanceReportVO.templateProductHeight!}<br>00:${adVideoPerformanceReportVO.adVideoSec!}<br>
-					  	<a href="#" target="_blank">${adVideoPerformanceReportVO.adLinkUrl!}</a><br>
+					<td  style="text-align:left; line-height: 20px; padding: 10px;width:50px;word-wrap:break-word;">${adVideoPerformanceReportVO.title!}<br>${adVideoPerformanceReportVO.templateProductWidth!} x ${adVideoPerformanceReportVO.templateProductHeight!}<br>00:${adVideoPerformanceReportVO.adVideoSec!}<br>
+					  	<a href="${adVideoPerformanceReportVO.adLinkUrl!}" target="_blank">${adVideoPerformanceReportVO.adLinkUrl!}</a><br>
 					</td>
 					<td><#if adVideoPerformanceReportVO.adPriceType == 'CPM'>千次曝光出價<#else>單次收視出價</#if><br>${adVideoPerformanceReportVO.adPriceType!}</td>
 					<td>${adVideoPerformanceReportVO.device!}</td>
