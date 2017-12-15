@@ -65,13 +65,15 @@ public class AdActionViewAjax extends BaseCookieAction{
 					totalCost += pfpAdActionViewVO.getAdClkPrice();
 					totalInvildClk += pfpAdActionViewVO.getInvalidClk();
 				}
-				if(totalClk > 0 || totalPv > 0){
+				if(totalClk > 0 && totalPv > 0){
 					totalClkRate = (float)totalClk / (float)totalPv*100;
 				}
 				
-				if(totalCost > 0 || totalClk > 0){
+				if(totalCost > 0 && totalClk > 0){
 					totalAvgCost = (float)totalCost / (float)totalClk;
 				}
+				
+				
 				
 				if(totalCost > 0 ){
 					thousandsCost = ((float)totalCost * 1000) / ((float)totalPv);
