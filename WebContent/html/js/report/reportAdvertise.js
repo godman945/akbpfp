@@ -173,12 +173,14 @@ function resetIframeSize(){
 		var td = $(obj).children()[1];
 		var iframe = td.querySelector('.akb_iframe');
 		var div = td.querySelector('.ad_size');
-		var size = $(div).text().replace('尺寸 ','');
-		var sizeArray = size.split(' x ');
-		var width = sizeArray[0];
-		var height = sizeArray[1];
-		iframe.width = width;
-		iframe.height = height;
+		if(div != null){
+			var size = $(div).text().replace('尺寸 ','');
+			var sizeArray = size.split(' x ');
+			var width = sizeArray[0].trim();
+			var height = sizeArray[1].trim();
+			iframe.width = width;
+			iframe.height = height;
+		}
 	});
 }
 
@@ -187,10 +189,12 @@ function resizeIframeInfo(){
 	$("#excerptTable tbody tr").each(function(index,obj){
 		var td = $(obj).children()[1];
 		var iframe = td.querySelector('.akb_iframe');
-		var adratio = iframe.height / iframe.width;
-		var	adh = 250 * adratio;
-		var infoDiv = $($(td).children()[0]).children()[1];
-		$(infoDiv).css('margin-top',(adh / 2) - 45+'px');
+		if(iframe != null){
+			var adratio = iframe.height / iframe.width;
+			var	adh = 250 * adratio;
+			var infoDiv = $($(td).children()[0]).children()[1];
+			$(infoDiv).css('margin-top',(adh / 2) - 45+'px');
+		}
 	});
 }
 
@@ -785,12 +789,12 @@ function tablesorter1(){
 	$("#excerptTable").tablesorter({
 		headers: {
 			0 : { sorter: false },
-			8 : { sorter: 'fancyNumber' },
-			9 : { sorter: 'fancyNumber' },
-			10 : { sorter: 'fancyNumber' },
-			11 : { sorter: 'rangesort' },
-			12 : { sorter: 'rangesort' },
-			13 : { sorter: 'rangesort' },
+//			8 : { sorter: 'fancyNumber' },
+//			9 : { sorter: 'fancyNumber' },
+//			10 : { sorter: 'fancyNumber' },
+//			11 : { sorter: 'rangesort' },
+//			12 : { sorter: 'rangesort' },
+//			13 : { sorter: 'rangesort' },
 			14 : { sorter: false }
 		},
 	});

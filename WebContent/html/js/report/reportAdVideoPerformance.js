@@ -130,8 +130,8 @@ $(function() {
 		 blockBody();
 		 resetIframeSize();
 	 }).bind("sortEnd",function(e, t){
-		 resizeIframeInfo();
 		 setTimeout(function(){  $.unblockUI(); }, 1000);
+		 resizeIframeInfo();
 	 });
 });
 
@@ -142,8 +142,8 @@ $(window).load(function(){
 /**重新恢復原本iframe尺寸*/
 function resetIframeSize(){
 	$("#excerptTable tbody tr").each(function(index,obj){
-		var td = $(obj).children()[1];
-		var iframe = td.querySelector('.akb_iframe');
+		var iframe = $(obj).children()[1].querySelector('.akb_iframe');
+		var td = $(obj).children()[2];
 		var div = td.querySelector('.ad_size');
 		var size = $(div).text().replace('尺寸 ','');
 		var sizeArray = size.split(' x ');
@@ -156,14 +156,14 @@ function resetIframeSize(){
 
 /**重新計算明細高度*/
 function resizeIframeInfo(){
-//	$("#excerptTable tbody tr").each(function(index,obj){
-//		var td = $(obj).children()[1];
-//		var iframe = td.querySelector('.akb_iframe');
-//		var adratio = iframe.height / iframe.width;
-//		var	adh = 250 * adratio;
-//		var infoDiv = $($(td).children()[0]).children()[1];
-//		$(infoDiv).css('margin-top',(adh / 2) - 45+'px');
-//	});
+	$("#excerptTable tbody tr").each(function(index,obj){
+		var td = $(obj).children()[1];
+		var iframe = td.querySelector('.akb_iframe');
+		var adratio = iframe.height / iframe.width;
+		var	adh = 250 * adratio;
+		var infoDiv = $($(td).children()[0]).children()[1];
+		$(infoDiv).css('margin-top',(adh / 2) - 45+'px');
+	});
 }
 
 
@@ -192,23 +192,7 @@ function ready(){
 	$.tablesorter.defaults.widgets = ['zebra'];
 	$("#excerptTable").tablesorter({
 		headers: {
-			0 : { sorter: 'fancyCurrency' },
-			1 : { sorter: 'fancyCurrency' },
-			2 : { sorter: false },
-			3 : { sorter: 'fancyCurrency' },
-			4 : { sorter: 'fancyCurrency' },
-			5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'fancyNumber' },
-			9 : { sorter: 'fancyNumber' },
-			10 : { sorter: 'fancyNumber' },
-			11 : { sorter: false },
-			12 : { sorter: 'fancyNumber' },
-			13 : { sorter: 'fancyNumber' },
-			14 : { sorter: 'fancyNumber' },
-			15 : { sorter: 'fancyNumber' },
-			16 : { sorter: 'fancyNumber' },
+			0 : { sorter: false },
 		}
 	});
 
