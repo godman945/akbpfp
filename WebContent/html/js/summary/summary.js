@@ -163,7 +163,7 @@ function loadChart(){
 			"chartType" : $('#selectChartType').val()
 		},
 		success : function(respone) {
-			console.log(respone);
+//			console.log(respone);
 			dataArray = respone;
 		}
 	});

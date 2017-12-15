@@ -228,6 +228,7 @@ public class PfpAdPvclkService extends BaseService<PfpAdPvclk,String> implements
 		    				
 		    				//判斷廣告類行
 		    				String html5Flag = "N";
+		    				adLayerVO.setHtml5Tag(html5Flag);
 		    				if(StringUtils.equals("c_x05_po_tad_0059", pfpAd.getAdAssignTadSeq())){
 		    					html5Flag = "Y";
 		    					adLayerVO.setHtml5Tag(html5Flag);
