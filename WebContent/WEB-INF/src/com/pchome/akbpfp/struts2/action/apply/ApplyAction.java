@@ -106,8 +106,8 @@ public class ApplyAction extends BaseSSLAction{
 	private String billingService;	
 	private String channelId;						// 金流訂單查詢	
 	private String accountId;					// 帳戶編號
-	private String pfdc;	
-	private String pfdu;
+	private String buPortalPfdu;	
+	private String buPortalPfdc;
 	
 	
 	public String execute() throws Exception{
@@ -299,7 +299,7 @@ public class ApplyAction extends BaseSSLAction{
 					String pfpId = pfpCustomerInfo.getCustomerInfoId();
 					String userId = user.getUserId();
 					//經銷商設定
-					processPfdUser(pfpId,userId,this.pfdc,this.pfdu);
+					processPfdUser(pfpId,userId,this.buPortalPfdu,this.buPortalPfdc);
 				}else{
 					log.info(">>> PCHOME PFD PROCESS:"+userMemberId);
 					//經銷商設定
@@ -416,11 +416,11 @@ public class ApplyAction extends BaseSSLAction{
 	/**
 	 * 經銷商設定
 	 * */
-	public boolean processPfdUser(String pfpId,String userId,String pfdc,String pfdu) throws Exception{
+	public boolean processPfdUser(String pfpId,String userId,String buPortalPfdc,String buPortalPfdu) throws Exception{
 		PfdUserAdAccountRefVO pfdUserAdAccountRefVO = new PfdUserAdAccountRefVO();
 		pfdUserAdAccountRefVO.setRefId(pfdUserAdAccountRefService.getNewRefId());
-		pfdUserAdAccountRefVO.setPfdCustomerInfoId(pfdc);
-		pfdUserAdAccountRefVO.setPfdUserId(pfdu);
+		pfdUserAdAccountRefVO.setPfdCustomerInfoId(buPortalPfdc);
+		pfdUserAdAccountRefVO.setPfdUserId(buPortalPfdu);
 		pfdUserAdAccountRefVO.setPfpCustomerInfoId(pfpId);
 		pfdUserAdAccountRefVO.setPfpUserId(userId);
 		pfdUserAdAccountRefVO.setPfpPayType("1");
@@ -908,17 +908,17 @@ public class ApplyAction extends BaseSSLAction{
 	public void setBuAccountVO(BuAccountVO buAccountVO) {
 		this.buAccountVO = buAccountVO;
 	}
-	public String getPfdc() {
-		return pfdc;
+	public String getBuPortalPfdu() {
+		return buPortalPfdu;
 	}
-	public void setPfdc(String pfdc) {
-		this.pfdc = pfdc;
+	public void setBuPortalPfdu(String buPortalPfdu) {
+		this.buPortalPfdu = buPortalPfdu;
 	}
-	public String getPfdu() {
-		return pfdu;
+	public String getBuPortalPfdc() {
+		return buPortalPfdc;
 	}
-	public void setPfdu(String pfdu) {
-		this.pfdu = pfdu;
+	public void setBuPortalPfdc(String buPortalPfdc) {
+		this.buPortalPfdc = buPortalPfdc;
 	}
 
 }
