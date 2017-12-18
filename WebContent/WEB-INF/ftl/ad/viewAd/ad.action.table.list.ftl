@@ -26,7 +26,7 @@
 		<th>廣告走期</th>
 		<th width="110">每日花費</th>
 		<th style="width:7%">曝光數</th>
-		<th><a style="float: left; margin-top: 7px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a>互動數</th>
+		<th><a style="float: left; margin-top: 3px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a>互動數</th>
 		<th>互動率</th>
 		<th style="min-width:65px;width:9%">單次互動費用</th>
 		<th style="min-width:65px;width:9%">千次曝光費用</th>	

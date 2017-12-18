@@ -1,22 +1,65 @@
 ﻿﻿﻿﻿$(document).ready(function(){
-	
-//	setInterval('TT()',"300");
-//	console.log($('#TT'));
-//	
-//	
-//	setInterval('BB()',"300");
-//	console.log($('#BB'));
-	
+	$(function() {
+	}).bind("sortStart",function(e, t){
+		 blockBody();
+		 resetIframeSize();
+	 }).bind("sortEnd",function(e, t){
+		 setTimeout(function(){  
+			 $.unblockUI(); 
+			 resizeIframeInfo();
+		 }, 1000);
+		 
+	 });
 });
 
 
-//function TT(){
-//	$('#AA3').text(new Date().getTime());
-//}
-//
-//function BB(){
-//	$('#AA2').text(new Date().getTime());
-//}
+/**重新恢復原本iframe尺寸*/
+function resetIframeSize(){
+	$("#tableView tbody tr").each(function(index,obj){
+		var iframe = $(obj).children()[1].querySelector('.akb_iframe');
+		var td = $(obj).children()[2];
+		var div = td.querySelector('.ad_size');
+		var size = $(div).text().replace('尺寸 ','');
+		var sizeArray = size.split(' x ');
+		var width = sizeArray[0];
+		var height = sizeArray[1];
+			console.log(width);
+			console.log(height);
+		
+//		iframe.width = width;
+//		iframe.height = height;
+	});
+}
+
+/**重新計算明細高度*/
+function resizeIframeInfo(){
+	$("#excerptTable tbody tr").each(function(index,obj){
+//		var td = $(obj).children()[1];
+//		var iframe = td.querySelector('.akb_iframe');
+//		var adratio = iframe.height / iframe.width;
+//		var	adh = 250 * adratio;
+//		var infoDiv = $($(td).children()[0]).children()[1];
+//		$(infoDiv).css('margin-top',(adh / 2) - 45+'px');
+	});
+}
+
+function blockBody(){
+	$('body').block({
+		message: "",
+		css: {
+			padding: 0,
+			margin: 0,
+			width: '100%',
+			top: '40%',
+			left: '35%',
+			textAlign: 'center',
+			color: '#000',
+			border: '3px solid #aaa',
+			backgroundColor: '#fff',
+			cursor: 'wait'
+		}
+	});
+}
 
 
 //default查詢廣告明細資料
@@ -126,6 +169,7 @@ function closeAdAdStatus(adAdSeq, status){
 function tableSorter(){
 	
 	$("#tableView").tablesorter({
+		 theme: 'blue',
 		headers:{
 			0:{sorter:false},
 			3 : { sorter: 'fancyNumber' },

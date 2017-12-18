@@ -17,7 +17,14 @@
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.blockUI.js"></script>
 	<script language="JavaScript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
 	<script language="JavaScript" src="http://code.highcharts.com/modules/exporting.js"></script>
+	<!--
+	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.tablesorter.combined.js"></script>
+	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.tablesorter.widgets.js"></script>
+	-->
     <@t.insertAttribute name="js" />	
+    
+    
+    
 </head>
 
 <body>

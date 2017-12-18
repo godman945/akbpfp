@@ -158,7 +158,7 @@ $(document).ready(function(){
 		$(".msg").text("當影片播超過三秒即計算為一次有效收視，系統接受最低出價NT$0.5");
 		$("#adPrice").val("0.5");
 	}else if($("#adPriceType").val() == 1){
-		$(".msg").text("當影片曝光1,000次即計算為一次收費，系統接受最低出價NT$65");
+		$(".msg").text("千次曝光計費，系統接受最低出價NT$65");
 		$("#adPrice").val("65");
 	}
 	
@@ -169,7 +169,7 @@ $(document).ready(function(){
 			$(".msg").text("當影片播超過三秒即計算為一次有效收視，系統接受最低出價NT$0.5");
 			$("#adPrice").val("0.5");
 		}else if($(this).val() == 1){
-			$(".msg").text("當影片曝光1,000次即計算為一次收費，系統接受最低出價NT$65");
+			$(".msg").text("千次曝光計費，系統接受最低出價NT$65");
 			$("#adPrice").val("65");
 		}
 		

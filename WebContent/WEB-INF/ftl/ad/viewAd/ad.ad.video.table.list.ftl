@@ -46,7 +46,7 @@
 				</td>
 				<td style=" text-align: left; line-height: 20px; padding: 10px;">
 						${adReportVO.content!}<br>
-						尺寸 ${adReportVO.adWidth!} x ${adReportVO.adHeight!}<br>
+						 <div class="ad_size">尺寸 ${adReportVO.adWidth!} x ${adReportVO.adHeight!}</div>
 						時間 :${adReportVO.adVideoSec!}<br>
 					  	<a href="#" target="_blank" src="${adReportVO.realUrl!}">${adReportVO.realUrl!}</a><br>
 				</td>
@@ -58,12 +58,12 @@
 		        </#if>
 		        </td>
 				<td class="td01">${adReportVO.adClkPriceType}</td>	
-				<td class="td01">${adReportVO.adPvSum?number?string('#,###')!}</td>
-				<td class="td01">${adReportVO.adClkSum?number?string('#,###')!}</td>
-				<td class="td01">${adReportVO.adClickRatings}%</td>		
-				<td class="td01">NT$ ${adReportVO.singleCost}</td>
-				<td class="td01">NT$ ${adReportVO.thousandsCost?number?string('#.##')!}</td>
-				<td class="td01">NT$ ${adReportVO.adPriceSum?number?string('#.##')!}</td>
+				<td class="td01">${adReportVO.adPvSum?number?number?string('#,###.##')!}</td>
+				<td class="td01">${adReportVO.adClkSum?number?number?string('#,###.##')!}</td>
+				<td class="td01">${adReportVO.adClickRatings?number?string('#,###.##')!}%</td>		
+				<td class="td01">NT$ ${adReportVO.singleCost?number?string('#,###.##')!}</td>
+				<td class="td01">NT$ ${adReportVO.thousandsCost?number?string('#,###.##')!}</td>
+				<td class="td01">NT$ ${adReportVO.adPriceSum?number?string('#,###.##')!}</td>
 				<td class="td02">
 					<#if pfpAdAdVideoViewVO.actionStatus != "9">
 						<a href="adAdAdd.html?adGroupSeq=${adReportVO.adGroupSeq!}&adOperatingRule=VIDEO">製作新廣告</a><br>
@@ -87,12 +87,12 @@
 </tbody
 	<tr class="tbg">
 		<td colspan="5">總計：${totalSize!}筆</td>
-		<td class="td01">${adReportVO.adPvSum?number?string('#,###')!}</td>
+		<td class="td01">${adReportVO.adPvSum?number?string('#,###.##')!}</td>
 		<td class="td01">${adReportVO.adClkSum?number?string('#,###')!}</td>		
-		<td class="td01">${adReportVO.adClickRatings!}%</td>
-		<td class="td01">NT$ ${adReportVO.singleCost!}</td>
-		<td class="td01">NT$ ${adReportVO.thousandsCost?number?string('#.##')!}</td>
-		<td class="td01">NT$ ${adReportVO.adPriceSum?number?string('#.##')!}</td>
+		<td class="td01">${adReportVO.adClickRatings?number?string('#,###')!}%</td>
+		<td class="td01">NT$ ${adReportVO.singleCost?number?string('#,###')!}</td>
+		<td class="td01">NT$ ${adReportVO.thousandsCost?number?string('#,###.##')!}</td>
+		<td class="td01">NT$ ${adReportVO.adPriceSum?number?string('#,###.##')!}</td>
 		<td class="td01"></td>
 	</tr>
 </table>

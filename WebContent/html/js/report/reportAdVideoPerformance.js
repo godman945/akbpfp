@@ -123,8 +123,6 @@ $(function(){
 	   showHighChart();
 	});
 	
-	
-	
 $(function() {
 	}).bind("sortStart",function(e, t){
 		 blockBody();
@@ -188,13 +186,55 @@ function blockBody(){
 
 //ajax id  重新榜定
 function ready(){
-	//sort table plugin
-	$.tablesorter.defaults.widgets = ['zebra'];
 	$("#excerptTable").tablesorter({
 		headers: {
-			0 : { sorter: false },
-		}
+			0: { sorter: false },
+		},
+		initialized: function(table) {
+			$("#excerptTable").on('sortStart', function() {
+				 blockBody();
+				 resetIframeSize();
+		    }),
+		    $("#excerptTable").on('sortEnd', function() {
+		    	setTimeout(function(){  $.unblockUI(); }, 1000);
+				resizeIframeInfo();
+		    });
+		 }
 	});
+	//sort table plugin
+//	$.tablesorter.defaults.widgets = ['zebra'];
+//	$("#excerptTable").tablesorter({
+//		headers: {
+//			0 : { sorter: false },
+//			1 : { sorter: 'string' },
+//			5 : { sorter: 'adSize' },
+//			6 : { sorter: 'number' },
+//			7 : { sorter: 'number' },
+//			8 : { sorter: 'percent' },
+//			9 : { sorter: 'currency' },
+//			10 : { sorter: 'currency' },
+//			11 : { sorter: false },
+//			12 : { sorter: 'number' },
+//			13 : { sorter: 'number' },
+//			14 : { sorter: 'number' },
+//			15 : { sorter: 'number' },
+//			16 : { sorter: 'percent' },
+//			17 : { sorter: 'number' },
+//			18 : { sorter: 'number' },
+//			19 : { sorter: 'number' },
+//			20 : { sorter: 'number' }
+			
+			
+			
+//			0 : { sorter: false },
+//			1 : { sorter: false },
+//			2 : { sorter:  'string'},
+//			3 : { sorter:  'string'},
+//			3 : { sorter:  'string'},
+//			4 : { sorter:  'string'},
+//			5 : { sorter:  'number'},
+//		}
+//	});
 
 	//日期區間內容
 	$('#IT_dateRange').attr("value", $('#fstartDate').val() + "~" + $('#fendDate').val());

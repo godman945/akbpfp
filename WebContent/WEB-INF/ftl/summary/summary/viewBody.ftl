@@ -56,7 +56,7 @@
     <td><table width="100%" height="230" border="0" cellpadding="0" cellspacing="1" class="tb01">
       <tr>
         <th height="30">總曝光數</th>
-        <th height="30"><a style="float: left; margin-top: 7px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a>總互動數</th>
+        <th height="30"><a style="float: left; margin-top: 3px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a>總互動數</th>
         <th height="30">總費用</th>
       </tr>
       <tr>

@@ -30,7 +30,7 @@
 				<th style="width:13%">聯播網廣告出價</th>
 				</#if>
 				<th style="width:8%">曝光數</th>
-				<th style="width:8%">互動數<a style="float: left; margin-top: 7px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a></th>	
+				<th style="width:8%">互動數<a style="float: left; margin-top: 3px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a></th>	
 				<th style="width:8%">互動率</th>
 				<th style="width:8%">單次互動費用</th>
 				<th style="width:8%">千次曝光費用</th>
@@ -45,7 +45,7 @@
 				<th style="width:8%">計價方式</th>
 				<th style="width:13%">廣告出價</th>
 				<th style="width:8%">曝光數</th>
-				<th style="width:8%">互動數<a style="float: left; margin-top: 7px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a></th>	
+				<th style="width:8%">互動數<a style="float: left; margin-top: 3px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a></th>	
 				<th style="width:8%">互動率</th>
 				<th style="width:8%">單次互動費用</th>
 				<th style="width:8%">千次曝光費用</th>

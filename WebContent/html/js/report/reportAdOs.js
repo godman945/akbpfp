@@ -134,7 +134,7 @@ function ready(){
 	if($("#excerptTable").children().length > 1){
 		var node = document.createElement("a");
 		node.style.float = 'left';
-		node.style.marginTop = '7px';
+		node.style.marginTop = '3px';
 		var img = document.createElement("img");
 		img.src='./html/img/question.gif';
 		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";

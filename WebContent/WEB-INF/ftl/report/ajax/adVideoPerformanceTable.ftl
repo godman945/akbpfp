@@ -1,6 +1,5 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-
 <script src="http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.js"></script>
 <!-- <link rel="stylesheet" href="http://jcrop-cdn.tapmodo.com/v0.9.9/css/jquery.Jcrop.css" /> -->
 
