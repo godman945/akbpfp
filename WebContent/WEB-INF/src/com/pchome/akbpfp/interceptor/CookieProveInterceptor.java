@@ -53,8 +53,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 	private SequenceService sequenceService;
 	
 	private String memberServer;
-	private String pfdc;
-	private String pfdu;
+	private String buPortalPfdc;
 	private String pcstoreName;
 	private String rutenName;
 	
@@ -85,7 +84,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 				result = invocation.invoke();
 				return result;
-			}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.pfdu)){
+			}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
 				result = invocation.invoke();
 				return result;
 			}
@@ -302,20 +301,12 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		this.sequenceService = sequenceService;
 	}
 
-	public String getPfdc() {
-		return pfdc;
+	public String getBuPortalPfdc() {
+		return buPortalPfdc;
 	}
 
-	public void setPfdc(String pfdc) {
-		this.pfdc = pfdc;
-	}
-
-	public String getPfdu() {
-		return pfdu;
-	}
-
-	public void setPfdu(String pfdu) {
-		this.pfdu = pfdu;
+	public void setBuPortalPfdc(String buPortalPfdc) {
+		this.buPortalPfdc = buPortalPfdc;
 	}
 
 	public String getPcstoreName() {

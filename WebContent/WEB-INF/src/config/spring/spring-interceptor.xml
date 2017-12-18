@@ -17,8 +17,7 @@
         <property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
         <property name="pfdUserMemberRefService" ref="PfdUserMemberRefService" />
         <property name="pfpBuService" ref="PfpBuService" />
-        <property name="pfdc" value="${bu.pfd.customer.info.id}" />
-        <property name="pfdu" value="${bu.pfd.user.id}" />
+        <property name="buPortalPfdc" value="${bu.portal.pfdc}" />
         <property name="pcstoreName" value="${bu.pcstore.name}" />
         <property name="rutenName" value="${bu.ruten.name}" />
     </bean>
@@ -32,8 +31,7 @@
         <property name="cookieProccessAPI" ref="CookieProccessAPI" />
         <property name="memberServer" value="${member.server}" />
         <property name="sequenceService" ref="SequenceService" />
-        <property name="pfdc" value="${bu.pfd.customer.info.id}" />
-        <property name="pfdu" value="${bu.pfd.user.id}" />
+        <property name="buPortalPfdc" value="${bu.portal.pfdc}" />
         <property name="pcstoreName" value="${bu.pcstore.name}" />
         <property name="rutenName" value="${bu.ruten.name}" />
     </bean>

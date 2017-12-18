@@ -56,8 +56,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	private PfdUserMemberRefService pfdUserMemberRefService;
 	private PfpBuService pfpBuService;
 	
-	private String pfdc;
-	private String pfdu;
+	private String buPortalPfdc;
 	private String pcstoreName;
 	private String rutenName;
 	
@@ -84,7 +83,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 			
 			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 				return "index";
-			}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.pfdu)){
+			}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
 				return "index";
 			}
 //			else if(buName.equals(rutenName) && !pfdc.equals(this.pfdc)){
@@ -316,20 +315,13 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		this.pfpBuService = pfpBuService;
 	}
 
-	public String getPfdc() {
-		return pfdc;
+
+	public String getBuPortalPfdc() {
+		return buPortalPfdc;
 	}
 
-	public void setPfdc(String pfdc) {
-		this.pfdc = pfdc;
-	}
-
-	public String getPfdu() {
-		return pfdu;
-	}
-
-	public void setPfdu(String pfdu) {
-		this.pfdu = pfdu;
+	public void setBuPortalPfdc(String buPortalPfdc) {
+		this.buPortalPfdc = buPortalPfdc;
 	}
 
 	public String getPcstoreName() {
