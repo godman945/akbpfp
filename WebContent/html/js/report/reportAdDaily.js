@@ -4,7 +4,7 @@ var reportAjaxActionPath="reportAdDailyAjaxTable.html";
 
 //一開始執行
 $(function(){
-
+	$('#selectChartType').children()[3].remove();
 	//flash chart
 	showHighChart();
 

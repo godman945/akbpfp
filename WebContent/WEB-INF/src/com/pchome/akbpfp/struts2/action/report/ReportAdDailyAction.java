@@ -167,7 +167,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 		downloadFlag="no";
 
-		tableHeadNameMap=new HashMap<String,String>();
+		tableHeadNameMap = new HashMap<String,String>();
 		tableHeadNameMap.put("曝光數", EnumReport.REPORT_CHART_TYPE_PV.getTextValue());
 		tableHeadNameMap.put("互動數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
 		tableHeadNameMap.put("互動率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
@@ -177,6 +177,8 @@ public class ReportAdDailyAction extends BaseReportAction {
 		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
 		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
 
+		System.out.println(tableHeadNameMap);
+		
 		optionSelect="";
 		optionNotSelect="";
 
