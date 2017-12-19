@@ -153,13 +153,15 @@ function resetIframeSize(){
 	$("#excerptTable tbody tr").each(function(index,obj){
 		var td = $(obj).children()[0];
 		var iframe = td.querySelector('.akb_iframe');
-		var div = td.querySelector('.ad_size');
-		var size = $(div).text().replace('尺寸 ','');
-		var sizeArray = size.split(' x ');
-		var width = sizeArray[0];
-		var height = sizeArray[1];
-		iframe.width = width;
-		iframe.height = height;
+		if(iframe != null){
+			var div = td.querySelector('.ad_size');
+			var size = $(div).text().replace('尺寸 ','');
+			var sizeArray = size.split(' x ');
+			var width = sizeArray[0];
+			var height = sizeArray[1];
+			iframe.width = width;
+			iframe.height = height;
+		}
 	});
 }
 
