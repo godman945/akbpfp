@@ -22,8 +22,8 @@
 			<td height="30" class="td01">NT$ ${vo.saveMoney?string('#,###')!}</td>
 			<td height="30" class="td01">NT$ ${vo.taxMoney?string('#,###')!}</td>
 			<td height="30" class="td01">NT$ ${vo.returnMoney?string('#,###')!}</td>
-			<td height="30" class="td01">NT$ ${vo.adSpentMoney?string('#,###')!}</td>
-			<td height="30" class="td01">NT$ ${vo.remain?string('#,###')!}</td>
+			<td height="30" class="td01">NT$ ${vo.adSpentMoney?string('#,###.##')!}</td>
+			<td height="30" class="td01">NT$ ${vo.remain?string('#,###.##')!}</td>
  	    </tr>		
 	</#list>
  	</tbody>
