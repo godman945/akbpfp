@@ -120,16 +120,12 @@ $(document).ready(function(){
 		
 		var userprice = $("#adPrice").val();
 		
-		console.log(userprice);
-		
 		if($("#adPriceType").val() == 1){
 			userprice = (userprice / 0.005) * 1000;
 		}else if($("#adPriceType").val() == 0){
 			userprice = userprice / 0.005;
 		}
 		
-		
-		console.log(userprice);
 		
 		$.ajax({
 			url: "adGroupSuggestPrice.html",
