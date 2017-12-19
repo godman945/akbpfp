@@ -26,10 +26,6 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 	private static final long serialVersionUID = 3038297271832911228L;
 
 	private LinkedList<String> tableHeadList =null; //頁面table head
-	
-
-	private LinkedList<String> tableTotalSumList = null; // 頁面 table data
-
 	private String[] align_data = {"center", "center", "center"};
 	private String[] align_sum = {"center", "center", "center"};
 
@@ -328,25 +324,35 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 
 		StringBuffer content = new StringBuffer();
 		String adPriceTypeName = StringUtils.isBlank(adPriceType) ? "全部" : adPriceTypeMap.get(adPriceType);
+		String searchDevice = "全部";
+		if(adPvclkDevice.equals("PC")){
+			searchDevice = "電腦";
+		}else if(adPvclkDevice.equals("mobile")){
+			searchDevice = "行動裝置";
+		}
+		
+		String searchAdSize = "全部尺寸";
+		if(StringUtils.isNotBlank(adSize)){
+			String sizeArray[] = adSize.split("_");
+			searchAdSize = sizeArray[0] + " x " + sizeArray[1];
+		}
+		
+		
 		//報表名稱
 		downloadFileName = new String(filename.getBytes("UTF-8"), "ISO8859-1");
 		content.append("帳戶," + super.getCustomer_info_title());
 		content.append("\n\n");
 		content.append("報表名稱,影音廣告成效");
 		content.append("\n\n");
-		content.append("經銷商帳戶,");
-		content.append("\n");
-		content.append("經銷商帳號,");
-		content.append("\n");
 		content.append("日期範圍,"+startDate+"到"+endDate);
 		content.append("\n");
 		content.append("計價方式,"+adPriceTypeName);
 		content.append("\n");
-		content.append("裝置,");
+		content.append("裝置,"+searchDevice);
 		content.append("\n");
-		content.append("廣告尺寸,");
+		content.append("廣告尺寸,"+searchAdSize);
 		content.append("\n");
-		content.append("搜尋條件,字詞包含");
+		content.append("搜尋條件,字詞包含,"+searchText);
 		content.append("\n");
 		content.append("搜尋廣告明細名稱");
 		content.append("\n\n");
@@ -416,7 +422,14 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			content.append(adVideoPerformanceReportVO.getVideoUrl()+",");
 			content.append(adVideoPerformanceReportVO.getAdLinkUrl()+",");
 			content.append((StringUtils.isBlank(adPriceType)? "全部" : adPriceType ) + ",");
-			content.append((StringUtils.isBlank(adPvclkDevice)? "全部" : adPvclkDevice )+ ",");
+			
+			String device = adVideoPerformanceReportVO.getAdPvClkDevice();
+			if(adPvclkDevice.equals("PC")){
+				device = "電腦";
+			}else if(adPvclkDevice.equals("mobile")){
+				device = "行動裝置";
+			}
+			content.append(device+ ",");
 			content.append(adVideoPerformanceReportVO.getTemplateProductWidth() + " x "+ adVideoPerformanceReportVO.getTemplateProductHeight()+",");
 			content.append(adVideoPerformanceReportVO.getAdPvSum()+",");
 			content.append(adVideoPerformanceReportVO.getAdViewSum()+",");
@@ -442,7 +455,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 				+ ","
 				+ ","
 				+ ","
-				+ (StringUtils.isBlank(adPriceType)? "全部" : adPriceType ) + ","
+				+ searchDevice + ","
 				+ ","
 				+ sumPV+","
 				+ sumView+","

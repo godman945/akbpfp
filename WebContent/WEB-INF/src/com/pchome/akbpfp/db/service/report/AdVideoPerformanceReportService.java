@@ -124,11 +124,6 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdViewRatings(objArray[7].toString());
 			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[8].toString());
 			adVideoPerformanceReportVO.setThousandsCost(objArray[9].toString());
-			
-			System.out.println(">>>>>>>>>>>>>>ThousandsCost:"+objArray[9].toString());
-			System.out.println(">>>>>>>>>>>>>>PV:"+objArray[9].toString());
-			System.out.println(">>>>>>>>>>>>>>COST:"+objArray[9].toString());
-			
 			adVideoPerformanceReportVO.setCostSum(objArray[10].toString());
 			adVideoPerformanceReportVO.setAdVideoProcess25Sum(objArray[11].toString());
 			adVideoPerformanceReportVO.setAdVideoProcess50Sum(objArray[12].toString());
