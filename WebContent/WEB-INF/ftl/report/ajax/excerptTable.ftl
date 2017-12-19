@@ -94,15 +94,17 @@ ${page}/${totalPage}
      
      <tbody>
      <#list tableDataList as td>
-         <#assign index = 0>
-		 <tr height="30">
+        <#assign index = 0>
+		<tr height="30">
 		<#list td as tdin>
 			<#if index = 10 || index = 11 || index = 12>
 				<td width='100' align="${align_data[index]}">NT$ ${tdin}</td>
+			<#elseif index = 12>
+				<td width='50' align="${align_data[index]}">NT$ ${tdin}</td>
 			<#elseif index = 8>
 				<td align="${align_data[index]}">${tdin}%</td>	
 			<#elseif index = 9>
-				<td width='100' align="${align_data[index]}">${tdin}</td>	
+				<td width='30' align="${align_data[index]}">${tdin}</td>
 			<#else>	
 				<td align="${align_data[index]}">${tdin}</td>
 			</#if>
