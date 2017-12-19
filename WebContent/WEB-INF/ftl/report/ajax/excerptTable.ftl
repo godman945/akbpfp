@@ -98,9 +98,11 @@ ${page}/${totalPage}
 		 <tr height="30">
 		<#list td as tdin>
 			<#if index = 10 || index = 11 || index = 12>
-				<td align="${align_data[index]}">NT$ ${tdin}</td>
+				<td width='100' align="${align_data[index]}">NT$ ${tdin}</td>
 			<#elseif index = 8>
 				<td align="${align_data[index]}">${tdin}%</td>	
+			<#elseif index = 9>
+				<td width='100' align="${align_data[index]}">${tdin}</td>	
 			<#else>	
 				<td align="${align_data[index]}">${tdin}</td>
 			</#if>
