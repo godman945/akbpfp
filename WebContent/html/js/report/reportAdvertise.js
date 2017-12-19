@@ -131,7 +131,11 @@ $(function(){
 
 	//flash chart reload
 	$('#reloadFlash').click(function(){
-	   showHighChart();
+	   if(chartAdSeq != null){
+		   showHighChart(chartAdSeq);
+	   }else{
+		   showHighChart(null);
+	   }
 	});
 	
 	$(function() {
@@ -439,7 +443,6 @@ function adIdSearch(adType, adId){
 
 //顯示open flash
 function showHighChart(adSeq){
-	
 	var searchAdSeq = "Null";
 	if(adSeq != null){
 		searchAdSeq = adSeq;
@@ -701,7 +704,10 @@ function ajaxFormSubmit(){
 	showHighChart(null);
 }
 
+/**廣告明細第三層*/
+var chartAdSeq = null;
 function detailQuery(adSeq) {
+ 	chartAdSeq = adSeq;
 	$('#downloadFlag').val("no");
 	json_data = {
 		"page": $('#formPage').val(),
