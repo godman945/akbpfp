@@ -291,40 +291,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 			adReportVO.setThousandsCost(objArray[6].toString());
 		}
 		
-		
-		
-		
 		return adReportVO;
-//		int totalSize = lisObj.size();
-//		int sumAdView = 0;
-//		int sumPv = 0;
-//		double sumCost = 0;
-//		for (Object object : lisObj) {
-//			Object[] objArray = (Object[]) object;
-//			sumPv = sumPv + Integer.valueOf(objArray[0].toString());
-//			sumCost = sumCost + Double.valueOf(objArray[1].toString());
-//			sumAdView = sumAdView + Integer.valueOf(objArray[2].toString());
-//		}
-//		
-//		double adViewRatings = 0;
-//		double singleAdViewCost = 0;
-//		double thousandsCost = 0;
-//		if(sumAdView != 0 || sumPv != 0){
-//			adViewRatings =	((double)sumAdView / (double)sumPv) * 100;
-//			thousandsCost = (double)sumCost / ((double)sumPv / 1000);
-//			if(sumCost >0 && sumAdView >0){
-//				singleAdViewCost = (double)sumCost / (double)sumAdView;
-//			}
-//		}
-//		PfpAdAdVideoViewSumVO pfpAdAdVideoViewSumVO = new PfpAdAdVideoViewSumVO();		
-//		pfpAdAdVideoViewSumVO.setTotalSize(totalSize);
-//		pfpAdAdVideoViewSumVO.setAdPvSum(sumPv);
-//		pfpAdAdVideoViewSumVO.setAdViewSum(sumAdView);
-//		pfpAdAdVideoViewSumVO.setAdViewRatings(adViewRatings);
-//		pfpAdAdVideoViewSumVO.setSingleAdViewCost(singleAdViewCost);
-//		pfpAdAdVideoViewSumVO.setThousandsCost(thousandsCost);
-//		pfpAdAdVideoViewSumVO.setCostSum(sumCost);
-//		return pfpAdAdVideoViewSumVO;
 	}
 	
 	
@@ -333,10 +300,14 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 	 * */
 	public List<AdReportVO> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
 		List<Object> lisObj = ((PfpAdDAO)dao).getAdAdVideoDetailView(pfpAdAdViewConditionVO);
-		List<AdReportVO> adReportVOList = new ArrayList<>();
+		
+		List<AdReportVO> adReportVOList = null;
+		if(lisObj.size() > 0 ){
+			adReportVOList = new ArrayList<>();
+		}
+		
 		for (Object object : lisObj) {
 			Object[] objArray = (Object[]) object;
-			
 			AdReportVO adReportVO = new AdReportVO();
 			adReportVO.setAdPvSum(objArray[0].toString());
 			adReportVO.setAdClkSum(objArray[1].toString());

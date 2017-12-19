@@ -1001,6 +1001,7 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" AND aa.customer_info_id = :customerInfoId "); 
 		sql.append(" AND a.ad_group_seq = :adGroupSeq "); 
 		sql.append(" AND g.ad_group_seq = a.ad_group_seq "); 
+		sql.append(" AND a.ad_status != 10 ");
 		sql.append(" AND aa.ad_action_seq = g.ad_action_seq "); 
 		sql.append(" GROUP  BY a.ad_seq)a "); 
 		Query query =  super.getSession().createSQLQuery(sql.toString());
@@ -1038,6 +1039,7 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" AND r.ad_pvclk_date >= :startDate  ");
 		sql.append(" AND r.ad_pvclk_date <= :endDate  ");
 		sql.append(" AND a.ad_group_seq = :adGroupSeq  ");
+		sql.append(" AND a.ad_status != 10 ");
 		sql.append(" AND g.ad_group_seq = a.ad_group_seq  ");
 		sql.append(" AND aa.ad_action_seq = g.ad_action_seq  ");
 		
@@ -1049,30 +1051,5 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		query.setParameter("adGroupSeq", pfpAdAdViewConditionVO.getAdGroupSeq());
 		return query.list();
 		
-		
-		
-		
-		
-//		sql.append(" SELECT IFNULL(TRUNCATE(SUM(ar.ad_pv),0),0)ad_pv, ");
-//		sql.append(" IFNULL(TRUNCATE(SUM(ar.ad_clk_price),2),0)cost, ");
-//		sql.append(" IFNULL(TRUNCATE(SUM((CASE ");
-//		sql.append(" WHEN ar.ad_clk_price_type = 'CPC' THEN ar.ad_clk ");
-//		sql.append(" ELSE ar.ad_view ");
-//		sql.append(" END)),0),0)ad_view ");
-//		sql.append(" FROM pfp_ad ad ");
-//		sql.append(" LEFT JOIN pfp_ad_report ar ON ar.ad_seq = ad.ad_seq, ");
-//		sql.append(" pfp_ad_group ag ");
-//		sql.append(" WHERE ag.ad_group_seq = :agSeq ");
-//		sql.append(" AND ad.ad_status != 10 ");
-//		sql.append(" AND ag.ad_group_seq = ad.ad_group_seq ");
-//		sql.append(" AND DATE_FORMAT(ad.ad_create_time,'%Y-%m-%d') >= :startDate ");
-//		sql.append(" AND DATE_FORMAT(ad.ad_create_time,'%Y-%m-%d') <= :endDate ");
-//		sql.append(" GROUP BY ad.ad_seq ");
-		
-//		Query query =  super.getSession().createSQLQuery(sql.toString());
-//		query.setParameter("agSeq", pfpAdAdViewConditionVO.getAdGroupSeq());
-//		query.setParameter("startDate", pfpAdAdViewConditionVO.getStartDate());
-//		query.setParameter("endDate", pfpAdAdViewConditionVO.getEndDate());
-//		return query.list();
 	}
 }
