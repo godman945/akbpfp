@@ -1,6 +1,6 @@
 
 var json_data;
-
+var reportExcerptLayer = '';
 //一開始執行
 //jQuery(document).ready(function() {
 blockBody();
@@ -232,12 +232,16 @@ function ready(){
         },
         initialized: function(table) {
 			$("#excerptTable").on('sortStart', function() {
-				 blockBody();
-				 resetIframeSize();
+				 if(reportExcerptLayer =='adLayer'){
+					 blockBody();
+					 resetIframeSize();	 
+				 }
 		    }),
 		    $("#excerptTable").on('sortEnd', function() {
-		    	setTimeout(function(){  $.unblockUI(); }, 1000);
-				resizeIframeInfo();
+		    	if(reportExcerptLayer == 'adLayer'){
+		    		setTimeout(function(){  $.unblockUI(); }, 1000);
+					resizeIframeInfo();
+		    	}
 		    });
 		 }
     });
@@ -465,6 +469,12 @@ function ready(){
 //單一 ajax table a href call ad search
 //總廣告成效-分類
 function adIdSearch(adType, adId){
+	if(adType == 'adtype_ad'){
+		reportExcerptLayer = 'adLayer';
+	}else{
+		reportExcerptLayer = '';
+	}
+	
 	var adPvclkDevice = null;
 	if($('#adPvclkDevice').val()) {
 		adPvclkDevice = $('#adPvclkDevice').val();

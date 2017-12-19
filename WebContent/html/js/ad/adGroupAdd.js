@@ -57,10 +57,19 @@ $(document).ready(function(){
 			$("#userPrice").val(price);
 		}
 		
+		
+		var userprice = $("#adPrice").val();
+		if($("#adPriceType").val() == 1){
+			userprice = (userprice / 0.005) * 1000;
+		}else if($("#adPriceType").val() == 0){
+			userprice = userprice / 0.005;
+		}
+		
+		
 		$.ajax({
 			url: "adGroupSuggestPrice.html",
 			data:{
-				"userprice": $("#adPrice").val()
+				"userprice": userprice
 			},
 			type: "post",
 			dataType: "json",
@@ -109,15 +118,28 @@ $(document).ready(function(){
 			$("#userPrice").val(price);
 		}
 		
+		var userprice = $("#adPrice").val();
+		
+		console.log(userprice);
+		
+		if($("#adPriceType").val() == 1){
+			userprice = (userprice / 0.005) * 1000;
+		}else if($("#adPriceType").val() == 0){
+			userprice = userprice / 0.005;
+		}
+		
+		
+		console.log(userprice);
+		
 		$.ajax({
 			url: "adGroupSuggestPrice.html",
 			data:{
-				"userprice": $("#adPrice").val()
+				"userprice":userprice
 			},
 			type: "post",
 			dataType: "json",
 			success: function(response, status){
-				console.log(response);
+//				console.log(response);
 				$("#showRate").html(response.adAsideRate+'%');
 			},
 				error: function(xtl) {
@@ -138,7 +160,7 @@ $(document).ready(function(){
 	
 	$('#cancel').click(function(){
 		$("#modifyForm")[0].reset();
-		//window.location.href = $("#backPage").val();
+		//window.location.href = $("#backPage").val(); 
 		refererHref($("#backPage").val());
 	});
 	
@@ -173,15 +195,22 @@ $(document).ready(function(){
 			$("#adPrice").val("65");
 		}
 		
+		var userprice = $("#adPrice").val();
+		if($("#adPriceType").val() == 1){
+			userprice = (userprice / 0.005) * 1000;
+		}else if($("#adPriceType").val() == 0){
+			userprice = userprice / 0.005;
+		}
+		
 		$.ajax({
 			url: "adGroupSuggestPrice.html",
 			data:{
-				"userprice": $("#adPrice").val()
+				"userprice": userprice
 			},
 			type: "post",
 			dataType: "json",
 			success: function(response, status){
-				console.log(response);
+//				console.log(response);
 				$("#showRate").html(response.adAsideRate+'%');
 			},
 				error: function(xtl) {
@@ -190,6 +219,9 @@ $(document).ready(function(){
 		 })
 		
 	})
+	
+	
+	
 	
 });
 

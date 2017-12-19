@@ -15,7 +15,7 @@
 <tbody>
     <tr>
       <th height="35">帳戶餘額</th>
-      <td>NT$ ${accountVO.remain!}</td>
+      <td>NT$ ${accountVO.remain?string('#,###.##')!}</td>
     </tr>
     <tr>
 		<th height="35">禮金序號</th>

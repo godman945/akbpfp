@@ -170,10 +170,6 @@ public class AdGroupAddAction extends BaseCookieAction{
 			log.info("backPage from cookie  = " + backPage);
 		}
 		
-		//log.info("backPage = " + backPage);
-
-		AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(Float.parseFloat(adGroupChannelPrice)));
-		
 		if(StringUtils.isNotBlank(adOperatingRule) && adOperatingRule.equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName())){
 			pfpAdPriceTypeVOList = new LinkedList<>();
 			for(EnumAdPriceType enumAdPriceType: EnumAdPriceType.values()){
@@ -183,8 +179,10 @@ public class AdGroupAddAction extends BaseCookieAction{
 				pfpAdPriceTypeVO.setPrice(enumAdPriceType.getPrice());
 				pfpAdPriceTypeVOList.add(pfpAdPriceTypeVO);
 			}
+			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate((float)(0.5 / 0.005)));
 			return "success_video";
 		}else{
+			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(Float.parseFloat(adGroupChannelPrice)));
 			return SUCCESS;
 		}
 	}
