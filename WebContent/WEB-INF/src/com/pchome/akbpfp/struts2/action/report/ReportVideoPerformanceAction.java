@@ -16,6 +16,7 @@ import com.pchome.akbpfp.db.dao.report.AdKeywordReportVO;
 import com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportVO;
 import com.pchome.akbpfp.db.service.report.IAdVideoPerformanceReportService;
 import com.pchome.akbpfp.db.vo.report.ReportQueryConditionVO;
+import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdVideoSizePoolType;
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
@@ -324,10 +325,13 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 
 		StringBuffer content = new StringBuffer();
 		String adPriceTypeName = StringUtils.isBlank(adPriceType) ? "全部計價方式" : adPriceTypeMap.get(adPriceType);
-		String searchDevice = "全部裝置";
+		String searchDeviceTitle = "全部裝置";
+		String searchDevice = "全部";
 		if(adPvclkDevice.equals("PC")){
+			searchDeviceTitle = "電腦";
 			searchDevice = "電腦";
 		}else if(adPvclkDevice.equals("mobile")){
+			searchDeviceTitle = "行動裝置";
 			searchDevice = "行動裝置";
 		}
 		
@@ -336,7 +340,6 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			String sizeArray[] = adSize.split("_");
 			searchAdSize = sizeArray[0] + " x " + sizeArray[1];
 		}
-		
 		
 		//報表名稱
 		downloadFileName = new String(filename.getBytes("UTF-8"), "ISO8859-1");
@@ -348,7 +351,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		content.append("\n");
 		content.append("計價方式,"+adPriceTypeName);
 		content.append("\n");
-		content.append("裝置,"+searchDevice);
+		content.append("裝置,"+searchDeviceTitle);
 		content.append("\n");
 		content.append("廣告尺寸,"+searchAdSize);
 		content.append("\n");
@@ -421,14 +424,13 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			content.append("00:"+adVideoPerformanceReportVO.getAdVideoSec()+",");
 			content.append(adVideoPerformanceReportVO.getVideoUrl()+",");
 			content.append(adVideoPerformanceReportVO.getAdLinkUrl()+",");
-			content.append((StringUtils.isBlank(adPriceType)? "全部" : adPriceType ) + ",");
-			String device = adVideoPerformanceReportVO.getAdPvClkDevice();
-			if(device.equals("PC")){
-				device = "電腦";
-			}else if(device.equals("mobile")){
-				device = "行動裝置";
+			for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+				if(enumAdPriceType.getDbTypeName().equals(adVideoPerformanceReportVO.getAdPriceType())){
+					content.append(enumAdPriceType.getTypeName() + ",");
+					break;
+				}
 			}
-			content.append(device+ ",");
+			content.append(searchDevice+ ",");
 			content.append(adVideoPerformanceReportVO.getTemplateProductWidth() + " x "+ adVideoPerformanceReportVO.getTemplateProductHeight()+",");
 			content.append(adVideoPerformanceReportVO.getAdPvSum()+",");
 			content.append(adVideoPerformanceReportVO.getAdViewSum()+",");
@@ -454,7 +456,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 				+ ","
 				+ ","
 				+ ","
-				+ searchDevice + ","
+				+ searchDeviceTitle + ","
 				+ ","
 				+ sumPV+","
 				+ sumView+","
