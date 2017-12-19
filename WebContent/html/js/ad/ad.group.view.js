@@ -1,6 +1,5 @@
 ﻿$(document).ready(function(){
 
-    
 });
 
 function findTableView(){
@@ -121,12 +120,8 @@ function modifySearchPrice(seq,type){
 		
 }
 
-
-
-
 function tableSorter(){
 	var adType = $("#adType").val();
-	
 	if(adType == "0"){
 		$("#tableView").tablesorter({
 			headers:{
@@ -148,7 +143,6 @@ function tableSorter(){
 				7 : { sorter: 'fancyNumber' },
 				8 : { sorter: 'rangesort' },
 				9 : { sorter: 'rangesort' },
-				11:{sorter:false}
 			}
 		});
 	}

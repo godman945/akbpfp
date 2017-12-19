@@ -323,8 +323,8 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		String filename="影音廣告成效報表_" + dformat.format(new Date()) + FILE_TYPE;
 
 		StringBuffer content = new StringBuffer();
-		String adPriceTypeName = StringUtils.isBlank(adPriceType) ? "全部" : adPriceTypeMap.get(adPriceType);
-		String searchDevice = "全部";
+		String adPriceTypeName = StringUtils.isBlank(adPriceType) ? "全部計價方式" : adPriceTypeMap.get(adPriceType);
+		String searchDevice = "全部裝置";
 		if(adPvclkDevice.equals("PC")){
 			searchDevice = "電腦";
 		}else if(adPvclkDevice.equals("mobile")){
@@ -422,11 +422,10 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			content.append(adVideoPerformanceReportVO.getVideoUrl()+",");
 			content.append(adVideoPerformanceReportVO.getAdLinkUrl()+",");
 			content.append((StringUtils.isBlank(adPriceType)? "全部" : adPriceType ) + ",");
-			
 			String device = adVideoPerformanceReportVO.getAdPvClkDevice();
-			if(adPvclkDevice.equals("PC")){
+			if(device.equals("PC")){
 				device = "電腦";
-			}else if(adPvclkDevice.equals("mobile")){
+			}else if(device.equals("mobile")){
 				device = "行動裝置";
 			}
 			content.append(device+ ",");

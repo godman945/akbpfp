@@ -291,6 +291,9 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 			adReportVO.setThousandsCost(objArray[6].toString());
 		}
 		
+		
+		
+		
 		return adReportVO;
 //		int totalSize = lisObj.size();
 //		int sumAdView = 0;
