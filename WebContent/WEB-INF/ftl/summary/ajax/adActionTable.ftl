@@ -32,8 +32,8 @@
 	    <td class="td01">${vo.clk?string('#,###')!}</td>	   
 	    <td class="td01">${vo.clkRate?string('#.##')!}%</td>
 	    <td class="td01">NT$ ${vo.avgClkCost?string('#.##')!}</td>
-	    <td class="td01">NT$ ${vo.thousandsCost?string('#.##')!}</td>
-	    <td class="td01">NT$ ${vo.clkCost?string('#,###')!}</td>
+	    <td class="td01">NT$ ${vo.thousandsCost?number?string('#,###.##')!}</td>
+	    <td class="td01">NT$ ${vo.clkCost?number?number?string('#,###.##')!}</td>
 	  </tr> 		
 	</#list>
 <#else>

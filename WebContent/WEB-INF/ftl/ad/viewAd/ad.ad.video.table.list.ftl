@@ -16,7 +16,7 @@
 <thead>
 	<tr>
 		<th width="50"><a href="#" onclick="checkAll()">全選</a></th>
-		<th width="200" colspan="2" rowspan="2">影片明細</th>
+		<th width="200" colspan="2">影片明細</th>
 		<th>狀態</th>
 		<th width="110">計價方式</th>
 		<th>曝光數</th>	
@@ -33,17 +33,19 @@
 	    <#list adReportVOList as adReportVO>
 			<tr>
 				<td>
-				<#if adReportVO.adActionStatus == "4" || adReportVO.adActionStatus == "9">
-			        <input type="checkbox" id="chkY_${adReportVO_index!}" name="chkY" value="${adReportVO.adSeq!}"/>
-				<#else>
-			       <input type="checkbox" id="chkN_${adReportVO_index!}" name="chkN" disabled/>
-				</#if>
+					<#if adReportVO.adActionStatus == "4" || adReportVO.adActionStatus == "9">
+				        <input type="checkbox" id="chkY_${adReportVO_index!}" name="chkY" value="${adReportVO.adSeq!}"/>
+					<#else>
+				       <input type="checkbox" id="chkN_${adReportVO_index!}" name="chkN" disabled/>
+					</#if>
 				</td>
+				
 				<td>
 					<div style="padding: 8px;height:auto;margin: 0 auto">
 						<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${adReportVO.adWidth!}" height="${adReportVO.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=${adReportVO.adVideoUrl!}&adPreviewVideoBgImg=<#if adReportVO.img = 'img/public/na.gif" style="display:none'><#else>http://showstg.pchome.com.tw/pfp/${adReportVO.img!}</#if>&realUrl=${adReportVO.realUrl!}"></iframe>
 					</div>
 				</td>
+				
 				<td style=" text-align: left; line-height: 20px; padding: 10px;">
 						${adReportVO.content!}<br>
 						 <div class="ad_size">尺寸 ${adReportVO.adWidth!} x ${adReportVO.adHeight!}</div>
@@ -52,18 +54,26 @@
 				</td>
 				
 		        <td class="td03">
-		        ${adReportVO.adStatusDesc!}
-		        <#if pfpAdAdVideoViewVO.adStatus == 3 || pfpAdAdVideoViewVO.adStatus == 6>
-		       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${adReportVO.adRejectReason!}">
-		        </#if>
+			        ${adReportVO.adStatusDesc!}
+			        <#if pfpAdAdVideoViewVO.adStatus == 3 || pfpAdAdVideoViewVO.adStatus == 6>
+			       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${adReportVO.adRejectReason!}">
+			        </#if>
 		        </td>
-				<td class="td01">${adReportVO.adClkPriceType}</td>	
+		        
+				<td class="td01">${adReportVO.adClkPriceType}</td>
+				
 				<td class="td01">${adReportVO.adPvSum?number?number?string('#,###.##')!}</td>
+				
 				<td class="td01">${adReportVO.adClkSum?number?number?string('#,###.##')!}</td>
-				<td class="td01">${adReportVO.adClickRatings?number?string('#,###.##')!}%</td>		
-				<td class="td01">NT$ ${adReportVO.singleCost?number?string('#,###.##')!}</td>
+				
+				<td class="td01">${adReportVO.adClickRatings?number?string('#,###.##')!}%</td>	
+					
+				<td class="td01">NT$ ${adReportVO.singleCost!}</td>
+				
 				<td class="td01">NT$ ${adReportVO.thousandsCost?number?string('#,###.##')!}</td>
+				
 				<td class="td01">NT$ ${adReportVO.adPriceSum?number?string('#,###.##')!}</td>
+				
 				<td class="td02">
 					<#if pfpAdAdVideoViewVO.actionStatus != "9">
 						<a href="adAdAdd.html?adGroupSeq=${adReportVO.adGroupSeq!}&adOperatingRule=VIDEO">製作新廣告</a><br>
@@ -90,7 +100,7 @@
 		<td class="td01">${adReportVO.adPvSum?number?string('#,###.##')!}</td>
 		<td class="td01">${adReportVO.adClkSum?number?string('#,###')!}</td>		
 		<td class="td01">${adReportVO.adClickRatings?number?string('#,###')!}%</td>
-		<td class="td01">NT$ ${adReportVO.singleCost?number?string('#,###')!}</td>
+		<td class="td01">NT$ ${adReportVO.singleCost?number?string('#,###.##')!}</td>
 		<td class="td01">NT$ ${adReportVO.thousandsCost?number?string('#,###.##')!}</td>
 		<td class="td01">NT$ ${adReportVO.adPriceSum?number?string('#,###.##')!}</td>
 		<td class="td01"></td>

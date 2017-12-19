@@ -33,7 +33,7 @@
 <h2><img src="html/img/iconcr.gif" hspace="2" vspace="12" align="absmiddle" />帳戶概要<span>為帳戶目前使用狀況，帳戶餘額結算時間為前一天為止</span></h2>
 <div class="ancli">帳戶名稱：${customerInfo.customerInfoTitle!}</div>
 <div class="ancli">
-	<span style="float:left">帳戶餘額：NT$ ${customerInfo.remain?string('#,###.##')!}元</span>
+	<span style="float:left">帳戶餘額：NT$ ${customerInfo.remain?string('#,###')!}元</span>
 	<div class="gbtn"><#if pay_type == payType[0].payType><a href="accountRemain.html">加值去</a></#if></div>
 </div>
 </div>
