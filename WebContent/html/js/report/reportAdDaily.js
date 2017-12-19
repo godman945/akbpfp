@@ -365,7 +365,7 @@ function showHighChart(){
 			"searchText" : $('#searchText').val()
 		},
 		success : function(respone) {
-//			console.log(respone);
+			console.log(respone);
 			dataArray = respone;
 		}
 	});
@@ -426,12 +426,14 @@ function showHighChart(){
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			decimals = 2;
 			break;
 			
 		case "kiloCost":
 			titleName = "千次曝光費用(NT$)";
 			selectTypeName = "千次曝光費用";
 			selectSuffix = "元";
+			decimals = 2;
 			break;
 			
 	}

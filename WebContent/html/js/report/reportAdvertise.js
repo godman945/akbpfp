@@ -536,6 +536,7 @@ function showHighChart(adSeq){
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			decimals = 2;
 			break;
 	}
 	

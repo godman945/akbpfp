@@ -169,6 +169,8 @@ public class ReportCampaginAction extends BaseReportAction {
 				flashDataMap.put(reportDate, new Float(doubleFormat.format(kiloCost)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
 				flashDataMap.put(reportDate, new Float(doubleFormat.format(adActionMaxPriceAvg)));
+			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+            	flashDataMap.put(reportDate, new Float(cost));
 			}
 		}
 

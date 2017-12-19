@@ -721,7 +721,7 @@ function showHighChart(){
 			"adOperatingRule" : $('#fadOperatingRule').val()
 		},
 		success : function(respone) {
-//			console.log(respone);
+			console.log(respone);
 			if($('#fadType').val() == "adtype_keyword"){
 				widDataArray = respone[0];
 				phrDataArray = respone[1];
@@ -790,6 +790,7 @@ function showHighChart(){
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			decimals = 2;
 			break;
 		}
 	} else {
@@ -831,6 +832,7 @@ function showHighChart(){
 				titleName = "費用(NT$)";
 				selectTypeName = "費用";
 				selectSuffix = "元";
+				decimals = 2;
 				break;
 		}
 	}

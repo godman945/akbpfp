@@ -511,6 +511,7 @@ function showHighChart(){
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			decimals = 2;
 			break;
 		case "adVideoUniqSum":
 			titleName = "收視人數(不重複)";
@@ -527,7 +528,6 @@ function showHighChart(){
 			selectTypeName = "重播次數";
 			selectSuffix = "次";
 			break;	
-		
 		case "ctr":
 			titleName = "互動率(%)";
 			selectTypeName = "互動率";
@@ -556,12 +556,6 @@ function showHighChart(){
 			selectSuffix = "元";
 			decimals = 2;
 			break;
-		case "cost":
-			titleName = "費用(NT$)";
-			selectTypeName = "費用";
-			selectSuffix = "元";
-			break;
-			
 		case "adVideoProcess100Ratings":
 			titleName = "影片完整播放率(%)";
 			selectTypeName = "影片完整播放率";
