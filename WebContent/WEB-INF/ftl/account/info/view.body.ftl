@@ -86,7 +86,7 @@
     <tr>
         <th height="35">帳戶餘額<br /><span class="t_s01">(帳戶餘額結算時間至前一天為止)</span></th>
         <td>
-            <span style="float:left">NT$ ${pfpCustomerInfo.remain?string('#,###.##')!}</span>
+            <span style="float:left">NT$ ${pfpCustomerInfo.remain?string('#,###')!}</span>
             <div class="gbtn"><#if pay_type == payType[0].payType><a href="accountRemain.html">帳戶儲值</a></#if></div>                    
         </td>
     </tr>
