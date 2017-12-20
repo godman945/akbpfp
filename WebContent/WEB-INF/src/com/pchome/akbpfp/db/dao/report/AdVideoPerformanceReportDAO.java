@@ -80,6 +80,10 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" AND g.ad_group_seq = a.ad_group_seq  ");
 		sql.append(" AND vr.ad_video_date >= :startDate And vr.ad_video_date <= :endDate "); 
 		sql.append(" GROUP BY a.ad_seq  ");
+		if(StringUtils.isNotBlank(reportQueryConditionVO.getAdPvclkDevice())){
+			sql.append(" ,vr.ad_pvclk_device  ");
+		}
+		
 		sql.append(" )a WHERE 1 = 1 ");
 		
 		if(StringUtils.isNotBlank(reportQueryConditionVO.getAdPriceType())){
@@ -202,6 +206,9 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" AND g.ad_group_seq = a.ad_group_seq  ");
 		sql.append(" AND vr.ad_video_date >= :startDate And vr.ad_video_date <= :endDate "); 
 		sql.append(" GROUP BY a.ad_seq  ");
+		if(StringUtils.isNotBlank(reportQueryConditionVO.getAdPvclkDevice())){
+			sql.append(" ,vr.ad_pvclk_device  ");
+		}
 		sql.append(" )a WHERE 1 = 1 ");
 		
 		if(StringUtils.isNotBlank(reportQueryConditionVO.getAdPriceType())){
@@ -314,6 +321,9 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" AND vr.ad_video_date >= :startDate ");
 		sql.append(" AND vr.ad_video_date <= :endDate ");
 		sql.append(" GROUP BY vr.ad_seq, ");
+		if(StringUtils.isNotBlank(reportQueryConditionVO.getAdPvclkDevice())){
+			sql.append(" vr.ad_pvclk_device,  ");
+		}
 		sql.append(" vr.ad_video_date, ");
 		sql.append(" video_size, ");
 		sql.append(" vr.ad_price_type ");
