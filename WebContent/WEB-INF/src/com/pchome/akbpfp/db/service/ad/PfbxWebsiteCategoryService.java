@@ -19,10 +19,12 @@ public class PfbxWebsiteCategoryService extends BaseService<PfbxWebsiteCategory,
 	public Map<String, List<Map<String, String>>> getAllOrderByCode() {
 		
 		List<PfbxWebsiteCategory> pfbxWebsiteCategoryList = ((IPfbxWebsiteCategoryDAO)dao).getAllOrderByCode();
-		
 		Map<String, List<PfbxWebsiteCategory>> pfbxWebsiteCategoryMap = new LinkedHashMap<String, List<PfbxWebsiteCategory>>();
 		for (int i = 0; i <= pfbxWebsiteCategoryList.size() - 1; i++) {
 			List<PfbxWebsiteCategory> a = new ArrayList<PfbxWebsiteCategory>();
+			if(pfbxWebsiteCategoryList.get(i).getCode().equals("00020000000000000000")){
+				continue;
+			}
 			a.add(pfbxWebsiteCategoryList.get(i));
 			pfbxWebsiteCategoryMap.put(pfbxWebsiteCategoryList.get(i).getCode(),a);
 		    
