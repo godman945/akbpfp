@@ -121,25 +121,32 @@ $(document).ready(function(){
 		var userprice = $("#adPrice").val();
 		
 		if($("#adPriceType").val() == 1){
-//			userprice = (userprice / 0.005) * 1000;
 			console.log('CPM 出價:'+userprice);
-//			userprice = userprice * 0.046;
-			
-			userprice = userprice / (0.005 * 1000);
-			
-			userprice = userprice * 0.23; 
+			userprice = userprice - 62; 
 			console.log('CPM 出價換算後:'+userprice);
+			
+////			userprice = (userprice / 0.005) * 1000;
+//			console.log('CPM 出價:'+userprice);
+////			userprice = userprice * 0.046;
+//			
+//			userprice = userprice / (0.005 * 1000);
+//			
+//			userprice = userprice * 0.23; 
+//			console.log('CPM 出價換算後:'+userprice);
 		}else if($("#adPriceType").val() == 0){
-//			userprice = userprice / 0.005;
 			console.log('CPV 出價:'+userprice);
-//			userprice = userprice * 6;
-			
-			
-			userprice = userprice / 0.005;
-			
-			userprice = userprice * 0.03;
-			
+			userprice = (userprice * 10) - 2;
 			console.log('CPV 出價換算後:'+userprice);
+////			userprice = userprice / 0.005;
+//			console.log('CPV 出價:'+userprice);
+////			userprice = userprice * 6;
+//			
+//			
+//			userprice = userprice / 0.005;
+//			
+//			userprice = userprice * 0.03;
+//			
+//			console.log('CPV 出價換算後:'+userprice);
 		}
 		
 		
