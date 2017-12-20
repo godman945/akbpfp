@@ -121,9 +121,16 @@ $(document).ready(function(){
 		var userprice = $("#adPrice").val();
 		
 		if($("#adPriceType").val() == 1){
-			userprice = (userprice / 0.005) * 1000;
+//			userprice = (userprice / 0.005) * 1000;
+			
+			console.log(userprice);
+			userprice = userprice * 0.046;
+			console.log(userprice);
 		}else if($("#adPriceType").val() == 0){
-			userprice = userprice / 0.005;
+//			userprice = userprice / 0.005;
+			console.log(userprice);
+			userprice = userprice * 6;
+			console.log(userprice);
 		}
 		
 		
@@ -135,7 +142,7 @@ $(document).ready(function(){
 			type: "post",
 			dataType: "json",
 			success: function(response, status){
-//				console.log(response);
+				console.log(response);
 				$("#showRate").html(response.adAsideRate+'%');
 			},
 				error: function(xtl) {
