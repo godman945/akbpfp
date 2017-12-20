@@ -83,6 +83,8 @@ public class ReportAdOsAction extends BaseReportAction {
 	
 	private String reportTitle;
 
+	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	
 	public String flashDataDownLoad() throws Exception {
 
 		//查詢日期寫進 cookie
@@ -153,7 +155,7 @@ public class ReportAdOsAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) kiloCost));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) cost));
+				flashDataMap.put(reportDate, new Float(decimalFormat.format(cost)));
 			}
 		}
 
@@ -396,7 +398,7 @@ public class ReportAdOsAction extends BaseReportAction {
 		for (AdOsReportVO adosreportvo: resultSumData) {
 			t_pv += Double.parseDouble(adosreportvo.getAdPvSum());
 			t_click += Double.parseDouble(adosreportvo.getAdClkSum());
-			t_cost += Math.round(Double.parseDouble(adosreportvo.getAdClkPriceSum()));
+			t_cost += Double.parseDouble(adosreportvo.getAdClkPriceSum());
 			t_invalid += Double.parseDouble(adosreportvo.getAdInvalidClkSum());
 		}
 
@@ -432,7 +434,7 @@ public class ReportAdOsAction extends BaseReportAction {
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat.format(t_cost));
 				}
 			}
 		}

@@ -90,6 +90,7 @@ public class ReportCampaginAction extends BaseReportAction {
 
 	private NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -170,7 +171,7 @@ public class ReportCampaginAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
 				flashDataMap.put(reportDate, new Float(doubleFormat.format(adActionMaxPriceAvg)));
 			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-            	flashDataMap.put(reportDate, new Float(cost));
+            	flashDataMap.put(reportDate, new Float(decimalFormat.format(cost)));
 			}
 		}
 

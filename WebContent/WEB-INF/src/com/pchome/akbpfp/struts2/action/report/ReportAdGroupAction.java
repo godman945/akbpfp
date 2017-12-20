@@ -92,6 +92,7 @@ public class ReportAdGroupAction extends BaseReportAction {
 	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
 	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -161,7 +162,7 @@ public class ReportAdGroupAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) kiloCost));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) cost));
+				flashDataMap.put(reportDate, new Float(decimalFormat.format(cost)));
 			}
 		}
 

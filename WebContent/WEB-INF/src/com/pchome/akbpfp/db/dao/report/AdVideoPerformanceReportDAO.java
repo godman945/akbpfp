@@ -264,7 +264,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append("  SUM(a.ad_view), ");
 		sql.append("  TRUNCATE((SUM(a.ad_view) / SUM(a.ad_pv)) * 100, 2) ad_view_ratings, ");
 		sql.append("  IFNULL(TRUNCATE(SUM(a.ad_price) / SUM(a.ad_view), 2), 0), ");
-		sql.append("  TRUNCATE((SUM(a.ad_price) / (SUM(a.ad_pv)) * 1000), 2)thousands_cost, ");
+		sql.append("  ROUND((SUM(a.ad_price) / (SUM(a.ad_pv)) * 1000), 2)thousands_cost, ");
 		sql.append("  SUM(a.ad_price)ad_price, ");
 		sql.append("  TRUNCATE((SUM(a.ad_video_process_100) / SUM(a.ad_pv)) * 100, 2), ");
 		sql.append("  SUM(a.ad_click)ad_click, ");

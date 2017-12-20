@@ -1461,7 +1461,7 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			t_pv += new Double(vo.getAdPvSum());
 			t_click += new Double(vo.getAdClkSum());
-			t_cost += Math.round(new Double(vo.getAdPriceSum()));
+			t_cost += new Double(vo.getAdPriceSum());
 			t_invalid += new Double(vo.getAdInvClkSum());
 		}
 

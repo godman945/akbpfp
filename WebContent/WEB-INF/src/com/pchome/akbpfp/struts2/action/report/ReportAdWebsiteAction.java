@@ -94,6 +94,8 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 	
 	private String searchWebsiteCode = "";
 
+	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	
 	public String flashDataDownLoad() throws Exception {
 
 		//查詢日期寫進 cookie
@@ -175,7 +177,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				data = kiloCost;
             } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				data = cost;
+				data = Double.valueOf(decimalFormat.format(cost));
 			}
 			
 			titleDataList.add(websiteCategoryName);

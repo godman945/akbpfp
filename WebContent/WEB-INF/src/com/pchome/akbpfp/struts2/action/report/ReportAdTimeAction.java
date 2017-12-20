@@ -89,7 +89,9 @@ public class ReportAdTimeAction extends BaseReportAction {
 	private String reportTitle;
 	
 	private String searchTime = "W";
-
+	
+	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	
 	public String flashDataDownLoad() throws Exception {
 
 		//查詢日期寫進 cookie
@@ -182,7 +184,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				data = kiloCost;
             }  else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				data = cost;
+				data = Double.parseDouble(decimalFormat.format(cost));
 			}
 			
 			if(StringUtils.equals(searchTime, "T")){

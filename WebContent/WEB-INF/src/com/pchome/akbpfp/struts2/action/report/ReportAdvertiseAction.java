@@ -93,6 +93,8 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	
 	private String adName = "";
 
+	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	
 	public String flashDataDownLoad() throws Exception {
 
 		//查詢日期寫進 cookie
@@ -168,7 +170,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) kiloCost));
             } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) cost));
+				flashDataMap.put(reportDate, new Float(decimalFormat.format(cost)));
 			}
 		}
 

@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -104,6 +105,8 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 	private List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOSum;
 	
 	private AdVideoPerformanceReportVO adVideoPerformanceReportVOCount = new AdVideoPerformanceReportVO();
+	
+	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
 	/**
 	 * Chart 
 	 */
@@ -140,6 +143,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		log.info(">>> customerInfoId = " + customerInfoId);
 		Map<Date,Float> flashDataMap = new HashMap<Date,Float>();
 		List<AdVideoPerformanceReportVO> resultData = adVideoPerformanceReportService.loadReportChart(reportQueryConditionVO);
+		
 		if(resultData.size() > 0){
 			for (AdVideoPerformanceReportVO adVideoPerformanceReportVO : resultData) {
 				if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
@@ -153,6 +157,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())) {
 					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getThousandsCost()));
 				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+					adVideoPerformanceReportVO.setCostSum(decimalFormat.format(Double.parseDouble(adVideoPerformanceReportVO.getCostSum())));
 					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getCostSum()));
 				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
 					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoProcess100Ratings()));
