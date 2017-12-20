@@ -532,7 +532,7 @@ public class ReportCampaginAction extends BaseReportAction {
 				double count = vo.getCount().doubleValue();
 				String adDevice = vo.getAdDevice();
 				String adType = vo.getAdType();
-				String adOperatingRuleName = vo.getAdOperatingRule();
+				String adOperatingRuleName = vo.getAdOperatingRuleDesc();
 	
 				//互動率 = 互動次數 / 曝光數
 				ctr = (click / pv) * 100;
