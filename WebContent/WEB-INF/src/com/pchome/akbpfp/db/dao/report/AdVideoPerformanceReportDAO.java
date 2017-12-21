@@ -25,7 +25,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" vr.ad_pvclk_device,  ");
 		sql.append(" SUM(vr.ad_pv),  ");
 		sql.append(" SUM(vr.ad_view),  ");
-		sql.append(" TRUNCATE((SUM(vr.ad_view) / SUM(vr.ad_pv)) * 100, 2) ad_view_ratings,  ");
+		sql.append(" ROUND((SUM(vr.ad_view) / SUM(vr.ad_pv)) * 100, 2) ad_view_ratings,  ");
 		sql.append(" Ifnull(TRUNCATE(SUM(vr.ad_price) / SUM(vr.ad_view), 2), 0),  ");
 		sql.append(" TRUNCATE((SUM(vr.ad_price) / (SUM(vr.ad_pv)) * 1000), 2)thousands_cost,  ");
 		sql.append(" SUM(vr.ad_price),  ");
@@ -42,7 +42,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" FROM pfp_ad_detail d  ");
 		sql.append(" WHERE d.ad_seq = a.ad_seq  ");
 		sql.append(" AND d.ad_detail_id = 'img'), ''),  ");
-		sql.append(" TRUNCATE((SUM(vr.ad_video_process_100) / SUM(vr.ad_pv)) * 100, 2),  ");
+		sql.append(" ROUND((SUM(vr.ad_video_process_100) / SUM(vr.ad_pv)) * 100, 2),  ");
 		sql.append(" Ifnull(  ");
 		sql.append(" (SELECT dd.ad_detail_content  ");
 		sql.append(" FROM pfp_ad_detail dd  ");
