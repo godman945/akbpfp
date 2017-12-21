@@ -281,12 +281,6 @@
 	
 	function alex(index){
 		var video = iframeArray[index].contentDocument.body.querySelector(".home-banner");
-		if(video == undefined || video == 'undefined'){
-			console.log('SSSSSSSSSSSSSSs');
-			return false;
-		}
-		
-		
 		var adcountdown = video.parentElement.parentElement.parentElement.querySelector('#video-countdown');
 		var ttime = Math.ceil(video.duration - video.currentTime);
 		var percent = Math.ceil((video.currentTime / video.duration) * 100);
