@@ -280,6 +280,7 @@
 	}, false);
 	
 	function alex(index){
+//		console.log(index);
 		var video = iframeArray[index].contentDocument.body.querySelector(".home-banner");
 		var adcountdown = video.parentElement.parentElement.parentElement.querySelector('#video-countdown');
 		var ttime = Math.ceil(video.duration - video.currentTime);
