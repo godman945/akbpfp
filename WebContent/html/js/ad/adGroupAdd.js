@@ -138,15 +138,18 @@ $(document).ready(function(){
 	$("#adPriceType").change(function(){
 		$(".msg").text('');
 		$('#errorMsg').empty();
+		var adUserAmount = $("#adUserAmount").val();
 		if($(this).val() == 0){
 			$("#adPrice").attr('step',0.1);
 			$("#adPrice").attr('min',0.5);
-			$("#adPrice").val(0.5);
+			var sysprice = 0.5 + (adUserAmount / 10);
+			$("#adPrice").val(sysprice.toFixed(1));
 			$(".msg").text("當影片播超過三秒即計算為一次有效收視，系統接受最低出價NT$0.5");
 		}else if($(this).val() == 1){
 			$("#adPrice").attr('step',1);
 			$("#adPrice").attr('min',65);
-			$("#adPrice").val(65);
+			sysprice = 65 + parseInt(adUserAmount);
+			$("#adPrice").val(sysprice);
 			$(".msg").text("千次曝光計費，系統接受最低出價NT$65");
 		}
 		

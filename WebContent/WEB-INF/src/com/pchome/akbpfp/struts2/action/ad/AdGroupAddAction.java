@@ -66,6 +66,7 @@ public class AdGroupAddAction extends BaseCookieAction{
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private IPfpAdSyspriceService pfpAdSyspriceService;
 	private float sysprice;
+	private int adUserAmount;
 	
 	public String adGroupAdd() throws Exception {
 		log.info("AdGroupAdd => adActionSeq = " + adActionSeq + "; adGroupSeq = " + adGroupSeq);
@@ -176,7 +177,7 @@ public class AdGroupAddAction extends BaseCookieAction{
 			//預設CPV
 			/*系統建議出價為各最低出價 + 昨日總家數量*/
 			PfpAdSysprice pfpAdSysprice = pfpAdSyspriceService.get(3);
-			int adUserAmount = pfpAdSysprice.getAmount();
+			adUserAmount = pfpAdSysprice.getAmount();
 			sysprice = (float) (0.5 + ((float)adUserAmount / (float)10));
 			float userprice = (adGroupChannelPriceDefault * 10) + 10;
 			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(userprice));
@@ -489,6 +490,14 @@ public class AdGroupAddAction extends BaseCookieAction{
 
 	public void setSysprice(float sysprice) {
 		this.sysprice = sysprice;
+	}
+
+	public int getAdUserAmount() {
+		return adUserAmount;
+	}
+
+	public void setAdUserAmount(int adUserAmount) {
+		this.adUserAmount = adUserAmount;
 	}
 	
 	

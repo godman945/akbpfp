@@ -89,3 +89,4 @@
 	</form>
 </div>
 <input type="hidden" id="messageId" value="${message!!}">
+<input type="hidden" id="adUserAmount" value="${adUserAmount!}">
