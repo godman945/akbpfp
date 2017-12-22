@@ -30,13 +30,27 @@ public class AdGroupMsgAction extends BaseCookieAction{
 	
 	public String modifyAdGroupChannelPriceAction() throws Exception{
 		adGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-		//sysprice = adSysprice.getSysprice();
-		//建議價
-		sysprice = syspriceOperaterAPI.getAdSuggestPrice(adPoolSeq);
-		//撥出率
-		adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
-		adGroupPriceType = adGroup.getAdGroupPriceType();
-		adType = adGroup.getPfpAdAction().getAdType();
+		if(adGroup.getAdGroupPriceType().equals("CPC")){
+			//sysprice = adSysprice.getSysprice();
+			//建議價
+			sysprice = syspriceOperaterAPI.getAdSuggestPrice(adPoolSeq);
+			//撥出率
+			adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
+			adGroupPriceType = adGroup.getAdGroupPriceType();
+			adType = adGroup.getPfpAdAction().getAdType();
+		}else if(adGroup.getAdGroupPriceType().equals("CPM")){
+			userprice = userprice - 58;
+			adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
+			adGroupPriceType = adGroup.getAdGroupPriceType();
+			adType = adGroup.getPfpAdAction().getAdType();
+			System.out.println("CPM >>>>>>>>>>userprice:" + userprice);
+		}else if(adGroup.getAdGroupPriceType().equals("CPV")){
+			userprice = (userprice * 10) + 10;
+			adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
+			adGroupPriceType = adGroup.getAdGroupPriceType();
+			adType = adGroup.getPfpAdAction().getAdType();
+			System.out.println("CPV >>>>>>>>>>userprice:" + userprice);
+		}
 		return SUCCESS;
 	}
 	

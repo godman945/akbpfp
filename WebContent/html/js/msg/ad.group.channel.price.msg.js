@@ -1,5 +1,4 @@
 ﻿$(document).ready(function(){
-	
 	$("#channelPrice input:button[name='no']").click(function(){
 		parent.$.fancybox.close();
 	});
@@ -62,7 +61,6 @@
 					submitFlag = false;
 					errMsg = '出價不得低於系統接受的最低單次收視出價 NT$0.5';
 				}
-				
 			}else if($('#adGroupPriceType').val() == 'CPM'){
 				var cpmRex = /^[0-9]*[1-9][0-9]*$/;
 				submitFlag = cpmRex.test(price);
@@ -84,10 +82,23 @@
 				$("#userPrice").val(price);
 			}
 			
+			var userprice = $("#userPrice").val();
+			if($('#adGroupPriceType').val() == 'CPV'){
+				console.log('CPV 出價:'+userprice);
+				userprice = (userprice * 10) + 10;
+				console.log('CPV 出價換算後:'+userprice);
+				console.log('目前系統最高出價:10');
+			}else if($('#adGroupPriceType').val() == 'CPM'){
+				console.log('CPM 出價:'+userprice);
+				userprice = userprice - 58; 
+				console.log('CPM 出價換算後:'+userprice);
+				console.log('目前系統最高出價:10');
+			}
+			
 			$.ajax({
 				url: "adGroupSuggestPrice.html",
 				data:{
-					"userprice": $("#userPrice").val()
+					"userprice": userprice
 				},
 				type: "post",
 				dataType: "json",

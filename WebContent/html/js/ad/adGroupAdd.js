@@ -21,11 +21,13 @@ $(document).ready(function(){
 		}
 	})
 	
-	
+	//手動輸入價格
 	$('#adPrice').keyup(function(){
 		var errMsg = '';
 		var price = $("#adPrice").val();
 		if($("#adPriceType").val() == 0){
+			$("#adPrice").attr('step',0.1);
+			$("#adPrice").attr('min',0.5);
 			var cpvRex = /^-?\d+\.?\d{0,1}$/;
 			submitFlag = cpvRex.test(price);
 			if(!submitFlag){
@@ -37,6 +39,9 @@ $(document).ready(function(){
 			}
 		}
 		if($("#adPriceType").val() == 1){
+			$("#adPrice").attr('step',1);
+			$("#adPrice").attr('min',65);
+			
 			var cpmRex = /^[0-9]*[1-9][0-9]*$/;
 			submitFlag = cpmRex.test(price);
 			if(!submitFlag){
@@ -56,37 +61,29 @@ $(document).ready(function(){
 			$('#errorMsg').empty();
 			$("#userPrice").val(price);
 		}
-		
-		
 		var userprice = $("#adPrice").val();
 		if($("#adPriceType").val() == 1){
-			userprice = (userprice / 0.005) * 1000;
+			console.log('CPM 出價:'+userprice);
+			userprice = userprice - 58; 
+			console.log('CPM 出價換算後:'+userprice);
+			console.log('目前系統最高出價:10');
 		}else if($("#adPriceType").val() == 0){
-			userprice = userprice / 0.005;
+			console.log('CPV 出價:'+userprice);
+			userprice = (userprice * 10) + 10;
+			console.log('CPV 出價換算後:'+userprice);
+			console.log('目前系統最高出價:10');
 		}
-		
-		
-		$.ajax({
-			url: "adGroupSuggestPrice.html",
-			data:{
-				"userprice": userprice
-			},
-			type: "post",
-			dataType: "json",
-			success: function(response, status){
-				$("#showRate").html(response.adAsideRate+'%');
-			},
-				error: function(xtl) {
-					alert("系統繁忙，請稍後再試！");
-				}
-		 })
+		changeRate(userprice);
 	})
 	
-	
+	//點擊元件變更價格
 	$('#adPrice').change(function(){
 		var errMsg = '';
 		var price = $("#adPrice").val();
 		if($("#adPriceType").val() == 0){
+			$("#adPrice").attr('step',0.1);
+			$("#adPrice").attr('min',0.5);
+			
 			var cpvRex = /^-?\d+\.?\d{0,1}$/;
 			submitFlag = cpvRex.test(price);
 			if(!submitFlag){
@@ -98,6 +95,8 @@ $(document).ready(function(){
 			}
 		}
 		if($("#adPriceType").val() == 1){
+			$("#adPrice").attr('step',1);
+			$("#adPrice").attr('min',65);
 			var cpmRex = /^[0-9]*[1-9][0-9]*$/;
 			submitFlag = cpmRex.test(price);
 			if(!submitFlag){
@@ -119,52 +118,51 @@ $(document).ready(function(){
 		}
 		
 		var userprice = $("#adPrice").val();
-		
 		if($("#adPriceType").val() == 1){
 			console.log('CPM 出價:'+userprice);
-			userprice = userprice - 62; 
+			userprice = userprice - 58; 
 			console.log('CPM 出價換算後:'+userprice);
-			
-////			userprice = (userprice / 0.005) * 1000;
-//			console.log('CPM 出價:'+userprice);
-////			userprice = userprice * 0.046;
-//			
-//			userprice = userprice / (0.005 * 1000);
-//			
-//			userprice = userprice * 0.23; 
-//			console.log('CPM 出價換算後:'+userprice);
+			console.log('目前系統最高出價:10');
 		}else if($("#adPriceType").val() == 0){
 			console.log('CPV 出價:'+userprice);
-			userprice = (userprice * 10) - 2;
+			userprice = (userprice * 10) + 10;
 			console.log('CPV 出價換算後:'+userprice);
-////			userprice = userprice / 0.005;
-//			console.log('CPV 出價:'+userprice);
-////			userprice = userprice * 6;
-//			
-//			
-//			userprice = userprice / 0.005;
-//			
-//			userprice = userprice * 0.03;
-//			
-//			console.log('CPV 出價換算後:'+userprice);
+			console.log('目前系統最高出價:10');
 		}
 		
+		changeRate(userprice);
+	})
+	
+	
+	//變更出價方式
+	$("#adPriceType").change(function(){
+		$(".msg").text('');
+		$('#errorMsg').empty();
+		if($(this).val() == 0){
+			$("#adPrice").attr('step',0.1);
+			$("#adPrice").attr('min',0.5);
+			$("#adPrice").val(0.5);
+			$(".msg").text("當影片播超過三秒即計算為一次有效收視，系統接受最低出價NT$0.5");
+		}else if($(this).val() == 1){
+			$("#adPrice").attr('step',1);
+			$("#adPrice").attr('min',65);
+			$("#adPrice").val(65);
+			$(".msg").text("千次曝光計費，系統接受最低出價NT$65");
+		}
 		
-		$.ajax({
-			url: "adGroupSuggestPrice.html",
-			data:{
-				"userprice":userprice
-			},
-			type: "post",
-			dataType: "json",
-			success: function(response, status){
-				console.log(response);
-				$("#showRate").html(response.adAsideRate+'%');
-			},
-				error: function(xtl) {
-					alert("系統繁忙，請稍後再試！");
-				}
-		 })
+		var userprice = $("#adPrice").val();
+		if($("#adPriceType").val() == 1){
+			console.log('CPM 出價:'+userprice);
+			userprice = userprice - 58;
+			console.log('CPM 出價換算後:'+userprice);
+			console.log('目前系統最高出價:10');
+		}else if($("#adPriceType").val() == 0){
+			console.log('CPV 出價:'+userprice);
+			userprice = (userprice * 10) + 10;
+			console.log('CPV 出價換算後:'+userprice);
+			console.log('目前系統最高出價:10');
+		}
+		changeRate(userprice);
 	})
 	
 	var showSearchPrice = $("#showSearchPrice").val();
@@ -196,52 +194,16 @@ $(document).ready(function(){
 	
 	//預設影音廣告基本價格與收費方式
 	if($("#adPriceType").val() == 0){
+		$("#adPrice").attr('step',0.1);
+		$("#adPrice").attr('min',0.5);
 		$(".msg").text("當影片播超過三秒即計算為一次有效收視，系統接受最低出價NT$0.5");
 		$("#adPrice").val("0.5");
 	}else if($("#adPriceType").val() == 1){
+		$("#adPrice").attr('step',1);
+		$("#adPrice").attr('min',65);
 		$(".msg").text("千次曝光計費，系統接受最低出價NT$65");
 		$("#adPrice").val("65");
 	}
-	
-	$("#adPriceType").change(function(){
-		$(".msg").text('');
-		$('#errorMsg').empty();
-		if($(this).val() == 0){
-			$(".msg").text("當影片播超過三秒即計算為一次有效收視，系統接受最低出價NT$0.5");
-			$("#adPrice").val("0.5");
-		}else if($(this).val() == 1){
-			$(".msg").text("千次曝光計費，系統接受最低出價NT$65");
-			$("#adPrice").val("65");
-		}
-		
-		var userprice = $("#adPrice").val();
-		if($("#adPriceType").val() == 1){
-			userprice = (userprice / 0.005) * 1000;
-		}else if($("#adPriceType").val() == 0){
-			userprice = userprice / 0.005;
-		}
-		
-		$.ajax({
-			url: "adGroupSuggestPrice.html",
-			data:{
-				"userprice": userprice
-			},
-			type: "post",
-			dataType: "json",
-			success: function(response, status){
-//				console.log(response);
-				$("#showRate").html(response.adAsideRate+'%');
-			},
-				error: function(xtl) {
-					alert("系統繁忙，請稍後再試！");
-				}
-		 })
-		
-	})
-	
-	
-	
-	
 });
 
 
@@ -249,5 +211,23 @@ function doAdGroupaddSubmit(){
 	if(submitFlag && adGroupNameFlag){
 		$("#modifyForm").submit();
 	}
+}
+
+function changeRate(userprice){
+	$.ajax({
+	url: "adGroupSuggestPrice.html",
+	data:{
+		"userprice": userprice
+	},
+	type: "post",
+	dataType: "json",
+	success: function(response, status){
+//		console.log(response);
+		$("#showRate").html(response.adAsideRate+'%');
+	},
+		error: function(xtl) {
+			alert("系統繁忙，請稍後再試！");
+		}
+ })
 }
 
