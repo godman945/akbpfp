@@ -11,11 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
+import com.pchome.akbpfp.db.pojo.PfpAdSysprice;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
 import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
+import com.pchome.akbpfp.db.service.sysprice.IPfpAdSyspriceService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdPriceTypeVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdPriceType;
@@ -62,23 +64,13 @@ public class AdGroupAddAction extends BaseCookieAction{
 	private PfpAdActionService pfpAdActionService;
 	private PfpAdGroupService pfpAdGroupService;
 	private SyspriceOperaterAPI syspriceOperaterAPI;
-
+	private IPfpAdSyspriceService pfpAdSyspriceService;
+	private float sysprice;
+	
 	public String adGroupAdd() throws Exception {
 		log.info("AdGroupAdd => adActionSeq = " + adActionSeq + "; adGroupSeq = " + adGroupSeq);
 		String adCustomerInfoId = "";
 		String referer = request.getHeader("Referer");
-		
-		/*
-		if(referer.indexOf("adActionAdd") > 0 || referer.indexOf("adActionView") > 0 || referer.indexOf("adGroupView") > 0) {
-			String encodeCookie = EncodeUtil.getInstance().encryptAES(referer, EnumCookieConstants.COOKIE_SECRET_KEY.getValue());
-			
-			CookieUtil.writeCookie(response, "preGroup", encodeCookie, EnumCookieConstants.COOKIE_DOMAIN.getValue(),
-									EnumCookieConstants.COOKIE_APPLY_AGE, EnumCookieConstants.COOKIE_USING_CODE.getValue());
-			
-			System.out.println("write cookie data="+referer);
-		}
-		*/
-		
 
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String tmpSeq = "";		// 回  adActionAdd.html 讀取資料用的 adActionSeq
@@ -86,10 +78,12 @@ public class AdGroupAddAction extends BaseCookieAction{
 		
 		showSearchPrice = "yes";
 		showChannelPrice = "yes";
-
+		float adGroupChannelPriceDefault = 0;
+		
 		// 由 adAddAction 取消回來時，會帶 adGroupSeq 的參數，但是不會帶 adActionSeq
 		if(StringUtils.isNotBlank(adGroupSeq)) {
 			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+			adGroupChannelPriceDefault = pfpAdGroup.getAdGroupChannelPrice();
 			adGroupName = pfpAdGroup.getAdGroupName();
 			adGroupSearchPrice = Integer.toString((int)pfpAdGroup.getAdGroupSearchPrice());;
 			adGroupChannelPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
@@ -179,7 +173,13 @@ public class AdGroupAddAction extends BaseCookieAction{
 				pfpAdPriceTypeVO.setPrice(enumAdPriceType.getPrice());
 				pfpAdPriceTypeVOList.add(pfpAdPriceTypeVO);
 			}
-			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate((float)(0.5 / 0.005)));
+			//預設CPV
+			/*系統建議出價為各最低出價 + 昨日總家數量*/
+			PfpAdSysprice pfpAdSysprice = pfpAdSyspriceService.get(3);
+			int adUserAmount = pfpAdSysprice.getAmount();
+			sysprice = (float) (0.5 + ((float)adUserAmount / (float)10));
+			float userprice = (adGroupChannelPriceDefault * 10) + 10;
+			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(userprice));
 			return "success_video";
 		}else{
 			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(Float.parseFloat(adGroupChannelPrice)));
@@ -473,6 +473,22 @@ public class AdGroupAddAction extends BaseCookieAction{
 
 	public void setAdPriceType(String adPriceType) {
 		this.adPriceType = adPriceType;
+	}
+
+	public IPfpAdSyspriceService getPfpAdSyspriceService() {
+		return pfpAdSyspriceService;
+	}
+
+	public void setPfpAdSyspriceService(IPfpAdSyspriceService pfpAdSyspriceService) {
+		this.pfpAdSyspriceService = pfpAdSyspriceService;
+	}
+
+	public float getSysprice() {
+		return sysprice;
+	}
+
+	public void setSysprice(float sysprice) {
+		this.sysprice = sysprice;
 	}
 	
 	

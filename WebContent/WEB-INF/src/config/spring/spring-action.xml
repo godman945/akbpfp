@@ -230,6 +230,7 @@
     	<property name="pfpAdActionService" ref="PfpAdActionService" /> 
     	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
     	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+    	<property name="pfpAdSyspriceService" ref="PfpAdSyspriceService" />
 		<property name="sysPriceAdPoolSeq" value="${ad.sysprice.adPoolSeq}" />
     </bean>
 

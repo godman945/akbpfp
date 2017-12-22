@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.msg;
 
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
+import com.pchome.akbpfp.db.pojo.PfpAdSysprice;
 import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.sysprice.IPfpAdSyspriceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -30,6 +31,9 @@ public class AdGroupMsgAction extends BaseCookieAction{
 	
 	public String modifyAdGroupChannelPriceAction() throws Exception{
 		adGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+		PfpAdSysprice pfpAdSysprice = pfpAdSyspriceService.get(3);
+		int adUserAmount = pfpAdSysprice.getAmount();
+		/*系統建議出價為各最低出價 + 昨日總家數量*/
 		if(adGroup.getAdGroupPriceType().equals("CPC")){
 			//sysprice = adSysprice.getSysprice();
 			//建議價
@@ -39,16 +43,20 @@ public class AdGroupMsgAction extends BaseCookieAction{
 			adGroupPriceType = adGroup.getAdGroupPriceType();
 			adType = adGroup.getPfpAdAction().getAdType();
 		}else if(adGroup.getAdGroupPriceType().equals("CPM")){
+			sysprice = 65 + adUserAmount;
 			userprice = userprice - 58;
 			adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
 			adGroupPriceType = adGroup.getAdGroupPriceType();
 			adType = adGroup.getPfpAdAction().getAdType();
 			System.out.println("CPM >>>>>>>>>>userprice:" + userprice);
+			System.out.println("CPM >>>>>>>>>>sysprice:" +sysprice);
 		}else if(adGroup.getAdGroupPriceType().equals("CPV")){
+			sysprice = (float) (0.5 + ((float)adUserAmount / (float)10));
 			userprice = (userprice * 10) + 10;
 			adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
 			adGroupPriceType = adGroup.getAdGroupPriceType();
 			adType = adGroup.getPfpAdAction().getAdType();
+			System.out.println("CPV >>>>>>>>>>sysprice:" +sysprice);
 			System.out.println("CPV >>>>>>>>>>userprice:" + userprice);
 		}
 		return SUCCESS;
@@ -134,5 +142,4 @@ public class AdGroupMsgAction extends BaseCookieAction{
 	public void setAdType(int adType) {
 		this.adType = adType;
 	}
-	
 }

@@ -193,17 +193,17 @@ $(document).ready(function(){
 	}
 	
 	//預設影音廣告基本價格與收費方式
-	if($("#adPriceType").val() == 0){
-		$("#adPrice").attr('step',0.1);
-		$("#adPrice").attr('min',0.5);
-		$(".msg").text("當影片播超過三秒即計算為一次有效收視，系統接受最低出價NT$0.5");
-		$("#adPrice").val("0.5");
-	}else if($("#adPriceType").val() == 1){
-		$("#adPrice").attr('step',1);
-		$("#adPrice").attr('min',65);
-		$(".msg").text("千次曝光計費，系統接受最低出價NT$65");
-		$("#adPrice").val("65");
-	}
+//	if($("#adPriceType").val() == 0){
+//		$("#adPrice").attr('step',0.1);
+//		$("#adPrice").attr('min',0.5);
+//		$(".msg").text("當影片播超過三秒即計算為一次有效收視，系統接受最低出價NT$0.5");
+////		$("#adPrice").val("0.5");
+//	}else if($("#adPriceType").val() == 1){
+//		$("#adPrice").attr('step',1);
+//		$("#adPrice").attr('min',65);
+//		$(".msg").text("千次曝光計費，系統接受最低出價NT$65");
+////		$("#adPrice").val("65");
+//	}
 });
 
 
