@@ -727,6 +727,7 @@ function appendVideoPreview(){
 			if(!createPreViewVideoExist){
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
+				console.log(">>>>>>>>>>"+height);
 				var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
