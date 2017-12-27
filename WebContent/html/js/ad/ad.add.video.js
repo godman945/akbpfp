@@ -677,7 +677,8 @@ function autoPreview(objData){
 	iframeInfoMap["iframe"+1] = {width:336,height:280};
 	iframeInfoMap["iframe"+2] = {width:640,height:390};
 	var url = $("#adVideoURL").val();
-	console.log(">>>>>:"+url);
+	var linkUrl = $("#adLinkURL").val();
+	console.log(">>>>>:"+linkUrl);
 	$.each(iframeInfoMap, function(key, obj) {
 		var a = 
 			'<div class="v_box">'+
@@ -686,7 +687,7 @@ function autoPreview(objData){
 			   '</div>'+
 			   '<div  class="v_preview box_a_style">'+
 //			   '<iframe class="akb_iframe"  scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true"'    'src="adVideoPreview.html?adPreviewVideoURL='+encodeURIComponent(url)+'&adPreviewVideoBgImg='+""+'"></iframe>'+
-			   '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="250" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&amp;adPreviewVideoBgImg=&amp;realUrl=http://24h.pchome.com.tw/store/DAAO7G"></iframe>'+
+			   '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="250" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl='+linkUrl+'"></iframe>'+
 			   '</div>'+
 			'</div>';
 			$("#preViewArea").append(a);
