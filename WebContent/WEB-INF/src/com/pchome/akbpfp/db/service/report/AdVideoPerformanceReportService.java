@@ -1,13 +1,8 @@
 package com.pchome.akbpfp.db.service.report;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -95,16 +90,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdPvSum(objArray[4].toString());
 			adVideoPerformanceReportVO.setAdViewSum(objArray[5].toString());
 			adVideoPerformanceReportVO.setAdViewRatings(objArray[6].toString());
-			
-//			BigDecimal bigDecimal = new BigDecimal(objArray[9].toString()); 
-//			bigDecimal = bigDecimal.setScale(2, RoundingMode.FLOOR);
-//			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[7].toString());
-			String singleAdViewCost = String.valueOf((float)objArray[9] / (float)objArray[4]);
-			adVideoPerformanceReportVO.setSingleAdViewCost(singleAdViewCost);
-			
-			
-			
-			
+			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[7].toString());
 			adVideoPerformanceReportVO.setThousandsCost(objArray[8].toString());
 			adVideoPerformanceReportVO.setCostSum(objArray[9].toString());
 			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(objArray[10].toString());
