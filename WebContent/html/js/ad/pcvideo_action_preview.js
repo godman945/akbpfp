@@ -174,7 +174,6 @@
 		function a2(){
 			this.tabindex="0";
 			console.log('DDDD');
-			
 			this.onload = function(){
 				
 //				var video = this.contentDocument.body.querySelector(".home-banner");
@@ -214,6 +213,7 @@
 		
 		/*點擊開始播放*/
 		function PlayHandler(video){
+			console.log('點擊開始播放');
 			if(video == null || video == undefined){
 				return false;
 			}
@@ -230,7 +230,7 @@
 			adlinkbtn2.style.display='none';
 			var index = getIframeIndex(video);
 			video.play();
-			var timeVideo = setInterval('alex('+index+')',"300");
+			var timeVideo = setInterval('alex('+index+')','300');
 			iframeInfoMap["iframe"+index] = {timmer:timeVideo};
 			
 		}
@@ -279,18 +279,59 @@
 		}
 	}, false);
 	
+	
+	
 	function alex(index){
+//		console.log('呼叫影片倒數');
 		var video = iframeArray[index].contentDocument.body.querySelector(".home-banner");
 		var adcountdown = video.parentElement.parentElement.parentElement.querySelector('#video-countdown');
 		var ttime = Math.ceil(video.duration - video.currentTime);
 		var percent = Math.ceil((video.currentTime / video.duration) * 100);
 		
+		
+		
+		
+		
 		if(!video.paused){
 			adcountdown.style.display='block';
 			var time = "影片倒數 "+ formatSecond(ttime);
+//			var time = "影片倒數 "+ new Date().getTime();
+			
+			
+			
+			
 			if(adcountdown.innerHTML != time){
-				adcountdown.innerHTML= time;
+				adcountdown.textContent = time.toString();
 			}
+			
+			
+			
+//			if(adcountdown.childNodes[0] != null){
+////				adcountdown.removeChild(adcountdown.childNodes[0]);
+////				console.log(adcountdown.childNodes[0].textContent = time);
+////				adcountdown.childNodes[0].textContent = time;
+////				var a = document.getElementById("SSS_"+index);
+////				a.innerHTML = time;
+////				console.log(document.getElementById("SSS"));
+//			}else{
+////				var iDiv = document.createElement('div');
+////				iDiv.innerHTML = time;
+////				iDiv.id= "SSS_"+index;
+//////				adcountdown.insertBefore(iDiv,adcountdown.childNodes[0]);
+////				adcountdown.appendChild(iDiv);
+//			}
+			
+
+			
+			
+//			adcountdown.innerHTML = 'FFF';
+			
+//			adcountdown.innerHTML = '';
+//			adcountdown.innerHTML = 'AA';
+			
+//			if(adcountdown.innerHTML != time){
+//				adcountdown.innerHTML= time;
+//			}
 		}else if(ttime == 0){
 			var replaybtn = video.parentElement.querySelector('#video-replaybtn');
 			var pausebtn = video.parentElement.querySelector('#video-pausebtn');
@@ -311,8 +352,9 @@
 	}
 	
 	
+	
 	/*影片時間格式*/
-	function formatSecond(secs) {          
+	function formatSecond(secs) {  
         var min = Math.floor(secs / 60);
         var sec = parseInt(secs-(min * 60));
         if (sec < 10) {
