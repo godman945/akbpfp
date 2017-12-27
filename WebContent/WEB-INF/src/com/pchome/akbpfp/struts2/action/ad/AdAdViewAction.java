@@ -244,6 +244,11 @@ public class AdAdViewAction extends BaseCookieAction{
 			if(sCurrentLine.indexOf("<#dad_201303070018>") >= 0){
 				sCurrentLine = sCurrentLine.replaceAll("<#dad_201303070018>", webmPath);
 			}
+			//取代js
+			if(sCurrentLine.indexOf("pcadscript") >=0){
+				str = str.append("<script language=\"JavaScript\" src=\"http://showstg.pchome.com.tw/pfp/html/js/ad/pcvideo_action_preview.js?t="+System.currentTimeMillis()+"\"></script>");
+				continue;
+			}
 			str = str.append(sCurrentLine+"\r\n");
 		}
 		previewHtml = str.toString();
