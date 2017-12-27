@@ -147,6 +147,7 @@ $(document).ready(function(){
 	    		return false;
 	    	}
 	    	callBlockUpload("圖片上傳中，請稍後");
+	    	
 	    }).on('fileuploaddone', function (e, data) {
 	    	var index = parseInt($("#fileUploadIndex").text());
 	    	index = index + 1;
@@ -176,6 +177,7 @@ $(document).ready(function(){
 		    	/**建立預覽圖*/
 		    	appendVideoPreview();
 	    	}
+	    	$('body').unblock();
 	    }).on('fileuploadprogressall', function (e, data) {	
 	    }).on('fileuploadprocessalways', function (e, data) {
 	    	//2015.7.12  tim   由於error後不會執行fileuploaddone,所以要加unblock()
