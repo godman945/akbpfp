@@ -727,14 +727,13 @@ function appendVideoPreview(){
 			if(!createPreViewVideoExist){
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
-				console.log(">>>>>>>>>>"+height);
 				var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
 				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+width+height+'" checked onclick="checkVideo(this)"/>'+width+'x'+height+'</span>'+
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
-				   '<iframe class="akb_iframe_S" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="230" height="400" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+$("#adVideoURL").val()+'&adPreviewVideoBgImg='+imgSrc+'&realUrl='+linkUrl+'"></iframe>'+
+				   '<iframe class="akb_iframe_S" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+$("#adVideoURL").val()+'&adPreviewVideoBgImg='+imgSrc+'&realUrl='+linkUrl+'"></iframe>'+
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
