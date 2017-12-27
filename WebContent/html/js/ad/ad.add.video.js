@@ -147,7 +147,6 @@ $(document).ready(function(){
 	    		return false;
 	    	}
 	    	callBlockUpload("圖片上傳中，請稍後");
-	    	
 	    }).on('fileuploaddone', function (e, data) {
 	    	var index = parseInt($("#fileUploadIndex").text());
 	    	index = index + 1;
@@ -320,6 +319,9 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		errorMsg = '檔案空白';
 	}
 	//檢核重複上傳
+//	console.log(fileArray);
+//	console.log(width);
+//	console.log(height);
 	fileArray.forEach(function(fileData,index) {
 		if(file.name == fileData.name){
 			imgRepeatFlag = true;
@@ -328,6 +330,12 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			return false;
 		}
 	})
+	
+//	var $img = $('<img>');
+//	$img.on('load', function(){
+//	  console.log($(file).width());
+//	});
+	
 	
 	var fileName = file.name;
 	var showFileName = "";
@@ -364,7 +372,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			 '<img src="'+objectUrl+'">'+
 			 '<p class="fancy adinf" onclick="preViewImg(\''+file.name+'\',\''+width+'\',\''+height+'\');" alt="預覽">預覽</p></div>'+
 			 '<ul style="margin-top: 5px;margin-left: -5px;">'+
-			 '<li><input type="radio" style="visibility:visible;float: left;display: block;"  name="'+readoName+'" checked onclick="clickSizePic(\''+showFileName+'\',\''+width+'\',\''+height+'\')"><i>名稱</i><b>' + showFileName + '</b></li>' + 
+			 '<li><input type="radio" style="visibility:visible;float: left;display: block;"  name="'+readoName+'" checked onclick="clickSizePic(\''+file.name+'\',\''+width+'\',\''+height+'\')"><i>名稱</i><b>' + showFileName + '</b></li>' + 
 			 '<li style="margin-left:30px;" class="'+imgSize+'"><i>尺寸</i><b>'+width+' x '+height+'</b></li>'+
 			 '<li style="margin-left:30px;" class="'+imgFileSize+'"><i>大小</i><b>'+fileSize+'</b></li>'+
 			 '<li style="margin-left:30px;" class="'+imgType+'"><i>格式</i><b>'+imgTypeName.toUpperCase()+'</b></li>'+
@@ -376,22 +384,25 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			 '</li>';
 		$(".aduplodul_p").append(a);
 		
-		$("#AG").children().each(function(index,value){
-			var checkFlag = false;
-			$(value.getElementsByTagName("ul")).children().each(function(index,obj){
-				if(index == 0 && readoName == $(obj).children()[0].name && $($(obj).children()[2]).text() != showFileName){
-					checkFlag = true;
-				}
-				
-				if(checkFlag && index == 1){
-					$(this).attr('class','no');
-					var data = $($(this).children()[1]).html("<br>");
-					$(this).children()[1].append('尺寸重複，僅能選擇一款。');
-					$(data).prepend(width+" x "+height);
-				}
-				
-			})
-		})
+//		$("#AG").children().each(function(index,value){
+//			var checkFlag = false;
+//			$(value.getElementsByTagName("ul")).children().each(function(index,obj){
+//				var existPicName = $(value).children()[3].value+"."+$(value).children()[5].value;
+//				console.log(existPicName);
+//				
+//				if(index == 0 && readoName == $(obj).children()[0].name && $($(obj).children()[2]).text() != showFileName){
+//					checkFlag = true;
+//				}
+//				
+//				if(checkFlag && index == 1){
+//					$(this).attr('class','no');
+//					var data = $($(this).children()[1]).html("<br>");
+//					$(this).children()[1].append('尺寸重複，僅能選擇一款。');
+//					$(data).prepend(width+" x "+height);
+//				}
+//				
+//			})
+//		})
 	}else if(imgSize == "no" || imgFileSize == "no" || imgType == "no" || imgRepeatFlag){
 		result = false;
 		var a =
@@ -430,6 +441,9 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	}
 	
 	var result = {result:result,width:width,height:height};
+	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes" && imgRepeatFlag == false){
+		clickSizePic(file.name,width,height);
+	}
 	return result;
 }
 
@@ -440,9 +454,12 @@ function clickSizePic(showFileName,width,height){
 		var radioName = null;
 		$(value.getElementsByTagName("ul")).children().each(function(index,obj){
 			radioName = $(obj).children()[0].name;
-			var name = $($(obj).children()[2]).text();
 			ulObj = $(obj).parent();
-			if(showFileName == name && radioName == (width+height)){
+			if(value.className != 'okbox'){
+				return true;
+			}
+			var existPicName = $(value).children()[3].value+"."+$(value).children()[5].value;
+			if(showFileName == existPicName && radioName == (width+height)){
 				flag = true;
 			}else if(radioName == (width+height)){
 				flag = false;
@@ -718,9 +735,9 @@ function appendVideoPreview(){
 	if(linkUrl.indexOf('http') == -1){
 		linkUrl = "http://"+linkUrl;
 	}
+	
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
-			var url = adPreviewVideoData.previewUrl;
 			var createPreViewVideoExist = false;
 			var createPreViewCheckboxObj = null;
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
@@ -741,7 +758,7 @@ function appendVideoPreview(){
 				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+width+height+'" checked onclick="checkVideo(this)"/>'+width+'x'+height+'</span>'+
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
-				   '<iframe class="akb_iframe_S" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+$("#adVideoURL").val()+'&adPreviewVideoBgImg='+imgSrc+'&realUrl="></iframe>'+
+				   '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+width+'" height="'+height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg='+imgSrc+'&realUrl="></iframe>'+
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
