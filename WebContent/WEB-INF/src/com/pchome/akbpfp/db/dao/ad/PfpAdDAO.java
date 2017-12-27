@@ -978,7 +978,7 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" ELSE r.ad_view "); 
 		sql.append(" END )) / Sum(r.ad_pv) ) * 100, 2), 0) "); 
 		sql.append(" ad_view_ratings, "); 
-		sql.append(" Ifnull(Truncate(Sum(r.ad_clk_price) / ( Sum(r.ad_pv) ), 2), 0), "); 
+		sql.append(" Ifnull(Sum(r.ad_clk_price) / Sum(r.ad_view), 0), "); 
 		sql.append(" Ifnull(((Sum(r.ad_clk_price) /  Sum(r.ad_pv)) * 1000),0) thousands_cost, "); 
 		sql.append(" a.ad_status, "); 
 		sql.append(" aa.ad_action_start_date, "); 

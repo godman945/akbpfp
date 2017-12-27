@@ -68,7 +68,7 @@
 				
 				<td class="td01">${adReportVO.adClickRatings?number?string('#,###.##')!}%</td>	
 					
-				<td class="td01">NT$ ${adReportVO.singleCost!}</td>
+				<td class="td01">NT$ ${adReportVO.singleCost?number?string('#,###.##')!}</td>
 				
 				<td class="td01">NT$ ${adReportVO.thousandsCost?number?string('#,###.##')!}</td>
 				
