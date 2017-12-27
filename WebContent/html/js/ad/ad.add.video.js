@@ -734,7 +734,7 @@ function appendVideoPreview(){
 				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+width+height+'" checked onclick="checkVideo(this)"/>'+width+'x'+height+'</span>'+
 				   '</div>'+
 				   '<div  class="v_preview box_a_style">'+
-				   '<iframe class="akb_iframe_S" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="250" height="520" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+$("#adVideoURL").val()+'&adPreviewVideoBgImg='+imgSrc+'&realUrl='+linkUrl+'"></iframe>'+
+				   '<iframe class="akb_iframe_S" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="230" height="'+height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+$("#adVideoURL").val()+'&adPreviewVideoBgImg='+imgSrc+'&realUrl='+linkUrl+'"></iframe>'+
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
