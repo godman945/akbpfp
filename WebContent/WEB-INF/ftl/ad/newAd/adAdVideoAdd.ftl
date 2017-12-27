@@ -348,3 +348,6 @@
 	</table>
 </div>
 <!-- 970x250 Banner廣告圖 說明   END-->
+
+
+<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="250" height="208.33333333333334" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=https://www.youtube.com/watch?v=c6GlpHVpjwQ&amp;adPreviewVideoBgImg=&amp;realUrl=http://24h.pchome.com.tw/store/DAAO7G"></iframe>
