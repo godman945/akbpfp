@@ -62,12 +62,6 @@ $(document).ready(function(){
 	var videoUrl = null;
 	//檢查廣告網址blur事件
 	$("#adVideoURL").blur(function() {
-		if($("#chkLinkURL").text() != "網址確認正確"){
-			$("#chkLinkURL").css('color','red');
-			$("#chkLinkURL").text('請確認影片到達網址');
-			return false;
-		}
-		
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLMsg").css('color','red');
 			$("#adVideoURLMsg").text('請輸入影片網址');
