@@ -708,7 +708,8 @@ function appendVideoPreview(){
 	if($("#AG").children().length == 0){
 		return false;
 	}
-	
+	var url = $("#adVideoURL").val();
+	var linkUrl = $("#adLinkURL").val();
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
 			var url = adPreviewVideoData.previewUrl;
