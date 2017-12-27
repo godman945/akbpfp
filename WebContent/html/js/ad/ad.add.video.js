@@ -62,6 +62,12 @@ $(document).ready(function(){
 	var videoUrl = null;
 	//檢查廣告網址blur事件
 	$("#adVideoURL").blur(function() {
+		if($("#chkLinkURL").text() != "網址確認正確"){
+			$("#chkLinkURL").css('color','red');
+			$("#chkLinkURL").text('請確認影片到達網址');
+			return false;
+		}
+		
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLMsg").css('color','red');
 			$("#adVideoURLMsg").text('請輸入影片網址');
@@ -678,6 +684,9 @@ function autoPreview(objData){
 	iframeInfoMap["iframe"+2] = {width:640,height:390};
 	var url = $("#adVideoURL").val();
 	var linkUrl = $("#adLinkURL").val();
+	if(linkUrl.indexOf('http') == -1){
+		linkUrl = "http://"+linkUrl;
+	}
 	$.each(iframeInfoMap, function(key, obj) {
 		var a = 
 			'<div class="v_box">'+
@@ -710,6 +719,9 @@ function appendVideoPreview(){
 	}
 	var url = $("#adVideoURL").val();
 	var linkUrl = $("#adLinkURL").val();
+	if(linkUrl.indexOf('http') == -1){
+		linkUrl = "http://"+linkUrl;
+	}
 	$("#AG input[type=radio]").each(function(index,radioObj){
 		if(radioObj.checked){
 			var url = adPreviewVideoData.previewUrl;
