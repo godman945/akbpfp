@@ -44,7 +44,9 @@ public class PchomeBuAPI extends BaseCookieAction {
 		log.info(request.getRequestURI());
 		log.info(request.getRequestURL());
 		log.info(request.getRemoteHost());
-
+		log.info(request.getQueryString());
+		log.info(request.getAttribute("javax.servlet.forward.request_uri"));
+		
 		
 		
 		if(!request.getRemoteAddr().equals("220.228.8.21") && !request.getRemoteAddr().equals("220.132.64.177") && !request.getRemoteAddr().equals("113.196.35.80")){
