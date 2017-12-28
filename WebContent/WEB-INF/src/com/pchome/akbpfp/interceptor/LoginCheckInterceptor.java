@@ -70,7 +70,11 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		/*BU LOGIN START*/
 		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
 		if(StringUtils.isNotBlank(buKey)){
-			log.info(">>>>>> CALL BU LOGIN API IP:"+request.getRemoteAddr());
+			log.info(">>>>>> CALL BU LOGIN REFERER:"+request.getHeader("referer"));
+			if(request.getHeader("referer").indexOf("adm.pcstore.com.tw") < 0){
+				return "index";
+			}
+			
 			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
 			byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
 			JSONObject buInfoJson = new JSONObject(new String(decBytes));
