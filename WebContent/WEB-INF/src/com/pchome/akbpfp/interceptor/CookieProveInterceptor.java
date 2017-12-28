@@ -71,7 +71,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
 		if(StringUtils.isNotBlank(buKey)){
 			log.info(">>>>>> CALL BU LOGIN REFERER:"+request.getHeader("referer"));
-			if(request.getHeader("referer").indexOf("adm.pcstore.com.tw") < 0){
+			if(request.getHeader("referer") == null || request.getHeader("referer").indexOf("adm.pcstore.com.tw") < 0){
 				return "index";
 			}
 			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
