@@ -29,7 +29,7 @@
 </div>
 
 <!-- 公告 end -->
-<a href="http://alex.pchome.com.tw:8080/akbpfp/api/buKeyEncode.html" target="_blank">http://alex.pchome.com.tw:8080/akbpfp/api/buKeyEncode.html</a>
+<a href="http://alex.pchome.com.tw:8080/akbpfp/api/buLogin.html?key=RwS49vLYOt5dIxpwTUrbW5A7qYr3sSdMrTGQ_sZkwZzhJ27wEK8lunijCX6ydBpBPL0XsNFvGIJETMrFSI3B7z6EVt0wFIieS6Udxql-L1qwfSO9o5KxNC-SzGrW_3mFn7zLciLmn_PImuNgnYRI67q42zr8mR9NrJ_Q2Nnem2EA-Uyv9lFAAyEmClM5-NVFkpfWKF3RjQ4CtwVffcMrxFjek-cT3S86HXeZ9o4xww7tshHStgxfJ_ClNkyq0nrHeg5kfaPEwTCaAHn_V2fVWR_5FfR8oQOMP0wK3WXm6xyj0LmCCvuj12wvdS-cL2YE7AMt2uU9lRGLhO43zZKdgw" target="_blank">login</a>
 <!-- 帳戶概要 start -->
 <div class="sum">
 <h2><img src="html/img/iconcr.gif" hspace="2" vspace="12" align="absmiddle" />帳戶概要<span>為帳戶目前使用狀況，帳戶餘額結算時間為前一天為止</span></h2>
