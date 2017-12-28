@@ -2,7 +2,10 @@ package com.pchome.akbpfp.api;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Enumeration;
 
 import org.apache.commons.codec.binary.Base64;
 import org.json.JSONObject;
@@ -34,6 +37,16 @@ public class PchomeBuAPI extends BaseCookieAction {
 	 * */
 	public String buKeyEncode() throws Exception{
 		log.info(">>>>>> CALL BU ENCODE API IP:"+request.getRemoteAddr());
+		
+		log.info(request.getRequestURL());
+		log.info(request.getServletPath());
+		log.info(request.getServerName());
+		log.info(request.getRequestURI());
+		log.info(request.getRequestURL());
+		log.info(request.getRemoteHost());
+
+		
+		
 		if(!request.getRemoteAddr().equals("220.228.8.21") && !request.getRemoteAddr().equals("220.132.64.177") && !request.getRemoteAddr().equals("113.196.35.80")){
 			return "input";
 		}
