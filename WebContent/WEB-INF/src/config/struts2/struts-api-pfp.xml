@@ -8,7 +8,8 @@
 	     		<result type="stream" name="success">
 	        		<param name="contentType">text/html</param>
 					<param name="inputName">returnLifeCheck</param>
-				</result> 	
+				</result>
+				<result type="redirectAction" name="input">index</result>
 		</action>
 		
 		<action name="buLogin" class="IndexAction" method="execute">

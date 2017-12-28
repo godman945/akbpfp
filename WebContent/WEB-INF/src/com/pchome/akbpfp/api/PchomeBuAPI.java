@@ -34,6 +34,9 @@ public class PchomeBuAPI extends BaseCookieAction {
 	 * */
 	public String buKeyEncode() throws Exception{
 		log.info(">>>>>> CALL BU ENCODE API IP:"+request.getRemoteAddr());
+		if(!request.getRemoteAddr().equals("220.228.8.21") && !request.getRemoteAddr().equals("220.132.64.177") && !request.getRemoteAddr().equals("113.196.35.80")){
+			return "input";
+		}
 		JSONObject json = new JSONObject(encodeData);
 		RSAPublicKey publicKey = (RSAPublicKey)RSAUtils.getPublicKey(RSAUtils.PUBLIC_KEY_2048);
 		byte[] srcBytes = json.toString().getBytes();
