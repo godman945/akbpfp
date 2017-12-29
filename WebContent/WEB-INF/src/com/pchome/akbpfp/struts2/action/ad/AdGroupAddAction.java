@@ -179,7 +179,7 @@ public class AdGroupAddAction extends BaseCookieAction{
 			PfpAdSysprice pfpAdSysprice = pfpAdSyspriceService.get(3);
 			adUserAmount = pfpAdSysprice.getAmount();
 			sysprice = (float) (0.5 + ((float)adUserAmount / (float)10));
-			float userprice = (adGroupChannelPriceDefault * 10) + 10;
+			float userprice = (sysprice * 10) + 10;
 			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(userprice));
 			return "success_video";
 		}else{
