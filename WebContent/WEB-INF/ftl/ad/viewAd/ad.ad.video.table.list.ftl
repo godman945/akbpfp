@@ -50,7 +50,7 @@
 						${adReportVO.content!}<br>
 						 <div class="ad_size">尺寸 ${adReportVO.adWidth!} x ${adReportVO.adHeight!}</div>
 						時間 :${adReportVO.adVideoSec!}<br>
-					  	<a href="#" target="_blank" src="${adReportVO.realUrl!}">${adReportVO.realUrl!}</a><br>
+					  	<a href="${adReportVO.realUrl!}" target="_blank">${adReportVO.realUrl!}</a><br>
 				</td>
 				
 		        <td class="td03">
