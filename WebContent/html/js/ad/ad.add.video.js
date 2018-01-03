@@ -860,7 +860,7 @@ function saveData() {
 			}
 		}
 	});
-	
+	console.log(videoDetailMap.size);
 	console.log(videoDetailMap);
 	return false;
 	
