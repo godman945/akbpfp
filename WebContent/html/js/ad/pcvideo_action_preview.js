@@ -99,11 +99,11 @@
 					var imgHeight;
 					var specialTemplate = false;
 					
+					if((this.width == 970 && this.height == 250) || this.width == 950 && this.height == 390){
+						specialTemplate = true;
+					}
+
 					if(resizeFlag){
-						if((this.width == 970 && this.height == 250) || this.width == 950 && this.height == 390){
-							specialTemplate = true;
-						}
-					}else{
 						if(this.width == 970){
 							adw = 391;
 						}
@@ -111,9 +111,6 @@
 							adw = 640;
 						}
 					}
-					
-					
-					
 					
 					//1.原始尺寸換算預覽寬高
 					var previewRatio = adw / this.width;
@@ -151,6 +148,18 @@
 						playbtn.setAttribute("style", "width:35px;margin-left:-35px");
 						videoControlbar.setAttribute("style", "height:"+barh+"px;");
 					}else{
+						if (vdoh/adw<ratio){
+							vdow=vdoh/ratio;
+							xpos=(!xcenter)?0:(adw-vdow)/2;
+							ypos=0;
+							vdow+="px";
+						}else{
+							vdow=100;
+							xpos=0
+							ypos=(!ycenter)?0:(adh-adw*0.5625 - 30)/2;
+							vdow+="%";
+						}
+					
 						imgWidth = adw;
 						imgHeight = previewHeight;
 						vdow = 100;
