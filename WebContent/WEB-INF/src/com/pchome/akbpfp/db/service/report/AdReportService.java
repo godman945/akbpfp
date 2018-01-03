@@ -184,7 +184,7 @@ public class AdReportService implements IAdReportService {
 					videoSeconds = videoSeconds.length() == 2 ?videoSeconds : "0"+videoSeconds;
 					String realUrlPath = adPreviewVideoBgImg.equals("img/public/na.gif\" style=\"display:none") ? "" : "http://showstg.pchome.com.tw/pfp/"+adPreviewVideoBgImg;
 					htmlCode = "<div style=\"display:flex;\"><div> ";
-					htmlCode = htmlCode + "<iframe class=\"akb_iframe\" scrolling=\"no\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" vspace=\"0\" hspace=\"0\" id=\"pchome8044_ad_frame1\" width=\""+width+"\" height=\""+height+"\" allowtransparency=\"true\" allowfullscreen=\"true\" src=\"adVideoModel.html?adPreviewVideoURL="+adPreviewVideoURL+"&adPreviewVideoBgImg="+realUrlPath+"&realUrl="+realUrl+"\"></iframe>";
+					htmlCode = htmlCode + "<iframe class=\"akb_iframe\" scrolling=\"no\" frameborder=\"0\" marginwidth=\"0\" marginheight=\"0\" vspace=\"0\" hspace=\"0\" id=\"pchome8044_ad_frame1\" width=\""+width+"\" height=\""+height+"\" allowtransparency=\"true\" allowfullscreen=\"true\" src=\"adVideoModel.html?adPreviewVideoURL="+adPreviewVideoURL+"&adPreviewVideoBgImg="+realUrlPath+"&realUrl="+realUrl+"&resize=true\"></iframe>";
 					htmlCode = htmlCode + "</div><div style=\" word-break:break-all; text-align: left; line-height: 20px; padding: 10px;"+style+"\">";
 					htmlCode = htmlCode + content+"<br>";
 					htmlCode = htmlCode + "<div class='ad_size'>尺寸 "+width+" x "+height+"</div>";

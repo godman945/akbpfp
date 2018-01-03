@@ -49,7 +49,7 @@
         	</div>
 		<#elseif "VIDEO" == vo.adStyle>
 				<div class="adreportdv">
-					<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${vo.adWidth!}" height="${vo.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=${vo.videoUrl!}&adPreviewVideoBgImg=<#if vo.img = 'img/public/na.gif" style="display:none'><#else>http://showstg.pchome.com.tw/pfp/${vo.img!}</#if>&realUrl=${vo.realUrl!}"></iframe>
+					<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${vo.adWidth!}" height="${vo.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=${vo.videoUrl!}&adPreviewVideoBgImg=<#if vo.img = 'img/public/na.gif" style="display:none'><#else>http://showstg.pchome.com.tw/pfp/${vo.img!}</#if>&realUrl=${vo.realUrl!}&resize=true"></iframe>
 					<span class="adboxdvinf"><div style=" text-align: left; line-height: 20px; padding: 10px; ">${vo.name!}<br>${vo.adWidth!}x${vo.adHeight!}<br>00:${vo.adVideoSec!}<br>
 				<a href="#" target="_blank">${adVideoPerformanceReportVO.realUrl!}</a><br>
 			</div></span>
