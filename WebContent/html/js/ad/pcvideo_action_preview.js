@@ -78,6 +78,8 @@
 							var imgInfo = url[i].split('=');
 							if(imgInfo.length > 1){
 								console.log(decodeURI(imgInfo[1]));
+								console.log(decodeURIComponent(imgInfo[1]));
+								
 							}
 						}
 					}
