@@ -66,6 +66,7 @@
 					video.load();
 					
 					var url = location.href;
+					console.log(url);
 					url =  location.href.split('&');
 					var resizeFlag = false;
 					for (var i in url) {
@@ -73,11 +74,13 @@
 							var resizeInfo = url[i].split('=');
 							resizeFlag = resizeInfo[1];
 						}
+						if(url[i].indexOf('adPreviewVideoBgImg') >= 0){
+							var imgInfo = url[i].split('=');
+							if(imgInfo.length > 1){
+								console.log(decodeURI(imgInfo[1]));
+							}
+						}
 					}
-					
-					console.log(resizeFlag);
-					console.log(this.height);
-					console.log(this.width);
 					
 					var css = document.createElement("style");
 					css.type = "text/css";
