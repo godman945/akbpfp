@@ -173,12 +173,6 @@
 							ypos=(!ycenter)?0:(adh-adw*0.5625 - 30)/2;
 							vdow+="%";
 						}
-//						if(this.width == 970){
-//							adw = 391;
-//						}
-//						if(this.width == 950){
-//							adw = 640;
-//						}
 						css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 						this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 						var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
