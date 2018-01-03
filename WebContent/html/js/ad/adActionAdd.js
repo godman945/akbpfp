@@ -2,7 +2,6 @@
 
 
 $(document).ready(function(){
-	
 	var firstAdType = $("#adType").val();
 	var firstAdDevice = $("#adDeviceSelect").val();
 	var firstObj;
@@ -356,6 +355,9 @@ $(document).ready(function(){
 function changeMappingAdStyle(){
 	$("#adStyle option").each(function(){
 		if($("#adType").val() == "0" && $(this).val() == "1"){
+			$(this).css('display','none');
+			$(this).attr("selected",false);
+		}else if($("#adType").val() == "1" && $(this).val() == "1"){
 			$(this).css('display','none');
 			$(this).attr("selected",false);
 		}else{
