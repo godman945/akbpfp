@@ -189,10 +189,8 @@
 		}
 		
 		function a1(){
-			console.log('CCCC');
 			this.tabindex="1";
 			this.onload = function(){
-				
 //				var video = this.contentDocument.body.querySelector(".home-banner");
 //				var adlinkbtn1 = video.parentElement.parentElement.parentElement.parentElement.querySelector('#ad-linkbtn');
 //				adlinkbtn1.tabindex="1";
@@ -253,7 +251,7 @@
 			playbtn.style.display='none';
 			pausebtn.style.display='none';
 			replaybtn.style.display='none';
-			adlinkbtn1.style.opacity = 1;
+			adlinkbtn1.style.opacity = 0;
 			adlinkbtn2.style.display='none';
 			var index = getIframeIndex(video);
 			video.play();
