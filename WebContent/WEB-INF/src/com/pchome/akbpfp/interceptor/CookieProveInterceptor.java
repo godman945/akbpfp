@@ -51,7 +51,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private PfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private SequenceService sequenceService;
-	
+	private String buPcstoreReferer;
 	private String memberServer;
 	private String buPortalPfdc;
 	private String pcstoreName;
@@ -71,9 +71,11 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
 		if(StringUtils.isNotBlank(buKey)){
 			log.info(">>>>>> CALL BU LOGIN REFERER:"+request.getHeader("referer"));
-			if(request.getHeader("referer") == null || request.getHeader("referer").indexOf("adm.pcstore.com.tw") < 0){
-				return "index";
-			}
+//			if(request.getHeader("referer") == null || request.getHeader("referer").indexOf("adm.pcstore.com.tw") < 0){
+//				return "index";
+//			}
+			
+			
 			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
 			byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
 			JSONObject buInfoJson = new JSONObject(new String(decBytes));
@@ -86,17 +88,31 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 				result = invocation.invoke();
 				return result;
-			}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
+			}
+			
+			if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
 				result = invocation.invoke();
 				return result;
 			}
-//			else if(buName.equals(rutenName) && !pfdc.equals(this.pfdu)){
-//				result = invocation.invoke();
-//				return result;
-//			}
-			else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
+			
+			if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
 				result = invocation.invoke();
 				return result;
+			}
+
+			if(buName.equals(pcstoreName)){
+				boolean pcstoreFlag = false;
+				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
+				for (String referer : buPcstoreRefererArray) {
+					if(request.getHeader("referer").indexOf(referer) >= 0){
+						pcstoreFlag = true;
+						break;
+					}
+				}
+				if(!pcstoreFlag){
+					result = invocation.invoke();
+					return result;
+				}	
 			}
 			
 			//1.查詢資料庫是否有此資料
@@ -325,6 +341,14 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 
 	public void setRutenName(String rutenName) {
 		this.rutenName = rutenName;
+	}
+
+	public String getBuPcstoreReferer() {
+		return buPcstoreReferer;
+	}
+
+	public void setBuPcstoreReferer(String buPcstoreReferer) {
+		this.buPcstoreReferer = buPcstoreReferer;
 	}
 	
 }

@@ -55,7 +55,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	private PfpUserMemberRefService pfpUserMemberRefService;
 	private PfdUserMemberRefService pfdUserMemberRefService;
 	private PfpBuService pfpBuService;
-	
+	private String buPcstoreReferer;
 	private String buPortalPfdc;
 	private String pcstoreName;
 	private String rutenName;
@@ -71,9 +71,9 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
 		if(StringUtils.isNotBlank(buKey)){
 			log.info(">>>>>> CALL BU LOGIN REFERER:"+request.getHeader("referer"));
-			if(request.getHeader("referer") == null || request.getHeader("referer").indexOf("adm.pcstore.com.tw") < 0){
-				return "index";
-			}
+//			if(request.getHeader("referer") == null || request.getHeader("referer").indexOf("adm.pcstore.com.tw") < 0){
+//				return "index";
+//			}
 			
 			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
 			byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
@@ -86,14 +86,28 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 			
 			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 				return "index";
-			}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
+			}
+			
+			if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
 				return "index";
 			}
-//			else if(buName.equals(rutenName) && !pfdc.equals(this.pfdc)){
-//				return "index";
-//			}
-			else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
+			
+			if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
 				return "index";
+			}
+			
+			if(buName.equals(pcstoreName)){
+				boolean pcstoreFlag = false;
+				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
+				for (String referer : buPcstoreRefererArray) {
+					if(referer.indexOf(request.getHeader("referer")) >= 0){
+						pcstoreFlag = true;
+						break;
+					}
+				}
+				if(!pcstoreFlag){
+					return "index";
+				}	
 			}
 			
 			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
@@ -341,6 +355,14 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 
 	public void setRutenName(String rutenName) {
 		this.rutenName = rutenName;
+	}
+
+	public String getBuPcstoreReferer() {
+		return buPcstoreReferer;
+	}
+
+	public void setBuPcstoreReferer(String buPcstoreReferer) {
+		this.buPcstoreReferer = buPcstoreReferer;
 	}
 
 }
