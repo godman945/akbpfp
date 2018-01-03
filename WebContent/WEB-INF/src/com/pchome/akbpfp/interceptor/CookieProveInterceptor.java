@@ -30,6 +30,7 @@ import com.pchome.akbpfp.db.service.bu.PfpBuService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfd.user.PfdUserAdAccountRefService;
 import com.pchome.akbpfp.db.service.sequence.SequenceService;
+import com.pchome.akbpfp.db.vo.account.AccountVO;
 import com.pchome.enumerate.bu.EnumBuType;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -126,6 +127,17 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 					cookieProccessAPI.deleteAllCookie(response);
 					createBuCookie(pfpBuAccount.getPcId(),response,false,pfpCustomerInfo);
 				}
+				AccountVO accountVO = pfpCustomerInfoService.existentAccount(pfpBuAccount.getPcId());
+				if(accountVO != null){
+					if(pfpBuAccount.getPfpStatus() == 0){
+						pfpBuAccount.setPfpStatus(1);
+						pfpBuAccount.setUpdateDate(new Date());
+						pfpBuService.saveOrUpdate(pfpBuAccount);
+					}
+					return "bulogin";
+				}else{
+					return "buApply";
+				}
 			}else{
 				String pcId = createBuUser(buInfoJson);
 				if(StringUtils.isNotBlank(pcId)){
@@ -134,8 +146,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 			}
 //			result = invocation.invoke();
 //			return result;
-			
-			return "bulogin";
+//			return "bulogin";
 			
 		}
 		/*BU LOGIN END*/
