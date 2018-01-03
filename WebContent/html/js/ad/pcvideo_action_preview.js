@@ -103,7 +103,17 @@
 						if((this.width == 970 && this.height == 250) || this.width == 950 && this.height == 390){
 							specialTemplate = true;
 						}
+					}else{
+						if(this.width == 970){
+							adw = 391;
+						}
+						if(this.width == 950){
+							adw = 640;
+						}
 					}
+					
+					
+					
 					
 					//1.原始尺寸換算預覽寬高
 					var previewRatio = adw / this.width;
@@ -152,7 +162,17 @@
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
-					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px;");
+					if(resizeFlag){
+						if(this.width == 970){
+							adbg.setAttribute("style", "height:250px");
+						}else if(this.width == 950){
+							adbg.setAttribute("style", "height:390px");
+						}else{
+							adbg.setAttribute("style", "height:"+padHeight+"px");
+						}
+					}else{
+						adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px;");	
+					}
 					this.width = adw;
 					this.height = adh;
 				}
