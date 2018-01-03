@@ -42,7 +42,7 @@
 				
 				<td>
 					<div style="padding: 8px;height:auto;margin: 0 auto">
-						<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${adReportVO.adWidth!}" height="${adReportVO.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=${adReportVO.adVideoUrl!}&adPreviewVideoBgImg=<#if adReportVO.img = 'img/public/na.gif" style="display:none'><#else>http://showstg.pchome.com.tw/pfp/${adReportVO.img!}</#if>&realUrl=${adReportVO.realUrl!}&resize=true"></iframe>
+						<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${adReportVO.adWidth!}" height="${adReportVO.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=${adReportVO.adVideoUrl!}&adPreviewVideoBgImg=<#if adReportVO.img = 'img/public/na.gif" style="display:none'><#else>${adReportVO.img!}</#if>&realUrl=${adReportVO.realUrl!}&resize=true"></iframe>
 					</div>
 				</td>
 				
