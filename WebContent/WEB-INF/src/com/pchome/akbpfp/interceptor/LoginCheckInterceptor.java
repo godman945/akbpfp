@@ -67,65 +67,60 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	public String intercept(ActionInvocation invocation) throws Exception{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
-		/*BU LOGIN START*/
-		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
-		if(StringUtils.isNotBlank(buKey)){
-			log.info(">>>>>> CALL BU LOGIN REFERER:"+request.getHeader("referer"));
-//			if(request.getHeader("referer") == null || request.getHeader("referer").indexOf("adm.pcstore.com.tw") < 0){
+//		/*BU LOGIN START*/
+//		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
+//		if(StringUtils.isNotBlank(buKey)){
+//			log.info(">>>>>> CALL BU LOGIN REFERER:"+request.getHeader("referer"));
+//			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
+//			byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
+//			JSONObject buInfoJson = new JSONObject(new String(decBytes));
+//			
+//			String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
+//			String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
+//			String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
+//			String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
+//			
+//			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 //				return "index";
 //			}
-			
-			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
-			byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
-			JSONObject buInfoJson = new JSONObject(new String(decBytes));
-			
-			String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
-			String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
-			String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
-			String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
-			
-			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
-				return "index";
-			}
-			
-			if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
-				return "index";
-			}
-			
-			if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
-				return "index";
-			}
-			
-			if(buName.equals(pcstoreName)){
-				boolean pcstoreFlag = false;
-				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
-				for (String referer : buPcstoreRefererArray) {
-					if(referer.indexOf(request.getHeader("referer")) >= 0){
-						pcstoreFlag = true;
-						break;
-					}
-				}
-				if(!pcstoreFlag){
-					return "index";
-				}	
-			}
-			
-			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
-			PfpBuAccount pfpBuAccount =  pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
-			if(pfpBuAccount != null){
-				AccountVO accountVO = pfpCustomerInfoService.existentAccount(pfpBuAccount.getPcId());
-				if(accountVO != null){
-					if(pfpBuAccount.getPfpStatus() == 0){
-						pfpBuAccount.setPfpStatus(1);
-						pfpBuAccount.setUpdateDate(new Date());
-						pfpBuService.saveOrUpdate(pfpBuAccount);
-					}
-					return "bulogin";
-				}else{
-					return "buApply";
-				}
-			}
-		}
+//			
+//			if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
+//				return "index";
+//			}
+//			
+//			if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
+//				return "index";
+//			}
+//			if(buName.equals(pcstoreName)){
+//				boolean pcstoreFlag = false;
+//				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
+//				for (String referer : buPcstoreRefererArray) {
+//					if(referer.indexOf(request.getHeader("referer")) >= 0){
+//						pcstoreFlag = true;
+//						break;
+//					}
+//				}
+//				pcstoreFlag = true;
+//				if(!pcstoreFlag){
+//					return "index";
+//				}	
+//			}
+//			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
+//			PfpBuAccount pfpBuAccount =  pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+//			if(pfpBuAccount != null){
+//				AccountVO accountVO = pfpCustomerInfoService.existentAccount(pfpBuAccount.getPcId());
+//				if(accountVO != null){
+//					if(pfpBuAccount.getPfpStatus() == 0){
+//						pfpBuAccount.setPfpStatus(1);
+//						pfpBuAccount.setUpdateDate(new Date());
+//						pfpBuService.saveOrUpdate(pfpBuAccount);
+//					}
+//					return "bulogin";
+//				}else{
+//					return "buApply";
+//				}
+//			}
+//		}
 		/*BU LOGIN END*/
 		
 		String pcId = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
