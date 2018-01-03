@@ -74,14 +74,6 @@
 							var resizeInfo = url[i].split('=');
 							resizeFlag = resizeInfo[1];
 						}
-						if(url[i].indexOf('adPreviewVideoBgImg') >= 0){
-							var imgInfo = url[i].split('=');
-							if(imgInfo.length > 1){
-								console.log(decodeURI(imgInfo[1]));
-								console.log(decodeURIComponent(imgInfo[1]));
-								
-							}
-						}
 					}
 					
 					var css = document.createElement("style");
