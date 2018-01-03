@@ -30,7 +30,6 @@ $(document).ready(function(){
 			$("#detailTitle").show();
 	    } else if(adType == "1"){
 	    	Obj = JSON.parse($("#adSearchDevice").text());
-	    	
 	    	$("#detailTitle").hide();
 	    	$("#detailId").val("進階設定 +");
 	    	$("#detailId").attr("onclick","openDetail()");
@@ -61,9 +60,7 @@ $(document).ready(function(){
 		$.each(Obj, function(key, value) { 
 			$("#adDevice").append('<option value='+ key+'>' + value + '</option>');
 		});
-		
 		changeMappingAdStyle();
-		
 	});
 	
 	
@@ -358,7 +355,7 @@ $(document).ready(function(){
 //變更廣告播放類型時變更對應廣告樣式
 function changeMappingAdStyle(){
 	$("#adStyle option").each(function(){
-		if($("#adType").val() == "1" && $(this).val() == "1"){
+		if($("#adType").val() == "0" && $(this).val() == "1"){
 			$(this).css('display','none');
 			$(this).attr("selected",false);
 		}else{
