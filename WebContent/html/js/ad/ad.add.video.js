@@ -860,10 +860,9 @@ function saveData() {
 			}
 		}
 	});
-	console.log(videoDetailMap.length);
-	console.log(videoDetailMap);
-	return false;
-	
+	if(videoDetailMap.length == 0){
+		return false;
+	}
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
 		$.blockUI({
