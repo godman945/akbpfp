@@ -65,15 +65,32 @@
 					adlinkbtn2.style.display='block';
 					video.load();
 					
+					var url = location.href;
+					url =  location.href.split('&');
+					var resizeFlag = false;
+					for (var i in url) {
+						if(url[i].indexOf('resize') >= 0){
+							var resizeInfo = url[i].split('=');
+							resizeFlag = resizeInfo[1];
+						}
+					}
+					
+					console.log(resizeFlag);
+					console.log(this.height);
+					console.log(this.width);
+					
 					var css = document.createElement("style");
 					css.type = "text/css";
-					
 					var adratio = this.height / this.width;
-					var adw = 250;
+					var adw = null;
+					if(resizeFlag){
+						adw = 250;
+					}else{
+						adw = this.width;
+					}
+					
 					var	adh = adw * adratio;
-					
 					var barh = 30;
-					
 					var vdow;
 					var vdoh = adh - barh;
 					var ratio = 0.5625;
@@ -85,21 +102,20 @@
 					var imgHeight;
 					var specialTemplate = false;
 					
-					if((this.width == 970 && this.height == 250) || this.width == 950 && this.height == 390){
-						specialTemplate = true;
+					if(resizeFlag){
+						if((this.width == 970 && this.height == 250) || this.width == 950 && this.height == 390){
+							specialTemplate = true;
+						}
 					}
-					
 					
 					//1.原始尺寸換算預覽寬高
 					var previewRatio = adw / this.width;
 					var previewHeight =  previewRatio * this.height;
-					
-					
 					var barhRatio = barh / this.height;
 					barh = previewHeight * barhRatio;
 					
 					//3.計算視頻16:9位置大小 
-					if(specialTemplate){
+					if(specialTemplate && resizeFlag){
 						//計算字幕高度
 						vdoh = previewHeight - barh;
 						vdow = vdoh / ratio;
@@ -138,25 +154,10 @@
 					
 					css.innerHTML = ".adw{width:"+adw+"px}.adh{height:"+adh+"px}.vdow{width:"+vdow+"}.xpos{left:"+xpos+"px}.ypos{top:"+ypos+"px}";
 					this.contentDocument.childNodes[0].getElementsByTagName("head")[0].appendChild(css);
-					
 					var adbg = this.contentDocument.childNodes[0].querySelector('.adbg');
 					adbg.setAttribute("style", "background-size:"+imgWidth+"px "+imgHeight+"px;");
-					
-					
-//					console.log('------------------>width:'+this.width);
-//					console.log('------------------>height:'+this.height);
-					
 					this.width = adw;
 					this.height = adh;
-					
-					
-//					
-//					console.log('------------------>adw:'+adw);
-//					console.log('------------------>adh:'+adh);
-					
-					
-					
-					
 				}
 			};
 		}
