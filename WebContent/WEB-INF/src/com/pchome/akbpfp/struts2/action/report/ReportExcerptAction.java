@@ -1131,6 +1131,9 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
+			
+			System.out.println("alex:"+vo.getAdPriceSum());
+			
 			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}

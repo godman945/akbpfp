@@ -97,19 +97,16 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 							for (int i=0; i<dataList.size(); i++) {
 
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
 								Double cost = (Double) objArray[2];
 								BigDecimal invClick = (BigDecimal) objArray[3];
-
 								AdAgesexReportVO vo = new AdAgesexReportVO();
 								
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
-								
 								resultData.add(vo);
 
 							}
@@ -252,7 +249,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		sqlParams.put("customerInfoId", customerInfoId);
 		sqlParams.put("startDate", sdf.parse(startDate));
 		sqlParams.put("endDate", sdf.parse(endDate));
-
+		
 		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
 			hql.append(" and r.ad_type = :adShowWay");
 			sqlParams.put("adShowWay", adShowWay);
@@ -277,9 +274,11 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		}
 		
 		if(StringUtils.isNotEmpty(searchAgesex) && StringUtils.equals(searchAgesex, "A") ){
-			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.age_code");
+			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.age_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+			hql.append(" order by r.ad_action_seq, r.ad_group_seq, r.age_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
 		} else {
-			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.sex");
+			hql.append(" group by r.ad_action_seq, r.ad_group_seq, r.sex, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+			hql.append(" order by r.ad_action_seq, r.ad_group_seq, r.sex desc, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
 		}
 		sqlParams.put("sql", hql);
 
@@ -294,8 +293,8 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		hql.append(" r.age_code,");
 		hql.append(" r.sex,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
-		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_time_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");	
+		hql.append(" sum(r.ad_clk_price), ");	
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
 		hql.append(" r.ad_action_seq, ");

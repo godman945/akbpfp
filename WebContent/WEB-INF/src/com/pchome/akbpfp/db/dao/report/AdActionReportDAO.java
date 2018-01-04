@@ -113,23 +113,20 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 						if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue())) {
 
 							for (int i=0; i<dataList.size(); i++) {
-
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
-								Double cost = (Double) objArray[2];
+								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2,BigDecimal.ROUND_UP);
+								Double cost = costBigDecimal.doubleValue();
+								System.out.println("總計:"+objArray[2]);
 								BigDecimal invClick = (BigDecimal) objArray[3];
-
 								AdActionReportVO vo = new AdActionReportVO();
 								
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
-								
 								resultData.add(vo);
-
 							}
 
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue())) {
@@ -142,12 +139,11 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 							adTypeMap = getAdType();
 							
 							for (int i=0; i<dataList.size(); i++) {
-
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
-								Double cost = (Double) objArray[2];
+								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2,BigDecimal.ROUND_UP);
+								Double cost = costBigDecimal.doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[3];
 								Double adActionMaxPrice = (Double) objArray[5];
 								BigInteger count = new BigInteger(String.valueOf(objArray[6]));
@@ -393,21 +389,37 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
+//		hql.append("select ");
+//		hql.append(" sum(r.ad_pv), ");
+//		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");	
+//		hql.append(" sum(r.ad_clk_price), ");
+//		hql.append(" sum(r.ad_invalid_clk), ");
+//		hql.append(" sum(r.ad_invalid_clk_price) ");
+//		hql.append(" from pfp_ad_action_report as r ");
+//		hql.append(" where 1 = 1 ");
+//		hql.append(" and r.customer_info_id = :customerInfoId");
+//		hql.append(" and r.ad_pvclk_date >= :startDate");
+//		hql.append(" and r.ad_pvclk_date <= :endDate");
+		
 		hql.append("select ");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_action_report 的時候，已經減過無效點擊數了，所以不用再減
-		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_action_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");		
+		hql.append(" sum(r.ad_clk_price), ");	
 		hql.append(" sum(r.ad_invalid_clk), ");
-		hql.append(" sum(r.ad_invalid_clk_price) ");
+		hql.append(" sum(r.ad_invalid_clk_price), ");
+		hql.append(" r.ad_action_seq, ");
+		hql.append(" r.ad_pvclk_device, ");
+		hql.append(" r.ad_operating_rule, ");
+		hql.append(" r.ad_type ");
 		hql.append(" from pfp_ad_action_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id = :customerInfoId");
 		hql.append(" and r.ad_pvclk_date >= :startDate");
 		hql.append(" and r.ad_pvclk_date <= :endDate");
+		
 		sqlParams.put("customerInfoId", customerInfoId);
 		sqlParams.put("startDate", startDate);
 		sqlParams.put("endDate", endDate);
-
 		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
 			hql.append(" and r.ad_type = :adShowWay");
 			sqlParams.put("adShowWay", adShowWay);
@@ -434,7 +446,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 			sqlParams.put("adOperatingRule", adOperatingRule);
 		}
 		
-		hql.append(" group by r.ad_action_seq");
+		hql.append(" group by r.ad_action_seq, r.ad_type, r.ad_operating_rule");
 		/*if(StringUtils.isNotBlank(adPvclkDevice)) {
 			hql.append(" , r.ad_pvclk_device");
 		}*/
@@ -468,7 +480,6 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		hql.append(" sum(r.ad_invalid_clk_price), ");
 		hql.append(" sum(r.ad_action_max_price * r.ad_action_count), ");
 		hql.append(" sum(r.ad_action_count), ");
-//		hql.append(" count(r.ad_action_report_seq), ");
 		hql.append(" r.ad_action_seq, ");
 		hql.append(" r.ad_pvclk_device, ");
 		hql.append(" r.ad_operating_rule, ");
