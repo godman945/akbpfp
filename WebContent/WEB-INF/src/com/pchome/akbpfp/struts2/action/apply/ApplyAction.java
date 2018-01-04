@@ -14,6 +14,7 @@ import com.pchome.akbpfp.api.MemberAPI;
 import com.pchome.akbpfp.api.RedirectBillingAPI;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
+import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpBuAccount;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.pojo.PfpOrder;
@@ -169,7 +170,7 @@ public class ApplyAction extends BaseSSLAction{
 				this.buAccountVO = new BuAccountVO();
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
-				buAccountVO.setGiftSno("");
+				buAccountVO.setGiftSno("STGT3TNRSV");
 			}
 		}
 		// 帳戶申請中
@@ -299,7 +300,7 @@ public class ApplyAction extends BaseSSLAction{
 					String pfpId = pfpCustomerInfo.getCustomerInfoId();
 					String userId = user.getUserId();
 					//經銷商設定
-					processPfdUser(pfpId,userId,this.buPortalPfdu,this.buPortalPfdc);
+					processPfdUser(pfpId,userId,this.buPortalPfdc,this.buPortalPfdu);
 				}else{
 					log.info(">>> PCHOME PFD PROCESS:"+userMemberId);
 					//經銷商設定
@@ -417,6 +418,11 @@ public class ApplyAction extends BaseSSLAction{
 	 * 經銷商設定
 	 * */
 	public boolean processPfdUser(String pfpId,String userId,String buPortalPfdc,String buPortalPfdu) throws Exception{
+		System.out.println(pfpId);
+		System.out.println(pfdUserAdAccountRefService.getNewRefId());
+		System.out.println(userId);
+		System.out.println(buPortalPfdc);
+		System.out.println(buPortalPfdu);
 		PfdUserAdAccountRefVO pfdUserAdAccountRefVO = new PfdUserAdAccountRefVO();
 		pfdUserAdAccountRefVO.setRefId(pfdUserAdAccountRefService.getNewRefId());
 		pfdUserAdAccountRefVO.setPfdCustomerInfoId(buPortalPfdc);
