@@ -154,7 +154,6 @@ public class ApplyAction extends BaseSSLAction{
 		if(pfpCustomerInfo == null){
 			// 新申請帳戶：預設資料
 			this.accountVO = new AccountVO();
-			
 			this.accountVO.setCategory("1");
 			this.accountVO.setUrlYN("1");
 			this.accountVO.setIndustry(EnumAccountIndustry.政府機關.getName());
@@ -170,6 +169,7 @@ public class ApplyAction extends BaseSSLAction{
 				this.buAccountVO = new BuAccountVO();
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
+				buAccountVO.setGiftSno("");
 			}
 		}
 		// 帳戶申請中

@@ -30,7 +30,6 @@ import com.pchome.akbpfp.db.service.bu.PfpBuService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfd.user.PfdUserAdAccountRefService;
 import com.pchome.akbpfp.db.service.sequence.SequenceService;
-import com.pchome.akbpfp.db.vo.account.AccountVO;
 import com.pchome.enumerate.bu.EnumBuType;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -72,6 +71,11 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
 		if(StringUtils.isNotBlank(buKey)){
 			log.info(">>>>>> CALL BU LOGIN REFERER:"+request.getHeader("referer"));
+//			if(request.getHeader("referer") == null || request.getHeader("referer").indexOf("adm.pcstore.com.tw") < 0){
+//				return "index";
+//			}
+			
+			
 			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
 			byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
 			JSONObject buInfoJson = new JSONObject(new String(decBytes));
@@ -82,25 +86,21 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 			String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
 			
 			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
-				invocation.invoke();
+				result = invocation.invoke();
 				return result;
 			}
 			
 			if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
-				invocation.invoke();
+				result = invocation.invoke();
 				return result;
 			}
 			
 			if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
-				invocation.invoke();
+				result = invocation.invoke();
 				return result;
 			}
 
 //			if(buName.equals(pcstoreName)){
-//				if(request.getHeader("referer") == null){
-//					invocation.invoke();
-//					return result;
-//				}
 //				boolean pcstoreFlag = false;
 //				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
 //				for (String referer : buPcstoreRefererArray) {
@@ -109,8 +109,8 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 //						break;
 //					}
 //				}
-//				pcstoreFlag = true;
 //				if(!pcstoreFlag){
+//					result = invocation.invoke();
 //					return result;
 //				}	
 //			}
@@ -127,27 +127,14 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 					cookieProccessAPI.deleteAllCookie(response);
 					createBuCookie(pfpBuAccount.getPcId(),response,false,pfpCustomerInfo);
 				}
-				AccountVO accountVO = pfpCustomerInfoService.existentAccount(pfpBuAccount.getPcId());
-				if(accountVO != null){
-					if(pfpBuAccount.getPfpStatus() == 0){
-						pfpBuAccount.setPfpStatus(1);
-						pfpBuAccount.setUpdateDate(new Date());
-						pfpBuService.saveOrUpdate(pfpBuAccount);
-					}
-					return "bulogin";
-				}else{
-					return "buApply";
-				}
 			}else{
 				String pcId = createBuUser(buInfoJson);
 				if(StringUtils.isNotBlank(pcId)){
 					createBuCookie(pcId,response,false,null);
 				}
 			}
-//			result = invocation.invoke();
-//			return result;
-//			return "bulogin";
-			
+			result = invocation.invoke();
+			return result;
 		}
 		/*BU LOGIN END*/
 		

@@ -1,6 +1,6 @@
 ﻿var freeBoolean = true;
 $(document).ready(function(){
-
+	
 	// 同意條款
 	$("#accept").click(function() {
 
@@ -216,6 +216,7 @@ $(document).ready(function(){
 	$("#giftSno").hover(function(){
 		checkGiftSno();
 	});
+	checkGiftSno();
 	
 	// 清除序號
 	$("#btnClrGift").click(function(){
