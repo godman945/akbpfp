@@ -94,21 +94,18 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 						if (sqlType.equals(EnumReport.REPORT_HQLTYPE_WEBSITE_COUNT.getTextValue())) {
 
 							for (int i=0; i<dataList.size(); i++) {
-
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
-								Double cost = (Double) objArray[2];
+								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2,BigDecimal.ROUND_UP);
+								Double cost = costBigDecimal.doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[3];
 
 								AdWebsiteReportVO vo = new AdWebsiteReportVO();
-								
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
-								
 								resultData.add(vo);
 
 							}
