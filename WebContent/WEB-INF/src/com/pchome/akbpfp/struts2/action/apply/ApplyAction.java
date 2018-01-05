@@ -343,23 +343,6 @@ public class ApplyAction extends BaseSSLAction{
 					
 					
 					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 				}else{
 					log.info(">>> PCHOME PFD PROCESS:"+userMemberId);
 					//經銷商設定
