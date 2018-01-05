@@ -303,43 +303,43 @@ public class ApplyAction extends BaseSSLAction{
 					processPfdUser(pfpId,userId,this.buPortalPfdc,this.buPortalPfdu);
 					
 					
-					// 開通帳戶權限
-					pfpCustomerInfo.setStatus(EnumAccountStatus.START.getStatus());
-					pfpCustomerInfo.setActivateDate(today);
-					pfpCustomerInfo.setRemain(admFreeGift.getAdmFreeAction().getGiftMoney());
-					pfpCustomerInfo.setUpdateDate(today);
-					pfpCustomerInfoService.saveOrUpdate(pfpCustomerInfo);
-					
-					// 開通使用者權限
-					user.setStatus(EnumUserStatus.START.getStatusId());
-					user.setActivateDate(today);
-					user.setUpdateDate(today);
-					pfpUserService.saveOrUpdate(user);				
-					
-					// 更新序號使用狀態
-					String shared = admFreeGift.getAdmFreeAction().getShared();
-					
-					//判斷活動是不是共用序號，不是則寫入資料到該筆序號
-					if(!StringUtils.equals(shared, "Y")){
-						admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
-						admFreeGift.setOpenDate(today);
-						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
-						admFreeGift.setUpdateDate(today);
-						admFreeGiftService.update(admFreeGift);
-					}
-					
-					// 參與活動記錄
-					AdmFreeRecord admFreeRecord = new AdmFreeRecord();
-					admFreeRecord.setAdmFreeAction(admFreeGift.getAdmFreeAction());
-					admFreeRecord.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
-					admFreeRecord.setRecordDate(today);
-					admFreeRecord.setUpdateDate(today);
-					admFreeRecord.setCreateDate(today);
-					
-					admFreeRecordService.saveOrUpdate(admFreeRecord);
-					
-					this.createTransDetail(pfpCustomerInfo,admFreeGift.getAdmFreeAction().getGiftMoney());
-					return "summary";	
+//					// 開通帳戶權限
+//					pfpCustomerInfo.setStatus(EnumAccountStatus.START.getStatus());
+//					pfpCustomerInfo.setActivateDate(today);
+//					pfpCustomerInfo.setRemain(admFreeGift.getAdmFreeAction().getGiftMoney());
+//					pfpCustomerInfo.setUpdateDate(today);
+//					pfpCustomerInfoService.saveOrUpdate(pfpCustomerInfo);
+//					
+//					// 開通使用者權限
+//					user.setStatus(EnumUserStatus.START.getStatusId());
+//					user.setActivateDate(today);
+//					user.setUpdateDate(today);
+//					pfpUserService.saveOrUpdate(user);				
+//					
+//					// 更新序號使用狀態
+//					String shared = admFreeGift.getAdmFreeAction().getShared();
+//					
+//					//判斷活動是不是共用序號，不是則寫入資料到該筆序號
+//					if(!StringUtils.equals(shared, "Y")){
+//						admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+//						admFreeGift.setOpenDate(today);
+//						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
+//						admFreeGift.setUpdateDate(today);
+//						admFreeGiftService.update(admFreeGift);
+//					}
+//					
+//					// 參與活動記錄
+//					AdmFreeRecord admFreeRecord = new AdmFreeRecord();
+//					admFreeRecord.setAdmFreeAction(admFreeGift.getAdmFreeAction());
+//					admFreeRecord.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+//					admFreeRecord.setRecordDate(today);
+//					admFreeRecord.setUpdateDate(today);
+//					admFreeRecord.setCreateDate(today);
+//					
+//					admFreeRecordService.saveOrUpdate(admFreeRecord);
+//					
+//					this.createTransDetail(pfpCustomerInfo,admFreeGift.getAdmFreeAction().getGiftMoney());
+//					return "summary";	
 					
 					
 					
