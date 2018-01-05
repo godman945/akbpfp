@@ -301,58 +301,31 @@ public class ApplyAction extends BaseSSLAction{
 					String userId = user.getUserId();
 					//經銷商設定
 					processPfdUser(pfpId,userId,this.buPortalPfdc,this.buPortalPfdu);
-					
-					
-					// 開通帳戶權限
-					pfpCustomerInfo.setStatus(EnumAccountStatus.START.getStatus());
-					pfpCustomerInfo.setActivateDate(today);
-					pfpCustomerInfo.setRemain(admFreeGift.getAdmFreeAction().getGiftMoney());
-					pfpCustomerInfo.setUpdateDate(today);
-					pfpCustomerInfoService.saveOrUpdate(pfpCustomerInfo);
-					
-					// 開通使用者權限
-					user.setStatus(EnumUserStatus.START.getStatusId());
-					user.setActivateDate(today);
-					user.setUpdateDate(today);
-					pfpUserService.saveOrUpdate(user);				
-					
-					// 更新序號使用狀態
-					String shared = admFreeGift.getAdmFreeAction().getShared();
-					
-					//判斷活動是不是共用序號，不是則寫入資料到該筆序號
-					if(!StringUtils.equals(shared, "Y")){
-						admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
-						admFreeGift.setOpenDate(today);
-						admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.YES.getStatus());
-						admFreeGift.setUpdateDate(today);
-						admFreeGiftService.update(admFreeGift);
+					if(admFreeGift != null){
+						// 更新序號使用狀態(未付款狀態先未啟用)
+						if(admFreeGift != null){
+							String shared = admFreeGift.getAdmFreeAction().getShared();
+							//判斷活動是不是共用序號，不是則寫入資料到該筆序號
+							if(!StringUtils.equals(shared, "Y")){
+								admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+								admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
+								admFreeGift.setUpdateDate(today);
+								admFreeGift.setOrderId(orderId);
+								admFreeGiftService.update(admFreeGift);
+							}
+						}
+						// 轉址至金流儲值  		
+						billingUrl = redirectBillingAPI.redirectUrl(orderId);
+						// 金流介接  Accesslog
+						String message = EnumAccesslogAction.ACCOUNT_ADD_MONEY.getMessage()+" URL："+billingUrl;
+						admAccesslogService.recordBillingLog(EnumAccesslogAction.ACCOUNT_ADD_MONEY, 
+															message,  
+															super.getId_pchome(), 
+															orderId,											
+															super.getCustomer_info_id(), 
+															super.getUser_id(), 
+															request.getRemoteAddr());
 					}
-					
-					// 參與活動記錄
-					AdmFreeRecord admFreeRecord = new AdmFreeRecord();
-					admFreeRecord.setAdmFreeAction(admFreeGift.getAdmFreeAction());
-					admFreeRecord.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
-					admFreeRecord.setRecordDate(today);
-					admFreeRecord.setUpdateDate(today);
-					admFreeRecord.setCreateDate(today);
-					
-					admFreeRecordService.saveOrUpdate(admFreeRecord);
-					this.createTransDetail(pfpCustomerInfo,admFreeGift.getAdmFreeAction().getGiftMoney());
-					
-					// 轉址至金流儲值  		
-					billingUrl = redirectBillingAPI.redirectUrl(orderId);
-					
-					// 金流介接  Accesslog
-					String message = EnumAccesslogAction.ACCOUNT_ADD_MONEY.getMessage()+" URL："+billingUrl;
-
-					admAccesslogService.recordBillingLog(EnumAccesslogAction.ACCOUNT_ADD_MONEY, 
-														message,  
-														super.getId_pchome(), 
-														orderId,											
-														super.getCustomer_info_id(), 
-														super.getUser_id(), 
-														request.getRemoteAddr());
-					
 				}else{
 					log.info(">>> PCHOME PFD PROCESS:"+userMemberId);
 					//經銷商設定
