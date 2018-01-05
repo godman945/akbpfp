@@ -37,7 +37,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdViewRatings(objArray[7].toString());
 			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[8].toString());
 			adVideoPerformanceReportVO.setThousandsCost(objArray[9].toString());
-			BigDecimal costBigDecimal = new BigDecimal(objArray[10].toString()).setScale(2,BigDecimal.ROUND_UP);
+			BigDecimal costBigDecimal = new BigDecimal(objArray[10].toString()).setScale(2,BigDecimal.ROUND_DOWN);
 			adVideoPerformanceReportVO.setCostSum(costBigDecimal.toString());
 			adVideoPerformanceReportVO.setAdVideoProcess25Sum(objArray[11].toString());
 			adVideoPerformanceReportVO.setAdVideoProcess50Sum(objArray[12].toString());
@@ -94,7 +94,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdViewRatings(objArray[6].toString());
 			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[7].toString());
 			adVideoPerformanceReportVO.setThousandsCost(objArray[8].toString());
-			adVideoPerformanceReportVO.setCostSum(objArray[9].toString());
+			adVideoPerformanceReportVO.setCostSum(new BigDecimal(objArray[9].toString()).setScale(2,BigDecimal.ROUND_DOWN).toString());
 			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(objArray[10].toString());
 			adVideoPerformanceReportVO.setAdClkSum(objArray[11].toString());
 			adVideoPerformanceReportVO.setAdVideoMusicSum(objArray[12].toString());
@@ -122,7 +122,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdViewRatings(objArray[7].toString());
 			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[8].toString());
 			adVideoPerformanceReportVO.setThousandsCost(objArray[9].toString());
-			adVideoPerformanceReportVO.setCostSum(objArray[10].toString());
+			adVideoPerformanceReportVO.setCostSum(new BigDecimal(objArray[10].toString()).setScale(2,BigDecimal.ROUND_DOWN).toString());
 			adVideoPerformanceReportVO.setAdVideoProcess25Sum(objArray[11].toString());
 			adVideoPerformanceReportVO.setAdVideoProcess50Sum(objArray[12].toString());
 			adVideoPerformanceReportVO.setAdVideoProcess75Sum(objArray[13].toString());

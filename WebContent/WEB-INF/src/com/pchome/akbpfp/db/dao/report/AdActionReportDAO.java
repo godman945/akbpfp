@@ -3,7 +3,6 @@ package com.pchome.akbpfp.db.dao.report;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,16 +16,19 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pchome.akbpfp.db.dao.BaseDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdActionReport;
+import com.pchome.akbpfp.db.service.bill.IPfpTransDetailService;
 import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
-import com.pchome.akbpfp.db.dao.BaseDAO;
-import com.pchome.akbpfp.db.pojo.PfpAdActionReport;
 
 @Transactional
 public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> implements IAdActionReportDAO {
 
+	private IPfpTransDetailService transDetailService;
+	
 	public List<AdActionReportVO> getReportList(final String sqlType, final String searchText, final String adSearchWay, final String adShowWay, final String adPvclkDevice, final String customerInfoId, final String adOperatingRule, final String startDate, final String endDate, final int page, final int pageSize) {
 
 		List<AdActionReportVO> result = (List<AdActionReportVO>) getHibernateTemplate().execute(
@@ -111,17 +113,14 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 						List<AdActionReportVO> resultData = new ArrayList<AdActionReportVO>();
 
 						if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue())) {
-
 							for (int i=0; i<dataList.size(); i++) {
 								Object[] objArray = (Object[]) dataList.get(i);
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
-								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2,BigDecimal.ROUND_UP);
-								Double cost = costBigDecimal.doubleValue();
-								System.out.println("總計:"+objArray[2]);
+								Double cost = (Double) objArray[2];
 								BigDecimal invClick = (BigDecimal) objArray[3];
 								AdActionReportVO vo = new AdActionReportVO();
-								
+								vo.setAdPriceSum(cost);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
@@ -142,7 +141,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								Object[] objArray = (Object[]) dataList.get(i);
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
-								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2,BigDecimal.ROUND_UP);
+								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2,BigDecimal.ROUND_DOWN);
 								Double cost = costBigDecimal.doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[3];
 								Double adActionMaxPrice = (Double) objArray[5];
@@ -153,7 +152,6 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								Integer adType = Integer.parseInt(objArray[10].toString());
 
 								AdActionReportVO adActionReportVO = new AdActionReportVO();
-
 								adActionReportVO.setAdPvSum(pv);
 								adActionReportVO.setAdClkSum(click);
 								adActionReportVO.setAdPriceSum(cost);
@@ -187,14 +185,12 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								Date reportDate = (Date) objArray[0];
 								BigDecimal pv = (BigDecimal) objArray[1];
 								BigDecimal click = (BigDecimal) objArray[2];
-								BigDecimal costBigDecimal = new BigDecimal(objArray[3].toString()).setScale(2,BigDecimal.ROUND_UP);
-								Double cost = costBigDecimal.doubleValue();
+								Double cost = new BigDecimal(objArray[3].toString()).setScale(2,BigDecimal.ROUND_DOWN).doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[4];
 								Double adActionMaxPrice = (Double) objArray[6];
 								BigInteger count = new BigInteger(String.valueOf(objArray[7]));
 
 								AdActionReportVO vo = new AdActionReportVO();
-
 								vo.setReportDate(reportDate);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
@@ -202,7 +198,6 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								vo.setAdInvClkSum(invClick);
 								vo.setAdActionMaxPriceSum(adActionMaxPrice);
 								vo.setCount(count);
-								
 								resultData.add(vo);
 
 							}
@@ -213,7 +208,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								Object[] objArray = (Object[]) dataList.get(i);
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
-								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2,BigDecimal.ROUND_UP);
+								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2,BigDecimal.ROUND_DOWN);
 								Double cost = costBigDecimal.doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[3];
 
@@ -233,13 +228,11 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 							adTypeMap = getAdType();
 							
 							for (int i=0; i<dataList.size(); i++) {
-
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								Date reportDate = (Date) objArray[0];
 								BigDecimal pv = (BigDecimal) objArray[1];
 								BigDecimal click = (BigDecimal) objArray[2];
-								BigDecimal costBigDecimal = new BigDecimal(objArray[3].toString()).setScale(2,BigDecimal.ROUND_UP);
+								BigDecimal costBigDecimal = new BigDecimal(objArray[3].toString()).setScale(2,BigDecimal.ROUND_DOWN);
 								Double cost = costBigDecimal.doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[4];
 								String adDevice = (String) objArray[6];
@@ -278,7 +271,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 								Date reportDate = (Date) objArray[0];
 								BigDecimal pv = (BigDecimal) objArray[1];
 								BigDecimal click = (BigDecimal) objArray[2];
-								BigDecimal costBigDecimal = new BigDecimal(objArray[3].toString()).setScale(2,BigDecimal.ROUND_UP);
+								BigDecimal costBigDecimal = new BigDecimal(objArray[3].toString()).setScale(2,BigDecimal.ROUND_DOWN);
 								Double cost = costBigDecimal.doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[4];
 
@@ -389,37 +382,21 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 
-//		hql.append("select ");
-//		hql.append(" sum(r.ad_pv), ");
-//		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");	
-//		hql.append(" sum(r.ad_clk_price), ");
-//		hql.append(" sum(r.ad_invalid_clk), ");
-//		hql.append(" sum(r.ad_invalid_clk_price) ");
-//		hql.append(" from pfp_ad_action_report as r ");
-//		hql.append(" where 1 = 1 ");
-//		hql.append(" and r.customer_info_id = :customerInfoId");
-//		hql.append(" and r.ad_pvclk_date >= :startDate");
-//		hql.append(" and r.ad_pvclk_date <= :endDate");
-		
 		hql.append("select ");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");		
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");
 		hql.append(" sum(r.ad_clk_price), ");	
 		hql.append(" sum(r.ad_invalid_clk), ");
-		hql.append(" sum(r.ad_invalid_clk_price), ");
-		hql.append(" r.ad_action_seq, ");
-		hql.append(" r.ad_pvclk_device, ");
-		hql.append(" r.ad_operating_rule, ");
-		hql.append(" r.ad_type ");
+		hql.append(" sum(r.ad_invalid_clk_price) ");
 		hql.append(" from pfp_ad_action_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id = :customerInfoId");
 		hql.append(" and r.ad_pvclk_date >= :startDate");
 		hql.append(" and r.ad_pvclk_date <= :endDate");
-		
 		sqlParams.put("customerInfoId", customerInfoId);
 		sqlParams.put("startDate", startDate);
 		sqlParams.put("endDate", endDate);
+
 		if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
 			hql.append(" and r.ad_type = :adShowWay");
 			sqlParams.put("adShowWay", adShowWay);
@@ -446,12 +423,11 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 			sqlParams.put("adOperatingRule", adOperatingRule);
 		}
 		
-		hql.append(" group by r.ad_action_seq, r.ad_type, r.ad_operating_rule");
+		hql.append(" group by r.ad_action_seq");
 		/*if(StringUtils.isNotBlank(adPvclkDevice)) {
 			hql.append(" , r.ad_pvclk_device");
 		}*/
 		sqlParams.put("sql", hql);
-
 		return sqlParams;
 	}
 
@@ -835,7 +811,6 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		for(EnumAdType enumAdType:EnumAdType.values()){
 			adTypeMap.put(enumAdType.getType(), enumAdType.getTypeName());
 		}
-		
 		return adTypeMap;
 	}
 }

@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -139,7 +140,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			Date reportDate = dateFormat.parse(adReportVO.getReportDate());
 			pv = Double.parseDouble(adReportVO.getAdPvSum());
 			click = Double.parseDouble(adReportVO.getAdClkSum());
-			cost = Double.parseDouble(adReportVO.getAdPriceSum());
+			cost = new BigDecimal(adReportVO.getAdPriceSum()).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
 			invClick = Double.parseDouble(adReportVO.getAdInvClkSum());
 
 			//互動率 = 互動次數 / 曝光數
@@ -530,119 +531,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 					+ totalCost / (sumPV / 1000)+","
 					+ totalCost);
 		}
-		
 		downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddhhmmss");
-//
-//		String filename="廣告明細成效報表_" + dformat.format(new Date()) + FILE_TYPE;
-//
-//		if(StringUtils.isNotBlank(searchAdseq)){
-//			filename="廣告明細成效->每日花費報表_" + dformat.format(new Date()) + FILE_TYPE;
-//		}
-//		
-//		StringBuffer content=new StringBuffer();
-//
-//		PfpCustomerInfo customerInfo = customerInfoService.findCustomerInfo(super.getCustomer_info_id());
-//
-//		content.append("帳戶," + customerInfo.getCustomerInfoTitle());
-//		content.append("\n\n");
-//		if(StringUtils.isNotBlank(searchAdseq)){
-//			content.append("報表名稱,PChome 廣告明細成效->每日花費報表");
-//			content.append("\n\n");
-//			PfpAd pfpAd = pfpAdDAO.get(searchAdseq);
-//			adName = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName();
-//			content.append("廣告明細," + adName);
-//		} else {
-//			content.append("報表名稱,PChome 廣告明細成效");
-//		}
-//		content.append("\n\n");
-//		content.append("播放類型," + getAdShowWayMap().get(adShowWay));
-//		content.append("\n");
-//		content.append("廣告樣式," + getAdStyleTypeMap().get(adOperatingRule));
-//		content.append("\n");
-//		content.append("裝置," + getAdPvclkDeviceMap().get(adPvclkDevice));
-//		content.append("\n");
-//		content.append("搜尋條件," + getAdSearchWayMap().get(adSearchWay));
-//		content.append("\n");
-//		content.append("搜尋內容," + searchText);
-//		content.append("\n");
-//		content.append("日期範圍," + startDate + " 到 " + endDate);
-//		content.append("\n\n");
-//
-//		for(String s:tableHeadList){
-//			content.append("\"" + s + "\"");
-//			content.append(",");
-//		}
-//		content.append("\n");
-//
-//		int percentageSeat = 14;
-//		int moneySeat1 = 15;
-//		int moneySeat2 = 16;
-//		int moneySeat3 = 17;
-//		if(StringUtils.isNotBlank(searchAdseq)){
-//			percentageSeat = 8;
-//			moneySeat1 = 9;
-//			moneySeat2 = 10;
-//			moneySeat3 = 11;
-//		}
-//		
-//		for(LinkedList<String> sl:tableDataList){
-//			int dataNumber = 1;
-//			for(String s:sl){
-//				if(s == null){
-//					s = " ";
-//				}
-//				if(dataNumber == moneySeat1 || dataNumber == moneySeat2 || dataNumber == moneySeat3){
-//					content.append("\"NT$ " + s + "\"");
-//				} else if(dataNumber == percentageSeat){
-//					content.append("\"" + s + "%\"");
-//				} else {
-//					content.append("\"" + s + "\"");	
-//				}
-//				content.append(",");
-//				dataNumber++;
-//			}
-//			content.append("\n");
-//		}
-//		content.append("\n");
-//
-//		if (tableDataTotalList!=null) {
-//			int dataTotalNumber = 1;
-//			for(String s:tableDataTotalList){
-//				if(dataTotalNumber == moneySeat1 || dataTotalNumber == moneySeat2 || dataTotalNumber == moneySeat3){
-//					content.append("\"NT$ " + s + "\"");
-//				} else if(dataTotalNumber == percentageSeat){
-//					content.append("\"" + s + "%\"");
-//				} else {
-//					content.append("\"" + s + "\"");
-//				}
-//				content.append(",");
-//				dataTotalNumber++;
-//			}
-//			content.append("\n");
-//		}
-//
-//		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > 0) {
-//			downloadFileName = new String(filename.getBytes("UTF-8"), "ISO8859-1");
-//		} else {
-//			downloadFileName = URLEncoder.encode(filename, "UTF-8");			
-//		}
-//		downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));
-
-		//處理 BOM 開頭要加上 "\uFEFF"
-		//downloadFileStream = new ByteArrayInputStream(("\uFEFF" + content.toString()).getBytes("utf-8"));
 	}
 
 	private void resultSumDataTrans(List<AdReportVO> resultSumData) {
@@ -685,6 +574,8 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			t_cost += new Double(adReportVO.getAdPriceSum());
 			t_invalid += new Double(adReportVO.getAdInvClkSum());
 		}
+		t_cost = new BigDecimal(t_cost).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;

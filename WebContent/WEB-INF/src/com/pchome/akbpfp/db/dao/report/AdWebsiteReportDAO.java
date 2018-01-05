@@ -97,7 +97,7 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 								Object[] objArray = (Object[]) dataList.get(i);
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
-								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2,BigDecimal.ROUND_UP);
+								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(3,BigDecimal.ROUND_DOWN);
 								Double cost = costBigDecimal.doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[3];
 
@@ -140,7 +140,6 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 								Integer adType = Integer.parseInt(objArray[11].toString());
 
 								AdWebsiteReportVO vo = new AdWebsiteReportVO();
-
 								vo.setWebsiteCategoryCode(websiteCategoryCode);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
@@ -163,7 +162,6 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 								vo.setAdOperatingRule(adStyleTypeMap.get(adOperatingRuleCode));
 								vo.setAdClkPriceType(adPriceTypeMap.get(adClkPriceType));
 								vo.setAdType(adTypeMap.get(adType));
-								
 								resultData.add(vo);
 
 							}
@@ -171,29 +169,23 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 						} else if (sqlType.trim().equals(EnumReport.REPORT_HQLTYPE_WEBSITE_CHART.getTextValue())) {
 
 							for (int i=0; i<dataList.size(); i++) {
-
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								String websiteCategoryCode	 ="";
 								if(objArray[0] != null){
 									websiteCategoryCode = objArray[0].toString();
 								}
-								
 								BigDecimal pv = (BigDecimal) objArray[1];
 								BigDecimal click = (BigDecimal) objArray[2];
-								Double cost = (Double) objArray[3];
+								Double cost = new BigDecimal(objArray[3].toString()).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[4];
 
 								AdWebsiteReportVO vo = new AdWebsiteReportVO();
-
 								vo.setWebsiteCategoryCode(websiteCategoryCode);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
-								
 								resultData.add(vo);
-
 							}
 						}
 

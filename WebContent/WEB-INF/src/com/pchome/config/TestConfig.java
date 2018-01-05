@@ -4,6 +4,9 @@ package com.pchome.config;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.pchome.akbpfp.db.service.bill.PfpTransDetailService;
+import com.pchome.akbpfp.db.vo.bill.BillVOList;
+
 
 
 
@@ -41,8 +44,9 @@ public class TestConfig {
 	public static void main(String[] args) throws Exception{
 		
 		ApplicationContext context = new FileSystemXmlApplicationContext(TestConfig.path);
-		context.getBean("PfpAdService");
-		
+		PfpTransDetailService pfpTransDetailService = (PfpTransDetailService) context.getBean("PfpTransDetailService");
+		BillVOList billVOList= pfpTransDetailService.findPfpTransDetail("AC2013071700001", "2018-01-02", "2018-01-02");
+		System.out.println(billVOList.getTotalAdSpentMoney());
 //		PfpAdService pfpAdService = (PfpAdService) context.getBean("PfpAdService");
 //		
 //		String adGroupSeq = "ag_201709070001";

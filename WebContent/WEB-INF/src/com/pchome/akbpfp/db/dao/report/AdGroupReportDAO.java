@@ -148,21 +148,16 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 						if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue())) {
 
 							for (int i=0; i<dataList.size(); i++) {
-
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
 								Double cost = (Double) objArray[2];
 								BigDecimal invClick = (BigDecimal) objArray[3];
-
 								AdGroupReportVO vo = new AdGroupReportVO();
-
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
-
 								resultData.add(vo);
 							}
 
@@ -176,12 +171,11 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 							adTypeMap = getAdType();
 							
 							for (int i=0; i<dataList.size(); i++) {
-
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
-								Double cost = (Double) objArray[2];
+								BigDecimal adClkPriceBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2, BigDecimal.ROUND_DOWN);
+								Double cost = adClkPriceBigDecimal.doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[3];
 								BigInteger count = (BigInteger) objArray[5];
 								String adGroupSeq = (String) objArray[6];
@@ -226,9 +220,9 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 								Date reportDate = (Date) objArray[0];
 								BigDecimal pv = (BigDecimal) objArray[1];
 								BigDecimal click = (BigDecimal) objArray[2];
-								Double cost = (Double) objArray[3];
+								BigDecimal adClkPriceBigDecimal = new BigDecimal(objArray[3].toString()).setScale(2, BigDecimal.ROUND_DOWN);
+								Double cost = adClkPriceBigDecimal.doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[4];
-
 								AdGroupReportVO vo = new AdGroupReportVO();
 
 								vo.setReportDate(reportDate);
@@ -236,7 +230,6 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
-
 								resultData.add(vo);
 							}
 
@@ -252,12 +245,10 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 								BigDecimal invClick = (BigDecimal) objArray[3];
 
 								AdGroupReportVO vo = new AdGroupReportVO();
-								
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
-								
 								resultData.add(vo);
 
 							}

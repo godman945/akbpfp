@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -214,6 +215,7 @@ public class ReportExcerptAction extends BaseReportAction {
 				pv = vo.getAdPvSum().doubleValue();
 				click = vo.getAdClkSum().doubleValue();
 				cost = vo.getAdPriceSum().doubleValue();
+				cost = new BigDecimal(cost).setScale(3, BigDecimal.ROUND_DOWN).doubleValue();
 				invClick = vo.getAdInvClkSum().doubleValue();
 
 				//互動率 = 互動次數 / 曝光數
@@ -1126,18 +1128,14 @@ public class ReportExcerptAction extends BaseReportAction {
 
 		//加總
 		for (int i=0; i<resultSumData.size(); i++) {
-
 			AdActionReportVO vo = resultSumData.get(i);
-
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			
-			System.out.println("alex:"+vo.getAdPriceSum());
-			
-			t_cost += vo.getAdPriceSum().doubleValue();
+			t_cost += vo.getAdPriceSum();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-
+		t_cost = new BigDecimal(t_cost).setScale(3, BigDecimal.ROUND_DOWN).doubleValue();
+		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;

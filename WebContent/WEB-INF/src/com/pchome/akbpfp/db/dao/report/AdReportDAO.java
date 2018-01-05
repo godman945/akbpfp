@@ -228,23 +228,17 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							}
 
 						} else if (sqlType.trim().equals(EnumReport.REPORT_HQLTYPE_ADVERTISE_CHART.getTextValue())){
-
 							for (int i=0; i<dataList.size(); i++) {
-
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								AdReportVO adReportVO = new AdReportVO();
-								
 								adReportVO.setReportDate(ObjectTransUtil.getInstance().getObjectToString(objArray[0]));
 								adReportVO.setAdPvSum(((BigDecimal)objArray[1]).toString());
 								adReportVO.setAdClkSum(((BigDecimal)objArray[2]).toString());
 								adReportVO.setAdPriceSum(((Double)objArray[3]).toString());
 								adReportVO.setAdInvClkSum(((BigDecimal)objArray[4]).toString());
-								
 								resultData.add(adReportVO);
 							}
 						}
-
 						return resultData;
 
 					}

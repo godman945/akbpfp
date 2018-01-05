@@ -131,7 +131,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 								String timeCode = objArray[1].toString();
 								BigDecimal pv = (BigDecimal) objArray[2];
 								BigDecimal click = (BigDecimal) objArray[3];
-								Double cost = (Double) objArray[4];
+								Double cost = new BigDecimal(objArray[4].toString()).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[5];
 								String adActionSeq = objArray[7].toString();
 								String adGroupSeq = objArray[8].toString();
@@ -185,20 +185,17 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 								String timeCode = objArray[1].toString();
 								BigDecimal pv = (BigDecimal) objArray[2];
 								BigDecimal click = (BigDecimal) objArray[3];
-								Double cost = (Double) objArray[4];
+								Double cost = new BigDecimal(objArray[4].toString()).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
 								BigDecimal invClick = (BigDecimal) objArray[5];
 
 								AdTimeReportVO vo = new AdTimeReportVO();
-
 								vo.setWeek(weekCode);
 								vo.setTime(timeCode);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
-								
 								resultData.add(vo);
-
 							}
 						}
 

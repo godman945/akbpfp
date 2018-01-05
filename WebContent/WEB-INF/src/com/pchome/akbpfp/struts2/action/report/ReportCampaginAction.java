@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -448,15 +449,13 @@ public class ReportCampaginAction extends BaseReportAction {
 
 		//加總
 		for (int i=0; i<resultSumData.size(); i++) {
-
 			AdActionReportVO vo = resultSumData.get(i);
-
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += vo.getAdPriceSum();
+			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-
+		t_cost = new BigDecimal(t_cost).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
 		//互動率 = 總互動次數 / 總曝光數
 		t_ctr = (t_click / t_pv) * 100;
 
