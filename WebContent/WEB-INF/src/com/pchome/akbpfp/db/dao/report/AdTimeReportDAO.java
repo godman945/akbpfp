@@ -16,13 +16,13 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pchome.akbpfp.db.dao.BaseDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdTimeReport;
 import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdTimeCode;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
-import com.pchome.akbpfp.db.dao.BaseDAO;
-import com.pchome.akbpfp.db.pojo.PfpAdTimeReport;
 
 @Transactional
 public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implements IAdTimeReportDAO {
@@ -131,7 +131,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 								String timeCode = objArray[1].toString();
 								BigDecimal pv = (BigDecimal) objArray[2];
 								BigDecimal click = (BigDecimal) objArray[3];
-								Double cost = new BigDecimal(objArray[4].toString()).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+								Double cost = Double.valueOf(objArray[4].toString());
 								BigDecimal invClick = (BigDecimal) objArray[5];
 								String adActionSeq = objArray[7].toString();
 								String adGroupSeq = objArray[8].toString();
@@ -185,7 +185,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 								String timeCode = objArray[1].toString();
 								BigDecimal pv = (BigDecimal) objArray[2];
 								BigDecimal click = (BigDecimal) objArray[3];
-								Double cost = new BigDecimal(objArray[4].toString()).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+								Double cost = Double.valueOf(objArray[4].toString());
 								BigDecimal invClick = (BigDecimal) objArray[5];
 
 								AdTimeReportVO vo = new AdTimeReportVO();

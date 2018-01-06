@@ -142,6 +142,15 @@ function ready(){
 		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
 		node.appendChild(img);
 		$($($("#excerptTable").children()[0]).children()[0]).children()[8].appendChild(node)
+		
+		var node2 = document.createElement("b");
+		node2.style.float = 'left';
+		node2.style.marginTop = '3px';
+		var img2 = document.createElement("img");
+		img2.src='./html/img/question.gif';
+		img2.title="廣告費用因小數點進位影響總計費用，實際扣款依帳單管理為主";
+		node2.appendChild(img2);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[12].appendChild(node2);
 	}
 	
 	//sort table plugin

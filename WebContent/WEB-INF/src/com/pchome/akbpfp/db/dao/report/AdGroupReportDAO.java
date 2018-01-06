@@ -18,12 +18,12 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pchome.akbpfp.db.dao.BaseDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdGroupReport;
 import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
-import com.pchome.akbpfp.db.dao.BaseDAO;
-import com.pchome.akbpfp.db.pojo.PfpAdGroupReport;
 
 @Transactional
 public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> implements IAdGroupReportDAO {
@@ -174,8 +174,7 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 								Object[] objArray = (Object[]) dataList.get(i);
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
-								BigDecimal adClkPriceBigDecimal = new BigDecimal(objArray[2].toString()).setScale(2, BigDecimal.ROUND_DOWN);
-								Double cost = adClkPriceBigDecimal.doubleValue();
+								Double cost = Double.valueOf(objArray[2].toString());
 								BigDecimal invClick = (BigDecimal) objArray[3];
 								BigInteger count = (BigInteger) objArray[5];
 								String adGroupSeq = (String) objArray[6];
@@ -220,8 +219,7 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 								Date reportDate = (Date) objArray[0];
 								BigDecimal pv = (BigDecimal) objArray[1];
 								BigDecimal click = (BigDecimal) objArray[2];
-								BigDecimal adClkPriceBigDecimal = new BigDecimal(objArray[3].toString()).setScale(2, BigDecimal.ROUND_DOWN);
-								Double cost = adClkPriceBigDecimal.doubleValue();
+								Double cost = Double.valueOf(objArray[3].toString());
 								BigDecimal invClick = (BigDecimal) objArray[4];
 								AdGroupReportVO vo = new AdGroupReportVO();
 

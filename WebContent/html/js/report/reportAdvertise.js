@@ -212,10 +212,22 @@ function ready(){
 		img.src='./html/img/question.gif';
 		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
 		node.appendChild(img);
+		
+		
+		var node2 = document.createElement("b");
+		node2.style.float = 'left';
+		node2.style.marginTop = '3px';
+		var img2 = document.createElement("img");
+		img2.src='./html/img/question.gif';
+		img2.title="廣告費用因小數點進位影響總計費用，實際扣款依帳單管理為主";
+		node2.appendChild(img2);
+		
 		if($($($('#excerptTable').children()[0]).children()).children().length == 15){
 			$($($("#excerptTable").children()[0]).children()[0]).children()[9].appendChild(node);
+			$($($("#excerptTable").children()[0]).children()[0]).children()[13].appendChild(node2);
 		}else{
 			$($($("#excerptTable").children()[0]).children()[0]).children()[6].appendChild(node);
+			$($($("#excerptTable").children()[0]).children()[0]).children()[10].appendChild(node2);
 		}
 	}
 	

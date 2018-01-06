@@ -133,6 +133,7 @@ public class ReportAdGroupAction extends BaseReportAction {
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
+			cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = vo.getAdInvClkSum().doubleValue();
 
 			//互動率 = 互動次數 / 曝光數
@@ -438,7 +439,7 @@ public class ReportAdGroupAction extends BaseReportAction {
 			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-		t_cost = new BigDecimal(t_cost).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
 		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {

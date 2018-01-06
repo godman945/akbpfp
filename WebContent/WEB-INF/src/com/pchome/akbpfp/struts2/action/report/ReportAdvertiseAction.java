@@ -140,7 +140,8 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			Date reportDate = dateFormat.parse(adReportVO.getReportDate());
 			pv = Double.parseDouble(adReportVO.getAdPvSum());
 			click = Double.parseDouble(adReportVO.getAdClkSum());
-			cost = new BigDecimal(adReportVO.getAdPriceSum()).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+			cost = Double.parseDouble(adReportVO.getAdPriceSum());
+			cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = Double.parseDouble(adReportVO.getAdInvClkSum());
 
 			//互動率 = 互動次數 / 曝光數
@@ -566,15 +567,13 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 		//加總
 		for (int i=0; i<resultSumData.size(); i++) {
-
 			AdReportVO adReportVO = resultSumData.get(i);
-
 			t_pv += new Double(adReportVO.getAdPvSum());
 			t_click += new Double(adReportVO.getAdClkSum());
 			t_cost += new Double(adReportVO.getAdPriceSum());
 			t_invalid += new Double(adReportVO.getAdInvClkSum());
 		}
-		t_cost = new BigDecimal(t_cost).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
 		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
@@ -642,9 +641,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
 
 		for (int i=0; i<resultData.size(); i++) {
-			
 			AdReportVO adReportVO = resultData.get(i);
-			
 			double pv = 0;
 			double click = 0;
 			double cost = 0;
@@ -652,9 +649,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			double ctr = 0;
 			double costAvg = 0;
 			double kiloCost = 0;
-
 			tableInDataList = new LinkedList<String>();
-
 			adActionName = adReportVO.getAdActionName();
 			adGroupName = adReportVO.getAdGroupName();
 			adPreview = adReportVO.getAdPreview();
@@ -664,18 +659,14 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			adName = adReportVO.getTitle();
 			String adOperatingRuleName = adReportVO.getAdOperatingRuleDesc();
 			String adClkPriceTypeName = adReportVO.getAdClkPriceType();
-
 			pv = new Double(adReportVO.getAdPvSum());
 			click = new Double(adReportVO.getAdClkSum());
-			
-			cost = new Double(adReportVO.getAdPriceSum());
+			cost = (new BigDecimal(String.valueOf(adReportVO.getAdPriceSum())).setScale(2, BigDecimal.ROUND_FLOOR)).doubleValue();
 			invClick = new Double(adReportVO.getAdInvClkSum());
-
 			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
 				ctr = (click / pv) * 100;
 			}
-
 			//單次互動費用 = 總費用 / 總互動次數
 			if (cost>0 && click>0) {
 				costAvg = cost / click;
@@ -685,7 +676,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			if(cost>0 && pv>0){
 				kiloCost = (cost * 1000) / pv;
 			}
-
 			PfpAdAction pfpAdAction = new PfpAdAction();
 			try {
 				pfpAdAction = pfpAdActionDAO.getPfpAdActionBySeq(adReportVO.getAdActionSeq());

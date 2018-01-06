@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -120,6 +121,7 @@ public class ReportAdOsAction extends BaseReportAction {
 			pv = Double.parseDouble(adosreportvo.getAdPvSum());
 			click = Double.parseDouble(adosreportvo.getAdClkSum());
 			cost = Double.parseDouble(adosreportvo.getAdClkPriceSum());
+			cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = Double.parseDouble(adosreportvo.getAdInvalidClkSum());
 
 			//互動率 = 互動次數 / 曝光數
@@ -401,7 +403,8 @@ public class ReportAdOsAction extends BaseReportAction {
 			t_cost += Double.parseDouble(adosreportvo.getAdClkPriceSum());
 			t_invalid += Double.parseDouble(adosreportvo.getAdInvalidClkSum());
 		}
-
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;

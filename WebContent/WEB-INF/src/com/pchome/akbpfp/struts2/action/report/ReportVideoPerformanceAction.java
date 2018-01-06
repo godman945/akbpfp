@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -157,7 +158,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())) {
 					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getThousandsCost()));
 				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					adVideoPerformanceReportVO.setCostSum(decimalFormat.format(Double.parseDouble(adVideoPerformanceReportVO.getCostSum())));
+					adVideoPerformanceReportVO.setCostSum(new BigDecimal(String.valueOf(adVideoPerformanceReportVO.getCostSum())).setScale(2, BigDecimal.ROUND_FLOOR).toString());
 					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getCostSum()));
 				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
 					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoProcess100Ratings()));
@@ -243,7 +244,9 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		this.adVideoPerformanceReportVOList = adVideoPerformanceReportService.loadReportDateList(reportQueryConditionVO);
 		
 		//查詢總數
+		this.adVideoPerformanceReportVOSum = adVideoPerformanceReportService.loadReportDateCount(reportQueryConditionVO);
 		double costSum = 0;
+		BigDecimal costSumBigDecimal = new BigDecimal(0);
 		int adVideoProcess25Sum = 0;
 		int adVideoProcess50Sum = 0;
 		int adVideoProcess75Sum = 0;
@@ -254,11 +257,10 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 		int adVideoUniqSum = 0;
 		int adVideoMusicSum = 0;
 		int adVideoReplaySum = 0;
-		this.adVideoPerformanceReportVOSum = adVideoPerformanceReportService.loadReportDateCount(reportQueryConditionVO);
 		for (AdVideoPerformanceReportVO adVideoPerformanceReportVO : adVideoPerformanceReportVOSum) {
 			adPvSum = adPvSum + Integer.parseInt(adVideoPerformanceReportVO.getAdPvSum());
 			adViewSum = adViewSum +  Integer.parseInt(adVideoPerformanceReportVO.getAdViewSum());
-			costSum = costSum + Double.parseDouble(adVideoPerformanceReportVO.getCostSum());
+			costSumBigDecimal = new BigDecimal(adVideoPerformanceReportVO.getCostSum()).add(costSumBigDecimal);
 			adVideoProcess25Sum = adVideoProcess25Sum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoProcess25Sum());
 			adVideoProcess50Sum = adVideoProcess50Sum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoProcess50Sum());
 			adVideoProcess75Sum = adVideoProcess75Sum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoProcess75Sum());
@@ -268,6 +270,8 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			adVideoReplaySum = adVideoReplaySum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoReplaySum());
 			adVideoMusicSum = adVideoMusicSum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoMusicSum());
 		}
+		costSum = (costSumBigDecimal.setScale(2, BigDecimal.ROUND_FLOOR)).doubleValue();
+		
 		double adViewRatings = 0;
 		double singleAdViewCost =0;
 		double thousandsCost = 0;
@@ -453,6 +457,8 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			content.append(adVideoPerformanceReportVO.getAdVideoProcess100Sum()+",");
 			content.append(adVideoPerformanceReportVO.getAdVideoProcess100Ratings()+"%");
 		}
+		sumCost = new BigDecimal(String.valueOf(sumCost)).setScale(2, BigDecimal.ROUND_FLOOR).floatValue();
+		
 		//總計
 		content.append("\n\n");
 		content.append(""

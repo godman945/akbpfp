@@ -16,12 +16,12 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pchome.akbpfp.db.dao.BaseDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdWebsiteReport;
 import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
-import com.pchome.akbpfp.db.dao.BaseDAO;
-import com.pchome.akbpfp.db.pojo.PfpAdWebsiteReport;
 
 @Transactional
 public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> implements IAdWebsiteReportDAO {
@@ -92,24 +92,19 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 						List<AdWebsiteReportVO> resultData = new ArrayList<AdWebsiteReportVO>();
 
 						if (sqlType.equals(EnumReport.REPORT_HQLTYPE_WEBSITE_COUNT.getTextValue())) {
-
 							for (int i=0; i<dataList.size(); i++) {
 								Object[] objArray = (Object[]) dataList.get(i);
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
-								BigDecimal costBigDecimal = new BigDecimal(objArray[2].toString()).setScale(3,BigDecimal.ROUND_DOWN);
-								Double cost = costBigDecimal.doubleValue();
+								Double cost = (Double)objArray[2];
 								BigDecimal invClick = (BigDecimal) objArray[3];
-
 								AdWebsiteReportVO vo = new AdWebsiteReportVO();
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
 								resultData.add(vo);
-
 							}
-
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_WEBSITE.getTextValue())) {
 
 							Map<String,String> adStyleTypeMap = new HashMap<String,String>();
@@ -130,7 +125,7 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 								
 								BigDecimal pv = (BigDecimal) objArray[1];
 								BigDecimal click = (BigDecimal) objArray[2];
-								Double cost = (Double) objArray[3];
+								Double cost = (Double)objArray[3];
 								BigDecimal invClick = (BigDecimal) objArray[4];
 								String adActionSeq = objArray[6].toString();
 								String adGroupSeq = objArray[7].toString();
@@ -176,9 +171,9 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 								}
 								BigDecimal pv = (BigDecimal) objArray[1];
 								BigDecimal click = (BigDecimal) objArray[2];
-								Double cost = new BigDecimal(objArray[3].toString()).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+								Double cost = (Double)objArray[3];
 								BigDecimal invClick = (BigDecimal) objArray[4];
-
+								
 								AdWebsiteReportVO vo = new AdWebsiteReportVO();
 								vo.setWebsiteCategoryCode(websiteCategoryCode);
 								vo.setAdPvSum(pv);
@@ -204,8 +199,8 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 
 		hql.append("select");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_website_report 的時候，已經減過無效點擊數了，所以不用再減
-		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_website_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");	
+		hql.append(" sum(r.ad_clk_price), ");	
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price) ");
 		hql.append(" from pfp_ad_website_report as r ");
@@ -259,8 +254,8 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 		hql.append("select");
 		hql.append(" r.website_category_code,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_website_report 的時候，已經減過無效點擊數了，所以不用再減
-		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_website_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");		
+		hql.append(" sum(r.ad_clk_price), ");	
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
 		hql.append(" r.ad_action_seq, ");
@@ -322,8 +317,8 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 		hql.append("select");
 		hql.append(" r.website_category_code,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_website_report 的時候，已經減過無效點擊數了，所以不用再減
-		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_website_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");	
+		hql.append(" sum(r.ad_clk_price), ");	
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price) ");
 		hql.append(" from pfp_ad_website_report as r ");

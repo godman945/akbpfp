@@ -210,12 +210,11 @@ public class ReportExcerptAction extends BaseReportAction {
 				costAvg = 0;
 				
 				AdActionReportVO vo = resultData_ad_action.get(i);
-
 				Date reportDate = vo.getReportDate();
 				pv = vo.getAdPvSum().doubleValue();
 				click = vo.getAdClkSum().doubleValue();
 				cost = vo.getAdPriceSum().doubleValue();
-				cost = new BigDecimal(cost).setScale(3, BigDecimal.ROUND_DOWN).doubleValue();
+				cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
 				invClick = vo.getAdInvClkSum().doubleValue();
 
 				//互動率 = 互動次數 / 曝光數
@@ -263,6 +262,7 @@ public class ReportExcerptAction extends BaseReportAction {
 					pv = vo.getAdPvSum().doubleValue();
 					click = vo.getAdClkSum().doubleValue();
 					cost = vo.getAdPriceSum().doubleValue();
+					cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
 					invClick = vo.getAdInvClkSum().doubleValue();
 
 					//互動率 = 互動次數 / 曝光數
@@ -441,6 +441,7 @@ public class ReportExcerptAction extends BaseReportAction {
 				pv = Double.parseDouble(vo.getAdPvSum());
 				click = Double.parseDouble(vo.getAdClkSum());
 				cost = Double.parseDouble(vo.getAdPriceSum());
+				cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
 				invClick = Double.parseDouble(vo.getAdInvClkSum());
 
 				//互動率 = 互動次數 / 曝光數
@@ -1131,10 +1132,10 @@ public class ReportExcerptAction extends BaseReportAction {
 			AdActionReportVO vo = resultSumData.get(i);
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += vo.getAdPriceSum();
+			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-		t_cost = new BigDecimal(t_cost).setScale(3, BigDecimal.ROUND_DOWN).doubleValue();
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
 		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
@@ -1205,7 +1206,8 @@ public class ReportExcerptAction extends BaseReportAction {
 			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
@@ -1457,15 +1459,14 @@ public class ReportExcerptAction extends BaseReportAction {
 
 		//加總
 		for (int i=0; i<resultSumData_ad.size(); i++) {
-
 			AdReportVO vo = resultSumData_ad.get(i);
-
 			t_pv += new Double(vo.getAdPvSum());
 			t_click += new Double(vo.getAdClkSum());
 			t_cost += new Double(vo.getAdPriceSum());
 			t_invalid += new Double(vo.getAdInvClkSum());
 		}
-
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;

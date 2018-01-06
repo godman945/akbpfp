@@ -93,7 +93,7 @@ ${page}/${totalPage}
 				<th width="80" rowspan="2">收視率</th>
 				<th width="80" rowspan="2">單次<br>收視費用</th>
 				<th width="80" rowspan="2">千次<br>曝光費用</th>
-				<th width="90" rowspan="2">費用</th>
+				<th width="90" rowspan="2">費用<b style="float: left; margin-top: 3px;"><img src="./html/img/question.gif" title="廣告費用因小數點進位影響總計費用，實際扣款依帳單管理為主"></b></th>
 				<th width="200" colspan="4">影片播放進度</th>
 				<th width="90" rowspan="2">影片<br>完整播放率</th>
 				<th width="80" rowspan="2">點選次數</th>

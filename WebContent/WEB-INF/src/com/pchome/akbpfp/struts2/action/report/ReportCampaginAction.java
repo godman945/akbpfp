@@ -130,11 +130,11 @@ public class ReportCampaginAction extends BaseReportAction {
 		for (int i=0; i<resultData.size(); i++) {
 
 			AdActionReportVO vo = resultData.get(i);
-
 			Date reportDate = vo.getReportDate();
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
+			cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = vo.getAdInvClkSum().doubleValue();
 			adActionMaxPrice = vo.getAdActionMaxPriceSum().doubleValue();
 			count = vo.getCount().doubleValue();
@@ -455,7 +455,8 @@ public class ReportCampaginAction extends BaseReportAction {
 			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-		t_cost = new BigDecimal(t_cost).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+		
 		//互動率 = 總互動次數 / 總曝光數
 		t_ctr = (t_click / t_pv) * 100;
 

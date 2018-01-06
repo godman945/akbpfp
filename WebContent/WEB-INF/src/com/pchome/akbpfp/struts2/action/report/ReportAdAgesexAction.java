@@ -140,16 +140,11 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		double total = 0;		//總合
 
 		for (int i=0; i<resultData.size(); i++) {
-
 			AdAgesexReportVO vo = resultData.get(i);
-
 			sex = vo.getSex();
 			ageCode = vo.getAge();
-
 			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				
 				total += vo.getAdPvSum().doubleValue();
-				
 				if(StringUtils.equals(searchAgesex, "S")){
 					switch(sex) {
 						case "M":
@@ -194,9 +189,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 					}
 				}
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-
 				//total += vo.getAdClkSum().doubleValue();
-				
 				if(StringUtils.equals(searchAgesex, "S")){
 					switch(sex) {
 						case "M":
@@ -283,11 +276,8 @@ public class ReportAdAgesexAction extends BaseReportAction {
 				//dataList.add(new Double(0));
 			}
 		}
-		
 		JSONArray array = new JSONArray(dataList);
-		
 		flashData = array.toString();
-
 		return SUCCESS;
 	}
 
@@ -564,7 +554,8 @@ public class ReportAdAgesexAction extends BaseReportAction {
 			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-		t_cost = new BigDecimal(t_cost).setScale(3, BigDecimal.ROUND_DOWN).doubleValue();
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
