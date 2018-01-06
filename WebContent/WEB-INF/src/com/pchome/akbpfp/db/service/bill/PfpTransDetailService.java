@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.db.service.bill;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,10 +67,8 @@ public class PfpTransDetailService extends BaseService <PfpTransDetail, String> 
 					totalReturnMoney += detail.getTransPrice();
 				}
 				
-				if(detail.getTransType().equals(EnumTransType.SPEND_COST.getTypeId()) ||
-						detail.getTransType().equals(EnumTransType.REFUND.getTypeId()) ||
-						detail.getTransType().equals(EnumTransType.LATER_REFUND.getTypeId())){
-					vo.setAdSpentMoney(detail.getTransPrice());
+				if(detail.getTransType().equals(EnumTransType.SPEND_COST.getTypeId()) ||detail.getTransType().equals(EnumTransType.REFUND.getTypeId()) ||	detail.getTransType().equals(EnumTransType.LATER_REFUND.getTypeId())){
+					vo.setAdSpentMoney((new BigDecimal(String.valueOf(detail.getTransPrice())).setScale(2, BigDecimal.ROUND_FLOOR)).floatValue());
 					totalAdSpentMoney += detail.getTransPrice();
 				}
 				
