@@ -131,7 +131,7 @@ ${page}/${totalPage}
 			        <td align="right">${adVideoPerformanceReportVO.adViewRatings}%</td>
 			        <td align="right">NT$ ${adVideoPerformanceReportVO.singleAdViewCost?number?string('#,###.##')!}</td>
 			        <td align="right">NT$ ${adVideoPerformanceReportVO.thousandsCost?number?string('#,###.##')!}</td>
-			        <td align="right">NT$ ${adVideoPerformanceReportVO.costSum?number?string('#,###.##')!}</td>
+			        <td align="right">NT$ ${adVideoPerformanceReportVO.costSum?number?string('#,###.###')!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess25Sum?number?string('#,###.##')!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess50Sum?number?string('#,###.##')!}</td>
 			        <td align="right">${adVideoPerformanceReportVO.adVideoProcess75Sum?number?string('#,###.##')!}</td>
@@ -157,7 +157,7 @@ ${page}/${totalPage}
 			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adViewRatings?number?string('#,###.##')!}%</th>
 			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOCount.singleAdViewCost?number?string('#,###.##')!}</th>
 			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOCount.thousandsCost?number?string('#,###.##')!}</th>
-			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOCount.costSum?number?string('#,###.##')!}</th>
+			    <th height="30" align="right">NT$ ${adVideoPerformanceReportVOCount.costSum?number?string('#,###.###')!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoProcess25Sum?number?string('#,###')!}</th>
 			   	<th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoProcess50Sum?number?string('#,###')!}</th>
 			    <th height="30" align="right">${adVideoPerformanceReportVOCount.adVideoProcess75Sum?number?string('#,###')!}</th>
