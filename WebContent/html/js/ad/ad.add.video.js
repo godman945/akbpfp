@@ -6,6 +6,18 @@ $(document).ready(function(){
 		saveData();
 	});
 	
+	$('#cancel').click(function(){
+		var url = $("#backPage").val();
+		if (/MSIE (\d+\.\d+);/.test(navigator.userAgent) || /MSIE(\d+\.\d+);/.test(navigator.userAgent)){
+			var referLink = document.createElement('a');
+			referLink.href = url;
+			document.body.appendChild(referLink);
+			referLink.click();
+		} else {
+			location.href = url;
+		}
+	});
+	
 	//影片網址檢查
 	var adVideoLinkWord = 1024;
 	$('#adVideoURL').bind('keyup', function() {
