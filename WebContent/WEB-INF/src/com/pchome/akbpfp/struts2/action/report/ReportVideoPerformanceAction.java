@@ -270,8 +270,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			adVideoReplaySum = adVideoReplaySum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoReplaySum());
 			adVideoMusicSum = adVideoMusicSum + Integer.parseInt(adVideoPerformanceReportVO.getAdVideoMusicSum());
 		}
-		costSum = (costSumBigDecimal.setScale(2, BigDecimal.ROUND_FLOOR)).doubleValue();
-		
+		costSum = (costSumBigDecimal.setScale(3, BigDecimal.ROUND_FLOOR)).doubleValue();
 		double adViewRatings = 0;
 		double singleAdViewCost =0;
 		double thousandsCost = 0;

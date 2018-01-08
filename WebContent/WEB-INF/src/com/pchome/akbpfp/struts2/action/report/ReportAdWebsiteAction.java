@@ -445,6 +445,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 
 		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+		NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
 
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("");
@@ -506,7 +507,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(doubleFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat2.format(t_cost));
 				}
 			}
 		}

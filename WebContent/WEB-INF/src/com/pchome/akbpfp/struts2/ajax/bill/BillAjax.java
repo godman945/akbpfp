@@ -83,7 +83,6 @@ public class BillAjax extends BaseCookieAction{
 			}
 			
 			content.append(",總計,");
-			
 			content.append("NT$ " + billVOList.getTotalSaveMoney()).append(",");
 			content.append("NT$ " + billVOList.getTotalTaxMoney()).append(",");
 			content.append("NT$ " + billVOList.getTotalReturnMoney()).append(",");

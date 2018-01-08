@@ -121,7 +121,7 @@ public class ReportAdOsAction extends BaseReportAction {
 			pv = Double.parseDouble(adosreportvo.getAdPvSum());
 			click = Double.parseDouble(adosreportvo.getAdClkSum());
 			cost = Double.parseDouble(adosreportvo.getAdClkPriceSum());
-			cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+			cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = Double.parseDouble(adosreportvo.getAdInvalidClkSum());
 
 			//互動率 = 互動次數 / 曝光數
@@ -403,7 +403,7 @@ public class ReportAdOsAction extends BaseReportAction {
 			t_cost += Double.parseDouble(adosreportvo.getAdClkPriceSum());
 			t_invalid += Double.parseDouble(adosreportvo.getAdInvalidClkSum());
 		}
-		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {

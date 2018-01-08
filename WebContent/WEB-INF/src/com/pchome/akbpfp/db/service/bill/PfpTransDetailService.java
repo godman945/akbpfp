@@ -39,7 +39,7 @@ public class PfpTransDetailService extends BaseService <PfpTransDetail, String> 
 			float totalAdSpentMoney = 0;
 			float remain = 0;
 			boolean tag = true;
-			
+			BigDecimal totalAdSpentMoneyBigDecimal = new BigDecimal(0);
 			for(PfpTransDetail detail:details){
 				
 				if(tag){
@@ -68,20 +68,19 @@ public class PfpTransDetailService extends BaseService <PfpTransDetail, String> 
 				}
 				
 				if(detail.getTransType().equals(EnumTransType.SPEND_COST.getTypeId()) ||detail.getTransType().equals(EnumTransType.REFUND.getTypeId()) ||	detail.getTransType().equals(EnumTransType.LATER_REFUND.getTypeId())){
-					vo.setAdSpentMoney(detail.getTransPrice());
+					totalAdSpentMoneyBigDecimal = totalAdSpentMoneyBigDecimal.add(new BigDecimal(String.valueOf(detail.getTransPrice())));
+//					vo.setAdSpentMoney(detail.getTransPrice());
+					vo.setAdSpentMoney((new BigDecimal(String.valueOf(detail.getTransPrice()))).floatValue());
 					totalAdSpentMoney += detail.getTransPrice();
 				}
-				
 				vo.setRemain(detail.getRemain());				
-				
 				vos.add(vo);
 			}
-			
 			billVOs.setBillVOs(vos);
 			billVOs.setTotalSaveMoney(totalSaveMoney);
 			billVOs.setTotalTaxMoney(totalTaxMoney);
 			billVOs.setTotalReturnMoney(totalReturnMoney);
-			billVOs.setTotalAdSpentMoney(totalAdSpentMoney);
+			billVOs.setTotalAdSpentMoney(totalAdSpentMoneyBigDecimal.floatValue());
 			billVOs.setRemain(remain);
 		}
 		
