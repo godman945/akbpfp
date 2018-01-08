@@ -149,7 +149,7 @@ public class AdAddAction extends BaseCookieAction{
 	private String adKeywordOpen;			//廣泛比對
 	private String adKeywordPhraseOpen;		//詞組比對
 	private String adKeywordPrecisionOpen;	//精準比對
-	
+	private String adGroupChannelPrice;
 	
 	
 	//新增廣告
@@ -157,6 +157,7 @@ public class AdAddAction extends BaseCookieAction{
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
 		String referer = request.getHeader("Referer");
 		backPage = "adActionView.html";
+		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 		if(StringUtils.isNotEmpty(referer)) {
 			if(referer.indexOf("adGroupAdd.html") >= 0 || referer.indexOf("adAdAdd.html") >= 0) {
 				backPage = "adGroupAdd.html?adGroupSeq=" + adGroupSeq;
@@ -168,13 +169,11 @@ public class AdAddAction extends BaseCookieAction{
 				controlPriceAPI.countProcess(pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()));
 			}
 		}
-
-		
-		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 		adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 		adGroupName  = pfpAdGroup.getAdGroupName();
 		adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
-		
+//		adOperatingRule = pfpAdGroup.getAdGroupPriceType();
+		adGroupChannelPrice = String.valueOf(pfpAdGroup.getAdGroupChannelPrice());
 		//多媒體廣告
 		if(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName().equals(adOperatingRule)){
 			saveAndNew = "";
@@ -1739,6 +1738,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setAdTitle(String adTitle) {
 		this.adTitle = adTitle;
+	}
+
+	public String getAdGroupChannelPrice() {
+		return adGroupChannelPrice;
+	}
+
+	public void setAdGroupChannelPrice(String adGroupChannelPrice) {
+		this.adGroupChannelPrice = adGroupChannelPrice;
 	}
 
 }
