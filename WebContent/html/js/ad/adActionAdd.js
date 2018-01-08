@@ -1,6 +1,5 @@
 ﻿var websiteCategoryObj = null;
 
-
 $(document).ready(function(){
 	var firstAdType = $("#adType").val();
 	var firstAdDevice = $("#adDeviceSelect").val();
@@ -12,6 +11,11 @@ $(document).ready(function(){
     } else if(firstAdType == "2"){
     	firstObj = JSON.parse($("#adChannelDevice").text());
     }
+	
+	if($('#adOperatingRule').val() != null){
+		$('#adStyle').val($('#adOperatingRule').val());
+	}
+	
 	
 	$.each(firstObj, function(key, value) { 
 		if(firstAdDevice == key){

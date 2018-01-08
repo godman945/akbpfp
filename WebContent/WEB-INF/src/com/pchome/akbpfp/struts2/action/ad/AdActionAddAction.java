@@ -123,6 +123,12 @@ public class AdActionAddAction extends BaseCookieAction{
 		oldWebsiteCategory = "";
 		adOperatingRule = "0";
 		
+		
+		if(StringUtils.isNotBlank(adActionSeq)){
+			PfpAdAction pfpAdAction = pfpAdActionService.get(adActionSeq);
+			adOperatingRule = pfpAdAction.getAdOperatingRule().equals("VIDEO") ? "1" : "0"; 
+		}
+		
 		PfdUserAdAccountRef pfdUserAdAccountRef = pfdUserAdAccountRefService.findPfdUserAdAccountRef(super.getCustomer_info_id());
 		String pfpAdTypeSelect = pfdUserAdAccountRef.getPfdCustomerInfo().getPfpAdtypeSelect();
 		
