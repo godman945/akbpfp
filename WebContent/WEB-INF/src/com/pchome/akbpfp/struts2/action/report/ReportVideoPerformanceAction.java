@@ -158,7 +158,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())) {
 					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getThousandsCost()));
 				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					adVideoPerformanceReportVO.setCostSum(new BigDecimal(String.valueOf(adVideoPerformanceReportVO.getCostSum())).setScale(2, BigDecimal.ROUND_FLOOR).toString());
+					adVideoPerformanceReportVO.setCostSum(new BigDecimal(String.valueOf(adVideoPerformanceReportVO.getCostSum())).setScale(3, BigDecimal.ROUND_FLOOR).toString());
 					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getCostSum()));
 				}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
 					flashDataMap.put(adVideoPerformanceReportVO.getReportDate(), Float.valueOf(adVideoPerformanceReportVO.getAdVideoProcess100Ratings()));
@@ -457,7 +457,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			content.append(adVideoPerformanceReportVO.getAdVideoProcess100Sum()+",");
 			content.append(adVideoPerformanceReportVO.getAdVideoProcess100Ratings()+"%");
 		}
-		sumCost = new BigDecimal(String.valueOf(sumCost)).setScale(2, BigDecimal.ROUND_FLOOR).floatValue();
+		sumCost = new BigDecimal(String.valueOf(sumCost)).setScale(3, BigDecimal.ROUND_FLOOR).floatValue();
 		
 		//總計
 		content.append("\n\n");

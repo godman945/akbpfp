@@ -401,7 +401,7 @@
         <span id="adSearchDevice" name="adSearchDevice" style="display:none;" >${adSearchDevice!}</span>
         <span id="adChannelDevice" name="adChannelDevice" style="display:none;" >${adChannelDevice!}</span>
         <input type="hidden" id="backPage" name="backPage" value="${backPage!}">
-        <input type="hidden" id="adOperatingRule" name="adOperatingRule" value="${adOperatingRule!}">
+        <input type="" id="adOperatingRule" name="adOperatingRule" value="${adOperatingRule!}">
     </form>
 </div>
 <div id="introDialog" style="display:none"></div>

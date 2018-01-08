@@ -237,7 +237,7 @@ public class SpringOpenFlashUtil {
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 			scale = 2;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-			scale = 2;
+			scale = 3;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_ADSORT.getTextValue())) {
 			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {

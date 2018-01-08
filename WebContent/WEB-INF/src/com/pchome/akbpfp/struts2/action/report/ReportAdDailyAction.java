@@ -83,7 +83,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 	NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
-	NumberFormat doubleFormat2 = new DecimalFormat("##.00");
+	NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -124,7 +124,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
-			cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+			cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = vo.getAdInvClkSum().doubleValue();
 
 			//互動率 = 互動次數 / 曝光數
@@ -177,9 +177,6 @@ public class ReportAdDailyAction extends BaseReportAction {
 		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
 		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
 		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
-
-		System.out.println(tableHeadNameMap);
-		
 		optionSelect="";
 		optionNotSelect="";
 
@@ -525,7 +522,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(doubleFormat.format(cost));
+						tableInDataList.addLast(doubleFormat2.format(cost));
 					}
 				}
 			}

@@ -19,17 +19,17 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 
-import com.pchome.enumerate.ad.EnumAdType;
-import com.pchome.enumerate.report.EnumReport;
-import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.akbpfp.db.dao.report.AdTimeReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdTimeReportService;
-import com.pchome.soft.util.DateValueUtil;
+import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
+import com.pchome.soft.util.DateValueUtil;
 
 public class ReportAdTimeAction extends BaseReportAction {
 
@@ -90,8 +90,8 @@ public class ReportAdTimeAction extends BaseReportAction {
 	private String reportTitle;
 	
 	private String searchTime = "W";
-	
-	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+	private NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -154,7 +154,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
-			cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+			cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = vo.getAdInvClkSum().doubleValue();
 
 			//互動率 = 互動次數 / 曝光數
@@ -186,7 +186,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				data = kiloCost;
             }  else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				data = Double.parseDouble(decimalFormat.format(cost));
+				data = Double.parseDouble(doubleFormat2.format(cost));
 			}
 			
 			if(StringUtils.equals(searchTime, "T")){
@@ -584,7 +584,6 @@ public class ReportAdTimeAction extends BaseReportAction {
 		LinkedList<String> tableInDataList;
 
         NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -684,7 +683,6 @@ public class ReportAdTimeAction extends BaseReportAction {
 			
 			tableInDataList.addLast(adActionName);
 			tableInDataList.addLast(adGroupName);
-			log.info(">>>>>>>>>>>>>>>>>>>>>...searchTime = " + searchTime);
 			if(StringUtils.equals("T", searchTime)){
 				tableInDataList.addLast(time);
 			} else {
@@ -712,7 +710,8 @@ public class ReportAdTimeAction extends BaseReportAction {
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(doubleFormat.format(cost));
+						System.out.println(">>>>>>>>SSS>>:"+cost);
+						tableInDataList.addLast(doubleFormat2.format(cost));
 					}
 				}
 			}

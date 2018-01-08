@@ -94,7 +94,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	
 	private String adName = "";
 
-	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.###");
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -141,7 +141,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			pv = Double.parseDouble(adReportVO.getAdPvSum());
 			click = Double.parseDouble(adReportVO.getAdClkSum());
 			cost = Double.parseDouble(adReportVO.getAdPriceSum());
-			cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+			cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = Double.parseDouble(adReportVO.getAdInvClkSum());
 
 			//互動率 = 互動次數 / 曝光數
@@ -172,7 +172,8 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) kiloCost));
             } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float(decimalFormat.format(cost)));
+            	 System.out.println("XAAAAAAAA:"+new Float(doubleFormat.format(cost)));
+            	flashDataMap.put(reportDate, new Float(doubleFormat.format(cost)));
 			}
 		}
 
@@ -639,6 +640,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+		NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
 
 		for (int i=0; i<resultData.size(); i++) {
 			AdReportVO adReportVO = resultData.get(i);
@@ -661,7 +663,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			String adClkPriceTypeName = adReportVO.getAdClkPriceType();
 			pv = new Double(adReportVO.getAdPvSum());
 			click = new Double(adReportVO.getAdClkSum());
-			cost = (new BigDecimal(String.valueOf(adReportVO.getAdPriceSum())).setScale(2, BigDecimal.ROUND_FLOOR)).doubleValue();
+			cost = (new BigDecimal(String.valueOf(adReportVO.getAdPriceSum())).setScale(3, BigDecimal.ROUND_FLOOR)).doubleValue();
 			invClick = new Double(adReportVO.getAdInvClkSum());
 			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
@@ -815,7 +817,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 					} else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(doubleFormat.format(cost));
+						tableInDataList.addLast(doubleFormat2.format(cost));
 					}
 				}
 			}

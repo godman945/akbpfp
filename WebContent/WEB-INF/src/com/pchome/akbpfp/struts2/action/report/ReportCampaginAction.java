@@ -91,7 +91,7 @@ public class ReportCampaginAction extends BaseReportAction {
 
 	private NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
-	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	private NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -134,7 +134,7 @@ public class ReportCampaginAction extends BaseReportAction {
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
-			cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+			cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = vo.getAdInvClkSum().doubleValue();
 			adActionMaxPrice = vo.getAdActionMaxPriceSum().doubleValue();
 			count = vo.getCount().doubleValue();
@@ -172,7 +172,7 @@ public class ReportCampaginAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
 				flashDataMap.put(reportDate, new Float(doubleFormat.format(adActionMaxPriceAvg)));
 			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-            	flashDataMap.put(reportDate, new Float(decimalFormat.format(cost)));
+            	flashDataMap.put(reportDate, new Float(doubleFormat2.format(cost)));
 			}
 		}
 
@@ -506,16 +506,10 @@ public class ReportCampaginAction extends BaseReportAction {
 		long nowTime = new Date().getTime();
 		try {
 			for (int i=0; i<resultData.size(); i++) {
-
 				tableInDataList = new LinkedList<String>();
-	
 				AdActionReportVO vo = resultData.get(i);
-	
 				String adActionSeq = vo.getAdActionSeq();
-	
 				PfpAdAction pfpAdAction =  adActionService.getPfpAdActionBySeq(adActionSeq);
-				System.out.println("pfpAdAction.getAdActionName() = " + pfpAdAction.getAdActionName());
-	
 				String adActionName = pfpAdAction.getAdActionName();
 			    int adActionStatus = pfpAdAction.getAdActionStatus();
 			    String adActionStartDate = dateFormat2.format(pfpAdAction.getAdActionStartDate());
@@ -618,7 +612,7 @@ public class ReportCampaginAction extends BaseReportAction {
 						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 							tableInDataList.addLast(doubleFormat.format(kiloCost));
 						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-							tableInDataList.addLast(doubleFormat.format(cost));
+							tableInDataList.addLast(doubleFormat2.format(cost));
 						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
 							tableInDataList.addLast(doubleFormat.format(adActionMaxPriceAvg));
 						}

@@ -86,9 +86,15 @@ public class AdGroupAddAction extends BaseCookieAction{
 			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 			adGroupChannelPriceDefault = pfpAdGroup.getAdGroupChannelPrice();
 			adGroupName = pfpAdGroup.getAdGroupName();
-			adGroupSearchPrice = Integer.toString((int)pfpAdGroup.getAdGroupSearchPrice());;
-			adGroupChannelPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
-			adGroupSearchPriceType = Integer.toString((int)pfpAdGroup.getAdGroupSearchPriceType());
+			if(pfpAdGroup.getAdGroupPriceType().equals("CPC")){
+				adGroupSearchPrice = Integer.toString((int)pfpAdGroup.getAdGroupSearchPrice());
+				adGroupChannelPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
+				adGroupSearchPriceType = Integer.toString((int)pfpAdGroup.getAdGroupSearchPriceType());
+			}else{
+				adGroupSearchPrice = String.valueOf(pfpAdGroup.getAdGroupSearchPrice());
+				adGroupChannelPrice = String.valueOf(pfpAdGroup.getAdGroupChannelPrice());
+				adGroupSearchPriceType = String.valueOf(pfpAdGroup.getAdGroupSearchPriceType());
+			}
 			adActionSeq = pfpAdGroup.getPfpAdAction().getAdActionSeq();
 			adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 			adActionMax = (int)pfpAdGroup.getPfpAdAction().getAdActionMax();
@@ -98,7 +104,6 @@ public class AdGroupAddAction extends BaseCookieAction{
 			sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
 			
 			PfpAdAction pfpAdAction = pfpAdGroup.getPfpAdAction();
-			
 			if(EnumAdType.AD_CHANNEL.getType() == pfpAdAction.getAdType()){			//隱藏搜尋廣告設定
 				showSearchPrice = "no";
 			} else if(EnumAdType.AD_SEARCH.getType() == pfpAdAction.getAdType()){	//隱藏內容廣告設定

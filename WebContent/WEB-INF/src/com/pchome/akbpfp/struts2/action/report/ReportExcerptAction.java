@@ -1110,7 +1110,6 @@ public class ReportExcerptAction extends BaseReportAction {
 
 		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 		NumberFormat doubleFormat = new DecimalFormat("###,###,###,##0.00");
-
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
 		tableDataTotalList.add("");

@@ -19,9 +19,6 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 
-import com.pchome.enumerate.ad.EnumAdType;
-import com.pchome.enumerate.report.EnumReport;
-import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.akbpfp.db.dao.report.AdWebsiteReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
@@ -29,8 +26,11 @@ import com.pchome.akbpfp.db.service.ad.IPfbxWebsiteCategoryService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdWebsiteReportService;
-import com.pchome.soft.util.DateValueUtil;
+import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
+import com.pchome.soft.util.DateValueUtil;
 
 public class ReportAdWebsiteAction extends BaseReportAction {
 
@@ -94,8 +94,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 	private String reportTitle;
 	
 	private String searchWebsiteCode = "";
-
-	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.###");
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -141,7 +140,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
-			cost = new BigDecimal(String.valueOf(cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+			cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = vo.getAdInvClkSum().doubleValue();
 
 			if(StringUtils.isNotEmpty(vo.getWebsiteCategoryCode()) && reportWebsiteCategoryMap.get(vo.getWebsiteCategoryCode()) != null){
@@ -179,7 +178,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				data = kiloCost;
             } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				data = Double.valueOf(decimalFormat.format(cost));
+				data = Double.valueOf(doubleFormat.format(cost));
 			}
 			
 			titleDataList.add(websiteCategoryName);
@@ -473,7 +472,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(2, BigDecimal.ROUND_FLOOR).doubleValue();
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
