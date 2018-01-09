@@ -22,8 +22,8 @@
 			<td height="30" class="td01">NT$ ${vo.saveMoney?string('#,###')!}</td>
 			<td height="30" class="td01">NT$ ${vo.taxMoney?string('#,###')!}</td>
 			<td height="30" class="td01">NT$ ${vo.returnMoney?string('#,###')!}</td>
-			<td height="30" class="td01">NT$ ${vo.adSpentMoney?string('#,###.###')!}</td>
-			<td height="30" class="td01">NT$ ${vo.remain?string('#,###.###')!}</td>
+			<td height="30" class="td01">NT$ ${vo.adSpentMoney?string('#,###')!}</td>
+			<td height="30" class="td01">NT$ ${vo.remain?string('#,###')!}</td>
  	    </tr>		
 	</#list>
  	</tbody>
@@ -35,7 +35,7 @@
 			<th><span class="header" id="totalAdd">稅金：NT$ ${billVOList.totalTaxMoney?string('#,###')!}</span></th>
 			<th><span class="header" id="totalIncome">廣告支出回收：NT$ ${billVOList.totalReturnMoney?string('#,###')!}</span></th>
 			<th><span class="header" id="totalExpense">廣告支出：NT$ ${billVOList.totalAdSpentMoney?string('#,###')!}</span></th>
-			<th><span class="header" id="totalRemain">帳戶餘額：NT$ ${billVOList.remain?string('#,###.###')!}</span></th>
+			<th><span class="header" id="totalRemain">帳戶餘額：NT$ ${billVOList.remain?string('#,###')!}</span></th>
    	</tr> 
    	</tfoot>
    	</#if>
