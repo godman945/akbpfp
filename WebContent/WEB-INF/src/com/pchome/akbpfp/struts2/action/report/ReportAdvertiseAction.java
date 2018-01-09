@@ -452,6 +452,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			sumClick = sumClick + Float.valueOf(adReportVO.getAdClkSum());
 			double clickAvg = (Double.valueOf(adReportVO.getAdClkSum()) / Double.valueOf(adReportVO.getAdPvSum())) * 100;
 			totalCost = totalCost + Double.valueOf(adReportVO.getAdPriceSum());
+			totalCost = (new BigDecimal(String.valueOf(totalCost)).setScale(3, BigDecimal.ROUND_FLOOR)).doubleValue();
 			double thousandsCost = Double.parseDouble(adReportVO.getAdPriceSum()) / (Double.parseDouble(adReportVO.getAdPvSum()) / 1000);
 			
 			double singleCost = 0;
