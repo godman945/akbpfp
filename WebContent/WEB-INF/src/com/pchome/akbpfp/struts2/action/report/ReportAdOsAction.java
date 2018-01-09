@@ -84,7 +84,8 @@ public class ReportAdOsAction extends BaseReportAction {
 	
 	private String reportTitle;
 
-	private DecimalFormat decimalFormat = new DecimalFormat("0.00");
+	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+	private NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -117,7 +118,6 @@ public class ReportAdOsAction extends BaseReportAction {
 			double ctr = 0;
 			double costAvg = 0;
 			double kiloCost = 0;
-
 			pv = Double.parseDouble(adosreportvo.getAdPvSum());
 			click = Double.parseDouble(adosreportvo.getAdClkSum());
 			cost = Double.parseDouble(adosreportvo.getAdClkPriceSum());
@@ -157,7 +157,7 @@ public class ReportAdOsAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) kiloCost));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float(decimalFormat.format(cost)));
+				flashDataMap.put(reportDate, new Float(doubleFormat2.format(cost)));
 			}
 		}
 
@@ -437,7 +437,7 @@ public class ReportAdOsAction extends BaseReportAction {
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(doubleFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat2.format(t_cost));
 				}
 			}
 		}
@@ -448,7 +448,6 @@ public class ReportAdOsAction extends BaseReportAction {
 		LinkedList<String> tableInDataList;
 
         NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
 
 		for (AdOsReportVO adosreportvo: resultData) {
 
@@ -502,11 +501,10 @@ public class ReportAdOsAction extends BaseReportAction {
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(doubleFormat.format(cost));
+						tableInDataList.addLast(doubleFormat2.format(cost));
 					}
 				}
 			}
-
 			tableDataList.addLast(tableInDataList);
 		}
 	}

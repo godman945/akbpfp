@@ -445,7 +445,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			content.append(adVideoPerformanceReportVO.getAdViewRatings()+"%,");
 			content.append("$"+adVideoPerformanceReportVO.getThousandsCost()+",");
 			content.append("$"+adVideoPerformanceReportVO.getSingleAdViewCost()+",");
-			content.append("$"+adVideoPerformanceReportVO.getCostSum()+",");
+			content.append("=\"$"+adVideoPerformanceReportVO.getCostSum()+"\",");
 			content.append(adVideoPerformanceReportVO.getAdClkSum()+",");
 			content.append(adVideoPerformanceReportVO.getAdVideoUniqSum()+",");
 			content.append(adVideoPerformanceReportVO.getAdVideoMusicSum()+",");
@@ -473,7 +473,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 				+ sumViewRatings+"%,"
 				+ "$"+sumThousandsCost+","
 				+ "$"+sumSingleAdViewCost+","
-				+ "$"+sumCost+","
+				+ "=\"$"+sumCost+"\","
 				+ sumClick+","
 				+ sumVideoUniq+","
 				+ sumMusic+","
