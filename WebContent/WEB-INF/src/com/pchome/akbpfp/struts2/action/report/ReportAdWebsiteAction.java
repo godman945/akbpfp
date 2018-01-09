@@ -519,6 +519,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 
         NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+		NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -646,7 +647,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(doubleFormat.format(cost));
+						tableInDataList.addLast(doubleFormat2.format(cost));
 					}
 				}
 			}
