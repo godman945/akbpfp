@@ -1032,7 +1032,7 @@ public class ReportExcerptAction extends BaseReportAction {
 							s = " ";
 						}
 						if(dataNumber == 14 || dataNumber == 15 || dataNumber == 16){
-							content.append("\"NT$ " + s + "\"");
+							content.append("=\"NT$ " + s + "\"");
 						} else if(dataNumber == 12){
 							content.append("\"" + s + "%\"");
 						} else {
@@ -1049,7 +1049,7 @@ public class ReportExcerptAction extends BaseReportAction {
 					int dataTotalNumber = 1;
 					for(String s:tableDataTotalList){
 						if(dataTotalNumber == 14 || dataTotalNumber == 15 || dataTotalNumber == 16){
-							content.append("\"NT$ " + s + "\"");
+							content.append("=\"NT$ " + s + "\"");
 						} else if(dataTotalNumber == 12){
 							content.append("\"" + s + "%\"");
 						} else {
@@ -1065,7 +1065,7 @@ public class ReportExcerptAction extends BaseReportAction {
 					int dataNumber = 1;
 					for(String s:sl){
 						if(dataNumber == 11 || dataNumber == 12 || dataNumber == 13){
-							content.append("\"NT$ " + s + "\"");
+							content.append("=\"NT$ " + s + "\"");
 						} else if(dataNumber == 9){
 							content.append("\"" + s + "%\"");
 						} else {
@@ -1082,7 +1082,7 @@ public class ReportExcerptAction extends BaseReportAction {
 					int dataTotalNumber = 1;
 					for(String s:tableDataTotalList){
 						if(dataTotalNumber == 11 || dataTotalNumber == 12 || dataTotalNumber == 13){
-							content.append("\"NT$ " + s + "\"");
+							content.append("=\"NT$ " + s + "\"");
 						} else if(dataTotalNumber == 9){
 							content.append("\"" + s + "%\"");
 						} else {
