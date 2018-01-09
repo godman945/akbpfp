@@ -207,7 +207,6 @@ public class AdAddAction extends BaseCookieAction{
 			for(EnumAdVideoSizePoolType enumAdVideoSize : EnumAdVideoSizePoolType.values()){
 				adVideoSizeMap.put(enumAdVideoSize.name(), enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight());
 			}
-			System.out.println(adVideoSizeMap);
 			adOperatingRule = pfpAdGroup.getPfpAdAction().getAdOperatingRule();
 			adStyle = adOperatingRule;
 			return "adVideoAdd";

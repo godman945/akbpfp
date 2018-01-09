@@ -1,6 +1,11 @@
 ﻿var submitFlag = true;
 var adGroupNameFlag = true;
 $(document).ready(function(){
+	
+	if($('#adPriceTypeValue').val() != null){
+		$('#adPriceType').val($('#adPriceTypeValue').val());
+	}
+	
 	if($('#adGroupName').val().length > 20){
 		$('#adGroupNameMsg').text('分類名稱輸入字數已超過上限 20 字');
 		var position = $('#adGroupNameMsg').offset();  

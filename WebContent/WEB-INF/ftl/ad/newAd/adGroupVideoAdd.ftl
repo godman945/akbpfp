@@ -26,24 +26,6 @@
 	        <h4>分類出價<span class="t_s01"></span> </h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 	        	<tbody>
-	        		<tr id="searchTr">
-	                	<th height="35">
-							<span class="t_s02">* </span>搜尋廣告出價 <a style="cursor:pointer;" onclick="opennots(1)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
-							<div id="shownotes1" style="visibility: hidden;" class="adnoticepop">
-								<h4>搜尋廣告出價 說明</h4>
-								<div class="adpopcont">設定最高單次點擊出價，來決定廣告的排名、以及廣告被點擊時您所支付的最高金額。請先設定初始出價，出價金額隨時可依廣告成效進行調整。</div>
-								<a onclick="closenots(1)" style="cursor:pointer;" class="adpopclose">關閉</a>
-							</div>
-	                	</th>
-	                    <td>
-	                    	<input type="radio" id="adGroupSearchPriceType" name="adGroupSearchPriceType" value="1" <#if adGroupSearchPriceType == "1">checked</#if>><b>使用系統建議出價，在我的預算內設定最高的排名出價</b></BR>
-							<div class="exp">你在下一步所建立的關鍵字，都以建立時的每組關鍵字最高的排名價格設為出價金額(出價金額會控制在您每日的廣告預算內)<br>範例：你設定的關鍵字「電腦」，廣告排名較高出價為$5，系統即為您設定出價為$5</div>
-
-							<input type="radio" id="adGroupSearchPriceType" name="adGroupSearchPriceType" value="2" <#if adGroupSearchPriceType == "2">checked</#if>><b>自行設定分類出價金額NT$<input type="text" style="width:50px" id="adGroupSearchPrice" name="adGroupSearchPrice" value="${defSearchPrice!}" maxlength="6"></b><br />
-							<div class="exp">此出價會套用在您下一步所建立的每組關鍵字中</div>
-							<span class="t_s01"><br />(二種出價方式都可在廣告新增完成後，在檢視關鍵字列表頁，可個別修改關鍵字的出價金額)</span>
-	                    </td>
-	                </tr>
 	                <tr id="channelTr">
 	                	<th height="35">
 							<span class="t_s02">* </span>影音廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
@@ -67,9 +49,8 @@
 	                    	<br>
 	                    		<div class="errMsg"></div>
 	                    	<br>
-		                    	<b>系統建議出價NT$<input type="number" min="0" step="0.1" id="adPrice" name="adPrice" style="width:50px" maxlength="6" value="${sysprice?number?string('#,###.##')!}">，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</b><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div></span>
+		                    	<b>系統建議出價NT$<input type="number" min="0" step="0.1" id="adPrice" name="adPrice" style="width:50px" maxlength="6" value="<#if adGroupSeq?exists>${adGroupChannelPrice!}<#else>${sysChannelPrice?number?string('#,###.##')!}</#if>">，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</b><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div></span>
 	                    		<div class="exp">出價金額會決定廣告播出率。系統會依每次影片的競價結果分析出最佳的播出率，實際支付的廣告收視費用，會小於或等於您的出價金額。</div>
-	                    	
 	                    </td>
 	                </tr>
 	            </tbody>
@@ -90,3 +71,4 @@
 </div>
 <input type="hidden" id="messageId" value="${message!!}">
 <input type="hidden" id="adUserAmount" value="${adUserAmount!}">
+<input type="hidden" id="adPriceTypeValue" name ="adPriceTypeValue" value="${adPriceTypeValue!}" />

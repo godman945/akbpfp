@@ -67,6 +67,7 @@ public class AdGroupAddAction extends BaseCookieAction{
 	private IPfpAdSyspriceService pfpAdSyspriceService;
 	private float sysprice;
 	private int adUserAmount;
+	private int adPriceTypeValue;
 	
 	public String adGroupAdd() throws Exception {
 		log.info("AdGroupAdd => adActionSeq = " + adActionSeq + "; adGroupSeq = " + adGroupSeq);
@@ -94,6 +95,14 @@ public class AdGroupAddAction extends BaseCookieAction{
 				adGroupSearchPrice = String.valueOf(pfpAdGroup.getAdGroupSearchPrice());
 				adGroupChannelPrice = String.valueOf(pfpAdGroup.getAdGroupChannelPrice());
 				adGroupSearchPriceType = String.valueOf(pfpAdGroup.getAdGroupSearchPriceType());
+				adOperatingRule = pfpAdGroup.getAdGroupPriceType().equals("CPC") ? "MEDIA" : "VIDEO";
+				adPriceType = pfpAdGroup.getAdGroupPriceType();
+				for(EnumAdPriceType enumAdPriceType: EnumAdPriceType.values()){
+					if(adPriceType.equals(enumAdPriceType.getDbTypeName())){
+						adPriceTypeValue = enumAdPriceType.getType();
+						break;
+					}
+				}
 			}
 			adActionSeq = pfpAdGroup.getPfpAdAction().getAdActionSeq();
 			adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
@@ -504,7 +513,12 @@ public class AdGroupAddAction extends BaseCookieAction{
 	public void setAdUserAmount(int adUserAmount) {
 		this.adUserAmount = adUserAmount;
 	}
-	
-	
-	
+
+	public int getAdPriceTypeValue() {
+		return adPriceTypeValue;
+	}
+
+	public void setAdPriceTypeValue(int adPriceTypeValue) {
+		this.adPriceTypeValue = adPriceTypeValue;
+	}
 }
