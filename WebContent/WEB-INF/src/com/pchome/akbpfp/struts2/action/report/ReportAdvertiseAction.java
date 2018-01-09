@@ -494,7 +494,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			content.append(df.format(clickAvg)+"%,");
 			content.append(singleCost+",");
 			content.append(thousandsCost+",");
-			content.append(Double.parseDouble(adReportVO.getAdPriceSum()));
+			content.append("=\""+Double.parseDouble(adReportVO.getAdPriceSum())+"\"");
 		}
 		//總計
 		content.append("\n\n");
@@ -510,7 +510,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 					+ df.format((sumClick / sumPV) * 100)+"%,"
 					+ (totalCost / sumClick)+","
 					+ totalCost / (sumPV / 1000)+","
-					+ totalCost);
+					+ "=\""+totalCost+"\"");
 		}else{
 			content.append(""
 					+ "總計:共"+adReportVOList.size()+"筆"+","
@@ -530,7 +530,7 @@ public class ReportAdvertiseAction extends BaseReportAction {
 					+ df.format((sumClick/sumPV)*100)+"%,"
 					+ (totalCost / sumClick)+","
 					+ totalCost / (sumPV / 1000)+","
-					+ totalCost);
+					+ "=\""+totalCost+"\"");
 		}
 		downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));
 	}

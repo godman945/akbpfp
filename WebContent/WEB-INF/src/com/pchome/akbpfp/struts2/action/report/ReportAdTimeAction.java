@@ -469,7 +469,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 			int dataNumber = 1;
 			for(String s:sl){
 				if(dataNumber == 12 || dataNumber == 13 || dataNumber == 14){
-					content.append("\"NT$ " + s + "\"");
+					content.append("=\"NT$ " + s + "\"");
 				} else if(dataNumber == 11){
 					content.append("\"" + s + "%\"");
 				} else {
@@ -486,7 +486,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 12 || dataTotalNumber == 13 || dataTotalNumber == 14){
-					content.append("\"NT$ " + s + "\"");
+					content.append("=\"NT$ " + s + "\"");
 				} else if(dataTotalNumber == 11){
 					content.append("\"" + s + "%\"");
 				} else {

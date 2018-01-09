@@ -373,7 +373,7 @@ public class ReportAdGroupAction extends BaseReportAction {
 			int dataNumber = 1;
 			for(String s:sl){
 				if(dataNumber == 11 || dataNumber == 12 || dataNumber == 13){
-					content.append("\"NT$ " + s + "\"");
+					content.append("=\"NT$ " + s + "\"");
 				} else if(dataNumber == 10){
 					content.append("\"" + s + "%\"");
 				} else {
@@ -390,7 +390,7 @@ public class ReportAdGroupAction extends BaseReportAction {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 11 || dataTotalNumber == 12 || dataTotalNumber == 13){
-					content.append("\"NT$ " + s + "\"");
+					content.append("=\"NT$ " + s + "\"");
 				} else if(dataTotalNumber == 10){
 					content.append("\"" + s + "%\"");
 				} else {
