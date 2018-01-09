@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.akbpfp.db.dao.report.AdOsReportVO;
@@ -339,7 +340,7 @@ public class ReportAdOsAction extends BaseReportAction {
 			int dataNumber = 1;
 			for(String s:sl){
 				if(dataNumber == 5 || dataNumber == 6 || dataNumber == 7){
-					content.append("=\"NT$ " + s + "\"");
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
 				} else if(dataNumber == 4){
 					content.append("\"" + s + "%\"");
 				} else {
@@ -356,7 +357,7 @@ public class ReportAdOsAction extends BaseReportAction {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 5 || dataTotalNumber == 6 || dataTotalNumber == 7){
-					content.append("=\"NT$ " + s + "\"");
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
 				} else if(dataTotalNumber == 4){
 					content.append("\"" + s + "%\"");
 				} else {

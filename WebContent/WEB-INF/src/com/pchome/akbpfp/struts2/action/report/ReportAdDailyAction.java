@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
@@ -362,7 +363,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 			int dataNumber = 1;
 			for(String s:sl){
 				if(dataNumber == 7 || dataNumber == 8 || dataNumber == 9){
-					content.append("=\"NT$ " + s + "\"");
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
 				} else if(dataNumber == 6){
 					content.append("\"" + s + "%\"");
 				} else {
@@ -379,7 +380,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 7 || dataTotalNumber == 8 || dataTotalNumber == 9){
-					content.append("=\"NT$ " + s + "\"");
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
 				} else if(dataTotalNumber == 6){
 					content.append("\"" + s + "%\"");
 				} else {

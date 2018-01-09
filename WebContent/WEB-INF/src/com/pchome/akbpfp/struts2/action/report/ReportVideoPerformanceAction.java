@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.pchome.akbpfp.db.dao.report.AdKeywordReportVO;
 import com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportVO;
@@ -445,6 +446,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			content.append(adVideoPerformanceReportVO.getAdViewRatings()+"%,");
 			content.append("$"+adVideoPerformanceReportVO.getThousandsCost()+",");
 			content.append("$"+adVideoPerformanceReportVO.getSingleAdViewCost()+",");
+//			content.append(StringEscapeUtils.escapeCsv("=\"$"+adVideoPerformanceReportVO.getCostSum())+"\",");
 			content.append("=\"$"+adVideoPerformanceReportVO.getCostSum()+"\",");
 			content.append(adVideoPerformanceReportVO.getAdClkSum()+",");
 			content.append(adVideoPerformanceReportVO.getAdVideoUniqSum()+",");
@@ -473,6 +475,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 				+ sumViewRatings+"%,"
 				+ "$"+sumThousandsCost+","
 				+ "$"+sumSingleAdViewCost+","
+//				+ StringEscapeUtils.escapeCsv("=\"$"+sumCost)+"\","
 				+ "=\"$"+sumCost+"\","
 				+ sumClick+","
 				+ sumVideoUniq+","

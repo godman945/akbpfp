@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONArray;
 
 import com.pchome.akbpfp.db.dao.report.AdAgesexReportVO;
@@ -484,7 +485,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 			int dataNumber = 1;
 			for(String s:sl){
 				if(dataNumber == 12 || dataNumber == 13 || dataNumber == 14){
-					content.append("=\"NT$ " + s + "\"");
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
 				} else if(dataNumber == 11){
 					content.append("\"" + s + "%\"");
 				} else {
@@ -501,7 +502,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
 				if(dataTotalNumber == 12 || dataTotalNumber == 13 || dataTotalNumber == 14){
-					content.append("=\"NT$ " + s + "\"");
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
 				} else if(dataTotalNumber == 11){
 					content.append("\"" + s + "%\"");
 				} else {
