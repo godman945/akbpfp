@@ -209,6 +209,7 @@ public class AdAddAction extends BaseCookieAction{
 			}
 			adOperatingRule = pfpAdGroup.getPfpAdAction().getAdOperatingRule();
 			adStyle = adOperatingRule;
+			backPage = "adActionView.html";
 			return "adVideoAdd";
 		}
 		

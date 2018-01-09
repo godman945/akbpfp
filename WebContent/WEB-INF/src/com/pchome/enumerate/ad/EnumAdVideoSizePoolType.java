@@ -1,7 +1,7 @@
 package com.pchome.enumerate.ad;
 
 public enum EnumAdVideoSizePoolType {
-    	DEFAULT_300250("300","250","DEFAULT","adp_201507210001","c_x05_mo_tad_0093","300","250"),
+    	DEFAULT_300250("300","250","DEFAULT","adp_201507210001","c_x05_mo_tad_0080","300","250"),
     	DEFAULT_336280("336","280","DEFAULT","adp_201601210002","c_x05_mo_tad_0080","336","280"),
     	DEFAULT_640390("640","390","DEFAULT","adp_201711060002","c_x05_mo_tad_0080","640","390"),
 		BANNER_300600("300", "600","BANNER","adp_201709190001","c_x05_mo_tad_0080","300","600"),
