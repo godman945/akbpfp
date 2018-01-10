@@ -3,7 +3,6 @@ package com.pchome.akbpfp.struts2.action.ad;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +11,6 @@ import com.pchome.akbpfp.api.SyspriceOperaterAPI;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdSysprice;
-import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
 import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
@@ -31,9 +29,6 @@ import com.pchome.soft.depot.utils.EncodeUtil;
 
 public class AdGroupAddAction extends BaseCookieAction{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private String message = "";
@@ -71,22 +66,21 @@ public class AdGroupAddAction extends BaseCookieAction{
 	
 	public String adGroupAdd() throws Exception {
 		log.info("AdGroupAdd => adActionSeq = " + adActionSeq + "; adGroupSeq = " + adGroupSeq);
-		String adCustomerInfoId = "";
+//		String adCustomerInfoId = "";
 		String referer = request.getHeader("Referer");
-
-		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
+//		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String tmpSeq = "";		// 回  adActionAdd.html 讀取資料用的 adActionSeq
 		adGroupSearchPriceType = "2";
-		
 		showSearchPrice = "yes";
 		showChannelPrice = "yes";
-		float adGroupChannelPriceDefault = 0;
+//		float adGroupChannelPriceDefault = 0;
 		
 		// 由 adAddAction 取消回來時，會帶 adGroupSeq 的參數，但是不會帶 adActionSeq
 		if(StringUtils.isNotBlank(adGroupSeq)) {
 			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-			adGroupChannelPriceDefault = pfpAdGroup.getAdGroupChannelPrice();
+//			adGroupChannelPriceDefault = pfpAdGroup.getAdGroupChannelPrice();
 			adGroupName = pfpAdGroup.getAdGroupName();
+			//多媒體廣告
 			if(pfpAdGroup.getAdGroupPriceType().equals("CPC")){
 				adGroupSearchPrice = Integer.toString((int)pfpAdGroup.getAdGroupSearchPrice());
 				adGroupChannelPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
@@ -108,7 +102,7 @@ public class AdGroupAddAction extends BaseCookieAction{
 			adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 			adActionMax = (int)pfpAdGroup.getPfpAdAction().getAdActionMax();
 			tmpSeq = pfpAdGroup.getPfpAdAction().getAdActionSeq();
-			adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
+//			adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
 			defSearchPrice = adGroupSearchPrice;
 			sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
 			
@@ -125,60 +119,54 @@ public class AdGroupAddAction extends BaseCookieAction{
 			adGroupSeq = "";
 			tmpSeq = adActionSeq;
 			PfpAdAction pfpAdAction = pfpAdActionService.getPfpAdActionBySeq(adActionSeq);
-			adActionName  = pfpAdAction.getAdActionName();
-			adActionMax = (int)pfpAdAction.getAdActionMax();
-			adCustomerInfoId = pfpAdAction.getPfpCustomerInfo().getCustomerInfoId();
-			adOperatingRule = pfpAdAction.getAdOperatingRule();
-			adGroupName = chkAdGroupName(adActionName);
-			adGroupSearchPrice = defSearchPrice;		//一開始沒有關鍵字，所以預設為3元，等廣告建完有關鍵字，再去呼叫api更新
-			sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
-			adGroupChannelPrice = "3";
-			
+			adGroupName = chkAdGroupName(pfpAdAction.getAdActionName());
+			if(pfpAdAction.getAdOperatingRule().equals(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName())){
+//				adActionName  = pfpAdAction.getAdActionName();
+				adActionMax = (int)pfpAdAction.getAdActionMax();
+//				adCustomerInfoId = pfpAdAction.getPfpCustomerInfo().getCustomerInfoId();
+				adOperatingRule = pfpAdAction.getAdOperatingRule();
+				adGroupSearchPrice = defSearchPrice;
+				sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
+				adGroupChannelPrice = "3";
+			}
+			if(pfpAdAction.getAdOperatingRule().equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName())){
+				adOperatingRule = pfpAdAction.getAdOperatingRule();
+			}
 			if(EnumAdType.AD_CHANNEL.getType() == pfpAdAction.getAdType()){			//隱藏搜尋廣告設定
 				showSearchPrice = "no";
 			} else if(EnumAdType.AD_SEARCH.getType() == pfpAdAction.getAdType()){	//隱藏內容廣告設定
 				showChannelPrice = "no";
 			}
-			
 		}
-		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
-		if(!customerInfoId.equals(adCustomerInfoId)) {
-			return "notOwner";
-		}
+//		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
+//		System.out.println(customerInfoId);
+//		System.out.println(pfpCustomerInfo.getCustomerInfoId());
+//		if(!customerInfoId.equals(adCustomerInfoId)) {
+//			return "notOwner";
+//		}
 
 		// 讀取cookie
-		
 		if(referer.indexOf("adActionAdd") > 0 ) {
 			backPage="adActionAdd.html?adActionSeq="+tmpSeq;
-
 			String encodeCookie = EncodeUtil.getInstance().encryptAES(backPage, EnumCookieConstants.COOKIE_PFP_SECRET_KEY.getValue());
-			
 			CookieUtil.writeCookie(response, "preGroup", encodeCookie, EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(),
 									EnumCookieConstants.COOKIE_ONE_HOUR_AGE, EnumCookieConstants.COOKIE_USING_CODE.getValue());
-			
 			log.info("write cookie data="+backPage);
-		
 		}else if(referer.indexOf("adActionView") > 0 || referer.indexOf("adGroupView") > 0 ) {
-		
 			backPage = referer;
-			
             String encodeCookie = EncodeUtil.getInstance().encryptAES(backPage, EnumCookieConstants.COOKIE_PFP_SECRET_KEY.getValue());
-			
-			CookieUtil.writeCookie(response, "preGroup", encodeCookie, EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(),
-									EnumCookieConstants.COOKIE_ONE_HOUR_AGE, EnumCookieConstants.COOKIE_USING_CODE.getValue());
-			
+			CookieUtil.writeCookie(response, "preGroup", encodeCookie, EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(),	EnumCookieConstants.COOKIE_ONE_HOUR_AGE, EnumCookieConstants.COOKIE_USING_CODE.getValue());
 			log.info("write cookie data="+backPage);
-					
 			//backPage="adActionAdd.html?adActionSeq="+tmpSeq;
 		} else {
-			//由 add 取消時
+			//由廣告上稿頁取消時
 			String cookieData = CookieUtil.getCookie(request, "preGroup", EnumCookieConstants.COOKIE_USING_CODE.getValue());
-			log.info("cookieData = " + cookieData);
 			String decodePreGroup = EncodeUtil.getInstance().decryptAES(cookieData, EnumCookieConstants.COOKIE_PFP_SECRET_KEY.getValue());
 			backPage = decodePreGroup;
 			log.info("backPage from cookie  = " + backPage);
 		}
 		
+		//影音廣告
 		if(StringUtils.isNotBlank(adOperatingRule) && adOperatingRule.equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName())){
 			pfpAdPriceTypeVOList = new LinkedList<>();
 			for(EnumAdPriceType enumAdPriceType: EnumAdPriceType.values()){

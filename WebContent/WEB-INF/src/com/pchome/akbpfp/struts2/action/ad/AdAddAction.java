@@ -178,14 +178,12 @@ public class AdAddAction extends BaseCookieAction{
 		if(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName().equals(adOperatingRule)){
 			saveAndNew = "";
 			if(adStyle == null)		adStyle = "TMG";
-
 			PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 			String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
 			String adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
 			if(!customerInfoId.equals(adCustomerInfoId)) {
 				return "notOwner";
 			}
-				
 			// 取出分類所屬關鍵字
 			pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
 			// 取出分類所屬排除關鍵字
@@ -198,6 +196,7 @@ public class AdAddAction extends BaseCookieAction{
 			if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
 				adHiddenType = "YES";
 			}
+			backPage = "adActionView.html";
 			return SUCCESS;
 		}
 		
