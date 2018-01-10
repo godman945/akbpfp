@@ -28,16 +28,21 @@ public class BillAction extends BaseSSLAction{
 	}
 	
 	public String execute() throws Exception {
-		
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;
 		}
-		
+		String startDate_cookie = this.getChoose_start_date();
+		String endDate_cookie = this.getChoose_end_date();
+		if (StringUtils.isEmpty(startDate)) {
+			if (StringUtils.isNotEmpty(startDate_cookie)) {
+				startDate = startDate_cookie;
+			} else {
+				startDate = DateValueUtil.getInstance().dateToString(DateValueUtil.getInstance().getDateForStartDateAddDay(DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH), -30));
+			}
+		}
 		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
-		startDate = DateValueUtil.getInstance().getDateValue(-30, DateValueUtil.DBPATH);
 		endDate = DateValueUtil.getInstance().getDateValue(DateValueUtil.YESTERDAY, DateValueUtil.DBPATH);
-		
 		pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		
 		return SUCCESS;
