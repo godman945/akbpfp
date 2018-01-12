@@ -135,7 +135,7 @@ function() {
                 } else {
                     adw = this.width;
                     var adh = adw * adratio;
-                    var barh = 30
+                    var barh = 30;
                     var vdow;
                     var vdoh = adh - barh;
                     var ratio = 0.5625;

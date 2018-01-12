@@ -148,7 +148,7 @@ $(document).ready(function(){
 		if($(this).val() == 0){
 			$("#adPrice").attr('step',0.1);
 			$("#adPrice").attr('min',0.5);
-			var sysprice = 0.5 + (adUserAmount / 10);
+			var sysprice = 0.5 + (adUserAmount / 100);
 			$("#adPrice").val(sysprice.toFixed(1));
 			$(".msg").text("當影片播超過三秒即計算為一次有效收視，系統接受最低出價NT$0.5");
 		}else if($(this).val() == 1){

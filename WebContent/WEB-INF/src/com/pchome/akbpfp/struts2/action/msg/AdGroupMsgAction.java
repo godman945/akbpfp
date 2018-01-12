@@ -32,7 +32,7 @@ public class AdGroupMsgAction extends BaseCookieAction{
 	public String modifyAdGroupChannelPriceAction() throws Exception{
 		adGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 		PfpAdSysprice pfpAdSysprice = pfpAdSyspriceService.get(3);
-		int adUserAmount = pfpAdSysprice.getAmount();
+		int adUserAmount = (int) pfpAdSysprice.getSysprice();
 		/*系統建議出價為各最低出價 + 昨日總家數量*/
 		if(adGroup.getAdGroupPriceType().equals("CPC")){
 			//sysprice = adSysprice.getSysprice();
@@ -51,7 +51,7 @@ public class AdGroupMsgAction extends BaseCookieAction{
 			System.out.println("CPM >>>>>>>>>>userprice:" + userprice);
 			System.out.println("CPM >>>>>>>>>>sysprice:" +sysprice);
 		}else if(adGroup.getAdGroupPriceType().equals("CPV")){
-			sysprice = (float) (0.5 + ((float)adUserAmount / (float)10));
+			sysprice = (float) (0.5 + ((float)adUserAmount / (float)100));
 			userprice = (userprice * 10) + 10;
 			adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
 			adGroupPriceType = adGroup.getAdGroupPriceType();

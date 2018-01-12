@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -102,7 +103,6 @@ public class AdGroupAddAction extends BaseCookieAction{
 			adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 			adActionMax = (int)pfpAdGroup.getPfpAdAction().getAdActionMax();
 			tmpSeq = pfpAdGroup.getPfpAdAction().getAdActionSeq();
-//			adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
 			defSearchPrice = adGroupSearchPrice;
 			sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
 			
@@ -179,8 +179,9 @@ public class AdGroupAddAction extends BaseCookieAction{
 			//預設CPV
 			/*系統建議出價為各最低出價 + 昨日總家數量*/
 			PfpAdSysprice pfpAdSysprice = pfpAdSyspriceService.get(3);
-			adUserAmount = pfpAdSysprice.getAmount();
-			sysprice = (float) (0.5 + ((float)adUserAmount / (float)10));
+			adUserAmount = (int)pfpAdSysprice.getSysprice();
+			sysprice = (float) (0.5 + ((float)adUserAmount / (float)100));
+			sysprice = (new BigDecimal(String.valueOf(sysprice)).setScale(1, BigDecimal.ROUND_HALF_UP)).floatValue();
 			float userprice = (sysprice * 10) + 10;
 			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(userprice));
 			return "success_video";
@@ -317,8 +318,8 @@ public class AdGroupAddAction extends BaseCookieAction{
 		
 		pfpAdGroupService.savePfpAdGroup(pfpAdGroup);
 
-		//系統價更新
-		syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, pfpAdGroup.getAdGroupChannelPrice());
+		//系統價更新 2018-01-12 停止更新價格出價以JOB為主
+//		syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, pfpAdGroup.getAdGroupChannelPrice());
 		
 		return SUCCESS;
 	}

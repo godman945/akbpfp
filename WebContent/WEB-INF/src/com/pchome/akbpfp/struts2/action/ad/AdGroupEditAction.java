@@ -204,8 +204,8 @@ public class AdGroupEditAction extends BaseCookieAction{
 		}
 		pfpAdGroupService.savePfpAdGroup(pfpAdGroup);
 		
-		//系統價更新
-		syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, Float.valueOf(adGroupChannelPrice));
+		//系統價更新 2018-01-12 停止更新價格出價以JOB為主
+//		syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, Float.valueOf(adGroupChannelPrice));
 
 		return SUCCESS;
 	}
