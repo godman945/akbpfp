@@ -1,10 +1,6 @@
 package com.pchome.akbpfp.struts2.ajax.ad;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,20 +9,19 @@ import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
-import com.pchome.akbpfp.db.vo.ad.PfpAdAdVideoViewSumVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.soft.util.DateValueUtil;
+import com.pchome.utils.CommonUtils;
 
 public class AdAdViewAjax extends BaseCookieAction{
 	
 	private static final long serialVersionUID = 1L;
-	
-	private IPfpAdService pfpAdService;
 	private AdReportVO adReportVO;
 	private String previewUrl;
+	private IPfpAdService pfpAdService;
 	private String adGroupSeq;
 	private String keyword;
 	private String searchType;
@@ -117,35 +112,16 @@ public class AdAdViewAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
-	public Map<String,String> getImgSize(String originalImg) throws IOException {
+	public Map<String,String> getImgSize(String originalImg) throws Exception {
 		Map<String,String> imgmap = new HashMap<String,String>();
-		String imgWidth = "0";
-		String imgHeight = "0";
 		File picture = null;
-		FileInputStream is = null;
-		BufferedImage sourceImg = null;
-		try{
-			picture = new File("/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/"));
-			if(picture != null){
-				is = new FileInputStream(picture);
-				sourceImg = javax.imageio.ImageIO.read(is);
-				imgWidth = Integer.toString(sourceImg.getWidth());
-				imgHeight = Integer.toString(sourceImg.getHeight());	
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if(is != null){
-				is.close();
-			}
+		String path = (originalImg.indexOf("D:/") >= 0) ? originalImg : "/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/");
+		picture = new File(path);
+		if(picture != null){
+			Map<String,String> imgInfo = CommonUtils.getInstance().getImgInfo(picture);
+			imgmap.put("imgWidth", imgInfo.get("imgWidth"));
+			imgmap.put("imgHeight", imgInfo.get("imgHeight"));
 		}
-		imgmap.put("imgWidth", imgWidth);
-		imgmap.put("imgHeight", imgHeight);
-		
 		return imgmap;
 	}
 
@@ -366,5 +342,4 @@ public class AdAdViewAjax extends BaseCookieAction{
 	public void setAdReportVOList(List<AdReportVO> adReportVOList) {
 		this.adReportVOList = adReportVOList;
 	}
-	
 }

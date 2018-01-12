@@ -9,14 +9,14 @@
   ga('send', 'pageview');
 
 </script>
-
+  
 <script type="text/javascript" src="http://adcl.pchome.com.tw:80/getAd2JS.html?type=24&channel=keyword&encoding=Utf8"></script>
 
 </div>
 <!-- footer start -->
 <div class="footer">
 ．<a href="http://www.pchome.com.tw/" target="_blank">PChome</a>
-．<a href="http://4c.pchome.com.tw/ad/" target="">廣告刊登</a>
+．<a href="http://show.pchome.com.tw/" target="">廣告刊登</a>
 ．<a href="faq.html?qid=2&fid=4" target="_blank">約定條款</a> 
 ．<a href="faq.html?fid=4&qid=5" target="_blank">刊登規範</a> 
 ．<a href="http://faq.pchome.com.tw/service/user_reply.html?ch=show" target="_blank">客服中心</a> 

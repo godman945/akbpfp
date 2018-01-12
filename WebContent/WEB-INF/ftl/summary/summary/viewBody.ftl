@@ -27,7 +27,6 @@
 </div>
 
 <!-- 公告 end -->
-
 <!-- 帳戶概要 start -->
 <div class="sum">
 <h2><img src="html/img/iconcr.gif" hspace="2" vspace="12" align="absmiddle" />帳戶概要<span>為帳戶目前使用狀況，帳戶餘額結算時間為前一天為止</span></h2>

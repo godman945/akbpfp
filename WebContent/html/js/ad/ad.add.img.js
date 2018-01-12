@@ -133,7 +133,20 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		flag = true;
 	}
 	
+	var fileName = file.name;
+	if(fileName.lastIndexOf(".") >= 0){
+		fileName = fileName.substring(0,fileName.lastIndexOf("."));
+	}
+	if(fileName.length > 1024){
+		fileName = fileName.substring(0,1024);
+	}
 	
+	var showFileName = "";
+	if(fileName.length > 8){
+		showFileName = fileName.substring(0,8) + "...";
+	} else {
+		showFileName = fileName;	
+	}
 	
 	var imgFileSize = 'no';
 	var imgSize = 'no';
@@ -142,6 +155,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	var imgType ='no';
 	var errorMsg ='';
 	var errorTitle ='';
+	
 	if(Math.round(file.size/1024) < 180){
 		imgFileSize = "yes";
 	}else{
@@ -161,6 +175,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			return false;
 		}
 	});
+	
 	if(!imgSizeFlag){
 		errorTitle = '錯誤的尺寸!';
 		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize(\'approveSizeDiv\');">支援規格查詢</a>';
@@ -182,21 +197,29 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			errorTitle = '錯誤的HTML5格式!';
 			errorMsg = '您所上傳的HTML5 ' + zipErrorMsg + ' <a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize(\'html5SizeDiv\');">HTML5規格查詢</a>';
 		}
-	} else {
-		if(imgRepeat == 'yes'){
-			errorTitle = '廣告圖片已存在!';
-			errorMsg = '您所上傳的廣告圖片在分類中已存在';
-		}
-		
-		$.each($("[name=imgMD5]"), function( index, obj ) {
-			if($(obj).val() == imgMD5){
-				errorTitle = '廣告圖片重複上傳!';
-				errorMsg = '您所上傳的廣告圖片在此次新增中已存在';
-				thisImgRepeat = 'yes';
-				return false;
-			}
-		});
+	} 
+	
+	if(imgRepeat == 'yes'){
+		errorTitle = '廣告圖片已存在!';
+		errorMsg = '您所上傳的廣告圖片在分類中已存在';
 	}
+	
+	$.each($("#AG [name=imgName]"), function( index, obj ) {
+		if(($(obj).val() == fileName)){
+			errorTitle = '廣告圖片重複上傳!';
+			errorMsg = '您所上傳的廣告圖片在此次新增中已存在';
+			thisImgRepeat = 'yes';
+			return false;
+		}
+	});
+	
+	
+//	console.log('imgFileSize:'+imgFileSize);
+//	console.log('imgSize:'+imgSize);
+//	console.log('imgType:'+imgType);
+//	console.log('imgRepeat:'+imgRepeat);
+//	console.log('thisImgRepeat:'+thisImgRepeat);
+//	console.log('html5Repeat:'+html5Repeat);
 	
 	if (adSeq == "") {
 		errorTitle = '上傳失敗!';
@@ -206,20 +229,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"  && imgRepeat == "no" && thisImgRepeat == "no" && html5Repeat == "no"){
 		var anyWindow = window.URL || window.webkitURL;
 		var objectUrl = anyWindow.createObjectURL(file);
-		var fileName = file.name;
-		var showFileName = "";
-		if(fileName.lastIndexOf(".") >= 0){
-			fileName = fileName.substring(0,fileName.lastIndexOf("."));
-		}
-		if(fileName.length > 1024){
-			fileName = fileName.substring(0,1024);
-		}
-		if(fileName.length > 8){
-			showFileName = fileName.substring(0,8) + "...";
-		} else {
-			showFileName = fileName;	
-		}
-		
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
 			 '<div class="adboxdv" >'+
@@ -237,20 +246,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			 '</li>';
 		$(".aduplodul").append(a);
 	} else if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"  && imgRepeat == "no" && thisImgRepeat == "yes" && html5Repeat == "yes"){
-		var fileName = file.name;
-		var showFileName = "";
-		if(fileName.lastIndexOf(".") >= 0){
-			fileName = fileName.substring(0,fileName.lastIndexOf("."));
-		}
-		if(fileName.length > 1024){
-			fileName = fileName.substring(0,1024);
-		}
-		if(fileName.length > 8){
-			showFileName = fileName.substring(0,8) + "...";
-		} else {
-			showFileName = fileName;	
-		}
-		
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
 			 '<div class="adboxdv" >'+
@@ -269,6 +264,23 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			 '<input type="hidden" id="' + adSeq + '_imgMD5" name="imgMD5" value="X" />' + 
 			 '</li>';
 		$(".aduplodul").append(a);
+	}else if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes" && imgType == "yes" && thisImgRepeat == 'yes'){
+		var a =
+			'<li class="failbox" style="padding: 20px 0 0 0;" id="'+adSeq+'">'+  
+			'<a class="addel" onclick="deleteImgDom(\''+adSeq+'\')">丟</a>'+
+		    '<em style="line-height:27px;font-size:23px;">'+errorTitle+'</em>'+
+		    '<em style="line-height:23px;font-size:15px;">請重新上傳檔案</em>'+
+		    '<ul style="height:110px;" >'+
+		    '<li class="'+imgSize+'"><i>尺寸</i><b>'+width+' x '+height+'</b></li>'+
+			'<li><i>檔名</i><b style="word-break:keep-all;white-space:nowrap;overflow:hidden;">'+file.name+'</b></li>'+
+			'<li class="'+imgFileSize+'"><i>大小</i><b>'+Math.round(file.size/1024)+'</b></li>'+
+			'<li class="'+imgType+'"><i>格式</i><b>'+imgTypeName.toUpperCase()+'</b></li>'+
+		    '</ul> '+
+		    '<div class="adboxdv">'+
+		    '<span><i>說明：</i>'+errorMsg+'</span>'+
+		    '</div>'+
+		    '</li>';
+		$(".aduplodul").append($(a));
 	}else{
 		var a =
 			'<li class="failbox" style="padding: 20px 0 0 0;" id="'+adSeq+'">'+  

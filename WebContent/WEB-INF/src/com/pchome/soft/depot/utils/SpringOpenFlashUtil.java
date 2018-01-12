@@ -13,17 +13,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.soft.util.DateValueUtil;
+
 import jofc2.model.Chart;
 import jofc2.model.axis.Label;
 import jofc2.model.axis.XAxis;
 import jofc2.model.axis.YAxis;
 import jofc2.model.elements.BarChart;
-import jofc2.model.elements.LineChart;
 import jofc2.model.elements.BarChart.Bar;
+import jofc2.model.elements.LineChart;
 import jofc2.model.elements.LineChart.Dot;
-
-import com.pchome.enumerate.report.EnumReport;
-import com.pchome.soft.util.DateValueUtil;
 
 public class SpringOpenFlashUtil {
 

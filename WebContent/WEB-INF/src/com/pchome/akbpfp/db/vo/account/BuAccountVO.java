@@ -3,6 +3,7 @@ package com.pchome.akbpfp.db.vo.account;
 public class BuAccountVO {
 	private String buId = "";
 	private String buUrl = "";
+	private String giftSno = "";
 	public String getBuId() {
 		return buId;
 	}
@@ -14,6 +15,12 @@ public class BuAccountVO {
 	}
 	public void setBuUrl(String buUrl) {
 		this.buUrl = buUrl;
+	}
+	public String getGiftSno() {
+		return giftSno;
+	}
+	public void setGiftSno(String giftSno) {
+		this.giftSno = giftSno;
 	}
 	
 	

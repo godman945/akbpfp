@@ -1,13 +1,10 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +33,7 @@ import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.rmi.accesslog.EnumAccesslogAction;
 import com.pchome.soft.depot.utils.HttpUtil;
+import com.pchome.utils.CommonUtils;
 
 public class AdEditAction extends BaseCookieAction{
 
@@ -863,35 +861,21 @@ public class AdEditAction extends BaseCookieAction{
 		}
 	}
 
-	private void getImgSize(String originalImg) throws IOException {
-		imgWidth = "0";
-		imgHeight = "0";
-		imgSize = "0";
-		imgTypeName = "JPG";
+	private void getImgSize(String originalImg) throws Exception {
+		log.info(">>>>>>>>>>>>>>>originalImg:"+originalImg);
+		System.out.println(">>>>>>>>>>>>>>>originalImg:" + originalImg);
+		String path = (originalImg.indexOf("D:/") >= 0) ? originalImg : "/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/");
 		File picture = null;
-		FileInputStream is = null;
-		BufferedImage sourceImg = null;
-		try{
-			picture = new File("/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/"));
-			if(picture != null){
-				is = new FileInputStream(picture);
-				sourceImg = javax.imageio.ImageIO.read(is);
-				imgWidth = Integer.toString(sourceImg.getWidth());
-				imgHeight = Integer.toString(sourceImg.getHeight());
-				imgSize = Integer.toString((int) Math.round(new Double(picture.length())/new Double(1024)));
-				imgTypeName = originalImg.substring(originalImg.lastIndexOf(".") + 1);
-				imgTypeName = imgTypeName.toUpperCase();
-			}
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if(is != null){
-				is.close();
-			}
+		picture = new File(path);
+		if(picture != null){
+			log.info(">>>>>>>>>>>>>>>picture:"+picture);
+			Map<String,String> imgInfo = CommonUtils.getInstance().getImgInfo(picture);
+			
+			log.info(">>>>>>>>>>>>>>>imgInfo:"+imgInfo);
+			
+			imgWidth = imgInfo.get("imgWidth");
+			imgHeight = imgInfo.get("imgHeight");
+			imgTypeName = imgInfo.get("imgFileType").toUpperCase();
 		}
 	}
 	

@@ -170,7 +170,7 @@ public class ReportAdGroupAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) kiloCost));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float(doubleFormat2.format(cost)));
+				flashDataMap.put(reportDate, new Float(cost));
 			}
 		}
 

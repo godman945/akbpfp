@@ -13,10 +13,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.FileImageInputStream;
+import javax.imageio.stream.ImageInputStream;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -185,26 +189,28 @@ public class CommonUtilModel extends BaseCookieAction{
 	    log.info(">>>>>"+userImgPath+custimerInfoid+"/"+date+"/temporal/");
 	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/");
 	    String[] list = folder.list();
-	    String imgUploadPath= "";
 	    ImageVO imageVO = new ImageVO();
 	    for(int i = 0; i < list.length; i++){
-		File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
-		if(file.getName().indexOf(adSeq) != -1){
-		//if(adSeq.equals(file.getName().substring(0,file.getName().indexOf(".")))){
-			String imgType = file.getName().substring(file.getName().indexOf(".") + 1);
-			BufferedImage bufferedImage = ImageIO.read(file);
-		    imageVO.setImgWidth(String.valueOf(bufferedImage.getWidth()));
-		    imageVO.setImgHeight(String.valueOf(bufferedImage.getHeight()));
-		 // 2015.08.27  先把產生縮圖註解掉 by tim
-		    /*int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
-		    BufferedImage resizedImage = new BufferedImage(90, 90, type);
-		    Graphics2D graphics2D = resizedImage.createGraphics();
-		    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, Color.WHITE,null);
-		    graphics2D.dispose();
-		    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));*/
-		    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\original\\"+adSeq+"." + imgType);
-
-		}
+			File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
+			if(file.getName().indexOf(adSeq) != -1){
+				String imgType = file.getName().substring(file.getName().indexOf(".") + 1);
+			    ImageInputStream stream = new FileImageInputStream(file);
+	            Iterator<ImageReader> readers = ImageIO.getImageReaders(stream);
+	            if (readers.hasNext()) {
+	                ImageReader reader = readers.next();
+	                reader.setInput(stream, true);
+	    		    imageVO.setImgWidth(String.valueOf(reader.getWidth(0)));
+	    		    imageVO.setImgHeight(String.valueOf(reader.getHeight(0)));
+	             }
+	            // 2015.08.27  先把產生縮圖註解掉 by tim
+			    /*int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
+			    BufferedImage resizedImage = new BufferedImage(90, 90, type);
+			    Graphics2D graphics2D = resizedImage.createGraphics();
+			    graphics2D.drawImage(bufferedImage, 0, 0, 90, 90, Color.WHITE,null);
+			    graphics2D.dispose();
+			    ImageIO.write(resizedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/"+adSeq+".jpg"));*/
+			    imageVO.setImgPath(userImgPath+custimerInfoid+"\\"+date+"\\original\\"+adSeq+"." + imgType);
+			}
 	    }
 	    return imageVO;
 	}

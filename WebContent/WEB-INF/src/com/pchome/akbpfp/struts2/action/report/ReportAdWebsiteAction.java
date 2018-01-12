@@ -179,7 +179,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				data = kiloCost;
             } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				data = Double.valueOf(doubleFormat.format(cost));
+				data = Double.valueOf(cost);
 			}
 			
 			titleDataList.add(websiteCategoryName);

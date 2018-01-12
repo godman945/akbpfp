@@ -1,14 +1,9 @@
 package com.pchome.soft.depot.utils;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.pchome.akbpfp.db.vo.account.AccountVO;
-import com.pchome.akbpfp.db.vo.member.MemberVO;
-import com.pchome.enumerate.cookie.EnumCookieConstants;
 
 public class ApplyDataCookieUtile {
 

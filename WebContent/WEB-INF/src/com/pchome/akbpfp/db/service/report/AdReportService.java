@@ -14,7 +14,6 @@ import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdReportDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.enumerate.report.EnumReport;
-import com.pchome.enumerate.utils.EnumStatus;
 
 public class AdReportService implements IAdReportService {
 

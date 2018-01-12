@@ -187,7 +187,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				data = kiloCost;
             }  else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				data = Double.parseDouble(doubleFormat2.format(cost));
+				data = cost;
 			}
 			
 			if(StringUtils.equals(searchTime, "T")){

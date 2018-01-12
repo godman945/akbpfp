@@ -3,6 +3,12 @@
 <form method="post" id="registerForm" name="registerForm" action="register.html">
 
 <div class="cont" style="width:800px;">
+	<#if buAccountVO?exists>
+		<div style="font-size:18px;color:#000;line-height:25px;font-family:Verdana">親愛的店家：
+			PChome聯播網推出「買500送500」活動，即日起至2018年2月15日止，開通PChome聯播網廣告刊登帳戶，可享儲值$500，加贈$500廣告禮金優惠。
+			<p style="margin:0;font-size:13px;color:#313131;">※本次活動贈送的廣告禮金須於2018年5月31日前使用完畢。
+		</div>
+	</#if>
 <div style="font-size:18px;color:#000;line-height:50px;font-family:Verdana">請設定您的PChome廣告帳戶資料並儲值，即可開通您的廣告刊登帳戶</div>
 <h2><img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">建立帳戶資料</h2>
 <div class="grtba"><span class="t_s01">* </span>為必填欄位
@@ -110,7 +116,18 @@
 <tbody>
 	<tr>
 		<th height="35">禮金序號</th>
-  		<td><input type="text" id="giftSno" name="giftSno" value="${accountVO.giftSno!}" autocomplete="off"  style="width:100px" maxlength="10" /><input type="button" id="btnClrGift" name="btnClrGift" value="清除序號"></td>
+			<#if .now?date lte "2018/2/15"?date && buAccountVO?exists>
+				<td>
+					<input disable type="text" id="giftSno" name="giftSno" value="${buAccountVO.giftSno!}" autocomplete="off"  style="width:100px" maxlength="10"/>
+					「買500送500」活動，贈送廣告禮金500元
+				</td>
+				<#else>
+				<td>
+				    B
+			  		<input type="text" id="giftSno" name="giftSno" value="${accountVO.giftSno!}" autocomplete="off"  style="width:100px" maxlength="10" />
+			  		<input type="button" id="btnClrGift" name="btnClrGift" value="清除序號">
+		  		</td>
+			</#if>
 	</tr>
 	<tr>
 		<th height="35">禮金金額</th>

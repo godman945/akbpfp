@@ -53,8 +53,8 @@
 		<property name="billingService" value="${billing.service}" />	
 		<property name="channelId" value="${billing.channel.id}" />	  
 		<property name="pfpBuService" ref="PfpBuService" />
-		<property name="pfdc" value="${bu.pfd.customer.info.id}" />
-		<property name="pfdu" value="${bu.pfd.user.id}" />
+		<property name="buPortalPfdu" value="${bu.portal.pfdu}" />
+		<property name="buPortalPfdc" value="${bu.portal.pfdc}" />
     </bean>
     
     <bean id="AuthorizationAction" class="com.pchome.akbpfp.struts2.action.apply.AuthorizationAction" scope="prototype" >
