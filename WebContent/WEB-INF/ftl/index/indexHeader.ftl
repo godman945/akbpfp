@@ -1,5 +1,3 @@
-<!-- <meta http-equiv="refresh" content="0; url=http://show.pchome.com.tw/faq.html?fid=2&qid=33"> -->
-
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 <#assign today = .now>
