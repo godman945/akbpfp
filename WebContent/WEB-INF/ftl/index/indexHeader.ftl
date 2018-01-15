@@ -1,8 +1,13 @@
+<!-- <meta http-equiv="refresh" content="0; url=http://show.pchome.com.tw/faq.html?fid=2&qid=33"> -->
+
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 <#assign today = .now>
 <#assign startDate = ("2015-03-18 00:00:00")?date("yyyy-MM-dd HH:mm:ss")> 
 <#assign endDate = ("2015-05-11 23:59:59")?date("yyyy-MM-dd HH:mm:ss")> 
+
+
+
 
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/style2016.css" />
@@ -75,6 +80,7 @@
             </button>
             <div class="logo"><a href="http://show.pchome.com.tw/" target=""><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
         </div>
+        <a href="http://alex.pchome.com.tw:8080/akbpfp/api/buLogin.html?key=jzMgXfH7rfzLUa6BtZN8YAkEnOQFTRtMleY5IceiqOyOZ77qKHXHX7v5lu0JqPnJ4DoqFkzK35s1teZJu2vdJIwI8ixcKiPkeA9f9HuX7Ncb6Rc74t8n47SQTVPHg-igcN-iRgAEoBwPC1az9ewYNqCZjPidc7s6yRKTLVdMieSY3CGQOg6F8wDboMvK2fWi5SpwJBRgfmdS72JX5SzzpzlQ-VtoFD3jBMP96idvVgNb_pyD88a3M3GdUxm1oOgboSNq43OQndD28LN_cY2uJb-gF2k_WCG7GqnxwOM6jME3ylFYxWU08AppcdDxbAxcJBe00iiWeojB_32ptkEq8A">商店街BU登入測試</a>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="#step">廣告刊登</a></li>
