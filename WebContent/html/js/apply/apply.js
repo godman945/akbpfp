@@ -1,6 +1,6 @@
-﻿﻿var freeBoolean = true;
+﻿var freeBoolean = true;
 $(document).ready(function(){
-	
+
 	// 同意條款
 	$("#accept").click(function() {
 
@@ -54,7 +54,7 @@ $(document).ready(function(){
 			addMoney: {
 				required: true,
 				digits: true,
-				min: 3000
+				min: 500
 			}
 		},
 		messages: {
@@ -101,7 +101,7 @@ $(document).ready(function(){
 			addMoney: {
 				required: "請填寫儲值金額.",
 				digits: "儲值金額只能填寫數字.",
-				min: "儲值金額至少要3000元."
+				min: "儲值金額至少要500元."
 			}
 		},
 		onfocusout: false,
@@ -117,7 +117,7 @@ $(document).ready(function(){
 		
 		var addMoney = $("#addMoney").val();
 		
-		if(addMoney >= 3000){
+		if(addMoney >= 500){
 			var addTax = Math.round(addMoney * 0.05);
 			var total = Math.round(addMoney * 1.05);
 			
@@ -216,7 +216,6 @@ $(document).ready(function(){
 	$("#giftSno").hover(function(){
 		checkGiftSno();
 	});
-	checkGiftSno();
 	
 	// 清除序號
 	$("#btnClrGift").click(function(){
@@ -271,7 +270,7 @@ function checkGift(){
 				
 				if(response.payment == "N"){
 					$("#addMoneyDiv").hide();
-					$("#addMoney").val("3000");
+					$("#addMoney").val("1000");
 				}
 			}
 		},
@@ -289,7 +288,7 @@ function clearGift(){
 	$("#addMoney").removeAttr("readonly");
 	$("#giftSno").removeAttr("readonly");
 	$("#addMoneyDiv").show();
-	$("#addMoney").val("3000");
+	$("#addMoney").val("1000");
 	var addTax = Math.round(1000 * 0.05);
 	var total = Math.round(1000 * 1.05);	
 	$("#addTax").html(addTax);
