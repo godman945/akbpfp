@@ -51,12 +51,9 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private PfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private SequenceService sequenceService;
-	
 	private String memberServer;
-	private String pfdc;
-	private String pfdu;
+	private String buPortalPfdc;
 	private String pcstoreName;
-	private String rutenName;
 	
 	/**
 	 * 檢查 id_pchome 是否被更改過
@@ -86,15 +83,11 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 				if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 					result = invocation.invoke();
 					return result;
-				}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.pfdu)){
+				}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
 					result = invocation.invoke();
 					return result;
 				}
-//				else if(buName.equals(rutenName) && !pfdc.equals(this.pfdu)){
-//					result = invocation.invoke();
-//					return result;
-//				}
-				else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
+				else if(!buName.equals(pcstoreName)){
 					result = invocation.invoke();
 					return result;
 				}
@@ -306,22 +299,6 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		this.sequenceService = sequenceService;
 	}
 
-	public String getPfdc() {
-		return pfdc;
-	}
-
-	public void setPfdc(String pfdc) {
-		this.pfdc = pfdc;
-	}
-
-	public String getPfdu() {
-		return pfdu;
-	}
-
-	public void setPfdu(String pfdu) {
-		this.pfdu = pfdu;
-	}
-
 	public String getPcstoreName() {
 		return pcstoreName;
 	}
@@ -330,12 +307,13 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		this.pcstoreName = pcstoreName;
 	}
 
-	public String getRutenName() {
-		return rutenName;
+	public String getBuPortalPfdc() {
+		return buPortalPfdc;
 	}
 
-	public void setRutenName(String rutenName) {
-		this.rutenName = rutenName;
+	public void setBuPortalPfdc(String buPortalPfdc) {
+		this.buPortalPfdc = buPortalPfdc;
 	}
+
 	
 }

@@ -55,11 +55,8 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	private PfpUserMemberRefService pfpUserMemberRefService;
 	private PfdUserMemberRefService pfdUserMemberRefService;
 	private PfpBuService pfpBuService;
-	
-	private String pfdc;
-	private String pfdu;
+	private String buPortalPfdc;
 	private String pcstoreName;
-	private String rutenName;
 	
 	/**
 	 * 登入判斷
@@ -68,9 +65,6 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	public String intercept(ActionInvocation invocation) throws Exception{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
-		
-		
-		
 		/*BU LOGIN START*/
 		String uri = request.getRequestURI();
 		if(uri.indexOf("buLogin") >= 0){
@@ -82,6 +76,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 				byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
 				JSONObject buInfoJson = new JSONObject(new String(decBytes));
 				
+				/*解碼後pcstore提供的資訊不可為空，對應的pfd經銷商為portal指定*/
 				String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
 				String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
 				String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
@@ -89,26 +84,21 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 				
 				if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
 					return "index";
-				}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.pfdu)){
+				}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
 					return "index";
-				}
-	//			else if(buName.equals(rutenName) && !pfdc.equals(this.pfdc)){
-	//				return "index";
-	//			}
-				else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
+				}else if(!buName.equals(pcstoreName)){
 					return "index";
 				}
 				
+				/** 查詢bu帳號是否開通，開通則更新bu狀態否則進入apply申請頁 */
 				List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
 				PfpBuAccount pfpBuAccount =  pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
 				if(pfpBuAccount != null){
 					AccountVO accountVO = pfpCustomerInfoService.existentAccount(pfpBuAccount.getPcId());
-					if(accountVO != null){
-						if(pfpBuAccount.getPfpStatus() == 0){
-							pfpBuAccount.setPfpStatus(1);
-							pfpBuAccount.setUpdateDate(new Date());
-							pfpBuService.saveOrUpdate(pfpBuAccount);
-						}
+					if(accountVO != null && pfpBuAccount.getPfpStatus() == 0){
+						pfpBuAccount.setPfpStatus(1);
+						pfpBuAccount.setUpdateDate(new Date());
+						pfpBuService.saveOrUpdate(pfpBuAccount);
 						return "bulogin";
 					}else{
 						return "buApply";
@@ -322,20 +312,13 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		this.pfpBuService = pfpBuService;
 	}
 
-	public String getPfdc() {
-		return pfdc;
+
+	public String getBuPortalPfdc() {
+		return buPortalPfdc;
 	}
 
-	public void setPfdc(String pfdc) {
-		this.pfdc = pfdc;
-	}
-
-	public String getPfdu() {
-		return pfdu;
-	}
-
-	public void setPfdu(String pfdu) {
-		this.pfdu = pfdu;
+	public void setBuPortalPfdc(String buPortalPfdc) {
+		this.buPortalPfdc = buPortalPfdc;
 	}
 
 	public String getPcstoreName() {
@@ -345,13 +328,4 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	public void setPcstoreName(String pcstoreName) {
 		this.pcstoreName = pcstoreName;
 	}
-
-	public String getRutenName() {
-		return rutenName;
-	}
-
-	public void setRutenName(String rutenName) {
-		this.rutenName = rutenName;
-	}
-
 }
