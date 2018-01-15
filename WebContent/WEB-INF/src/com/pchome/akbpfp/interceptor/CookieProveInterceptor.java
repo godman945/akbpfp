@@ -74,7 +74,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		if(uri.indexOf("buLogin") >= 0){
 			String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
 			if(StringUtils.isNotBlank(buKey)){
-				log.info(">>>>>> CALL BU LOGIN API IP:"+request.getRemoteAddr());
+				log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
 				RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
 				byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
 				JSONObject buInfoJson = new JSONObject(new String(decBytes));

@@ -73,7 +73,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		if(uri.indexOf("buLogin") >= 0){
 			String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
 			if(StringUtils.isNotBlank(buKey)){
-				log.info(">>>>>> CALL BU LOGIN API IP:"+request.getRemoteAddr());
+				log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
 				
 				RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
 				byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
@@ -98,7 +98,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 					boolean pcstoreFlag = false;
 					String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
 					for (String referer : buPcstoreRefererArray) {
-						if(referer.indexOf(request.getHeader("referer")) >= 0){
+						if(request.getHeader("referer").contains(referer)){
 							pcstoreFlag = true;
 							break;
 						}
