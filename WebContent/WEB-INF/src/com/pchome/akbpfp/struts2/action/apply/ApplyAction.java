@@ -170,7 +170,7 @@ public class ApplyAction extends BaseSSLAction{
 				this.buAccountVO = new BuAccountVO();
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
-				buAccountVO.setGiftSno("STGT3TNRSV");
+				buAccountVO.setGiftSno("STTBDAEFJ8");
 			}
 		}
 		// 帳戶申請中
