@@ -81,6 +81,7 @@
             <div class="logo"><a href="http://show.pchome.com.tw/" target=""><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
         </div>
         <a href="http://showstg.pchome.com.tw/pfp/api/buLogin.html?key=jzMgXfH7rfzLUa6BtZN8YAkEnOQFTRtMleY5IceiqOyOZ77qKHXHX7v5lu0JqPnJ4DoqFkzK35s1teZJu2vdJIwI8ixcKiPkeA9f9HuX7Ncb6Rc74t8n47SQTVPHg-igcN-iRgAEoBwPC1az9ewYNqCZjPidc7s6yRKTLVdMieSY3CGQOg6F8wDboMvK2fWi5SpwJBRgfmdS72JX5SzzpzlQ-VtoFD3jBMP96idvVgNb_pyD88a3M3GdUxm1oOgboSNq43OQndD28LN_cY2uJb-gF2k_WCG7GqnxwOM6jME3ylFYxWU08AppcdDxbAxcJBe00iiWeojB_32ptkEq8A">商店街BU登入測試</a>
+        <a href="http://showstg.pchome.com.tw/pfp/api/buLogin.html?key=blXuYWw47DSpFXCCZpRuSS-XH3k3CGdTn1IDRNJrxQQ6V-N_jM1AMlG4umuHtFtEtxsx5iA-16fC3BVUBHMu1WhzPU4zRy48db3udXK2JmS9cSI77y1wjhUPuAYuLAiJbCe1TvI5GMrshhi6aUjkdG4Nbq0aRbwkkv7y7mFJ8qVwxcB1fX7cnW9_MWc9KHNRwxUSsESXwU_G8FFXAuhgQJkEeMutOoz0ShhTUbrHF3NWondl7ynPdnWmXI-hZOvq8rc8gC0KLoTNCCCYQPcGfnk0lFF6wOg_mOlfOUb5PGxTLjjjNyhnuD3JpXzXbIsCDlJNppIA5Ng_Q3MDq3xWtg">商店街BU登入測試2</a>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="#step">廣告刊登</a></li>
