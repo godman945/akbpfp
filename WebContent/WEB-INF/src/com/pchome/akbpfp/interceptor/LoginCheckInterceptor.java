@@ -55,9 +55,12 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	private PfpUserMemberRefService pfpUserMemberRefService;
 	private PfdUserMemberRefService pfdUserMemberRefService;
 	private PfpBuService pfpBuService;
+	//商店街bu對應經銷商
 	private String buPortalPfdc;
+	//商店街bu名稱
 	private String pcstoreName;
-	
+	//商店街bu Referer來源
+	private String buPcstoreReferer;
 	/**
 	 * 登入判斷
 	 */
@@ -88,6 +91,21 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 					return "index";
 				}else if(!buName.equals(pcstoreName)){
 					return "index";
+				}
+				
+				//檢查Referer來源
+				if(buName.equals(this.pcstoreName)){
+					boolean pcstoreFlag = false;
+					String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
+					for (String referer : buPcstoreRefererArray) {
+						if(referer.indexOf(request.getHeader("referer")) >= 0){
+							pcstoreFlag = true;
+							break;
+						}
+					}
+					if(!pcstoreFlag){
+						return "index";
+					}
 				}
 				
 				/** 查詢bu帳號是否開通，開通則更新bu狀態否則進入apply申請頁 */
@@ -328,4 +346,14 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	public void setPcstoreName(String pcstoreName) {
 		this.pcstoreName = pcstoreName;
 	}
+
+	public String getBuPcstoreReferer() {
+		return buPcstoreReferer;
+	}
+
+	public void setBuPcstoreReferer(String buPcstoreReferer) {
+		this.buPcstoreReferer = buPcstoreReferer;
+	}
+	
+	
 }

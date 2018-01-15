@@ -52,8 +52,12 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 	private PfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private SequenceService sequenceService;
 	private String memberServer;
+	//商店街bu對應經銷商
 	private String buPortalPfdc;
+	//商店街bu名稱
 	private String pcstoreName;
+	//商店街bu Referer來源
+	private String buPcstoreReferer;
 	
 	/**
 	 * 檢查 id_pchome 是否被更改過
@@ -313,6 +317,14 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 
 	public void setBuPortalPfdc(String buPortalPfdc) {
 		this.buPortalPfdc = buPortalPfdc;
+	}
+
+	public String getBuPcstoreReferer() {
+		return buPcstoreReferer;
+	}
+
+	public void setBuPcstoreReferer(String buPcstoreReferer) {
+		this.buPcstoreReferer = buPcstoreReferer;
 	}
 
 	
