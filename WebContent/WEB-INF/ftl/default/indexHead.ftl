@@ -10,6 +10,9 @@
 <meta name="keywords" content="聯播網,google 聯播網,聯播網廣告,聯播網廣告費,聯播網廣告費用,聯播網行銷,聯播網廣告,Google adwords,興趣行銷,再行銷,標籤廣告,網頁廣告,Google 廣告,Yahoo廣告,PChome 廣告,露天廣告,買廣告,廣告曝光,影音廣告,影片廣告,Html5廣告,精準廣告,精準行銷,商品廣告,動態商品廣告,精準TA,圖像廣告,圖文廣告,PChome聯播網,CPC,CPM,CPV,點過廣告,影音聯播網,Html5聯播網,Html廣告,Html聯播網,電商" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 導公告頁 -->
+<meta http-equiv="refresh" content="0; url=http://show.pchome.com.tw/faq.html?fid=2&qid=33">
+
 <link rel="shortcut icon" href="http://www.pchome.com.tw/favicon.ico">
 <title>PChome 聯播網廣告</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
