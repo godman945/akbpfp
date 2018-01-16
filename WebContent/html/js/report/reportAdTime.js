@@ -133,6 +133,27 @@ $(function(){
 
 //ajax id  重新榜定
 function ready(){
+	if($("#excerptTable").children().length > 1){
+		var node = document.createElement("a");
+		node.style.float = 'left';
+		node.style.marginTop = '3px';
+		var img = document.createElement("img");
+		img.src='./html/img/question.gif';
+		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
+		node.appendChild(img);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[9].appendChild(node)
+		
+		var node2 = document.createElement("b");
+		node2.style.float = 'left';
+		node2.style.marginTop = '3px';
+		var img2 = document.createElement("img");
+		img2.src='./html/img/question.gif';
+		img2.title="廣告費用因小數點進位影響總計費用，實際扣款依帳單管理為主";
+		node2.appendChild(img2);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[13].appendChild(node2)
+	}
+	
+	
 	//sort table plugin
 	$.tablesorter.defaults.widgets = ['zebra'];
 
@@ -140,11 +161,12 @@ function ready(){
 		headers: {
 			0 : { sorter: false },
 			//4 : { sorter: 'fancyNumber' },
-			5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'rangesort' },
-			9 : { sorter: 'rangesort' }
+			8 : { sorter: 'fancyNumber' },
+			9 : { sorter: 'fancyNumber' },
+			10 : { sorter: 'fancyNumber' },
+			11 : { sorter: 'rangesort' },
+			12 : { sorter: 'rangesort' },
+			13 : { sorter: 'rangesort' }
 		}
 	});
 
@@ -253,6 +275,7 @@ function ready(){
 	var searchText = document.excerptFrom.searchText.value;
 	var adShowWay = document.excerptFrom.adShowWay.value;
 	var searchTime = document.excerptFrom.searchTime.value;
+	var adOperatingRule = document.excerptFrom.adOperatingRule.value;
 
 	$("#searchText").attr("value", searchText);
 
@@ -291,6 +314,13 @@ function ready(){
 		}
 	});
 	
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == adOperatingRule) {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
 	//搜尋動作 Do
 	$('#btnSearchDo').click(function(){
 		searchDo();
@@ -298,7 +328,7 @@ function ready(){
 		ajaxFormSubmit();		
 	});
 	
-	$("#adShowWay, #adPvclkDevice, #adSearchWay, #searchTime").change(function(){
+	$("#adShowWay, #adPvclkDevice, #adSearchWay, #searchTime, #adOperatingRule").change(function(){
     	searchDo();
     	ajaxFormSubmit();
    });
@@ -357,7 +387,8 @@ function showHighChart(){
 			"charType" : $('#selectChartType').val(),
 			"searchId" : $('#fsearchId').val(),
 			"searchText" : $('#searchText').val(),
-			"searchTime" : $('#fadSearchTime').val()
+			"searchTime" : $('#fadSearchTime').val(),
+			"adOperatingRule" : $('#fadOperatingRule').val()
 		},
 		success : function(respone) {
 			console.log(respone);
@@ -390,14 +421,14 @@ function showHighChart(){
 			selectSuffix = "次";
 			break;
 		case "ctr":
-			titleName = "點選率(%)";
-			selectTypeName = "點選率";
+			titleName = "互動率(%)";
+			selectTypeName = "互動率";
 			selectSuffix = "%";
 			decimals = 2;
 			break;
 		case "click":
-			titleName = "點選次數(次)";
-			selectTypeName = "點選次數";
+			titleName = "互動數(次)";
+			selectTypeName = "互動數";
 			selectSuffix = "次";
 			break;
 		case "invalid":
@@ -406,8 +437,14 @@ function showHighChart(){
 			selectSuffix = "次";
 			break;
 		case "avgCost":
-			titleName = "平均點選費用(NT$)";
-			selectTypeName = "平均點選費用";
+			titleName = "單次互動費用(NT$)";
+			selectTypeName = "單次互動費用";
+			selectSuffix = "元";
+			decimals = 2;
+			break;
+		case "kiloCost":
+			titleName = "千次曝光費用(NT$)";
+			selectTypeName = "千次曝光費用";
 			selectSuffix = "元";
 			decimals = 2;
 			break;
@@ -415,6 +452,7 @@ function showHighChart(){
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			decimals = 3;
 			break;
 	}
 	
@@ -524,7 +562,8 @@ function initJsonData(){
 		"searchText": $('#fsearchText').val(),
 		"searchId": $('#fsearchId').val(),
 		"downloadFlag": $('#downloadFlag').val(),
-		"searchTime": $('#fadSearchTime').val()
+		"searchTime": $('#fadSearchTime').val(),
+		"adOperatingRule": $('#fadOperatingRule').val()
 	};
 }
 
@@ -576,6 +615,7 @@ function searchDo(){
 	document.excerptFrom.searchText.value = $('#searchText').val();
 	document.excerptFrom.adShowWay.value = $('#adShowWay').val();
 	document.excerptFrom.searchTime.value = $('#searchTime').val();
+	document.excerptFrom.adOperatingRule.value = $('#adOperatingRule').val();
 	document.excerptFrom.searchId.value = "";
 	document.excerptFrom.formPage.value = "1";
 }
@@ -613,6 +653,13 @@ function serachReset(){
 
 	$("#searchTime").children().each(function(){
 		if ($(this).val() == "W") {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == "") {
 			//jQuery給法
 			$(this).attr("selected", "true"); //或是給selected也可
 		}

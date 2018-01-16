@@ -47,3 +47,16 @@ text-align:center;
 text-decoration:none;
 }
 
+.msg{
+	color:red;
+	font-size:12;
+	display:initial;
+	font-weight:900;
+	font-family:Verdana;
+}
+.errMsg{
+	color:red;
+	font-size:12;
+	display:initial;
+	font-family:Verdana;
+}

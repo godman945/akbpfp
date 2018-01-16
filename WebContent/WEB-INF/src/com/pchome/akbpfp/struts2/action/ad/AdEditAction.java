@@ -70,14 +70,13 @@ public class AdEditAction extends BaseCookieAction{
 	private String divBatchWord = "display:none;";		// 為了配合 adFreeAdAddKeyword 做的設定
 	private String batchkeywords = "";					// 為了配合 adFreeAdAddKeyword 做的設定
 	private String adLinkURL;
-	
+	private String adVideoURL;
 	private String imgWidth = "";
 	private String imgHeight = "";
 	private String imgSize = "";
 	private String imgTypeName = "";
 	private String html5Flag;
 	private String zipTitle = "";
-	
 	private String photoTmpPath;
 	private String photoPath;
 	private String photoDbPath;
@@ -177,10 +176,6 @@ public class AdEditAction extends BaseCookieAction{
 				    deCodeUrl =HttpUtil.getInstance().convertRealUrl(show_url);
 				}
 				adDetailContent[4] = deCodeUrl;
-//				String show_url = HttpUtil.getInstance().getUnicode(pfpAdDetails.get(i).getAdDetailContent());
-//				adDetailContent[4] = show_url.replaceAll("http://", "");
-//			    	adDetailSeq[4] = pfpAdDetails.get(i).getAdDetailSeq();
-//				adDetailContent[4] = deCodeUrl.replaceAll("http://", "");
 			}
 		}
 
@@ -304,16 +299,6 @@ public class AdEditAction extends BaseCookieAction{
 				 }
 				 
 			    }
-//				if(adDetailContent[i] != null && !adDetailContent[i].equals(pfpAdDetail.getAdDetailContent())) {
-//					if(pfpAdDetail.getAdDetailId().equals("real_url")) {
-//					    if(adDetailContent[i].indexOf("http") <=0 ) {
-//						adDetailContent[i] = "http://" + adDetailContent[i];
-//					    }else{
-
-//
-//					    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-//					    }
-//					}
 				if(pfpAdDetail.getAdDetailId().equals("show_url")) {
 						
 				    if(adDetailContent[i].indexOf("http://") < 0 ) {
@@ -386,6 +371,40 @@ public class AdEditAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	
+	
+	/*
+	 * 儲存影音上稿資料
+	 * 
+	 * */
+	public String doAdAdEditVideo() {
+		try{
+			System.out.println(adSeq);
+			System.out.println(adLinkURL);
+			List<PfpAdDetail> pfpAdDetailList = pfpAdDetailService.getPfpAdDetailByAdSeq(adSeq);
+			Date date = new Date();
+			for (PfpAdDetail pfpAdDetail : pfpAdDetailList) {
+				if(pfpAdDetail.getAdDetailId().equals("real_url")){
+					pfpAdDetail.setAdDetailContent(adLinkURL);
+					pfpAdDetail.setAdDetailUpdateTime(date);
+					
+					PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
+					pfpAd.setAdStatus(EnumStatus.NoVerify.getStatusId());
+					pfpAd.setAdSendVerifyTime(date);
+					pfpAd.setAdUpdateTime(date);
+					pfpAdService.updatePfpAd(pfpAd);
+					break;
+				}
+			}
+			result = "success";
+			return SUCCESS;
+		}catch(Exception e){
+			e.getMessage();
+			result = "error";
+			return SUCCESS;
+		}
+	}
+	
 	//圖像廣告
 	public String AdAdEditImg() throws Exception {
 		log.info("AdAdEditImg => adSeq = " + adSeq);
@@ -860,6 +879,99 @@ public class AdEditAction extends BaseCookieAction{
 		}
 	}
 	
+	
+	/**
+	 * 編輯影音廣告
+	 * */
+	public String adAdEditVideo() throws Exception{
+		log.info("AdAdVideoEdit => adSeq = " + adSeq);
+
+		PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
+		adActionName = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName();
+		adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();
+		adGroupName  = pfpAd.getPfpAdGroup().getAdGroupName();
+		adStyle = pfpAd.getAdStyle();
+		adStatus = pfpAd.getAdStatus();
+		adGroupStatus = pfpAd.getPfpAdGroup().getAdGroupStatus();
+		adActionStatus = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
+		adType = pfpAd.getPfpAdGroup().getPfpAdAction().getAdType().toString();
+		adVerifyRejectReason = "";
+
+		// ad Status
+		for(EnumStatus status:EnumStatus.values()){
+			if(status.getStatusId() == adStatus){
+				adStatusDesc = status.getStatusRemark();
+			}
+		}
+		if((adStatus == 3 || adStatus == 6) && StringUtils.isNotEmpty(pfpAd.getAdVerifyRejectReason())) {
+			adVerifyRejectReason = "說明：" + pfpAd.getAdVerifyRejectReason();
+		}
+
+		pfpAdDetails = pfpAdDetailService.getPfpAdDetails(null, adSeq, null, null);
+		adDetailSeq = new String[5];
+		adDetailContent = new String[5];
+
+		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
+		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
+		String adCustomerInfoId = pfpAd.getPfpAdGroup().getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
+		if(!customerInfoId.equals(adCustomerInfoId)) {
+			return "notOwner";
+		}
+
+		for (int i = 0; i < pfpAdDetails.size(); i++) {
+			//log.info("pfpAdDetails.get(i).getAdDetailContent() = " + pfpAdDetails.get(i).getAdDetailContent());
+			String adDetailId = pfpAdDetails.get(i).getAdDetailId();
+			if(adDetailId != null && adDetailId.equals("img")) {
+				adDetailSeq[0] = pfpAdDetails.get(i).getAdDetailSeq();
+				adDetailContent[0] = pfpAdDetails.get(i).getAdDetailContent() + "?" + RandomStringUtils.randomAlphanumeric(10);
+				if(adDetailContent[0].indexOf("display:none") > 0) {
+					adDetailContent[0] = pfpAdDetails.get(i).getAdDetailContent();
+					imgFile = "";
+				} else {
+					imgFile = photoPath + adDetailContent[0].substring(adDetailContent[0].lastIndexOf(photoDbPath) + 4);
+				}
+			} else if(adDetailId != null && adDetailId.equals("title")) {
+				adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();;
+				adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
+			} else if(adDetailId != null && adDetailId.equals("content")) {
+				adDetailSeq[2] = pfpAdDetails.get(i).getAdDetailSeq();;
+				adDetailContent[2] = pfpAdDetails.get(i).getAdDetailContent();
+			}else if(adDetailId.equals("video_url")){
+				adVideoURL = pfpAdDetails.get(i).getAdDetailContent();
+			}else if(adDetailId != null && adDetailId.equals("real_url")) {
+				adDetailSeq[3] = pfpAdDetails.get(i).getAdDetailSeq();
+				String deCodeUrl = pfpAdDetails.get(i).getAdDetailContent();
+				try {
+				    deCodeUrl = HttpUtil.getInstance().convertRealUrl(deCodeUrl);
+				}
+				catch (Exception e) {
+				    log.error(deCodeUrl, e);
+				}
+				adDetailContent[3] = deCodeUrl.replaceAll("http://", "");
+				adLinkURL = deCodeUrl;
+			} else if(adDetailId != null && adDetailId.equals("show_url")) {
+				adDetailSeq[4] = pfpAdDetails.get(i).getAdDetailSeq();
+				String show_url = pfpAdDetails.get(i).getAdDetailContent();
+				String deCodeUrl="";
+				if(show_url.indexOf("http://") < 0){
+				    deCodeUrl = HttpUtil.getInstance().convertRealUrl("http://" + show_url);
+			    	}else{
+				    deCodeUrl =HttpUtil.getInstance().convertRealUrl(show_url);
+				}
+				adDetailContent[4] = deCodeUrl;
+			}
+		}
+
+		if(adDetailSeq[0] == null) {
+			adDetailSeq[0] = "";
+			adDetailContent[0] = "img/public/na.gif\" style=\"display:none";
+			imgFile = "";
+		}	
+		
+		
+		return SUCCESS;
+	}
+	
 	private void addAccesslog(EnumAccesslogAction enumAccesslogAction,String accesslogMessage) throws Exception{
 		admAccesslogService.recordAdLog(enumAccesslogAction, accesslogMessage, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 	}
@@ -1206,6 +1318,14 @@ public class AdEditAction extends BaseCookieAction{
 
 	public String getZipTitle() {
 		return zipTitle;
+	}
+
+	public String getAdVideoURL() {
+		return adVideoURL;
+	}
+
+	public void setAdVideoURL(String adVideoURL) {
+		this.adVideoURL = adVideoURL;
 	}
 
 }

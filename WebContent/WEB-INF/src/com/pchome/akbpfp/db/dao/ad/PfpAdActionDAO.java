@@ -748,18 +748,11 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 	@SuppressWarnings("unchecked")
 	public HashMap<String, Object> getAdActionReportByAdActionsList(String customerInfoId, List<String> adActionSeqList, String adType, Date startDate, Date endDate) throws Exception{
 		Session session = getSession();
-		System.out.println("customerInfoId = " + customerInfoId);
-		System.out.println("adActionSeqList = " + adActionSeqList);
-		//System.out.println("adKeywordSeq = " + adKeywordSeqList);
-		//System.out.println("adKeywordType = " + adKeywordType);
-		//System.out.println("startDate = " + startDate);
-		//System.out.println("endDate = " + endDate);
-		
 		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
 		StringBuffer hql = new StringBuffer();
 		hql.append("select adActionSeq,");
 		hql.append(" COALESCE(sum(adPv),0), ");
-		hql.append(" COALESCE(sum(adClk),0), ");
+		hql.append(" COALESCE(sum((case when adClkPriceType ='CPC' then adClk else adView end)),0), ");
 		hql.append(" COALESCE(sum(adClkPrice),0), ");
 		hql.append(" COALESCE(sum(adInvalidClk),0), ");
 		hql.append(" COALESCE(sum(adInvalidClkPrice),0) ");
@@ -800,13 +793,13 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 		log.info("hql  = "+ hql.toString());
 
 		// 將條件資料設定給 Query，準備 query
-		Query q = session.createQuery(hql.toString());
+		Query query = session.createQuery(hql.toString());
         for (String paramName:sqlParams.keySet()) {
         	if(!paramName.equals("sql")) {
 				if(paramName.equals("adActionSeq")) {
-					q.setParameterList("adActionSeq", adActionSeqList);
+					query.setParameterList("adActionSeq", adActionSeqList);
 				} else {
-					q.setParameter(paramName, sqlParams.get(paramName));
+					query.setParameter(paramName, sqlParams.get(paramName));
 				}
         	}
         }
@@ -814,7 +807,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 
         // 將得到的廣告成效結果，設定成 Map, 以方便用 adKeywordSeq 抓取資料
 		HashMap<String, Object> adActionSum = new HashMap<String, Object>();
-		List<Object> pfpAdActionReports = q.list();
+		List<Object> pfpAdActionReports = query.list();
 		System.out.println("pfpAdActionReports.size() = " + pfpAdActionReports.size());
 		for(Object object:pfpAdActionReports) {
 			Object[] ob = (Object[])object;

@@ -2,14 +2,19 @@
 var highChartActionPath="reportAdvertiseAjaxChart.html";
 var reportAjaxActionPath="reportAdvertiseAjaxTable.html";
 
+//鎖住畫面直到資料載入完畢
+blockBody();
+
+
 //一開始執行
 $(function(){
-
 	//flash chart
 	showHighChart();
 
 	//flash data
 	ready();
+	
+	//綁定排序
 	tablesorter1();
 
 	//日期區間選擇
@@ -126,12 +131,106 @@ $(function(){
 
 	//flash chart reload
 	$('#reloadFlash').click(function(){
-	   showHighChart();
+	   if(chartAdSeq != null){
+		   showHighChart(chartAdSeq);
+	   }else{
+		   showHighChart(null);
+	   }
 	});
+	
+	$(function() {
+	
+	}).bind("sortStart",function(e, t){
+		 blockBody();
+		 resetIframeSize();
+	 }).bind("sortEnd",function(e, t){
+		 resizeIframeInfo();
+		 setTimeout(function(){  $.unblockUI(); }, 1000);
+	 });
 });
+
+$(window).load(function(){ 
+	 $.unblockUI();
+}); 
+
+function blockBody(){
+	$('body').block({
+		message: "",
+		css: {
+			padding: 0,
+			margin: 0,
+			width: '100%',
+			top: '40%',
+			left: '35%',
+			textAlign: 'center',
+			color: '#000',
+			border: '3px solid #aaa',
+			backgroundColor: '#fff',
+			cursor: 'wait'
+		}
+	});
+}
+
+/**重新恢復原本iframe尺寸*/
+function resetIframeSize(){
+	$("#excerptTable tbody tr").each(function(index,obj){
+		var td = $(obj).children()[1];
+		var iframe = td.querySelector('.akb_iframe');
+		var div = td.querySelector('.ad_size');
+		if(div != null){
+			var size = $(div).text().replace('尺寸 ','');
+			var sizeArray = size.split(' x ');
+			var width = sizeArray[0].trim();
+			var height = sizeArray[1].trim();
+			iframe.width = width;
+			iframe.height = height;
+		}
+	});
+}
+
+/**重新計算明細高度*/
+function resizeIframeInfo(){
+	$("#excerptTable tbody tr").each(function(index,obj){
+		var td = $(obj).children()[1];
+		var iframe = td.querySelector('.akb_iframe');
+		if(iframe != null){
+			var adratio = iframe.height / iframe.width;
+			var	adh = 250 * adratio;
+			var infoDiv = $($(td).children()[0]).children()[1];
+			$(infoDiv).css('margin-top',(adh / 2) - 45+'px');
+		}
+	});
+}
 
 //ajax id  重新榜定
 function ready(){
+	if($("#excerptTable").children().length > 1){
+		var node = document.createElement("a");
+		node.style.float = 'left';
+		node.style.marginTop = '3px';
+		var img = document.createElement("img");
+		img.src='./html/img/question.gif';
+		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
+		node.appendChild(img);
+		
+		
+		var node2 = document.createElement("b");
+		node2.style.float = 'left';
+		node2.style.marginTop = '3px';
+		var img2 = document.createElement("img");
+		img2.src='./html/img/question.gif';
+		img2.title="廣告費用因小數點進位影響總計費用，實際扣款依帳單管理為主";
+		node2.appendChild(img2);
+		
+		if($($($('#excerptTable').children()[0]).children()).children().length == 15){
+			$($($("#excerptTable").children()[0]).children()[0]).children()[9].appendChild(node);
+			$($($("#excerptTable").children()[0]).children()[0]).children()[13].appendChild(node2);
+		}else{
+			$($($("#excerptTable").children()[0]).children()[0]).children()[6].appendChild(node);
+			$($($("#excerptTable").children()[0]).children()[0]).children()[10].appendChild(node2);
+		}
+	}
+	
 	//sort table plugin
 
 	//日期區間內容
@@ -238,6 +337,7 @@ function ready(){
 	var adSearchWay = document.excerptFrom.adSearchWay.value;
 	var searchText = document.excerptFrom.searchText.value;
 	var adShowWay = document.excerptFrom.adShowWay.value;
+	var adOperatingRule = document.excerptFrom.adOperatingRule.value;
 
 	$("#searchText").attr("value", searchText);
 
@@ -269,6 +369,13 @@ function ready(){
 		}
 	});
 
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == adOperatingRule) {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
 	//搜尋動作 Do
 	$('#btnSearchDo').click(function(){
 		searchDo();
@@ -281,7 +388,7 @@ function ready(){
 		}
 	});
 	
-	$("#adShowWay, #adPvclkDevice, #adSearchWay").change(function(){
+	$("#adShowWay, #adPvclkDevice, #adSearchWay, #adOperatingRule").change(function(){
     	searchDo();
     	var searchAdseq = $("#fsearchAdseq").val();
 		if(searchAdseq != ""){
@@ -348,7 +455,6 @@ function adIdSearch(adType, adId){
 
 //顯示open flash
 function showHighChart(adSeq){
-	
 	var searchAdSeq = "Null";
 	if(adSeq != null){
 		searchAdSeq = adSeq;
@@ -371,10 +477,11 @@ function showHighChart(adSeq){
 			"charType" : $('#selectChartType').val(),
 			"searchId" : $('#fsearchId').val(),
 			"searchText" : $('#searchText').val(),
-			"searchAdseq" : searchAdSeq
+			"searchAdseq" : searchAdSeq,
+			"adOperatingRule" : $('#fadOperatingRule').val()
 		},
 		success : function(respone) {
-			console.log(respone);
+//			console.log(respone);
 			dataArray = respone;
 		}
 	});
@@ -410,14 +517,14 @@ function showHighChart(adSeq){
 			selectSuffix = "次";
 			break;
 		case "ctr":
-			titleName = "點選率(%)";
-			selectTypeName = "點選率";
+			titleName = "互動率(%)";
+			selectTypeName = "互動率";
 			selectSuffix = "%";
 			decimals = 2;
 			break;
 		case "click":
-			titleName = "點選次數(次)";
-			selectTypeName = "點選次數";
+			titleName = "互動數(次)";
+			selectTypeName = "互動數";
 			selectSuffix = "次";
 			break;
 		case "invalid":
@@ -426,8 +533,14 @@ function showHighChart(adSeq){
 			selectSuffix = "次";
 			break;
 		case "avgCost":
-			titleName = "平均點選費用(NT$)";
-			selectTypeName = "平均點選費用";
+			titleName = "單次互動費用(NT$)";
+			selectTypeName = "單次互動費用";
+			selectSuffix = "元";
+			decimals = 2;
+			break;
+		case "kiloCost":
+			titleName = "千次曝光費用(NT$)";
+			selectTypeName = "千次曝光費用";
 			selectSuffix = "元";
 			decimals = 2;
 			break;
@@ -435,6 +548,7 @@ function showHighChart(adSeq){
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			decimals = 3;
 			break;
 	}
 	
@@ -554,7 +668,8 @@ function initJsonData(){
 		"adShowWay": $('#fadShowWay').val(),
 		"searchText": $('#fsearchText').val(),
 		"searchId": $('#fsearchId').val(),
-		"downloadFlag": $('#downloadFlag').val()
+		"downloadFlag": $('#downloadFlag').val(),
+		"adOperatingRule": $('#fadOperatingRule').val()
 	};
 }
 
@@ -602,7 +717,10 @@ function ajaxFormSubmit(){
 	showHighChart(null);
 }
 
+/**廣告明細第三層*/
+var chartAdSeq = null;
 function detailQuery(adSeq) {
+ 	chartAdSeq = adSeq;
 	$('#downloadFlag').val("no");
 	json_data = {
 		"page": $('#formPage').val(),
@@ -619,7 +737,8 @@ function detailQuery(adSeq) {
 		"searchText": $('#fsearchText').val(),
 		"searchId": $('#fsearchId').val(),
 		"downloadFlag": $('#downloadFlag').val(),
-		"searchAdseq": adSeq
+		"searchAdseq": adSeq,
+		"adOperatingRule": $('#fadOperatingRule').val()
 	};
 	
 	$('#reportTableOut').block({
@@ -663,34 +782,65 @@ function detailQuery(adSeq) {
 }
 
 function tablesorter1(){
+	
+//	$("#excerptTable thead").addEventListener("click", function(){};
+
+//	  $(function() {
+//          $("#excerptTable").tablesorter({debug: true});
+//          $("#excerptTable").toggle(
+//            function() {
+//              alert('major asc')
+//            },
+//            function() {
+//              alert('major desc')
+//            }
+//          );
+//      });
+	
 	$.tablesorter.defaults.widgets = ['zebra'];
+	
+	
 	//$.tablesorter.defaults.sortList = [[0,0]];
 	//$("#excerptTable").tablesorter();
 
+	
+	
 	$("#excerptTable").tablesorter({
 		headers: {
 			0 : { sorter: false },
-			//5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'fancyNumber' },
-			9 : { sorter: 'rangesort' },
-			10 : { sorter: 'rangesort' },
-			11 : { sorter: false }
-		}
+//			8 : { sorter: 'fancyNumber' },
+//			9 : { sorter: 'fancyNumber' },
+//			10 : { sorter: 'fancyNumber' },
+//			11 : { sorter: 'rangesort' },
+//			12 : { sorter: 'rangesort' },
+//			13 : { sorter: 'rangesort' },
+			14 : { sorter: false }
+		},
+		initialized: function(table) {
+			$("#excerptTable").on('sortStart', function() {
+				 blockBody();
+				 resetIframeSize();
+		    }),
+		    $("#excerptTable").on('sortEnd', function() {
+		    	setTimeout(function(){  $.unblockUI(); }, 1000);
+				resizeIframeInfo();
+		    });
+		 }
 	});
 }
 
 function tablesorter2(){
+	
 	$.tablesorter.defaults.widgets = ['zebra'];
 	
 	$("#excerptTable").tablesorter({
 		headers: {
-			4 : { sorter: 'fancyNumber' },
 			5 : { sorter: 'fancyNumber' },
 			6 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'rangesort' },
-			7 : { sorter: 'rangesort' }
+			7 : { sorter: 'fancyNumber' },
+			8 : { sorter: 'rangesort' },
+			9 : { sorter: 'rangesort' },
+			10 : { sorter: 'rangesort' }
 		}
 	});
 }
@@ -702,6 +852,7 @@ function searchDo(){
 	document.excerptFrom.adSearchWay.value = $('#adSearchWay').val();
 	document.excerptFrom.searchText.value = $('#searchText').val();
 	document.excerptFrom.adShowWay.value = $('#adShowWay').val();
+	document.excerptFrom.adOperatingRule.value = $('#adOperatingRule').val();
 	document.excerptFrom.searchId.value = "";
 	document.excerptFrom.formPage.value = "1";
 }
@@ -738,6 +889,13 @@ function serachReset(){
 		}
 	});
 
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == "") {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
 	document.excerptFrom.searchId.value = "";
 }
 
@@ -757,7 +915,6 @@ function preview(img) {
 }
 
 function previewHtml5(width,height,imgSrc,realUrl){
-	
 	 $.fancybox(
 			 '<div style="position:absolute;z-index:10;border:0px;background:none;width:' + width + 'px;height:' + height + 'px;">' + 
 			 '<a href="' + realUrl + '" target="_blank" style="display:block;width:' + width + 'px;height:' + height + 'px;"><img src="html/img/blank.gif" style="width:' + width + 'px;height:' + height + 'px;border:0px;"></a>'

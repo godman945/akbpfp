@@ -3,59 +3,69 @@
 
 <link href="<@s.url value="/html/css/ad/adPlugInStyle.css" />" rel="stylesheet" type="text/css" /> 
 <#if adStyle == "TXT">
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTxt.js" ></script>
+	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTxt.js" ></script>
 <#elseif adStyle == "TMG">
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmg.js?t=20141124" ></script>
+	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmg.js?t=20141124" ></script>
+<#elseif adStyle == "VIDEO">
+	<@t.insertAttribute name="includeJs" />
 </#if>
-
 
 <div class="cont">
 <#if adStyle == "TXT">
     <form method="post" id="modifyForm" name="modifyForm" action="doAdAdAddTxt.html">
 <#elseif adStyle == "TMG">
     <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
+<#elseif adStyle == "VIDEO">
+	<form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddVideo.html">
 </#if>
 		<h1 class="adtitle">廣告：${adActionName!} > 分類：${adGroupName!}</h1>
 		<h2>
 			<div class="cal">帳戶名稱：${customer_info_title!}</div>
 			<img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">新增廣告
 		</h2>
-		<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
+		<#if adStyle == "VIDEO">
+				<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告</b>  &gt; 廣告完成 </div>
+			<#else>
+				<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
+		</#if>
 		<ul class="admenuul">
-            <li class="m01"><a href="adAddImg.html?adGroupSeq=${adGroupSeq!}" onClick="return(chkLeave())">圖像廣告</a></li>
-            <li class="m02"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}" class="active" onClick="return(chkLeave())">圖文廣告</a></li>
-            <!-- <li class="m03"><a href="#">影音廣告</a></li>-->
+			<#if adStyle == "VIDEO">
+					<li class="m03"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}&adOperatingRule=VIDEO" class="active" onClick="return(chkLeave())">影音廣告</a></li>
+				<#else>
+					<li class="m01"><a href="adAddImg.html?adGroupSeq=${adGroupSeq!}&adOperatingRule=MEDIA" onClick="return(chkLeave())">圖像廣告</a></li>
+		            <li class="m02"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}&adOperatingRule=MEDIA" class="active" onClick="return(chkLeave())">圖文廣告</a></li>
+			</#if>
         </ul>
         
-        
-        
-		<div class="grtba">
-			<h4 style="display:none;">建立廣告</h4>
-			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">
-				<tbody>
-					<tr>
-						<th height="35"><span class="t_s02">* </span>選擇廣告分類</th>
-						<td>
-							<select id="adClass" name="adClass">
-								<option value="0">選擇分類</option>
-								<option value="1" selected>分類1</option>
-								<option value="2">分類2</option>
-								<option value="3">分類3</option>
-								<option value="4">分類4</option>
-								<option value="5">分類5</option>
-								<option value="6">分類6</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<th height="35"><span class="t_s02">* </span>廣告樣式</th>
-						<td>
-							<input type="radio" id="adStyle" name="adStyle" value="TXT" onclick="setAdStyle(this.value);" <#if adStyle == "TXT">checked</#if>>文字廣告
-							<input type="radio" id="adStyle" name="adStyle" value="TMG" onclick="setAdStyle(this.value);" <#if adStyle == "TMG">checked</#if>>圖文廣告
-						</td>
-					</tr>
-				</tbody>
-			</table>
+        <#if adStyle != "VIDEO">
+			<div class="grtba">
+				<h4 style="display:none;">建立廣告</h4>
+				<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">
+					<tbody>
+						<tr>
+							<th height="35"><span class="t_s02">* </span>選擇廣告分類</th>
+							<td>
+								<select id="adClass" name="adClass">
+									<option value="0">選擇分類</option>
+									<option value="1" selected>分類1</option>
+									<option value="2">分類2</option>
+									<option value="3">分類3</option>
+									<option value="4">分類4</option>
+									<option value="5">分類5</option>
+									<option value="6">分類6</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th height="35"><span class="t_s02">* </span>廣告樣式</th>
+							<td>
+								<input type="radio" id="adStyle" name="adStyle" value="TXT" onclick="setAdStyle(this.value);" <#if adStyle == "TXT">checked</#if>>文字廣告
+								<input type="radio" id="adStyle" name="adStyle" value="TMG" onclick="setAdStyle(this.value);" <#if adStyle == "TMG">checked</#if>>圖文廣告
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</#if>
 <#if adStyle == "TXT">
 <!-- adTxt start -->
 <@t.insertAttribute name="adTxt" />
@@ -64,17 +74,19 @@
 <!-- adTmg start -->
 <@t.insertAttribute name="adTmg" />
 <!-- adTmg end -->
+<#elseif adStyle == "VIDEO">
+<div class="grtba">
+<@t.insertAttribute name="adAddVideo" />
 </#if>
  
-		</div>
 
 		<#if adStyle == "TXT" || adStyle == "TMG">
-		<!-- adKeyword start -->
-		<div id=keywordBody>
-		<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adKeywordAdd.js" ></script>
-		<@t.insertAttribute name="adKeyword" />
-		</div>
-		<!-- adKeyword end -->
+			<!-- adKeyword start -->
+				<div id=keywordBody>
+				<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adKeywordAdd.js" ></script>
+				<@t.insertAttribute name="adKeyword" />
+				</div>
+			<!-- adKeyword end -->
 		</#if>
 		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
 		<center style="margin-top:10px;">

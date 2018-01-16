@@ -19,7 +19,7 @@
         <property name="pfpBuService" ref="PfpBuService" />
         <property name="buPortalPfdc" value="${bu.portal.pfdc}" />
         <property name="pcstoreName" value="${bu.pcstore.name}" />
-        <property name="rutenName" value="${bu.ruten.name}" />
+        <property name="buPcstoreReferer" value="${bu.pcstore.referer}" />
     </bean>
     
     <!-- Cookie Prove Interceptor -->
@@ -33,7 +33,7 @@
         <property name="sequenceService" ref="SequenceService" />
         <property name="buPortalPfdc" value="${bu.portal.pfdc}" />
         <property name="pcstoreName" value="${bu.pcstore.name}" />
-        <property name="rutenName" value="${bu.ruten.name}" />
+        <property name="buPcstoreReferer" value="${bu.pcstore.referer}" />
     </bean>
     
     <!-- Root Privilege Interceptor -->

@@ -91,6 +91,7 @@
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
 		<result type="tiles" name="success">.ad.group.add</result>
+		<result type="tiles" name="success_video">.ad.group.video.add</result>
 		<result type="redirectAction" name="notOwner">
 			<param name="actionName">adActionView</param>  
 		</result>
@@ -99,11 +100,19 @@
    	<action name="doAdGroupAdd" class="AdGroupAddAction" method="doAdGroupAdd">
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
+		
+		<result type="redirectAction" name="input">
+			<param name="actionName">adGroupAdd</param>  
+			<param name="adActionSeq">${adActionSeq}</param>
+		</result>
+		
 		<result type="redirectAction" name="success">
 			<param name="actionName">adAdAdd</param>  
 			<param name="adGroupSeq">${adGroupSeq}</param>
+			<param name="adOperatingRule">${adOperatingRule}</param>
 		</result>
-		<result type="tiles" name="input">.ad.group.add</result>
+		
+		<!--  <result type="tiles" name="input">.ad.group.add</result> -->
     </action>
 
    	<action name="adGroupEdit" class="AdGroupEditAction" method="adGroupEdit">
@@ -147,11 +156,12 @@
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
 		<result type="tiles" name="success">.ad.ad.add</result>
+		<result type="tiles" name="adVideoAdd">.ad.video.add</result>
 		<result type="redirectAction" name="notOwner">
 			<param name="actionName">adActionView</param>  
 		</result>
     </action>
-
+    
 	<action name="doAdAdAddTxt" class="AdAddAction" method="doAdAdAddTxt">
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
@@ -179,6 +189,66 @@
 		</result>
 		<result type="tiles" name="input">.ad.ad.add</result>
     </action>
+    
+    <!-- 影音廣告  START-->
+   		<action name="adAddVideoSaveAjax" class="AdAddAction" method="doAdAdAddVideo">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+       		<result type="json" name="success">
+        		<param name="root">result</param>
+        	</result>
+     	</action>
+     	
+     	<action name="adAddVideoFinish" class="AdFinishAction" method="adAddVideoFinish">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+       		<result type="tiles" name="success">.ad.add.video.finish</result>
+     	</action>
+     	
+     	<action name="adAdVideoView" class="AdAdViewAction" method="adAdVideoView">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">ad.ad.video.view</result>
+    	</action>
+    	
+    	
+    	<action name="adAdVideoViewTable" class="AdAdViewAjax" method="adAdVideoViewTableAjax">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">ad.ad.video.table</result>
+	    </action>
+	    
+	    
+	   <action name="adAdEditVideo" class="AdEditAction" method="adAdEditVideo">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">51200</param>
+			</interceptor-ref>
+			<result type="redirectAction" name="input">
+				<param name="actionName">adAdVideoView</param>  
+				<param name="adGroupSeq">${adGroupSeq}</param>
+			</result>
+			<result type="tiles" name="success">.ad.ad.vodeo.edit</result>
+    	</action>
+    	
+    	
+    	<action name="adVideoPreview" class="AdAdViewAction" method="videoPreview">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">.ad.ad.vodeo.preview</result>
+    	</action>
+    	
+    	
+    	<action name="adAddVideoEditSaveAjax" class="AdEditAction" method="doAdAdEditVideo">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+       		<result type="json" name="success">
+        		<param name="root">result</param>
+        	</result>
+     	</action>
+    	
+    <!-- 影音廣告  END-->
 
 	<action name="adAdEdit" class="AdEditAction" method="AdAdEdit">
 		<interceptor-ref name="loginCheckStack" />
@@ -286,6 +356,16 @@
             <param name="inputName">msg</param>
         </result>
 	</action>
+
+	<action name="chkVideoUrl" class="AdUtilAjax" method="chkVideoUrl">
+       	<interceptor-ref name="loginCheckStack" />
+		<interceptor-ref name="adPrivilegeInterceptor" />
+        <result type="stream">
+            <param name="contentType">text/html</param>
+            <param name="inputName">msg</param>
+        </result>
+	</action>
+
 
 	<action name="getAdGroup" class="AdGroupAjax" method="getAdGroup">
 		<interceptor-ref name="loginCheckStack" />
@@ -520,9 +600,14 @@
 				<param name="actionName">adAdView</param>  
 				<param name="adGroupSeq">${adGroupSeq}</param>  
 			</result>
+			
+			<result type="redirectAction" name="adAdVideoView">
+				<param name="actionName">adAdVideoView</param>  
+				<param name="adGroupSeq">${adGroupSeq}</param>  
+			</result>
+			
+			
     	</action>
-    	
-    	
     	
     	<!-- 圖片廣告 -->
     	<action name="adAddImg" class="AdAddAction" method="adAddImgView">

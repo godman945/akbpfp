@@ -4,6 +4,9 @@
 <#assign startDate = ("2015-03-18 00:00:00")?date("yyyy-MM-dd HH:mm:ss")> 
 <#assign endDate = ("2015-05-11 23:59:59")?date("yyyy-MM-dd HH:mm:ss")> 
 
+
+
+
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/style2016.css" />
 
@@ -73,7 +76,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <div class="logo"><a href="http://show.pchome.com.tw/" target=""><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
+            <div class="logo"><a href="http://show.pchome.com.tw/" target="http://show.pchome.com.tw"><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-left">

@@ -1,6 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-
-// Generated 2017/6/22 �W�� 10:22:48 by Hibernate Tools 3.4.0.CR1
+// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -49,22 +48,17 @@ public class PfpUserMemberRefId implements java.io.Serializable {
 			return false;
 		PfpUserMemberRefId castOther = (PfpUserMemberRefId) other;
 
-		return ((this.getUserId() == castOther.getUserId()) || (this
-				.getUserId() != null && castOther.getUserId() != null && this
-				.getUserId().equals(castOther.getUserId())))
-				&& ((this.getMemberId() == castOther.getMemberId()) || (this
-						.getMemberId() != null
-						&& castOther.getMemberId() != null && this
-						.getMemberId().equals(castOther.getMemberId())));
+		return ((this.getUserId() == castOther.getUserId()) || (this.getUserId() != null
+				&& castOther.getUserId() != null && this.getUserId().equals(castOther.getUserId())))
+				&& ((this.getMemberId() == castOther.getMemberId()) || (this.getMemberId() != null
+						&& castOther.getMemberId() != null && this.getMemberId().equals(castOther.getMemberId())));
 	}
 
 	public int hashCode() {
 		int result = 17;
 
-		result = 37 * result
-				+ (getUserId() == null ? 0 : this.getUserId().hashCode());
-		result = 37 * result
-				+ (getMemberId() == null ? 0 : this.getMemberId().hashCode());
+		result = 37 * result + (getUserId() == null ? 0 : this.getUserId().hashCode());
+		result = 37 * result + (getMemberId() == null ? 0 : this.getMemberId().hashCode());
 		return result;
 	}
 

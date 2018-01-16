@@ -40,7 +40,7 @@ public class AdGroupEditAction extends BaseCookieAction{
 	private String adGroupChannelPrice;		//聯播廣告出價
 	private String AdAsideRate;				//播放率
 	private String backPage;
-	
+	private String adGroupPriceType;
 	private String sysPriceAdPoolSeq;       //廣告建議價取得 pool from api prop 注入
 
 	private PfpCustomerInfoService pfpCustomerInfoService;
@@ -66,11 +66,12 @@ public class AdGroupEditAction extends BaseCookieAction{
 		defSearchPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
 		adGroupSearchPrice = Integer.toString((int)pfpAdGroup.getAdGroupSearchPrice());
 		sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
-		adGroupChannelPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
+		adGroupChannelPrice = Float.toString(pfpAdGroup.getAdGroupChannelPrice());
 		adGroupSearchPriceType = Integer.toString((int)pfpAdGroup.getAdGroupSearchPriceType());
 		adActionSeq = pfpAdGroup.getPfpAdAction().getAdActionSeq();
 		adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 		adActionMax = (int)pfpAdGroup.getPfpAdAction().getAdActionMax();
+		adGroupPriceType = pfpAdGroup.getAdGroupPriceType();
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
 		String adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
 		if(!customerInfoId.equals(adCustomerInfoId)) {
@@ -203,8 +204,8 @@ public class AdGroupEditAction extends BaseCookieAction{
 		}
 		pfpAdGroupService.savePfpAdGroup(pfpAdGroup);
 		
-		//系統價更新
-		syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, Float.valueOf(adGroupChannelPrice));
+		//系統價更新 2018-01-12 停止更新價格出價以JOB為主
+//		syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, Float.valueOf(adGroupChannelPrice));
 
 		return SUCCESS;
 	}
@@ -327,6 +328,14 @@ public class AdGroupEditAction extends BaseCookieAction{
 
 	public String getShowChannelPrice() {
 		return showChannelPrice;
+	}
+
+	public String getAdGroupPriceType() {
+		return adGroupPriceType;
+	}
+
+	public void setAdGroupPriceType(String adGroupPriceType) {
+		this.adGroupPriceType = adGroupPriceType;
 	}
 
 }

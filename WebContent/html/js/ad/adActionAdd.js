@@ -1,6 +1,5 @@
 ﻿var websiteCategoryObj = null;
 
-
 $(document).ready(function(){
 	var firstAdType = $("#adType").val();
 	var firstAdDevice = $("#adDeviceSelect").val();
@@ -12,6 +11,11 @@ $(document).ready(function(){
     } else if(firstAdType == "2"){
     	firstObj = JSON.parse($("#adChannelDevice").text());
     }
+	
+	if($('#adOperatingRule').val() != null){
+		$('#adStyle').val($('#adOperatingRule').val());
+	}
+	
 	
 	$.each(firstObj, function(key, value) { 
 		if(firstAdDevice == key){
@@ -29,7 +33,6 @@ $(document).ready(function(){
 			$("#detailTitle").show();
 	    } else if(adType == "1"){
 	    	Obj = JSON.parse($("#adSearchDevice").text());
-	    	
 	    	$("#detailTitle").hide();
 	    	$("#detailId").val("進階設定 +");
 	    	$("#detailId").attr("onclick","openDetail()");
@@ -60,10 +63,15 @@ $(document).ready(function(){
 		$.each(Obj, function(key, value) { 
 			$("#adDevice").append('<option value='+ key+'>' + value + '</option>');
 		});
+		changeMappingAdStyle();
+	});
+	
+	
+	$("#adStyle").change(function(){
+		$("#adOperatingRule").val($("#adStyle").val());
 	});
 	
 	initDate();
-
 	
 	function initDate() {
 
@@ -345,6 +353,25 @@ $(document).ready(function(){
 		}
 	});
 });
+
+
+//變更廣告播放類型時變更對應廣告樣式
+function changeMappingAdStyle(){
+	$("#adStyle option").each(function(){
+		if($("#adType").val() == "0" && $(this).val() == "1"){
+			$(this).css('display','none');
+			$(this).attr("selected",false);
+		}else if($("#adType").val() == "1" && $(this).val() == "1"){
+			$(this).css('display','none');
+			$(this).attr("selected",false);
+		}else{
+			$(this).css('display','');
+			$(this).attr("selected",true);
+			$("#adOperatingRule").val($("#adStyle").val());
+		}
+	});
+}
+
 
 function opennots(id) {
 	$("#shownotes"+id).css("visibility", "visible");

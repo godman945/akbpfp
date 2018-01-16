@@ -4,7 +4,7 @@ var reportAjaxActionPath="reportAdDailyAjaxTable.html";
 
 //一開始執行
 $(function(){
-
+	$('#selectChartType').children()[3].remove();
 	//flash chart
 	showHighChart();
 
@@ -132,6 +132,27 @@ $(function(){
 
 //ajax id  重新榜定
 function ready(){
+	if($("#excerptTable").children().length > 1){
+		var node = document.createElement("a");
+		node.style.float = 'left';
+		node.style.marginTop = '3px';
+		var img = document.createElement("img");
+		img.src='./html/img/question.gif';
+		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
+		node.appendChild(img);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[4].appendChild(node)
+		
+		var node2 = document.createElement("b");
+		node2.style.float = 'left';
+		node2.style.marginTop = '3px';
+		var img2 = document.createElement("img");
+		img2.src='./html/img/question.gif';
+		img2.title="廣告費用因小數點進位影響總計費用，實際扣款依帳單管理為主";
+		node2.appendChild(img2);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[8].appendChild(node2);
+	}
+	
+	
 	//sort table plugin
 	$.tablesorter.defaults.widgets = ['zebra'];
 	//$.tablesorter.defaults.sortList = [[0,0]];
@@ -144,7 +165,8 @@ function ready(){
 			4 : { sorter: 'fancyNumber' },
 			5 : { sorter: 'fancyNumber' },
 			6 : { sorter: 'rangesort' },
-			7 : { sorter: 'rangesort' }
+			7 : { sorter: 'rangesort' },
+			8 : { sorter: 'rangesort' }
 		}
 	});
 
@@ -388,14 +410,14 @@ function showHighChart(){
 			selectSuffix = "次";
 			break;
 		case "ctr":
-			titleName = "點選率(%)";
-			selectTypeName = "點選率";
+			titleName = "互動率(%)";
+			selectTypeName = "互動率";
 			selectSuffix = "%";
 			decimals = 2;
 			break;
 		case "click":
-			titleName = "點選次數(次)";
-			selectTypeName = "點選次數";
+			titleName = "互動數(次)";
+			selectTypeName = "互動數";
 			selectSuffix = "次";
 			break;
 		case "invalid":
@@ -404,8 +426,8 @@ function showHighChart(){
 			selectSuffix = "次";
 			break;
 		case "avgCost":
-			titleName = "平均點選費用(NT$)";
-			selectTypeName = "平均點選費用";
+			titleName = "單次互動費用(NT$)";
+			selectTypeName = "單次互動費用";
 			selectSuffix = "元";
 			decimals = 2;
 			break;
@@ -413,7 +435,16 @@ function showHighChart(){
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			decimals = 3;
 			break;
+			
+		case "kiloCost":
+			titleName = "千次曝光費用(NT$)";
+			selectTypeName = "千次曝光費用";
+			selectSuffix = "元";
+			decimals = 2;
+			break;
+			
 	}
 	
 	// ---預設樣式----

@@ -7,8 +7,7 @@ import java.util.List;
 import com.pchome.akbpfp.db.dao.IBaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
-import com.pchome.akbpfp.db.pojo.PfpAdGroup;
-import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
+import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 
 public interface IPfpAdDAO extends IBaseDAO<PfpAd,String>{
 	
@@ -29,6 +28,10 @@ public interface IPfpAdDAO extends IBaseDAO<PfpAd,String>{
 	public void updatePfpAdStatus(String pfpAdStatus, String adSeq) throws Exception;
 	
 	public void saveOrUpdateWithCommit(PfpAd adAd) throws Exception;
+	
+	public List<Object> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception;
+	
+	public List<Object> getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception;
 	
 	/**
 	 * (舊版)查詢廣告分類資料，由 pfp_ad_report 統計資料

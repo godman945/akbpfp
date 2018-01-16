@@ -30,18 +30,13 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Object> totalPvclkCost(String customerInfoId, Date startDate, Date endDate) throws Exception{
-	
 		StringBuffer hql = new StringBuffer();
-		
-		hql.append("select sum(adPv), sum(adClk), sum(adClkPrice), sum(adInvalidClk), sum(adInvalidClkPrice) ");
-		//hql.append(" from PfpAdPvclk" );			// 舊版讀取 pfp_ad_pvclk
-		hql.append(" from PfpAdActionReport" );		// 新版讀取 pfp_ad_action_report
+		hql.append("select sum(adPv), sum((case when adOperatingRule ='CPC' then adClk else adView end)), sum(adClkPrice), sum(adInvalidClk), sum(adInvalidClkPrice) ");
+		hql.append(" from PfpAdActionReport" );
 		hql.append(" where customerInfoId = ? ");
 		hql.append(" and adPvclkDate >= ? ");
 		hql.append(" and adPvclkDate <= ? ");
-		
 		Object[] ob = new Object[]{customerInfoId, startDate, endDate};
-		
 		return super.getHibernateTemplate().find(hql.toString(), ob);
 	}
 	
@@ -57,19 +52,14 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Object> chartPvclkCost(String customerInfoId, Date startDate, Date endDate) throws Exception{
-		
 		StringBuffer hql = new StringBuffer();
-		
-		hql.append("select adPvclkDate, sum(adPv), sum(adClk), sum(adClkPrice), sum(adInvalidClk), sum(adInvalidClkPrice) ");
-		//hql.append(" from PfpAdPvclk" );			// 舊版讀取 pfp_ad_pvclk
-		hql.append(" from PfpAdActionReport" );		// 新版讀取 pfp_ad_action_report
+		hql.append("select adPvclkDate, sum(adPv), sum((case when adOperatingRule ='CPC' then adClk else adView end)), sum(adClkPrice), sum(adInvalidClk), sum(adInvalidClkPrice) ");
+		hql.append(" from PfpAdActionReport" );
 		hql.append(" where customerInfoId = ? ");
 		hql.append(" and adPvclkDate >= ? ");
 		hql.append(" and adPvclkDate <= ? ");
 		hql.append(" group by adPvclkDate ");
-
 		Object[] ob = new Object[]{customerInfoId, startDate, endDate};
-
 		return super.getHibernateTemplate().find(hql.toString(), ob);		
 	}
 
@@ -297,7 +287,7 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 		// 統計每項廣告成本
 		StringBuffer hql = new StringBuffer();
 		
-		hql.append("select adSeq, sum(adPv), sum(adClk), sum(adClkPrice), ");
+		hql.append("select adSeq, sum(adPv), sum((case when adClkPriceType ='CPC' then adClk else adView end)), sum(adClkPrice), ");
 		hql.append(" 		sum(adInvalidClk), ");	
 		hql.append(" 		sum(adInvalidClkPrice) ");
 		hql.append(" from PfpAdReport");

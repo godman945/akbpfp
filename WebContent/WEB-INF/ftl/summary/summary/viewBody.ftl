@@ -21,8 +21,6 @@
 	    </tr>
   	</table>
 </span>
-
-
 </h2>
 <div id="latestBoardList" style="height:120px;height:110px\9;overflow:auto"></div>
 
@@ -57,13 +55,13 @@
     <td><table width="100%" height="230" border="0" cellpadding="0" cellspacing="1" class="tb01">
       <tr>
         <th height="30">總曝光數</th>
-        <th height="30">總點選次數</th>
+        <th height="30"><a style="float: left; margin-top: 3px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a>總互動數</th>
         <th height="30">總費用</th>
       </tr>
       <tr>
         <td height="200">${totalAdPvclkCost[0]?string('#,###')!}</td>
         <td>${totalAdPvclkCost[1]?string('#,###')!}</td>        
-        <td>NT$ ${totalAdPvclkCost[2]?string('#,###')!}</td>
+        <td>NT$ ${totalAdPvclkCost[2]?string('#,###.##')!}</td>
       </tr>
     </table></td>
     <td width="618"><@t.insertAttribute name="chartTable" /></td>
@@ -96,6 +94,5 @@
 </div>
 
 <div id="tableList"></div>
-
-
 </div>
+

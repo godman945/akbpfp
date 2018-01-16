@@ -8,16 +8,19 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.dao.ad.PfpAdDAO;
+import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.service.BaseService;
+import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
+import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
 public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdService{
-
+	
 	public List<PfpAd> getAllPfpAds() throws Exception{
 		return ((PfpAdDAO)dao).loadAll();
 	}
@@ -135,33 +138,44 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 					adAdViewVOs = new ArrayList<PfpAdAdViewVO>();
 				}
 
-				PfpAdAdViewVO adAdViewVO = new PfpAdAdViewVO();
-				adAdViewVO.setAdActionSeq(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionSeq());
-				adAdViewVO.setAdActionName(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName());
+				PfpAdAdViewVO pfpAdAdViewVO = new PfpAdAdViewVO();
+				pfpAdAdViewVO.setAdActionSeq(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionSeq());
+				pfpAdAdViewVO.setAdActionName(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName());
+				
+				System.out.println(pfpAd.getPfpAdGroup().getAdGroupPriceType());
+				// 計費方式
+				for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+					if(enumAdPriceType.getDbTypeName().equals(pfpAd.getPfpAdGroup().getAdGroupPriceType())){
+						pfpAdAdViewVO.setAdPriceType(enumAdPriceType.getTypeName());
+						break;
+					}
+				}
+				
 				// 廣告類型
 				for(EnumAdType type:EnumAdType.values()){
 					int adType = pfpAd.getAdStatus();
 					if(type.getType() == adType){
-						adAdViewVO.setAdType(type.getChName());
+						pfpAdAdViewVO.setAdType(type.getChName());
+						break;
 					}
 				}
 
-				adAdViewVO.setAdGroupSeq(pfpAd.getPfpAdGroup().getAdGroupSeq());
-				adAdViewVO.setAdGroupName(pfpAd.getPfpAdGroup().getAdGroupName());
-				adAdViewVO.setAdSeq(pfpAd.getAdSeq());
-				adAdViewVO.setAdTemplateNo(pfpAd.getTemplateProductSeq());
-				adAdViewVO.setAdStyle(pfpAd.getAdStyle());
+				pfpAdAdViewVO.setAdGroupSeq(pfpAd.getPfpAdGroup().getAdGroupSeq());
+				pfpAdAdViewVO.setAdGroupName(pfpAd.getPfpAdGroup().getAdGroupName());
+				pfpAdAdViewVO.setAdSeq(pfpAd.getAdSeq());
+				pfpAdAdViewVO.setAdTemplateNo(pfpAd.getTemplateProductSeq());
+				pfpAdAdViewVO.setAdStyle(pfpAd.getAdStyle());
 
 				for(EnumStatus status:EnumStatus.values()){
 					int adStatus = pfpAd.getAdStatus();
 
 					if(status.getStatusId() == adStatus){
-						adAdViewVO.setAdStatus(adStatus);
-						adAdViewVO.setAdStatusDesc(status.getStatusRemark());
+						pfpAdAdViewVO.setAdStatus(adStatus);
+						pfpAdAdViewVO.setAdStatusDesc(status.getStatusRemark());
 					}
 				}
 
-				adAdViewVO.setAdRejectReason(pfpAd.getAdVerifyRejectReason());
+				pfpAdAdViewVO.setAdRejectReason(pfpAd.getAdVerifyRejectReason());
 
 				// 依照廣告活動序號，讀取、設定廣告成效，沒有廣告成效的，就不用設定了
 				if(pfpAdReports != null && pfpAdReports.size() > 0 && pfpAdReports.get(pfpAd.getAdSeq()) != null) {
@@ -171,15 +185,12 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 						int clk = Integer.parseInt(obj[2].toString());
 						float clkPrice = Float.parseFloat(obj[3].toString());
 						int invalidClk = Integer.parseInt(obj[4].toString());
-						//float invalidClkPrice = Float.parseFloat(obj[5].toString());
-
-						//clk = clk - invalidClk;
-						//clkPrice = clkPrice - invalidClkPrice;
-
-						adAdViewVO.setAdPv(pv);
-						adAdViewVO.setAdClk(clk);
-						adAdViewVO.setInvalidClk(invalidClk);
-						adAdViewVO.setAdClkPrice(clkPrice);
+						float thousandsCost = 0;
+						
+						pfpAdAdViewVO.setAdPv(pv);
+						pfpAdAdViewVO.setAdClk(clk);
+						pfpAdAdViewVO.setInvalidClk(invalidClk);
+						pfpAdAdViewVO.setAdClkPrice(clkPrice);
 
 						// 求點閱率
 						float clkRate = 0;
@@ -192,9 +203,12 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 						if(clkPrice > 0 || clk > 0){
 							clkPriceAvg = clkPrice / clk;
 						}
-
-						adAdViewVO.setAdClkRate(clkRate);
-						adAdViewVO.setAdClkPriceAvg(clkPriceAvg);
+						//千次曝光費用
+						thousandsCost = (clkPrice / ((float)pv / 1000) );
+						
+						pfpAdAdViewVO.setThousandsCost(thousandsCost);
+						pfpAdAdViewVO.setAdClkRate(clkRate);
+						pfpAdAdViewVO.setAdClkPriceAvg(clkPriceAvg);
 					}
 				}
 
@@ -202,46 +216,46 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				if(StringUtils.equals("c_x05_po_tad_0059", pfpAd.getAdAssignTadSeq())){
 					html5Tag = "Y";
 				}
-				adAdViewVO.setHtml5Tag(html5Tag);
+				pfpAdAdViewVO.setHtml5Tag(html5Tag);
 				
 				for (PfpAdDetail pfpAdDetail: pfpAd.getPfpAdDetails()) {
 				    if ("real_url".equals(pfpAdDetail.getAdDetailId())) {
-				        adAdViewVO.setRealUrl(pfpAdDetail.getAdDetailContent());
+				        pfpAdAdViewVO.setRealUrl(pfpAdDetail.getAdDetailContent());
 				    }
 				    if ("title".equals(pfpAdDetail.getAdDetailId())) {
-				        adAdViewVO.setTitle(pfpAdDetail.getAdDetailContent());
+				        pfpAdAdViewVO.setTitle(pfpAdDetail.getAdDetailContent());
 				    }
 				    
 				    if(StringUtils.equals("Y", html5Tag)){
 				    	if ("img".equals(pfpAdDetail.getAdDetailId())) {
-				    		adAdViewVO.setImg(pfpAdDetail.getAdDetailContent());
-				    		adAdViewVO.setOriginalImg(pfpAdDetail.getAdDetailContent());
+				    		pfpAdAdViewVO.setImg(pfpAdDetail.getAdDetailContent());
+				    		pfpAdAdViewVO.setOriginalImg(pfpAdDetail.getAdDetailContent());
 				    	}
 				    	if("zip".equals(pfpAdDetail.getAdDetailId())){
-				    		adAdViewVO.setZipTitle(pfpAdDetail.getAdDetailContent());
+				    		pfpAdAdViewVO.setZipTitle(pfpAdDetail.getAdDetailContent());
 				    	}
 				    	if("size".equals(pfpAdDetail.getAdDetailId())){
 				    		String[] sizeArray = pfpAdDetail.getAdDetailContent().split("x");
-				    		adAdViewVO.setImgWidth(sizeArray[0].trim());
-				    		adAdViewVO.setImgHeight(sizeArray[1].trim());
+				    		pfpAdAdViewVO.setImgWidth(sizeArray[0].trim());
+				    		pfpAdAdViewVO.setImgHeight(sizeArray[1].trim());
 				    	}
 				    } else {
 				    	if ("img".equals(pfpAdDetail.getAdDetailId())) {
-	                        adAdViewVO.setImg(pfpAdDetail.getAdDetailContent());
-	                        if(adAdViewVO.getImg().indexOf("original") == -1){
-	                        	if(adAdViewVO.getImg().lastIndexOf("/") >= 0){
-	                        		imgFilename = adAdViewVO.getImg().substring(adAdViewVO.getImg().lastIndexOf("/"));
-	                        		adAdViewVO.setOriginalImg(adAdViewVO.getImg().replace(imgFilename, "/original" + imgFilename));	
+	                        pfpAdAdViewVO.setImg(pfpAdDetail.getAdDetailContent());
+	                        if(pfpAdAdViewVO.getImg().indexOf("original") == -1){
+	                        	if(pfpAdAdViewVO.getImg().lastIndexOf("/") >= 0){
+	                        		imgFilename = pfpAdAdViewVO.getImg().substring(pfpAdAdViewVO.getImg().lastIndexOf("/"));
+	                        		pfpAdAdViewVO.setOriginalImg(pfpAdAdViewVO.getImg().replace(imgFilename, "/original" + imgFilename));	
 	                        	}
-	                        	adAdViewVO.setOriginalImg(adAdViewVO.getImg());
+	                        	pfpAdAdViewVO.setOriginalImg(pfpAdAdViewVO.getImg());
 	                        } else {
-	                        	adAdViewVO.setOriginalImg(adAdViewVO.getImg());
+	                        	pfpAdAdViewVO.setOriginalImg(pfpAdAdViewVO.getImg());
 	                        }
 	                    }
 				    }
 				}
 
-				adAdViewVOs.add(adAdViewVO);
+				adAdViewVOs.add(pfpAdAdViewVO);
 			}
 		}
 
@@ -258,6 +272,93 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
     public List<PfpAd> validAdAd(String adGroupSeq) throws Exception{
 		return ((PfpAdDAO)dao).validAdAd(adGroupSeq);
 	}
-
-
+	
+	/*
+	 * 取得影音廣告明細總數
+	 * */
+	public AdReportVO getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
+		
+		List<Object> lisObj =  ((PfpAdDAO)dao).getAdAdVideoDetailViewCount(pfpAdAdViewConditionVO);
+		AdReportVO adReportVO = new AdReportVO();
+		for (Object object : lisObj) {
+			Object[] objArray = (Object[]) object;
+			adReportVO.setAdPvSum(objArray[0].toString());
+			adReportVO.setAdClkSum(objArray[1].toString());
+			adReportVO.setAdPriceSum(objArray[2].toString());
+			adReportVO.setAdInvClkSum(objArray[3].toString());
+			adReportVO.setAdClickRatings(objArray[4].toString());
+			adReportVO.setSingleCost(objArray[5].toString());
+			adReportVO.setThousandsCost(objArray[6].toString());
+		}
+		
+		return adReportVO;
+	}
+	
+	
+	/*
+	 * 取得影音廣告明細
+	 * */
+	public List<AdReportVO> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception {
+		List<Object> lisObj = ((PfpAdDAO)dao).getAdAdVideoDetailView(pfpAdAdViewConditionVO);
+		
+		List<AdReportVO> adReportVOList = null;
+		if(lisObj.size() > 0 ){
+			adReportVOList = new ArrayList<>();
+		}
+		
+		for (Object object : lisObj) {
+			Object[] objArray = (Object[]) object;
+			AdReportVO adReportVO = new AdReportVO();
+			adReportVO.setAdPvSum(objArray[0].toString());
+			adReportVO.setAdClkSum(objArray[1].toString());
+			adReportVO.setAdPriceSum(objArray[2].toString());
+			adReportVO.setAdInvClkSum(objArray[3].toString());
+			adReportVO.setAdClickRatings(objArray[4].toString());
+			adReportVO.setSingleCost(objArray[5].toString());
+			adReportVO.setThousandsCost(objArray[6].toString());
+			adReportVO.setAdSeq(objArray[10].toString());
+			adReportVO.setAdOperatingRule(objArray[11].toString());
+			adReportVO.setAdActionName(objArray[13].toString());
+			adReportVO.setCustomerInfoId(objArray[14].toString());
+			adReportVO.setAdClkPriceType(objArray[15].toString());
+			adReportVO.setAdVideoUrl(objArray[18].toString());
+			adReportVO.setRealUrl(objArray[19].toString());
+			adReportVO.setImg(objArray[20].toString());
+			adReportVO.setContent(objArray[22].toString());
+			
+			String[] sizeArray = ((String)objArray[21]).split("_");
+			if(sizeArray.length == 2){
+				adReportVO.setAdWidth(sizeArray[0]);
+				adReportVO.setAdHeight(sizeArray[1]);
+			}
+			
+			String secs = objArray[17].toString();
+			if(secs.length() == 2){
+				adReportVO.setAdVideoSec("00:"+secs);
+			}else if(secs.length() == 1){
+				adReportVO.setAdVideoSec("00:0"+secs);
+			}
+			
+			int adActionStatus = (Integer)objArray[7];
+			for (EnumStatus enumStatus : EnumStatus.values()) {
+				if(adActionStatus == enumStatus.getStatusId()){
+					adReportVO.setAdStatusDesc(enumStatus.getStatusDesc());
+					adReportVO.setAdActionStatus(String.valueOf(objArray[7]));
+					break;
+				}
+			}
+			
+			String adPriceType = objArray[15].toString();
+			for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+				if(adPriceType.equals(enumAdPriceType.getDbTypeName())){
+					adReportVO.setAdClkPriceType(enumAdPriceType.getTypeName());
+					break;
+				}
+			}
+			adReportVOList.add(adReportVO);
+		}
+		return adReportVOList;
+	}
 }
+
+

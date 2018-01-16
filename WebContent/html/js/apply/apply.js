@@ -160,6 +160,8 @@ $(document).ready(function(){
 	// 地址
 	$("#address").val($("#memberAddress").val());
 	
+	checkGiftSno();
+	
 	// 儲值付款
 	$("#save").click(function(){
 		

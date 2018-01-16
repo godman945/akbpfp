@@ -4,10 +4,10 @@
                      度量:
       	<select id="selectChartType"> 
       		<option value="pv">曝光數</option> 
-      		<option value="click">點選次數</option>
-      		<option value="ctr">點選率</option> 
-      		<option value="invalid">無效點選次數</option> 
-      		<option value="avgCost">平均點選費用</option>
+      		<option value="click">互動數</option>
+      		<option value="ctr">互動率</option> 
+      		<option value="avgCost">單次互動費用</option>
+      		<option value="kiloCost">千次曝光費用</option>
       		<option value="cost">費用</option> 
       	</select>
       	<input type="button" value="重繪圖表" id="reloadFlash">

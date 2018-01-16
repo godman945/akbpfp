@@ -193,8 +193,8 @@ public class AdFreeAddAction extends BaseCookieAction{
 			pfpAdGroupService.savePfpAdGroup(pfpAdGroup);
 			pfpAdActionService.updatePfpAdActionStatus(Integer.toString(EnumStatus.Open.getStatusId()), pfpAdAction.getAdActionSeq());
 			
-			//系統價更新
-			syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, 3f);
+			//系統價更新 2018-01-12 停止更新價格出價以JOB為主
+//			syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, 3f);
 		}
 	}
 	

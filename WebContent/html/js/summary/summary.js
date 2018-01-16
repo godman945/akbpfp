@@ -1,4 +1,4 @@
-﻿$(document).ready(function(){
+﻿﻿$(document).ready(function(){
 
 	ready();
 	
@@ -163,7 +163,7 @@ function loadChart(){
 			"chartType" : $('#selectChartType').val()
 		},
 		success : function(respone) {
-			console.log(respone);
+//			console.log(respone);
 			dataArray = respone;
 		}
 	});
@@ -199,7 +199,7 @@ function loadChart(){
 			selectSuffix = "次";
 			break;
 		case "click":
-			titleName = "點選次數(次)";
+			titleName = "互動數(次)";
 			selectTypeName = "點選次數";
 			selectSuffix = "次";
 			break;
@@ -207,6 +207,7 @@ function loadChart(){
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			decimals = 2;
 			break;
 	}
 	

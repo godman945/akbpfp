@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
@@ -50,8 +52,8 @@ public class ReportExcerptAction extends BaseReportAction {
 
 	private LinkedList<LinkedList<String>> tableDataList =null; // 頁面 table data
 
-	private String[] align_data = {"left", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"left", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "right"};
 
 	private IAdActionReportService adActionReportService=null;
 	private IAdGroupReportService adGroupReportService=null;
@@ -89,6 +91,7 @@ public class ReportExcerptAction extends BaseReportAction {
 	private String searchText=""; //搜尋文字
 	private String adShowWay=""; //全部,搜尋廣告,聯播廣告
 	private String searchId=""; //廣告id,分類id,廣告明細id,關鍵字id
+	private String adOperatingRule;//廣告樣式
 
 	private String stepStr="";//頁面顯示,目前位址,廣告活動-->act01-->
 	
@@ -113,7 +116,10 @@ public class ReportExcerptAction extends BaseReportAction {
 	//關鍵字報表另外呈現
 	private List<AdKeywordReportVO> AdKeywordReportVOList;
 	private AdKeywordReportVO AdKeywordReportDataTotal;
-
+	private NumberFormat intFormat = new DecimalFormat("###,###,###,###");
+	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,##.##");
+	private NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
+	
 	/**
 	 * Chart 
 	 */
@@ -165,24 +171,20 @@ public class ReportExcerptAction extends BaseReportAction {
 		if (adType.equals(EnumReport.ADTYPE_ACTIVITY.getTextValue())) {
 
 			resultData_ad_action = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),
-					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
-			System.out.println(">>>>> 111");
+					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 		} else if (adType.equals(EnumReport.ADTYPE_GROUP.getTextValue()) ||
 				   adType.equals(EnumReport.DETAIL_GROUP.getTextValue()) ||
 				   adType.equals(EnumReport.DETAIL_ACTIVITY.getTextValue())) {
-			System.out.println(">>>>> 222");
 			resultData_ad_group = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),
-					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 		} else if (adType.equals(EnumReport.ADTYPE_KEYWORD.getTextValue())) {
-			System.out.println(">>>>> 333");
 			resultData_kw = adKeywordReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),
 					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
 
 		} else if (adType.equals(EnumReport.ADTYPE_AD.getTextValue())) {
-			System.out.println(">>>>> 444");
 			resultData_ad = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE_CHART.getTextValue(),
-					searchId, "", searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+					searchId, "", searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 		}
 		
 		Map<Date,Float> flashDataMap=new HashMap<Date,Float>();
@@ -200,6 +202,7 @@ public class ReportExcerptAction extends BaseReportAction {
 		double invClick = 0;
 		double ctr = 0;
 		double costAvg = 0;
+		double kiloCost = 0;
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -211,21 +214,26 @@ public class ReportExcerptAction extends BaseReportAction {
 				costAvg = 0;
 				
 				AdActionReportVO vo = resultData_ad_action.get(i);
-
 				Date reportDate = vo.getReportDate();
 				pv = vo.getAdPvSum().doubleValue();
 				click = vo.getAdClkSum().doubleValue();
 				cost = vo.getAdPriceSum().doubleValue();
+				cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 				invClick = vo.getAdInvClkSum().doubleValue();
 
-				//點選率 = 點選次數 / 曝光數
+				//互動率 = 互動次數 / 曝光數
 				if (pv>0 && click>0) {
 					ctr = (click / pv) * 100;
 				}
 
-				//平均點選費用 = 總費用 / 總點選次數
+				//單次互動費用 = 總費用 / 總互動次數
 				if (cost>0 && click>0) {
 					costAvg = cost / click;
+				}
+
+				//千次曝光費用 = 總費用*1000 / 曝光數
+				if(cost>0 && pv>0){
+					 kiloCost = (cost * 1000) / pv;
 				}
 
 				if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
@@ -238,7 +246,9 @@ public class ReportExcerptAction extends BaseReportAction {
 					flashDataMap.put(reportDate, new Float((float) invClick));
 				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 					flashDataMap.put(reportDate, new Float((float) costAvg));
-				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+					flashDataMap.put(reportDate, new Float((float) kiloCost));
+	            } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 					flashDataMap.put(reportDate, new Float((float) cost));
 				}
 			}
@@ -256,16 +266,22 @@ public class ReportExcerptAction extends BaseReportAction {
 					pv = vo.getAdPvSum().doubleValue();
 					click = vo.getAdClkSum().doubleValue();
 					cost = vo.getAdPriceSum().doubleValue();
+					cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 					invClick = vo.getAdInvClkSum().doubleValue();
 
-					//點選率 = 點選次數 / 曝光數
+					//互動率 = 互動次數 / 曝光數
 					if (pv>0 && click>0) {
 						ctr = (click / pv) * 100;
 					}
 
-					//平均點選費用 = 總費用 / 總點選次數
+					//單次互動費用 = 總費用 / 總互動次數
 					if (cost>0 && click>0) {
 						costAvg = cost / click;
+					}
+
+					//千次曝光費用 = 總費用*1000 / 曝光數
+					if(cost>0 && pv>0){
+						 kiloCost = (cost * 1000) / pv;
 					}
 
 					if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
@@ -278,7 +294,9 @@ public class ReportExcerptAction extends BaseReportAction {
 						flashDataMap.put(reportDate, new Float((float) invClick));
 					} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 						flashDataMap.put(reportDate, new Float((float) costAvg));
-					} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+					} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+						flashDataMap.put(reportDate, new Float((float) kiloCost));
+		            } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 						flashDataMap.put(reportDate, new Float((float) cost));
 					}
 				}
@@ -427,16 +445,22 @@ public class ReportExcerptAction extends BaseReportAction {
 				pv = Double.parseDouble(vo.getAdPvSum());
 				click = Double.parseDouble(vo.getAdClkSum());
 				cost = Double.parseDouble(vo.getAdPriceSum());
+				cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 				invClick = Double.parseDouble(vo.getAdInvClkSum());
 
-				//點選率 = 點選次數 / 曝光數
+				//互動率 = 互動次數 / 曝光數
 				if (pv>0 && click>0) {
 					ctr = (click / pv) * 100;
 				}
 
-				//平均點選費用 = 總費用 / 總點選次數
+				//單次互動費用 = 總費用 / 總互動次數
 				if (cost>0 && click>0) {
 					costAvg = cost / click;
+				}
+
+				//千次曝光費用 = 總費用*1000 / 曝光數
+				if(cost>0 && pv>0){
+					 kiloCost = (cost * 1000) / pv;
 				}
 				
 				if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
@@ -449,7 +473,9 @@ public class ReportExcerptAction extends BaseReportAction {
 					flashDataMap.put(reportDate, new Float((float) invClick));
 				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 					flashDataMap.put(reportDate, new Float((float) costAvg));
-				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+				} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+					flashDataMap.put(reportDate, new Float((float) kiloCost));
+	            } else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 					flashDataMap.put(reportDate, new Float((float) cost));
 				}
 			}
@@ -476,16 +502,17 @@ public class ReportExcerptAction extends BaseReportAction {
 
 		tableHeadNameMap=new HashMap<String,String>();
 		tableHeadNameMap.put("曝光數", EnumReport.REPORT_CHART_TYPE_PV.getTextValue());
-		tableHeadNameMap.put("點選次數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
-		tableHeadNameMap.put("點選率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
+		tableHeadNameMap.put("互動數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
+		tableHeadNameMap.put("互動率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
 		tableHeadNameMap.put("無效點選次數", EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue());
-		tableHeadNameMap.put("平均點選費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
 		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
 
 		optionSelect="";
 		optionNotSelect="";
 
-		optionSelect="曝光數,點選次數,點選率,無效點選次數,平均點選費用,費用";
+		optionSelect="曝光數,互動數,互動率,無效點選次數,單次互動費用,千次曝光費用,費用";
 
 		tableHeadShowList=new LinkedList<String>();
 
@@ -503,8 +530,8 @@ public class ReportExcerptAction extends BaseReportAction {
 		String customerInfoId=super.getCustomer_info_id();
 		log.info(">>> customerInfoId = " + customerInfoId);
 
-		tableHeadList=new LinkedList<String>();//table head
-		tableDataList=new LinkedList<LinkedList<String>>();//table data
+		tableHeadList = new LinkedList<String>();//table head
+		tableDataList = new LinkedList<LinkedList<String>>();//table data
 
 		//自訂欄位選擇
 		if(StringUtils.isNotEmpty(optionSelect)){
@@ -608,8 +635,18 @@ public class ReportExcerptAction extends BaseReportAction {
 		log.info(">>> endDate = " + endDate);
 
 		tableHeadList.addFirst("裝置");
-		tableHeadList.addFirst("狀態");
-		tableHeadList.addFirst("類型");
+		if(adType.equals(EnumReport.ADTYPE_KEYWORD.getTextValue())){
+			tableHeadList.addFirst("狀態");
+		} else {
+			if(adType.equals(EnumReport.ADTYPE_ACTIVITY.getTextValue())){
+				tableHeadList.addFirst("走期");
+			} else {
+				tableHeadList.addFirst("計價方式");
+			}
+			tableHeadList.addFirst("狀態");
+			tableHeadList.addFirst("廣告樣式");
+		}
+		tableHeadList.addFirst("播放類型");
 
 //廣告層********************************************************************************************************
 		if(adType.equals(EnumReport.ADTYPE_ACTIVITY.getTextValue())){
@@ -620,14 +657,15 @@ public class ReportExcerptAction extends BaseReportAction {
 			//第一欄位
 			tableHeadList.addFirst("廣告");
 
-			//搜尋結果
+			//搜尋總計結果
 			List<AdActionReportVO> resultSumData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue(),
-					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 			totalPageSize = resultSumData.size();
 
+			//搜尋明細結果
 			List<AdActionReportVO> resultData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue(),
-					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+					searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 
 			if (resultSumData!=null && resultSumData.size()>0) {
 				resultSumDataTrans_ad_action(resultSumData);
@@ -676,12 +714,12 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			//搜尋結果
 			List<AdGroupReportVO> resultSumData = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue(),
-					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 			totalPageSize = resultSumData.size();
 
 			List<AdGroupReportVO> resultData = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue(),
-					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+					searchId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 
 			if (resultSumData!=null && resultSumData.size()>0) {
 				resultSumDataTrans_ad_group(resultSumData);
@@ -798,11 +836,11 @@ public class ReportExcerptAction extends BaseReportAction {
 			}
 
 			//搜尋結果
-			List<AdReportVO> resultSumData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE_COUNT.getTextValue(), searchId, "", searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+			List<AdReportVO> resultSumData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE_COUNT.getTextValue(), searchId, "", searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 			totalPageSize = resultSumData.size();
 
-			List<AdReportVO> resultData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue(), searchId, "", searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+			List<AdReportVO> resultData = adReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_ADVERTISE.getTextValue(), searchId, "", searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 
 			if (resultSumData!=null && resultSumData.size()>0) {
 				resultSumDataTrans_ad(resultSumData);
@@ -859,8 +897,16 @@ public class ReportExcerptAction extends BaseReportAction {
 		content.append("\n\n");
 		content.append("報表名稱,PChome 總廣告成效");
 		content.append("\n\n");
-		content.append("廣告方式," + getAdShowWayMap().get(adShowWay));
-		content.append("\n\n");
+		content.append("播放類型," + getAdShowWayMap().get(adShowWay));
+		content.append("\n");
+		content.append("廣告樣式," + getAdStyleTypeMap().get(adOperatingRule));
+		content.append("\n");
+		content.append("裝置," + getAdPvclkDeviceMap().get(adPvclkDevice));
+		content.append("\n");
+		content.append("搜尋條件," + getAdSearchWayMap().get(adSearchWay));
+		content.append("\n");
+		content.append("搜尋內容," + searchText);
+		content.append("\n");
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
 
@@ -986,9 +1032,9 @@ public class ReportExcerptAction extends BaseReportAction {
 						if(s == null){
 							s = " ";
 						}
-						if(dataNumber == 12 || dataNumber == 13){
-							content.append("\"NT$ " + s + "\"");
-						} else if(dataNumber == 10){
+						if(dataNumber == 14 || dataNumber == 15 || dataNumber == 16){
+							content.append(StringEscapeUtils.escapeCsv("=\"NT$"+s+"\""));
+						} else if(dataNumber == 12){
 							content.append("\"" + s + "%\"");
 						} else {
 							content.append("\"" + s + "\"");	
@@ -1003,9 +1049,9 @@ public class ReportExcerptAction extends BaseReportAction {
 				if (tableDataTotalList!=null) {
 					int dataTotalNumber = 1;
 					for(String s:tableDataTotalList){
-						if(dataTotalNumber == 12 || dataTotalNumber == 13){
-							content.append("\"NT$ " + s + "\"");
-						} else if(dataTotalNumber == 10){
+						if(dataTotalNumber == 14 || dataTotalNumber == 15 || dataTotalNumber == 16){
+							content.append(StringEscapeUtils.escapeCsv("=\"NT$"+s+"\""));
+						} else if(dataTotalNumber == 12){
 							content.append("\"" + s + "%\"");
 						} else {
 							content.append("\"" + s + "\"");
@@ -1019,9 +1065,9 @@ public class ReportExcerptAction extends BaseReportAction {
 				for(LinkedList<String> sl:tableDataList){
 					int dataNumber = 1;
 					for(String s:sl){
-						if(dataNumber == 9 || dataNumber == 10){
-							content.append("\"NT$ " + s + "\"");
-						} else if(dataNumber == 7){
+						if(dataNumber == 11 || dataNumber == 12 || dataNumber == 13){
+							content.append(StringEscapeUtils.escapeCsv("=\"NT$"+s+"\""));
+						} else if(dataNumber == 9){
 							content.append("\"" + s + "%\"");
 						} else {
 							content.append("\"" + s + "\"");	
@@ -1036,9 +1082,9 @@ public class ReportExcerptAction extends BaseReportAction {
 				if (tableDataTotalList!=null) {
 					int dataTotalNumber = 1;
 					for(String s:tableDataTotalList){
-						if(dataTotalNumber == 9 || dataTotalNumber == 10){
-							content.append("\"NT$ " + s + "\"");
-						} else if(dataTotalNumber == 7){
+						if(dataTotalNumber == 11 || dataTotalNumber == 12 || dataTotalNumber == 13){
+							content.append(StringEscapeUtils.escapeCsv("=\"NT$"+s+"\""));
+						} else if(dataTotalNumber == 9){
 							content.append("\"" + s + "%\"");
 						} else {
 							content.append("\"" + s + "\"");
@@ -1065,42 +1111,45 @@ public class ReportExcerptAction extends BaseReportAction {
 	}
 
 	private void resultSumDataTrans_ad_action(List<AdActionReportVO> resultSumData) throws Exception {
-
-		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,##0.00");
-
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
+		tableDataTotalList.add("");
+		tableDataTotalList.add("");
 
 		double t_pv = 0; //總曝光數
-		double t_click = 0; //總點選次數
-		double t_ctr = 0; //點選率
+		double t_click = 0; //總互動數
+		double t_ctr = 0; //互動率
 		double t_invalid = 0; //無效點選次數
-		double t_costAvg = 0; //平均點選費用
+		double t_costAvg = 0; //單次互動費用
+		double t_kiloCost = 0;	//千次曝光費用
 		double t_cost = 0; //總費用
 
 		//加總
 		for (int i=0; i<resultSumData.size(); i++) {
-
 			AdActionReportVO vo = resultSumData.get(i);
-
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += new Double(vo.getAdPriceSum());
+			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-
-		//點選率 = 總點選次數 / 總曝光數
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
+		
+		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
 		}
 
-		//平均點選費用 = 總費用 / 總點選次數
+		//單次互動費用 = 總費用 / 總互動次數
 		if (t_cost>0 && t_click>0) {
 			t_costAvg = t_cost / t_click;
+		}
+		
+		//千次曝光費用 = 總費用*1000 / 曝光數
+		if(t_cost>0 && t_pv>0){
+			t_kiloCost = (t_cost * 1000) / t_pv;
 		}
 		
 		if (!tableHeadShowList.isEmpty()) {
@@ -1117,8 +1166,10 @@ public class ReportExcerptAction extends BaseReportAction {
 					tableDataTotalList.addLast(intFormat.format(t_invalid));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_costAvg));
+				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat2.format(t_cost));
 				}
 			}
 		}
@@ -1134,12 +1185,15 @@ public class ReportExcerptAction extends BaseReportAction {
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
+		tableDataTotalList.add("");
+		tableDataTotalList.add("");
 
 		double t_pv = 0; //總曝光數
-		double t_click = 0; //總點選次數
-		double t_ctr = 0; //點選率
+		double t_click = 0; //總互動數
+		double t_ctr = 0; //互動率
 		double t_invalid = 0; //無效點選次數
-		double t_costAvg = 0; //平均點選費用
+		double t_costAvg = 0; //單次互動費用
+		double t_kiloCost = 0;	//千次曝光費用
 		double t_cost = 0; //總費用
 
 		//加總
@@ -1152,15 +1206,21 @@ public class ReportExcerptAction extends BaseReportAction {
 			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-
-		//點選率 = 總點選次數 / 總曝光數
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
+		
+		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
 		}
 
-		//平均點選費用 = 總費用 / 總點選次數
+		//單次互動費用 = 總費用 / 總互動次數
 		if (t_cost>0 && t_click>0) {
 			t_costAvg = t_cost / t_click;
+		}
+		
+		//千次曝光費用 = 總費用*1000 / 曝光數
+		if(t_cost>0 && t_pv>0){
+			t_kiloCost = (t_cost * 1000) / t_pv;
 		}
 		
 		if (!tableHeadShowList.isEmpty()) {
@@ -1177,8 +1237,10 @@ public class ReportExcerptAction extends BaseReportAction {
 					tableDataTotalList.addLast(intFormat.format(t_invalid));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_costAvg));
+				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat2.format(t_cost));
 				}
 			}
 		}
@@ -1233,7 +1295,7 @@ public class ReportExcerptAction extends BaseReportAction {
 			//廣泛比對
 			t_pv += new Double(keywordReportVO.getKwPvSum());
 			t_click += new Double(keywordReportVO.getKwClkSum());
-			t_cost += new Double(keywordReportVO.getKwPriceSum());
+			t_cost += Math.round(new Double(keywordReportVO.getKwPriceSum()));
 			t_invalid += new Double(keywordReportVO.getKwInvClkSum());
 			
 			//詞組比對
@@ -1370,12 +1432,10 @@ public class ReportExcerptAction extends BaseReportAction {
 	}
 
 	private void resultSumDataTrans_ad(List<AdReportVO> resultSumData_ad) {
-
-		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,##0.00");
-
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData_ad.size()));
+		tableDataTotalList.add("");
+		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
@@ -1386,31 +1446,36 @@ public class ReportExcerptAction extends BaseReportAction {
 		}
 
 		double t_pv = 0; //總曝光數
-		double t_click = 0; //總點選次數
-		double t_ctr = 0; //點選率
+		double t_click = 0; //總互動數
+		double t_ctr = 0; //互動率
 		double t_invalid = 0; //無效點選次數
-		double t_costAvg = 0; //平均點選費用
+		double t_costAvg = 0; //單次互動費用
+		double t_kiloCost = 0;	//千次曝光費用
 		double t_cost = 0; //總費用
 
 		//加總
 		for (int i=0; i<resultSumData_ad.size(); i++) {
-
 			AdReportVO vo = resultSumData_ad.get(i);
-
 			t_pv += new Double(vo.getAdPvSum());
 			t_click += new Double(vo.getAdClkSum());
 			t_cost += new Double(vo.getAdPriceSum());
 			t_invalid += new Double(vo.getAdInvClkSum());
 		}
-
-		//點選率 = 總點選次數 / 總曝光數
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
+		
+		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
 		}
 
-		//平均點選費用 = 總費用 / 總點選次數
+		//單次互動費用 = 總費用 / 總互動次數
 		if (t_cost>0 && t_click>0) {
 			t_costAvg = t_cost / t_click;
+		}
+		
+		//千次曝光費用 = 總費用*1000 / 曝光數
+		if(t_cost>0 && t_pv>0){
+			t_kiloCost = (t_cost * 1000) / t_pv;
 		}
 		
 		if (!tableHeadShowList.isEmpty()) {
@@ -1427,20 +1492,17 @@ public class ReportExcerptAction extends BaseReportAction {
 					tableDataTotalList.addLast(intFormat.format(t_invalid));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_costAvg));
+				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat2.format(t_cost));
 				}
 			}
 		}
 	}
 
 	private void resultDataTrans_ad_action(List<AdActionReportVO> resultData) throws Exception {
-
 		LinkedList<String> tableInDataList;
-
-		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,##0.00");
-
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -1450,9 +1512,9 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			tableInDataList = new LinkedList<String>();
 
-			AdActionReportVO vo = resultData.get(i);
+			AdActionReportVO adActionReportVO = resultData.get(i);
 
-			String adActionSeq = vo.getAdActionSeq();
+			String adActionSeq = adActionReportVO.getAdActionSeq();
 
 			PfpAdAction pfpAdAction =  adActionService.getPfpAdActionBySeq(adActionSeq);
 
@@ -1461,25 +1523,31 @@ public class ReportExcerptAction extends BaseReportAction {
 		    String adActionStartDate = dateFormat2.format(pfpAdAction.getAdActionStartDate());
 		    String adActionEndDate = dateFormat2.format(pfpAdAction.getAdActionEndDate());
 
-			double pv = vo.getAdPvSum().doubleValue();
-			double click = vo.getAdClkSum().doubleValue();
-			double cost = new Double(vo.getAdPriceSum());
-			double invClick = vo.getAdInvClkSum().doubleValue();
+			double pv = adActionReportVO.getAdPvSum().doubleValue();
+			double click = adActionReportVO.getAdClkSum().doubleValue();
+			double cost = new Double(adActionReportVO.getAdPriceSum());
+			double invClick = adActionReportVO.getAdInvClkSum().doubleValue();
 			double ctr = 0;
 			double costAvg = 0;
-			String adType = vo.getAdType();
-			String adDevice = vo.getAdDevice();
+			double kiloCost = 0;
+			String adType = adActionReportVO.getAdType();
+			String adDevice = adActionReportVO.getAdDevice();
+			String adOperatingRuleName = adActionReportVO.getAdOperatingRuleDesc();
 
-			//點選率 = 點選次數 / 曝光數
+			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
 				ctr = (click / pv) * 100;
 			}
 
-			//平均點選費用 = 總費用 / 總點選次數
+			//單次互動費用 = 總費用 / 總互動次數
 			if (cost>0 && click>0) {
 				costAvg = cost / click;
 			}
 
+			//千次曝光費用 = 總費用*1000 / 曝光數
+			if(cost>0 && pv>0){
+				kiloCost = (cost * 1000) / pv;
+			}
 			//狀態為開啟的話必須判斷走期( 待播放 or 走期中 or 已結束 )
 			if (adActionStatus == EnumStatus.Open.getStatusId()) {
 				long startDate = (dateFormat.parse(adActionStartDate + " 00:00:00")).getTime();
@@ -1500,7 +1568,16 @@ public class ReportExcerptAction extends BaseReportAction {
 			}
 
 			tableInDataList.addLast(adType);
+			tableInDataList.addLast(adOperatingRuleName);
 			tableInDataList.addLast(getAdStatusMap().get(Integer.toString(adActionStatus)));
+			
+			if (adActionEndDate.equals("3000-12-31")) {
+				adActionEndDate = "永久";
+			}
+
+			String adDate = adActionStartDate + " ~ " + adActionEndDate;
+
+			tableInDataList.addLast(adDate);
 			tableInDataList.addLast(adDevice);
 
 			if(!tableHeadShowList.isEmpty()){
@@ -1517,8 +1594,10 @@ public class ReportExcerptAction extends BaseReportAction {
 						tableInDataList.addLast(intFormat.format(invClick));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(costAvg));
+					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(intFormat.format(cost));
+						tableInDataList.addLast(doubleFormat2.format(cost));
 					}
 				}
 			}
@@ -1553,17 +1632,25 @@ public class ReportExcerptAction extends BaseReportAction {
 			double invClick = vo.getAdInvClkSum().doubleValue();
 			double ctr = 0;
 			double costAvg = 0;
+			double kiloCost = 0;
 			String adDevice = vo.getAdDevice();
 			String adType = vo.getAdType();
+			String adOperatingRuleName = vo.getAdOperatingRule();
+			String adClkPriceTypeName = vo.getAdClkPriceType();
 
-			//點選率 = 點選次數 / 曝光數
+			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
 				ctr = (click / pv) * 100;
 			}
 
-			//平均點選費用 = 總費用 / 總點選次數
+			//單次互動費用 = 總費用 / 總互動次數
 			if (cost>0 && click>0) {
 				costAvg = cost / click;
+			}
+
+			//千次曝光費用 = 總費用*1000 / 曝光數
+			if(cost>0 && pv>0){
+				kiloCost = (cost * 1000) / pv;
 			}
 
 			if (StringUtils.isNotEmpty(downloadFlag) && downloadFlag.equals("yes")) {
@@ -1574,7 +1661,9 @@ public class ReportExcerptAction extends BaseReportAction {
 			}
 
 			tableInDataList.addLast(adType);
+			tableInDataList.addLast(adOperatingRuleName);
 			tableInDataList.addLast(getAdStatusMap().get(Integer.toString(adGroupStatus)));
+			tableInDataList.addLast(adClkPriceTypeName);
 			tableInDataList.addLast(adDevice);
 
 			if(!tableHeadShowList.isEmpty()){
@@ -1591,8 +1680,10 @@ public class ReportExcerptAction extends BaseReportAction {
 						tableInDataList.addLast(intFormat.format(invClick));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(costAvg));
+					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(intFormat.format(cost));
+						tableInDataList.addLast(doubleFormat2.format(cost));
 					}
 				}
 			}
@@ -1618,8 +1709,6 @@ public class ReportExcerptAction extends BaseReportAction {
 		int adKeywordPhrpoen = 0;
 		int adKeywordPrepoen = 0;
 
-		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,##0.00");
 		//AdKeywordReportVOList = new ArrayList<AdKeywordReportVO>();
 		
 		for (int i=0; i<resultData.size(); i++) {
@@ -1950,10 +2039,6 @@ public class ReportExcerptAction extends BaseReportAction {
 		int adActionStatus = 0;
 		int adGroupStatus = 0;
 		int adStatus = 0;
-
-		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,##0.00");
-
 		for (int i=0; i<resultData.size(); i++) {
 
 			tableInDataList = new LinkedList<String>();
@@ -1966,23 +2051,38 @@ public class ReportExcerptAction extends BaseReportAction {
 			double invClick = new Double(adReportVO.getAdInvClkSum());
 			double ctr = 0;
 			double costAvg = 0;
+			double kiloCost = 0;
 			String adDevice = adReportVO.getAdDevice();
 			String adType = adReportVO.getAdType();
+			String adOperatingRuleName = adReportVO.getAdOperatingRuleDesc();
+			String adClkPriceTypeName = adReportVO.getAdClkPriceType();
 
-			//點選率 = 點選次數 / 曝光數
+			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
 				ctr = (click / pv) * 100;
 			}
 
-			//平均點選費用 = 總費用 / 總點選次數
+			//單次互動費用 = 總費用 / 總互動次數
 			if (cost>0 && click>0) {
 				costAvg = cost / click;
 			}
 
+			//千次曝光費用 = 總費用*1000 / 曝光數
+			if(cost>0 && pv>0){
+				kiloCost = (cost * 1000) / pv;
+			}
+
 			if(downloadFlag.equals("yes")){
-				tableInDataList.addLast(adReportVO.getTitle());
-				tableInDataList.addLast(adReportVO.getContent());
-				tableInDataList.addLast(adReportVO.getShowUrl());
+				if(adReportVO.getAdOperatingRule().equals("MEDIA")){
+					tableInDataList.addLast(adReportVO.getTitle());
+					tableInDataList.addLast(adReportVO.getContent());
+					tableInDataList.addLast(adReportVO.getShowUrl());
+				}else if(adReportVO.getAdOperatingRule().equals("VIDEO")){
+					tableInDataList.addLast(adReportVO.getTitle());
+					tableInDataList.addLast(adReportVO.getContent());
+					tableInDataList.addLast(adReportVO.getAdVideoUrl());
+				}
+				
 				tableInDataList.addLast(adReportVO.getRealUrl());
 			} else {
 				tableInDataList.addLast(adReportVO.getAdPreview());
@@ -2092,11 +2192,13 @@ public class ReportExcerptAction extends BaseReportAction {
 
 			}
 			tableInDataList.addLast(adType);
+			tableInDataList.addLast(adOperatingRuleName);
 			if(downloadFlag.equals("yes")){
 				tableInDataList.addLast(alter);
 			} else {
 				tableInDataList.addLast("<img src=\"./html/img/" + icon + "\" alt=\"" + alter + "\" title=\"" + alter + "\">");
 			}
+			tableInDataList.addLast(adClkPriceTypeName);
 			tableInDataList.addLast(adDevice);
 
 			if(!tableHeadShowList.isEmpty()){
@@ -2113,8 +2215,10 @@ public class ReportExcerptAction extends BaseReportAction {
 						tableInDataList.addLast(intFormat.format(invClick));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(costAvg));
+					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(intFormat.format(cost));
+						tableInDataList.addLast(doubleFormat2.format(cost));
 					}
 				}
 			}
@@ -2359,6 +2463,14 @@ public class ReportExcerptAction extends BaseReportAction {
 
 	public AdKeywordReportVO getAdKeywordReportDataTotal() {
 		return AdKeywordReportDataTotal;
+	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
 	}
 	
 }

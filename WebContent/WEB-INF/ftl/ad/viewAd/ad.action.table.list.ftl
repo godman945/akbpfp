@@ -19,18 +19,19 @@
 	<tr>
 		<th width="50"><a href="#" onclick="checkAll()">全選</a></th>
 		<th height="35">廣告</th>
-		<th>類型</th>
+		<th>播放類型</th>
+		<th>廣告樣式</th>
 		<th>裝置</th>
 		<th>狀態</th>
 		<th>廣告走期</th>
-		<th>每日花費</th>
+		<th width="110">每日花費</th>
 		<th style="width:7%">曝光數</th>
-		<th>點選次數</th>
-		<th>點選率</th>
-		<!--<th>無效點選次數</th>-->	
-		<th>平均點選費用</th>
+		<th><a style="float: left; margin-top: 3px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a>互動數</th>
+		<th>互動率</th>
+		<th style="min-width:65px;width:9%">單次互動費用</th>
+		<th style="min-width:65px;width:9%">千次曝光費用</th>	
 		<th style="min-width:65px;width:9%">費用</th>
-		<th>編輯</th>
+		<th style="min-width:65px;width:5%">編輯</th>
 	</tr>	
 </thead>
 <tbody>
@@ -53,6 +54,8 @@
 				</#if>		        	
 		        </td>
 		        <td class="td03">${vo.adType!}</td>
+		        <td class="td03">${vo.adOperatingRule!}</td>
+		        
 		        <td class="td03">${vo.adDevice!}</td>
 		        <td class="td03">${vo.adActionStatusDesc!}</td>
 				<td class="td03">
@@ -66,9 +69,9 @@
 				<td class="td01">${vo.adPv?string('#,###')!}</td>				
 				<td class="td01">${vo.adClk?string('#,###')!}</td>
 				<td class="td01">${vo.adClkRate?string('#.##')!}%</td>
-				<!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->
 				<td class="td01">NT$ ${vo.adClkPriceAvg?string('#.##')!}</td>
-				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
+				<td class="td01">NT$ ${vo.thousandsCost?string('#.##')!}</td>
+				<td class="td01">NT$ ${vo.adClkPrice?string('#,###.##')!}</td>
 				<td class="td02">
 					<#if vo.adActionStatus != 9>
 						<a href="adGroupAdd.html?adActionSeq=${vo.adActionSeq!}">新增分類</a><br>
@@ -89,13 +92,13 @@
 	</#if>
 </tbody>
 	<tr class="tbg">
-		<td colspan="7">總計：${totalSize!}筆</td>
+		<td colspan="8">總計：${totalSize!}筆</td>
 		<td class="td01">${totalPv?string('#,###')!}</td>				
 		<td class="td01">${totalClk?string('#,###')!}</td>	
 		<td class="td01">${totalClkRate?string('#.##')!}%</td>
-		<!--<td class="td01">${totalInvildClk?string('#.##')!}</td>-->
-		<td class="td01">NT$ ${totalAvgCost?string('#.##')!}</td>
-		<td class="td01">NT$ ${totalCost?string('#,###')!}</td>
+		<td class="td01">NT$ ${totalAvgCost?string('#,###.##')!}</td>
+		<td class="td01">NT$ ${thousandsCost?string('#,###.##')!}</td>
+		<td class="td01">NT$ ${totalCost?string('#,###.##')!}</td>
 		<td></td>
 	</tr>
 </table>

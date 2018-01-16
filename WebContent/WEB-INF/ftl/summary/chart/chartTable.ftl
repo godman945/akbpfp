@@ -9,7 +9,7 @@
                      度量:
       	<select id="selectChartType"> 
       		<option value="pv" selected>曝光數</option> 
-      		<option value="click">點選次數</option>      		
+      		<option value="click">互動數</option>      		
       		<option value="cost">費用</option> 
       	</select>
       	<input type="button" value="重繪圖表" id="reloadChart">

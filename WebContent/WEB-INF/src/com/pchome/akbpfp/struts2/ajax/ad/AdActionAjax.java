@@ -11,7 +11,6 @@ import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 
 import com.opensymphony.oscache.util.StringUtil;
-import com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfbxWebsiteCategoryService;
@@ -22,6 +21,7 @@ import com.pchome.enumerate.utils.EnumStatus;
 
 public class AdActionAjax extends BaseCookieAction{
 	
+	private static final long serialVersionUID = 1L;
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private PfpAdActionService pfpAdActionService;
 	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;

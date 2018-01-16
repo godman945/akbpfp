@@ -1,6 +1,5 @@
 package com.pchome.soft.depot.utils;
 
-import java.io.File;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -10,20 +9,17 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import org.apache.commons.codec.binary.Base64;
+import org.json.JSONObject;
 
 public class RSAUtils {
 
@@ -172,23 +168,34 @@ public class RSAUtils {
     
     
     public static void main(String[] args) throws Exception {
-
+    	String buKey = "mBfKi8Wc5AjAcMaGLXL-SOgMJ5CFf_CnrG5v2rH0ERcdj7trHs0EEGwGFeLuCK5JdDh8cLQqF2jOOprAYlHmY9Bf2E8cRSvvQsPyxjy4_j6JYPzD3sIGsFApCj7LdGMw7bqV5zHtu036djFjCtfYW8eu_lrXosbWnVRQuFcopbaGVnqNZv2sEZwpXZtZrIOJ2QOtAtYnvVvSOLKsp-3HgD06hTm0m1fBokOSUoskIhaONFpJ8BptXlhc7W0PePlMx_NfgGNuUKVOVTnlC_WV0ylVSIa2h8CDjSpZ5RqbroUI1r96EYgQsxdHdALn8qugaxu8Dx5tXW6LhgOtSqL2iQ";
+    	
+    	RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
+		byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
+		JSONObject buInfoJson = new JSONObject(new String(decBytes));
+		System.out.println(buInfoJson);
+    	
+    	
+//		{"pfdc":"PFDU20150630001","buId":"V000001","buName":"pcstore","url":"http://www.mypcstore.com.tw/sammi/"}
+    	
+    	
+    	
     	//String strTest = "<member><id>richard0120</id><pwd>nissan370z</pwd></member>";
     	//String strTest = "<member><email>test9965@pchome.com.tw</email></member>";
-    	String strTest = "{\"id\":\"barthes\",\"user_name\":\"趴趴\",\"sexuality\":\"F\",\"birthday\":\"2012-12-21\",\"phone\":\"02-22668855\",\"cellphone\":\"0922555666\",\"zipcode\":\"106\",\"address\":\"中華民國萬萬歲17號\"}";
-       	System.out.println(">>> strTest = " + strTest);
-
-    	//test encode
-    	String strEncode = encode(strTest);
-    	System.out.println(">>> strEncode = " + strEncode);
-    	//System.out.println(">>> strEncode length = " + strEncode.getBytes().length);
-
-    	//test decode
-    	//strEncode = "RhEBhGjDKmSkwpNLt2m4uC1AvM9Zu6W738lMiZM2L+oUpZVOF/cF3FT1IRolSb5wDhHKFpSDvUe55ABJSVVa6yEJaJTII7hRhdTrZJkkkAibZ0RgbwRGCOilvcWalIhYVR054aV1YZAHEbcAX/2NjF1pBnaiJrcz92LIN6I1qN4Iyx5IQ07Cigjx3/GAWnUEjyl/E+yX/yY6EQlHck5tRjpKaADJXNcbT80PL4S/xu8+n7lTcAt+sZ5fBovcGgDhZXDIeZGofyrWQ+y6I96+WMgn3Nu2/wV50WdVkAdf50ANGreRpTDnR2leG5/c3JESbF+B8RvJuLZaQBb5vNgkKA==";
-    	//System.out.println(">>> strEncode 2 length = " + strEncode.getBytes().length);
-
-        String strDecode = decode(strEncode);
-        System.out.println(">>> strDecode = " + strDecode);
+//    	String strTest = "{\"id\":\"barthes\",\"user_name\":\"趴趴\",\"sexuality\":\"F\",\"birthday\":\"2012-12-21\",\"phone\":\"02-22668855\",\"cellphone\":\"0922555666\",\"zipcode\":\"106\",\"address\":\"中華民國萬萬歲17號\"}";
+//       	System.out.println(">>> strTest = " + strTest);
+//
+//    	//test encode
+//    	String strEncode = encode(strTest);
+//    	System.out.println(">>> strEncode = " + strEncode);
+//    	//System.out.println(">>> strEncode length = " + strEncode.getBytes().length);
+//
+//    	//test decode
+//    	//strEncode = "RhEBhGjDKmSkwpNLt2m4uC1AvM9Zu6W738lMiZM2L+oUpZVOF/cF3FT1IRolSb5wDhHKFpSDvUe55ABJSVVa6yEJaJTII7hRhdTrZJkkkAibZ0RgbwRGCOilvcWalIhYVR054aV1YZAHEbcAX/2NjF1pBnaiJrcz92LIN6I1qN4Iyx5IQ07Cigjx3/GAWnUEjyl/E+yX/yY6EQlHck5tRjpKaADJXNcbT80PL4S/xu8+n7lTcAt+sZ5fBovcGgDhZXDIeZGofyrWQ+y6I96+WMgn3Nu2/wV50WdVkAdf50ANGreRpTDnR2leG5/c3JESbF+B8RvJuLZaQBb5vNgkKA==";
+//    	//System.out.println(">>> strEncode 2 length = " + strEncode.getBytes().length);
+//
+//        String strDecode = decode(strEncode);
+//        System.out.println(">>> strDecode = " + strDecode);
         
     }
 }

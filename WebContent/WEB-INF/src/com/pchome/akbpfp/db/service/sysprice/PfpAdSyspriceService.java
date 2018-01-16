@@ -19,19 +19,14 @@ public class PfpAdSyspriceService extends BaseService <PfpAdSysprice,String> imp
 	public PfpAdSysprice getAdSysprice(String adPoolSeq) throws Exception{
 		
 		PfpAdSysprice adSysprice = ((PfpAdSyspriceDAO) dao).getAdSysprice(adPoolSeq);
-		
 		if(adSysprice == null){
-			
 			adSysprice = new PfpAdSysprice();
 			adSysprice.setAdPoolSeq(adPoolSeq);
 			adSysprice.setSysprice(Float.parseFloat(definePrice));		// 廣告預設價錢
 			adSysprice.setAmount(0);
-			
 			super.saveOrUpdate(adSysprice);			
 		}
-		
 		return adSysprice;
-		
 	}
 
 	public void setDefinePrice(String definePrice) {

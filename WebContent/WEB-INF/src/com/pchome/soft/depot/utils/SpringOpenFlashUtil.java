@@ -13,17 +13,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.soft.util.DateValueUtil;
+
 import jofc2.model.Chart;
 import jofc2.model.axis.Label;
 import jofc2.model.axis.XAxis;
 import jofc2.model.axis.YAxis;
 import jofc2.model.elements.BarChart;
-import jofc2.model.elements.LineChart;
 import jofc2.model.elements.BarChart.Bar;
+import jofc2.model.elements.LineChart;
 import jofc2.model.elements.LineChart.Dot;
-
-import com.pchome.enumerate.report.EnumReport;
-import com.pchome.soft.util.DateValueUtil;
 
 public class SpringOpenFlashUtil {
 
@@ -237,7 +237,7 @@ public class SpringOpenFlashUtil {
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 			scale = 2;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-			scale = 0;
+			scale = 3;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_ADSORT.getTextValue())) {
 			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
@@ -246,6 +246,16 @@ public class SpringOpenFlashUtil {
 			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTRINVALID.getTextValue())) {
 			scale = 0;
+		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())) {
+			scale = 2;
+		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())) {
+			scale = 2;
+		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
+			scale = 2;
+		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())) {
+			scale = 2;
+		}else if(charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())){
+			scale = 2;
 		}
 		//x 軸兩日期間所相差的天數
 		long maxValueX = DateValueUtil.getInstance().getDateDiffDay(startDate, endDate);
@@ -264,7 +274,6 @@ public class SpringOpenFlashUtil {
 		}
 		
 		JSONArray array = new JSONArray(dataList);
-		
 		return array.toString();
 	}
 	
@@ -280,7 +289,7 @@ public class SpringOpenFlashUtil {
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 			scale = 2;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-			scale = 0;
+			scale = 2;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_ADSORT.getTextValue())) {
 			scale = 0;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {

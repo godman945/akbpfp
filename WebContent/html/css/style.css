@@ -423,7 +423,8 @@ background:url(../img/detailtab_bg1.gif) no-repeat center right;}
 /********/
 
 /****報表表格****/
-/* tables */
+/* tables 舊版
+
 table.tablesorter {
     font-family:arial;
     background-color: #CDCDCD;
@@ -463,6 +464,74 @@ background-color: #e0e0e0;
 }
 
 .text01{text-align:center}
+*/
+
+
+.tablesorter {
+    font-family:arial;
+    background-color: #CDCDCD;
+    margin:10px 0pt 15px;
+    font-size: 10pt;
+    width: 100%;
+    text-align: center;
+}
+table.tablesorter thead tr th{
+    background-image: url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==);
+    background-repeat: no-repeat;
+	background-position: center right;
+	padding: 4px 18px 4px 4px;
+	white-space: normal;
+	cursor: pointer;
+	background-color:#eee;
+}
+
+table.tablesorter tfoot tr th {
+	background-image:"";
+	background-position: center right;
+	padding: 4px;
+	white-space: normal;
+	background-color:#eee;
+}
+
+
+.tablesorter tbody td {
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
+}
+.tablesorter tbody tr.odd td {
+    background-color:#F0F0F6;
+}
+
+.tablesorter .tablesorter-headerDesc{
+	background-repeat: no-repeat;
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7);
+}
+
+
+.tablesorter .tablesorter-headerAsc {
+	background-repeat: no-repeat;
+	background-image: url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7);
+}
+
+.tablesorter thead .sorter-false {
+	background-image: none;
+	cursor: default;
+	padding: 4px;
+}
+
+
+.tablesorter tfoot .tablesorter-headerAsc,.tablesorter tfoot .tablesorter-headerDesc {
+	background-image: none;
+	cursor: default;
+}
+
+
+
+
+
+.text01{text-align:center}
+
 /*************/
 .boxpreview {
 margin:0 auto;

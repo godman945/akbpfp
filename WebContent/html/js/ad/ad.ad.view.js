@@ -23,7 +23,6 @@
 
 
 function findTableView(){
-
 	var date = $("#IT_dateRange").val().split("~");
 	var startDate = date[0];
 	var endDate = date[1];
@@ -51,7 +50,7 @@ function findTableView(){
 		success:function(response, status){
 			$("#tableList").html(response);	
 			page();
-			 tableSorter();
+			tableSorter();
 		},
 		error: function(xtl) {
 			alert("系統繁忙，請稍後再試！");
@@ -123,17 +122,9 @@ function closeAdAdStatus(adAdSeq, status){
 }
 
 function tableSorter(){
-	
 	$("#tableView").tablesorter({
 		headers:{
 			0:{sorter:false},
-			3 : { sorter: 'fancyNumber' },
-			4 : { sorter: 'fancyNumber' },
-			5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'rangesort' },
-			7 : { sorter: 'rangesort' },
-			8:{sorter:false},
-			9:{sorter:false},
 			10:{sorter:false}
 			}
 	});

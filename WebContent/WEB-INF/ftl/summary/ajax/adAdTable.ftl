@@ -9,18 +9,19 @@
   <tr>
 	<th height="35">廣告明細</th>
     <th style="width:10%">狀態</th>
+    <th style="width:10%">計價方式</th>
     <th style="width:10%">曝光數</th>
-    <th style="width:10%">點選次數</th>
-    <th style="width:10%">點選率</th>
-    <!--<th style="width:10%">無效點選次數</th>-->
-    <th style="width:10%">平均點選費用</th>
+    <th style="width:10%"><a style="float: left; margin-top: 3px;"><img src="./html/img/question.gif" title="互動數欄位:計算不同廣告樣式所產生的主要動作次數"></a>互動數</th>
+    <th style="width:10%">互動率</th>
+    <th style="width:10%">單次互動費用</th>
+    <th style="width:10%">千次曝光費用</th>
     <th style="width:10%">費用</th>
   </tr>
 </thead>
 <tbody>
 <#if adLayerVO?exists>
 	<#list adLayerVO as vo>
-	  <tr>  	
+	  <tr> 	
 		<td height="35" class="td02">
 		<#if "IMG" == vo.adStyle  && "N" == vo.html5Tag>
  			<div class="adreportdv">
@@ -46,20 +47,28 @@
 		            </span>
 	        	</span>
         	</div>
-		<#else>
-			<span>
-				<iframe height="120" width="350" src="adModel.html?adNo=${vo.seq!}&tproNo=${vo.templateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe>
-				</iframe>
-			</span>
+		<#elseif "VIDEO" == vo.adStyle>
+				<div class="adreportdv">
+					<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="${vo.adWidth!}" height="${vo.adHeight!}" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=${vo.videoUrl!}&adPreviewVideoBgImg=<#if vo.img = 'img/public/na.gif" style="display:none'><#else>${vo.img!}</#if>&realUrl=${vo.realUrl!}&resize=true"></iframe>
+					<span class="adboxdvinf"><div style=" text-align: left; line-height: 20px; padding: 10px; ">${vo.name!}<br>${vo.adWidth!}x${vo.adHeight!}<br>00:${vo.adVideoSec!}<br>
+				<a href="#" target="_blank">${adVideoPerformanceReportVO.realUrl!}</a><br>
+			</div></span>
+				</div>
+			<#else>
+				<span>
+					<iframe height="120" width="350" src="adModel.html?adNo=${vo.seq!}&tproNo=${vo.templateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe>
+					</iframe>
+				</span>
 		</#if>
 		</td>
 	    <td class="td03">${vo.statusChName!}</td>
+	    <td class="td03">${vo.adPriceType!}</td>
 	    <td class="td01">${vo.pv?string('#,###')!}</td>
 	    <td class="td01">${vo.clk?string('#,###')!}</td>	  
 	    <td class="td01">${vo.clkRate?string('#.##')!}%</td>
-	    <!--<td class="td01">${vo.invalidClk?string('#,###')!}</td>-->  
-	    <td class="td01">NT$ ${vo.avgClkCost?string('#.##')!}</td>
-	    <td class="td01">NT$ ${vo.clkCost?string('#,###')!}</td>
+	    <td class="td01">NT$ ${vo.avgClkCost?number?string('#,###.##')!}</td>
+	    <td class="td01">NT$ ${vo.thousandsCost?number?string('#,###.##')!}</td>
+	    <td class="td01">NT$ ${vo.clkCost?number?string('#,###.##')!}</td>
 	  </tr> 		
 	</#list>
 <#else>

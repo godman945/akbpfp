@@ -6,7 +6,7 @@ public class BaseSSLAction extends BaseCookieAction{
 	
 	private final static String LOCAL_SCHEME = "http://";
 	private final static String LOCAL_PORT = "8080";
-	private final static String LOCAL_DONAME = "ray.pchome.com.tw";
+	private final static String LOCAL_DONAME = "alex.pchome.com.tw";
 	protected String redirectUrl;
 	protected String resultType;
 	

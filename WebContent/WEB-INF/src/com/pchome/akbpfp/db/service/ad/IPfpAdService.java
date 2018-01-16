@@ -3,9 +3,10 @@ package com.pchome.akbpfp.db.service.ad;
 import java.util.Date;
 import java.util.List;
 
+import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
-import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.service.IBaseService;
+import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.enumerate.ad.EnumAdType;
 
@@ -25,4 +26,9 @@ public interface IPfpAdService extends IBaseService<PfpAd,String>{
 	public long getPfpAdCount(String customerInfoId, String adGroupSeq, String keyword, int page, int pageSize) throws Exception;
 
 	public List<PfpAd> validAdAd(String adGroupSeq) throws Exception;
+	
+	//取得影音廣告明細
+	public List<AdReportVO> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception;
+	//取得影音廣告總計資訊
+	public AdReportVO getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception;
 }

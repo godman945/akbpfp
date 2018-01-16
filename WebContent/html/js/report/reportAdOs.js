@@ -131,6 +131,17 @@ $(function(){
 
 //ajax id  重新榜定
 function ready(){
+	if($("#excerptTable").children().length > 1){
+		var node = document.createElement("a");
+		node.style.float = 'left';
+		node.style.marginTop = '3px';
+		var img = document.createElement("img");
+		img.src='./html/img/question.gif';
+		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
+		node.appendChild(img);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[3].appendChild(node)
+	}
+	
 	//sort table plugin
 	$.tablesorter.defaults.widgets = ['zebra'];
 	//$.tablesorter.defaults.sortList = [[0,0]];
@@ -143,8 +154,7 @@ function ready(){
 			3 : { sorter: 'fancyNumber' },
 			4 : { sorter: 'rangesort' },
 			5 : { sorter: 'rangesort' },
-			6 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' }
+			6 : { sorter: 'rangesort' }
 		}
 	});
 	
@@ -348,14 +358,14 @@ function showHighChart(){
 			selectSuffix = "次";
 			break;
 		case "ctr":
-			titleName = "點選率(%)";
+			titleName = "互動率(%)";
 			selectTypeName = "點選率";
 			selectSuffix = "%";
 			decimals = 2;
 			break;
 		case "click":
-			titleName = "點選次數(次)";
-			selectTypeName = "點選次數";
+			titleName = "互動數(次)";
+			selectTypeName = "互動數";
 			selectSuffix = "次";
 			break;
 		case "invalid":
@@ -364,8 +374,8 @@ function showHighChart(){
 			selectSuffix = "次";
 			break;
 		case "avgCost":
-			titleName = "平均點選費用(NT$)";
-			selectTypeName = "平均點選費用";
+			titleName = "單次互動費用(NT$)";
+			selectTypeName = "單次互動費用";
 			selectSuffix = "元";
 			decimals = 2;
 			break;
@@ -373,6 +383,13 @@ function showHighChart(){
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			decimals = 3;
+			break;
+		case "kiloCost":
+			titleName = "千次曝光費用(NT$)";
+			selectTypeName = "千次曝光費用";
+			selectSuffix = "元";
+			decimals = 2;
 			break;
 	}
 	

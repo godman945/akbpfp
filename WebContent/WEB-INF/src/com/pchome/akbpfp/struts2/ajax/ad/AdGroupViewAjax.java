@@ -13,13 +13,10 @@ import com.pchome.soft.util.DateValueUtil;
 
 public class AdGroupViewAjax extends BaseCookieAction{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private IPfpAdGroupService pfpAdGroupService;
-	
+	private IPfpAdActionService pfpAdActionService;
 	private String keyword;
 	private String searchType;
 	private String startDate;
@@ -38,19 +35,18 @@ public class AdGroupViewAjax extends BaseCookieAction{
 	private int totalClk = 0;						
 	private float totalClkRate = 0;
 	private float totalAvgCost = 0;
-	private int totalCost = 0;
+	private float totalCost = 0;
 	private int totalInvalidClk = 0;
 	private String groupMaxPrice;
 	private String adType;						//廣告類別
-	
+	private String adOperatingRule;
+	private String adPriceType;
+	private float totalThousandsCost;
 	public String adGroupViewTableAjax() throws Exception{
 		int type = Integer.parseInt(searchType);
 		//List<PfpAdGroupViewVO> allAdGroupViews = null;
 		long allAdGroupViews = 0;
-		
-		//adActionSeq = "aa_201306180015";
 		//log.info(" adActionSeq = "+adActionSeq);
-		
 		for(EnumAdType adType:EnumAdType.values()){
 			if(adType.getType() == type){
 				allAdGroupViews = pfpAdGroupService.getPfpAdGroupCount(super.getCustomer_info_id(), 
@@ -66,8 +62,15 @@ public class AdGroupViewAjax extends BaseCookieAction{
 																	pageSize);
 			}
 		}
+		PfpAdAction pfpAdAction = pfpAdActionService.get(adActionSeq);
+		adOperatingRule = pfpAdAction.getAdOperatingRule();
 		
-		adSearchPriceType = EnumAdSearchPriceType.values();
+		if(adOperatingRule.equals("VIDEO")){
+			
+		}
+		if(adOperatingRule.equals("MEDIA")){
+			adSearchPriceType = EnumAdSearchPriceType.values();
+		}
 		
 		if(allAdGroupViews > 0){
 			totalCount = allAdGroupViews;
@@ -87,15 +90,17 @@ public class AdGroupViewAjax extends BaseCookieAction{
 					totalClkRate = (float)totalClk / (float)totalPv*100;
 				}
 				
-				if(totalCost > 0 || totalClk > 0){
+				if(totalCost > 0 && totalClk > 0){
 					totalAvgCost = (float)totalCost / (float)totalClk;	
+				}
+				if(totalCost > 0){
+					this.totalThousandsCost += ((float)totalCost / ((float)totalPv) * 1000);
 				}
 			}
 		}
 		
 		// 查詢日期寫進cookie
 		this.setChooseDate(startDate, endDate);
-			
 		return SUCCESS;
 	}
 	
@@ -192,7 +197,8 @@ public class AdGroupViewAjax extends BaseCookieAction{
 		return totalAvgCost;
 	}
 
-	public int getTotalCost() {
+
+	public float getTotalCost() {
 		return totalCost;
 	}
 
@@ -214,6 +220,39 @@ public class AdGroupViewAjax extends BaseCookieAction{
 
 	public void setAdType(String adType) {
 		this.adType = adType;
+	}
+
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
+
+	public IPfpAdActionService getPfpAdActionService() {
+		return pfpAdActionService;
+	}
+
+	public void setPfpAdActionService(IPfpAdActionService pfpAdActionService) {
+		this.pfpAdActionService = pfpAdActionService;
+	}
+
+	public String getAdPriceType() {
+		return adPriceType;
+	}
+
+	public void setAdPriceType(String adPriceType) {
+		this.adPriceType = adPriceType;
+	}
+
+	public float getTotalThousandsCost() {
+		return totalThousandsCost;
+	}
+
+	public String getSearchType() {
+		return searchType;
 	}
 	
 }

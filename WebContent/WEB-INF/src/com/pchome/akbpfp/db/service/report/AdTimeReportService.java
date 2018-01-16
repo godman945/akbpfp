@@ -13,7 +13,7 @@ public class AdTimeReportService implements IAdTimeReportService {
 		this.adTimeReportDAO = adTimeReportDAO;
 	}
 
-	public List<AdTimeReportVO> loadReportDate(String sqlType, String searchTime, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String startDate, String endDate, int page, int pageSize) throws Exception {
-		return adTimeReportDAO.getReportList(sqlType, searchTime, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+	public List<AdTimeReportVO> loadReportDate(String sqlType, String searchTime, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String adOperatingRule, String startDate, String endDate, int page, int pageSize) throws Exception {
+		return adTimeReportDAO.getReportList(sqlType, searchTime, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 	}
 }

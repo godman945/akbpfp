@@ -86,6 +86,7 @@
 
     <bean id="AdGroupViewAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdGroupViewAjax" scope="prototype" >
 	    <property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+	    <property name="pfpAdActionService" ref="PfpAdActionService" />
     </bean> 
     
 	<bean id="AdKeywordViewAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdKeywordViewAjax" scope="prototype" >
@@ -93,6 +94,7 @@
     </bean>  
     
     <bean id="AdAdViewAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdAdViewAjax" scope="prototype" >
+	    <property name="jdbcEnvironment" value="${jdbc.driverUrl}" />
 	    <property name="pfpAdService" ref="PfpAdService" /> 
     </bean> 
 </beans>

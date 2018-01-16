@@ -2,6 +2,8 @@ package com.pchome.akbpfp.db.vo.ad;
 
 public class AdLayerVO {
 
+	private String adType = "";
+	private String adOperatingRule = "";
 	private String seq = "";
 	private String name = "";
 	private String templateNo = "";	
@@ -13,6 +15,7 @@ public class AdLayerVO {
 	private float clkRate = 0;
 	private float avgClkCost = 0;	
 	private float invalidClk = 0;
+	private float thousandsCost = 0;
 	//圖像廣告
 	private String realUrl = "";
 	private String img = "";
@@ -52,6 +55,18 @@ public class AdLayerVO {
 	private float preAvgClkCost = 0;	
 	private float preInvalidClk = 0;
 	
+	/*影音廣告*/
+	//尺寸寬度
+	private String adWidth;
+	//尺寸高度
+	private String adHeight;
+	//影片網址
+	private String videoUrl;
+	//影片秒數
+	private String adVideoSec;
+	//計價方式
+	private String adPriceType;
+		
 	public String getSeq() {
 		return seq;
 	}
@@ -303,6 +318,54 @@ public class AdLayerVO {
 	}
 	public void setZipTitle(String zipTitle) {
 		this.zipTitle = zipTitle;
+	}
+	public String getAdType() {
+		return adType;
+	}
+	public void setAdType(String adType) {
+		this.adType = adType;
+	}
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
+	public float getThousandsCost() {
+		return thousandsCost;
+	}
+	public void setThousandsCost(float thousandsCost) {
+		this.thousandsCost = thousandsCost;
+	}
+	public String getAdWidth() {
+		return adWidth;
+	}
+	public void setAdWidth(String adWidth) {
+		this.adWidth = adWidth;
+	}
+	public String getAdHeight() {
+		return adHeight;
+	}
+	public void setAdHeight(String adHeight) {
+		this.adHeight = adHeight;
+	}
+	public String getVideoUrl() {
+		return videoUrl;
+	}
+	public void setVideoUrl(String videoUrl) {
+		this.videoUrl = videoUrl;
+	}
+	public String getAdVideoSec() {
+		return adVideoSec;
+	}
+	public void setAdVideoSec(String adVideoSec) {
+		this.adVideoSec = adVideoSec;
+	}
+	public String getAdPriceType() {
+		return adPriceType;
+	}
+	public void setAdPriceType(String adPriceType) {
+		this.adPriceType = adPriceType;
 	}
 	
 }

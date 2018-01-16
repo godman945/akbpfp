@@ -171,15 +171,14 @@ public class AdGroupViewAction extends BaseCookieAction{
 											super.getCustomer_info_id(), 
 											super.getUser_id(), 
 											super.request.getRemoteAddr());
-			
-			adGroup.setAdGroupChannelPrice(Integer.parseInt(userPrice));
-			adGroup.setAdGroupCreateTime(new Date());
+			adGroup.setAdGroupChannelPrice(Float.valueOf(userPrice));
+			adGroup.setAdGroupUpdateTime(new Date());
 			pfpAdGroupService.saveOrUpdate(adGroup);
 			
 			adActionSeq = adGroup.getPfpAdAction().getAdActionSeq();
 			
-			//系統價更新
-			syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, Float.valueOf(userPrice));
+			//系統價更新 2018-01-12 停止更新價格出價以JOB為主
+//			syspriceOperaterAPI.addAdSysprice(sysPriceAdPoolSeq, Float.valueOf(userPrice));
 		}
 		
 		return SUCCESS;

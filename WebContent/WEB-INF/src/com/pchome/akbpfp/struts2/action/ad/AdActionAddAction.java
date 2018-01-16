@@ -7,31 +7,6 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -52,6 +27,7 @@ import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdDevice;
 import com.pchome.enumerate.ad.EnumAdPvLimitPeriod;
 import com.pchome.enumerate.ad.EnumAdPvLimitStyle;
+import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
@@ -79,15 +55,19 @@ public class AdActionAddAction extends BaseCookieAction{
 	private float remain;
 	private int tmpRemain;
 	private String backPage;
-
+	private String adOperatingRule;
+	
+	
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdActionService pfpAdActionService;
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private IPfpAdSpecificWebsiteService pfpAdSpecificWebsiteService;
 	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
-	
+	//key:0  搜尋廣告+聯播網廣告(觸及廣告族群最廣泛),1 搜尋廣告(PChome找東西搜尋和搜尋夥伴),2 聯播網廣告(PChome的合作網站聯播網)
 	private Map<String,String> adTypeMap;
+	private Map<String,Integer> adStyleTypeMap;
+	
 	private String adAllDevice;
 	private String adSearchDevice;
 	private String adChannelDevice;
@@ -141,6 +121,13 @@ public class AdActionAddAction extends BaseCookieAction{
 		adPvLimitAmount = "0";
 		pvLimitSelect = "N";
 		oldWebsiteCategory = "";
+		adOperatingRule = "0";
+		
+		
+		if(StringUtils.isNotBlank(adActionSeq)){
+			PfpAdAction pfpAdAction = pfpAdActionService.get(adActionSeq);
+			adOperatingRule = pfpAdAction.getAdOperatingRule().equals("VIDEO") ? "1" : "0"; 
+		}
 		
 		PfdUserAdAccountRef pfdUserAdAccountRef = pfdUserAdAccountRefService.findPfdUserAdAccountRef(super.getCustomer_info_id());
 		String pfpAdTypeSelect = pfdUserAdAccountRef.getPfdCustomerInfo().getPfpAdtypeSelect();
@@ -154,6 +141,11 @@ public class AdActionAddAction extends BaseCookieAction{
 				adTypeMap.put(String.valueOf(enumAdType.getType()), enumAdType.getTypeName() + "(" + enumAdType.getExplanation() + ")");
 			}
 			number++;
+		}
+		//廣告樣式下拉選單
+		adStyleTypeMap = new LinkedHashMap<String,Integer>();
+		for(EnumAdStyleType enumAdStyleType: EnumAdStyleType.values()){
+			adStyleTypeMap.put(enumAdStyleType.getType(), enumAdStyleType.getValue());
 		}
 		
 		//廣告播放裝置下拉選項
@@ -328,10 +320,17 @@ public class AdActionAddAction extends BaseCookieAction{
 	}
 
 	public String doAdActionAdd() throws Exception {
+		
+		
 		log.info("doAdActionAdd => adActionSeq = " + adActionSeq);
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
 
+		if(StringUtils.isBlank(adOperatingRule)) {
+			message = "廣告類型不可為空！";
+			return INPUT;
+		}
+		
 		if(StringUtils.isEmpty(customerInfoId)) {
 			message = "請登入！";
 			return INPUT;
@@ -437,6 +436,7 @@ public class AdActionAddAction extends BaseCookieAction{
 			pfpAdAction.setAdActionSeq(adActionSeq);
 			pfpAdAction.setAdActionCreatTime(new Date());
 		}
+		
 		pfpAdAction.setAdActionName(adActionName);
 		pfpAdAction.setAdActionDesc(adActionName);
 		pfpAdAction.setAdActionStartDate(ActionStartDate);
@@ -448,6 +448,11 @@ public class AdActionAddAction extends BaseCookieAction{
 		pfpAdAction.setAdActionUpdateTime(new Date());
 		if(pfpAdActionService.getAdGroupCounts(adActionSeq) <= 0) {
 			pfpAdAction.setAdActionStatus(EnumStatus.UnDone.getStatusId());		// 新增廣告時，status 設定為未完成
+		}
+		if(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getValue() == Integer.parseInt(adOperatingRule)){
+			pfpAdAction.setAdOperatingRule(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName());
+		}else if(EnumAdStyleType.AD_STYLE_VIDEO.getValue() == Integer.parseInt(adOperatingRule)){
+			pfpAdAction.setAdOperatingRule(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName());
 		}
 		pfpAdAction.setAdType(Integer.parseInt(adType));
 		pfpAdAction.setAdDevice(Integer.parseInt(adDevice));	
@@ -799,5 +804,17 @@ public class AdActionAddAction extends BaseCookieAction{
 	public String getOldWebsiteCategory() {
 		return oldWebsiteCategory;
 	}
-	
+
+	public Map<String, Integer> getAdStyleTypeMap() {
+		return adStyleTypeMap;
+	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
+
 }

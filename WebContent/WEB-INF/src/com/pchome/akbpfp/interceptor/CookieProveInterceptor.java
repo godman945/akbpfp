@@ -51,11 +51,13 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private PfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private SequenceService sequenceService;
-	
 	private String memberServer;
+	//商店街bu對應經銷商
 	private String buPortalPfdc;
+	//商店街bu名稱
 	private String pcstoreName;
-	private String rutenName;
+	//商店街bu Referer來源
+	private String buPcstoreReferer;
 	
 	/**
 	 * 檢查 id_pchome 是否被更改過
@@ -68,57 +70,54 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		HttpServletResponse response = ServletActionContext.getResponse();
 		
 		/*BU LOGIN START*/
-		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
-		if(StringUtils.isNotBlank(buKey)){
-			log.info(">>>>>> CALL BU LOGIN REFERER:"+request.getHeader("referer"));
-			if(request.getHeader("referer") == null || request.getHeader("referer").indexOf("adm.pcstore.com.tw") < 0){
-				return "index";
-			}
-			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
-			byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
-			JSONObject buInfoJson = new JSONObject(new String(decBytes));
-			
-			String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
-			String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
-			String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
-			String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
-			
-			if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
-				result = invocation.invoke();
-				return result;
-			}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
-				result = invocation.invoke();
-				return result;
-			}
-//			else if(buName.equals(rutenName) && !pfdc.equals(this.pfdu)){
-//				result = invocation.invoke();
-//				return result;
-//			}
-			else if(!buName.equals(rutenName) && !buName.equals(pcstoreName)){
-				result = invocation.invoke();
-				return result;
-			}
-			
-			//1.查詢資料庫是否有此資料
-			//2.存在則查詢pfp資訊是否存在
-			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
-			PfpBuAccount pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
-			if(pfpBuAccount != null){
-				PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfoByMmeberId(pfpBuAccount.getPcId());
-				if(pfpCustomerInfo != null){
-					createBuCookie(pfpBuAccount.getPcId(),response,true,pfpCustomerInfo);
+		String uri = request.getRequestURI();
+		if(uri.indexOf("buLogin") >= 0){
+			String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
+			if(StringUtils.isNotBlank(buKey)){
+				log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
+				RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
+				byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
+				JSONObject buInfoJson = new JSONObject(new String(decBytes));
+				
+				String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
+				String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
+				String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
+				String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
+				
+				if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
+					result = invocation.invoke();
+					return result;
+				}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
+					result = invocation.invoke();
+					return result;
+				}
+				else if(!buName.equals(pcstoreName)){
+					result = invocation.invoke();
+					return result;
+				}
+				
+				//1.查詢資料庫是否有此資料
+				//2.存在則查詢pfp資訊是否存在
+				List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
+				PfpBuAccount pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+				if(pfpBuAccount != null){
+					PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfoByMmeberId(pfpBuAccount.getPcId());
+					if(pfpCustomerInfo != null){
+						createBuCookie(pfpBuAccount.getPcId(),response,true,pfpCustomerInfo);
+					}else{
+						cookieProccessAPI.deleteAllCookie(response);
+						createBuCookie(pfpBuAccount.getPcId(),response,false,pfpCustomerInfo);
+					}
 				}else{
-					cookieProccessAPI.deleteAllCookie(response);
-					createBuCookie(pfpBuAccount.getPcId(),response,false,pfpCustomerInfo);
+					String pcId = createBuUser(buInfoJson);
+					log.info(">>>>>bu pcId:"+pcId);
+					if(StringUtils.isNotBlank(pcId)){
+						createBuCookie(pcId,response,false,null);
+					}
 				}
-			}else{
-				String pcId = createBuUser(buInfoJson);
-				if(StringUtils.isNotBlank(pcId)){
-					createBuCookie(pcId,response,false,null);
-				}
+				result = invocation.invoke();
+				return result;
 			}
-			result = invocation.invoke();
-			return result;
 		}
 		/*BU LOGIN END*/
 		
@@ -191,6 +190,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 	 * 建立BU使用者資料
 	 * */
 	public String createBuUser(JSONObject buInfoJson) throws Exception{
+		log.info(">>>>>>>>>>create bu");
 		String buId = buInfoJson.getString("buId");
 		String pfdc = buInfoJson.getString("pfdc");
 		String url = buInfoJson.getString("url");
@@ -303,14 +303,6 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		this.sequenceService = sequenceService;
 	}
 
-	public String getBuPortalPfdc() {
-		return buPortalPfdc;
-	}
-
-	public void setBuPortalPfdc(String buPortalPfdc) {
-		this.buPortalPfdc = buPortalPfdc;
-	}
-
 	public String getPcstoreName() {
 		return pcstoreName;
 	}
@@ -319,12 +311,21 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		this.pcstoreName = pcstoreName;
 	}
 
-	public String getRutenName() {
-		return rutenName;
+	public String getBuPortalPfdc() {
+		return buPortalPfdc;
 	}
 
-	public void setRutenName(String rutenName) {
-		this.rutenName = rutenName;
+	public void setBuPortalPfdc(String buPortalPfdc) {
+		this.buPortalPfdc = buPortalPfdc;
 	}
+
+	public String getBuPcstoreReferer() {
+		return buPcstoreReferer;
+	}
+
+	public void setBuPcstoreReferer(String buPcstoreReferer) {
+		this.buPcstoreReferer = buPcstoreReferer;
+	}
+
 	
 }

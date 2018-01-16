@@ -51,6 +51,16 @@
 			</result> 		
      </action>
   
+  	<!-- 影音預覽 RMI -->
+  	<action name="adVideoModel" class="AdModelAPIAction" method="adModelVideoAction">
+     		<result type="stream" name="success">
+        		<param name="contentType">text/html</param>
+				<param name="inputName">returnAdHtml</param> 
+				<param name="noCache">true</param>
+			</result> 		
+     </action>
+  
+  
      
      <action name="lifeCheck" class="LifeCheckAPIAction" method="lifeCheck">
      		<result type="stream" name="success">

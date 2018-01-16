@@ -14,6 +14,7 @@ import com.pchome.akbpfp.api.MemberAPI;
 import com.pchome.akbpfp.api.RedirectBillingAPI;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
+import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpBuAccount;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.pojo.PfpOrder;
@@ -154,7 +155,6 @@ public class ApplyAction extends BaseSSLAction{
 		if(pfpCustomerInfo == null){
 			// 新申請帳戶：預設資料
 			this.accountVO = new AccountVO();
-			
 			this.accountVO.setCategory("1");
 			this.accountVO.setUrlYN("1");
 			this.accountVO.setIndustry(EnumAccountIndustry.政府機關.getName());
@@ -170,6 +170,7 @@ public class ApplyAction extends BaseSSLAction{
 				this.buAccountVO = new BuAccountVO();
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
+				buAccountVO.setGiftSno("STTBDAEFJ8");
 			}
 		}
 		// 帳戶申請中
@@ -299,7 +300,32 @@ public class ApplyAction extends BaseSSLAction{
 					String pfpId = pfpCustomerInfo.getCustomerInfoId();
 					String userId = user.getUserId();
 					//經銷商設定
-					processPfdUser(pfpId,userId,this.buPortalPfdu,this.buPortalPfdc);
+					processPfdUser(pfpId,userId,this.buPortalPfdc,this.buPortalPfdu);
+					if(admFreeGift != null){
+						// 更新序號使用狀態(未付款狀態先未啟用)
+						if(admFreeGift != null){
+							String shared = admFreeGift.getAdmFreeAction().getShared();
+							//判斷活動是不是共用序號，不是則寫入資料到該筆序號
+							if(!StringUtils.equals(shared, "Y")){
+								admFreeGift.setCustomerInfoId(pfpCustomerInfo.getCustomerInfoId());
+								admFreeGift.setGiftSnoStatus(EnumGiftSnoUsed.NO.getStatus());
+								admFreeGift.setUpdateDate(today);
+								admFreeGift.setOrderId(orderId);
+								admFreeGiftService.update(admFreeGift);
+							}
+						}
+						// 轉址至金流儲值  		
+						billingUrl = redirectBillingAPI.redirectUrl(orderId);
+						// 金流介接  Accesslog
+						String message = EnumAccesslogAction.ACCOUNT_ADD_MONEY.getMessage()+" URL："+billingUrl;
+						admAccesslogService.recordBillingLog(EnumAccesslogAction.ACCOUNT_ADD_MONEY, 
+															message,  
+															super.getId_pchome(), 
+															orderId,											
+															super.getCustomer_info_id(), 
+															super.getUser_id(), 
+															request.getRemoteAddr());
+					}
 				}else{
 					log.info(">>> PCHOME PFD PROCESS:"+userMemberId);
 					//經銷商設定
@@ -417,6 +443,11 @@ public class ApplyAction extends BaseSSLAction{
 	 * 經銷商設定
 	 * */
 	public boolean processPfdUser(String pfpId,String userId,String buPortalPfdc,String buPortalPfdu) throws Exception{
+		System.out.println(pfpId);
+		System.out.println(pfdUserAdAccountRefService.getNewRefId());
+		System.out.println(userId);
+		System.out.println(buPortalPfdc);
+		System.out.println(buPortalPfdu);
 		PfdUserAdAccountRefVO pfdUserAdAccountRefVO = new PfdUserAdAccountRefVO();
 		pfdUserAdAccountRefVO.setRefId(pfdUserAdAccountRefService.getNewRefId());
 		pfdUserAdAccountRefVO.setPfdCustomerInfoId(buPortalPfdc);

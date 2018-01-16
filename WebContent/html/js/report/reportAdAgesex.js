@@ -133,6 +133,26 @@ $(function(){
 
 //ajax id  重新榜定
 function ready(){
+	if($("#excerptTable").children().length > 1){
+		var node = document.createElement("a");
+		node.style.float = 'left';
+		node.style.marginTop = '3px';
+		var img = document.createElement("img");
+		img.src='./html/img/question.gif';
+		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
+		node.appendChild(img);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[9].append(node);
+		
+		var node2 = document.createElement("b");
+		node2.style.float = 'left';
+		node2.style.marginTop = '3px';
+		var img2 = document.createElement("img");
+		img2.src='./html/img/question.gif';
+		img2.title="廣告費用因小數點進位影響總計費用，實際扣款依帳單管理為主";
+		node2.appendChild(img2);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[13].append(node2);
+	}
+	
 	//sort table plugin
 	$.tablesorter.defaults.widgets = ['zebra'];
 
@@ -140,11 +160,12 @@ function ready(){
 		headers: {
 			0 : { sorter: false },
 			//4 : { sorter: 'fancyNumber' },
-			5 : { sorter: 'fancyNumber' },
-			6 : { sorter: 'fancyNumber' },
-			7 : { sorter: 'fancyNumber' },
-			8 : { sorter: 'rangesort' },
-			9 : { sorter: 'rangesort' }
+			8 : { sorter: 'fancyNumber' },
+			9 : { sorter: 'fancyNumber' },
+			10 : { sorter: 'fancyNumber' },
+			11 : { sorter: 'rangesort' },
+			12 : { sorter: 'rangesort' },
+			13 : { sorter: 'rangesort' }
 		}
 	});
 
@@ -253,6 +274,7 @@ function ready(){
 	var searchText = document.excerptFrom.searchText.value;
 	var adShowWay = document.excerptFrom.adShowWay.value;
 	var searchAgesex = document.excerptFrom.searchAgesex.value;
+	var adOperatingRule = document.excerptFrom.adOperatingRule.value;
 
 	$("#searchText").attr("value", searchText);
 
@@ -291,6 +313,13 @@ function ready(){
 		}
 	});
 	
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == adOperatingRule) {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
 	//搜尋動作 Do
 	$('#btnSearchDo').click(function(){
 		searchDo();
@@ -298,7 +327,7 @@ function ready(){
 		ajaxFormSubmit();		
 	});
 	
-	$("#adShowWay, #adPvclkDevice, #adSearchWay, #searchAgesex").change(function(){
+	$("#adShowWay, #adPvclkDevice, #adSearchWay, #searchAgesex, #adOperatingRule").change(function(){
     	searchDo();
     	ajaxFormSubmit();
    });
@@ -357,7 +386,8 @@ function showHighChart(){
 			"charType" : $('#selectChartType').val(),
 			"searchId" : $('#fsearchId').val(),
 			"searchText" : $('#searchText').val(),
-			"searchAgesex" : $('#fadSearchAgesex').val()
+			"searchAgesex" : $('#fadSearchAgesex').val(),
+			"adOperatingRule" : $('#fadOperatingRule').val()
 		},
 		success : function(respone) {
 			console.log(respone);
@@ -367,7 +397,6 @@ function showHighChart(){
 	
 	// ---預設樣式----
     Highcharts.setOptions({
-        
     	symbols:['circle'],
        	lang: {
        		months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '11月', '12月'],
@@ -516,7 +545,8 @@ function initJsonData(){
 		"searchText": $('#fsearchText').val(),
 		"searchId": $('#fsearchId').val(),
 		"downloadFlag": $('#downloadFlag').val(),
-		"searchAgesex": $('#fadSearchAgesex').val()
+		"searchAgesex": $('#fadSearchAgesex').val(),
+		"adOperatingRule": $('#fadOperatingRule').val()
 	};
 }
 
@@ -568,6 +598,7 @@ function searchDo(){
 	document.excerptFrom.searchText.value = $('#searchText').val();
 	document.excerptFrom.adShowWay.value = $('#adShowWay').val();
 	document.excerptFrom.searchAgesex.value = $('#searchAgesex').val();
+	document.excerptFrom.adOperatingRule.value = $('#adOperatingRule').val();
 	document.excerptFrom.searchId.value = "";
 	document.excerptFrom.formPage.value = "1";
 }
@@ -605,6 +636,13 @@ function serachReset(){
 
 	$("#searchAgesex").children().each(function(){
 		if ($(this).val() == "A") {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == "") {
 			//jQuery給法
 			$(this).attr("selected", "true"); //或是給selected也可
 		}

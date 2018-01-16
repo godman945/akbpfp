@@ -10,17 +10,19 @@ import com.pchome.enumerate.ad.EnumAdSearchPriceType;
 
 public class AdGroupMsgAction extends BaseCookieAction{
 	
+	private static final long serialVersionUID = 1L;
 	private PfpAdGroupService pfpAdGroupService;
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private IPfpAdSyspriceService pfpAdSyspriceService;
 	private String adPoolSeq;
-	
+	private int adType;
 	private String adGroupSeq;	
 	private PfpAdGroup adGroup;
 	private float sysprice;
 	private float adAsideRate; 
 	private float userprice;
 	private String searchPriceTypeName;
+	private String adGroupPriceType;
 	
 	public String execute() throws Exception{
 		
@@ -28,18 +30,35 @@ public class AdGroupMsgAction extends BaseCookieAction{
 	}
 	
 	public String modifyAdGroupChannelPriceAction() throws Exception{
-		
-				
 		adGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-		
-		PfpAdSysprice adSysprice = pfpAdSyspriceService.getAdSysprice(adPoolSeq);
-		
-		//sysprice = adSysprice.getSysprice();
-		//建議價
-		sysprice = syspriceOperaterAPI.getAdSuggestPrice(adPoolSeq);
-		//撥出率
-		adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
-		
+		PfpAdSysprice pfpAdSysprice = pfpAdSyspriceService.get(3);
+		int adUserAmount = (int) pfpAdSysprice.getSysprice();
+		/*系統建議出價為各最低出價 + 昨日總家數量*/
+		if(adGroup.getAdGroupPriceType().equals("CPC")){
+			//sysprice = adSysprice.getSysprice();
+			//建議價
+			sysprice = syspriceOperaterAPI.getAdSuggestPrice(adPoolSeq);
+			//撥出率
+			adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
+			adGroupPriceType = adGroup.getAdGroupPriceType();
+			adType = adGroup.getPfpAdAction().getAdType();
+		}else if(adGroup.getAdGroupPriceType().equals("CPM")){
+			sysprice = 65 + adUserAmount;
+			userprice = userprice - 58;
+			adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
+			adGroupPriceType = adGroup.getAdGroupPriceType();
+			adType = adGroup.getPfpAdAction().getAdType();
+			System.out.println("CPM >>>>>>>>>>userprice:" + userprice);
+			System.out.println("CPM >>>>>>>>>>sysprice:" +sysprice);
+		}else if(adGroup.getAdGroupPriceType().equals("CPV")){
+			sysprice = (float) (0.5 + ((float)adUserAmount / (float)100));
+			userprice = (userprice * 10) + 10;
+			adAsideRate = syspriceOperaterAPI.getAdAsideRate(userprice);
+			adGroupPriceType = adGroup.getAdGroupPriceType();
+			adType = adGroup.getPfpAdAction().getAdType();
+			System.out.println("CPV >>>>>>>>>>sysprice:" +sysprice);
+			System.out.println("CPV >>>>>>>>>>userprice:" + userprice);
+		}
 		return SUCCESS;
 	}
 	
@@ -108,6 +127,19 @@ public class AdGroupMsgAction extends BaseCookieAction{
 		return searchPriceTypeName;
 	}
 
-	
-	
+	public String getAdGroupPriceType() {
+		return adGroupPriceType;
+	}
+
+	public void setAdGroupPriceType(String adGroupPriceType) {
+		this.adGroupPriceType = adGroupPriceType;
+	}
+
+	public int getAdType() {
+		return adType;
+	}
+
+	public void setAdType(int adType) {
+		this.adType = adType;
+	}
 }

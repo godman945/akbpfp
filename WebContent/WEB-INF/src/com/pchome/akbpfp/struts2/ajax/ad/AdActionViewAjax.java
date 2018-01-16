@@ -5,14 +5,10 @@ import java.util.List;
 import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdActionViewVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
-import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.soft.util.DateValueUtil;
 
 public class AdActionViewAjax extends BaseCookieAction{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private IPfpAdActionService pfpAdActionService;
@@ -21,7 +17,7 @@ public class AdActionViewAjax extends BaseCookieAction{
 	private String searchType;
 	private String startDate;
 	private String endDate;
-	private List<PfpAdActionViewVO> adActionViewVO;
+	private List<PfpAdActionViewVO> adActionViewVOList;
 	
 	private int pageNo = 1;       				// 初始化目前頁數
 	private int pageSize = 20;     				// 初始化每頁幾筆
@@ -32,8 +28,9 @@ public class AdActionViewAjax extends BaseCookieAction{
 	private int totalPv = 0;						
 	private int totalClk = 0;						
 	private float totalClkRate = 0;
+	private float thousandsCost = 0;
 	private float totalAvgCost = 0;
-	private int totalCost = 0;
+	private float totalCost = 0;
 	private int totalInvildClk = 0;
 	
 	public String execute() throws Exception{
@@ -41,43 +38,45 @@ public class AdActionViewAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * 廣告管理-檢視廣告
+	 * */
 	public String adActionViewTableAjax() throws Exception{
 		//int type = Integer.parseInt(searchType);
 		long allAdActionViews = 0;
 		
-		//for(EnumAdType adType:EnumAdType.values()){
-			//if(adType.getType() == type){
-				allAdActionViews = pfpAdActionService.getPfpAdActionCount(super.getCustomer_info_id(), keyword, searchType);
-				adActionViewVO = pfpAdActionService.getAdActionView(super.getCustomer_info_id(), 
+		allAdActionViews = pfpAdActionService.getPfpAdActionCount(super.getCustomer_info_id(), keyword, searchType);
+		
+		this.adActionViewVOList = pfpAdActionService.getAdActionView(super.getCustomer_info_id(), 
 																	keyword, 
 																	searchType, 
 																	DateValueUtil.getInstance().stringToDate(startDate), 
 																	DateValueUtil.getInstance().stringToDate(endDate),
 																	pageNo, 
 																	pageSize);
-				
-			//}
-		//}
-		
 		if(allAdActionViews > 0) {
 			totalCount = allAdActionViews;
 			pageCount = (int) Math.ceil(((float)totalCount / pageSize));
-
-			if(adActionViewVO != null && adActionViewVO.size() > 0){
-				totalSize = adActionViewVO.size();		
-				for(PfpAdActionViewVO vo:adActionViewVO){
-					totalPv += vo.getAdPv();
-					totalClk += vo.getAdClk();		
-					totalCost += vo.getAdClkPrice();
-					totalInvildClk += vo.getInvalidClk();
+			if(adActionViewVOList != null && adActionViewVOList.size() > 0){
+				totalSize = adActionViewVOList.size();		
+				for(PfpAdActionViewVO pfpAdActionViewVO:adActionViewVOList){
+					totalPv += pfpAdActionViewVO.getAdPv();
+					totalClk += pfpAdActionViewVO.getAdClk();		
+					totalCost += pfpAdActionViewVO.getAdClkPrice();
+					totalInvildClk += pfpAdActionViewVO.getInvalidClk();
 				}
-				
-				if(totalClk > 0 || totalPv > 0){
+				if(totalClk > 0 && totalPv > 0){
 					totalClkRate = (float)totalClk / (float)totalPv*100;
 				}
 				
-				if(totalCost > 0 || totalClk > 0){
-					totalAvgCost = (float)totalCost / (float)totalClk;	
+				if(totalCost > 0 && totalClk > 0){
+					totalAvgCost = (float)totalCost / (float)totalClk;
+				}
+				
+				
+				
+				if(totalCost > 0 ){
+					thousandsCost = ((float)totalCost * 1000) / ((float)totalPv);
 				}
 			}
 		}
@@ -110,7 +109,7 @@ public class AdActionViewAjax extends BaseCookieAction{
 	}
 
 	public List<PfpAdActionViewVO> getAdActionViewVO() {
-		return adActionViewVO;
+		return adActionViewVOList;
 	}
 
 	public int getPageNo() {
@@ -157,12 +156,21 @@ public class AdActionViewAjax extends BaseCookieAction{
 		return totalAvgCost;
 	}
 
-	public int getTotalCost() {
+
+	public float getTotalCost() {
 		return totalCost;
 	}
 
 	public int getTotalInvildClk() {
 		return totalInvildClk;
+	}
+
+	public float getThousandsCost() {
+		return thousandsCost;
+	}
+
+	public void setThousandsCost(float thousandsCost) {
+		this.thousandsCost = thousandsCost;
 	}
 	
 	

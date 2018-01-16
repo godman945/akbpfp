@@ -54,7 +54,7 @@
 							</div>
 	                	</th>
 	                    <td>
-	                    	<b>系統建議出價NT$<input type="text" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${sysChannelPrice!}" maxlength="6">，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span></b>
+	                    	<b>系統建議出價NT$<input type="text" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="<#if adGroupSeq?exists>${adGroupChannelPrice!}<#else>${sysChannelPrice!}</#if>" maxlength="6">，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span></b>
 	                    	<div class="exp">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
 	                    </td>
 	                </tr>
@@ -71,6 +71,8 @@
         <input type="hidden" id="backPage" name="backPage" value="${backPage!}">
         <input type="hidden" id="showSearchPrice" name ="showSearchPrice" value="${showSearchPrice!}" />
 	    <input type="hidden" id="showChannelPrice" name ="showChannelPrice" value="${showChannelPrice!}" />
+	    <input type="hidden" id="adOperatingRule" name ="adOperatingRule" value="${adOperatingRule!}" />
 	</form>
 </div>
 <input type="hidden" id="messageId" value="${message!!}">
+<input type="hidden"  value="${adGroupChannelPrice!}" />

@@ -7,6 +7,8 @@ public class PfpAdActionViewVO {
 	private String adActionDesc = "";
 	private String adType = "";
 	private String adDevice = "";
+	private String adOperatingRule;
+	private float thousandsCost;
 	private float adActionMax = 0;
 	private int adActionStatus = 0;
 	private String adActionStatusDesc = "";
@@ -142,6 +144,18 @@ public class PfpAdActionViewVO {
 	}
 	public void setInvalidClkPrice(float invalidClkPrice) {
 		this.invalidClkPrice = invalidClkPrice;
+	}
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
+	public float getThousandsCost() {
+		return thousandsCost;
+	}
+	public void setThousandsCost(float thousandsCost) {
+		this.thousandsCost = thousandsCost;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -16,19 +17,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONArray;
 
-import com.pchome.enumerate.ad.EnumAdType;
-import com.pchome.enumerate.report.EnumReport;
-import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.akbpfp.db.dao.report.AdAgesexReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdAgesexReportService;
-import com.pchome.soft.util.DateValueUtil;
+import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
+import com.pchome.soft.util.DateValueUtil;
 
 public class ReportAdAgesexAction extends BaseReportAction {
 
@@ -37,8 +39,8 @@ public class ReportAdAgesexAction extends BaseReportAction {
 	private LinkedList<String> tableHeadList =null; //頁面table head
 
 	// 欄位
-	private String[] align_data = {"center", "center", "center", "center", "center", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "center", "center", "center", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
 
 	private LinkedList<LinkedList<String>> tableDataList =null; // 頁面 table data
 	private LinkedList<String> tableDataTotalList =null; //頁面全部加總table total foot
@@ -72,6 +74,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 	private String searchText="";//搜尋文字
 	private String adShowWay="0";//廣告顯示位址,一般,內容
 	private String searchId="";//廣告id ,某活動,某群組id
+	private String adOperatingRule;//廣告樣式
 	
 	private String charPic="";//圖表格式
 	private String charType="";//度量
@@ -89,6 +92,8 @@ public class ReportAdAgesexAction extends BaseReportAction {
 	
 	private String searchAgesex = "A";
 
+	private String timeName = "";
+	
 	public String flashDataDownLoad() throws Exception {
 
 		//查詢日期寫進 cookie
@@ -104,10 +109,14 @@ public class ReportAdAgesexAction extends BaseReportAction {
 			searchText = "";
 		}
 
+		if(adOperatingRule.equals("Null")) {
+			adOperatingRule = "";
+		}
+		
 		String customerInfoId = super.getCustomer_info_id();
 		log.info(">>> customerInfoId = " + customerInfoId);
 
-		List<AdAgesexReportVO> resultData = adAgesexReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_AGESEX_CHART.getTextValue(),searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+		List<AdAgesexReportVO> resultData = adAgesexReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_AGESEX_CHART.getTextValue(),searchAgesex,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 		List<Double> dataList = new ArrayList<Double>();
 		
@@ -132,16 +141,11 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		double total = 0;		//總合
 
 		for (int i=0; i<resultData.size(); i++) {
-
 			AdAgesexReportVO vo = resultData.get(i);
-
 			sex = vo.getSex();
 			ageCode = vo.getAge();
-
 			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				
 				total += vo.getAdPvSum().doubleValue();
-				
 				if(StringUtils.equals(searchAgesex, "S")){
 					switch(sex) {
 						case "M":
@@ -186,9 +190,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 					}
 				}
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-
 				//total += vo.getAdClkSum().doubleValue();
-				
 				if(StringUtils.equals(searchAgesex, "S")){
 					switch(sex) {
 						case "M":
@@ -275,11 +277,8 @@ public class ReportAdAgesexAction extends BaseReportAction {
 				//dataList.add(new Double(0));
 			}
 		}
-		
 		JSONArray array = new JSONArray(dataList);
-		
 		flashData = array.toString();
-
 		return SUCCESS;
 	}
 
@@ -291,11 +290,12 @@ public class ReportAdAgesexAction extends BaseReportAction {
 
 		tableHeadNameMap=new HashMap<String,String>();
 		tableHeadNameMap.put("曝光數", EnumReport.REPORT_CHART_TYPE_PV.getTextValue());
-		tableHeadNameMap.put("點選次數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
-		tableHeadNameMap.put("點選率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
+		tableHeadNameMap.put("互動數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
+		tableHeadNameMap.put("互動率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
 		// 20140318： 隱藏 "無效點選次數" 欄位
 		//tableHeadNameMap.put("無效點選次數", EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue());
-		tableHeadNameMap.put("平均點選費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
 		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
 		
 		optionSelect="";
@@ -303,7 +303,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 
 		//optionSelect="曝光數,點選率(%),點選次數,無效點選次數,平均點選費用,費用";
 		// 20140318： 隱藏 "無效點選次數" 欄位
-		optionSelect="曝光數,點選次數,點選率,平均點選費用,費用";
+		optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
 
 		tableHeadShowList=new LinkedList<String>();
 
@@ -381,6 +381,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		log.info("adType="+adType);
 		log.info("adSearchWay="+adSearchWay);
 		log.info("adShowWay="+adShowWay);
+		log.info("adOperatingRule="+adOperatingRule);
 
 		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
 
@@ -408,20 +409,23 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		}
 
 		tableHeadList.addFirst("裝置");
-		String timeName = "年齡";
+			this.timeName = "年齡";
 		if(StringUtils.equals("S", searchAgesex)){
-			timeName = "性別";
+			this.timeName = "性別";
 		} 
+		tableHeadList.addFirst("計價方式");
+		tableHeadList.addFirst("廣告樣式");
+		tableHeadList.addFirst("播放類型");
 		tableHeadList.addFirst(timeName);
 		tableHeadList.addFirst("分類");
 		tableHeadList.addFirst("廣告");
 		tableHeadList.addFirst("狀態");
 
-		List<AdAgesexReportVO> resultSumData = adAgesexReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_AGESEX_COUNT.getTextValue(), searchAgesex, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+		List<AdAgesexReportVO> resultSumData = adAgesexReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_AGESEX_COUNT.getTextValue(), searchAgesex, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 		int totalPageSize = resultSumData.size();
 
-		List<AdAgesexReportVO> resultData = adAgesexReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_AGESEX.getTextValue(), searchAgesex, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+		List<AdAgesexReportVO> resultData = adAgesexReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_AGESEX.getTextValue(), searchAgesex, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 
 		totalPage = totalPageSize/pageSize;
 
@@ -456,8 +460,18 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		content.append("\n\n");
 		content.append("報表名稱,PChome 廣告族群成效");
 		content.append("\n\n");
-		content.append("廣告方式," + getAdShowWayMap().get(adShowWay));
-		content.append("\n\n");
+		content.append("播放類型," + getAdShowWayMap().get(adShowWay));
+		content.append("\n");
+		content.append("廣告樣式," + getAdStyleTypeMap().get(adOperatingRule));
+		content.append("\n");
+		content.append("統計變項," + timeName);
+		content.append("\n");
+		content.append("裝置," + getAdPvclkDeviceMap().get(adPvclkDevice));
+		content.append("\n");
+		content.append("搜尋條件," + getAdSearchWayMap().get(adSearchWay));
+		content.append("\n");
+		content.append("搜尋內容," + searchText);
+		content.append("\n");
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
 
@@ -470,9 +484,9 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
-				if(dataNumber == 9 || dataNumber == 10){
-					content.append("\"NT$ " + s + "\"");
-				} else if(dataNumber == 8){
+				if(dataNumber == 12 || dataNumber == 13 || dataNumber == 14){
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
+				} else if(dataNumber == 11){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -487,9 +501,9 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 9 || dataTotalNumber == 10){
-					content.append("\"NT$ " + s + "\"");
-				} else if(dataTotalNumber == 8){
+				if(dataTotalNumber == 12 || dataTotalNumber == 13 || dataTotalNumber == 14){
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
+				} else if(dataTotalNumber == 11){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -514,6 +528,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 
 		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+		NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
 
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("");
@@ -521,33 +536,41 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
+		tableDataTotalList.add("");
+		tableDataTotalList.add("");
+		tableDataTotalList.add("");
 
 		double t_pv = 0; //總曝光數
-		double t_click = 0; //總點選次數
-		double t_ctr = 0; //點選率
+		double t_click = 0; //總互動數
+		double t_ctr = 0; //互動率
 		double t_invalid = 0; //無效點選次數
-		double t_costAvg = 0; //平均點選費用
+		double t_costAvg = 0; //單次互動費用
+		double t_kiloCost = 0;	//千次曝光費用
 		double t_cost = 0; //總費用
 
 		//加總
 		for (int i=0; i<resultSumData.size(); i++) {
-
 			AdAgesexReportVO vo = resultSumData.get(i);
-
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
 			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
-
-		//點選率 = 總點選次數 / 總曝光數
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
+		
+		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
 		}
 
-		//平均點選費用 = 總費用 / 總點選次數
+		//單次互動費用 = 總費用 / 總互動次數
 		if (t_cost>0 && t_click>0) {
 			t_costAvg = t_cost / t_click;
+		}
+		
+		//千次曝光費用 = 總費用*1000 / 曝光數
+		if(t_cost>0 && t_pv>0){
+			t_kiloCost = (t_cost * 1000) / t_pv;
 		}
 		
 		if (!tableHeadShowList.isEmpty()) {
@@ -564,8 +587,10 @@ public class ReportAdAgesexAction extends BaseReportAction {
 					tableDataTotalList.addLast(intFormat.format(t_invalid));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_costAvg));
+				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat2.format(t_cost));
 				}
 			}
 		}
@@ -577,6 +602,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 
         NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+		NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -603,23 +629,32 @@ public class ReportAdAgesexAction extends BaseReportAction {
 
 			double pv = vo.getAdPvSum().doubleValue();
 			double click = vo.getAdClkSum().doubleValue();
+			
 			double cost = vo.getAdPriceSum().doubleValue();
 			double invClick = vo.getAdInvClkSum().doubleValue();
 			double ctr = 0;
 			double costAvg = 0;
+			double kiloCost = 0;
 			String adDevice = vo.getAdDevice();
-			String adType = vo.getAdType();
 			String age = vo.getAge();
 			String sex = vo.getSex();
+			String adTypeName = vo.getAdType();
+			String adOperatingRuleName = vo.getAdOperatingRule();
+			String adClkPriceTypeName = vo.getAdClkPriceType();
 
-			//點選率 = 點選次數 / 曝光數
+			//互動率 = 互動次數 / 曝光數
 			if (pv>0 && click>0) {
 				ctr = (click / pv) * 100;
 			}
 
-			//平均點選費用 = 總費用 / 總點選次數
+			//單次互動費用 = 總費用 / 總互動次數
 			if (cost>0 && click>0) {
 				costAvg = cost / click;
+			}
+
+			//千次曝光費用 = 總費用*1000 / 曝光數
+			if(cost>0 && pv>0){
+				kiloCost = (cost * 1000) / pv;
 			}
 
 
@@ -675,6 +710,9 @@ public class ReportAdAgesexAction extends BaseReportAction {
 			} else {
 				tableInDataList.addLast(age);
 			}
+			tableInDataList.addLast(adTypeName);
+			tableInDataList.addLast(adOperatingRuleName);
+			tableInDataList.addLast(adClkPriceTypeName);
 			tableInDataList.addLast(adDevice);
 
 			if(!tableHeadShowList.isEmpty()){
@@ -691,8 +729,10 @@ public class ReportAdAgesexAction extends BaseReportAction {
  						tableInDataList.addLast(intFormat.format(invClick));
  					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 						tableInDataList.addLast(doubleFormat.format(costAvg));
+					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+						tableInDataList.addLast(doubleFormat.format(kiloCost));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(intFormat.format(cost));
+						tableInDataList.addLast(doubleFormat2.format(cost));
 					}
 				}
 			}
@@ -896,6 +936,14 @@ public class ReportAdAgesexAction extends BaseReportAction {
 
 	public void setSearchAgesex(String searchAgesex) {
 		this.searchAgesex = searchAgesex;
+	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
 	}
 	
 }

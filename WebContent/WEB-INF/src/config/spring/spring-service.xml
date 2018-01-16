@@ -104,6 +104,10 @@
         <property name="adWebsiteReportDAO" ref="AdWebsiteReportDAO" />
     </bean>
 
+  	<bean id="AdVideoPerformanceReportService" class="com.pchome.akbpfp.db.service.report.AdVideoPerformanceReportService"> 
+        <property name="adVideoPerformanceReportDAO" ref="AdVideoPerformanceReportDAO" />
+    </bean>
+    
 	<!-- Adm -->
 	<bean id="AdmFreeActionService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeActionService">
         <property name="dao" ref="AdmFreeActionDAO" />
@@ -114,6 +118,22 @@
         <property name="sequenceService" ref="SequenceService" /> 
         <property name="customerInfoService" ref="PfpCustomerInfoService" />   
     </bean>    
+
+	    <bean id="AdmFreeGiftService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeGiftService">
+        <property name="dao" ref="AdmFreeGiftDAO" />     
+    </bean>
+    
+    <bean id="AdmFreeRecordService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeRecordService">
+        <property name="dao" ref="AdmFreeRecordDAO" />     
+    </bean>
+    
+    <bean id="AdmManagerDetailService" class="com.pchome.akbpfp.db.service.manager.AdmManagerDetailService">
+        <property name="dao" ref="AdmManagerDetailDAO" />     
+    </bean>
+    
+    <bean id="AdmChannelAccountService" class="com.pchome.akbpfp.db.service.adm.channel.AdmChannelAccountService">
+             <property name="dao" ref="AdmChannelAccountDAO" />
+    </bean>
 
 	<!-- Ad -->
     <bean id="PfpAdService" class="com.pchome.akbpfp.db.service.ad.PfpAdService">    	     
@@ -200,20 +220,8 @@
         <property name="dao" ref="PfdUserAdAccountRefDAO" />     
     </bean>
     
-    <bean id="AdmFreeGiftService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeGiftService">
-        <property name="dao" ref="AdmFreeGiftDAO" />     
-    </bean>
-    
-    <bean id="AdmFreeRecordService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeRecordService">
-        <property name="dao" ref="AdmFreeRecordDAO" />     
-    </bean>
-    
-    <bean id="AdmManagerDetailService" class="com.pchome.akbpfp.db.service.manager.AdmManagerDetailService">
-        <property name="dao" ref="AdmManagerDetailDAO" />     
-    </bean>
-    
-    <bean id="AdmChannelAccountService" class="com.pchome.akbpfp.db.service.adm.channel.AdmChannelAccountService">
-             <property name="dao" ref="AdmChannelAccountDAO" />
+ 	<bean id="PfpAdVideoSourceService" class="com.pchome.akbpfp.db.service.advideo.PfpAdVideoSourceService">
+        <property name="dao" ref="PfpAdVideoSourceDAO" />     
     </bean>
     
     <!-- pfpbu -->

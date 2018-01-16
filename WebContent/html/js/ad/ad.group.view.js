@@ -1,6 +1,5 @@
 ﻿$(document).ready(function(){
 
-    
 });
 
 function findTableView(){
@@ -104,21 +103,17 @@ function closeAdGroupStatus(adGroupSeq, status){
 
 
 function modifyChannelPrice(seq,price){
-	
 	$("#adGroupSeq").val(seq);
-	
 	$.fancybox({
-		'href'     :'modifyAdGroupChannelPriceMsg.html?adGroupSeq='+seq+'&userprice='+price		                    
+		'href'     :'modifyAdGroupChannelPriceMsg.html?adGroupSeq='+seq+'&userprice='+price     
 	});
 	
 	
 }
 
 function modifySearchPrice(seq,type){
-
 	$("#adGroupSeq").val(seq);
 	$("#searchPriceType").val(type);
-	
 	$.fancybox({
 		'href'     :'modifyAdGroupSearchPriceMsg.html?adGroupSeq='+seq		                    
 	});
@@ -127,7 +122,6 @@ function modifySearchPrice(seq,type){
 
 function tableSorter(){
 	var adType = $("#adType").val();
-	
 	if(adType == "0"){
 		$("#tableView").tablesorter({
 			headers:{
@@ -149,7 +143,6 @@ function tableSorter(){
 				7 : { sorter: 'fancyNumber' },
 				8 : { sorter: 'rangesort' },
 				9 : { sorter: 'rangesort' },
-				11:{sorter:false}
 			}
 		});
 	}

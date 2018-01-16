@@ -1,10 +1,11 @@
 
 var json_data;
-
+var reportExcerptLayer = '';
 //一開始執行
 //jQuery(document).ready(function() {
-jQuery(window).load(function() {
+blockBody();
 
+jQuery(window).load(function() {
     //flash chart
 	showHighChart();
 
@@ -133,13 +134,96 @@ jQuery(window).load(function() {
     //flash chart reload
     $('#reloadFlash').click(function(){
     	showHighChart();
-    });  
+    });
+    
+	$(function() {
+		
+	}).bind("sortStart",function(e, t){
+		 blockBody();
+		 resetIframeSize();
+	 }).bind("sortEnd",function(e, t){
+		 resizeIframeInfo();
+		 setTimeout(function(){  $.unblockUI(); }, 1000);
+	 });
+    
 });
+
+/**重新恢復原本iframe尺寸*/
+function resetIframeSize(){
+	$("#excerptTable tbody tr").each(function(index,obj){
+		var td = $(obj).children()[0];
+		var iframe = td.querySelector('.akb_iframe');
+		if(iframe != null){
+			var div = td.querySelector('.ad_size');
+			var size = $(div).text().replace('尺寸 ','');
+			var sizeArray = size.split(' x ');
+			var width = sizeArray[0];
+			var height = sizeArray[1];
+			iframe.width = width;
+			iframe.height = height;
+		}
+	});
+}
+
+/**重新計算明細高度*/
+function resizeIframeInfo(){
+	$("#excerptTable tbody tr").each(function(index,obj){
+		var td = $(obj).children()[0];
+		var iframe = td.querySelector('.akb_iframe');
+		var adratio = iframe.height / iframe.width;
+		var	adh = 250 * adratio;
+		var infoDiv = $($(td).children()[0]).children()[1];
+		$(infoDiv).css('margin-top',(adh / 2) - 45+'px');
+	});
+}
+
+$(window).load(function(){ 
+	 $.unblockUI();
+}); 
+
+function blockBody(){
+	$('body').block({
+		message: "",
+		css: {
+			padding: 0,
+			margin: 0,
+			width: '100%',
+			top: '40%',
+			left: '35%',
+			textAlign: 'center',
+			color: '#000',
+			border: '3px solid #aaa',
+			backgroundColor: '#fff',
+			cursor: 'wait'
+		}
+	});
+}
 
 
 //ajax id  重新榜定
 function ready(){
-    
+	
+	if($("#excerptTable").children().length > 1){
+		var node = document.createElement("a");
+		node.style.float = 'left';
+		node.style.marginTop = '3px';
+		var img = document.createElement("img");
+		img.src='./html/img/question.gif';
+		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
+		node.appendChild(img);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[7].appendChild(node);
+		
+		var node2 = document.createElement("b");
+		node2.style.float = 'left';
+		node2.style.marginTop = '3px';
+		var img2 = document.createElement("img");
+		img2.src='./html/img/question.gif';
+		img2.title="廣告費用因小數點進位影響總計費用，實際扣款依帳單管理為主";
+		node2.appendChild(img2);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[12].appendChild(node2);
+	}
+	
+	
 	//sort table plugin
     $.tablesorter.defaults.widgets = ['zebra'];
     //$.tablesorter.defaults.sortList = [[0,0]];
@@ -148,13 +232,28 @@ function ready(){
     $("#excerptTable").tablesorter({
         headers: {
             //3 : { sorter: 'fancyNumber' },
-            5 : { sorter: 'fancyNumber' },
-            6 : { sorter: 'fancyNumber' },
             7 : { sorter: 'fancyNumber' },
             8 : { sorter: 'fancyNumber' },
-            9 : { sorter: 'rangesort' },
-            10 : { sorter: 'rangesort' }
-        }
+            9 : { sorter: 'fancyNumber' },
+            10 : { sorter: 'fancyNumber' },
+            11 : { sorter: 'rangesort' },
+            12 : { sorter: 'rangesort' },
+            13 : { sorter: 'rangesort' }
+        },
+        initialized: function(table) {
+			$("#excerptTable").on('sortStart', function() {
+				 if(reportExcerptLayer =='adLayer'){
+					 blockBody();
+					 resetIframeSize();	 
+				 }
+		    }),
+		    $("#excerptTable").on('sortEnd', function() {
+		    	if(reportExcerptLayer == 'adLayer'){
+		    		setTimeout(function(){  $.unblockUI(); }, 1000);
+					resizeIframeInfo();
+		    	}
+		    });
+		 }
     });
     
     //關鍵字專用
@@ -316,6 +415,7 @@ function ready(){
     var adSearchWay = document.excerptFrom.adSearchWay.value;
     var searchText = document.excerptFrom.searchText.value;
     var adShowWay = document.excerptFrom.adShowWay.value;
+    var adOperatingRule = document.excerptFrom.adOperatingRule.value;
     
     
     $("#searchText").attr("value", searchText);
@@ -348,6 +448,12 @@ function ready(){
         }
     });
     
+    $("#adOperatingRule").children().each(function(){
+		if ($(this).val() == adOperatingRule) {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
     
     //搜尋動作 Do
     $('#btnSearchDo').click(function(){
@@ -355,7 +461,7 @@ function ready(){
         ajaxFormSubmit();
     });
     
-    $("#adShowWay, #adPvclkDevice, #adType, #adSearchWay").change(function(){
+    $("#adShowWay, #adPvclkDevice, #adType, #adSearchWay, #adOperatingRule").change(function(){
     	searchDo();
     	ajaxFormSubmit();
    });
@@ -371,7 +477,14 @@ function ready(){
 
 
 //單一 ajax table a href call ad search
+//總廣告成效-分類
 function adIdSearch(adType, adId){
+	if(adType == 'adtype_ad'){
+		reportExcerptLayer = 'adLayer';
+	}else{
+		reportExcerptLayer = '';
+	}
+	
 	var adPvclkDevice = null;
 	if($('#adPvclkDevice').val()) {
 		adPvclkDevice = $('#adPvclkDevice').val();
@@ -438,7 +551,8 @@ function initJsonData(){
         "adShowWay": $('#fadShowWay').val(),
         "searchText": $('#fsearchText').val(),
         "searchId": $('#fsearchId').val(),
-        "downloadFlag": $('#downloadFlag').val()
+        "downloadFlag": $('#downloadFlag').val(),
+		"adOperatingRule" : $('#fadOperatingRule').val()
     };
 }
 
@@ -500,6 +614,7 @@ function searchDo(){
     document.excerptFrom.adSearchWay.value = $('#adSearchWay').val();
     document.excerptFrom.searchText.value = $('#searchText').val();
     document.excerptFrom.adShowWay.value = $('#adShowWay').val();
+    document.excerptFrom.adOperatingRule.value = $('#adOperatingRule').val();
     //document.excerptFrom.searchId.value = "";
     document.excerptFrom.formPage.value = "1";
 }
@@ -538,6 +653,13 @@ function serachReset(){
             $(this).attr("selected", "true"); //或是給selected也可
         }
     });
+    
+    $("#adOperatingRule").children().each(function(){
+		if ($(this).val() == "") {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
     
     document.excerptFrom.searchId.value = "";
 }
@@ -603,7 +725,8 @@ function showHighChart(){
 			"charPic" : $('#selectChartPic').val(),
 			"charType" : $('#selectChartType').val(),
 			"searchId" : $('#fsearchId').val(),
-			"searchText" : $('#searchText').val()
+			"searchText" : $('#searchText').val(),
+			"adOperatingRule" : $('#fadOperatingRule').val()
 		},
 		success : function(respone) {
 			console.log(respone);
@@ -642,7 +765,8 @@ function showHighChart(){
 	var selectTypeName = "";
 	var selectSuffix = "";
 	var decimals = 0;		//顯示小數點後幾位數
-	switch(selectType){
+	if($('#fadType').val() == "adtype_keyword"){
+		switch(selectType){
 		case "pv":
 			titleName = "曝光數(次)";
 			selectTypeName = "曝光數";
@@ -674,7 +798,51 @@ function showHighChart(){
 			titleName = "費用(NT$)";
 			selectTypeName = "費用";
 			selectSuffix = "元";
+			decimals = 2;
 			break;
+		}
+	} else {
+		switch(selectType){
+			case "pv":
+				titleName = "曝光數(次)";
+				selectTypeName = "曝光數";
+				selectSuffix = "次";
+				break;
+			case "ctr":
+				titleName = "互動率(%)";
+				selectTypeName = "互動率";
+				selectSuffix = "%";
+				decimals = 2;
+				break;
+			case "click":
+				titleName = "互動數(次)";
+				selectTypeName = "互動數";
+				selectSuffix = "次";
+				break;
+			case "invalid":
+				titleName = "無效點選數(次)";
+				selectTypeName = "無效點選數";
+				selectSuffix = "次";
+				break;
+			case "avgCost":
+				titleName = "單次互動費用(NT$)";
+				selectTypeName = "單次互動費用";
+				selectSuffix = "元";
+				decimals = 2;
+				break;
+			case "kiloCost":
+				titleName = "千次曝光費用(NT$)";
+				selectTypeName = "千次曝光費用";
+				selectSuffix = "元";
+				decimals = 2;
+				break;
+			case "cost":
+				titleName = "費用(NT$)";
+				selectTypeName = "費用";
+				selectSuffix = "元";
+				decimals = 3;
+				break;
+		}
 	}
 	
 	// ---預設樣式----
@@ -794,7 +962,7 @@ function showHighChart(){
     		},
     	});
     } else {
-    	$('#hcharts_bx').highcharts({  
+    	$('#hcharts_bx').highcharts({
     		chart: {
     			type: chartPic 
     		},	

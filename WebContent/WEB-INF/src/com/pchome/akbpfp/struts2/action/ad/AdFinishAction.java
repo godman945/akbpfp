@@ -16,15 +16,13 @@ import com.pchome.akbpfp.db.service.ad.PfpAdService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdDevice;
+import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 
 
 public class AdFinishAction extends BaseCookieAction{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private String message = "";
@@ -40,7 +38,7 @@ public class AdFinishAction extends BaseCookieAction{
 	private String adGroupSearchPriceType;
 	private String adGroupSearchPrice;
 	private String adGroupChannelPrice;
-
+	private String adGroupPriceTypeDesc;
 	private List<PfpAd> pfpAdList;
 	private List<PfpAdKeyword> pfpAdKeywordList;
 
@@ -56,9 +54,10 @@ public class AdFinishAction extends BaseCookieAction{
 	private String adType;
 	private String adTypeName;
 	private String adDeviceName;
+	private String adOperatingRule;
 	
 	public String AdAddFinish() throws Exception {
-	    	getadDate();
+	    getadDate();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 		adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
@@ -124,6 +123,99 @@ public class AdFinishAction extends BaseCookieAction{
 		pfpAdKeywordList = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
 		return SUCCESS;
 	}
+	
+	/*
+	 * 影音廣告上稿完成
+	 * */
+	public String adAddVideoFinish() throws Exception{
+	    getadDate();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+		adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
+	
+		//收費方式
+		for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+			if(enumAdPriceType.getDbTypeName().equals(pfpAdGroup.getAdGroupPriceType())){
+				adGroupPriceTypeDesc = enumAdPriceType.getTypeName();
+				break;
+			}
+		}
+		adOperatingRule = pfpAdGroup.getPfpAdAction().getAdOperatingRule();
+		
+		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
+		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
+		String adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
+		if(!customerInfoId.equals(adCustomerInfoId)) {
+			return "notOwner";
+		}
+	
+		adActionSeq = pfpAdGroup.getPfpAdAction().getAdActionSeq();
+		adActionMax = NumberFormat.getIntegerInstance().format(pfpAdGroup.getPfpAdAction().getAdActionMax());
+		adActionStartDate = sdf.format(pfpAdGroup.getPfpAdAction().getAdActionStartDate());
+		adGroupName  = pfpAdGroup.getAdGroupName();
+		
+		adGroupSearchPrice = Integer.toString((int)pfpAdGroup.getAdGroupSearchPrice());
+		//CPC為多媒體廣告其他為影音廣告
+		if(pfpAdGroup.getAdGroupPriceType().equals(EnumAdPriceType.AD_PRICE_CPC.getDbTypeName())){
+			adGroupChannelPrice = Integer.toString((int)pfpAdGroup.getAdGroupChannelPrice());
+		}else if(pfpAdGroup.getAdGroupPriceType().equals(EnumAdPriceType.AD_PRICE_CPM.getDbTypeName())){
+			adGroupChannelPrice = String.valueOf((int)pfpAdGroup.getAdGroupChannelPrice());
+		}else if(pfpAdGroup.getAdGroupPriceType().equals(EnumAdPriceType.AD_PRICE_CPV.getDbTypeName())){
+			adGroupChannelPrice = String.valueOf(pfpAdGroup.getAdGroupChannelPrice());
+		}
+		
+		adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
+		Integer adDevice = pfpAdGroup.getPfpAdAction().getAdDevice();
+		adTypeName = "";
+		
+		for(EnumAdType enumAdType: EnumAdType.values()){
+			if(Integer.parseInt(adType) == enumAdType.getType()){
+				adTypeName = enumAdType.getTypeName();
+			}
+		}
+		
+		for(EnumAdDevice enumAdDevice:EnumAdDevice.values()){
+			if(adDevice == enumAdDevice.getDevType()){
+				adDeviceName = enumAdDevice.getDevTypeName();
+			}
+		}
+		
+		adGroupSearchPriceType = "";
+		switch(pfpAdGroup.getAdGroupSearchPriceType()) {
+			case 1:
+				adGroupSearchPriceType = "系統建議出價";
+				break;
+			case 2:
+				adGroupSearchPriceType = "自行設定出價NT$" + adGroupSearchPrice;
+				break;
+			default:
+				adGroupSearchPriceType = "系統建議出價";
+				break;
+		}
+	
+		if(sdf.format(pfpAdGroup.getPfpAdAction().getAdActionEndDate()).equals("3000-12-31")) {
+			selAdActionEndDate = "永久";
+		} else {
+			selAdActionEndDate = sdf.format(pfpAdGroup.getPfpAdAction().getAdActionEndDate());
+		}
+	
+		pfpAdList = pfpAdService.getPfpAds(null, adGroupSeq, null, null, null, null);
+		List<PfpAd> pfpAdNotCloseList = new ArrayList<PfpAd>();
+		for(PfpAd pfpAd : pfpAdList){
+			if(EnumStatus.Close.getStatusId() != pfpAd.getAdStatus()){
+				pfpAdNotCloseList.add(pfpAd);
+			}
+		}
+		pfpAdList = pfpAdNotCloseList;
+		
+		pfpAdKeywordList = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
+		
+		return SUCCESS;
+	}
+	
+	
+	
+	
 	
 	public void getadDate(){
 	    Calendar calendar = Calendar.getInstance();
@@ -238,5 +330,20 @@ public class AdFinishAction extends BaseCookieAction{
 	public void setAdDeviceName(String adDeviceName) {
 		this.adDeviceName = adDeviceName;
 	}
-	
+
+	public String getAdGroupPriceTypeDesc() {
+		return adGroupPriceTypeDesc;
+	}
+
+	public void setAdGroupPriceTypeDesc(String adGroupPriceTypeDesc) {
+		this.adGroupPriceTypeDesc = adGroupPriceTypeDesc;
+	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
 }

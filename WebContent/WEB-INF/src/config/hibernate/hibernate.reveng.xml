@@ -2,82 +2,154 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
-	<table-filter match-name="adm_accesslog" match-catalog="akb" />
-	<table-filter match-name="adm_channel_account" match-catalog="akb" />
-	<table-filter match-name="adm_define_ad" match-catalog="akb" />
-	<table-filter match-name="adm_free_action" match-catalog="akb" />
-	<table-filter match-name="adm_free_gift" match-catalog="akb" />
-	<table-filter match-name="adm_free_record" match-catalog="akb" />
-	<table-filter match-name="adm_manager_detail" match-catalog="akb" />
-	<table-filter match-name="adm_recognize_detail" match-catalog="akb" />
-	<table-filter match-name="adm_recognize_record" match-catalog="akb" />
+	<table-filter match-name="adm_accesslog" match-catalog="akb_video" />
+	<table-filter match-name="adm_channel_account"
+		match-catalog="akb_video" />
+	<table-filter match-name="adm_define_ad" match-catalog="akb_video" />
+	<table-filter match-name="adm_free_action"
+		match-catalog="akb_video" />
+	<table-filter match-name="adm_free_gift" match-catalog="akb_video" />
+	<table-filter match-name="adm_free_record"
+		match-catalog="akb_video" />
+	<table-filter match-name="adm_manager_detail"
+		match-catalog="akb_video" />
+	<table-filter match-name="adm_recognize_detail"
+		match-catalog="akb_video" />
+	<table-filter match-name="adm_recognize_record"
+		match-catalog="akb_video" />
 	<table-filter match-name="pfd_apply_for_business"
-		match-catalog="akb" />
-	<table-filter match-name="pfd_ad_action_report" match-catalog="akb" />
-	<table-filter match-name="pfd_ad_group_report" match-catalog="akb" />
-	<table-filter match-name="pfd_ad_report" match-catalog="akb" />
-	<table-filter match-name="pfd_keyword_report" match-catalog="akb" />
-	<table-filter match-name="pfd_bonus_detail" match-catalog="akb" />
-	<table-filter match-name="pfd_bonus_item" match-catalog="akb" />
-	<table-filter match-name="pfd_bonus_set" match-catalog="akb" />
-	<table-filter match-name="pfd_board" match-catalog="akb" />
-	<table-filter match-name="pfd_contract" match-catalog="akb" />
-	<table-filter match-name="pfd_customer_info" match-catalog="akb" />
+		match-catalog="akb_video" />
+	<table-filter match-name="pfd_ad_action_report"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfd_ad_group_report"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfd_ad_report" match-catalog="akb_video" />
+	<table-filter match-name="pfd_keyword_report"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfd_bonus_detail"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfd_bonus_item" match-catalog="akb_video" />
+	<table-filter match-name="pfd_bonus_set" match-catalog="akb_video" />
+	<table-filter match-name="pfd_board" match-catalog="akb_video" />
+	<table-filter match-name="pfd_contract" match-catalog="akb_video" />
+	<table-filter match-name="pfd_customer_info"
+		match-catalog="akb_video" />
 	<table-filter match-name="pfd_fixed_bonus_detail"
-		match-catalog="akb" />
+		match-catalog="akb_video" />
 	<table-filter match-name="pfd_month_total_bonus"
-		match-catalog="akb" />
-	<table-filter match-name="pfd_user" match-catalog="akb" />
+		match-catalog="akb_video" />
+	<table-filter match-name="pfd_user" match-catalog="akb_video" />
 	<table-filter match-name="pfd_user_ad_account_ref"
-		match-catalog="akb" />
-	<table-filter match-name="pfd_user_member_ref" match-catalog="akb" />
-	<table-filter match-name="pfp_ad" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_action" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_action_report" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_category" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_click" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_detail" match-catalog="akb" />
+		match-catalog="akb_video" />
+	<table-filter match-name="pfd_user_member_ref"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad" match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_action" match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_action_report"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_category"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_click" match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_detail" match-catalog="akb_video" />
 	<table-filter match-name="pfp_ad_exclude_keyword"
-		match-catalog="akb" />
-	<table-filter match-name="pfp_ad_group" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_group_report" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_invalid" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_keyword" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_keyword_pvclk" match-catalog="akb" />
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_group" match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_group_report"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_invalid" match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_keyword" match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_keyword_pvclk"
+		match-catalog="akb_video" />
 	<table-filter match-name="pfp_ad_keyword_report"
-		match-catalog="akb" />
-	<table-filter match-name="pfp_ad_pvclk" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_rank" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_rate" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_sysprice" match-catalog="akb" />
-	<table-filter match-name="pfp_board" match-catalog="akb" />
-	<table-filter match-name="pfp_customer_info" match-catalog="akb" />
-	<table-filter match-name="pfp_enterprise" match-catalog="akb" />
-	<table-filter match-name="pfp_illegal_keyword" match-catalog="akb" />
-	<table-filter match-name="pfp_keyword_sysprice" match-catalog="akb" />
-	<table-filter match-name="pfp_mailbox" match-catalog="akb" />
-	<table-filter match-name="pfp_menu" match-catalog="akb" />
-	<table-filter match-name="pfp_order" match-catalog="akb" />
-	<table-filter match-name="pfp_order_detail" match-catalog="akb" />
-	<table-filter match-name="pfp_privilege_model" match-catalog="akb" />
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_pvclk" match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_rank" match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_rate" match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_sysprice"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_board" match-catalog="akb_video" />
+	<table-filter match-name="pfp_customer_info"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_enterprise" match-catalog="akb_video" />
+	<table-filter match-name="pfp_illegal_keyword"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_keyword_sysprice"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_mailbox" match-catalog="akb_video" />
+	<table-filter match-name="pfp_menu" match-catalog="akb_video" />
+	<table-filter match-name="pfp_order" match-catalog="akb_video" />
+	<table-filter match-name="pfp_order_detail"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_privilege_model"
+		match-catalog="akb_video" />
 	<table-filter match-name="pfp_privilege_model_menu_ref"
-		match-catalog="akb" />
-	<table-filter match-name="pfp_report" match-catalog="akb" />
-	<table-filter match-name="pfp_sysprice_rate" match-catalog="akb" />
-	<table-filter match-name="pfp_trans_detail" match-catalog="akb" />
-	<table-filter match-name="pfp_user" match-catalog="akb" />
-	<table-filter match-name="pfp_user_member_ref" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_time_report" match-catalog="akb" />
-	<table-filter match-name="pfp_ad_age_report" match-catalog="akb" />
-	<table-filter match-name="sequence" match-catalog="akb" />
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_report" match-catalog="akb_video" />
+	<table-filter match-name="pfp_sysprice_rate"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_trans_detail"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_user" match-catalog="akb_video" />
+	<table-filter match-name="pfp_user_member_ref"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_time_report"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_ad_age_report"
+		match-catalog="akb_video" />
+	<table-filter match-name="sequence" match-catalog="akb_video" />
 	<table-filter match-name="pfp_ad_specific_website"
-		match-catalog="akb" />
-	<table-filter match-name="pfbx_size" match-catalog="akb" />
+		match-catalog="akb_video" />
+	<table-filter match-name="pfbx_size" match-catalog="akb_video" />
 	<table-filter match-name="pfbx_website_category"
-		match-catalog="akb" />
+		match-catalog="akb_video" />
 	<table-filter match-name="pfp_ad_website_report"
-		match-catalog="akb" />
-	<table-filter match-name="pfp_refund_order" match-catalog="akb" />
-	<table-filter match-name="pfp_bu_account" match-catalog="akb"></table-filter>
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_refund_order"
+		match-catalog="akb_video" />
+	<table-filter match-name="pfp_bu_account"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfp_ad_os_report"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfp_ad_report"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="adm_pfpd_ad_pvclk_report"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfp_ad_age_report"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfd_ad_template_report"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfd_ad_time_report"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfd_ad_website_report"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="adm_client_count_report"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfp_ad_video" match-catalog="akb_video"></table-filter>
+	<table-filter match-name="pfp_ad_video_report"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="adm_uniq_data"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfp_channel_admin"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfp_ad_gift" match-catalog="akb_video"></table-filter>
+	<table-filter match-name="adm_feedback_record"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfp_ad_keyword_invalid"
+		match-catalog="akb_video">
+	</table-filter>
+	<table-filter match-name="pfp_ad_video_source" match-catalog="akb_video"></table-filter>
 
 </hibernate-reverse-engineering>

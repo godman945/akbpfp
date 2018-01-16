@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.report;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
@@ -40,8 +42,8 @@ public class ReportCampaginAction extends BaseReportAction {
 	//private String[] align_data = {"center", "left", "left", "center", "right", "right", "right", "right", "right", "right", "right"};
 	//private String[] align_sum = {"center", "center", "left", "center", "right", "right", "right", "right", "right", "right", "right"};
 	// 20140318： 隱藏 "無效點選次數" 欄位
-	private String[] align_data = {"center", "center", "left", "center", "center", "right", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "right"};
 
 	private IAdActionReportService adActionReportService=null;
 	private IPfpAdActionService adActionService=null;
@@ -72,6 +74,7 @@ public class ReportCampaginAction extends BaseReportAction {
 	private String searchText="";//搜尋文字
 	private String adShowWay="";//廣告顯示位址,一般,內容
 	private String searchId="";//廣告id ,某活動,某群組id
+	private String adOperatingRule;//廣告樣式
 
 	private String charPic="";//圖表格式
 	private String charType="";//度量
@@ -87,6 +90,10 @@ public class ReportCampaginAction extends BaseReportAction {
 	
 	private String reportTitle;
 
+	private NumberFormat intFormat = new DecimalFormat("###,###,###,###");
+	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+	private NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
+	
 	public String flashDataDownLoad() throws Exception {
 
 		//查詢日期寫進 cookie
@@ -106,7 +113,7 @@ public class ReportCampaginAction extends BaseReportAction {
 		log.info(">>> customerInfoId = " + customerInfoId);
 
 		List<AdActionReportVO> resultData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),
-				searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate,-1,-1);
+				searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate,-1,-1);
 
 		Map<Date, Float> flashDataMap = new HashMap<Date, Float>();
 
@@ -117,30 +124,34 @@ public class ReportCampaginAction extends BaseReportAction {
 		double ctr = 0;
 		double costAvg = 0;
 		double adActionMaxPrice = 0;
+		double kiloCost = 0;
 		double count = 0;
 		double adActionMaxPriceAvg = 0; //每日花費上限
 
 		for (int i=0; i<resultData.size(); i++) {
 
 			AdActionReportVO vo = resultData.get(i);
-
 			Date reportDate = vo.getReportDate();
 			pv = vo.getAdPvSum().doubleValue();
 			click = vo.getAdClkSum().doubleValue();
 			cost = vo.getAdPriceSum().doubleValue();
+			cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 			invClick = vo.getAdInvClkSum().doubleValue();
 			adActionMaxPrice = vo.getAdActionMaxPriceSum().doubleValue();
 			count = vo.getCount().doubleValue();
 
-			//點選率 = 點選次數 / 曝光數
-			if (pv>0 && click>0) {
-				ctr = (click / pv) * 100;
-			}
+			//互動率 = 互動次數 / 曝光數
+			ctr = (click / pv) * 100;
 
-			//平均點選費用 = 總費用 / 總點選次數
-			if (cost>0 && click>0) {
+			//單次互動費用 = 總費用 / 總互動次數
+			if(click == 0){
+				costAvg = cost;
+			}else{
 				costAvg = cost / click;
 			}
+
+			//千次曝光費用 = 總費用*1000 / 曝光數
+			kiloCost = (cost * 1000) / pv;
 
 			//計算平均每日花費上限
 			if (adActionMaxPrice>0 && count>0) {
@@ -152,15 +163,17 @@ public class ReportCampaginAction extends BaseReportAction {
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 				flashDataMap.put(reportDate, new Float((float) click));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) ctr));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(ctr)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) invClick));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(invClick)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) costAvg));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) cost));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(costAvg)));
+			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(kiloCost)));
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) adActionMaxPriceAvg));
+				flashDataMap.put(reportDate, new Float(doubleFormat.format(adActionMaxPriceAvg)));
+			}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+            	flashDataMap.put(reportDate, new Float(cost));
 			}
 		}
 
@@ -178,11 +191,12 @@ public class ReportCampaginAction extends BaseReportAction {
 		tableHeadNameMap=new HashMap<String,String>();
 		tableHeadNameMap.put("每日花費", EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue());
 		tableHeadNameMap.put("曝光數", EnumReport.REPORT_CHART_TYPE_PV.getTextValue());
-		tableHeadNameMap.put("點選次數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
-		tableHeadNameMap.put("點選率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
+		tableHeadNameMap.put("互動數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
+		tableHeadNameMap.put("互動率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
 		// 20140318： 隱藏 "無效點選次數" 欄位
 		//tableHeadNameMap.put("無效點選次數", EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue());
-		tableHeadNameMap.put("平均點選費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
 		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
 		
 		optionSelect="";
@@ -191,7 +205,7 @@ public class ReportCampaginAction extends BaseReportAction {
 		//optionSelect="曝光數,點選率(%),點選次數,無效點選次數,平均點選費用,費用";
 		//optionSelect="每日花費,曝光數,點選率(%),點選次數,無效點選次數,平均點選費用,費用";
 		// 20140318： 隱藏 "無效點選次數" 欄位
-		optionSelect="每日花費,曝光數,點選次數,點選率,平均點選費用,費用";
+		optionSelect="每日花費,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
 
 
 		tableHeadShowList=new LinkedList<String>();
@@ -305,15 +319,16 @@ public class ReportCampaginAction extends BaseReportAction {
 
 		tableHeadList.addFirst("裝置");
 		tableHeadList.addFirst("走期");
-		tableHeadList.addFirst("類型");
+		tableHeadList.addFirst("廣告樣式");
+		tableHeadList.addFirst("播放類型");
 		tableHeadList.addFirst("廣告");
 		tableHeadList.addFirst("狀態");
 
-		List<AdActionReportVO> resultSumData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue(),searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, -1, -1);
+		List<AdActionReportVO> resultSumData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue(),searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
 
 		int totalPageSize = resultSumData.size();
 		
-		List<AdActionReportVO> resultData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue(),searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+		List<AdActionReportVO> resultData = adActionReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue(),searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 
 		totalPage = totalPageSize/pageSize;
 
@@ -350,8 +365,16 @@ public class ReportCampaginAction extends BaseReportAction {
 		content.append("\n\n");
 		content.append("報表名稱,PChome 廣告成效");
 		content.append("\n\n");
-		content.append("廣告方式," + getAdShowWayMap().get(adShowWay));
-		content.append("\n\n");
+		content.append("播放類型," + getAdShowWayMap().get(adShowWay));
+		content.append("\n");
+		content.append("廣告樣式," + getAdStyleTypeMap().get(adOperatingRule));
+		content.append("\n");
+		content.append("裝置," + getAdPvclkDeviceMap().get(adPvclkDevice));
+		content.append("\n");
+		content.append("搜尋條件," + getAdSearchWayMap().get(adSearchWay));
+		content.append("\n");
+		content.append("搜尋內容," + searchText);
+		content.append("\n");
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
 
@@ -364,9 +387,9 @@ public class ReportCampaginAction extends BaseReportAction {
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
-				if(dataNumber == 6 ||dataNumber == 10 || dataNumber == 11){
-					content.append("\"NT$ " + s + "\"");
-				} else if(dataNumber == 9){
+				if(dataNumber == 7 ||dataNumber == 11 || dataNumber == 12 || dataNumber == 13){
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
+				} else if(dataNumber == 10){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -381,9 +404,9 @@ public class ReportCampaginAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 10 || dataTotalNumber == 11){
-					content.append("\"NT$ " + s + "\"");
-				} else if(dataTotalNumber == 9){
+				if(dataTotalNumber == 11 || dataTotalNumber == 12 || dataTotalNumber == 13){
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
+				} else if(dataTotalNumber == 10){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -408,12 +431,10 @@ public class ReportCampaginAction extends BaseReportAction {
 
 	private void resultSumDataTrans(List<AdActionReportVO> resultSumData) throws Exception {
 
-		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
-
 		tableDataTotalList = new LinkedList<String>();
 		tableDataTotalList.add("");
 		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
+		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
 		tableDataTotalList.add("");
@@ -424,28 +445,31 @@ public class ReportCampaginAction extends BaseReportAction {
 		double t_ctr = 0; //點選率
 		double t_invalid = 0; //無效點選次數
 		double t_costAvg = 0; //平均點選費用
+		double t_kiloCost = 0;	//千次曝光費用
 		double t_cost = 0; //總費用
 
 		//加總
 		for (int i=0; i<resultSumData.size(); i++) {
-
 			AdActionReportVO vo = resultSumData.get(i);
-
 			t_pv += vo.getAdPvSum().doubleValue();
 			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += new Double(vo.getAdPriceSum());
+			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 		}
+		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
+		
+		//互動率 = 總互動次數 / 總曝光數
+		t_ctr = (t_click / t_pv) * 100;
 
-		//點選率 = 總點選次數 / 總曝光數
-		if (t_pv>0 && t_click>0) {
-			t_ctr = (t_click / t_pv) * 100;
-		}
-
-		//平均點選費用 = 總費用 / 總點選次數
-		if (t_cost>0 && t_click>0) {
+		//單次互動費用 = 總費用 / 總互動次數
+		if (t_click == 0) {
+			t_costAvg = t_cost;
+		}else{
 			t_costAvg = t_cost / t_click;
 		}
+		
+		//千次曝光費用 = 總費用*1000 / 曝光數
+		t_kiloCost = (t_cost * 1000) / t_pv;
 		
 		if (!tableHeadShowList.isEmpty()) {
 			String mapKey;
@@ -461,8 +485,10 @@ public class ReportCampaginAction extends BaseReportAction {
 					tableDataTotalList.addLast(intFormat.format(t_invalid));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 					tableDataTotalList.addLast(doubleFormat.format(t_costAvg));
+				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_cost));
+					tableDataTotalList.addLast(doubleFormat2.format(t_cost));
 				}
 			}
 		}
@@ -481,16 +507,10 @@ public class ReportCampaginAction extends BaseReportAction {
 		long nowTime = new Date().getTime();
 		try {
 			for (int i=0; i<resultData.size(); i++) {
-
 				tableInDataList = new LinkedList<String>();
-	
 				AdActionReportVO vo = resultData.get(i);
-	
 				String adActionSeq = vo.getAdActionSeq();
-	
 				PfpAdAction pfpAdAction =  adActionService.getPfpAdActionBySeq(adActionSeq);
-				System.out.println("pfpAdAction.getAdActionName() = " + pfpAdAction.getAdActionName());
-	
 				String adActionName = pfpAdAction.getAdActionName();
 			    int adActionStatus = pfpAdAction.getAdActionStatus();
 			    String adActionStartDate = dateFormat2.format(pfpAdAction.getAdActionStartDate());
@@ -498,25 +518,30 @@ public class ReportCampaginAction extends BaseReportAction {
 	
 				double pv = vo.getAdPvSum().doubleValue();
 				double click = vo.getAdClkSum().doubleValue();
-				double cost = new Double(vo.getAdPriceSum());
+				double cost = vo.getAdPriceSum();
 				double invClick = vo.getAdInvClkSum().doubleValue();
 				double ctr = 0;
 				double costAvg = 0;
+				double kiloCost = 0;
 				double adActionMaxPriceAvg = 0;
 				double adActionMaxPrice = vo.getAdActionMaxPriceSum().doubleValue();
 				double count = vo.getCount().doubleValue();
 				String adDevice = vo.getAdDevice();
 				String adType = vo.getAdType();
+				String adOperatingRuleName = vo.getAdOperatingRuleDesc();
 	
-				//點選率 = 點選次數 / 曝光數
-				if (pv>0 && click>0) {
-					ctr = (click / pv) * 100;
-				}
-	
-				//平均點選費用 = 總費用 / 總點選次數
-				if (cost>0 && click>0) {
+				//互動率 = 互動次數 / 曝光數
+				ctr = (click / pv) * 100;
+
+				//單次互動費用 = 總費用 / 總互動次數
+				if(click == 0){
+					costAvg = cost;
+				}else{
 					costAvg = cost / click;
 				}
+
+				//千次曝光費用 = 總費用*1000 / 曝光數
+				kiloCost = (cost * 1000) / pv;
 	
 				//計算平均每日花費上限
 				System.out.println("adActionMaxPrice = " + adActionMaxPrice);
@@ -560,6 +585,7 @@ public class ReportCampaginAction extends BaseReportAction {
 	
 				tableInDataList.addLast(adActionName);
 				tableInDataList.addLast(adType);
+				tableInDataList.addLast(adOperatingRuleName);
 				
 				if (adActionEndDate.equals("3000-12-31")) {
 					adActionEndDate = "永久";
@@ -584,8 +610,10 @@ public class ReportCampaginAction extends BaseReportAction {
 	 						tableInDataList.addLast(intFormat.format(invClick));
 	 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 							tableInDataList.addLast(doubleFormat.format(costAvg));
+						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+							tableInDataList.addLast(doubleFormat.format(kiloCost));
 						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-							tableInDataList.addLast(intFormat.format(cost));
+							tableInDataList.addLast(doubleFormat2.format(cost));
 						} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
 							tableInDataList.addLast(doubleFormat.format(adActionMaxPriceAvg));
 						}
@@ -787,4 +815,14 @@ public class ReportCampaginAction extends BaseReportAction {
 	public void setCharType(String charType) {
 		this.charType = charType;
 	}
+
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
+	}
+	
+	
 }
