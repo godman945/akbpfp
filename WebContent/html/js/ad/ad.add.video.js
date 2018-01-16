@@ -712,6 +712,12 @@ function autoPreview(objData){
 	if(linkUrl.indexOf('http') == -1){
 		linkUrl = "http://"+linkUrl;
 	}
+	
+	
+	console.log('url>>>>>>>>>>>>>>:'+url);
+	console.log('linkUrl>>>>>>>>>>>>>>:'+linkUrl);
+	
+	
 	$.each(iframeInfoMap, function(key, obj) {
 		var a = 
 			'<div class="v_box">'+
