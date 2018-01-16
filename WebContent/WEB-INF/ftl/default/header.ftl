@@ -1,6 +1,6 @@
-<!-- 導公告頁
+<!-- 導公告頁 -->
 <meta http-equiv="refresh" content="0; url=http://show.pchome.com.tw/faq.html?fid=2&qid=33">
- -->
+ 
 <#assign s=JspTaglibs["/struts-tags"]>
 <@s.set var="uri" value="%{#request['javax.servlet.forward.request_uri']}" />
 <#-- 利用 freemaker 的date 屬性進行時間的判斷 -->
