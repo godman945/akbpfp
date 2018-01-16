@@ -31,7 +31,7 @@ public class PfpAdPvclkDAO extends BaseDAO<PfpAdPvclk,String> implements IPfpAdP
 	@SuppressWarnings("unchecked")
 	public List<Object> totalPvclkCost(String customerInfoId, Date startDate, Date endDate) throws Exception{
 		StringBuffer hql = new StringBuffer();
-		hql.append("select sum(adPv), sum((case when adOperatingRule ='CPC' then adClk else adView end)), sum(adClkPrice), sum(adInvalidClk), sum(adInvalidClkPrice) ");
+		hql.append("select sum(adPv), sum((case when adClkPriceType ='CPC' then adClk else adView end)), sum(adClkPrice), sum(adInvalidClk), sum(adInvalidClkPrice) ");
 		hql.append(" from PfpAdActionReport" );
 		hql.append(" where customerInfoId = ? ");
 		hql.append(" and adPvclkDate >= ? ");
