@@ -80,6 +80,7 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-left">
+            	<li><a href="http://showstg.pchome.com.tw/pfp/api/buLogin.html?key=C5iQaMJQQJWPtGEJzCTf2OA00mGMUweUPfxFmyERtQhSKngCpXEBBIzYDtvx3i-VrtyG8V6siJfMC-DDT-ZB6tTM9HUsR70UE88Yxnv6jCAEppSqHwSrObOVPHwiqmdnG8wDAMf5N2DTdWMm0MzK9TmRKMZ9Vo4UfXN2ZElcydMi0isRSIh2m0aW5vvoneBdflE2zrdaQCkXQuLt1X6T9XQeYld7JlIHNdCtJjLPQChyk6PB1nVe5qG4snHgB7e0iY5Cykl6XK57C0k2tLlYI4GvtDCZFWOorJ3vUQE9QiN35nQ2xUjpq5jAVlfwZ59bfG2MYRp1iI_S4cBHR_iOFw">TEST</a></li>
                 <li><a href="#step">廣告刊登</a></li>
                 <li><a href="#impression">廣告版位</a></li>
                 <li><a href="#fee">計費方式</a></li>
