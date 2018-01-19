@@ -1,8 +1,52 @@
-﻿﻿﻿﻿$(document).ready(function(){
+﻿
+
+
+document.addEventListener('DOMContentLoaded', function() {
+	$.unblockUI();
+}, false);
+
+﻿﻿﻿$(document).ready(function(){
 	callBlockUpload();
-	window.onload=function(){
-		$.unblockUI();
-	}
+//	var a = document.getElementsByTagName("iframe");
+//	for(var i = 0; i< a.length; i++){
+//		
+//		
+//		 a[i].onload = function(){
+//			 $.unblockUI();
+//		 };
+//		
+//		
+//		
+//		
+//		
+//		
+////		a[i].attachEvent("onload", function(){
+////	        alert("Local iframe is now loaded.");
+////	    });
+//		
+////		if (a[i].attachEvent){
+////			
+//////			console.log('AAAAA');
+////		    a[i].attachEvent("onload", function(){
+////		    	
+//////		        alert("Local iframe is now loaded.");
+////		    });
+////		} else {
+//////			console.log('CCC');
+////		    a[i].onload = function(){
+////		    	$.unblockUI();
+//////		        alert("Local iframe is now loaded.");
+////		    };
+////		}
+////		console.log(a[i]);
+//	}
+	
+	
+	
+//	window.onload=function(){
+//		$.unblockUI();
+//	}
+	
 	$("#tableView").tablesorter({
 		headers: {
 			0: { sorter: false },
