@@ -4,17 +4,16 @@
 //document.addEventListener('DOMContentLoaded', function() {
 //	$.unblockUI();
 //}, false);
- $(window).load(function() {
-	 alert('SS');
-	 $.unblockUI();
- });
+// $(window).load(function() {
+//	 $.unblockUI();
+// });
 //$('document').onload(function() {
 //	$.unblockUI();
 //});
 
-
 ﻿﻿﻿$(document).ready(function(){
 	callBlockUpload();
+	setTimeout(function(){  $.unblockUI(); }, 3000);
 //	var a = document.getElementsByTagName("iframe");
 //	for(var i = 0; i< a.length; i++){
 //		
