@@ -1,5 +1,8 @@
 ﻿﻿﻿﻿$(document).ready(function(){
-	
+	callBlockUpload();
+	window.onload=function(){
+		$.unblockUI();
+	}
 	$("#tableView").tablesorter({
 		headers: {
 			0: { sorter: false },
@@ -93,7 +96,7 @@ function findTableView(){
 	var adGroupSeq = $("#adGroupSeq").val();
 	var adType = $("#adType").val();
 	var adOperatingRule = $("#adOperatingRule").val();
-	callBlockUpload();
+//	callBlockUpload();
 	$.ajax({
 		async: false,
 		url: "adAdVideoViewTable.html",
@@ -243,23 +246,22 @@ function closePrew(){
 	$("#preViewArea").empty();
 }
 
+//鎖住UI
 function callBlockUpload(){
-	  $('body').block({
-	        message: "<img src='html/img/LoadingWait.gif' />",
+	  $.blockUI({
+		  message: "<b><font size=5>影片載入中...</font></b><img src='html/img/LoadingWait.gif' />",
 	        css: {
-	            padding: 0,
-	            margin: 0,
-	            width: '50%',
-	            top: '40%',
-	            left: '35%',
-	            textAlign: 'center',
-	            color: '#000',
-	            border: '3px solid #aaa',
-	            backgroundColor: '#fff',
-	            cursor: 'wait'
+	        	  border: '3px solid #aaa',
+			      padding: '15px',
+			      backgroundColor: '#fff',
+			       '-webkit-border-radius': '10px',
+			       '-moz-border-radius': '10px',
+			        opacity: .9,
+			        textAlign:      'center',
+			        cursor:         'wait',
+			        top:'50%'
 	        }
 	    });
-	  $($('.blockUI')[1]).css('height',1024)
 }
 //alert('FF1');
 document.addEventListener('DOMContentLoaded', function () {
