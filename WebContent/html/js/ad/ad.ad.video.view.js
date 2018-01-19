@@ -1,9 +1,16 @@
 ﻿
 
 
-document.addEventListener('DOMContentLoaded', function() {
-	$.unblockUI();
-}, false);
+//document.addEventListener('DOMContentLoaded', function() {
+//	$.unblockUI();
+//}, false);
+ $(window).load(function() {
+	 $.unblockUI();
+ });
+//$('document').onload(function() {
+//	$.unblockUI();
+//});
+
 
 ﻿﻿﻿$(document).ready(function(){
 	callBlockUpload();
