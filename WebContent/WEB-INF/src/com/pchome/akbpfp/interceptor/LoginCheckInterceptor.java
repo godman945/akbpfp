@@ -6,6 +6,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumMap;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +69,22 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	public String intercept(ActionInvocation invocation) throws Exception{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		log.info(">>>>>>>>>>>>>>>>>>>>>IPHONE START");
+		Enumeration headerNames = request.getHeaderNames();
+	        while (headerNames.hasMoreElements()) {
+	            String key = (String) headerNames.nextElement();
+	            String value = request.getHeader(key);
+		        log.info("key:"+key);
+		        log.info("value:"+value);
+		        log.info("------------------");
+	        }
+		log.info(">>>>>>>>>>>>>>>>>>>>>IPHONE END");
+		
+		
+		
+		
+		
 		/*BU LOGIN START*/
 		String uri = request.getRequestURI();
 		if(uri.indexOf("buLogin") >= 0){
