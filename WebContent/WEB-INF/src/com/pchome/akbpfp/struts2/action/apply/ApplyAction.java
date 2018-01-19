@@ -199,7 +199,19 @@ public class ApplyAction extends BaseSSLAction{
 			}
 
 			this.accountVO.setMemberVO(memberVO);
-
+			
+			
+			// BU資料
+			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(userMemberId);
+			if(pfpBuAccountList.size() > 0){
+				PfpBuAccount pfpBuAccount = pfpBuAccountList.get(0);
+				this.buAccountVO = new BuAccountVO();
+				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
+				buAccountVO.setBuId(pfpBuAccount.getBuId());
+				buAccountVO.setGiftSno("STTBDAEFJ8");
+				return "success";
+			}
+			
 			result = "wait";
 		}else{
 			// 帳戶已啟用、停權、關閉
