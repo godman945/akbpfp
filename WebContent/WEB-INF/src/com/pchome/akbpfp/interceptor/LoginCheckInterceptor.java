@@ -79,6 +79,8 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		        log.info("value:"+value);
 		        log.info("------------------");
 	        }
+	        String imei = 		System.getProperty("IMEI");
+	        log.info("imei------------------"+imei);
 		log.info(">>>>>>>>>>>>>>>>>>>>>IPHONE END");
 		
 		
