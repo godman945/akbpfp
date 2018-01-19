@@ -2,6 +2,7 @@ package com.pchome.akbpfp.interceptor;
 
 
 
+import java.net.NetworkInterface;
 import java.security.interfaces.RSAPrivateKey;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,15 +73,24 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		
 		log.info(">>>>>>>>>>>>>>>>>>>>>IPHONE START");
 		Enumeration headerNames = request.getHeaderNames();
-	        while (headerNames.hasMoreElements()) {
-	            String key = (String) headerNames.nextElement();
-	            String value = request.getHeader(key);
-		        log.info("key:"+key);
-		        log.info("value:"+value);
-		        log.info("------------------");
-	        }
-	        String imei = 		System.getProperty("IMEI");
-	        log.info("imei------------------"+imei);
+		while (headerNames.hasMoreElements()) {
+			String key = (String) headerNames.nextElement();
+			String value = request.getHeader(key);
+			log.info("key:"+key);
+			log.info("value:"+value);
+			log.info("------------------");
+		}
+		Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+		while (nis.hasMoreElements()) {
+		    NetworkInterface ni = nis.nextElement();
+		    log.info(ni.getName() + " " + ni.getDisplayName());
+		    log.info(ni.getName() + " " + ni.getNetworkInterfaces().nextElement().getMTU());
+		    log.info(ni.getName() + " " + ni.getNetworkInterfaces().nextElement().getIndex());
+		}
+	        
+	        
+	        
+	       
 		log.info(">>>>>>>>>>>>>>>>>>>>>IPHONE END");
 		
 		
