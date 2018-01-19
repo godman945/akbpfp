@@ -5,6 +5,7 @@
 //	$.unblockUI();
 //}, false);
  $(window).load(function() {
+	 alert('SS');
 	 $.unblockUI();
  });
 //$('document').onload(function() {
