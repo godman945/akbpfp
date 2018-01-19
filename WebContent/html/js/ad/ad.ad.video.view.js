@@ -1,58 +1,9 @@
-﻿
-
-
-//document.addEventListener('DOMContentLoaded', function() {
-//	$.unblockUI();
-//}, false);
-// $(window).load(function() {
-//	 $.unblockUI();
-// });
-//$('document').onload(function() {
-//	$.unblockUI();
-//});
-
-﻿﻿﻿$(document).ready(function(){
+﻿﻿﻿﻿$(document).ready(function(){
 	callBlockUpload();
-	setTimeout(function(){  $.unblockUI(); }, 3000);
-//	var a = document.getElementsByTagName("iframe");
-//	for(var i = 0; i< a.length; i++){
-//		
-//		
-//		 a[i].onload = function(){
-//			 $.unblockUI();
-//		 };
-//		
-//		
-//		
-//		
-//		
-//		
-////		a[i].attachEvent("onload", function(){
-////	        alert("Local iframe is now loaded.");
-////	    });
-//		
-////		if (a[i].attachEvent){
-////			
-//////			console.log('AAAAA');
-////		    a[i].attachEvent("onload", function(){
-////		    	
-//////		        alert("Local iframe is now loaded.");
-////		    });
-////		} else {
-//////			console.log('CCC');
-////		    a[i].onload = function(){
-////		    	$.unblockUI();
-//////		        alert("Local iframe is now loaded.");
-////		    };
-////		}
-////		console.log(a[i]);
-//	}
 	
-	
-	
-//	window.onload=function(){
-//		$.unblockUI();
-//	}
+	window.onload=function(){
+		$.unblockUI();
+	}
 	
 	$("#tableView").tablesorter({
 		headers: {
