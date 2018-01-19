@@ -94,19 +94,19 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 				}
 				
 				//檢查Referer來源
-//				if(buName.equals(this.pcstoreName)){
-//					boolean pcstoreFlag = false;
-//					String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
-//					for (String referer : buPcstoreRefererArray) {
-//						if(request.getHeader("referer").contains(referer)){
-//							pcstoreFlag = true;
-//							break;
-//						}
-//					}
-//					if(!pcstoreFlag){
-//						return "index";
-//					}
-//				}
+				if(buName.equals(this.pcstoreName)){
+					boolean pcstoreFlag = false;
+					String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
+					for (String referer : buPcstoreRefererArray) {
+						if(request.getHeader("referer").contains(referer)){
+							pcstoreFlag = true;
+							break;
+						}
+					}
+					if(!pcstoreFlag){
+						return "index";
+					}
+				}
 				
 				/** 查詢bu帳號是否開通，開通則更新bu狀態否則進入apply申請頁 */
 				List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
