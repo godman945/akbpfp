@@ -186,7 +186,7 @@ public class AdGroupAddAction extends BaseCookieAction{
 			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(userprice));
 			return "success_video";
 		}else{
-			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(Float.parseFloat(adGroupChannelPrice)));
+			AdAsideRate = String.format("%,3.2f", syspriceOperaterAPI.getAdAsideRate(Float.parseFloat(sysChannelPrice)));
 			return SUCCESS;
 		}
 	}
