@@ -69,8 +69,8 @@
  	      var fp = new Fingerprint2();
  	      fp.get(function(result, components) {
  	        var d2 = new Date();
- 	        var timeString = "Time took to calculate the fingerprint: " + (d2 - d1) + "ms";
- 	        var details = "<strong>Detailed information: </strong><br />";
+ 	        var timeString = "執行 fingerprint 時間: " + (d2 - d1) + "ms";
+ 	        var details = "<strong>系統資訊: </strong><br />";
  	        if(typeof window.console !== "undefined") {
  	          console.log(timeString);
  	          console.log(result);
