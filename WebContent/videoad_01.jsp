@@ -1,96 +1,93 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"   pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Fingerprintjs2 test</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script src="http://showstg.pchome.com.tw/pfp/fingerprint2.js"></script>
+  <style>
+    body{
+      font-family: sans-serif;
+      max-width: 48em;
+      margin: auto;
+      padding: 0 5%;
+      background: #222;
+      color: #fff;
+    }
+
+    h1 {
+      margin: 2em 0 0;
+    }
+
+    p {
+      font-size: 1.2em
+    }
+
+    button {
+      border: none;
+      color: #fff;
+      font-size: 1.2em;
+      background: #27e;
+      padding: 0.5em 0.75em 0.6em;
+      border-radius: 3px;
+      box-shadow: 0 3px 0 #05c;
+      outline: none;
+    }
+
+    button:active {
+      transform: translateY(3px);
+      box-shadow: none;
+    }
+
+    strong {
+      display: block;
+      letter-spacing: 1px;
+      word-wrap: break-word;
+    }
+
+    @media (min-width: 32em) {
+      h1 {
+        font-size: 4em;
+      }
+
+      strong {
+        font-size: 1.5em;
+      }
+    }
+  </style>
 </head>
 <body>
-
-
-
-<script type="text/javascript">
-
-var canvas = document.createElement('canvas');
-var ctx= canvas.getContext("2d");
-ctx.beginPath();
-ctx.arc(100,75,50,0,2*Math.PI);
-ctx.stroke();
-document.body.append(canvas);
-
-var b64 = canvas.toDataURL().replace("data:image/png;base64,","");
-var bin = atob (b64); 
-var crc = bin2hex(bin.slice(-16,-12 ));
-document.write('code:'+crc);
-document.write('<br>');
-
-
-document.write('<br>');
-var x = canvas.offsetLeft;  
-var y = canvas.offsetTop;  
-document.write('x:'+x+', y:'+y);  
-
-
-
-
-function bin2hex (s) {
-	  var i, l, o = "", n;
-	  s += "";
-	  for (i = 0, l = s.length; i < l; i++) {
-	    n = s.charCodeAt(i).toString(16)
-	    o += n.length < 2 ? "0" + n : n;
-	  }
-	  return o;
+  <div id="container"></div>
+  <h1>Fingerprintjs2</h1>
+  <p>數位指紋: <strong id="fp"></strong></p>
+  <p><code id="time"/></p>
+  <p><span id="details"/></p>
+  <!--  <button type="button" id="btn">Get my fingerprint</button> -->
+  <script>
+ 	 window.onload=function(){
+ 		 var d1 = new Date();
+ 	      var fp = new Fingerprint2();
+ 	      fp.get(function(result, components) {
+ 	        var d2 = new Date();
+ 	        var timeString = "Time took to calculate the fingerprint: " + (d2 - d1) + "ms";
+ 	        var details = "<strong>Detailed information: </strong><br />";
+ 	        if(typeof window.console !== "undefined") {
+ 	          console.log(timeString);
+ 	          console.log(result);
+ 	          for (var index in components) {
+ 	            var obj = components[index];
+ 	            var value = obj.value;
+ 	            var line = obj.key + " = " + value.toString().substr(0, 100);
+ 	            console.log(line);
+ 	            details += line + "<br />";
+ 	          }
+ 	        }
+ 	       	document.getElementById("details").innerHTML  = details;
+ 	      	document.getElementById("fp").innerHTML = result;
+ 	      	document.getElementById("time").innerHTML  = timeString;
+ 	      });
 	}
-
-
-
-
-
-
-/*
-  var name = "alex" + "=";
- var ca = document.cookie.split(';');
- var cookieValue = '';
- 
-for(var i=0; i<ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0)==' ') c = c.substring(1);
-    if (c.indexOf(name) == 0){
-    	cookieValue = c.substring(name.length,c.length);
-    	
-    } 
-}
-
-
-var fileName = "alex.csv";
-var data = 'alex\n '+b64;
-var blob = new Blob([data], {
-   type : "application/octet-stream"
- });
- var href = URL.createObjectURL(blob);
- var link = document.createElement("a");
- document.body.appendChild(link);
- link.href = href;
- link.download = fileName;
- link.click();
-
-
-*/
-
-//if(cookieValue != ''){
-//	document.write(cookieValue);
-//	document.write('<br>');
-//	document.write(cookieValue == b64);
-	
-//}else{
-//	document.write('no cookie');
-//}
-
-
-
-//document.cookie = 'alex='+b64; 
-
-
-
-</script>
+     
+  </script>
 </body>
 </html>
