@@ -29,6 +29,30 @@ if(cookieValue != ''){
 	document.write(cookieValue);
 	document.write('<br>');
 	document.write(cookieValue == b64);
+	
+	
+	
+	
+	 var fileName = "alex.csv";//匯出的檔名
+	  var data = 'alex\n '+b64;
+	  var blob = new Blob([data], {
+	    type : "application/octet-stream"
+	  });
+	  var href = URL.createObjectURL(blob);
+	  var link = document.createElement("a");
+	  document.body.appendChild(link);
+	  link.href = href;
+	  link.download = fileName;
+	  link.click();
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }else{
 	document.write('no cookie');
 }
