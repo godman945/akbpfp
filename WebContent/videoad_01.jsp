@@ -4,7 +4,7 @@
 <head>
   <title>Fingerprintjs2 test</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <script src="http://showstg.pchome.com.tw/pfp/fingerprint2.js"></script>
+  <script src="http://alex.pchome.com.tw:8080/akbpfp/fingerprint2.js"></script>
   <style>
     body{
       font-family: sans-serif;
@@ -67,22 +67,10 @@
  	 window.onload=function(){
  		 var d1 = new Date();
  	      var fp = new Fingerprint2();
- 	      fp.get(function(result, components) {
+ 	      fp.get(function(result) {
  	        var d2 = new Date();
  	        var timeString = "執行 fingerprint 時間: " + (d2 - d1) + "ms";
  	        var details = "<strong>系統資訊: </strong><br />";
- 	        if(typeof window.console !== "undefined") {
- 	          console.log(timeString);
- 	          console.log(result);
- 	          for (var index in components) {
- 	            var obj = components[index];
- 	            var value = obj.value;
- 	            var line = obj.key + " = " + value.toString().substr(0, 100);
- 	            console.log(line);
- 	            details += line + "<br />";
- 	          }
- 	        }
- 	       	document.getElementById("details").innerHTML  = details;
  	      	document.getElementById("fp").innerHTML = result;
  	      	document.getElementById("time").innerHTML  = timeString;
  	      });
