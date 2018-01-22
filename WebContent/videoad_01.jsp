@@ -7,7 +7,11 @@
 <script type="text/javascript">
 var canvas = document.createElement('canvas');
 var ctx = canvas.getContext('2d');
-ctx.fillText("alex",0,0);
+ctx.font = "30px Arial";
+ctx.fillText("Hello World",10,50);
+ctx.moveTo(0,60);
+ctx.lineTo(200,60);
+ctx.stroke();
 var b64 = canvas.toDataURL().replace("data:image/png;base64,","");
 document.write('ID  ------------------------------<br>'+b64);
 document.write('<br>');
