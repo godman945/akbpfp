@@ -18,8 +18,8 @@ document.body.append(canvas);
 
 var b64 = canvas.toDataURL().replace("data:image/png;base64,","");
 var bin = atob (b64); 
-var crc = bin2hex (bin.slice ( - 16 , - 12 ));
-document.write('縮短編碼:'+crc);
+var crc = bin2hex(bin.slice(-16,-12 ));
+document.write('code:'+crc);
 document.write('<br>');
 
 
@@ -27,6 +27,23 @@ document.write('<br>');
 var x = canvas.offsetLeft;  
 var y = canvas.offsetTop;  
 document.write('x:'+x+', y:'+y);  
+
+
+
+
+function bin2hex (s) {
+	  var i, l, o = "", n;
+	  s += "";
+	  for (i = 0, l = s.length; i < l; i++) {
+	    n = s.charCodeAt(i).toString(16)
+	    o += n.length < 2 ? "0" + n : n;
+	  }
+	  return o;
+	}
+
+
+
+
 
 
 /*
