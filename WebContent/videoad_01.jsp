@@ -16,10 +16,11 @@ ctx.arc(100,75,50,0,2*Math.PI);
 ctx.stroke();
 document.body.append(canvas);
 
-var b64 = canvas.toDataURL().replace("data:image/png;base64,","");
-document.write('ID  ------------------------------<br>'+b64);
+//var b64 = canvas.toDataURL().replace("data:image/png;base64,","");
 document.write('<br>');
-
+var x = canvas.offsetLeft;  
+var y = canvas.offsetTop;  
+document.write('x:'+x+', y:'+y);  
 
 
 /*
@@ -35,23 +36,28 @@ for(var i=0; i<ca.length; i++) {
     	
     } 
 }
+
+
+var fileName = "alex.csv";
+var data = 'alex\n '+b64;
+var blob = new Blob([data], {
+   type : "application/octet-stream"
+ });
+ var href = URL.createObjectURL(blob);
+ var link = document.createElement("a");
+ document.body.appendChild(link);
+ link.href = href;
+ link.download = fileName;
+ link.click();
+
+
 */
 
 //if(cookieValue != ''){
 //	document.write(cookieValue);
 //	document.write('<br>');
 //	document.write(cookieValue == b64);
-	 var fileName = "alex.csv";
-	 var data = 'alex\n '+b64;
-	 var blob = new Blob([data], {
-	    type : "application/octet-stream"
-	  });
-	  var href = URL.createObjectURL(blob);
-	  var link = document.createElement("a");
-	  document.body.appendChild(link);
-	  link.href = href;
-	  link.download = fileName;
-	  link.click();
+	
 //}else{
 //	document.write('no cookie');
 //}
