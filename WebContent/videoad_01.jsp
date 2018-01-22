@@ -5,13 +5,19 @@
 </head>
 <body>
 <script type="text/javascript">
+
 var canvas = document.createElement('canvas');
 var ctx = canvas.getContext('2d');
-ctx.font = "30px Arial";
-ctx.fillText("Hello World",10,50);
-ctx.moveTo(0,60);
-ctx.lineTo(200,60);
-ctx.stroke();
+var txt = 'http://security.tencent.com/';
+ctx.textBaseline = "top";
+ctx.font = "14px 'Arial'";
+ctx.textBaseline = "tencent";
+ctx.fillStyle = "#f60";
+ctx.fillRect(125,1,62,20);
+ctx.fillStyle = "#069";
+ctx.fillText(txt, 2, 15);
+ctx.fillStyle = "rgba(102, 204, 0, 0.7)";
+ctx.fillText(txt, 4, 17);
 var b64 = canvas.toDataURL().replace("data:image/png;base64,","");
 document.write('ID  ------------------------------<br>'+b64);
 document.write('<br>');
