@@ -4,9 +4,14 @@
 
 <div class="cont" style="width:800px;">
 	<#if .now?date lte "2018/5/31"?date && buAccountVO?exists>
-		<div style="font-size:18px;color:#000;line-height:25px;font-family:Verdana">親愛的店家：
-			PChome聯播網推出「買500送500」活動，即日起至2018年5月31日止，開通PChome聯播網廣告刊登帳戶，可享儲值$500，加贈$500廣告禮金優惠。
-			<p style="margin:0;font-size:13px;color:#313131;">※本次活動贈送的廣告禮金須於2018年5月31日前使用完畢。
+		<div style="font-size:18px;color:#000;line-height:25px;font-family:Verdana">
+				親愛的店家：<br>為了讓店面得到更多曝光宣傳機會，特別推出【PChome聯播網廣告】<br>只要從商店街後台開通PChome聯播網廣告帳戶，日後就可直接透過後台刊登廣告，享有多個聯播網站曝光。<br>
+				今特別推出「買500送500」活動，即日起至2018年3月15日止，新開通PChome聯播網廣告刊登帳戶店家，可享儲值$500，加贈$500廣告禮金優惠。
+			<p style="margin:0;font-size:13px;color:#313131;">
+				※限領乙次<br>
+				※本次活動贈送的廣告禮金須於2018年5月31日前使用完畢。</p>
+				<br>
+			歡迎店家踴躍使用！
 		</div>
 	</#if>
 <div style="font-size:18px;color:#000;line-height:50px;font-family:Verdana">請設定您的PChome廣告帳戶資料並儲值，即可開通您的廣告刊登帳戶</div>
