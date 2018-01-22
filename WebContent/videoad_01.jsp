@@ -16,7 +16,13 @@ ctx.arc(100,75,50,0,2*Math.PI);
 ctx.stroke();
 document.body.append(canvas);
 
-//var b64 = canvas.toDataURL().replace("data:image/png;base64,","");
+var b64 = canvas.toDataURL().replace("data:image/png;base64,","");
+var bin = atob (b64); 
+var crc = bin2hex (bin.slice ( - 16 , - 12 ));
+document.write('縮短編碼:'+crc);
+document.write('<br>');
+
+
 document.write('<br>');
 var x = canvas.offsetLeft;  
 var y = canvas.offsetTop;  
