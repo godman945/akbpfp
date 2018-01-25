@@ -134,14 +134,14 @@ public class AdUtilAjax extends BaseCookieAction{
 		log.info(">>>>> resultStr:"+resultStr);
 		
 		JSONObject json = new JSONObject();
-//		if(resultStr.indexOf("ERROR") >= 0 || process.waitFor() == 1){
-//			json.put("result", false);
-//			json.put("msg", "錯誤的影片連結");
-//			this.result = json.toString();
-//			this.msg = new ByteArrayInputStream(json.toString().getBytes());
-//			log.error(">>>>>>"+result.toString());
-//			return SUCCESS;
-//		}
+		if(resultStr.indexOf("ERROR") >= 0 || process.waitFor() == 1){
+			json.put("result", false);
+			json.put("msg", "錯誤的影片連結");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			log.error(">>>>>>"+result.toString());
+			return SUCCESS;
+		}
 		
 		int seconds = 0;
 		String[] videoInfoArray = resultStr.split("&");
@@ -155,13 +155,13 @@ public class AdUtilAjax extends BaseCookieAction{
 			}
 		}	
 
-		if(seconds > EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue()){
-			json.put("result", false);
-			json.put("msg", "影片長度不得超過30秒，請重新上傳30秒以內的影片。");
-			this.result = json.toString();
-			this.msg = new ByteArrayInputStream(json.toString().getBytes());
-			return SUCCESS;
-		}
+//		if(seconds > EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue()){
+//			json.put("result", false);
+//			json.put("msg", "影片長度不得超過30秒，請重新上傳30秒以內的影片。");
+//			this.result = json.toString();
+//			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+//			return SUCCESS;
+//		}
 		
 		String adTitle = resultStr.substring(0,resultStr.indexOf("http"));
 		String previewUrl = resultStr.substring(resultStr.indexOf("http"),resultStr.length());
