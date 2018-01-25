@@ -140,7 +140,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			this.result = json.toString();
 			this.msg = new ByteArrayInputStream(json.toString().getBytes());
 			log.error(">>>>>>"+result.toString());
-			return SUCCESS;
+//			return SUCCESS;
 		}
 		
 		int seconds = 0;
