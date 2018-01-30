@@ -30,16 +30,7 @@
                             <span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right;clear: both;;margin-right: 3%" id="spanAdLinkURL">已輸入0字，剩1024字</span>
                         </td>
                     </tr>
-                    <!--
-                    <tr>
-                        <th height="35" style="width:12%;"><a name="errAdLinkURL"></a>影片標題</th>
-                        <td style="min-width:50px;">
-                            <input type="text" class="inputPlaceholderTmg" id="adTitle" name="adTitle" style="width:96%;" placeholder="影片標題" maxlength=""><br>
-                            <span id="chkAdTitle" name="chkAdTitle" style="color:red"></span><span style="float:right;clear: both;;margin-right: 3%" id="spanAdTitle">已輸入0字，剩17字</span>
-                        </td>
-                    </tr>
-                    -->
-                    <tr>
+                    <tr id="notVerticalAdTr">
                         <th height="35" style="width:12%"><a name="errAdImg"></a><span class="t_s02">* </span>Banner廣告圖<br><a href="#" target="" onclick="approveSize('bannerDiv');">支援規格查詢 </a></th><td style="min-width:200px;">
                              <table border="0" cellspacing="0" cellpadding="0">
                             	<tbody>
@@ -91,7 +82,7 @@
             
             <div style="height: 15px"></div>
            <!--上傳預覽區塊_圖片start--><!--上傳訊息start 預設是隱藏，有資料才顯示-->
-        <div class="grtba">
+        <div class="grtba" id="imgPreview">
             <h4>Banner廣告圖預覽</h4>
             <div style="">
             <div class="" style="">
