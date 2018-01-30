@@ -168,13 +168,22 @@ public class AdUtilAjax extends BaseCookieAction{
 		
 		//判斷是否直立影片
 		boolean verticalAd = false;
-		String videoSize = result.substring(result.indexOf("18 - "),result.indexOf(" (small);"));
-		log.info(">>>>>>>>>>>alex verticalAd:"+videoSize);
-		videoSize = videoSize.replace("18 - ", "");
-		String [] videoSizeArray = videoSize.toString().split("x");
-		if(Integer.parseInt(videoSizeArray[1]) > Integer.parseInt(videoSizeArray[0])){
-			verticalAd = true;
-		}
+		
+		log.info(">>>>>>>>>>>alex result:"+result);
+		
+//		String videoSize = result.substring(result.indexOf("18 - "),result.indexOf(" (small);"));
+		
+		
+		
+		
+		
+		
+//		log.info(">>>>>>>>>>>alex verticalAd:"+videoSize);
+//		videoSize = videoSize.replace("18 - ", "");
+//		String [] videoSizeArray = videoSize.toString().split("x");
+//		if(Integer.parseInt(videoSizeArray[1]) > Integer.parseInt(videoSizeArray[0])){
+//			verticalAd = true;
+//		}
 		
 		json.put("result", true);
 		json.put("videoTime", seconds);
