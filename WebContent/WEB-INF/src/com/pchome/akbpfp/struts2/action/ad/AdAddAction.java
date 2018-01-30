@@ -152,7 +152,8 @@ public class AdAddAction extends BaseCookieAction{
 	private String adKeywordPhraseOpen;		//詞組比對
 	private String adKeywordPrecisionOpen;	//精準比對
 	private String adGroupChannelPrice;
-	
+	//是否直立影音
+	private boolean verticalAd;
 	
 	//新增廣告
 	public String AdAdAdd() throws Exception {
@@ -363,7 +364,9 @@ public class AdAddAction extends BaseCookieAction{
 			
 			//檢查是否有下載過的影片
 			PfpAdVideoSource pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adVideoURL);
-			//根據尺寸建立明細
+			
+			
+			//根據尺寸建立明細->一般影音
 			for (int i = 0; i<adDetailInfoArray.length(); i++) {
 				String adVideoSize = "";
 				boolean isBannerSize = true;
@@ -380,6 +383,11 @@ public class AdAddAction extends BaseCookieAction{
 						break;
 					}else if(enumAdVideoSize.getType().equals("BANNER") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight())){
 						isBannerSize = true;
+						pool = enumAdVideoSize.getPoolType();
+						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+						break;
+					}else if(enumAdVideoSize.getType().equals("VERTICAL") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight())){
+						isBannerSize = false;
 						pool = enumAdVideoSize.getPoolType();
 						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
 						break;
@@ -431,7 +439,12 @@ public class AdAddAction extends BaseCookieAction{
 				saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),pool,"");
 				saveAdDetail(adSize ,"video_size",pool,"dad_201303070012");
 				saveAdDetail(adTitle.trim() ,"content",pool,"");
-				
+				if(verticalAd){
+					saveAdDetail("Y" ,"video_vertical",pool,"dad_201303070013");
+				}else{
+					saveAdDetail("N" ,"video_vertical",pool,"dad_201303070013");
+				}
+
 				//3.儲存影片下載狀態與位置明細
 				if(pfpAdVideoSource == null){
 					saveAdDetail("尚未下載" ,"mp4_path",pool,EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
@@ -1746,6 +1759,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setAdGroupChannelPrice(String adGroupChannelPrice) {
 		this.adGroupChannelPrice = adGroupChannelPrice;
+	}
+
+	public boolean isVerticalAd() {
+		return verticalAd;
+	}
+
+	public void setVerticalAd(boolean verticalAd) {
+		this.verticalAd = verticalAd;
 	}
 
 }
