@@ -118,7 +118,7 @@ $(document).ready(function(){
 					/**影片標題*/
 					$('#adTitle').html('<div style="display:inline;font-size:10px;">'+adTitle+'</div>');
 					
-					/**影片預設尺寸*/
+					/**影片預設尺寸*/ 
 					console.log(adPreviewVideoData);
 					if(adPreviewVideoData != null && !adPreviewVideoData.verticalAdFlag){
 						verticalAd = false;
