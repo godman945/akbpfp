@@ -129,7 +129,7 @@ public class AdUtilAjax extends BaseCookieAction{
 	public String chkVideoUrl() throws Exception{
 		
 		//取得影片播放網址
-		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g --get-title " + adVideoUrl });
+		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g --get-title --get-format " + adVideoUrl });
 		String resultStr = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
 		log.info(">>>>> resultStr:"+resultStr);
 		
@@ -155,20 +155,32 @@ public class AdUtilAjax extends BaseCookieAction{
 			}
 		}	
 
-//		if(seconds > EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue()){
-//			json.put("result", false);
-//			json.put("msg", "影片長度不得超過30秒，請重新上傳30秒以內的影片。");
-//			this.result = json.toString();
-//			this.msg = new ByteArrayInputStream(json.toString().getBytes());
-//			return SUCCESS;
-//		}
+		if(seconds > EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue()){
+			json.put("result", false);
+			json.put("msg", "影片長度不得超過30秒，請重新上傳30秒以內的影片。");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			return SUCCESS;
+		}
 		
 		String adTitle = resultStr.substring(0,resultStr.indexOf("http"));
 		String previewUrl = resultStr.substring(resultStr.indexOf("http"),resultStr.length());
+		
+		//判斷是否直立影片
+		boolean verticalAd = false;
+		String videoSize = result.substring(result.indexOf("18 - "),result.indexOf(" (small);"));
+		log.info(">>>>>>>>>>>alex verticalAd:"+videoSize);
+		videoSize = videoSize.replace("18 - ", "");
+		String [] videoSizeArray = videoSize.toString().split("x");
+		if(Integer.parseInt(videoSizeArray[1]) > Integer.parseInt(videoSizeArray[0])){
+			verticalAd = true;
+		}
+		
 		json.put("result", true);
 		json.put("videoTime", seconds);
 		json.put("previewUrl", previewUrl);
 		json.put("adTitle", adTitle);
+		json.put("verticalAd", verticalAd);
 		process.destroy();
 		this.result = json.toString();
 		this.msg = new ByteArrayInputStream(json.toString().getBytes());
