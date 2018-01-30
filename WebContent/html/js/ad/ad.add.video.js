@@ -120,6 +120,7 @@ $(document).ready(function(){
 					
 					/**影片預設尺寸*/
 					if(adPreviewVideoData != null && adPreviewVideoData.verticalAdFlag == 'N'){
+						verticalAd = false;
 						$("#preViewArea").empty();
 						autoPreview(result);
 						appendVideoPreview();
@@ -918,10 +919,6 @@ function saveData() {
 	if(videoDetailMap.length == 0){
 		return false;
 	}
-	
-	return false;
-	
-	
 	
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
