@@ -1,6 +1,7 @@
 ﻿var fileArray =[];
 var seqArray = [];
 var adPreviewVideoData = null;
+var verticalAd = false;
 $(document).ready(function(){
 	$('#save').click(function(){
 		saveData();
@@ -102,7 +103,7 @@ $(document).ready(function(){
 				type:"POST",
 				dataType:"JSON",
 				success:function(result, status){
-					console.log(result);
+//					console.log(result);
 				},
 				error: function(xtl) {
 					//alert("系統繁忙，請稍後再試！");
@@ -129,6 +130,7 @@ $(document).ready(function(){
 						$('#notVerticalAdTr').removeAttr("style").hide();
 						$('#imgPreview').removeAttr("style").hide();
 						$("#preViewArea").empty();
+						verticalAd = true;
 						autoPreview(result);
 						appendVideoPreview();
 					}else{
@@ -912,9 +914,15 @@ function saveData() {
 			}
 		}
 	});
+	
 	if(videoDetailMap.length == 0){
 		return false;
 	}
+	
+	return false;
+	
+	
+	
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
 		$.blockUI({
@@ -945,7 +953,8 @@ function saveData() {
 					"adVideoURL":$("#adVideoURL").val(),
 					"adLinkURL":$("#adLinkURL").val(),
 					"videoTime":adPreviewVideoData.videoTime,
-					"adTitle":adPreviewVideoData.adTitle
+					"adTitle":adPreviewVideoData.adTitle,
+					"verticalAd":verticalAd,
 				},
 				success : function(respone) {
 //					console.log(respone);
