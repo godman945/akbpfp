@@ -121,7 +121,6 @@ $(document).ready(function(){
 					/**影片預設尺寸*/ 
 					console.log(adPreviewVideoData);
 					if(adPreviewVideoData != null && !adPreviewVideoData.verticalAdFlag){
-						console.log('AAAAAAAAa');
 						verticalAd = false;
 						$("#preViewArea").empty();
 						autoPreview(result);
@@ -130,18 +129,16 @@ $(document).ready(function(){
 					
 					/*直式影片*/
 					if(adPreviewVideoData != null && adPreviewVideoData.verticalAdFlag){
-						console.log('CCCC');
 						$('#notVerticalAdTr').removeAttr("style").hide();
 						$('#imgPreview').removeAttr("style").hide();
+						console.log('CCCC');
 						$("#preViewArea").empty();
 						verticalAd = true;
 						autoPreview(result);
-						appendVideoPreview();
 					}else{
 						$('#notVerticalAdTr').removeAttr("style").show();
 						$('#imgPreview').removeAttr("style").show();
 					}
-					
 					$('body').unblock();
 				}else{
 					adPreviewVideoData = null;
