@@ -131,9 +131,8 @@ $(document).ready(function(){
 					if(adPreviewVideoData != null && adPreviewVideoData.verticalAdFlag){
 						$('#notVerticalAdTr').removeAttr("style").hide();
 						$('#imgPreview').removeAttr("style").hide();
-						console.log('CCCC');
-						$("#preViewArea").empty();
 						verticalAd = true;
+						$("#preViewArea").empty();
 						autoPreview(result);
 					}else{
 						$('#notVerticalAdTr').removeAttr("style").show();
@@ -721,6 +720,7 @@ function callBlock(){
 var iframeInfoMap = new Object();
 function autoPreview(objData){
 	//直式影片
+	console.log(objData.verticalAdFlag)
 	if(objData.verticalAdFlag){
 		iframeInfoMap["iframe"+0] = {width:300,height:600};
 		var url = $("#adVideoURL").val();
