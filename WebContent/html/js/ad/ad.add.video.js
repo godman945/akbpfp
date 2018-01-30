@@ -2,6 +2,7 @@
 var seqArray = [];
 var adPreviewVideoData = null;
 var verticalAd = false;
+var iframeInfoMap = new Object();
 $(document).ready(function(){
 	$('#save').click(function(){
 		saveData();
@@ -133,6 +134,7 @@ $(document).ready(function(){
 						$('#imgPreview').removeAttr("style").hide();
 						verticalAd = true;
 						$("#preViewArea").empty();
+						iframeInfoMap = new Object();
 						autoPreview(result);
 					}else{
 						$('#notVerticalAdTr').removeAttr("style").show();
@@ -717,7 +719,6 @@ function callBlock(){
 }
 
 /*動態新增影片預覽*/
-var iframeInfoMap = new Object();
 function autoPreview(objData){
 	//直式影片
 	console.log(objData.verticalAdFlag);
