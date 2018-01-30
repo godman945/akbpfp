@@ -121,6 +121,7 @@ $(document).ready(function(){
 					/**影片預設尺寸*/ 
 					console.log(adPreviewVideoData);
 					if(adPreviewVideoData != null && !adPreviewVideoData.verticalAdFlag){
+						console.log('AAAAAAAAa');
 						verticalAd = false;
 						$("#preViewArea").empty();
 						autoPreview(result);
@@ -128,7 +129,8 @@ $(document).ready(function(){
 					}
 					
 					/*直式影片*/
-					if(adPreviewVideoData.verticalAdFlag){
+					if(adPreviewVideoData != null && adPreviewVideoData.verticalAdFlag){
+						console.log('CCCC');
 						$('#notVerticalAdTr').removeAttr("style").hide();
 						$('#imgPreview').removeAttr("style").hide();
 						$("#preViewArea").empty();
