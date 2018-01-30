@@ -123,6 +123,14 @@ $(document).ready(function(){
 						autoPreview(result);
 						appendVideoPreview();
 					}
+					
+					
+					/*直式影片*/
+					console.log('adPreviewVideoData.verticalAdFlag:'+adPreviewVideoData.verticalAdFlag);
+					if(adPreviewVideoData.verticalAdFlag){
+						$('#notVerticalAdTr').hide();
+					}
+					
 					$('body').unblock();
 				}else{
 					adPreviewVideoData = null;
