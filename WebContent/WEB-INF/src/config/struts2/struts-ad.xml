@@ -232,14 +232,6 @@
 			<result type="tiles" name="success">.ad.ad.vodeo.edit</result>
     	</action>
     	
-    	
-    	<action name="adVideoPreview" class="AdAdViewAction" method="videoPreview">
-			<interceptor-ref name="loginCheckStack" />
-			<interceptor-ref name="adPrivilegeInterceptor" />
-			<result type="tiles" name="success">.ad.ad.vodeo.preview</result>
-    	</action>
-    	
-    	
     	<action name="adAddVideoEditSaveAjax" class="AdEditAction" method="doAdAdEditVideo">
       		<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="adPrivilegeInterceptor" />
