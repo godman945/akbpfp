@@ -366,7 +366,7 @@ public class AdAddAction extends BaseCookieAction{
 			PfpAdVideoSource pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adVideoURL);
 			
 			
-			//根據尺寸建立明細->一般影音
+			//根據尺寸建立明細
 			for (int i = 0; i<adDetailInfoArray.length(); i++) {
 				String adVideoSize = "";
 				boolean isBannerSize = true;
