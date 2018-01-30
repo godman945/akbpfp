@@ -168,6 +168,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		
 		//判斷是否直立影片
 		boolean verticalAd = false;
+		log.info(">>>>>>>>>>>alex resultStr:"+resultStr);
 		String videoSize = resultStr.substring(resultStr.indexOf("18 - "),resultStr.indexOf(" (small);"));
 		log.info(">>>>>>>>>>>alex verticalAd:"+videoSize);
 		videoSize = videoSize.replace("18 - ", "");
