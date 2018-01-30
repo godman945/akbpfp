@@ -102,7 +102,7 @@ $(document).ready(function(){
 				type:"POST",
 				dataType:"JSON",
 				success:function(result, status){
-//					console.log(result);
+					console.log(result);
 				},
 				error: function(xtl) {
 					//alert("系統繁忙，請稍後再試！");
@@ -712,11 +712,6 @@ function autoPreview(objData){
 	if(linkUrl.indexOf('http') == -1){
 		linkUrl = "http://"+linkUrl;
 	}
-	
-	
-	console.log('url>>>>>>>>>>>>>>:'+url);
-	console.log('linkUrl>>>>>>>>>>>>>>:'+linkUrl);
-	
 	
 	$.each(iframeInfoMap, function(key, obj) {
 		var a = 
