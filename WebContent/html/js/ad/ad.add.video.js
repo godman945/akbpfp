@@ -720,7 +720,10 @@ function callBlock(){
 var iframeInfoMap = new Object();
 function autoPreview(objData){
 	//直式影片
-	console.log(objData.verticalAdFlag)
+	console.log(objData.verticalAdFlag);
+	console.log(iframeInfoMap);
+	
+	
 	if(objData.verticalAdFlag){
 		iframeInfoMap["iframe"+0] = {width:300,height:600};
 		var url = $("#adVideoURL").val();
