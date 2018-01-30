@@ -118,17 +118,19 @@ $(document).ready(function(){
 					$('#adTitle').html('<div style="display:inline;font-size:10px;">'+adTitle+'</div>');
 					
 					/**影片預設尺寸*/
-					if(adPreviewVideoData != null){
+					if(adPreviewVideoData != null && adPreviewVideoData.verticalAdFlag == 'N'){
 						$("#preViewArea").empty();
 						autoPreview(result);
 						appendVideoPreview();
 					}
 					
-					
 					/*直式影片*/
-					console.log('adPreviewVideoData.verticalAdFlag:'+adPreviewVideoData.verticalAdFlag);
 					if(adPreviewVideoData.verticalAdFlag){
-						$('#notVerticalAdTr').hide();
+						$('#notVerticalAdTr').removeAttr("style").hide();
+						$('#imgPreview').removeAttr("style").hide();
+					}else{
+						$('#notVerticalAdTr').removeAttr("style").show();
+						$('#imgPreview').removeAttr("style").show();
 					}
 					
 					$('body').unblock();
