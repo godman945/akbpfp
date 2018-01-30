@@ -119,7 +119,7 @@ $(document).ready(function(){
 					$('#adTitle').html('<div style="display:inline;font-size:10px;">'+adTitle+'</div>');
 					
 					/**影片預設尺寸*/
-					if(adPreviewVideoData != null && adPreviewVideoData.verticalAdFlag == 'N'){
+					if(adPreviewVideoData != null && !adPreviewVideoData.verticalAdFlag){
 						verticalAd = false;
 						$("#preViewArea").empty();
 						autoPreview(result);
