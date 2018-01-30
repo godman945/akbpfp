@@ -96,5 +96,3 @@
 <div id="tableList"></div>
 </div>
 
-<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="" height="" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=https://www.youtube.com/watch?v=HZnTWKTgtUw&amp;adPreviewVideoBgImg=&amp;realUrl=http://1111.com.tw&amp;resize=false"></iframe>
-

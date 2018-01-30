@@ -460,6 +460,11 @@ public class AdAddAction extends BaseCookieAction{
 					pfpAdVideoSource.setAdVideoUrl(adVideoURL);
 					pfpAdVideoSource.setAdVideoWebmPath("尚未下載");
 					pfpAdVideoSource.setAdVideoMp4Path("尚未下載");
+					if(verticalAd){
+						pfpAdVideoSource.setVideoVertical("Y");						
+					}else{
+						pfpAdVideoSource.setVideoVertical("N");
+					}
 					pfpAdVideoSource.setCreateDate(date);
 					pfpAdVideoSource.setUpdateDate(date);
 					pfpAdVideoSourceService.saveOrUpdate(pfpAdVideoSource);
