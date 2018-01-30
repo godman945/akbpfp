@@ -717,45 +717,63 @@ function callBlock(){
 /*動態新增影片預覽*/
 var iframeInfoMap = new Object();
 function autoPreview(objData){
-	
-	
-	console.log(objData);
-	
-	
-	
-	
-	
-	
-	iframeInfoMap["iframe"+0] = {width:300,height:250};
-	iframeInfoMap["iframe"+1] = {width:336,height:280};
-	iframeInfoMap["iframe"+2] = {width:640,height:390};
-	var url = $("#adVideoURL").val();
-	var linkUrl = $("#adLinkURL").val();
-	if(linkUrl.indexOf('http') == -1){
-		linkUrl = "http://"+linkUrl;
-	}
-	$.each(iframeInfoMap, function(key, obj) {
-		var a = 
-			'<div class="v_box">'+
-			   '<div class="">'+
-			      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
-			   '</div>'+
-			   '<div  class="v_preview box_a_style">'+
-			   '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>'+
-			   '</div>'+
-			'</div>';
-			$("#preViewArea").append(a);
-	});
-	$(".adVideoCheckArea").css('display','');
-	
-	if($($('#adViseoSize')[0]).children()[1] ==  undefined){
-		$('#adViseoSize').append('<option value="300250">300 x 250</option>');
-	}
-	if($($('#adViseoSize')[0]).children()[2] ==  undefined){
-		$('#adViseoSize').append('<option value="336280">336 x 280</option>');
-	}
-	if($($('#adViseoSize')[0]).children()[3] ==  undefined){
-		$('#adViseoSize').append('<option value="640390">640 x 390</option>');
+	//直式影片
+	if(objData.verticalAdFlag){
+		iframeInfoMap["iframe"+0] = {width:300,height:600};
+		var url = $("#adVideoURL").val();
+		var linkUrl = $("#adLinkURL").val();
+		if(linkUrl.indexOf('http') == -1){
+			linkUrl = "http://"+linkUrl;
+		}
+		$.each(iframeInfoMap, function(key, obj) {
+			var a = 
+				'<div class="v_box">'+
+				   '<div class="">'+
+				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
+				   '</div>'+
+				   '<div  class="v_preview box_a_style">'+
+				   '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>'+
+				   '</div>'+
+				'</div>';
+				$("#preViewArea").append(a);
+		});
+		$(".adVideoCheckArea").css('display','');
+		
+		if($($('#adViseoSize')[0]).children()[1] ==  undefined){
+			$('#adViseoSize').append('<option value="300600">300 x 600</option>');
+		}
+	}else{
+		iframeInfoMap["iframe"+0] = {width:300,height:250};
+		iframeInfoMap["iframe"+1] = {width:336,height:280};
+		iframeInfoMap["iframe"+2] = {width:640,height:390};
+		var url = $("#adVideoURL").val();
+		var linkUrl = $("#adLinkURL").val();
+		if(linkUrl.indexOf('http') == -1){
+			linkUrl = "http://"+linkUrl;
+		}
+		$.each(iframeInfoMap, function(key, obj) {
+			var a = 
+				'<div class="v_box">'+
+				   '<div class="">'+
+				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
+				   '</div>'+
+				   '<div  class="v_preview box_a_style">'+
+				   '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>'+
+				   '</div>'+
+				'</div>';
+				$("#preViewArea").append(a);
+		});
+		$(".adVideoCheckArea").css('display','');
+		
+		if($($('#adViseoSize')[0]).children()[1] ==  undefined){
+			$('#adViseoSize').append('<option value="300250">300 x 250</option>');
+		}
+		if($($('#adViseoSize')[0]).children()[2] ==  undefined){
+			$('#adViseoSize').append('<option value="336280">336 x 280</option>');
+		}
+		if($($('#adViseoSize')[0]).children()[3] ==  undefined){
+			$('#adViseoSize').append('<option value="640390">640 x 390</option>');
+		}
 	}
 }
 
