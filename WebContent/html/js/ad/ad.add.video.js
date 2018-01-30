@@ -128,6 +128,9 @@ $(document).ready(function(){
 					if(adPreviewVideoData.verticalAdFlag){
 						$('#notVerticalAdTr').removeAttr("style").hide();
 						$('#imgPreview').removeAttr("style").hide();
+						$("#preViewArea").empty();
+						autoPreview(result);
+						appendVideoPreview();
 					}else{
 						$('#notVerticalAdTr').removeAttr("style").show();
 						$('#imgPreview').removeAttr("style").show();
@@ -714,6 +717,15 @@ function callBlock(){
 /*動態新增影片預覽*/
 var iframeInfoMap = new Object();
 function autoPreview(objData){
+	
+	
+	console.log(objData);
+	
+	
+	
+	
+	
+	
 	iframeInfoMap["iframe"+0] = {width:300,height:250};
 	iframeInfoMap["iframe"+1] = {width:336,height:280};
 	iframeInfoMap["iframe"+2] = {width:640,height:390};
@@ -722,7 +734,6 @@ function autoPreview(objData){
 	if(linkUrl.indexOf('http') == -1){
 		linkUrl = "http://"+linkUrl;
 	}
-	
 	$.each(iframeInfoMap, function(key, obj) {
 		var a = 
 			'<div class="v_box">'+
