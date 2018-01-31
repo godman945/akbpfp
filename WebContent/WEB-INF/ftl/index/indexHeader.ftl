@@ -87,6 +87,7 @@
                 <li><a href="http://show.pchome.com.tw/faq.html" target="_blank">新手上路</a></li>
                 <li><a href="http://4c.pchome.com.tw/campaign/2016/emba/" target="_blank">EMBA行銷講座</a></li>
 				<li><a href="http://4c.pchome.com.tw/index.html" target="_blank">專人諮詢</a></li>
+				<li><a href="http://showstg.pchome.com.tw/pfp/api/buLogin.html?key=T_XP_RvTInrkfwLMzQauvBvUKXu2Y_yuWYg7fMh_ZlIiW26S04XTtWe0DlEmPvYos4iNrX_dHqXGXXwOaxg5d18ysHF6QVgMNXufRmbUhtCySMIFKt-gtq4XXoRTnxghjxTcgtLYao3UMXCBkrN7nH3-_MkRwyDQ0aNLRTuUsLepd8Q76Ov7v9gMcvWoY1iGqlbEz2U_2OxrSSw66SFMgsh-NF_PcUjTi-oFLDsNB8qlS-XBdt-c-cun898-JmoBquDu2FC1ruvGAHKl5GCsgjqePzf69bzx5OUYCSz89GxQEXhOJvxLtqdLIIJhc1cWGPYPs7kGCw8kdkImNn6XKA" target="_blank">BUTEST</a></li>
 		        <div class="login">
 		            <#if id_pchome?exists>
 						<!-- <img src="<@s.url value="/" />html/main/img/icon_bb.gif" hspace="3" align="absmiddle"> -->
