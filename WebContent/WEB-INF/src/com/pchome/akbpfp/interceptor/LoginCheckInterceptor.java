@@ -83,6 +83,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 			
 			if(StringUtils.isBlank(buReferer)){
 				cookieProccessAPI.deletePfpLoginCookie(response);
+				cookieProccessAPI.deleteApplyPfpCookie(response);
 				return "index";
 			}
 			
@@ -99,7 +100,9 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 				}
 				
 				if(!pcstoreFlag){
+					log.info(">>>>>>>>>>>>>> deleteApplyPfpCookie");
 					cookieProccessAPI.deletePfpLoginCookie(response);
+					cookieProccessAPI.deleteApplyPfpCookie(response);
 					return "index";
 				}
 			}
