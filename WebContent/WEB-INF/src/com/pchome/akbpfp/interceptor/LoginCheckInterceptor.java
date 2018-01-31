@@ -85,6 +85,9 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 				cookieProccessAPI.deletePfpLoginCookie(response);
 				return "index";
 			}
+			
+			log.info(">>>>>>>>>>>>>> pfpBuAccount:"+pfpBuAccount == null);
+			
 			if(pfpBuAccount != null){
 				boolean pcstoreFlag = false;
 				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
@@ -94,6 +97,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 						break;
 					}
 				}
+				
 				if(!pcstoreFlag){
 					cookieProccessAPI.deletePfpLoginCookie(response);
 					return "index";
