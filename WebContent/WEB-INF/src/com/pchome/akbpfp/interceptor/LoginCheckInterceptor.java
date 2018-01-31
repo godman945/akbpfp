@@ -81,13 +81,13 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 				boolean pcstoreFlag = false;
 				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
 				for (String referer : buPcstoreRefererArray) {
-					System.out.println(request.getHeader("referer")+":"+referer);
 					if(request.getHeader("referer").contains(referer)){
 						pcstoreFlag = true;
 						break;
 					}
 				}
 				if(!pcstoreFlag){
+					cookieProccessAPI.deletePfpLoginCookie(response);
 					return "index";
 				}
 			}
