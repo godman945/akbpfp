@@ -568,12 +568,20 @@ public class ApplyAction extends BaseSSLAction{
 						
 			// 從會員中心取會員資料
 			this.memberVO = memberAPI.getMemberVOData(super.getId_pchome());
-			
-			// 建立新帳戶
-			String customerInfoId = sequenceService.getSerialNumber(EnumSequenceTableName.ACCOUNT);
+			String customerInfoId = "";
+			// 建立新帳戶,先判斷是否為BU帳戶，若是取BU帳戶memid當帳戶編號
+			PfpBuAccount pfpBuAccount = null;
+			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(super.getId_pchome());
+			if(pfpBuAccountList.size() > 0){
+				pfpBuAccount =  pfpBuAccountList.get(0);
+			}
+			if(pfpBuAccount != null){
+				customerInfoId = pfpBuAccount.getPcId().toUpperCase();
+			}else{
+				customerInfoId = sequenceService.getSerialNumber(EnumSequenceTableName.ACCOUNT);
+			}
 			
 			customerInfo = new PfpCustomerInfo();
-			
 			//網址去除http://及https://
 			urlAddress = urlAddress.trim();
 			if(urlAddress.length() >= 7){
