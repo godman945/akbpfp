@@ -68,13 +68,36 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 	public String intercept(ActionInvocation invocation) throws Exception{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
+		String pcId = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
+		String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+//		log.info("userData: " + userData);
+		
 		/*BU LOGIN START*/
+		PfpBuAccount pfpBuAccount = null;
+		if(StringUtils.isNotBlank(pcId)){
+			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(pcId);
+			pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+			if(pfpBuAccount != null){
+				boolean pcstoreFlag = false;
+				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
+				for (String referer : buPcstoreRefererArray) {
+					System.out.println(request.getHeader("referer")+":"+referer);
+					if(request.getHeader("referer").contains(referer)){
+						pcstoreFlag = true;
+						break;
+					}
+				}
+				if(!pcstoreFlag){
+					return "index";
+				}
+			}
+		}
+		
 		String uri = request.getRequestURI();
 		if(uri.indexOf("buLogin") >= 0){
 			String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
 			if(StringUtils.isNotBlank(buKey)){
 				log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
-				
 				RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
 				byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
 				JSONObject buInfoJson = new JSONObject(new String(decBytes));
@@ -109,8 +132,6 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 				}
 				
 				/** 查詢bu帳號是否開通，開通則更新bu狀態否則進入apply申請頁 */
-				List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
-				PfpBuAccount pfpBuAccount =  pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
 				if(pfpBuAccount != null){
 					AccountVO accountVO = pfpCustomerInfoService.existentAccount(pfpBuAccount.getPcId());
 					if(accountVO != null && pfpBuAccount.getPfpStatus() == 0){
@@ -125,10 +146,6 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 			}
 		}
 		/*BU LOGIN END*/
-		
-		String pcId = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
-		String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
-		log.info("userData: " + userData);
 		
 		if(StringUtils.isNotBlank(pcId) && StringUtils.isNotBlank(userData)){
 			// 解析 cookie 

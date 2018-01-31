@@ -231,7 +231,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		String result = "ERROR";
 		String jsonStr = HttpUtil.doGet(memberServer + "autoRegister4PFD.html", "pfpAcc=" + pfpCustomerInfoId.toLowerCase());
 		JSONObject json = new JSONObject(jsonStr);
-		
+		log.info("Create bu >>>>>>>>>>>>>>"+json);
 		if(StringUtils.isNotBlank(pfpCustomerInfoId)){
 			if(StringUtils.equals(json.getString("status"), "success")){
 				result = json.getString("memberId").trim();
