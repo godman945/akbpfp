@@ -78,8 +78,10 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(pcId);
 			pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
 			String buReferer = request.getHeader("referer");
+			
+			log.info(">>>>>>>>>>>>>> buReferer:"+buReferer);
+			
 			if(StringUtils.isBlank(buReferer)){
-				log.info(">>>>>>>>>>>>>> NO buReferer");
 				cookieProccessAPI.deletePfpLoginCookie(response);
 				return "index";
 			}
