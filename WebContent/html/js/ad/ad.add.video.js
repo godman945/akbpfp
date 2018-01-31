@@ -722,6 +722,7 @@ function autoPreview(objData){
 	//直式影片
 	if(objData.verticalAdFlag){
 		iframeInfoMap["iframe"+0] = {width:300,height:600};
+		iframeInfoMap["iframe"+1] = {width:320,height:480};
 		var url = $("#adVideoURL").val();
 		var linkUrl = $("#adLinkURL").val();
 		if(linkUrl.indexOf('http') == -1){
