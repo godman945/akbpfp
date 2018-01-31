@@ -98,6 +98,9 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		}
 		
 		String uri = request.getRequestURI();
+		
+		log.info(">>>>>>>>>>>>>>>uri:"+uri);
+		
 		if(uri.indexOf("buLogin") >= 0){
 			String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
 			if(StringUtils.isNotBlank(buKey)){
