@@ -78,16 +78,9 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(pcId);
 			pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
 			String buReferer = request.getHeader("referer");
-			
-			log.info(">>>>>>>>>>>>>> buReferer:"+buReferer);
-			
 			if(StringUtils.isBlank(buReferer)){
-				cookieProccessAPI.deletePfpLoginCookie(response);
-				cookieProccessAPI.deleteApplyPfpCookie(response);
 				return "index";
 			}
-			
-			log.info(">>>>>>>>>>>>>> pfpBuAccount:"+pfpBuAccount == null);
 			
 			if(pfpBuAccount != null){
 				boolean pcstoreFlag = false;
@@ -98,11 +91,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 						break;
 					}
 				}
-				
 				if(!pcstoreFlag){
-					log.info(">>>>>>>>>>>>>> deleteApplyPfpCookie");
-					cookieProccessAPI.deletePfpLoginCookie(response);
-					cookieProccessAPI.deleteApplyPfpCookie(response);
 					return "index";
 				}
 			}
