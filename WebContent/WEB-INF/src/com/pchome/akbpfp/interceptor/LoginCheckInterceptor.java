@@ -77,6 +77,12 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		if(StringUtils.isNotBlank(pcId)){
 			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(pcId);
 			pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+			String buReferer = request.getHeader("referer");
+			if(StringUtils.isBlank(buReferer)){
+				log.info(">>>>>>>>>>>>>> NO buReferer");
+				cookieProccessAPI.deletePfpLoginCookie(response);
+				return "index";
+			}
 			if(pfpBuAccount != null){
 				boolean pcstoreFlag = false;
 				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
