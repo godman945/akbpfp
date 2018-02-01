@@ -3,11 +3,14 @@ package com.pchome.akbpfp.interceptor;
 
 
 import java.security.interfaces.RSAPrivateKey;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,66 +68,125 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception{
 		String result = "index";
-		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
+		String id_pchome = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
+		String dna_pchome = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_DNA_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		
-		/*BU LOGIN START*/
-		String uri = request.getRequestURI();
-		if(uri.indexOf("buLogin") >= 0){
-			String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
-			if(StringUtils.isNotBlank(buKey)){
-				log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
-				RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
-				byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
-				JSONObject buInfoJson = new JSONObject(new String(decBytes));
-				
-				String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
-				String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
-				String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
-				String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
-				
-				if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
-					result = invocation.invoke();
-					return result;
-				}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
-					result = invocation.invoke();
-					return result;
-				}
-				else if(!buName.equals(pcstoreName)){
-					result = invocation.invoke();
-					return result;
-				}
-				
-				//1.查詢資料庫是否有此資料
-				//2.存在則查詢pfp資訊是否存在
-				List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
-				PfpBuAccount pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
-				if(pfpBuAccount != null){
-					PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfoByMmeberId(pfpBuAccount.getPcId());
-					if(pfpCustomerInfo != null){
-						createBuCookie(pfpBuAccount.getPcId(),response,true,pfpCustomerInfo);
-					}else{
-						cookieProccessAPI.deleteAllCookie(response);
-						createBuCookie(pfpBuAccount.getPcId(),response,false,pfpCustomerInfo);
-					}
-				}else{
-					String pcId = createBuUser(buInfoJson);
-					log.info(">>>>>bu pcId:"+pcId);
-					if(StringUtils.isNotBlank(pcId)){
-						createBuCookie(pcId,response,false,null);
-					}
-				}
-				result = invocation.invoke();
-				return result;
+		System.out.println(request.getHeader("referer"));
+		//判斷是否BU帳戶與來源
+		if(StringUtils.isNotBlank(id_pchome)){
+			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(id_pchome);
+			PfpBuAccount pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+			if(pfpBuAccount != null && !request.getHeader("referer").contains("showstg")){
+				return "index";
 			}
 		}
+		
+		
+//		if(StringUtils.isNotBlank(id_pchome)){
+//			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(id_pchome);
+//			PfpBuAccount pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+//			if(pfpBuAccount != null){
+//				
+//				boolean pcstoreFlag = false;
+//				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
+//				for (String referer : buPcstoreRefererArray) {
+//					if(request.getHeader("referer").contains(referer)){
+//						pcstoreFlag = true;
+//						break;
+//					}
+//				}
+//				if(!pcstoreFlag){
+//					if(invocation.getInvocationContext().getParameters().get("BbUser") == null){
+//						String buFlag = ((String[])invocation.getInvocationContext().getParameters().get("BbUser"))[0];
+//						if(!buFlag.equals("true")){
+//							result = invocation.invoke();
+//							return result;
+//						}
+//					}
+//				}else{
+//					
+//				}
+//				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+//				if(invocation.getInvocationContext().getParameters().get("BbUser") == null){
+//					result = invocation.invoke();
+//					return result;
+//				}else{
+//					String buFlag = ((String[])invocation.getInvocationContext().getParameters().get("BbUser"))[0]; 
+//					if(!buFlag.equals("true")){
+//						result = invocation.invoke();
+//						return result;
+//					}
+//				}
+//			}
+//		}
+		
+		
+		
+		
+//		if(uri.indexOf("buLogin") >= 0){
+//			String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
+//			if(StringUtils.isNotBlank(buKey)){
+//				log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
+//				RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
+//				byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
+//				JSONObject buInfoJson = new JSONObject(new String(decBytes));
+//				
+//				String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
+//				String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
+//				String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
+//				String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
+//				
+//				if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
+//					result = invocation.invoke();
+//					return result;
+//				}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
+//					result = invocation.invoke();
+//					return result;
+//				}
+//				else if(!buName.equals(pcstoreName)){
+//					result = invocation.invoke();
+//					return result;
+//				}
+//				
+//				//1.查詢資料庫是否有此資料
+//				//2.存在則查詢pfp資訊是否存在
+//				List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByBuId(buId);
+//				PfpBuAccount pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+//				if(pfpBuAccount != null){
+//					PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfoByMmeberId(pfpBuAccount.getPcId());
+//					if(pfpCustomerInfo != null){
+//						createBuCookie(pfpBuAccount.getPcId(),response,true,pfpCustomerInfo);
+//					}else{
+//						cookieProccessAPI.deleteAllCookie(response);
+//						createBuCookie(pfpBuAccount.getPcId(),response,false,pfpCustomerInfo);
+//					}
+//				}else{
+//					String pcId = createBuUser(buInfoJson);
+//					log.info(">>>>>bu pcId:"+pcId);
+//					if(StringUtils.isNotBlank(pcId)){
+//						createBuCookie(pcId,response,false,null);
+//					}
+//				}
+//				result = invocation.invoke();
+//				return result;
+//			}
+//		}
 		/*BU LOGIN END*/
 		
-		String id_pchome = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), 
-							EnumCookieConstants.COOKIE_USING_CODE.getValue());
-		String dna_pchome = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_DNA_PCHOME.getValue(), 
-							EnumCookieConstants.COOKIE_USING_CODE.getValue());
+		
 		
 		//log.info(" id_pchome: "+id_pchome);
 		

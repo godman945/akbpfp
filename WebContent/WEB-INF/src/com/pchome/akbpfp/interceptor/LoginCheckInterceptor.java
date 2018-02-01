@@ -70,89 +70,115 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		HttpServletResponse response = ServletActionContext.getResponse();
 		String pcId = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+		
+		//判斷是否BU帳戶與來源
+//		if(StringUtils.isNotBlank(pcId)){
+//			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(pcId);
+//			PfpBuAccount pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+//			if(pfpBuAccount != null){
+//				boolean pcstoreFlag = false;
+//				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
+//				for (String referer : buPcstoreRefererArray) {
+//					if(request.getHeader("referer").contains(referer)){
+//						pcstoreFlag = true;
+//						break;
+//					}
+//				}
+//				if(!pcstoreFlag){
+//					if(invocation.getInvocationContext().getParameters().get("BbUser") == null){
+//						String buFlag = ((String[])invocation.getInvocationContext().getParameters().get("BbUser"))[0];
+//						if(!buFlag.equals("true")){
+//							return "index";
+//						}
+//					}
+//				}
+//			}
+//		}
+		
+		
 //		log.info("userData: " + userData);
 		
-		/*BU LOGIN START*/
-		PfpBuAccount pfpBuAccount = null;
-		if(StringUtils.isNotBlank(pcId)){
-			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(pcId);
-			pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
-			String buReferer = request.getHeader("referer");
-			if(StringUtils.isBlank(buReferer)){
-				return "index";
-			}
-			
-			if(pfpBuAccount != null){
-				boolean pcstoreFlag = false;
-				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
-				for (String referer : buPcstoreRefererArray) {
-					if(request.getHeader("referer").contains(referer)){
-						pcstoreFlag = true;
-						break;
-					}
-				}
-				if(!pcstoreFlag){
-					return "index";
-				}
-			}
-		}
-		
-		String uri = request.getRequestURI();
-		
-		log.info(">>>>>>>>>>>>>>>uri:"+uri);
-		
-		if(uri.indexOf("buLogin") >= 0){
-			String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
-			if(StringUtils.isNotBlank(buKey)){
-				log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
-				RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
-				byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
-				JSONObject buInfoJson = new JSONObject(new String(decBytes));
-				
-				/*解碼後pcstore提供的資訊不可為空，對應的pfd經銷商為portal指定*/
-				String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
-				String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
-				String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
-				String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
-				
-				if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
-					return "index";
-				}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
-					return "index";
-				}else if(!buName.equals(pcstoreName)){
-					return "index";
-				}
-				
-				//檢查Referer來源
-				if(buName.equals(this.pcstoreName)){
-					boolean pcstoreFlag = false;
-					String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
-					for (String referer : buPcstoreRefererArray) {
-						if(request.getHeader("referer").contains(referer)){
-							pcstoreFlag = true;
-							break;
-						}
-					}
-					if(!pcstoreFlag){
-						return "index";
-					}
-				}
-				
-				/** 查詢bu帳號是否開通，開通則更新bu狀態否則進入apply申請頁 */
-				if(pfpBuAccount != null){
-					AccountVO accountVO = pfpCustomerInfoService.existentAccount(pfpBuAccount.getPcId());
-					if(accountVO != null && pfpBuAccount.getPfpStatus() == 0){
-						pfpBuAccount.setPfpStatus(1);
-						pfpBuAccount.setUpdateDate(new Date());
-						pfpBuService.saveOrUpdate(pfpBuAccount);
-						return "bulogin";
-					}else{
-						return "buApply";
-					}
-				}
-			}
-		}
-		/*BU LOGIN END*/
+//		/*BU LOGIN START*/
+//		PfpBuAccount pfpBuAccount = null;
+//		if(StringUtils.isNotBlank(pcId)){
+//			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(pcId);
+//			pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+//			String buReferer = request.getHeader("referer");
+//			if(StringUtils.isBlank(buReferer)){
+//				return "index";
+//			}
+//			
+//			if(pfpBuAccount != null){
+//				boolean pcstoreFlag = false;
+//				String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
+//				for (String referer : buPcstoreRefererArray) {
+//					if(request.getHeader("referer").contains(referer)){
+//						pcstoreFlag = true;
+//						break;
+//					}
+//				}
+//				if(!pcstoreFlag){
+//					return "index";
+//				}
+//			}
+//		}
+//		
+//		String uri = request.getRequestURI();
+//		
+//		log.info(">>>>>>>>>>>>>>>uri:"+uri);
+//		
+//		if(uri.indexOf("buLogin") >= 0){
+//			String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
+//			if(StringUtils.isNotBlank(buKey)){
+//				log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
+//				RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
+//				byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
+//				JSONObject buInfoJson = new JSONObject(new String(decBytes));
+//				
+//				/*解碼後pcstore提供的資訊不可為空，對應的pfd經銷商為portal指定*/
+//				String buId = buInfoJson.getString(EnumBuType.BU_ID.getKey());
+//				String pfdc = buInfoJson.getString(EnumBuType.BU_PFD_CUSTOMER.getKey());
+//				String url = buInfoJson.getString(EnumBuType.BU_URL.getKey());
+//				String buName = buInfoJson.getString(EnumBuType.BU_NAME.getKey());
+//				
+//				if(StringUtils.isBlank(buId) || StringUtils.isBlank(pfdc) || StringUtils.isBlank(url) || StringUtils.isBlank(buName)){
+//					return "index";
+//				}else if(buName.equals(this.pcstoreName) && !pfdc.equals(this.buPortalPfdc)){
+//					return "index";
+//				}else if(!buName.equals(pcstoreName)){
+//					return "index";
+//				}
+//				
+//				//檢查Referer來源
+//				if(buName.equals(this.pcstoreName)){
+//					boolean pcstoreFlag = false;
+//					String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
+//					for (String referer : buPcstoreRefererArray) {
+//						if(request.getHeader("referer").contains(referer)){
+//							pcstoreFlag = true;
+//							break;
+//						}
+//					}
+//					if(!pcstoreFlag){
+//						return "index";
+//					}
+//				}
+//				
+//				/** 查詢bu帳號是否開通，開通則更新bu狀態否則進入apply申請頁 */
+//				if(pfpBuAccount != null){
+//					AccountVO accountVO = pfpCustomerInfoService.existentAccount(pfpBuAccount.getPcId());
+//					if(accountVO != null && pfpBuAccount.getPfpStatus() == 0){
+//						pfpBuAccount.setPfpStatus(1);
+//						pfpBuAccount.setUpdateDate(new Date());
+//						pfpBuService.saveOrUpdate(pfpBuAccount);
+//						return "bulogin";
+//					}else{
+//						return "buApply";
+//					}
+//				}
+//			}
+//		}
+//		/*BU LOGIN END*/
 		
 		if(StringUtils.isNotBlank(pcId) && StringUtils.isNotBlank(userData)){
 			// 解析 cookie 
@@ -259,9 +285,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 				}
 				
 				// 不是管理者帳戶又不同一個 id
-				if(!pcId.equals(refPcId) &&
-						!manager.equals(EnumPfpRootUser.PCHOME_MANAGER.getPrivilege()) &&
-						!manager.equals(EnumPfpRootUser.PFD.getPrivilege())){
+				if(!pcId.equals(refPcId) &&	!manager.equals(EnumPfpRootUser.PCHOME_MANAGER.getPrivilege()) &&	!manager.equals(EnumPfpRootUser.PFD.getPrivilege())){
 					return "index";
 				}
 			}

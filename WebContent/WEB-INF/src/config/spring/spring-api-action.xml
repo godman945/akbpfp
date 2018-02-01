@@ -45,10 +45,19 @@
     </bean>
     
     <bean id="pchomeBuApi" class="com.pchome.akbpfp.api.PchomeBuAPI" scope="prototype" >
+    	<property name="buIp" value="${bu.ip}" />
+    	<property name="buSuccessUrl" value="${bu.success.url}" />
+    	<property name="buErrorUrl" value="${bu.error.url}" />
+    	<property name="memberServer" value="${member.server}" />
+        <property name="buPortalPfdc" value="${bu.portal.pfdc}" />
+        <property name="pcstoreName" value="${bu.pcstore.name}" />
+        <property name="buPcstoreReferer" value="${bu.pcstore.referer}" />
+    	<property name="cookieUtils" ref="CookieFunctionUtils" />
+    	<property name="cookieProccessAPI" ref="CookieProccessAPI" />
     	<property name="pfpBuService" ref="PfpBuService" /> 
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" />
     	<property name="sequenceService" ref="SequenceService" />
-    	<property name="buIp" value="${bu.ip}" />
 	</bean>
     
 </beans>

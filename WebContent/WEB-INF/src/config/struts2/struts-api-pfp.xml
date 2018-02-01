@@ -12,10 +12,20 @@
 				<result type="redirectAction" name="input">index</result>
 		</action>
 		
-		<action name="buLogin" class="IndexAction" method="execute">
-			<interceptor-ref name="loginCheckStack" />
-	       	<result type="tiles" name="success">account.info.modify</result>
-		</action> 
-		
+		<action name="buLogin" class="pchomeBuApi" method="callBulogin">
+			<result type="redirect" name="input">${buErrorUrl}</result>
+			<result type="redirect" name="success">${buSuccessUrl}</result>
+		</action>
     </package>
+    
+    <package name="bu-login" extends="struts-base">  
+		<action name="busuccess" class="pchomeBuApi" method="bulogin">
+				<interceptor-ref name="loginCheckStack" />
+				<result type="redirectAction" name="success">
+					<param name="actionName">summary</param> 
+					<param name="BbUser">true</param>
+				</result>
+		</action>
+    </package>
+    
 </struts>
