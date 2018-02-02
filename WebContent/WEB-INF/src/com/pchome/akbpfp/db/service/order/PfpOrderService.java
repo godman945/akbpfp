@@ -94,7 +94,8 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 				data = new LinkedHashMap<String, Object>();
 				data.put(EnumBillingField.MEM_ID.toString(), memberId);
 				data.put(EnumBillingField.TOTAL_PRICE.toString(), order.getOrderPrice()+order.getTax());
-				data.put(EnumBillingField.USER_NAME.toString(), memberVO.getMemberName());
+//				data.put(EnumBillingField.USER_NAME.toString(), memberVO.getMemberName());
+				data.put(EnumBillingField.USER_NAME.toString(), "");
 				data.put(EnumBillingField.USER_MAIL.toString(), memberVO.getMemberCheckMail());
 				data.put(EnumBillingField.USER_SEX.toString(), memberVO.getMemberSex());
 				data.put(EnumBillingField.USER_TEL.toString(), memberVO.getMemberTelephone());
