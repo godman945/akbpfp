@@ -13,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pchome.akbpfp.api.MemberAPI;
 import com.pchome.akbpfp.db.dao.bill.PfpTransDetailDAO;
+import com.pchome.akbpfp.db.dao.bu.PfpBuDAO;
 import com.pchome.akbpfp.db.dao.order.IPfpOrderDAO;
 import com.pchome.akbpfp.db.dao.order.PfpOrderDAO;
 import com.pchome.akbpfp.db.dao.user.PfpUserDAO;
+import com.pchome.akbpfp.db.pojo.PfpBuAccount;
 import com.pchome.akbpfp.db.pojo.PfpOrder;
 import com.pchome.akbpfp.db.pojo.PfpOrderDetail;
 import com.pchome.akbpfp.db.pojo.PfpTransDetail;
@@ -33,7 +35,7 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 
 	private MemberAPI memberAPI;
 	private PfpUserDAO pfpUserDAO;
-	
+	private PfpBuDAO pfpBuDAO;
 	private PfpTransDetailDAO pfpTransDetailDAO;
 	private String akbPfpServerUrl;
 	
@@ -94,8 +96,12 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 				data = new LinkedHashMap<String, Object>();
 				data.put(EnumBillingField.MEM_ID.toString(), memberId);
 				data.put(EnumBillingField.TOTAL_PRICE.toString(), order.getOrderPrice()+order.getTax());
-//				data.put(EnumBillingField.USER_NAME.toString(), memberVO.getMemberName());
-				data.put(EnumBillingField.USER_NAME.toString(), "");
+				List<PfpBuAccount> pfpBuAccountList = pfpBuDAO.findPfpBuAccountByMemberId(memberId);
+				if(pfpBuAccountList.size() > 0){
+					data.put(EnumBillingField.USER_NAME.toString(), "");
+				}else{
+					data.put(EnumBillingField.USER_NAME.toString(), memberVO.getMemberName());
+				}
 				data.put(EnumBillingField.USER_MAIL.toString(), memberVO.getMemberCheckMail());
 				data.put(EnumBillingField.USER_SEX.toString(), memberVO.getMemberSex());
 				data.put(EnumBillingField.USER_TEL.toString(), memberVO.getMemberTelephone());
@@ -105,7 +111,6 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 				data.put(EnumBillingField.CH_BTN_TEXT.toString(), EnumBillingField.CH_BTN_TEXT.getValue());
 				data.put(EnumBillingField.CH_URL.toString(), akbPfpServerUrl);
 				data.put(EnumBillingField.DETAIL.toString(), new LinkedHashMap[]{detailMap});
-				
 			}
 		}
 		
@@ -238,6 +243,14 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 
 	public void setAkbPfpServerUrl(String akbPfpServerUrl) {
 		this.akbPfpServerUrl = akbPfpServerUrl;
+	}
+
+	public PfpBuDAO getPfpBuDAO() {
+		return pfpBuDAO;
+	}
+
+	public void setPfpBuDAO(PfpBuDAO pfpBuDAO) {
+		this.pfpBuDAO = pfpBuDAO;
 	}
 
 	public static void main(String arg[]) throws Exception{
