@@ -96,13 +96,8 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 				data = new LinkedHashMap<String, Object>();
 				data.put(EnumBillingField.MEM_ID.toString(), memberId);
 				data.put(EnumBillingField.TOTAL_PRICE.toString(), order.getOrderPrice()+order.getTax());
-				log.info(">>>>>>>>>>>>>>>>>>memberId:"+memberId);
 				List<PfpBuAccount> pfpBuAccountList = pfpBuDAO.findPfpBuAccountByMemberId(memberId);
-				
-				log.info(">>>>>>>>>>>>>>>>>>pfpBuAccountList:"+pfpBuAccountList.size());
-				log.info(">>>>>>>>>>>>>>>>>>pfpBuAccountList null:"+pfpBuAccountList == null);
-				
-				if(pfpBuAccountList != null){
+				if(pfpBuAccountList.size() > 0){
 					data.put(EnumBillingField.USER_NAME.toString(), "");
 				}else{
 					data.put(EnumBillingField.USER_NAME.toString(), memberVO.getMemberName());
