@@ -100,6 +100,9 @@ public class PchomeBuAPI extends BaseCookieAction {
 	public String callBulogin() throws Exception{
 		log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
 		//檢查來源
+		if(request.getHeader("referer") == null){
+			return INPUT;
+		}
 		boolean pcstoreFlag = false;
 		String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
 		for (String referer : buPcstoreRefererArray) {
