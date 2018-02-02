@@ -19,6 +19,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 import com.pchome.akbpfd.db.service.user.PfdUserMemberRefService;
 import com.pchome.akbpfp.api.CookieProccessAPI;
 import com.pchome.akbpfp.db.pojo.PfdUserMemberRef;
+import com.pchome.akbpfp.db.pojo.PfpBuAccount;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.pojo.PfpUser;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;

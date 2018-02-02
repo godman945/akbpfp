@@ -20,7 +20,6 @@
     
     <package name="bu-login" extends="struts-base">  
 		<action name="busuccess" class="pchomeBuApi" method="bulogin">
-				<interceptor-ref name="loginCheckStack" />
 				<result type="redirectAction" name="success">
 					<param name="actionName">summary</param> 
 					<param name="BbUser">true</param>
