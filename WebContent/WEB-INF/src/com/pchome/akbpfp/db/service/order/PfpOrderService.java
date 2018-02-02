@@ -97,7 +97,7 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 				data.put(EnumBillingField.MEM_ID.toString(), memberId);
 				data.put(EnumBillingField.TOTAL_PRICE.toString(), order.getOrderPrice()+order.getTax());
 				List<PfpBuAccount> pfpBuAccountList = pfpBuDAO.findPfpBuAccountByMemberId(memberId);
-				if(pfpBuAccountList.size() > 0){
+				if(pfpBuAccountList != null){
 					data.put(EnumBillingField.USER_NAME.toString(), "");
 				}else{
 					data.put(EnumBillingField.USER_NAME.toString(), memberVO.getMemberName());
