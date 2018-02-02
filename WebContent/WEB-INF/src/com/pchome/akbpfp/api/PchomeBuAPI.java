@@ -98,23 +98,23 @@ public class PchomeBuAPI extends BaseCookieAction {
 	 * BU帳號登入用
 	 * */
 	public String callBulogin() throws Exception{
+		log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
 		//檢查來源
 		boolean pcstoreFlag = false;
 		String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
-//		for (String referer : buPcstoreRefererArray) {
-//			if(request.getHeader("referer").contains(referer)){
-//				pcstoreFlag = true;
-//				break;
-//			}
-//		}
-//		if(!pcstoreFlag){
-//			return INPUT;
-//		}
+		for (String referer : buPcstoreRefererArray) {
+			if(request.getHeader("referer").contains(referer)){
+				pcstoreFlag = true;
+				break;
+			}
+		}
+		if(!pcstoreFlag){
+			return INPUT;
+		}
 		
 		//檢查格式
 		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
 		if(StringUtils.isNotBlank(buKey)){
-			log.info(">>>>>> CALL BU LOGIN API REFERER:" +request.getHeader("referer"));
 			RSAPrivateKey privateKey = (RSAPrivateKey)RSAUtils.getPrivateKey(RSAUtils.PRIVATE_KEY_2048);
 			byte[] decBytes = RSAUtils.decrypt(privateKey, Base64.decodeBase64(buKey));
 			JSONObject buInfoJson = new JSONObject(new String(decBytes));
