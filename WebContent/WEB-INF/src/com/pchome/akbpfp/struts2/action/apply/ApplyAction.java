@@ -332,7 +332,7 @@ public class ApplyAction extends BaseSSLAction{
 						String message = EnumAccesslogAction.ACCOUNT_ADD_MONEY.getMessage()+" URL："+billingUrl;
 						admAccesslogService.recordBillingLog(EnumAccesslogAction.ACCOUNT_ADD_MONEY, 
 															message,  
-															"", 
+															super.getId_pchome(), 
 															orderId,											
 															super.getCustomer_info_id(), 
 															super.getUser_id(), 
@@ -387,10 +387,10 @@ public class ApplyAction extends BaseSSLAction{
 			
 			// 金流介接  Accesslog
 			String message = EnumAccesslogAction.ACCOUNT_ADD_MONEY.getMessage()+" URL："+billingUrl;
-			String id_pchome = StringUtils.isNotBlank(this.getBuAccountVO().getBuId()) ? "" : super.getId_pchome();
+
 			admAccesslogService.recordBillingLog(EnumAccesslogAction.ACCOUNT_ADD_MONEY, 
 												message,  
-												id_pchome, 
+												super.getId_pchome(), 
 												orderId,											
 												super.getCustomer_info_id(), 
 												super.getUser_id(), 
