@@ -163,6 +163,10 @@ public class PchomeBuAPI extends BaseCookieAction {
 		}
 	
 	public String bulogin() throws Exception{
+		AccountVO accountVO = pfpCustomerInfoService.existentAccount(super.getId_pchome());
+		if(accountVO == null){
+			return "apply";
+		}
 		return SUCCESS;
 	}
 	
