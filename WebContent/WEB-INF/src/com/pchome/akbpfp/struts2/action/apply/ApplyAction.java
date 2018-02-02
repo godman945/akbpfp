@@ -332,7 +332,7 @@ public class ApplyAction extends BaseSSLAction{
 						String message = EnumAccesslogAction.ACCOUNT_ADD_MONEY.getMessage()+" URL："+billingUrl;
 						admAccesslogService.recordBillingLog(EnumAccesslogAction.ACCOUNT_ADD_MONEY, 
 															message,  
-															super.getId_pchome(), 
+															"", 
 															orderId,											
 															super.getCustomer_info_id(), 
 															super.getUser_id(), 
