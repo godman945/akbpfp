@@ -101,15 +101,15 @@ public class PchomeBuAPI extends BaseCookieAction {
 		//檢查來源
 		boolean pcstoreFlag = false;
 		String [] buPcstoreRefererArray = buPcstoreReferer.trim().split(",");
-		for (String referer : buPcstoreRefererArray) {
-			if(request.getHeader("referer").contains(referer)){
-				pcstoreFlag = true;
-				break;
-			}
-		}
-		if(!pcstoreFlag){
-			return INPUT;
-		}
+//		for (String referer : buPcstoreRefererArray) {
+//			if(request.getHeader("referer").contains(referer)){
+//				pcstoreFlag = true;
+//				break;
+//			}
+//		}
+//		if(!pcstoreFlag){
+//			return INPUT;
+//		}
 		
 		//檢查格式
 		String buKey = request.getParameter(EnumBuType.BU_LOGIN_KEY.getKey());
@@ -146,16 +146,16 @@ public class PchomeBuAPI extends BaseCookieAction {
 				}
 				PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfoByMmeberId(pfpBuAccount.getPcId());
 				if(pfpCustomerInfo != null){
-					createBuCookie(pfpBuAccount.getPcId(),response,true,pfpCustomerInfo);
+					createBuCookie(pfpBuAccount.getPcId(),response,true,pfpCustomerInfo,buId);
 					}else{
 						cookieProccessAPI.deleteAllCookie(response);
-						createBuCookie(pfpBuAccount.getPcId(),response,false,pfpCustomerInfo);
+						createBuCookie(pfpBuAccount.getPcId(),response,false,pfpCustomerInfo,buId);
 					}
 				}else{
 					String pcId = createBuUser(buInfoJson);
 					log.info(">>>>>bu pcId:"+pcId);
 					if(StringUtils.isNotBlank(pcId)){
-						createBuCookie(pcId,response,false,null);
+						createBuCookie(pcId,response,false,null,buId);
 					}
 				}
 			}
@@ -163,16 +163,13 @@ public class PchomeBuAPI extends BaseCookieAction {
 		}
 	
 	public String bulogin() throws Exception{
-		System.out.println("AAAA");
 		return SUCCESS;
 	}
-	
-	
 	
 	/*
 	 * 建立BU cookie登入資料
 	 * */
-	public boolean createBuCookie(String pcId,HttpServletResponse response,boolean pfpIsExist,PfpCustomerInfo pfpCustomerInfo) throws Exception{
+	public boolean createBuCookie(String pcId,HttpServletResponse response,boolean pfpIsExist,PfpCustomerInfo pfpCustomerInfo,String buId) throws Exception{
 		if(pfpIsExist){
 			Set<PfpUser> pfpUserSet = pfpCustomerInfo.getPfpUsers();
 			String userId = "";
@@ -197,6 +194,7 @@ public class PchomeBuAPI extends BaseCookieAction {
 			pfbInfoMap.put("PFD_CUSTOMER_INFO_ID", pfdc);
 			pfbInfoMap.put("PFD_USER_ID", pfdu);
 			pfbInfoMap.put("MANAGER", "N");
+			pfbInfoMap.put("PFB_BU_ACCOUND", buId);
 			String encodePfpInfo = EncodeUtil.getInstance().encryptAES(pfbInfoMap.toString(), "pchomeakbpfp2012");
 			//akb_pfp_user
 			CookieUtil.writeCookie(response, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(), encodePfpInfo, ".pchome.com.tw", 5000, EnumCookieConstants.COOKIE_USING_CODE.getValue());

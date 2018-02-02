@@ -4,7 +4,7 @@ package com.pchome.enumerate.cookie;
  * PFP 登入 cookie key
  */
 public enum EnumCookiePfpKey {
-    	PFP_REALITY_USER_TITLE,
+    PFP_REALITY_USER_TITLE,
 	PFP_USER_ID,					
 	PFP_USER_STATUS,
 	PFP_USER_PRIVILEGE_ID,			// 使用者權限
@@ -15,6 +15,7 @@ public enum EnumCookiePfpKey {
 	PFD_USER_ID,
 	PFD_CONTRACT_STATUS,			// 合約狀態
 	PFD_RETURN_ACTION,				// 返回頁面
-	MANAGER;						// 登入的管理者人員
+	MANAGER,						// 登入的管理者人員
+	PFB_BU_ACCOUND;
 	
 }

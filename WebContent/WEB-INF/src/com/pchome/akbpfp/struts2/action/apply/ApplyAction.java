@@ -14,7 +14,6 @@ import com.pchome.akbpfp.api.MemberAPI;
 import com.pchome.akbpfp.api.RedirectBillingAPI;
 import com.pchome.akbpfp.db.pojo.AdmFreeGift;
 import com.pchome.akbpfp.db.pojo.AdmFreeRecord;
-import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpBuAccount;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.pojo.PfpOrder;
@@ -269,6 +268,7 @@ public class ApplyAction extends BaseSSLAction{
 		log.info("-------------------userStyle=" + userStyle);
 		// 從會員中心取會員資料
 		this.memberVO = memberAPI.getMemberVOData(userMemberId);
+		
 		
 		AdmFreeGift admFreeGift = null;			
 		

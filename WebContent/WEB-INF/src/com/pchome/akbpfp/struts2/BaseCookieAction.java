@@ -1,12 +1,14 @@
 package com.pchome.akbpfp.struts2;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.pchome.akbpfp.db.pojo.PfpBuAccount;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.cookie.EnumCookiePfpKey;
 import com.pchome.soft.depot.utils.CookieStringToMap;
@@ -27,6 +29,7 @@ public class BaseCookieAction extends BaseAction {
 	// 個人資訊
     private String id_pchome;
     private String user_id;
+    private String bu_id;
     private String user_status;
     private String user_privilege;
     private String customer_info_id;
@@ -180,6 +183,15 @@ public class BaseCookieAction extends BaseAction {
 		choose_end_date = DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH);
 		choose_start_date = DateValueUtil.getInstance().getDateValue(-30, DateValueUtil.DBPATH);
 		this.setChooseDate(choose_start_date, choose_end_date);
+	}
+
+	public String getBu_id() {
+		bu_id = cookieMap.get(EnumCookiePfpKey.PFB_BU_ACCOUND);
+		return bu_id;
+	}
+
+	public void setBu_id(String bu_id) {
+		this.bu_id = bu_id;
 	}
 	
 }
