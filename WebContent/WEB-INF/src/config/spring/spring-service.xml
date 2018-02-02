@@ -18,6 +18,7 @@
         <property name="dao" ref="PfpOrderDAO" />
         <property name="memberAPI" ref="MemberAPI" />
         <property name="pfpUserDAO" ref="PfpUserDAO" />
+        <property name="pfpBuDAO" ref="PfpBuDAO" />
         <property name="pfpTransDetailDAO" ref="PfpTransDetailDAO" />
         <property name="akbPfpServerUrl" value="${akbpfp.server}" />        
     </bean>
