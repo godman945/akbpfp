@@ -94,7 +94,9 @@ public class AdAdViewAjax extends BaseCookieAction{
 					totalClk += vo.getAdClk();		
 					totalCost += vo.getAdClkPrice();
 					totalInvalidClk += vo.getInvalidClk();
-					this.totalThousandsCost += (float)totalCost / ((float)totalPv / 1000);
+					if(totalCost > 0 && ((float)totalPv / 1000) > 0){
+						this.totalThousandsCost += (float)totalCost / ((float)totalPv / 1000);
+					}
 				}
 				
 				if(totalClk > 0 || totalPv > 0){
