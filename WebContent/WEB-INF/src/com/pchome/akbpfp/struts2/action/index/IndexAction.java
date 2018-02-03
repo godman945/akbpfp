@@ -48,8 +48,6 @@ public class IndexAction extends BaseCookieAction {
 	private String accountType;
 	private String akbpfdServer;
 	
-	private String buApplyUrl;
-	private String buSummaryUrl;
 	
 	
 	
@@ -410,6 +408,14 @@ public class IndexAction extends BaseCookieAction {
 //		return result;
 //	}
 	
+	
+	public String alex() throws Exception{
+		System.out.println("SSSSS");
+		return "summary";
+		
+	}
+	
+	
 
 	public List<FaqListVO> getFaqListVOs() {
 		return faqListVOs;
@@ -535,21 +541,6 @@ public class IndexAction extends BaseCookieAction {
 
 	public String getAkbpfdServer() {
 		return akbpfdServer;
-	}
-	public String getBuApplyUrl() {
-		return buApplyUrl;
-	}
-
-	public void setBuApplyUrl(String buApplyUrl) {
-		this.buApplyUrl = buApplyUrl;
-	}
-
-	public String getBuSummaryUrl() {
-		return buSummaryUrl;
-	}
-
-	public void setBuSummaryUrl(String buSummaryUrl) {
-		this.buSummaryUrl = buSummaryUrl;
 	}
 
 }
