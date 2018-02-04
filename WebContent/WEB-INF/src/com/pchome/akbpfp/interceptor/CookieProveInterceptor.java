@@ -3,7 +3,9 @@ package com.pchome.akbpfp.interceptor;
 
 
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,8 +30,10 @@ import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfd.user.PfdUserAdAccountRefService;
 import com.pchome.akbpfp.db.service.sequence.SequenceService;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
+import com.pchome.enumerate.cookie.EnumCookiePfpKey;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.soft.depot.utils.CookieFunction;
+import com.pchome.soft.depot.utils.CookieStringToMap;
 import com.pchome.soft.depot.utils.CookieUtil;
 import com.pchome.soft.depot.utils.EncodeUtil;
 import com.pchome.utils.HttpUtil;
@@ -63,6 +67,23 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String id_pchome = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		String dna_pchome = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_DNA_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
+		
+		
+		//判斷是否BU帳號
+//		if(StringUtils.isNotBlank(id_pchome)){
+//			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(id_pchome);
+//			PfpBuAccount pfpBuAccount = pfpBuAccountList.size() > 0 ? pfpBuAccountList.get(0) : null;
+//			if(pfpBuAccount != null){
+//				String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
+//				EnumMap<EnumCookiePfpKey, String> cookieMap = CookieStringToMap.getInstance().transformEnumMap(userData);
+//				System.out.println(cookieMap.get(EnumCookiePfpKey.PFB_BU_ACCOUND));
+//			}
+//		}
+		
+		
+		
+		
+		
 		
 		//log.info(" id_pchome: "+id_pchome);
 		if(StringUtils.isNotEmpty(id_pchome) && StringUtils.isNotEmpty(dna_pchome)){

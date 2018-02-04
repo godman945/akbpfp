@@ -4,8 +4,8 @@
 <head>
   <title>Fingerprintjs2 test</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <!-- --> <script src="http://showstg.pchome.com.tw/pfp/pchomeFingerprint.js"></script> 
-  <!--  <script src="http://showstg.pchome.com.tw/pfp/fingerprint2.js"></script> -->
+  <!--  <script src="http://showstg.pchome.com.tw/pfp/pchomeFingerprint.js"></script> -->
+  <!--  --> <script src="http://alex.pchome.com.tw:8080/akbpfp/pchomeFingerprint.js"></script>
   <style>
     body{
       font-family: sans-serif;
@@ -67,7 +67,7 @@
   <script>
  	 window.onload=function(){
  		 var d1 = new Date();
- 	      var fp = new Fingerprint2();
+ 	      var fp = new PCHOMEFingerprint();
  	      fp.get(function(result) {
  	        var d2 = new Date();
  	        var timeString = "執行 fingerprint 時間: " + (d2 - d1) + "ms";

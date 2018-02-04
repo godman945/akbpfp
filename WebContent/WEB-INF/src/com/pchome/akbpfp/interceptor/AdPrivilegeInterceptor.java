@@ -29,8 +29,7 @@ public class AdPrivilegeInterceptor extends AbstractInterceptor{
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		
-		String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(), 
-												EnumCookieConstants.COOKIE_USING_CODE.getValue());
+		String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		
 		EnumMap<EnumCookiePfpKey, String> cookieMap = CookieStringToMap.getInstance().transformEnumMap(userData);
 		
