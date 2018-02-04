@@ -62,9 +62,9 @@
             keys = this.screenResolutionKey(keys);
             keys = this.availableScreenResolutionKey(keys);
             keys = this.timezoneOffsetKey(keys);
-            keys = this.sessionStorageKey(keys);
-            keys = this.localStorageKey(keys);
-            keys = this.indexedDbKey(keys);
+//            keys = this.sessionStorageKey(keys);
+//            keys = this.localStorageKey(keys);
+//            keys = this.indexedDbKey(keys);
             keys = this.addBehaviorKey(keys);
             keys = this.openDatabaseKey(keys);
             keys = this.cpuClassKey(keys);
