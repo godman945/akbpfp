@@ -9,7 +9,7 @@ public enum EnumAdVideoSizePoolType {
     	BANNER_950390("310", "390","BANNER","adp_201711060001","c_x05_mo_tad_0080","950","390"),
     	BANNER_970250("579", "250","BANNER","adp_201601210003","c_x05_mo_tad_0080","970","250"),
     	VERTICAL_300600("300", "600","VERTICAL","adp_201709190001","c_x05_mo_tad_0110","300","600"),
-    	VERTICAL_320400("320", "480","VERTICAL","adp_201709190001","c_x05_mo_tad_0110","320","480");
+    	VERTICAL_320480("320", "480","VERTICAL","adp_201601210001","c_x05_mo_tad_0110","320","480");
     	
 	private final String widh;
 	private final String height;
