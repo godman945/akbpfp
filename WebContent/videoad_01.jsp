@@ -4,8 +4,8 @@
 <head>
   <title>Fingerprintjs2 test</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <!---->  <script src="http://showstg.pchome.com.tw/pfp/pchomeFingerprint.js"></script> 
-  <!--  <script src="http://alex.pchome.com.tw:8080/akbpfp/pchomeFingerprint.js"></script>--> 
+  <!--  --><script src="http://showstg.pchome.com.tw/pfp/pchomeFingerprint.js"></script> 
+  <!--   <script src="http://alex.pchome.com.tw:8080/akbpfp/pchomeFingerprint.js"></script>-->
   <style>
     body{
       font-family: sans-serif;
