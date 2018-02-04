@@ -53,20 +53,20 @@
                     })
                 }
             };
-//            keys = this.userAgentKey(keys);
-//            keys = this.languageKey(keys);
-//            keys = this.colorDepthKey(keys);
-//            keys = this.deviceMemoryKey(keys);
-//            keys = this.pixelRatioKey(keys);
-//            keys = this.hardwareConcurrencyKey(keys);
-//            keys = this.screenResolutionKey(keys);
-//            keys = this.availableScreenResolutionKey(keys);
-//            keys = this.timezoneOffsetKey(keys);
-//            keys = this.sessionStorageKey(keys);
-//            keys = this.localStorageKey(keys);
-//            keys = this.indexedDbKey(keys);
-//            keys = this.addBehaviorKey(keys);
-//            keys = this.openDatabaseKey(keys);
+            keys = this.userAgentKey(keys);
+            keys = this.languageKey(keys);
+            keys = this.colorDepthKey(keys);
+            keys = this.deviceMemoryKey(keys);
+            keys = this.pixelRatioKey(keys);
+            keys = this.hardwareConcurrencyKey(keys);
+            keys = this.screenResolutionKey(keys);
+            keys = this.availableScreenResolutionKey(keys);
+            keys = this.timezoneOffsetKey(keys);
+            keys = this.sessionStorageKey(keys);
+            keys = this.localStorageKey(keys);
+            keys = this.indexedDbKey(keys);
+            keys = this.addBehaviorKey(keys);
+            keys = this.openDatabaseKey(keys);
             keys = this.cpuClassKey(keys);
 //            keys = this.platformKey(keys);
 //            keys = this.doNotTrackKey(keys);
