@@ -1,19 +1,19 @@
 ﻿(function(name, context, definition) {
     'use strict';
     if (typeof window.define === 'function' && window.define.amd) {
-        window.define(definition);
+        window.define(definition)
     } else if (typeof module !== 'undefined' && module.exports) {
-        module.exports = definition();
+        module.exports = definition()
     } else if (context.exports) {
-        context.exports = definition();
+        context.exports = definition()
     } else {
-        context[name] = definition();
+        context[name] = definition()
     }
 })('PCHOMEFingerprint', this, function() {
     'use strict';
-    var Fingerprint2 = function(options) {
-        if (!(this instanceof Fingerprint2)) {
-            return new Fingerprint2(options);
+    var PCHOMEFingerprint = function(options) {
+        if (!(this instanceof PCHOMEFingerprint)) {
+            return new PCHOMEFingerprint(options)
         }
         var defaultOptions = {
             swfContainerId: 'fingerprintjs2',
@@ -21,22 +21,22 @@
             detectScreenOrientation: true,
             sortPluginsFor: [/palemoon/i],
             userDefinedFonts: []
-        }
+        };
         this.options = this.extend(options, defaultOptions);
         this.nativeForEach = Array.prototype.forEach;
-        this.nativeMap = Array.prototype.map;
-    }
-    Fingerprint2.prototype = {
+        this.nativeMap = Array.prototype.map
+    };
+    PCHOMEFingerprint.prototype = {
         extend: function(source, target) {
             if (source == null) {
-                return target;
+                return target
             }
             for (var k in source) {
                 if (source[k] != null && target[k] !== source[k]) {
-                    target[k] = source[k];
+                    target[k] = source[k]
                 }
             }
-            return target;
+            return target
         },
         get: function(done) {
             var that = this;
@@ -45,53 +45,52 @@
                 addPreprocessedComponent: function(pair) {
                     var componentValue = pair.value;
                     if (typeof that.options.preprocessor === 'function') {
-                        componentValue = that.options.preprocessor(pair.key, componentValue);
+                        componentValue = that.options.preprocessor(pair.key, componentValue)
                     }
                     keys.data.push({
                         key: pair.key,
                         value: componentValue
                     })
                 }
-            }
-            keys = this.userAgentKey(keys);
-            keys = this.languageKey(keys);
-            keys = this.colorDepthKey(keys);
-            keys = this.deviceMemoryKey(keys);
-            keys = this.pixelRatioKey(keys);
-            keys = this.hardwareConcurrencyKey(keys);
-            keys = this.screenResolutionKey(keys);
-            keys = this.availableScreenResolutionKey(keys);
-            keys = this.timezoneOffsetKey(keys);
-            keys = this.sessionStorageKey(keys);
-            keys = this.localStorageKey(keys);
-            keys = this.indexedDbKey(keys);
-            keys = this.addBehaviorKey(keys);
-            keys = this.openDatabaseKey(keys);
-            keys = this.cpuClassKey(keys);
-            keys = this.platformKey(keys);
-            keys = this.doNotTrackKey(keys);
-            keys = this.pluginsKey(keys);
-            keys = this.canvasKey(keys);
-            keys = this.webglKey(keys);
-            keys = this.webglVendorAndRendererKey(keys);
-            keys = this.adBlockKey(keys);
-            keys = this.hasLiedLanguagesKey(keys);
-            keys = this.hasLiedResolutionKey(keys);
-            keys = this.hasLiedOsKey(keys);
-            keys = this.hasLiedBrowserKey(keys);
-            keys = this.customEntropyFunction(keys);
-            /*keys,newKeys 為硬體資訊28項特徵  最後一項為js字體比對*/
+            };
+//            keys = this.userAgentKey(keys);
+//            keys = this.languageKey(keys);
+//            keys = this.colorDepthKey(keys);
+//            keys = this.deviceMemoryKey(keys);
+//            keys = this.pixelRatioKey(keys);
+//            keys = this.hardwareConcurrencyKey(keys);
+//            keys = this.screenResolutionKey(keys);
+//            keys = this.availableScreenResolutionKey(keys);
+//            keys = this.timezoneOffsetKey(keys);
+//            keys = this.sessionStorageKey(keys);
+//            keys = this.localStorageKey(keys);
+//            keys = this.indexedDbKey(keys);
+//            keys = this.addBehaviorKey(keys);
+//            keys = this.openDatabaseKey(keys);
+//            keys = this.cpuClassKey(keys);
+//            keys = this.platformKey(keys);
+//            keys = this.doNotTrackKey(keys);
+//            keys = this.pluginsKey(keys);
+//            keys = this.canvasKey(keys);
+//            keys = this.webglKey(keys);
+//            keys = this.webglVendorAndRendererKey(keys);
+//            keys = this.adBlockKey(keys);
+//            keys = this.hasLiedLanguagesKey(keys);
+//            keys = this.hasLiedResolutionKey(keys);
+//            keys = this.hasLiedOsKey(keys);
+//            keys = this.hasLiedBrowserKey(keys);
+//            keys = this.customEntropyFunction(keys);
             this.fontsKey(keys, function(newKeys) {
                 var values = [];
                 that.each(newKeys.data, function(pair) {
                     var value = pair.value;
                     if (value && typeof value.join === 'function') {
-                        value = value.join(';');
+                        value = value.join(';')
                     }
-                    values.push(value);
-                })
+                    values.push(value)
+                });
                 var murmur = that.x64hash128(values.join('~~~'), 31);
-                return done(murmur, newKeys.data);
+                return done(murmur, newKeys.data)
             })
         },
         customEntropyFunction: function(keys) {
@@ -101,7 +100,7 @@
                     value: this.options.customFunction()
                 })
             }
-            return keys;
+            return keys
         },
         userAgentKey: function(keys) {
             if (!this.options.excludeUserAgent) {
@@ -110,20 +109,19 @@
                     value: this.getUserAgent()
                 })
             }
-            return keys;
+            return keys
         },
         getUserAgent: function() {
-            return navigator.userAgent;
+            return navigator.userAgent
         },
         languageKey: function(keys) {
             if (!this.options.excludeLanguage) {
-                // IE 9,10 on Windows 10 does not have the `navigator.language` property any longer
                 keys.addPreprocessedComponent({
                     key: 'language',
                     value: navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || ''
                 })
             }
-            return keys;
+            return keys
         },
         colorDepthKey: function(keys) {
             if (!this.options.excludeColorDepth) {
@@ -132,7 +130,7 @@
                     value: window.screen.colorDepth || -1
                 })
             }
-            return keys;
+            return keys
         },
         deviceMemoryKey: function(keys) {
             if (!this.options.excludeDeviceMemory) {
@@ -141,10 +139,10 @@
                     value: this.getDeviceMemory()
                 })
             }
-            return keys;
+            return keys
         },
         getDeviceMemory: function() {
-            return navigator.deviceMemory || -1;
+            return navigator.deviceMemory || -1
         },
         pixelRatioKey: function(keys) {
             if (!this.options.excludePixelRatio) {
@@ -153,43 +151,43 @@
                     value: this.getPixelRatio()
                 })
             }
-            return keys;
+            return keys
         },
         getPixelRatio: function() {
-            return window.devicePixelRatio || '';
+            return window.devicePixelRatio || ''
         },
         screenResolutionKey: function(keys) {
             if (!this.options.excludeScreenResolution) {
-                return this.getScreenResolution(keys);
+                return this.getScreenResolution(keys)
             }
-            return keys;
+            return keys
         },
         getScreenResolution: function(keys) {
             var resolution;
             if (this.options.detectScreenOrientation) {
-                resolution = (window.screen.height > window.screen.width) ? [window.screen.height, window.screen.width] : [window.screen.width, window.screen.height];
+                resolution = (window.screen.height > window.screen.width) ? [window.screen.height, window.screen.width] : [window.screen.width, window.screen.height]
             } else {
-                resolution = [window.screen.width, window.screen.height];
+                resolution = [window.screen.width, window.screen.height]
             }
             keys.addPreprocessedComponent({
                 key: 'resolution',
                 value: resolution
-            })
-            return keys;
+            });
+            return keys
         },
         availableScreenResolutionKey: function(keys) {
             if (!this.options.excludeAvailableScreenResolution) {
-                return this.getAvailableScreenResolution(keys);
+                return this.getAvailableScreenResolution(keys)
             }
-            return keys;
+            return keys
         },
         getAvailableScreenResolution: function(keys) {
             var available;
             if (window.screen.availWidth && window.screen.availHeight) {
                 if (this.options.detectScreenOrientation) {
-                    available = (window.screen.availHeight > window.screen.availWidth) ? [window.screen.availHeight, window.screen.availWidth] : [window.screen.availWidth, window.screen.availHeight];
+                    available = (window.screen.availHeight > window.screen.availWidth) ? [window.screen.availHeight, window.screen.availWidth] : [window.screen.availWidth, window.screen.availHeight]
                 } else {
-                    available = [window.screen.availHeight, window.screen.availWidth];
+                    available = [window.screen.availHeight, window.screen.availWidth]
                 }
             }
             if (typeof available !== 'undefined') {
@@ -198,7 +196,7 @@
                     value: available
                 })
             }
-            return keys;
+            return keys
         },
         timezoneOffsetKey: function(keys) {
             if (!this.options.excludeTimezoneOffset) {
@@ -207,7 +205,7 @@
                     value: new Date().getTimezoneOffset()
                 })
             }
-            return keys;
+            return keys
         },
         sessionStorageKey: function(keys) {
             if (!this.options.excludeSessionStorage && this.hasSessionStorage()) {
@@ -216,7 +214,7 @@
                     value: 1
                 })
             }
-            return keys;
+            return keys
         },
         localStorageKey: function(keys) {
             if (!this.options.excludeSessionStorage && this.hasLocalStorage()) {
@@ -225,7 +223,7 @@
                     value: 1
                 })
             }
-            return keys;
+            return keys
         },
         indexedDbKey: function(keys) {
             if (!this.options.excludeIndexedDB && this.hasIndexedDB()) {
@@ -234,17 +232,16 @@
                     value: 1
                 })
             }
-            return keys;
+            return keys
         },
         addBehaviorKey: function(keys) {
-            // body might not be defined at this point or removed programmatically
             if (!this.options.excludeAddBehavior && document.body && document.body.addBehavior) {
                 keys.addPreprocessedComponent({
                     key: 'add_behavior',
                     value: 1
                 })
             }
-            return keys;
+            return keys
         },
         openDatabaseKey: function(keys) {
             if (!this.options.excludeOpenDatabase && window.openDatabase) {
@@ -253,7 +250,7 @@
                     value: 1
                 })
             }
-            return keys;
+            return keys
         },
         cpuClassKey: function(keys) {
             if (!this.options.excludeCpuClass) {
@@ -262,7 +259,7 @@
                     value: this.getNavigatorCpuClass()
                 })
             }
-            return keys;
+            return keys
         },
         platformKey: function(keys) {
             if (!this.options.excludePlatform) {
@@ -271,7 +268,7 @@
                     value: this.getNavigatorPlatform()
                 })
             }
-            return keys;
+            return keys
         },
         doNotTrackKey: function(keys) {
             if (!this.options.excludeDoNotTrack) {
@@ -280,7 +277,7 @@
                     value: this.getDoNotTrack()
                 })
             }
-            return keys;
+            return keys
         },
         canvasKey: function(keys) {
             if (!this.options.excludeCanvas && this.isCanvasSupported()) {
@@ -289,7 +286,7 @@
                     value: this.getCanvasFp()
                 })
             }
-            return keys;
+            return keys
         },
         webglKey: function(keys) {
             if (!this.options.excludeWebGL && this.isWebGlSupported()) {
@@ -298,7 +295,7 @@
                     value: this.getWebglFp()
                 })
             }
-            return keys;
+            return keys
         },
         webglVendorAndRendererKey: function(keys) {
             if (!this.options.excludeWebGLVendorAndRenderer && this.isWebGlSupported()) {
@@ -307,7 +304,7 @@
                     value: this.getWebglVendorAndRenderer()
                 })
             }
-            return keys;
+            return keys
         },
         adBlockKey: function(keys) {
             if (!this.options.excludeAdBlock) {
@@ -316,7 +313,7 @@
                     value: this.getAdBlock()
                 })
             }
-            return keys;
+            return keys
         },
         hasLiedLanguagesKey: function(keys) {
             if (!this.options.excludeHasLiedLanguages) {
@@ -325,7 +322,7 @@
                     value: this.getHasLiedLanguages()
                 })
             }
-            return keys;
+            return keys
         },
         hasLiedResolutionKey: function(keys) {
             if (!this.options.excludeHasLiedResolution) {
@@ -334,7 +331,7 @@
                     value: this.getHasLiedResolution()
                 })
             }
-            return keys;
+            return keys
         },
         hasLiedOsKey: function(keys) {
             if (!this.options.excludeHasLiedOs) {
@@ -343,7 +340,7 @@
                     value: this.getHasLiedOs()
                 })
             }
-            return keys;
+            return keys
         },
         hasLiedBrowserKey: function(keys) {
             if (!this.options.excludeHasLiedBrowser) {
@@ -352,9 +349,8 @@
                     value: this.getHasLiedBrowser()
                 })
             }
-            return keys;
+            return keys
         },
-
         fontsKey: function(keys, done) {
             return this.jsFontsKey(keys, done)
         },
@@ -362,12 +358,9 @@
             var that = this;
             return setTimeout(function() {
                 var baseFonts = ['monospace', 'sans-serif', 'serif'];
-                var fontList = [
-                    'Arial'
-                ];
-                fontList = fontList.concat(that.options.userDefinedFonts)
+                var fontList = ['Arial'];
+                fontList = fontList.concat(that.options.userDefinedFonts);
                 var testString = 'mmmmmmmmmmlli';
-                // we test using 72px font size, we may use any size. I guess larger the better.
                 var testSize = '72px';
                 var h = document.getElementsByTagName('body')[0];
                 var baseFontsDiv = document.createElement('div');
@@ -381,28 +374,23 @@
                     s.style.fontSize = testSize;
                     s.style.lineHeight = 'normal';
                     s.innerHTML = testString;
-                    return s;
-                }
-
+                    return s
+                };
                 var createSpanWithFonts = function(fontToDetect, baseFont) {
                     var s = createSpan();
                     s.style.fontFamily = "'" + fontToDetect + "'," + baseFont;
-                    return s;
-                }
-
-                // creates spans for the base fonts and adds them to baseFontsDiv
+                    return s
+                };
                 var initializeBaseFontsSpans = function() {
                     var spans = [];
                     for (var index = 0, length = baseFonts.length; index < length; index++) {
                         var s = createSpan();
                         s.style.fontFamily = baseFonts[index];
                         baseFontsDiv.appendChild(s);
-                        spans.push(s);
+                        spans.push(s)
                     }
-                    return spans;
-                }
-
-                // creates spans for the fonts to detect and adds them to fontsDiv
+                    return spans
+                };
                 var initializeFontsSpans = function() {
                     var spans = {};
                     for (var i = 0, l = fontList.length; i < l; i++) {
@@ -410,42 +398,34 @@
                         for (var j = 0, numDefaultFonts = baseFonts.length; j < numDefaultFonts; j++) {
                             var s = createSpanWithFonts(fontList[i], baseFonts[j]);
                             fontsDiv.appendChild(s);
-                            fontSpans.push(s);
+                            fontSpans.push(s)
                         }
-                        spans[fontList[i]] = fontSpans;
+                        spans[fontList[i]] = fontSpans
                     }
-                    return spans;
-                }
-
+                    return spans
+                };
                 var isFontAvailable = function(fontSpans) {
                     var detected = false;
                     for (var i = 0; i < baseFonts.length; i++) {
                         detected = (fontSpans[i].offsetWidth !== defaultWidth[baseFonts[i]] || fontSpans[i].offsetHeight !== defaultHeight[baseFonts[i]]);
                         if (detected) {
-                            return detected;
+                            return detected
                         }
                     }
-                    return detected;
-                }
-
-                // create spans for base fonts
+                    return detected
+                };
                 var baseFontsSpans = initializeBaseFontsSpans();
-                // add the spans to the DOM
                 h.appendChild(baseFontsDiv);
-                // get the default width for the three base fonts
                 for (var index = 0, length = baseFonts.length; index < length; index++) {
                     defaultWidth[baseFonts[index]] = baseFontsSpans[index].offsetWidth;
-                    defaultHeight[baseFonts[index]] = baseFontsSpans[index].offsetHeight;
+                    defaultHeight[baseFonts[index]] = baseFontsSpans[index].offsetHeight
                 }
-                // create spans for fonts to detect
                 var fontsSpans = initializeFontsSpans();
-                // add all the spans to the DOM
                 h.appendChild(fontsDiv);
-                // check available fonts
                 var available = [];
                 for (var i = 0, l = fontList.length; i < l; i++) {
                     if (isFontAvailable(fontsSpans[fontList[i]])) {
-                        available.push(fontList[i]);
+                        available.push(fontList[i])
                     }
                 }
                 h.removeChild(fontsDiv);
@@ -453,8 +433,8 @@
                 keys.addPreprocessedComponent({
                     key: 'js_fonts',
                     value: available
-                })
-                done(keys);
+                });
+                done(keys)
             }, 1)
         },
         pluginsKey: function(keys) {
@@ -473,91 +453,63 @@
                     })
                 }
             }
-            return keys;
+            return keys
         },
         getRegularPlugins: function() {
             var plugins = [];
             if (navigator.plugins) {
-                // plugins isn't defined in Node envs.
                 for (var i = 0, l = navigator.plugins.length; i < l; i++) {
                     if (navigator.plugins[i]) {
-                        plugins.push(navigator.plugins[i]);
+                        plugins.push(navigator.plugins[i])
                     }
                 }
             }
-            // sorting plugins only for those user agents, that we know randomize the plugins
-            // every time we try to enumerate them
             if (this.pluginsShouldBeSorted()) {
                 plugins = plugins.sort(function(a, b) {
                     if (a.name > b.name) {
-                        return 1;
+                        return 1
                     }
                     if (a.name < b.name) {
-                        return -1;
+                        return -1
                     }
-                    return 0;
+                    return 0
                 })
             }
             return this.map(plugins, function(p) {
                 var mimeTypes = this.map(p, function(mt) {
-                    return [mt.type, mt.suffixes].join('~');
+                    return [mt.type, mt.suffixes].join('~')
                 }).join(',');
-                return [p.name, p.description, mimeTypes].join('::');
+                return [p.name, p.description, mimeTypes].join('::')
             }, this)
         },
         getIEPlugins: function() {
             var result = [];
             if ((Object.getOwnPropertyDescriptor && Object.getOwnPropertyDescriptor(window, 'ActiveXObject')) || ('ActiveXObject' in window)) {
-                var names = [
-                        'AcroPDF.PDF', // Adobe PDF reader 7+
-                        'Adodb.Stream',
-                        'AgControl.AgControl', // Silverlight
-                        'DevalVRXCtrl.DevalVRXCtrl.1',
-                        'MacromediaFlashPaper.MacromediaFlashPaper',
-                        'Msxml2.DOMDocument',
-                        'Msxml2.XMLHTTP',
-                        'PDF.PdfCtrl', // Adobe PDF reader 6 and earlier, brrr
-                        'QuickTime.QuickTime', // QuickTime
-                        'QuickTimeCheckObject.QuickTimeCheck.1',
-                        'RealPlayer',
-                        'RealPlayer.RealPlayer(tm) ActiveX Control (32-bit)',
-                        'RealVideo.RealVideo(tm) ActiveX Control (32-bit)',
-                        'Scripting.Dictionary',
-                        'SWCtl.SWCtl', // ShockWave player
-                        'Shell.UIHelper',
-                        'ShockwaveFlash.ShockwaveFlash', // flash plugin
-                        'Skype.Detection',
-                        'TDCCtl.TDCCtl',
-                        'WMPlayer.OCX', // Windows media player
-                        'rmocx.RealPlayer G2 Control',
-                        'rmocx.RealPlayer G2 Control.1'
-                    ]
-                    // starting to detect plugins in IE
+                var names = ['AcroPDF.PDF', 'Adodb.Stream', 'AgControl.AgControl', 'DevalVRXCtrl.DevalVRXCtrl.1', 'MacromediaFlashPaper.MacromediaFlashPaper', 'Msxml2.DOMDocument', 'Msxml2.XMLHTTP', 'PDF.PdfCtrl', 'QuickTime.QuickTime', 'QuickTimeCheckObject.QuickTimeCheck.1', 'RealPlayer', 'RealPlayer.RealPlayer(tm) ActiveX Control (32-bit)', 'RealVideo.RealVideo(tm) ActiveX Control (32-bit)', 'Scripting.Dictionary', 'SWCtl.SWCtl', 'Shell.UIHelper', 'ShockwaveFlash.ShockwaveFlash', 'Skype.Detection', 'TDCCtl.TDCCtl', 'WMPlayer.OCX', 'rmocx.RealPlayer G2 Control', 'rmocx.RealPlayer G2 Control.1'];
                 result = this.map(names, function(name) {
                     try {
-                        // eslint-disable-next-line no-new
                         new window.ActiveXObject(name);
-                        return name;
+                        return name
                     } catch (e) {
-                        return null;
+                        return null
                     }
                 })
             }
             if (navigator.plugins) {
-                result = result.concat(this.getRegularPlugins());
+                result = result.concat(this.getRegularPlugins())
             }
-            return result;
+            return result
         },
         pluginsShouldBeSorted: function() {
-            var should = false
+            var should = false;
             for (var i = 0, l = this.options.sortPluginsFor.length; i < l; i++) {
                 var re = this.options.sortPluginsFor[i];
                 if (navigator.userAgent.match(re)) {
                     should = true;
-                    break;
+                    break
                 }
             }
-            return should;
+            return should
         },
         touchSupportKey: function(keys) {
             if (!this.options.excludeTouchSupport) {
@@ -566,7 +518,7 @@
                     value: this.getTouchSupport()
                 })
             }
-            return keys;
+            return keys
         },
         hardwareConcurrencyKey: function(keys) {
             if (!this.options.excludeHardwareConcurrency) {
@@ -575,59 +527,58 @@
                     value: this.getHardwareConcurrency()
                 })
             }
-            return keys;
+            return keys
         },
         hasSessionStorage: function() {
             try {
-                return !!window.sessionStorage;
+                return !!window.sessionStorage
             } catch (e) {
-                return true;
+                return true
             }
         },
-        // https://bugzilla.mozilla.org/show_bug.cgi?id=781447
         hasLocalStorage: function() {
             try {
-                return !!window.localStorage;
+                return !!window.localStorage
             } catch (e) {
-                return true; // SecurityError when referencing it means it exists
+                return true
             }
         },
         hasIndexedDB: function() {
             try {
-                return !!window.indexedDB;
+                return !!window.indexedDB
             } catch (e) {
-                return true; // SecurityError when referencing it means it exists
+                return true
             }
         },
         getHardwareConcurrency: function() {
             if (navigator.hardwareConcurrency) {
-                return navigator.hardwareConcurrency;
+                return navigator.hardwareConcurrency
             }
-            return 'unknown';
+            return 'unknown'
         },
         getNavigatorCpuClass: function() {
             if (navigator.cpuClass) {
                 return navigator.cpuClass
             } else {
-                return 'unknown';
+                return 'unknown'
             }
         },
         getNavigatorPlatform: function() {
             if (navigator.platform) {
                 return navigator.platform
             } else {
-                return 'unknown';
+                return 'unknown'
             }
         },
         getDoNotTrack: function() {
             if (navigator.doNotTrack) {
-                return navigator.doNotTrack;
+                return navigator.doNotTrack
             } else if (navigator.msDoNotTrack) {
-                return navigator.msDoNotTrack;
+                return navigator.msDoNotTrack
             } else if (window.doNotTrack) {
-                return window.doNotTrack;
+                return window.doNotTrack
             } else {
-                return 'unknown';
+                return 'unknown'
             }
         },
         getCanvasFp: function() {
@@ -636,7 +587,7 @@
             canvas.width = 2000;
             canvas.height = 200;
             canvas.style.display = 'inline';
-            var ctx = canvas.getContext('2d')
+            var ctx = canvas.getContext('2d');
             ctx.rect(0, 0, 10, 10);
             ctx.rect(2, 2, 6, 6);
             result.push('canvas winding:' + ((ctx.isPointInPath(5, 5, 'evenodd') === false) ? 'yes' : 'no'));
@@ -645,9 +596,9 @@
             ctx.fillRect(125, 1, 62, 20);
             ctx.fillStyle = '#069';
             if (this.options.dontUseFakeFontInCanvas) {
-                ctx.font = '11pt Arial';
+                ctx.font = '11pt Arial'
             } else {
-                ctx.font = '11pt no-real-font-123';
+                ctx.font = '11pt no-real-font-123'
             }
             ctx.fillText('Cwm fjordbank glyphs vext quiz, \ud83d\ude03', 2, 15);
             ctx.fillStyle = 'rgba(102, 204, 0, 0.2)';
@@ -674,11 +625,10 @@
             ctx.arc(75, 75, 25, 0, Math.PI * 2, true);
             ctx.fill('evenodd');
             if (canvas.toDataURL) {
-                result.push('canvas fp:' + canvas.toDataURL());
+                result.push('canvas fp:' + canvas.toDataURL())
             }
-            return result.join('~');
+            return result.join('~')
         },
-
         getWebglFp: function() {
             var gl;
             var fa2s = function(fa) {
@@ -686,27 +636,25 @@
                 gl.enable(gl.DEPTH_TEST);
                 gl.depthFunc(gl.LEQUAL);
                 gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-                return '[' + fa[0] + ', ' + fa[1] + ']';
-            }
+                return '[' + fa[0] + ', ' + fa[1] + ']'
+            };
             var maxAnisotropy = function(gl) {
                 var ext = gl.getExtension('EXT_texture_filter_anisotropic') || gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic') || gl.getExtension('MOZ_EXT_texture_filter_anisotropic');
                 if (ext) {
                     var anisotropy = gl.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT);
                     if (anisotropy === 0) {
-                        anisotropy = 2;
+                        anisotropy = 2
                     }
-                    return anisotropy;
+                    return anisotropy
                 } else {
-                    return null;
+                    return null
                 }
-            }
+            };
             gl = this.getWebglCanvas();
             if (!gl) {
-                return null;
+                return null
             }
-
-            /*WebGL指紋是MaxMind和Augur指紋識別技術的組合 使用著色器繪製漸變對象，並將圖像轉換為Base64字符串，每個設備上可能都是獨一無二的。*/
-            var result = []
+            var result = [];
             var vShaderTemplate = 'attribute vec2 attrVertex;varying vec2 varyinTexCoordinate;uniform vec2 uniformOffset;void main(){varyinTexCoordinate=attrVertex+uniformOffset;gl_Position=vec4(attrVertex,0,1);}';
             var fShaderTemplate = 'precision mediump float;varying vec2 varyinTexCoordinate;void main() {gl_FragColor=vec4(varyinTexCoordinate,0,1);}';
             var vertexPosBuffer = gl.createBuffer();
@@ -733,10 +681,8 @@
             gl.uniform2f(program.offsetUniform, 1, 1);
             gl.drawArrays(gl.TRIANGLE_STRIP, 0, vertexPosBuffer.numItems);
             try {
-                result.push(gl.canvas.toDataURL());
-            } catch (e) {
-                /* .toDataURL may be absent or broken (blocked by extension) */
-            }
+                result.push(gl.canvas.toDataURL())
+            } catch (e) {}
             result.push('extensions:' + (gl.getSupportedExtensions() || []).join(';'));
             result.push('webgl aliased line width range:' + fa2s(gl.getParameter(gl.ALIASED_LINE_WIDTH_RANGE)));
             result.push('webgl aliased point size range:' + fa2s(gl.getParameter(gl.ALIASED_POINT_SIZE_RANGE)));
@@ -763,18 +709,15 @@
             result.push('webgl stencil bits:' + gl.getParameter(gl.STENCIL_BITS));
             result.push('webgl vendor:' + gl.getParameter(gl.VENDOR));
             result.push('webgl version:' + gl.getParameter(gl.VERSION));
-
             try {
-                // Add the unmasked vendor and unmasked renderer if the debug_renderer_info extension is available
                 var extensionDebugRendererInfo = gl.getExtension('WEBGL_debug_renderer_info');
                 if (extensionDebugRendererInfo) {
                     result.push('webgl unmasked vendor:' + gl.getParameter(extensionDebugRendererInfo.UNMASKED_VENDOR_WEBGL));
-                    result.push('webgl unmasked renderer:' + gl.getParameter(extensionDebugRendererInfo.UNMASKED_RENDERER_WEBGL));
+                    result.push('webgl unmasked renderer:' + gl.getParameter(extensionDebugRendererInfo.UNMASKED_RENDERER_WEBGL))
                 }
-            } catch (e) { /* squelch */ }
-
+            } catch (e) {}
             if (!gl.getShaderPrecisionFormat) {
-                return result.join('~');
+                return result.join('~')
             }
             result.push('webgl vertex shader high float precision:' + gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT).precision);
             result.push('webgl vertex shader high float precision rangeMin:' + gl.getShaderPrecisionFormat(gl.VERTEX_SHADER, gl.HIGH_FLOAT).rangeMin);
@@ -812,283 +755,242 @@
             result.push('webgl fragment shader low int precision:' + gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.LOW_INT).precision);
             result.push('webgl fragment shader low int precision rangeMin:' + gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.LOW_INT).rangeMin);
             result.push('webgl fragment shader low int precision rangeMax:' + gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.LOW_INT).rangeMax);
-            return result.join('~');
+            return result.join('~')
         },
-        /*WebGL指紋的一個子集*/
         getWebglVendorAndRenderer: function() {
             try {
                 var glContext = this.getWebglCanvas();
                 var extensionDebugRendererInfo = glContext.getExtension('WEBGL_debug_renderer_info');
-                return glContext.getParameter(extensionDebugRendererInfo.UNMASKED_VENDOR_WEBGL) + '~' + glContext.getParameter(extensionDebugRendererInfo.UNMASKED_RENDERER_WEBGL);
+                return glContext.getParameter(extensionDebugRendererInfo.UNMASKED_VENDOR_WEBGL) + '~' + glContext.getParameter(extensionDebugRendererInfo.UNMASKED_RENDERER_WEBGL)
             } catch (e) {
-                return null;
+                return null
             }
         },
         getAdBlock: function() {
             var ads = document.createElement('div');
-            ads.innerHTML = '&nbsp;';
+            ads.innerHTML = ' ';
             ads.className = 'adsbox';
             var result = false;
             try {
                 document.body.appendChild(ads);
                 result = document.getElementsByClassName('adsbox')[0].offsetHeight === 0;
-                document.body.removeChild(ads);
+                document.body.removeChild(ads)
             } catch (e) {
-                result = false;
+                result = false
             }
-            return result;
+            return result
         },
-        /*檢查navigator language是否為第一個語言*/
         getHasLiedLanguages: function() {
             if (typeof navigator.languages !== 'undefined') {
                 try {
                     var firstLanguages = navigator.languages[0].substr(0, 2);
                     if (firstLanguages !== navigator.language.substr(0, 2)) {
-                        return true;
+                        return true
                     }
                 } catch (err) {
-                    return true;
+                    return true
                 }
             }
-            return false;
+            return false
         },
         getHasLiedResolution: function() {
             if (window.screen.width < window.screen.availWidth) {
-                return true;
+                return true
             }
             if (window.screen.height < window.screen.availHeight) {
-                return true;
+                return true
             }
-            return false;
+            return false
         },
         getHasLiedOs: function() {
             var userAgent = navigator.userAgent.toLowerCase();
             var oscpu = navigator.oscpu;
             var platform = navigator.platform.toLowerCase();
             var os;
-                // We extract the OS from the user agent (respect the order of the if else if statement)
             if (userAgent.indexOf('windows phone') >= 0) {
-                os = 'Windows Phone';
+                os = 'Windows Phone'
             } else if (userAgent.indexOf('win') >= 0) {
-                os = 'Windows';
+                os = 'Windows'
             } else if (userAgent.indexOf('android') >= 0) {
-                os = 'Android';
+                os = 'Android'
             } else if (userAgent.indexOf('linux') >= 0) {
-                os = 'Linux';
+                os = 'Linux'
             } else if (userAgent.indexOf('iphone') >= 0 || userAgent.indexOf('ipad') >= 0) {
-                os = 'iOS';
+                os = 'iOS'
             } else if (userAgent.indexOf('mac') >= 0) {
-                os = 'Mac';
+                os = 'Mac'
             } else {
-                os = 'Other';
+                os = 'Other'
             }
-            // We detect if the person uses a mobile device
-            var mobileDevice
-            if (('ontouchstart' in window) ||
-                (navigator.maxTouchPoints > 0) ||
-                (navigator.msMaxTouchPoints > 0)) {
-                mobileDevice = true;
+            var mobileDevice;
+            if (('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)) {
+                mobileDevice = true
             } else {
-                mobileDevice = false;
-            }
-
-            if (mobileDevice && os !== 'Windows Phone' && os !== 'Android' && os !== 'iOS' && os !== 'Other') {
-                return true;
-            }
-
-            // We compare oscpu with the OS extracted from the UA
-            if (typeof oscpu !== 'undefined') {
-                oscpu = oscpu.toLowerCase()
-                if (oscpu.indexOf('win') >= 0 && os !== 'Windows' && os !== 'Windows Phone') {
-                    return true;
-                } else if (oscpu.indexOf('linux') >= 0 && os !== 'Linux' && os !== 'Android') {
-                    return true;
-                } else if (oscpu.indexOf('mac') >= 0 && os !== 'Mac' && os !== 'iOS') {
-                    return true;
-                } else if ((oscpu.indexOf('win') === -1 && oscpu.indexOf('linux') === -1 && oscpu.indexOf('mac') === -1) !== (os === 'Other')) {
-                    return true;
-                }
-            }
-
-            // We compare platform with the OS extracted from the UA
-            if (platform.indexOf('win') >= 0 && os !== 'Windows' && os !== 'Windows Phone') {
-                return true;
-            } else if ((platform.indexOf('linux') >= 0 || platform.indexOf('android') >= 0 || platform.indexOf('pike') >= 0) && os !== 'Linux' && os !== 'Android') {
-                return true;
-            } else if ((platform.indexOf('mac') >= 0 || platform.indexOf('ipad') >= 0 || platform.indexOf('ipod') >= 0 || platform.indexOf('iphone') >= 0) && os !== 'Mac' && os !== 'iOS') {
-                return true;
-            } else if ((platform.indexOf('win') === -1 && platform.indexOf('linux') === -1 && platform.indexOf('mac') === -1) !== (os === 'Other')) {
-                return true;
-            }
-
-            if (typeof navigator.plugins === 'undefined' && os !== 'Windows' && os !== 'Windows Phone') {
-                // We are are in the case where the person uses ie, therefore we can infer that it's windows
+                mobileDevice = false
+            } if (mobileDevice && os !== 'Windows Phone' && os !== 'Android' && os !== 'iOS' && os !== 'Other') {
                 return true
             }
-
+            if (typeof oscpu !== 'undefined') {
+                oscpu = oscpu.toLowerCase();
+                if (oscpu.indexOf('win') >= 0 && os !== 'Windows' && os !== 'Windows Phone') {
+                    return true
+                } else if (oscpu.indexOf('linux') >= 0 && os !== 'Linux' && os !== 'Android') {
+                    return true
+                } else if (oscpu.indexOf('mac') >= 0 && os !== 'Mac' && os !== 'iOS') {
+                    return true
+                } else if ((oscpu.indexOf('win') === -1 && oscpu.indexOf('linux') === -1 && oscpu.indexOf('mac') === -1) !== (os === 'Other')) {
+                    return true
+                }
+            }
+            if (platform.indexOf('win') >= 0 && os !== 'Windows' && os !== 'Windows Phone') {
+                return true
+            } else if ((platform.indexOf('linux') >= 0 || platform.indexOf('android') >= 0 || platform.indexOf('pike') >= 0) && os !== 'Linux' && os !== 'Android') {
+                return true
+            } else if ((platform.indexOf('mac') >= 0 || platform.indexOf('ipad') >= 0 || platform.indexOf('ipod') >= 0 || platform.indexOf('iphone') >= 0) && os !== 'Mac' && os !== 'iOS') {
+                return true
+            } else if ((platform.indexOf('win') === -1 && platform.indexOf('linux') === -1 && platform.indexOf('mac') === -1) !== (os === 'Other')) {
+                return true
+            }
+            if (typeof navigator.plugins === 'undefined' && os !== 'Windows' && os !== 'Windows Phone') {
+                return true
+            }
             return false
         },
         getHasLiedBrowser: function() {
             var userAgent = navigator.userAgent.toLowerCase();
             var productSub = navigator.productSub;
-
-            // we extract the browser from the user agent (respect the order of the tests)
             var browser;
             if (userAgent.indexOf('firefox') >= 0) {
-                browser = 'Firefox';
+                browser = 'Firefox'
             } else if (userAgent.indexOf('opera') >= 0 || userAgent.indexOf('opr') >= 0) {
-                browser = 'Opera';
+                browser = 'Opera'
             } else if (userAgent.indexOf('chrome') >= 0) {
-                browser = 'Chrome';
+                browser = 'Chrome'
             } else if (userAgent.indexOf('safari') >= 0) {
-                browser = 'Safari';
+                browser = 'Safari'
             } else if (userAgent.indexOf('trident') >= 0) {
-                browser = 'Internet Explorer';
+                browser = 'Internet Explorer'
             } else {
-                browser = 'Other';
+                browser = 'Other'
+            } if ((browser === 'Chrome' || browser === 'Safari' || browser === 'Opera') && productSub !== '20030107') {
+                return true
             }
-
-            if ((browser === 'Chrome' || browser === 'Safari' || browser === 'Opera') && productSub !== '20030107') {
-                return true;
-            }
-
-            // eslint-disable-next-line no-eval
-            var tempRes = eval.toString().length
+            var tempRes = eval.toString().length;
             if (tempRes === 37 && browser !== 'Safari' && browser !== 'Firefox' && browser !== 'Other') {
-                return true;
+                return true
             } else if (tempRes === 39 && browser !== 'Internet Explorer' && browser !== 'Other') {
-                return true;
+                return true
             } else if (tempRes === 33 && browser !== 'Chrome' && browser !== 'Opera' && browser !== 'Other') {
-                return true;
+                return true
             }
-
-            // We create an error to see how it is handled
             var errFirefox;
             try {
-                // eslint-disable-next-line no-throw-literal
                 throw 'a'
             } catch (err) {
                 try {
                     err.toSource();
-                    errFirefox = true;
+                    errFirefox = true
                 } catch (errOfErr) {
-                    errFirefox = false;
+                    errFirefox = false
                 }
             }
             if (errFirefox && browser !== 'Firefox' && browser !== 'Other') {
-                return true;
+                return true
             }
-            return false;
+            return false
         },
         isCanvasSupported: function() {
             var elem = document.createElement('canvas');
-            return !!(elem.getContext && elem.getContext('2d'));
+            return !!(elem.getContext && elem.getContext('2d'))
         },
         isWebGlSupported: function() {
-            // code taken from Modernizr
             if (!this.isCanvasSupported()) {
-                return false;
+                return false
             }
-
             var glContext = this.getWebglCanvas();
-            return !!window.WebGLRenderingContext && !!glContext;
+            return !!window.WebGLRenderingContext && !!glContext
         },
         isIE: function() {
             if (navigator.appName === 'Microsoft Internet Explorer') {
-                return true;
-            } else if (navigator.appName === 'Netscape' && /Trident/.test(navigator.userAgent)) { // IE 11
-                return true;
+                return true
+            } else if (navigator.appName === 'Netscape' && /Trident/.test(navigator.userAgent)) {
+                return true
             }
-            return false;
+            return false
         },
         hasSwfObjectLoaded: function() {
-            return typeof window.swfobject !== 'undefined';
+            return typeof window.swfobject !== 'undefined'
         },
         hasMinFlashInstalled: function() {
-            return window.swfobject.hasFlashPlayerVersion('9.0.0');
+            return window.swfobject.hasFlashPlayerVersion('9.0.0')
         },
         addFlashDivNode: function() {
             var node = document.createElement('div');
             node.setAttribute('id', this.options.swfContainerId);
-            document.body.appendChild(node);
+            document.body.appendChild(node)
         },
         loadSwfAndDetectFonts: function(done) {
             var hiddenCallback = '___fp_swf_loaded';
             window[hiddenCallback] = function(fonts) {
-                done(fonts);
-            }
+                done(fonts)
+            };
             var id = this.options.swfContainerId;
             this.addFlashDivNode();
             var flashvars = {
                 onReady: hiddenCallback
-            }
+            };
             var flashparams = {
                 allowScriptAccess: 'always',
                 menu: 'false'
-            }
-            window.swfobject.embedSWF(this.options.swfPath, id, '1', '1', '9.0.0', false, flashvars, flashparams, {});
+            };
+            window.swfobject.embedSWF(this.options.swfPath, id, '1', '1', '9.0.0', false, flashvars, flashparams, {})
         },
         getWebglCanvas: function() {
             var canvas = document.createElement('canvas');
             var gl = null;
             try {
-                gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-            } catch (e) { /* squelch */ }
+                gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+            } catch (e) {}
             if (!gl) {
-                gl = null;
+                gl = null
             }
             return gl
         },
-
-        /**
-         * @template T
-         * @param {T=} context
-         */
         each: function(obj, iterator, context) {
             if (obj === null) {
-                return;
+                return
             }
             if (this.nativeForEach && obj.forEach === this.nativeForEach) {
-                obj.forEach(iterator, context);
+                obj.forEach(iterator, context)
             } else if (obj.length === +obj.length) {
                 for (var i = 0, l = obj.length; i < l; i++) {
                     if (iterator.call(context, obj[i], i, obj) === {}) {
-                        return;
+                        return
                     }
                 }
             } else {
                 for (var key in obj) {
                     if (obj.hasOwnProperty(key)) {
                         if (iterator.call(context, obj[key], key, obj) === {}) {
-                            return;
+                            return
                         }
                     }
                 }
             }
         },
-
-        /**
-         * @template T,V
-         * @param {T=} context
-         * @param {function(this:T, ?, (string|number), T=):V} iterator
-         * @return {V}
-         */
         map: function(obj, iterator, context) {
             var results = [];
-                // Not using strict equality so that this acts as a
-                // shortcut to checking for `null` and `undefined`.
             if (obj == null) {
-                return results;
+                return results
             }
             if (this.nativeMap && obj.map === this.nativeMap) {
-                return obj.map(iterator, context);
+                return obj.map(iterator, context)
             }
             this.each(obj, function(value, index, list) {
-                results[results.length] = iterator.call(context, value, index, list);
-            })
-            return results;
+                results[results.length] = iterator.call(context, value, index, list)
+            });
+            return results
         },
-
         x64Add: function(m, n) {
             m = [m[0] >>> 16, m[0] & 0xffff, m[1] >>> 16, m[1] & 0xffff];
             n = [n[0] >>> 16, n[0] & 0xffff, n[1] >>> 16, n[1] & 0xffff];
@@ -1104,9 +1006,8 @@
             o[1] &= 0xffff;
             o[0] += m[0] + n[0];
             o[0] &= 0xffff;
-            return [(o[0] << 16) | o[1], (o[2] << 16) | o[3]];
+            return [(o[0] << 16) | o[1], (o[2] << 16) | o[3]]
         },
-
         x64Multiply: function(m, n) {
             m = [m[0] >>> 16, m[0] & 0xffff, m[1] >>> 16, m[1] & 0xffff];
             n = [n[0] >>> 16, n[0] & 0xffff, n[1] >>> 16, n[1] & 0xffff];
@@ -1131,31 +1032,31 @@
             o[1] &= 0xffff;
             o[0] += (m[0] * n[3]) + (m[1] * n[2]) + (m[2] * n[1]) + (m[3] * n[0]);
             o[0] &= 0xffff;
-            return [(o[0] << 16) | o[1], (o[2] << 16) | o[3]];
+            return [(o[0] << 16) | o[1], (o[2] << 16) | o[3]]
         },
         x64Rotl: function(m, n) {
             n %= 64;
             if (n === 32) {
-                return [m[1], m[0]];
+                return [m[1], m[0]]
             } else if (n < 32) {
-                return [(m[0] << n) | (m[1] >>> (32 - n)), (m[1] << n) | (m[0] >>> (32 - n))];
+                return [(m[0] << n) | (m[1] >>> (32 - n)), (m[1] << n) | (m[0] >>> (32 - n))]
             } else {
                 n -= 32;
-                return [(m[1] << n) | (m[0] >>> (32 - n)), (m[0] << n) | (m[1] >>> (32 - n))];
+                return [(m[1] << n) | (m[0] >>> (32 - n)), (m[0] << n) | (m[1] >>> (32 - n))]
             }
         },
         x64LeftShift: function(m, n) {
             n %= 64;
             if (n === 0) {
-                return m;
+                return m
             } else if (n < 32) {
-                return [(m[0] << n) | (m[1] >>> (32 - n)), m[1] << n];
+                return [(m[0] << n) | (m[1] >>> (32 - n)), m[1] << n]
             } else {
-                return [m[1] << (n - 32), 0];
+                return [m[1] << (n - 32), 0]
             }
         },
         x64Xor: function(m, n) {
-            return [m[0] ^ n[0], m[1] ^ n[1]];
+            return [m[0] ^ n[0], m[1] ^ n[1]]
         },
         x64Fmix: function(h) {
             h = this.x64Xor(h, [0, h[0] >>> 1]);
@@ -1163,13 +1064,8 @@
             h = this.x64Xor(h, [0, h[0] >>> 1]);
             h = this.x64Multiply(h, [0xc4ceb9fe, 0x1a85ec53]);
             h = this.x64Xor(h, [0, h[0] >>> 1]);
-            return h;
+            return h
         },
-
-        //
-        // Given a string and an optional seed as an int, returns a 128 bit
-        // hash using the x64 flavor of MurmurHash3, as an unsigned hex.
-        //
         x64hash128: function(key, seed) {
             key = key || '';
             seed = seed || 0;
@@ -1197,65 +1093,50 @@
                 h2 = this.x64Xor(h2, k2);
                 h2 = this.x64Rotl(h2, 31);
                 h2 = this.x64Add(h2, h1);
-                h2 = this.x64Add(this.x64Multiply(h2, [0, 5]), [0, 0x38495ab5]);
-            }
+                h2 = this.x64Add(this.x64Multiply(h2, [0, 5]), [0, 0x38495ab5])
+            };
             k1 = [0, 0];
             k2 = [0, 0];
             switch (remainder) {
                 case 15:
                     k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 14)], 48));
-                        // fallthrough
                 case 14:
                     k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 13)], 40));
-                        // fallthrough
                 case 13:
                     k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 12)], 32));
-                        // fallthrough
                 case 12:
                     k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 11)], 24));
-                        // fallthrough
                 case 11:
                     k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 10)], 16));
-                        // fallthrough
                 case 10:
                     k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 9)], 8));
-                        // fallthrough
                 case 9:
                     k2 = this.x64Xor(k2, [0, key.charCodeAt(i + 8)]);
                     k2 = this.x64Multiply(k2, c2);
                     k2 = this.x64Rotl(k2, 33);
                     k2 = this.x64Multiply(k2, c1);
                     h2 = this.x64Xor(h2, k2);
-                        // fallthrough
                 case 8:
                     k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 7)], 56));
-                        // fallthrough
                 case 7:
                     k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 6)], 48));
-                        // fallthrough
                 case 6:
                     k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 5)], 40));
-                        // fallthrough
                 case 5:
                     k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 4)], 32));
-                        // fallthrough
                 case 4:
                     k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 3)], 24));
-                        // fallthrough
                 case 3:
                     k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 2)], 16));
-                        // fallthrough
                 case 2:
                     k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 1)], 8));
-                        // fallthrough
                 case 1:
                     k1 = this.x64Xor(k1, [0, key.charCodeAt(i)]);
                     k1 = this.x64Multiply(k1, c1);
                     k1 = this.x64Rotl(k1, 31);
                     k1 = this.x64Multiply(k1, c2);
-                    h1 = this.x64Xor(h1, k1);
-                        // fallthrough
-            }
+                    h1 = this.x64Xor(h1, k1)
+            };
             h1 = this.x64Xor(h1, [0, key.length]);
             h2 = this.x64Xor(h2, [0, key.length]);
             h1 = this.x64Add(h1, h2);
@@ -1264,9 +1145,8 @@
             h2 = this.x64Fmix(h2);
             h1 = this.x64Add(h1, h2);
             h2 = this.x64Add(h2, h1);
-            return ('00000000' + (h1[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (h1[1] >>> 0).toString(16)).slice(-8) + ('00000000' + (h2[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (h2[1] >>> 0).toString(16)).slice(-8);
+            return (('00000000' + (h1[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (h1[1] >>> 0).toString(16)).slice(-8) + ('00000000' + (h2[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (h2[1] >>> 0).toString(16)).slice(-8))
         }
-    }
-    Fingerprint2.VERSION = '1.5.1';
-    return Fingerprint2;
+    };
+    return PCHOMEFingerprint
 })
