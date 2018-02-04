@@ -16,7 +16,7 @@
             return new PCHOMEFingerprint(options)
         }
         var defaultOptions = {
-            swfContainerId: 'fingerprintjs2',
+            swfContainerId: 'PCHOMEFingerprint',
             swfPath: 'flash/compiled/FontList.swf',
             detectScreenOrientation: true,
             sortPluginsFor: [/palemoon/i],
@@ -54,7 +54,6 @@
                 }
             };
             keys = this.userAgentKey(keys);
-            keys = this.languageKey(keys);
             keys = this.colorDepthKey(keys);
             keys = this.deviceMemoryKey(keys);
             keys = this.pixelRatioKey(keys);
@@ -62,24 +61,11 @@
             keys = this.screenResolutionKey(keys);
             keys = this.availableScreenResolutionKey(keys);
             keys = this.timezoneOffsetKey(keys);
-//            keys = this.sessionStorageKey(keys);
-//            keys = this.localStorageKey(keys);
-//            keys = this.indexedDbKey(keys);
             keys = this.addBehaviorKey(keys);
             keys = this.openDatabaseKey(keys);
             keys = this.cpuClassKey(keys);
-//            keys = this.platformKey(keys);
-//            keys = this.doNotTrackKey(keys);
-//            keys = this.pluginsKey(keys);
             keys = this.canvasKey(keys);
             keys = this.webglKey(keys);
-//            keys = this.webglVendorAndRendererKey(keys);
-//            keys = this.adBlockKey(keys);
-//            keys = this.hasLiedLanguagesKey(keys);
-//            keys = this.hasLiedResolutionKey(keys);
-//            keys = this.hasLiedOsKey(keys);
-//            keys = this.hasLiedBrowserKey(keys);
-//            keys = this.customEntropyFunction(keys);
             this.fontsKey(keys, function(newKeys) {
                 var values = [];
                 that.each(newKeys.data, function(pair) {
@@ -93,15 +79,6 @@
                 return done(murmur, newKeys.data)
             })
         },
-        customEntropyFunction: function(keys) {
-            if (typeof this.options.customFunction === 'function') {
-                keys.addPreprocessedComponent({
-                    key: 'custom',
-                    value: this.options.customFunction()
-                })
-            }
-            return keys
-        },
         userAgentKey: function(keys) {
             if (!this.options.excludeUserAgent) {
                 keys.addPreprocessedComponent({
@@ -113,15 +90,6 @@
         },
         getUserAgent: function() {
             return navigator.userAgent
-        },
-        languageKey: function(keys) {
-            if (!this.options.excludeLanguage) {
-                keys.addPreprocessedComponent({
-                    key: 'language',
-                    value: navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || ''
-                })
-            }
-            return keys
         },
         colorDepthKey: function(keys) {
             if (!this.options.excludeColorDepth) {
@@ -207,33 +175,6 @@
             }
             return keys
         },
-        sessionStorageKey: function(keys) {
-            if (!this.options.excludeSessionStorage && this.hasSessionStorage()) {
-                keys.addPreprocessedComponent({
-                    key: 'session_storage',
-                    value: 1
-                })
-            }
-            return keys
-        },
-        localStorageKey: function(keys) {
-            if (!this.options.excludeSessionStorage && this.hasLocalStorage()) {
-                keys.addPreprocessedComponent({
-                    key: 'local_storage',
-                    value: 1
-                })
-            }
-            return keys
-        },
-        indexedDbKey: function(keys) {
-            if (!this.options.excludeIndexedDB && this.hasIndexedDB()) {
-                keys.addPreprocessedComponent({
-                    key: 'indexed_db',
-                    value: 1
-                })
-            }
-            return keys
-        },
         addBehaviorKey: function(keys) {
             if (!this.options.excludeAddBehavior && document.body && document.body.addBehavior) {
                 keys.addPreprocessedComponent({
@@ -261,24 +202,6 @@
             }
             return keys
         },
-        platformKey: function(keys) {
-            if (!this.options.excludePlatform) {
-                keys.addPreprocessedComponent({
-                    key: 'navigator_platform',
-                    value: this.getNavigatorPlatform()
-                })
-            }
-            return keys
-        },
-        doNotTrackKey: function(keys) {
-            if (!this.options.excludeDoNotTrack) {
-                keys.addPreprocessedComponent({
-                    key: 'do_not_track',
-                    value: this.getDoNotTrack()
-                })
-            }
-            return keys
-        },
         canvasKey: function(keys) {
             if (!this.options.excludeCanvas && this.isCanvasSupported()) {
                 keys.addPreprocessedComponent({
@@ -293,60 +216,6 @@
                 keys.addPreprocessedComponent({
                     key: 'webgl',
                     value: this.getWebglFp()
-                })
-            }
-            return keys
-        },
-        webglVendorAndRendererKey: function(keys) {
-            if (!this.options.excludeWebGLVendorAndRenderer && this.isWebGlSupported()) {
-                keys.addPreprocessedComponent({
-                    key: 'webgl_vendor',
-                    value: this.getWebglVendorAndRenderer()
-                })
-            }
-            return keys
-        },
-        adBlockKey: function(keys) {
-            if (!this.options.excludeAdBlock) {
-                keys.addPreprocessedComponent({
-                    key: 'adblock',
-                    value: this.getAdBlock()
-                })
-            }
-            return keys
-        },
-        hasLiedLanguagesKey: function(keys) {
-            if (!this.options.excludeHasLiedLanguages) {
-                keys.addPreprocessedComponent({
-                    key: 'has_lied_languages',
-                    value: this.getHasLiedLanguages()
-                })
-            }
-            return keys
-        },
-        hasLiedResolutionKey: function(keys) {
-            if (!this.options.excludeHasLiedResolution) {
-                keys.addPreprocessedComponent({
-                    key: 'has_lied_resolution',
-                    value: this.getHasLiedResolution()
-                })
-            }
-            return keys
-        },
-        hasLiedOsKey: function(keys) {
-            if (!this.options.excludeHasLiedOs) {
-                keys.addPreprocessedComponent({
-                    key: 'has_lied_os',
-                    value: this.getHasLiedOs()
-                })
-            }
-            return keys
-        },
-        hasLiedBrowserKey: function(keys) {
-            if (!this.options.excludeHasLiedBrowser) {
-                keys.addPreprocessedComponent({
-                    key: 'has_lied_browser',
-                    value: this.getHasLiedBrowser()
                 })
             }
             return keys
@@ -436,24 +305,6 @@
                 });
                 done(keys)
             }, 1)
-        },
-        pluginsKey: function(keys) {
-            if (!this.options.excludePlugins) {
-                if (this.isIE()) {
-                    if (!this.options.excludeIEPlugins) {
-                        keys.addPreprocessedComponent({
-                            key: 'ie_plugins',
-                            value: this.getIEPlugins()
-                        })
-                    }
-                } else {
-                    keys.addPreprocessedComponent({
-                        key: 'regular_plugins',
-                        value: this.getRegularPlugins()
-                    })
-                }
-            }
-            return keys
         },
         getRegularPlugins: function() {
             var plugins = [];
