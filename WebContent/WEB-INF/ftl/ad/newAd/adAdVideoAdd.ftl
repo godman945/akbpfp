@@ -176,7 +176,7 @@
 	               <div id="adSizeDiv" style="height:50px;">
 	                 <div>
 	                    <div style="width:110px;float:left;">
-	                    		<p>300 x 250(電腦)</p>
+	                    		<p>300 x 600(電腦)</p>
 	                    </div>
 	                    <div style="width:120px;float:left;">
 	                    		<p>320 x 480(行動裝置)</p>
