@@ -171,7 +171,7 @@
 	              </td>
 	            </tr>
 	            <tr>
-	             <th height="20">直立式影音廣告</th>
+	             <th height="20">直立式影音廣告尺寸</th>
 	              <td>
 	               <div id="adSizeDiv" style="height:50px;">
 	                 <div>
