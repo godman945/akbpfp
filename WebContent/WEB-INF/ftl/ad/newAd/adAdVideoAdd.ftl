@@ -112,8 +112,8 @@
                    
                 </div>
                 </div>
-            <span style="font-size: 13px;line-height: 30px; text-align: center; color: red; clear: both;display: block;">請先輸入您的影片網址與上傳Banner廣告圖</span>
-            <span style="font-size: 13px;line-height: 30px;  text-align: center; clear: both;display: block;"">若您沒有上傳任何Banner廣告圖，則僅支援300x250、336x280、640x390 三種影音廣告尺寸。</span>
+            <span id="bannerMsgSpan" style="font-size: 13px;line-height: 30px; text-align: center; color: red; clear: both;display: block;">請先輸入您的影片網址與上傳Banner廣告圖</span>
+            <span id="sizeMsgSpan" style="font-size: 13px;line-height: 30px;  text-align: center; clear: both;display: block;"">若您沒有上傳任何Banner廣告圖，則僅支援300x250、336x280、640x390 三種影音廣告尺寸。</span>
         </div>
 		<!--上傳預覽區塊_影音end-->
             
