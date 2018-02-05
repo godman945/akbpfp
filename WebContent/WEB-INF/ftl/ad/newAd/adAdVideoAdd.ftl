@@ -170,6 +170,22 @@
 	               </div>
 	              </td>
 	            </tr>
+	            <tr>
+	             <th height="20">直立式影音廣告</th>
+	              <td>
+	               <div id="adSizeDiv" style="height:50px;">
+	                 <div>
+	                    <div style="width:110px;float:left;">
+	                    		<p>300 x 250(電腦)</p>
+	                    </div>
+	                    <div style="width:120px;float:left;">
+	                    		<p>320 x 480(行動裝置)</p>
+	                    </div>
+	                 </div>
+	                 <div></div>
+	               </div>
+	              </td>
+	            </tr>
 	        </tbody>
 	    </table>
 	    <center><input onclick="closeBtn();" class="popbtn" type="button" value="關閉"></center>
