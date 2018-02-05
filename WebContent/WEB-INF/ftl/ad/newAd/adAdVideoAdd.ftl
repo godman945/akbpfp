@@ -138,7 +138,7 @@
 	            <tr>
 	                <th height="20">影音長寬比</th>
 	                <td>
-	               		16：9
+	               		16：9、9：16
 	               	</td>
 	            </tr>
 	           	<tr>
@@ -148,7 +148,7 @@
 	               	</td>
 	            </tr>
 	            <tr>
-	              <th height="20">影音廣告尺寸</th>
+	              <th height="20">一般影音廣告尺寸</th>
 	              <td>
 	               <div id="adSizeDiv" style="height:200px;">
 	                 <div>
