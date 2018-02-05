@@ -131,8 +131,8 @@ $(document).ready(function(){
 					if(adPreviewVideoData != null && adPreviewVideoData.verticalAdFlag){
 						$('#notVerticalAdTr').removeAttr("style").hide();
 						$('#imgPreview').removeAttr("style").hide();
-//						$('#bannerMsgSpan').removeAttr("style").hide();
-//						$('#sizeMsgSpan').removeAttr("style").hide();
+						$('#bannerMsgSpan').removeAttr("style").hide();
+						$('#sizeMsgSpan').removeAttr("style").hide();
 						verticalAd = true;
 						$("#preViewArea").empty();
 						iframeInfoMap = new Object();
@@ -140,8 +140,8 @@ $(document).ready(function(){
 					}else{
 						$('#notVerticalAdTr').removeAttr("style").show();
 						$('#imgPreview').removeAttr("style").show();
-//						$('#bannerMsgSpan').removeAttr("style").show();
-//						$('#sizeMsgSpan').removeAttr("style").show();
+						$('#bannerMsgSpan').removeAttr("style").show();
+						$('#sizeMsgSpan').removeAttr("style").show();
 						
 					}
 					$('body').unblock();
@@ -749,6 +749,8 @@ function autoPreview(objData){
 		
 		if($($('#adViseoSize')[0]).children()[1] ==  undefined){
 			$('#adViseoSize').append('<option value="300600">300 x 600</option>');
+		}
+		if($($('#adViseoSize')[0]).children()[2] ==  undefined){
 			$('#adViseoSize').append('<option value="320480">320 x 480</option>');
 		}
 	}else{
