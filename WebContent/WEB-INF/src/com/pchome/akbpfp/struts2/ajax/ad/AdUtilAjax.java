@@ -191,7 +191,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		}
 		json.put("result", true);
 		json.put("videoTime", seconds);
-		json.put("previewUrl", previewUrl.substring(0, previewUrl.indexOf("18 -"))); 
+		json.put("previewUrl", previewUrl.substring(0, previewUrl.indexOf("18 -")).replace("\n","")); 
 		json.put("adTitle", adTitle);
 		json.put("verticalAdFlag", verticalAdFlag);
 		process.destroy();
