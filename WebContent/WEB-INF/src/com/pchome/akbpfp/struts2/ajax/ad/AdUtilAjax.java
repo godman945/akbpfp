@@ -163,13 +163,27 @@ public class AdUtilAjax extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
+		
+		log.info("resultStr =========== "+resultStr);
+		
 		String adTitle = resultStr.substring(0,resultStr.indexOf("http"));
 		String previewUrl = resultStr.substring(resultStr.indexOf("http"),resultStr.length());
+		
+		log.info("previewUrl =========== "+previewUrl);
+		
 		//判斷是否直立影片
 		boolean verticalAdFlag = false;
 		if(resultStr.indexOf(" (small)") >=0){
 			String videoSize = resultStr.substring(resultStr.indexOf("18 - "),resultStr.indexOf(" (small)"));
+			
+			log.info("videoSize =========== "+videoSize);
+			
 			videoSize = videoSize.replace("18 - ", "");
+			
+			
+			log.info("videoSize replace=========== "+videoSize);
+			
+			
 			String [] videoSizeArray = videoSize.toString().split("x");
 			if(Integer.parseInt(videoSizeArray[1]) > Integer.parseInt(videoSizeArray[0])){
 				verticalAdFlag = true;
@@ -182,6 +196,9 @@ public class AdUtilAjax extends BaseCookieAction{
 		json.put("verticalAdFlag", verticalAdFlag);
 		process.destroy();
 		this.result = json.toString();
+		
+		log.info("json replace=========== "+json.toString());
+		
 		this.msg = new ByteArrayInputStream(json.toString().getBytes());
 		return SUCCESS;
 	}
