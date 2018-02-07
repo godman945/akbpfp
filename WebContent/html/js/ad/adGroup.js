@@ -64,20 +64,20 @@
 					}
 				},
 				searchprice: "required",
-				adGroupSearchPrice: {
-					required: {
-						depends: function() {
-							return $('input[name=adGroupSearchPriceType]:checked').val() == '2';
-						}
-					},
-					digits: {
-						depends: function() {
-							return $('input[name=adGroupSearchPriceType]:checked').val() == '2';
-						}
-					},
-					min: 3,
-					max: $('#adActionMax').val()
-				},
+//				adGroupSearchPrice: {
+//					required: {
+//						depends: function() {
+//							return $('input[name=adGroupSearchPriceType]:checked').val() == '2';
+//						}
+//					},
+//					digits: {
+//						depends: function() {
+//							return $('input[name=adGroupSearchPriceType]:checked').val() == '2';
+//						}
+//					},
+//					min: 3,
+//					max: $('#adActionMax').val()
+//				},
 				adGroupChannelPrice: {
 					required: true,
 					digits: true,
@@ -93,12 +93,12 @@
 					remote: "廣告分類名稱重複，請重新輸入"
 				},
 				searchprice: "請選擇搜尋廣告出價.",
-				adGroupSearchPrice: {
-					required:  "請填寫搜尋廣告出價.",
-					digits: "搜尋廣告出價只能填寫數字.",
-					min: "搜尋廣告出價最少為3元",
-					max: "出價已超過廣告每日預算 " +$('#adActionMax').val()+ " 元"
-				},
+//				adGroupSearchPrice: {
+//					required:  "請填寫搜尋廣告出價.",
+//					digits: "搜尋廣告出價只能填寫數字.",
+//					min: "搜尋廣告出價最少為3元",
+//					max: "出價已超過廣告每日預算 " +$('#adActionMax').val()+ " 元"
+//				},
 				adGroupChannelPrice: {
 					required:  "請填寫聯播廣告出價.",
 					digits: "聯播廣告出價只能填寫數字.",
