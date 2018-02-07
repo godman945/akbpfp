@@ -84,7 +84,7 @@
 				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
 				<td class="td02">
 					<#if vo.adStatus != 9>
-						<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}">製作新廣告</a><br>
+						<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}&adOperatingRule=MEDIA">製作新廣告</a><br>
 						<#if adType == "0" || adType == "1" >
 						<a href="adKeywordAdd.html?adGroupSeq=${vo.adGroupSeq!}">新增關鍵字</a><br>
 						</#if>
