@@ -724,6 +724,14 @@ function callBlock(){
 
 /*動態新增影片預覽*/
 function autoPreview(objData){
+	
+	$("#adViseoSize").children().each(function(index,obj) {
+		if(obj.value != "0"){
+			obj.remove(index);
+		}
+	});
+	
+	
 	//直式影片
 	if(objData.verticalAdFlag){
 		iframeInfoMap["iframe"+0] = {width:300,height:600};
