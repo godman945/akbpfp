@@ -69,7 +69,7 @@
 		    	<#if adOperatingRule?exists && adOperatingRule == "MEDIA">
 					<td height="35" class="td02">
 					    <#if vo.adGroupStatus != 9 >
-					    	<a href="adAdView.html?adGroupSeq=${vo.adGroupSeq!}&groupMaxPrice=${groupMaxPrice!}">${vo.adGroupName!} >>>${adType!}</a>
+					    	<a href="adAdView.html?adGroupSeq=${vo.adGroupSeq!}&groupMaxPrice=${groupMaxPrice!}">${vo.adGroupName!}</a>
 						<#else>
 						     ${vo.adGroupName!}
 						</#if>		        	
