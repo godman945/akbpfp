@@ -195,6 +195,16 @@
 			$("#searchPricEerrorMsg").text('');
 			submitFlag = true;
 		}
+		
+		var cpmRex = /^[0-9]*[1-9][0-9]*$/;
+		submitFlag = cpmRex.test($('#adGroupSearchPrice').val());
+		if(!submitFlag){
+			$("#searchPricEerrorMsg").text('搜尋廣告出價最少為3元');
+			submitFlag = false;
+		}else{
+			$("#searchPricEerrorMsg").text('');
+			submitFlag = true;
+		}
 	})
 	
 	
