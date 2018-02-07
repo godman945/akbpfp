@@ -112,6 +112,7 @@
 				submitFlag = false;
 			}
 		});
+		
 	}else{
 		$("#adGroupChannelPrice").keyup(function(){
 			var errMsg = '';
@@ -171,7 +172,6 @@
 		$('#adGroupChannelPrice').change(function(){
 			submitFlag = true;
 			$("#errorMsg").text('');
-			
 			var adGroupChannelPrice = $('#adGroupChannelPrice').val();
 			if(/[^0-9]$/.test(parseInt(adGroupChannelPrice))){
 				$("#errorMsg").text('聯播廣告出價只能填寫數字');
@@ -183,7 +183,19 @@
 				$("#errorMsg").text('出價已超過每日廣告預算' + $('#adActionMax').val() + '元');
 				submitFlag = false;
 			}
-		})
+		});
+		
+		
+		$("#adGroupSearchPrice").keyup(function(){
+		$("#searchPricEerrorMsg").text('搜尋廣告出價最少為3元');
+		if($('#adGroupSearchPrice').val() < 3){
+			$("#searchPricEerrorMsg").text('搜尋廣告出價最少為3元');
+			submitFlag = false;
+		}else{
+			$("#searchPricEerrorMsg").text('');
+			submitFlag = true;
+		}
+	})
 	}
 	
 	$('#save').click(function(){

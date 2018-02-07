@@ -76,7 +76,7 @@
 					</td>
 					<td class="td03">${vo.adDevice!}</td>
 					<td class="td03">${vo.adGroupStatusDesc!}</td>
-					<#if adType == '0' || adType == '1' >
+					<#if adType == '0'>
 					    <td class="td03">${vo.adPriceTypeDesc!}</td>
 					    <td>
 					       <div class="notsbg">
@@ -91,6 +91,18 @@
 						        <br>預估播出率：${vo.adAsideRate?string('#.##')!}%<br><input type="button" value="修改" onClick="modifyChannelPrice('${vo.adGroupSeq!}','${vo.adGroupChannelPrice!}')" />
 						</td>
 					</#if>
+					<#if adType == '1' >
+						<td class="td03">${vo.adPriceTypeDesc!}</td>
+						<td>
+					       <div class="notsbg">
+							        ${adSearchPriceType[0].desc!}
+							        <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="在選擇系統建議出價時刻，以此分類中的關鍵字，最高的排名價格設為出價金額範&#13;例：您在2013年9月1日設定「系統建議出價」，你設定的關鍵字「電腦」廣告排名較高出價為$5，系統即為您設定出價為$5">
+									NT$ ${vo.adGroupSearchPrice!}<br/>
+								<br><input type="button" value="修改" onClick="modifySearchPrice('${vo.adGroupSeq!}','${vo.adGroupSearchPriceType!}')" />
+				            </div>
+						</td>
+					</#if>
+
 						<#if  adType == '2' >
 					       	<td class="td03">${vo.adPriceTypeDesc!}</td>
 					        <td>
