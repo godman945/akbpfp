@@ -5,7 +5,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.FileImageInputStream;
+import javax.imageio.stream.ImageInputStream;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -139,10 +145,19 @@ public class AdReportService implements IAdReportService {
 						try{
 							picture = new File("/home/webuser/akb/pfp/" +  img.replace("\\", "/"));
 							if(picture != null){
-								is = new FileInputStream(picture);
-								sourceImg = javax.imageio.ImageIO.read(is);
-								imgWidth = Integer.toString(sourceImg.getWidth());
-								imgHeight = Integer.toString(sourceImg.getHeight());	
+//								is = new FileInputStream(picture);
+//								sourceImg = javax.imageio.ImageIO.read(is);
+//								imgWidth = Integer.toString(sourceImg.getWidth());
+//								imgHeight = Integer.toString(sourceImg.getHeight());
+								ImageInputStream stream = new FileImageInputStream(picture);
+				                Iterator<ImageReader> readers = ImageIO.getImageReaders(stream);
+				                if (readers.hasNext()) {
+				                    ImageReader reader = readers.next();
+				                    reader.setInput(stream, true);
+				                    imgWidth = String.valueOf(reader.getWidth(0));
+				                    imgHeight = String.valueOf(reader.getHeight(0));
+				                 }
+				                 stream.close();
 							}
 						} catch (FileNotFoundException e) {
 							e.printStackTrace();
