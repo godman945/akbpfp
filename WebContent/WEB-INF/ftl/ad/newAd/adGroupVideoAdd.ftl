@@ -49,7 +49,7 @@
 	                    	<br>
 	                    		<div class="errMsg"></div>
 	                    	<br>
-		                    	<b>系統建議出價NT$<input type="number" min="0" step="0.1" id="adPrice" name="adPrice" style="width:50px" maxlength="6" value="<#if adGroupChannelPrice?exists>${adGroupChannelPrice!}<#else>${sysprice?number?string('#,###.##')!}</#if>">，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</b><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div></span>
+		                    	<b>系統建議出價NT$<input type="number" min="0" step="0.1" id="adPrice" name="adPrice" style="width:50px" maxlength="6" value="<#if adGroupChannelPrice?exists>${adGroupChannelPrice!}<#else>${sysprice?number?string('#,###.##')!}</#if>"> 系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</b><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div></span>
 	                    		<div class="exp">出價金額會決定廣告播出率。系統會依每次影片的競價結果分析出最佳的播出率，實際支付的廣告收視費用，會小於或等於您的出價金額。</div>
 	                    </td>
 	                </tr>

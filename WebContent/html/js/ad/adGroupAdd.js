@@ -68,15 +68,15 @@ $(document).ready(function(){
 		}
 		var userprice = $("#adPrice").val();
 		if($("#adPriceType").val() == 1){
-			console.log('CPM 出價:'+userprice);
+//			console.log('CPM 出價:'+userprice);
 			userprice = userprice - 58; 
-			console.log('CPM 出價換算後:'+userprice);
-			console.log('目前系統最高出價:10');
+//			console.log('CPM 出價換算後:'+userprice);
+//			console.log('目前系統最高出價:10');
 		}else if($("#adPriceType").val() == 0){
-			console.log('CPV 出價:'+userprice);
+//			console.log('CPV 出價:'+userprice);
 			userprice = (userprice * 10) + 10;
-			console.log('CPV 出價換算後:'+userprice);
-			console.log('目前系統最高出價:10');
+//			console.log('CPV 出價換算後:'+userprice);
+//			console.log('目前系統最高出價:10');
 		}
 		changeRate(userprice);
 	})
@@ -124,15 +124,15 @@ $(document).ready(function(){
 		
 		var userprice = $("#adPrice").val();
 		if($("#adPriceType").val() == 1){
-			console.log('CPM 出價:'+userprice);
+//			console.log('CPM 出價:'+userprice);
 			userprice = userprice - 58; 
-			console.log('CPM 出價換算後:'+userprice);
-			console.log('目前系統最高出價:10');
+//			console.log('CPM 出價換算後:'+userprice);
+//			console.log('目前系統最高出價:10');
 		}else if($("#adPriceType").val() == 0){
-			console.log('CPV 出價:'+userprice);
+//			console.log('CPV 出價:'+userprice);
 			userprice = (userprice * 10) + 10;
-			console.log('CPV 出價換算後:'+userprice);
-			console.log('目前系統最高出價:10');
+//			console.log('CPV 出價換算後:'+userprice);
+//			console.log('目前系統最高出價:10');
 		}
 		
 		changeRate(userprice);
@@ -160,15 +160,15 @@ $(document).ready(function(){
 		
 		var userprice = $("#adPrice").val();
 		if($("#adPriceType").val() == 1){
-			console.log('CPM 出價:'+userprice);
+//			console.log('CPM 出價:'+userprice);
 			userprice = userprice - 58;
-			console.log('CPM 出價換算後:'+userprice);
-			console.log('目前系統最高出價:10');
+//			console.log('CPM 出價換算後:'+userprice);
+//			console.log('目前系統最高出價:10');
 		}else if($("#adPriceType").val() == 0){
-			console.log('CPV 出價:'+userprice);
+//			console.log('CPV 出價:'+userprice);
 			userprice = (userprice * 10) + 10;
-			console.log('CPV 出價換算後:'+userprice);
-			console.log('目前系統最高出價:10');
+//			console.log('CPV 出價換算後:'+userprice);
+//			console.log('目前系統最高出價:10');
 		}
 		changeRate(userprice);
 	})

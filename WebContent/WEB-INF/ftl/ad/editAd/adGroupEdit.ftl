@@ -52,7 +52,7 @@
 							</div>
 	                	</th>
 	                    <td>
-	                    	<b>聯播網廣告出價金額NT$<input type="text" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${adGroupChannelPrice?number!}" maxlength="6"><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div>，系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span>，系統建議出價NT$ ${sysChannelPrice!} </b>
+	                    	<b>聯播網廣告出價金額NT$<input type="text" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${adGroupChannelPrice?number!}" maxlength="6"><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div> 系統預估播出率:<span id="showRate" name="showRate">${AdAsideRate!}%</span>，系統建議出價NT$ ${sysChannelPrice!} </b>
 	                    	<div class="exp">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
 	                    </td>
 	                </tr>
