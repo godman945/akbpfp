@@ -184,9 +184,9 @@
 				submitFlag = false;
 			}
 		});
-		
-		
-		$("#adGroupSearchPrice").keyup(function(){
+	}
+	
+	$("#adGroupSearchPrice").keyup(function(){
 		$("#searchPricEerrorMsg").text('搜尋廣告出價最少為3元');
 		if($('#adGroupSearchPrice').val() < 3){
 			$("#searchPricEerrorMsg").text('搜尋廣告出價最少為3元');
@@ -196,7 +196,8 @@
 			submitFlag = true;
 		}
 	})
-	}
+	
+	
 	
 	$('#save').click(function(){
 		//取得驗證回傳值

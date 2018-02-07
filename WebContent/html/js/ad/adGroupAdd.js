@@ -1,7 +1,6 @@
 ﻿var submitFlag = true;
 var adGroupNameFlag = true;
 $(document).ready(function(){
-	
 	if($('#adPriceTypeValue').val() != null){
 		$('#adPriceType').val($('#adPriceTypeValue').val());
 	}

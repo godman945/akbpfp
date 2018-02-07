@@ -36,8 +36,8 @@
 	                    <td>
 	                    	<input type="radio" id="adGroupSearchPriceType" name="adGroupSearchPriceType" value="1" <#if adGroupSearchPriceType == "1">checked</#if>><b>使用系統建議出價，在我的預算內設定最高的排名出價</b></BR>
 	                    	<div class="exp">你在下一步所建立的關鍵字，都以建立時的每組關鍵字最高的排名價格設為出價金額(出價金額會控制在您每日的廣告預算內)<br>範例：你設定的關鍵字「電腦」，廣告排名較高出價為$5，系統即為您設定出價為$5</div>
-
 	                    	<input type="radio" id="adGroupSearchPriceType" name="adGroupSearchPriceType" value="2" <#if adGroupSearchPriceType == "2">checked</#if>><b>自行設定分類出價金額NT$<input type="text" style="width:50px" id="adGroupSearchPrice" name="adGroupSearchPrice" value="${adGroupSearchPrice!}" maxlength="6"></b>
+							<div id="searchPricEerrorMsg" style="color:red;margin-left:10px;display:inline;"></div>
 							<div class="exp">此出價會套用在您下一步所建立的每組關鍵字中</div>
 							<span class="t_s01"><br />(二種出價方式都可在廣告新增完成後，在檢視關鍵字列表頁，可個別修改關鍵字的出價金額)</span>
 	                    </td>
