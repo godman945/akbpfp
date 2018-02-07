@@ -166,6 +166,26 @@
 		});
 	}
 	
+	//新增分類時，計費方式為CPC檢查用
+	if($('#adOperatingRule').val() == 'MEDIA'){
+		$('#adGroupChannelPrice').change(function(){
+			submitFlag = true;
+			$("#errorMsg").text('');
+			
+			var adGroupChannelPrice = $('#adGroupChannelPrice').val();
+			if(/[^0-9]$/.test(parseInt(adGroupChannelPrice))){
+				$("#errorMsg").text('聯播廣告出價只能填寫數字');
+				submitFlag = false;
+			}else if (parseInt(adGroupChannelPrice) < 3) {
+				$("#errorMsg").text('聯播廣告出價最少為3元');
+				submitFlag = false;
+			}else if (parseInt(adGroupChannelPrice) > parseInt($('#adActionMax').val())) {
+				$("#errorMsg").text('出價已超過每日廣告預算' + $('#adActionMax').val() + '元');
+				submitFlag = false;
+			}
+		})
+	}
+	
 	$('#save').click(function(){
 		//取得驗證回傳值
 		if(submitFlag){
