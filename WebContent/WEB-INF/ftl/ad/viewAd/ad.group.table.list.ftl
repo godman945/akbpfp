@@ -65,37 +65,38 @@
 				      <input type="checkbox" id="chkN_${vo_index!}" name="chkN" disabled/>
 					</#if>	
 				</td>
+				
 		    	<#if adOperatingRule?exists && adOperatingRule == "MEDIA">
 					<td height="35" class="td02">
 					    <#if vo.adGroupStatus != 9 >
-					    	<a href="adAdView.html?adGroupSeq=${vo.adGroupSeq!}&groupMaxPrice=${groupMaxPrice!}">${vo.adGroupName!}</a>
+					    	<a href="adAdView.html?adGroupSeq=${vo.adGroupSeq!}&groupMaxPrice=${groupMaxPrice!}">${vo.adGroupName!} >>>${adType!}</a>
 						<#else>
-						       ${vo.adGroupName!}
+						     ${vo.adGroupName!}
 						</#if>		        	
 					</td>
 					<td class="td03">${vo.adDevice!}</td>
 					<td class="td03">${vo.adGroupStatusDesc!}</td>
 					<#if adType == '0' || adType == '1' >
+					    <td class="td03">${vo.adPriceTypeDesc!}</td>
 					    <td>
 					       <div class="notsbg">
-						       <#if vo.adGroupSearchPriceType == adSearchPriceType[0].typeId >
 							        ${adSearchPriceType[0].desc!}
 							        <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="在選擇系統建議出價時刻，以此分類中的關鍵字，最高的排名價格設為出價金額範&#13;例：您在2013年9月1日設定「系統建議出價」，你設定的關鍵字「電腦」廣告排名較高出價為$5，系統即為您設定出價為$5">
-								<#else>
 									NT$ ${vo.adGroupSearchPrice!}<br/>
-							        ${adSearchPriceType[1].desc!}			        
-							        <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="您的出價已套用在此分類的每組關鍵字中">       	
-								</#if>
 								<br><input type="button" value="修改" onClick="modifySearchPrice('${vo.adGroupSeq!}','${vo.adGroupSearchPriceType!}')" />
-				                </div>
+				            </div>
 						</td>
-						</#if>
-						<td class="td03">${vo.adPriceTypeDesc!}</td>
-						<#if adType == '0' || adType == '2' >
-					        <td>
-						        NT$ ${vo.adGroupChannelPrice?string('#,###')!}
+						 <td>
+						      	 NT$ ${vo.adGroupChannelPrice?string('#,###')!}
 						        <br>預估播出率：${vo.adAsideRate?string('#.##')!}%<br><input type="button" value="修改" onClick="modifyChannelPrice('${vo.adGroupSeq!}','${vo.adGroupChannelPrice!}')" />
-					        </td>
+						</td>
+					</#if>
+						<#if  adType == '2' >
+					       	<td class="td03">${vo.adPriceTypeDesc!}</td>
+					        <td>
+						      	 NT$ ${vo.adGroupChannelPrice?string('#,###')!}
+						        <br>預估播出率：${vo.adAsideRate?string('#.##')!}%<br><input type="button" value="修改" onClick="modifyChannelPrice('${vo.adGroupSeq!}','${vo.adGroupChannelPrice!}')" />
+							</td>
 					    </#if>
 							<td class="td01">${vo.adPv?string('#,###')!}</td>				
 							<td class="td01">${vo.adClk?string('#,###')!}</td>
