@@ -129,6 +129,27 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							Integer adGroupStatus = null;
 							for (int i=0; i<dataList.size(); i++) {
 								objArray = (Object[]) dataList.get(i);
+								
+								log.info(">>>>>>>>>>0 DeBug:"+objArray[0]);
+								log.info(">>>>>>>>>>1 DeBug:"+objArray[1]);
+								log.info(">>>>>>>>>>2 DeBug:"+objArray[2]);
+								log.info(">>>>>>>>>>3 DeBug:"+objArray[3]);
+								log.info(">>>>>>>>>>4 DeBug:"+objArray[4]);
+								log.info(">>>>>>>>>>5 DeBug:"+objArray[5]);
+								log.info(">>>>>>>>>>6 DeBug:"+objArray[6]);
+								log.info(">>>>>>>>>>7 DeBug:"+objArray[7]);
+								log.info(">>>>>>>>>>8 DeBug:"+objArray[8]);
+								log.info(">>>>>>>>>>9 DeBug:"+objArray[9]);
+								log.info(">>>>>>>>>>10 DeBug:"+objArray[10]);
+								log.info(">>>>>>>>>>11 DeBug:"+objArray[11]);
+								log.info(">>>>>>>>>>12 DeBug:"+objArray[12]);
+								log.info(">>>>>>>>>>13 DeBug:"+objArray[13]);
+								log.info(">>>>>>>>>>14 DeBug:"+objArray[14]);
+								log.info(">>>>>>>>>>15 DeBug:"+objArray[15]);
+								log.info(">>>>>>>>>>16 DeBug:"+objArray[16]);
+								log.info(">>>>>>>>>>17 DeBug:"+objArray[17]);
+								
+								
 								adPvSum = (BigDecimal)objArray[0];
 								adClkSum = (BigDecimal)objArray[1];
 								adPriceSum = (Double)objArray[2];
@@ -208,7 +229,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 							}
 							
 						} else if (sqlType.trim().equals(EnumReport.REPORT_HQLTYPE_ADVERTISE_COUNT.getTextValue())){
-
+							log.info(">>>>>>>>>>REPORT_HQLTYPE_ADVERTISE_COUNT DeBug:");
 							for (int i=0; i<dataList.size(); i++) {
 
 								Object[] objArray = (Object[]) dataList.get(i);
