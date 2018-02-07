@@ -191,6 +191,7 @@
 		if($('#adGroupSearchPrice').val() < 3){
 			$("#searchPricEerrorMsg").text('搜尋廣告出價最少為3元');
 			submitFlag = false;
+			return false;
 		}else{
 			$("#searchPricEerrorMsg").text('');
 			submitFlag = true;
@@ -199,13 +200,14 @@
 		var cpmRex = /^[0-9]*[1-9][0-9]*$/;
 		submitFlag = cpmRex.test($('#adGroupSearchPrice').val());
 		if(!submitFlag){
-			$("#searchPricEerrorMsg").text('搜尋廣告出價最少為3元');
+			$("#searchPricEerrorMsg").text('搜尋廣告出價須正整數');
 			submitFlag = false;
+			return false;
 		}else{
 			$("#searchPricEerrorMsg").text('');
 			submitFlag = true;
 		}
-	})
+	});
 	
 	
 	
