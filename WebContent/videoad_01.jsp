@@ -52,7 +52,6 @@
       h1 {
         font-size: 4em;
       }
-
       strong {
         font-size: 1.5em;
       }
