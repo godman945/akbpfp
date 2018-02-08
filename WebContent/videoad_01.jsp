@@ -68,6 +68,14 @@
 	var a = new PCHOMEFingerprint().getCanvasFp();
     var c = new PCHOMEFingerprint().x64hash128(a,31);
     document.getElementById("fp").innerHTML = c;
+    
+    
+    var fp = new PCHOMEFingerprint();
+     fp.get(function(result) {
+       var d2 = new Date();
+     	document.getElementById("fp").innerHTML = result;
+     });
+    
   }
    
   </script>
