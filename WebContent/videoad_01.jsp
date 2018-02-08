@@ -64,9 +64,12 @@
   <p>數位指紋: <strong id="fp"></strong></p>
   <!--  <button type="button" id="btn">Get my fingerprint</button> -->
   <script>
+  window.onload=function(){
 	var a = new PCHOMEFingerprint().getCanvasFp();
     var c = new PCHOMEFingerprint().x64hash128(a,31);
     document.getElementById("fp").innerHTML = c;
+  }
+   
   </script>
 </body>
 </html>
