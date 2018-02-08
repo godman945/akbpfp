@@ -9,7 +9,7 @@
   <script>
   window.onload=function(){
 	var a = new PCHOMEFingerprint().getCanvasFp();
-    var c = new PCHOMEFingerprint().x64hash128('alex',1024);
+    var c = new PCHOMEFingerprint().x64hash128(a,1024);
     document.write('<p>數位指紋: <strong id="fp">'+c+'</strong></p>');
   }
   </script>
