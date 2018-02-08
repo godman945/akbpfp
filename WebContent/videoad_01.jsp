@@ -65,39 +65,9 @@
   <p>數位指紋: <strong id="fp"></strong></p>
   <!--  <button type="button" id="btn">Get my fingerprint</button> -->
   <script>
-  /*
- 	 window.onload=function(){
- 		 var d1 = new Date();
- 	      var fp = new PCHOMEFingerprint();
- 	      fp.get(function(result) {
- 	        var d2 = new Date();
- 	        var timeString = "執行 fingerprint 時間: " + (d2 - d1) + "ms";
- 	        var details = "<strong>系統資訊: </strong><br />";
- 	      	document.getElementById("fp").innerHTML = result;
- 	      	document.getElementById("time").innerHTML  = timeString;
- 	      });
-	}
-    */ 
-    var x = null;
-    new PCHOMEFingerprint().get(function(result) {
-    		 //console.log(result);
-    	//	 document.getElementById("fp").innerHTML = result;
-    		 
-    		 return  result;
-   	});
-    
-    //40db6d93ffdf9b54659e9cf0aeda20d9
-    var a = new PCHOMEFingerprint().x64hash128('alex');
-    console.log(a);
-    document.getElementById("fp").innerHTML = a;
-    //console.log(document.getElementById("fp"));
-    
-//    let copy = document.getElementById("fp");
-  //  console.log($(copy).text());
-  
-  
-  
-    
+	var a = new PCHOMEFingerprint().getCanvasFp();
+    var c = new PCHOMEFingerprint().x64hash128(a,31);
+    document.getElementById("fp").innerHTML = c;
   </script>
 </body>
 </html>
