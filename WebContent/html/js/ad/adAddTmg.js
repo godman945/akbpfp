@@ -20,6 +20,14 @@
 		}
 	}
 
+	//檢查商品原價與商品促銷價的值，只能輸入數字
+	$('#salesPrice, #promotionalPrice').bind('keyup', function() {
+		if(checkNum($(this).val())){
+			alert('只能填寫數字');
+			$(this).val($(this).val().substr(0, $(this).val().length - 1));
+		}
+	});
+	
 	// 檢查資料是否正確
 	$('#adTitle').bind('blur', function() {
 		if($('#adTitle').val().length > 0 && $('#adTitle').val().length <= 4) {
@@ -110,7 +118,6 @@
 	}
 
 	
-	
 	//提示顯示輸入連結網址字數與檢查
 	function chk_adLinkURL() {
 		var maxlength = $('#adLinkURL').attr("maxlength");
@@ -142,10 +149,9 @@
 		setData();
 	}
 	
-
 	//檢查廣告連結網址
 	function chk_adLinkURLLink() {
-		urlCheck("adLinkURL",$("#adLinkURL").val());
+		urlCheck("adLinkURL", $("#adLinkURL").val());
 	}
 	
 	//連結網址鍵盤件鍵檢查
@@ -155,61 +161,59 @@
 	
 	//檢查網址blur事件
 	$("#adLinkURL").blur(function() {
-		if($("#adLinkURL").val() != "show.pchome.com.tw"){
-			urlCheck("adLinkURL",$("#adLinkURL").val());
-		}else{
-			$("#chkLinkURL").css("color","red");
+		if ($("#adLinkURL").val() != "show.pchome.com.tw") {
+			urlCheck("adLinkURL", $("#adLinkURL").val());
+		} else {
+			$("#chkLinkURL").css("color", "red");
 			$("#chkLinkURL").text("請輸入廣告連結網址");
 		}
 	});
 	
-
 	//網域鍵盤輸入事件檢查
 	$('#adShowURL').bind('keyup', function() {
 		chk_adShowURL();
 	});
 	
-	
 	//檢查網域blur事件
 	$("#adShowURL").blur(function() {
-		if($("#adShowURL").val() == "show.pchome.com.tw"){
-			$("#chkShowURL").css("color","red");
+		if ($("#adShowURL").val() == "show.pchome.com.tw") {
+			$("#chkShowURL").css("color", "red");
 			$("#chkShowURL").text("請輸入廣告顯示網址");
-		}else{
-			urlCheck("adShowURL",$("#adShowURL").val());
-			if($("#adShowURL").val() == ""){
-				$("#chkShowURL").css("color","red");
+		} else {
+			urlCheck("adShowURL", $("#adShowURL").val());
+			if ($("#adShowURL").val() == "") {
+				$("#chkShowURL").css("color", "red");
 				$("#chkShowURL").text("請輸入廣告顯示網址");
 			}
 		}
 	});
-	
 	
 	//顯示網域提示字數與檢查
 	function chk_adShowURL() {
 		var maxlength = $('#adShowURL').attr("maxlength");
 		var adShowURL = $('#adShowURL').val();
 		var length = adShowURL.length;
-			if(adShowURL == "") {
-				$('#chkShowURL').css("color","red");
-				$("#chkShowURL").text("請輸入廣告顯示網址.");
-				$("#previewURL").text($('#adShowURL').attr("placeholder"));
-			} else {
-				// 去掉網址的 http://
-				if(adShowURL.indexOf("://") > 0) {
-					adShowURL = adShowURL.substring(adShowURL.indexOf("://") + 3);
+		if(adShowURL == "") {
+			$('#chkShowURL').css("color","red");
+			$("#chkShowURL").text("請輸入廣告顯示網址.");
+			$("#previewURL").text($('#adShowURL').attr("placeholder"));
+		} else {
+			// 去掉網址的 http://
+			if(adShowURL.indexOf("://") > 0) {
+				adShowURL = adShowURL.substring(adShowURL.indexOf("://") + 3);
+			}
+			
+			if($("#sameRealUrl").prop("checked")){
+				// 去掉連結網址 / 後的所有字串
+				if(adShowURL.indexOf("/") > 0) {
+					adShowURL = adShowURL.substring(0, adShowURL.indexOf("/"));
 				}
-				if($("#sameRealUrl").prop("checked")){
-					// 去掉連結網址 / 後的所有字串
-					if(adShowURL.indexOf("/") > 0) {
-						adShowURL = adShowURL.substring(0, adShowURL.indexOf("/"));
-					}
-				}
+			}
 				
-				$("#chkShowURL").text("");
-				$("#previewURL").text(adShowURL);
-				$("#adShowURL").val(adShowURL);
-				length = adShowURL.length;
+			$("#chkShowURL").text("");
+			$("#previewURL").text(adShowURL);
+			$("#adShowURL").val(adShowURL);
+			length = adShowURL.length;
 			if(length == maxlength) {
 				$('#chkShowURL').css("color","blue");
 				$("#chkShowURL").text("廣告顯示網址輸入字數已達上限" +maxlength+ "字");
@@ -296,8 +300,8 @@
 			}
 		}
 		//連結網址字數檢查
-			chkWord($('#adShowURL'), "spanAdShowURL");
-			chkWord($('#adLinkURL'), "spanAdLinkURL");
+		chkWord($('#adShowURL'), "spanAdShowURL");
+		chkWord($('#adLinkURL'), "spanAdLinkURL");
 	}
 
 	//點擊顯示網域
@@ -336,6 +340,7 @@
 			$("#chkShowURL").text("請輸入廣告顯示網址.");
 		}
 	});
+	
 	//輸入字數檢查與提示
 	function chkWord(el, showId) {
 		var length = 0;
@@ -396,7 +401,6 @@
 		}
 	}
 	
-	
 	function saveData() {
 		var adType = $("#adType").val();
 		if(adType == "0" || adType == "1"){
@@ -418,6 +422,7 @@
 				}
 			}
 		}
+		
 		if($("#chkFile").text() != ""){
 			location.href="#imghead";
 			return false;
@@ -453,6 +458,17 @@
 			return false;
 		}
 		
+		//商品原價檢核
+		if($("#salesPrice").val() != "" && checkNum($("#salesPrice").val())){
+			alert('商品原價只能填寫數字');
+			return false;
+		}
+		
+		//商品促銷價檢核
+		if($("#promotionalPrice").val() != "" && checkNum($("#promotionalPrice").val())){
+			alert('商品促銷價只能填寫數字');
+			return false;
+		}
 		
 		if($("#chkLinkURL").css("color") == "rgb(255, 0, 0)"  || $("#chkLinkURL").text() != "網址確認正確"){
 			$('#chkLinkURL').css("color","red");
@@ -481,22 +497,15 @@
 			location.href="#uploadFile";
 			return false;
 		}
+		
 		if($("#sizeCheckDiv").css("display") == "block"){
 			location.href="#uploadFile";
 			return false;
 		}
 		
-		
-		
-		
-		
-		
-		
 		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 		if(confirm(alt)) {
 			var kwLen = document.getElementsByName("keywords").length;
-			
-			
 			
 			//取得驗證回傳值
 			if(chk_adTitle() && chk_adContent() && $("#chkFile").text() == ""){
@@ -524,11 +533,10 @@
 							$("#modifyForm").submit();
 				        }
 					});
-				} 
+			}
 		}
 	}
 
-	
 	function setData() {
 		if(LinkUrl && ShowUrl && $("#adTitle").val()!="" && $("#adContent").val()!=""){
 			document.getElementsByName("adDetailContent")[0].value = document.getElementById('uploadFile').value;
@@ -536,6 +544,8 @@
 			document.getElementsByName("adDetailContent")[2].value = $('#adContent').val();
 			document.getElementsByName("adDetailContent")[3].value = $('#adLinkURL').val();
 			document.getElementsByName("adDetailContent")[4].value = $("#adShowURL").val();
+			document.getElementsByName("adDetailContent")[5].value = $('#salesPrice').val();
+			document.getElementsByName("adDetailContent")[6].value = $("#promotionalPrice").val();
 		}
 	}
 });
@@ -545,7 +555,6 @@ function ValidURL(url) {
 	var isUrl = re.test(url);
 	return isUrl;
 }
-
 
 function deleteImage() {
 	sizeFlag = true;
@@ -657,4 +666,9 @@ function chkLeave(){
 
 function fileLoad(){
 	$("#uploadFile").click();
+}
+
+//檢查是否為數字，非數字回true
+function checkNum(val) {
+	return /[^0-9]$/.test(val);
 }

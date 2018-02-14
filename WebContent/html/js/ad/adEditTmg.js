@@ -32,6 +32,14 @@
 		}
 	}
 
+	//檢查商品原價與商品促銷價的值，只能輸入數字
+	$('#salesPrice, #promotionalPrice').bind('keyup', function() {
+		if(checkNum($(this).val())){
+			alert('只能填寫數字');
+			$(this).val($(this).val().substr(0, $(this).val().length - 1));
+		}
+	});
+	
 	// 檢查資料是否正確
 	$('#adTitle').bind('blur', function() {
 		if($('#adTitle').val().length > 0 && $('#adTitle').val().length <= 4) {
@@ -507,6 +515,17 @@
 			return false;
 		}
 		
+		//商品原價檢核
+		if($("#salesPrice").val() != "" && checkNum($("#salesPrice").val())){
+			alert('商品原價只能填寫數字');
+			return false;
+		}
+		
+		//商品促銷價檢核
+		if($("#promotionalPrice").val() != "" && checkNum($("#promotionalPrice").val())){
+			alert('商品促銷價只能填寫數字');
+			return false;
+		}
 		
 		if($("#chkLinkURL").css("color") == "rgb(255, 0, 0)"  || $("#chkLinkURL").text() != "網址確認正確"){
 			location.href="#adLinkURL";
@@ -590,8 +609,10 @@
 			document.getElementsByName("adDetailContent")[0].value = document.getElementById('uploadFile').value;
 			document.getElementsByName("adDetailContent")[1].value = $('#adTitle').val();
 			document.getElementsByName("adDetailContent")[2].value = $('#adContent').val();
-			document.getElementsByName("adDetailContent")[3].value = $('#adLinkURL').val();
-			document.getElementsByName("adDetailContent")[4].value = $("#adShowURL").val();
+			document.getElementsByName("adDetailContent")[3].value = $('#salesPrice').val();
+			document.getElementsByName("adDetailContent")[4].value = $("#promotionalPrice").val();
+			document.getElementsByName("adDetailContent")[5].value = $('#adLinkURL').val();
+			document.getElementsByName("adDetailContent")[6].value = $("#adShowURL").val();
 		}
 	}
 });
@@ -711,4 +732,9 @@ function closenots(id) {
 
 function fileLoad(){
 	$("#uploadFile").click();
+}
+
+//檢查是否為數字，非數字回true
+function checkNum(val) {
+	return /[^0-9]$/.test(val);
 }

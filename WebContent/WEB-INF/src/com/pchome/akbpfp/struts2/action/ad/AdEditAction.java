@@ -128,8 +128,8 @@ public class AdEditAction extends BaseCookieAction{
 		}
 
 		pfpAdDetails = pfpAdDetailService.getPfpAdDetails(null, adSeq, null, null);
-		adDetailSeq = new String[5];
-		adDetailContent = new String[5];
+		adDetailSeq = new String[7];
+		adDetailContent = new String[7];
 
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
@@ -176,6 +176,12 @@ public class AdEditAction extends BaseCookieAction{
 				    deCodeUrl =HttpUtil.getInstance().convertRealUrl(show_url);
 				}
 				adDetailContent[4] = deCodeUrl;
+			} else if(adDetailId != null && adDetailId.equals("sales_price")) {
+				adDetailSeq[5] = pfpAdDetails.get(i).getAdDetailSeq();
+				adDetailContent[5] = pfpAdDetails.get(i).getAdDetailContent();
+			} else if(adDetailId != null && adDetailId.equals("promotional_price")) {
+				adDetailSeq[6] = pfpAdDetails.get(i).getAdDetailSeq();
+				adDetailContent[6] = pfpAdDetails.get(i).getAdDetailContent();
 			}
 		}
 

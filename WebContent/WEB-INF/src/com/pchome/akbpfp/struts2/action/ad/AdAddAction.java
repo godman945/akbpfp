@@ -237,18 +237,18 @@ public class AdAddAction extends BaseCookieAction{
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 
 		// 新增廣告
-		addAd(pfpAdGroup,null);
+		addAd(pfpAdGroup, null);
 		
 		String imgDetail = "";
 		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
 		for(int i = 0; i < adDetailID.length; i++) {
 		    if(i == 0 && adStyle.equals("TMG")) {
-			try {
-			    if(StringUtils.isNotBlank(imgFile)) {
-				File iPath = new File(photoPath);		// 圖片的存放路徑
-				File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
-				if(!iPath.exists())			iPath.mkdirs();
-				if(!iTmpPath.exists())		iTmpPath.mkdirs();
+				try {
+				    if(StringUtils.isNotBlank(imgFile)) {
+						File iPath = new File(photoPath);		// 圖片的存放路徑
+						File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
+						if(!iPath.exists())			iPath.mkdirs();
+						if(!iTmpPath.exists())		iTmpPath.mkdirs();
 						String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
 						File adFile = null;	// 上傳圖片的檔名
 						if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
@@ -258,7 +258,7 @@ public class AdAddAction extends BaseCookieAction{
 						}
 						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
 						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
-
+	
 						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
 					} else {
 						if(StringUtils.isBlank(adDetailContent[0])) {
@@ -278,16 +278,17 @@ public class AdAddAction extends BaseCookieAction{
 				if(adDetailContent[i].indexOf("http") < 0 ) {
 					adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
 				}else{
-				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-				}
 			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-			    	adDetailContent[i] = adDetailContent[i].trim();
+				}
+		    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+		    	adDetailContent[i] = adDetailContent[i].trim();
 			}
+			
 			if(adDetailID[i].equals("show_url")) {
 			    if(adDetailContent[i].indexOf("http://") < 0 ) {
-				adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
+			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
 			    }else{
-				adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
 			    }
 //			    adDetailContent[i] = (HttpUtil.getInstance().getRealUrl(adDetailContent[i]).replace("http://", ""));
 			    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
@@ -500,8 +501,6 @@ public class AdAddAction extends BaseCookieAction{
 			return SUCCESS;
 		}
 	}
-	
-
 
 	// 新增文字式廣告
 	@Transactional
@@ -593,45 +592,45 @@ public class AdAddAction extends BaseCookieAction{
 						//message = "請輸入" + adDetailName[i] + " ！";
 					}
 				} else {
-					if(adDetailID[i].equals("title")) {
-						if(adDetailContent[i].length() > 17) {
+					if (adDetailID[i].equals("title")) {
+						if (adDetailContent[i].length() > 17) {
 							message = "廣告標題不可超過 17  字！";
 						}
-					} else if(adDetailID[i].equals("content")) {
-						if(adDetailContent[i].length() > 38) {
+					} else if (adDetailID[i].equals("content")) {
+						if (adDetailContent[i].length() > 38) {
 							message = "廣告內容不可超過 38  字！";
 						}
-					} else if(adDetailID[i].equals("real_url")) {
-						if(StringUtil.isEmpty(adDetailContent[i])){
-						    message = "請填寫廣告連結網址.";
+					} else if (adDetailID[i].equals("real_url")) {
+						if (StringUtil.isEmpty(adDetailContent[i])) {
+							message = "請填寫廣告連結網址.";
 						}
 
-					    	if(adDetailContent[i].length() > 1024) {
+						if (adDetailContent[i].length() > 1024) {
 							message = "廣告連結網址不可超過 1024字！";
 						} else {
 							String url = adDetailContent[i];
 							int urlState = 0;
-							if(url.indexOf("http") != 0) {
-								url = "http://"+url;
+							if (url.indexOf("http") != 0) {
+								url = "http://" + url;
 							}
 							urlState = HttpUtil.getInstance().getStatusCode(url);
-							if(urlState < 200 && urlState >= 300) {
+							if (urlState < 200 && urlState >= 300) {
 								message = "請輸入正確的廣告連結網址！";
 							}
 						}
-					} else if(adDetailID[i].equals("show_url")) {
-					    	if(StringUtil.isEmpty(adDetailContent[i])){
-					    	    message = "請填寫廣告顯示網址.";
-					    	}
-					    	String url = adDetailContent[i];
-					    	int urlState = 0;
-					    	if(url.indexOf("http") != 0) {
-					    	    url = "http://"+url;
-					    	}
-					    	urlState = HttpUtil.getInstance().getStatusCode(url);
-					    	if(urlState < 200 && urlState >= 300) {
-					    	    message = "請輸入正確的廣告顯示網址！";
-					    	}
+					} else if (adDetailID[i].equals("show_url")) {
+						if (StringUtil.isEmpty(adDetailContent[i])) {
+							message = "請填寫廣告顯示網址.";
+						}
+						String url = adDetailContent[i];
+						int urlState = 0;
+						if (url.indexOf("http") != 0) {
+							url = "http://" + url;
+						}
+						urlState = HttpUtil.getInstance().getStatusCode(url);
+						if (urlState < 200 && urlState >= 300) {
+							message = "請輸入正確的廣告顯示網址！";
+						}
 					}
 				}
 			}
