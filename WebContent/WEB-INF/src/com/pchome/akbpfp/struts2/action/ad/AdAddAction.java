@@ -517,30 +517,30 @@ public class AdAddAction extends BaseCookieAction{
 		// 新增廣告
 		addAd(pfpAdGroup,null);
 		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
-		for(int i = 0; i < adDetailID.length; i++) {
-		    adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
-		    List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, adDetailID[i], null, adPoolSeq);
-		    String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-		    if(adDetailID[i].equals("real_url") || adDetailID[i].equals("show_url")) {
-			if(adDetailContent[i].indexOf("http") !=0 ) {
-			    adDetailContent[i] = "http://" + adDetailContent[i];
+		for (int i = 0; i < adDetailID.length; i++) {
+			adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+			List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, adDetailID[i], null, adPoolSeq);
+			String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+			if (adDetailID[i].equals("real_url") || adDetailID[i].equals("show_url")) {
+				if (adDetailContent[i].indexOf("http") != 0) {
+					adDetailContent[i] = "http://" + adDetailContent[i];
+				}
+				adDetailContent[i] = adDetailContent[i].trim();
 			}
-			adDetailContent[i] = adDetailContent[i].trim();
-		    }
-		pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
-		pfpAdDetailVO.setAdSeq(adSeq);
-		pfpAdDetailVO.setAdPoolSeq(adPoolSeq);
-		pfpAdDetailVO.setAdDetailId(adDetailID[i]);
-		pfpAdDetailVO.setAdDetailContent(adDetailContent[i]);
-		if(adDetailID[i].equals("img") || adDetailID[i].equals("title") || adDetailID[i].equals("content")) {
-		    pfpAdDetailVO.setVerifyFlag("y");
-		} else {
-		    pfpAdDetailVO.setVerifyFlag("n");
-		}
-		pfpAdDetailVO.setDefineAdSeq(defineAdSeq);
-		pfpAdDetailVO.setAdDetailCreateTime(new Date());
-		pfpAdDetailVO.setAdDetailUpdateTime(new Date());
-		pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
+			pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
+			pfpAdDetailVO.setAdSeq(adSeq);
+			pfpAdDetailVO.setAdPoolSeq(adPoolSeq);
+			pfpAdDetailVO.setAdDetailId(adDetailID[i]);
+			pfpAdDetailVO.setAdDetailContent(adDetailContent[i]);
+			if (adDetailID[i].equals("img") || adDetailID[i].equals("title") || adDetailID[i].equals("content")) {
+				pfpAdDetailVO.setVerifyFlag("y");
+			} else {
+				pfpAdDetailVO.setVerifyFlag("n");
+			}
+			pfpAdDetailVO.setDefineAdSeq(defineAdSeq);
+			pfpAdDetailVO.setAdDetailCreateTime(new Date());
+			pfpAdDetailVO.setAdDetailUpdateTime(new Date());
+			pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
 		}
 
 		// 新增關鍵字
@@ -553,7 +553,7 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdGroupService.save(pfpAdGroup);
 
 		// 是否為 "儲存後再新增廣告"
-		if(saveAndNew != null && saveAndNew.equals("save+new")) {
+		if (saveAndNew != null && saveAndNew.equals("save+new")) {
 			return "saveNew";
 		}
 		return SUCCESS;
@@ -668,61 +668,58 @@ public class AdAddAction extends BaseCookieAction{
 
 	// 新增關鍵字
 	private void addKeywords(PfpAdGroup pfpAdGroup) {
-		    try {
+	    try {
 			if(keywords.length == 0){
 			    return;
 			}
 			List<String> adKeywords = this.checkKeywords(adGroupSeq, keywords);
 			if(!adKeywords.isEmpty()){
-			    for(String keyword:adKeywords){
-				String adKeywordSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_KEYWORD, "_");
-				PfpAdKeyword pfpAdKeyword = new PfpAdKeyword();
-				pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
-				pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
-				pfpAdKeyword.setAdKeyword(keyword);
-				//廣泛比對設定
-				if(StringUtils.isNotBlank(adKeywordOpen)){
-					pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
-					pfpAdKeyword.setAdKeywordOpen(1);
-				} else {
-					pfpAdKeyword.setAdKeywordSearchPrice(0);
-					pfpAdKeyword.setAdKeywordOpen(0);
+				for (String keyword : adKeywords) {
+					String adKeywordSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_KEYWORD, "_");
+					PfpAdKeyword pfpAdKeyword = new PfpAdKeyword();
+					pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
+					pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
+					pfpAdKeyword.setAdKeyword(keyword);
+					// 廣泛比對設定
+					if (StringUtils.isNotBlank(adKeywordOpen)) {
+						pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+						pfpAdKeyword.setAdKeywordOpen(1);
+					} else {
+						pfpAdKeyword.setAdKeywordSearchPrice(0);
+						pfpAdKeyword.setAdKeywordOpen(0);
+					}
+					// 詞組比對設定
+					if (StringUtils.isNotBlank(adKeywordPhraseOpen)) {
+						pfpAdKeyword.setAdKeywordSearchPhrasePrice(pfpAdGroup.getAdGroupSearchPrice());
+						pfpAdKeyword.setAdKeywordPhraseOpen(1);
+					} else {
+						pfpAdKeyword.setAdKeywordSearchPhrasePrice(0);
+						pfpAdKeyword.setAdKeywordPhraseOpen(0);
+					}
+					// 精準比對設定
+					if (StringUtils.isNotBlank(adKeywordPrecisionOpen)) {
+						pfpAdKeyword.setAdKeywordSearchPrecisionPrice(pfpAdGroup.getAdGroupSearchPrice());
+						pfpAdKeyword.setAdKeywordPrecisionOpen(1);
+					} else {
+						pfpAdKeyword.setAdKeywordSearchPrecisionPrice(0);
+						pfpAdKeyword.setAdKeywordPrecisionOpen(0);
+					}
+					pfpAdKeyword.setAdKeywordChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
+					pfpAdKeyword.setAdKeywordOrder(0);
+					pfpAdKeyword.setAdKeywordPhraseOrder(0);
+					pfpAdKeyword.setAdKeywordPrecisionOrder(0);
+					pfpAdKeyword.setAdKeywordStatus(EnumStatus.Open.getStatusId());
+					pfpAdKeyword.setAdKeywordCreateTime(new Date());
+					pfpAdKeyword.setAdKeywordUpdateTime(new Date());
+					pfpAdKeywordService.saveOrUpdate(pfpAdKeyword);
+					syspriceOperaterAPI.addKeywordSysprice(keyword, pfpAdGroup.getAdGroupSearchPrice());
 				}
-				//詞組比對設定
-				if(StringUtils.isNotBlank(adKeywordPhraseOpen)){
-					pfpAdKeyword.setAdKeywordSearchPhrasePrice(pfpAdGroup.getAdGroupSearchPrice());
-					pfpAdKeyword.setAdKeywordPhraseOpen(1);
-				} else {
-					pfpAdKeyword.setAdKeywordSearchPhrasePrice(0);
-					pfpAdKeyword.setAdKeywordPhraseOpen(0);
-				}
-				//精準比對設定
-				if(StringUtils.isNotBlank(adKeywordPrecisionOpen)){
-					pfpAdKeyword.setAdKeywordSearchPrecisionPrice(pfpAdGroup.getAdGroupSearchPrice());
-					pfpAdKeyword.setAdKeywordPrecisionOpen(1);
-				} else {
-					pfpAdKeyword.setAdKeywordSearchPrecisionPrice(0);
-					pfpAdKeyword.setAdKeywordPrecisionOpen(0);
-				}
-				pfpAdKeyword.setAdKeywordChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
-				pfpAdKeyword.setAdKeywordOrder(0);
-				pfpAdKeyword.setAdKeywordPhraseOrder(0);
-				pfpAdKeyword.setAdKeywordPrecisionOrder(0);
-				pfpAdKeyword.setAdKeywordStatus(EnumStatus.Open.getStatusId());
-				pfpAdKeyword.setAdKeywordCreateTime(new Date());
-				pfpAdKeyword.setAdKeywordUpdateTime(new Date());
-				pfpAdKeywordService.saveOrUpdate(pfpAdKeyword);
-				syspriceOperaterAPI.addKeywordSysprice(keyword, pfpAdGroup.getAdGroupSearchPrice());
-			    }
 			}
 	
 		} catch(Exception ex) {
 		    log.info("Exception(addKeywords) : " + ex);
 		}
 	}
-
-
-
 
 	/**
 	 * 檢查是否重覆新增
@@ -747,24 +744,23 @@ public class AdAddAction extends BaseCookieAction{
 			log.info(" keywords size: "+keywords.length);
 			log.info(" existKeywords size: "+existKeywords.size());
 			if(existKeywords.isEmpty()){
-			    for(int i=0;i<keywords.length;i++){
-				list.add(keywords[i].trim());
-			    }
+				for (int i = 0; i < keywords.length; i++) {
+					list.add(keywords[i].trim());
+				}
 			}else{
 			    for(int i=0;i<keywords.length;i++){
-				for(String keyword:existKeywords){
-				    if(!keyword.equals(keywords[i].trim())){
-					list.add(keywords[i].trim());
-					break;
-				    }else{
-					log.info(" keywords[i]: "+keywords[i].trim());
-				    }
-				}
+					for (String keyword : existKeywords) {
+						if (!keyword.equals(keywords[i].trim())) {
+							list.add(keywords[i].trim());
+							break;
+						} else {
+							log.info(" keywords[i]: " + keywords[i].trim());
+						}
+					}
 			    }
 			}
-		}
-		else{
-		    log.info(" check keywords is null");
+		} else {
+			log.info(" check keywords is null");
 		}
 		return list;
 	}
@@ -1095,16 +1091,14 @@ public class AdAddAction extends BaseCookieAction{
         		    fileSize = String.valueOf(file.length() / 1024);
         		}
 
-
-                while(StringUtils.isBlank(adSeq)) {
-            		try {
-            		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-            		}
-            		catch (Exception e) {
-            		    log.error(e.getMessage());
-                        Thread.sleep(100);
-            		}
-                }
+				while (StringUtils.isBlank(adSeq)) {
+					try {
+						adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+					} catch (Exception e) {
+						log.error(e.getMessage());
+						Thread.sleep(100);
+					}
+				}
                 commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
 
         		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
@@ -1114,10 +1108,6 @@ public class AdAddAction extends BaseCookieAction{
 
 	    return SUCCESS;
 	}
-	
-	
-	
-	
 
 	/**
 	 * 儲存圖像上稿資料

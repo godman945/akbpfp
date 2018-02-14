@@ -128,6 +128,7 @@ public class AdEditAction extends BaseCookieAction{
 		}
 
 		pfpAdDetails = pfpAdDetailService.getPfpAdDetails(null, adSeq, null, null);
+//		System.out.println(">>>>>>pfpAdDetails.size():" + pfpAdDetails.size());
 		adDetailSeq = new String[7];
 		adDetailContent = new String[7];
 
@@ -141,47 +142,46 @@ public class AdEditAction extends BaseCookieAction{
 		for (int i = 0; i < pfpAdDetails.size(); i++) {
 			//log.info("pfpAdDetails.get(i).getAdDetailContent() = " + pfpAdDetails.get(i).getAdDetailContent());
 			String adDetailId = pfpAdDetails.get(i).getAdDetailId();
-			if(adDetailId != null && adDetailId.equals("img")) {
+			if (adDetailId != null && adDetailId.equals("img")) {
 				adDetailSeq[0] = pfpAdDetails.get(i).getAdDetailSeq();
 				adDetailContent[0] = pfpAdDetails.get(i).getAdDetailContent() + "?" + RandomStringUtils.randomAlphanumeric(10);
-				if(adDetailContent[0].indexOf("display:none") > 0) {
+				if (adDetailContent[0].indexOf("display:none") > 0) {
 					adDetailContent[0] = pfpAdDetails.get(i).getAdDetailContent();
 					imgFile = "";
 				} else {
 					imgFile = photoPath + adDetailContent[0].substring(adDetailContent[0].lastIndexOf(photoDbPath) + 4);
 				}
-			} else if(adDetailId != null && adDetailId.equals("title")) {
-				adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();;
+			} else if (adDetailId != null && adDetailId.equals("title")) {
+				adDetailSeq[1] = pfpAdDetails.get(i).getAdDetailSeq();
 				adDetailContent[1] = pfpAdDetails.get(i).getAdDetailContent();
-			} else if(adDetailId != null && adDetailId.equals("content")) {
-				adDetailSeq[2] = pfpAdDetails.get(i).getAdDetailSeq();;
+			} else if (adDetailId != null && adDetailId.equals("content")) {
+				adDetailSeq[2] = pfpAdDetails.get(i).getAdDetailSeq();
 				adDetailContent[2] = pfpAdDetails.get(i).getAdDetailContent();
-			} else if(adDetailId != null && adDetailId.equals("real_url")) {
+			} else if (adDetailId != null && adDetailId.equals("sales_price")) {
 				adDetailSeq[3] = pfpAdDetails.get(i).getAdDetailSeq();
+				adDetailContent[3] = pfpAdDetails.get(i).getAdDetailContent();
+			} else if (adDetailId != null && adDetailId.equals("promotional_price")) {
+				adDetailSeq[4] = pfpAdDetails.get(i).getAdDetailSeq();
+				adDetailContent[4] = pfpAdDetails.get(i).getAdDetailContent();
+			} else if (adDetailId != null && adDetailId.equals("real_url")) {
+				adDetailSeq[5] = pfpAdDetails.get(i).getAdDetailSeq();
 				String deCodeUrl = pfpAdDetails.get(i).getAdDetailContent();
 				try {
-				    deCodeUrl = HttpUtil.getInstance().convertRealUrl(deCodeUrl);
+					deCodeUrl = HttpUtil.getInstance().convertRealUrl(deCodeUrl);
+				} catch (Exception e) {
+					log.error(deCodeUrl, e);
 				}
-				catch (Exception e) {
-				    log.error(deCodeUrl, e);
-				}
-				adDetailContent[3] = deCodeUrl.replaceAll("http://", "");
-			} else if(adDetailId != null && adDetailId.equals("show_url")) {
-				adDetailSeq[4] = pfpAdDetails.get(i).getAdDetailSeq();
-				String show_url = pfpAdDetails.get(i).getAdDetailContent();
-				String deCodeUrl="";
-				if(show_url.indexOf("http://") < 0){
-				    deCodeUrl = HttpUtil.getInstance().convertRealUrl("http://" + show_url);
-			    	}else{
-				    deCodeUrl =HttpUtil.getInstance().convertRealUrl(show_url);
-				}
-				adDetailContent[4] = deCodeUrl;
-			} else if(adDetailId != null && adDetailId.equals("sales_price")) {
-				adDetailSeq[5] = pfpAdDetails.get(i).getAdDetailSeq();
-				adDetailContent[5] = pfpAdDetails.get(i).getAdDetailContent();
-			} else if(adDetailId != null && adDetailId.equals("promotional_price")) {
+				adDetailContent[5] = deCodeUrl.replaceAll("http://", "");
+			} else if (adDetailId != null && adDetailId.equals("show_url")) {
 				adDetailSeq[6] = pfpAdDetails.get(i).getAdDetailSeq();
-				adDetailContent[6] = pfpAdDetails.get(i).getAdDetailContent();
+				String show_url = pfpAdDetails.get(i).getAdDetailContent();
+				String deCodeUrl = "";
+				if (show_url.indexOf("http://") < 0) {
+					deCodeUrl = HttpUtil.getInstance().convertRealUrl("http://" + show_url);
+				} else {
+					deCodeUrl = HttpUtil.getInstance().convertRealUrl(show_url);
+				}
+				adDetailContent[6] = deCodeUrl;
 			}
 		}
 
