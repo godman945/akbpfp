@@ -22,7 +22,7 @@
 
 	//檢查商品原價與商品促銷價的值，只能輸入數字
 	$('#salesPrice, #promotionalPrice').bind('keyup', function() {
-		if(checkNum($(this).val())){
+		if(isNotNum($(this).val())){
 			alert('只能填寫數字');
 			$(this).val($(this).val().substr(0, $(this).val().length - 1));
 		}
@@ -459,13 +459,13 @@
 		}
 		
 		//商品原價檢核
-		if($("#salesPrice").val() != "" && checkNum($("#salesPrice").val())){
+		if($("#salesPrice").val() != "" && isNotNum($("#salesPrice").val())){
 			alert('商品原價只能填寫數字');
 			return false;
 		}
 		
 		//商品促銷價檢核
-		if($("#promotionalPrice").val() != "" && checkNum($("#promotionalPrice").val())){
+		if($("#promotionalPrice").val() != "" && isNotNum($("#promotionalPrice").val())){
 			alert('商品促銷價只能填寫數字');
 			return false;
 		}
@@ -669,6 +669,6 @@ function fileLoad(){
 }
 
 //檢查是否為數字，非數字回true
-function checkNum(val) {
+function isNotNum(val) {
 	return /[^0-9]$/.test(val);
 }

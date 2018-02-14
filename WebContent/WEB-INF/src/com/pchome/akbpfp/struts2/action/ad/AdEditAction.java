@@ -128,7 +128,6 @@ public class AdEditAction extends BaseCookieAction{
 		}
 
 		pfpAdDetails = pfpAdDetailService.getPfpAdDetails(null, adSeq, null, null);
-//		System.out.println(">>>>>>pfpAdDetails.size():" + pfpAdDetails.size());
 		adDetailSeq = new String[7];
 		adDetailContent = new String[7];
 
@@ -206,7 +205,7 @@ public class AdEditAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
-	// 新增圖文式廣告
+	// 修改圖文式廣告
 	@Transactional
 	public String doAdAdEditTmg() throws Exception {
 		log.info("doAdAdAddTmg => adSeq = " + adSeq);
@@ -273,9 +272,9 @@ public class AdEditAction extends BaseCookieAction{
 						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
 						String oldImgDteail = pfpAdDetail.getAdDetailContent();
 						pfpAdDetail.setAdDetailContent(imgDetail);
-						if(checkDetailChange(oldImgDteail,imgDetail)){
-							 detailAccesslogMessage += "廣告圖片；";
-						 }
+						if (checkDetailChange(oldImgDteail, imgDetail)) {
+							detailAccesslogMessage += "廣告圖片；";
+						}
 					} else {
 						if(StringUtils.isBlank(adDetailContent[0])) {
 							imgDetail = "img/public/na.gif\" style=\"display:none";
@@ -291,52 +290,53 @@ public class AdEditAction extends BaseCookieAction{
 					log.info("ex : " + ex);
 				}
 			} else {
-			    if(pfpAdDetail.getAdDetailId().equals("real_url") && !StringUtils.isBlank(adDetailContent[i])) {
-				 if(adDetailContent[i].indexOf("http") < 0 ) {
-				     adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
-				     //adDetailContent[i] = "http://" + adDetailContent[i];
-			     }else{
-			    	adDetailContent[i] = adDetailContent[i];
-			     }
-				 adDetailContent[i] = adDetailContent[i].trim();
-				 
-				 if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
-					 detailAccesslogMessage += "廣告連結網址；";
-				 }
-				 
-			    }
-				if(pfpAdDetail.getAdDetailId().equals("show_url")) {
-						
-				    if(adDetailContent[i].indexOf("http://") < 0 ) {
-					adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
-				    }else{
-					adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-				    }
-				    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
-				    adDetailContent[i] = adDetailContent[i].trim();
-				    
-				    if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
-						 detailAccesslogMessage += "廣告顯示網址；";
+				if (pfpAdDetail.getAdDetailId().equals("real_url") && !StringUtils.isBlank(adDetailContent[i])) {
+					if (adDetailContent[i].indexOf("http") < 0) {
+						adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
+						// adDetailContent[i] = "http://" + adDetailContent[i];
+					} else {
+						adDetailContent[i] = adDetailContent[i];
+					}
+					adDetailContent[i] = adDetailContent[i].trim();
+
+					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
+						detailAccesslogMessage += "廣告連結網址；";
 					}
 				}
-				if(pfpAdDetail.getAdDetailId().equals("title") ) {
-					adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
-					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
-					
-					if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
-						 detailAccesslogMessage += "廣告標題；";
+				
+				if (pfpAdDetail.getAdDetailId().equals("show_url")) {
+
+					if (adDetailContent[i].indexOf("http://") < 0) {
+						adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
+					} else {
+						adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+					}
+					adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
+					adDetailContent[i] = adDetailContent[i].trim();
+
+					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
+						detailAccesslogMessage += "廣告顯示網址；";
 					}
 				}
-				if(pfpAdDetail.getAdDetailId().equals("content") ) {
+				
+				if (pfpAdDetail.getAdDetailId().equals("title")) {
 					adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
 					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
-					
-					if(checkDetailChange(pfpAdDetail.getAdDetailContent(),adDetailContent[i])){
-						 detailAccesslogMessage += "廣告內容；";
+
+					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
+						detailAccesslogMessage += "廣告標題；";
+					}
+				}
+				
+				if (pfpAdDetail.getAdDetailId().equals("content")) {
+					adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
+					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
+
+					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
+						detailAccesslogMessage += "廣告內容；";
 					}
 				}
 				pfpAdDetail.setAdDetailContent(adDetailContent[i]);
-//				}
 			}
 
 			// 如果沒有圖檔資料，要用新增，有資料的部分，就用修改
@@ -346,8 +346,8 @@ public class AdEditAction extends BaseCookieAction{
 			    pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
 			}
 			
-			
 		}
+		
 		if(StringUtils.isNotBlank(detailAccesslogMessage)){
 			detailAccesslogMessage = detailAccesslogMessage.substring(0,detailAccesslogMessage.length() -1);
 			addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：" + detailAccesslogMessage);
@@ -376,8 +376,6 @@ public class AdEditAction extends BaseCookieAction{
 
 		return SUCCESS;
 	}
-
-	
 	
 	/*
 	 * 儲存影音上稿資料
@@ -562,8 +560,6 @@ public class AdEditAction extends BaseCookieAction{
             return SUCCESS;
         }
 		
-        
-        
         /*if(StringUtils.isBlank(imgTitle)){
             result = "請填寫圖片名稱！";
             return SUCCESS;
@@ -646,9 +642,9 @@ public class AdEditAction extends BaseCookieAction{
 			pfpAdDetail.setAdDetailContent(adLinkURL.trim());
 			pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
 			
-			if(checkDetailChange(oldRealUrl,adLinkURL.trim())){
-				addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：廣告連結網址"); 
-			 }
+			if (checkDetailChange(oldRealUrl, adLinkURL.trim())) {
+				addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：廣告連結網址");
+			}
 		}
 
 		//修改名稱
@@ -723,52 +719,52 @@ public class AdEditAction extends BaseCookieAction{
 				message = "請選擇關鍵字比對方式！";
 			}
 			
-			for(int i = 0; i < adDetailID.length; i++) {
+			for (int i = 0; i < adDetailID.length; i++) {
 				if (StringUtils.isEmpty(adDetailContent[i])) {
-					if(i == 0 && adStyle.equals("TMG")) {
-						//message = "請輸入" + adDetailName[i] + " ！";
+					if (i == 0 && adStyle.equals("TMG")) {
+						// message = "請輸入" + adDetailName[i] + " ！";
 					}
 				} else {
-					if(adDetailID[i].equals("title")) {
-						if(adDetailContent[i].length() > 17) {
+					if (adDetailID[i].equals("title")) {
+						if (adDetailContent[i].length() > 17) {
 							message = "廣告標題不可超過 17  字！";
 						}
-					} else if(adDetailID[i].equals("content")) {
-						if(adDetailContent[i].length() > 38) {
+					} else if (adDetailID[i].equals("content")) {
+						if (adDetailContent[i].length() > 38) {
 							message = "廣告內容不可超過 38  字！";
 						}
-					} else if(adDetailID[i].equals("real_url")) {
-					    	if(StringUtil.isEmpty(adDetailContent[i])){
-						    message = "請填寫廣告連結網址.";
+					} else if (adDetailID[i].equals("real_url")) {
+						if (StringUtil.isEmpty(adDetailContent[i])) {
+							message = "請填寫廣告連結網址.";
 						}
-						if(adDetailContent[i].length() > 1024) {
+						if (adDetailContent[i].length() > 1024) {
 							message = "廣告連結網址不可超過 1024  字！";
 						} else {
 							String url = adDetailContent[i];
 							int urlState = 0;
-							if(url.indexOf("http") != 0) {
-								url = "http://"+url;
+							if (url.indexOf("http") != 0) {
+								url = "http://" + url;
 							}
 							urlState = HttpUtil.getInstance().getStatusCode(HttpUtil.getInstance().getRealUrl(url));
-							if(urlState < 200 && urlState >= 300) {
+							if (urlState < 200 && urlState >= 300) {
 								message = "請輸入正確的廣告連結網址！";
 							}
 						}
-					} else if(adDetailID[i].equals("show_url")) {
-					    	if(StringUtil.isEmpty(adDetailContent[i])){
-					    	    message = "請填寫廣告顯示網址.";
-					    	}
-					    	String url = adDetailContent[i];
-					    	int urlState = 0;
-					    	if(url.indexOf("http://") < 0) {
-					    	    urlState = HttpUtil.getInstance().getStatusCode("http://"+url);
-					    	}else{
-					    	    urlState = HttpUtil.getInstance().getStatusCode(url);
-					    	}
+					} else if (adDetailID[i].equals("show_url")) {
+						if (StringUtil.isEmpty(adDetailContent[i])) {
+							message = "請填寫廣告顯示網址.";
+						}
+						String url = adDetailContent[i];
+						int urlState = 0;
+						if (url.indexOf("http://") < 0) {
+							urlState = HttpUtil.getInstance().getStatusCode("http://" + url);
+						} else {
+							urlState = HttpUtil.getInstance().getStatusCode(url);
+						}
 
-					    	if(urlState < 200 && urlState >= 300) {
-					    	    message = "請輸入正確的廣告顯示網址！";
-					    	}
+						if (urlState < 200 && urlState >= 300) {
+							message = "請輸入正確的廣告顯示網址！";
+						}
 					}
 				}
 			}
@@ -885,7 +881,6 @@ public class AdEditAction extends BaseCookieAction{
 		}
 	}
 	
-	
 	/**
 	 * 編輯影音廣告
 	 * */
@@ -973,7 +968,6 @@ public class AdEditAction extends BaseCookieAction{
 			adDetailContent[0] = "img/public/na.gif\" style=\"display:none";
 			imgFile = "";
 		}	
-		
 		
 		return SUCCESS;
 	}

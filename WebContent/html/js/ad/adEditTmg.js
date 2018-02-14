@@ -34,7 +34,7 @@
 
 	//檢查商品原價與商品促銷價的值，只能輸入數字
 	$('#salesPrice, #promotionalPrice').bind('keyup', function() {
-		if(checkNum($(this).val())){
+		if(isNotNum($(this).val())){
 			alert('只能填寫數字');
 			$(this).val($(this).val().substr(0, $(this).val().length - 1));
 		}
@@ -48,9 +48,11 @@
 		}
 		chk_adTitle();
 	});
+	
 	$('#adTitle').bind('keyup', function() {
 		chk_adTitle();
 	});
+	
 	function chk_adTitle() {
 		var back = false;
 		var maxlength = $('#adTitle').attr("maxlength");
@@ -91,9 +93,11 @@
 		}
 		chk_adContent();
 	});
+	
 	$('#adContent').bind('keyup', function() {
 		chk_adContent();
 	});
+	
 	function chk_adContent() {
 		var back = false;
 		var maxlength = $('#adContent').attr("maxlength");
@@ -186,9 +190,7 @@
 		setData();
 	}
 	
-	
 	//檢查廣告連結網址
-	
 	function chk_adLinkURLLink() {
 		urlCheck("adLinkURL",$("#adLinkURL").val());
 	}
@@ -207,6 +209,7 @@
 	$('#adShowURL').bind('keyup', function() {
 		chk_adShowURL();
 	});
+	
 	//檢查網域blur事件
 	$('#adShowURL').blur(function() {
 		if($("#adShowURL").val() == "show.pchome.com.tw"){
@@ -220,6 +223,7 @@
 			}
 		}
 	});
+	
 	//顯示網域提示字數與檢查
 	function chk_adShowURL() {
 		var maxlength = $('#adShowURL').attr("maxlength");
@@ -293,9 +297,6 @@
 //		chkWord($('#adShowURL'), "spanAdShowURL");
 	}
 
-	
-	
-	
 	function urlCheck(urlType,adUrl){
 		var adUrlHint = urlType != "adShowURL" ? "chkLinkURL" : "chkShowURL";
 		if(adUrl != "" && urlType.indexOf("show.pchome.com.tw") < 0) {
@@ -369,9 +370,9 @@
 				return false;
 			}
 		}
-		//連結網址字數檢查
-			chkWord($('#adShowURL'), "spanAdShowURL");
-			chkWord($('#adLinkURL'), "spanAdLinkURL");
+		// 連結網址字數檢查
+		chkWord($('#adShowURL'), "spanAdShowURL");
+		chkWord($('#adLinkURL'), "spanAdLinkURL");
 	}
 	
 	//點擊顯示網域
@@ -412,26 +413,26 @@
 			$("#chkShowURL").text("請填寫廣告顯示網址.");
 			$("#previewURL").text($("#chkShowURL").attr("placeholder"));
 			ShowUrl = false;
-			}
+		}
 	});
 
 	function chkWord(el, showId) {
 		var length = el.val().length;
 		var maxlength = el.attr("maxlength");
-		if(el.val() == el.attr("placeholder")) {
-			$('#'+showId).text("已輸入0字，剩" + maxlength + "字");
-		}else{
-			if(showId=="spanAdLinkURL"){
-				if(length <=1024){
-				$('#spanAdLinkURL').css("color","");
-				$('#'+showId).text("已輸入" + length + "字，剩" + (1024 - length) + "字");
-			}else{
-				$('#spanAdLinkURL').css("color","red");
-				$('#'+showId).text("已輸入" + length + "字，超過" + (length - 1024) + "字");
-				LinkUrl = false;
-			}
-			}else{
-				$('#'+showId).text("已輸入" + length + "字，剩" + (maxlength - length) + "字");
+		if (el.val() == el.attr("placeholder")) {
+			$('#' + showId).text("已輸入0字，剩" + maxlength + "字");
+		} else {
+			if (showId == "spanAdLinkURL") {
+				if (length <= 1024) {
+					$('#spanAdLinkURL').css("color", "");
+					$('#' + showId).text("已輸入" + length + "字，剩" + (1024 - length) + "字");
+				} else {
+					$('#spanAdLinkURL').css("color", "red");
+					$('#' + showId).text("已輸入" + length + "字，超過" + (length - 1024) + "字");
+					LinkUrl = false;
+				}
+			} else {
+				$('#' + showId).text("已輸入" + length + "字，剩" + (maxlength - length) + "字");
 			}
 		}
 	}
@@ -516,13 +517,13 @@
 		}
 		
 		//商品原價檢核
-		if($("#salesPrice").val() != "" && checkNum($("#salesPrice").val())){
+		if($("#salesPrice").val() != "" && isNotNum($("#salesPrice").val())){
 			alert('商品原價只能填寫數字');
 			return false;
 		}
 		
 		//商品促銷價檢核
-		if($("#promotionalPrice").val() != "" && checkNum($("#promotionalPrice").val())){
+		if($("#promotionalPrice").val() != "" && isNotNum($("#promotionalPrice").val())){
 			alert('商品促銷價只能填寫數字');
 			return false;
 		}
@@ -541,67 +542,69 @@
 			location.href="#uploadFile";
 			return false;
 		}
+		
 		if($("#sizeCheckDiv").css("display") == "block"){
 			location.href="#uploadFile";
 			return false;
 		}
 		
 		if(LinkUrl && ShowUrl && $("#adTitle").val()!="" && $("#adContent").val()!=""){
-				var adStatus = $("#adStatus").val();
-				var alertMsg = "";
-				if(adStatus == 3) {
-					alertMsg = "請再次確認您的廣告是否符合刊登規範\n\n提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
-				} else {
-					alertMsg = "PChome將會審核您編輯過的廣告。\n\n提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
-				}
-				if(confirm(alertMsg)) {
-					setData();
-					
-					if($("#oldImgFile").val() != "") {
-						if($("#imgFile").val() != $("#oldImgFile").val()){
-							$.ajax({
-								type: "POST",
-								url: "deleteIMG.html",
-								data: { imgFile: $("#oldImgFile").val()}
-							}).done(function( msg ) {
-								if(msg == "delFinish") {
-									
-								}
-							});
-						} 	
-					}
-					
-					// form submit
-					$("#modifyForm").attr("target", "_self");
-					$("#modifyForm").attr("action", "doAdAdEditTmg.html");
-					$("#modifyForm").submit();
-				}
-			} 
-			if(!LinkUrl){
-				if(errId != "#errAdLinkURL") {
-					pages--;
-					errId = "#errAdLinkURL";
-				}
-				location.href="#errAdLinkURL";
-			}else if(!ShowUrl){
-				if(errId != "#errAdShowURL") {
-					pages--;
-					errId = "#errAdShowURL";
-				}
-				location.href="#errAdShowURL";
-			}else if($("#adTitle").val().length == 0){
-				if(errId != "#errAdTitle") {
-					pages--;
-					errId = "#errAdTitle";
-				}
-				location.href="#errAdTitle";
-			}else if($("#adContent").val().length == 0){
-				if(errId != "#errAdContent") {
-					pages--;
-					errId = "#errAdContent";
-				}
-				location.href="#errAdContent";
+			var adStatus = $("#adStatus").val();
+			var alertMsg = "";
+			if(adStatus == 3) {
+				alertMsg = "請再次確認您的廣告是否符合刊登規範\n\n提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
+			} else {
+				alertMsg = "PChome將會審核您編輯過的廣告。\n\n提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 			}
+			if(confirm(alertMsg)) {
+				setData();
+				
+				if($("#oldImgFile").val() != "") {
+					if($("#imgFile").val() != $("#oldImgFile").val()){
+						$.ajax({
+							type: "POST",
+							url: "deleteIMG.html",
+							data: { imgFile: $("#oldImgFile").val()}
+						}).done(function( msg ) {
+							if(msg == "delFinish") {
+								
+							}
+						});
+					} 	
+				}
+				
+				// form submit
+				$("#modifyForm").attr("target", "_self");
+				$("#modifyForm").attr("action", "doAdAdEditTmg.html");
+				$("#modifyForm").submit();
+			}
+		}
+
+		if (!LinkUrl) {
+			if (errId != "#errAdLinkURL") {
+				pages--;
+				errId = "#errAdLinkURL";
+			}
+			location.href = "#errAdLinkURL";
+		} else if (!ShowUrl) {
+			if (errId != "#errAdShowURL") {
+				pages--;
+				errId = "#errAdShowURL";
+			}
+			location.href = "#errAdShowURL";
+		} else if ($("#adTitle").val().length == 0) {
+			if (errId != "#errAdTitle") {
+				pages--;
+				errId = "#errAdTitle";
+			}
+			location.href = "#errAdTitle";
+		} else if ($("#adContent").val().length == 0) {
+			if (errId != "#errAdContent") {
+				pages--;
+				errId = "#errAdContent";
+			}
+			location.href = "#errAdContent";
+		}
 	}
 
 	function setData() {
@@ -735,6 +738,6 @@ function fileLoad(){
 }
 
 //檢查是否為數字，非數字回true
-function checkNum(val) {
+function isNotNum(val) {
 	return /[^0-9]$/.test(val);
 }
