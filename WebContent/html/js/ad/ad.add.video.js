@@ -75,7 +75,7 @@ $(document).ready(function(){
 	
 	var videoUrl = null;
 	//檢查廣告網址blur事件
-	$("#adVideoURL").blur(function(alex5) {
+	$("#adVideoURL").blur(function() {
 		if($("#adVideoURL").val() == ""){
 			$("#adVideoURLMsg").css('color','red');
 			$("#adVideoURLMsg").text('請輸入影片網址');
@@ -156,6 +156,8 @@ $(document).ready(function(){
 				}
 			});
 		}
+	}).done(function (result) {
+		alex5();
 	});
 	
 	function alex5(){
