@@ -155,9 +155,14 @@ $(document).ready(function(){
 					//$('body').unblock();
 				}
 			});
-			$('body').unblock();
 		}
-	});
+	})(alex5);
+	
+	function alex5(){
+		console.log('AAA');
+		$('body').unblock();
+	}
+	
 	
 	var fileFinishSize = 0;
 	//存入上傳後的圖片陣列
