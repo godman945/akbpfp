@@ -156,7 +156,6 @@ $(document).ready(function(){
 				}
 			});
 		}
-	}).done(function (result) {
 		alex5();
 	});
 	
