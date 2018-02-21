@@ -144,7 +144,7 @@ $(document).ready(function(){
 						$('#sizeMsgSpan').removeAttr("style").show();
 						
 					}
-					$('body').unblock();
+					//$('body').unblock();
 				}else{
 					adPreviewVideoData = null;
 					videoUrl = null;
@@ -152,7 +152,7 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").html(result.msg);
 					$("#preViewArea").empty();
 					$('#adTitle').empty();
-					$('body').unblock();
+				//	$('body').unblock();
 				}
 			});
 		}
