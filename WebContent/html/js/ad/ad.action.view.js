@@ -165,8 +165,6 @@ function tableSorter(){
 
 // 處理廣告刊登選擇介面部分
 function dealWithAddAdMenu() {
-	// 處理跑版，先隱藏起來
-//	$(".menu-option-addad").hide();
 
 	// 調整介面位置在新增廣告按鈕下方
 	var addAdImg = $('.addAdImg').offset();
@@ -174,13 +172,6 @@ function dealWithAddAdMenu() {
 		top : addAdImg.top + $('.addAdImg').height(),
 		left : addAdImg.left
 	});
-	
-//	var addAdImgTop = $('.addAdImg').offset().top + 33;
-//	var addAdImgLeft = $('.addAdImg').offset().left;
-//	$(".menu-option-addad").css({
-//		top : addAdImgTop,
-//		left : addAdImgLeft
-//	});
 	
 	// 鼠標移到新增廣告圖片及選取介面時，介面都為顯示，移出則隱藏
 	$('.addAdImg, .menu-option-addad').mouseenter(function(){
