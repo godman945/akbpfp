@@ -154,9 +154,10 @@ $(document).ready(function(){
 					$('#adTitle').empty();
 					//$('body').unblock();
 				}
+				alex5();
 			});
 		}
-		alex5();
+		
 	});
 	
 	function alex5(){
