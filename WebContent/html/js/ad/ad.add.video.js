@@ -802,6 +802,8 @@ function autoPreview(objData){
 			$('#adViseoSize').append('<option value="640390">640 x 390</option>');
 		}
 	}
+	
+	console.log(":A:");
 }
 
 //影片存在建立預覽
