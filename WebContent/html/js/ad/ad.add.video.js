@@ -779,6 +779,11 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
+			
+//			this.onload = function(){
+//				
+//			}
+			
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -789,6 +794,8 @@ function autoPreview(objData){
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
+		}).load(function () { 
+			console.log('DDD');
 		});
 		$(".adVideoCheckArea").css('display','');
 		
@@ -803,7 +810,6 @@ function autoPreview(objData){
 		}
 	}
 	
-	console.log(":A:");
 }
 
 //影片存在建立預覽
