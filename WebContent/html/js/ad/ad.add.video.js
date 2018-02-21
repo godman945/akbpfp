@@ -156,7 +156,7 @@ $(document).ready(function(){
 				}
 			});
 		}
-	})(alex5);
+	}(alex5));
 	
 	function alex5(){
 		console.log('AAA');
