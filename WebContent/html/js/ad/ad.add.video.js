@@ -152,9 +152,10 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").html(result.msg);
 					$("#preViewArea").empty();
 					$('#adTitle').empty();
-				//	$('body').unblock();
+					//$('body').unblock();
 				}
 			});
+			$('body').unblock();
 		}
 	});
 	
