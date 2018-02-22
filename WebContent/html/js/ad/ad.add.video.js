@@ -789,7 +789,7 @@ function autoPreview(objData){
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
-		});
+		}(alex5));
 		$(".adVideoCheckArea").css('display','');
 		
 		if($($('#adViseoSize')[0]).children()[1] ==  undefined){
@@ -803,7 +803,7 @@ function autoPreview(objData){
 		}
 	}
 	
-}(alex5)
+}
 
 
 function alex5(){
