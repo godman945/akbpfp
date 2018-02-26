@@ -799,6 +799,16 @@ function autoPreview(objData){
 	
 	var a = document.getElementsByTagName('iframe');
 	console.log(a);
+	
+	
+	 for (var i = 0; i < document.getElementsByTagName('iframe').length; i++) {
+		 document.getElementsByTagName('iframe')[i].onload = function() {
+			 console.log(this);
+			 console.log('done');
+		 }
+	 }
+	
+	
 	$('body').unblock();
 }
 
