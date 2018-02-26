@@ -816,12 +816,12 @@ function autoPreview(objData){
 //	 $frms.load(function () {
 //         showMsg(this.id);
 //     });
-	$('body').unblock();
 }
 
 function showMsg(m) {
-	console.log(m);
-	console.log('SSSSSSSSSSSSSSSSSSss');
+	$('body').unblock();
+//	console.log(m);
+//	console.log('SSSSSSSSSSSSSSSSSSss');
 }
 
 //影片存在建立預覽
