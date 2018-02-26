@@ -796,8 +796,7 @@ function autoPreview(objData){
 		}
 	}
 	
-	console.log('AAA');
-	//$('body').unblock();
+	$('body').unblock();
 }
 
 
