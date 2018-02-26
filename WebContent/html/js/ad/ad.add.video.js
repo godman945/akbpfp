@@ -159,12 +159,6 @@ $(document).ready(function(){
 		
 	});
 	
-	function alex5(){
-		console.log('AAA');
-		$('body').unblock();
-	}
-	
-	
 	var fileFinishSize = 0;
 	//存入上傳後的圖片陣列
 	$(function () {
@@ -788,7 +782,10 @@ function autoPreview(objData){
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
-		}(alex5));
+		})alex(){
+			console.log('AAA');
+			$('body').unblock();
+		};
 		$(".adVideoCheckArea").css('display','');
 		
 		if($($('#adViseoSize')[0]).children()[1] ==  undefined){
