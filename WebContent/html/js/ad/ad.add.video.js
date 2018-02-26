@@ -796,6 +796,9 @@ function autoPreview(objData){
 		}
 	}
 	
+	
+	var a = document.getElementsByTagName('iframe');
+	console.log(a);
 	$('body').unblock();
 }
 
