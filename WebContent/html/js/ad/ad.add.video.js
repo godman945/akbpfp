@@ -796,33 +796,14 @@ function autoPreview(objData){
 		}
 	}
 	
-	
-//	var a = document.getElementsByTagName('iframe');
-//	console.log(a);
-	
-	
 	 for (var i = 0; i < document.getElementsByTagName('iframe').length; i++) {
 		 var $frms = $(document.getElementsByTagName('iframe')[i]);
 		 $frms.load(function () {
-			 showMsg(this.id);
+			 $('body').unblock();
 		 });
-//		 console.log(document.getElementsByTagName('iframe')[i]);
-//		 document.getElementsByTagName('iframe')[i].onload = function() {
-//			 console.log(this);
-//			 console.log('done');
-//		 }
 	 }
-//	 var $frms = $(document.getElementsByTagName('iframe')[0],document.getElementsByTagName('iframe')[1],document.getElementsByTagName('iframe')[2]);
-//	 $frms.load(function () {
-//         showMsg(this.id);
-//     });
 }
 
-function showMsg(m) {
-	$('body').unblock();
-//	console.log(m);
-//	console.log('SSSSSSSSSSSSSSSSSSss');
-}
 
 //影片存在建立預覽
 function appendVideoPreview(){
