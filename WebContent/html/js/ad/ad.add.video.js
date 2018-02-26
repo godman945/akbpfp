@@ -801,19 +801,24 @@ function autoPreview(objData){
 //	console.log(a);
 	
 	
-	 for (var i = 0; i < document.getElementsByTagName('iframe').length; i++) {
-		 console.log(document.getElementsByTagName('iframe')[i]);
-		 document.getElementsByTagName('iframe')[i].onload = function() {
-			 console.log(this);
-			 console.log('done');
-		 }
-	 }
-	
-	
+//	 for (var i = 0; i < document.getElementsByTagName('iframe').length; i++) {
+//		 console.log(document.getElementsByTagName('iframe')[i]);
+//		 document.getElementsByTagName('iframe')[i].onload = function() {
+//			 console.log(this);
+//			 console.log('done');
+//		 }
+//	 }
+	 var $frms = $("document.getElementsByTagName('iframe')[0],document.getElementsByTagName('iframe')[1]");
+	 $frms.load(function () {
+         showMsg(this.id);
+     });
 	$('body').unblock();
 }
 
-
+function showMsg(m) {
+	console.log(m);
+	console.log('SSSSSSSSSSSSSSSSSSss');
+}
 
 //影片存在建立預覽
 function appendVideoPreview(){
