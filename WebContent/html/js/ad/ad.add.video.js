@@ -799,8 +799,13 @@ function autoPreview(objData){
 	 for (var i = 0; i < document.getElementsByTagName('iframe').length; i++) {
 		 var $frms = $(document.getElementsByTagName('iframe')[i]);
 		 $frms.load(function () {
-			 $('body').unblock();
+			
 		 });
+		 setTimeout(function () {
+             $frms.load(function () {
+            	 $('body').unblock();
+             });
+         }, 1000);
 	 }
 }
 
