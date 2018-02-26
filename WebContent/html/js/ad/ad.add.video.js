@@ -142,7 +142,6 @@ $(document).ready(function(){
 						$('#imgPreview').removeAttr("style").show();
 						$('#bannerMsgSpan').removeAttr("style").show();
 						$('#sizeMsgSpan').removeAttr("style").show();
-						
 					}
 					//$('body').unblock();
 				}else{
@@ -152,9 +151,9 @@ $(document).ready(function(){
 					$("#adVideoURLMsg").html(result.msg);
 					$("#preViewArea").empty();
 					$('#adTitle').empty();
-					//$('body').unblock();
+					$('body').unblock();
 				}
-				alex5();
+				//alex5();
 			});
 		}
 		
@@ -803,12 +802,8 @@ function autoPreview(objData){
 		}
 	}
 	
-}
+}(alex5)
 
-
-function alex5(){
-	console.log('DDDDDD');
-}
 
 
 //影片存在建立預覽
