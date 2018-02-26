@@ -782,10 +782,7 @@ function autoPreview(objData){
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
-		})alex(){
-			console.log('AAA');
-			$('body').unblock();
-		};
+		});
 		$(".adVideoCheckArea").css('display','');
 		
 		if($($('#adViseoSize')[0]).children()[1] ==  undefined){
@@ -799,6 +796,8 @@ function autoPreview(objData){
 		}
 	}
 	
+	console.log('AAA');
+	//$('body').unblock();
 }
 
 
