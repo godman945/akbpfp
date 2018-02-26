@@ -801,17 +801,21 @@ function autoPreview(objData){
 //	console.log(a);
 	
 	
-//	 for (var i = 0; i < document.getElementsByTagName('iframe').length; i++) {
+	 for (var i = 0; i < document.getElementsByTagName('iframe').length; i++) {
+		 var $frms = $(document.getElementsByTagName('iframe')[i]);
+		 $frms.load(function () {
+			 showMsg(this.id);
+		 });
 //		 console.log(document.getElementsByTagName('iframe')[i]);
 //		 document.getElementsByTagName('iframe')[i].onload = function() {
 //			 console.log(this);
 //			 console.log('done');
 //		 }
-//	 }
-	 var $frms = $(document.getElementsByTagName('iframe')[0],document.getElementsByTagName('iframe')[1],document.getElementsByTagName('iframe')[2]);
-	 $frms.load(function () {
-         showMsg(this.id);
-     });
+	 }
+//	 var $frms = $(document.getElementsByTagName('iframe')[0],document.getElementsByTagName('iframe')[1],document.getElementsByTagName('iframe')[2]);
+//	 $frms.load(function () {
+//         showMsg(this.id);
+//     });
 	$('body').unblock();
 }
 
