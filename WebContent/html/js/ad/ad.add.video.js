@@ -802,7 +802,7 @@ function autoPreview(objData){
 		}
 	}
 	
-}(alex5)
+}
 
 
 
