@@ -808,7 +808,7 @@ function autoPreview(objData){
 //			 console.log('done');
 //		 }
 //	 }
-	 var $frms = $("document.getElementsByTagName('iframe')[0],document.getElementsByTagName('iframe')[1]");
+	 var $frms = $(document.getElementsByTagName('iframe')[0],document.getElementsByTagName('iframe')[1]);
 	 $frms.load(function () {
          showMsg(this.id);
      });
