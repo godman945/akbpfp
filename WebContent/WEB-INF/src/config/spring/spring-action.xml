@@ -249,6 +249,7 @@
 		<property name="controlPriceAPI" ref="ControlPriceAPI" />
 		<property name="pfbSizeService" ref="PfbSizeService" />
 		<property name="photoDbPath" value="${photo.db.path}" />
+		<property name="redisAPI" ref="RedisAPI" />
     </bean>
 
     <bean id="AdKeywordAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdKeywordAddAction" scope="prototype" >

@@ -73,6 +73,7 @@
     <definition name=".ad.ad.add.body" template="/ftl/ad/newAd/adAdAdd.ftl">
     	<put-attribute name="adTxt" value="/ftl/ad/newAd/adAdAddTxt.ftl" />
     	<put-attribute name="adTmg" value="/ftl/ad/newAd/adAdAddTmg.ftl" />
+    	<put-attribute name="adTmgManyURL" value="/ftl/ad/newAd/adAdAddTmgManyURL.ftl" />
     	<put-attribute name="adKeyword" value="/ftl/ad/newAd/adAdAddKeyword.ftl" />
     </definition>
 
@@ -318,4 +319,7 @@
     	<put-attribute name="page" value="default.page" />
     </definition>   
     
+    <!-- 圖文廣告-多筆網址刊登 -->
+    <definition name="ad.ajaxTable.searchURL" template="/ftl/ad/newAd/adAdAddTmgManyURLSearchDetailsTable.ftl" />
+    <!-- 圖文廣告-多筆網址刊登 END-->
 </tiles-definitions>

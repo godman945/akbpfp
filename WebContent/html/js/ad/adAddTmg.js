@@ -548,6 +548,9 @@
 			document.getElementsByName("adDetailContent")[6].value = $("#promotionalPrice").val();
 		}
 	}
+		
+	//處理頁籤部分
+	dealWithBookmark();
 });
 
 function ValidURL(url) {
@@ -671,4 +674,32 @@ function fileLoad(){
 //檢查是否為數字，非數字回true
 function isNotNum(val) {
 	return /[^0-9]$/.test(val);
+}
+
+// 處理圖文廣告頁籤部分
+function dealWithBookmark() {
+	// 依據網址參數判斷
+	var url = location.search;
+	if (url.indexOf("bookmark=fastURLAdAdd") > -1) {
+		// 目前為多筆網址刊登時
+		$('.fastURLAdAdd').closest(".addN-card-piece").addClass("selected-stat");
+		$('.adAdd').closest(".addN-card-piece").removeClass("selected-stat");
+		$('.ultext').show();
+		
+		//點擊一般廣告刊登等同點擊圖文廣告
+		$('.adAdd').click(function(){
+			window.location = "adAdAdd.html?adGroupSeq=" + $("#adGroupSeq").val() + "&adOperatingRule=MEDIA";
+		});
+	} else {
+		// 目前為一般刊登時
+		$('.adAdd').closest(".addN-card-piece").addClass("selected-stat");
+		$('.fastURLAdAdd').closest(".addN-card-piece").removeClass("selected-stat");
+		
+		// 點擊多筆網址刊登
+		$('.fastURLAdAdd').click(function(){
+			if(chkLeave()){
+				window.location = "adAdAdd.html?adGroupSeq=" + $("#adGroupSeq").val() + "&adOperatingRule=MEDIA&bookmark=fastURLAdAdd";
+			}
+		});
+	}
 }

@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.api.ControlPriceAPI;
+import com.pchome.akbpfp.api.RedisAPI;
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
 import com.pchome.akbpfp.db.pojo.AdmDefineAd;
 import com.pchome.akbpfp.db.pojo.PfbxSize;
@@ -154,6 +155,8 @@ public class AdAddAction extends BaseCookieAction{
 	private String adGroupChannelPrice;
 	//是否直立影音
 	private boolean verticalAd;
+	private String bookmark; //圖文廣告選擇哪個頁籤
+	private RedisAPI redisAPI;
 	
 	//新增廣告
 	public String AdAdAdd() throws Exception {
@@ -180,7 +183,13 @@ public class AdAddAction extends BaseCookieAction{
 		//多媒體廣告
 		if(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName().equals(adOperatingRule)){
 			saveAndNew = "";
-			if(adStyle == null)		adStyle = "TMG";
+			if(adStyle == null){
+				adStyle = "TMG";
+				//進入多筆網址刊登頁籤，則先清除redis上的資料
+				if("fastURLAdAdd".equals(bookmark)){
+					redisAPI.delRedisData("pfpcart_" + super.getCustomer_info_id());
+				}
+			}
 			PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 			String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
 			String adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
@@ -1765,6 +1774,22 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setVerticalAd(boolean verticalAd) {
 		this.verticalAd = verticalAd;
+	}
+
+	public String getBookmark() {
+		return bookmark;
+	}
+
+	public void setBookmark(String bookmark) {
+		this.bookmark = bookmark;
+	}
+
+	public RedisAPI getRedisAPI() {
+		return redisAPI;
+	}
+
+	public void setRedisAPI(RedisAPI redisAPI) {
+		this.redisAPI = redisAPI;
 	}
 
 }

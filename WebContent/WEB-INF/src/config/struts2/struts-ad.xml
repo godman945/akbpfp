@@ -242,6 +242,18 @@
     	
     <!-- 影音廣告  END-->
 
+	<!-- 圖文廣告-多筆網址刊登 -->
+	<action name="searchStoreProductURLAjax" class="AdSearchURLAjax" method="searchURLData">
+    	<interceptor-ref name="loginCheckStack" />
+    	<result type="tiles" name="success">ad.ajaxTable.searchURL</result>
+    </action>
+    
+<!--     <action name="searchStoreProductAddURLAjax" class="AdSearchURLAjax" method="searchAddURLData"> -->
+<!--     	<interceptor-ref name="loginCheckStack" /> -->
+<!--     	<result type="tiles" name="success">ad.ajaxTable.searchURL</result> -->
+<!--     </action> -->
+	<!-- 圖文廣告-多筆網址刊登 END-->
+	
 	<action name="adAdEdit" class="AdEditAction" method="AdAdEdit">
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
