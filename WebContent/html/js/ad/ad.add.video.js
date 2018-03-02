@@ -143,7 +143,7 @@ $(document).ready(function(){
 						$('#bannerMsgSpan').removeAttr("style").show();
 						$('#sizeMsgSpan').removeAttr("style").show();
 					}
-//					$('body').unblock();
+					$('body').unblock();
 				}else{
 					adPreviewVideoData = null;
 					videoUrl = null;
@@ -725,6 +725,10 @@ function callBlock(){
 /*動態新增影片預覽*/
 function autoPreview(objData){
 	
+	console.log('>>>>>>>>>>autoPreview');
+	
+	
+	
 	$("#adViseoSize").children().each(function(index,obj) {
 		if(obj.value != "0"){
 			obj.remove(index);
@@ -742,6 +746,8 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
+			console.log('>>>>>>>>>>>>>>>>直立影音');
+			
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -771,6 +777,9 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
+			
+			console.log('>>>>>>>>>>>>>>>>非直立影音');
+			
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
