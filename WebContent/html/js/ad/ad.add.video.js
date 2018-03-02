@@ -143,7 +143,7 @@ $(document).ready(function(){
 						$('#bannerMsgSpan').removeAttr("style").show();
 						$('#sizeMsgSpan').removeAttr("style").show();
 					}
-					$('body').unblock();
+//					$('body').unblock();
 				}else{
 					adPreviewVideoData = null;
 					videoUrl = null;
