@@ -834,6 +834,7 @@ function appendVideoPreview(){
 			});
 			
 			if(!createPreViewVideoExist){
+				console.log("TEST >>>>>>>>>>>");
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
 				var a = 
