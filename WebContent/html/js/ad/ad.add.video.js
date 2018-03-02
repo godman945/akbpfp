@@ -143,7 +143,7 @@ $(document).ready(function(){
 						$('#bannerMsgSpan').removeAttr("style").show();
 						$('#sizeMsgSpan').removeAttr("style").show();
 					}
-					//$('body').unblock();
+					$('body').unblock();
 				}else{
 					adPreviewVideoData = null;
 					videoUrl = null;
@@ -153,7 +153,6 @@ $(document).ready(function(){
 					$('#adTitle').empty();
 					$('body').unblock();
 				}
-				//alex5();
 			});
 		}
 		
@@ -795,18 +794,6 @@ function autoPreview(objData){
 			$('#adViseoSize').append('<option value="640390">640 x 390</option>');
 		}
 	}
-	
-	 for (var i = 0; i < document.getElementsByTagName('iframe').length; i++) {
-		 var $frms = $(document.getElementsByTagName('iframe')[i]);
-		 $frms.load(function () {
-			
-		 });
-		 setTimeout(function () {
-             $frms.load(function () {
-            	 $('body').unblock();
-             });
-         }, 1000);
-	 }
 }
 
 
