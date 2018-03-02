@@ -808,6 +808,9 @@ function autoPreview(objData){
 
 //影片存在建立預覽
 function appendVideoPreview(){
+	console.log("影片存在建立預覽");
+	
+	
 	if($("#AG").children().length == 0){
 		return false;
 	}
