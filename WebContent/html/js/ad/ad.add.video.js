@@ -797,11 +797,11 @@ function autoPreview(objData){
 			var iframe = document.createElement('iframe');
 //			iframe.src = 'data:text/html;charset=utf-8,' + encodeURI('adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true');
 			
-			
+			iframe.src = encodeURI('adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true');
 			iframe.onload = function() { 
 				$("#preViewArea").append(iframe);
 			};
-			iframe.src = encodeURI('adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true');
+			
 //			document.body.appendChild(iframe);
 			
 			
