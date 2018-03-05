@@ -724,17 +724,11 @@ function callBlock(){
 
 /*動態新增影片預覽*/
 function autoPreview(objData){
-	
-	console.log('>>>>>>>>>>autoPreview');
-	
-	
-	
 	$("#adViseoSize").children().each(function(index,obj) {
 		if(obj.value != "0"){
 			obj.remove(index);
 		}
 	});
-	
 	
 	//直式影片
 	if(objData.verticalAdFlag){
@@ -776,11 +770,8 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
-			
 			console.log('>>>>>>>>>>>>>>>>非直立影音');
-			console.log('>>>>>>>>>>>>>>>>key:'+key);
-			console.log(obj);
-			
+			console.log('<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>');
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -820,9 +811,6 @@ function autoPreview(objData){
 
 //影片存在建立預覽
 function appendVideoPreview(){
-	console.log("影片存在建立預覽");
-	
-	
 	if($("#AG").children().length == 0){
 		return false;
 	}
