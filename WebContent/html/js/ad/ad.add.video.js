@@ -791,8 +791,8 @@ function autoPreview(objData){
 //				   '</div>'+
 //				'</div>';
 //				$("#preViewArea").append(a);
-			var a = '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>';
-			$("#preViewArea").append(a);
+//			var a = '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>';
+			$("#preViewArea").append('<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>');
 			return false;
 				
 		});
