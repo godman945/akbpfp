@@ -746,17 +746,17 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
-			console.log('>>>>>>>>>>>>>>>>直立影音2222');
-//			var a = 
-//				'<div class="v_box">'+
-//				   '<div class="">'+
-//				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
-//				   '</div>'+
-//				   '<div  class="v_preview box_a_style">'+
-//				   '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>'+
-//				   '</div>'+
-//				'</div>';
-//				$("#preViewArea").append(a);
+			console.log('>>>>>>>>>>>>>>>>直立影音');
+			var a = 
+				'<div class="v_box">'+
+				   '<div class="">'+
+				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
+				   '</div>'+
+				   '<div  class="v_preview box_a_style">'+
+				   '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>'+
+				   '</div>'+
+				'</div>';
+				$("#preViewArea").append(a);
 		});
 		$(".adVideoCheckArea").css('display','');
 		
@@ -780,15 +780,15 @@ function autoPreview(objData){
 			console.log('>>>>>>>>>>>>>>>>非直立影音');
 			
 			var a = 
-				'<div class="v_box">'+
-				   '<div class="">'+
-				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
-				   '</div>'+
-				   '<div  class="v_preview box_a_style">'+
-				   '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>'+
-				   '</div>'+
-				'</div>';
-				$("#preViewArea").append(a);
+//				'<div class="v_box">'+
+//				   '<div class="">'+
+//				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
+//				   '</div>'+
+//				   '<div  class="v_preview box_a_style">'+
+//				   '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>'+
+//				   '</div>'+
+//				'</div>';
+//				$("#preViewArea").append(a);
 		});
 		$(".adVideoCheckArea").css('display','');
 		
