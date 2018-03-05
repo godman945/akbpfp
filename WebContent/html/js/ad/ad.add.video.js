@@ -779,7 +779,7 @@ function autoPreview(objData){
 			
 			console.log('>>>>>>>>>>>>>>>>非直立影音');
 			
-			var a = 
+//			var a = 
 //				'<div class="v_box">'+
 //				   '<div class="">'+
 //				      '<span><input type="checkbox" name="checkbox" id="checkbox_'+obj.width+obj.height+'" checked onclick="checkVideo(this)"/>'+obj.width+'x'+obj.height+'</span>'+
