@@ -59,6 +59,10 @@ public class HttpUtil {
     private static HttpUtil http = new HttpUtil();
     private DefaultHttpClient client;
 
+	public static HttpUtil getInstance() {
+		return http;
+	}
+    
 	public synchronized DefaultHttpClient getClient() {
 		return client;
 	}
@@ -162,10 +166,6 @@ public class HttpUtil {
 		return getUnicode(url.getHost()) + path;
 	}
     
-	public static HttpUtil getInstance() {
-		return http;
-	}
-
 	public synchronized String getResult(String url, String charSet) {
 		String result = null;
 
@@ -292,59 +292,51 @@ public class HttpUtil {
 		return statusCode;
 	}
     
-    private void configureClient() throws NoSuchAlgorithmException,
-	    KeyManagementException {
+	private void configureClient() throws NoSuchAlgorithmException, KeyManagementException {
 
-	HttpParams params = new BasicHttpParams();
-	HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
-	HttpProtocolParams.setContentCharset(params, "UTF-8");
-	HttpProtocolParams.setUserAgent(params, "TestAgent/1.1");
-	HttpProtocolParams.setUseExpectContinue(params, false);
-	HttpConnectionParams.setStaleCheckingEnabled(params, false);
-	ConnManagerParams.setMaxTotalConnections(params, 200);
-	ConnManagerParams.setMaxConnectionsPerRoute(params,
-		new ConnPerRouteBean(20));
-	// 設定連接超時3秒
-	HttpConnectionParams.setConnectionTimeout(params, 5 * 1000);
-	HttpConnectionParams.setSoTimeout(params, 5 * 1000);
+		HttpParams params = new BasicHttpParams();
+		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+		HttpProtocolParams.setContentCharset(params, "UTF-8");
+		HttpProtocolParams.setUserAgent(params, "TestAgent/1.1");
+		HttpProtocolParams.setUseExpectContinue(params, false);
+		HttpConnectionParams.setStaleCheckingEnabled(params, false);
+		ConnManagerParams.setMaxTotalConnections(params, 200);
+		ConnManagerParams.setMaxConnectionsPerRoute(params, new ConnPerRouteBean(20));
+		// 設定連接超時3秒
+		HttpConnectionParams.setConnectionTimeout(params, 5 * 1000);
+		HttpConnectionParams.setSoTimeout(params, 5 * 1000);
 
-	SSLContext sslContext = SSLContext.getInstance("TLS");
-	sslContext.init(null, new TrustManager[] { new X509TrustManager() {
-	    public void checkClientTrusted(X509Certificate[] chain,
-		    String authType) {
+		SSLContext sslContext = SSLContext.getInstance("TLS");
+		sslContext.init(null, new TrustManager[] { new X509TrustManager() {
+			public void checkClientTrusted(X509Certificate[] chain, String authType) {
 
-	    }
+			}
 
-	    public void checkServerTrusted(X509Certificate[] chain,
-		    String authType) {
+			public void checkServerTrusted(X509Certificate[] chain, String authType) {
 
-	    }
+			}
 
-	    public X509Certificate[] getAcceptedIssuers() {
-		return new X509Certificate[] {};
-	    }
-	} }, new SecureRandom());
+			public X509Certificate[] getAcceptedIssuers() {
+				return new X509Certificate[] {};
+			}
+		} }, new SecureRandom());
 
-	// Create and initialize scheme registry
-	SchemeRegistry schemeRegistry = new SchemeRegistry();
-	SSLSocketFactory sf = new SSLSocketFactory(sslContext,
-		SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-	schemeRegistry.register(new Scheme("http", PlainSocketFactory
-		.getSocketFactory(), 80));
-	// schemeRegistry.register(new Scheme("https",
-	// SSLSocketFactory.getSocketFactory(), 443));
-	schemeRegistry.register(new Scheme("https", sf, 443));
+		// Create and initialize scheme registry
+		SchemeRegistry schemeRegistry = new SchemeRegistry();
+		SSLSocketFactory sf = new SSLSocketFactory(sslContext, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+		schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+		// schemeRegistry.register(new Scheme("https",
+		// SSLSocketFactory.getSocketFactory(), 443));
+		schemeRegistry.register(new Scheme("https", sf, 443));
 
-	// Create an HttpClient with the ThreadSafeClientConnManager.
-	// This connection manager must be used if more than one thread will
-	// be using the HttpClient.
-	ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(
-		params, schemeRegistry);
+		// Create an HttpClient with the ThreadSafeClientConnManager.
+		// This connection manager must be used if more than one thread will
+		// be using the HttpClient.
+		ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(params, schemeRegistry);
 
-	client = new DefaultHttpClient(cm, params);
-	client.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(3,
-		true));
-    }
+		client = new DefaultHttpClient(cm, params);
+		client.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(3, true));
+	}
 
 	public void shutdownHttp() {
 		client.getConnectionManager().shutdown();
