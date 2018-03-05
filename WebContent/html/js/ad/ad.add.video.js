@@ -799,7 +799,7 @@ function autoPreview(objData){
 			iframe.onload = function(){
 				iframe.onload = null;
 			};
-			document.getElementById("preViewArea").appendChild(iframe);
+			document.body.appendChild(iframe);
 			iframe.src = utl;
 			
 			
