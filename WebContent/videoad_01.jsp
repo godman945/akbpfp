@@ -3,15 +3,13 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <script src="http://showstg.pchome.com.tw/pfp/pchomeFingerprint.js"></script>
 </head>
 <body>
-  <script>
-  window.onload=function(){
-	var a = new PCHOMEFingerprint().getCanvasFp();
-    var c = new PCHOMEFingerprint().x64hash128(a,1024);
-    document.write('<p>數位指紋: <strong id="fp">'+c+'</strong></p>');
-  }
-  </script>
+	<div id="alex">99999</div> 
 </body>
+
+<script src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+<script src="http://alex.pchome.com.tw:8080/akbpfp/test.js"></script>
+
+
 </html>
