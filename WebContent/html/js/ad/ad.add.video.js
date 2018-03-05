@@ -778,6 +778,8 @@ function autoPreview(objData){
 		$.each(iframeInfoMap, function(key, obj) {
 			
 			console.log('>>>>>>>>>>>>>>>>非直立影音');
+			console.log('>>>>>>>>>>>>>>>>key:'+key);
+			console.log('>>>>>>>>>>>>>>>>obj'+obj);
 			
 			var a = 
 				'<div class="v_box">'+
@@ -791,7 +793,7 @@ function autoPreview(objData){
 				$("#preViewArea").append(a);
 				
 				
-				result = false;
+				return false;
 				
 		});
 		$(".adVideoCheckArea").css('display','');
