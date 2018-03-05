@@ -798,7 +798,6 @@ function autoPreview(objData){
 			var iframe = document.createElement('iframe');
 			iframe.onload = function(){
 				iframe.onload = null;
-				msg.innerHTML += "-onload";
 			};
 			document.getElementById("preViewArea").appendChild(iframe);
 			iframe.src = utl;
