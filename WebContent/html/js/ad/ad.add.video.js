@@ -746,7 +746,7 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
-			console.log('>>>>>>>>>>>>>>>>直立影音');
+			console.log('>>>>>>>>>>>>>>>>直立影音2222');
 //			var a = 
 //				'<div class="v_box">'+
 //				   '<div class="">'+
