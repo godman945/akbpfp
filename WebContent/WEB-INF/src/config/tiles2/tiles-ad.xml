@@ -320,6 +320,6 @@
     </definition>   
     
     <!-- 圖文廣告-多筆網址刊登 -->
-    <definition name="ad.ajaxTable.searchURL" template="/ftl/ad/newAd/adAdAddTmgManyURLSearchDetailsTable.ftl" />
+<!--     <definition name="ad.ajaxTable.searchURL" template="/ftl/ad/newAd/adAdAddTmgManyURLSearchDetailsTable.ftl" /> -->
     <!-- 圖文廣告-多筆網址刊登 END-->
 </tiles-definitions>

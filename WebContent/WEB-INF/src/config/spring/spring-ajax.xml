@@ -100,7 +100,8 @@
     
     <!-- 圖文廣告-多筆網址刊登 -->
     <bean id="AdSearchURLAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdSearchURLAjax" scope="prototype" >
-    <property name="redisAPI" ref="RedisAPI" />
+<!--     <property name="redisAPI" ref="RedisAPI" /> -->
+    <property name="pfpAdManyURLSearchService" ref="PfpAdManyURLSearchService" />
 <!-- 	    <property name="jdbcEnvironment" value="${jdbc.driverUrl}" /> -->
 <!-- 	    <property name="pfpAdService" ref="PfpAdService" />  -->
     </bean>

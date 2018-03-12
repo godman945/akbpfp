@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.Character.UnicodeBlock;
+import java.net.HttpURLConnection;
 import java.net.IDN;
 import java.net.URI;
 import java.net.URL;
@@ -30,7 +31,6 @@ import org.apache.http.HttpStatus;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.ClientPNames;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.params.ConnPerRouteBean;
 import org.apache.http.conn.scheme.PlainSocketFactory;
@@ -46,8 +46,7 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.util.EntityUtils;
-import org.apache.http.client.utils.Punycode;
-import org.springframework.transaction.annotation.Transactional;
+
 /**
  * httpclient all settings
  * 
@@ -213,6 +212,38 @@ public class HttpUtil {
 		return result;
 	}
 
+	/**
+	 * 用get方式取得資料
+	 * @param url
+	 * @return 取得資料, 狀態碼
+	 * @throws IOException
+	 */
+	public synchronized StringBuffer doGet(String url) throws IOException {
+		URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        //默認值GET
+        con.setRequestMethod("GET");
+
+        //增加 Header
+        con.setRequestProperty("User-Agent", "Mozilla/5.0");
+
+        int responseCode = con.getResponseCode();
+//        System.out.println("\nSending 'GET' request to URL : " + url);
+//        System.out.println("Response Code : " + responseCode);
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+		return response.append(", status:" + responseCode);
+//		return response;
+	}
+	
     /**
      * @author weich
      * @param String

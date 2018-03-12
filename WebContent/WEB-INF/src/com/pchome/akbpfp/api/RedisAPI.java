@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
@@ -15,6 +18,8 @@ import redis.clients.jedis.ShardedJedisPool;
 
 public class RedisAPI {
 
+	protected Log log = LogFactory.getLog(this.getClass());
+	
 	private String environment;
 	private String redisServer;
 	private String redisTestServer;
@@ -107,20 +112,14 @@ public class RedisAPI {
 	 * @return
 	 */
 	public String getRedisData(String key) {
-		try {
-			if ("stg".equals(environment) || "prd".equals(environment)) { // 正式環境
-				// 正式機
-				JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
-				return jedis.get(key);
-			} else { // 測試環境
-				ShardedJedisPool pool = new ShardedJedisPool(jedisPoolConfig(), setJedisTestServerConfig());
-				ShardedJedis one = pool.getResource();
-				return one.get(key);
-			}
-		} catch (Exception e) {
-			System.out.println("取得redis資料錯誤:" + e.getMessage());
+		if ("stg".equals(environment) || "prd".equals(environment)) { // 正式環境
+			JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
+			return jedis.get(key);
+		} else { // 測試環境
+			ShardedJedisPool pool = new ShardedJedisPool(jedisPoolConfig(), setJedisTestServerConfig());
+			ShardedJedis jedis = pool.getResource();
+			return jedis.get(key);
 		}
-		return null;
 	}
 	
 	/**
