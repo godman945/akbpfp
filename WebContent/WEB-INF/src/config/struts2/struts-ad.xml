@@ -267,6 +267,14 @@
        	</result>
     </action>
     
+    <!-- 查詢結果修改廣告明細按鈕事件 -->
+    <action name="modifyADDetailAjax" class="AdSearchURLAjax" method="modifyADDetail" >
+    	<interceptor-ref name="loginCheckStack" />
+    	<result type="json" name="success">
+			<param name="root">dataMap</param>
+       	</result>
+    </action>
+    
 <!--     <action name="searchStoreProductAddURLAjax" class="AdSearchURLAjax" method="searchAddURLData"> -->
 <!--     	<interceptor-ref name="loginCheckStack" /> -->
 <!--     	<result type="tiles" name="success">ad.ajaxTable.searchURL</result> -->

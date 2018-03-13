@@ -23,6 +23,9 @@ public class PfpAdManyURLVO {
 	
 //	private int modifyPrice; //查詢結果修改促銷價
 	private String modifyPrice; //查詢結果修改促銷價
+	private String modifyADTitle; //查詢結果修改標題
+	private String modifyADContent; //查詢結果修改商品描述
+	private String modifyADShowURL; //查詢結果修改顯示連結
 	
 //	private StringBuffer adCrawlerResult;
 	private JSONArray apiJsonArray; //取得廣告爬蟲api資料
@@ -173,6 +176,30 @@ public class PfpAdManyURLVO {
 
 	public void setModifyPrice(String modifyPrice) {
 		this.modifyPrice = modifyPrice;
+	}
+
+	public String getModifyADTitle() {
+		return modifyADTitle;
+	}
+
+	public void setModifyADTitle(String modifyADTitle) {
+		this.modifyADTitle = modifyADTitle;
+	}
+
+	public String getModifyADContent() {
+		return modifyADContent;
+	}
+
+	public void setModifyADContent(String modifyADContent) {
+		this.modifyADContent = modifyADContent;
+	}
+
+	public String getModifyADShowURL() {
+		return modifyADShowURL;
+	}
+
+	public void setModifyADShowURL(String modifyADShowURL) {
+		this.modifyADShowURL = modifyADShowURL;
 	}
 
 }

@@ -217,7 +217,9 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		if("price".equals(modifyField)){
 			redisJsonObjectDetail.put("price", vo.getModifyPrice());
 		}else if("detail".equals(modifyField)){
-			
+			redisJsonObjectDetail.put("title", vo.getModifyADTitle());
+			redisJsonObjectDetail.put("description", vo.getModifyADContent());
+			redisJsonObjectDetail.put("show_url", vo.getModifyADShowURL());
 		}
 		
 		//取代資料

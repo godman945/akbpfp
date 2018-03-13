@@ -152,9 +152,9 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "						<div style='width:315px; height:85px; float:left;text-align:left; margin-left:12px;'>";
 		tempHtml += "							<img src='" + pic_url + "' style=' width:85px; height:85px; float:left; margin-right:5px; border:0'>";
 		tempHtml += "							<div>";
-		tempHtml += "								<h3 style='font-size:17px; font-weight:600; line-height:20px; margin:0; padding:0; color:rgb(0,69,178); word-break:break-all; display:inline-block; word-wrap:break-word; width:225px;'>" + title.substring(0, 17) + "</h3>";
-		tempHtml += "								<p style='font-size:12px; color:rgb(102,102,102); line-height:15px; margin:0; padding:0; word-break:break-all; display:inline-block; word-wrap:break-word; width:225px;'>" + description.substring(0, 36) + "</p>";
-		tempHtml += "								<span style='font-size:12px; color:rgb(0,107,182); line-height:15px; margin:0; padding:0; word-break:break-all; display:inline-block; word-wrap:break-word; width:225px;'>" + show_url + "</span>";
+		tempHtml += "								<h3 style='font-size:17px; font-weight:600; line-height:20px; margin:0; padding:0; color:rgb(0,69,178); word-break:break-all; display:inline-block; word-wrap:break-word; width:225px;' class='defaultADTitle' >" + title.substring(0, 17) + "</h3>";
+		tempHtml += "								<p style='font-size:12px; color:rgb(102,102,102); line-height:15px; margin:0; padding:0; word-break:break-all; display:inline-block; word-wrap:break-word; width:225px;' class='defaultADDescription' >" + description.substring(0, 36) + "</p>";
+		tempHtml += "								<span style='font-size:12px; color:rgb(0,107,182); line-height:15px; margin:0; padding:0; word-break:break-all; display:inline-block; word-wrap:break-word; width:225px;' class='defaultADShowURL' >" + show_url + "</span>";
 		tempHtml += "							</div>";
 		tempHtml += "						</div>";
 		tempHtml += "					</a>";
@@ -180,7 +180,7 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "							<span style='float:right' id='spanAdTitle'>已輸入0字，剩17字</span>";
 		tempHtml += "							<textarea style='width:96%;margin: 1px 0;padding: 3px;' class='inputPlaceholderTmgTextarea' id='adContent' name='adContent' maxlength='36' onkeypress='if(event.keyCode==13) return false;' placeholder='" + description.substring(0, 36) + "'></textarea>";
 		tempHtml += "							<span style='float:right' id='spanAdContent'>已輸入0字，剩36字</span>";
-		tempHtml += "							<input type='text' class='inputPlaceholderTmg' data-value='spanAdLinkURL' id='adLinkURL' name='adLinkURL' style='width: 96%;margin: 1px 0;padding: 3px;' value='" + show_url + "' placeholder='" + show_url + "'>";
+		tempHtml += "							<input type='text' class='inputPlaceholderTmg' data-value='spanAdLinkURL' id='adShowURL' name='adShowURL' style='width: 96%;margin: 1px 0;padding: 3px;' maxlength='30' placeholder='" + show_url + "'>";
 		tempHtml += "							<span style='float:right' id='spanAdShowURL'>已輸入0字，剩30字</span>";
 		tempHtml += "						</div>";
 		tempHtml += "					</div>";
@@ -215,7 +215,7 @@ function processSearchResultViewHtml(redisData){
 		//促銷價修改欄位部分
 		tempHtml += "		<div class='mod_ok ad-mod-hide'>";
 		tempHtml += "			<input class='mod-button ps btn_ok modifyPriceOKBtn' type='button' id='' value='確 認'>";
-		tempHtml += "			<p class='price_wd'>NT.<input type='text' class='modifyPrice' style='width:80px;margin: 1px 0; padding: 3px;text-align: center' value='" + price + "' placeholder='" + price + "' maxlength='8'></p>";
+		tempHtml += "			<p class='price_wd'>NT.<input type='text' class='modifyPrice' style='width:80px;margin: 1px 0; padding: 3px;text-align: center' placeholder='" + price + "' maxlength='8'></p>";
 		tempHtml += "		</div>";
 		tempHtml += "	</td>";
 		
@@ -368,7 +368,7 @@ function processResultViewBtn(){
 			    dataType: "json",
 			    url: "modifyPriceAjax.html",
 			    data: {
-			    	"searchURL": $(this).parent().parent().parent().find(".linkUrl").html(),
+			    	"searchURL": $(this).closest("tr").find(".linkUrl").html(),
 			    	"modifyPrice": keyinModifyPrice
 			    },
 			    timeout: 30000,
@@ -392,17 +392,94 @@ function processResultViewBtn(){
 		}
 	});
 	
-//	//修改明細資料按鈕事件
-//	$('.modifyADDetailEditBtn').unbind('click').click(function () {
-//		console.log("edit");
-//		$(this).parent().parent().find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
-//	});
-//	
-//	//修改明細資料點確定後事件
-//	$('.modifyADDetailOKBtn').unbind('click').click(function () {
-//		console.log("apapap");
-//		
-//	});
+	//修改明細資料按鈕事件
+	$('.modifyADDetailEditBtn').unbind('click').click(function () {
+		var _thisADDetailBlock = $(this).closest(".ad-mod"); //廣告明細欄位位置
+		
+		_thisADDetailBlock.find("#adTitle").val(_thisADDetailBlock.find("#adTitle").attr("placeholder"));
+		var adTitleLength = _thisADDetailBlock.find("#adTitle").val().length;
+		var adTitleMaxLength = _thisADDetailBlock.find("#adTitle").attr("maxlength");
+		_thisADDetailBlock.find("#spanAdTitle").html("已輸入" + adTitleLength + "字，剩" + (parseInt(adTitleMaxLength) - parseInt(adTitleLength)) + "字");
+		
+		_thisADDetailBlock.find("#adContent").val(_thisADDetailBlock.find("#adContent").attr("placeholder"));
+		var adContentLength = _thisADDetailBlock.find("#adContent").val().length;
+		var adContentMaxLength = _thisADDetailBlock.find("#adContent").attr("maxlength");
+		_thisADDetailBlock.find("#spanAdContent").html("已輸入" + adContentLength + "字，剩" + (parseInt(adContentMaxLength) - parseInt(adContentLength)) + "字");
+		
+		_thisADDetailBlock.find("#adShowURL").val(_thisADDetailBlock.find("#adShowURL").attr("placeholder"));
+		var adShowURLLength = _thisADDetailBlock.find("#adShowURL").val().length;
+		var adShowURLMaxLength = _thisADDetailBlock.find("#adShowURL").attr("maxlength");
+		_thisADDetailBlock.find("#spanAdShowURL").html("已輸入" + adShowURLLength + "字，剩" + (parseInt(adShowURLMaxLength) - parseInt(adShowURLLength)) + "字");
+		
+		_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
+	});
+	
+	//修改明細資料點確定後事件
+	$('.modifyADDetailOKBtn').unbind('click').click(function () {
+		var _thisADDetailBlock = $(this).closest(".ad-mod"); //廣告明細欄位位置
+//		console.log("AAA");
+		
+		var tempADTitle = _thisADDetailBlock.find("#adTitle").attr("placeholder");
+		var tempADContent = _thisADDetailBlock.find("#adContent").attr("placeholder");
+		var tempADShowURL = _thisADDetailBlock.find("#adShowURL").attr("placeholder");
+		var keyinADTitle = _thisADDetailBlock.find("#adTitle").val();
+		var keyinADContent = _thisADDetailBlock.find("#adContent").val();
+		var keyinADShowURL = _thisADDetailBlock.find("#adShowURL").val();
+		
+		//其中一個欄位有異動過,則更新
+		if(tempADTitle != keyinADTitle || tempADContent != keyinADContent || tempADShowURL != keyinADShowURL){
+		
+			$.ajax({
+			    type: "post",
+			    dataType: "json",
+			    url: "modifyADDetailAjax.html",
+			    data: {
+			    	"searchURL": $(this).closest("tr").find(".linkUrl").html(),
+			    	"modifyADTitle": keyinADTitle,
+			    	"modifyADContent": keyinADContent,
+			    	"modifyADShowURL": keyinADShowURL
+			    },
+			    timeout: 30000,
+			    error: function(xhr){
+			        alert('Ajax request 發生錯誤');
+			    },
+			    success:function(response, status){
+			    	if (response.status == "ERROR") {
+			    		alert(response.msg);
+			    	}else{
+			    		_thisADDetailBlock.find('.defaultADTitle').html(keyinADTitle);
+			    		_thisADDetailBlock.find("#adTitle").attr("placeholder", keyinADTitle);
+			    		_thisADDetailBlock.find('.defaultADDescription').html(keyinADContent);
+			    		_thisADDetailBlock.find("#adContent").attr("placeholder", keyinADContent);
+			    		_thisADDetailBlock.find('.defaultADShowURL').html(keyinADShowURL);
+			    		_thisADDetailBlock.find("#adShowURL").attr("placeholder", keyinADShowURL);
+			    		
+			    		_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
+			    	}
+				}
+			});
+		
+		}else{
+			_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
+		}
+	});
+	
+	//處理可輸入多少字文案
+	$('#adTitle, #adContent, #adShowURL').unbind('keyup').keyup(function () {
+//		console.log("AAA");
+		var valLength = $(this).val().length;
+		var valMaxlength = $(this).attr("maxlength");
+		var id = $(this).attr("id");
+		
+		if(id == "adTitle"){
+			$(this).parent().find("#spanAdTitle").html("已輸入" + valLength + "字，剩" + (parseInt(valMaxlength) - parseInt(valLength)) + "字");
+		}else if(id == "adContent"){
+			$(this).parent().find("#spanAdContent").html("已輸入" + valLength + "字，剩" + (parseInt(valMaxlength) - parseInt(valLength)) + "字");
+		}else if(id == "adShowURL"){
+			$(this).parent().find("#spanAdShowURL").html("已輸入" + valLength + "字，剩" + (parseInt(valMaxlength) - parseInt(valLength)) + "字");
+		}
+	});
+	
 }
 
 //檢查輸入網址是否正確

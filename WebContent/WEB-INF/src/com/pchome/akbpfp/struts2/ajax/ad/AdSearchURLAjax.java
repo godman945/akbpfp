@@ -21,8 +21,10 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	private int pageSize = 2; //每頁筆數(初始預設每頁N筆)
 	private int totalPage = 1; //總頁數(初始預設1頁)
 	
-//	private int modifyPrice; //ajax傳進來的修改促銷價
 	private String modifyPrice; //ajax傳進來的修改促銷價
+	private String modifyADTitle; //ajax傳進來的修改標題
+	private String modifyADContent; //ajax傳進來的修改商品描述
+	private String modifyADShowURL; //ajax傳進來的修改顯示連結
 	
 	private Map<String,Object> dataMap;
 	
@@ -139,6 +141,35 @@ public class AdSearchURLAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * 查詢結果修改廣告明細按鈕事件
+	 * @return
+	 * @throws JSONException 
+	 */
+	public String modifyADDetail() throws JSONException {
+		dataMap = new HashMap<String, Object>();
+		System.out.println("modifyADDetail");
+		
+		String custId = super.getCustomer_info_id();
+		PfpAdManyURLVO vo = new PfpAdManyURLVO();
+		vo.setId(custId);
+		vo.setSearchURL(searchURL);
+		vo.setModifyADTitle(modifyADTitle);
+		vo.setModifyADContent(modifyADContent);
+		vo.setModifyADShowURL(modifyADShowURL);
+		
+		pfpAdManyURLSearchService.getRedisURLData(vo);
+		
+		pfpAdManyURLSearchService.setModifyFieldData(vo, "detail");
+		if(StringUtils.isNotEmpty(vo.getMessage())){
+			dataMap.put("status", "ERROR");
+			dataMap.put("msg", vo.getMessage());
+			return SUCCESS;
+		}
+		
+		return SUCCESS;
+	}
+	
 	public String getSearchURL() {
 		return searchURL;
 	}
@@ -193,6 +224,30 @@ public class AdSearchURLAjax extends BaseCookieAction{
 
 	public void setModifyPrice(String modifyPrice) {
 		this.modifyPrice = modifyPrice;
+	}
+
+	public String getModifyADTitle() {
+		return modifyADTitle;
+	}
+
+	public void setModifyADTitle(String modifyADTitle) {
+		this.modifyADTitle = modifyADTitle;
+	}
+
+	public String getModifyADContent() {
+		return modifyADContent;
+	}
+
+	public void setModifyADContent(String modifyADContent) {
+		this.modifyADContent = modifyADContent;
+	}
+
+	public String getModifyADShowURL() {
+		return modifyADShowURL;
+	}
+
+	public void setModifyADShowURL(String modifyADShowURL) {
+		this.modifyADShowURL = modifyADShowURL;
 	}
 
 }
