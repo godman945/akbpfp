@@ -21,6 +21,9 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	private int pageSize = 2; //每頁筆數(初始預設每頁N筆)
 	private int totalPage = 1; //總頁數(初始預設1頁)
 	
+//	private int modifyPrice; //ajax傳進來的修改促銷價
+	private String modifyPrice; //ajax傳進來的修改促銷價
+	
 	private Map<String,Object> dataMap;
 	
 	/**
@@ -87,14 +90,12 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	 * @throws JSONException 
 	 */
 	public String changePageOrPageSize() throws JSONException{
-		System.out.println("changeLALALA");
 		dataMap = new HashMap<String, Object>();
 		
 		String custId = super.getCustomer_info_id();
 		PfpAdManyURLVO vo = new PfpAdManyURLVO();
 		vo.setPage(page);
 		vo.setPageSize(pageSize);
-//		vo.setTotalPage(totalPage);
 		vo.setId(custId);
 		pfpAdManyURLSearchService.getRedisURLData(vo);
 		
@@ -111,7 +112,33 @@ public class AdSearchURLAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 
-
+	/**
+	 * 查詢結果修改促銷價按鈕事件
+	 * @return
+	 * @throws JSONException 
+	 */
+	public String modifyPrice() throws JSONException {
+		dataMap = new HashMap<String, Object>();
+		System.out.println("modifyPrice");
+		
+		String custId = super.getCustomer_info_id();
+		PfpAdManyURLVO vo = new PfpAdManyURLVO();
+		vo.setId(custId);
+		vo.setModifyPrice(modifyPrice);
+		vo.setSearchURL(searchURL);
+		
+		pfpAdManyURLSearchService.getRedisURLData(vo);
+		
+		pfpAdManyURLSearchService.setModifyFieldData(vo, "price");
+		if(StringUtils.isNotEmpty(vo.getMessage())){
+			dataMap.put("status", "ERROR");
+			dataMap.put("msg", vo.getMessage());
+			return SUCCESS;
+		}
+		
+		return SUCCESS;
+	}
+	
 	public String getSearchURL() {
 		return searchURL;
 	}
@@ -159,5 +186,13 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	public void setDataMap(Map<String, Object> dataMap) {
 		this.dataMap = dataMap;
 	}
-	
+
+	public String getModifyPrice() {
+		return modifyPrice;
+	}
+
+	public void setModifyPrice(String modifyPrice) {
+		this.modifyPrice = modifyPrice;
+	}
+
 }

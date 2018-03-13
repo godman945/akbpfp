@@ -33,5 +33,13 @@ public interface IPfpAdManyURLSearchService extends IBaseService<PfpAdManyURLVO,
 	 * @throws JSONException 
 	 */
 	public void getRedisURLData(PfpAdManyURLVO vo) throws JSONException;
+
+	/**
+	 * 將修改的欄位更新至redis
+	 * @param vo
+	 * @param modifyField price:修改促銷價、detail:修改明細資料標題 描述 顯示網址
+	 * @throws JSONException
+	 */
+	public void setModifyFieldData(PfpAdManyURLVO vo, String modifyField) throws JSONException;
 	
 }

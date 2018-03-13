@@ -67,13 +67,8 @@
 		
 			<span class="pages">
 				<input type="hidden" id="contentPath" name="contentPath" value="<@s.url value="/html/img/"/>">
-			    <#-- <input type="hidden" id="hiddenPage" name="hiddenPage">
-				<input type="hidden" id="hiddenTotalPage" name="hiddenTotalPage">
-				<input type="hidden" id="hiddenPageSize" name="hiddenPageSize"> -->
-				
 			    <img style="vertical-align:middle" id="fpage" src="<@s.url value="/html/img/"/>page_first.gif" />
 				<img style="vertical-align:middle" id="ppage" src="<@s.url value="/html/img/"/>page_pre.gif" />
-					<#-- ${page}/${totalPage} -->
 					<span id="page"></span>/<span id="totalPage"></span> 
 				<img style="vertical-align:middle" id="npage" src="<@s.url value="/html/img/"/>page_next.gif" />
 				<img style="vertical-align:middle" id="epage" src="<@s.url value="/html/img/"/>page_end.gif" />
@@ -87,9 +82,6 @@
 					<option>20</option>
 					<option>50</option>
 					<option>100</option>
-				    <#-- <#list pageSizeList as ps>
-				        <option>${ps}</option>
-				    </#list> -->
 				</select> 
 				行
 			</span>			
@@ -112,8 +104,9 @@
 				</tr>
 			</thead>
 			
-			<tbody class="dataDetilTable" aria-live="polite" aria-relevant="all">
+			<tbody class="dataDetailTable" aria-live="polite" aria-relevant="all">
 				<#-- 每筆資料塞入部分  -->
+
 			</tbody>
 		</table>
 		
@@ -139,13 +132,6 @@
 		
 		<div style="clear:both; height:10px;></div>
 		<#-- 選擇上稿商品 end-->
-		
-		
-		<#-- 
-			<input type="hidden" id="formPage" name="page" value="${page}">	
-			<input type="hidden" id="fpageSize" name="pageSize" value="${pageSize}">
-			<input type="hidden" id="ftotalPage" name="totalPage" value="${totalPage}">
-		-->
 	</div>
 	
 	<div class="queryResult" style="height:50px;display:none;">

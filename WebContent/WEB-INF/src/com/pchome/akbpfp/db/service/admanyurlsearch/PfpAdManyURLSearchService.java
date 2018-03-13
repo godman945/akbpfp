@@ -90,19 +90,19 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		JSONArray jsonArray = new JSONArray();
 		
 		for (int arrayLength = 0; arrayLength < apiJsonArray.length(); arrayLength++) {
-			JSONObject apiJsonObjectDetil = new JSONObject(apiJsonArray.get(arrayLength).toString());
-			JSONObject jsonObjectDetil = new JSONObject();
-			jsonObjectDetil.put("pic_url", processPicURL(apiJsonObjectDetil.get("pic_url").toString()));
-			jsonObjectDetil.put("title", apiJsonObjectDetil.get("title").toString());
-			jsonObjectDetil.put("description", apiJsonObjectDetil.get("description").toString());
-			jsonObjectDetil.put("link_url", apiJsonObjectDetil.get("link_url").toString());
-			jsonObjectDetil.put("show_url", processShowURL(apiJsonObjectDetil.get("link_url").toString()));
-			jsonObjectDetil.put("sp_price", apiJsonObjectDetil.optString("sp_price"));
-			jsonObjectDetil.put("price", apiJsonObjectDetil.get("price").toString());
+			JSONObject apiJsonObjectDetail = new JSONObject(apiJsonArray.get(arrayLength).toString());
+			JSONObject jsonObjectDetail = new JSONObject();
+			jsonObjectDetail.put("pic_url", processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
+			jsonObjectDetail.put("title", apiJsonObjectDetail.get("title").toString());
+			jsonObjectDetail.put("description", apiJsonObjectDetail.get("description").toString());
+			jsonObjectDetail.put("link_url", apiJsonObjectDetail.get("link_url").toString());
+			jsonObjectDetail.put("show_url", processShowURL(apiJsonObjectDetail.get("link_url").toString()));
+			jsonObjectDetail.put("sp_price", apiJsonObjectDetail.optString("sp_price"));
+			jsonObjectDetail.put("price", apiJsonObjectDetail.get("price").toString());
 			//只有24h才有此參數
-			jsonObjectDetil.put("suggest", apiJsonObjectDetil.opt("suggest"));
+			jsonObjectDetail.put("suggest", apiJsonObjectDetail.opt("suggest"));
 			
-			jsonArray.put(jsonObjectDetil);
+			jsonArray.put(jsonObjectDetail);
 		}
 		return jsonArray;
 	}
@@ -118,9 +118,9 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 */
 	private JSONObject checkRedisData(JSONArray apiJsonArray, JSONObject redisJsonObject) throws JSONException {
 		for (int i = 0; i < apiJsonArray.length(); i++) {
-			JSONObject apiJsonObjectDetil = new JSONObject(apiJsonArray.get(i).toString());
+			JSONObject apiJsonObjectDetail = new JSONObject(apiJsonArray.get(i).toString());
 			//如果打api拿到的值，在redis資料找不到，則將此筆api資料加入
-			if(redisJsonObject.getJSONArray("products").toString().indexOf(apiJsonObjectDetil.get("link_url").toString()) == -1){
+			if(redisJsonObject.getJSONArray("products").toString().indexOf(apiJsonObjectDetail.get("link_url").toString()) == -1){
 				redisJsonObject.accumulate("products", apiJsonArray.get(i));
 			}
 		}
@@ -188,6 +188,50 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		vo.setRedisDataTotalSize(redisJsonArray.length());
 	}
 
+	/**
+	 * 將修改的欄位資料更新至redis
+	 * 尋找到該字串段落修改後取代
+	 * @throws JSONException 
+	 */
+	@Override
+	public void setModifyFieldData(PfpAdManyURLVO vo, String modifyField) throws JSONException {
+		JSONObject redisJsonObject = vo.getRedisJsonObject();
+		String products = redisJsonObject.getJSONArray("products").toString();
+		
+		//找到URL位置
+		int index = products.indexOf(vo.getSearchURL());
+		
+		//取得URL前後段字串
+		String startStr = products.substring(0, index);
+		String endStr = products.substring(index, products.length());
+		
+		//由前後段字串找到包url那一段的位置
+		int startStrIndex = startStr.lastIndexOf("{\"");
+		int endStrIndex = endStr.indexOf("\"}");
+		
+		//取得所需要斷落字串
+		String data = products.substring(startStrIndex, (startStr.length() + endStrIndex + 2));
+		
+		//修改資料
+		JSONObject redisJsonObjectDetail = new JSONObject(data.toString());
+		if("price".equals(modifyField)){
+			redisJsonObjectDetail.put("price", vo.getModifyPrice());
+		}else if("detail".equals(modifyField)){
+			
+		}
+		
+		//取代資料
+		JSONArray tempJsonArray = new JSONArray(products.replace(data, redisJsonObjectDetail.toString()));
+		redisJsonObject.put("products", tempJsonArray);
+		
+		//更新至redis
+		String status = redisAPI.setRedisDataDefaultTimeout("pfpcart_" + vo.getId(), redisJsonObject.toString());
+		if (!"OK".equals(status)) { // 存redis失敗
+			log.error("ModifyFieldData error:insert redisData err");
+			vo.setMessage("系統忙碌中，請稍後再試。");
+		}
+	}
+	
 	public RedisAPI getRedisAPI() {
 		return redisAPI;
 	}
@@ -195,5 +239,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	public void setRedisAPI(RedisAPI redisAPI) {
 		this.redisAPI = redisAPI;
 	}
+
+	
 
 }

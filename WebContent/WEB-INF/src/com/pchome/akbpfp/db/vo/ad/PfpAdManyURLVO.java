@@ -13,13 +13,16 @@ public class PfpAdManyURLVO {
 	private String id;
 	
 	//廣告明細
-	private String adDetilPicURL; // 圖片路徑
-	private String adDetilTitle; // 標題
-	private String adDetilDescription; // 商品描述
-	private String adDetilLinkURL; // 網頁連結
-	private String adDetilShowURL; // 顯示網址
-	private String adDetilSalePrice; // 原價
-	private String adDetilPrice; // 促銷價
+	private String adDetailPicURL; // 圖片路徑
+	private String adDetailTitle; // 標題
+	private String adDetailDescription; // 商品描述
+	private String adDetailLinkURL; // 網頁連結
+	private String adDetailShowURL; // 顯示網址
+	private String adDetailSalePrice; // 原價
+	private String adDetailPrice; // 促銷價
+	
+//	private int modifyPrice; //查詢結果修改促銷價
+	private String modifyPrice; //查詢結果修改促銷價
 	
 //	private StringBuffer adCrawlerResult;
 	private JSONArray apiJsonArray; //取得廣告爬蟲api資料
@@ -76,52 +79,52 @@ public class PfpAdManyURLVO {
 	}
 
 	//
-//	public String getAdDetilPicURL() {
-//		return adDetilPicURL;
+//	public String getAdDetailPicURL() {
+//		return adDetailPicURL;
 //	}
 //
-//	public void setAdDetilPicURL(String adDetilPicURL) {
-//		this.adDetilPicURL = adDetilPicURL;
+//	public void setAdDetailPicURL(String adDetailPicURL) {
+//		this.adDetailPicURL = adDetailPicURL;
 //	}
 //
-//	public String getAdDetilTitle() {
-//		return adDetilTitle;
+//	public String getAdDetailTitle() {
+//		return adDetailTitle;
 //	}
 //
-//	public void setAdDetilTitle(String adDetilTitle) {
-//		this.adDetilTitle = adDetilTitle;
+//	public void setAdDetailTitle(String adDetailTitle) {
+//		this.adDetailTitle = adDetailTitle;
 //	}
 //
-//	public String getAdDetilDescription() {
-//		return adDetilDescription;
+//	public String getAdDetailDescription() {
+//		return adDetailDescription;
 //	}
 //
-//	public void setAdDetilDescription(String adDetilDescription) {
-//		this.adDetilDescription = adDetilDescription;
+//	public void setAdDetailDescription(String adDetailDescription) {
+//		this.adDetailDescription = adDetailDescription;
 //	}
 //
-//	public String getAdDetilLinkURL() {
-//		return adDetilLinkURL;
+//	public String getAdDetailLinkURL() {
+//		return adDetailLinkURL;
 //	}
 //
-//	public void setAdDetilLinkURL(String adDetilLinkURL) {
-//		this.adDetilLinkURL = adDetilLinkURL;
+//	public void setAdDetailLinkURL(String adDetailLinkURL) {
+//		this.adDetailLinkURL = adDetailLinkURL;
 //	}
 //
-//	public String getAdDetilPrice() {
-//		return adDetilPrice;
+//	public String getAdDetailPrice() {
+//		return adDetailPrice;
 //	}
 //
-//	public void setAdDetilPrice(String adDetilPrice) {
-//		this.adDetilPrice = adDetilPrice;
+//	public void setAdDetailPrice(String adDetailPrice) {
+//		this.adDetailPrice = adDetailPrice;
 //	}
 //
-//	public String getAdDetilSalePrice() {
-//		return adDetilSalePrice;
+//	public String getAdDetailSalePrice() {
+//		return adDetailSalePrice;
 //	}
 //
-//	public void setAdDetilSalePrice(String adDetilSalePrice) {
-//		this.adDetilSalePrice = adDetilSalePrice;
+//	public void setAdDetailSalePrice(String adDetailSalePrice) {
+//		this.adDetailSalePrice = adDetailSalePrice;
 //	}
 //
 //	public int getPageTotalSize() {
@@ -132,12 +135,12 @@ public class PfpAdManyURLVO {
 //		this.pageTotalSize = pageTotalSize;
 //	}
 //
-//	public String getAdDetilShowURL() {
-//		return adDetilShowURL;
+//	public String getAdDetailShowURL() {
+//		return adDetailShowURL;
 //	}
 //
-//	public void setAdDetilShowURL(String adDetilShowURL) {
-//		this.adDetilShowURL = adDetilShowURL;
+//	public void setAdDetailShowURL(String adDetailShowURL) {
+//		this.adDetailShowURL = adDetailShowURL;
 //	}
 //
 	public String getMessage() {
@@ -163,7 +166,13 @@ public class PfpAdManyURLVO {
 	public void setRedisJsonObject(JSONObject redisJsonObject) {
 		this.redisJsonObject = redisJsonObject;
 	}
-	
-	
+
+	public String getModifyPrice() {
+		return modifyPrice;
+	}
+
+	public void setModifyPrice(String modifyPrice) {
+		this.modifyPrice = modifyPrice;
+	}
 
 }

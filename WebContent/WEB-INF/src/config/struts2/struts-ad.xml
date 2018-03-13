@@ -246,7 +246,6 @@
 	<!-- 輸入網址搜尋 -->
 	<action name="searchStoreProductURLAjax" class="AdSearchURLAjax" method="searchStoreProductURLData" >
     	<interceptor-ref name="loginCheckStack" />
-<!--     	<result type="tiles" name="success">ad.ajaxTable.searchURL</result> -->
     	<result type="json" name="success">
 			<param name="root">dataMap</param>
        	</result>
@@ -254,6 +253,14 @@
     
 	<!-- 切換頁及改變每頁顯示N筆 -->
     <action name="changePageOrPageSizeAjax" class="AdSearchURLAjax" method="changePageOrPageSize" >
+    	<interceptor-ref name="loginCheckStack" />
+    	<result type="json" name="success">
+			<param name="root">dataMap</param>
+       	</result>
+    </action>
+    
+    <!-- 查詢結果修改促銷價按鈕事件 -->
+    <action name="modifyPriceAjax" class="AdSearchURLAjax" method="modifyPrice" >
     	<interceptor-ref name="loginCheckStack" />
     	<result type="json" name="success">
 			<param name="root">dataMap</param>
