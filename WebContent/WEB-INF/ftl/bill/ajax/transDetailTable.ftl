@@ -5,7 +5,7 @@
 				<th class="header">日期</th>
 				<th class="header">明細內容</th>
 				<th class="header">加值金額</th>
-				<th class="header">稅金</th>
+				<th class="header">退款金額</th>
 				<th class="header">廣告支出回收</th>
 				<th class="header">廣告支出</th>
 				<th class="header">帳戶餘額</th>
@@ -20,7 +20,7 @@
 			<td height="30" class="td03">${vo.transDate!}</td>
 			<td height="30" class="td03">${vo.transContents!}</td>			
 			<td height="30" class="td01">NT$ ${vo.saveMoney?string('#,###')!}</td>
-			<td height="30" class="td01">NT$ ${vo.taxMoney?string('#,###')!}</td>
+			<td height="30" class="td01">NT$ ${vo.refundMoney?string('#,###')!}</td>
 			<td height="30" class="td01">NT$ ${vo.returnMoney?string('#,###')!}</td>
 			<td height="30" class="td01">NT$ ${vo.adSpentMoney?string('#,###')!}</td>
 			<td height="30" class="td01">NT$ ${vo.remain?string('#,###')!}</td>
@@ -32,7 +32,7 @@
 			<th>　</th>
 			<th><span class="header" id="totalCost">總費用</span></th>
 			<th><span class="header" id="totalAdd">加值：NT$ ${billVOList.totalSaveMoney?string('#,###')!}</span></th>
-			<th><span class="header" id="totalAdd">稅金：NT$ ${billVOList.totalTaxMoney?string('#,###')!}</span></th>
+			<th><span class="header" id="totalAdd">退款：NT$ ${billVOList.totalRefundMoney?string('#,###')!}</span></th>
 			<th><span class="header" id="totalIncome">廣告支出回收：NT$ ${billVOList.totalReturnMoney?string('#,###')!}</span></th>
 			<th><span class="header" id="totalExpense">廣告支出：NT$ ${billVOList.totalAdSpentMoney?string('#,###')!}</span></th>
 			<th><span class="header" id="totalRemain">帳戶餘額：NT$ ${billVOList.remain?string('#,###')!}</span></th>

@@ -9,6 +9,7 @@ public class BillVO {
 	private float returnMoney;					// 退回金額
 	private float adSpentMoney;					// 廣告花費
 	private float remain;						// 帳戶餘額
+	private float refundMoney;			     	// 預付、後付退款總額
 	
 	public String getTransDate() {
 		return transDate;
@@ -51,6 +52,12 @@ public class BillVO {
 	}
 	public void setRemain(float remain) {
 		this.remain = remain;
+	}
+	public float getRefundMoney() {
+		return refundMoney;
+	}
+	public void setRefundMoney(float refundMoney) {
+		this.refundMoney = refundMoney;
 	}
 	
 }
