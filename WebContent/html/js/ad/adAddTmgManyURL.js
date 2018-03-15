@@ -96,7 +96,11 @@ function searchStoreProductURLAjax(URL, errorMsgBlock){
 		    		processSearchResultViewHtml(JSON.parse(response.redisData));
 		    	}
 		    	
-				urlInfoMap[URL + "_ckeck_flag"] = "N";
+		    	/*先判斷是否有值，有值表示此網址已輸入過，則不修改flag，沒值則新增預設值。 
+		    	      避免已經勾選過的值，因再次輸入，就被改掉*/
+		    	if(!urlInfoMap[URL + "_ckeck_flag"]){
+		    		urlInfoMap[URL + "_ckeck_flag"] = "N";		    		
+		    	}
 			}
 			$('#loadingWaitBlock').unblock();
 		}
