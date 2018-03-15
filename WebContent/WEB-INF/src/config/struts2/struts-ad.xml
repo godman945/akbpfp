@@ -275,10 +275,6 @@
        	</result>
     </action>
     
-<!--     <action name="searchStoreProductAddURLAjax" class="AdSearchURLAjax" method="searchAddURLData"> -->
-<!--     	<interceptor-ref name="loginCheckStack" /> -->
-<!--     	<result type="tiles" name="success">ad.ajaxTable.searchURL</result> -->
-<!--     </action> -->
 	<!-- 圖文廣告-多筆網址刊登 END-->
 	
 	<action name="adAdEdit" class="AdEditAction" method="AdAdEdit">
@@ -683,5 +679,42 @@
      	</action>
     	
     	<!-- 圖片廣告 END -->
+    	
+    	<!-- 快速刊登廣告 START -->
+    	<action name="adFastPublishAction" class="AdAddAction" method="adFastPublishAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">.ad.fast.publish.add</result>
+			<result type="redirectAction" name="notOwner">
+				<param name="actionName">adActionView</param>  
+			</result>
+	    </action>
+	    
+	    <action name="adConfirmFastPublishUrlAjax" class="AdSearchURLAjax" method="adConfirmFastPublishUrl">
+       		<interceptor-ref name="loginCheckStack" />
+       		<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+     	
+     	<action name="adActionFastPublishUrlViewAction" class="AdActionAddAction" method="adActionFastPublishUrlView">
+       		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">.ad.action.view.fastpublishurl</result>
+			<result type="redirectAction" name="notOwner">
+				<param name="actionName">adActionView</param>  
+			</result>
+     	</action>
+     	
+     	<!-- 取得廣告活動設定資料 -->
+     	<action name="adActionInfoAjax" class="AdSearchURLAjax" method="adActionInfo">
+       		<interceptor-ref name="loginCheckStack" />
+       		<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+     	
+    	<!-- 快速刊登廣告 END -->
+    	
     </package>
 </struts>

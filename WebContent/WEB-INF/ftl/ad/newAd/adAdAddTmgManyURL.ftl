@@ -94,7 +94,7 @@
 				<tr role="row">
 					<th width="50" data-column="0" class="" scope="col" role="columnheader" aria-disabled="true" unselectable="on" aria-sort="none" aria-label="全選: No sort applied, sorting is disabled" style="user-select: none;">
 						<div class="tablesorter-header-inner">
-							<a href="#" onclick="checkAll()">全選</a>
+							<a href="javascript:void(0)" onclick="checkAll()">全選</a>
 						</div>
 					</th>
 					<th>廣告明細預覽</th>
@@ -135,6 +135,6 @@
 	</div>
 	
 	<div class="queryResult" style="height:50px;display:none;">
-		<span class="apply-element-txt">已選擇: <b class="checkboxCount-down">0</b> 筆商品物件刊登</span>
+		<span class="apply-element-txt">已選擇: <b class="checkboxCount-down"><div id="checkAdCount" style="display:inline;">0</div></b> 筆商品物件刊登</span>
 	</div>
 </div>

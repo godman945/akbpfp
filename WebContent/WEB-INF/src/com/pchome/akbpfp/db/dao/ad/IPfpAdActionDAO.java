@@ -112,4 +112,7 @@ public interface IPfpAdActionDAO extends IBaseDAO<PfpAdAction,String>{
 	public List<PfpAdAction> findBroadcastAdAction(String customerInfoId);
 
     public int getAdGroupCounts(String adActionSeq) throws Exception;
+    
+    //查詢多媒體廣告活動
+  	public List<PfpAdAction> getAdActionByCustomerInfoIdAndMediaAd(String customerInfoId) throws Exception;
 }

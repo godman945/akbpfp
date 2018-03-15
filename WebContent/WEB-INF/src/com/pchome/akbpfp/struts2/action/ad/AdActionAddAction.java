@@ -41,9 +41,10 @@ public class AdActionAddAction extends BaseCookieAction{
 	private static final long serialVersionUID = 1L;
 
 	private String message = "";
-
+	private String customerInfoId;
 	private String adActionSeq;
 	private String adActionName;
+	private String adGroupName;
 	private String adActionDesc;
 	private String adActionStartDate;
 	private String adActionEndDate;
@@ -90,6 +91,14 @@ public class AdActionAddAction extends BaseCookieAction{
 	private String pvLimitSelect;
 	private String[] websiteAddCategory;
 	private String oldWebsiteCategory;
+	//廣告形式
+	private int defaultAdType;
+	//廣告樣式
+	private String defaultAdOperatingRule;
+	//廣告播放裝置
+	private int defaultAdDevice;
+	
+	private List<PfpAdAction> pfpAdActionList;
 	
 	private Map<String,String> adPvLimitStyleMap;
 	private Map<String,String> adPvLimitPeriodMap;
@@ -526,6 +535,24 @@ public class AdActionAddAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	
+	/*
+	 * 快速上稿活動起始畫面
+	 */
+	public String adActionFastPublishUrlView() throws Exception{
+		pfpAdActionList = pfpAdActionService.getAdActionByCustomerInfoIdAndMediaAd(super.getCustomer_info_id());
+		adActionName = "PCHOME聯播網廣告";
+		adGroupName = "PCHOME聯播網廣告";
+		customerInfoId = super.getCustomer_info_id();
+		if(pfpAdActionList.size() > 0){
+			PfpAdAction pfpAdAction = pfpAdActionList.get(0);
+			defaultAdType = pfpAdAction.getAdType();
+			defaultAdOperatingRule = pfpAdAction.getAdOperatingRule();
+			defaultAdDevice = pfpAdAction.getAdDevice();
+		}
+		return SUCCESS;
+	}
+	
 	private String reversionString(String timeString){
 		
 		String time = "";
@@ -815,6 +842,54 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public void setAdOperatingRule(String adOperatingRule) {
 		this.adOperatingRule = adOperatingRule;
+	}
+
+	public String getAdGroupName() {
+		return adGroupName;
+	}
+
+	public void setAdGroupName(String adGroupName) {
+		this.adGroupName = adGroupName;
+	}
+
+	public List<PfpAdAction> getPfpAdActionList() {
+		return pfpAdActionList;
+	}
+
+	public void setPfpAdActionList(List<PfpAdAction> pfpAdActionList) {
+		this.pfpAdActionList = pfpAdActionList;
+	}
+
+	public String getCustomerInfoId() {
+		return customerInfoId;
+	}
+
+	public void setCustomerInfoId(String customerInfoId) {
+		this.customerInfoId = customerInfoId;
+	}
+
+	public int getDefaultAdType() {
+		return defaultAdType;
+	}
+
+	public void setDefaultAdType(int defaultAdType) {
+		this.defaultAdType = defaultAdType;
+	}
+
+	public String getDefaultAdOperatingRule() {
+		return defaultAdOperatingRule;
+	}
+
+	public void setDefaultAdOperatingRule(String defaultAdOperatingRule) {
+		this.defaultAdOperatingRule = defaultAdOperatingRule;
+	}
+
+	public int getDefaultAdDevice() {
+		return defaultAdDevice;
+	}
+
+	public void setDefaultAdDevice(int defaultAdDevice) {
+		this.defaultAdDevice = defaultAdDevice;
 	}
 
 }

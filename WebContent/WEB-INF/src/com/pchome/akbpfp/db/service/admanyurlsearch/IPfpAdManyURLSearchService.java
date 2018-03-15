@@ -42,4 +42,9 @@ public interface IPfpAdManyURLSearchService extends IBaseService<PfpAdManyURLVO,
 	 */
 	public void setModifyFieldData(PfpAdManyURLVO vo, String modifyField) throws JSONException;
 	
+	/**
+	 * 確認需要新增url至redis
+	 * */
+	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo,String userId) throws Exception;
+	
 }

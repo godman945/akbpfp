@@ -1,5 +1,7 @@
 package com.pchome.akbpfp.db.service.admanyurlsearch;
 
+import java.util.Iterator;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -233,6 +235,54 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			vo.setMessage("系統忙碌中，請稍後再試。");
 		}
 	}
+	
+	
+	/*
+	 * 確認新增至redis網址
+	 * */
+	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo,String userId) throws Exception{
+		String result = "更新成功";
+		String redisKey = "pfpcart_" + userId;
+		String redisData = redisAPI.getRedisData(redisKey);
+		JSONObject redisJson = new JSONObject(redisData);
+		JSONArray productsJsonArray = redisJson.getJSONArray("products");
+		
+		JSONObject adFastPublishUrlInfoJson = new JSONObject(adFastPublishUrlInfo); 
+		
+		Iterator adFastPublishUrlInfoJsoIterator = adFastPublishUrlInfoJson.keys();
+        while (adFastPublishUrlInfoJsoIterator.hasNext()) {
+        	String key = adFastPublishUrlInfoJsoIterator.next().toString();
+        	
+        	if(adFastPublishUrlInfoJson.get(key).equals("Y")){
+        		for (int i = 0; i < productsJsonArray.length(); i++) {
+	        		JSONObject realSaveRedisJson = (JSONObject) productsJsonArray.get(i);
+	        		if(realSaveRedisJson.get("link_url").equals(key.replace("_ckeck_flag", ""))){
+	        			realSaveRedisJson.put("add", "Y");
+	        			break;
+	        		}
+				}
+        	}
+        	
+        	if(adFastPublishUrlInfoJson.get(key).equals("N")){
+        		for (int i = 0; i < productsJsonArray.length(); i++) {
+	        		JSONObject realSaveRedisJson = (JSONObject) productsJsonArray.get(i);
+	        		if(realSaveRedisJson.get("link_url").equals(key.replace("_ckeck_flag", ""))){
+	        			realSaveRedisJson.put("add", "N");
+	        			break;
+	        		}
+				}
+        	}
+        }
+        
+        
+        redisJson.put("products", productsJsonArray);
+        redisAPI.setRedisDataDefaultTimeout("pfpcart_" + userId, redisJson.toString());
+       
+		return result;
+		
+	}
+	
+	
 	
 	public RedisAPI getRedisAPI() {
 		return redisAPI;

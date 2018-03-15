@@ -322,4 +322,22 @@
     <!-- 圖文廣告-多筆網址刊登 -->
 <!--     <definition name="ad.ajaxTable.searchURL" template="/ftl/ad/newAd/adAdAddTmgManyURLSearchDetailsTable.ftl" /> -->
     <!-- 圖文廣告-多筆網址刊登 END-->
+    
+    <!-- 快速刊登廣告 START -->
+    <definition name=".ad.fast.publish.add" extends="ad.nocss.layout">
+        <put-attribute name="body" value=".ad.fast.add.body" />
+    </definition>
+    
+    <definition name=".ad.fast.add.body" template="/ftl/ad/newAd/adAdAdd.ftl">
+    	<put-attribute name="fastPublish" value="/ftl/ad/newAd/adAdAddTmgManyURL.ftl" />
+    </definition>
+    
+    
+    <definition name=".ad.action.view.fastpublishurl" extends="ad.layout">
+        <put-attribute name="body" value="/ftl/ad/newAd/adActionFastPublishUrl.ftl" />
+    </definition>
+    
+    <!-- 快速刊登廣告 END -->
+    
+    
 </tiles-definitions>

@@ -41,6 +41,7 @@ var page = 1; //目前頁數
 var totalPage; //總頁數
 
 //店家刊登商品網址，查詢網址內容
+var urlInfoMap = new Map();
 function searchStoreProductURLAjax(URL, errorMsgBlock){
 	//一開始先將錯誤訊息欄位清空、隱藏
 	if (errorMsgBlock == "storeProductURL") {
@@ -94,6 +95,7 @@ function searchStoreProductURLAjax(URL, errorMsgBlock){
 		    		//處理查詢結果畫面
 		    		processSearchResultViewHtml(JSON.parse(response.redisData));
 		    	}
+		    	urlInfoMap[URL+"_ckeck_flag"] = "N";
 			}
 			$('#loadingWaitBlock').unblock();
 		}
@@ -134,17 +136,17 @@ function processSearchResultViewHtml(redisData){
 		//組每一筆資料
 	    tempHtml += "<tr role='row'>";
 		//checkbox區塊
-		tempHtml += "	<td><input type='checkbox' id='chkN_0' name='chkN'></td>";
+		tempHtml += "	<td><input type='checkbox' id='chkN_0' name='chkN' onclick='checkAd(this,\""+link_url+"\");'></td>";
 		//廣告明細區塊
 		tempHtml += "	<td height='35' class='td02'>";
 		tempHtml += "		<div class='ad-mod'>";
 		tempHtml += "			<div class='mod_edit'>";
 		tempHtml += "				<input class='mod-button btn_edit modifyADDetailEditBtn' type='button' id='' style='z-index:9' value='修 改'>";
 		tempHtml += "				<div style='min-width: 400px;width:337px; height:85px; border:0px rgb(205,205,205) solid; padding:15px 5px 15px 5px; font-family:微軟正黑體,Arial; position:relative; '>";
-		tempHtml += "					<div id='logooff' style='position:absolute;top:0; left:0;width:20px; height:18px; line-height:18px; background:rgb(175,175,175); cursor:pointer;' onmouseover='doOver()'>";
+		tempHtml += "					<div id='logooff_"+index+"' style='position:absolute;top:0; left:0;width:20px; height:18px; line-height:18px; background:rgb(175,175,175); cursor:pointer;' onmouseover='logoEvent(\""+index+"\","+'"mouseover"'+")'>";
 		tempHtml += "						<img src='https://kdpic.pchome.com.tw/img/public/adlogo_off.png' width='20' height='18' border='0'>";
 		tempHtml += "					</div>";
-		tempHtml += "					<div id='logoshow' style='display:none;position:absolute;top:0; left:0; height:18px; line-height:18px; background:rgb(175,175,175); cursor:pointer;' onmouseout='doOut()'>";
+		tempHtml += "					<div id='logoshow_"+index+"' style='display:none;position:absolute;top:0; left:0; height:18px; line-height:18px; background:rgb(175,175,175); cursor:pointer;' onmouseout='logoEvent(\""+index+"\","+'"mouseout"'+")'>";
 		tempHtml += "						<a href='https://show.pchome.com.tw' style='text-decoration:none' target='_new'><span style='font-size:12px;color:#FFF;text-shadow:-1px -1px rgb(152,152,152); padding-left:52px; background:url(https://kdpic.pchome.com.tw/img/public/adlogo_on.png) no-repeat;'>提供的廣告</span></a>";
 		tempHtml += "					</div>";
 		
@@ -226,6 +228,79 @@ function processSearchResultViewHtml(redisData){
 	$('.dataDetailTable').html(tempHtml);
 	
 	processResultViewBtn();
+}
+
+
+//廣告logo控制
+function logoEvent(id,behavior){
+	if(behavior == 'mouseover'){
+		$($("#logooff_"+id)[0]).css('display','none');
+		$($("#logoshow_"+id)[0]).css('display','');
+	}else{
+		$($("#logooff_"+id)[0]).css('display','');
+		$($("#logoshow_"+id)[0]).css('display','none');
+	}
+}
+
+//勾選全部廣告
+function checkAll(){
+	var checkAdCount = 0;
+	$("#tableView input[type=checkbox]").each(function(index, obj){
+		checkAdCount = checkAdCount + 1;
+		$(obj).prop('checked', true);
+	});
+	
+	$.each(urlInfoMap, function(index, obj){
+//		console.log(index);
+//		console.log(obj);
+		urlInfoMap[index] = "Y";
+	})
+	
+	$("#checkAdCount").text(checkAdCount);
+	
+}
+
+//點擊勾選廣告
+function checkAd(obj,link_url){
+	var checkAdCount = parseInt($("#checkAdCount").text());
+	if($(obj).prop('checked') == true){
+		checkAdCount = checkAdCount + 1;
+		urlInfoMap[link_url+"_ckeck_flag"] = "Y";
+	}
+	if($(obj).prop('checked') == false){
+		checkAdCount = checkAdCount - 1;
+		urlInfoMap[link_url+"_ckeck_flag"] = "N";
+	}
+	$("#checkAdCount").text(checkAdCount);
+}
+
+//點擊下一步
+function fastPublishNext(){
+	console.log(JSON.stringify(urlInfoMap));
+	$.ajax({
+	    type: "post",
+	    dataType: "json",
+	    url: "adConfirmFastPublishUrlAjax.html",
+	    data: {
+	    	"adFastPublishUrlInfo": JSON.stringify(urlInfoMap)
+	    },
+	    timeout: 30000,
+	    error: function(xhr){
+//	    	$('#loadingWaitBlock').unblock();
+	        alert('Ajax request 發生錯誤');
+	    },
+	    success: function(response, status){
+	    	console.log(response);
+	    	window.location="adActionFastPublishUrlViewAction.html";
+		}
+	});
+	
+	
+	
+	
+	
+	
+//	$("#alex").text(urlInfo);
 }
 
 //切換上下頁或每頁顯示N筆時

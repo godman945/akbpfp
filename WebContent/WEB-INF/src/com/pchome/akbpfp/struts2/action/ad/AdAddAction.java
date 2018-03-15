@@ -1119,6 +1119,18 @@ public class AdAddAction extends BaseCookieAction{
 	}
 
 	/**
+	 * 快速上稿
+	 * */
+	public String adFastPublishAction(){
+		log.info(">>>>>> START adFastPublishAction");
+		bookmark = "fastURLAdAdd";
+		adActionName = "PCHOME聯播網廣告";
+		adGroupName = "PCHOME聯播網廣告";
+//		adStyle = "TMG";
+		return SUCCESS;
+	}
+
+	/**
 	 * 儲存圖像上稿資料
 	 * */
 	public String uploadImgSave() throws Exception{

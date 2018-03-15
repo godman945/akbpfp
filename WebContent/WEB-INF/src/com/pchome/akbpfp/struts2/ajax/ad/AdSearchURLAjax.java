@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.service.admanyurlsearch.IPfpAdManyURLSearchService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdManyURLVO;
@@ -25,9 +26,10 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	private String modifyADTitle; //ajax傳進來的修改標題
 	private String modifyADContent; //ajax傳進來的修改商品描述
 	private String modifyADShowURL; //ajax傳進來的修改顯示連結
-	
+	private String actionName; //廣告活動名稱
+	private String customerInfoId; //登入帳號id
 	private Map<String,Object> dataMap;
-	
+	private String adFastPublishUrlInfo;
 	/**
 	 * 1.檢查輸入網址，打廣告爬蟲api取得資料
 	 * 2.廣告爬蟲api取得資料與redis內的資料比對，是否重複，存入redis前先將資料整理後再存
@@ -170,6 +172,27 @@ public class AdSearchURLAjax extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * 快速上稿
+	 * */
+	public String adConfirmFastPublishUrl() throws Exception{
+		log.info(">>>>>> START adFastPublishAction");
+		dataMap = new HashMap<String, Object>();
+		dataMap.put("alex", "CCC");
+		pfpAdManyURLSearchService.adConfirmFastPublishUrl(adFastPublishUrlInfo,super.getCustomer_info_id());
+		return SUCCESS;
+	}
+	/**
+	 * 廣告活動設定資訊
+	 * */
+	public String adActionInfo() throws Exception{
+		dataMap = new HashMap<String, Object>();
+		
+//		dataMap.
+		
+		return SUCCESS;
+	}
+	
 	public String getSearchURL() {
 		return searchURL;
 	}
@@ -249,5 +272,16 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	public void setModifyADShowURL(String modifyADShowURL) {
 		this.modifyADShowURL = modifyADShowURL;
 	}
+
+	public String getAdFastPublishUrlInfo() {
+		return adFastPublishUrlInfo;
+	}
+
+	public void setAdFastPublishUrlInfo(String adFastPublishUrlInfo) {
+		this.adFastPublishUrlInfo = adFastPublishUrlInfo;
+	}
+
+
+
 
 }
