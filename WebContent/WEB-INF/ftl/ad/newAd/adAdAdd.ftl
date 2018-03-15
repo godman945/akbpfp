@@ -25,18 +25,7 @@
 			<div class="cal">帳戶名稱：${customer_info_title!}</div>
 			<img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">新增廣告
 		</h2>
-
-		<!-- 快速網址刊登 START-->
-		<div class="addN-container">
-				<div class="addN-card-piece selected-stat">
-					<div class="tag fastURLAdAdd">多筆網址刊登</div>
-				</div>
-				<div class="ultext" style="">僅需提供您的商品賣場網址或單一商品網址，系統自動會幫您載回商品資訊輕鬆上稿</div>
-		</div>
 		
-		<!-- 快速網址刊登 END-->
-
-
 		<#if adStyle == "VIDEO">
 			<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作影音廣告</b>  &gt; 廣告完成 </div>
 		<#else>
@@ -67,6 +56,41 @@
 		</#if>
 
     	<div class="grtba">
+        
+        <#--
+        <#if adStyle != "VIDEO">
+			<div class="grtba">
+				
+				<h4 style="display:none;">建立廣告</h4>
+				<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">
+					<tbody>
+						<tr>
+							<th height="35"><span class="t_s02">* </span>選擇廣告分類</th>
+							<td>
+								<select id="adClass" name="adClass">
+									<option value="0">選擇分類</option>
+									<option value="1" selected>分類1</option>
+									<option value="2">分類2</option>
+									<option value="3">分類3</option>
+									<option value="4">分類4</option>
+									<option value="5">分類5</option>
+									<option value="6">分類6</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th height="35"><span class="t_s02">* </span>廣告樣式</th>
+							<td>
+								<input type="radio" id="adStyle" name="adStyle" value="TXT" onclick="setAdStyle(this.value);" <#if adStyle == "TXT">checked</#if>>文字廣告
+								<input type="radio" id="adStyle" name="adStyle" value="TMG" onclick="setAdStyle(this.value);" <#if adStyle == "TMG">checked</#if>>圖文廣告
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+		</#if>
+		-->
+
 		<#-- 判斷adStyle，插入相對應的細部畫面 -->
 		<#if adStyle == "TXT">
 			<#-- adTxt start -->
@@ -92,27 +116,19 @@
 			</div>
 			<#-- adKeyword end -->
 		</#if>
-		
-		<!-- 送出區塊 START-->
-			<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
-	        <#if bookmark??>
-		        <center style="margin-top:10px;">
-					<input type="button" id="cancel" value="取 消"> 
-					<input type="button" id="save" value="下一步" onclick="fastPublishNext();"> 
-				</center>
-	        	<#else>
-	        	<center style="margin-top:10px;">
-					<input type="button" id="cancel" value="取 消"> 
-					<input type="button" id="save" value="送出審核"> 
-				</center>
-				<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroupSeq!}">
-				<input type="hidden" id="saveAndNew" name="saveAndNew" value="${saveAndNew!}">
-				<input type="hidden" id="ulTmpName" name="ulTmpName" value="${ulTmpName!}">
-				<input type="hidden" id="imgFile" name="imgFile" value="${imgFile!}">
-		        <input type="hidden" id="backPage" name="backPage" value="${backPage!}">
-		        <input type="hidden" id="adType" name="adType" value="${adType!}">
-	        </#if>
-        <!-- 送出區塊 END-->
+
+		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
+		<center style="margin-top:10px;">
+			<input type="button" id="cancel" value="取 消"> 
+			<input type="button" id="save" value="送出審核"> 
+			<#-- <input type="button" id="saveNew" value="儲存後再新增廣告"> --> 
+		</center>
+		<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroupSeq!}">
+		<input type="hidden" id="saveAndNew" name="saveAndNew" value="${saveAndNew!}">
+		<input type="hidden" id="ulTmpName" name="ulTmpName" value="${ulTmpName!}">
+		<input type="hidden" id="imgFile" name="imgFile" value="${imgFile!}">
+        <input type="hidden" id="backPage" name="backPage" value="${backPage!}">
+        <input type="hidden" id="adType" name="adType" value="${adType!}">
 	</form>
 	<iframe id="uploadIMG" name="uploadIMG" style="display:none;height:150px;width:600px"></iframe>
 	<iframe id="doAdd" name="doAdd" style="display:none;height:150px;width:600px"></iframe>
