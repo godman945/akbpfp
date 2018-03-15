@@ -135,6 +135,6 @@
 	</div>
 	
 	<div class="queryResult" style="height:50px;display:none;">
-		<span class="apply-element-txt">已選擇: <b class="checkboxCount-down"><div id="checkAdCount" style="display:inline;">0</div></b> 筆商品物件刊登</span>
+		<span class="apply-element-txt">已選擇: <b class="checkboxCount-down">0</b> 筆商品物件刊登</span>
 	</div>
 </div>
