@@ -56,40 +56,6 @@
 		</#if>
 
     	<div class="grtba">
-        
-        <#--
-        <#if adStyle != "VIDEO">
-			<div class="grtba">
-				
-				<h4 style="display:none;">建立廣告</h4>
-				<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">
-					<tbody>
-						<tr>
-							<th height="35"><span class="t_s02">* </span>選擇廣告分類</th>
-							<td>
-								<select id="adClass" name="adClass">
-									<option value="0">選擇分類</option>
-									<option value="1" selected>分類1</option>
-									<option value="2">分類2</option>
-									<option value="3">分類3</option>
-									<option value="4">分類4</option>
-									<option value="5">分類5</option>
-									<option value="6">分類6</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th height="35"><span class="t_s02">* </span>廣告樣式</th>
-							<td>
-								<input type="radio" id="adStyle" name="adStyle" value="TXT" onclick="setAdStyle(this.value);" <#if adStyle == "TXT">checked</#if>>文字廣告
-								<input type="radio" id="adStyle" name="adStyle" value="TMG" onclick="setAdStyle(this.value);" <#if adStyle == "TMG">checked</#if>>圖文廣告
-							</td>
-						</tr>
-					</tbody>
-				</table>
-				
-		</#if>
-		-->
 
 		<#-- 判斷adStyle，插入相對應的細部畫面 -->
 		<#if adStyle == "TXT">
@@ -129,6 +95,8 @@
 		<input type="hidden" id="imgFile" name="imgFile" value="${imgFile!}">
         <input type="hidden" id="backPage" name="backPage" value="${backPage!}">
         <input type="hidden" id="adType" name="adType" value="${adType!}">
+        <input type="hidden" id="adClass" name="adClass" value="1">
+        <input type="hidden" id="adStyle" name="adStyle" value="${adStyle!}">
 	</form>
 	<iframe id="uploadIMG" name="uploadIMG" style="display:none;height:150px;width:600px"></iframe>
 	<iframe id="doAdd" name="doAdd" style="display:none;height:150px;width:600px"></iframe>

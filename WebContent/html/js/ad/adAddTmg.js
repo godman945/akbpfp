@@ -542,10 +542,10 @@
 			document.getElementsByName("adDetailContent")[0].value = document.getElementById('uploadFile').value;
 			document.getElementsByName("adDetailContent")[1].value = $('#adTitle').val();
 			document.getElementsByName("adDetailContent")[2].value = $('#adContent').val();
-			document.getElementsByName("adDetailContent")[3].value = $('#adLinkURL').val();
-			document.getElementsByName("adDetailContent")[4].value = $("#adShowURL").val();
-			document.getElementsByName("adDetailContent")[5].value = $('#salesPrice').val();
-			document.getElementsByName("adDetailContent")[6].value = $("#promotionalPrice").val();
+			document.getElementsByName("adDetailContent")[3].value = $('#salesPrice').val();
+			document.getElementsByName("adDetailContent")[4].value = $("#promotionalPrice").val();
+			document.getElementsByName("adDetailContent")[5].value = $('#adLinkURL').val();
+			document.getElementsByName("adDetailContent")[6].value = $("#adShowURL").val();
 		}
 	}
 		
