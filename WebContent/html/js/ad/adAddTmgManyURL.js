@@ -253,21 +253,6 @@ function checkAll() {
 	$("[class^=checkboxCount]").text(parseInt($(".checkboxCount-up").text()) + parseInt(notCheckCount));
 }
 
-////勾選全部廣告
-//function checkAll() {
-//	//目前幾筆是未勾選
-//	var notCheckCount = $('#tableView input[type=checkbox]:not(:checked)').length;
-//	
-//	//改為勾選及資料放入map
-//	$("#tableView input[type=checkbox]").each(function(index, obj) {
-//		$(obj).prop('checked', true);
-//		urlInfoMap[$(obj).prop('value') + "_ckeck_flag"] = "Y";
-//	});
-//	
-//	//目前勾選筆數 + 未勾選筆數
-//	$("[class^=checkboxCount]").text(parseInt($(".checkboxCount-up").text()) + parseInt(notCheckCount));
-//}
-
 //點擊勾選廣告
 function checkAd(obj, link_url) {
 	//目前勾選筆數
@@ -286,40 +271,6 @@ function checkAd(obj, link_url) {
 	// 模糊查詢
 	$("[class^=checkboxCount]").text(checkAdCount);
 }
-
-//勾選全部廣告
-//function checkAll() {
-//	var checkAdCount = 0;
-//	$("#tableView input[type=checkbox]").each(function(index, obj) {
-//		checkAdCount = checkAdCount + 1;
-//		$(obj).prop('checked', true);
-//	});
-//
-//	$.each(urlInfoMap, function(index, obj) {
-//		// console.log(index);
-//		// console.log(obj);
-//		urlInfoMap[index] = "Y";
-//	})
-//
-//	// 模糊查詢
-//	$("[class^=checkboxCount]").text(checkAdCount);
-//	// $("#checkAdCount").text(checkAdCount);
-//
-//}
-//
-////點擊勾選廣告
-//function checkAd(obj, link_url) {
-//	var checkAdCount = parseInt($("#checkAdCount").text());
-//	if ($(obj).prop('checked') == true) {
-//		checkAdCount = checkAdCount + 1;
-//		urlInfoMap[link_url + "_ckeck_flag"] = "Y";
-//	}
-//	if ($(obj).prop('checked') == false) {
-//		checkAdCount = checkAdCount - 1;
-//		urlInfoMap[link_url + "_ckeck_flag"] = "N";
-//	}
-//	$("#checkAdCount").text(checkAdCount);
-//}
 
 //點擊下一步
 function fastPublishNext(){
