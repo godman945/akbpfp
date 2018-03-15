@@ -4,8 +4,8 @@
     	<tr height="35"> 
 				<th class="header">日期</th>
 				<th class="header">明細內容</th>
-				<th class="header">加值金額</th>
-				<th class="header">退款金額</th>
+				<th class="header">加值金額(含稅)</th>
+				<th class="header">退款金額(含稅)</th>
 				<th class="header">廣告支出回收</th>
 				<th class="header">廣告支出</th>
 				<th class="header">帳戶餘額</th>

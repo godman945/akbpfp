@@ -67,7 +67,7 @@ public class BillAjax extends BaseCookieAction{
 			content.append("\n\n");
 			content.append("日期範圍,"+startDate+"~"+endDate);
 			content.append("\n\n");
-			content.append("日期,明細內容,加值金額,退款金額,廣告支出回收,廣告支出,帳戶餘額");
+			content.append("日期,明細內容,加值金額(含稅),退款金額(含稅),廣告支出回收,廣告支出,帳戶餘額");
 			content.append("\n");
 			
 			for(BillVO vo:billVOList.getBillVOs()){
