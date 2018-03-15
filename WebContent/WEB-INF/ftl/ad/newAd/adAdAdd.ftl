@@ -34,7 +34,9 @@
 				<div class="ultext" style="">僅需提供您的商品賣場網址或單一商品網址，系統自動會幫您載回商品資訊輕鬆上稿</div>
 		</div>
 		<div class="grtba">
-			<@t.insertAttribute name="fastPublish"/>
+			<#if bookmark??>
+				<@t.insertAttribute name="fastPublish"/>
+			</#if>
 		</div>
 		<!-- 快速網址刊登 END-->
 
