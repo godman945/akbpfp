@@ -65,9 +65,9 @@
 		<#elseif adStyle == "TMG">
 			<#-- adTmg start -->
 			<#if bookmark?exists && bookmark == "fastURLAdAdd">
-				<@t.insertAttribute name="adTmgManyURL"/>
+				<@t.insertAttribute name="adTmgManyURL"/> <#-- 多筆網址刊登頁 -->
 			<#else>
-				<@t.insertAttribute name="adTmg"/>
+				<@t.insertAttribute name="adTmg"/> <#-- 一般廣告刊登頁 -->
 			</#if>
 			<#-- adTmg end -->
 		<#elseif adStyle == "VIDEO">
