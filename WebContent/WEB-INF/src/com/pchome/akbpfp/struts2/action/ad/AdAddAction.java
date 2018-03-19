@@ -1320,7 +1320,6 @@ public class AdAddAction extends BaseCookieAction{
 				doAdActionAdd();
 				doAdAdAddFastPublisDetailFlag = doAdAdAddFastPublisDetail();
 			}else{
-				doAdAdAddFastPublisDetail();
 				doAdAdAddFastPublisDetailFlag = doAdAdAddFastPublisDetail();
 			}
 			
