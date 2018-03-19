@@ -92,7 +92,7 @@ public class RedisAPI {
 	 */
 	public String setRedisData(String key, int time, String val) {
 		try {
-			if ("stg".equals(environment) || "prd".equals(environment)) { // 正式環境
+			if ("prd".equals(environment)) { // 正式環境
 				JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
 				return jedis.setex(key, time, val);
 			} else { // 測試環境
@@ -112,7 +112,7 @@ public class RedisAPI {
 	 * @return
 	 */
 	public String getRedisData(String key) {
-		if ("stg".equals(environment) || "prd".equals(environment)) { // 正式環境
+		if ("prd".equals(environment)) { // 正式環境
 			JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
 			return jedis.get(key);
 		} else { // 測試環境
@@ -129,7 +129,7 @@ public class RedisAPI {
 	 */
 	public Long delRedisData(String key) {
 		try {
-			if ("stg".equals(environment) || "prd".equals(environment)) { // 正式環境
+			if ("prd".equals(environment)) { // 正式環境
 				// 正式機
 				JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
 				return jedis.del(key);
