@@ -40,11 +40,13 @@ $(document).ready(function(){
 			return false;
 		}
 
+		// 新增關鍵字
 		var keyWordArray = [];
 		$.each($("#KeywordUL li"), function( index, obj ) {
 			keyWordArray.push($(obj).text());
 		});
 		
+		//新增排除關鍵字
 		var excludeKeywordULArray = [];
 		$.each($("#ExcludeKeywordUL li"), function( index, obj ) {
 			excludeKeywordULArray.push($(obj).text());
@@ -122,7 +124,7 @@ $(document).ready(function(){
 				"adFastPublishUrlInfo" : JSON.stringify(urlInfoMap),
 				"adGroupSeq" : $("#adGroupSeq").val(),
 				"keywords" : JSON.stringify(keyWordArray),
-//				"excludeKeywords" : JSON.stringify(excludeKeywordULArray),
+				"excludeKeywords" : JSON.stringify(excludeKeywordULArray),
 				"adKeywordOpen" : $("#adKeywordOpen").attr("checked"),
 				"adKeywordPhraseOpen" : $("#adKeywordPhraseOpen").attr("checked"),
 				"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked")

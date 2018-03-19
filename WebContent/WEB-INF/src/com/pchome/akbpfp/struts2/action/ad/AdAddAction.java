@@ -372,11 +372,11 @@ public class AdAddAction extends BaseCookieAction{
 		System.out.println("====>adFastPublishUrlInfo:" + adFastPublishUrlInfo);
 		
 		dataMap = new HashMap<String, Object>();
-		String custId = super.getCustomer_info_id();
-		
+
 		PfpAdManyURLVO vo = new PfpAdManyURLVO();
-		vo.setId(custId);
+		vo.setId(super.getCustomer_info_id());
 		
+		//檢查相關資料是否正確
 		doAdAdAddTmgManyURLCheckData(vo);
 		if(StringUtils.isNotEmpty(vo.getMessage())){
 			dataMap.put("status", "ERROR");
@@ -384,31 +384,94 @@ public class AdAddAction extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
-//		//檢查關鍵字比對方式是否選取
-//		if(keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
-//				&& StringUtils.isBlank(adKeywordPrecisionOpen)){
-////			message = "請選擇關鍵字比對方式！";
-//			dataMap.put("status", "ERROR");
-//			dataMap.put("msg", "請選擇關鍵字比對方式！");
-//			return SUCCESS;
-//		}
-		
-		//檢查勾選的資料   讀取redis資料，檢查勾選資料輸入的是否正確，檢查好後一起取得資料(捨去未選擇的資料)放入vo後，最後用vo內的資料一筆一筆新增進pfp_ad_detail table
-		
 		//設定一些參數值
 		adPoolSeq = EnumAdStyle.TMG.getAdPoolSeq();
 		templateProductSeq = EnumAdStyle.TMG.getTproSeq();
 		adClass = "1";   // 廣告分類
 		adStyle = "TMG"; // 廣告型態
-
+		
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 
 		//新增資料到pfp_ad table
 		addAd(pfpAdGroup, null);
 		
 		//新增資料到pfp_ad_detail table
+		// 取得此客編在Redis的資料
+		pfpAdManyURLSearchService.getRedisURLData(vo);
+		// 檢查勾選資料是否正確,正確的放入vo
+		JSONObject redisJsonObject = vo.getRedisJsonObject();
+		String products = redisJsonObject.getJSONArray("products").toString();
 		
+		JSONObject adFastPublishUrlInfoJson = new JSONObject(adFastPublishUrlInfo); 
+		Iterator adFastPublishUrlInfoJsoIterator = adFastPublishUrlInfoJson.keys();
+        while (adFastPublishUrlInfoJsoIterator.hasNext()) {
+        	String key = adFastPublishUrlInfoJsoIterator.next().toString();
+        	if(adFastPublishUrlInfoJson.get(key).equals("Y")){ //是選取的資料
+        		
+        		//找到URL位置
+        		int index = products.indexOf(key.replace("_ckeck_flag", ""));
+        		//取得URL前後段字串
+        		String startStr = products.substring(0, index);
+        		String endStr = products.substring(index, products.length());
+        		//由前後段字串找到包url那一段的位置
+        		int startStrIndex = startStr.lastIndexOf("{\"");
+        		int endStrIndex = endStr.indexOf("\"}");
+        		//取得所需要斷落字串
+        		String data = products.substring(startStrIndex, (startStr.length() + endStrIndex + 2));
+        		//取得資料
+        		JSONObject redisJsonObjectDetail = new JSONObject(data.toString());
+        		
+        		//新增圖片資料
+        		List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, "img", null, adPoolSeq);
+        		String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		saveAdDetail(redisJsonObjectDetail.get("pic_url").toString(), "img", adPoolSeq, defineAdSeq);
+        		
+        		//新增標題資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "title", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		saveAdDetail(redisJsonObjectDetail.get("title").toString(), "title", adPoolSeq, defineAdSeq);
+        		
+        		//新增內文資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "content", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		saveAdDetail(redisJsonObjectDetail.get("description").toString(), "content", adPoolSeq, defineAdSeq);
+        		
+        		//新增原價資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "sales_price", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		saveAdDetail(redisJsonObjectDetail.get("sp_price").toString(), "sales_price", adPoolSeq, defineAdSeq);
+        		
+        		//新增促銷價資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "promotional_price", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		saveAdDetail(redisJsonObjectDetail.get("price").toString(), "promotional_price", adPoolSeq, defineAdSeq);
+        		
+        		//新增實際網址資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "real_url", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		saveAdDetail(redisJsonObjectDetail.get("link_url").toString(), "real_url", adPoolSeq, defineAdSeq);
+        		
+        		//新增顯示網址資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "show_url", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		saveAdDetail(redisJsonObjectDetail.get("show_url").toString(), "show_url", adPoolSeq, defineAdSeq);
+        		
+//        		if(redisJsonObjectDetail.get("title").toString().length() > 17){
+//        			vo.setMessage("尚未選擇商品物件");
+//        		}else if(redisJsonObjectDetail.get("description").toString().length() > 36){
+//        			
+//        		}else if(redisJsonObjectDetail.get("show_url").toString().length() > 30){
+//        			
+//        		}
+        		
+        	}
+        }
 		
+		// 新增關鍵字
+		addKeywords(pfpAdGroup);
+		//新增排除關鍵字
+		addExcludeKeywords(pfpAdGroup);
+        
 		return SUCCESS;
 	}
 	
@@ -425,6 +488,7 @@ public class AdAddAction extends BaseCookieAction{
 		} else if (!adFastPublishUrlInfo.contains("\"Y\"")) { // 檢查是否選取物件
 			vo.setMessage("尚未選擇商品物件");
 		} else {
+			
 //			// 取得此客編在Redis的資料
 //			pfpAdManyURLSearchService.getRedisURLData(vo);
 //			// 檢查勾選資料是否正確,正確的放入vo
@@ -450,6 +514,10 @@ public class AdAddAction extends BaseCookieAction{
 //	        		//修改資料
 //	        		JSONObject redisJsonObjectDetail = new JSONObject(data.toString());
 //	        		if(redisJsonObjectDetail.get("title").toString().length() > 17){
+//	        			vo.setMessage("尚未選擇商品物件");
+//	        		}else if(redisJsonObjectDetail.get("description").toString().length() > 36){
+//	        			
+//	        		}else if(redisJsonObjectDetail.get("show_url").toString().length() > 30){
 //	        			
 //	        		}
 //	        		
@@ -985,22 +1053,27 @@ public class AdAddAction extends BaseCookieAction{
 
 	/**
 	 * 新增廣告明細
-	 * */
-	public void saveAdDetail(String content ,String adDetailId,String adPoolSeq,String defineAdSeq) throws Exception{
-	    templateProductSeq = EnumAdStyle.IMG.getTproSeq();
-	    adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
-	    PfpAdDetail pfpAdDetail = new PfpAdDetail();
-	    pfpAdDetail.setAdDetailSeq(adDetailSeq);
-	    pfpAdDetail.setPfpAd(pfpAdService.getPfpAdBySeq(adSeq));
-	    pfpAdDetail.setAdDetailId(adDetailId);
-	    pfpAdDetail.setAdDetailContent(content);
-	    pfpAdDetail.setAdPoolSeq(adPoolSeq);
-	    pfpAdDetail.setDefineAdSeq(defineAdSeq);
-	    pfpAdDetail.setVerifyFlag("y");
-	    pfpAdDetail.setVerifyStatus("n");
-	    pfpAdDetail.setAdDetailCreateTime(new Date());
-	    pfpAdDetail.setAdDetailUpdateTime(new Date());
-	    pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
+	 * @param content     廣告明細內容
+	 * @param adDetailId  元件id
+	 * @param adPoolSeq   資料來源序號
+	 * @param defineAdSeq 廣告定義序號
+	 * @throws Exception
+	 */
+	public void saveAdDetail(String content, String adDetailId, String adPoolSeq, String defineAdSeq) throws Exception {
+		templateProductSeq = EnumAdStyle.IMG.getTproSeq();
+		adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+		PfpAdDetail pfpAdDetail = new PfpAdDetail();
+		pfpAdDetail.setAdDetailSeq(adDetailSeq);
+		pfpAdDetail.setPfpAd(pfpAdService.getPfpAdBySeq(adSeq));
+		pfpAdDetail.setAdDetailId(adDetailId);
+		pfpAdDetail.setAdDetailContent(content);
+		pfpAdDetail.setAdPoolSeq(adPoolSeq);
+		pfpAdDetail.setDefineAdSeq(defineAdSeq);
+		pfpAdDetail.setVerifyFlag("y");
+		pfpAdDetail.setVerifyStatus("n");
+		pfpAdDetail.setAdDetailCreateTime(new Date());
+		pfpAdDetail.setAdDetailUpdateTime(new Date());
+		pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
 	}
 
 	/**
@@ -2226,6 +2299,10 @@ public class AdAddAction extends BaseCookieAction{
 		return adFastPublishUrlInfo;
 	}
 
+	public void setAdFastPublishUrlInfo(String adFastPublishUrlInfo) {
+		this.adFastPublishUrlInfo = adFastPublishUrlInfo;
+	}
+
 	public IPfpAdManyURLSearchService getPfpAdManyURLSearchService() {
 		return pfpAdManyURLSearchService;
 	}
@@ -2233,7 +2310,6 @@ public class AdAddAction extends BaseCookieAction{
 	public void setPfpAdManyURLSearchService(IPfpAdManyURLSearchService pfpAdManyURLSearchService) {
 		this.pfpAdManyURLSearchService = pfpAdManyURLSearchService;
 	}
-	
 	
 }
 
