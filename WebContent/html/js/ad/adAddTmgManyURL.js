@@ -16,20 +16,133 @@ var maskingConfig = {
 	};
 
 $(document).ready(function(){
-
+	$("#storeProductURL").val(""); //如果按上一頁返回，清除資料
+	
 	//店家刊登商品網址欄位
 	$("#storeProductURL").blur(function(){
-//		console.log($(this).attr("id"));
 		searchStoreProductURLAjax($("#storeProductURL").val(), "storeProductURL");
 	});
 	
 	//確認新增按鈕點擊事件
 	$("#confirmAddURLbtn").click(function(){
-//		console.log($(this).attr("id"));
 		searchStoreProductURLAjax($("#confirmAddURL").val(), "confirmAddURL");
-//		searchAddURLAjax($("#confirmAddURL").val(), "confirmAddURL");
 	});
 
+	//送出審核
+	$('#manyURLSave').click(function(){
+		var rowCount = parseInt($(".checkboxCount-up").text()); //目前選擇筆數
+		if(rowCount == 0){
+			alert("尚未選擇商品物件");
+			return false;
+		}
+		
+		if(!confirm("提醒您，您已選擇" + rowCount + "筆商品物件刊登，廣告將在3個工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放")){
+			return false;
+		}
+
+		var keyWordArray = [];
+		$.each($("#KeywordUL li"), function( index, obj ) {
+			keyWordArray.push($(obj).text());
+		});
+		
+		var excludeKeywordULArray = [];
+		$.each($("#ExcludeKeywordUL li"), function( index, obj ) {
+			excludeKeywordULArray.push($(obj).text());
+		});
+		
+		var adType = $("#adType").val();
+		if(adType == "0" || adType == "1"){
+			var kwLen = document.getElementsByName("keywords").length;
+			if( $("#existKW").children().length == 0 ){
+				if(kwLen < 2){
+					$('#chkAdKeyword').text("請新增關鍵字");
+					location.href="#adKeyword";
+					return false;
+				}
+			}
+			
+			//檢查關建字比對方式是否有被勾選
+			if(kwLen >= 2){
+				if(!$("#adKeywordOpen").attr('checked') && !$("#adKeywordPhraseOpen").attr('checked') && !$("#adKeywordPrecisionOpen").attr('checked')){
+					$('#chkAdKeywordOpen').text("請勾選關鍵字比對方式");
+					location.href="#chkAdKeywordOpen";
+					return false;
+				}
+			}
+		}
+		console.log("lookk");
+//		$.blockUI({
+//		    message: "<h1>製作新廣告中，請稍後...</h1>",
+//		    css: {
+//	            width: '500px',
+//	            height: '65px',
+//	            opacity: .9,
+//	            border:         '3px solid #aaa',
+//	            backgroundColor:'#fff',
+//	            textAlign:      'center',
+//	            cursor:         'wait',
+//	            '-webkit-border-radius': '10px',
+//	            '-moz-border-radius':    '10px'
+//	        },
+//	        fadeIn: 1000, 
+//	        timeout:   200, 
+//	        onBlock: function() {
+//				// form submit
+//				$("#modifyForm").attr("target", "doAdd");
+//				$("#modifyForm").attr("action", "adActionManyURLAction.html");
+//				$("#modifyForm").submit();
+////				window.location = "doAdAdAddTmgManyUrl.html";
+//				console.log("KKKKKKKKK");
+//	        }
+//		});
+		
+//		$.ajax({
+//			type : "post",
+//			dataType : "json",
+//			url : "adConfirmFastPublishUrlAjax.html",
+//			data : {
+//				"adFastPublishUrlInfo" : JSON.stringify(urlInfoMap)
+//			},
+//			timeout : 30000,
+//			error : function(xhr) {
+//				//	    	$('#loadingWaitBlock').unblock();
+//				alert('Ajax request 發生錯誤');
+//			},
+//			success : function(response, status) {
+//				//	    	console.log(response);
+//				window.location = "adActionFastPublishUrlViewAction.html";
+//			}
+//		});
+		
+		$.ajax({
+			type : "post",
+			dataType : "json",
+			url : "doAdAdAddTmgManyURLAjax.html",
+			data : {
+				"adFastPublishUrlInfo" : JSON.stringify(urlInfoMap),
+				"adGroupSeq" : $("#adGroupSeq").val(),
+				"keywords" : JSON.stringify(keyWordArray),
+//				"excludeKeywords" : JSON.stringify(excludeKeywordULArray),
+				"adKeywordOpen" : $("#adKeywordOpen").attr("checked"),
+				"adKeywordPhraseOpen" : $("#adKeywordPhraseOpen").attr("checked"),
+				"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked")
+			},
+			timeout : 30000,
+			error : function(xhr) {
+				alert('Ajax request 發生錯誤');
+			},
+			success : function(response, status) {
+				if (response.status == "ERROR") {
+					alert(response.msg);
+				} else {
+					console.log("OKOK");
+//					$(location).attr('href', 'adAddFinish.html?adGroupSeq=' + $("#adGroupSeq").val());	
+				}
+			}
+		});
+		
+	});
+	
 });
 
 // 顯示輸入店家商品網址區塊
@@ -142,15 +255,15 @@ function processSearchResultViewHtml(redisData){
 	    tempHtml += "<tr role='row'>";
 		//checkbox區塊
 	    if(urlInfoMap[link_url + "_ckeck_flag"] == "Y"){ //判斷此筆資料是否被勾選
-	    	tempHtml += "	<td><input type='checkbox' id='chkN_0' name='chkN' value='" + link_url + "' onclick='checkAd(this,\"" + link_url + "\");' checked='true' ></td>";
+	    	tempHtml += "	<td><input type='checkbox' id='chkN_" + index + "' name='chkN' value='" + link_url + "' onclick='checkAd(this,\"" + link_url + "\");' checked='true' ></td>";
 	    }else{
-	    	tempHtml += "	<td><input type='checkbox' id='chkN_0' name='chkN' value='" + link_url + "' onclick='checkAd(this,\"" + link_url + "\");'></td>";
+	    	tempHtml += "	<td><input type='checkbox' id='chkN_" + index + "' name='chkN' value='" + link_url + "' onclick='checkAd(this,\"" + link_url + "\");'></td>";
 	    }
 		//廣告明細區塊
 		tempHtml += "	<td height='35' class='td02'>";
 		tempHtml += "		<div class='ad-mod'>";
 		tempHtml += "			<div class='mod_edit'>";
-		tempHtml += "				<input class='mod-button btn_edit modifyADDetailEditBtn' type='button' id='' style='z-index:9' value='修 改'>";
+		tempHtml += "				<input class='mod-button btn_edit modifyADDetailEditBtn' type='button' style='z-index:9' value='修 改'>";
 		tempHtml += "				<div style='min-width: 400px;width:337px; height:85px; border:0px rgb(205,205,205) solid; padding:15px 5px 15px 5px; font-family:微軟正黑體,Arial; position:relative; '>";
 		tempHtml += "					<div id='logooff_" + index + "' style='position:absolute;top:0; left:0;width:20px; height:18px; line-height:18px; background:rgb(175,175,175); cursor:pointer;' onmouseover='logoEvent(\""+index+"\","+'"mouseover"'+")'>";
 		tempHtml += "						<img src='https://kdpic.pchome.com.tw/img/public/adlogo_off.png' width='20' height='18' border='0'>";
@@ -175,7 +288,7 @@ function processSearchResultViewHtml(redisData){
 		
 		
 		tempHtml += "			<div class='mod_ok ad-mod-hide'>";
-		tempHtml += "				<input class='mod-button btn_ok modifyADDetailOKBtn' type='button' id='' value='確 認'>";
+		tempHtml += "				<input class='mod-button btn_ok modifyADDetailOKBtn' type='button' value='確 認'>";
 		tempHtml += "				<div style='width:85%; border:0px rgb(205,205,205) solid; padding:15px 5px 15px 5px; font-family:微軟正黑體, Arial; position:relative;'>";
 		tempHtml += "					<div id='logooff' style='position:absolute;top:0; left:0;width:20px; height:18px; line-height:18px; background:rgb(175,175,175); cursor:pointer;' onmouseover='doOver()'>";
 		tempHtml += "						<img src='https://kdpic.pchome.com.tw/img/public/adlogo_off.png' width='20' height='18' border='0'>";
@@ -216,7 +329,7 @@ function processSearchResultViewHtml(redisData){
 		//促銷價
 		tempHtml += "	<td class='td03 ad-mod'>";
 		tempHtml += "		<div class='mod_edit'>";
-		tempHtml += "			<input class='mod-button ps btn_edit modifyPriceEditBtn' type='button' id='' value='修 改'>";
+		tempHtml += "			<input class='mod-button ps btn_edit modifyPriceEditBtn' type='button' value='修 改'>";
 		tempHtml += "			<div class='price_wd'>";
 		if(price){ //有值則補上NT.
 			tempHtml += "NT." + price
@@ -225,7 +338,7 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "		</div>";
 		//促銷價修改欄位部分
 		tempHtml += "		<div class='mod_ok ad-mod-hide'>";
-		tempHtml += "			<input class='mod-button ps btn_ok modifyPriceOKBtn' type='button' id='' value='確 認'>";
+		tempHtml += "			<input class='mod-button ps btn_ok modifyPriceOKBtn' type='button' value='確 認'>";
 		tempHtml += "			<p class='price_wd'>NT.<input type='text' class='modifyPrice' style='width:80px;margin: 1px 0; padding: 3px;text-align: center' placeholder='" + price + "' maxlength='8'></p>";
 		tempHtml += "		</div>";
 		tempHtml += "	</td>";
@@ -245,7 +358,7 @@ function checkAll() {
 	var notCheckCount = 0;
 	
 	$("#tableView input[type=checkbox]").each(function(index, obj) {
-		//目前迴圈繞到的此筆，是否為已勾選的，不是則做計算，勾選，改值動作
+		//目前迴圈繞到的此筆，是否為已勾選的，不是則做計算、勾選、改值動作
 		if(urlInfoMap[$(obj).prop('value') + "_ckeck_flag"] == "N"){
 			notCheckCount += 1;
 			$(obj).prop('checked', true);
@@ -274,35 +387,6 @@ function checkAd(obj, link_url) {
 	
 	// 模糊查詢
 	$("[class^=checkboxCount]").text(checkAdCount);
-}
-
-//點擊下一步
-function fastPublishNext(){
-	console.log(JSON.stringify(urlInfoMap));
-	$.ajax({
-	    type: "post",
-	    dataType: "json",
-	    url: "adConfirmFastPublishUrlAjax.html",
-	    data: {
-	    	"adFastPublishUrlInfo": JSON.stringify(urlInfoMap)
-	    },
-	    timeout: 30000,
-	    error: function(xhr){
-//	    	$('#loadingWaitBlock').unblock();
-	        alert('Ajax request 發生錯誤');
-	    },
-	    success: function(response, status){
-	    	console.log(response);
-	    	window.location="adActionFastPublishUrlViewAction.html";
-		}
-	});
-	
-	
-	
-	
-	
-	
-//	$("#alex").text(urlInfo);
 }
 
 //切換上下頁或每頁顯示N筆時
@@ -604,4 +688,28 @@ function doOut() {
 //檢查是否為數字，是數字回true
 function isNum(val) {
 	return /^[0-9]*$/.test(val);
+}
+
+//點擊下一步
+function fastPublishNext() {
+	//	console.log(JSON.stringify(urlInfoMap));
+	$.ajax({
+		type : "post",
+		dataType : "json",
+		url : "adConfirmFastPublishUrlAjax.html",
+		data : {
+			"adFastPublishUrlInfo" : JSON.stringify(urlInfoMap)
+		},
+		timeout : 30000,
+		error : function(xhr) {
+			//	    	$('#loadingWaitBlock').unblock();
+			alert('Ajax request 發生錯誤');
+		},
+		success : function(response, status) {
+			//	    	console.log(response);
+			window.location = "adActionFastPublishUrlViewAction.html";
+		}
+	});
+
+	//	$("#alex").text(urlInfo);
 }
