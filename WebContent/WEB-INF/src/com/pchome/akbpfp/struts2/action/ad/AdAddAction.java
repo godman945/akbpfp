@@ -1297,7 +1297,7 @@ public class AdAddAction extends BaseCookieAction{
 	 * 快速上稿畫面
 	 * */
 	public String adFastPublishAdd(){
-		log.info(">>>>>> START adFastPublishAdd");
+		log.info(">>>>>> init redis:"+"pfpcart_" + super.getCustomer_info_id());
 		redisAPI.delRedisData("pfpcart_" + super.getCustomer_info_id());
 		adStyle = "TMG";
 		adType = "";
@@ -1462,7 +1462,7 @@ public class AdAddAction extends BaseCookieAction{
 					URL url = new URL(imgPath);
 					BufferedImage img = ImageIO.read(url);
 					ImageIO.write(img, "jpg",new File(photoPath+"/"+adSeq+".jpg"));
-					imgPath = "img/user/"+getCustomer_info_id()+"/original"+ adSeq+".jpg";
+					imgPath = "img/user/"+getCustomer_info_id()+"/"+sdf.format(date)+"/original/"+ adSeq+".jpg";
 					saveAdDetail(imgPath ,"img","adp_201303070003","dad_201303070010");
 					saveAdDetail(title ,"title","adp_201303070003","dad_201303070011");
 					saveAdDetail(content ,"content","adp_201303070003","dad_201303070012");
