@@ -1647,10 +1647,23 @@ public class AdAddAction extends BaseCookieAction{
 					saveAdDetail(show_url ,"show_url","adp_201303070003","dad_201303070013");
 				}
 			}
+			
+			//新增關鍵字
+			if(!adType.equals("2")){
+				String[] keywords = (String[]) redisJson.get("suggest");
+				for (String keyword : keywords) {
+					System.out.println(keyword);
+				}
+				adKeywordPrecisionOpen = "on";
+				addKeywords(pfpAdGroup);
+			}
 		}
 		
 		pfpAdGroup.setAdGroupStatus(4);
 		pfpAdGroupService.save(pfpAdGroup);
+		
+		
+	
 		
 		return true;
 	}
@@ -2299,10 +2312,6 @@ public class AdAddAction extends BaseCookieAction{
 		return adFastPublishUrlInfo;
 	}
 
-	public void setAdFastPublishUrlInfo(String adFastPublishUrlInfo) {
-		this.adFastPublishUrlInfo = adFastPublishUrlInfo;
-	}
-
 	public IPfpAdManyURLSearchService getPfpAdManyURLSearchService() {
 		return pfpAdManyURLSearchService;
 	}
@@ -2310,6 +2319,7 @@ public class AdAddAction extends BaseCookieAction{
 	public void setPfpAdManyURLSearchService(IPfpAdManyURLSearchService pfpAdManyURLSearchService) {
 		this.pfpAdManyURLSearchService = pfpAdManyURLSearchService;
 	}
+	
 	
 }
 

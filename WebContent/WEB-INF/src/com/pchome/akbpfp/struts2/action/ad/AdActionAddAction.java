@@ -555,7 +555,7 @@ public class AdActionAddAction extends BaseCookieAction{
 			defaultAdType = pfpAdAction.getAdType();
 			defaultAdOperatingRule = pfpAdAction.getAdOperatingRule();
 			defaultAdDevice = pfpAdAction.getAdDevice();
-			adActionMax = String.valueOf(pfpAdAction.getAdActionMax());
+			adActionMax = String.valueOf((int)pfpAdAction.getAdActionMax());
 			adActionStartDate = sdf.format(pfpAdAction.getAdActionStartDate());
 			adActionEndDate = sdf.format(pfpAdAction.getAdActionEndDate());
 			pfpAdGroupList = new ArrayList<>();
