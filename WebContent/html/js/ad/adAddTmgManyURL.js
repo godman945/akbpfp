@@ -42,18 +42,11 @@ $(document).ready(function(){
 
 		// 新增關鍵字
 		var keyWordArray = [];
-		$.each($("#KeywordUL li"), function( index, obj ) {
-			keyWordArray.push($(obj).text());
-		});
-		
 		//新增排除關鍵字
 		var excludeKeywordULArray = [];
-		$.each($("#ExcludeKeywordUL li"), function( index, obj ) {
-			excludeKeywordULArray.push($(obj).text());
-		});
 		
 		var adType = $("#adType").val();
-		if(adType == "0" || adType == "1"){
+		if(adType == "0" || adType == "1"){ //0:全部 1:搜尋廣告+聯播網廣告 2:聯播網廣告
 			var kwLen = document.getElementsByName("keywords").length;
 			if( $("#existKW").children().length == 0 ){
 				if(kwLen < 2){
@@ -71,6 +64,14 @@ $(document).ready(function(){
 					return false;
 				}
 			}
+			
+			$.each($("#KeywordUL li"), function( index, obj ) {
+				keyWordArray.push($(obj).text());
+			});
+			
+			$.each($("#ExcludeKeywordUL li"), function( index, obj ) {
+				excludeKeywordULArray.push($(obj).text());
+			});
 		}
 		console.log("lookk");
 //		$.blockUI({

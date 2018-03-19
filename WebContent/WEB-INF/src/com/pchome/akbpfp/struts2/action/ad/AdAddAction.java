@@ -2312,6 +2312,10 @@ public class AdAddAction extends BaseCookieAction{
 		return adFastPublishUrlInfo;
 	}
 
+	public void setAdFastPublishUrlInfo(String adFastPublishUrlInfo) {
+		this.adFastPublishUrlInfo = adFastPublishUrlInfo;
+	}
+
 	public IPfpAdManyURLSearchService getPfpAdManyURLSearchService() {
 		return pfpAdManyURLSearchService;
 	}
