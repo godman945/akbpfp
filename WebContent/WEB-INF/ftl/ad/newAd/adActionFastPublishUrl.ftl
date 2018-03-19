@@ -8,15 +8,6 @@
 <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.datepick-zh-TW.js"></script>
 <script language="JavaScript" src="<@s.url value="/" />html/js/ad/dateRangeSelect.js" ></script>
 
-
-<#if adStyle == "TXT">
-	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTxt.js" ></script>
-<#elseif adStyle == "TMG">
-	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmg.js?t=20180221001" ></script>
-<#elseif adStyle == "VIDEO">
-	<@t.insertAttribute name="includeJs" />
-</#if>
-
 <div class="cont">
     <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdFastPublistAddTmg.html">
 		<h1 class="adtitle">廣告：${adActionName!} > 分類：${adGroupName!}</h1>
@@ -28,10 +19,15 @@
 		<!-- 快速網址刊登 START-->
 		<div class="addN-container">
 				<div class="addN-card-piece selected-stat">
-					<div class="tag fastURLAdAdd">多筆網址刊登</div>
-				</div>
+                    <div class="tag adAdd">多筆網址刊登</div>
+                </div>
+                <div class="addN-card-piece" style="display:none;">
+                    <div class="tag fastURLAdAdd">多筆網址刊登</div>
+                </div>
 				<div class="ultext" style="">僅需提供您的商品賣場網址或單一商品網址，系統自動會幫您載回商品資訊輕鬆上稿</div>
 		</div>
+		
+		
 		<!-- 遮罩開始 -->
 		<div id="loadingWaitBlock">
 			<!-- 廣告活動設定開始 -->
@@ -164,6 +160,7 @@
 						</th>
                         <td>
                         	每日花費 NT$ <input type="number" min="100" step="1" id="adActionMax" name="adActionMax" maxlength="6" value="${adActionMax!}">
+                        	<div id="adActionMaxErrorMsg" style="color: red;display:none;"></div>
                         </td>
                     </tr>
                 </tbody>
@@ -179,7 +176,8 @@
 	                    	<th height="35"><span class="t_s02">* </span>分類名稱</th>
 		                    <td>
 		                    	<input id="setGroupName" name="setGroupName" style="display:none;" type="text" maxlength="20" value="" placeholder="建立新的分類名稱">
-		                    	<#if (pfpAdActionList?size > 0)>
+		                    	<div id="setGroupNameErrorMsg" style="color: red;display:none;"></div>
+								<#if (pfpAdActionList?size > 0)>
 									<select id="adGroupNameSelect"> 
 					                	<#list pfpAdGroupList as pfpAdGroup>
 											<option value="${pfpAdGroup.adGroupSeq!}">${pfpAdGroup.adGroupName!}</option>
@@ -191,8 +189,12 @@
 	                	</tr>
 		                <tr id="channelTr">
 		                	<th height="35">
-								<span class="t_s02">* </span>聯播網廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="http://show.pchome.com.tw/html/img/question.gif"></a><br>
-								
+								<span class="t_s02">* </span>聯播廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
+								<div id="shownotes2" style="visibility: hidden;" class="adnoticepop">
+									<h4>聯播廣告出價 說明</h4>
+									<div class="adpopcont">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
+									<a onclick="closenots(2)" style="cursor:pointer;" class="adpopclose">關閉</a>
+								</div>
 		                	</th>
 		                   	<td>
 		                    	<b>系統建議出價NT$<input type="number" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${sysChannelPrice!}" min="3" max="999999"><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div> 系統預估播出率:<span id="showRate" name="showRate">${adAsideRate!}%</span></b>

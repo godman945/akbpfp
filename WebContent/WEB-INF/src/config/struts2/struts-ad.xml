@@ -717,13 +717,6 @@
         	</result>
      	</action>
      	
-     	<action name="adActionInfoAjax" class="AdSearchURLAjax" method="adActionInfo">
-       		<interceptor-ref name="loginCheckStack" />
-       		<result type="json" name="success">
-        		<param name="root">dataMap</param>
-        	</result>
-     	</action>
-
 
 		<action name="adAddFastPublisSaveAjax" class="AdAddAction" method="doAdAdAddFastPublis">
       		<interceptor-ref name="loginCheckStack" />

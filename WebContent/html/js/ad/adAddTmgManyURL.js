@@ -692,12 +692,8 @@ function isNum(val) {
 
 //點擊下一步
 function fastPublishNext() {
-	//	console.log(JSON.stringify(urlInfoMap));
-	
 	var flag = false;
 	for (var key in urlInfoMap) {
-		console.log(key);
-		console.log(urlInfoMap[key]);
 		if(urlInfoMap[key] == "Y"){
 			flag = true;
 			break;
@@ -714,11 +710,9 @@ function fastPublishNext() {
 			},
 			timeout : 30000,
 			error : function(xhr) {
-				//	    	$('#loadingWaitBlock').unblock();
 				alert('Ajax request 發生錯誤');
 			},
 			success : function(response, status) {
-				//	    	console.log(response);
 				window.location = "adActionFastPublishUrlViewAction.html";
 			}
 		});

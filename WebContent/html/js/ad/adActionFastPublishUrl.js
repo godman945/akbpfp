@@ -1,8 +1,4 @@
 ﻿$(document).ready(function(){
-	
-	
-	
-	
 	initDate();
 	
 	function initDate() {
@@ -81,6 +77,31 @@
 		}
 	});
 	
+	$("#adActionMax").keyup(function(){
+		if($("#adActionMax").val() == ""){
+			$("#adActionMaxErrorMsg").html('請填寫每日預算金額.');
+			$("#adActionMaxErrorMsg").css('display','inline');
+		}else if($("#adActionMax").val() < 100){
+			$("#adActionMaxErrorMsg").html('為讓您的廣告有足夠曝光量，每日預算至少為NT$100');
+			$("#adActionMaxErrorMsg").css('display','inline');
+		}else if($("#adActionMax").val() >= 100){
+			$("#adActionMaxErrorMsg").html('');
+			$("#adActionMaxErrorMsg").css('display','none');
+		}
+	});
+	
+	$('#adActionMax').change(function(){
+		if($("#adActionMax").val() == ""){
+			$("#adActionMaxErrorMsg").html('請填寫每日預算金額.');
+			$("#adActionMaxErrorMsg").css('display','inline');
+		}else if($("#adActionMax").val() < 100){
+			$("#adActionMaxErrorMsg").html('為讓您的廣告有足夠曝光量，每日預算至少為NT$100');
+			$("#adActionMaxErrorMsg").css('display','inline');
+		}else if($("#adActionMax").val() >= 100){
+			$("#adActionMaxErrorMsg").html('');
+			$("#adActionMaxErrorMsg").css('display','none');
+		}
+	});
 });
 
 
@@ -247,6 +268,15 @@ function addAdaction(){
 	}
 }
 
+function opennots(id) {
+	$("#shownotes"+id).css("visibility", "visible");
+}
+
+function closenots(id) {
+	$("#shownotes"+id).css("visibility", "hidden");
+}
+
+
 function alex(){
 	var submitFlag = true;
 	var errorMsg = '';
@@ -279,12 +309,22 @@ function alex(){
 			errorMsg ='廣告名稱重複，請重新輸入';
 		}
 		
+		if($('#setGroupNameErrorMsg').text() == ''){
+			submitFlag = false;
+			$("#setGroupNameErrorMsg").html('請輸入分類名稱.');
+			$("#setGroupNameErrorMsg").css('display','inline');
+		}else{
+			$("#setGroupNameErrorMsg").html('');
+			$("#setGroupNameErrorMsg").css('display','none');
+		}
+		
+		
 	}
 	
 	
 	console.log(submitFlag);
 	console.log(errorMsg);
-//	return false;
+	return false;
 	
 	if(submitFlag){
 		var adActionName = $('#setAdActionName').val();
