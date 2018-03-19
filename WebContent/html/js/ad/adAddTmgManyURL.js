@@ -693,23 +693,34 @@ function isNum(val) {
 //點擊下一步
 function fastPublishNext() {
 	//	console.log(JSON.stringify(urlInfoMap));
-	$.ajax({
-		type : "post",
-		dataType : "json",
-		url : "adConfirmFastPublishUrlAjax.html",
-		data : {
-			"adFastPublishUrlInfo" : JSON.stringify(urlInfoMap)
-		},
-		timeout : 30000,
-		error : function(xhr) {
-			//	    	$('#loadingWaitBlock').unblock();
-			alert('Ajax request 發生錯誤');
-		},
-		success : function(response, status) {
-			//	    	console.log(response);
-			window.location = "adActionFastPublishUrlViewAction.html";
+	
+	var flag = false;
+	for (var key in urlInfoMap) {
+		console.log(key);
+		console.log(urlInfoMap[key]);
+		if(urlInfoMap[key] == "Y"){
+			flag = true;
+			break;
 		}
-	});
-
-	//	$("#alex").text(urlInfo);
+	}
+	
+	if(flag){
+		$.ajax({
+			type : "post",
+			dataType : "json",
+			url : "adConfirmFastPublishUrlAjax.html",
+			data : {
+				"adFastPublishUrlInfo" : JSON.stringify(urlInfoMap)
+			},
+			timeout : 30000,
+			error : function(xhr) {
+				//	    	$('#loadingWaitBlock').unblock();
+				alert('Ajax request 發生錯誤');
+			},
+			success : function(response, status) {
+				//	    	console.log(response);
+				window.location = "adActionFastPublishUrlViewAction.html";
+			}
+		});
+	}
 }
