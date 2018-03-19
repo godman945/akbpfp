@@ -23,7 +23,6 @@
 	  <property name="PfpAdRateService" ref="PfpAdRateService" />
 	  <property name="pfpAdSyspriceService" ref="PfpAdSyspriceService" />
 	  <property name="sysPriceAdPoolSeq" value="${ad.sysprice.adPoolSeq}" />
-	 
 	</bean>
    
 </beans>

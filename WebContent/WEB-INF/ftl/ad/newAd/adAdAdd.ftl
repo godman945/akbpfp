@@ -29,10 +29,10 @@
 		<#if adStyle == "VIDEO">
 			<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作影音廣告</b>  &gt; 廣告完成 </div>
 		<#else>
-			<div class="steps" style="background:none;">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
+			<div class="steps" style="background:none;<#if admenuul == "fastPublishAdd">display:none;</#if>">輸入廣告基本設定 &gt; 建立分類及出價  &gt; <b>製作廣告及關鍵字設定</b>  &gt; 廣告完成 </div>
 		</#if>
 	
-		<ul class="admenuul">
+		<ul class="admenuul" <#if admenuul?? && admenuul == "fastPublishAdd">style=display:none;</#if>>
 			<#if adStyle == "VIDEO">
 				<li class="m03"><a href="adAdAdd.html?adGroupSeq=${adGroupSeq!}&adOperatingRule=VIDEO" class="active" onClick="return(chkLeave())">影音廣告</a></li>
 			<#else>
@@ -45,12 +45,12 @@
 			<#-- 只有圖文廣告有刊登廣告頁籤切換 -->
 			<div class="addN-container">
 				<div class="addN-card-piece">
-					<div class="tag adAdd">一般廣告刊登</div>
-				</div>
-				<div class="addN-card-piece">
-					<div class="tag fastURLAdAdd">多筆網址刊登</div>
-				</div>
-				<div class="ultext" style="display:none;">僅需提供您的商品賣場網址或單一商品網址，系統自動會幫您載回商品資訊輕鬆上稿</div>
+                    <div class="tag adAdd"><#if admenuul?? && admenuul == "fastPublishAdd">多筆網址刊登<#else>一般廣告刊登</#if></div>
+                </div>
+                <div class="addN-card-piece"<#if admenuul?? && admenuul == "fastPublishAdd">style=display:none;</#if>>
+                    <div class="tag fastURLAdAdd">多筆網址刊登</div>
+                </div>
+                <div class="ultext" style="display:none;">僅需提供您的商品賣場網址或單一商品網址，系統自動會幫您載回商品資訊輕鬆上稿</div>
 			</div>
 			<#-- 刊登廣告頁籤切換 end-->
 		</#if>
@@ -74,7 +74,7 @@
 			<@t.insertAttribute name="adAddVideo" />
 		</#if>
  
-		<#if adStyle == "TXT" || adStyle == "TMG">
+		<#if (adStyle == "TXT" || adStyle == "TMG")  && adType == "0">
 			<#-- adKeyword start -->
 			<div id=keywordBody>
 				<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adKeywordAdd.js" ></script>
@@ -86,7 +86,11 @@
 		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
 		<center style="margin-top:10px;">
 			<input type="button" id="cancel" value="取 消"> 
-			<input type="button" id="save" value="送出審核"> 
+			<#if admenuul?? && admenuul == "fastPublishAdd">
+                <input type="button" id="" value="下一步" onclick="fastPublishNext();"> 
+            <#else>
+                <input type="button" id="save" value="送出審核">
+            </#if>
 			<#-- <input type="button" id="saveNew" value="儲存後再新增廣告"> --> 
 		</center>
 		<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroupSeq!}">

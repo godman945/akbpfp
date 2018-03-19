@@ -12,14 +12,18 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.api.SyspriceOperaterAPI;
 import com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory;
 import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
+import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdSpecificWebsite;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfbxWebsiteCategoryService;
+import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdSpecificWebsiteService;
 import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
+import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfd.user.IPfdUserAdAccountRefService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
@@ -35,9 +39,6 @@ import com.pchome.enumerate.utils.EnumStatus;
 
 public class AdActionAddAction extends BaseCookieAction{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private String message = "";
@@ -57,14 +58,16 @@ public class AdActionAddAction extends BaseCookieAction{
 	private int tmpRemain;
 	private String backPage;
 	private String adOperatingRule;
-	
-	
-	private PfpCustomerInfoService pfpCustomerInfoService;
+	private String sysChannelPrice;
+	private String sysPriceAdPoolSeq;
+	private String adAsideRate;
+	private IPfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
-	private PfpAdActionService pfpAdActionService;
+	private IPfpAdActionService pfpAdActionService;
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private IPfpAdSpecificWebsiteService pfpAdSpecificWebsiteService;
 	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
+	
 	//key:0  搜尋廣告+聯播網廣告(觸及廣告族群最廣泛),1 搜尋廣告(PChome找東西搜尋和搜尋夥伴),2 聯播網廣告(PChome的合作網站聯播網)
 	private Map<String,String> adTypeMap;
 	private Map<String,Integer> adStyleTypeMap;
@@ -99,10 +102,14 @@ public class AdActionAddAction extends BaseCookieAction{
 	private int defaultAdDevice;
 	
 	private List<PfpAdAction> pfpAdActionList;
+	private List<PfpAdGroup> pfpAdGroupList;
 	
 	private Map<String,String> adPvLimitStyleMap;
 	private Map<String,String> adPvLimitPeriodMap;
-
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
+	private SyspriceOperaterAPI syspriceOperaterAPI;
+	
 	public String adActionAdd() throws Exception{
 		log.info("adActionAdd => adActionSeq = " + adActionSeq);
 		String referer = request.getHeader("Referer");
@@ -115,7 +122,6 @@ public class AdActionAddAction extends BaseCookieAction{
 
 		// 設定預設值
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		adActionName = "";
 		adActionDesc = "";
 		adActionStartDate = sdf.format(date);
@@ -549,9 +555,21 @@ public class AdActionAddAction extends BaseCookieAction{
 			defaultAdType = pfpAdAction.getAdType();
 			defaultAdOperatingRule = pfpAdAction.getAdOperatingRule();
 			defaultAdDevice = pfpAdAction.getAdDevice();
+			adActionMax = String.valueOf(pfpAdAction.getAdActionMax());
+			adActionStartDate = sdf.format(pfpAdAction.getAdActionStartDate());
+			adActionEndDate = sdf.format(pfpAdAction.getAdActionEndDate());
+			pfpAdGroupList = new ArrayList<>();
+			pfpAdGroupList.addAll(pfpAdAction.getPfpAdGroups());
+			sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
+			float adAsideRate = syspriceOperaterAPI.getAdAsideRate(Float.valueOf(sysChannelPrice));
+			adAsideRate = adAsideRate == 0 ? 0 : adAsideRate;
+			this.adAsideRate = adAsideRate == 0 ? "0" : String.valueOf(adAsideRate);
+			System.out.println(this.adAsideRate);
 		}
 		return SUCCESS;
 	}
+	
+	
 	
 	private String reversionString(String timeString){
 		
@@ -890,6 +908,46 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public void setDefaultAdDevice(int defaultAdDevice) {
 		this.defaultAdDevice = defaultAdDevice;
+	}
+
+	public List<PfpAdGroup> getPfpAdGroupList() {
+		return pfpAdGroupList;
+	}
+
+	public void setPfpAdGroupList(List<PfpAdGroup> pfpAdGroupList) {
+		this.pfpAdGroupList = pfpAdGroupList;
+	}
+
+	public String getSysChannelPrice() {
+		return sysChannelPrice;
+	}
+
+	public void setSysChannelPrice(String sysChannelPrice) {
+		this.sysChannelPrice = sysChannelPrice;
+	}
+
+	public SyspriceOperaterAPI getSyspriceOperaterAPI() {
+		return syspriceOperaterAPI;
+	}
+
+	public void setSyspriceOperaterAPI(SyspriceOperaterAPI syspriceOperaterAPI) {
+		this.syspriceOperaterAPI = syspriceOperaterAPI;
+	}
+
+	public String getSysPriceAdPoolSeq() {
+		return sysPriceAdPoolSeq;
+	}
+
+	public void setSysPriceAdPoolSeq(String sysPriceAdPoolSeq) {
+		this.sysPriceAdPoolSeq = sysPriceAdPoolSeq;
+	}
+
+	public String getAdAsideRate() {
+		return adAsideRate;
+	}
+
+	public void setAdAsideRate(String adAsideRate) {
+		this.adAsideRate = adAsideRate;
 	}
 
 }

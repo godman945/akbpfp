@@ -878,7 +878,8 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 		System.out.println(customerInfoId);
 		StringBuffer hql = new StringBuffer();
 		hql.append(" from PfpAdAction where pfpCustomerInfo.customerInfoId = :customerInfoId  ");
-    	hql.append(" and adOperatingRule = 'MEDIA' ");
+		hql.append(" and adActionStatus = 4 ");
+		hql.append(" and adOperatingRule = 'MEDIA' ");
     	hql.append(" order by adActionUpdateTime desc ");
 		Query query = super.getSession().createQuery(hql.toString());
 		query.setString("customerInfoId", customerInfoId);

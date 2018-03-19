@@ -1,12 +1,17 @@
 package com.pchome.akbpfp.struts2.ajax.ad;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
-import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.pojo.PfpAdAction;
+import com.pchome.akbpfp.db.pojo.PfpAdGroup;
+import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
 import com.pchome.akbpfp.db.service.admanyurlsearch.IPfpAdManyURLSearchService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdManyURLVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -26,10 +31,12 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	private String modifyADTitle; //ajax傳進來的修改標題
 	private String modifyADContent; //ajax傳進來的修改商品描述
 	private String modifyADShowURL; //ajax傳進來的修改顯示連結
-	private String actionName; //廣告活動名稱
-	private String customerInfoId; //登入帳號id
-	private Map<String,Object> dataMap;
+	private String adActionSeq; //廣告活動序號
 	private String adFastPublishUrlInfo;
+	private Map<String,Object> dataMap;
+	private List<PfpAdGroup> pfpAdGroupList;
+	private IPfpAdActionService pfpAdActionService;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	/**
 	 * 1.檢查輸入網址，打廣告爬蟲api取得資料
 	 * 2.廣告爬蟲api取得資料與redis內的資料比對，是否重複，存入redis前先將資料整理後再存
@@ -186,10 +193,21 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	 * 廣告活動設定資訊
 	 * */
 	public String adActionInfo() throws Exception{
+		PfpAdAction pfpAdAction = pfpAdActionService.get(adActionSeq);
+		Set<PfpAdGroup> groupSet = pfpAdAction.getPfpAdGroups();
 		dataMap = new HashMap<String, Object>();
-		
-//		dataMap.
-		
+		dataMap.put(adActionSeq,pfpAdAction.getAdActionSeq() );
+		dataMap.put("defaultAdType", pfpAdAction.getAdType());
+		dataMap.put("defaultAdOperatingRule", pfpAdAction.getAdOperatingRule());
+		dataMap.put("defaultAdDevice", pfpAdAction.getAdDevice());
+		dataMap.put("defaultAdActionMax", pfpAdAction.getAdActionMax());
+		dataMap.put("defaultAdActionEndDate", sdf.format(pfpAdAction.getAdActionEndDate()));
+		dataMap.put("defaultAdActionStartDate", sdf.format(pfpAdAction.getAdActionStartDate()));
+		Map<String,String> adGroupsMap = new HashMap<>();
+		for (PfpAdGroup pfpAdGroup : groupSet) {
+			adGroupsMap.put(pfpAdGroup.getAdGroupSeq(), pfpAdGroup.getAdGroupName());
+		}
+		dataMap.put("adGroups", adGroupsMap);
 		return SUCCESS;
 	}
 	
@@ -279,6 +297,30 @@ public class AdSearchURLAjax extends BaseCookieAction{
 
 	public void setAdFastPublishUrlInfo(String adFastPublishUrlInfo) {
 		this.adFastPublishUrlInfo = adFastPublishUrlInfo;
+	}
+
+	public String getAdActionSeq() {
+		return adActionSeq;
+	}
+
+	public void setAdActionSeq(String adActionSeq) {
+		this.adActionSeq = adActionSeq;
+	}
+
+	public IPfpAdActionService getPfpAdActionService() {
+		return pfpAdActionService;
+	}
+
+	public void setPfpAdActionService(IPfpAdActionService pfpAdActionService) {
+		this.pfpAdActionService = pfpAdActionService;
+	}
+
+	public List<PfpAdGroup> getPfpAdGroupList() {
+		return pfpAdGroupList;
+	}
+
+	public void setPfpAdGroupList(List<PfpAdGroup> pfpAdGroupList) {
+		this.pfpAdGroupList = pfpAdGroupList;
 	}
 
 

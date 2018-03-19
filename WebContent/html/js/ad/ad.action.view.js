@@ -193,7 +193,7 @@ function dealWithAddAdMenu() {
 	//快速網址刊登導頁
 	$('.fastURLAdAdd').click(function() {
 //		alert('功能待開放。');
-		window.location = "adFastPublishAction.html";
+		window.location = "adFastPublishAdd.html";
 	});
 	
 }

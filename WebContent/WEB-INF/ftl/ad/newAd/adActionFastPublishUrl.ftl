@@ -2,9 +2,11 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
 <link type="text/css" rel="stylesheet" href="<@s.url value="/html/css/ad/adPlugInStyle.css" />" />
-<link type="text/css" rel="stylesheet" href="<@s.url value="/html/css/ad/adAdAddManyURL.css" />" /> 
+<link type="text/css" rel="stylesheet" href="<@s.url value="/html/css/ad/adAdAddManyURL.css" />" />
+<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script> 
 <script language="JavaScript" src="<@s.url value="/" />html/js/ad/adActionFastPublishUrl.js" ></script>
-
+<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.datepick-zh-TW.js"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/ad/dateRangeSelect.js" ></script>
 
 
 <#if adStyle == "TXT">
@@ -16,13 +18,7 @@
 </#if>
 
 <div class="cont">
-<#if adStyle == "TXT">
-    <form method="post" id="modifyForm" name="modifyForm" action="doAdAdAddTxt.html">
-<#elseif adStyle == "TMG">
-    <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
-<#elseif adStyle == "VIDEO">
-	<form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddVideo.html">
-</#if>
+    <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdFastPublistAddTmg.html">
 		<h1 class="adtitle">廣告：${adActionName!} > 分類：${adGroupName!}</h1>
 		<h2>
 			<div class="cal">帳戶名稱：${customer_info_title!}</div>
@@ -91,15 +87,16 @@
 				                        	<#if (pfpAdActionList?size > 0)>
 				                        		<select id="adActionNameSelect"> 
 					                        	<#list pfpAdActionList as pfpAdAction>
-														<option value="${pfpAdAction.adActionName!}">${pfpAdAction.adActionName!}</option>
+														<option value="${pfpAdAction.adActionSeq!}">${pfpAdAction.adActionName!}</option>
 													</#list>
 					                        	</select>
 					                        	<br>
 												<#else>
 												CCC
 											</#if>
-						                    
-						                    <input class="adnuAD_but" style="color: #ff0000;margin: 12px 0 0px 0" type="button" value="新增廣告" id="">
+						                    <input class="adnuAD_but" id="setAdActionName" name="setAdActionName" style="display:none;" type="text" maxlength="20" value="" placeholder="建立新的廣告名稱">
+						                    <input class="adnuAD_but" id="addAdActionName" name="addAdActionName" style="color: #ff0000;margin: 12px 0 0px 0" type="button" value="新增廣告" onclick="addAdaction()">
+						                    <div id="actionNameErrorMsg" style="color: red;display:none;"></div>
 						                    <br>
 						                    <p class="addnew_AD ad-mod-hide" style="margin: 0"><input type="text" id="adActionName" name="adActionName" maxlength="20" value="建立新的廣告名稱">
 						                    <input type="button" id="" value="確定" onclick=""></p>                     	
@@ -119,8 +116,7 @@
 				                        <th height="35"><span class="t_s02">* </span>廣告樣式</th>
 				                        <td>
 				                        	<select id="adOperatingRuleSelect" name="adOperatingRuleSelect">
-				                        		<option value="0">多媒體廣告</option>
-				                        		<option value="1">影音廣告</option>
+				                        		<option value="MEDIA">多媒體廣告</option>
 						                    </select>
 				                        </td>
 				                    </tr>
@@ -140,55 +136,37 @@
 		
 				
 	<!-- adTmg end -->
-	 
-	
-				<!-- adKeyword start -->
-					<div id="keywordBody">
-					<script language="JavaScript" src="/html/js/ad/adKeywordAdd.js"></script>
-	
-			<!-- adKeyword start -->
-			<script language="JavaScript" src="/html/js/ad/adKeywordAction.js"></script>
-			<!-- adKeyword end -->
-			<!-- IE 沒有 placeholder 效果，用此 code 模擬 placeholder(Jack指導版) --> 
-			<!--[if IE]>
-			<script language="JavaScript" src="/html/js/ad/simuPlaceholderKeyword.js" ></script>
-			<![endif]-->
-			<!-- IE 沒有 placeholder 效果，用此 code 模擬 placeholder(Jack指導版) --> 
-			<div style="clear:both;height:10px"></div>
-	
-	
 	
 		    <h4>廣告走期及花費設定</h4>
-	        <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
-	                <tbody>
-	                    <tr>
-	                        <th height="35"><span class="t_s02">* </span>廣告開始日期</th>
-	                        <td>
-	                        	<input id="adActionStartDate" name="adActionStartDate" value="2018-02-02" readonly="true" class="hasDatepicker"><img class="ui-datepicker-trigger" src="html/img/icon_cal.gif" alt="" title="">
-	                       	</td>
-	                    </tr>
-	                    <tr>
-	                        <th height="35"><span class="t_s02">* </span>廣告結束日期</th>
-	                        <td>
-	                            <input type="radio" value="N" id="selAdActionEndDate" name="selAdActionEndDate" onclick="cleanEndDate();" checked="">無  
-	                            <input type="radio" value="Y" id="selAdActionEndDate" name="selAdActionEndDate">  <input value="" id="adActionEndDate" name="adActionEndDate" readonly="true" class="hasDatepicker"><img class="ui-datepicker-trigger" src="html/img/icon_cal.gif" alt="" title=""><span id="chkEndDate" name="chkEndDate" style="float:righ;color:red"></span>
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <th height="35">
-								<span class="t_s02">* </span>每日廣告預算 <a style="cursor:pointer;" onclick="opennots(1)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
-								<div id="shownotes1" style="visibility: hidden;" class="adnoticepop">
-									<h4>每日預算設定</h4>
-									<div class="adpopcont">每日廣告的實際花費，會依搜尋量的變化，與每日設定的廣告預算有小差異。</div>
-									<a onclick="closenots(1)" style="cursor:pointer;" class="adpopclose">關閉</a>
-								</div>
-							</th>
-	                        <td>
-	                        	每日花費 NT$ <input type="text" id="adActionMax" name="adActionMax" maxlength="6" value="500">
-	                        	<input type="hidden" id="remain" name="remain" value="0">
-	                        </td>
-	                    </tr>
-	                </tbody>
+	        <table id="setAdTimeAndMaxPriceTable" width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
+	               <tbody>
+                    <tr>
+                        <th height="35"><span class="t_s02">* </span>廣告開始日期</th>
+                        <td>
+                        	<input id="adActionStartDate" name="adActionStartDate" value="${adActionStartDate!}" readonly="true"  >
+                       	</td>
+                    </tr>
+                    <tr>
+                        <th height="35"><span class="t_s02">* </span>廣告結束日期</th>
+                        <td>
+                            <input type="radio" value="N" name="selAdActionEndDate" onclick="cleanEndDate();" checked>無  
+                            <input type="radio" value="Y" name="selAdActionEndDate" >  <input value="${adActionEndDate!}" id="adActionEndDate" name="adActionEndDate" readonly="true"/><span id="chkEndDate" name="chkEndDate" style="float:righ;color:red"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th height="35">
+							<span class="t_s02">* </span>每日廣告預算 <a style="cursor:pointer;" onclick="opennots(1)"><img src="/akbpfp/html/img/question.gif" align="absmiddle"></a><br>
+							<div id="shownotes1" style="visibility: hidden;" class="adnoticepop">
+								<h4>每日預算設定</h4>
+								<div class="adpopcont">每日廣告的實際花費，會依搜尋量的變化，與每日設定的廣告預算有小差異。</div>
+								<a onclick="closenots(1)" style="cursor:pointer;" class="adpopclose">關閉</a>
+							</div>
+						</th>
+                        <td>
+                        	每日花費 NT$ <input type="number" min="100" step="1" id="adActionMax" name="adActionMax" maxlength="6" value="${adActionMax!}">
+                        </td>
+                    </tr>
+                </tbody>
 	            </table>
 	
 	            <div style="clear:both;height:10px"></div>
@@ -197,16 +175,29 @@
 	
 	            <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 		        	<tbody>
-		        		
+		        		<tr>
+	                    	<th height="35"><span class="t_s02">* </span>分類名稱</th>
+		                    <td>
+		                    	<input id="setGroupName" name="setGroupName" style="display:none;" type="text" maxlength="20" value="" placeholder="建立新的分類名稱">
+		                    	<#if (pfpAdActionList?size > 0)>
+									<select id="adGroupNameSelect"> 
+					                	<#list pfpAdGroupList as pfpAdGroup>
+											<option value="${pfpAdGroup.adGroupSeq!}">${pfpAdGroup.adGroupName!}</option>
+										</#list>
+					                </select>
+					                <br>
+								</#if>
+							</td>
+	                	</tr>
 		                <tr id="channelTr">
 		                	<th height="35">
 								<span class="t_s02">* </span>聯播網廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="http://show.pchome.com.tw/html/img/question.gif"></a><br>
 								
 		                	</th>
-		                    <td>
-		                    	<b>系統建議出價NT$<input type="text" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="14" maxlength="6">，系統預估播出率:<span id="showRate" name="showRate">2.16%</span></b>
+		                   	<td>
+		                    	<b>系統建議出價NT$<input type="number" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${sysChannelPrice!}" min="3" max="999999"><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div> 系統預估播出率:<span id="showRate" name="showRate">${adAsideRate!}%</span></b>
 		                    	<div class="exp">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
-		                    </td>
+	                    	</td>
 		                </tr>
 		            </tbody>
 		        </table>
@@ -219,21 +210,20 @@
 
 		<center style="margin-top:10px;">
 			<input type="button" id="cancel" value="取 消"> 
-			<input type="button" id="save" style="color: #1d5ed6" value="送出審核">
+			<input id="fastPublishSave" type="button" style="color: #1d5ed6" value="送出審核" onclick="alex();">
 		</center>
-		<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="ag_201711220004">
-		<input type="hidden" id="saveAndNew" name="saveAndNew" value="">
-		<input type="hidden" id="ulTmpName" name="ulTmpName" value="ermeVqXI1wai8Bubq9Ft00RfwUucCb">
-		<input type="hidden" id="imgFile" name="imgFile" value="">
-        <input type="hidden" id="backPage" name="backPage" value="adActionView.html">
-        <input type="hidden" id="adType" name="adType" value="0">
         
-        
-        <input type="" id="defaultAdType" name="defaultAdType" value="${defaultAdType!}">
-        <input type="" id="defaultAdOperatingRule" name="defaultAdOperatingRule" value="${defaultAdOperatingRule!}">
-        <input type="" id="defaultAdDevice" name="defaultAdDevice" value="${defaultAdDevice!}">
+        <input type="hidden" id="defaultAdType" name="defaultAdType" value="${defaultAdType!}">
+        <input type="hidden" id="defaultAdOperatingRule" name="defaultAdOperatingRule" value="${defaultAdOperatingRule!}">
+        <input type="hidden" id="defaultAdDevice" name="defaultAdDevice" value="${defaultAdDevice!}">
+        <input type="hidden" id="defaultAdActionMax" name="defaultAdActionMax" value="${adActionMax!}">
+        <input type="hidden" id="defaultAdActionEndDate" name="defaultAdActionEndDate" value="${adActionEndDate!}">
+        <input type="hidden" id="defaultAdActionStartDate" name="defaultAdActionStartDate" value="${adActionStartDate!}">
 </div>
 
 	</form>
 </div>
-<input type="hidden" id="messageId" value="${message!!}">
+<input type="hidden" id="messageId" value="${message!}">
+
+
+

@@ -561,13 +561,6 @@
 			<result type="json" name="success">
 			 <param name="root">result</param>
 			</result>
-			<!-- 
-			<result type="redirectAction" name="success">
-				<param name="actionName">adGroupView</param>  
-				<param name="adActionSeq">${adActionSeq}</param>  
-			</result>
-			 -->
-			
     	</action>
     	
     	<!-- 檢視廣告第三頁 -->
@@ -681,10 +674,12 @@
     	<!-- 圖片廣告 END -->
     	
     	<!-- 快速刊登廣告 START -->
-    	<action name="adFastPublishAction" class="AdAddAction" method="adFastPublishAction">
+    	<action name="adFastPublishAdd" class="AdAddAction" method="adFastPublishAdd">
 			<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="adPrivilegeInterceptor" />
-			<result type="tiles" name="success">.ad.fast.publish.add</result>
+			<!---->  <result type="tiles" name="success">.ad.fast.publish.add</result> 
+			<!--  <result type="tiles" name="success">.ad.ad.add</result> -->
+			
 			<result type="redirectAction" name="notOwner">
 				<param name="actionName">adActionView</param>  
 			</result>
@@ -711,6 +706,22 @@
        		<interceptor-ref name="loginCheckStack" />
        		<result type="json" name="success">
         		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+     	
+     	<action name="adActionInfoAjax" class="AdSearchURLAjax" method="adActionInfo">
+       		<interceptor-ref name="loginCheckStack" />
+       		<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+
+
+		<action name="adAddFastPublisSaveAjax" class="AdAddAction" method="doAdAdAddFastPublis">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+       		<result type="json" name="success">
+        		<param name="root">result</param>
         	</result>
      	</action>
      	
