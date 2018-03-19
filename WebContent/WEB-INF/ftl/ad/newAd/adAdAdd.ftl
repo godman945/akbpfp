@@ -88,7 +88,9 @@
 			<input type="button" id="cancel" value="取 消"> 
 			<#if admenuul?? && admenuul == "fastPublishAdd">
                 <input type="button" id="" value="下一步" onclick="fastPublishNext();"> 
-            <#else>
+            <#elseif bookmark?exists && bookmark == "fastURLAdAdd">
+				<input type="button" id="manyURLSave" value="送出審核"> <#-- 多筆網址刊登頁 -->
+			<#else>
                 <input type="button" id="save" value="送出審核">
             </#if>
 			<#-- <input type="button" id="saveNew" value="儲存後再新增廣告"> --> 

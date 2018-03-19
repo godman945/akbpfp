@@ -25,6 +25,7 @@ import javax.imageio.stream.ImageInputStream;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -52,11 +53,13 @@ import com.pchome.akbpfp.db.service.ad.PfpAdExcludeKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.ad.PfpAdKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdService;
+import com.pchome.akbpfp.db.service.admanyurlsearch.IPfpAdManyURLSearchService;
 import com.pchome.akbpfp.db.service.advideo.IPfpAdVideoSourceService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfbx.IPfbSizeService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdDetailVO;
+import com.pchome.akbpfp.db.vo.ad.PfpAdManyURLVO;
 import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.akbpfp.godutil.ImageVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -166,7 +169,9 @@ public class AdAddAction extends BaseCookieAction{
 	private Map<String,Object> deleteAdMap = new HashMap<>();
 	private List<String> deleteAdList = new ArrayList<>();
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	
+	Map<String,Object> dataMap;
+	private String adFastPublishUrlInfo; //多網址上稿，勾選的資料flag=Y
+	private IPfpAdManyURLSearchService pfpAdManyURLSearchService;
 	
 	//新增廣告
 	public String AdAdAdd() throws Exception {
@@ -356,6 +361,104 @@ public class AdAddAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	/**
+	 * 新增圖文廣告-多網址上搞(畫面雙頁籤部分)
+	 * @return
+	 * @throws Exception 
+	 */
+	public String doAdAdAddTmgManyURL() throws Exception{
+		//TODO 多網址上搞
+		log.info("doAdAdAddTmgManyURL => adGroupSeq = " + adGroupSeq + ";");
+		System.out.println("====>adFastPublishUrlInfo:" + adFastPublishUrlInfo);
+		
+		dataMap = new HashMap<String, Object>();
+		String custId = super.getCustomer_info_id();
+		
+		PfpAdManyURLVO vo = new PfpAdManyURLVO();
+		vo.setId(custId);
+		
+		doAdAdAddTmgManyURLCheckData(vo);
+		if(StringUtils.isNotEmpty(vo.getMessage())){
+			dataMap.put("status", "ERROR");
+			dataMap.put("msg", vo.getMessage());
+			return SUCCESS;
+		}
+		
+//		//檢查關鍵字比對方式是否選取
+//		if(keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
+//				&& StringUtils.isBlank(adKeywordPrecisionOpen)){
+////			message = "請選擇關鍵字比對方式！";
+//			dataMap.put("status", "ERROR");
+//			dataMap.put("msg", "請選擇關鍵字比對方式！");
+//			return SUCCESS;
+//		}
+		
+		//檢查勾選的資料   讀取redis資料，檢查勾選資料輸入的是否正確，檢查好後一起取得資料(捨去未選擇的資料)放入vo後，最後用vo內的資料一筆一筆新增進pfp_ad_detail table
+		
+		//設定一些參數值
+		adPoolSeq = EnumAdStyle.TMG.getAdPoolSeq();
+		templateProductSeq = EnumAdStyle.TMG.getTproSeq();
+		adClass = "1";   // 廣告分類
+		adStyle = "TMG"; // 廣告型態
+
+		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+
+		//新增資料到pfp_ad table
+		addAd(pfpAdGroup, null);
+		
+		//新增資料到pfp_ad_detail table
+		
+		
+		return SUCCESS;
+	}
+	
+	/**
+	 * 檢查相關資料是否正確
+	 * @param vo
+	 * @throws JSONException 
+	 */
+	private void doAdAdAddTmgManyURLCheckData(PfpAdManyURLVO vo) throws JSONException {
+		//檢查關鍵字比對方式是否選取
+		if (keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
+				&& StringUtils.isBlank(adKeywordPrecisionOpen)) {
+			vo.setMessage("請選擇關鍵字比對方式！");
+		} else if (!adFastPublishUrlInfo.contains("\"Y\"")) { // 檢查是否選取物件
+			vo.setMessage("尚未選擇商品物件");
+		} else {
+//			// 取得此客編在Redis的資料
+//			pfpAdManyURLSearchService.getRedisURLData(vo);
+//			// 檢查勾選資料是否正確,正確的放入vo
+//			JSONObject redisJsonObject = vo.getRedisJsonObject();
+//			String products = redisJsonObject.getJSONArray("products").toString();
+//			
+//			JSONObject adFastPublishUrlInfoJson = new JSONObject(adFastPublishUrlInfo); 
+//			Iterator adFastPublishUrlInfoJsoIterator = adFastPublishUrlInfoJson.keys();
+//	        while (adFastPublishUrlInfoJsoIterator.hasNext()) {
+//	        	String key = adFastPublishUrlInfoJsoIterator.next().toString();
+//	        	if(adFastPublishUrlInfoJson.get(key).equals("Y")){ //是選取的資料
+//	        		
+//	        		//找到URL位置
+//	        		int index = products.indexOf(key.replace("_ckeck_flag", ""));
+//	        		//取得URL前後段字串
+//	        		String startStr = products.substring(0, index);
+//	        		String endStr = products.substring(index, products.length());
+//	        		//由前後段字串找到包url那一段的位置
+//	        		int startStrIndex = startStr.lastIndexOf("{\"");
+//	        		int endStrIndex = endStr.indexOf("\"}");
+//	        		//取得所需要斷落字串
+//	        		String data = products.substring(startStrIndex, (startStr.length() + endStrIndex + 2));
+//	        		//修改資料
+//	        		JSONObject redisJsonObjectDetail = new JSONObject(data.toString());
+//	        		if(redisJsonObjectDetail.get("title").toString().length() > 17){
+//	        			
+//	        		}
+//	        		
+//	        	}
+//	        }
+	        
+		}
+	}
+	
 	/*
 	 * 儲存影音上稿資料
 	 * 
@@ -2111,5 +2214,30 @@ public class AdAddAction extends BaseCookieAction{
 		this.pfpAdActionService = pfpAdActionService;
 	}
 
+	public Map<String, Object> getDataMap() {
+		return dataMap;
+	}
+
+	public void setDataMap(Map<String, Object> dataMap) {
+		this.dataMap = dataMap;
+	}
+
+	public String getAdFastPublishUrlInfo() {
+		return adFastPublishUrlInfo;
+	}
+
+	public void setAdFastPublishUrlInfo(String adFastPublishUrlInfo) {
+		this.adFastPublishUrlInfo = adFastPublishUrlInfo;
+	}
+
+	public IPfpAdManyURLSearchService getPfpAdManyURLSearchService() {
+		return pfpAdManyURLSearchService;
+	}
+
+	public void setPfpAdManyURLSearchService(IPfpAdManyURLSearchService pfpAdManyURLSearchService) {
+		this.pfpAdManyURLSearchService = pfpAdManyURLSearchService;
+	}
+
+	
 }
 

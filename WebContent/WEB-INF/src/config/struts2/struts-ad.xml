@@ -275,6 +275,14 @@
        	</result>
     </action>
     
+    <!-- 多網址上搞送出審核 -->
+    <action name="doAdAdAddTmgManyURLAjax" class="AdAddAction" method="doAdAdAddTmgManyURL">
+   		<interceptor-ref name="loginCheckStack" />
+   		<interceptor-ref name="adPrivilegeInterceptor" />
+   		<result type="json" name="success">
+    		<param name="root">dataMap</param>
+      	</result>
+   	</action>
 	<!-- 圖文廣告-多筆網址刊登 END-->
 	
 	<action name="adAdEdit" class="AdEditAction" method="AdAdEdit">

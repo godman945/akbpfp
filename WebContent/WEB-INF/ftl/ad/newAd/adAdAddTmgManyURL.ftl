@@ -92,7 +92,7 @@
 		<table id="tableView" class="tableManager" width="100%" border="0" cellpadding="0" cellspacing="1" role="grid">
 			<thead>
 				<tr role="row">
-					<th width="50" data-column="0" class="" scope="col" role="columnheader" aria-disabled="true" unselectable="on" aria-sort="none" aria-label="全選: No sort applied, sorting is disabled" style="user-select: none;">
+					<th width="50" data-column="0" scope="col" role="columnheader" aria-disabled="true" unselectable="on" aria-sort="none" aria-label="全選: No sort applied, sorting is disabled" style="user-select: none;">
 						<div class="tablesorter-header-inner">
 							<a href="javascript:void(0)" onclick="checkAll()">全選</a>
 						</div>
