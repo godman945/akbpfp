@@ -1454,8 +1454,8 @@ public class AdAddAction extends BaseCookieAction{
 					String imgPath = addAdJson.getString("pic_url");
 					String title = addAdJson.getString("show_url");
 					String content = addAdJson.getString("description");
-					String sales_price = addAdJson.getString("price");
-					String promotional_price = addAdJson.getString("sp_price");
+					String sales_price = addAdJson.getString("sp_price");
+					String promotional_price = addAdJson.getString("price");
 					String real_url = addAdJson.getString("link_url");
 					String show_url = addAdJson.getString("show_url");
 					URL url = new URL(imgPath);
