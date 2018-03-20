@@ -284,7 +284,7 @@ function setUserActionData(){
 }
 
 function addAdaction(){
-	if( $("#defaultHasActionRecord").val() == "N"){
+	if($("#defaultHasActionRecord").val() == "N"){
 		return false;
 	}
 	
@@ -356,16 +356,18 @@ function alex(){
 		submitFlag = false;
 	}
 	
-	console.log(submitFlag);
-	
 	if(submitFlag){
 		var adActionName = $('#setAdActionName').val();
 		var adGroupName = $('#setGroupName').val();
 		var adActionStartDate = $('#adActionStartDate').val();
 		var adActionEndDate = $('#adActionEndDate').val();
-		var adGroupSeq = $('#adGroupNameSelect').val();
-		adGroupSeq = $('#adGroupNameSelect').val().split('_');
-		adGroupSeq = adGroupSeq[0]+"_"+adGroupSeq[1];
+		
+		var adGroupSeq = '';
+		if($('#adGroupNameSelect').val() != ''){
+			adGroupSeq = $('#adGroupNameSelect').val();
+			adGroupSeq = $('#adGroupNameSelect').val().split('_');
+			adGroupSeq = adGroupSeq[0]+"_"+adGroupSeq[1];
+		}
 		var adActionSeq = $('#adActionNameSelect').val();
 		var adType = $('#adType').val();
 		var adDevice = $('#adDevice').val();
