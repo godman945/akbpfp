@@ -1,6 +1,22 @@
 ﻿$(document).ready(function(){
-	initDate();
+	if($("#defaultHasActionRecord").val() == "N"){
+		$('#setAdActionName').show();
+		$('#setGroupName').show();
+		setUserActionData();
+	}else{
+		//設定廣告活動預設資料
+		initDefaultActionInfo();
+		$("#adActionNameSelect").change(function(){
+			changeActionDefaultData(this.value);
+		});
+		//設定聯播網廣告出價
+		$("#priceType").html('聯播網廣告出價');
+		var groupInfo = $("#adGroupNameSelect").val().split('_');
+		$("#adGroupChannelPrice").val(groupInfo[2]);
+		getAdAsideRate();
+	}
 	
+	initDate();
 	function initDate() {
 		$("#adActionStartDate").datepicker({
             dateFormat: "yy-mm-dd",
@@ -17,38 +33,42 @@
 		});
 	}
 	
-	
-	//設定廣告活動預設資料
-	initDefaultActionInfo();
-	$("#adActionNameSelect").change(function(){
-		changeActionDefaultData(this.value);
-	});
-	
-	
 	$("#adGroupChannelPrice").keyup(function(){
-		var submitFlag = true;
-		var errMsg = '';
-		var price = $("#adGroupChannelPrice").val();
-		
 		var cpvRex = /^-?\d+\.?\d{0}$/;
-		submitFlag = cpvRex.test(price);
+		var price = $("#adGroupChannelPrice").val();
+		var submitFlag = cpvRex.test(price);
 		if(!submitFlag){
-			errMsg = '只接受整數或小數1位...';
-		}
-		
-		if(!submitFlag){
-			$('#errorMsg').empty();
-			$('#errorMsg').append(errMsg);
-			return false;
+			errMsg = '只接受整數...';
+			$('#errorMsg').html(errMsg);
+		}else if(price < 3){
+			errMsg = '聯播廣告出價最少為3元';
+			$('#errorMsg').html(errMsg);
 		}else{
 			$('#errorMsg').empty();
-			$("#userPrice").val(price);
+			getAdAsideRate();
 		}
+	});
+	
+	$('#adGroupNameSelect').change(function(){
+		var groupInfo = $("#adGroupNameSelect").val().split('_');
+		$("#adGroupChannelPrice").val(groupInfo[2]);
 		getAdAsideRate();
 	});
 	
 	$('#adGroupChannelPrice').change(function(){
-		getAdAsideRate();
+		var cpvRex = /^-?\d+\.?\d{0}$/;
+		var price = $("#adGroupChannelPrice").val();
+		var submitFlag = cpvRex.test(price);
+		if(!submitFlag){
+			errMsg = '只接受整數...';
+			$('#errorMsg').html(errMsg);
+		}else if(price < 3){
+			errMsg = '聯播廣告出價最少為3元';
+			$('#errorMsg').html(errMsg);
+		}else{
+			$('#errorMsg').empty();
+			getAdAsideRate();
+		}
 	});
 	
 	$("#setAdActionName").keyup(function(){
@@ -64,7 +84,6 @@
 						$("#actionNameErrorMsg").html('廣告名稱重複，請重新輸入');
 						$("#actionNameErrorMsg").css('display','inline');
 						$("#actionNameErrorMsg").show();
-						
 					}else{
 						$("#actionNameErrorMsg").html('');
 						$("#actionNameErrorMsg").css('display','none');
@@ -74,6 +93,17 @@
 					errorDialogBtn("錯誤訊息","系統繁忙，請稍後再試！");
 				}
 			});
+		}
+	});
+	
+	$("#setGroupName").keyup(function(){
+		if($("#setGroupName").val() != ''){
+			$("#setGroupNameErrorMsg").html('');
+			$("#setGroupNameErrorMsg").css('display','none');
+		}else{
+			$("#setGroupNameErrorMsg").html('請輸入分類名稱.');
+			$("#setGroupNameErrorMsg").css('display','inline');
+			$("#setGroupNameErrorMsg").show();
 		}
 	});
 	
@@ -169,11 +199,6 @@ function initDefaultActionInfo(){
 	
 	if($("#defaultAdActionEndDate").val() != ""){
 		$("#setAdTimeAndMaxPriceTable input[type=radio]").each(function(index, obj) {
-//			if(this.value == 'N' && $("#defaultAdActionEndDate").val() == '3000-12-31'){
-//				$(this).attr("checked", true);
-//			}else{
-//				
-//			}
 			$(this).prop("disabled",true);
 		});
 		$("#adActionEndDate").datepicker("disable");
@@ -181,9 +206,13 @@ function initDefaultActionInfo(){
 	
 	if($("#defaultAdActionMax").val() != ""){
 		$("#adActionMax").prop( "disabled", true );
-		$("#defaultAdActionMax").val($("#defaultAdDevice").val());
+		$("#adActionMax").val($("#defaultAdActionMax").val());
 	}
 	
+	
+	if($("#adGroupChannelPrice").val() != ""){
+		$("#adGroupChannelPrice").prop( "disabled", true );
+	}
 }
 
 function cleanEndDate() {
@@ -216,13 +245,18 @@ function changeActionDefaultData(adActionSeq){
 }
 
 function setDefaultActionData(actionData){
+	$('#actionNameErrorMsg').html('');
+	$('#actionNameErrorMsg').hide();
+	$('#setGroupNameErrorMsg').html('');
+	$('#setGroupNameErrorMsg').hide();
+	$('#adActionMaxErrorMsg').html('');
+	$('#adActionMaxErrorMsg').hide();
 	$("#defaultAdType").val(actionData["defaultAdType"]);
 	$("#defaultAdOperatingRule").val(actionData["defaultAdOperatingRule"]);
 	$("#defaultAdDevice").val(actionData["defaultAdDevice"]);
 	$("#defaultAdActionMax").val(actionData["defaultAdActionMax"]);
 	$("#defaultAdActionEndDate").val(actionData["defaultAdActionEndDate"]);
 	$("#defaultAdActionStartDate").val(actionData["defaultAdActionStartDate"]);
-	
 	$("#adGroupNameSelect").empty();
 	for (var key in actionData["adGroups"]) {
 		$('#adGroupNameSelect').append('<option value="'+key+'">'+(actionData["adGroups"])[key]+'</option>');
@@ -232,6 +266,7 @@ function setDefaultActionData(actionData){
 
 //開啟所有隱藏項目
 function setUserActionData(){
+	$('#adGroupChannelPrice').prop("disabled",false);
 	$('#adType').prop("disabled",false);
 	$('#adOperatingRuleSelect').prop("disabled",false);
 	$('#adDevice').prop("disabled",false);
@@ -249,6 +284,10 @@ function setUserActionData(){
 }
 
 function addAdaction(){
+	if( $("#defaultHasActionRecord").val() == "N"){
+		return false;
+	}
+	
 	if($('#addAdActionName').val() == '新增廣告'){
 		$('#adActionNameSelect').hide();
 		$('#setAdActionName').show();
@@ -256,6 +295,9 @@ function addAdaction(){
 		$('#setGroupName').show();
 		$('#addAdActionName').val('返回建立過的廣告');
 		setUserActionData();
+		$("#priceType").html('系統建議出價');
+		$("#adGroupChannelPrice").val($("#defaultSysPrice").val());
+		getAdAsideRate();
 	}else if($('#addAdActionName').val() == '返回建立過的廣告'){
 		changeActionDefaultData($("#adActionNameSelect option:selected" ).val());
 		$("#adActionNameSelect").show();
@@ -265,6 +307,10 @@ function addAdaction(){
 		$('#setGroupName').val('');
 		$('#setGroupName').hide();
 		$('#adGroupNameSelect').show();
+		$("#priceType").html('聯播網廣告出價');
+		var groupInfo = $("#adGroupNameSelect").val().split('_');
+		$("#adGroupChannelPrice").val(groupInfo[2]);
+		getAdAsideRate();
 	}
 }
 
@@ -277,54 +323,40 @@ function closenots(id) {
 }
 
 
-function alex(){
-	var submitFlag = true;
-	var errorMsg = '';
-	if($('#addAdActionName').val() == '返回建立過的廣告'){
-		var r = /^[0-9]*[1-9][0-9]*$/;
-
-		if($('#adActionMax').val() < 100){
-			submitFlag = false;
-			errorMsg ='為讓您的廣告有足夠曝光量，每日預算至少為NT$100';
-		}
-		
-		if($('#setAdActionName').val() == ''){
-			submitFlag = false;
-			errorMsg ='廣告名稱不可為空';
-		}
-		if($('#adActionMax').val() == ''){
-			if(r.test($('#adActionMax').val()) == false){
-				submitFlag = false;
-				errorMsg ='格式錯誤';
-			}
-		}
-		
-		if($('#setGroupName').val() == ''){
-			submitFlag = false;
-			errorMsg ='分類名稱不可為空';
-		}
-		
-		if($('#actionNameErrorMsg').text() != ''){
-			submitFlag = false;
-			errorMsg ='廣告名稱重複，請重新輸入';
-		}
-		
-		if($('#setGroupNameErrorMsg').text() == ''){
-			submitFlag = false;
-			$("#setGroupNameErrorMsg").html('請輸入分類名稱.');
-			$("#setGroupNameErrorMsg").css('display','inline');
-		}else{
-			$("#setGroupNameErrorMsg").html('');
-			$("#setGroupNameErrorMsg").css('display','none');
-		}
-		
-		
+function checkSubmit(){
+	if($("#setAdActionName").val() == '' && $('#addAdActionName').val() == '返回建立過的廣告'){
+		$("#actionNameErrorMsg").html('請輸入廣告名稱');
+		$("#actionNameErrorMsg").css('display','inline');
+		$("#actionNameErrorMsg").show();
 	}
 	
+	if($("#adActionMax").val() == ""){
+		$("#adActionMaxErrorMsg").html('請填寫每日預算金額.');
+		$("#adActionMaxErrorMsg").css('display','inline');
+	}else if($("#adActionMax").val() < 100){
+		$("#adActionMaxErrorMsg").html('為讓您的廣告有足夠曝光量，每日預算至少為NT$100');
+		$("#adActionMaxErrorMsg").css('display','inline');
+	}
+	
+	if($('#setGroupName').val() == '' && $('#addAdActionName').val() == '返回建立過的廣告'){
+		$("#setGroupNameErrorMsg").html('請輸入分類名稱.');
+		$("#setGroupNameErrorMsg").css('display','inline');
+	}else{
+		$("#setGroupNameErrorMsg").html('');
+		$("#setGroupNameErrorMsg").css('display','none');
+	}
+	
+}
+
+
+function alex(){
+	checkSubmit();
+	var submitFlag = true;
+	if($('#errorMsg').text() != '' || $('#adActionMaxErrorMsg').text() != '' || $('#actionNameErrorMsg').text() != '' || $('#setGroupNameErrorMsg').text() != ''){
+		submitFlag = false;
+	}
 	
 	console.log(submitFlag);
-	console.log(errorMsg);
-	return false;
 	
 	if(submitFlag){
 		var adActionName = $('#setAdActionName').val();
@@ -332,6 +364,8 @@ function alex(){
 		var adActionStartDate = $('#adActionStartDate').val();
 		var adActionEndDate = $('#adActionEndDate').val();
 		var adGroupSeq = $('#adGroupNameSelect').val();
+		adGroupSeq = $('#adGroupNameSelect').val().split('_');
+		adGroupSeq = adGroupSeq[0]+"_"+adGroupSeq[1];
 		var adActionSeq = $('#adActionNameSelect').val();
 		var adType = $('#adType').val();
 		var adDevice = $('#adDevice').val();

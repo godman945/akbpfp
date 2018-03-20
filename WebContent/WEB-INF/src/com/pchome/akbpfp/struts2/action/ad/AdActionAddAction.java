@@ -67,6 +67,7 @@ public class AdActionAddAction extends BaseCookieAction{
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private IPfpAdSpecificWebsiteService pfpAdSpecificWebsiteService;
 	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
+	private String hasActionRecord;
 	
 	//key:0  搜尋廣告+聯播網廣告(觸及廣告族群最廣泛),1 搜尋廣告(PChome找東西搜尋和搜尋夥伴),2 聯播網廣告(PChome的合作網站聯播網)
 	private Map<String,String> adTypeMap;
@@ -550,6 +551,12 @@ public class AdActionAddAction extends BaseCookieAction{
 		adActionName = "PCHOME聯播網廣告";
 		adGroupName = "PCHOME聯播網廣告";
 		customerInfoId = super.getCustomer_info_id();
+		
+		sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
+		float adAsideRate = syspriceOperaterAPI.getAdAsideRate(Float.valueOf(sysChannelPrice));
+		adAsideRate = adAsideRate == 0 ? 0 : adAsideRate;
+		this.adAsideRate = adAsideRate == 0 ? "0" : String.valueOf(adAsideRate);
+		
 		if(pfpAdActionList.size() > 0){
 			PfpAdAction pfpAdAction = pfpAdActionList.get(0);
 			defaultAdType = pfpAdAction.getAdType();
@@ -560,11 +567,9 @@ public class AdActionAddAction extends BaseCookieAction{
 			adActionEndDate = sdf.format(pfpAdAction.getAdActionEndDate());
 			pfpAdGroupList = new ArrayList<>();
 			pfpAdGroupList.addAll(pfpAdAction.getPfpAdGroups());
-			sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
-			float adAsideRate = syspriceOperaterAPI.getAdAsideRate(Float.valueOf(sysChannelPrice));
-			adAsideRate = adAsideRate == 0 ? 0 : adAsideRate;
-			this.adAsideRate = adAsideRate == 0 ? "0" : String.valueOf(adAsideRate);
-			System.out.println(this.adAsideRate);
+			hasActionRecord = "Y";
+		}else{
+			hasActionRecord = "N";
 		}
 		return SUCCESS;
 	}
@@ -948,6 +953,14 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public void setAdAsideRate(String adAsideRate) {
 		this.adAsideRate = adAsideRate;
+	}
+
+	public String getHasActionRecord() {
+		return hasActionRecord;
+	}
+
+	public void setHasActionRecord(String hasActionRecord) {
+		this.hasActionRecord = hasActionRecord;
 	}
 
 }

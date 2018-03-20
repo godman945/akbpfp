@@ -26,7 +26,6 @@ public class AdSearchURLAjax extends BaseCookieAction{
 //	private int pageSize = 20; //每頁筆數(初始預設每頁N筆)
 	private int pageSize = 2; //每頁筆數(初始預設每頁N筆)
 	private int totalPage = 1; //總頁數(初始預設1頁)
-	
 	private String modifyPrice; //ajax傳進來的修改促銷價
 	private String modifyADTitle; //ajax傳進來的修改標題
 	private String modifyADContent; //ajax傳進來的修改商品描述
@@ -200,12 +199,12 @@ public class AdSearchURLAjax extends BaseCookieAction{
 		dataMap.put("defaultAdType", pfpAdAction.getAdType());
 		dataMap.put("defaultAdOperatingRule", pfpAdAction.getAdOperatingRule());
 		dataMap.put("defaultAdDevice", pfpAdAction.getAdDevice());
-		dataMap.put("defaultAdActionMax", pfpAdAction.getAdActionMax());
+		dataMap.put("defaultAdActionMax", (int)pfpAdAction.getAdActionMax());
 		dataMap.put("defaultAdActionEndDate", sdf.format(pfpAdAction.getAdActionEndDate()));
 		dataMap.put("defaultAdActionStartDate", sdf.format(pfpAdAction.getAdActionStartDate()));
 		Map<String,String> adGroupsMap = new HashMap<>();
 		for (PfpAdGroup pfpAdGroup : groupSet) {
-			adGroupsMap.put(pfpAdGroup.getAdGroupSeq(), pfpAdGroup.getAdGroupName());
+			adGroupsMap.put(pfpAdGroup.getAdGroupSeq()+"_"+(int)pfpAdGroup.getAdGroupChannelPrice(), pfpAdGroup.getAdGroupName());
 		}
 		dataMap.put("adGroups", adGroupsMap);
 		return SUCCESS;
@@ -322,6 +321,7 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	public void setPfpAdGroupList(List<PfpAdGroup> pfpAdGroupList) {
 		this.pfpAdGroupList = pfpAdGroupList;
 	}
+
 
 
 

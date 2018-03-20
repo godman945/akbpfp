@@ -87,8 +87,6 @@
 													</#list>
 					                        	</select>
 					                        	<br>
-												<#else>
-												CCC
 											</#if>
 						                    <input class="adnuAD_but" id="setAdActionName" name="setAdActionName" style="display:none;" type="text" maxlength="20" value="" placeholder="建立新的廣告名稱">
 						                    <input class="adnuAD_but" id="addAdActionName" name="addAdActionName" style="color: #ff0000;margin: 12px 0 0px 0" type="button" value="新增廣告" onclick="addAdaction()">
@@ -180,7 +178,7 @@
 								<#if (pfpAdActionList?size > 0)>
 									<select id="adGroupNameSelect"> 
 					                	<#list pfpAdGroupList as pfpAdGroup>
-											<option value="${pfpAdGroup.adGroupSeq!}">${pfpAdGroup.adGroupName!}</option>
+											<option value="${pfpAdGroup.adGroupSeq!}_${pfpAdGroup.adGroupChannelPrice!}">${pfpAdGroup.adGroupName!}</option>
 										</#list>
 					                </select>
 					                <br>
@@ -197,7 +195,7 @@
 								</div>
 		                	</th>
 		                   	<td>
-		                    	<b>系統建議出價NT$<input type="number" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${sysChannelPrice!}" min="3" max="999999"><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div> 系統預估播出率:<span id="showRate" name="showRate">${adAsideRate!}%</span></b>
+		                    	<b><div id ="priceType" style="display:inline;">系統建議出價</div>NT$<input type="number" style="width:50px" id="adGroupChannelPrice" name="adGroupChannelPrice" value="${sysChannelPrice!}" min="3" max="999999"><div id="errorMsg" style="color:red;margin-left:10px;display:inline;"></div> 系統預估播出率:<span id="showRate" name="showRate">${adAsideRate!}%</span></b>
 		                    	<div class="exp">出價金額會決定廣告播出率。系統會依每次廣告的競價結果分析出最佳的播出率，實際支付的廣告點擊費用，會小於或等於您的出價金額。</div>
 	                    	</td>
 		                </tr>
@@ -221,6 +219,8 @@
         <input type="hidden" id="defaultAdActionMax" name="defaultAdActionMax" value="${adActionMax!}">
         <input type="hidden" id="defaultAdActionEndDate" name="defaultAdActionEndDate" value="${adActionEndDate!}">
         <input type="hidden" id="defaultAdActionStartDate" name="defaultAdActionStartDate" value="${adActionStartDate!}">
+        <input type="hidden" id="defaultHasActionRecord" name="defaultHasActionRecord" value="${hasActionRecord!}">
+        <input type="hidden" id="defaultSysPrice" name="defaultSysPrice" value="${sysChannelPrice!}">
 </div>
 
 	</form>

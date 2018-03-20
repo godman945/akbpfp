@@ -1540,22 +1540,22 @@ public class AdAddAction extends BaseCookieAction{
 			}
 			
 			if(doAdAdAddFastPublisDetailFlag){
-				System.out.println("adActionName:"+adActionName);
-				System.out.println("adGroupName:"+adGroupName);
-				System.out.println("adActionStartDate:"+adActionStartDate);
-				System.out.println("adActionEndDate:"+adActionEndDate);
-				System.out.println("adGroupSeq:"+adGroupSeq);
-				System.out.println("adActionSeq:"+adActionSeq);
-				System.out.println("adType:"+adType);
-				System.out.println("adDevice:"+adDevice);
-				System.out.println("adActionMax:"+adActionMax);
-				System.out.println("adGroupChannelPrice:"+adGroupChannelPrice);
-				System.out.println("adOperatingRule:"+adOperatingRule);
+//				System.out.println("adActionName:"+adActionName);
+//				System.out.println("adGroupName:"+adGroupName);
+//				System.out.println("adActionStartDate:"+adActionStartDate);
+//				System.out.println("adActionEndDate:"+adActionEndDate);
+//				System.out.println("adGroupSeq:"+adGroupSeq);
+//				System.out.println("adActionSeq:"+adActionSeq);
+//				System.out.println("adType:"+adType);
+//				System.out.println("adDevice:"+adDevice);
+//				System.out.println("adActionMax:"+adActionMax);
+//				System.out.println("adGroupChannelPrice:"+adGroupChannelPrice);
+//				System.out.println("adOperatingRule:"+adOperatingRule);
 				result = adGroupSeq;
 				return SUCCESS;
 			}
 			result ="error";
-			return result;
+			return SUCCESS;
 		}catch(Exception e){
 			//刪除新增的ad
 			List<String> deleteAdList = (List<String>) deleteAdMap.get("adList");
@@ -1577,7 +1577,7 @@ public class AdAddAction extends BaseCookieAction{
 			}
 			e.printStackTrace();
 			result ="error";
-			return result;
+			return SUCCESS;
 		}
 		
 	}
@@ -1587,6 +1587,7 @@ public class AdAddAction extends BaseCookieAction{
 	 * 1.不存在group時新增分類
 	 * 2.建立Ad
 	 * 3.建立明細
+	 * 4.新增關鍵字
 	 * */
 	private boolean doAdAdAddFastPublisDetail() throws Exception{
 		String referer = request.getHeader("Referer");
@@ -1688,26 +1689,49 @@ public class AdAddAction extends BaseCookieAction{
 				}
 			}
 			
-			//新增關鍵字
+			//新增關鍵字 
 			if(!adType.equals("2")){
-				String[] keywords = (String[]) redisJson.get("suggest");
-				for (String keyword : keywords) {
-					System.out.println(keyword);
-				}
-				adKeywordPrecisionOpen = "on";
-				addKeywords(pfpAdGroup);
+				saveKeyWord(adGroupSeq,redisAdArrayJson);
 			}
 		}
-		
 		pfpAdGroup.setAdGroupStatus(4);
 		pfpAdGroupService.save(pfpAdGroup);
-		
-		
-	
-		
 		return true;
 	}
 	
+	
+	/*
+	 * 快速上稿新增關鍵字
+	 * */
+	private void saveKeyWord(String groupSeq,JSONArray redisAdArrayJson) throws Exception{
+		PfpAdGroup pfpAdGroup = pfpAdGroupService.get(adGroupSeq);
+		Set<PfpAdKeyword> pfpAdKeywordSet = pfpAdGroup.getPfpAdKeywords();
+		List<String> keywordList = new ArrayList<>();
+		for (int i = 0; i < redisAdArrayJson.length(); i++) {
+			JSONObject addAdJson = (JSONObject) redisAdArrayJson.get(i);
+			JSONArray radisKeywords = (JSONArray) addAdJson.get("suggest");
+			for (int j = 0; j < radisKeywords.length(); j++) {
+				boolean isExist = false;
+				for (PfpAdKeyword pfpAdKeyword : pfpAdKeywordSet) {
+					if(pfpAdKeyword.getAdKeyword().equals(radisKeywords.get(j))){
+						isExist = true;
+						break;
+					}
+				}
+				if(!isExist){
+					keywordList.add(radisKeywords.get(j).toString());
+				}
+			}
+		}
+		int keywordSize = keywordList.size();
+		if(keywordSize > 0){
+			this.keywords = new String[keywordSize];
+			this.keywords = keywordList.toArray(keywords);
+			//預設廣泛比對
+			adKeywordPrecisionOpen = "on";
+			addKeywords(pfpAdGroup);
+		}
+	}
 	
 	/*
 	 * 快速上稿新增廣告活動
