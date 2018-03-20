@@ -377,6 +377,9 @@ public class AdAddAction extends BaseCookieAction{
 		PfpAdManyURLVO vo = new PfpAdManyURLVO();
 		vo.setId(super.getCustomer_info_id());
 		
+		processKeyWordList();
+		processExcludeKeyWordList();
+		
 		//檢查相關資料是否正確
 		doAdAdAddTmgManyURLCheckData(vo);
 		if(StringUtils.isNotEmpty(vo.getMessage())){
@@ -471,6 +474,62 @@ public class AdAddAction extends BaseCookieAction{
 	}
 	
 	/**
+	 * 處理關鍵字
+	 */
+	private void processKeyWordList() {
+		List<String> keyWordList = new ArrayList<String>();
+		if (!keywords[0].equals("[]")) {
+			String data = "";
+			for (char a : keywords[0].toCharArray()) {
+				if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+					continue;
+				}
+				if (String.valueOf(a).equals("]")) {
+					keyWordList.add(data);
+				} else {
+					if (String.valueOf(a).equals(",")) {
+						keyWordList.add(data);
+						data = "";
+					} else {
+						data = data + String.valueOf(a);
+					}
+				}
+			}
+			keywords = keyWordList.toArray(new String[keyWordList.size()]);
+		} else { //無輸入則清空
+			keywords = new String[] {};
+		}
+	}
+
+	/**
+	 * 處理排除關鍵字
+	 */
+	private void processExcludeKeyWordList() {
+		List<String> excludeKeyWordList = new ArrayList<String>();
+    	if (!excludeKeywords[0].equals("[]")) {
+    	    String data = "";
+    	    for (char a : excludeKeywords[0].toCharArray()) {
+        		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+        		    continue;
+        		}
+        		if (String.valueOf(a).equals("]")) {
+        		    excludeKeyWordList.add(data);
+        		} else {
+        		    if (String.valueOf(a).equals(",")) {
+            			excludeKeyWordList.add(data);
+            			data = "";
+        		    } else {
+        		        data = data + String.valueOf(a);
+        		    }
+        		}
+    	    }
+    	    excludeKeywords = excludeKeyWordList.toArray(new String[excludeKeyWordList.size()]);
+		} else { //無輸入則清空
+			excludeKeywords = new String[] {};
+		}
+	}
+	
+	/**
 	 * 處理下載圖片及路徑
 	 * @param imgPath
 	 * @return
@@ -497,9 +556,9 @@ public class AdAddAction extends BaseCookieAction{
 	 * @throws JSONException 
 	 */
 	private void doAdAdAddTmgManyURLCheckData(PfpAdManyURLVO vo) throws JSONException {
-		//檢查關鍵字比對方式是否選取。廣告類型0:全部 1:搜尋廣告+聯播網廣告 才有輸入關鍵字欄位部分
-		if (("0".equals(adType) || "1".equals(adType)) && keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
-				&& StringUtils.isBlank(adKeywordPrecisionOpen)) {
+		//檢查關鍵字比對方式是否選取。廣告類型0:全部 1:搜尋廣告+聯播網廣告 才有輸入關鍵字欄位部分 && keywords.length != 0 
+		if (keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) 
+				&& StringUtils.isBlank(adKeywordPhraseOpen) && StringUtils.isBlank(adKeywordPrecisionOpen)) {
 			vo.setMessage("請選擇關鍵字比對方式！");
 		} else if (!adFastPublishUrlInfo.contains("\"Y\"")) { // 檢查是否選取物件
 			vo.setMessage("尚未選擇商品物件");

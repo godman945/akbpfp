@@ -40,38 +40,33 @@ $(document).ready(function(){
 			return false;
 		}
 
-		// 新增關鍵字
-		var keyWordArray = [];
-		//新增排除關鍵字
-		var excludeKeywordULArray = [];
+		var keyWordArray = [];          // 新增關鍵字
+		var excludeKeywordULArray = []; //新增排除關鍵字
 		
 		var adType = $("#adType").val();
 		if(adType == "0" || adType == "1"){ //0:全部 1:搜尋廣告+聯播網廣告 2:聯播網廣告
-			var kwLen = document.getElementsByName("keywords").length;
-			if( $("#existKW").children().length == 0 ){
-				if(kwLen < 2){
-					$('#chkAdKeyword').text("請新增關鍵字");
-					location.href="#adKeyword";
-					return false;
-				}
-			}
+			//有關鍵字相關的欄位，才來執行迴圈增加效能
+			$.each($("#KeywordUL li"), function(index, obj) {
+				keyWordArray.push($(obj).text());
+			});
+			$.each($("#ExcludeKeywordUL li"), function(index, obj) {
+				excludeKeywordULArray.push($(obj).text());
+			});
 			
-			//檢查關建字比對方式是否有被勾選
-			if(kwLen >= 2){
-				if(!$("#adKeywordOpen").attr('checked') && !$("#adKeywordPhraseOpen").attr('checked') && !$("#adKeywordPrecisionOpen").attr('checked')){
-					$('#chkAdKeywordOpen').text("請勾選關鍵字比對方式");
+			if($("#existKW").children().length == 0 && keyWordArray.length == 0){
+				$("#chkAdKeyword").html("請新增關鍵字");
+				location.href="#adKeyword";
+				return false;
+			}else if(keyWordArray.length > 0){ //檢查關建字比對方式是否有被勾選
+				if(!$("#adKeywordOpen").attr('checked') 
+					&& !$("#adKeywordPhraseOpen").attr('checked') 
+					&& !$("#adKeywordPrecisionOpen").attr('checked')){
+					$("#chkAdKeywordOpen").html("請勾選關鍵字比對方式");
 					location.href="#chkAdKeywordOpen";
 					return false;
 				}
 			}
 			
-			$.each($("#KeywordUL li"), function( index, obj ) {
-				keyWordArray.push($(obj).text());
-			});
-			
-			$.each($("#ExcludeKeywordUL li"), function( index, obj ) {
-				excludeKeywordULArray.push($(obj).text());
-			});
 		}
 
 		$('#loadingWaitBlock').block({
