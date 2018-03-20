@@ -324,7 +324,7 @@ function closenots(id) {
 
 
 function checkSubmit(){
-	if($("#setAdActionName").val() == '' && $('#addAdActionName').val() == '返回建立過的廣告'){
+	if(($("#setAdActionName").val() == '' && $('#addAdActionName').val() == '返回建立過的廣告') || ($("#setAdActionName").val() == '' && $("#defaultHasActionRecord").val() == "N")){
 		$("#actionNameErrorMsg").html('請輸入廣告名稱');
 		$("#actionNameErrorMsg").css('display','inline');
 		$("#actionNameErrorMsg").show();
@@ -338,7 +338,7 @@ function checkSubmit(){
 		$("#adActionMaxErrorMsg").css('display','inline');
 	}
 	
-	if($('#setGroupName').val() == '' && $('#addAdActionName').val() == '返回建立過的廣告'){
+	if(($('#setGroupName').val() == '' && $('#addAdActionName').val() == '返回建立過的廣告') || ($("#setGroupName").val() == '' && $("#defaultHasActionRecord").val() == "N")){
 		$("#setGroupNameErrorMsg").html('請輸入分類名稱.');
 		$("#setGroupNameErrorMsg").css('display','inline');
 	}else{
@@ -389,7 +389,7 @@ function alex(){
 		            '-moz-border-radius':    '10px'
 		        },
 		        fadeIn: 1000, 
-		        timeout:   200, 
+		        timeout:   300, 
 		        onBlock: function() {
 		    		$.ajax({
 					url : "adAddFastPublisSaveAjax.html",
