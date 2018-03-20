@@ -319,10 +319,6 @@
     	<put-attribute name="page" value="default.page" />
     </definition>   
     
-    <!-- 圖文廣告-多筆網址刊登 -->
-<!--     <definition name="ad.ajaxTable.searchURL" template="/ftl/ad/newAd/adAdAddTmgManyURLSearchDetailsTable.ftl" /> -->
-    <!-- 圖文廣告-多筆網址刊登 END-->
-    
     <!-- 快速刊登廣告 START -->
     <definition name=".ad.fast.publish.add" extends="ad.nocss.layout">
         <put-attribute name="body" value=".ad.ad.add.body" />
