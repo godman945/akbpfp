@@ -17,25 +17,6 @@
 					<input type="text" class="inputPlaceholderTmg" id="storeProductURL" name="storeProductURL" style="width:96%;" placeholder="Ex:http://show.pchome.com.tw"><br>
 					<span id="chkStoreProductURL" name="chkStoreProductURL" style="color:rgb(255, 0, 0); display:none;"></span>
 				</td>
-				<td style="background:#dadada;" width="550">
-					<#--播放預覽start-->
-					<div class="boxpreview">
-						<h5>廣告預覽</h5>
-						<div class="rstli" style="width:500px;margin:0 auto">
-							<span><img id="previewImg" src="<@s.url value="/" />html/img/upl9090.gif" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'"></span>
-							<h2 style="background:none"><a href="javascript:void(0);" id="previewTitle" name="previewTitle" title="PChome關鍵字廣告 全新登場">PChome關鍵字廣告 全新登場</a></h2>
-							<span id="previewContent" name="previewContent">讓您的廣告受到世界矚目、訂單多到接不完！立即使用PChome關鍵字廣告‎。</span>
-							<h5 id="previewURL">show.pchome.com.tw</h5>
-						</div>
-						<div class="adpreviewbg">
-							<h5>曝光示意圖</h5>
-							<div class="adpreview">
-								<img width="300" border="0" src="<@s.url value="/" />html/img/searchpic02.jpg">
-							</div>
-						</div>
-					</div>
-					<#--廣告預覽end-->
-				</td>
 			</tr>
 		</tbody>
 	</table>

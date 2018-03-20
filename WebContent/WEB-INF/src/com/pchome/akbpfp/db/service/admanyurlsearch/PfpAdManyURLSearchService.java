@@ -26,7 +26,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	@Override
 	public void getAdCrawlerAPIData(PfpAdManyURLVO vo) {
 		try {
-			StringBuffer adCrawlerResult = HttpUtil.getInstance().doGet("http://adcrawler.mypchome.com.tw:8080/product/?url=" + vo.getSearchURL());
+			StringBuffer adCrawlerResult = HttpUtil.getInstance().doGet("http://adcrawler.mypchome.com.tw/product/?url=" + vo.getSearchURL());
 			JSONObject apiJsonObject = new JSONObject(adCrawlerResult.toString());
 			if (adCrawlerResult.toString().indexOf("status:200") == -1) { // 檢查連線是否正常
 				log.error("getAdCrawlerAPIData error:status != 200");

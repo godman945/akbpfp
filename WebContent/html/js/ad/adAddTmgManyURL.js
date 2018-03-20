@@ -677,6 +677,10 @@ function fastPublishNext() {
 		}
 	}
 	
+	if(!flag){
+		alert("請選擇一筆商品物件刊登");
+	}
+	
 	if(flag){
 		$.ajax({
 			type : "post",
