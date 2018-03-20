@@ -361,9 +361,8 @@ function alex(){
 		var adGroupName = $('#setGroupName').val();
 		var adActionStartDate = $('#adActionStartDate').val();
 		var adActionEndDate = $('#adActionEndDate').val();
-		
 		var adGroupSeq = '';
-		if($('#adGroupNameSelect').val() != ''){
+		if($('#adGroupNameSelect').val() != undefined){
 			adGroupSeq = $('#adGroupNameSelect').val();
 			adGroupSeq = $('#adGroupNameSelect').val().split('_');
 			adGroupSeq = adGroupSeq[0]+"_"+adGroupSeq[1];
