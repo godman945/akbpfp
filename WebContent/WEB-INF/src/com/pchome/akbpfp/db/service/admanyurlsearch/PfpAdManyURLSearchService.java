@@ -94,13 +94,13 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		for (int arrayLength = 0; arrayLength < apiJsonArray.length(); arrayLength++) {
 			JSONObject apiJsonObjectDetail = new JSONObject(apiJsonArray.get(arrayLength).toString());
 			JSONObject jsonObjectDetail = new JSONObject();
-			jsonObjectDetail.put("pic_url", processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
-			jsonObjectDetail.put("title", apiJsonObjectDetail.get("title").toString());
+			jsonObjectDetail.put("pic_url",     processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
+			jsonObjectDetail.put("title",       apiJsonObjectDetail.get("title").toString());
 			jsonObjectDetail.put("description", apiJsonObjectDetail.get("description").toString());
-			jsonObjectDetail.put("link_url", apiJsonObjectDetail.get("link_url").toString());
-			jsonObjectDetail.put("show_url", processShowURL(apiJsonObjectDetail.get("link_url").toString()));
-			jsonObjectDetail.put("sp_price", apiJsonObjectDetail.optString("sp_price"));
-			jsonObjectDetail.put("price", apiJsonObjectDetail.get("price").toString());
+			jsonObjectDetail.put("link_url",    apiJsonObjectDetail.get("link_url").toString());
+			jsonObjectDetail.put("show_url",    processShowURL(apiJsonObjectDetail.get("link_url").toString()));
+			jsonObjectDetail.put("sp_price",    processPrice(apiJsonObjectDetail.optString("sp_price")));
+			jsonObjectDetail.put("price",       processPrice(apiJsonObjectDetail.get("price").toString()));
 			//只有24h才有此參數
 			jsonObjectDetail.put("suggest", apiJsonObjectDetail.opt("suggest"));
 			
@@ -127,42 +127,6 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			}
 		}
 		return redisJsonObject;
-	}
-	
-	/**
-	 * 處理明細顯示網址，取得Domain部份
-	 * @param url
-	 * @return
-	 */
-	private String processShowURL(String url) {
-		url = url.substring(url.indexOf("://") + 3);
-		url = url.substring(0, url.indexOf("/"));
-		return url;
-	}
-
-	/**
-	 * 處理明細圖片路徑
-	 * @param picURL
-	 * @return
-	 */
-	private String processPicURL(String picURL) {
-		String URLHttp = picURL.substring(0,6);
-		if(URLHttp.indexOf("//") > -1){
-			picURL = "http:" + picURL;
-		}else if(URLHttp.indexOf("http:") == -1 && URLHttp.indexOf("https:") == -1){
-			picURL = "http://" + picURL;
-		}
-		return picURL;
-	}
-
-	/**
-	 * 取得redis上，輸入的客編搜尋的網址資料
-	 */
-	@Override
-	public void getRedisURLData(PfpAdManyURLVO vo) throws JSONException {
-		String redisKey = "pfpcart_" + vo.getId();
-		String redisData = redisAPI.getRedisData(redisKey); // 查詢此客戶redis是否有資料
-		vo.setRedisJsonObject(new JSONObject(redisData));
 	}
 	
 	/**
@@ -236,11 +200,10 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		}
 	}
 	
-	
 	/*
 	 * 確認新增至redis網址
 	 * */
-	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo,String userId) throws Exception{
+	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo, String userId) throws Exception{
 		String result = "更新成功";
 		String redisKey = "pfpcart_" + userId;
 		String redisData = redisAPI.getRedisData(redisKey);
@@ -274,15 +237,60 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
         	}
         }
         
-        
         redisJson.put("products", productsJsonArray);
         redisAPI.setRedisDataDefaultTimeout("pfpcart_" + userId, redisJson.toString());
        
 		return result;
-		
 	}
 	
 	
+	/**
+	 * 取得redis上，輸入的客編搜尋的網址資料
+	 */
+	@Override
+	public void getRedisURLData(PfpAdManyURLVO vo) throws JSONException {
+		String redisKey = "pfpcart_" + vo.getId();
+		String redisData = redisAPI.getRedisData(redisKey); // 查詢此客戶redis是否有資料
+		vo.setRedisJsonObject(new JSONObject(redisData));
+	}
+	
+	/**
+	 * 處理價格
+	 * 金錢符號、逗號去除
+	 * @param price
+	 * @return
+	 */
+	private String processPrice(String price) {
+		price = price.replace("$", "");
+		price = price.replace(",", "");
+		return price;
+	}
+	
+	/**
+	 * 處理明細顯示網址，取得Domain部份
+	 * @param url
+	 * @return
+	 */
+	private String processShowURL(String url) {
+		url = url.substring(url.indexOf("://") + 3);
+		url = url.substring(0, url.indexOf("/"));
+		return url;
+	}
+
+	/**
+	 * 處理明細圖片路徑
+	 * @param picURL
+	 * @return
+	 */
+	private String processPicURL(String picURL) {
+		String URLHttp = picURL.substring(0,6);
+		if(URLHttp.indexOf("//") > -1){
+			picURL = "http:" + picURL;
+		}else if(URLHttp.indexOf("http:") == -1 && URLHttp.indexOf("https:") == -1){
+			picURL = "http://" + picURL;
+		}
+		return picURL;
+	}
 	
 	public RedisAPI getRedisAPI() {
 		return redisAPI;
@@ -291,7 +299,5 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	public void setRedisAPI(RedisAPI redisAPI) {
 		this.redisAPI = redisAPI;
 	}
-
-	
 
 }
