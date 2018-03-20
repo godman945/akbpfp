@@ -73,50 +73,22 @@ $(document).ready(function(){
 				excludeKeywordULArray.push($(obj).text());
 			});
 		}
-		console.log("lookk");
-//		$.blockUI({
-//		    message: "<h1>製作新廣告中，請稍後...</h1>",
-//		    css: {
-//	            width: '500px',
-//	            height: '65px',
-//	            opacity: .9,
-//	            border:         '3px solid #aaa',
-//	            backgroundColor:'#fff',
-//	            textAlign:      'center',
-//	            cursor:         'wait',
-//	            '-webkit-border-radius': '10px',
-//	            '-moz-border-radius':    '10px'
-//	        },
-//	        fadeIn: 1000, 
-//	        timeout:   200, 
-//	        onBlock: function() {
-//				// form submit
-//				$("#modifyForm").attr("target", "doAdd");
-//				$("#modifyForm").attr("action", "adActionManyURLAction.html");
-//				$("#modifyForm").submit();
-////				window.location = "doAdAdAddTmgManyUrl.html";
-//				console.log("KKKKKKKKK");
-//	        }
-//		});
-		
-//		$.ajax({
-//			type : "post",
-//			dataType : "json",
-//			url : "adConfirmFastPublishUrlAjax.html",
-//			data : {
-//				"adFastPublishUrlInfo" : JSON.stringify(urlInfoMap)
-//			},
-//			timeout : 30000,
-//			error : function(xhr) {
-//				//	    	$('#loadingWaitBlock').unblock();
-//				alert('Ajax request 發生錯誤');
-//			},
-//			success : function(response, status) {
-//				//	    	console.log(response);
-//				window.location = "adActionFastPublishUrlViewAction.html";
-//			}
-//		});
-		
+
+		$('#loadingWaitBlock').block({
+		    message: "<h1>製作新廣告中，請稍後...</h1>",
+		    css: {
+	            width: '500px',
+	            height: '65px',
+	            opacity: .9,
+	            border:         '3px solid #aaa',
+	            backgroundColor:'#fff',
+	            textAlign:      'center',
+	            cursor:         'wait',
+	            '-webkit-border-radius': '10px',
+	            '-moz-border-radius':    '10px'
+	        }
+		});
+
 		$.ajax({
 			type : "post",
 			dataType : "json",
@@ -128,19 +100,21 @@ $(document).ready(function(){
 				"excludeKeywords" : JSON.stringify(excludeKeywordULArray),
 				"adKeywordOpen" : $("#adKeywordOpen").attr("checked"),
 				"adKeywordPhraseOpen" : $("#adKeywordPhraseOpen").attr("checked"),
-				"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked")
+				"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked"),
+				"adType" : adType
 			},
 			timeout : 30000,
 			error : function(xhr) {
+				$('#loadingWaitBlock').unblock();
 				alert('Ajax request 發生錯誤');
 			},
 			success : function(response, status) {
 				if (response.status == "ERROR") {
 					alert(response.msg);
 				} else {
-					console.log("OKOK");
-//					$(location).attr('href', 'adAddFinish.html?adGroupSeq=' + $("#adGroupSeq").val());	
+					$(location).attr('href', 'adAddFinish.html?adGroupSeq=' + $("#adGroupSeq").val());	
 				}
+				$('#loadingWaitBlock').unblock();
 			}
 		});
 		

@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -390,12 +391,7 @@ public class AdAddAction extends BaseCookieAction{
 		adClass = "1";   // 廣告分類
 		adStyle = "TMG"; // 廣告型態
 		
-		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-
-		//新增資料到pfp_ad table
-		addAd(pfpAdGroup, null);
-		
-		//新增資料到pfp_ad_detail table
+		// 新增資料到table
 		// 取得此客編在Redis的資料
 		pfpAdManyURLSearchService.getRedisURLData(vo);
 		// 檢查勾選資料是否正確,正確的放入vo
@@ -407,6 +403,11 @@ public class AdAddAction extends BaseCookieAction{
         while (adFastPublishUrlInfoJsoIterator.hasNext()) {
         	String key = adFastPublishUrlInfoJsoIterator.next().toString();
         	if(adFastPublishUrlInfoJson.get(key).equals("Y")){ //是選取的資料
+        		
+        		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+        		adSeq = null; //清除adSeq再建立一筆
+        		//新增資料到pfp_ad table
+        		addAd(pfpAdGroup, null);
         		
         		//找到URL位置
         		int index = products.indexOf(key.replace("_ckeck_flag", ""));
@@ -421,68 +422,83 @@ public class AdAddAction extends BaseCookieAction{
         		//取得資料
         		JSONObject redisJsonObjectDetail = new JSONObject(data.toString());
         		
+        		//新增資料到pfp_ad_detail table
         		//新增圖片資料
         		List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, "img", null, adPoolSeq);
         		String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		saveAdDetail(redisJsonObjectDetail.get("pic_url").toString(), "img", adPoolSeq, defineAdSeq);
+        		String imgPath = redisJsonObjectDetail.get("pic_url").toString();
+        		imgPath = processImgPath(imgPath);
+        		newSaveAdDetail(imgPath, "img", adPoolSeq, defineAdSeq);
         		
         		//新增標題資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "title", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		saveAdDetail(redisJsonObjectDetail.get("title").toString(), "title", adPoolSeq, defineAdSeq);
+        		newSaveAdDetail(redisJsonObjectDetail.get("title").toString(), "title", adPoolSeq, defineAdSeq);
         		
         		//新增內文資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "content", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		saveAdDetail(redisJsonObjectDetail.get("description").toString(), "content", adPoolSeq, defineAdSeq);
+        		newSaveAdDetail(redisJsonObjectDetail.get("description").toString(), "content", adPoolSeq, defineAdSeq);
         		
         		//新增原價資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "sales_price", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		saveAdDetail(redisJsonObjectDetail.get("sp_price").toString(), "sales_price", adPoolSeq, defineAdSeq);
+        		newSaveAdDetail(redisJsonObjectDetail.get("sp_price").toString(), "sales_price", adPoolSeq, defineAdSeq);
         		
         		//新增促銷價資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "promotional_price", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		saveAdDetail(redisJsonObjectDetail.get("price").toString(), "promotional_price", adPoolSeq, defineAdSeq);
+        		newSaveAdDetail(redisJsonObjectDetail.get("price").toString(), "promotional_price", adPoolSeq, defineAdSeq);
         		
         		//新增實際網址資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "real_url", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		saveAdDetail(redisJsonObjectDetail.get("link_url").toString(), "real_url", adPoolSeq, defineAdSeq);
+        		newSaveAdDetail(redisJsonObjectDetail.get("link_url").toString(), "real_url", adPoolSeq, defineAdSeq);
         		
         		//新增顯示網址資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "show_url", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		saveAdDetail(redisJsonObjectDetail.get("show_url").toString(), "show_url", adPoolSeq, defineAdSeq);
+        		newSaveAdDetail(redisJsonObjectDetail.get("show_url").toString(), "show_url", adPoolSeq, defineAdSeq);
         		
-//        		if(redisJsonObjectDetail.get("title").toString().length() > 17){
-//        			vo.setMessage("尚未選擇商品物件");
-//        		}else if(redisJsonObjectDetail.get("description").toString().length() > 36){
-//        			
-//        		}else if(redisJsonObjectDetail.get("show_url").toString().length() > 30){
-//        			
-//        		}
-        		
+        		// 新增關鍵字
+        		addKeywords(pfpAdGroup);
+        		//新增排除關鍵字
+        		addExcludeKeywords(pfpAdGroup);
         	}
         }
 		
-		// 新增關鍵字
-		addKeywords(pfpAdGroup);
-		//新增排除關鍵字
-		addExcludeKeywords(pfpAdGroup);
-        
 		return SUCCESS;
 	}
 	
+	/**
+	 * 處理下載圖片及路徑
+	 * @param imgPath
+	 * @return
+	 * @throws IOException
+	 */
+	private String processImgPath(String imgPath) throws IOException {
+		Date date = new Date();
+		String photoPath = photoDbPathNew + super.getCustomer_info_id() + "/" + sdf.format(date) + "/original";
+		File file = new File(photoPath);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		
+		URL url = new URL(imgPath);
+		BufferedImage img = ImageIO.read(url);
+		ImageIO.write(img, "jpg", new File(photoPath + "/" + adSeq + ".jpg"));
+		imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + ".jpg";
+		return imgPath;
+	}
+
 	/**
 	 * 檢查相關資料是否正確
 	 * @param vo
 	 * @throws JSONException 
 	 */
 	private void doAdAdAddTmgManyURLCheckData(PfpAdManyURLVO vo) throws JSONException {
-		//檢查關鍵字比對方式是否選取
-		if (keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
+		//檢查關鍵字比對方式是否選取。廣告類型0:全部 1:搜尋廣告+聯播網廣告 才有輸入關鍵字欄位部分
+		if (("0".equals(adType) || "1".equals(adType)) && keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
 				&& StringUtils.isBlank(adKeywordPrecisionOpen)) {
 			vo.setMessage("請選擇關鍵字比對方式！");
 		} else if (!adFastPublishUrlInfo.contains("\"Y\"")) { // 檢查是否選取物件
@@ -1075,7 +1091,31 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdDetail.setAdDetailUpdateTime(new Date());
 		pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
 	}
-
+	
+	/**
+	 * 新增廣告明細 - 沒有修改templateProductSeq
+	 * @param content     廣告明細內容
+	 * @param adDetailId  元件id
+	 * @param adPoolSeq   資料來源序號
+	 * @param defineAdSeq 廣告定義序號
+	 * @throws Exception
+	 */
+	private void newSaveAdDetail(String content, String adDetailId, String adPoolSeq, String defineAdSeq) throws Exception {
+		adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+		PfpAdDetail pfpAdDetail = new PfpAdDetail();
+		pfpAdDetail.setAdDetailSeq(adDetailSeq);
+		pfpAdDetail.setPfpAd(pfpAdService.getPfpAdBySeq(adSeq));
+		pfpAdDetail.setAdDetailId(adDetailId);
+		pfpAdDetail.setAdDetailContent(content);
+		pfpAdDetail.setAdPoolSeq(adPoolSeq);
+		pfpAdDetail.setDefineAdSeq(defineAdSeq);
+		pfpAdDetail.setVerifyFlag("y");
+		pfpAdDetail.setVerifyStatus("n");
+		pfpAdDetail.setAdDetailCreateTime(new Date());
+		pfpAdDetail.setAdDetailUpdateTime(new Date());
+		pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
+	}
+	
 	/**
 	 * 進行批次上傳圖像廣告
 	 * 1.圖片存檔至暫存file
