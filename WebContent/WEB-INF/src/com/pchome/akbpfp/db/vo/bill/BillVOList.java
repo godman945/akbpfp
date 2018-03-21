@@ -10,6 +10,7 @@ public class BillVOList {
 	private float totalReturnMoney;				// 退回總額
 	private float totalAdSpentMoney;			// 花費總額
 	private float remain;
+	private float totalRefundMoney;				// 預付、後付退款總額
 	
 
 	public List<BillVO> getBillVOs() {
@@ -48,6 +49,11 @@ public class BillVOList {
 	public void setRemain(float remain) {
 		this.remain = remain;
 	}
-	
+	public float getTotalRefundMoney() {
+		return totalRefundMoney;
+	}
+	public void setTotalRefundMoney(float totalRefundMoney) {
+		this.totalRefundMoney = totalRefundMoney;
+	}
 	
 }

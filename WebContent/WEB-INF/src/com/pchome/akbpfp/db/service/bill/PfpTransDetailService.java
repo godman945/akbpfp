@@ -37,6 +37,7 @@ public class PfpTransDetailService extends BaseService <PfpTransDetail, String> 
 			float totalTaxMoney = 0;
 			float totalReturnMoney = 0;				
 			float totalAdSpentMoney = 0;
+			float totalRefundMoney = 0;
 			float remain = 0;
 			boolean tag = true;
 			BigDecimal totalAdSpentMoneyBigDecimal = new BigDecimal(0);
@@ -59,7 +60,7 @@ public class PfpTransDetailService extends BaseService <PfpTransDetail, String> 
 					vo.setSaveMoney(detail.getTransPrice()+detail.getTax());
 					vo.setTaxMoney(detail.getTax());
 					totalSaveMoney += detail.getTransPrice()+detail.getTax();
-					totalTaxMoney += detail.getTax();
+//					totalTaxMoney += detail.getTax();
 				}
 				
 				if(detail.getTransType().equals(EnumTransType.INVALID_COST.getTypeId())){
@@ -67,12 +68,19 @@ public class PfpTransDetailService extends BaseService <PfpTransDetail, String> 
 					totalReturnMoney += detail.getTransPrice();
 				}
 				
-				if(detail.getTransType().equals(EnumTransType.SPEND_COST.getTypeId()) ||detail.getTransType().equals(EnumTransType.REFUND.getTypeId()) ||	detail.getTransType().equals(EnumTransType.LATER_REFUND.getTypeId())){
+				if(detail.getTransType().equals(EnumTransType.SPEND_COST.getTypeId())){
 					totalAdSpentMoneyBigDecimal = totalAdSpentMoneyBigDecimal.add(new BigDecimal(String.valueOf(detail.getTransPrice())));
 //					vo.setAdSpentMoney(detail.getTransPrice());
 					vo.setAdSpentMoney((new BigDecimal(String.valueOf(detail.getTransPrice()))).floatValue());
 					totalAdSpentMoney += detail.getTransPrice();
 				}
+				
+				//預付、後付退款
+				if(detail.getTransType().equals(EnumTransType.REFUND.getTypeId()) ||	detail.getTransType().equals(EnumTransType.LATER_REFUND.getTypeId())){
+					vo.setRefundMoney(detail.getTransPrice() + Math.round(detail.getTax()));
+					totalRefundMoney += (detail.getTransPrice() + Math.round(detail.getTax()));
+				}
+				
 				vo.setRemain(detail.getRemain());				
 				vos.add(vo);
 			}
@@ -82,6 +90,7 @@ public class PfpTransDetailService extends BaseService <PfpTransDetail, String> 
 			billVOs.setTotalReturnMoney(totalReturnMoney);
 			billVOs.setTotalAdSpentMoney(totalAdSpentMoneyBigDecimal.floatValue());
 			billVOs.setRemain(remain);
+			billVOs.setTotalRefundMoney(totalRefundMoney);
 		}
 		
 		return billVOs;

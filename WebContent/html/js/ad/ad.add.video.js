@@ -142,7 +142,6 @@ $(document).ready(function(){
 						$('#imgPreview').removeAttr("style").show();
 						$('#bannerMsgSpan').removeAttr("style").show();
 						$('#sizeMsgSpan').removeAttr("style").show();
-						
 					}
 					$('body').unblock();
 				}else{
@@ -156,6 +155,7 @@ $(document).ready(function(){
 				}
 			});
 		}
+		
 	});
 	
 	var fileFinishSize = 0;
@@ -724,13 +724,11 @@ function callBlock(){
 
 /*動態新增影片預覽*/
 function autoPreview(objData){
-	
 	$("#adViseoSize").children().each(function(index,obj) {
 		if(obj.value != "0"){
 			obj.remove(index);
 		}
 	});
-	
 	
 	//直式影片
 	if(objData.verticalAdFlag){
@@ -742,6 +740,7 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
+			console.log('>>>>>>>>>>>>>>>>直立影音');
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -771,6 +770,8 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
+			console.log('>>>>>>>>>>>>>>>>非直立影音');
+			console.log('<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>');
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -781,6 +782,17 @@ function autoPreview(objData){
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
+//			var a = '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>';
+			
+//			var utl = 'adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true';
+//			var msg = document.getElementById("msg");
+//			var iframe = document.createElement('iframe');
+//			iframe.onload = function(){
+//				iframe.onload = null;
+//			};
+//			document.body.appendChild(iframe);
+//			iframe.src = utl;
+				
 		});
 		$(".adVideoCheckArea").css('display','');
 		
@@ -795,6 +807,7 @@ function autoPreview(objData){
 		}
 	}
 }
+
 
 //影片存在建立預覽
 function appendVideoPreview(){
@@ -821,6 +834,7 @@ function appendVideoPreview(){
 			});
 			
 			if(!createPreViewVideoExist){
+				console.log("TEST >>>>>>>>>>>");
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
 				var a = 

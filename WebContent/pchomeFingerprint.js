@@ -38,6 +38,7 @@
             }
             return target
         },
+        
         getCanvasFp: function() {
             var result = [];
             var canvas = document.createElement('canvas');

@@ -28,7 +28,7 @@
         <@t.insertAttribute name="dateRangeSelect" />            
 	</div>
 	
-	<div class="grtba borderbox" >
+	<div class="grtba borderbox" id="tableView">
 		<div>
 			<h4 style="float:left">廣告列表 </h4>
             <#if addFlag?exists && addFlag=="y">
