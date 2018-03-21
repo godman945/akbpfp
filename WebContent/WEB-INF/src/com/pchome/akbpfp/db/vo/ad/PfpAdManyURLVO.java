@@ -12,22 +12,11 @@ public class PfpAdManyURLVO {
 	private int redisDataTotalSize = 0; //總筆數
 	private String id;
 	
-	//廣告明細
-	private String adDetailPicURL; // 圖片路徑
-	private String adDetailTitle; // 標題
-	private String adDetailDescription; // 商品描述
-	private String adDetailLinkURL; // 網頁連結
-	private String adDetailShowURL; // 顯示網址
-	private String adDetailSalePrice; // 原價
-	private String adDetailPrice; // 促銷價
-	
-//	private int modifyPrice; //查詢結果修改促銷價
-	private String modifyPrice; //查詢結果修改促銷價
-	private String modifyADTitle; //查詢結果修改標題
+	private String modifyPrice;     //查詢結果修改促銷價
+	private String modifyADTitle;   //查詢結果修改標題
 	private String modifyADContent; //查詢結果修改商品描述
 	private String modifyADShowURL; //查詢結果修改顯示連結
 	
-//	private StringBuffer adCrawlerResult;
 	private JSONArray apiJsonArray; //取得廣告爬蟲api資料
 	private JSONObject redisJsonObject; //redis內取得的資料
 	private String message = ""; //訊息
@@ -81,71 +70,6 @@ public class PfpAdManyURLVO {
 		this.redisDataTotalSize = redisDataTotalSize;
 	}
 
-	//
-//	public String getAdDetailPicURL() {
-//		return adDetailPicURL;
-//	}
-//
-//	public void setAdDetailPicURL(String adDetailPicURL) {
-//		this.adDetailPicURL = adDetailPicURL;
-//	}
-//
-//	public String getAdDetailTitle() {
-//		return adDetailTitle;
-//	}
-//
-//	public void setAdDetailTitle(String adDetailTitle) {
-//		this.adDetailTitle = adDetailTitle;
-//	}
-//
-//	public String getAdDetailDescription() {
-//		return adDetailDescription;
-//	}
-//
-//	public void setAdDetailDescription(String adDetailDescription) {
-//		this.adDetailDescription = adDetailDescription;
-//	}
-//
-//	public String getAdDetailLinkURL() {
-//		return adDetailLinkURL;
-//	}
-//
-//	public void setAdDetailLinkURL(String adDetailLinkURL) {
-//		this.adDetailLinkURL = adDetailLinkURL;
-//	}
-//
-//	public String getAdDetailPrice() {
-//		return adDetailPrice;
-//	}
-//
-//	public void setAdDetailPrice(String adDetailPrice) {
-//		this.adDetailPrice = adDetailPrice;
-//	}
-//
-//	public String getAdDetailSalePrice() {
-//		return adDetailSalePrice;
-//	}
-//
-//	public void setAdDetailSalePrice(String adDetailSalePrice) {
-//		this.adDetailSalePrice = adDetailSalePrice;
-//	}
-//
-//	public int getPageTotalSize() {
-//		return pageTotalSize;
-//	}
-//
-//	public void setPageTotalSize(int pageTotalSize) {
-//		this.pageTotalSize = pageTotalSize;
-//	}
-//
-//	public String getAdDetailShowURL() {
-//		return adDetailShowURL;
-//	}
-//
-//	public void setAdDetailShowURL(String adDetailShowURL) {
-//		this.adDetailShowURL = adDetailShowURL;
-//	}
-//
 	public String getMessage() {
 		return message;
 	}
