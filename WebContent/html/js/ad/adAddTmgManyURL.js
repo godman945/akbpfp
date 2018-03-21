@@ -232,11 +232,14 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "	<td height='35' class='td02'>";
 		
 		if(title.length > 17 && description.length > 36){
-			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>標題和內文字數超過文案限制，請確認是否需要修改，如不修改，廣告將依照預覽樣式製作。</div>";
+			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>標題和內文字數超過文案限制，請確認是否需要修改。</div>";
+			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>※提醒您，若不修改，廣告將依照此預覽樣式製作。</div>";
 		}else if(title.length > 17){
-			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>標題字數超過文案限制，請確認是否需要修改，如不修改，廣告將依照預覽樣式製作。</div>";
+			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>標題字數超過文案限制，請確認是否需要修改。</div>";
+			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>※提醒您，若不修改，廣告將依照此預覽樣式製作。</div>";
 		}else if(description.length > 36){
-			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>內文字數超過文案限制，請確認是否需要修改，如不修改，廣告將依照預覽樣式製作。</div>";
+			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>內文字數超過文案限制，請確認是否需要修改。</div>";
+			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>※提醒您，若不修改，廣告將依照此預覽樣式製作。</div>";
 		}
 		
 		tempHtml += "		<div class='ad-mod'>";
