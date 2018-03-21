@@ -369,8 +369,7 @@ public class AdAddAction extends BaseCookieAction{
 	 */
 	public String doAdAdAddTmgManyURL() throws Exception{
 		//TODO 多網址上搞
-		log.info("doAdAdAddTmgManyURL => adGroupSeq = " + adGroupSeq + ";");
-		System.out.println("====>adFastPublishUrlInfo:" + adFastPublishUrlInfo);
+		log.info("doAdAdAddTmgManyURL => adGroupSeq = " + adGroupSeq + ",=> adFastPublishUrlInfo =" + adFastPublishUrlInfo + ";");
 		
 		dataMap = new HashMap<String, Object>();
 
