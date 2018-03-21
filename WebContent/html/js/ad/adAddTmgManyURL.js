@@ -159,7 +159,6 @@ function searchStoreProductURLAjax(URL, errorMsgBlock){
 	    },
 	    success: function(response, status){
 			if (response.status == "ERROR") {
-//				alert(response.msg);
 				if (errorMsgBlock == "storeProductURL") { // 輸入為店家刊登商品網址，則顯示在該區塊
 					$("#chkStoreProductURL").show().html(response.msg);
 				} else if (errorMsgBlock == "confirmAddURL") { // 輸入為新增商品網址
@@ -196,7 +195,6 @@ var tempHtml = "";
 //處理查詢結果畫面
 function processSearchResultViewHtml(redisData){
 	$.each(redisData, function(index, list){
-//		console.log(index + ":" + list);
 		var sp_price = "";    //原價
 		var title = "";       //標題
 		var price = "";       //促銷價
@@ -205,7 +203,6 @@ function processSearchResultViewHtml(redisData){
 		var pic_url = "";     //圖片網址
 		var show_url = "";    //顯示domain
 		$.each(list, function(key, val){
-//			console.log(key + ":" + val);
 			if(key == "sp_price"){
 				sp_price = val;
 			}else if(key == "title"){
@@ -233,6 +230,15 @@ function processSearchResultViewHtml(redisData){
 	    }
 		//廣告明細區塊
 		tempHtml += "	<td height='35' class='td02'>";
+		
+		if(title.length > 17 && description.length > 36){
+			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>標題和內文字數超過文案限制，請確認是否需要修改，如不修改，廣告將依照預覽樣式製作。</div>";
+		}else if(title.length > 17){
+			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>標題字數超過文案限制，請確認是否需要修改，如不修改，廣告將依照預覽樣式製作。</div>";
+		}else if(description.length > 36){
+			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>內文字數超過文案限制，請確認是否需要修改，如不修改，廣告將依照預覽樣式製作。</div>";
+		}
+		
 		tempHtml += "		<div class='ad-mod'>";
 		tempHtml += "			<div class='mod_edit'>";
 		tempHtml += "				<input class='mod-button btn_edit modifyADDetailEditBtn' type='button' style='z-index:9' value='修 改'>";
@@ -272,11 +278,11 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "					<div style='float:left;text-align:left; margin-left:12px;'>";
 		tempHtml += "						<img src=" + pic_url + " style='width:85px; height:85px; float:left; margin-right:5px; border:0'>";
 		tempHtml += "						<div style='float: left;width: 72%;'>";
-		tempHtml += "							<input type='text' class='inputPlaceholderTmg' id='adTitle' name='adTitle' style='width:96%;margin: 1px 0; padding: 3px;' placeholder='" + title.substring(0, 17) + "' maxlength='17'>";
+		tempHtml += "							<input type='text' class='inputPlaceholderTmg' id='adTitle' name='adTitle' style='width:96%;margin: 1px 0; padding: 3px;' value='" + title + "' maxlength='17'>";
 		tempHtml += "							<span style='float:right' id='spanAdTitle'></span>";
-		tempHtml += "							<textarea style='width:96%;margin: 1px 0;padding: 3px;' class='inputPlaceholderTmgTextarea' id='adContent' name='adContent' maxlength='36' onkeypress='if(event.keyCode==13) return false;' placeholder='" + description.substring(0, 36) + "'></textarea>";
+		tempHtml += "							<textarea style='width:96%;margin: 1px 0;padding: 3px;' class='inputPlaceholderTmgTextarea' id='adContent' name='adContent' maxlength='36' onkeypress='if(event.keyCode==13) return false;' >" + description + "</textarea>";
 		tempHtml += "							<span style='float:right' id='spanAdContent'></span>";
-		tempHtml += "							<input type='text' class='inputPlaceholderTmg' data-value='spanAdLinkURL' id='adShowURL' name='adShowURL' style='width: 96%;margin: 1px 0;padding: 3px;' maxlength='30' placeholder='" + show_url + "'>";
+		tempHtml += "							<input type='text' class='inputPlaceholderTmg' data-value='spanAdLinkURL' id='adShowURL' name='adShowURL' style='width: 96%;margin: 1px 0;padding: 3px;' maxlength='30' value='" + show_url + "'>";
 		tempHtml += "							<span style='float:right' id='spanAdShowURL'></span>";
 		tempHtml += "						</div>";
 		tempHtml += "					</div>";
@@ -326,25 +332,25 @@ function processSearchResultViewHtml(redisData){
 
 //勾選全部廣告
 function checkAll() {
-	//目前幾筆是未勾選
-	var notCheckCount = 0;
+	//目前幾筆勾選
+	var checkCount = 0;
 	
 	$("#tableView input[type=checkbox]").each(function(index, obj) {
 		//目前迴圈繞到的此筆，是否為已勾選的，不是則做計算、勾選、改值動作
 		if(urlInfoMap[$(obj).prop('value') + "_ckeck_flag"] == "N"){
-			notCheckCount += 1;
+			checkCount += 1;
 			$(obj).prop('checked', true);
 			urlInfoMap[$(obj).prop('value') + "_ckeck_flag"] = "Y";
 		}
 	});
 	
-	//目前勾選筆數 + 未勾選筆數
-	$("[class^=checkboxCount]").text(parseInt($(".checkboxCount-up").text()) + parseInt(notCheckCount));
+	//目前勾選總筆數 + 現在勾選筆數
+	$("[class^=checkboxCount]").text(parseInt($(".checkboxCount-up").text()) + parseInt(checkCount));
 }
 
 //點擊勾選廣告
 function checkAd(obj, link_url) {
-	//目前勾選筆數
+	//目前勾選總筆數
 	var checkAdCount = parseInt($(".checkboxCount-up").text());
 	
 	//計算數量及修改flag
@@ -458,6 +464,10 @@ function processPageAndTotalPage(){
 	}
 }
 
+var tempADTitle;
+var tempADContent;
+var tempADShowURL;
+
 //處理查詢結果畫面的按鈕部分
 function processResultViewBtn(){
 	
@@ -517,73 +527,75 @@ function processResultViewBtn(){
 	
 	//修改明細資料按鈕事件
 	$('.modifyADDetailEditBtn').unbind('click').click(function () {
-		var _thisADDetailBlock = $(this).closest(".ad-mod"); //廣告明細欄位位置
+		var _thisADDetailBlock = $(this).closest(".ad-mod"); //廣告明細欄位位置(包含顯示及編及區塊)
 		
-		_thisADDetailBlock.find("#adTitle").val(_thisADDetailBlock.find("#adTitle").attr("placeholder"));
 		var adTitleLength = _thisADDetailBlock.find("#adTitle").val().length;
 		var adTitleMaxLength = _thisADDetailBlock.find("#adTitle").attr("maxlength");
 		_thisADDetailBlock.find("#spanAdTitle").html("已輸入" + adTitleLength + "字，剩" + (parseInt(adTitleMaxLength) - parseInt(adTitleLength)) + "字");
 		
-		_thisADDetailBlock.find("#adContent").val(_thisADDetailBlock.find("#adContent").attr("placeholder"));
 		var adContentLength = _thisADDetailBlock.find("#adContent").val().length;
 		var adContentMaxLength = _thisADDetailBlock.find("#adContent").attr("maxlength");
 		_thisADDetailBlock.find("#spanAdContent").html("已輸入" + adContentLength + "字，剩" + (parseInt(adContentMaxLength) - parseInt(adContentLength)) + "字");
 		
-		_thisADDetailBlock.find("#adShowURL").val(_thisADDetailBlock.find("#adShowURL").attr("placeholder"));
 		var adShowURLLength = _thisADDetailBlock.find("#adShowURL").val().length;
 		var adShowURLMaxLength = _thisADDetailBlock.find("#adShowURL").attr("maxlength");
 		_thisADDetailBlock.find("#spanAdShowURL").html("已輸入" + adShowURLLength + "字，剩" + (parseInt(adShowURLMaxLength) - parseInt(adShowURLLength)) + "字");
+		
+		//放到暫存，用來判斷是否修改過
+		tempADTitle = _thisADDetailBlock.find("#adTitle").val();
+		tempADContent = _thisADDetailBlock.find("#adContent").val();
+		tempADShowURL = _thisADDetailBlock.find("#adShowURL").val();
 		
 		_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
 	});
 	
 	//修改明細資料點確定後事件
 	$('.modifyADDetailOKBtn').unbind('click').click(function () {
-		var _thisADDetailBlock = $(this).closest(".ad-mod"); //廣告明細欄位位置
+				
+		var _thisADDetailBlock = $(this).closest(".ad-mod"); //廣告明細欄位位置(包含顯示及編及區塊)
+		var keyinADTitle = _thisADDetailBlock.find("#adTitle").val();     //輸入的標題
+		var keyinADContent = _thisADDetailBlock.find("#adContent").val(); //輸入的內文
+		var keyinADShowURL = _thisADDetailBlock.find("#adShowURL").val(); //輸入的顯示網址
 		
-		var tempADTitle = _thisADDetailBlock.find("#adTitle").attr("placeholder");
-		var tempADContent = _thisADDetailBlock.find("#adContent").attr("placeholder");
-		var tempADShowURL = _thisADDetailBlock.find("#adShowURL").attr("placeholder");
-		var keyinADTitle = _thisADDetailBlock.find("#adTitle").val();
-		var keyinADContent = _thisADDetailBlock.find("#adContent").val();
-		var keyinADShowURL = _thisADDetailBlock.find("#adShowURL").val();
-		
-		//其中一個欄位有異動過,則更新
-		if(tempADTitle != keyinADTitle || tempADContent != keyinADContent || tempADShowURL != keyinADShowURL){
-		
-			$.ajax({
-			    type: "post",
-			    dataType: "json",
-			    url: "modifyADDetailAjax.html",
-			    data: {
-			    	"searchURL": $(this).closest("tr").find(".linkUrl").html(),
-			    	"modifyADTitle": keyinADTitle,
-			    	"modifyADContent": keyinADContent,
-			    	"modifyADShowURL": keyinADShowURL
-			    },
-			    timeout: 30000,
-			    error: function(xhr){
-			        alert('Ajax request 發生錯誤');
-			    },
-			    success:function(response, status){
-			    	if (response.status == "ERROR") {
-			    		alert(response.msg);
-			    	}else{
-			    		_thisADDetailBlock.find('.defaultADTitle').html(keyinADTitle);
-			    		_thisADDetailBlock.find("#adTitle").attr("placeholder", keyinADTitle);
-			    		_thisADDetailBlock.find('.defaultADDescription').html(keyinADContent);
-			    		_thisADDetailBlock.find("#adContent").attr("placeholder", keyinADContent);
-			    		_thisADDetailBlock.find('.defaultADShowURL').html(keyinADShowURL);
-			    		_thisADDetailBlock.find("#adShowURL").attr("placeholder", keyinADShowURL);
-			    		
-			    		_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
-			    	}
-				}
-			});
-		
-		}else{
-			_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
+		if(!checkADTitle(keyinADTitle)){
+			return false;
+		}else if(!checkADContent(keyinADContent)){
+			return false;
+		}else if(!checkEdit(_thisADDetailBlock, keyinADTitle, keyinADContent, keyinADShowURL)){
+			return false;
 		}
+		
+		$.ajax({
+		    type: "post",
+		    dataType: "json",
+		    url: "modifyADDetailAjax.html",
+		    data: {
+		    	"searchURL": $(this).closest("tr").find(".linkUrl").html(),
+		    	"modifyADTitle": keyinADTitle,
+		    	"modifyADContent": keyinADContent,
+		    	"modifyADShowURL": keyinADShowURL
+		    },
+		    timeout: 30000,
+		    error: function(xhr){
+		        alert('Ajax request 發生錯誤');
+		    },
+		    success:function(response, status){
+		    	if (response.status == "ERROR") {
+		    		alert(response.msg);
+		    	}else{
+		    		_thisADDetailBlock.find('.defaultADTitle').html(keyinADTitle);
+		    		_thisADDetailBlock.find("#adTitle").attr("placeholder", keyinADTitle);
+		    		_thisADDetailBlock.find('.defaultADDescription').html(keyinADContent);
+		    		_thisADDetailBlock.find("#adContent").attr("placeholder", keyinADContent);
+		    		_thisADDetailBlock.find('.defaultADShowURL').html(keyinADShowURL);
+		    		_thisADDetailBlock.find("#adShowURL").attr("placeholder", keyinADShowURL);
+		    		
+		    		_thisADDetailBlock.closest("td").find('.exceedWordNumber').remove(); //只有檢核都ok才能儲存,儲存後刪除文案
+		    		_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
+		    	}
+			}
+		});
+		
 	});
 	
 	//處理可輸入多少字文案
@@ -601,6 +613,39 @@ function processResultViewBtn(){
 		}
 	});
 	
+}
+
+//檢查廣告明細欄位修改標題
+function checkADTitle(keyinADTitle){
+	if(keyinADTitle.length == 0){
+		alert("請輸入標題。");
+		return false;
+	}else if(keyinADTitle.length > 17){
+		alert("標題已超過限制字數。");
+		return false;
+	}
+	return true;
+}
+
+//檢查廣告明細欄位修改內文
+function checkADContent(keyinADContent){
+	if(keyinADContent.length == 0){
+		alert("請輸入內文。");
+		return false;
+	}else if(keyinADContent.length > 36){
+		alert("內文已超過限制字數。");
+		return false;
+	}
+	return true;
+}
+
+//檢查是否編輯修改過
+function checkEdit(_thisADDetailBlock, keyinADTitle, keyinADContent, keyinADShowURL){
+	if(tempADTitle == keyinADTitle && tempADContent == keyinADContent && tempADShowURL == keyinADShowURL){
+		_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
+		return false;
+	}
+	return true;
 }
 
 //檢查輸入網址是否正確
