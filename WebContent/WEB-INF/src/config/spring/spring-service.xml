@@ -233,6 +233,5 @@
 	<!-- 多網址上搞 -->
     <bean id="PfpAdManyURLSearchService" class="com.pchome.akbpfp.db.service.admanyurlsearch.PfpAdManyURLSearchService">
 		<property name="redisAPI" ref="RedisAPI" />
-<!--              <property name="dao" ref="PfpBuDAO" /> -->
     </bean>
 </beans>
