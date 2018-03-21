@@ -36,10 +36,10 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	private List<PfpAdGroup> pfpAdGroupList;
 	private IPfpAdActionService pfpAdActionService;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
 	/**
 	 * 1.檢查輸入網址，打廣告爬蟲api取得資料
 	 * 2.廣告爬蟲api取得資料與redis內的資料比對，是否重複，存入redis前先將資料整理後再存
-	 * 
 	 * @return
 	 */
 	public String searchStoreProductURLData() {
@@ -129,7 +129,6 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	 */
 	public String modifyPrice() throws JSONException {
 		dataMap = new HashMap<String, Object>();
-		System.out.println("modifyPrice");
 		
 		String custId = super.getCustomer_info_id();
 		PfpAdManyURLVO vo = new PfpAdManyURLVO();
@@ -156,7 +155,6 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	 */
 	public String modifyADDetail() throws JSONException {
 		dataMap = new HashMap<String, Object>();
-		System.out.println("modifyADDetail");
 		
 		String custId = super.getCustomer_info_id();
 		PfpAdManyURLVO vo = new PfpAdManyURLVO();
@@ -188,6 +186,7 @@ public class AdSearchURLAjax extends BaseCookieAction{
 		pfpAdManyURLSearchService.adConfirmFastPublishUrl(adFastPublishUrlInfo,super.getCustomer_info_id());
 		return SUCCESS;
 	}
+	
 	/**
 	 * 廣告活動設定資訊
 	 * */
@@ -321,9 +320,5 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	public void setPfpAdGroupList(List<PfpAdGroup> pfpAdGroupList) {
 		this.pfpAdGroupList = pfpAdGroupList;
 	}
-
-
-
-
 
 }
