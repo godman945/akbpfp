@@ -6,7 +6,6 @@
 
 
 function findTableView(){
-	
 	var date = $("#IT_dateRange").val().split("~");
 	var startDate = date[0];
 	var endDate = date[1];
@@ -14,7 +13,7 @@ function findTableView(){
 	var pageNo = $("#pageNo").val();
 	var pageSize = $("#pageSize").val();
 	var keyword = $("#keyword").val();
-	
+	$('#tableView').block(maskingConfig);
 	$.ajax({
 		url: "adActionViewTable.html",
 		data:{
@@ -38,8 +37,12 @@ function findTableView(){
 
 		},
 		error: function(xtl) {
+			$('#tableView').unblock();
 			alert("系統繁忙，請稍後再試！");
 		}
+	}).done(function() {
+		  $( this ).addClass( "done" );
+		  $('#tableView').unblock();
 	});
 	
 }

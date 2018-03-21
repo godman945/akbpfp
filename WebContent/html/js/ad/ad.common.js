@@ -85,10 +85,8 @@
 });
 
 function ready(){
-	
 	var dateRange = $("#startDate").val()+"~"+$("#endDate").val();
 	$("#IT_dateRange").val(dateRange);
-	
 	findTableView();
 }
 
@@ -108,3 +106,21 @@ function wantSearch(pageNo) {
     }
     findTableView();
 }
+
+
+var maskingConfig = {
+	    message: "<img src='html/img/LoadingWait.gif' />",
+	    css: {
+	        padding: 0,
+	        margin: 0,
+	        width: '50%',
+	        top: '40%',
+	        left: '35%',
+	        textAlign: 'center',
+	        color: '#000',
+	        border: '3px solid #aaa',
+	        backgroundColor: '#fff',
+	        cursor: 'wait'
+	    }
+	};
+
