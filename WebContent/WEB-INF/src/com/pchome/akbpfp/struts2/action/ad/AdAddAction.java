@@ -397,7 +397,7 @@ public class AdAddAction extends BaseCookieAction{
 		// 新增資料到table
 		// 取得此客編在Redis的資料
 		pfpAdManyURLSearchService.getRedisURLData(vo);
-		// 檢查勾選資料是否正確,正確的放入vo
+		
 		JSONObject redisJsonObject = vo.getRedisJsonObject();
 		String products = redisJsonObject.getJSONArray("products").toString();
 		
@@ -436,12 +436,16 @@ public class AdAddAction extends BaseCookieAction{
         		//新增標題資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "title", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		newSaveAdDetail(redisJsonObjectDetail.get("title").toString(), "title", adPoolSeq, defineAdSeq);
+        		String title = redisJsonObjectDetail.get("title").toString();
+        		int titleMaxLength = title.length() > 17 ? 17 : title.length();
+        		newSaveAdDetail(title.substring(0, titleMaxLength), "title", adPoolSeq, defineAdSeq);
         		
         		//新增內文資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "content", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		newSaveAdDetail(redisJsonObjectDetail.get("description").toString(), "content", adPoolSeq, defineAdSeq);
+        		String description = redisJsonObjectDetail.get("description").toString();
+        		int descriptionMaxLength = description.length() > 36 ? 36 : description.length();
+        		newSaveAdDetail(description.substring(0, descriptionMaxLength), "content", adPoolSeq, defineAdSeq);
         		
         		//新增原價資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "sales_price", null, adPoolSeq);
@@ -469,7 +473,7 @@ public class AdAddAction extends BaseCookieAction{
         		addExcludeKeywords(pfpAdGroup);
         	}
         }
-		
+
 		return SUCCESS;
 	}
 	
@@ -562,43 +566,6 @@ public class AdAddAction extends BaseCookieAction{
 			vo.setMessage("請選擇關鍵字比對方式！");
 		} else if (!adFastPublishUrlInfo.contains("\"Y\"")) { // 檢查是否選取物件
 			vo.setMessage("尚未選擇商品物件");
-		} else {
-			
-//			// 取得此客編在Redis的資料
-//			pfpAdManyURLSearchService.getRedisURLData(vo);
-//			// 檢查勾選資料是否正確,正確的放入vo
-//			JSONObject redisJsonObject = vo.getRedisJsonObject();
-//			String products = redisJsonObject.getJSONArray("products").toString();
-//			
-//			JSONObject adFastPublishUrlInfoJson = new JSONObject(adFastPublishUrlInfo); 
-//			Iterator adFastPublishUrlInfoJsoIterator = adFastPublishUrlInfoJson.keys();
-//	        while (adFastPublishUrlInfoJsoIterator.hasNext()) {
-//	        	String key = adFastPublishUrlInfoJsoIterator.next().toString();
-//	        	if(adFastPublishUrlInfoJson.get(key).equals("Y")){ //是選取的資料
-//	        		
-//	        		//找到URL位置
-//	        		int index = products.indexOf(key.replace("_ckeck_flag", ""));
-//	        		//取得URL前後段字串
-//	        		String startStr = products.substring(0, index);
-//	        		String endStr = products.substring(index, products.length());
-//	        		//由前後段字串找到包url那一段的位置
-//	        		int startStrIndex = startStr.lastIndexOf("{\"");
-//	        		int endStrIndex = endStr.indexOf("\"}");
-//	        		//取得所需要斷落字串
-//	        		String data = products.substring(startStrIndex, (startStr.length() + endStrIndex + 2));
-//	        		//修改資料
-//	        		JSONObject redisJsonObjectDetail = new JSONObject(data.toString());
-//	        		if(redisJsonObjectDetail.get("title").toString().length() > 17){
-//	        			vo.setMessage("尚未選擇商品物件");
-//	        		}else if(redisJsonObjectDetail.get("description").toString().length() > 36){
-//	        			
-//	        		}else if(redisJsonObjectDetail.get("show_url").toString().length() > 30){
-//	        			
-//	        		}
-//	        		
-//	        	}
-//	        }
-	        
 		}
 	}
 	
@@ -1567,7 +1534,6 @@ public class AdAddAction extends BaseCookieAction{
     	return SUCCESS;
     }
 
-	
 	/**
 	 * 快速上稿畫面
 	 * */
@@ -1582,7 +1548,6 @@ public class AdAddAction extends BaseCookieAction{
 		adGroupName = "PCHOME聯播網廣告";
 		return SUCCESS;
 	}
-	
 	
 	/**
 	 * 快速上稿新增廣告
@@ -1758,7 +1723,6 @@ public class AdAddAction extends BaseCookieAction{
 		return true;
 	}
 	
-	
 	/*
 	 * 快速上稿新增關鍵字
 	 * */
@@ -1848,12 +1812,7 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdActionService.save(pfpAdAction);
 		
 		deleteAdMap.put("adActionSeq", adActionSeq);
-		
-		
 	}
-	
-	
-	
 	
 	/**
 	 * 檢查檔案數
@@ -1883,8 +1842,6 @@ public class AdAddAction extends BaseCookieAction{
 		return time;
 	}
 
-	
-	
 	private String getIndexHtmlPath(String path){
 		String indexPath = "";
 		
