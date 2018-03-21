@@ -17,6 +17,7 @@ var maskingConfig = {
 
 $(document).ready(function(){
 	$("#storeProductURL").val(""); //如果按上一頁返回，清除資料
+	$('.ultext').show(); // 只有多網址上搞會套此js，顯示文案
 	
 	//店家刊登商品網址欄位
 	$("#storeProductURL").blur(function(){

@@ -684,7 +684,6 @@ function dealWithBookmark() {
 		// 目前為多筆網址刊登時
 		$('.fastURLAdAdd').closest(".addN-card-piece").addClass("selected-stat");
 		$('.adAdd').closest(".addN-card-piece").removeClass("selected-stat");
-		$('.ultext').show();
 		
 		//點擊一般廣告刊登等同點擊圖文廣告
 		$('.adAdd').click(function(){
