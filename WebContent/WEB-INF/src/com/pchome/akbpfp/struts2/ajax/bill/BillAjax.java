@@ -67,7 +67,7 @@ public class BillAjax extends BaseCookieAction{
 			content.append("\n\n");
 			content.append("日期範圍,"+startDate+"~"+endDate);
 			content.append("\n\n");
-			content.append("日期,明細內容,加值金額,稅金,廣告支出回收,廣告支出,帳戶餘額");
+			content.append("日期,明細內容,加值金額(含稅),退款金額(含稅),廣告支出回收,廣告支出,帳戶餘額");
 			content.append("\n");
 			
 			for(BillVO vo:billVOList.getBillVOs()){
@@ -75,7 +75,7 @@ public class BillAjax extends BaseCookieAction{
 				content.append(vo.getTransDate()).append(",");
 				content.append(vo.getTransContents()).append(",");
 				content.append("NT$ " + vo.getSaveMoney()).append(",");
-				content.append("NT$ " + vo.getTaxMoney()).append(",");
+				content.append("NT$ " + vo.getRefundMoney()).append(",");
 				content.append("NT$ " + vo.getReturnMoney()).append(",");
 				content.append("NT$ " + vo.getAdSpentMoney()).append(",");
 				content.append("NT$ " + vo.getRemain()).append(",");
@@ -84,7 +84,7 @@ public class BillAjax extends BaseCookieAction{
 			
 			content.append(",總計,");
 			content.append("NT$ " + billVOList.getTotalSaveMoney()).append(",");
-			content.append("NT$ " + billVOList.getTotalTaxMoney()).append(",");
+			content.append("NT$ " + billVOList.getTotalRefundMoney()).append(",");
 			content.append("NT$ " + billVOList.getTotalReturnMoney()).append(",");
 			content.append("NT$ " + billVOList.getTotalAdSpentMoney()).append(",");
 			content.append("NT$ " + billVOList.getRemain());
@@ -93,8 +93,6 @@ public class BillAjax extends BaseCookieAction{
 			downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));
 			
 		}
-		
-		
 		
 		return SUCCESS;
 	}
