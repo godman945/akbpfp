@@ -1,11 +1,20 @@
 package com.pchome.config;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.pchome.akbpfp.api.AsidRateUtile;
-import com.pchome.akbpfp.db.vo.bill.BillVOList;
+//import com.pchome.akbpfp.api.RedisAPI;
+import com.pchome.akbpfp.db.pojo.PfpAdGroup;
+import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
+import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 
 
 
@@ -42,11 +51,83 @@ public class TestConfig {
 	
 	
 	public static void main(String[] args) throws Exception{
+		  
 		
 		ApplicationContext context = new FileSystemXmlApplicationContext(TestConfig.path);
-		AsidRateUtile AsidRateUtile = (AsidRateUtile) context.getBean("AsidRateUtile");
+//		RedisAPI redisAPI = (RedisAPI) context.getBean("RedisAPI");
 		
-		System.out.println(AsidRateUtile.getSyspriceRates(Float.valueOf("0.3")));
+		
+		
+//		System.out.println(pfpAdGroup.getPfpAdKeywords() == null);
+//		
+		
+//		System.out.println(keywordsSet);
+		
+//		for (PfpAdKeyword pfpAdKeyword : keywordsSet) {
+//			System.out.println(pfpAdKeyword.getAdKeyword());
+//		}
+		
+		List<String> keyWordList = new ArrayList<>();
+		keyWordList.add("液晶電視");
+		String[] stockArr = new String[keyWordList.size()];
+		stockArr = keyWordList.toArray(stockArr);
+
+		for (String string : stockArr) {
+			System.out.println("比對用:"+string);
+		}
+		
+		
+		String redisKey = "pfpcart_AC2013071700001";
+//		String redisData = redisAPI.getRedisData(redisKey);
+//		JSONObject redisJson = new JSONObject(redisData);
+//		JSONArray  redisAdArrayJson = (JSONArray) redisJson.get("products");
+//		for (int i = 0; i < redisAdArrayJson.length(); i++) {
+//			JSONObject addAdJson = (JSONObject) redisAdArrayJson.get(i);
+//			JSONArray radisKeywords = (JSONArray) addAdJson.get("suggest");
+//			for (int j = 0; j < radisKeywords.length(); j++) {
+//				boolean isExist = false;
+//				for (String string : stockArr) {
+//					System.out.println(string+":"+radisKeywords.get(j)+":"+string.equals(radisKeywords.get(j)));
+//					if(string.equals(radisKeywords.get(j).toString())){
+//						isExist = true;
+//						break;
+//					}
+//				}
+//				if(isExist){
+//					System.out.println("新增過:"+radisKeywords.get(j));
+//				}
+//			}
+			
+			
+			
+//			String[] a = (String[]) addAdJson.get("suggest");
+//			System.out.println(a);
+			
+//			String[] stringArray = addAdJson.getString("suggest").split(",");
+//			for (String string : stringArray) {
+//				System.out.println(string);
+//			}
+//			String[] stringArray = addAdJson.getString("suggest");
+//			String[] stringArray = Arrays.copyOf(addAdJson.get("suggest"), addAdJson.get("suggest"), String[].class);
+			
+//			System.out.println(addAdJson.get("suggest"));
+			
+//			String a = (addAdJson.get("suggest")).toString();
+			
+//			String[] keywords = (String[]) (addAdJson.get("suggest"));
+//			for (String keyword : keywords) {
+//				System.out.println(keyword);
+//			}
+//		}
+		
+		
+		
+		
+		
+		
+//		AsidRateUtile AsidRateUtile = (AsidRateUtile) context.getBean("AsidRateUtile");
+//		System.out.println(AsidRateUtile.getSyspriceRates(Float.valueOf("100")));
+//		System.out.println(AsidRateUtile.getSyspriceRates(Float.valueOf("0.3")));
 		
 		
 //		BillVOList billVOList= pfpTransDetailService.findPfpTransDetail("AC2013071700001", "2018-01-02", "2018-01-02");
