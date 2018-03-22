@@ -957,29 +957,29 @@ public class AdAddAction extends BaseCookieAction{
 	 * 1. 分類下已新增關鍵字
 	 * 2. 分類下已排除關鍵字
 	 */
-	private List<String> checkKeywords(String adGroupSeq, String[] keywords){
+	private List<String> checkKeywords(String adGroupSeq, String[] keywords) {
 		List<String> list = null;
-		if(StringUtils.isNotBlank(adGroupSeq) && keywords != null && StringUtils.isNotBlank(keywords.toString())){
-		    list = new ArrayList<String>();
-		    List<String> existKeywords = new ArrayList<String>();
+		if (StringUtils.isNotBlank(adGroupSeq) && keywords != null && StringUtils.isNotBlank(keywords.toString())) {
+			list = new ArrayList<String>();
+			List<String> existKeywords = new ArrayList<String>();
 			// 分類下已新增關鍵字
 			List<PfpAdKeyword> adKeywords = pfpAdKeywordService.findAdKeywords(adGroupSeq);
-			for(PfpAdKeyword keyword:adKeywords){
-			    existKeywords.add(keyword.getAdKeyword());
+			for (PfpAdKeyword keyword : adKeywords) {
+				existKeywords.add(keyword.getAdKeyword());
 			}
 			// 分類下已排除關鍵字
-			List<PfpAdExcludeKeyword> adExcludeKeywords =pfpAdExcludeKeywordService.findAdExcludeKeywords(adGroupSeq);
-			for(PfpAdExcludeKeyword keyword:adExcludeKeywords){
-			    existKeywords.add(keyword.getAdExcludeKeyword());
+			List<PfpAdExcludeKeyword> adExcludeKeywords = pfpAdExcludeKeywordService.findAdExcludeKeywords(adGroupSeq);
+			for (PfpAdExcludeKeyword keyword : adExcludeKeywords) {
+				existKeywords.add(keyword.getAdExcludeKeyword());
 			}
-			log.info(" keywords size: "+keywords.length);
-			log.info(" existKeywords size: "+existKeywords.size());
-			if(existKeywords.isEmpty()){
+			log.info(" keywords size: " + keywords.length);
+			log.info(" existKeywords size: " + existKeywords.size());
+			if (existKeywords.isEmpty()) {
 				for (int i = 0; i < keywords.length; i++) {
 					list.add(keywords[i].trim());
 				}
-			}else{
-			    for(int i=0;i<keywords.length;i++){
+			} else {
+				for (int i = 0; i < keywords.length; i++) {
 					for (String keyword : existKeywords) {
 						if (!keyword.equals(keywords[i].trim())) {
 							list.add(keywords[i].trim());
@@ -988,7 +988,7 @@ public class AdAddAction extends BaseCookieAction{
 							log.info(" keywords[i]: " + keywords[i].trim());
 						}
 					}
-			    }
+				}
 			}
 		} else {
 			log.info(" check keywords is null");
@@ -999,9 +999,9 @@ public class AdAddAction extends BaseCookieAction{
 	// 新增排除關鍵字
 	private void addExcludeKeywords(PfpAdGroup pfpAdGroup) {
 		try {
-			if(excludeKeywords != null && excludeKeywords.length > 0) {
-				for(int i = 0; i < excludeKeywords.length; i++) {
-					//log.info("excludeKeywords["+i+"] = " + excludeKeywords[i]);
+			if (excludeKeywords != null && excludeKeywords.length > 0) {
+				for (int i = 0; i < excludeKeywords.length; i++) {
+					// log.info("excludeKeywords["+i+"] = " + excludeKeywords[i]);
 					String adExcludeKeywordSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_EXCLUDE_KEYWORD, "_");
 					PfpAdExcludeKeyword pfpAdExcludeKeyword = new PfpAdExcludeKeyword();
 					pfpAdExcludeKeyword.setAdExcludeKeywordSeq(adExcludeKeywordSeq);
@@ -1014,7 +1014,7 @@ public class AdAddAction extends BaseCookieAction{
 				}
 			}
 
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			log.info("Exception(addExcludeKeywords):" + ex);
 		}
 	}
@@ -1536,8 +1536,8 @@ public class AdAddAction extends BaseCookieAction{
 	/**
 	 * 快速上稿畫面
 	 * */
-	public String adFastPublishAdd(){
-		log.info(">>>>>> init redis:"+"pfpcart_" + super.getCustomer_info_id());
+	public String adFastPublishAdd() {
+		log.info(">>>>>> init redis:" + "pfpcart_" + super.getCustomer_info_id());
 		redisAPI.delRedisData("pfpcart_" + super.getCustomer_info_id());
 		adStyle = "TMG";
 		adType = "";
@@ -1816,14 +1816,14 @@ public class AdAddAction extends BaseCookieAction{
 	/**
 	 * 檢查檔案數
 	 * */
-	private int checkFileAmount(String path){
+	private int checkFileAmount(String path) {
 		int amount = 0;
 		File checkFlie = new File(path);
-		File[] files = checkFlie.listFiles(); //獲取資料夾下面的所有檔
+		File[] files = checkFlie.listFiles(); // 獲取資料夾下面的所有檔
 		for (File f : files) {
-			//判斷是否為資料夾
+			// 判斷是否為資料夾
 			if (f.isDirectory()) {
-				amount += checkFileAmount(f.getPath()); //如果是資料夾，檢查該資料夾內檔案數
+				amount += checkFileAmount(f.getPath()); // 如果是資料夾，檢查該資料夾內檔案數
 			} else {
 				amount++;
 			}
@@ -1832,32 +1832,32 @@ public class AdAddAction extends BaseCookieAction{
 		return amount;
 	}
 	
-	private String reversionString(String timeString) throws Exception{
+	private String reversionString(String timeString) throws Exception {
 		String time = "";
 		String[] timeArray = timeString.split("");
-		for(int i=0;i<timeArray.length;i++){
+		for (int i = 0; i < timeArray.length; i++) {
 			time = timeArray[i] + time;
 		}
 		return time;
 	}
 
-	private String getIndexHtmlPath(String path){
+	private String getIndexHtmlPath(String path) {
 		String indexPath = "";
-		
+
 		File checkFlie = new File(path);
-		File[] files = checkFlie.listFiles(); //獲取資料夾下面的所有檔
+		File[] files = checkFlie.listFiles(); // 獲取資料夾下面的所有檔
 		for (File f : files) {
-			//判斷是否為資料夾
+			// 判斷是否為資料夾
 			if (f.isDirectory()) {
-				indexPath = getIndexHtmlPath(f.getPath()); //如果是資料夾，檢查該資料夾內檔案
+				indexPath = getIndexHtmlPath(f.getPath()); // 如果是資料夾，檢查該資料夾內檔案
 			} else {
-				if(f.getPath().indexOf("index.htm") != -1){
+				if (f.getPath().indexOf("index.htm") != -1) {
 					indexPath = f.getPath();
 					break;
 				}
 			}
 		}
-		
+
 		return indexPath;
 	}
 	
