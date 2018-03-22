@@ -82,7 +82,7 @@
 							<input type="hidden" id="adDetailID" name="adDetailID" value="sales_price">
 							<input type="hidden" id="adDetailName" name="adDetailName" value="商品原價">
 							<input type="hidden" id="adDetailContent" name="adDetailContent">
-                        	NT$ <input type="text" maxlength="20" id="salesPrice" name="salesPrice">
+                        	NT$ <input type="text" maxlength="8" id="salesPrice" name="salesPrice">
 						</td>
 					</tr>
 					<tr>
@@ -91,7 +91,7 @@
 							<input type="hidden" id="adDetailID" name="adDetailID" value="promotional_price">
 							<input type="hidden" id="adDetailName" name="adDetailName" value="商品促銷價">
 							<input type="hidden" id="adDetailContent" name="adDetailContent">
-                        	NT$ <input type="text" maxlength="20" id="promotionalPrice" name="promotionalPrice">
+                        	NT$ <input type="text" maxlength="8" id="promotionalPrice" name="promotionalPrice">
 						</td>
 					</tr>
 					<tr>

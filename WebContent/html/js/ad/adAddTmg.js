@@ -21,10 +21,14 @@
 	}
 
 	//檢查商品原價與商品促銷價的值，只能輸入數字
-	$('#salesPrice, #promotionalPrice').bind('keyup', function() {
-		if(isNotNum($(this).val())){
-			alert('只能填寫數字');
-			$(this).val($(this).val().substr(0, $(this).val().length - 1));
+	$('#salesPrice, #promotionalPrice').bind('blur', function() { //複製貼上的用此判斷，判斷非數字清除欄位值
+		if(isNotNum($(this).val())) {
+			if($(this).attr("id") == "salesPrice"){
+				alert('商品原價只能填寫數字');
+			}else if($(this).attr("id") == "promotionalPrice"){
+				alert('商品促銷價只能填寫數字');
+			}
+			$(this).val("");
 		}
 	});
 	
@@ -673,7 +677,7 @@ function fileLoad(){
 
 //檢查是否為數字，非數字回true
 function isNotNum(val) {
-	return /[^0-9]$/.test(val);
+	return !(/^[0-9]*$/.test(val));
 }
 
 // 處理圖文廣告頁籤部分

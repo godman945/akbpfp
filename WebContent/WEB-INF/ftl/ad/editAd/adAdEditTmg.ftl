@@ -92,7 +92,7 @@
 							<input type="hidden" id="adDetailID" name="adDetailID" value="sales_price">
 							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[3]!}">
 							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[3]!}">
-                        	NT$ <input type="text" maxlength="20" id="salesPrice" name="salesPrice" value="${adDetailContent[3]!}">
+                        	NT$ <input type="text" maxlength="8" id="salesPrice" name="salesPrice" value="${adDetailContent[3]!}">
 						</td>
 					</tr>
 					<tr>
@@ -101,7 +101,7 @@
 							<input type="hidden" id="adDetailID" name="adDetailID" value="promotional_price">
 							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[4]!}">
 							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[4]!}">
-                        	NT$ <input type="text" maxlength="20" id="promotionalPrice" name="promotionalPrice" value="${adDetailContent[4]!}">
+                        	NT$ <input type="text" maxlength="8" id="promotionalPrice" name="promotionalPrice" value="${adDetailContent[4]!}">
 						</td>
 					</tr>
 					<tr>
