@@ -140,6 +140,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		JSONArray redisJsonArray = redisJsonObject.getJSONArray("products");
 		JSONArray tempJsonArray = new JSONArray();
 
+		// 前端js已經先加減頁數，所以需要先扣1，方便計算開始筆數與結束筆數
 		// 開始筆數 = 目前頁數 * 每頁幾筆
 		int startNum = (vo.getPage() - 1) * vo.getPageSize();
 		// 結束筆數 = redis總筆數小餘計算該顯示的總筆數，則使用redis總筆數
