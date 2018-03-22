@@ -46,6 +46,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	
 	/**
 	 * 檢查api取得資料是否已存在redis，已存在不動作，未存在新增進去
+	 * @param vo
 	 */
 	@Override
 	public void checkRedisData(PfpAdManyURLVO vo) {
@@ -121,8 +122,8 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	private JSONObject checkRedisData(JSONArray apiJsonArray, JSONObject redisJsonObject) throws JSONException {
 		for (int i = 0; i < apiJsonArray.length(); i++) {
 			JSONObject apiJsonObjectDetail = new JSONObject(apiJsonArray.get(i).toString());
-			//如果打api拿到的值，在redis資料找不到，則將此筆api資料加入
-			if(redisJsonObject.getJSONArray("products").toString().indexOf(apiJsonObjectDetail.get("link_url").toString()) == -1){
+			// 如果打api拿到的值，在redis資料找不到，則將此筆api資料加入
+			if (redisJsonObject.getJSONArray("products").toString().indexOf(apiJsonObjectDetail.get("link_url").toString()) == -1) {
 				redisJsonObject.accumulate("products", apiJsonArray.get(i));
 			}
 		}
@@ -135,29 +136,31 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 */
 	@Override
 	public void getRedisLimitData(PfpAdManyURLVO vo) throws JSONException {
-		
 		JSONObject redisJsonObject = vo.getRedisJsonObject();
 		JSONArray redisJsonArray = redisJsonObject.getJSONArray("products");
 		JSONArray tempJsonArray = new JSONArray();
-		
+
 		// 開始筆數 = 目前頁數 * 每頁幾筆
 		int startNum = (vo.getPage() - 1) * vo.getPageSize();
-		// 結束筆數 = redis總筆數小餘計算該顯示的總筆數，則使用redis總筆數 
-		//ex:redis資料僅3筆,但此頁最多可顯示到10筆,則長度抓3,因為也無4~10資料抓3
+		// 結束筆數 = redis總筆數小餘計算該顯示的總筆數，則使用redis總筆數
+		// ex:redis資料僅3筆,但此頁最多可顯示到10筆,則長度抓3,因為也無4~10資料抓3
 		int maxNum = vo.getPage() * vo.getPageSize();
 		int endNum = redisJsonArray.length() < maxNum ? redisJsonArray.length() : maxNum;
 		for (int i = startNum; i < endNum; i++) {
 			tempJsonArray.put(redisJsonArray.get(i));
 		}
+
 		redisJsonObject.put("products", tempJsonArray);
 		vo.setRedisJsonObject(redisJsonObject);
 		vo.setRedisDataTotalSize(redisJsonArray.length());
 	}
 
 	/**
-	 * 將修改的欄位資料更新至redis
+	 * 將修改的欄位更新至redis
 	 * 尋找到該字串段落修改後取代
-	 * @throws JSONException 
+	 * @param vo
+	 * @param modifyField price:修改促銷價、detail:修改明細資料標題 描述 顯示網址
+	 * @throws JSONException
 	 */
 	@Override
 	public void setModifyFieldData(PfpAdManyURLVO vo, String modifyField) throws JSONException {
@@ -180,9 +183,9 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		
 		//修改資料
 		JSONObject redisJsonObjectDetail = new JSONObject(data.toString());
-		if("price".equals(modifyField)){
+		if ("price".equals(modifyField)) {
 			redisJsonObjectDetail.put("price", vo.getModifyPrice());
-		}else if("detail".equals(modifyField)){
+		} else if ("detail".equals(modifyField)) {
 			redisJsonObjectDetail.put("title", vo.getModifyADTitle());
 			redisJsonObjectDetail.put("description", vo.getModifyADContent());
 			redisJsonObjectDetail.put("show_url", vo.getModifyADShowURL());
@@ -203,46 +206,45 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	/*
 	 * 確認新增至redis網址
 	 * */
-	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo, String userId) throws Exception{
+	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo, String userId) throws Exception {
 		String result = "更新成功";
 		String redisKey = "pfpcart_" + userId;
 		String redisData = redisAPI.getRedisData(redisKey);
 		JSONObject redisJson = new JSONObject(redisData);
 		JSONArray productsJsonArray = redisJson.getJSONArray("products");
-		
-		JSONObject adFastPublishUrlInfoJson = new JSONObject(adFastPublishUrlInfo); 
-		
+
+		JSONObject adFastPublishUrlInfoJson = new JSONObject(adFastPublishUrlInfo);
+
 		Iterator adFastPublishUrlInfoJsoIterator = adFastPublishUrlInfoJson.keys();
-        while (adFastPublishUrlInfoJsoIterator.hasNext()) {
-        	String key = adFastPublishUrlInfoJsoIterator.next().toString();
-        	
-        	if(adFastPublishUrlInfoJson.get(key).equals("Y")){
-        		for (int i = 0; i < productsJsonArray.length(); i++) {
-	        		JSONObject realSaveRedisJson = (JSONObject) productsJsonArray.get(i);
-	        		if(realSaveRedisJson.get("link_url").equals(key.replace("_ckeck_flag", ""))){
-	        			realSaveRedisJson.put("add", "Y");
-	        			break;
-	        		}
+		while (adFastPublishUrlInfoJsoIterator.hasNext()) {
+			String key = adFastPublishUrlInfoJsoIterator.next().toString();
+
+			if (adFastPublishUrlInfoJson.get(key).equals("Y")) {
+				for (int i = 0; i < productsJsonArray.length(); i++) {
+					JSONObject realSaveRedisJson = (JSONObject) productsJsonArray.get(i);
+					if (realSaveRedisJson.get("link_url").equals(key.replace("_ckeck_flag", ""))) {
+						realSaveRedisJson.put("add", "Y");
+						break;
+					}
 				}
-        	}
-        	
-        	if(adFastPublishUrlInfoJson.get(key).equals("N")){
-        		for (int i = 0; i < productsJsonArray.length(); i++) {
-	        		JSONObject realSaveRedisJson = (JSONObject) productsJsonArray.get(i);
-	        		if(realSaveRedisJson.get("link_url").equals(key.replace("_ckeck_flag", ""))){
-	        			realSaveRedisJson.put("add", "N");
-	        			break;
-	        		}
+			}
+
+			if (adFastPublishUrlInfoJson.get(key).equals("N")) {
+				for (int i = 0; i < productsJsonArray.length(); i++) {
+					JSONObject realSaveRedisJson = (JSONObject) productsJsonArray.get(i);
+					if (realSaveRedisJson.get("link_url").equals(key.replace("_ckeck_flag", ""))) {
+						realSaveRedisJson.put("add", "N");
+						break;
+					}
 				}
-        	}
-        }
-        
-        redisJson.put("products", productsJsonArray);
-        redisAPI.setRedisDataDefaultTimeout("pfpcart_" + userId, redisJson.toString());
-       
+			}
+		}
+
+		redisJson.put("products", productsJsonArray);
+		redisAPI.setRedisDataDefaultTimeout("pfpcart_" + userId, redisJson.toString());
+
 		return result;
 	}
-	
 	
 	/**
 	 * 取得redis上，輸入的客編搜尋的網址資料
@@ -283,10 +285,10 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 * @return
 	 */
 	private String processPicURL(String picURL) {
-		String URLHttp = picURL.substring(0,6);
-		if(URLHttp.indexOf("//") > -1){
+		String URLHttp = picURL.substring(0, 6);
+		if (URLHttp.indexOf("//") > -1) {
 			picURL = "http:" + picURL;
-		}else if(URLHttp.indexOf("http:") == -1 && URLHttp.indexOf("https:") == -1){
+		} else if (URLHttp.indexOf("http:") == -1 && URLHttp.indexOf("https:") == -1) {
 			picURL = "http://" + picURL;
 		}
 		return picURL;

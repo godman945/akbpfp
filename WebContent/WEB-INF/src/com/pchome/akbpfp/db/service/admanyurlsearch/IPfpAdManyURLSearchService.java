@@ -36,6 +36,7 @@ public interface IPfpAdManyURLSearchService extends IBaseService<PfpAdManyURLVO,
 
 	/**
 	 * 將修改的欄位更新至redis
+	 * 尋找到該字串段落修改後取代
 	 * @param vo
 	 * @param modifyField price:修改促銷價、detail:修改明細資料標題 描述 顯示網址
 	 * @throws JSONException
