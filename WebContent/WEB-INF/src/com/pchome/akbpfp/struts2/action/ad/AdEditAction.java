@@ -266,49 +266,52 @@ public class AdEditAction extends BaseCookieAction{
 			}
 			pfpAdDetail.setAdDetailUpdateTime(new Date()); // 更新更新時間
 			
-			if(pfpAdDetail.getAdDetailId().equals("img")) {
+			if ("img".equals(pfpAdDetail.getAdDetailId())) {
 				try {
 					log.info(imgFile);
-					if(StringUtils.isNotBlank(imgFile)) {
-						File iPath = new File(photoPath);		// 圖片的存放路徑
-						File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
-						if(!iPath.exists())			iPath.mkdirs();
-						if(!iTmpPath.exists())		iTmpPath.mkdirs();
-						String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
-						if(fileType.indexOf("?") != -1){
-							fileType = fileType.substring(0,fileType.indexOf("?"));
+					if (StringUtils.isNotBlank(imgFile)) {
+						File iPath = new File(photoPath); // 圖片的存放路徑
+						File iTmpPath = new File(photoTmpPath); // 暫存圖片的路徑
+						if (!iPath.exists())
+							iPath.mkdirs();
+						if (!iTmpPath.exists())
+							iTmpPath.mkdirs();
+						String fileType = imgFile.substring(imgFile.lastIndexOf(".") + 1);
+						if (fileType.indexOf("?") != -1) {
+							fileType = fileType.substring(0, fileType.indexOf("?"));
 						}
-						File adFile = null;	// 上傳圖片的檔名
-						if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
+						File adFile = null; // 上傳圖片的檔名
+						if ("GIF".equals(fileType.toUpperCase())) {
+							// 只有GIF存原副檔名
 							adFile = new File(photoPath, adSeq + "." + fileType);
-						}else {
+						} else {
 							adFile = new File(photoPath, adSeq + ".jpg");
 						}
-						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
-						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
+						File tmpFile = new File(imgFile); // 設定圖片的 File 元件
+						tmpFile.renameTo(adFile); // 把暫存圖片搬到存放區
 						log.info("---------------imgName=" + adFile.getName());
-						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
+						imgDetail = photoDbPath + adFile.getName(); // 設定圖片檔存放在DB 的路徑
 						String oldImgDteail = pfpAdDetail.getAdDetailContent();
 						pfpAdDetail.setAdDetailContent(imgDetail);
 						if (checkDetailChange(oldImgDteail, imgDetail)) {
 							detailAccesslogMessage += "廣告圖片；";
 						}
 					} else {
-						if(StringUtils.isBlank(adDetailContent[0])) {
+						if (StringUtils.isBlank(adDetailContent[0])) {
 							imgDetail = "img/public/na.gif\" style=\"display:none";
 							String oldImgDteail = pfpAdDetail.getAdDetailContent();
 							pfpAdDetail.setAdDetailContent(imgDetail);
 							pfpAdDetail.setAdDetailContent(imgDetail);
-							if(checkDetailChange(oldImgDteail,imgDetail)){
-								 detailAccesslogMessage += "廣告圖片；";
-							 }
+							if (checkDetailChange(oldImgDteail, imgDetail)) {
+								detailAccesslogMessage += "廣告圖片；";
+							}
 						}
 					}
 				} catch (Exception ex) {
 					log.info("ex : " + ex);
 				}
 			} else {
-				if (pfpAdDetail.getAdDetailId().equals("real_url") && !StringUtils.isBlank(adDetailContent[i])) {
+				if ("real_url".equals(pfpAdDetail.getAdDetailId()) && !StringUtils.isBlank(adDetailContent[i])) {
 					if (adDetailContent[i].indexOf("http") < 0) {
 						adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
 						// adDetailContent[i] = "http://" + adDetailContent[i];
@@ -320,10 +323,7 @@ public class AdEditAction extends BaseCookieAction{
 					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
 						detailAccesslogMessage += "廣告連結網址；";
 					}
-				}
-				
-				if (pfpAdDetail.getAdDetailId().equals("show_url")) {
-
+				} else if ("show_url".equals(pfpAdDetail.getAdDetailId())) {
 					if (adDetailContent[i].indexOf("http://") < 0) {
 						adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" + adDetailContent[i]);
 					} else {
@@ -335,25 +335,30 @@ public class AdEditAction extends BaseCookieAction{
 					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
 						detailAccesslogMessage += "廣告顯示網址；";
 					}
-				}
-				
-				if (pfpAdDetail.getAdDetailId().equals("title")) {
+				} else if ("title".equals(pfpAdDetail.getAdDetailId())) {
 					adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
 					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
 
 					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
 						detailAccesslogMessage += "廣告標題；";
 					}
-				}
-				
-				if (pfpAdDetail.getAdDetailId().equals("content")) {
+				} else if ("content".equals(pfpAdDetail.getAdDetailId())) {
 					adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
 					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
 
 					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
 						detailAccesslogMessage += "廣告內容；";
 					}
+				} else if ("sales_price".equals(pfpAdDetail.getAdDetailId())) {
+					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
+						detailAccesslogMessage += "商品原價；";
+					}
+				} else if ("promotional_price".equals(pfpAdDetail.getAdDetailId())) {
+					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
+						detailAccesslogMessage += "商品促銷價；";
+					}
 				}
+
 				pfpAdDetail.setAdDetailContent(adDetailContent[i]);
 			}
 
@@ -366,7 +371,7 @@ public class AdEditAction extends BaseCookieAction{
 			
 		}
 		
-		if(StringUtils.isNotBlank(detailAccesslogMessage)){
+		if(StringUtils.isNotBlank(detailAccesslogMessage)){ // 紀錄更新log
 			detailAccesslogMessage = detailAccesslogMessage.substring(0,detailAccesslogMessage.length() -1);
 			addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：" + detailAccesslogMessage);
 		}
