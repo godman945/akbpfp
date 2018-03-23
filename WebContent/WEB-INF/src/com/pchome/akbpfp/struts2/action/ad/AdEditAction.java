@@ -246,6 +246,23 @@ public class AdEditAction extends BaseCookieAction{
 				pfpAdDetail.setVerifyStatus("n");
 				pfpAdDetail.setAdDetailCreateTime(new Date());
 				pfpAdDetail.setAdDetailUpdateTime(new Date());
+			}else if(StringUtils.isEmpty(adDetailSeq[i])){ // 不管後面新增幾個欄位
+				pfpAdDetail = new PfpAdDetail();
+				pfpAdDetail.setAdDetailSeq(sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_"));
+				pfpAdDetail.setPfpAd(pfpAd);
+				if (i == 3) {
+					pfpAdDetail.setAdDetailId("sales_price"); // 商品原價
+					pfpAdDetail.setDefineAdSeq("dad_201303070015");
+				} else if (i == 4) {
+					pfpAdDetail.setAdDetailId("promotional_price"); // 商品促銷價
+					pfpAdDetail.setDefineAdSeq("dad_201303070016");
+				}
+				pfpAdDetail.setAdDetailContent(adDetailContent[i]);
+				pfpAdDetail.setAdPoolSeq("adp_201303070003");
+				pfpAdDetail.setVerifyFlag("y");
+				pfpAdDetail.setVerifyStatus("n");
+				pfpAdDetail.setAdDetailCreateTime(new Date());
+				pfpAdDetail.setAdDetailUpdateTime(new Date());
 			}
 			
 			if(pfpAdDetail.getAdDetailId().equals("img")) {
@@ -340,7 +357,7 @@ public class AdEditAction extends BaseCookieAction{
 			}
 
 			// 如果沒有圖檔資料，要用新增，有資料的部分，就用修改
-			if(i == 0 && StringUtils.isEmpty(adDetailSeq[i])) {
+			if((i == 0 && StringUtils.isEmpty(adDetailSeq[i])) || StringUtils.isEmpty(adDetailSeq[i])) {
 			    pfpAdDetailService.insertPfpAdDetail(pfpAdDetail);
 			} else {
 			    pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
