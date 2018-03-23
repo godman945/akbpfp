@@ -264,6 +264,7 @@ public class AdEditAction extends BaseCookieAction{
 				pfpAdDetail.setAdDetailCreateTime(new Date());
 				pfpAdDetail.setAdDetailUpdateTime(new Date());
 			}
+			pfpAdDetail.setAdDetailUpdateTime(new Date()); // 更新更新時間
 			
 			if(pfpAdDetail.getAdDetailId().equals("img")) {
 				try {
