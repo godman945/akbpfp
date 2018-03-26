@@ -13,7 +13,7 @@
 			<tr>
 				<th height="35" style="width:12%">店家刊登商品網址</th>
 				<td style="min-width:250px;background:#f9f9f9">
-					<span style="color: #ff3300;padding: 3px 0">* 請輸入店家賣場商品頁，系統自動偵測網站商品內容! (僅限PChome24h購物、商店街、個人賣場(商店街)、露天賣家。)</span><br>
+					<span style="color:#777; padding: 3px 0">* 請輸入店家賣場商品頁，系統自動偵測網站商品內容! (僅限PChome24h購物、商店街、個人賣場(商店街)、露天賣家。)</span><br>
 					<input type="text" class="inputPlaceholderTmg" id="storeProductURL" name="storeProductURL" style="width:96%;" placeholder="Ex:http://show.pchome.com.tw"><br>
 					<span id="chkStoreProductURL" name="chkStoreProductURL" style="color:rgb(255, 0, 0); display:none;"></span>
 				</td>
