@@ -186,6 +186,8 @@ function searchStoreProductURLAjax(URL, errorMsgBlock){
 		    	if(!urlInfoMap[URL + "_ckeck_flag"]){
 		    		urlInfoMap[URL + "_ckeck_flag"] = "N";		    		
 		    	}
+		    	
+		    	$("#" + errorMsgBlock).val(""); // 輸入上面或下面的網址，讀取完後相對應位置的網址就拿掉。
 			}
 			$('#loadingWaitBlock').unblock();
 		}
