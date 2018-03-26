@@ -105,26 +105,26 @@ public class CommonUtilModel extends BaseCookieAction{
 	/**
 	 * 刪除暫存圖片
 	 * */
-	public void deleteTemporalImg(String userImgPath,String custimerInfoid,String date,String adSeq) throws Exception{
-	    log.info("開始刪除暫存圖片:"+adSeq+".jpg");
-	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/");
-            String[] list = folder.list();
-            for(int i = 0; i < list.length; i++){
-        	if(!list[i].equals(adSeq+".jpg")){
-        	    File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
-        	    file.delete();
-        	}
-            }
+	public void deleteTemporalImg(String userImgPath, String custimerInfoid, String date, String adSeq) throws Exception {
+		log.info("開始刪除暫存圖片:" + adSeq + ".jpg");
+		File folder = new File(userImgPath + custimerInfoid + "/" + date + "/temporal/");
+		String[] list = folder.list();
+		for (int i = 0; i < list.length; i++) {
+			if (!list[i].equals(adSeq + ".jpg")) {
+				File file = new File(userImgPath + custimerInfoid + "/" + date + "/temporal/" + list[i]);
+				file.delete();
+			}
+		}
 	}
 
 	/**
 	 * 壓縮JPG圖檔
 	 * */
-	private void squeezeJPG(String pathFile){
-	    try {
-	    	Runtime rt = Runtime.getRuntime();
-	    	//Process proc = rt.exec("/usr/bin/jpegoptim " + pathFile);
-	    	Process proc = rt.exec("convert -verbose " + pathFile + " -strip -quality 95 " + pathFile);
+	private void squeezeJPG(String pathFile) {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			// Process proc = rt.exec("/usr/bin/jpegoptim " + pathFile);
+			Process proc = rt.exec("convert -verbose " + pathFile + " -strip -quality 95 " + pathFile);
 		} catch (Exception e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG error ");
 			log.info(e);
@@ -136,11 +136,11 @@ public class CommonUtilModel extends BaseCookieAction{
 	/**
 	 * 壓縮PNG圖檔
 	 * */
-	private void squeezePNG(String pathFile){
-	    try {
-	    	Runtime rt = Runtime.getRuntime();
-	    	//Process proc = rt.exec("/usr/bin/optipng " + pathFile);
-	    	Process proc = rt.exec("convert -verbose " + pathFile + " -strip -quality 95 " + pathFile);
+	private void squeezePNG(String pathFile) {
+		try {
+			Runtime rt = Runtime.getRuntime();
+			// Process proc = rt.exec("/usr/bin/optipng " + pathFile);
+			Process proc = rt.exec("convert -verbose " + pathFile + " -strip -quality 95 " + pathFile);
 		} catch (Exception e) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG error ");
 			log.info(e);
@@ -151,34 +151,35 @@ public class CommonUtilModel extends BaseCookieAction{
 	/**
 	 * 刪除全部暫存圖片
 	 * */
-	public void deleteAllTemporalImg(String userImgPath,String custimerInfoid,String date) throws Exception{
-	    log.info("開始刪除全部暫存圖片");
-	    File folder = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/");
-           /* String[] list = folder.list();
-            for(int i = 0; i < list.length; i++){
-        	File file = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
-        	file.delete();
-            }*/
-	    File[] files = folder.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            deleteAll(files[i]);
-        }
+	public void deleteAllTemporalImg(String userImgPath, String custimerInfoid, String date) throws Exception {
+		log.info("開始刪除全部暫存圖片");
+		File folder = new File(userImgPath + custimerInfoid + "/" + date + "/temporal/");
+		/*
+		 * String[] list = folder.list(); for(int i = 0; i < list.length; i++){
+		 * File file = new
+		 * File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
+		 * file.delete(); }
+		 */
+		File[] files = folder.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			deleteAll(files[i]);
+		}
 	}
 
 	public void deleteAll(File path) {
-        if (!path.exists()) {
-            return;
-        }
-        if (path.isFile()) {
-            path.delete();
-            return;
-        }
-        File[] files = path.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            deleteAll(files[i]);
-        }
-        path.delete();
-    }
+		if (!path.exists()) {
+			return;
+		}
+		if (path.isFile()) {
+			path.delete();
+			return;
+		}
+		File[] files = path.listFiles();
+		for (int i = 0; i < files.length; i++) {
+			deleteAll(files[i]);
+		}
+		path.delete();
+	}
 
 	/**
 	 * 1.建立此次上傳圖檔
@@ -270,23 +271,23 @@ public class CommonUtilModel extends BaseCookieAction{
 	    return imageVO;
 	}
 	
-	private String getIndexHtmlPath(String path){
+	private String getIndexHtmlPath(String path) {
 		String indexPath = "";
-		
+
 		File checkFlie = new File(path);
-		File[] files = checkFlie.listFiles(); //獲取資料夾下面的所有檔
+		File[] files = checkFlie.listFiles(); // 獲取資料夾下面的所有檔
 		for (File f : files) {
-			//判斷是否為資料夾
+			// 判斷是否為資料夾
 			if (f.isDirectory()) {
-				indexPath = getIndexHtmlPath(f.getPath()); //如果是資料夾，檢查該資料夾內檔案
+				indexPath = getIndexHtmlPath(f.getPath()); // 如果是資料夾，檢查該資料夾內檔案
 			} else {
-				if(f.getPath().indexOf("index.htm") != -1){
+				if (f.getPath().indexOf("index.htm") != -1) {
 					indexPath = f.getPath();
 					break;
 				}
 			}
 		}
-		
+
 		return indexPath;
 	}
 	
@@ -343,25 +344,34 @@ public class CommonUtilModel extends BaseCookieAction{
 		}
 	}
 	
-    public String getDecimalFormat1(String data) throws Exception{
-//	for (EnumCommon enumData : EnumCommon.values()) {
-//	    if(data.getClass().getName().equals(enumData.getStatusDesc())){
-//		System.out.println(enumData.name());
-//		String methodName = "get"+enumData.name();
-//		CommonDataModel commonDataModel = new CommonDataModel();
-//		commonDataModel.getClass().getMethod(methodName).invoke(commonDataModel);
-////		CommonDataModel commonDataModel = new CommonDataModel();
-////		commonDataModel.getClass().getMethod(a);
-////		Method  method = c.getDeclaredMethod ("method name", parameterTypes)
-////		method.invoke (objectToInvokeOn, params)
-//	    }
-//	}
-	if(!pattern.matcher(data).matches()){
-	    return null;
+	public String getDecimalFormat1(String data) throws Exception {
+		// for (EnumCommon enumData : EnumCommon.values()) {
+		// if(data.getClass().getName().equals(enumData.getStatusDesc())){
+		// System.out.println(enumData.name());
+		// String methodName = "get"+enumData.name();
+		// CommonDataModel commonDataModel = new CommonDataModel();
+		// commonDataModel.getClass().getMethod(methodName).invoke(commonDataModel);
+		//// CommonDataModel commonDataModel = new CommonDataModel();
+		//// commonDataModel.getClass().getMethod(a);
+		//// Method method = c.getDeclaredMethod ("method name", parameterTypes)
+		//// method.invoke (objectToInvokeOn, params)
+		// }
+		// }
+		if (!pattern.matcher(data).matches()) {
+			return null;
+		}
+		return null;
 	}
-	return null;
-    }
 
-
+    /**
+     * 檢查有無資料夾，沒有則新建資料夾
+     * @param folderPath 資料夾路徑
+     */
+	public static void checkFolderCreation(String folderPath) {
+		File folder = new File(folderPath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+	}
 
 }

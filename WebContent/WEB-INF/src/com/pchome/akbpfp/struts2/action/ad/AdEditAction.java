@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ import com.pchome.akbpfp.db.service.ad.PfpAdKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
+import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
@@ -37,9 +39,6 @@ import com.pchome.utils.CommonUtils;
 
 public class AdEditAction extends BaseCookieAction{
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private String message = "";
@@ -80,6 +79,7 @@ public class AdEditAction extends BaseCookieAction{
 	private String photoTmpPath;
 	private String photoPath;
 	private String photoDbPath;
+	private String photoDbPathNew;
 
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
@@ -270,37 +270,57 @@ public class AdEditAction extends BaseCookieAction{
 				try {
 					log.info(imgFile);
 					if (StringUtils.isNotBlank(imgFile)) {
-						File iPath = new File(photoPath); // 圖片的存放路徑
-						File iTmpPath = new File(photoTmpPath); // 暫存圖片的路徑
-						if (!iPath.exists())
-							iPath.mkdirs();
-						if (!iTmpPath.exists())
-							iTmpPath.mkdirs();
-						String fileType = imgFile.substring(imgFile.lastIndexOf(".") + 1);
-						if (fileType.indexOf("?") != -1) {
-							fileType = fileType.substring(0, fileType.indexOf("?"));
-						}
-						File adFile = null; // 上傳圖片的檔名
-						if ("GIF".equals(fileType.toUpperCase())) {
-							// 只有GIF存原副檔名
-							adFile = new File(photoPath, adSeq + "." + fileType);
-						} else {
-							adFile = new File(photoPath, adSeq + ".jpg");
-						}
-						File tmpFile = new File(imgFile); // 設定圖片的 File 元件
-						tmpFile.renameTo(adFile); // 把暫存圖片搬到存放區
-						log.info("---------------imgName=" + adFile.getName());
-						imgDetail = photoDbPath + adFile.getName(); // 設定圖片檔存放在DB 的路徑
+						
 						String oldImgDteail = pfpAdDetail.getAdDetailContent();
-						pfpAdDetail.setAdDetailContent(imgDetail);
-						if (checkDetailChange(oldImgDteail, imgDetail)) {
-							detailAccesslogMessage += "廣告圖片；";
+						if(oldImgDteail.length() >= 0){ // 避免如果原本就沒圖的，截字串出錯
+							oldImgDteail = oldImgDteail.substring(3);
 						}
+						
+						if (imgFile.indexOf(oldImgDteail) == -1) { // 有更改圖片
+							detailAccesslogMessage += "廣告圖片；";
+
+							/* 新的路徑:img/user/AC2013071700005/20180323/original/ad_201803230005.jpg
+							 * 舊的路徑:img/ad_201801290001.jpg
+							 * */
+							String oldImgDate = "";
+							if (oldImgDteail.split("/").length > 3) { // 如果已經是新的路徑的話,切出來的長度超過3個
+								oldImgDate = oldImgDteail.split("/")[3];
+							} else {
+								SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+								oldImgDate = sdf.format(new Date());
+							}
+
+							String photoPath = photoDbPathNew + super.getCustomer_info_id() + "/" + oldImgDate + "/original/";
+							CommonUtilModel.checkFolderCreation(photoPath); // 檢查有無資料夾，沒有則新建資料夾
+
+							// 判斷gif還是jpg
+							String fileType = imgFile.substring(imgFile.lastIndexOf(".") + 1);
+							if (fileType.indexOf("?") != -1) {
+								fileType = fileType.substring(0, fileType.indexOf("?"));
+							}
+
+							// 上傳圖片的檔名
+							File adFile = null;
+							String imgName = "";
+							if ("GIF".equalsIgnoreCase(fileType)) {
+								// 只有GIF存原副檔名
+								imgName = adSeq + "." + fileType;
+								adFile = new File(photoPath, imgName);
+							} else {
+								imgName = adSeq + ".jpg";
+								adFile = new File(photoPath, adSeq + ".jpg");
+							}
+							File tmpFile = new File(imgFile); // 設定圖片的 File 元件
+							tmpFile.renameTo(adFile); // 把暫存圖片搬到存放區
+							
+							String imgPath = "img/user/" + super.getCustomer_info_id() + "/" + oldImgDate + "/original/" + imgName;
+							pfpAdDetail.setAdDetailContent(imgPath);
+						}
+						
 					} else {
 						if (StringUtils.isBlank(adDetailContent[0])) {
 							imgDetail = "img/public/na.gif\" style=\"display:none";
 							String oldImgDteail = pfpAdDetail.getAdDetailContent();
-							pfpAdDetail.setAdDetailContent(imgDetail);
 							pfpAdDetail.setAdDetailContent(imgDetail);
 							if (checkDetailChange(oldImgDteail, imgDetail)) {
 								detailAccesslogMessage += "廣告圖片；";
@@ -1349,6 +1369,14 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setAdVideoURL(String adVideoURL) {
 		this.adVideoURL = adVideoURL;
+	}
+
+	public String getPhotoDbPathNew() {
+		return photoDbPathNew;
+	}
+
+	public void setPhotoDbPathNew(String photoDbPathNew) {
+		this.photoDbPathNew = photoDbPathNew;
 	}
 
 }
