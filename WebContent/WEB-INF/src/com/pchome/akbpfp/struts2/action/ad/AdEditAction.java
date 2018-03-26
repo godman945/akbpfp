@@ -281,6 +281,7 @@ public class AdEditAction extends BaseCookieAction{
 
 							/* 新的路徑:img/user/AC2013071700005/20180323/original/ad_201803230005.jpg
 							 * 舊的路徑:img/ad_201801290001.jpg
+							 * 沒圖片的路徑:img/public/na.gif" style="display:none
 							 * */
 							String oldImgDate = "";
 							if (oldImgDteail.split("/").length > 3) { // 如果已經是新的路徑的話,切出來的長度超過3個
