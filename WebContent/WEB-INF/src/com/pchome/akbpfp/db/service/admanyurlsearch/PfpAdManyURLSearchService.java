@@ -96,10 +96,17 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			JSONObject apiJsonObjectDetail = new JSONObject(apiJsonArray.get(arrayLength).toString());
 			JSONObject jsonObjectDetail = new JSONObject();
 			jsonObjectDetail.put("pic_url",            processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
-			jsonObjectDetail.put("title",              apiJsonObjectDetail.get("title").toString());
-			jsonObjectDetail.put("intact_title",       apiJsonObjectDetail.get("title").toString());
-			jsonObjectDetail.put("description",        apiJsonObjectDetail.get("description").toString());
-			jsonObjectDetail.put("intact_description", apiJsonObjectDetail.get("description").toString());
+			
+			String title = apiJsonObjectDetail.get("title").toString();
+			int titleMaxLength = (title.length() > 17) ? 17 : title.length();
+			jsonObjectDetail.put("title", title.substring(0, titleMaxLength));
+			jsonObjectDetail.put("intact_title", title);
+
+			String description = apiJsonObjectDetail.get("description").toString();
+			int descriptionMaxLength = (description.length() > 36) ? 36 : description.length();
+			jsonObjectDetail.put("description", description.substring(0, descriptionMaxLength));
+			jsonObjectDetail.put("intact_description", description);
+			
 			jsonObjectDetail.put("link_url",           apiJsonObjectDetail.get("link_url").toString());
 			jsonObjectDetail.put("show_url",           processShowURL(apiJsonObjectDetail.get("link_url").toString()));
 			jsonObjectDetail.put("sp_price",           processPrice(apiJsonObjectDetail.optString("sp_price")));

@@ -404,7 +404,7 @@ public class AdAddAction extends BaseCookieAction{
 		Iterator adFastPublishUrlInfoJsoIterator = adFastPublishUrlInfoJson.keys();
         while (adFastPublishUrlInfoJsoIterator.hasNext()) {
         	String key = adFastPublishUrlInfoJsoIterator.next().toString();
-        	if(adFastPublishUrlInfoJson.get(key).equals("Y")){ //是選取的資料
+        	if("Y".equals(adFastPublishUrlInfoJson.get(key))){ //是選取的資料
         		
         		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
         		adSeq = null; //清除adSeq再建立一筆
@@ -435,9 +435,7 @@ public class AdAddAction extends BaseCookieAction{
         		//新增標題資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "title", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		String title = redisJsonObjectDetail.get("title").toString();
-        		int titleMaxLength = title.length() > 17 ? 17 : title.length();
-        		newSaveAdDetail(title.substring(0, titleMaxLength), "title", adPoolSeq, defineAdSeq);
+        		newSaveAdDetail(redisJsonObjectDetail.get("title").toString(), "title", adPoolSeq, defineAdSeq);
         		
         		//新增完整標題資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "intact_title", null, adPoolSeq);
@@ -447,9 +445,7 @@ public class AdAddAction extends BaseCookieAction{
         		//新增內文資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "content", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		String description = redisJsonObjectDetail.get("description").toString();
-        		int descriptionMaxLength = description.length() > 36 ? 36 : description.length();
-        		newSaveAdDetail(description.substring(0, descriptionMaxLength), "content", adPoolSeq, defineAdSeq);
+        		newSaveAdDetail(redisJsonObjectDetail.get("description").toString(), "content", adPoolSeq, defineAdSeq);
         		
         		//新增完整內文資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "intact_content", null, adPoolSeq);
