@@ -439,12 +439,22 @@ public class AdAddAction extends BaseCookieAction{
         		int titleMaxLength = title.length() > 17 ? 17 : title.length();
         		newSaveAdDetail(title.substring(0, titleMaxLength), "title", adPoolSeq, defineAdSeq);
         		
+        		//新增完整標題資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "intact_title", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		newSaveAdDetail(redisJsonObjectDetail.get("intact_title").toString(), "intact_title", adPoolSeq, defineAdSeq);
+        		
         		//新增內文資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "content", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
         		String description = redisJsonObjectDetail.get("description").toString();
         		int descriptionMaxLength = description.length() > 36 ? 36 : description.length();
         		newSaveAdDetail(description.substring(0, descriptionMaxLength), "content", adPoolSeq, defineAdSeq);
+        		
+        		//新增完整內文資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "intact_content", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		newSaveAdDetail(redisJsonObjectDetail.get("intact_description").toString(), "intact_content", adPoolSeq, defineAdSeq);
         		
         		//新增原價資料
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "sales_price", null, adPoolSeq);
@@ -1693,7 +1703,9 @@ public class AdAddAction extends BaseCookieAction{
 					//新增明細
 					String imgPath = addAdJson.getString("pic_url");
 					String title = addAdJson.getString("title");
+					String intact_title = addAdJson.getString("intact_title");
 					String content = addAdJson.getString("description");
+					String intact_content = addAdJson.getString("intact_description");
 					String sales_price = addAdJson.getString("sp_price");
 					String promotional_price = addAdJson.getString("price");
 					String real_url = addAdJson.getString("link_url");
@@ -1702,13 +1714,15 @@ public class AdAddAction extends BaseCookieAction{
 					BufferedImage img = ImageIO.read(url);
 					ImageIO.write(img, "jpg",new File(photoPath+"/"+adSeq+".jpg"));
 					imgPath = "img/user/"+getCustomer_info_id()+"/"+sdf.format(date)+"/original/"+ adSeq+".jpg";
-					saveAdDetail(imgPath ,"img","adp_201303070003","dad_201303070010");
-					saveAdDetail(title ,"title","adp_201303070003","dad_201303070011");
-					saveAdDetail(content ,"content","adp_201303070003","dad_201303070012");
-					saveAdDetail(sales_price ,"sales_price","adp_201303070003","dad_201303070015");
-					saveAdDetail(promotional_price ,"promotional_price","adp_201303070003","dad_201303070016");
-					saveAdDetail(real_url ,"real_url","adp_201303070003","dad_201303070014");
-					saveAdDetail(show_url ,"show_url","adp_201303070003","dad_201303070013");
+					saveAdDetail(imgPath, "img", "adp_201303070003", "dad_201303070010");
+					saveAdDetail(title, "title", "adp_201303070003", "dad_201303070011");
+					saveAdDetail(intact_title, "intact_title", "adp_201303070003", "dad_201303070017");
+					saveAdDetail(content, "content", "adp_201303070003", "dad_201303070012");
+					saveAdDetail(intact_content, "intact_content", "adp_201303070003", "dad_201303070018");
+					saveAdDetail(sales_price, "sales_price", "adp_201303070003", "dad_201303070015");
+					saveAdDetail(promotional_price, "promotional_price", "adp_201303070003", "dad_201303070016");
+					saveAdDetail(real_url, "real_url", "adp_201303070003", "dad_201303070014");
+					saveAdDetail(show_url, "show_url", "adp_201303070003", "dad_201303070013");
 				}
 			}
 			

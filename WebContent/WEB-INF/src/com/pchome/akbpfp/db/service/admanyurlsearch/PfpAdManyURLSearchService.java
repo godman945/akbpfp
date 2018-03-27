@@ -95,13 +95,15 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		for (int arrayLength = 0; arrayLength < apiJsonArray.length(); arrayLength++) {
 			JSONObject apiJsonObjectDetail = new JSONObject(apiJsonArray.get(arrayLength).toString());
 			JSONObject jsonObjectDetail = new JSONObject();
-			jsonObjectDetail.put("pic_url",     processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
-			jsonObjectDetail.put("title",       apiJsonObjectDetail.get("title").toString());
-			jsonObjectDetail.put("description", apiJsonObjectDetail.get("description").toString());
-			jsonObjectDetail.put("link_url",    apiJsonObjectDetail.get("link_url").toString());
-			jsonObjectDetail.put("show_url",    processShowURL(apiJsonObjectDetail.get("link_url").toString()));
-			jsonObjectDetail.put("sp_price",    processPrice(apiJsonObjectDetail.optString("sp_price")));
-			jsonObjectDetail.put("price",       processPrice(apiJsonObjectDetail.get("price").toString()));
+			jsonObjectDetail.put("pic_url",            processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
+			jsonObjectDetail.put("title",              apiJsonObjectDetail.get("title").toString());
+			jsonObjectDetail.put("intact_title",       apiJsonObjectDetail.get("title").toString());
+			jsonObjectDetail.put("description",        apiJsonObjectDetail.get("description").toString());
+			jsonObjectDetail.put("intact_description", apiJsonObjectDetail.get("description").toString());
+			jsonObjectDetail.put("link_url",           apiJsonObjectDetail.get("link_url").toString());
+			jsonObjectDetail.put("show_url",           processShowURL(apiJsonObjectDetail.get("link_url").toString()));
+			jsonObjectDetail.put("sp_price",           processPrice(apiJsonObjectDetail.optString("sp_price")));
+			jsonObjectDetail.put("price",              processPrice(apiJsonObjectDetail.get("price").toString()));
 			//只有24h才有此參數
 			jsonObjectDetail.put("suggest", apiJsonObjectDetail.opt("suggest"));
 			
