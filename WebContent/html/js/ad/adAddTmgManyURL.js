@@ -234,17 +234,6 @@ function processSearchResultViewHtml(redisData){
 		//廣告明細區塊
 		tempHtml += "	<td height='35' class='td02'>";
 		
-		if(title.length > 17 && description.length > 36){
-			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>標題和內文字數超過文案限制，請確認是否需要修改。</div>";
-			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>※提醒您，若不修改，廣告將依照此預覽樣式製作。</div>";
-		}else if(title.length > 17){
-			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>標題字數超過文案限制，請確認是否需要修改。</div>";
-			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>※提醒您，若不修改，廣告將依照此預覽樣式製作。</div>";
-		}else if(description.length > 36){
-			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>內文字數超過文案限制，請確認是否需要修改。</div>";
-			tempHtml += "   <div class='exceedWordNumber' style='color:rgb(255, 0, 0);'>※提醒您，若不修改，廣告將依照此預覽樣式製作。</div>";
-		}
-		
 		tempHtml += "		<div class='ad-mod'>";
 		tempHtml += "			<div class='mod_edit'>";
 		tempHtml += "				<input class='mod-button btn_edit modifyADDetailEditBtn' type='button' style='z-index:9' value='修 改'>";
@@ -596,7 +585,6 @@ function processResultViewBtn(){
 		    		_thisADDetailBlock.find('.defaultADShowURL').html(keyinADShowURL);
 		    		_thisADDetailBlock.find("#adShowURL").attr("placeholder", keyinADShowURL);
 		    		
-		    		_thisADDetailBlock.closest("td").find('.exceedWordNumber').remove(); //只有檢核都ok才能儲存,儲存後刪除文案
 		    		_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
 		    	}
 			}
