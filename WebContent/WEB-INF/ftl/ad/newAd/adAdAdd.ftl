@@ -2,7 +2,7 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
 <link type="text/css" rel="stylesheet" href="<@s.url value="/html/css/ad/adPlugInStyle.css" />" />
-<link type="text/css" rel="stylesheet" href="<@s.url value="/html/css/ad/adAdAddManyURL.css?t=20180326001" />" /> 
+<link type="text/css" rel="stylesheet" href="<@s.url value="/html/css/ad/adAdAddManyURL.css?t=20180327001" />" /> 
 
 <#if adStyle == "TXT">
 	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTxt.js" ></script>

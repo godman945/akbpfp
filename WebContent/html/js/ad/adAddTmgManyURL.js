@@ -200,8 +200,10 @@ function processSearchResultViewHtml(redisData){
 	$.each(redisData, function(index, list){
 		var sp_price = "";    //原價
 		var title = "";       //標題
+		var intact_title = "";//完整標題
 		var price = "";       //促銷價
 		var description = ""; //描述
+		var intact_description = ""; //完整描述
 		var link_url = "";    //網頁連結
 		var pic_url = "";     //圖片網址
 		var show_url = "";    //顯示domain
@@ -210,10 +212,14 @@ function processSearchResultViewHtml(redisData){
 				sp_price = val;
 			}else if(key == "title"){
 				title = val;
+			}else if(key == "intact_title"){
+				intact_title = val;
 			}else if(key == "price"){
 				price = val;
 			}else if(key == "description"){
 				description = val;
+			}else if(key == "intact_description"){
+				intact_description = val;
 			}else if(key == "link_url"){
 				link_url = val;
 			}else if(key == "pic_url"){
@@ -236,7 +242,7 @@ function processSearchResultViewHtml(redisData){
 		
 		tempHtml += "		<div class='ad-mod'>";
 		tempHtml += "			<div class='mod_edit'>";
-		tempHtml += "				<input class='mod-button btn_edit modifyADDetailEditBtn' type='button' style='z-index:9' value='修 改'>";
+		tempHtml += "				<input class='mod-button btn_edit modifyADDetailEditBtn' type='button' style='z-index:1' value='修 改'>";
 		tempHtml += "				<div style='min-width: 400px;width:337px; height:85px; border:0px rgb(205,205,205) solid; padding:15px 5px 15px 5px; font-family:微軟正黑體,Arial; position:relative; '>";
 		tempHtml += "					<div id='logooff_" + index + "' style='position:absolute;top:0; left:0;width:20px; height:18px; line-height:18px; background:rgb(175,175,175); cursor:pointer;' onmouseover='logoEvent(\""+index+"\","+'"mouseover"'+")'>";
 		tempHtml += "						<img src='https://kdpic.pchome.com.tw/img/public/adlogo_off.png' width='20' height='18' border='0'>";
@@ -257,6 +263,9 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "					</a>";
 		
 		tempHtml += "				</div>";
+		tempHtml += "				<span class='orgad_content'>完整廣告內容";
+		tempHtml += "				    <a href='javascript:void(0);' onclick=\"openNots(this, '" + intact_title + "', '" + intact_description + "')\"><img src='./html/img/question.gif' align='absmiddle'></a>";
+		tempHtml += "				</span>";
 		tempHtml += "			</div>";
 		
 		
@@ -699,6 +708,31 @@ function doOut() {
 //檢查是否為數字，是數字回true
 function isNum(val) {
 	return /^[0-9]*$/.test(val);
+}
+
+//處理完整廣告內容開窗
+function openNots(_this, intact_title, intact_description) {
+	var iconPosition = $(_this).offset(); // 取得點擊icon位置
+	$("#notes").css({
+		"top" : iconPosition.top + 25,
+		"left" : iconPosition.left + 20,
+		"z-index" : 2
+	});
+	
+	// 如果目前是打開的狀態，則不再顯示
+	var tempHtml = "<h4>完整廣告內容</h4>";
+	tempHtml += "   <div class='adpopcont'>";
+	tempHtml += "     <h1>" + intact_title + "</h1>";
+	tempHtml += "     <span>" + intact_description + "</span>";
+	tempHtml += "   </div>";
+	tempHtml += "   <div class='note_24h'>提醒您，此廣告內容僅適用於原生廣告版位，一般廣告版位如前頁預覽畫面所示。如廣告內容有受到字數限制，請按「修改」鈕調整，謝謝。</div>";
+	tempHtml += "   <a onclick='closeNots()' style='cursor:pointer;' class='adpopclose'>關閉</a>";
+	$("#notes").html(tempHtml).show();
+}
+
+//隱藏完整廣告內容視窗
+function closeNots() {
+	$("#notes").hide();
 }
 
 //點擊下一步
