@@ -23,8 +23,7 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	
 	private String searchURL;  //輸入的網址
 	private int page = 1;      //第幾頁(初始預設第1頁)
-//	private int pageSize = 20; //每頁筆數(初始預設每頁N筆)
-	private int pageSize = 2; //每頁筆數(初始預設每頁N筆)
+	private int pageSize = 5; //每頁筆數(初始預設每頁N筆)
 	private int totalPage = 1; //總頁數(初始預設1頁)
 	private String modifyPrice; //ajax傳進來的修改促銷價
 	private String modifyADTitle; //ajax傳進來的修改標題

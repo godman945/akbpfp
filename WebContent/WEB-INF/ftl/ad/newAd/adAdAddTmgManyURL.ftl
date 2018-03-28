@@ -1,7 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmgManyURL.js?t=20180328004"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmgManyURL.js?t=20180328005"></script>
 
 <div style="clear:both;height:0px"></div>
 <h4>製作廣告</h4>
@@ -58,13 +58,12 @@
 				
 				顯示 
 				<select id="pageSizeSelect" name="pageSizeSelect" style="vertical-align:middle" >
-					<option>2</option>
-					<option>3</option>
+					<option>5</option>
+					<option>10</option>
 					<option>20</option>
 					<option>50</option>
-					<option>100</option>
 				</select> 
-				行
+				筆
 			</span>			
 		</div>
 	

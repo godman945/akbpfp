@@ -241,6 +241,7 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "	<td height='35' class='td02'>";
 		
 		tempHtml += "		<div class='ad-mod'>";
+		//預覽修改按鈕區塊
 		tempHtml += "			<div class='mod_edit'>";
 		tempHtml += "				<input class='mod-button btn_edit modifyADDetailEditBtn' type='button' style='z-index:1' value='修 改'>";
 		tempHtml += "				<div style='min-width: 400px;width:337px; height:85px; border:0px rgb(205,205,205) solid; padding:15px 5px 15px 5px; font-family:微軟正黑體,Arial; position:relative; '>";
@@ -263,12 +264,9 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "					</a>";
 		
 		tempHtml += "				</div>";
-		tempHtml += "				<span class='orgad_content'>完整廣告內容";
-		tempHtml += "				    <a href='javascript:void(0);' onclick=\"openNots(this, '" + intact_title + "', '" + intact_description + "')\"><img src='./html/img/question.gif' align='absmiddle'></a>";
-		tempHtml += "				</span>";
 		tempHtml += "			</div>";
 		
-		
+		//編輯確認按鈕區塊
 		tempHtml += "			<div class='mod_ok ad-mod-hide'>";
 		tempHtml += "				<input class='mod-button btn_ok modifyADDetailOKBtn' type='button' value='確 認'>";
 		tempHtml += "				<div style='width:85%; border:0px rgb(205,205,205) solid; padding:15px 5px 15px 5px; font-family:微軟正黑體, Arial; position:relative;'>";
@@ -294,7 +292,9 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "				</div>";
 		tempHtml += "			</div>";
 		
-		
+		tempHtml += "			<span class='orgad_content'>完整廣告內容";
+		tempHtml += "				<a href='javascript:void(0);' onclick=\"openNots(this, '" + intact_title + "', '" + intact_description + "')\"><img src='./html/img/question.gif' align='absmiddle'></a>";
+		tempHtml += "			</span>";
 		tempHtml += "		</div>";
 		tempHtml += "	</td>";
 		
