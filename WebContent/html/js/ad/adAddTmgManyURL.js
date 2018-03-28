@@ -728,6 +728,16 @@ function openNots(_this, intact_title, intact_description) {
 	tempHtml += "   <div class='note_24h'>提醒您，此廣告內容僅適用於原生廣告版位，一般廣告版位如前頁預覽畫面所示。如廣告內容有受到字數限制，請按「修改」鈕調整，謝謝。</div>";
 	tempHtml += "   <a onclick='closeNots()' style='cursor:pointer;' class='adpopclose'>關閉</a>";
 	$("#notes").html(tempHtml).show();
+	
+	// 放大縮小瀏覽器的時候，重新調整視窗位置
+	$(window).resize(function() {
+		var iconPosition = $(_this).offset(); // 取得點擊icon位置
+		$("#notes").css({
+			"top" : iconPosition.top + 25,
+			"left" : iconPosition.left + 20,
+			"z-index" : 2
+		});
+	});
 }
 
 //隱藏完整廣告內容視窗

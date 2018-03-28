@@ -1,7 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmgManyURL.js?t=20180328001"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmgManyURL.js?t=20180328002"></script>
 
 <div style="clear:both;height:0px"></div>
 <h4>製作廣告</h4>
