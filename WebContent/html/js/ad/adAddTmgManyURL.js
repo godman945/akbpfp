@@ -715,7 +715,7 @@ function openNots(_this, intact_title, intact_description) {
 	var iconPosition = $(_this).offset(); // 取得點擊icon位置
 	$("#notes").css({
 		"top" : iconPosition.top + 25,
-		"left" : iconPosition.left + 20,
+		"left" : iconPosition.left - 80,
 		"z-index" : 2
 	});
 	
