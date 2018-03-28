@@ -10,7 +10,6 @@
 
 <div class="cont">
     <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdFastPublistAddTmg.html">
-		<h1 class="adtitle">廣告：${adActionName!} > 分類：${adGroupName!}</h1>
 		<h2>
 			<div class="cal">帳戶名稱：${customer_info_title!}</div>
 			<img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">新增廣告
@@ -149,7 +148,7 @@
                     </tr>
                     <tr>
                         <th height="35">
-							<span class="t_s02">* </span>每日廣告預算 <a style="cursor:pointer;" onclick="opennots(1)"><img src="/akbpfp/html/img/question.gif" align="absmiddle"></a><br>
+							<span class="t_s02">* </span>每日廣告預算 <a style="cursor:pointer;" onclick="opennots(1)"><img src="<@s.url value="/" />html/img/question.gif" align="absmiddle"></a><br>
 							<div id="shownotes1" style="visibility: hidden;" class="adnoticepop">
 								<h4>每日預算設定</h4>
 								<div class="adpopcont">每日廣告的實際花費，會依搜尋量的變化，與每日設定的廣告預算有小差異。</div>

@@ -20,7 +20,8 @@
 <#elseif adStyle == "VIDEO">
 	<form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddVideo.html">
 </#if>
-		<h1 class="adtitle">廣告：${adActionName!} > 分類：${adGroupName!}</h1>
+		<#-- 直接快速網址刊登選項，不顯示 廣告：XXX > 分類： XXX-->
+		<h1 class="adtitle" style="<#if admenuul == "fastPublishAdd">display:none;</#if>">廣告：${adActionName!} > 分類：${adGroupName!}</h1>
 		<h2>
 			<div class="cal">帳戶名稱：${customer_info_title!}</div>
 			<img vspace="12" hspace="2" align="absmiddle" src="<@s.url value="/" />html/img/iconcr.gif">新增廣告
