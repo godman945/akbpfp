@@ -254,6 +254,7 @@
 		<property name="redisAPI" ref="RedisAPI" />
 		<property name="pfpAdActionService" ref="PfpAdActionService" />
 		<property name="pfpAdManyURLSearchService" ref="PfpAdManyURLSearchService" />
+		<property name="manyURLRediskey" value="${redis.manyURL.rediskey}" />
     </bean>
 
     <bean id="AdKeywordAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdKeywordAddAction" scope="prototype" >

@@ -16,6 +16,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		implements IPfpAdManyURLSearchService {
 
 	private RedisAPI redisAPI;
+	private String manyURLRediskey;
 	
 	/**
 	 * 從廣告爬蟲api取得資料，及網址相關檢查
@@ -51,7 +52,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	@Override
 	public void checkRedisData(PfpAdManyURLVO vo) {
 		try {
-			String redisKey = "pfpcart_" + vo.getId();
+			String redisKey = manyURLRediskey + vo.getId();
 			String redisData = redisAPI.getRedisData(redisKey); // 查詢此客戶redis是否有資料
 
 			JSONArray apiJsonArray = vo.getApiJsonArray();
@@ -206,7 +207,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		redisJsonObject.put("products", tempJsonArray);
 		
 		//更新至redis
-		String status = redisAPI.setRedisDataDefaultTimeout("pfpcart_" + vo.getId(), redisJsonObject.toString());
+		String status = redisAPI.setRedisDataDefaultTimeout(manyURLRediskey + vo.getId(), redisJsonObject.toString());
 		if (!"OK".equals(status)) { // 存redis失敗
 			log.error("ModifyFieldData error:insert redisData err");
 			vo.setMessage("系統忙碌中，請稍後再試。");
@@ -218,7 +219,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 * */
 	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo, String userId) throws Exception {
 		String result = "更新成功";
-		String redisKey = "pfpcart_" + userId;
+		String redisKey = manyURLRediskey + userId;
 		String redisData = redisAPI.getRedisData(redisKey);
 		JSONObject redisJson = new JSONObject(redisData);
 		JSONArray productsJsonArray = redisJson.getJSONArray("products");
@@ -251,7 +252,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		}
 
 		redisJson.put("products", productsJsonArray);
-		redisAPI.setRedisDataDefaultTimeout("pfpcart_" + userId, redisJson.toString());
+		redisAPI.setRedisDataDefaultTimeout(manyURLRediskey + userId, redisJson.toString());
 
 		return result;
 	}
@@ -261,7 +262,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 */
 	@Override
 	public void getRedisURLData(PfpAdManyURLVO vo) throws JSONException {
-		String redisKey = "pfpcart_" + vo.getId();
+		String redisKey = manyURLRediskey + vo.getId();
 		String redisData = redisAPI.getRedisData(redisKey); // 查詢此客戶redis是否有資料
 		vo.setRedisJsonObject(new JSONObject(redisData));
 	}
@@ -310,6 +311,10 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 
 	public void setRedisAPI(RedisAPI redisAPI) {
 		this.redisAPI = redisAPI;
+	}
+
+	public void setManyURLRediskey(String manyURLRediskey) {
+		this.manyURLRediskey = manyURLRediskey;
 	}
 
 }

@@ -164,8 +164,10 @@ public class AdAddAction extends BaseCookieAction{
 	private String adGroupChannelPrice;
 	//是否直立影音
 	private boolean verticalAd;
+	
 	private String bookmark; //圖文廣告選擇哪個頁籤
 	private RedisAPI redisAPI;
+	private String manyURLRediskey;
 	//新增Ad成功的seq
 	private Map<String,Object> deleteAdMap = new HashMap<>();
 	private List<String> deleteAdList = new ArrayList<>();
@@ -203,7 +205,7 @@ public class AdAddAction extends BaseCookieAction{
 				adStyle = "TMG";
 				//進入多筆網址刊登頁籤，則先清除redis上的資料
 				if("fastURLAdAdd".equals(bookmark)){
-					redisAPI.delRedisData("pfpcart_" + super.getCustomer_info_id());
+					redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id());
 				}
 			}
 			PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
@@ -1543,8 +1545,8 @@ public class AdAddAction extends BaseCookieAction{
 	 * 快速上稿畫面
 	 * */
 	public String adFastPublishAdd() {
-		log.info(">>>>>> init redis:" + "pfpcart_" + super.getCustomer_info_id());
-		redisAPI.delRedisData("pfpcart_" + super.getCustomer_info_id());
+		log.info(">>>>>> init redis:" + manyURLRediskey + super.getCustomer_info_id());
+		redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id());
 		adStyle = "TMG";
 		adType = "";
 		bookmark = "fastURLAdAdd";
@@ -1664,7 +1666,7 @@ public class AdAddAction extends BaseCookieAction{
 			return false;
 		}
 		
-		String redisKey = "pfpcart_" + super.getCustomer_info_id();
+		String redisKey = manyURLRediskey + super.getCustomer_info_id();
 		String redisData = redisAPI.getRedisData(redisKey);
 		if(StringUtils.isNotBlank(redisData)){
 			String photoPath = photoDbPathNew + super.getCustomer_info_id()+"/"+sdf.format(date)+"/original";
@@ -2412,7 +2414,10 @@ public class AdAddAction extends BaseCookieAction{
 	public void setPfpAdManyURLSearchService(IPfpAdManyURLSearchService pfpAdManyURLSearchService) {
 		this.pfpAdManyURLSearchService = pfpAdManyURLSearchService;
 	}
-	
+
+	public void setManyURLRediskey(String manyURLRediskey) {
+		this.manyURLRediskey = manyURLRediskey;
+	}
 	
 }
 
