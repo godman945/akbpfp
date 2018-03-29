@@ -285,9 +285,7 @@ function setUserActionData(){
 	var d = new Date().toISOString().slice(0,10); 
 	$("#adActionStartDate").val(d);
 	$("#adActionEndDate").val('');
-	$("#setAdTimeAndMaxPriceTable input[type=radio]").each(function(index, obj) {
-		$(this).prop("disabled",false);
-	});
+	$("input[name='selAdActionEndDate'][value='N']").prop("checked", true);
 }
 
 function addAdaction(){
