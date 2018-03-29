@@ -209,6 +209,9 @@ function initDefaultActionInfo(){
 			$("#adActionEndDate").val("");
 			$("input[name='selAdActionEndDate'][value='N']").prop("checked", true);
 		}
+		$("#setAdTimeAndMaxPriceTable input[type=radio]").each(function(index, obj) {
+			$(this).prop("disabled",true);
+		});
 		$("#adActionEndDate").datepicker("disable");
 	}
 	
@@ -286,6 +289,9 @@ function setUserActionData(){
 	$("#adActionStartDate").val(d);
 	$("#adActionEndDate").val('');
 	$("input[name='selAdActionEndDate'][value='N']").prop("checked", true);
+	$("#setAdTimeAndMaxPriceTable input[type=radio]").each(function(index, obj) {
+		$(this).prop("disabled", false);
+	});
 }
 
 function addAdaction(){
