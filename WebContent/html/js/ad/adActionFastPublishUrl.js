@@ -6,13 +6,16 @@
 	}else{
 		//設定廣告活動預設資料
 		initDefaultActionInfo();
+		
 		$("#adActionNameSelect").change(function(){
 			changeActionDefaultData(this.value);
 		});
+		
 		//設定聯播網廣告出價
 		$("#priceType").html('聯播網廣告出價');
 		var groupInfo = $("#adGroupNameSelect").val().split('_');
 		$("#adGroupChannelPrice").val(groupInfo[2]);
+		
 		getAdAsideRate();
 	}
 	
@@ -176,42 +179,46 @@ var maskingConfig = {
 
 
 function initDefaultActionInfo(){
-	if($("#defaultAdType").val() != -1){
-		$("#adType").prop( "disabled", true );
+	if ($("#defaultAdType").val() != -1) {
+		$("#adType").prop("disabled", true);
 		$("#adType").val($("#defaultAdType").val());
 	}
-	
-	if($("#defaultAdOperatingRule").val() == 'MEDIA'){
+
+	if ($("#defaultAdOperatingRule").val() == 'MEDIA') {
 		$("#adOperatingRuleSelect").prop("disabled", true);
 		$("#adOperatingRuleSelect").val(0);
 	}
 	
-	if($("#defaultAdDevice").val() != -1){
-		$("#adDevice").prop( "disabled", true );
+	if ($("#defaultAdDevice").val() != -1) {
+		$("#adDevice").prop("disabled", true);
 		$("#adDevice").val($("#defaultAdDevice").val());
 	}
 	
-	if($("#defaultAdActionStartDate").val() != ""){
+	if ($("#defaultAdActionStartDate").val() != "") {
 		$("#adActionStartDate").val($("#defaultAdActionStartDate").val());
-		$("#adDevice").prop( "disabled", true );
+		$("#adDevice").prop("disabled", true);
 		$("#adActionStartDate").datepicker("disable");
 	}
 	
 	if($("#defaultAdActionEndDate").val() != ""){
-		$("#setAdTimeAndMaxPriceTable input[type=radio]").each(function(index, obj) {
-			$(this).prop("disabled",true);
-		});
+		// 結束日期不是無期限，則勾選Y帶上日期
+		if ($("#defaultAdActionEndDate").val() != "3000-12-31") {
+			$("#adActionEndDate").val($("#defaultAdActionEndDate").val());
+			$("input[name='selAdActionEndDate'][value='Y']").prop("checked", true);
+		} else {
+			$("#adActionEndDate").val("");
+			$("input[name='selAdActionEndDate'][value='N']").prop("checked", true);
+		}
 		$("#adActionEndDate").datepicker("disable");
 	}
 	
-	if($("#defaultAdActionMax").val() != ""){
-		$("#adActionMax").prop( "disabled", true );
+	if ($("#defaultAdActionMax").val() != "") {
+		$("#adActionMax").prop("disabled", true);
 		$("#adActionMax").val($("#defaultAdActionMax").val());
 	}
 	
-	
-	if($("#adGroupChannelPrice").val() != ""){
-		$("#adGroupChannelPrice").prop( "disabled", true );
+	if ($("#adGroupChannelPrice").val() != "") {
+		$("#adGroupChannelPrice").prop("disabled", true);
 	}
 }
 

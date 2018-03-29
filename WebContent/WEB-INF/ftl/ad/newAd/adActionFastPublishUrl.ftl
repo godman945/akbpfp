@@ -17,155 +17,115 @@
 
 		<!-- 快速網址刊登 START-->
 		<div class="addN-container">
-				<div class="addN-card-piece selected-stat">
-                    <div class="tag adAdd">多筆網址刊登</div>
-                </div>
-                <div class="addN-card-piece" style="display:none;">
-                    <div class="tag fastURLAdAdd">多筆網址刊登</div>
-                </div>
-				<div class="ultext" style="">僅需提供您的商品賣場網址或單一商品網址，系統自動會幫您載回商品資訊輕鬆上稿</div>
+			<div class="addN-card-piece selected-stat">
+	            <div class="tag adAdd">多筆網址刊登</div>
+	        </div>
+			<div class="ultext" style="">僅需提供您的商品賣場網址或單一商品網址，系統自動會幫您載回商品資訊輕鬆上稿</div>
 		</div>
-		
 		
 		<!-- 遮罩開始 -->
 		<div id="loadingWaitBlock">
 			<!-- 廣告活動設定開始 -->
 			<div class="grtba">
-					<h4 style="display:none;">建立廣告</h4>
-					<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="display:none;">
-						<tbody>
-							<tr>
-								<th height="35"><span class="t_s02">* </span>選擇廣告分類</th>
-								<td>
-									<select id="adClass" name="adClass">
-										<option value="0">選擇分類</option>
-										<option value="1" selected="">分類1</option>
-										<option value="2">分類2</option>
-										<option value="3">分類3</option>
-										<option value="4">分類4</option>
-										<option value="5">分類5</option>
-										<option value="6">分類6</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<th height="35"><span class="t_s02">* </span>廣告樣式</th>
-								<td>
-									<input type="radio" id="adStyle" name="adStyle" value="TXT" onclick="setAdStyle(this.value);">文字廣告
-									<input type="radio" id="adStyle" name="adStyle" value="TMG" onclick="setAdStyle(this.value);" checked="">圖文廣告
-								</td>
-							</tr>
-						</tbody>
-					</table>
-	<!-- adTmg start -->
-				<!-- IE 沒有 placeholder 效果，用此 code 模擬 placeholder(Jack指導版) --> 
-				<!--[if IE]>
-				<script language="JavaScript" src="/html/js/ad/simuPlaceholderTmg.js" ></script>
-				<![endif]-->
-				<!-- IE 沒有 placeholder 效果，用此 code 模擬 placeholder(Jack指導版) --> 
 	  			<div style="clear:both;height:0px"></div>
-	
-				<table id="excerptTable" width="100%" border="0" cellpadding="0" cellspacing="1" class="tablesorter"> 
+
+				<table id="excerptTable" width="100%" border="0" cellpadding="0" cellspacing="1" class="tablesorter">
 				  	<tfoot>
-				    	<tr height="35"> 
-								<td>走期活動確認</td>    		
-				    	</tr> 
-						</tfoot>
+				    	<tr height="35">
+							<td>走期活動確認</td>
+				    	</tr>
+					</tfoot>
 				</table>
-	            <h4>廣告基本設定</h4>
-	
-				<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
-				                <tbody>
-				                    <tr>
-				                        <th height="35"><span class="t_s02">* </span>廣告名稱</th>
-				                        <td>
-				                        	<#if (pfpAdActionList?size > 0)>
-				                        		<select id="adActionNameSelect"> 
-					                        	<#list pfpAdActionList as pfpAdAction>
-														<option value="${pfpAdAction.adActionSeq!}">${pfpAdAction.adActionName!}</option>
-													</#list>
-					                        	</select>
-					                        	<br>
-											</#if>
-						                    <input class="adnuAD_but" id="setAdActionName" name="setAdActionName" style="display:none;" type="text" maxlength="20" value="" placeholder="建立新的廣告名稱">
-						                    <input class="adnuAD_but" id="addAdActionName" name="addAdActionName" style="color: #ff0000;margin: 12px 0 0px 0" type="button" value="新增廣告" onclick="addAdaction()">
-						                    <div id="actionNameErrorMsg" style="color: red;display:none;"></div>
-						                    <br>
-						                    <p class="addnew_AD ad-mod-hide" style="margin: 0"><input type="text" id="adActionName" name="adActionName" maxlength="20" value="建立新的廣告名稱">
-						                    <input type="button" id="" value="確定" onclick=""></p>                     	
-				                        </td>
-				                    </tr>
-				                    <tr>
-				                        <th height="35"><span class="t_s02">* </span>廣告播放類型</th>
-				                        <td>
-				                        	<select id="adType" name="adType">
-					                    		<option value="2" selected="">聯播網廣告(PChome的合作網站聯播網)</option>
-					                    		<option value="0">搜尋廣告+聯播網廣告(觸及廣告族群最廣泛)</option>
-					                    		<option value="1">搜尋廣告(PChome找東西搜尋和搜尋夥伴)</option>
-					                    	</select>
-				                        </td>
-				                    </tr>
-				                    <tr>
-				                        <th height="35"><span class="t_s02">* </span>廣告樣式</th>
-				                        <td>
-				                        	<select id="adOperatingRuleSelect" name="adOperatingRuleSelect">
-				                        		<option value="MEDIA">多媒體廣告</option>
-						                    </select>
-				                        </td>
-				                    </tr>
-				                    <tr>
-				                        <th height="35"><span class="t_s02">* </span>廣告播放裝置</th>
-				                        <td>
-				                        	<select id="adDevice" name="adDevice">
-												<option value="0">電腦+行動裝置</option>
-												<option value="1">電腦</option>
-												<option value="2">行動裝置</option>
-											</select>
-				                        </td>
-				                    </tr>
-				                </tbody>
-				    </table>
-	
-		
 				
-	<!-- adTmg end -->
-	
-		    <h4>廣告走期及花費設定</h4>
-	        <table id="setAdTimeAndMaxPriceTable" width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
-	               <tbody>
-                    <tr>
-                        <th height="35"><span class="t_s02">* </span>廣告開始日期</th>
-                        <td>
-                        	<input id="adActionStartDate" name="adActionStartDate" value="${adActionStartDate!}" readonly="true"  >
-                       	</td>
-                    </tr>
-                    <tr>
-                        <th height="35"><span class="t_s02">* </span>廣告結束日期</th>
-                        <td>
-                            <input type="radio" value="N" name="selAdActionEndDate" onclick="cleanEndDate();" checked>無  
-                            <input type="radio" value="Y" name="selAdActionEndDate" >  <input value="${adActionEndDate!}" id="adActionEndDate" name="adActionEndDate" readonly="true"/><span id="chkEndDate" name="chkEndDate" style="float:righ;color:red"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th height="35">
-							<span class="t_s02">* </span>每日廣告預算 <a style="cursor:pointer;" onclick="opennots(1)"><img src="<@s.url value="/" />html/img/question.gif" align="absmiddle"></a><br>
-							<div id="shownotes1" style="visibility: hidden;" class="adnoticepop">
-								<h4>每日預算設定</h4>
-								<div class="adpopcont">每日廣告的實際花費，會依搜尋量的變化，與每日設定的廣告預算有小差異。</div>
-								<a onclick="closenots(1)" style="cursor:pointer;" class="adpopclose">關閉</a>
-							</div>
-						</th>
-                        <td>
-                        	每日花費 NT$ <input type="number" min="100" step="1" id="adActionMax" name="adActionMax" maxlength="6" value="${adActionMax!}">
-                        	<div id="adActionMaxErrorMsg" style="color: red;display:none;"></div>
-                        </td>
-                    </tr>
-                </tbody>
+	            <h4>廣告基本設定</h4>
+				<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
+					<tbody>
+						<tr>
+							<th height="35"><span class="t_s02">* </span>廣告名稱</th>
+					    	<td>
+								<#if (pfpAdActionList?size > 0)>
+					        	<select id="adActionNameSelect">
+						        	<#list pfpAdActionList as pfpAdAction>
+									<option value="${pfpAdAction.adActionSeq!}">${pfpAdAction.adActionName!}</option>
+									</#list>
+						    	</select>
+						    	<br>
+								</#if>
+								<input class="adnuAD_but" id="setAdActionName" name="setAdActionName" style="display:none;" type="text" maxlength="20" value="" placeholder="建立新的廣告名稱">
+								<input class="adnuAD_but" id="addAdActionName" name="addAdActionName" style="color: #ff0000;margin: 12px 0 0px 0" type="button" value="新增廣告" onclick="addAdaction()">
+							    <div id="actionNameErrorMsg" style="color: red;display:none;"></div>
+							    <br>
+							    <p class="addnew_AD ad-mod-hide" style="margin: 0"><input type="text" id="adActionName" name="adActionName" maxlength="20" value="建立新的廣告名稱">
+							    <input type="button" id="" value="確定" onclick=""></p>
+					        </td>
+					    </tr>
+	                    <tr>
+	                        <th height="35"><span class="t_s02">* </span>廣告播放類型</th>
+	                        <td>
+	                        	<select id="adType" name="adType">
+		                    		<option value="2" selected="">聯播網廣告(PChome的合作網站聯播網)</option>
+		                    		<option value="0">搜尋廣告+聯播網廣告(觸及廣告族群最廣泛)</option>
+		                    		<option value="1">搜尋廣告(PChome找東西搜尋和搜尋夥伴)</option>
+		                    	</select>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th height="35"><span class="t_s02">* </span>廣告樣式</th>
+	                        <td>
+	                        	<select id="adOperatingRuleSelect" name="adOperatingRuleSelect">
+	                        		<option value="MEDIA">多媒體廣告</option>
+			                    </select>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th height="35"><span class="t_s02">* </span>廣告播放裝置</th>
+	                        <td>
+	                        	<select id="adDevice" name="adDevice">
+									<option value="0">電腦+行動裝置</option>
+									<option value="1">電腦</option>
+									<option value="2">行動裝置</option>
+								</select>
+	                        </td>
+	                    </tr>
+				    </tbody>
+				</table>
+
+				<h4>廣告走期及花費設定</h4>
+				<table id="setAdTimeAndMaxPriceTable" width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
+					<tbody>
+	                    <tr>
+	                        <th height="35"><span class="t_s02">* </span>廣告開始日期</th>
+	                        <td>
+	                        	<input id="adActionStartDate" name="adActionStartDate" value="${adActionStartDate!}" readonly="true" >
+	                       	</td>
+	                    </tr>
+	                    <tr>
+	                        <th height="35"><span class="t_s02">* </span>廣告結束日期</th>
+	                        <td>
+	                            <input type="radio" value="N" name="selAdActionEndDate" onclick="cleanEndDate();" checked>無  
+	                            <input type="radio" value="Y" name="selAdActionEndDate" >  <input value="<#if adActionEndDate != "3000-12-31">${adActionEndDate!}</#if>" id="adActionEndDate" name="adActionEndDate" readonly="true"/><span id="chkEndDate" name="chkEndDate" style="float:righ;color:red"></span>
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th height="35">
+								<span class="t_s02">* </span>每日廣告預算 <a style="cursor:pointer;" onclick="opennots(1)"><img src="<@s.url value="/" />html/img/question.gif" align="absmiddle"></a><br>
+								<div id="shownotes1" style="visibility: hidden;" class="adnoticepop">
+									<h4>每日預算設定</h4>
+									<div class="adpopcont">每日廣告的實際花費，會依搜尋量的變化，與每日設定的廣告預算有小差異。</div>
+									<a onclick="closenots(1)" style="cursor:pointer;" class="adpopclose">關閉</a>
+								</div>
+							</th>
+	                        <td>
+	                        	每日花費 NT$ <input type="number" min="100" step="1" id="adActionMax" name="adActionMax" maxlength="6" value="${adActionMax!}">
+	                        	<div id="adActionMaxErrorMsg" style="color: red;display:none;"></div>
+	                        </td>
+	                    </tr>
+                	</tbody>
 	            </table>
 	
 	            <div style="clear:both;height:10px"></div>
 	
-	           <h4>分類出價<span class="t_s01">(分類出價是指：您願意支付每次點擊廣告的最高金額！最低出價NT$3)</span> </h4>
+	            <h4>分類出價<span class="t_s01">(分類出價是指：您願意支付每次點擊廣告的最高金額！最低出價NT$3)</span> </h4>
 	
 	            <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 		        	<tbody>
@@ -202,10 +162,10 @@
 		        </table>
 	
 	            <div style="clear:both;height:10px"></div>
-	</div>
-	<!-- 廣告活動設定開始 -->
-	</div>
-	<!-- 遮罩結束 -->		
+			</div>
+			<!-- 廣告活動設定結束 -->
+		</div>
+		<!-- 遮罩結束 -->		
 
 		<center style="margin-top:10px;">
 			<input type="button" id="cancel" value="取 消"> 
@@ -220,11 +180,7 @@
         <input type="hidden" id="defaultAdActionStartDate" name="defaultAdActionStartDate" value="${adActionStartDate!}">
         <input type="hidden" id="defaultHasActionRecord" name="defaultHasActionRecord" value="${hasActionRecord!}">
         <input type="hidden" id="defaultSysPrice" name="defaultSysPrice" value="${sysChannelPrice!}">
-</div>
-
 	</form>
 </div>
+
 <input type="hidden" id="messageId" value="${message!}">
-
-
-
