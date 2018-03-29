@@ -574,24 +574,20 @@ public class AdActionAddAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
-	
-	
-	private String reversionString(String timeString){
-		
+	private String reversionString(String timeString) {
 		String time = "";
 		String[] timeArray = timeString.split("");
-		for(int i=0;i<timeArray.length;i++){
+		for (int i = 0; i < timeArray.length; i++) {
 			time = timeArray[i] + time;
 		}
-		
+
 		return time;
 	}
 
-	
-	private void getAgeMap(){
-		for(int i=18;i<=75;i++){
-			adActionStartAgeMap.put(String.valueOf(i),i + "歲");
-			adActionEndAgeMap.put(String.valueOf(i),i + "歲");
+	private void getAgeMap() {
+		for (int i = 18; i <= 75; i++) {
+			adActionStartAgeMap.put(String.valueOf(i), i + "歲");
+			adActionEndAgeMap.put(String.valueOf(i), i + "歲");
 		}
 	}
 	
