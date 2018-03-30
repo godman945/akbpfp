@@ -199,9 +199,15 @@ public class AdUtilAjax extends BaseCookieAction{
 				verticalAdFlag = true;
 			}
 		}
+		
+		
+		if(previewUrl.indexOf("18 -") >=0) {
+			previewUrl = previewUrl.substring(0, previewUrl.indexOf("18 -")).replace("\n", "");
+		}
+		
 		json.put("result", true);
 		json.put("videoTime", seconds);
-		json.put("previewUrl", previewUrl.substring(0, previewUrl.indexOf("18 -")).replace("\n","")); 
+		json.put("previewUrl", previewUrl); 
 		json.put("adTitle", adTitle);
 		json.put("verticalAdFlag", verticalAdFlag);
 		process.destroy();
@@ -246,4 +252,17 @@ public class AdUtilAjax extends BaseCookieAction{
 		this.adVideoUrl = adVideoUrl;
 	}
 
+	
+	public static void main(String args[]){
+		String previewUrl ="https://r4---sn-un57en7e.googlevideo.com/videoplayback?gir=yes&ratebypass=yes&source=youtube&pl=22&c=WEB&requiressl=yes&clen=924594&ipbits=0&mm=31%2C26&mn=sn-un57en7e%2Csn-3pm76n7s&ei=Y6S9WoShAdqwgQOOyImICg&ms=au%2Conr&mt=1522377650&mv=u&dur=10.054&expire=1522399427&ip=210.59.230.92&key=yt6&signature=79C64665F15AAFEA01F2C09FC3312B279E996FAB.135A9D3124A86112C0636FF9AEB3AC69EA8EBA91&lmt=1517978591137725&id=o-ABwSzMR-lq7-Gof3RndaSyS9DU4ixezKn8oNUfsAbjjx&itag=18&mime=video%2Fmp4&fvip=4&sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire";
+		if(previewUrl.indexOf("18 -") >=0) {
+			previewUrl = previewUrl.substring(0, previewUrl.indexOf("18 -")).replace("\n", "");
+		}
+		
+//		String previewUrl ="https://r4---sn-un57sn76.googlevideo.com/videoplayback?sparams=clen%2Cdur%2Cei%2Cgir%2Cid%2Cinitcwndbps%2Cip%2Cipbits%2Citag%2Clmt%2Cmime%2Cmm%2Cmn%2Cms%2Cmv%2Cpl%2Cratebypass%2Crequiressl%2Csource%2Cexpire&ipbits=0&signature=19F315BC8                          F6D007EFDC8BE5FFA028AE88F1F6DA5.75BEFAB871DC8EC68B46F4F3831D988A9D851DAD&m                          ime=video%2Fmp4&pl=21&itag=18&clen=924594&c=WEB&gir=yes&ratebypass=yes&mm=31%2C26&mn=sn-un57sn76%2Csn-ogul7n7s&mt=1522377766&mv=m&ei=z6S9WrWmK8XbqAHEvJrIAw&ms=au%2Conr&requiressl=yes&key=yt6&ip=211.20.188.44&lmt=1517978591137725&dur=10.054&expire=1522399535&source=youtube&initcwndbps=1118750&fvip=4&id=o-APwpaQTXDRbX_5kq3duq7MTrDWYHi_xx2Jf0vC8hVDeb 18 - \n640x360 (medium)";
+		System.out.println(previewUrl);
+//		System.out.println(previewUrl.substring(0, previewUrl.indexOf("18 -")).replace("\n", ""));
+		
+	}
+	
 }
