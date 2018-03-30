@@ -20,9 +20,6 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	
 	/**
 	 * 從廣告爬蟲api取得資料，及網址相關檢查
-	 * api 500error 將服務重啟，參考指令如下
-	 * pkill -9 -f uwsgi
-	 * uwsgi --ini /var/www/api_project/api/apiconf.ini > /var/log/uwsgi/uwsgi.log 2>&1 &
 	 */
 	@Override
 	public void getAdCrawlerAPIData(PfpAdManyURLVO vo) {
@@ -96,7 +93,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		for (int arrayLength = 0; arrayLength < apiJsonArray.length(); arrayLength++) {
 			JSONObject apiJsonObjectDetail = new JSONObject(apiJsonArray.get(arrayLength).toString());
 			JSONObject jsonObjectDetail = new JSONObject();
-			jsonObjectDetail.put("pic_url",            processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
+			jsonObjectDetail.put("pic_url", processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
 			
 			String title = apiJsonObjectDetail.get("title").toString();
 			int titleMaxLength = (title.length() > 17) ? 17 : title.length();
@@ -108,10 +105,10 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			jsonObjectDetail.put("description", description.substring(0, descriptionMaxLength));
 			jsonObjectDetail.put("intact_description", description);
 			
-			jsonObjectDetail.put("link_url",           apiJsonObjectDetail.get("link_url").toString());
-			jsonObjectDetail.put("show_url",           processShowURL(apiJsonObjectDetail.get("link_url").toString()));
-			jsonObjectDetail.put("sp_price",           processPrice(apiJsonObjectDetail.optString("sp_price")));
-			jsonObjectDetail.put("price",              processPrice(apiJsonObjectDetail.get("price").toString()));
+			jsonObjectDetail.put("link_url", apiJsonObjectDetail.get("link_url").toString());
+			jsonObjectDetail.put("show_url", processShowURL(apiJsonObjectDetail.get("link_url").toString()));
+			jsonObjectDetail.put("sp_price", processPrice(apiJsonObjectDetail.optString("sp_price")));
+			jsonObjectDetail.put("price",    processPrice(apiJsonObjectDetail.get("price").toString()));
 			//只有24h才有此參數
 			jsonObjectDetail.put("suggest", apiJsonObjectDetail.opt("suggest"));
 			
