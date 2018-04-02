@@ -206,7 +206,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		//更新至redis
 		String status = redisAPI.setRedisDataDefaultTimeout(manyURLRediskey + vo.getId(), redisJsonObject.toString());
 		if (!"OK".equals(status)) { // 存redis失敗
-			log.error("ModifyFieldData error:insert redisData err");
+			log.error("ModifyFieldData error:update redisData err");
 			vo.setMessage("系統忙碌中，請稍後再試。");
 		}
 	}
