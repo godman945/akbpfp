@@ -180,6 +180,7 @@
         <input type="hidden" id="defaultAdActionStartDate" name="defaultAdActionStartDate" value="${adActionStartDate!}">
         <input type="hidden" id="defaultHasActionRecord" name="defaultHasActionRecord" value="${hasActionRecord!}">
         <input type="hidden" id="defaultSysPrice" name="defaultSysPrice" value="${sysChannelPrice!}">
+        <input type="hidden" id="userCategory" name="userCategory" value="${userCategory!}">
 	</form>
 </div>
 

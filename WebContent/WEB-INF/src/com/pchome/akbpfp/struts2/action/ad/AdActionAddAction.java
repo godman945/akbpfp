@@ -40,7 +40,7 @@ import com.pchome.enumerate.utils.EnumStatus;
 public class AdActionAddAction extends BaseCookieAction{
 
 	private static final long serialVersionUID = 1L;
-
+	private String userCategory;
 	private String message = "";
 	private String customerInfoId;
 	private String adActionSeq;
@@ -556,7 +556,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		float adAsideRate = syspriceOperaterAPI.getAdAsideRate(Float.valueOf(sysChannelPrice));
 		adAsideRate = adAsideRate == 0 ? 0 : adAsideRate;
 		this.adAsideRate = adAsideRate == 0 ? "0" : String.valueOf(adAsideRate);
-		
+		this.userCategory = pfpCustomerInfoService.get(super.getCustomer_info_id()).getCategory();
 		if(pfpAdActionList.size() > 0){
 			PfpAdAction pfpAdAction = pfpAdActionList.get(0);
 			defaultAdType = pfpAdAction.getAdType();
@@ -957,6 +957,14 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public void setHasActionRecord(String hasActionRecord) {
 		this.hasActionRecord = hasActionRecord;
+	}
+
+	public String getUserCategory() {
+		return userCategory;
+	}
+
+	public void setUserCategory(String userCategory) {
+		this.userCategory = userCategory;
 	}
 
 }

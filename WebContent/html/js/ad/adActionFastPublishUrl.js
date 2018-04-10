@@ -279,7 +279,17 @@ function setUserActionData(){
 	$('#adGroupChannelPrice').prop("disabled",false);
 	$('#adType').prop("disabled",false);
 	$('#adOperatingRuleSelect').prop("disabled",false);
+	
 	$('#adDevice').prop("disabled",false);
+	if($('#userCategory').val() == '2'){
+		$($('#adDevice').children()[1]).hide();
+		$($('#adDevice').children()[2]).hide();
+	}else{
+		$($('#adDevice').children()[1]).show();
+		$($('#adDevice').children()[2]).show();
+	}
+	
+	
 	$("#adActionStartDate").datepicker('enable');
 	$("#adActionEndDate").datepicker('enable');
 	
