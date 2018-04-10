@@ -587,6 +587,10 @@ public class AdAddAction extends BaseCookieAction{
 			
 			if(StringUtils.isBlank(adVideoURL)){
 				result = "adVideoURL is null";
+			}else{
+				if(adVideoURL.indexOf("&") >-1){
+					adVideoURL = adVideoURL.substring(0,adVideoURL.indexOf("&"));
+				}
 			}
 			
 			templateProductSeq = EnumAdStyle.VIDEO.getTproSeq();
