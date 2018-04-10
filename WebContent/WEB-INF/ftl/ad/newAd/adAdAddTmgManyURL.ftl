@@ -1,7 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmgManyURL.js?t=20180328005"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmgManyURL.js?t=20180410001"></script>
 
 <div style="clear:both;height:0px"></div>
 <h4>製作廣告</h4>
@@ -14,7 +14,8 @@
 				<th height="35" style="width:12%">店家刊登商品網址</th>
 				<td style="min-width:250px;background:#f9f9f9">
 					<span style="color:#777; padding: 3px 0">* 請輸入店家賣場商品頁，系統自動偵測網站商品內容! (僅限PChome24h購物、商店街、個人賣場(商店街)、露天賣家。)</span><br>
-					<input type="text" class="inputPlaceholderTmg" id="storeProductURL" name="storeProductURL" style="width:96%;" placeholder="Ex:http://show.pchome.com.tw"><br>
+					<input type="text" class="inputPlaceholderTmg" id="storeProductURL" name="storeProductURL" style="width:67.7%;" placeholder="Ex:http://show.pchome.com.tw">
+					<input type="button" id="topConfirmAddURLbtn" name="topConfirmAddURLbtn" value="確認新增"><br>
 					<span id="chkStoreProductURL" name="chkStoreProductURL" style="color:rgb(255, 0, 0); display:none;"></span>
 				</td>
 			</tr>

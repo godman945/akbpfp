@@ -24,6 +24,11 @@ $(document).ready(function(){
 		searchStoreProductURLAjax($("#storeProductURL").val(), "storeProductURL");
 	});
 	
+	//上面的確認新增按鈕點擊事件
+	$("#topConfirmAddURLbtn").click(function(){
+		searchStoreProductURLAjax($("#storeProductURL").val(), "storeProductURL");
+	});
+	
 	//確認新增按鈕點擊事件
 	$("#confirmAddURLbtn").click(function(){
 		searchStoreProductURLAjax($("#confirmAddURL").val(), "confirmAddURL");
@@ -725,7 +730,7 @@ function openNots(_this, intact_title, intact_description) {
 	tempHtml += "     <h1>" + intact_title + "</h1>";
 	tempHtml += "     <span>" + intact_description + "</span>";
 	tempHtml += "   </div>";
-	tempHtml += "   <div class='note_24h'>提醒您，此廣告內容僅適用於原生廣告版位，一般廣告版位如前頁預覽畫面所示。如廣告內容有受到字數限制，請按「修改」鈕調整，謝謝。</div>";
+	tempHtml += "   <div class='note_24h'>提醒您，一般廣告因字數限制無法完整呈現，您可按下修改鍵調整內文；詳細完整廣告內容僅適用於搜尋原生廣告版位。</div>";
 	tempHtml += "   <a onclick='closeNots()' style='cursor:pointer;' class='adpopclose'>關閉</a>";
 	$("#notes").html(tempHtml).show();
 }
