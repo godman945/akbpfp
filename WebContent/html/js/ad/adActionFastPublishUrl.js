@@ -281,7 +281,7 @@ function setUserActionData(){
 	$('#adOperatingRuleSelect').prop("disabled",false);
 	
 	$('#adDevice').prop("disabled",false);
-	if($('#userCategory').val() == '2'){
+	if($('#userCategory').val() == '1'){
 		$($('#adDevice').children()[1]).hide();
 		$($('#adDevice').children()[2]).hide();
 	}else{
