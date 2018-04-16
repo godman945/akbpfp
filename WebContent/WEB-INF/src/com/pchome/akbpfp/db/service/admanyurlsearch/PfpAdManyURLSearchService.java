@@ -101,12 +101,12 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			jsonObjectDetail.put("intact_title", title);
 
 			String description = apiJsonObjectDetail.get("description").toString();
-			int descriptionMaxLength = (description.length() > 36) ? 36 : description.length();
-			jsonObjectDetail.put("description", description.substring(0, descriptionMaxLength));
+			String linkUrl = apiJsonObjectDetail.get("link_url").toString();
+			jsonObjectDetail.put("description", processDescription(description, linkUrl));
 			jsonObjectDetail.put("intact_description", description);
 			
-			jsonObjectDetail.put("link_url", apiJsonObjectDetail.get("link_url").toString());
-			jsonObjectDetail.put("show_url", processShowURL(apiJsonObjectDetail.get("link_url").toString()));
+			jsonObjectDetail.put("link_url", linkUrl);
+			jsonObjectDetail.put("show_url", processShowURL(linkUrl));
 			jsonObjectDetail.put("sp_price", processPrice(apiJsonObjectDetail.optString("sp_price")));
 			jsonObjectDetail.put("price",    processPrice(apiJsonObjectDetail.get("price").toString()));
 			//只有24h才有此參數
@@ -262,6 +262,28 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		String redisKey = manyURLRediskey + vo.getId();
 		String redisData = redisAPI.getRedisData(redisKey); // 查詢此客戶redis是否有資料
 		vo.setRedisJsonObject(new JSONObject(redisData));
+	}
+	
+	/**
+	 * 處理商品描述(內文)
+	 * 1.取最多36個字
+	 * 2.露天跟個人賣場，內容欄位沒有值，則帶入預設文字"直接購買"
+	 * @param description
+	 * @param string
+	 * @return
+	 */
+	private String processDescription(String description, String url) {
+		// 取最多36個字
+		int descriptionMaxLength = (description.length() > 36) ? 36 : description.length();
+		description = description.substring(0, descriptionMaxLength);
+
+		// 露天或個人賣場沒有值，且字數為0
+		if ((url.indexOf("goods.ruten.com.tw") > -1 || url.indexOf("seller.pcstore.com.tw") > -1)
+				&& descriptionMaxLength == 0) {
+			description = "直接購買";
+		}
+
+		return description;
 	}
 	
 	/**
