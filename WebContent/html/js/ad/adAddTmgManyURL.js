@@ -224,7 +224,7 @@ function processSearchResultViewHtml(redisData){
 			}else if(key == "description"){
 				description = val;
 			}else if(key == "intact_description"){
-				intact_description = val;
+				intact_description = val.replace(/\"/g, "&quot;"); // 處理"符號
 			}else if(key == "link_url"){
 				link_url = val;
 			}else if(key == "pic_url"){
