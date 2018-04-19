@@ -309,7 +309,7 @@ function processSearchResultViewHtml(redisData){
 		//原價
 		tempHtml += "	<td class='td03'>"; 
 		if(sp_price){ //有值則補上NT$
-			tempHtml += "NT$" + processCommaStyle(sp_price)
+			tempHtml += "NT$ " + processCommaStyle(sp_price)
 		}
 		tempHtml += "	</td>";
 		
@@ -319,14 +319,14 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "			<input class='mod-button ps btn_edit modifyPriceEditBtn' type='button' value='修 改'>";
 		tempHtml += "			<div class='price_wd'>";
 		if(price){ //有值則補上NT$
-			tempHtml += "NT$" + processCommaStyle(price)
+			tempHtml += "NT$ " + processCommaStyle(price)
 		}
 		tempHtml += "			</div>";
 		tempHtml += "		</div>";
 		//促銷價修改欄位部分
 		tempHtml += "		<div class='mod_ok ad-mod-hide'>";
 		tempHtml += "			<input class='mod-button ps btn_ok modifyPriceOKBtn' type='button' value='確 認'>";
-		tempHtml += "			<p class='price_wd'>NT$<input type='text' class='modifyPrice' style='width:80px;margin: 1px 0; padding: 3px;text-align: center' value='" + price + "' maxlength='8'></p>";
+		tempHtml += "			<p class='price_wd'>NT$ <input type='text' class='modifyPrice' style='width:80px;margin: 1px 0; padding: 3px;text-align: center' value='" + price + "' maxlength='8'></p>";
 		tempHtml += "		</div>";
 		tempHtml += "	</td>";
 		
@@ -520,7 +520,7 @@ function processResultViewBtn(){
 			    	if (response.status == "ERROR") {
 			    		alert(response.msg);
 			    	}else{
-			    		_thisPriceBlock.find("div.price_wd").html("NT$" + processCommaStyle(keyinModifyPrice));
+			    		_thisPriceBlock.find("div.price_wd").html("NT$ " + processCommaStyle(keyinModifyPrice));
 
 			    		_thisPriceBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
 			    	}
