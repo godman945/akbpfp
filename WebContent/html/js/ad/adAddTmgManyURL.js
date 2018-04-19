@@ -308,8 +308,8 @@ function processSearchResultViewHtml(redisData){
 		
 		//原價
 		tempHtml += "	<td class='td03'>"; 
-		if(sp_price){ //有值則補上NT.
-			tempHtml += "NT." + sp_price
+		if(sp_price){ //有值則補上NT$
+			tempHtml += "NT$" + processCommaStyle(sp_price)
 		}
 		tempHtml += "	</td>";
 		
@@ -318,15 +318,15 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "		<div class='mod_edit'>";
 		tempHtml += "			<input class='mod-button ps btn_edit modifyPriceEditBtn' type='button' value='修 改'>";
 		tempHtml += "			<div class='price_wd'>";
-		if(price){ //有值則補上NT.
-			tempHtml += "NT." + price
+		if(price){ //有值則補上NT$
+			tempHtml += "NT$" + processCommaStyle(price)
 		}
 		tempHtml += "			</div>";
 		tempHtml += "		</div>";
 		//促銷價修改欄位部分
 		tempHtml += "		<div class='mod_ok ad-mod-hide'>";
 		tempHtml += "			<input class='mod-button ps btn_ok modifyPriceOKBtn' type='button' value='確 認'>";
-		tempHtml += "			<p class='price_wd'>NT.<input type='text' class='modifyPrice' style='width:80px;margin: 1px 0; padding: 3px;text-align: center' placeholder='" + price + "' maxlength='8'></p>";
+		tempHtml += "			<p class='price_wd'>NT$<input type='text' class='modifyPrice' style='width:80px;margin: 1px 0; padding: 3px;text-align: center' value='" + price + "' maxlength='8'></p>";
 		tempHtml += "		</div>";
 		tempHtml += "	</td>";
 		
@@ -480,10 +480,11 @@ var tempADShowURL;
 //處理查詢結果畫面的按鈕部分
 function processResultViewBtn(){
 	
+	var defaultModifyPrice = ""; // 預設的促銷價
 	//修改促銷價按鈕事件
 	$('.modifyPriceEditBtn').unbind('click').click(function () {
 		var _thisPriceBlock = $(this).closest(".td03.ad-mod"); //促銷價欄位位置
-		_thisPriceBlock.find(".modifyPrice").val(_thisPriceBlock.find(".modifyPrice").attr("placeholder"));
+		defaultModifyPrice = _thisPriceBlock.find(".modifyPrice").val();
 		$(this).parent().parent().find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
 	});
 	
@@ -491,9 +492,7 @@ function processResultViewBtn(){
 	$('.modifyPriceOKBtn').unbind('click').click(function () {
 
 		var _thisPriceBlock = $(this).closest(".td03.ad-mod"); //促銷價欄位位置
-		
 		var keyinModifyPrice = _thisPriceBlock.find(".modifyPrice").val();
-		var defaultModifyPrice = _thisPriceBlock.find(".modifyPrice").attr("placeholder");
 		
 		//有輸入值且輸入值不是預設值
 		if(keyinModifyPrice && (keyinModifyPrice != defaultModifyPrice)){
@@ -501,7 +500,7 @@ function processResultViewBtn(){
 			//檢核輸入資料
 			if(!isNum(keyinModifyPrice)){
 				alert('只能填寫數字');
-				_thisPriceBlock.find(".modifyPrice").val("");
+				_thisPriceBlock.find(".modifyPrice").val(defaultModifyPrice); // 還原預設促銷價
 				return false;
 			}
 			
@@ -521,15 +520,15 @@ function processResultViewBtn(){
 			    	if (response.status == "ERROR") {
 			    		alert(response.msg);
 			    	}else{
-			    		_thisPriceBlock.find("div.price_wd").html("NT." + keyinModifyPrice);
-			    		_thisPriceBlock.find(".modifyPrice").attr("placeholder", keyinModifyPrice);
-			    		
+			    		_thisPriceBlock.find("div.price_wd").html("NT$" + processCommaStyle(keyinModifyPrice));
+
 			    		_thisPriceBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
 			    	}
 				}
 			});
 			
 		} else {
+			_thisPriceBlock.find(".modifyPrice").val(defaultModifyPrice); // 清空值的話，寫回預設值
 			_thisPriceBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
 		}
 	});
@@ -684,6 +683,11 @@ function isURLInaccurate(URL, errorMsgBlock){
 	}
 	
 	return false;
+}
+
+//處理千分位逗號
+function processCommaStyle(number){
+	return parseInt(number).toLocaleString('en-US');
 }
 
 //處理廣告明細，圖片左上角的Logo顯示隱藏效果 start
