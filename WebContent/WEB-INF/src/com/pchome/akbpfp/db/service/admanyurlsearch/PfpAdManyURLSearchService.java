@@ -103,7 +103,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			String description = apiJsonObjectDetail.get("description").toString();
 			String linkUrl = apiJsonObjectDetail.get("link_url").toString();
 			jsonObjectDetail.put("description", processDescription(description, linkUrl));
-			jsonObjectDetail.put("intact_description", description);
+			jsonObjectDetail.put("intact_description", processIntactDescription(description, linkUrl));
 			
 			jsonObjectDetail.put("link_url", linkUrl);
 			jsonObjectDetail.put("show_url", processShowURL(linkUrl));
@@ -277,12 +277,35 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		int descriptionMaxLength = (description.length() > 36) ? 36 : description.length();
 		description = description.substring(0, descriptionMaxLength);
 
-		// 露天或個人賣場沒有值，且字數為0
+		description = processDescriptionFromURL(description, url);
+
+		return description;
+	}
+	
+	/**
+	 * 處理完整的商品描述(內文)
+	 * 1.露天跟個人賣場，內容欄位沒有值，則帶入預設文字"直接購買"
+	 * @param description
+	 * @param url
+	 * @return
+	 */
+	private String processIntactDescription(String description, String url) {
+		description = processDescriptionFromURL(description, url);
+		return description;
+	}
+	
+	/**
+	 * 依據不同網址，處理相對應的商品描述(內文)
+	 * @param description
+	 * @param url
+	 * @return
+	 */
+	private String processDescriptionFromURL(String description, String url){
+		// 露天或個人賣場沒有值，改為直接購買
 		if ((url.indexOf("goods.ruten.com.tw") > -1 || url.indexOf("seller.pcstore.com.tw") > -1)
-				&& descriptionMaxLength == 0) {
+				&& description.length() == 0) {
 			description = "直接購買";
 		}
-
 		return description;
 	}
 	
