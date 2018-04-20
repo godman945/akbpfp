@@ -7,8 +7,11 @@
 		//設定廣告活動預設資料
 		initDefaultActionInfo();
 		
+		//切換廣告名稱
 		$("#adActionNameSelect").change(function(){
 			changeActionDefaultData(this.value);
+			//觸發分類名稱事件，更換聯播網廣告出價金額
+			$("#adGroupNameSelect").trigger("change");
 		});
 		
 		//設定聯播網廣告出價
@@ -52,6 +55,7 @@
 		}
 	});
 	
+	//切換分類名稱
 	$('#adGroupNameSelect').change(function(){
 		var groupInfo = $("#adGroupNameSelect").val().split('_');
 		$("#adGroupChannelPrice").val(groupInfo[2]);
