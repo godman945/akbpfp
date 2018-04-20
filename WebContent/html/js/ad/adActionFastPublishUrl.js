@@ -10,8 +10,6 @@
 		//切換廣告名稱
 		$("#adActionNameSelect").change(function(){
 			changeActionDefaultData(this.value);
-			//觸發分類名稱事件，更換聯播網廣告出價金額
-			$("#adGroupNameSelect").trigger("change");
 		});
 		
 		//設定聯播網廣告出價
@@ -255,6 +253,8 @@ function changeActionDefaultData(adActionSeq){
 		}
 	}).done(function() {
 		setDefaultActionData(actionData);
+		//觸發分類名稱事件，更換聯播網廣告出價金額
+		$("#adGroupNameSelect").trigger("change");
 	});
 }
 
