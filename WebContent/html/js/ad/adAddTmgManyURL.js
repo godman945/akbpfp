@@ -259,7 +259,9 @@ function processSearchResultViewHtml(redisData){
 		
 		tempHtml += "					<a target='_blank' href='" + link_url + "' style='text-decoration:none'>";
 		tempHtml += "						<div style='width:315px; height:85px; float:left;text-align:left; margin-left:12px;'>";
-		tempHtml += "							<img src='" + pic_url + "' style=' width:85px; height:85px; float:left; margin-right:5px; border:0'>";
+		if (pic_url.indexOf("display:none", 0) == -1) { // 有圖片組img區塊
+			tempHtml += "						<img src='" + pic_url + "' style=' width:85px; height:85px; float:left; margin-right:5px; border:0'>";
+		}
 		tempHtml += "							<div>";
 		tempHtml += "								<h3 style='font-size:17px; font-weight:600; line-height:20px; margin:0; padding:0; color:rgb(0,69,178); word-break:break-all; display:inline-block; word-wrap:break-word; width:225px;' class='defaultADTitle' >" + title + "</h3>";
 		tempHtml += "								<p style='font-size:12px; color:rgb(102,102,102); line-height:15px; margin:0; padding:0; word-break:break-all; display:inline-block; word-wrap:break-word; width:225px;' class='defaultADDescription' >" + description + "</p>";
@@ -283,7 +285,9 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "					</div>";
 		
 		tempHtml += "					<div style='float:left;text-align:left; margin-left:12px;'>";
-		tempHtml += "						<img src=" + pic_url + " style='width:85px; height:85px; float:left; margin-right:5px; border:0'>";
+		if (pic_url.indexOf("display:none", 0) == -1) { // 有圖片組img區塊
+			tempHtml += "					<img src=" + pic_url + " style='width:85px; height:85px; float:left; margin-right:5px; border:0'>";
+		}
 		tempHtml += "						<div style='float: left;width: 72%;'>";
 		tempHtml += "							<input type='text' class='inputPlaceholderTmg' id='adTitle' name='adTitle' style='width:96%;margin: 1px 0; padding: 3px;' value='" + title + "' maxlength='17'>";
 		tempHtml += "							<span style='float:right' id='spanAdTitle'></span>";

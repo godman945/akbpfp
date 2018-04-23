@@ -334,10 +334,19 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 
 	/**
 	 * 處理明細圖片路徑
+	 * 1.沒有商品圖
+	 * 2.有圖片路徑修正
 	 * @param picURL
 	 * @return
 	 */
 	private String processPicURL(String picURL) {
+		// 沒有商品圖
+		if(picURL.indexOf("no-product") > -1){
+			picURL = "img/public/na.gif\" style=\"display:none";
+			return picURL;
+		}
+		
+		// 處理圖片路徑
 		String URLHttp = picURL.substring(0, 6);
 		if (URLHttp.indexOf("//") > -1) {
 			picURL = "http:" + picURL;

@@ -548,6 +548,10 @@ public class AdAddAction extends BaseCookieAction{
 	 * @throws IOException
 	 */
 	private String processImgPath(String imgPath) throws IOException {
+		if (imgPath.indexOf("display:none") > -1) { // 沒有圖片，不做處理
+			return imgPath;
+		}
+		
 		Date date = new Date();
 		String photoPath = photoDbPathNew + super.getCustomer_info_id() + "/" + sdf.format(date) + "/original";
 		File file = new File(photoPath);
@@ -1713,10 +1717,12 @@ public class AdAddAction extends BaseCookieAction{
 					String promotional_price = addAdJson.getString("price");
 					String real_url = addAdJson.getString("link_url");
 					String show_url = addAdJson.getString("show_url");
-					URL url = new URL(imgPath);
-					BufferedImage img = ImageIO.read(url);
-					ImageIO.write(img, "jpg",new File(photoPath+"/"+adSeq+".jpg"));
-					imgPath = "img/user/"+getCustomer_info_id()+"/"+sdf.format(date)+"/original/"+ adSeq+".jpg";
+					if (imgPath.indexOf("display:none") == -1) { // 有圖片才做下載圖片路徑調整動作
+						URL url = new URL(imgPath);
+						BufferedImage img = ImageIO.read(url);
+						ImageIO.write(img, "jpg", new File(photoPath + "/" + adSeq + ".jpg"));
+						imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + ".jpg";
+					}
 					saveAdDetail(imgPath, "img", "adp_201303070003", "dad_201303070010");
 					saveAdDetail(title, "title", "adp_201303070003", "dad_201303070011");
 					saveAdDetail(intact_title, "intact_title", "adp_201303070003", "dad_201303070017");
