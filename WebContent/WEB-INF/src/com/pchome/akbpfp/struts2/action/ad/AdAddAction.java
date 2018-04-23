@@ -1709,6 +1709,7 @@ public class AdAddAction extends BaseCookieAction{
 					
 					//新增明細
 					String imgPath = addAdJson.getString("pic_url");
+					String filenameExtension = imgPath.substring(imgPath.length() -3 , imgPath.length());
 					String title = addAdJson.getString("title");
 					String intact_title = addAdJson.getString("intact_title");
 					String content = addAdJson.getString("description");
@@ -1720,8 +1721,8 @@ public class AdAddAction extends BaseCookieAction{
 					if (imgPath.indexOf("display:none") == -1) { // 有圖片才做下載圖片路徑調整動作
 						URL url = new URL(imgPath);
 						BufferedImage img = ImageIO.read(url);
-						ImageIO.write(img, "jpg", new File(photoPath + "/" + adSeq + ".jpg"));
-						imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + ".jpg";
+						ImageIO.write(img, filenameExtension, new File(photoPath + "/" + adSeq + "."+filenameExtension));
+						imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + "."+filenameExtension;
 					}
 					saveAdDetail(imgPath, "img", "adp_201303070003", "dad_201303070010");
 					saveAdDetail(title, "title", "adp_201303070003", "dad_201303070011");
