@@ -205,7 +205,7 @@ public class AdAddAction extends BaseCookieAction{
 				adStyle = "TMG";
 				//進入多筆網址刊登頁籤，則先清除redis上的資料
 				if("fastURLAdAdd".equals(bookmark)){
-					redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id());
+					redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id() + super.getRequest().getSession().getId());
 				}
 			}
 			PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
@@ -377,6 +377,7 @@ public class AdAddAction extends BaseCookieAction{
 
 		PfpAdManyURLVO vo = new PfpAdManyURLVO();
 		vo.setId(super.getCustomer_info_id());
+		vo.setSessionId(super.getRequest().getSession().getId());
 		
 		processKeyWordList();
 		processExcludeKeyWordList();
@@ -1549,8 +1550,8 @@ public class AdAddAction extends BaseCookieAction{
 	 * 快速上稿畫面
 	 * */
 	public String adFastPublishAdd() {
-		log.info(">>>>>> init redis:" + manyURLRediskey + super.getCustomer_info_id());
-		redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id());
+		log.info(">>>>>> init redis:" + manyURLRediskey + super.getCustomer_info_id() + super.getRequest().getSession().getId());
+		redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id() + super.getRequest().getSession().getId());
 		adStyle = "TMG";
 		adType = "";
 		bookmark = "fastURLAdAdd";
@@ -1670,7 +1671,7 @@ public class AdAddAction extends BaseCookieAction{
 			return false;
 		}
 		
-		String redisKey = manyURLRediskey + super.getCustomer_info_id();
+		String redisKey = manyURLRediskey + super.getCustomer_info_id() + super.getRequest().getSession().getId();
 		String redisData = redisAPI.getRedisData(redisKey);
 		if(StringUtils.isNotBlank(redisData)){
 			String photoPath = photoDbPathNew + super.getCustomer_info_id()+"/"+sdf.format(date)+"/original";

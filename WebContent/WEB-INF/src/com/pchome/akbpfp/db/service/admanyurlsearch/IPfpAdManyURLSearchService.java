@@ -45,7 +45,12 @@ public interface IPfpAdManyURLSearchService extends IBaseService<PfpAdManyURLVO,
 	
 	/**
 	 * 確認需要新增url至redis
-	 * */
-	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo,String userId) throws Exception;
+	 * @param adFastPublishUrlInfo
+	 * @param userId
+	 * @param sessionId
+	 * @return
+	 * @throws Exception
+	 */
+	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo,String userId, String sessionId) throws Exception;
 	
 }

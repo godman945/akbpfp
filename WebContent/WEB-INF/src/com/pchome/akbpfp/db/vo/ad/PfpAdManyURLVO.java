@@ -21,6 +21,7 @@ public class PfpAdManyURLVO {
 	private JSONObject redisJsonObject; //redis內取得的資料
 	private String message = ""; //訊息
 	
+	private String sessionId;
 	
 	public String getSearchURL() {
 		return searchURL;
@@ -124,6 +125,14 @@ public class PfpAdManyURLVO {
 
 	public void setModifyADShowURL(String modifyADShowURL) {
 		this.modifyADShowURL = modifyADShowURL;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 
 }

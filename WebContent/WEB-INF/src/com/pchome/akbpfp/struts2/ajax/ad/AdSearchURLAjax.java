@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 
@@ -55,6 +57,7 @@ public class AdSearchURLAjax extends BaseCookieAction{
 			vo.setPageSize(pageSize);
 			vo.setTotalPage(totalPage);
 			vo.setId(custId);
+			vo.setSessionId(super.getRequest().getSession().getId());
 			
 			//檢查輸入網址，取得資料
 			pfpAdManyURLSearchService.getAdCrawlerAPIData(vo);
@@ -106,6 +109,7 @@ public class AdSearchURLAjax extends BaseCookieAction{
 		vo.setPage(page);
 		vo.setPageSize(pageSize);
 		vo.setId(custId);
+		vo.setSessionId(super.getRequest().getSession().getId());
 		pfpAdManyURLSearchService.getRedisURLData(vo);
 		
 		pfpAdManyURLSearchService.getRedisLimitData(vo);
@@ -134,6 +138,7 @@ public class AdSearchURLAjax extends BaseCookieAction{
 		vo.setId(custId);
 		vo.setModifyPrice(modifyPrice);
 		vo.setSearchURL(searchURL);
+		vo.setSessionId(super.getRequest().getSession().getId());
 		
 		pfpAdManyURLSearchService.getRedisURLData(vo);
 		
@@ -162,6 +167,7 @@ public class AdSearchURLAjax extends BaseCookieAction{
 		vo.setModifyADTitle(modifyADTitle);
 		vo.setModifyADContent(modifyADContent);
 		vo.setModifyADShowURL(modifyADShowURL);
+		vo.setSessionId(super.getRequest().getSession().getId());
 		
 		pfpAdManyURLSearchService.getRedisURLData(vo);
 		
@@ -182,7 +188,7 @@ public class AdSearchURLAjax extends BaseCookieAction{
 		log.info(">>>>>> START adFastPublishAction");
 		dataMap = new HashMap<String, Object>();
 		dataMap.put("alex", "CCC");
-		pfpAdManyURLSearchService.adConfirmFastPublishUrl(adFastPublishUrlInfo,super.getCustomer_info_id());
+		pfpAdManyURLSearchService.adConfirmFastPublishUrl(adFastPublishUrlInfo, super.getCustomer_info_id(), super.getRequest().getSession().getId());
 		return SUCCESS;
 	}
 	
