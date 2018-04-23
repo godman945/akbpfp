@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -559,10 +560,17 @@ public class AdAddAction extends BaseCookieAction{
 			file.mkdirs();
 		}
 		
+		String filenameExtension = imgPath.substring(imgPath.length() -3 , imgPath.length()); // 取得副檔名
 		URL url = new URL(imgPath);
-		BufferedImage img = ImageIO.read(url);
-		ImageIO.write(img, "jpg", new File(photoPath + "/" + adSeq + ".jpg"));
-		imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + ".jpg";
+		String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension; // 存放路徑 + 檔名
+		if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式
+			InputStream in = url.openStream();
+			Files.copy(in, new File(imgPathAndName).toPath());
+		} else { // jpg圖片下載方式
+			BufferedImage img = ImageIO.read(url);
+			ImageIO.write(img, filenameExtension, new File(imgPathAndName));
+		}
+		imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + "." + filenameExtension;
 		return imgPath;
 	}
 
@@ -1720,9 +1728,15 @@ public class AdAddAction extends BaseCookieAction{
 					String show_url = addAdJson.getString("show_url");
 					if (imgPath.indexOf("display:none") == -1) { // 有圖片才做下載圖片路徑調整動作
 						URL url = new URL(imgPath);
-						BufferedImage img = ImageIO.read(url);
-						ImageIO.write(img, filenameExtension, new File(photoPath + "/" + adSeq + "."+filenameExtension));
-						imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + "."+filenameExtension;
+						String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension;
+						if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式
+							InputStream in = url.openStream();
+							Files.copy(in, new File(imgPathAndName).toPath());
+						} else { // jpg圖片下載方式
+							BufferedImage img = ImageIO.read(url);
+							ImageIO.write(img, filenameExtension, new File(imgPathAndName));
+						}
+						imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + "." + filenameExtension;
 					}
 					saveAdDetail(imgPath, "img", "adp_201303070003", "dad_201303070010");
 					saveAdDetail(title, "title", "adp_201303070003", "dad_201303070011");
