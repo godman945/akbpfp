@@ -182,8 +182,7 @@ function searchStoreProductURLAjax(URL, errorMsgBlock){
 		    	//依照每頁幾筆來組畫面，超過每頁幾筆數則畫面不調整
 		    	if($('.dataDetailTable tr').length < parseInt($("#pageSizeSelect").val())){
 		    		tempHtml = "";
-		    		//處理查詢結果畫面
-		    		processSearchResultViewHtml(JSON.parse(response.redisData));
+		    		processSearchResultViewHtml(JSON.parse(response.redisData)); //處理查詢結果畫面
 		    	}
 		    	
 		    	/*先判斷是否有值，有值表示此網址已輸入過，則不修改flag，沒值則新增預設值。 
@@ -200,7 +199,9 @@ function searchStoreProductURLAjax(URL, errorMsgBlock){
 }
 
 var tempHtml = "";
-//處理查詢結果畫面
+/**
+ * 處理查詢結果畫面
+ */
 function processSearchResultViewHtml(redisData){
 	$.each(redisData, function(index, list){
 		var sp_price = "";    //原價
@@ -359,6 +360,28 @@ function checkAll() {
 	
 	//目前勾選總筆數 + 現在勾選筆數
 	$("[class^=checkboxCount]").text(parseInt($(".checkboxCount-up").text()) + parseInt(checkCount));
+	
+	//全選完後調整為取消全選
+	$("#manyURLCheckAll").html("取消全選").addClass("cancelSelectAll").attr("onclick", "noCheckAll()");
+}
+
+//取消勾選全部
+function noCheckAll(){
+	var noCheckCount = 0; // 被取消的總筆數
+	$("#tableView input[type=checkbox]").each(function(index, obj) {
+		//目前迴圈繞到的此筆，是否為已勾選的，不是則做計算、勾選、改值動作
+		if(urlInfoMap[$(obj).prop('value') + "_ckeck_flag"] == "Y"){
+			noCheckCount += 1;
+			$(obj).prop('checked', false);
+			urlInfoMap[$(obj).prop('value') + "_ckeck_flag"] = "N";
+		}
+	});
+	
+	//目前勾選總筆數 - 被取消的總筆數
+	$("[class^=checkboxCount]").text(parseInt($(".checkboxCount-up").text()) - parseInt(noCheckCount));
+	
+	//取消全選完後調整為全選
+	$("#manyURLCheckAll").html("全選").removeClass("cancelSelectAll").attr("onclick", "checkAll()");
 }
 
 //點擊勾選廣告
@@ -370,14 +393,37 @@ function checkAd(obj, link_url) {
 	if ($(obj).prop('checked') == true) {
 		checkAdCount = checkAdCount + 1;
 		urlInfoMap[link_url + "_ckeck_flag"] = "Y";
-	}
-	if ($(obj).prop('checked') == false) {
+	} else if ($(obj).prop('checked') == false) {
 		checkAdCount = checkAdCount - 1;
 		urlInfoMap[link_url + "_ckeck_flag"] = "N";
 	}
 	
 	// 模糊查詢
 	$("[class^=checkboxCount]").text(checkAdCount);
+	
+	checkCheckAllOrNoCheckAllBtn();
+}
+
+/**
+ * 檢查目前是顯示全選還是取消全選按鈕
+ */
+function checkCheckAllOrNoCheckAllBtn(){
+	var checkCount = 0; // 選擇的總筆數
+	var noCheckCount = 0; // 沒有選擇的總筆數
+	$("#tableView input[type=checkbox]").each(function(index, obj) {
+		//目前迴圈繞到的此筆，是否為已勾選的
+		if(urlInfoMap[$(obj).prop('value') + "_ckeck_flag"] == "Y"){
+			checkCount += 1;
+		} else {
+			noCheckCount += 1;
+		}
+	});
+	
+	if(checkCount > 0 && noCheckCount == 0){ // 沒有被選擇的數量為0表示全部選取了
+		$("#manyURLCheckAll").html("取消全選").addClass("cancelSelectAll").attr("onclick", "noCheckAll()");
+	}else {
+		$("#manyURLCheckAll").html("全選").removeClass("cancelSelectAll").attr("onclick", "checkAll()");
+	}
 }
 
 //切換上下頁或每頁顯示N筆時
@@ -405,15 +451,16 @@ function changePageOrPageSizeAjax(){
 	    	processPageAndTotalPage();
 	    	
 	    	tempHtml = "";
-    		//處理查詢結果畫面
-    		processSearchResultViewHtml(JSON.parse(response.redisData));
+    		processSearchResultViewHtml(JSON.parse(response.redisData)); //處理查詢結果畫面
     		$('#loadingWaitBlock').unblock();
 		}
 	});
 	
 }
 
-//處理頁數與總頁數急按鈕
+/**
+ * 處理頁數與總頁數及按鈕
+ */
 function processPageAndTotalPage(){
 	
 	//顯示目前第幾頁與總頁數
@@ -481,7 +528,9 @@ var tempADTitle;
 var tempADContent;
 var tempADShowURL;
 
-//處理查詢結果畫面的按鈕部分
+/**
+ * 處理查詢結果畫面的按鈕部分
+ */
 function processResultViewBtn(){
 	
 	var defaultModifyPrice = ""; // 預設的促銷價
@@ -624,6 +673,7 @@ function processResultViewBtn(){
 		}
 	});
 	
+	checkCheckAllOrNoCheckAllBtn(); // 檢查目前是顯示全選還是取消全選按鈕 
 }
 
 //檢查廣告明細欄位修改標題

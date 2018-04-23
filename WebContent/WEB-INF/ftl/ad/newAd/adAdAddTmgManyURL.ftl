@@ -1,7 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmgManyURL.js?t=20180423001"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmgManyURL.js?t=20180423002"></script>
 
 <div style="clear:both;height:0px"></div>
 <h4>製作廣告</h4>
@@ -75,7 +75,7 @@
 				<tr role="row">
 					<th width="50" data-column="0" scope="col" role="columnheader" aria-disabled="true" unselectable="on" aria-sort="none" aria-label="全選: No sort applied, sorting is disabled" style="user-select: none;">
 						<div class="tablesorter-header-inner">
-							<a href="javascript:void(0)" onclick="checkAll()">全選</a>
+							<a id="manyURLCheckAll" href="javascript:void(0)" onclick="checkAll()">全選</a>
 						</div>
 					</th>
 					<th>廣告明細預覽</th>
