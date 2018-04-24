@@ -1,6 +1,11 @@
 package com.pchome.akbpfp.db.service.admanyurlsearch;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.Iterator;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -86,8 +91,9 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 * @param apiJsonArray
 	 * @return
 	 * @throws JSONException 
+	 * @throws IOException 
 	 */
-	private JSONArray processData(JSONArray apiJsonArray) throws JSONException {
+	private JSONArray processData(JSONArray apiJsonArray) throws JSONException, IOException {
 		JSONArray jsonArray = new JSONArray();
 		
 		for (int arrayLength = 0; arrayLength < apiJsonArray.length(); arrayLength++) {
@@ -344,8 +350,9 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 * 2.有圖片路徑修正
 	 * @param picURL
 	 * @return
+	 * @throws IOException 
 	 */
-	private String processPicURL(String picURL) {
+	private String processPicURL(String picURL) throws IOException {
 		// 沒有商品圖
 		if(picURL.indexOf("no-product") > -1){
 			picURL = "img/public/na.gif\" style=\"display:none";
@@ -359,6 +366,20 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		} else if (URLHttp.indexOf("http:") == -1 && URLHttp.indexOf("https:") == -1) {
 			picURL = "http://" + picURL;
 		}
+		
+		String filenameExtension = picURL.substring(picURL.length() -3 , picURL.length()); // 取得副檔名
+		//長方形 GIF，圖片擋掉只留文字廣告
+		if ("gif".equalsIgnoreCase(filenameExtension)) {
+			URL url = new URL(picURL);
+			BufferedImage img = ImageIO.read(url);
+			int width = img.getWidth();
+			int height = img.getHeight();
+			if(width != height){ // 長寬不相同，為長方形
+				picURL = "img/public/na.gif\" style=\"display:none";
+				return picURL;
+			}
+		}
+		
 		return picURL;
 	}
 	
