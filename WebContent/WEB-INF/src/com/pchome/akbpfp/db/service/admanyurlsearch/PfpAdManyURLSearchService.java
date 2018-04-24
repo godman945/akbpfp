@@ -329,6 +329,12 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	private String processShowURL(String url) {
 		url = url.substring(url.indexOf("://") + 3);
 		url = url.substring(0, url.indexOf("/"));
+		
+		// 如果是露天商品頁，調整為露天首頁
+		if ("goods.ruten.com.tw".equals(url)) { 
+			url = "www.ruten.com.tw";
+		}
+		
 		return url;
 	}
 
