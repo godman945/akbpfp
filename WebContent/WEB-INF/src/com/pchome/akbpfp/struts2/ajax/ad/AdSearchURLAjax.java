@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONException;
 
@@ -22,6 +20,7 @@ import com.pchome.utils.CommonUtils;
 public class AdSearchURLAjax extends BaseCookieAction{
 	
 	private IPfpAdManyURLSearchService pfpAdManyURLSearchService;
+	private String akbPfpServer;
 	
 	private String searchURL;  //輸入的網址
 	private int page = 1;      //第幾頁(初始預設第1頁)
@@ -155,9 +154,9 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	/**
 	 * 查詢結果修改廣告明細按鈕事件
 	 * @return
-	 * @throws JSONException 
+	 * @throws Exception 
 	 */
-	public String modifyADDetail() throws JSONException {
+	public String modifyADDetail() throws Exception {
 		dataMap = new HashMap<String, Object>();
 		
 		String custId = super.getCustomer_info_id();
@@ -168,6 +167,14 @@ public class AdSearchURLAjax extends BaseCookieAction{
 		vo.setModifyADContent(modifyADContent);
 		vo.setModifyADShowURL(modifyADShowURL);
 		vo.setSessionId(super.getRequest().getSession().getId());
+		
+		AdUtilAjax adUtilAjax = new AdUtilAjax();
+		String msg = adUtilAjax.checkAdShowUrl(modifyADShowURL, akbPfpServer);
+		if (StringUtils.isNotEmpty(msg)) {
+			dataMap.put("status", "ERROR");
+			dataMap.put("msg", msg);
+			return SUCCESS;
+		}
 		
 		pfpAdManyURLSearchService.getRedisURLData(vo);
 		
@@ -324,6 +331,14 @@ public class AdSearchURLAjax extends BaseCookieAction{
 
 	public void setPfpAdGroupList(List<PfpAdGroup> pfpAdGroupList) {
 		this.pfpAdGroupList = pfpAdGroupList;
+	}
+
+	public String getAkbPfpServer() {
+		return akbPfpServer;
+	}
+
+	public void setAkbPfpServer(String akbPfpServer) {
+		this.akbPfpServer = akbPfpServer;
 	}
 
 }

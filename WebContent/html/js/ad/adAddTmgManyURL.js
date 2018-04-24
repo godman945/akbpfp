@@ -294,7 +294,7 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "							<span style='float:right' id='spanAdTitle'></span>";
 		tempHtml += "							<textarea style='width:96%;margin: 1px 0;padding: 3px;' class='inputPlaceholderTmgTextarea' id='adContent' name='adContent' maxlength='36' onkeypress='if(event.keyCode==13) return false;' >" + description + "</textarea>";
 		tempHtml += "							<span style='float:right' id='spanAdContent'></span>";
-		tempHtml += "							<input type='text' class='inputPlaceholderTmg' data-value='spanAdLinkURL' id='adShowURL' name='adShowURL' style='width: 96%;margin: 1px 0;padding: 3px;' maxlength='30' value='" + show_url + "'>";
+		tempHtml += "							<input type='text' class='inputPlaceholderTmg modifyAdShowURL' data-value='spanAdLinkURL' id='adShowURL' name='adShowURL' style='width: 96%;margin: 1px 0;padding: 3px;' maxlength='30' value='" + show_url + "'>";
 		tempHtml += "							<span style='float:right' id='spanAdShowURL'></span>";
 		tempHtml += "						</div>";
 		tempHtml += "					</div>";
@@ -610,21 +610,29 @@ function processResultViewBtn(){
 		_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
 	});
 	
+	var modifyADDetailOKBtnClickFlag = false; // 處理ajax還沒結束一直連點，判斷用flag
 	//修改明細資料點確定後事件
 	$('.modifyADDetailOKBtn').unbind('click').click(function () {
-				
+		if (modifyADDetailOKBtnClickFlag) {
+			return false;
+		}
+		
 		var _thisADDetailBlock = $(this).closest(".ad-mod"); //廣告明細欄位位置(包含顯示及編及區塊)
 		var keyinADTitle = _thisADDetailBlock.find("#adTitle").val();     //輸入的標題
 		var keyinADContent = _thisADDetailBlock.find("#adContent").val(); //輸入的內文
 		var keyinADShowURL = _thisADDetailBlock.find("#adShowURL").val(); //輸入的顯示網址
 		
-		if(!checkADTitle(keyinADTitle)){
+		if (!checkADTitle(keyinADTitle)) {
 			return false;
-		}else if(!checkADContent(keyinADContent)){
+		} else if (!checkADContent(keyinADContent)) {
 			return false;
-		}else if(!checkEdit(_thisADDetailBlock, keyinADTitle, keyinADContent, keyinADShowURL)){
+		} else if (!checkADShowURL(keyinADShowURL)) {
+			return false;
+		} else if (!checkEdit(_thisADDetailBlock, keyinADTitle, keyinADContent, keyinADShowURL)) {
 			return false;
 		}
+		
+		modifyADDetailOKBtnClickFlag = true;
 		
 		$.ajax({
 		    type: "post",
@@ -639,6 +647,7 @@ function processResultViewBtn(){
 		    timeout: 30000,
 		    error: function(xhr){
 		        alert('Ajax request 發生錯誤');
+		        modifyADDetailOKBtnClickFlag = false;
 		    },
 		    success:function(response, status){
 		    	if (response.status == "ERROR") {
@@ -653,6 +662,7 @@ function processResultViewBtn(){
 		    		
 		    		_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");
 		    	}
+		    	modifyADDetailOKBtnClickFlag = false;
 			}
 		});
 		
@@ -673,34 +683,65 @@ function processResultViewBtn(){
 		}
 	});
 	
+	//修改廣告明細預覽的顯示網址，離開顯示網址輸入框時，網址處理
+	$('.modifyAdShowURL').unbind('blur').blur(function() {
+		var adShowURL = $(this).val();
+		// 去掉網址的 http://
+		if (adShowURL.indexOf("://") > 0) {
+			adShowURL = adShowURL.substring(adShowURL.indexOf("://") + 3);
+		}
+		// 去掉連結網址 / 後的所有字串
+		if (adShowURL.indexOf("/") > 0) {
+			adShowURL = adShowURL.substring(0, adShowURL.indexOf("/"));
+		}
+		$(this).val(adShowURL);
+	});
+	
 	checkCheckAllOrNoCheckAllBtn(); // 檢查目前是顯示全選還是取消全選按鈕 
 }
 
-//檢查廣告明細欄位修改標題
+/**
+ * 檢查廣告明細欄位修改標題
+ */
 function checkADTitle(keyinADTitle){
-	if(keyinADTitle.length == 0){
+	if (keyinADTitle.length == 0) {
 		alert("請輸入標題。");
 		return false;
-	}else if(keyinADTitle.length > 17){
+	} else if (keyinADTitle.length > 17) {
 		alert("標題已超過限制字數。");
 		return false;
 	}
 	return true;
 }
 
-//檢查廣告明細欄位修改內文
+/**
+ * 檢查廣告明細欄位修改內文
+ */
 function checkADContent(keyinADContent){
-	if(keyinADContent.length == 0){
+	if (keyinADContent.length == 0) {
 		alert("請輸入內文。");
 		return false;
-	}else if(keyinADContent.length > 36){
+	} else if (keyinADContent.length > 36) {
 		alert("內文已超過限制字數。");
 		return false;
 	}
 	return true;
 }
 
-//檢查是否編輯修改過
+/**
+ * 檢查廣告明細欄位修改顯示網址
+ */
+function checkADShowURL(keyinADShowURL){
+	if (keyinADShowURL.length == 0) {
+		alert("請輸入廣告顯示網址");
+		return false;
+	}
+	return true;
+}
+
+/**
+ * 檢查是否編輯修改過
+ */
 function checkEdit(_thisADDetailBlock, keyinADTitle, keyinADContent, keyinADShowURL){
 	if(tempADTitle == keyinADTitle && tempADContent == keyinADContent && tempADShowURL == keyinADShowURL){
 		_thisADDetailBlock.find(".mod_ok, .mod_edit").toggleClass("ad-mod-hide");

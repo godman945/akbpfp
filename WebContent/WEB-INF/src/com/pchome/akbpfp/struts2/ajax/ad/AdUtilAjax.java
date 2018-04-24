@@ -34,6 +34,23 @@ public class AdUtilAjax extends BaseCookieAction{
 	private String adVideoUrl;
 	
 	/**
+	 * 檢查輸入的顯示廣告網址，確認是否為危險網址
+	 * @param adShowUrl
+	 * @param akbPfpServer 
+	 * @return
+	 * @throws Exception
+	 */
+	public String checkAdShowUrl(String adShowUrl, String akbPfpServer) throws Exception {
+		url = adShowUrl;
+		this.akbPfpServer = akbPfpServer;
+		checkAdUrl();
+		if (urlState < 200 || urlState >= 300) {
+			return "請輸入正確的廣告顯示網址";
+		}
+		return "";
+	}
+	
+	/**
 	 * 檢查輸入的廣告網址，確認是否為危險網址
 	 * @return
 	 * @throws Exception
@@ -271,5 +288,5 @@ public class AdUtilAjax extends BaseCookieAction{
 //		System.out.println(previewUrl.substring(0, previewUrl.indexOf("18 -")).replace("\n", ""));
 		
 	}
-	
+
 }
