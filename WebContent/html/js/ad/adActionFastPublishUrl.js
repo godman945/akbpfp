@@ -12,11 +12,30 @@
 			changeActionDefaultData(this.value);
 		});
 		
+		//切換分類名稱
+		$('#adGroupNameSelect').change(function(){
+			var groupInfo = $("#adGroupNameSelect").val().split('_');
+			$("#adGroupChannelPrice").val(groupInfo[2]);
+			changeGroupDefaultData(groupInfo[0]+"_"+groupInfo[1]);
+			getAdAsideRate();
+		});
+		
+		$('#adType').change(function(){
+			console.log($("#addAdActionName").val());
+			if($("#addAdActionName").val() == '返回建立過的廣告'){
+				console.log($("#adType").val());
+				if($('#adType').val() == '2'){
+					$("#searchTr").hide();
+				}else{
+					$("#searchTr").show();
+				}
+			}
+		});
+		
 		//設定聯播網廣告出價
 		$("#priceType").html('聯播網廣告出價');
 		var groupInfo = $("#adGroupNameSelect").val().split('_');
 		$("#adGroupChannelPrice").val(groupInfo[2]);
-		
 		getAdAsideRate();
 	}
 	
@@ -53,12 +72,6 @@
 		}
 	});
 	
-	//切換分類名稱
-	$('#adGroupNameSelect').change(function(){
-		var groupInfo = $("#adGroupNameSelect").val().split('_');
-		$("#adGroupChannelPrice").val(groupInfo[2]);
-		getAdAsideRate();
-	});
 	
 	$('#adGroupChannelPrice').change(function(){
 		var cpvRex = /^-?\d+\.?\d{0}$/;
@@ -185,7 +198,13 @@ function initDefaultActionInfo(){
 		$("#adType").prop("disabled", true);
 		$("#adType").val($("#defaultAdType").val());
 	}
-
+	
+	if($("#defaultAdType").val() == '2'){
+		$("#searchTr").hide();
+	}else{
+		$("#searchTr").show();
+	}
+	
 	if ($("#defaultAdOperatingRule").val() == 'MEDIA') {
 		$("#adOperatingRuleSelect").prop("disabled", true);
 		$("#adOperatingRuleSelect").val(0);
@@ -225,6 +244,21 @@ function initDefaultActionInfo(){
 	if ($("#adGroupChannelPrice").val() != "") {
 		$("#adGroupChannelPrice").prop("disabled", true);
 	}
+	
+	
+	if ($("#defaultAdGroupSearchPriceType").val() != "") {
+		if($("#defaultAdGroupSearchPriceType").val() == 1){
+    		$("input[name='adGroupSearchPriceType'][value='1']").prop("checked", true);
+    	}
+    	if($("#defaultAdGroupSearchPriceType").val() == 2){
+    		$("input[name='adGroupSearchPriceType'][value='2']").prop("checked", true);
+    	}
+	}
+	
+	if($('#defaultAdGroupSearchPrice').val() != ''){
+		$("#adGroupSearchPrice").val($('#defaultAdGroupSearchPrice').val());
+	}
+	
 }
 
 function cleanEndDate() {
@@ -249,7 +283,11 @@ function changeActionDefaultData(adActionSeq){
 	    },
 	    success:function(response, status){
 	    	actionData = response;
-    		$('#loadingWaitBlock').unblock();
+//	    	console.log(actionData);
+//	    	$("#defaultAdGroupSearchPriceType").val(response.defaultAdGroupSearchPriceType);
+//	    	$("#defaultAdGroupSearchPrice").val(response.defaultAdGroupSearchPrice);
+//	    	$("#defaultAdGroupChannelPrice").val(response.defaultAdGroupChannelPrice);
+//    		$('#loadingWaitBlock').unblock();
 		}
 	}).done(function() {
 		setDefaultActionData(actionData);
@@ -257,6 +295,45 @@ function changeActionDefaultData(adActionSeq){
 		$("#adGroupNameSelect").trigger("change");
 	});
 }
+
+//取得分類明細
+function changeGroupDefaultData(adGroupSeq){
+	$.ajax({
+	    type: "post",
+	    dataType: "json",
+	    url: "adGroupInfoAjax.html",
+	    data: {
+	          "adGroupSeq": adGroupSeq
+	    },
+	    timeout: 30000,
+	    error: function(xhr){
+	    	$('#loadingWaitBlock').unblock();
+	        alert('Ajax request 發生錯誤');
+	    },
+	    success:function(response, status){
+	    	$("#defaultAdGroupSearchPriceType").val(response.adGroupSearchPriceType);
+	    	$("#defaultAdGroupSearchPrice").val(response.adGroupSearchPrice);
+	    	$("#defaultAdGroupChannelPrice").val(response.adGroupChannelPrice);
+	    	
+	    	if(response.adGroupSearchPriceType == 1){
+	    		$("input[name='adGroupSearchPriceType'][value='1']").prop("checked", true);
+	    		
+	    	}
+	    	if(response.adGroupSearchPriceType == 2){
+	    		$("input[name='adGroupSearchPriceType'][value='2']").prop("checked", true);
+	    	}
+	    	$("#adGroupSearchPrice").val(response.adGroupSearchPrice);
+	    	
+	    	$('#loadingWaitBlock').unblock();
+		}
+	}).done(function() {
+    	
+	});
+	
+	
+}
+
+
 
 function setDefaultActionData(actionData){
 	$('#actionNameErrorMsg').html('');
@@ -288,11 +365,12 @@ function setUserActionData(){
 	if($('#userCategory').val() == '1'){
 		$($('#adDevice').children()[1]).hide();
 		$($('#adDevice').children()[2]).hide();
+		$($('#adType').children()[2]).hide();
 	}else{
 		$($('#adDevice').children()[1]).show();
 		$($('#adDevice').children()[2]).show();
+		$($('#adType').children()[2]).show();
 	}
-	
 	
 	$("#adActionStartDate").datepicker('enable');
 	$("#adActionEndDate").datepicker('enable');
@@ -306,13 +384,20 @@ function setUserActionData(){
 	$("#setAdTimeAndMaxPriceTable input[type=radio]").each(function(index, obj) {
 		$(this).prop("disabled", false);
 	});
+	
+	$('[name="adGroupSearchPriceType"]')[0].disabled = false;
+	$('[name="adGroupSearchPriceType"]')[1].disabled = false;
+	$('[name="adGroupSearchPriceType"]')[0].checked  = false;
+	$('[name="adGroupSearchPriceType"]')[1].checked  = true;
+	$("#adGroupSearchPrice")[0].disabled = false;
+	$("#adGroupSearchPrice").val($("#defaultAdGroupSearchPrice").val());
+	
 }
 
 function addAdaction(){
 	if($("#defaultHasActionRecord").val() == "N"){
 		return false;
 	}
-	
 	if($('#addAdActionName').val() == '新增廣告'){
 		$('#adActionNameSelect').hide();
 		$('#setAdActionName').show();
@@ -335,6 +420,14 @@ function addAdaction(){
 		$("#priceType").html('聯播網廣告出價');
 		var groupInfo = $("#adGroupNameSelect").val().split('_');
 		$("#adGroupChannelPrice").val(groupInfo[2]);
+		$('[name="adGroupSearchPriceType"]')[0].disabled = true;
+		$('[name="adGroupSearchPriceType"]')[1].disabled = true;
+		$('[name="adGroupSearchPriceType"]')[0].checked  = false;
+		$('[name="adGroupSearchPriceType"]')[1].checked  = false;
+		$("#adGroupSearchPrice").val('');
+		$("#adGroupSearchPrice")[0].disabled = true;
+		
+		
 		getAdAsideRate();
 	}
 }
@@ -371,6 +464,7 @@ function checkSubmit(){
 		$("#setGroupNameErrorMsg").css('display','none');
 	}
 	
+	
 }
 
 
@@ -398,6 +492,8 @@ function alex(){
 		var adActionMax = $('#adActionMax').val();
 		var adGroupChannelPrice = $('#adGroupChannelPrice').val();
 		var adOperatingRule = $('#adOperatingRuleSelect').val();
+		var adGroupSearchPriceType = $('input[name=adGroupSearchPriceType]:checked').val();
+		var adGroupSearchPrice = $("#adGroupSearchPrice").val();
 		
 		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 		if(confirm(alt)) {
@@ -432,7 +528,9 @@ function alex(){
 						adDevice:adDevice,
 						adActionMax:adActionMax,
 						adGroupChannelPrice:adGroupChannelPrice,
-						adOperatingRule:adOperatingRule
+						adOperatingRule:adOperatingRule,
+						adGroupSearchPriceType : adGroupSearchPriceType,
+						adGroupSearchPrice : adGroupSearchPrice
 					},
 					success : function(respone) {
 						window.location = "adAddFinish.html?adGroupSeq="+respone;

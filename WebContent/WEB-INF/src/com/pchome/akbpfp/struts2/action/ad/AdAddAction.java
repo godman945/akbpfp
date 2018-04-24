@@ -1,7 +1,5 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -129,7 +127,8 @@ public class AdAddAction extends BaseCookieAction{
 	// return data
 	private InputStream msg;
 	private String result;
-
+	private String adGroupSearchPriceType;
+	private String adGroupSearchPrice;
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdGroupService pfpAdGroupService;
@@ -562,54 +561,16 @@ public class AdAddAction extends BaseCookieAction{
 			file.mkdirs();
 		}
 		
-		// 取得副檔名
-		String filenameExtension = imgPath.substring(imgPath.length() -3 , imgPath.length());
+		String filenameExtension = imgPath.substring(imgPath.length() -3 , imgPath.length()); // 取得副檔名
 		URL url = new URL(imgPath);
 		String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension; // 存放路徑 + 檔名
-		
-		if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
+		if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式
 			InputStream in = url.openStream();
 			Files.copy(in, new File(imgPathAndName).toPath());
-			
 		} else { // jpg圖片下載方式
 			BufferedImage img = ImageIO.read(url);
-			int width = img.getWidth();
-			int height = img.getHeight();
-			if (width != height) { // 長寬不相同，為長方形。
-				// url圖片要改成新的寬高
-				int newWidth = 250;
-				int newHeight = 188;
-
-				// 底圖的寬、高、顏色
-				int baseMapWidth = 250;
-				int baseMapHeight = 250;
-				Color baseMapWhite = new Color(255, 255, 255); // Color white
-				int rgb = baseMapWhite.getRGB();
-				BufferedImage baseMap = new BufferedImage(baseMapWidth, baseMapHeight, BufferedImage.TYPE_INT_RGB); // 建立一個空的圖片
-				// 將每個像素調整為設定的顏色
-				for (int i = 0; i < baseMapWidth; i++) {
-					for (int j = 0; j < baseMapHeight; j++) {
-						baseMap.setRGB(i, j, rgb);
-					}
-				}
-				
-				// 建立url圖片區
-				BufferedImage image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_BGR);
-				Graphics imageGraphics = image.createGraphics();
-				imageGraphics.drawImage(img, 0, 0, newWidth, newHeight, null); // 畫入url圖片及設定新寬高
-
-				// 取得底圖的繪圖區
-				Graphics baseMapGraphics = baseMap.getGraphics();
-				// 畫入調整好的新url圖片(就是底圖白色，圖片蓋在前面一層)，設定高從31px開始，0~31px則顯示成白色，呈現置中效果
-				baseMapGraphics.drawImage(image, 0, 31, null);
-				// 下載最後處理完成的基本圖
-				ImageIO.write(baseMap, filenameExtension, new File(imgPathAndName));
-				
-			} else { // 相同為正方形，直接下載
-				ImageIO.write(img, filenameExtension, new File(imgPathAndName));
-			}
+			ImageIO.write(img, filenameExtension, new File(imgPathAndName));
 		}
-		
 		imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + "." + filenameExtension;
 		return imgPath;
 	}
@@ -2518,6 +2479,22 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setManyURLRediskey(String manyURLRediskey) {
 		this.manyURLRediskey = manyURLRediskey;
+	}
+
+	public String getAdGroupSearchPriceType() {
+		return adGroupSearchPriceType;
+	}
+
+	public void setAdGroupSearchPriceType(String adGroupSearchPriceType) {
+		this.adGroupSearchPriceType = adGroupSearchPriceType;
+	}
+
+	public String getAdGroupSearchPrice() {
+		return adGroupSearchPrice;
+	}
+
+	public void setAdGroupSearchPrice(String adGroupSearchPrice) {
+		this.adGroupSearchPrice = adGroupSearchPrice;
 	}
 	
 }

@@ -102,6 +102,7 @@
     <bean id="AdSearchURLAjax" class="com.pchome.akbpfp.struts2.ajax.ad.AdSearchURLAjax" scope="prototype" >
     	<property name="pfpAdManyURLSearchService" ref="PfpAdManyURLSearchService" />
     	<property name="pfpAdActionService" ref="PfpAdActionService" />
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" />
 		<property name="akbPfpServer" value="${akbpfp.server}" />
     </bean>
     <!-- 圖文廣告-多筆網址刊登 END-->

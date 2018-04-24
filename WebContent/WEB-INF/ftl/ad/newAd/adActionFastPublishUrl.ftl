@@ -144,6 +144,28 @@
 								</#if>
 							</td>
 	                	</tr>
+	                	
+	                	
+	                	<tr id="searchTr">
+		                	<th height="35">
+								<span class="t_s02">* </span>搜尋廣告出價 <a style="cursor:pointer;" onclick="opennots(1)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
+								<div id="shownotes1" style="visibility: hidden;" class="adnoticepop">
+									<h4>搜尋廣告出價 說明</h4>
+									<div class="adpopcont">設定最高單次點擊出價，來決定廣告的排名、以及廣告被點擊時您所支付的最高金額。請先設定初始出價，出價金額隨時可依廣告成效進行調整。</div>
+									<a onclick="closenots(1)" style="cursor:pointer;" class="adpopclose">關閉</a>
+								</div>
+		                	</th>
+		                    <td onselectstart="return false">
+		                    	<input type="radio" disabled name="adGroupSearchPriceType" value="1" <b>使用系統建議出價，在我的預算內設定最高的排名出價</b></BR>
+								<div class="exp">你在下一步所建立的關鍵字，都以建立時的每組關鍵字最高的排名價格設為出價金額(出價金額會控制在您每日的廣告預算內)<br>範例：你設定的關鍵字「電腦」，廣告排名較高出價為$5，系統即為您設定出價為$5</div>
+								<input type="radio" disabled name="adGroupSearchPriceType" value="2" <b>自行設定分類出價金額NT$<input type="text" style="width:50px" disabled id="adGroupSearchPrice" name="adGroupSearchPrice" value="${defSearchPrice!}" maxlength="6"></b><div id="searchPricEerrorMsg" style="color:red;margin-left:10px;display:inline;"></div><br/>
+								<div class="exp">此出價會套用在您下一步所建立的每組關鍵字中</div>
+								<span class="t_s01"><br />(二種出價方式都可在廣告新增完成後，在檢視關鍵字列表頁，可個別修改關鍵字的出價金額)</span>
+		                    </td>
+	                	</tr>
+	                
+	                
+	                
 		                <tr id="channelTr">
 		                	<th height="35">
 								<span class="t_s02">* </span>聯播廣告出價 <a style="cursor:pointer;" onclick="opennots(2)"><img src="<@s.url value="/" />html/img/question.gif"></a><br>
@@ -181,6 +203,9 @@
         <input type="hidden" id="defaultHasActionRecord" name="defaultHasActionRecord" value="${hasActionRecord!}">
         <input type="hidden" id="defaultSysPrice" name="defaultSysPrice" value="${sysChannelPrice!}">
         <input type="hidden" id="userCategory" name="userCategory" value="${userCategory!}">
+        <input type="hidden" id="defaultAdGroupSearchPriceType" name="defaultAdGroupSearchPriceType" value="${defaultAdGroupSearchPriceType!}">
+        <input type="hidden" id="defaultAdGroupSearchPrice" name="defaultAdGroupSearchPrice" value="${defaultAdGroupSearchPrice!}">
+        <input type="hidden" id="defaultAdGroupChannelPrice" name="defaultAdGroupChannelPrice" value="${defaultAdGroupChannelPrice!}">
 	</form>
 </div>
 

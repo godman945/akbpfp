@@ -716,7 +716,13 @@
         		<param name="root">dataMap</param>
         	</result>
      	</action>
-     	
+     	<!-- 取得分類設定資料 -->
+     	<action name="adGroupInfoAjax" class="AdSearchURLAjax" method="adGroupInfo">
+       		<interceptor-ref name="loginCheckStack" />
+       		<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
 
 		<action name="adAddFastPublisSaveAjax" class="AdAddAction" method="doAdAdAddFastPublis">
       		<interceptor-ref name="loginCheckStack" />

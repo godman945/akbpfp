@@ -102,6 +102,11 @@ public class AdActionAddAction extends BaseCookieAction{
 	//廣告播放裝置
 	private int defaultAdDevice;
 	
+	private int defaultAdGroupSearchPriceType;
+	private int defaultAdGroupSearchPrice;
+	private int defaultAdGroupChannelPrice;
+	
+	
 	private List<PfpAdAction> pfpAdActionList;
 	private List<PfpAdGroup> pfpAdGroupList;
 	
@@ -565,6 +570,15 @@ public class AdActionAddAction extends BaseCookieAction{
 			adActionMax = String.valueOf((int)pfpAdAction.getAdActionMax());
 			adActionStartDate = sdf.format(pfpAdAction.getAdActionStartDate());
 			adActionEndDate = sdf.format(pfpAdAction.getAdActionEndDate());
+			
+			List<PfpAdGroup> list = new ArrayList<PfpAdGroup>(pfpAdAction.getPfpAdGroups());
+			if(list.size() > 0){
+				PfpAdGroup pfpAdGroup = list.get(0);
+				System.out.println(pfpAdGroup.getAdGroupName());
+				defaultAdGroupSearchPriceType = (int)pfpAdGroup.getAdGroupSearchPriceType();
+				defaultAdGroupSearchPrice = (int)pfpAdGroup.getAdGroupSearchPrice();
+				defaultAdGroupChannelPrice = (int)pfpAdGroup.getAdGroupChannelPrice();
+			}
 			pfpAdGroupList = new ArrayList<>();
 			pfpAdGroupList.addAll(pfpAdAction.getPfpAdGroups());
 			hasActionRecord = "Y";
@@ -965,6 +979,30 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public void setUserCategory(String userCategory) {
 		this.userCategory = userCategory;
+	}
+
+	public int getDefaultAdGroupSearchPriceType() {
+		return defaultAdGroupSearchPriceType;
+	}
+
+	public void setDefaultAdGroupSearchPriceType(int defaultAdGroupSearchPriceType) {
+		this.defaultAdGroupSearchPriceType = defaultAdGroupSearchPriceType;
+	}
+
+	public int getDefaultAdGroupSearchPrice() {
+		return defaultAdGroupSearchPrice;
+	}
+
+	public void setDefaultAdGroupSearchPrice(int defaultAdGroupSearchPrice) {
+		this.defaultAdGroupSearchPrice = defaultAdGroupSearchPrice;
+	}
+
+	public int getDefaultAdGroupChannelPrice() {
+		return defaultAdGroupChannelPrice;
+	}
+
+	public void setDefaultAdGroupChannelPrice(int defaultAdGroupChannelPrice) {
+		this.defaultAdGroupChannelPrice = defaultAdGroupChannelPrice;
 	}
 
 }
