@@ -1,4 +1,9 @@
 ﻿$(document).ready(function(){
+	// 點選取消
+	$('#cancel').click(function() {
+		location.href = 'adActionView.html';
+	});
+	
 	if($("#defaultHasActionRecord").val() == "N"){
 		$('#setAdActionName').show();
 		$('#setGroupName').show();
