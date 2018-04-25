@@ -563,8 +563,11 @@ public class AdAddAction extends BaseCookieAction{
 			file.mkdirs();
 		}
 		
-		// 取得副檔名
-        String filenameExtension = imgPath.substring(imgPath.length() -3 , imgPath.length());
+		// 取得副檔名，處理圖片如果有被加timestamp等參數從?位置抓取副檔名，沒被加參數則直接依長度取最後3碼
+		int startLength = (imgPath.indexOf("?") > -1 ? imgPath.indexOf("?") - 3 : imgPath.length() - 3);
+		int endLength = (imgPath.indexOf("?") > -1 ? imgPath.indexOf("?") : imgPath.length());
+		String filenameExtension = imgPath.substring(startLength, endLength);
+        
         URL url = new URL(imgPath);
         String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension; // 存放路徑 + 檔名
         
