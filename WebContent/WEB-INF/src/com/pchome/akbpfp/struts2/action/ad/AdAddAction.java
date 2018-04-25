@@ -1798,17 +1798,20 @@ public class AdAddAction extends BaseCookieAction{
 		List<String> keywordList = new ArrayList<>();
 		for (int i = 0; i < redisAdArrayJson.length(); i++) {
 			JSONObject addAdJson = (JSONObject) redisAdArrayJson.get(i);
-			JSONArray radisKeywords = (JSONArray) addAdJson.get("suggest");
-			for (int j = 0; j < radisKeywords.length(); j++) {
-				boolean isExist = false;
-				for (PfpAdKeyword pfpAdKeyword : pfpAdKeywordSet) {
-					if(pfpAdKeyword.getAdKeyword().equals(radisKeywords.get(j))){
-						isExist = true;
-						break;
+			boolean suggestFlag = addAdJson.isNull("suggest");
+			if(!suggestFlag){
+				JSONArray radisKeywords = (JSONArray) addAdJson.get("suggest");
+				for (int j = 0; j < radisKeywords.length(); j++) {
+					boolean isExist = false;
+					for (PfpAdKeyword pfpAdKeyword : pfpAdKeywordSet) {
+						if(pfpAdKeyword.getAdKeyword().equals(radisKeywords.get(j))){
+							isExist = true;
+							break;
+						}
 					}
-				}
-				if(!isExist){
-					keywordList.add(radisKeywords.get(j).toString());
+					if(!isExist){
+						keywordList.add(radisKeywords.get(j).toString());
+					}
 				}
 			}
 		}
