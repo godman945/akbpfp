@@ -222,10 +222,14 @@ function initDefaultActionInfo(){
 		$("#adType").val($("#defaultAdType").val());
 	}
 	
-	if($("#defaultAdType").val() == '2'){
+	if($('#adType').val() == '2'){
 		$("#searchTr").hide();
+	}else if($('#adType').val() == '1'){
+		$("#searchTr").show();
+		$("#channelTr").hide();
 	}else{
 		$("#searchTr").show();
+		$("#channelTr").show();
 	}
 	
 	if ($("#defaultAdOperatingRule").val() == 'MEDIA') {
