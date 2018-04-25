@@ -121,6 +121,10 @@ $(document).ready(function(){
 		
 	});
 	
+	// 點選取消
+	$('#cancel').click(function() {
+		location.href = 'adActionView.html';
+	});
 });
 
 // 顯示輸入店家商品網址區塊
