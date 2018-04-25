@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.struts2.ajax.ad;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.json.JSONException;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
+import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.akbpfp.db.service.admanyurlsearch.IPfpAdManyURLSearchService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdManyURLVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -31,10 +33,12 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	private String modifyADContent; //ajax傳進來的修改商品描述
 	private String modifyADShowURL; //ajax傳進來的修改顯示連結
 	private String adActionSeq; //廣告活動序號
+	private String adGroupSeq; //廣告分類序號
 	private String adFastPublishUrlInfo;
 	private Map<String,Object> dataMap;
 	private List<PfpAdGroup> pfpAdGroupList;
 	private IPfpAdActionService pfpAdActionService;
+	private IPfpAdGroupService pfpAdGroupService;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	
 	/**
@@ -205,6 +209,7 @@ public class AdSearchURLAjax extends BaseCookieAction{
 	public String adActionInfo() throws Exception{
 		PfpAdAction pfpAdAction = pfpAdActionService.get(adActionSeq);
 		Set<PfpAdGroup> groupSet = pfpAdAction.getPfpAdGroups();
+		List<PfpAdGroup> list = new ArrayList<>(groupSet);
 		dataMap = new HashMap<String, Object>();
 		dataMap.put(adActionSeq,pfpAdAction.getAdActionSeq() );
 		dataMap.put("defaultAdType", pfpAdAction.getAdType());
@@ -218,6 +223,26 @@ public class AdSearchURLAjax extends BaseCookieAction{
 			adGroupsMap.put(pfpAdGroup.getAdGroupSeq()+"_"+(int)pfpAdGroup.getAdGroupChannelPrice(), pfpAdGroup.getAdGroupName());
 		}
 		dataMap.put("adGroups", adGroupsMap);
+		
+		if(list.size() > 0){
+			PfpAdGroup pfpAdGroup = list.get(0);
+			dataMap.put("adGroupChannelPrice", (int)pfpAdGroup.getAdGroupChannelPrice());
+			dataMap.put("adGroupSearchPrice", (int)pfpAdGroup.getAdGroupSearchPrice());
+			dataMap.put("adGroupSearchPriceType", (int)pfpAdGroup.getAdGroupSearchPriceType());
+		}
+		return SUCCESS;
+	}
+	
+	
+	/**
+	 * 廣告分類設定資訊
+	 * */
+	public String adGroupInfo() throws Exception{
+		PfpAdGroup pfpAdGroup = pfpAdGroupService.get(adGroupSeq);
+		dataMap = new HashMap<String, Object>();
+		dataMap.put("adGroupChannelPrice", (int)pfpAdGroup.getAdGroupChannelPrice());
+		dataMap.put("adGroupSearchPrice", (int)pfpAdGroup.getAdGroupSearchPrice());
+		dataMap.put("adGroupSearchPriceType", (int)pfpAdGroup.getAdGroupSearchPriceType());
 		return SUCCESS;
 	}
 	
@@ -339,6 +364,22 @@ public class AdSearchURLAjax extends BaseCookieAction{
 
 	public void setAkbPfpServer(String akbPfpServer) {
 		this.akbPfpServer = akbPfpServer;
+	}
+
+	public String getAdGroupSeq() {
+		return adGroupSeq;
+	}
+
+	public void setAdGroupSeq(String adGroupSeq) {
+		this.adGroupSeq = adGroupSeq;
+	}
+
+	public IPfpAdGroupService getPfpAdGroupService() {
+		return pfpAdGroupService;
+	}
+
+	public void setPfpAdGroupService(IPfpAdGroupService pfpAdGroupService) {
+		this.pfpAdGroupService = pfpAdGroupService;
 	}
 
 }
