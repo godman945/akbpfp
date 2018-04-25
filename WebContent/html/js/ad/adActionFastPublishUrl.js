@@ -24,6 +24,7 @@
 			if($("#addAdActionName").val() == '返回建立過的廣告'){
 				if($('#adType').val() == '2'){
 					$("#searchTr").hide();
+					$("#channelTr").show();
 				}else if($('#adType').val() == '1'){
 					$("#searchTr").show();
 					$("#channelTr").hide();
@@ -224,6 +225,7 @@ function initDefaultActionInfo(){
 	
 	if($('#adType').val() == '2'){
 		$("#searchTr").hide();
+		$("#channelTr").show();
 	}else if($('#adType').val() == '1'){
 		$("#searchTr").show();
 		$("#channelTr").hide();
