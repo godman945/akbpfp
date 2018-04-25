@@ -21,13 +21,15 @@
 		});
 		
 		$('#adType').change(function(){
-			console.log($("#addAdActionName").val());
 			if($("#addAdActionName").val() == '返回建立過的廣告'){
-				console.log($("#adType").val());
 				if($('#adType').val() == '2'){
 					$("#searchTr").hide();
+				}else if($('#adType').val() == '1'){
+					$("#searchTr").show();
+					$("#channelTr").hide();
 				}else{
 					$("#searchTr").show();
+					$("#channelTr").show();
 				}
 			}
 		});
