@@ -880,7 +880,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 		hql.append(" from PfpAdAction where pfpCustomerInfo.customerInfoId = :customerInfoId  ");
 		hql.append(" and adActionStatus = 4 ");
 		hql.append(" and adOperatingRule = 'MEDIA' ");
-    	hql.append(" order by adActionUpdateTime desc ");
+    	hql.append(" order by adActionCreatTime desc ");
 		Query query = super.getSession().createQuery(hql.toString());
 		query.setString("customerInfoId", customerInfoId);
 		query.setMaxResults(10);
