@@ -125,6 +125,27 @@
 		}
 	});
 	
+	$("#adGroupSearchPrice").keyup(function(){
+		var cpmRex = /^[0-9]*[1-9][0-9]*$/;
+		var submitFlag = cpmRex.test($('#adGroupSearchPrice').val());
+		if(!submitFlag){
+			$("#searchPricEerrorMsg").css('display','inline');
+			$("#searchPricEerrorMsg").text('搜尋廣告出價須正整數');
+		}else{
+			$("#searchPricEerrorMsg").css('display','none');
+			$("#searchPricEerrorMsg").text('');
+			
+			if($("#adGroupSearchPrice").val() < 3){
+				$("#searchPricEerrorMsg").css('display','inline');
+				$("#searchPricEerrorMsg").text('搜尋廣告出價最少為3元');
+			}else{
+				$("#searchPricEerrorMsg").css('display','none');
+				$("#searchPricEerrorMsg").text('');
+			}
+		}
+	});
+	
+	
 	$("#adActionMax").keyup(function(){
 		if($("#adActionMax").val() == ""){
 			$("#adActionMaxErrorMsg").html('請填寫每日預算金額.');
@@ -407,6 +428,7 @@ function addAdaction(){
 		setUserActionData();
 		$("#priceType").html('系統建議出價');
 		$("#adGroupChannelPrice").val($("#defaultSysPrice").val());
+		$("#adGroupSearchPrice").val("3");
 		getAdAsideRate();
 	}else if($('#addAdActionName').val() == '返回建立過的廣告'){
 		changeActionDefaultData($("#adActionNameSelect option:selected" ).val());
@@ -467,11 +489,10 @@ function checkSubmit(){
 	
 }
 
-
 function alex(){
 	checkSubmit();
 	var submitFlag = true;
-	if($('#errorMsg').text() != '' || $('#adActionMaxErrorMsg').text() != '' || $('#actionNameErrorMsg').text() != '' || $('#setGroupNameErrorMsg').text() != ''){
+	if($('#errorMsg').text() != '' || $('#adActionMaxErrorMsg').text() != '' || $('#actionNameErrorMsg').text() != '' || $('#setGroupNameErrorMsg').text() != '' || $('#searchPricEerrorMsg').text() != ''){
 		submitFlag = false;
 	}
 	
