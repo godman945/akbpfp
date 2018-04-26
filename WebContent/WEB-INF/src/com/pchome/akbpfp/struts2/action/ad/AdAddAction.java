@@ -1707,8 +1707,8 @@ public class AdAddAction extends BaseCookieAction{
 			pfpAdGroup.setPfpAdAction(pfpAdAction);
 			pfpAdGroup.setAdGroupCreateTime(date);
 			pfpAdGroup.setAdGroupName(adGroupName);
-			pfpAdGroup.setAdGroupSearchPriceType(1);
-			pfpAdGroup.setAdGroupSearchPrice(Float.parseFloat(adGroupChannelPrice));
+			pfpAdGroup.setAdGroupSearchPriceType(Integer.parseInt(adGroupSearchPriceType));
+			pfpAdGroup.setAdGroupSearchPrice(Float.parseFloat(adGroupSearchPrice));
 			pfpAdGroup.setAdGroupChannelPrice(Float.parseFloat(adGroupChannelPrice));
 			pfpAdGroup.setAdGroupPriceType(EnumAdPriceType.AD_PRICE_CPC.getDbTypeName());
 			// 新增廣告分類時，status 設定為未完成
