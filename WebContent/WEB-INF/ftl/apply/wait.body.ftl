@@ -134,6 +134,7 @@
     </tr>
     <tr>
         <th height="35">營業稅</th>
+        <#-- round：返回最近的整数，四捨五入 -->
         <td>NT$ <span id="addTax">${accountVO.addTax?round!}</span></td>
     </tr>
     <tr>
