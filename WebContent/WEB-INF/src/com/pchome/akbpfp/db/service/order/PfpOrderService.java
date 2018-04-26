@@ -79,8 +79,8 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 			detailMap.put(EnumBillingField.CPD_ID.toString(), productId);
 			detailMap.put(EnumBillingField.PD_ATTB.toString(), EnumBillingField.PD_ATTB.getValue());
 			detailMap.put(EnumBillingField.PD_QTY.toString(), EnumBillingField.PD_QTY.getValue());
-			detailMap.put(EnumBillingField.PD_UNTPRI.toString(), Math.floor(order.getOrderPrice() + order.getTax()));
-			detailMap.put(EnumBillingField.PD_TOTPRI.toString(), Math.floor(order.getOrderPrice() + order.getTax()));
+			detailMap.put(EnumBillingField.PD_UNTPRI.toString(), Math.round(order.getOrderPrice() + order.getTax()));
+			detailMap.put(EnumBillingField.PD_TOTPRI.toString(), Math.round(order.getOrderPrice() + order.getTax()));
 			detailMap.put(EnumBillingField.MONEY.toString(), new LinkedHashMap[]{});
 			
 			// 取會員資料
