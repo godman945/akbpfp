@@ -24,7 +24,7 @@
     </definition>
     
     <definition name="apply.wait.head" extends="apply.view.head" >
-    	<put-attribute name="js" value="wait.js?20180426" />
+    	<put-attribute name="js" value="wait.js?t=20180426001" />
     </definition>
     
     <definition name="wait.js" extends="apply.js" >
