@@ -4,33 +4,31 @@ $(document).ready(function(){
 	// validate field
 	$("#registerForm").validate({
 		rules: {
-			
 			addMoney: {
 				required: true,
 				digits: true,
-				min: 3000
+				min: 500
 			}
 		},
 		messages: {
 			addMoney: {
 				required: "請填寫儲值金額.",
 				digits: "儲值金額只能填寫數字.",
-				min: "儲值金額至少要3000元."
+				min: "儲值金額至少要500元."
 			}
 		}
 	});
 	
 	$("#addMoney").keyup(function(){
-		
 		var addMoney = $("#addMoney").val();
-		
-		if(addMoney >= 3000){
+		// 輸入首次儲值金額大於500則計算營業稅與總金額(含5%營業稅)
+		if (addMoney >= 500) {
 			var addTax = Math.round(addMoney * 0.05);
 			var total = Math.round(addMoney * 1.05);
-			
+
 			$("#addTax").html(addTax);
 			$("#total").html(total);
-		}else{
+		} else {
 			$("#addTax").html(0);
 			$("#total").html(0);
 		}
@@ -52,34 +50,31 @@ $(document).ready(function(){
 	
 	// 同意條款
 	$("#accept").click(function() {
-
-		   if($("#accept").attr("checked")  && freeBoolean){
-			   $("#save").attr("disabled",false);
-		   }else{
-			   $("#save").attr("disabled",true);
-		   }
-			
+		if ($("#accept").attr("checked") && freeBoolean) {
+			$("#save").attr("disabled", false);
+		} else {
+			$("#save").attr("disabled", true);
+		}
 	});
 	
 	// 儲值付款
-	$("#save").click(function(){
-		
-		if($("#accept").attr("checked")){
-			
-			$("#next").attr("disabled",true);
-			
+	$("#save").click(function() {
+
+		if ($("#accept").attr("checked")) {
+
+			$("#next").attr("disabled", true);
+
 			checkGiftSno();
-			
-			if(!freeBoolean){
+
+			if (!freeBoolean) {
 				return false;
 			}
-			
-			if($("#registerForm").valid() == 1){
-				
+
+			if ($("#registerForm").valid() == 1) {
 				$("#registerForm").submit();
 			}
-			
-		 }
+
+		}
 
 	});
 	
@@ -90,7 +85,6 @@ $(document).ready(function(){
 	
 	// 清除序號
 	$("#btnClrGift").click(function(){
-		
 		clearGift();
 	});
 	
@@ -103,7 +97,6 @@ function checkGiftSno() {
 }
 
 function checkGift(){
-	
 	$.ajax({
 		url: "checkGiftSno.html",
 		data: {
@@ -111,8 +104,7 @@ function checkGift(){
 		},
 		type: "post",
 		dataType: "json",
-		success: function(response, status) {			
-			
+		success: function(response, status) {
 			if(response.giftStatus == "used"){
 				$("#showMoney").text("此序號已使用");
 				freeBoolean = false;
@@ -152,7 +144,6 @@ function checkGift(){
 }
 
 function clearGift(){
-	
 	$("#giftSno").val("");
 	$("#showMoney").text("");
 	$("#giftMoney").val("");

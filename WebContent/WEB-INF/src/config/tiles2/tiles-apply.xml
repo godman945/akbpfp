@@ -28,7 +28,7 @@
     </definition>
     
     <definition name="wait.js" extends="apply.js" >
-    	<put-attribute name="jsName" value="apply/wait.js" />
+    	<put-attribute name="jsName" value="apply/wait.js?t=20180426001" />
     </definition>
     
     <definition name="apply.wait" extends="apply.layout">

@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.db.service.order;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -79,8 +80,8 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 			detailMap.put(EnumBillingField.CPD_ID.toString(), productId);
 			detailMap.put(EnumBillingField.PD_ATTB.toString(), EnumBillingField.PD_ATTB.getValue());
 			detailMap.put(EnumBillingField.PD_QTY.toString(), EnumBillingField.PD_QTY.getValue());
-			detailMap.put(EnumBillingField.PD_UNTPRI.toString(), order.getOrderPrice()+order.getTax());
-			detailMap.put(EnumBillingField.PD_TOTPRI.toString(), order.getOrderPrice()+order.getTax());
+			detailMap.put(EnumBillingField.PD_UNTPRI.toString(), getAddAndRoundHalfDown(order.getOrderPrice(), order.getTax()));
+			detailMap.put(EnumBillingField.PD_TOTPRI.toString(), getAddAndRoundHalfDown(order.getOrderPrice(), order.getTax()));
 			detailMap.put(EnumBillingField.MONEY.toString(), new LinkedHashMap[]{});
 			
 			// 取會員資料
@@ -95,7 +96,7 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 				
 				data = new LinkedHashMap<String, Object>();
 				data.put(EnumBillingField.MEM_ID.toString(), memberId);
-				data.put(EnumBillingField.TOTAL_PRICE.toString(), order.getOrderPrice()+order.getTax());
+				data.put(EnumBillingField.TOTAL_PRICE.toString(), getAddAndRoundHalfDown(order.getOrderPrice(), order.getTax()));
 				List<PfpBuAccount> pfpBuAccountList = pfpBuDAO.findPfpBuAccountByMemberId(memberId);
 				if(pfpBuAccountList.size() > 0){
 					data.put(EnumBillingField.USER_NAME.toString(), "");
@@ -229,6 +230,19 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 		return order;
 	}
 	
+	/**
+	 * 訂單金額 + 營業稅 四捨五入
+	 * @param orderPrice 訂單金額
+	 * @param tax 營業稅
+	 * @return
+	 */
+	private String getAddAndRoundHalfDown(float orderPrice, float tax) {
+		BigDecimal oP = new BigDecimal(String.valueOf(orderPrice));
+		BigDecimal t = new BigDecimal(String.valueOf(tax)).setScale(0, BigDecimal.ROUND_HALF_UP);
+		BigDecimal total = oP.add(t);
+		return total.toString();
+	}
+	
 	public void setMemberAPI(MemberAPI memberAPI) {
 		this.memberAPI = memberAPI;
 	}
@@ -263,10 +277,9 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 		
 		String date = DateValueUtil.getInstance().getDateValue(DateValueUtil.YESTERDAY, DateValueUtil.DBPATH);
 		
-	
+//		service.orderInfoForBilling("OR2018042600014");
 		//AccountVO vo = service .findRegisterDataById("reantoilpc");
 		//log.info("\n   size  =  "+service.checkOrderDetail("AC201303060000000023", date).size());
 	}
 	
-
 }

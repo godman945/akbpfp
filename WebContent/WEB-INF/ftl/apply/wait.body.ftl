@@ -127,18 +127,19 @@
 <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 <tbody>
 	<tr>
-        <th height="35"><span class="t_s02">* </span>首次儲值金額<br><span id="first" name="first" class="t_s01"> (首次儲值金額最少為新台幣$3000)</span></th>
+        <th height="35"><span class="t_s02">* </span>首次儲值金額<br><span id="first" name="first" class="t_s01"> (首次儲值金額最少為新台幣$500)</span></th>
         <td>NT$
           	<input type="text" id="addMoney" name="addMoney" value="${accountVO.addMoney!}" autocomplete="off" maxlength="6" style="width:50px" <#if accountVO.giftSno??>readonly</#if> />
         </td>
     </tr>
     <tr>
         <th height="35">營業稅</th>
-        <td>NT$ <span id="addTax">${accountVO.addTax!}</span></td>
+        <#-- round：返回最近的整数，四捨五入 -->
+        <td>NT$ <span id="addTax">${accountVO.addTax?round!}</span></td>
     </tr>
     <tr>
       <th height="35">總金額(含5%營業稅)<br /><span class="t_s01">(實際付款及發票金額)</span></th>
-      <td>NT$ <span id="total"/>${(accountVO.addMoney+accountVO.addTax)!}</span></td>
+      <td>NT$ <span id="total"/>${(accountVO.addMoney + accountVO.addTax?round)!}</span></td>
     </tr>
 </tbody>
 </table>
