@@ -134,11 +134,11 @@
     </tr>
     <tr>
         <th height="35">營業稅</th>
-        <td>NT$ <span id="addTax">${accountVO.addTax!}</span></td>
+        <td>NT$ <span id="addTax">${accountVO.addTax?round!}</span></td>
     </tr>
     <tr>
       <th height="35">總金額(含5%營業稅)<br /><span class="t_s01">(實際付款及發票金額)</span></th>
-      <td>NT$ <span id="total"/>${(accountVO.addMoney+accountVO.addTax)!}</span></td>
+      <td>NT$ <span id="total"/>${(accountVO.addMoney + accountVO.addTax?round)!}</span></td>
     </tr>
 </tbody>
 </table>
