@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.db.service.order;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -79,8 +80,8 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 			detailMap.put(EnumBillingField.CPD_ID.toString(), productId);
 			detailMap.put(EnumBillingField.PD_ATTB.toString(), EnumBillingField.PD_ATTB.getValue());
 			detailMap.put(EnumBillingField.PD_QTY.toString(), EnumBillingField.PD_QTY.getValue());
-			detailMap.put(EnumBillingField.PD_UNTPRI.toString(), Math.round(order.getOrderPrice() + order.getTax()));
-			detailMap.put(EnumBillingField.PD_TOTPRI.toString(), Math.round(order.getOrderPrice() + order.getTax()));
+			detailMap.put(EnumBillingField.PD_UNTPRI.toString(), getRoundHalfDown(order.getOrderPrice(), order.getTax()));
+			detailMap.put(EnumBillingField.PD_TOTPRI.toString(), getRoundHalfDown(order.getOrderPrice(), order.getTax()));
 			detailMap.put(EnumBillingField.MONEY.toString(), new LinkedHashMap[]{});
 			
 			// 取會員資料
@@ -95,7 +96,7 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 				
 				data = new LinkedHashMap<String, Object>();
 				data.put(EnumBillingField.MEM_ID.toString(), memberId);
-				data.put(EnumBillingField.TOTAL_PRICE.toString(), order.getOrderPrice()+order.getTax());
+				data.put(EnumBillingField.TOTAL_PRICE.toString(), getRoundHalfDown(order.getOrderPrice(), order.getTax()));
 				List<PfpBuAccount> pfpBuAccountList = pfpBuDAO.findPfpBuAccountByMemberId(memberId);
 				if(pfpBuAccountList.size() > 0){
 					data.put(EnumBillingField.USER_NAME.toString(), "");
@@ -172,6 +173,19 @@ public class PfpOrderService extends BaseService<PfpOrder,String> implements IPf
 		return data;
 	}
 	
+	/**
+	 * 訂單金額 + 營業稅 四捨五入
+	 * @param orderPrice 訂單金額
+	 * @param tax 營業稅
+	 * @return
+	 */
+	private String getRoundHalfDown(float orderPrice, float tax) {
+		BigDecimal oP = new BigDecimal(String.valueOf(orderPrice));
+		BigDecimal t = new BigDecimal(String.valueOf(tax)).setScale(0, BigDecimal.ROUND_HALF_UP);
+		BigDecimal total = oP.add(t);
+		return total.toString();
+	}
+
 	public List<PfpTransDetail> getPfpOrderCost(String customerInfoId, String yesterday) throws Exception{
 		
 		List<PfpOrder> pfpOrders = ((PfpOrderDAO)dao).findPfpOrder(customerInfoId, yesterday);
