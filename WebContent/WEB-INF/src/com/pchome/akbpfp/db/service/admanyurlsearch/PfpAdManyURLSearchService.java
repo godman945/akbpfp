@@ -102,8 +102,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			jsonObjectDetail.put("pic_url", processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
 			
 			String title = apiJsonObjectDetail.get("title").toString();
-			int titleMaxLength = (title.length() > 17) ? 17 : title.length();
-			jsonObjectDetail.put("title", title.substring(0, titleMaxLength));
+			jsonObjectDetail.put("title", processTitle(title));
 			jsonObjectDetail.put("intact_title", title);
 
 			String description = apiJsonObjectDetail.get("description").toString();
@@ -268,6 +267,24 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		String redisKey = manyURLRediskey + vo.getId() + vo.getSessionId();
 		String redisData = redisAPI.getRedisData(redisKey); // 查詢此客戶redis是否有資料
 		vo.setRedisJsonObject(new JSONObject(redisData));
+	}
+	
+	/**
+	 * 處理標題
+	 * 1.取最多17個字
+	 * 2.篩選掉emoji特殊符號
+	 * @param title
+	 * @return
+	 */
+	private String processTitle(String title) {
+		//篩選掉emoji特殊符號
+		title = title.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", "");
+		
+		// 取最多17個字
+		int titleMaxLength = (title.length() > 17) ? 17 : title.length();
+		title = title.substring(0, titleMaxLength);
+		
+		return title;
 	}
 	
 	/**
