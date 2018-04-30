@@ -81,8 +81,10 @@ import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.ad.EnumAdVideoDownloadStatus;
 import com.pchome.enumerate.ad.EnumAdVideoSizePoolType;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
+import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.soft.depot.utils.CookieUtil;
 import com.pchome.soft.depot.utils.HttpUtil;
 import com.pchome.soft.depot.utils.SpringZipCompress;
 
@@ -207,9 +209,11 @@ public class AdAddAction extends BaseCookieAction{
 			saveAndNew = "";
 			if(adStyle == null){
 				adStyle = "TMG";
-				//進入多筆網址刊登頁籤，則先清除redis上的資料
-				if("fastURLAdAdd".equals(bookmark)){
-					redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id() + super.getRequest().getSession().getId());
+				//進入多筆網址刊登頁籤，新增cookie
+				if ("fastURLAdAdd".equals(bookmark)) {
+					CookieUtil.writeCookie(response, EnumCookieConstants.COOKIE_PFPCART.getValue(), String.valueOf(new Date().getTime()), EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(), null);
+					//進入多筆網址刊登頁籤，則先清除redis上的資料
+//					redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id());
 				}
 			}
 			PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
@@ -381,7 +385,7 @@ public class AdAddAction extends BaseCookieAction{
 
 		PfpAdManyURLVO vo = new PfpAdManyURLVO();
 		vo.setId(super.getCustomer_info_id());
-		vo.setSessionId(super.getRequest().getSession().getId());
+		vo.setRedisCookieVal(CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_PFPCART.getValue(), null));
 		
 		processKeyWordList();
 		processExcludeKeyWordList();
@@ -1606,8 +1610,10 @@ public class AdAddAction extends BaseCookieAction{
 	 * 快速上稿畫面
 	 * */
 	public String adFastPublishAdd() {
-		log.info(">>>>>> init redis:" + manyURLRediskey + super.getCustomer_info_id() + super.getRequest().getSession().getId());
-		redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id() + super.getRequest().getSession().getId());
+		Date d = new Date();
+		CookieUtil.writeCookie(response, EnumCookieConstants.COOKIE_PFPCART.getValue(), String.valueOf(d.getTime()), EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(), null);
+		log.info(">>>>>> init redis:" + manyURLRediskey + super.getCustomer_info_id() + String.valueOf(d.getTime()));
+//		redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id());
 		adStyle = "TMG";
 		adType = "";
 		bookmark = "fastURLAdAdd";
@@ -1727,7 +1733,7 @@ public class AdAddAction extends BaseCookieAction{
 			return false;
 		}
 		
-		String redisKey = manyURLRediskey + super.getCustomer_info_id() + super.getRequest().getSession().getId();
+		String redisKey = manyURLRediskey + super.getCustomer_info_id() + CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_PFPCART.getValue(), null);
 		String redisData = redisAPI.getRedisData(redisKey);
 		if(StringUtils.isNotBlank(redisData)){
 			String photoPath = photoDbPathNew + super.getCustomer_info_id()+"/"+sdf.format(date)+"/original";

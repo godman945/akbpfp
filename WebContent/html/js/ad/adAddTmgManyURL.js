@@ -15,7 +15,10 @@ var maskingConfig = {
 	    }
 	};
 
+var tempRedisCookieVal; // 初始值
 $(document).ready(function(){
+	tempRedisCookieVal = $.cookie('pfpcart');
+	
 	$("#storeProductURL").val(""); //如果按上一頁返回，清除資料
 	$('.ultext').show(); // 只有多網址上搞會套此js，顯示文案
 	
@@ -36,6 +39,10 @@ $(document).ready(function(){
 
 	//送出審核
 	$('#manyURLSave').click(function(){
+		if(checkRedisCookieVal()){
+			return false;
+		}
+		
 		var rowCount = parseInt($(".checkboxCount-up").text()); //目前選擇筆數
 		if(rowCount == 0){
 			alert("尚未選擇商品物件");
@@ -138,6 +145,11 @@ var totalPage; //總頁數
 var urlInfoMap = new Map(); //存放此筆資料是否被勾選
 //店家刊登商品網址，查詢網址內容
 function searchStoreProductURLAjax(URL, errorMsgBlock){
+	
+	if(checkRedisCookieVal()){
+		return false;
+	}
+	
 	//一開始先將錯誤訊息欄位清空、隱藏
 	if (errorMsgBlock == "storeProductURL") {
 		$("#chkStoreProductURL").hide().html("");
@@ -862,8 +874,24 @@ function closeNots() {
 	$("#notes").hide();
 }
 
+/**
+ * 檢查是否開多個頁籤同時操作
+ */
+function checkRedisCookieVal(){
+	if(tempRedisCookieVal != $.cookie('pfpcart')){
+		alert("使用多筆網址刊登功能，請勿開啟多個頁籤同時操作。\n請使用最後開啟的頁籤繼續進行操作。");
+		history.go(-1);
+		return true;
+	}
+	return false;
+}
+
 //點擊下一步
 function fastPublishNext() {
+	if(checkRedisCookieVal()){
+		return false;
+	}
+	
 	var flag = false;
 	for (var key in urlInfoMap) {
 		if(urlInfoMap[key] == "Y"){

@@ -21,7 +21,7 @@ public class PfpAdManyURLVO {
 	private JSONObject redisJsonObject; //redis內取得的資料
 	private String message = ""; //訊息
 	
-	private String sessionId;
+	private String redisCookieVal = ""; //redis存放在cookie的其中一個值
 	
 	public String getSearchURL() {
 		return searchURL;
@@ -127,12 +127,12 @@ public class PfpAdManyURLVO {
 		this.modifyADShowURL = modifyADShowURL;
 	}
 
-	public String getSessionId() {
-		return sessionId;
+	public String getRedisCookieVal() {
+		return redisCookieVal;
 	}
 
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
+	public void setRedisCookieVal(String redisCookieVal) {
+		this.redisCookieVal = redisCookieVal;
 	}
 
 }

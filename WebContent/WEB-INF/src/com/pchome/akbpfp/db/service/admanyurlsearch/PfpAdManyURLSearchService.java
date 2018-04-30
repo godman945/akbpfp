@@ -54,7 +54,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	@Override
 	public void checkRedisData(PfpAdManyURLVO vo) {
 		try {
-			String redisKey = manyURLRediskey + vo.getId() + vo.getSessionId();
+			String redisKey = manyURLRediskey + vo.getId() + vo.getRedisCookieVal();
 			String redisData = redisAPI.getRedisData(redisKey); // 查詢此客戶redis是否有資料
 
 			JSONArray apiJsonArray = vo.getApiJsonArray();
@@ -209,7 +209,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		redisJsonObject.put("products", tempJsonArray);
 		
 		//更新至redis
-		String status = redisAPI.setRedisDataDefaultTimeout(manyURLRediskey + vo.getId() + vo.getSessionId(), redisJsonObject.toString());
+		String status = redisAPI.setRedisDataDefaultTimeout(manyURLRediskey + vo.getId() + vo.getRedisCookieVal(), redisJsonObject.toString());
 		if (!"OK".equals(status)) { // 存redis失敗
 			log.error("ModifyFieldData error:update redisData err");
 			vo.setMessage("系統忙碌中，請稍後再試。");
@@ -219,9 +219,9 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	/**
 	 * 確認新增至redis網址
 	 * */
-	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo, String userId, String sessionId) throws Exception {
+	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo, String userId, String redisCookieVal) throws Exception {
 		String result = "更新成功";
-		String redisKey = manyURLRediskey + userId + sessionId;
+		String redisKey = manyURLRediskey + userId + redisCookieVal;
 		String redisData = redisAPI.getRedisData(redisKey);
 		JSONObject redisJson = new JSONObject(redisData);
 		JSONArray productsJsonArray = redisJson.getJSONArray("products");
@@ -264,7 +264,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 */
 	@Override
 	public void getRedisURLData(PfpAdManyURLVO vo) throws JSONException {
-		String redisKey = manyURLRediskey + vo.getId() + vo.getSessionId();
+		String redisKey = manyURLRediskey + vo.getId() + vo.getRedisCookieVal();
 		String redisData = redisAPI.getRedisData(redisKey); // 查詢此客戶redis是否有資料
 		vo.setRedisJsonObject(new JSONObject(redisData));
 	}

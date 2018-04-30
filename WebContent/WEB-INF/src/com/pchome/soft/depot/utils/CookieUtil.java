@@ -101,6 +101,44 @@ public class CookieUtil {
 	}
 
 	/**
+	 * 寫入 cookie,不設定時間,瀏覽器關閉後cookie消失,有必要的話加以編碼
+	 * @param response
+	 * @param cookieName 要寫入的 cookie 名稱
+	 * @param cookieValue 要寫入的 cookie 值
+	 * @param domain 要寫入的 cookie domain
+	 * @param maxAge 要寫入的 cookie 存活時間
+	 * @param encodeCode 編碼用的編碼, 不需編碼的時候給 null
+	 * @return
+	 */
+	public static void writeCookie(HttpServletResponse response, String cookieName, String cookieValue,
+		String domain, String encodeCode) {
+
+		//logger.info(">>> encode cookieValue = " + cookieValue);
+		if (StringUtils.isNotEmpty(encodeCode)) {
+	        try {
+
+	        	cookieValue = URLEncoder.encode(cookieValue, encodeCode);
+	        	//logger.info(">>> encode cookieValue = " + cookieValue);
+
+	        } catch (UnsupportedEncodingException uee) {
+	        	logger.error(uee.getMessage(), uee);
+	        } catch (Exception e) {
+	        	logger.error(e.getMessage(), e);
+	        }
+		}
+
+		//write cookie
+        if (StringUtils.isNotEmpty(cookieValue)) {
+        	//logger.info(">>> write cookie: name = " + cookieName + ", value = " + cookieValue);
+            Cookie cookie = new Cookie(cookieName, cookieValue);
+            cookie.setDomain(domain);
+            cookie.setPath("/");
+    		response.addCookie(cookie);
+    		//logger.info(">>> write cookie end");
+        }
+	}
+	
+	/**
 	 * 加密
 	 */
     public static String encodeEmail(String email, int key1Length, int key2Length) {

@@ -47,10 +47,10 @@ public interface IPfpAdManyURLSearchService extends IBaseService<PfpAdManyURLVO,
 	 * 確認需要新增url至redis
 	 * @param adFastPublishUrlInfo
 	 * @param userId
-	 * @param sessionId
+	 * @param redisCookieVal
 	 * @return
 	 * @throws Exception
 	 */
-	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo,String userId, String sessionId) throws Exception;
+	public String adConfirmFastPublishUrl(String adFastPublishUrlInfo,String userId, String redisCookieVal) throws Exception;
 	
 }
