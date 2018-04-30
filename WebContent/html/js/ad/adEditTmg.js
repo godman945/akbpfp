@@ -67,6 +67,8 @@
 		} else if(adTitle != "" && !isAllowKW(adTitle)) {
 			$('#chkAdTitle').css("color","red");
 			$("#chkAdTitle").text("廣告標題不得輸入'$'");
+		} else if(processCheckMatch("emoji", adTitle)) {
+			$('#chkAdTitle').css("color", "red").text("廣告標題不得輸入此特殊符號。");
 		} else {
 			$("#chkAdTitle").text("");
 			$("#previewTitle").text(adTitle);
@@ -112,6 +114,8 @@
 		} else if(adContent != "" && !isAllowKW(adContent)) {
 			$('#chkAdContent').css("color","red");
 			$("#chkAdContent").text("廣告內容不得輸入'$'");
+		} else if(processCheckMatch("emoji", adContent)) {
+			$('#chkAdContent').css("color", "red").text("廣告內容不得輸入此特殊符號。");
 		} else {
 			$("#chkAdContent").text("");
 			if(length == maxlength) {
@@ -740,4 +744,17 @@ function fileLoad(){
 //檢查是否為數字，非數字回true
 function isNotNum(val) {
 	return /[^0-9]$/.test(val);
+}
+
+/**
+ * 確認輸入的文字，是否有不符合規定部分
+ * @param flag emoji(手機特殊符號) 或 無
+ * @param string 檢查的字串
+ * @returns
+ */
+function processCheckMatch(flag, string) {
+	if(flag == "emoji"){
+		return string.match(/[\ud800-\udbff]|[\udc00-\udfff]|[\ud800-\udfff]/);
+	}
+	return false;
 }
