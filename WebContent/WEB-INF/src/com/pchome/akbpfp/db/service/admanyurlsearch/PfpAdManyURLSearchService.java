@@ -29,7 +29,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	@Override
 	public void getAdCrawlerAPIData(PfpAdManyURLVO vo) {
 		try {
-			StringBuffer adCrawlerResult = HttpUtil.getInstance().doGet("http://adcrawler.mypchome.com.tw/product/?url=" + vo.getSearchURL());
+			StringBuffer adCrawlerResult = HttpUtil.getInstance().doGet("http://pysvr.mypchome.com.tw/product/?url=" + vo.getSearchURL());
 			JSONObject apiJsonObject = new JSONObject(adCrawlerResult.toString());
 			if (adCrawlerResult.toString().indexOf("status:200") == -1) { // 檢查連線是否正常
 				log.error("getAdCrawlerAPIData error:status != 200");
@@ -103,7 +103,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			
 			String title = apiJsonObjectDetail.get("title").toString();
 			jsonObjectDetail.put("title", processTitle(title));
-			jsonObjectDetail.put("intact_title", title);
+			jsonObjectDetail.put("intact_title", processIntactTitle(title));
 
 			String description = apiJsonObjectDetail.get("description").toString();
 			String linkUrl = apiJsonObjectDetail.get("link_url").toString();
@@ -271,14 +271,14 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	
 	/**
 	 * 處理標題
-	 * 1.取最多17個字
-	 * 2.篩選掉emoji特殊符號
+	 * 1.篩選掉emoji特殊符號
+	 * 2.取最多17個字
 	 * @param title
 	 * @return
 	 */
 	private String processTitle(String title) {
 		//篩選掉emoji特殊符號
-		title = title.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", "");
+		title = processReplaceAll("emoji", title, "");
 		
 		// 取最多17個字
 		int titleMaxLength = (title.length() > 17) ? 17 : title.length();
@@ -288,14 +288,30 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	}
 	
 	/**
+	 * 處理完整的標題
+	 * 1.篩選掉emoji特殊符號
+	 * @param title
+	 * @return
+	 */
+	private String processIntactTitle(String intactTitle) {
+		//篩選掉emoji特殊符號
+		intactTitle = processReplaceAll("emoji", intactTitle, "");
+		return intactTitle;
+	}
+	
+	/**
 	 * 處理商品描述(內文)
-	 * 1.取最多36個字
-	 * 2.露天跟個人賣場，內容欄位沒有值，則帶入預設文字"直接購買"
+	 * 1.篩選掉emoji特殊符號
+	 * 2.取最多36個字
+	 * 3.露天跟個人賣場，內容欄位沒有值，則帶入預設文字"直接購買"
 	 * @param description
 	 * @param string
 	 * @return
 	 */
 	private String processDescription(String description, String url) {
+		//篩選掉emoji特殊符號
+		description = processReplaceAll("emoji", description, "");
+		
 		// 取最多36個字
 		int descriptionMaxLength = (description.length() > 36) ? 36 : description.length();
 		description = description.substring(0, descriptionMaxLength);
@@ -308,13 +324,33 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	/**
 	 * 處理完整的商品描述(內文)
 	 * 1.露天跟個人賣場，內容欄位沒有值，則帶入預設文字"直接購買"
-	 * @param description
+	 * @param intactDescription
 	 * @param url
 	 * @return
 	 */
-	private String processIntactDescription(String description, String url) {
-		description = processDescriptionFromURL(description, url);
-		return description;
+	private String processIntactDescription(String intactDescription, String url) {
+		//篩選掉emoji特殊符號
+		intactDescription = processReplaceAll("emoji", intactDescription, "");
+		
+		intactDescription = processDescriptionFromURL(intactDescription, url);
+		
+		return intactDescription;
+	}
+	
+	/**
+	 * 處理取代，可用正規表示式
+	 * @param flag emoji(手機特殊符號) 或 無
+	 * @param string 被處理字串
+	 * @param newString 取代成為新字串
+	 * @return
+	 */
+	private String processReplaceAll(String flag, String string, String newString) {
+		if ("emoji".equalsIgnoreCase(flag)) {
+			string = string.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", newString);
+		} else {
+			string = string.replaceAll(string, newString);
+		}
+		return string;
 	}
 	
 	/**

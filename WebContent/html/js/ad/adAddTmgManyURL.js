@@ -707,9 +707,12 @@ function processResultViewBtn(){
 /**
  * 檢查廣告明細欄位修改標題
  */
-function checkADTitle(keyinADTitle){
+function checkADTitle(keyinADTitle) {
 	if (keyinADTitle.length == 0) {
 		alert("請輸入標題。");
+		return false;
+	} else if (processCheckMatch("emoji", keyinADTitle)) {
+		alert("廣告標題不得輸入此特殊符號。");
 		return false;
 	} else if (keyinADTitle.length > 17) {
 		alert("標題已超過限制字數。");
@@ -725,11 +728,27 @@ function checkADContent(keyinADContent){
 	if (keyinADContent.length == 0) {
 		alert("請輸入內文。");
 		return false;
+	} else if (processCheckMatch("emoji", keyinADContent)) {
+		alert("廣告內文不得輸入此特殊符號。");
+		return false;
 	} else if (keyinADContent.length > 36) {
 		alert("內文已超過限制字數。");
 		return false;
 	}
 	return true;
+}
+
+/**
+ * 確認輸入的文字，是否有不符合規定部分
+ * @param flag emoji(手機特殊符號) 或 無
+ * @param string 檢查的字串
+ * @returns
+ */
+function processCheckMatch(flag, string) {
+	if(flag == "emoji"){
+		return string.match(/[\ud800-\udbff]|[\udc00-\udfff]|[\ud800-\udfff]/);
+	}
+	return false;
 }
 
 /**
