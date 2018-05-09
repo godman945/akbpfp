@@ -321,25 +321,26 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 			adReportVO.setAdActionName(objArray[13].toString());
 			adReportVO.setCustomerInfoId(objArray[14].toString());
 			adReportVO.setAdClkPriceType(objArray[15].toString());
-			adReportVO.setAdVideoUrl(objArray[18].toString());
-			adReportVO.setRealUrl(objArray[19].toString());
-			adReportVO.setImg(objArray[20].toString());
-			adReportVO.setContent(objArray[22].toString());
-			
-			String[] sizeArray = ((String)objArray[21]).split("_");
+			adReportVO.setAdVideoUrl(objArray[20].toString());
+			adReportVO.setRealUrl(objArray[21].toString());
+			adReportVO.setImg(objArray[22].toString());
+			adReportVO.setContent(objArray[24].toString());
+			adReportVO.setAdStatus(objArray[17].toString());
+			adReportVO.setAdRejectReason(objArray[18].toString());
+			String[] sizeArray = ((String)objArray[23]).split("_");
 			if(sizeArray.length == 2){
 				adReportVO.setAdWidth(sizeArray[0]);
 				adReportVO.setAdHeight(sizeArray[1]);
 			}
 			
-			String secs = objArray[17].toString();
+			String secs = objArray[19].toString();
 			if(secs.length() == 2){
 				adReportVO.setAdVideoSec("00:"+secs);
 			}else if(secs.length() == 1){
 				adReportVO.setAdVideoSec("00:0"+secs);
 			}
 			
-			int adActionStatus = (Integer)objArray[7];
+			int adActionStatus = (Integer)objArray[17];
 			for (EnumStatus enumStatus : EnumStatus.values()) {
 				if(adActionStatus == enumStatus.getStatusId()){
 					adReportVO.setAdStatusDesc(enumStatus.getStatusDesc());

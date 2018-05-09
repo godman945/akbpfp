@@ -426,7 +426,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			sumViewRatings = (sumView / sumPV * 100);
 			sumThousandsCost = (sumCost / sumPV * 1000);
 			sumSingleAdViewCost = (sumCost / sumView);
-			sumVideoProcess100Ratings = (sumVideoProvess100 / sumView * 100);
+			sumVideoProcess100Ratings = (sumVideoProvess100 / sumPV * 100);
 			
 			content.append("\n");
 			content.append(adVideoPerformanceReportVO.getTitle().trim()  +",");
