@@ -76,10 +76,10 @@
 				<td class="td01">NT$ ${adReportVO.adPriceSum?number?string('#,###.##')!}</td>
 				
 				<td class="td02">
-					<#if adReportVO.adActionStatus != "9">
+					<#if adReportVO.adStatus != "9">
 						<a href="adAdAdd.html?adGroupSeq=${adReportVO.adGroupSeq!}&adOperatingRule=VIDEO">製作新廣告</a><br>
 					</#if>
-					<#if adReportVO.adStatus != 2 && adReportVO.adStatus != 13>	
+					<#if adReportVO.adStatus != "2" && adReportVO.adStatus != "13">	
 						<a href="adAdEditVideo.html?adSeq=${adReportVO.adSeq!}">修改</a><br>
 					</#if>
 					<#if adReportVO.adStatus == "0" || adReportVO.adStatus == "1" || adReportVO.adStatus == "3" || adReportVO.adStatus == "6" >
