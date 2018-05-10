@@ -33,7 +33,7 @@
 	    <#list adReportVOList as adReportVO>
 			<tr>
 				<td>
-					<#if adReportVO.adActionStatus == "4" || adReportVO.adActionStatus == "9">
+					<#if adReportVO.adStatus == "4" || adReportVO.adStatus == "9">
 				        <input type="checkbox" id="chkY_${adReportVO_index!}" name="chkY" value="${adReportVO.adSeq!}"/>
 					<#else>
 				       <input type="checkbox" id="chkN_${adReportVO_index!}" name="chkN" disabled/>
@@ -53,11 +53,12 @@
 					  	<a href="${adReportVO.realUrl!}" target="_blank">${adReportVO.realUrl!}</a><br>
 				</td>
 				
-		        <td class="td03">
-			        ${adReportVO.adStatusDesc!}
-			        <#if pfpAdAdVideoViewVO.adStatus == 3 || pfpAdAdVideoViewVO.adStatus == 6>
-			       	 <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${adReportVO.adRejectReason!}">
-			        </#if>
+		        <td class="td02" style="width:60px;">
+			        <#if adReportVO.adStatus == "3" || adReportVO.adStatus == "6">
+						${adReportVO.adStatusDesc!} <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${adReportVO.adRejectReason!}">
+			        <#else>
+			        	${adReportVO.adStatusDesc!}
+					</#if>
 		        </td>
 		        
 				<td class="td01">${adReportVO.adClkPriceType}</td>
@@ -75,14 +76,14 @@
 				<td class="td01">NT$ ${adReportVO.adPriceSum?number?string('#,###.##')!}</td>
 				
 				<td class="td02">
-					<#if pfpAdAdVideoViewVO.actionStatus != "9">
+					<#if adReportVO.adActionStatus != "9">
 						<a href="adAdAdd.html?adGroupSeq=${adReportVO.adGroupSeq!}&adOperatingRule=VIDEO">製作新廣告</a><br>
 					</#if>
-					<a href="adAdEditVideo.html?adSeq=${adReportVO.adSeq!}">修改</a><br>
-					<#if pfpAdAdVideoViewVO.actionStatus != "2" && pfpAdAdVideoViewVO.actionStatus != "13">	
-						<#if pfpAdAdVideoViewVO.actionStatus == "0" || pfpAdAdVideoViewVO.actionStatus == "1" || pfpAdAdVideoViewVO.actionStatus == "3" || pfpAdAdVideoViewVO.actionStatus == "6" >
-							<a href="#" onclick="closeAdAdStatus('${adReportVO.adSeq!}','10')">關閉</a>
-						</#if>
+					<#if vo.adStatus != 2 && vo.adStatus != 13>	
+						<a href="adAdEditVideo.html?adSeq=${adReportVO.adSeq!}">修改</a><br>
+					</#if>
+					<#if adReportVO.adStatus == "0" || adReportVO.adStatus == "1" || adReportVO.adStatus == "3" || adReportVO.adStatus == "6" >
+						<a href="#" onclick="closeAdAdStatus('${adReportVO.adSeq!}','10')">關閉</a>
 					</#if>
 				</td>
 			</tr>

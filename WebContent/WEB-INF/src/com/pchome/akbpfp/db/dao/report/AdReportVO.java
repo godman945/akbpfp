@@ -41,6 +41,9 @@ public class AdReportVO {
 	private String img;
 	private String adWidth;
 	private String adHeight;
+	
+	private String adRejectReason;
+	
 	//影片長度
 	private String adVideoSec;
 	//影片網址
@@ -341,6 +344,14 @@ public class AdReportVO {
 
 	public void setAdHeight(String adHeight) {
 		this.adHeight = adHeight;
+	}
+
+	public String getAdRejectReason() {
+		return adRejectReason;
+	}
+
+	public void setAdRejectReason(String adRejectReason) {
+		this.adRejectReason = adRejectReason;
 	}
 
 
