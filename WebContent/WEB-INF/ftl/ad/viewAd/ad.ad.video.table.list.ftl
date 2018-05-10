@@ -79,11 +79,11 @@
 					<#if adReportVO.adActionStatus != "9">
 						<a href="adAdAdd.html?adGroupSeq=${adReportVO.adGroupSeq!}&adOperatingRule=VIDEO">製作新廣告</a><br>
 					</#if>
-					<a href="adAdEditVideo.html?adSeq=${adReportVO.adSeq!}">修改</a><br>
-					<#if adReportVO.adActionStatus != "2" && adReportVO.adActionStatus != "13">	
-						<#if adReportVO.adStatus == "0" || adReportVO.adStatus == "1" || adReportVO.adStatus == "3" || adReportVO.adStatus == "6" >
-							<a href="#" onclick="closeAdAdStatus('${adReportVO.adSeq!}','10')">關閉</a>
-						</#if>
+					<#if vo.adStatus != 2 && vo.adStatus != 13>	
+						<a href="adAdEditVideo.html?adSeq=${adReportVO.adSeq!}">修改</a><br>
+					</#if>
+					<#if adReportVO.adStatus == "0" || adReportVO.adStatus == "1" || adReportVO.adStatus == "3" || adReportVO.adStatus == "6" >
+						<a href="#" onclick="closeAdAdStatus('${adReportVO.adSeq!}','10')">關閉</a>
 					</#if>
 				</td>
 			</tr>
