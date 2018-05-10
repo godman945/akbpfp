@@ -33,7 +33,7 @@
 	    <#list adReportVOList as adReportVO>
 			<tr>
 				<td>
-					<#if adReportVO.adActionStatus == "4" || adReportVO.adActionStatus == "9">
+					<#if adReportVO.adStatus == "4" || adReportVO.adStatus == "9">
 				        <input type="checkbox" id="chkY_${adReportVO_index!}" name="chkY" value="${adReportVO.adSeq!}"/>
 					<#else>
 				       <input type="checkbox" id="chkN_${adReportVO_index!}" name="chkN" disabled/>
@@ -56,7 +56,9 @@
 		        <td class="td02" style="width:60px;">
 			        <#if adReportVO.adStatus == "3" || adReportVO.adStatus == "6">
 						${adReportVO.adStatusDesc!} <img src="<@s.url value="/" />html/img/icon_Q.gif" align="absmiddle" title="${adReportVO.adRejectReason!}">
-			        </#if>
+			        <#else>
+			        	${adReportVO.adStatusDesc!}
+					</#if>
 		        </td>
 		        
 				<td class="td01">${adReportVO.adClkPriceType}</td>

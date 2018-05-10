@@ -996,7 +996,7 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		sql.append(" g.ad_group_price_type, "); 
 		sql.append(" a.ad_seq, "); 
 		sql.append(" a.ad_status, "); 
-		sql.append(" ad_verify_reject_reason "); 
+		sql.append(" Ifnull(a.ad_verify_reject_reason,'') "); 
 		sql.append(" FROM pfp_ad a "); 
 		sql.append(" LEFT JOIN pfp_ad_report r ON r.ad_seq = a.ad_seq "); 
 		sql.append(" AND r.ad_pvclk_date >= :startDate "); 

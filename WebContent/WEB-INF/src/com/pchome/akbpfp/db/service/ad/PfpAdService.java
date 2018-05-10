@@ -340,14 +340,22 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				adReportVO.setAdVideoSec("00:0"+secs);
 			}
 			
-			int adActionStatus = (Integer)objArray[17];
+			int adStatus = (Integer)objArray[17];
+			int adActionStatus = (Integer)objArray[7];
 			for (EnumStatus enumStatus : EnumStatus.values()) {
-				if(adActionStatus == enumStatus.getStatusId()){
+				if(adStatus == enumStatus.getStatusId()){
+					adReportVO.setAdStatus(String.valueOf(enumStatus.getStatusId()));
 					adReportVO.setAdStatusDesc(enumStatus.getStatusDesc());
-					adReportVO.setAdActionStatus(String.valueOf(objArray[7]));
-					break;
+				}
+				
+				if(adActionStatus == enumStatus.getStatusId()){
+					adReportVO.setAdActionStatus(String.valueOf(enumStatus.getStatusId()));
 				}
 			}
+			
+			
+			
+			
 			
 			String adPriceType = objArray[15].toString();
 			for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
