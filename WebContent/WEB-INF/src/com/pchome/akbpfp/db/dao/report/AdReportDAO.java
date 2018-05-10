@@ -252,7 +252,9 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 
 		hql.append("select ");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_report 的時候，已經減過無效點擊數了，所以不用再減
+		/* 產生pfp_ad_group_report 的時候，已經減過無效點擊數了，所以不用再減
+		   20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分 */
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then (r.ad_clk - r.ad_invalid_clk) else r.ad_view end)), ");
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price) ");
@@ -320,7 +322,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 
 		hql.append("select ");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then (r.ad_clk - r.ad_invalid_clk) else r.ad_view end)), ");
 		hql.append(" sum(r.ad_clk_price), ");		
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" r.ad_pvclk_date, ");
@@ -419,7 +421,9 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append("select");
 		hql.append(" r.ad_pvclk_date,");
 		hql.append(" sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");				// 產生pfp_ad_report 的時候，已經減過無效點擊數了，所以不用再減
+		/* 產生pfp_ad_group_report 的時候，已經減過無效點擊數了，所以不用再減
+		   20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分 */
+		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then (r.ad_clk - r.ad_invalid_clk) else r.ad_view end)), ");
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
