@@ -6,7 +6,7 @@ public interface IAPIProvider {
 	 * 取Html廣告內容 
 	 */
 	public String getAdContent(String tproNo, String adNo) throws Exception;
-	
+
 	/**
 	 * 取Video廣告內容 
 	 */
