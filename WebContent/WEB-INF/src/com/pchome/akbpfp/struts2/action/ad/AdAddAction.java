@@ -1685,7 +1685,7 @@ public class AdAddAction extends BaseCookieAction{
 	 * 1.不存在group時新增分類
 	 * 2.建立Ad
 	 * 3.建立明細
-	 * 4.新增關鍵字
+	 * 4.新增關鍵字  20180518 開會討論，先關閉新增關鍵字部分
 	 * */
 	private boolean doAdAdAddFastPublisDetail() throws Exception{
 		String referer = request.getHeader("Referer");
@@ -1788,10 +1788,10 @@ public class AdAddAction extends BaseCookieAction{
 				}
 			}
 			
-			//新增關鍵字 
-			if(!adType.equals("2")){
-				saveKeyWord(adGroupSeq,redisAdArrayJson);
-			}
+			// 新增關鍵字。 20180518 開會討論，先關閉新增關鍵字部分
+//			if(!adType.equals("2")){
+//				saveKeyWord(adGroupSeq,redisAdArrayJson);
+//			}
 		}
 		pfpAdGroup.setAdGroupStatus(4);
 		pfpAdGroupService.save(pfpAdGroup);
