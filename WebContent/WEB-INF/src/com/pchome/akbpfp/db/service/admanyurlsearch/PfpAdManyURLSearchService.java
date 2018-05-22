@@ -15,19 +15,24 @@ import org.json.JSONObject;
 import com.pchome.akbpfp.api.RedisAPI;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdManyURLVO;
+import com.pchome.service.portalcms.PortalcmsUtil;
+import com.pchome.service.portalcms.bean.Mail;
 import com.pchome.soft.depot.utils.HttpUtil;
+import com.pchome.soft.util.SpringEmailUtil;
 
 public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, String>
 		implements IPfpAdManyURLSearchService {
 
 	private RedisAPI redisAPI;
 	private String manyURLRediskey;
+	private SpringEmailUtil springEmailUtil;
 	
 	/**
 	 * 從廣告爬蟲api取得資料，及網址相關檢查
+	 * @throws Exception 
 	 */
 	@Override
-	public void getAdCrawlerAPIData(PfpAdManyURLVO vo) {
+	public void getAdCrawlerAPIData(PfpAdManyURLVO vo) throws Exception {
 		try {
 			StringBuffer adCrawlerResult = HttpUtil.getInstance().doGet("http://pysvr.mypchome.com.tw/product/?url=" + vo.getSearchURL());
 			JSONObject apiJsonObject = new JSONObject(adCrawlerResult.toString());
@@ -44,6 +49,16 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		} catch (Exception e) {
 			log.error("getAdCrawlerAPIData error:" + e);
 			vo.setMessage("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			
+			// 出錯時寄信
+			Mail mail = null;
+			mail = PortalcmsUtil.getInstance().getMail("P098");
+			if (mail == null) {
+				throw new Exception("Mail Object is null.");
+			}
+			String subject = "pfp 呼叫 python api 錯誤 ";
+			mail.setMsg("<html><body>網址:" + vo.getSearchURL() + "<br />錯誤訊息 :" + e + "</body></html>");
+			springEmailUtil.sendHtmlEmail(subject, mail.getMailFrom(), mail.getMailTo(), mail.getMailBcc(), mail.getMsg());
 		}
 	}
 	
@@ -446,6 +461,10 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 
 	public void setManyURLRediskey(String manyURLRediskey) {
 		this.manyURLRediskey = manyURLRediskey;
+	}
+
+	public void setSpringEmailUtil(SpringEmailUtil springEmailUtil) {
+		this.springEmailUtil = springEmailUtil;
 	}
 
 }

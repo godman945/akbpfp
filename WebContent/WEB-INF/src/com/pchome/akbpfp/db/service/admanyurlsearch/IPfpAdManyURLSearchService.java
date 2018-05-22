@@ -11,8 +11,9 @@ public interface IPfpAdManyURLSearchService extends IBaseService<PfpAdManyURLVO,
 	/**
 	 * 從廣告爬蟲api取得資料，及網址相關檢查，取得資料存入vo
 	 * @param vo
+	 * @throws Exception 
 	 */
-	public void getAdCrawlerAPIData(PfpAdManyURLVO vo);
+	public void getAdCrawlerAPIData(PfpAdManyURLVO vo) throws Exception;
 
 	/**
 	 * 檢查api取得資料是否已存在redis，已存在不動作，未存在新增進去

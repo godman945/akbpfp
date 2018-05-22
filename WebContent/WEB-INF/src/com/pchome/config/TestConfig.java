@@ -44,6 +44,7 @@ public class TestConfig {
 		contentTitle+"config/spring/spring-log4j.xml",
 		contentTitle+"config/spring/local/spring-prop.xml",
 		contentTitle+"config/spring/spring-api.xml",
+		contentTitle+"config/spring/spring-mail-config.xml",
 		contentTitle+"config/spring/spring-util.xml",
 		contentTitle+"config/spring/spring-factory.xml",
 		contentTitle+"config/spring/spring-rmi-client.xml"
