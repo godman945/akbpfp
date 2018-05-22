@@ -32,9 +32,11 @@
 		<div>
 			<h4 style="float:left">廣告列表 </h4>
             <#if addFlag?exists && addFlag=="y">
-			    &nbsp;<img class="addAdImg" src="<@s.url value="/" />html/img/btnadd.gif">
+            	<a href="adActionAdd.html"  class="addbtn"><img src="<@s.url value="/" />html/img/btnadd.gif"></a>
 
-			    <#-- 廣告刊登選擇介面 start -->
+			    <#-- 廣告刊登選擇介面 start 20180522要上線前說此區塊先不開放，之後再看看。
+			    &nbsp;<img class="addAdImg" src="<@s.url value="/" />html/img/btnadd.gif">
+			    
 				<div class="menu-option-addad" style="display: none;">
 					<div class="content-wrapper">
 						<div class="close-menu">
@@ -68,7 +70,7 @@
 					    </div>
 				    </div>
 				</div>
-				<#-- 廣告刊登選擇介面 end-->
+				 廣告刊登選擇介面 end-->
             </#if>
 		</div>
 		
