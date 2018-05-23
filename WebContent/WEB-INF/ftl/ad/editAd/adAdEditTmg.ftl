@@ -37,7 +37,7 @@
 								</div>
 							</span>
 						</td>
-						<td style="background:#dadada;" rowspan="5" width="550">
+						<td style="background:#dadada;" rowspan="7" width="550">
 							<!--播放預覽start-->
 							<div style="display:block;" class="boxpreview">
 								<h5>廣告預覽</h5>
@@ -46,7 +46,7 @@
 									<img id="previewImg" src="${adDetailContent[0]!}" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'">
 									<h2 style="background:none"><a href="#"  id="previewTitle" name="previewTitle" title="${adDetailContent[1]!}">${adDetailContent[1]!}</a></h2>
 									<span id="previewContent" name="previewContent">${adDetailContent[2]!}</span>
-									<h5 id="previewURL">${adDetailContent[4]!}</h5>
+									<h5 id="previewURL">${adDetailContent[6]!}</h5>
 								</div>
 								<div class="adpreviewbg" >
 									<h5>曝光示意圖</h5>
@@ -87,12 +87,30 @@
 						</td>
 					</tr>
 					<tr>
+						<th height="35" style="width:12%">商品原價</th>
+						<td style="min-width:250px;">
+							<input type="hidden" id="adDetailID" name="adDetailID" value="sales_price">
+							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[3]!}">
+							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[3]!}">
+                        	NT$ <input type="text" maxlength="8" id="salesPrice" name="salesPrice" value="${adDetailContent[3]!}">
+						</td>
+					</tr>
+					<tr>
+						<th height="35" style="width:12%">商品促銷價</th>
+						<td style="min-width:250px;">
+							<input type="hidden" id="adDetailID" name="adDetailID" value="promotional_price">
+							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[4]!}">
+							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[4]!}">
+                        	NT$ <input type="text" maxlength="8" id="promotionalPrice" name="promotionalPrice" value="${adDetailContent[4]!}">
+						</td>
+					</tr>
+					<tr>
 						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>廣告連結網址</th>
 						<td style="min-width:250px;">
 							<input type="hidden" id="adDetailID" name="adDetailID" value="real_url">
-							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[3]!}">
-							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[3]!}">
-							<input type="text" class="inputPlaceholderTmg" data-value="spanAdLinkURL" id="adLinkURL" name="adLinkURL" style="width:96%;" value="${adDetailContent[3]!}" placeholder="show.pchome.com.tw"  ><br>
+							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[5]!}">
+							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[5]!}">
+							<input type="text" class="inputPlaceholderTmg" data-value="spanAdLinkURL" id="adLinkURL" name="adLinkURL" style="width:96%;" value="${adDetailContent[5]!}" placeholder="show.pchome.com.tw"  ><br>
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">　</span>
 						</td>
 					</tr>
@@ -100,10 +118,10 @@
 						<th height="35" style="width:12%;"><a name="errAdShowURL"></a><span class="t_s02">* </span>廣告顯示網址</th>
 						<td style="min-width:250px;">
 							<input type="hidden" id="adDetailID" name="adDetailID" value="show_url" >
-							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[4]!}">
-							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[4]!}">
+							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[6]!}">
+							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[6]!}">
 							<input type="checkbox" id="sameRealUrl" name="sameRealUrl">廣告對外顯示網址同廣告連結網址網域<br>
-							<input type="text" class="inputPlaceholderTmg" data-value="spanAdShowURL" id="adShowURL" name="adShowURL" style="width:96%;"  value="${adDetailContent[4]!}" placeholder="show.pchome.com.tw" maxlength="30"><br>
+							<input type="text" class="inputPlaceholderTmg" data-value="spanAdShowURL" id="adShowURL" name="adShowURL" style="width:96%;"  value="${adDetailContent[6]!}" placeholder="show.pchome.com.tw" maxlength="30"><br>
 							<span id="chkShowURL" name="chkShowURL" style="float:righ;color:red"></span>
 							<span style="float:right" id="spanAdShowURL">　</span>
 						</td>

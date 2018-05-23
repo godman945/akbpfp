@@ -321,50 +321,7 @@ public class PfpAdActionService extends BaseService<PfpAdAction,String> implemen
 	    return ((IPfpAdActionDAO) dao).getAdGroupCounts(adActionSeq);
 	}
 
-//	public Integer checkAdActionNumber(String customerInfoId) throws Exception{
-//		
-//		List<PfpAdAction> adActionList = ((PfpAdActionDAO) dao).findPfpAdAction(customerInfoId);
-//		
-//		if(adActionList.size() > 0){
-//			return adActionList.size();
-//		}
-//		else{
-//			return 0;
-//		}
-//		
-//	}
-	
-//	public List<PfpAdAction> getAllPfpAdActions() throws Exception{
-//		return ((PfpAdActionDAO)dao).loadAll();
-//	}
-	
-//	public List<PfpAdAction> getPfpAdActions(String adActionSeq, String adActionName, String adType, String adActionStartDate, String adActionEndDate, String adActionMax, String adActionStatus, String userID, PfpCustomerInfo pfpCustomerInfo) throws Exception{
-//		return ((PfpAdActionDAO)dao).getPfpAdActions(adActionSeq, adActionName, adType, adActionStartDate, adActionEndDate, adActionMax, adActionStatus, userID, pfpCustomerInfo);
-//	}
-	
-//	public List<Object> findAdActionView(String actionName, String startDate, String endDate, String adType, int page, int pageSize, String customerInfoId) throws Exception{
-//		return ((PfpAdActionDAO)dao).findAdActionView(actionName, startDate, endDate, adType, page, pageSize, customerInfoId);
-//	}
-	
-//	public String getCount(String actionName, String startDate, String endDate, String adType, int page, int pageSize, String customerInfoId) throws Exception{
-//		return ((PfpAdActionDAO)dao).getCount(actionName, startDate, endDate, adType, page, pageSize, customerInfoId);
-//	}
-
-//	public void insertPfpAdAction(PfpAdAction pfpAdAction) throws Exception {
-//		((PfpAdActionDAO)dao).insertPfpAdAction(pfpAdAction);
-//	}
-
-//	public void updatePfpAdAction(PfpAdAction pfpAdAction) throws Exception {
-//		((PfpAdActionDAO)dao).updatePfpAdAction(pfpAdAction);
-//	}
-
-//	public void updatePfpAdActionMax(String adActionSeq, String pfpAdActionMax) throws Exception {
-//		((PfpAdActionDAO)dao).updatePfpAdActionMax(adActionSeq, pfpAdActionMax);
-//	}
-
-//	public List<PfpAdActionViewVO> getAllAdActionView(String customerInfoId, String keyword, EnumAdType enumAdType, Date startDate, Date endDate) throws Exception{
-//		//return ((PfpAdActionDAO)dao).getAdActionPvclk(customerInfoId, keyword, enumAdType.getType(), startDate, endDate, -1, -1);
-//		//return ((PfpAdActionDAO)dao).getAdActionReport(customerInfoId, keyword, enumAdType.getType(), startDate, endDate, -1, -1);
-//		return getAdActionView(customerInfoId, keyword, enumAdType, startDate, endDate, -1, -1);
-//	}
+	public List<PfpAdAction> getAdActionByCustomerInfoIdAndMediaAd(String customerInfoId) throws Exception{
+		return ((IPfpAdActionDAO) dao).getAdActionByCustomerInfoIdAndMediaAd(customerInfoId);
+	}
 }

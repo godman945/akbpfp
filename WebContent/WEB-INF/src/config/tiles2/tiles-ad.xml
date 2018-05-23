@@ -73,6 +73,7 @@
     <definition name=".ad.ad.add.body" template="/ftl/ad/newAd/adAdAdd.ftl">
     	<put-attribute name="adTxt" value="/ftl/ad/newAd/adAdAddTxt.ftl" />
     	<put-attribute name="adTmg" value="/ftl/ad/newAd/adAdAddTmg.ftl" />
+    	<put-attribute name="adTmgManyURL" value="/ftl/ad/newAd/adAdAddTmgManyURL.ftl" />
     	<put-attribute name="adKeyword" value="/ftl/ad/newAd/adAdAddKeyword.ftl" />
     </definition>
 
@@ -317,5 +318,17 @@
     <definition name="ad.ad.table" template="/ftl/ad/viewAd/ad.ad.table.list.ftl" >
     	<put-attribute name="page" value="default.page" />
     </definition>   
+    
+    <!-- 快速刊登廣告 START -->
+    <definition name=".ad.fast.publish.add" extends="ad.nocss.layout">
+        <put-attribute name="body" value=".ad.ad.add.body" />
+    </definition>
+    
+    <definition name=".ad.action.view.fastpublishurl" extends="ad.layout">
+        <put-attribute name="body" value="/ftl/ad/newAd/adActionFastPublishUrl.ftl" />
+    </definition>
+    
+    <!-- 快速刊登廣告 END -->
+    
     
 </tiles-definitions>

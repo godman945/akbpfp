@@ -2,6 +2,8 @@
 	$("#searchType").change(function(){
 		findTableView();
 	});
+	
+//	dealWithAddAdMenu(); //處理廣告刊登選擇介面部分。 20180522要上線前說此區塊先不開放，之後再看看。
 });
 
 
@@ -67,8 +69,7 @@ function modifyAdStatus(status){
 				'showCloseButton' :false,
 				'href'     :'closeAdActionMsg.html' 		                    
 			});
-		}
-		else if(parseInt(status) == 9){
+		}else if(parseInt(status) == 9){
 			$.fancybox({
 				'showCloseButton' :false,
 				'href'     :'stopAdActionMsg.html' 		                    
@@ -164,3 +165,37 @@ function tableSorter(){
 			}
 	});
 }
+
+//// 處理廣告刊登選擇介面部分  20180522要上線前說此區塊先不開放，之後再看看。
+//function dealWithAddAdMenu() {
+//
+//	// 調整介面位置在新增廣告按鈕下方
+//	var addAdImg = $('.addAdImg').offset();
+//	$(".menu-option-addad").css({
+//		top : addAdImg.top + $('.addAdImg').height(),
+//		left : addAdImg.left
+//	});
+//	
+//	// 鼠標移到新增廣告圖片及選取介面時，介面都為顯示，移出則隱藏
+//	$('.addAdImg, .menu-option-addad').mouseenter(function(){
+//		$(".menu-option-addad").show();
+//	}).mouseleave(function(){
+//		$(".menu-option-addad").hide();
+//	});
+//	
+//	// 關閉選取介面
+//	$('.close-menu').click(function() {
+//		$(".menu-option-addad").hide();
+//	});
+//
+//	//一般廣告刊登導頁
+//	$('.adAdd').click(function() {
+//		window.location = "adActionAdd.html";
+//	});
+//	
+//	//快速網址刊登導頁
+//	$('.fastURLAdAdd').click(function() {
+//		window.location = "adFastPublishAdd.html";
+//	});
+//	
+//}

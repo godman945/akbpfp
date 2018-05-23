@@ -29,14 +29,14 @@
 								</div>
 							</span>
 						</td>
-						<td style="background:#dadada;" rowspan="5" width="550">
+						<td style="background:#dadada;" rowspan="7" width="550">
 							<!--播放預覽start-->
 							<div style="display:block;" class="boxpreview">
 								<h5>廣告預覽</h5>
 								<!--<center><a href="3">參考其他人撰寫關鍵字廣告</a></center>-->
 								<div class="rstli" style="width:500px;margin:0 auto">
 									<span><img id="previewImg" src="<@s.url value="/" />html/img/upl9090.gif" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'"></span>
-									<h2 style="background:none"><a href="#"  id="previewTitle" name="previewTitle" title="PChome關鍵字廣告 全新登">PChome關鍵字廣告 全新登場</a></h2>
+									<h2 style="background:none"><a href="#"  id="previewTitle" name="previewTitle" title="PChome關鍵字廣告 全新登場">PChome關鍵字廣告 全新登場</a></h2>
 									<span id="previewContent" name="previewContent">讓您的廣告受到世界矚目、訂單多到接不完！立即使用PChome關鍵字廣告‎。</span>
 									<h5 id="previewURL">show.pchome.com.tw</h5>
 								</div>
@@ -74,6 +74,24 @@
 								<div class="adpopcont">廣告內容太短、說明不清，都將影響您的廣告效果。<br><br>建議用直接、吸睛的文字，清晰具體的描述產品、服務、活動，才能增加您的廣告吸引力，提升廣告成效。</div>
 								<a onclick="closenots(2)" style="cursor:pointer;" class="adpopclose">關閉</a>
 							</div>
+						</td>
+					</tr>
+					<tr>
+						<th height="35" style="width:12%">商品原價</th>
+						<td style="min-width:250px;">
+							<input type="hidden" id="adDetailID" name="adDetailID" value="sales_price">
+							<input type="hidden" id="adDetailName" name="adDetailName" value="商品原價">
+							<input type="hidden" id="adDetailContent" name="adDetailContent">
+                        	NT$ <input type="text" maxlength="8" id="salesPrice" name="salesPrice">
+						</td>
+					</tr>
+					<tr>
+						<th height="35" style="width:12%">商品促銷價</th>
+						<td style="min-width:250px;">
+							<input type="hidden" id="adDetailID" name="adDetailID" value="promotional_price">
+							<input type="hidden" id="adDetailName" name="adDetailName" value="商品促銷價">
+							<input type="hidden" id="adDetailContent" name="adDetailContent">
+                        	NT$ <input type="text" maxlength="8" id="promotionalPrice" name="promotionalPrice">
 						</td>
 					</tr>
 					<tr>

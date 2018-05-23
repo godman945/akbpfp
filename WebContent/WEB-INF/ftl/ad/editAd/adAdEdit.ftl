@@ -5,7 +5,7 @@
 <#if adStyle == "TXT">
 <script language="JavaScript" src="<@s.url value="/" />html/js/ad/adEditTxt.js" ></script>
 <#elseif adStyle == "TMG">
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adEditTmg.js?t=20141124" ></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adEditTmg.js?t=20180430001" ></script>
 </#if>
 
 <div class="cont">

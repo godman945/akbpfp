@@ -85,4 +85,18 @@ public class CommonUtils {
 		}
 		return imgInfoMap;
 	}
+	
+	/**
+	 * 取得總頁數
+	 * @param totalDataSize 總筆數
+	 * @param pageSize      每頁筆數
+	 * @return
+	 */
+	public static int getTotalPage(int totalDataSize, int pageSize) {
+		int totalPage = (totalDataSize / pageSize); //沒筆數則會為0
+		if ((totalDataSize % pageSize) > 0) { //筆數還有剩，則再多加一頁
+			totalPage += 1;
+		}
+		return totalPage;
+	}
 }

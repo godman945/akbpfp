@@ -52,21 +52,6 @@ public interface IPfpAdActionService extends IBaseService<PfpAdAction,String>{
 	
 	public int getAdGroupCounts(String adActionSeq) throws Exception;
 	
-	//public Integer checkAdActionNumber(String customerInfoId) throws Exception;
-
-	//public List<PfpAdAction> getAllPfpAdActions() throws Exception;
-	
-	//public List<PfpAdAction> getPfpAdActions(String adActionSeq, String adActionName, String adType, String adActionStartDate, String adActionEndDate, String adActionMax, String adActionStatus, String userID, PfpCustomerInfo pfpCustomerInfo) throws Exception;
-
-	//public List<Object> findAdActionView(String actionName, String startDate, String endDate, String adType, int page, int pageSize, String customerInfoId) throws Exception;
-
-	//public String getCount(String actionName, String startDate, String endDate, String adType, int page, int pageSize, String customerInfoId) throws Exception;
-	
-	//public void insertPfpAdAction(PfpAdAction pfpAdAction) throws Exception;
-	
-	//public void updatePfpAdAction(PfpAdAction pfpAdAction) throws Exception;
-	
-	//public void updatePfpAdActionMax(String adActionSeq, String pfpAdActionMax) throws Exception;
-
-	//public List<PfpAdActionViewVO> getAllAdActionView(String customerInfoId, String keyword, EnumAdType enumAdType, Date startDate, Date endDate) throws Exception;
+	//查詢多媒體廣告活動
+	public List<PfpAdAction> getAdActionByCustomerInfoIdAndMediaAd(String customerInfoId) throws Exception;
 }

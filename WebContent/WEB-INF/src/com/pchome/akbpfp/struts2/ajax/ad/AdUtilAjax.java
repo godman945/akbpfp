@@ -33,79 +33,103 @@ public class AdUtilAjax extends BaseCookieAction{
 	private String akbPfpServer;
 	private String adVideoUrl;
 	
+	/**
+	 * 檢查輸入的顯示廣告網址，確認是否為危險網址
+	 * @param adShowUrl
+	 * @param akbPfpServer 
+	 * @return
+	 * @throws Exception
+	 */
+	public String checkAdShowUrl(String adShowUrl, String akbPfpServer) throws Exception {
+		url = adShowUrl;
+		this.akbPfpServer = akbPfpServer;
+		checkAdUrl();
+		if (urlState < 200 || urlState >= 300) {
+			return "請輸入正確的廣告顯示網址";
+		}
+		return "";
+	}
+	
+	/**
+	 * 檢查輸入的廣告網址，確認是否為危險網址
+	 * @return
+	 * @throws Exception
+	 */
 	public String checkAdUrl() throws Exception{
-	    	log.info("checkAdUrl");
+		log.info("checkAdUrl");
 	    
 		Boolean noError = false;
 		
 		//檢查url 是否危險網址API
 		HttpGet request = new HttpGet();
-		URL thisUrl = new URL("http://pseapi.mypchome.com.tw/api/security/safeBrowsingLookup.html?url="+url);
+		URL thisUrl = new URL("http://pseapi.mypchome.com.tw/api/security/safeBrowsingLookup.html?url=" + url);
 		URI uri = new URI(thisUrl.getProtocol(), thisUrl.getHost(), thisUrl.getPath(), thisUrl.getQuery(), null);
 		request.setURI(uri);
 		HttpClient client = new DefaultHttpClient();
 		HttpResponse response = client.execute(request);
 		InputStream urlContent = response.getEntity().getContent();
-		BufferedReader buf = new BufferedReader(new InputStreamReader(urlContent,"UTF-8"));
+		BufferedReader buf = new BufferedReader(new InputStreamReader(urlContent, "UTF-8"));
 		StringBuilder sb = new StringBuilder();
 		String jsonStr;
 		while (true) {
-		    jsonStr = buf.readLine();
-		    if (jsonStr == null)
-			break;
-		    sb.append(jsonStr);
+			jsonStr = buf.readLine();
+			if (jsonStr == null){
+				break;
+			}
+			sb.append(jsonStr);
 		}
 		buf.close();
 		urlContent.close();
-		log.info(">>>>>>>>>>>>>>"+sb);
+		log.info(">>>>>>>>>>>>>>" + sb);
 		JSONObject jsonObj = new JSONObject(sb.toString());
 		JSONObject jsonObjMsg = new JSONObject(jsonObj.get("success").toString());
-		if(jsonObjMsg.get("msg").toString().equals("malware")){
-		    this.msg = new ByteArrayInputStream(jsonObjMsg.get("msg").toString().getBytes());
-		    return SUCCESS;
-		}else{
+		if (jsonObjMsg.get("msg").toString().equals("malware")) {
+			this.msg = new ByteArrayInputStream(jsonObjMsg.get("msg").toString().getBytes());
+			return SUCCESS;
+		} else {
 			try {
-			    if(StringUtils.isEmpty(url) || url.length()<1){
-				return null;
-			    }else{
-				if(url.indexOf("http")<0){
-				    url= "http://"+url;
+				if (StringUtils.isEmpty(url) || url.length() < 1) {
+					return null;
+				} else {
+					if (url.indexOf("http") < 0) {
+						url = "http://" + url;
+					}
 				}
-			    }
-			    url = HttpUtil.getInstance().getRealUrl(url);
-			    log.info("url = " + url);
+				url = HttpUtil.getInstance().getRealUrl(url);
+				log.info("url = " + url);
 			    
 			    // www.mjholly.com pass
-			    String passUrl = url;
-			    if(url.indexOf("www.mjholly.com") >= 0){
-			    	passUrl = passUrl.replaceAll("http://", "");
-			    	passUrl = passUrl.replaceAll("https://", "");
-			    	passUrl = passUrl.substring(0, passUrl.indexOf(".com") + 4);
-			    }
+				String passUrl = url;
+				if (url.indexOf("www.mjholly.com") >= 0) {
+					passUrl = passUrl.replaceAll("http://", "");
+					passUrl = passUrl.replaceAll("https://", "");
+					passUrl = passUrl.substring(0, passUrl.indexOf(".com") + 4);
+				}
 			    
-			    if(url.indexOf(akbPfpServer) == 0){
+				if (url.indexOf(akbPfpServer) == 0) {
 			    //if(akbPfpServer.equals(url) || (akbPfpServer.substring(0, akbPfpServer.length() -1).equals(url))){
-			    	urlState = 200;
-			    } else if("www.mjholly.com".equals(passUrl)){
-			    	urlState = 200;
-			    } else {
-			    	urlState = HttpUtil.getInstance().getStatusCode(url);
-			    	msg = new ByteArrayInputStream("".getBytes());	
-			    }
-			    log.info("urlState>>>"+urlState);
-			    if(urlState >= 200 && urlState < 300){
-				noError = true;
-				log.info("urlState = " + urlState);
-			    }
+					urlState = 200;
+				} else if ("www.mjholly.com".equals(passUrl)) {
+					urlState = 200;
+				} else {
+					urlState = HttpUtil.getInstance().getStatusCode(url);
+					msg = new ByteArrayInputStream("".getBytes());
+				}
+				log.info("urlState>>>" + urlState);
+				if (urlState >= 200 && urlState < 300) {
+					noError = true;
+					log.info("urlState = " + urlState);
+				}
 			
-    			} catch(Exception ex) {
-    			    System.out.println("Exception(AdUtilAjax.checkUrl) : " + ex.toString());
-    			}
-			if(url != null && !url.trim().equals("")) {
-			    log.info("noError = " + noError);
-			    msg = new ByteArrayInputStream(noError.toString().getBytes());
+			} catch (Exception ex) {
+				System.out.println("Exception(AdUtilAjax.checkUrl) : " + ex.toString());
+			}
+			
+			if (url != null && !url.trim().equals("")) {
+				log.info("noError = " + noError);
+				msg = new ByteArrayInputStream(noError.toString().getBytes());
 			} else {
-			msg = new ByteArrayInputStream("".getBytes());
+				msg = new ByteArrayInputStream("".getBytes());
 			}
 		}
 		return SUCCESS;
@@ -264,5 +288,5 @@ public class AdUtilAjax extends BaseCookieAction{
 //		System.out.println(previewUrl.substring(0, previewUrl.indexOf("18 -")).replace("\n", ""));
 		
 	}
-	
+
 }

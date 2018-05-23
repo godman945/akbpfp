@@ -12,14 +12,18 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.api.SyspriceOperaterAPI;
 import com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory;
 import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
+import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdSpecificWebsite;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfbxWebsiteCategoryService;
+import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdSpecificWebsiteService;
 import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
+import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfd.user.IPfdUserAdAccountRefService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
@@ -35,15 +39,13 @@ import com.pchome.enumerate.utils.EnumStatus;
 
 public class AdActionAddAction extends BaseCookieAction{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
+	private String userCategory;
 	private String message = "";
-
+	private String customerInfoId;
 	private String adActionSeq;
 	private String adActionName;
+	private String adGroupName;
 	private String adActionDesc;
 	private String adActionStartDate;
 	private String adActionEndDate;
@@ -56,14 +58,17 @@ public class AdActionAddAction extends BaseCookieAction{
 	private int tmpRemain;
 	private String backPage;
 	private String adOperatingRule;
-	
-	
-	private PfpCustomerInfoService pfpCustomerInfoService;
+	private String sysChannelPrice;
+	private String sysPriceAdPoolSeq;
+	private String adAsideRate;
+	private IPfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
-	private PfpAdActionService pfpAdActionService;
+	private IPfpAdActionService pfpAdActionService;
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private IPfpAdSpecificWebsiteService pfpAdSpecificWebsiteService;
 	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
+	private String hasActionRecord;
+	
 	//key:0  搜尋廣告+聯播網廣告(觸及廣告族群最廣泛),1 搜尋廣告(PChome找東西搜尋和搜尋夥伴),2 聯播網廣告(PChome的合作網站聯播網)
 	private Map<String,String> adTypeMap;
 	private Map<String,Integer> adStyleTypeMap;
@@ -90,10 +95,27 @@ public class AdActionAddAction extends BaseCookieAction{
 	private String pvLimitSelect;
 	private String[] websiteAddCategory;
 	private String oldWebsiteCategory;
+	//廣告形式
+	private int defaultAdType;
+	//廣告樣式
+	private String defaultAdOperatingRule;
+	//廣告播放裝置
+	private int defaultAdDevice;
+	
+	private int defaultAdGroupSearchPriceType;
+	private int defaultAdGroupSearchPrice;
+	private int defaultAdGroupChannelPrice;
+	
+	
+	private List<PfpAdAction> pfpAdActionList;
+	private List<PfpAdGroup> pfpAdGroupList;
 	
 	private Map<String,String> adPvLimitStyleMap;
 	private Map<String,String> adPvLimitPeriodMap;
-
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	
+	private SyspriceOperaterAPI syspriceOperaterAPI;
+	
 	public String adActionAdd() throws Exception{
 		log.info("adActionAdd => adActionSeq = " + adActionSeq);
 		String referer = request.getHeader("Referer");
@@ -106,7 +128,6 @@ public class AdActionAddAction extends BaseCookieAction{
 
 		// 設定預設值
 		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		adActionName = "";
 		adActionDesc = "";
 		adActionStartDate = sdf.format(date);
@@ -526,22 +547,61 @@ public class AdActionAddAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
-	private String reversionString(String timeString){
+	
+	/*
+	 * 快速上稿活動起始畫面
+	 */
+	public String adActionFastPublishUrlView() throws Exception{
+		pfpAdActionList = pfpAdActionService.getAdActionByCustomerInfoIdAndMediaAd(super.getCustomer_info_id());
+		adActionName = "PCHOME聯播網廣告";
+		adGroupName = "PCHOME聯播網廣告";
+		customerInfoId = super.getCustomer_info_id();
 		
+		sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
+		float adAsideRate = syspriceOperaterAPI.getAdAsideRate(Float.valueOf(sysChannelPrice));
+		adAsideRate = adAsideRate == 0 ? 0 : adAsideRate;
+		this.adAsideRate = adAsideRate == 0 ? "0" : String.valueOf(adAsideRate);
+		this.userCategory = pfpCustomerInfoService.get(super.getCustomer_info_id()).getCategory();
+		if(pfpAdActionList.size() > 0){
+			PfpAdAction pfpAdAction = pfpAdActionList.get(0);
+			defaultAdType = pfpAdAction.getAdType();
+			defaultAdOperatingRule = pfpAdAction.getAdOperatingRule();
+			defaultAdDevice = pfpAdAction.getAdDevice();
+			adActionMax = String.valueOf((int)pfpAdAction.getAdActionMax());
+			adActionStartDate = sdf.format(pfpAdAction.getAdActionStartDate());
+			adActionEndDate = sdf.format(pfpAdAction.getAdActionEndDate());
+			
+			List<PfpAdGroup> list = new ArrayList<PfpAdGroup>(pfpAdAction.getPfpAdGroups());
+			if(list.size() > 0){
+				PfpAdGroup pfpAdGroup = list.get(0);
+				System.out.println(pfpAdGroup.getAdGroupName());
+				defaultAdGroupSearchPriceType = (int)pfpAdGroup.getAdGroupSearchPriceType();
+				defaultAdGroupSearchPrice = (int)pfpAdGroup.getAdGroupSearchPrice();
+				defaultAdGroupChannelPrice = (int)pfpAdGroup.getAdGroupChannelPrice();
+			}
+			pfpAdGroupList = new ArrayList<>();
+			pfpAdGroupList.addAll(pfpAdAction.getPfpAdGroups());
+			hasActionRecord = "Y";
+		}else{
+			hasActionRecord = "N";
+		}
+		return SUCCESS;
+	}
+	
+	private String reversionString(String timeString) {
 		String time = "";
 		String[] timeArray = timeString.split("");
-		for(int i=0;i<timeArray.length;i++){
+		for (int i = 0; i < timeArray.length; i++) {
 			time = timeArray[i] + time;
 		}
-		
+
 		return time;
 	}
 
-	
-	private void getAgeMap(){
-		for(int i=18;i<=75;i++){
-			adActionStartAgeMap.put(String.valueOf(i),i + "歲");
-			adActionEndAgeMap.put(String.valueOf(i),i + "歲");
+	private void getAgeMap() {
+		for (int i = 18; i <= 75; i++) {
+			adActionStartAgeMap.put(String.valueOf(i), i + "歲");
+			adActionEndAgeMap.put(String.valueOf(i), i + "歲");
 		}
 	}
 	
@@ -815,6 +875,134 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public void setAdOperatingRule(String adOperatingRule) {
 		this.adOperatingRule = adOperatingRule;
+	}
+
+	public String getAdGroupName() {
+		return adGroupName;
+	}
+
+	public void setAdGroupName(String adGroupName) {
+		this.adGroupName = adGroupName;
+	}
+
+	public List<PfpAdAction> getPfpAdActionList() {
+		return pfpAdActionList;
+	}
+
+	public void setPfpAdActionList(List<PfpAdAction> pfpAdActionList) {
+		this.pfpAdActionList = pfpAdActionList;
+	}
+
+	public String getCustomerInfoId() {
+		return customerInfoId;
+	}
+
+	public void setCustomerInfoId(String customerInfoId) {
+		this.customerInfoId = customerInfoId;
+	}
+
+	public int getDefaultAdType() {
+		return defaultAdType;
+	}
+
+	public void setDefaultAdType(int defaultAdType) {
+		this.defaultAdType = defaultAdType;
+	}
+
+	public String getDefaultAdOperatingRule() {
+		return defaultAdOperatingRule;
+	}
+
+	public void setDefaultAdOperatingRule(String defaultAdOperatingRule) {
+		this.defaultAdOperatingRule = defaultAdOperatingRule;
+	}
+
+	public int getDefaultAdDevice() {
+		return defaultAdDevice;
+	}
+
+	public void setDefaultAdDevice(int defaultAdDevice) {
+		this.defaultAdDevice = defaultAdDevice;
+	}
+
+	public List<PfpAdGroup> getPfpAdGroupList() {
+		return pfpAdGroupList;
+	}
+
+	public void setPfpAdGroupList(List<PfpAdGroup> pfpAdGroupList) {
+		this.pfpAdGroupList = pfpAdGroupList;
+	}
+
+	public String getSysChannelPrice() {
+		return sysChannelPrice;
+	}
+
+	public void setSysChannelPrice(String sysChannelPrice) {
+		this.sysChannelPrice = sysChannelPrice;
+	}
+
+	public SyspriceOperaterAPI getSyspriceOperaterAPI() {
+		return syspriceOperaterAPI;
+	}
+
+	public void setSyspriceOperaterAPI(SyspriceOperaterAPI syspriceOperaterAPI) {
+		this.syspriceOperaterAPI = syspriceOperaterAPI;
+	}
+
+	public String getSysPriceAdPoolSeq() {
+		return sysPriceAdPoolSeq;
+	}
+
+	public void setSysPriceAdPoolSeq(String sysPriceAdPoolSeq) {
+		this.sysPriceAdPoolSeq = sysPriceAdPoolSeq;
+	}
+
+	public String getAdAsideRate() {
+		return adAsideRate;
+	}
+
+	public void setAdAsideRate(String adAsideRate) {
+		this.adAsideRate = adAsideRate;
+	}
+
+	public String getHasActionRecord() {
+		return hasActionRecord;
+	}
+
+	public void setHasActionRecord(String hasActionRecord) {
+		this.hasActionRecord = hasActionRecord;
+	}
+
+	public String getUserCategory() {
+		return userCategory;
+	}
+
+	public void setUserCategory(String userCategory) {
+		this.userCategory = userCategory;
+	}
+
+	public int getDefaultAdGroupSearchPriceType() {
+		return defaultAdGroupSearchPriceType;
+	}
+
+	public void setDefaultAdGroupSearchPriceType(int defaultAdGroupSearchPriceType) {
+		this.defaultAdGroupSearchPriceType = defaultAdGroupSearchPriceType;
+	}
+
+	public int getDefaultAdGroupSearchPrice() {
+		return defaultAdGroupSearchPrice;
+	}
+
+	public void setDefaultAdGroupSearchPrice(int defaultAdGroupSearchPrice) {
+		this.defaultAdGroupSearchPrice = defaultAdGroupSearchPrice;
+	}
+
+	public int getDefaultAdGroupChannelPrice() {
+		return defaultAdGroupChannelPrice;
+	}
+
+	public void setDefaultAdGroupChannelPrice(int defaultAdGroupChannelPrice) {
+		this.defaultAdGroupChannelPrice = defaultAdGroupChannelPrice;
 	}
 
 }

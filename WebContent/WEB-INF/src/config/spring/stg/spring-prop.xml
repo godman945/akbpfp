@@ -14,7 +14,8 @@
                 <value>classpath:config/prop/stg/stg.jdbc.properties</value>
                 <value>classpath:config/prop/stg/stg.rmi.properties</value>
                 <value>classpath:config/prop/stg/stg.server.properties</value>
-                <value>classpath:config/prop/stg/stg.buInfo.properties</value>   		
+                <value>classpath:config/prop/stg/stg.buInfo.properties</value>
+                <value>classpath:config/prop/stg/stg.redis.properties</value>
             </list>
         </property>
     </bean>

@@ -242,6 +242,49 @@
     	
     <!-- 影音廣告  END-->
 
+	<!-- 圖文廣告-多筆網址刊登 -->
+	<!-- 輸入網址搜尋 -->
+	<action name="searchStoreProductURLAjax" class="AdSearchURLAjax" method="searchStoreProductURLData" >
+    	<interceptor-ref name="loginCheckStack" />
+    	<result type="json" name="success">
+			<param name="root">dataMap</param>
+       	</result>
+    </action>
+    
+	<!-- 切換頁及改變每頁顯示N筆 -->
+    <action name="changePageOrPageSizeAjax" class="AdSearchURLAjax" method="changePageOrPageSize" >
+    	<interceptor-ref name="loginCheckStack" />
+    	<result type="json" name="success">
+			<param name="root">dataMap</param>
+       	</result>
+    </action>
+    
+    <!-- 查詢結果修改促銷價按鈕事件 -->
+    <action name="modifyPriceAjax" class="AdSearchURLAjax" method="modifyPrice" >
+    	<interceptor-ref name="loginCheckStack" />
+    	<result type="json" name="success">
+			<param name="root">dataMap</param>
+       	</result>
+    </action>
+    
+    <!-- 查詢結果修改廣告明細按鈕事件 -->
+    <action name="modifyADDetailAjax" class="AdSearchURLAjax" method="modifyADDetail" >
+    	<interceptor-ref name="loginCheckStack" />
+    	<result type="json" name="success">
+			<param name="root">dataMap</param>
+       	</result>
+    </action>
+    
+    <!-- 多網址上搞送出審核 -->
+    <action name="doAdAdAddTmgManyURLAjax" class="AdAddAction" method="doAdAdAddTmgManyURL">
+   		<interceptor-ref name="loginCheckStack" />
+   		<interceptor-ref name="adPrivilegeInterceptor" />
+   		<result type="json" name="success">
+    		<param name="root">dataMap</param>
+      	</result>
+   	</action>
+	<!-- 圖文廣告-多筆網址刊登 END-->
+	
 	<action name="adAdEdit" class="AdEditAction" method="AdAdEdit">
 		<interceptor-ref name="loginCheckStack" />
 		<interceptor-ref name="adPrivilegeInterceptor" />
@@ -526,13 +569,6 @@
 			<result type="json" name="success">
 			 <param name="root">result</param>
 			</result>
-			<!-- 
-			<result type="redirectAction" name="success">
-				<param name="actionName">adGroupView</param>  
-				<param name="adActionSeq">${adActionSeq}</param>  
-			</result>
-			 -->
-			
     	</action>
     	
     	<!-- 檢視廣告第三頁 -->
@@ -643,8 +679,60 @@
         	</result>
      	</action>
     	
-    	
-    	
     	<!-- 圖片廣告 END -->
+    	
+    	<!-- 快速刊登廣告 START -->
+    	<action name="adFastPublishAdd" class="AdAddAction" method="adFastPublishAdd">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<!---->  <result type="tiles" name="success">.ad.fast.publish.add</result> 
+			<!--  <result type="tiles" name="success">.ad.ad.add</result> -->
+			
+			<result type="redirectAction" name="notOwner">
+				<param name="actionName">adActionView</param>  
+			</result>
+	    </action>
+	    
+	    <action name="adConfirmFastPublishUrlAjax" class="AdSearchURLAjax" method="adConfirmFastPublishUrl">
+       		<interceptor-ref name="loginCheckStack" />
+       		<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+     	
+     	<action name="adActionFastPublishUrlViewAction" class="AdActionAddAction" method="adActionFastPublishUrlView">
+       		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">.ad.action.view.fastpublishurl</result>
+			<result type="redirectAction" name="notOwner">
+				<param name="actionName">adActionView</param>  
+			</result>
+     	</action>
+     	
+     	<!-- 取得廣告活動設定資料 -->
+     	<action name="adActionInfoAjax" class="AdSearchURLAjax" method="adActionInfo">
+       		<interceptor-ref name="loginCheckStack" />
+       		<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+     	<!-- 取得分類設定資料 -->
+     	<action name="adGroupInfoAjax" class="AdSearchURLAjax" method="adGroupInfo">
+       		<interceptor-ref name="loginCheckStack" />
+       		<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+
+		<action name="adAddFastPublisSaveAjax" class="AdAddAction" method="doAdAdAddFastPublis">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+       		<result type="json" name="success">
+        		<param name="root">result</param>
+        	</result>
+     	</action>
+     	
+    	<!-- 快速刊登廣告 END -->
+    	
     </package>
 </struts>

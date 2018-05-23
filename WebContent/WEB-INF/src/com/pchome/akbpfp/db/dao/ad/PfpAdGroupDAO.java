@@ -772,7 +772,7 @@ public class PfpAdGroupDAO extends BaseDAO<PfpAdGroup,String> implements IPfpAdG
 		StringBuffer hql = new StringBuffer();
 		hql.append("select adGroupSeq,");
 		hql.append(" COALESCE(sum(adPv),0), ");
-		hql.append(" COALESCE(sum((case when adClkPriceType = 'CPC' then adClk else adView end)),0), ");
+		hql.append(" COALESCE(sum((case when adClkPriceType = 'CPC' then (adClk - adInvalidClk) else adView end)),0), ");
 		hql.append(" COALESCE(sum(adClkPrice),0), ");
 		hql.append(" COALESCE(sum(adInvalidClk),0), ");
 		hql.append(" COALESCE(sum(adInvalidClkPrice),0), ");

@@ -229,4 +229,11 @@
     <bean id="PfpBuService" class="com.pchome.akbpfp.db.service.bu.PfpBuService">
              <property name="dao" ref="PfpBuDAO" />
     </bean>
+    
+	<!-- 多網址上搞 -->
+    <bean id="PfpAdManyURLSearchService" class="com.pchome.akbpfp.db.service.admanyurlsearch.PfpAdManyURLSearchService">
+		<property name="redisAPI" ref="RedisAPI" />
+		<property name="manyURLRediskey" value="${redis.manyURL.rediskey}" />
+		<property name="springEmailUtil" ref="SpringEmailUtil" />
+    </bean>
 </beans>

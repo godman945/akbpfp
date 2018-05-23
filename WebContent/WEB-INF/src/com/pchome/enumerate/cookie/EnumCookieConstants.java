@@ -17,7 +17,8 @@ public enum EnumCookieConstants {
 	COOKIE_USING_CODE("ISO-8859-1"),									// 讀寫 cookie 所用的編碼
 	COOKIE_BILLING_BILLING_PCHOME("billing_pchome"),					// 金流處理訂單和登入帳戶 Id 不一樣cookie
 	COOKIE_BILLING_CUSTOMERINFO("billing_customer_info"),				// 金流判斷總管理者 cookie
-	COOKIE_CHOOSE_DATE("choose_date");									// PFP date cookie
+	COOKIE_CHOOSE_DATE("choose_date"),									// PFP date cookie
+	COOKIE_PFPCART("pfpcart");											// PFP多網址上搞
 	
 	public static final int COOKIE_MAX_AGE = 60*60*24*365*30;	//cookie 可用時間
 	public static final int COOKIE_ONE_HOUR_AGE = 60*60;		//cookie 可用時間

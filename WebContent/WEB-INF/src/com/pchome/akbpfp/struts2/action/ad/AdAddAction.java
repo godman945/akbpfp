@@ -1,9 +1,15 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,6 +29,7 @@ import javax.imageio.stream.ImageInputStream;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -31,10 +38,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.api.ControlPriceAPI;
+import com.pchome.akbpfp.api.RedisAPI;
 import com.pchome.akbpfp.api.SyspriceOperaterAPI;
 import com.pchome.akbpfp.db.pojo.AdmDefineAd;
 import com.pchome.akbpfp.db.pojo.PfbxSize;
 import com.pchome.akbpfp.db.pojo.PfpAd;
+import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpAdExcludeKeyword;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
@@ -42,16 +51,19 @@ import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
 import com.pchome.akbpfp.db.pojo.PfpAdVideoSource;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.DefineAdService;
+import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
 import com.pchome.akbpfp.db.service.ad.PfpAdDetailService;
 import com.pchome.akbpfp.db.service.ad.PfpAdExcludeKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
 import com.pchome.akbpfp.db.service.ad.PfpAdKeywordService;
 import com.pchome.akbpfp.db.service.ad.PfpAdService;
+import com.pchome.akbpfp.db.service.admanyurlsearch.IPfpAdManyURLSearchService;
 import com.pchome.akbpfp.db.service.advideo.IPfpAdVideoSourceService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfbx.IPfbSizeService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdDetailVO;
+import com.pchome.akbpfp.db.vo.ad.PfpAdManyURLVO;
 import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.akbpfp.godutil.ImageVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -59,6 +71,7 @@ import com.pchome.enumerate.ad.EnumAdCannelMobileSize;
 import com.pchome.enumerate.ad.EnumAdChannelPCSize;
 import com.pchome.enumerate.ad.EnumAdDetail;
 import com.pchome.enumerate.ad.EnumAdDevice;
+import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdSearchMobileSize;
 import com.pchome.enumerate.ad.EnumAdSearchPCSize;
 import com.pchome.enumerate.ad.EnumAdSize;
@@ -68,8 +81,10 @@ import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.ad.EnumAdVideoDownloadStatus;
 import com.pchome.enumerate.ad.EnumAdVideoSizePoolType;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
+import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.soft.depot.utils.CookieUtil;
 import com.pchome.soft.depot.utils.HttpUtil;
 import com.pchome.soft.depot.utils.SpringZipCompress;
 
@@ -77,8 +92,11 @@ import com.pchome.soft.depot.utils.SpringZipCompress;
 public class AdAddAction extends BaseCookieAction{
 
 	private static final long serialVersionUID = 1L;
+	private float adActionMax;
 	private String message = "";
-	
+	private String adActionSeq;
+	private String adActionStartDate;
+	private String adActionEndDate;
 	private String adActionName;
 	private String adGroupSeq;
 	private String adGroupName;
@@ -91,7 +109,7 @@ public class AdAddAction extends BaseCookieAction{
 	private String[] videoDetailMap;
 	private String adVideoURL;
 	private String adTitle;
-	
+	private String admenuul;
 	private String videoTime;
 	private String adDetailSeq;
 	private String adPoolSeq;
@@ -106,7 +124,6 @@ public class AdAddAction extends BaseCookieAction{
 	private String backPage;				// 取消的返回頁面
 	private String divBatchWord = "display:none;";		// 為了配合 adFreeAdAddKeyword 做的設定
 	private String batchkeywords = "";					// 為了配合 adFreeAdAddKeyword 做的設定
-
 	private String fileContentType;
 	private String photoTmpPath;
 	private String photoPath;
@@ -114,10 +131,12 @@ public class AdAddAction extends BaseCookieAction{
 	// return data
 	private InputStream msg;
 	private String result;
-
+	private String adGroupSearchPriceType;
+	private String adGroupSearchPrice;
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdGroupService pfpAdGroupService;
+	private IPfpAdActionService pfpAdActionService;
 	private PfpAdService pfpAdService;
 	private PfpAdDetailService pfpAdDetailService;
 	private PfpAdKeywordService pfpAdKeywordService;
@@ -132,11 +151,8 @@ public class AdAddAction extends BaseCookieAction{
 	private List<PfbxSize> searchMobileSizeList = new ArrayList<PfbxSize>();
 	private List<PfbxSize> channelPCSizeList = null;
 	private List<PfbxSize> channelMobileSizeList = new ArrayList<PfbxSize>();
-	
 	//影音廣告支援尺寸
 	private Map<String,String> adVideoSizeMap;
-	
-	
 	//圖片上傳位置
 	private String imgUploadPath;
 	private ControlPriceAPI controlPriceAPI;
@@ -154,6 +170,17 @@ public class AdAddAction extends BaseCookieAction{
 	private String adGroupChannelPrice;
 	//是否直立影音
 	private boolean verticalAd;
+	
+	private String bookmark; //圖文廣告選擇哪個頁籤
+	private RedisAPI redisAPI;
+	private String manyURLRediskey;
+	//新增Ad成功的seq
+	private Map<String,Object> deleteAdMap = new HashMap<>();
+	private List<String> deleteAdList = new ArrayList<>();
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	Map<String,Object> dataMap;
+	private String adFastPublishUrlInfo; //多網址上稿，勾選的資料flag=Y
+	private IPfpAdManyURLSearchService pfpAdManyURLSearchService;
 	
 	//新增廣告
 	public String AdAdAdd() throws Exception {
@@ -180,7 +207,15 @@ public class AdAddAction extends BaseCookieAction{
 		//多媒體廣告
 		if(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName().equals(adOperatingRule)){
 			saveAndNew = "";
-			if(adStyle == null)		adStyle = "TMG";
+			if(adStyle == null){
+				adStyle = "TMG";
+				//進入多筆網址刊登頁籤，新增cookie
+				if ("fastURLAdAdd".equals(bookmark)) {
+					CookieUtil.writeCookie(response, EnumCookieConstants.COOKIE_PFPCART.getValue(), String.valueOf(new Date().getTime()), EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(), null);
+					//進入多筆網址刊登頁籤，則先清除redis上的資料
+//					redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id());
+				}
+			}
 			PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 			String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
 			String adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
@@ -237,18 +272,18 @@ public class AdAddAction extends BaseCookieAction{
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 
 		// 新增廣告
-		addAd(pfpAdGroup,null);
+		addAd(pfpAdGroup, null);
 		
 		String imgDetail = "";
 		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
 		for(int i = 0; i < adDetailID.length; i++) {
 		    if(i == 0 && adStyle.equals("TMG")) {
-			try {
-			    if(StringUtils.isNotBlank(imgFile)) {
-				File iPath = new File(photoPath);		// 圖片的存放路徑
-				File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
-				if(!iPath.exists())			iPath.mkdirs();
-				if(!iTmpPath.exists())		iTmpPath.mkdirs();
+				try {
+				    if(StringUtils.isNotBlank(imgFile)) {
+						File iPath = new File(photoPath);		// 圖片的存放路徑
+						File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
+						if(!iPath.exists())			iPath.mkdirs();
+						if(!iTmpPath.exists())		iTmpPath.mkdirs();
 						String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
 						File adFile = null;	// 上傳圖片的檔名
 						if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
@@ -258,7 +293,7 @@ public class AdAddAction extends BaseCookieAction{
 						}
 						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
 						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
-
+	
 						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
 					} else {
 						if(StringUtils.isBlank(adDetailContent[0])) {
@@ -278,16 +313,17 @@ public class AdAddAction extends BaseCookieAction{
 				if(adDetailContent[i].indexOf("http") < 0 ) {
 					adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
 				}else{
-				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-				}
 			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-			    	adDetailContent[i] = adDetailContent[i].trim();
+				}
+		    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+		    	adDetailContent[i] = adDetailContent[i].trim();
 			}
+			
 			if(adDetailID[i].equals("show_url")) {
 			    if(adDetailContent[i].indexOf("http://") < 0 ) {
-				adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
+			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
 			    }else{
-				adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
 			    }
 //			    adDetailContent[i] = (HttpUtil.getInstance().getRealUrl(adDetailContent[i]).replace("http://", ""));
 			    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
@@ -336,6 +372,271 @@ public class AdAddAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 
+	/**
+	 * 新增圖文廣告-多網址上搞(畫面雙頁籤部分)
+	 * @return
+	 * @throws Exception 
+	 */
+	public String doAdAdAddTmgManyURL() throws Exception{
+		//TODO 多網址上搞
+		log.info("doAdAdAddTmgManyURL => adGroupSeq = " + adGroupSeq + ",=> adFastPublishUrlInfo =" + adFastPublishUrlInfo + ";");
+		
+		dataMap = new HashMap<String, Object>();
+
+		PfpAdManyURLVO vo = new PfpAdManyURLVO();
+		vo.setId(super.getCustomer_info_id());
+		vo.setRedisCookieVal(CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_PFPCART.getValue(), null));
+		
+		processKeyWordList();
+		processExcludeKeyWordList();
+		
+		//檢查相關資料是否正確
+		doAdAdAddTmgManyURLCheckData(vo);
+		if(StringUtils.isNotEmpty(vo.getMessage())){
+			dataMap.put("status", "ERROR");
+			dataMap.put("msg", vo.getMessage());
+			return SUCCESS;
+		}
+		
+		//設定一些參數值
+		adPoolSeq = EnumAdStyle.TMG.getAdPoolSeq();
+		templateProductSeq = EnumAdStyle.TMG.getTproSeq();
+		adClass = "1";   // 廣告分類
+		adStyle = "TMG"; // 廣告型態
+		
+		// 新增資料到table
+		// 取得此客編在Redis的資料
+		pfpAdManyURLSearchService.getRedisURLData(vo);
+		
+		JSONObject redisJsonObject = vo.getRedisJsonObject();
+		String products = redisJsonObject.getJSONArray("products").toString();
+		
+		JSONObject adFastPublishUrlInfoJson = new JSONObject(adFastPublishUrlInfo); 
+		Iterator adFastPublishUrlInfoJsoIterator = adFastPublishUrlInfoJson.keys();
+        while (adFastPublishUrlInfoJsoIterator.hasNext()) {
+        	String key = adFastPublishUrlInfoJsoIterator.next().toString();
+        	if("Y".equals(adFastPublishUrlInfoJson.get(key))){ //是選取的資料
+        		
+        		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+        		adSeq = null; //清除adSeq再建立一筆
+        		//新增資料到pfp_ad table
+        		addAd(pfpAdGroup, null);
+        		
+        		//找到URL位置
+        		int index = products.indexOf(key.replace("_ckeck_flag", ""));
+        		//取得URL前後段字串
+        		String startStr = products.substring(0, index);
+        		String endStr = products.substring(index, products.length());
+        		//由前後段字串找到包url那一段的位置
+        		int startStrIndex = startStr.lastIndexOf("{\"");
+        		int endStrIndex = endStr.indexOf("\"}");
+        		//取得所需要斷落字串
+        		String data = products.substring(startStrIndex, (startStr.length() + endStrIndex + 2));
+        		//取得資料
+        		JSONObject redisJsonObjectDetail = new JSONObject(data.toString());
+        		
+        		//新增資料到pfp_ad_detail table
+        		//新增圖片資料
+        		List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, "img", null, adPoolSeq);
+        		String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		String imgPath = redisJsonObjectDetail.get("pic_url").toString();
+        		imgPath = processImgPath(imgPath);
+        		newSaveAdDetail(imgPath, "img", adPoolSeq, defineAdSeq);
+        		
+        		//新增標題資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "title", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		newSaveAdDetail(redisJsonObjectDetail.get("title").toString(), "title", adPoolSeq, defineAdSeq);
+        		
+        		//新增完整標題資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "intact_title", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		newSaveAdDetail(redisJsonObjectDetail.get("intact_title").toString(), "intact_title", adPoolSeq, defineAdSeq);
+        		
+        		//新增內文資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "content", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		newSaveAdDetail(redisJsonObjectDetail.get("description").toString(), "content", adPoolSeq, defineAdSeq);
+        		
+        		//新增完整內文資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "intact_content", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		newSaveAdDetail(redisJsonObjectDetail.get("intact_description").toString(), "intact_content", adPoolSeq, defineAdSeq);
+        		
+        		//新增原價資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "sales_price", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		newSaveAdDetail(redisJsonObjectDetail.get("sp_price").toString(), "sales_price", adPoolSeq, defineAdSeq);
+        		
+        		//新增促銷價資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "promotional_price", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		newSaveAdDetail(redisJsonObjectDetail.get("price").toString(), "promotional_price", adPoolSeq, defineAdSeq);
+        		
+        		//新增實際網址資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "real_url", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		newSaveAdDetail(redisJsonObjectDetail.get("link_url").toString(), "real_url", adPoolSeq, defineAdSeq);
+        		
+        		//新增顯示網址資料
+        		admDefineAd = defineAdService.getDefineAdByCondition(null, "show_url", null, adPoolSeq);
+        		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		newSaveAdDetail(redisJsonObjectDetail.get("show_url").toString(), "show_url", adPoolSeq, defineAdSeq);
+        		
+        		// 新增關鍵字
+        		addKeywords(pfpAdGroup);
+        		//新增排除關鍵字
+        		addExcludeKeywords(pfpAdGroup);
+        	}
+        }
+
+		return SUCCESS;
+	}
+	
+	/**
+	 * 處理關鍵字
+	 */
+	private void processKeyWordList() {
+		List<String> keyWordList = new ArrayList<String>();
+		if (!keywords[0].equals("[]")) {
+			String data = "";
+			for (char a : keywords[0].toCharArray()) {
+				if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+					continue;
+				}
+				if (String.valueOf(a).equals("]")) {
+					keyWordList.add(data);
+				} else {
+					if (String.valueOf(a).equals(",")) {
+						keyWordList.add(data);
+						data = "";
+					} else {
+						data = data + String.valueOf(a);
+					}
+				}
+			}
+			keywords = keyWordList.toArray(new String[keyWordList.size()]);
+		} else { //無輸入則清空
+			keywords = new String[] {};
+		}
+	}
+
+	/**
+	 * 處理排除關鍵字
+	 */
+	private void processExcludeKeyWordList() {
+		List<String> excludeKeyWordList = new ArrayList<String>();
+    	if (!excludeKeywords[0].equals("[]")) {
+    	    String data = "";
+    	    for (char a : excludeKeywords[0].toCharArray()) {
+        		if (String.valueOf(a).equals("[") || String.valueOf(a).equals("\"")) {
+        		    continue;
+        		}
+        		if (String.valueOf(a).equals("]")) {
+        		    excludeKeyWordList.add(data);
+        		} else {
+        		    if (String.valueOf(a).equals(",")) {
+            			excludeKeyWordList.add(data);
+            			data = "";
+        		    } else {
+        		        data = data + String.valueOf(a);
+        		    }
+        		}
+    	    }
+    	    excludeKeywords = excludeKeyWordList.toArray(new String[excludeKeyWordList.size()]);
+		} else { //無輸入則清空
+			excludeKeywords = new String[] {};
+		}
+	}
+	
+	/**
+	 * 處理下載圖片及路徑
+	 * @param imgPath
+	 * @return
+	 * @throws IOException
+	 */
+	private String processImgPath(String imgPath) throws IOException {
+		if (imgPath.indexOf("display:none") > -1) { // 沒有圖片，不做處理
+			return imgPath;
+		}
+		
+		Date date = new Date();
+		String photoPath = photoDbPathNew + super.getCustomer_info_id() + "/" + sdf.format(date) + "/original";
+		File file = new File(photoPath);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		
+		// 取得副檔名，處理圖片如果有被加timestamp等參數從?位置抓取副檔名，沒被加參數則直接依長度取最後3碼
+		int startLength = (imgPath.indexOf("?") > -1 ? imgPath.indexOf("?") - 3 : imgPath.length() - 3);
+		int endLength = (imgPath.indexOf("?") > -1 ? imgPath.indexOf("?") : imgPath.length());
+		String filenameExtension = imgPath.substring(startLength, endLength);
+        
+        URL url = new URL(imgPath);
+        String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension; // 存放路徑 + 檔名
+        
+        if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
+            InputStream in = url.openStream();
+            Files.copy(in, new File(imgPathAndName).toPath());
+            
+        } else { // jpg圖片下載方式
+            BufferedImage img = ImageIO.read(url);
+            int width = img.getWidth();
+            int height = img.getHeight();
+            if (width != height) { // 長寬不相同，為長方形。
+                // url圖片要改成新的寬高
+                int newWidth = 250;
+                int newHeight = 188;
+ 
+                // 底圖的寬、高、顏色
+                int baseMapWidth = 250;
+                int baseMapHeight = 250;
+                Color baseMapWhite = new Color(255, 255, 255); // Color white
+                int rgb = baseMapWhite.getRGB();
+                BufferedImage baseMap = new BufferedImage(baseMapWidth, baseMapHeight, BufferedImage.TYPE_INT_RGB); // 建立一個空的圖片
+                // 將每個像素調整為設定的顏色
+                for (int i = 0; i < baseMapWidth; i++) {
+                    for (int j = 0; j < baseMapHeight; j++) {
+                        baseMap.setRGB(i, j, rgb);
+                    }
+                }
+                
+                // 建立url圖片區
+                BufferedImage image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_BGR);
+                Graphics imageGraphics = image.createGraphics();
+                imageGraphics.drawImage(img, 0, 0, newWidth, newHeight, null); // 畫入url圖片及設定新寬高
+ 
+                // 取得底圖的繪圖區
+                Graphics baseMapGraphics = baseMap.getGraphics();
+                // 畫入調整好的新url圖片(就是底圖白色，圖片蓋在前面一層)，設定高從31px開始，0~31px則顯示成白色，呈現置中效果
+                baseMapGraphics.drawImage(image, 0, 31, null);
+                // 下載最後處理完成的基本圖
+                ImageIO.write(baseMap, filenameExtension, new File(imgPathAndName));
+                
+            } else { // 相同為正方形，直接下載
+                ImageIO.write(img, filenameExtension, new File(imgPathAndName));
+            }
+        }
+        
+		imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + "." + filenameExtension;
+		return imgPath;
+	}
+
+	/**
+	 * 檢查相關資料是否正確
+	 * @param vo
+	 * @throws JSONException 
+	 */
+	private void doAdAdAddTmgManyURLCheckData(PfpAdManyURLVO vo) throws JSONException {
+		//檢查關鍵字比對方式是否選取。廣告類型0:全部 1:搜尋廣告+聯播網廣告 才有輸入關鍵字欄位部分 && keywords.length != 0 
+		if (keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) 
+				&& StringUtils.isBlank(adKeywordPhraseOpen) && StringUtils.isBlank(adKeywordPrecisionOpen)) {
+			vo.setMessage("請選擇關鍵字比對方式！");
+		} else if (!adFastPublishUrlInfo.contains("\"Y\"")) { // 檢查是否選取物件
+			vo.setMessage("尚未選擇商品物件");
+		}
+	}
+	
 	/*
 	 * 儲存影音上稿資料
 	 * 
@@ -504,8 +805,6 @@ public class AdAddAction extends BaseCookieAction{
 			return SUCCESS;
 		}
 	}
-	
-
 
 	// 新增文字式廣告
 	@Transactional
@@ -522,30 +821,30 @@ public class AdAddAction extends BaseCookieAction{
 		// 新增廣告
 		addAd(pfpAdGroup,null);
 		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
-		for(int i = 0; i < adDetailID.length; i++) {
-		    adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
-		    List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, adDetailID[i], null, adPoolSeq);
-		    String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-		    if(adDetailID[i].equals("real_url") || adDetailID[i].equals("show_url")) {
-			if(adDetailContent[i].indexOf("http") !=0 ) {
-			    adDetailContent[i] = "http://" + adDetailContent[i];
+		for (int i = 0; i < adDetailID.length; i++) {
+			adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+			List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, adDetailID[i], null, adPoolSeq);
+			String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+			if (adDetailID[i].equals("real_url") || adDetailID[i].equals("show_url")) {
+				if (adDetailContent[i].indexOf("http") != 0) {
+					adDetailContent[i] = "http://" + adDetailContent[i];
+				}
+				adDetailContent[i] = adDetailContent[i].trim();
 			}
-			adDetailContent[i] = adDetailContent[i].trim();
-		    }
-		pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
-		pfpAdDetailVO.setAdSeq(adSeq);
-		pfpAdDetailVO.setAdPoolSeq(adPoolSeq);
-		pfpAdDetailVO.setAdDetailId(adDetailID[i]);
-		pfpAdDetailVO.setAdDetailContent(adDetailContent[i]);
-		if(adDetailID[i].equals("img") || adDetailID[i].equals("title") || adDetailID[i].equals("content")) {
-		    pfpAdDetailVO.setVerifyFlag("y");
-		} else {
-		    pfpAdDetailVO.setVerifyFlag("n");
-		}
-		pfpAdDetailVO.setDefineAdSeq(defineAdSeq);
-		pfpAdDetailVO.setAdDetailCreateTime(new Date());
-		pfpAdDetailVO.setAdDetailUpdateTime(new Date());
-		pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
+			pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
+			pfpAdDetailVO.setAdSeq(adSeq);
+			pfpAdDetailVO.setAdPoolSeq(adPoolSeq);
+			pfpAdDetailVO.setAdDetailId(adDetailID[i]);
+			pfpAdDetailVO.setAdDetailContent(adDetailContent[i]);
+			if (adDetailID[i].equals("img") || adDetailID[i].equals("title") || adDetailID[i].equals("content")) {
+				pfpAdDetailVO.setVerifyFlag("y");
+			} else {
+				pfpAdDetailVO.setVerifyFlag("n");
+			}
+			pfpAdDetailVO.setDefineAdSeq(defineAdSeq);
+			pfpAdDetailVO.setAdDetailCreateTime(new Date());
+			pfpAdDetailVO.setAdDetailUpdateTime(new Date());
+			pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
 		}
 
 		// 新增關鍵字
@@ -558,7 +857,7 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdGroupService.save(pfpAdGroup);
 
 		// 是否為 "儲存後再新增廣告"
-		if(saveAndNew != null && saveAndNew.equals("save+new")) {
+		if (saveAndNew != null && saveAndNew.equals("save+new")) {
 			return "saveNew";
 		}
 		return SUCCESS;
@@ -597,45 +896,45 @@ public class AdAddAction extends BaseCookieAction{
 						//message = "請輸入" + adDetailName[i] + " ！";
 					}
 				} else {
-					if(adDetailID[i].equals("title")) {
-						if(adDetailContent[i].length() > 17) {
+					if (adDetailID[i].equals("title")) {
+						if (adDetailContent[i].length() > 17) {
 							message = "廣告標題不可超過 17  字！";
 						}
-					} else if(adDetailID[i].equals("content")) {
-						if(adDetailContent[i].length() > 38) {
+					} else if (adDetailID[i].equals("content")) {
+						if (adDetailContent[i].length() > 38) {
 							message = "廣告內容不可超過 38  字！";
 						}
-					} else if(adDetailID[i].equals("real_url")) {
-						if(StringUtil.isEmpty(adDetailContent[i])){
-						    message = "請填寫廣告連結網址.";
+					} else if (adDetailID[i].equals("real_url")) {
+						if (StringUtil.isEmpty(adDetailContent[i])) {
+							message = "請填寫廣告連結網址.";
 						}
 
-					    	if(adDetailContent[i].length() > 1024) {
+						if (adDetailContent[i].length() > 1024) {
 							message = "廣告連結網址不可超過 1024字！";
 						} else {
 							String url = adDetailContent[i];
 							int urlState = 0;
-							if(url.indexOf("http") != 0) {
-								url = "http://"+url;
+							if (url.indexOf("http") != 0) {
+								url = "http://" + url;
 							}
 							urlState = HttpUtil.getInstance().getStatusCode(url);
-							if(urlState < 200 && urlState >= 300) {
+							if (urlState < 200 && urlState >= 300) {
 								message = "請輸入正確的廣告連結網址！";
 							}
 						}
-					} else if(adDetailID[i].equals("show_url")) {
-					    	if(StringUtil.isEmpty(adDetailContent[i])){
-					    	    message = "請填寫廣告顯示網址.";
-					    	}
-					    	String url = adDetailContent[i];
-					    	int urlState = 0;
-					    	if(url.indexOf("http") != 0) {
-					    	    url = "http://"+url;
-					    	}
-					    	urlState = HttpUtil.getInstance().getStatusCode(url);
-					    	if(urlState < 200 && urlState >= 300) {
-					    	    message = "請輸入正確的廣告顯示網址！";
-					    	}
+					} else if (adDetailID[i].equals("show_url")) {
+						if (StringUtil.isEmpty(adDetailContent[i])) {
+							message = "請填寫廣告顯示網址.";
+						}
+						String url = adDetailContent[i];
+						int urlState = 0;
+						if (url.indexOf("http") != 0) {
+							url = "http://" + url;
+						}
+						urlState = HttpUtil.getInstance().getStatusCode(url);
+						if (urlState < 200 && urlState >= 300) {
+							message = "請輸入正確的廣告顯示網址！";
+						}
 					}
 				}
 			}
@@ -673,52 +972,52 @@ public class AdAddAction extends BaseCookieAction{
 
 	// 新增關鍵字
 	private void addKeywords(PfpAdGroup pfpAdGroup) {
-		    try {
+	    try {
 			if(keywords.length == 0){
 			    return;
 			}
 			List<String> adKeywords = this.checkKeywords(adGroupSeq, keywords);
 			if(!adKeywords.isEmpty()){
-			    for(String keyword:adKeywords){
-				String adKeywordSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_KEYWORD, "_");
-				PfpAdKeyword pfpAdKeyword = new PfpAdKeyword();
-				pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
-				pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
-				pfpAdKeyword.setAdKeyword(keyword);
-				//廣泛比對設定
-				if(StringUtils.isNotBlank(adKeywordOpen)){
-					pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
-					pfpAdKeyword.setAdKeywordOpen(1);
-				} else {
-					pfpAdKeyword.setAdKeywordSearchPrice(0);
-					pfpAdKeyword.setAdKeywordOpen(0);
+				for (String keyword : adKeywords) {
+					String adKeywordSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_KEYWORD, "_");
+					PfpAdKeyword pfpAdKeyword = new PfpAdKeyword();
+					pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
+					pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
+					pfpAdKeyword.setAdKeyword(keyword);
+					// 廣泛比對設定
+					if (StringUtils.isNotBlank(adKeywordOpen)) {
+						pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+						pfpAdKeyword.setAdKeywordOpen(1);
+					} else {
+						pfpAdKeyword.setAdKeywordSearchPrice(0);
+						pfpAdKeyword.setAdKeywordOpen(0);
+					}
+					// 詞組比對設定
+					if (StringUtils.isNotBlank(adKeywordPhraseOpen)) {
+						pfpAdKeyword.setAdKeywordSearchPhrasePrice(pfpAdGroup.getAdGroupSearchPrice());
+						pfpAdKeyword.setAdKeywordPhraseOpen(1);
+					} else {
+						pfpAdKeyword.setAdKeywordSearchPhrasePrice(0);
+						pfpAdKeyword.setAdKeywordPhraseOpen(0);
+					}
+					// 精準比對設定
+					if (StringUtils.isNotBlank(adKeywordPrecisionOpen)) {
+						pfpAdKeyword.setAdKeywordSearchPrecisionPrice(pfpAdGroup.getAdGroupSearchPrice());
+						pfpAdKeyword.setAdKeywordPrecisionOpen(1);
+					} else {
+						pfpAdKeyword.setAdKeywordSearchPrecisionPrice(0);
+						pfpAdKeyword.setAdKeywordPrecisionOpen(0);
+					}
+					pfpAdKeyword.setAdKeywordChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
+					pfpAdKeyword.setAdKeywordOrder(0);
+					pfpAdKeyword.setAdKeywordPhraseOrder(0);
+					pfpAdKeyword.setAdKeywordPrecisionOrder(0);
+					pfpAdKeyword.setAdKeywordStatus(EnumStatus.Open.getStatusId());
+					pfpAdKeyword.setAdKeywordCreateTime(new Date());
+					pfpAdKeyword.setAdKeywordUpdateTime(new Date());
+					pfpAdKeywordService.saveOrUpdate(pfpAdKeyword);
+					syspriceOperaterAPI.addKeywordSysprice(keyword, pfpAdGroup.getAdGroupSearchPrice());
 				}
-				//詞組比對設定
-				if(StringUtils.isNotBlank(adKeywordPhraseOpen)){
-					pfpAdKeyword.setAdKeywordSearchPhrasePrice(pfpAdGroup.getAdGroupSearchPrice());
-					pfpAdKeyword.setAdKeywordPhraseOpen(1);
-				} else {
-					pfpAdKeyword.setAdKeywordSearchPhrasePrice(0);
-					pfpAdKeyword.setAdKeywordPhraseOpen(0);
-				}
-				//精準比對設定
-				if(StringUtils.isNotBlank(adKeywordPrecisionOpen)){
-					pfpAdKeyword.setAdKeywordSearchPrecisionPrice(pfpAdGroup.getAdGroupSearchPrice());
-					pfpAdKeyword.setAdKeywordPrecisionOpen(1);
-				} else {
-					pfpAdKeyword.setAdKeywordSearchPrecisionPrice(0);
-					pfpAdKeyword.setAdKeywordPrecisionOpen(0);
-				}
-				pfpAdKeyword.setAdKeywordChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
-				pfpAdKeyword.setAdKeywordOrder(0);
-				pfpAdKeyword.setAdKeywordPhraseOrder(0);
-				pfpAdKeyword.setAdKeywordPrecisionOrder(0);
-				pfpAdKeyword.setAdKeywordStatus(EnumStatus.Open.getStatusId());
-				pfpAdKeyword.setAdKeywordCreateTime(new Date());
-				pfpAdKeyword.setAdKeywordUpdateTime(new Date());
-				pfpAdKeywordService.saveOrUpdate(pfpAdKeyword);
-				syspriceOperaterAPI.addKeywordSysprice(keyword, pfpAdGroup.getAdGroupSearchPrice());
-			    }
 			}
 	
 		} catch(Exception ex) {
@@ -726,50 +1025,46 @@ public class AdAddAction extends BaseCookieAction{
 		}
 	}
 
-
-
-
 	/**
 	 * 檢查是否重覆新增
 	 * 1. 分類下已新增關鍵字
 	 * 2. 分類下已排除關鍵字
 	 */
-	private List<String> checkKeywords(String adGroupSeq, String[] keywords){
+	private List<String> checkKeywords(String adGroupSeq, String[] keywords) {
 		List<String> list = null;
-		if(StringUtils.isNotBlank(adGroupSeq) && keywords != null && StringUtils.isNotBlank(keywords.toString())){
-		    list = new ArrayList<String>();
-		    List<String> existKeywords = new ArrayList<String>();
+		if (StringUtils.isNotBlank(adGroupSeq) && keywords != null && StringUtils.isNotBlank(keywords.toString())) {
+			list = new ArrayList<String>();
+			List<String> existKeywords = new ArrayList<String>();
 			// 分類下已新增關鍵字
 			List<PfpAdKeyword> adKeywords = pfpAdKeywordService.findAdKeywords(adGroupSeq);
-			for(PfpAdKeyword keyword:adKeywords){
-			    existKeywords.add(keyword.getAdKeyword());
+			for (PfpAdKeyword keyword : adKeywords) {
+				existKeywords.add(keyword.getAdKeyword());
 			}
 			// 分類下已排除關鍵字
-			List<PfpAdExcludeKeyword> adExcludeKeywords =pfpAdExcludeKeywordService.findAdExcludeKeywords(adGroupSeq);
-			for(PfpAdExcludeKeyword keyword:adExcludeKeywords){
-			    existKeywords.add(keyword.getAdExcludeKeyword());
+			List<PfpAdExcludeKeyword> adExcludeKeywords = pfpAdExcludeKeywordService.findAdExcludeKeywords(adGroupSeq);
+			for (PfpAdExcludeKeyword keyword : adExcludeKeywords) {
+				existKeywords.add(keyword.getAdExcludeKeyword());
 			}
-			log.info(" keywords size: "+keywords.length);
-			log.info(" existKeywords size: "+existKeywords.size());
-			if(existKeywords.isEmpty()){
-			    for(int i=0;i<keywords.length;i++){
-				list.add(keywords[i].trim());
-			    }
-			}else{
-			    for(int i=0;i<keywords.length;i++){
-				for(String keyword:existKeywords){
-				    if(!keyword.equals(keywords[i].trim())){
+			log.info(" keywords size: " + keywords.length);
+			log.info(" existKeywords size: " + existKeywords.size());
+			if (existKeywords.isEmpty()) {
+				for (int i = 0; i < keywords.length; i++) {
 					list.add(keywords[i].trim());
-					break;
-				    }else{
-					log.info(" keywords[i]: "+keywords[i].trim());
-				    }
 				}
-			    }
+			} else {
+				for (int i = 0; i < keywords.length; i++) {
+					for (String keyword : existKeywords) {
+						if (!keyword.equals(keywords[i].trim())) {
+							list.add(keywords[i].trim());
+							break;
+						} else {
+							log.info(" keywords[i]: " + keywords[i].trim());
+						}
+					}
+				}
 			}
-		}
-		else{
-		    log.info(" check keywords is null");
+		} else {
+			log.info(" check keywords is null");
 		}
 		return list;
 	}
@@ -777,9 +1072,9 @@ public class AdAddAction extends BaseCookieAction{
 	// 新增排除關鍵字
 	private void addExcludeKeywords(PfpAdGroup pfpAdGroup) {
 		try {
-			if(excludeKeywords != null && excludeKeywords.length > 0) {
-				for(int i = 0; i < excludeKeywords.length; i++) {
-					//log.info("excludeKeywords["+i+"] = " + excludeKeywords[i]);
+			if (excludeKeywords != null && excludeKeywords.length > 0) {
+				for (int i = 0; i < excludeKeywords.length; i++) {
+					// log.info("excludeKeywords["+i+"] = " + excludeKeywords[i]);
 					String adExcludeKeywordSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_EXCLUDE_KEYWORD, "_");
 					PfpAdExcludeKeyword pfpAdExcludeKeyword = new PfpAdExcludeKeyword();
 					pfpAdExcludeKeyword.setAdExcludeKeywordSeq(adExcludeKeywordSeq);
@@ -792,7 +1087,7 @@ public class AdAddAction extends BaseCookieAction{
 				}
 			}
 
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			log.info("Exception(addExcludeKeywords):" + ex);
 		}
 	}
@@ -872,24 +1167,53 @@ public class AdAddAction extends BaseCookieAction{
 
 	/**
 	 * 新增廣告明細
-	 * */
-	public void saveAdDetail(String content ,String adDetailId,String adPoolSeq,String defineAdSeq) throws Exception{
-	    templateProductSeq = EnumAdStyle.IMG.getTproSeq();
-	    adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
-	    PfpAdDetail pfpAdDetail = new PfpAdDetail();
-	    pfpAdDetail.setAdDetailSeq(adDetailSeq);
-	    pfpAdDetail.setPfpAd(pfpAdService.getPfpAdBySeq(adSeq));
-	    pfpAdDetail.setAdDetailId(adDetailId);
-	    pfpAdDetail.setAdDetailContent(content);
-	    pfpAdDetail.setAdPoolSeq(adPoolSeq);
-	    pfpAdDetail.setDefineAdSeq(defineAdSeq);
-	    pfpAdDetail.setVerifyFlag("y");
-	    pfpAdDetail.setVerifyStatus("n");
-	    pfpAdDetail.setAdDetailCreateTime(new Date());
-	    pfpAdDetail.setAdDetailUpdateTime(new Date());
-	    pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
+	 * @param content     廣告明細內容
+	 * @param adDetailId  元件id
+	 * @param adPoolSeq   資料來源序號
+	 * @param defineAdSeq 廣告定義序號
+	 * @throws Exception
+	 */
+	public void saveAdDetail(String content, String adDetailId, String adPoolSeq, String defineAdSeq) throws Exception {
+		templateProductSeq = EnumAdStyle.IMG.getTproSeq();
+		adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+		PfpAdDetail pfpAdDetail = new PfpAdDetail();
+		pfpAdDetail.setAdDetailSeq(adDetailSeq);
+		pfpAdDetail.setPfpAd(pfpAdService.getPfpAdBySeq(adSeq));
+		pfpAdDetail.setAdDetailId(adDetailId);
+		pfpAdDetail.setAdDetailContent(content);
+		pfpAdDetail.setAdPoolSeq(adPoolSeq);
+		pfpAdDetail.setDefineAdSeq(defineAdSeq);
+		pfpAdDetail.setVerifyFlag("y");
+		pfpAdDetail.setVerifyStatus("n");
+		pfpAdDetail.setAdDetailCreateTime(new Date());
+		pfpAdDetail.setAdDetailUpdateTime(new Date());
+		pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
 	}
-
+	
+	/**
+	 * 新增廣告明細 - 沒有修改templateProductSeq
+	 * @param content     廣告明細內容
+	 * @param adDetailId  元件id
+	 * @param adPoolSeq   資料來源序號
+	 * @param defineAdSeq 廣告定義序號
+	 * @throws Exception
+	 */
+	private void newSaveAdDetail(String content, String adDetailId, String adPoolSeq, String defineAdSeq) throws Exception {
+		adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+		PfpAdDetail pfpAdDetail = new PfpAdDetail();
+		pfpAdDetail.setAdDetailSeq(adDetailSeq);
+		pfpAdDetail.setPfpAd(pfpAdService.getPfpAdBySeq(adSeq));
+		pfpAdDetail.setAdDetailId(adDetailId);
+		pfpAdDetail.setAdDetailContent(content);
+		pfpAdDetail.setAdPoolSeq(adPoolSeq);
+		pfpAdDetail.setDefineAdSeq(defineAdSeq);
+		pfpAdDetail.setVerifyFlag("y");
+		pfpAdDetail.setVerifyStatus("n");
+		pfpAdDetail.setAdDetailCreateTime(new Date());
+		pfpAdDetail.setAdDetailUpdateTime(new Date());
+		pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
+	}
+	
 	/**
 	 * 進行批次上傳圖像廣告
 	 * 1.圖片存檔至暫存file
@@ -1100,16 +1424,14 @@ public class AdAddAction extends BaseCookieAction{
         		    fileSize = String.valueOf(file.length() / 1024);
         		}
 
-
-                while(StringUtils.isBlank(adSeq)) {
-            		try {
-            		    adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-            		}
-            		catch (Exception e) {
-            		    log.error(e.getMessage());
-                        Thread.sleep(100);
-            		}
-                }
+				while (StringUtils.isBlank(adSeq)) {
+					try {
+						adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+					} catch (Exception e) {
+						log.error(e.getMessage());
+						Thread.sleep(100);
+					}
+				}
                 commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
 
         		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
@@ -1119,10 +1441,6 @@ public class AdAddAction extends BaseCookieAction{
 
 	    return SUCCESS;
 	}
-	
-	
-	
-	
 
 	/**
 	 * 儲存圖像上稿資料
@@ -1199,7 +1517,6 @@ public class AdAddAction extends BaseCookieAction{
     	CommonUtilModel commonUtilModel = new CommonUtilModel();
     	String customerInfoId = super.getCustomer_info_id();
     	Date date = new Date();
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
     	ImageVO imageVO = new ImageVO();
     	if (seqArray.length() > 0) {
     	    for (int i = 0; i < seqArray.length(); i++) {
@@ -1290,16 +1607,302 @@ public class AdAddAction extends BaseCookieAction{
     }
 
 	/**
+	 * 快速上稿畫面
+	 * */
+	public String adFastPublishAdd() {
+		Date d = new Date();
+		CookieUtil.writeCookie(response, EnumCookieConstants.COOKIE_PFPCART.getValue(), String.valueOf(d.getTime()), EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(), null);
+		log.info(">>>>>> init redis:" + manyURLRediskey + super.getCustomer_info_id() + String.valueOf(d.getTime()));
+//		redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id());
+		adStyle = "TMG";
+		adType = "";
+		bookmark = "fastURLAdAdd";
+		admenuul = "fastPublishAdd";
+		adActionName = "PCHOME聯播網廣告";
+		adGroupName = "PCHOME聯播網廣告";
+		return SUCCESS;
+	}
+	
+	/**
+	 * 快速上稿新增廣告
+	 * */
+	public String doAdAdAddFastPublis() throws Exception{
+		try{
+			//先呼叫建立活動再呼叫建立廣告明細
+			boolean doAdAdAddFastPublisDetailFlag = false;
+			if(StringUtils.isNotBlank(adActionName)){
+				doAdActionAdd();
+				doAdAdAddFastPublisDetailFlag = doAdAdAddFastPublisDetail();
+			}else{
+				doAdAdAddFastPublisDetailFlag = doAdAdAddFastPublisDetail();
+			}
+			
+			if(doAdAdAddFastPublisDetailFlag){
+//				System.out.println("adActionName:"+adActionName);
+//				System.out.println("adGroupName:"+adGroupName);
+//				System.out.println("adActionStartDate:"+adActionStartDate);
+//				System.out.println("adActionEndDate:"+adActionEndDate);
+//				System.out.println("adGroupSeq:"+adGroupSeq);
+//				System.out.println("adActionSeq:"+adActionSeq);
+//				System.out.println("adType:"+adType);
+//				System.out.println("adDevice:"+adDevice);
+//				System.out.println("adActionMax:"+adActionMax);
+//				System.out.println("adGroupChannelPrice:"+adGroupChannelPrice);
+//				System.out.println("adOperatingRule:"+adOperatingRule);
+				result = adGroupSeq;
+				return SUCCESS;
+			}
+			result ="error";
+			return SUCCESS;
+		}catch(Exception e){
+			//刪除新增的ad
+			List<String> deleteAdList = (List<String>) deleteAdMap.get("adList");
+			for (String adSeq : deleteAdList) {
+				log.info(">>>>>> delete adSeq:"+adSeq);
+				pfpAdService.delete(pfpAdService.get(adSeq));
+			}
+			
+			String deleteAdGroupSeq = (String) deleteAdMap.get("adGroupSeq");
+			if(StringUtils.isNotBlank(deleteAdGroupSeq)){
+				log.info(">>>>>> delete adGroupSeq:"+deleteAdGroupSeq);
+				pfpAdGroupService.delete(pfpAdGroupService.get(deleteAdGroupSeq));
+			}
+			
+			String deleteAdActionSeq = (String) deleteAdMap.get("adActionSeq");
+			if(StringUtils.isNotBlank(deleteAdActionSeq)){
+				log.info(">>>>>> delete adActionSeq:"+deleteAdActionSeq);
+				pfpAdActionService.delete(pfpAdActionService.get(deleteAdActionSeq));
+			}
+			e.printStackTrace();
+			result ="error";
+			return SUCCESS;
+		}
+		
+	}
+	
+	/*
+	 * 快速上稿新增廣告明細
+	 * 1.不存在group時新增分類
+	 * 2.建立Ad
+	 * 3.建立明細
+	 * 4.新增關鍵字  20180518 開會討論，先關閉新增關鍵字部分
+	 * */
+	private boolean doAdAdAddFastPublisDetail() throws Exception{
+		String referer = request.getHeader("Referer");
+		backPage = "adActionView.html";
+		if(StringUtils.isNotEmpty(referer)) {
+			if(referer.indexOf("adGroupAdd.html") >= 0 || referer.indexOf("adAdAdd.html") >= 0) {
+				backPage = "adGroupAdd.html?adGroupSeq=" + adGroupSeq;
+			} else {
+				backPage = referer;
+			}
+			if(referer.indexOf("adGroupAdd.html") >= 0 ){
+				// 重算調控金額
+				controlPriceAPI.countProcess(pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()));
+			}
+		}
+		
+		Date date = new Date();
+		
+		PfpAdGroup pfpAdGroup = null;
+		if(StringUtils.isNotBlank(adActionName)){
+			pfpAdGroup = new PfpAdGroup();
+			adGroupSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_GROUP, "_");
+			PfpAdAction pfpAdAction = pfpAdActionService.getPfpAdActionBySeq(adActionSeq);
+			pfpAdGroup.setAdGroupSeq(adGroupSeq);
+			pfpAdGroup.setPfpAdAction(pfpAdAction);
+			pfpAdGroup.setAdGroupCreateTime(date);
+			pfpAdGroup.setAdGroupName(adGroupName);
+			pfpAdGroup.setAdGroupSearchPriceType(Integer.parseInt(adGroupSearchPriceType));
+			pfpAdGroup.setAdGroupSearchPrice(Float.parseFloat(adGroupSearchPrice));
+			pfpAdGroup.setAdGroupChannelPrice(Float.parseFloat(adGroupChannelPrice));
+			pfpAdGroup.setAdGroupPriceType(EnumAdPriceType.AD_PRICE_CPC.getDbTypeName());
+			// 新增廣告分類時，status 設定為未完成
+			pfpAdGroup.setAdGroupStatus(EnumStatus.UnDone.getStatusId());
+			pfpAdGroup.setAdGroupUpdateTime(date);
+			//更新廣告活動狀態為已完成(開啟)
+			pfpAdGroup.getPfpAdAction().setAdActionStatus(EnumStatus.Open.getStatusId());
+			pfpAdGroupService.savePfpAdGroup(pfpAdGroup);
+			
+			deleteAdMap.put("adGroupSeq", adGroupSeq);
+		}else{
+			pfpAdGroup = pfpAdGroupService.get(adGroupSeq);
+		}
+		
+		if(pfpAdGroup == null){
+			return false;
+		}
+		
+		String redisKey = manyURLRediskey + super.getCustomer_info_id() + CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_PFPCART.getValue(), null);
+		String redisData = redisAPI.getRedisData(redisKey);
+		if(StringUtils.isNotBlank(redisData)){
+			String photoPath = photoDbPathNew + super.getCustomer_info_id()+"/"+sdf.format(date)+"/original";
+			File file = new File(photoPath);
+			if(!file.exists()){
+				file.mkdirs();
+			}
+			
+			JSONObject redisJson = new JSONObject(redisData);
+			JSONArray  redisAdArrayJson = (JSONArray) redisJson.get("products");
+			for (int i = 0; i < redisAdArrayJson.length(); i++) {
+				JSONObject addAdJson = (JSONObject) redisAdArrayJson.get(i);
+				if(addAdJson.get("add").equals("Y")){
+					adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+					PfpAd pfpAd = new PfpAd();
+					pfpAd.setAdSeq(adSeq);
+					pfpAd.setPfpAdGroup(pfpAdGroup);
+					pfpAd.setAdClass("1");
+					pfpAd.setAdStyle("TMG");
+					pfpAd.setTemplateProductSeq("tpro_201306280001");
+					pfpAd.setAdSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
+					pfpAd.setAdChannelPrice(pfpAdGroup.getAdGroupChannelPrice());
+					pfpAd.setAdStatus(EnumStatus.NoVerify.getStatusId());
+					pfpAd.setAdSendVerifyTime(date);
+					pfpAd.setAdCreateTime(date);
+					pfpAd.setAdUpdateTime(date);
+					pfpAdService.save(pfpAd);
+					deleteAdList.add(adSeq);
+					
+					deleteAdMap.put("adList", deleteAdList);
+					
+					//新增明細
+					String imgPath = addAdJson.getString("pic_url");
+					String title = addAdJson.getString("title");
+					String intact_title = addAdJson.getString("intact_title");
+					String content = addAdJson.getString("description");
+					String intact_content = addAdJson.getString("intact_description");
+					String sales_price = addAdJson.getString("sp_price");
+					String promotional_price = addAdJson.getString("price");
+					String real_url = addAdJson.getString("link_url");
+					String show_url = addAdJson.getString("show_url");
+
+					saveAdDetail(processImgPath(imgPath), "img", "adp_201303070003", "dad_201303070010");
+					saveAdDetail(title, "title", "adp_201303070003", "dad_201303070011");
+					saveAdDetail(intact_title, "intact_title", "adp_201303070003", "dad_201303070017");
+					saveAdDetail(content, "content", "adp_201303070003", "dad_201303070012");
+					saveAdDetail(intact_content, "intact_content", "adp_201303070003", "dad_201303070018");
+					saveAdDetail(sales_price, "sales_price", "adp_201303070003", "dad_201303070015");
+					saveAdDetail(promotional_price, "promotional_price", "adp_201303070003", "dad_201303070016");
+					saveAdDetail(real_url, "real_url", "adp_201303070003", "dad_201303070014");
+					saveAdDetail(show_url, "show_url", "adp_201303070003", "dad_201303070013");
+				}
+			}
+			
+			// 新增關鍵字。 20180518 開會討論，先關閉新增關鍵字部分
+//			if(!adType.equals("2")){
+//				saveKeyWord(adGroupSeq,redisAdArrayJson);
+//			}
+		}
+		pfpAdGroup.setAdGroupStatus(4);
+		pfpAdGroupService.save(pfpAdGroup);
+		return true;
+	}
+	
+	/*
+	 * 快速上稿新增關鍵字
+	 * */
+	private void saveKeyWord(String groupSeq,JSONArray redisAdArrayJson) throws Exception{
+		PfpAdGroup pfpAdGroup = pfpAdGroupService.get(adGroupSeq);
+		Set<PfpAdKeyword> pfpAdKeywordSet = pfpAdGroup.getPfpAdKeywords();
+		List<String> keywordList = new ArrayList<>();
+		for (int i = 0; i < redisAdArrayJson.length(); i++) {
+			JSONObject addAdJson = (JSONObject) redisAdArrayJson.get(i);
+			boolean suggestFlag = addAdJson.isNull("suggest");
+			if(!suggestFlag){
+				JSONArray radisKeywords = (JSONArray) addAdJson.get("suggest");
+				for (int j = 0; j < radisKeywords.length(); j++) {
+					boolean isExist = false;
+					for (PfpAdKeyword pfpAdKeyword : pfpAdKeywordSet) {
+						if(pfpAdKeyword.getAdKeyword().equals(radisKeywords.get(j))){
+							isExist = true;
+							break;
+						}
+					}
+					if(!isExist){
+						keywordList.add(radisKeywords.get(j).toString());
+					}
+				}
+			}
+		}
+		int keywordSize = keywordList.size();
+		if(keywordSize > 0){
+			this.keywords = new String[keywordSize];
+			this.keywords = keywordList.toArray(keywords);
+			//預設廣泛比對
+			adKeywordPrecisionOpen = "on";
+			addKeywords(pfpAdGroup);
+		}
+	}
+	
+	/*
+	 * 快速上稿新增廣告活動
+	 * */
+	private void doAdActionAdd() throws Exception{
+		log.info("fast publist adActionAdd");
+		//預設全天時段
+		String timeCode ="111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
+		adActionSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_ACTION, "_");
+		PfpAdAction pfpAdAction = new PfpAdAction();
+		pfpAdAction.setAdActionSeq(adActionSeq);
+		pfpAdAction.setAdActionCreatTime(new Date());
+		pfpAdAction.setAdActionName(adActionName);
+		pfpAdAction.setAdActionDesc(adActionName);
+		pfpAdAction.setAdActionStartDate(adUtils.DateFormat(adActionStartDate));
+		if(StringUtils.isBlank(adActionEndDate)) {
+			pfpAdAction.setAdActionEndDate(adUtils.DateFormat("3000-12-31"));
+		}else{
+			pfpAdAction.setAdActionEndDate(adUtils.DateFormat(adActionEndDate));
+		}
+		pfpAdAction.setAdActionMax(adActionMax);
+		pfpAdAction.setAdActionControlPrice(adActionMax);
+		pfpAdAction.setUserId(super.getUser_id());
+		pfpAdAction.setAdActionUpdateTime(new Date());
+		pfpAdAction.setAdActionStatus(EnumStatus.UnDone.getStatusId());
+		pfpAdAction.setAdOperatingRule(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName());
+		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
+		pfpAdAction.setPfpCustomerInfo(pfpCustomerInfo);
+		pfpAdAction.setAdType(Integer.parseInt(adType));
+		pfpAdAction.setAdDevice(Integer.parseInt(adDevice));	
+		
+		String mon = reversionString(timeCode.substring(0,24));
+		String tue = reversionString(timeCode.substring(24,48));
+		String wed = reversionString(timeCode.substring(48,72));
+		String thu = reversionString(timeCode.substring(72,96));
+		String fri = reversionString(timeCode.substring(96,120));
+		String sat = reversionString(timeCode.substring(120,144));
+		String sun = reversionString(timeCode.substring(144));
+		pfpAdAction.setAdActionMonTime(Integer.parseInt(mon, 2));
+		pfpAdAction.setAdActionTueTime(Integer.parseInt(tue, 2));
+		pfpAdAction.setAdActionWedTime(Integer.parseInt(wed, 2));
+		pfpAdAction.setAdActionThuTime(Integer.parseInt(thu, 2));
+		pfpAdAction.setAdActionFriTime(Integer.parseInt(fri, 2));
+		pfpAdAction.setAdActionSatTime(Integer.parseInt(sat, 2));
+		pfpAdAction.setAdActionSunTime(Integer.parseInt(sun, 2));
+		//曝光限制-活動
+		pfpAdAction.setAdPvLimitStyle("0");
+		//曝光限制-每日
+		pfpAdAction.setAdPvLimitPeriod("0");
+		//曝光限制-同一受眾次數
+		pfpAdAction.setAdPvLimitAmount(0);
+		pfpAdAction.setAdActionStartAge(0);
+		pfpAdAction.setAdActionEndAge(99);
+		pfpAdAction.setAdSpecificPlayType("0");
+		pfpAdActionService.save(pfpAdAction);
+		
+		deleteAdMap.put("adActionSeq", adActionSeq);
+	}
+	
+	/**
 	 * 檢查檔案數
 	 * */
-	private int checkFileAmount(String path){
+	private int checkFileAmount(String path) {
 		int amount = 0;
 		File checkFlie = new File(path);
-		File[] files = checkFlie.listFiles(); //獲取資料夾下面的所有檔
+		File[] files = checkFlie.listFiles(); // 獲取資料夾下面的所有檔
 		for (File f : files) {
-			//判斷是否為資料夾
+			// 判斷是否為資料夾
 			if (f.isDirectory()) {
-				amount += checkFileAmount(f.getPath()); //如果是資料夾，檢查該資料夾內檔案數
+				amount += checkFileAmount(f.getPath()); // 如果是資料夾，檢查該資料夾內檔案數
 			} else {
 				amount++;
 			}
@@ -1308,23 +1911,32 @@ public class AdAddAction extends BaseCookieAction{
 		return amount;
 	}
 	
-	private String getIndexHtmlPath(String path){
+	private String reversionString(String timeString) throws Exception {
+		String time = "";
+		String[] timeArray = timeString.split("");
+		for (int i = 0; i < timeArray.length; i++) {
+			time = timeArray[i] + time;
+		}
+		return time;
+	}
+
+	private String getIndexHtmlPath(String path) {
 		String indexPath = "";
-		
+
 		File checkFlie = new File(path);
-		File[] files = checkFlie.listFiles(); //獲取資料夾下面的所有檔
+		File[] files = checkFlie.listFiles(); // 獲取資料夾下面的所有檔
 		for (File f : files) {
-			//判斷是否為資料夾
+			// 判斷是否為資料夾
 			if (f.isDirectory()) {
-				indexPath = getIndexHtmlPath(f.getPath()); //如果是資料夾，檢查該資料夾內檔案
+				indexPath = getIndexHtmlPath(f.getPath()); // 如果是資料夾，檢查該資料夾內檔案
 			} else {
-				if(f.getPath().indexOf("index.htm") != -1){
+				if (f.getPath().indexOf("index.htm") != -1) {
 					indexPath = f.getPath();
 					break;
 				}
 			}
 		}
-		
+
 		return indexPath;
 	}
 	
@@ -1782,4 +2394,113 @@ public class AdAddAction extends BaseCookieAction{
 		this.verticalAd = verticalAd;
 	}
 
+	public String getBookmark() {
+		return bookmark;
+	}
+
+	public void setBookmark(String bookmark) {
+		this.bookmark = bookmark;
+	}
+
+	public RedisAPI getRedisAPI() {
+		return redisAPI;
+	}
+
+	public void setRedisAPI(RedisAPI redisAPI) {
+		this.redisAPI = redisAPI;
+	}
+
+	public String getAdmenuul() {
+		return admenuul;
+	}
+
+	public void setAdmenuul(String admenuul) {
+		this.admenuul = admenuul;
+	}
+
+	public String getAdActionStartDate() {
+		return adActionStartDate;
+	}
+
+	public void setAdActionStartDate(String adActionStartDate) {
+		this.adActionStartDate = adActionStartDate;
+	}
+
+	public String getAdActionEndDate() {
+		return adActionEndDate;
+	}
+
+	public void setAdActionEndDate(String adActionEndDate) {
+		this.adActionEndDate = adActionEndDate;
+	}
+
+	public float getAdActionMax() {
+		return adActionMax;
+	}
+
+	public void setAdActionMax(float adActionMax) {
+		this.adActionMax = adActionMax;
+	}
+
+	public String getAdActionSeq() {
+		return adActionSeq;
+	}
+
+	public void setAdActionSeq(String adActionSeq) {
+		this.adActionSeq = adActionSeq;
+	}
+
+	public IPfpAdActionService getPfpAdActionService() {
+		return pfpAdActionService;
+	}
+
+	public void setPfpAdActionService(IPfpAdActionService pfpAdActionService) {
+		this.pfpAdActionService = pfpAdActionService;
+	}
+
+	public Map<String, Object> getDataMap() {
+		return dataMap;
+	}
+
+	public void setDataMap(Map<String, Object> dataMap) {
+		this.dataMap = dataMap;
+	}
+
+	public String getAdFastPublishUrlInfo() {
+		return adFastPublishUrlInfo;
+	}
+
+	public void setAdFastPublishUrlInfo(String adFastPublishUrlInfo) {
+		this.adFastPublishUrlInfo = adFastPublishUrlInfo;
+	}
+
+	public IPfpAdManyURLSearchService getPfpAdManyURLSearchService() {
+		return pfpAdManyURLSearchService;
+	}
+
+	public void setPfpAdManyURLSearchService(IPfpAdManyURLSearchService pfpAdManyURLSearchService) {
+		this.pfpAdManyURLSearchService = pfpAdManyURLSearchService;
+	}
+
+	public void setManyURLRediskey(String manyURLRediskey) {
+		this.manyURLRediskey = manyURLRediskey;
+	}
+
+	public String getAdGroupSearchPriceType() {
+		return adGroupSearchPriceType;
+	}
+
+	public void setAdGroupSearchPriceType(String adGroupSearchPriceType) {
+		this.adGroupSearchPriceType = adGroupSearchPriceType;
+	}
+
+	public String getAdGroupSearchPrice() {
+		return adGroupSearchPrice;
+	}
+
+	public void setAdGroupSearchPrice(String adGroupSearchPrice) {
+		this.adGroupSearchPrice = adGroupSearchPrice;
+	}
+	
 }
+
