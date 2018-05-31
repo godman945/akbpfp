@@ -177,6 +177,8 @@ public class ApplyAction extends BaseSSLAction{
 				log.info(">>>>>>>>>>>giftSno:"+giftSno);
 				
 			}
+			
+			log.info("TES:"+accountVO.getGiftSno());
 		}
 		// 帳戶申請中
 		else if(pfpCustomerInfo.getStatus().equals(EnumAccountStatus.APPLY.getStatus())) {

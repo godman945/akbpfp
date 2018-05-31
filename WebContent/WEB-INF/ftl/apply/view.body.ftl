@@ -123,7 +123,7 @@
 				</td>
 				<#else>
 				<td>
-			  		<input type="text" id="giftSno" name="giftSno" value=":${accountVO.giftSno!}" autocomplete="off"  style="width:100px" maxlength="10" />
+			  		<input type="text" id="giftSno" name="giftSno" value="${accountVO.giftSno!}" autocomplete="off"  style="width:100px" maxlength="10" />
 			  		<input type="button" id="btnClrGift" name="btnClrGift" value="清除序號">
 		  		</td>
 			</#if>
