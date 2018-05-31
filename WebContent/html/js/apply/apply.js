@@ -235,7 +235,7 @@ function checkGiftSno() {
 }
 
 function checkGift(){
-	
+	console.log($("#giftSno").val());
 	$.ajax({
 		url: "checkGiftSno.html",
 		data: {

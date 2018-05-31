@@ -161,7 +161,6 @@ public class ApplyAction extends BaseSSLAction{
 			this.accountVO.setAddTax(EnumSaveMoney.Default.getTaxMoney());			
 			this.accountVO.setMemberVO(memberVO);
 			this.accountVO.setGiftMoney(0);
-			
 			// BU資料
 			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(userMemberId);
 			if(pfpBuAccountList.size() > 0){
@@ -169,7 +168,9 @@ public class ApplyAction extends BaseSSLAction{
 				this.buAccountVO = new BuAccountVO();
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
-				buAccountVO.setGiftSno("STTBDAEFJ8");
+				buAccountVO.setGiftSno("");
+				log.info(">>>>>>>>>>>giftSno:"+giftSno);
+				log.info(">>>>>>>>>>>giftSno:"+accountVO.getGiftSno());
 			}
 		}
 		// 帳戶申請中
@@ -196,7 +197,6 @@ public class ApplyAction extends BaseSSLAction{
 			if (StringUtils.isBlank(memberVO.getMemberAddress())) {
 				memberVO.setMemberAddress(pfpCustomerInfo.getAddress());
 			}
-
 			this.accountVO.setMemberVO(memberVO);
 			
 			
@@ -207,7 +207,10 @@ public class ApplyAction extends BaseSSLAction{
 				this.buAccountVO = new BuAccountVO();
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
-				buAccountVO.setGiftSno("STTBDAEFJ8");
+				buAccountVO.setGiftSno("");
+				accountVO.setGiftSno("");
+				log.info(">>>>>>>>>>>giftSno:"+giftSno);
+				log.info(">>>>>>>>>>>giftSno:"+accountVO.getGiftSno());
 				return "success";
 			}
 			
@@ -216,13 +219,7 @@ public class ApplyAction extends BaseSSLAction{
 			// 帳戶已啟用、停權、關閉
 			result = "summary";
 		}		
-		
 		log.info(" result = "+result);
-		
-		
-		
-		
-		
 		return result;
 	}
 	/**
@@ -538,15 +535,16 @@ public class ApplyAction extends BaseSSLAction{
 	 * 最新一筆訂單狀態
 	 */
 	private void checkOrderStatus(String customerInfoId) throws Exception{
-		
 		// 申請中帳戶最新一筆訂單狀態
 		PfpOrder order = pfpOrderService.latestOrder(customerInfoId);
-		
 		this.accountVO.setOrderStatus(order.getStatus());
 		this.accountVO.setAddMoney(order.getOrderPrice());
 		this.accountVO.setAddTax(order.getTax());			
 		this.accountVO.setGiftSno(order.getGiftSno());		
 		this.accountVO.setGiftMoney(order.getGiftMoney());
+		
+		
+		log.info(">>>>alex2:"+accountVO.getGiftSno());
 		
 	}
 	
@@ -729,8 +727,10 @@ public class ApplyAction extends BaseSSLAction{
 				if(admFreeGift != null){
 					giftSno = admFreeGift.getGiftSno();
 					giftMoney = admFreeGift.getAdmFreeAction().getGiftMoney();
-					
 					order.setGiftSno(giftSno);
+					
+					log.info(">>>>alex:"+giftSno);
+					
 					order.setGiftMoney(giftMoney);
 				}
 				
