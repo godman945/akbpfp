@@ -170,6 +170,9 @@ public class ApplyAction extends BaseSSLAction{
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
 				buAccountVO.setGiftSno("");
+				
+				log.info(">>>>>>>>>>>giftSno:"+giftSno);
+				
 			}
 		}
 		// 帳戶申請中
@@ -208,6 +211,9 @@ public class ApplyAction extends BaseSSLAction{
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
 				buAccountVO.setGiftSno("");
+				
+				log.info(">>>>>>>>>>>giftSno:"+giftSno);
+				
 				return "success";
 			}
 			
