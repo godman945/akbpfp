@@ -161,10 +161,6 @@ public class ApplyAction extends BaseSSLAction{
 			this.accountVO.setAddTax(EnumSaveMoney.Default.getTaxMoney());			
 			this.accountVO.setMemberVO(memberVO);
 			this.accountVO.setGiftMoney(0);
-			
-			
-			log.info("TES:"+accountVO.getGiftSno());
-			
 			// BU資料
 			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(userMemberId);
 			if(pfpBuAccountList.size() > 0){
@@ -173,13 +169,9 @@ public class ApplyAction extends BaseSSLAction{
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
 				buAccountVO.setGiftSno("");
-				
 				log.info(">>>>>>>>>>>giftSno:"+giftSno);
 				log.info(">>>>>>>>>>>giftSno:"+accountVO.getGiftSno());
-				
 			}
-			
-			log.info("TES:"+accountVO.getGiftSno());
 		}
 		// 帳戶申請中
 		else if(pfpCustomerInfo.getStatus().equals(EnumAccountStatus.APPLY.getStatus())) {
@@ -205,7 +197,6 @@ public class ApplyAction extends BaseSSLAction{
 			if (StringUtils.isBlank(memberVO.getMemberAddress())) {
 				memberVO.setMemberAddress(pfpCustomerInfo.getAddress());
 			}
-
 			this.accountVO.setMemberVO(memberVO);
 			
 			
@@ -217,10 +208,9 @@ public class ApplyAction extends BaseSSLAction{
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
 				buAccountVO.setGiftSno("");
-				
+				accountVO.setGiftSno("");
 				log.info(">>>>>>>>>>>giftSno:"+giftSno);
 				log.info(">>>>>>>>>>>giftSno:"+accountVO.getGiftSno());
-				
 				return "success";
 			}
 			
@@ -229,13 +219,7 @@ public class ApplyAction extends BaseSSLAction{
 			// 帳戶已啟用、停權、關閉
 			result = "summary";
 		}		
-		
 		log.info(" result = "+result);
-		
-		
-		
-		
-		
 		return result;
 	}
 	/**
@@ -560,7 +544,7 @@ public class ApplyAction extends BaseSSLAction{
 		this.accountVO.setGiftMoney(order.getGiftMoney());
 		
 		
-		log.info(">>>>alex2:"+giftSno);
+		log.info(">>>>alex2:"+accountVO.getGiftSno());
 		
 	}
 	
