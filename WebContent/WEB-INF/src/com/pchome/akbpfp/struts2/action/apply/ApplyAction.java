@@ -175,6 +175,7 @@ public class ApplyAction extends BaseSSLAction{
 				buAccountVO.setGiftSno("");
 				
 				log.info(">>>>>>>>>>>giftSno:"+giftSno);
+				log.info(">>>>>>>>>>>giftSno:"+accountVO.getGiftSno());
 				
 			}
 			
@@ -218,6 +219,7 @@ public class ApplyAction extends BaseSSLAction{
 				buAccountVO.setGiftSno("");
 				
 				log.info(">>>>>>>>>>>giftSno:"+giftSno);
+				log.info(">>>>>>>>>>>giftSno:"+accountVO.getGiftSno());
 				
 				return "success";
 			}
