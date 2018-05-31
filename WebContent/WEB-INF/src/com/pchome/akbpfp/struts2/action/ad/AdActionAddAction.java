@@ -139,7 +139,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		adSpecificPlayType = "0";
 		adPvLimitStyle = "0";
 		adPvLimitPeriod = "0";
-		adPvLimitAmount = "20";
+		adPvLimitAmount = "5";
 		pvLimitSelect = "N";
 		oldWebsiteCategory = "";
 		adOperatingRule = "0";
