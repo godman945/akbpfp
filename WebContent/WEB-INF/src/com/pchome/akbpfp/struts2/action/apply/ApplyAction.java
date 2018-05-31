@@ -162,6 +162,9 @@ public class ApplyAction extends BaseSSLAction{
 			this.accountVO.setMemberVO(memberVO);
 			this.accountVO.setGiftMoney(0);
 			
+			
+			log.info("TES:"+accountVO.getGiftSno());
+			
 			// BU資料
 			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(userMemberId);
 			if(pfpBuAccountList.size() > 0){
@@ -544,16 +547,13 @@ public class ApplyAction extends BaseSSLAction{
 	 * 最新一筆訂單狀態
 	 */
 	private void checkOrderStatus(String customerInfoId) throws Exception{
-		
 		// 申請中帳戶最新一筆訂單狀態
 		PfpOrder order = pfpOrderService.latestOrder(customerInfoId);
-		
 		this.accountVO.setOrderStatus(order.getStatus());
 		this.accountVO.setAddMoney(order.getOrderPrice());
 		this.accountVO.setAddTax(order.getTax());			
 		this.accountVO.setGiftSno(order.getGiftSno());		
 		this.accountVO.setGiftMoney(order.getGiftMoney());
-		
 	}
 	
 	/**
@@ -735,8 +735,10 @@ public class ApplyAction extends BaseSSLAction{
 				if(admFreeGift != null){
 					giftSno = admFreeGift.getGiftSno();
 					giftMoney = admFreeGift.getAdmFreeAction().getGiftMoney();
-					
 					order.setGiftSno(giftSno);
+					
+					log.info(">>>>alex:"+giftSno);
+					
 					order.setGiftMoney(giftMoney);
 				}
 				
