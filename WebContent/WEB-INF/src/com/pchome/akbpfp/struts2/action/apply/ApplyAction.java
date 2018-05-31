@@ -554,6 +554,10 @@ public class ApplyAction extends BaseSSLAction{
 		this.accountVO.setAddTax(order.getTax());			
 		this.accountVO.setGiftSno(order.getGiftSno());		
 		this.accountVO.setGiftMoney(order.getGiftMoney());
+		
+		
+		log.info(">>>>alex2:"+giftSno);
+		
 	}
 	
 	/**
