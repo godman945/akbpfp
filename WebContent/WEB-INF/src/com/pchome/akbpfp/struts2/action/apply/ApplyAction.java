@@ -207,7 +207,7 @@ public class ApplyAction extends BaseSSLAction{
 				this.buAccountVO = new BuAccountVO();
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
-				buAccountVO.setGiftSno("STTBDAEFJ8");
+				buAccountVO.setGiftSno("");
 				return "success";
 			}
 			
