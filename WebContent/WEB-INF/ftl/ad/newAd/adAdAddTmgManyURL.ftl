@@ -2,7 +2,7 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
 <script type="text/javascript" src="<@s.url value="/" />html/js/jquery/jquery.cookie.js"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmgManyURL.js?t=20180430001"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adAddTmgManyURL.js?t=20180622001"></script>
 
 <div style="clear:both;height:0px"></div>
 <h4>製作廣告</h4>

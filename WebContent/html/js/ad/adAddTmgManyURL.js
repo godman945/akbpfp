@@ -792,17 +792,18 @@ function isURLInaccurate(URL, errorMsgBlock){
 		return true;
 	}else if(!(URL.indexOf("http://24h.pchome.com.tw/", 0) > -1
 			|| URL.indexOf("https://24h.pchome.com.tw/", 0) > -1
-			|| URL.indexOf("24h.pchome.com.tw/", 0) > -1
+//			|| URL.indexOf("24h.pchome.com.tw/", 0) > -1
 			//商店街
 			|| URL.indexOf("http://www.pcstore.com.tw/", 0) > -1
 			|| URL.indexOf("https://www.pcstore.com.tw/", 0) > -1
-			|| URL.indexOf("www.pcstore.com.tw/", 0) > -1
+//			|| URL.indexOf("www.pcstore.com.tw/", 0) > -1
 			//個人賣場(商店街)
 			|| URL.indexOf("http://seller.pcstore.com.tw/", 0) > -1
 			|| URL.indexOf("https://seller.pcstore.com.tw/", 0) > -1
-			|| URL.indexOf("seller.pcstore.com.tw/", 0) > -1
+//			|| URL.indexOf("seller.pcstore.com.tw/", 0) > -1
 			//露天商品頁
-			|| URL.indexOf("http://goods.ruten.com.tw/item/show?", 0) > -1)	){
+			|| URL.indexOf("http://goods.ruten.com.tw/item/show?", 0) > -1
+			|| URL.indexOf("https://goods.ruten.com.tw/item/show?", 0) > -1)	){
 		
 		if(errorMsgBlock == "storeProductURL"){ //輸入為店家刊登商品網址，則顯示在該區塊
 			$("#chkStoreProductURL").show().html(errMsg);
