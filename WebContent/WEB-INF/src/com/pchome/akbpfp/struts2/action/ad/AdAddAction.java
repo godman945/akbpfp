@@ -377,7 +377,7 @@ public class AdAddAction extends BaseCookieAction{
 	 * @return
 	 * @throws Exception 
 	 */
-	public String doAdAdAddTmgManyURL() throws Exception{
+	public String doAdAdAddTmgManyURL() throws Exception {
 		//TODO 多網址上搞
 		log.info("doAdAdAddTmgManyURL => adGroupSeq = " + adGroupSeq + ",=> adFastPublishUrlInfo =" + adFastPublishUrlInfo + ";");
 		
@@ -392,7 +392,7 @@ public class AdAddAction extends BaseCookieAction{
 		
 		//檢查相關資料是否正確
 		doAdAdAddTmgManyURLCheckData(vo);
-		if(StringUtils.isNotEmpty(vo.getMessage())){
+		if (StringUtils.isNotEmpty(vo.getMessage())) {
 			dataMap.put("status", "ERROR");
 			dataMap.put("msg", vo.getMessage());
 			return SUCCESS;
@@ -411,15 +411,16 @@ public class AdAddAction extends BaseCookieAction{
 		JSONObject redisJsonObject = vo.getRedisJsonObject();
 		String products = redisJsonObject.getJSONArray("products").toString();
 		
+		PfpAdGroup pfpAdGroup = null;
 		JSONObject adFastPublishUrlInfoJson = new JSONObject(adFastPublishUrlInfo); 
 		Iterator adFastPublishUrlInfoJsoIterator = adFastPublishUrlInfoJson.keys();
         while (adFastPublishUrlInfoJsoIterator.hasNext()) {
         	String key = adFastPublishUrlInfoJsoIterator.next().toString();
-        	if("Y".equals(adFastPublishUrlInfoJson.get(key))){ //是選取的資料
+			if ("Y".equals(adFastPublishUrlInfoJson.get(key))) { // 是選取的資料
         		
-        		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+        		pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
         		adSeq = null; //清除adSeq再建立一筆
-        		//新增資料到pfp_ad table
+        		//開始新增資料到pfp_ad table
         		addAd(pfpAdGroup, null);
         		
         		//找到URL位置
@@ -489,7 +490,11 @@ public class AdAddAction extends BaseCookieAction{
         		addExcludeKeywords(pfpAdGroup);
         	}
         }
-
+        
+        // 開啟廣告分類(僅更新一次)
+ 		pfpAdGroup.setAdGroupStatus(4);
+ 		pfpAdGroupService.save(pfpAdGroup);
+ 		
 		return SUCCESS;
 	}
 	
