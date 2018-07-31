@@ -99,5 +99,12 @@
 	<table-filter match-name="pfp_ad_keyword_invalid">
 	</table-filter>
 	<table-filter match-name="pfp_ad_video_source"></table-filter>
-
+	<table-filter match-name="pfp_catalog"></table-filter>
+	<table-filter match-name="pfp_catalog_group"></table-filter>
+	<table-filter match-name="pfp_catalog_group_item"></table-filter>
+	<table-filter match-name="pfp_catalog_logo"></table-filter>
+	<table-filter match-name="pfp_catalog_logo_detail"></table-filter>
+	<table-filter match-name="pfp_catalog_prod_ec"></table-filter>
+	<table-filter match-name="pfp_catalog_upload_err_log"></table-filter>
+	<table-filter match-name="pfp_catalog_upload_log"></table-filter>
 </hibernate-reverse-engineering>

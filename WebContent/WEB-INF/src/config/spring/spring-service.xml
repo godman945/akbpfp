@@ -236,4 +236,10 @@
 		<property name="manyURLRediskey" value="${redis.manyURL.rediskey}" />
 		<property name="springEmailUtil" ref="SpringEmailUtil" />
     </bean>
+    
+    <bean id="PfpCatalogGroupService" class="com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupService">
+    	<property name="dao" ref="PfpCatalogGroupDAO" />
+    </bean>
+    
+    
 </beans>

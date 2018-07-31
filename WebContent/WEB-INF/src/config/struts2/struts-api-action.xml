@@ -77,6 +77,17 @@
      </action>
  --> 
  		
+ 	<action name="catalogProdGroupAPI" class="CatalogProdGroupAPIAction" method="prodGroupList">
+<!--     	<result type="stream" name="success"> -->
+ 			<result type="json" name="success">
+    		<param name="noCache">true</param>
+            <param name="contentType">text/html</param>
+<!-- 	        <param name="contentType">text/plain</param> -->
+<!-- 			<param name="inputName">returnLifeCheck</param>  -->
+		</result> 		
+     </action>
+ 		
+ 		
  
     </package>
 </struts>

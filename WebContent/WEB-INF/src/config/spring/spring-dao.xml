@@ -221,4 +221,9 @@
     <bean id="PfpBuDAO" class="com.pchome.akbpfp.db.dao.bu.PfpBuDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    
+     <bean id="PfpCatalogGroupDAO" class="com.pchome.akbpfp.db.dao.catalog.prodGroup.PfpCatalogGroupDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
 </beans>
