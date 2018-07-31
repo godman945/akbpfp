@@ -63,6 +63,7 @@
 	
 	
 	<bean id="CatalogProdGroupAPIAction" class="com.pchome.akbpfp.struts2.action.api.CatalogProdGroupAPIAction" scope="prototype" >
+    	<property name="prodGroupFactory" ref="ProdGroupFactory" />
     	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
 	</bean>
     

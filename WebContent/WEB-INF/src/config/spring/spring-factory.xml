@@ -20,7 +20,18 @@
     </bean>-->
     
     
+    <bean id="ProdGroupFactory" class="com.pchome.akbpfp.catalog.prodGroup.factory.ProdGroupFactory" scope="prototype" >
+   		<property name="ecProdGroup" ref="EcProdGroup" />
+   		<property name="BookingProdGroup" ref="BookingProdGroup" />
+    </bean>
     
+    
+     <bean id="EcProdGroup" class="com.pchome.akbpfp.catalog.prodGroup.factory.EcProdGroup" scope="prototype" >
+   		<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
+     </bean>
+     <bean id="BookingProdGroup" class="com.pchome.akbpfp.catalog.prodGroup.factory.BookingProdGroup" scope="prototype" >
+   		<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
+     </bean>
     
     
     

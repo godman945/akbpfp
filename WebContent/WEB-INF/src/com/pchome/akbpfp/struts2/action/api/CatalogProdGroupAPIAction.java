@@ -9,7 +9,7 @@ public class CatalogProdGroupAPIAction extends BaseCookieAction{
 	
 	private PfpCatalogGroupService pfpCatalogGroupService;
 //	private PfpOrderService pfpOrderService;
-	
+	private ProdGroupFactory prodGroupFactory;
 	private String groupId;
 	private String returnJson;
 	
@@ -25,7 +25,7 @@ public class CatalogProdGroupAPIAction extends BaseCookieAction{
 		
 		String catalogType = pfpCatalogGroupService.getCatalogType(groupId) ;
 		
-		AProdGroup aProdGroup = ProdGroupFactory.getAProdGroupObj(catalogType);
+		AProdGroup aProdGroup = prodGroupFactory.getAProdGroupObj(catalogType);
 		
 		
 		System.out.println("父類別方法1: "+aProdGroup.getCatalogGroupSQL());
@@ -33,7 +33,7 @@ public class CatalogProdGroupAPIAction extends BaseCookieAction{
 		
 		
 		
-		aProdGroup = ProdGroupFactory.getAProdGroupObj("2");
+		aProdGroup = prodGroupFactory.getAProdGroupObj("2");
 		System.out.println("父類別方法2: "+aProdGroup.getCatalogGroupSQL());
 		System.out.println("子類別方法2: "+aProdGroup.getProdGroupList(groupId));
 		
@@ -73,6 +73,12 @@ public class CatalogProdGroupAPIAction extends BaseCookieAction{
 
 	public void setReturnJson(String returnJson) {
 		this.returnJson = returnJson;
+	}
+
+
+
+	public void setProdGroupFactory(ProdGroupFactory prodGroupFactory) {
+		this.prodGroupFactory = prodGroupFactory;
 	}
 
 
