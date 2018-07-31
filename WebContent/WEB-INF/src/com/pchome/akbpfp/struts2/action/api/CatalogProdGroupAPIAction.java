@@ -31,6 +31,8 @@ public class CatalogProdGroupAPIAction extends BaseCookieAction{
 		System.out.println("父類別方法1: "+aProdGroup.getCatalogGroupSQL());
 		System.out.println("子類別方法1: "+aProdGroup.getProdGroupList(groupId));
 		
+		
+		
 		aProdGroup = ProdGroupFactory.getAProdGroupObj("2");
 		System.out.println("父類別方法2: "+aProdGroup.getCatalogGroupSQL());
 		System.out.println("子類別方法2: "+aProdGroup.getProdGroupList(groupId));
