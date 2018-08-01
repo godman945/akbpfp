@@ -236,4 +236,11 @@
 		<property name="manyURLRediskey" value="${redis.manyURL.rediskey}" />
 		<property name="springEmailUtil" ref="SpringEmailUtil" />
     </bean>
+    
+    <!-- 商品廣告-檔案上傳 -->
+    <bean id="PfpCatalogUploadListService" class="com.pchome.akbpfp.db.service.catalog.uploadList.PfpCatalogUploadListService">
+    	<property name="akbPfpServer" value="${akbpfp.server}" />
+<!--              <property name="dao" ref="PfpBuDAO" /> -->
+    </bean>
+    
 </beans>
