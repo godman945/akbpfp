@@ -717,9 +717,10 @@ function dealWithBookmark() {
 		
 		// 點擊多筆網址刊登
 		$('.fastURLAdAdd').click(function(){
-			if(chkLeave()){
-				window.location = "adAdAdd.html?adGroupSeq=" + $("#adGroupSeq").val() + "&adOperatingRule=MEDIA&bookmark=fastURLAdAdd";
-			}
+			alert("多筆網址刊登廣告系統維護中，您可使用一般廣告刊登編輯您的廣告。");
+//			if(chkLeave()){
+//				window.location = "adAdAdd.html?adGroupSeq=" + $("#adGroupSeq").val() + "&adOperatingRule=MEDIA&bookmark=fastURLAdAdd";
+//			}
 		});
 	}
 }
