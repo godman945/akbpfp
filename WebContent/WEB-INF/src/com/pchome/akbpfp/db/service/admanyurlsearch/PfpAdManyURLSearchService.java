@@ -121,6 +121,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		for (int arrayLength = 0; arrayLength < apiJsonArray.length(); arrayLength++) {
 			JSONObject apiJsonObjectDetail = new JSONObject(apiJsonArray.get(arrayLength).toString());
 			JSONObject jsonObjectDetail = new JSONObject();
+			log.info("圖片路徑:" + apiJsonObjectDetail.get("pic_url").toString());
 			jsonObjectDetail.put("pic_url", processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
 			
 			String title = apiJsonObjectDetail.get("title").toString();
