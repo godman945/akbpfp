@@ -437,6 +437,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			return picURL;
 		}
 		
+		log.info("開始處理圖片路徑");
 		// 處理圖片路徑
 		String URLHttp = picURL.substring(0, 6);
 		if (URLHttp.indexOf("//") > -1) {
@@ -449,6 +450,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		
 		//長方形 GIF，圖片擋掉只留文字廣告
 		if ("gif".equalsIgnoreCase(filenameExtension)) {
+			log.info("處理完後路徑:" + picURL);
 			URL url = new URL(picURL);
 			
 			// 處理略過https部分
@@ -460,6 +462,8 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			BufferedImage img = ImageIO.read(connection);
 			int width = img.getWidth();
 			int height = img.getHeight();
+			log.info("圖片寬:" + width);
+			log.info("圖片高:" + height);
 			if(width != height){ // 長寬不相同，為長方形
 				picURL = "img/public/na.gif\" style=\"display:none";
 				return picURL;
