@@ -3,8 +3,6 @@ package com.pchome.akbpfp.db.service.admanyurlsearch;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -109,10 +107,8 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 * @return
 	 * @throws JSONException 
 	 * @throws IOException 
-	 * @throws NoSuchAlgorithmException 
-	 * @throws KeyManagementException 
 	 */
-	private JSONArray processData(JSONArray apiJsonArray) throws JSONException, IOException, KeyManagementException, NoSuchAlgorithmException {
+	private JSONArray processData(JSONArray apiJsonArray) throws JSONException, IOException {
 		JSONArray jsonArray = new JSONArray();
 		
 		for (int arrayLength = 0; arrayLength < apiJsonArray.length(); arrayLength++) {
@@ -423,11 +419,9 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 * 2.有圖片路徑修正
 	 * @param picURL
 	 * @return
-	 * @throws IOException 
-	 * @throws NoSuchAlgorithmException 
-	 * @throws KeyManagementException 
+	 * @throws IOException
 	 */
-	private String processPicURL(String picURL) throws IOException, NoSuchAlgorithmException, KeyManagementException {
+	private String processPicURL(String picURL) throws IOException {
 		// 沒有商品圖
 		if(picURL.indexOf("no-product") > -1){
 			picURL = "img/public/na.gif\" style=\"display:none";

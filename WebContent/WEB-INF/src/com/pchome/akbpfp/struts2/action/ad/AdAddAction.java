@@ -565,15 +565,13 @@ public class AdAddAction extends BaseCookieAction{
 	 * @param imgPath
 	 * @return
 	 * @throws IOException
-	 * @throws KeyManagementException 
-	 * @throws NoSuchAlgorithmException 
 	 */
-	private String processImgPath(String imgPath) throws IOException, KeyManagementException, NoSuchAlgorithmException {
+	private String processImgPath(String imgPath) throws IOException {
 		if (imgPath.indexOf("display:none") > -1) { // 沒有圖片，不做處理
 			return imgPath;
 		}
 		
-		log.info("Download picture to start");
+		log.info("開始下載圖片。");
 		
 		Date date = new Date();
 		String photoPath = photoDbPathNew + super.getCustomer_info_id() + "/" + sdf.format(date) + "/original";
@@ -587,7 +585,7 @@ public class AdAddAction extends BaseCookieAction{
 		int endLength = (imgPath.indexOf("?") > -1 ? imgPath.indexOf("?") : imgPath.length());
 		String filenameExtension = imgPath.substring(startLength, endLength);
         
-		log.info("Download picture URL:" + imgPath);
+		log.info("下載圖片網址:" + imgPath);
         URL url = new URL(imgPath.replaceFirst("https", "http"));
         String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension; // 存放路徑 + 檔名
 
@@ -636,7 +634,7 @@ public class AdAddAction extends BaseCookieAction{
         }
         
 		imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + "." + filenameExtension;
-		log.info("Download picture end");
+		log.info("下載圖片結束");
 		return imgPath;
 	}
 
