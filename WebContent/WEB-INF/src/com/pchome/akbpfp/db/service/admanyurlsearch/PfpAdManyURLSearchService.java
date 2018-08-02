@@ -6,11 +6,14 @@ import java.io.InputStream;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -455,10 +458,11 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			
 			// 處理略過https部分
 	        final SSLContext sc = SSLContext.getInstance("SSL");
-	        sc.init(null, HttpUtil.getTrustingManager(), new java.security.SecureRandom());                                 
+	        sc.init(null, getTrustingManager(), new java.security.SecureRandom());                                 
 	        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 	        InputStream connection = url.openStream();
 	        
+	        log.info("connection:" + connection);
 			BufferedImage img = ImageIO.read(connection);
 			int width = img.getWidth();
 			int height = img.getHeight();
@@ -471,6 +475,29 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		}
 		
 		return picURL;
+	}
+	
+	/**
+	 * 略過https使用
+	 * @return
+	 */
+	private TrustManager[] getTrustingManager() {
+		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+
+			@Override
+			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+				return null;
+			}
+
+			@Override
+			public void checkClientTrusted(X509Certificate[] certs, String authType) {
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] certs, String authType) {
+			}
+		} };
+		return trustAllCerts;
 	}
 	
 	public RedisAPI getRedisAPI() {
