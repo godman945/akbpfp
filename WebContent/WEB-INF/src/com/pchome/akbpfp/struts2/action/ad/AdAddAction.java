@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
+import java.security.KeyManagementException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +28,10 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -440,6 +447,8 @@ public class AdAddAction extends BaseCookieAction{
         		//新增圖片資料
         		List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, "img", null, adPoolSeq);
         		String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		log.info("開始新增pfp_ad_detail資料，ad_seq:" + defineAdSeq);
+        		
         		String imgPath = redisJsonObjectDetail.get("pic_url").toString();
         		imgPath = processImgPath(imgPath);
         		newSaveAdDetail(imgPath, "img", adPoolSeq, defineAdSeq);
@@ -488,6 +497,8 @@ public class AdAddAction extends BaseCookieAction{
         		addKeywords(pfpAdGroup);
         		//新增排除關鍵字
         		addExcludeKeywords(pfpAdGroup);
+        		
+        		log.info("新增ad_seq:" + defineAdSeq + "完成。");
         	}
         }
         
@@ -559,11 +570,15 @@ public class AdAddAction extends BaseCookieAction{
 	 * @param imgPath
 	 * @return
 	 * @throws IOException
+	 * @throws KeyManagementException 
+	 * @throws NoSuchAlgorithmException 
 	 */
-	private String processImgPath(String imgPath) throws IOException {
+	private String processImgPath(String imgPath) throws IOException, KeyManagementException, NoSuchAlgorithmException {
 		if (imgPath.indexOf("display:none") > -1) { // 沒有圖片，不做處理
 			return imgPath;
 		}
+		
+		log.info("Download picture to start");
 		
 		Date date = new Date();
 		String photoPath = photoDbPathNew + super.getCustomer_info_id() + "/" + sdf.format(date) + "/original";
@@ -577,15 +592,23 @@ public class AdAddAction extends BaseCookieAction{
 		int endLength = (imgPath.indexOf("?") > -1 ? imgPath.indexOf("?") : imgPath.length());
 		String filenameExtension = imgPath.substring(startLength, endLength);
         
+		log.info("Download picture URL:" + imgPath);
         URL url = new URL(imgPath);
         String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension; // 存放路徑 + 檔名
         
+        // 處理略過https部分
+        final SSLContext sc = SSLContext.getInstance("SSL");
+        sc.init(null, getTrustingManager(), new java.security.SecureRandom());                                 
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        InputStream connection = url.openStream();
+        
+        // 處理圖片下載
         if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
             InputStream in = url.openStream();
             Files.copy(in, new File(imgPathAndName).toPath());
             
         } else { // jpg圖片下載方式
-            BufferedImage img = ImageIO.read(url);
+            BufferedImage img = ImageIO.read(connection);
             int width = img.getWidth();
             int height = img.getHeight();
             if (width != height) { // 長寬不相同，為長方形。
@@ -624,6 +647,7 @@ public class AdAddAction extends BaseCookieAction{
         }
         
 		imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + "." + filenameExtension;
+		log.info("Download picture end");
 		return imgPath;
 	}
 
@@ -1943,6 +1967,29 @@ public class AdAddAction extends BaseCookieAction{
 		}
 
 		return indexPath;
+	}
+	
+	/**
+	 * 略過https使用
+	 * @return
+	 */
+	private static TrustManager[] getTrustingManager() {
+		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+
+			@Override
+			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+				return null;
+			}
+
+			@Override
+			public void checkClientTrusted(X509Certificate[] certs, String authType) {
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] certs, String authType) {
+			}
+		} };
+		return trustAllCerts;
 	}
 	
 	public List<PfbxSize> getSearchPCSizeList() {
