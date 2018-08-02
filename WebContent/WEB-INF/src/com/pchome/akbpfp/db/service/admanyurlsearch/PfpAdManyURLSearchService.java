@@ -40,9 +40,10 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 				log.error("getAdCrawlerAPIData error:status != 200");
 				vo.setMessage("系統忙碌中，請稍後再試。");
 			} else if (apiJsonObject.length() == 0) { // 檢查輸入網址是否正確
-				log.info("getAdCrawlerAPIData error:URL error " + vo.getSearchURL());
+				log.error("getAdCrawlerAPIData error:URL error " + vo.getSearchURL());
 				vo.setMessage("查無資料，請確認輸入網址是否正確。");
 			} else {
+				log.info("爬蟲已完成。");
 				// 正確，將資料寫入vo
 				vo.setApiJsonArray(apiJsonObject.getJSONArray("products"));
 			}
@@ -428,7 +429,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			return picURL;
 		}
 		
-		log.info("開始處理圖片路徑");
+		log.info("開始處理圖片路徑。");
 		// 處理圖片路徑
 		String URLHttp = picURL.substring(0, 6);
 		if (URLHttp.indexOf("//") > -1) {
@@ -441,7 +442,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		
 		//長方形 GIF，圖片擋掉只留文字廣告
 		if ("gif".equalsIgnoreCase(filenameExtension)) {
-			log.info("處理完後的圖片路徑:" + picURL);
+			log.info("處理完後的gif圖片路徑:" + picURL.replaceFirst("https", "http"));
 			URL url = new URL(picURL.replaceFirst("https", "http"));
 			
 			BufferedImage img = ImageIO.read(url);
@@ -453,6 +454,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			}
 		}
 		
+		log.info("處理圖片路徑結束。");
 		return picURL;
 	}
 	
