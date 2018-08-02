@@ -2,10 +2,15 @@ package com.pchome.akbpfp.db.service.admanyurlsearch;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -107,8 +112,10 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 * @return
 	 * @throws JSONException 
 	 * @throws IOException 
+	 * @throws NoSuchAlgorithmException 
+	 * @throws KeyManagementException 
 	 */
-	private JSONArray processData(JSONArray apiJsonArray) throws JSONException, IOException {
+	private JSONArray processData(JSONArray apiJsonArray) throws JSONException, IOException, KeyManagementException, NoSuchAlgorithmException {
 		JSONArray jsonArray = new JSONArray();
 		
 		for (int arrayLength = 0; arrayLength < apiJsonArray.length(); arrayLength++) {
@@ -419,8 +426,10 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 * @param picURL
 	 * @return
 	 * @throws IOException 
+	 * @throws NoSuchAlgorithmException 
+	 * @throws KeyManagementException 
 	 */
-	private String processPicURL(String picURL) throws IOException {
+	private String processPicURL(String picURL) throws IOException, NoSuchAlgorithmException, KeyManagementException {
 		// 沒有商品圖
 		if(picURL.indexOf("no-product") > -1){
 			picURL = "img/public/na.gif\" style=\"display:none";
@@ -436,10 +445,18 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		}
 		
 		String filenameExtension = picURL.substring(picURL.length() -3 , picURL.length()); // 取得副檔名
+		
 		//長方形 GIF，圖片擋掉只留文字廣告
 		if ("gif".equalsIgnoreCase(filenameExtension)) {
 			URL url = new URL(picURL);
-			BufferedImage img = ImageIO.read(url);
+			
+			// 處理略過https部分
+	        final SSLContext sc = SSLContext.getInstance("SSL");
+	        sc.init(null, HttpUtil.getTrustingManager(), new java.security.SecureRandom());                                 
+	        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+	        InputStream connection = url.openStream();
+	        
+			BufferedImage img = ImageIO.read(connection);
 			int width = img.getWidth();
 			int height = img.getHeight();
 			if(width != height){ // 長寬不相同，為長方形
