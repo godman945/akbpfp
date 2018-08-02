@@ -454,13 +454,13 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		//長方形 GIF，圖片擋掉只留文字廣告
 		if ("gif".equalsIgnoreCase(filenameExtension)) {
 			log.info("處理完後路徑:" + picURL);
-			System.setProperty("https.protocols", "TLSv1.2, TLSv1.1");
+			System.setProperty("https.protocols", "TLSv1.2");
 			
 			URL url = new URL(picURL);
 			
 			// 處理略過https部分
 	        final SSLContext sc = SSLContext.getInstance("SSL");
-	        sc.init(null, getTrustingManager(), new java.security.SecureRandom());                                 
+	        sc.init(null, HttpUtil.getTrustingManager(), new java.security.SecureRandom());                                 
 	        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 	        InputStream connection = url.openStream();
 	        
@@ -477,29 +477,6 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		}
 		
 		return picURL;
-	}
-	
-	/**
-	 * 略過https使用
-	 * @return
-	 */
-	private TrustManager[] getTrustingManager() {
-		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-
-			@Override
-			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-				return null;
-			}
-
-			@Override
-			public void checkClientTrusted(X509Certificate[] certs, String authType) {
-			}
-
-			@Override
-			public void checkServerTrusted(X509Certificate[] certs, String authType) {
-			}
-		} };
-		return trustAllCerts;
 	}
 	
 	public RedisAPI getRedisAPI() {
