@@ -454,6 +454,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		//長方形 GIF，圖片擋掉只留文字廣告
 		if ("gif".equalsIgnoreCase(filenameExtension)) {
 			log.info("處理完後路徑:" + picURL);
+			System.setProperty("https.protocols", "TLSv1.2");
 			URL url = new URL(picURL);
 			
 			// 處理略過https部分
