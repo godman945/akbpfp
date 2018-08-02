@@ -2,18 +2,12 @@ package com.pchome.akbpfp.db.service.admanyurlsearch;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -454,17 +448,9 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		//長方形 GIF，圖片擋掉只留文字廣告
 		if ("gif".equalsIgnoreCase(filenameExtension)) {
 			log.info("處理完後路徑:" + picURL);
-			System.setProperty("https.protocols", "TLSv1.2, TLSv1.1, SSLv3");
-			URL url = new URL(picURL);
+			URL url = new URL(picURL.replaceFirst("https", "http"));
 			
-			// 處理略過https部分
-	        final SSLContext sc = SSLContext.getInstance("SSL");
-	        sc.init(null, HttpUtil.getTrustingManager(), new java.security.SecureRandom());                                 
-	        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-	        InputStream connection = url.openStream();
-	        
-	        log.info("connection:" + connection);
-			BufferedImage img = ImageIO.read(connection);
+			BufferedImage img = ImageIO.read(url);
 			int width = img.getWidth();
 			int height = img.getHeight();
 			log.info("圖片寬:" + width);

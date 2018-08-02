@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.security.KeyManagementException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,10 +27,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
@@ -593,22 +588,16 @@ public class AdAddAction extends BaseCookieAction{
 		String filenameExtension = imgPath.substring(startLength, endLength);
         
 		log.info("Download picture URL:" + imgPath);
-        URL url = new URL(imgPath);
+        URL url = new URL(imgPath.replaceFirst("https", "http"));
         String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension; // 存放路徑 + 檔名
-        
-        // 處理略過https部分
-        final SSLContext sc = SSLContext.getInstance("SSL");
-        sc.init(null, HttpUtil.getTrustingManager(), new java.security.SecureRandom());                                 
-        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        InputStream connection = url.openStream();
-        
+
         // 處理圖片下載
         if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
             InputStream in = url.openStream();
             Files.copy(in, new File(imgPathAndName).toPath());
             
         } else { // jpg圖片下載方式
-            BufferedImage img = ImageIO.read(connection);
+            BufferedImage img = ImageIO.read(url);
             int width = img.getWidth();
             int height = img.getHeight();
             if (width != height) { // 長寬不相同，為長方形。
