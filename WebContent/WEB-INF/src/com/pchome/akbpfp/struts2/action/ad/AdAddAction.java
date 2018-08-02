@@ -440,7 +440,7 @@ public class AdAddAction extends BaseCookieAction{
         		//新增圖片資料
         		List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, "img", null, adPoolSeq);
         		String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		log.info("開始新增pfp_ad_detail資料，ad_seq:" + defineAdSeq);
+        		log.info("開始新增pfp_ad_detail資料，ad_seq:" + adSeq);
         		
         		String imgPath = redisJsonObjectDetail.get("pic_url").toString();
         		imgPath = processImgPath(imgPath);
@@ -491,7 +491,7 @@ public class AdAddAction extends BaseCookieAction{
         		//新增排除關鍵字
         		addExcludeKeywords(pfpAdGroup);
         		
-        		log.info("新增ad_seq:" + defineAdSeq + "完成。");
+        		log.info("新增ad_seq:" + adSeq + "完成。");
         	}
         }
         
