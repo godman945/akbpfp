@@ -447,14 +447,12 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		
 		//長方形 GIF，圖片擋掉只留文字廣告
 		if ("gif".equalsIgnoreCase(filenameExtension)) {
-			log.info("處理完後路徑:" + picURL);
+			log.info("處理完後的圖片路徑:" + picURL);
 			URL url = new URL(picURL.replaceFirst("https", "http"));
 			
 			BufferedImage img = ImageIO.read(url);
 			int width = img.getWidth();
 			int height = img.getHeight();
-			log.info("圖片寬:" + width);
-			log.info("圖片高:" + height);
 			if(width != height){ // 長寬不相同，為長方形
 				picURL = "img/public/na.gif\" style=\"display:none";
 				return picURL;

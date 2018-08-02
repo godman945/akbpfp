@@ -595,7 +595,7 @@ public class AdAddAction extends BaseCookieAction{
         if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
             InputStream in = url.openStream();
             Files.copy(in, new File(imgPathAndName).toPath());
-            
+            in.close();
         } else { // jpg圖片下載方式
             BufferedImage img = ImageIO.read(url);
             int width = img.getWidth();
