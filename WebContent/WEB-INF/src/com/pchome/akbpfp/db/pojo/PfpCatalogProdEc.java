@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/7/27 �W�� 09:49:01 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/8/1 �U�� 12:20:03 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -33,6 +33,7 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 	private String prodUseStatus;
 	private String prodCategory;
 	private String prodStatus;
+	private String prodCheckStatus;
 	private Date updateDate;
 	private Date createDate;
 
@@ -41,7 +42,7 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 
 	public PfpCatalogProdEc(PfpCatalog pfpCatalog, String catalogProdEcSeq, String prodName, String prodTitle,
 			String prodUrl, int prodPrice, int prodDiscountPrice, String prodStockStatus, String prodUseStatus,
-			String prodCategory, String prodStatus, Date updateDate, Date createDate) {
+			String prodCategory, String prodStatus, String prodCheckStatus, Date updateDate, Date createDate) {
 		this.pfpCatalog = pfpCatalog;
 		this.catalogProdEcSeq = catalogProdEcSeq;
 		this.prodName = prodName;
@@ -53,6 +54,7 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 		this.prodUseStatus = prodUseStatus;
 		this.prodCategory = prodCategory;
 		this.prodStatus = prodStatus;
+		this.prodCheckStatus = prodCheckStatus;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
@@ -169,8 +171,17 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 		this.prodStatus = prodStatus;
 	}
 
+	@Column(name = "prod_check_status", nullable = false, length = 1)
+	public String getProdCheckStatus() {
+		return this.prodCheckStatus;
+	}
+
+	public void setProdCheckStatus(String prodCheckStatus) {
+		this.prodCheckStatus = prodCheckStatus;
+	}
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date", nullable = false, length = 0)
+	@Column(name = "update_date", nullable = false, length = 19)
 	public Date getUpdateDate() {
 		return this.updateDate;
 	}
@@ -180,7 +191,7 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 0)
+	@Column(name = "create_date", nullable = false, length = 19)
 	public Date getCreateDate() {
 		return this.createDate;
 	}

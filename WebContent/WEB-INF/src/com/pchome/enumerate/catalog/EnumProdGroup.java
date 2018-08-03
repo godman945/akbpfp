@@ -1,6 +1,6 @@
 package com.pchome.enumerate.catalog;
 
-public enum ProdGroupEnum {
+public enum EnumProdGroup {
 
 	Ec_Prod_Group("Ec_Prod_Group", "1","一般購物類"),
 	Booking_Prod_Group("Booking_Prod_Group", "2","訂房住宿類"),
@@ -11,7 +11,7 @@ public enum ProdGroupEnum {
 	private final String catalogType;
 	private final String desc;
 
-	private ProdGroupEnum(String key, String catalogType, String desc) {
+	private EnumProdGroup(String key, String catalogType, String desc) {
 		this.key = key;
 		this.catalogType = catalogType;
 		this.desc = desc;

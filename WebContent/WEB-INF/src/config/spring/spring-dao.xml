@@ -226,4 +226,8 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
+    <bean id="PfpCatalogGroupItemDAO" class="com.pchome.akbpfp.db.dao.catalog.prodGroup.PfpCatalogGroupItemDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
 </beans>

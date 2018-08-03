@@ -1,9 +1,17 @@
 package com.pchome.akbpfp.db.dao.catalog.prodGroup;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.Query;
+import org.hibernate.transform.Transformers;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
+import com.pchome.akbpfp.db.pojo.PfdUserMemberRef;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
+import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 
 public class PfpCatalogGroupDAO extends BaseDAO<PfpCatalogGroup,String> implements IPfpCatalogGroupDAO{
 	
@@ -15,13 +23,39 @@ public class PfpCatalogGroupDAO extends BaseDAO<PfpCatalogGroup,String> implemen
 		hql.append(" where catalogGroupSeq = '"+groupId+"' ");
 		
 		return super.getHibernateTemplate().find(hql.toString());
-		
-//		StringBuffer hql = new StringBuffer();
-//		hql.append(" from PfpCatalogGroup ");
-//		hql.append(" where catalogGroupSeq = ? ");
-//		Object[] ob = new Object[]{groupId};
-//		return super.getHibernateTemplate().find(hql.toString(), ob);
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<PfpCatalogGroup> getCatalogSeq(String groupId) throws Exception{
+		
+		StringBuffer hql = new StringBuffer();
+		hql.append(" from PfpCatalogGroup ");
+		hql.append(" where catalogGroupSeq = '"+groupId+"' ");
+		
+		return super.getHibernateTemplate().find(hql.toString());
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL) throws Exception{
+
+		StringBuffer hql = new StringBuffer();
+		hql.append(" select  * from ");
+		hql.append(" pfp_catalog_prod_ec ");
+		hql.append(" where 1 = 1 ");
+		hql.append(" and catalog_seq =  '" + catalogSeq + "'");
+		hql.append(" and prod_check_status = '1' ");
+		hql.append(" and prod_status = '1' ");
+		hql.append(filterSQL);
+
+		log.info(hql.toString());
+
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); // 这样子返回Map
+		return query.list();
+	}
+	
+
 
 //	@SuppressWarnings("unchecked")
 //	public List<PfpCustomerInfo> findCustomerInfo(String customerInfoId) {

@@ -1,19 +1,12 @@
 package com.pchome.akbpfp.db.service.catalog.prodGroup;
 
-import java.util.List;
-import java.util.Map;
-
-import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
+import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.service.IBaseService;
 
 
-public interface IPfpCatalogGroupService extends IBaseService<PfpCatalogGroup,String>{
+public interface IPfpCatalogGroupItemService extends IBaseService<PfpCatalogGroupItem,Integer>{
 	
-	public String getCatalogType(String groupId) throws Exception;
-	
-	public String getCatalogSeq(String groupId) throws Exception;
-	
-	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL) throws Exception;
+	public String getCatalogGroupFilterSQL(String groupId) throws Exception;
 	
 	
 	

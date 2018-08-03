@@ -1,25 +1,14 @@
 package com.pchome.akbpfp.catalog.prodGroup.factory;
 
-import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupService;
+import org.json.JSONArray;
 
 public class BookingProdGroup extends AProdGroup {
-	public IPfpCatalogGroupService pfpCatalogGroupService ;
+	
 	@Override
-	public String getProdGroupList(String groupId) throws Exception {
+	public JSONArray getProdGroupList(String catalogSeq, String filterSQL) throws Exception {
+		JSONArray prodListJson = new JSONArray(); 
 		
-		
-		
-		
-		
-		return "Booking-- Prod Group";
+		return prodListJson;
 	}
-	public IPfpCatalogGroupService getPfpCatalogGroupService() {
-		return pfpCatalogGroupService;
-	}
-	public void setPfpCatalogGroupService(IPfpCatalogGroupService pfpCatalogGroupService) {
-		this.pfpCatalogGroupService = pfpCatalogGroupService;
-	}
-	
-	
 	
 }
