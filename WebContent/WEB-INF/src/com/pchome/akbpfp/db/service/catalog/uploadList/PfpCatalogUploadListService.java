@@ -6,10 +6,10 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.catalog.uploadList.IPfpCatalogUploadListDAO;
+import com.pchome.akbpfp.db.dao.catalog.uploadList.PfpCatalogUploadListDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.service.BaseService;
@@ -19,7 +19,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 
 	private String akbPfpServer;
 	
-//	private IPfpCatalogUploadListDAO pfpCatalogUploadListDAO;
+	private PfpCatalogUploadListDAO pfpCatalogUploadListDAO;
 	
 	@Override
 	public Map<String, Object> processCatalogProdJsonData(JSONObject catalogProdJsonData) throws Exception {
@@ -157,7 +157,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				prodItemErrorMsg += "prodUrl:必填欄位必須輸入資訊;";
 			} else {
 				String checkResultMsg = adUtilAjax.checkAdShowUrl(prodUrl, akbPfpServer);
-				if(!checkResultMsg.isEmpty()){
+				if (!checkResultMsg.isEmpty()) {
 					prodItemErrorMsg += "prodUrl:請輸入正確的連結網址;";
 				}
 			}
@@ -196,7 +196,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				if ("1".equals(updateWay)) { // 1.取代:上傳新檔案會取代目前的資料，table內未在新檔案中找到的產品將會遭到刪除。
 				} else {
 					// 2.更新:上傳新檔案會新增產品或更新現有的產品，不會刪除產品。
-//					pfpCatalogUploadListDAO.saveOrUpdatePfpCatalogProdEc(pfpCatalogProdEc);
+					pfpCatalogUploadListDAO.saveOrUpdatePfpCatalogProdEc(pfpCatalogProdEc);
 				}
 				successDataCount++;
 			}
@@ -210,6 +210,11 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	}
 
 	
+
+	public void setPfpCatalogUploadListDAO(PfpCatalogUploadListDAO pfpCatalogUploadListDAO) {
+		this.pfpCatalogUploadListDAO = pfpCatalogUploadListDAO;
+	}
+
 	public void setAkbPfpServer(String akbPfpServer) {
 		this.akbPfpServer = akbPfpServer;
 	}

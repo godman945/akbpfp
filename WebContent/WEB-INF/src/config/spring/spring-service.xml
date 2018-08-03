@@ -240,7 +240,8 @@
     <!-- 商品廣告-檔案上傳 -->
     <bean id="PfpCatalogUploadListService" class="com.pchome.akbpfp.db.service.catalog.uploadList.PfpCatalogUploadListService">
     	<property name="akbPfpServer" value="${akbpfp.server}" />
-<!--              <property name="dao" ref="PfpBuDAO" /> -->
+<!--         <property name="dao" ref="PfpCatalogUploadListDAO" /> -->
+        <property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
     </bean>
     
 </beans>
