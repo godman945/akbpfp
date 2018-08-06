@@ -1,7 +1,9 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -10,16 +12,20 @@ import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.catalog.uploadList.IPfpCatalogUploadListDAO;
 import com.pchome.akbpfp.db.dao.catalog.uploadList.PfpCatalogUploadListDAO;
+import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.service.BaseService;
+import com.pchome.akbpfp.db.service.ad.PfpAdService;
+import com.pchome.akbpfp.db.service.catalog.PfpCatalogService;
 import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
 
 public class PfpCatalogUploadListService extends BaseService<String, String> implements IPfpCatalogUploadListService {
 
-	private String akbPfpServer;
-	
+	private PfpCatalogService pfpCatalogService;
 	private PfpCatalogUploadListDAO pfpCatalogUploadListDAO;
+	
+	private String akbPfpServer;
 	
 	@Override
 	public Map<String, Object> processCatalogProdJsonData(JSONObject catalogProdJsonData) throws Exception {
@@ -86,6 +92,8 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		// 處理每筆商品資料
 		int successDataCount = 0;
 		int errorDataCount = 0;
+		// 記錄商品品號列表，不在列表內的資料都刪除
+		List<String> catalogProdEcSeqList = new ArrayList<String>();
 		JSONArray catalogProdItemJsonArray = new JSONArray(catalogProdItem);
 		for (int i = 0; i < catalogProdItemJsonArray.length(); i++) {
 			JSONObject catalogProdItemJson = (JSONObject) catalogProdItemJsonArray.get(i);
@@ -93,6 +101,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 			
 			String catalogProdEcSeq = catalogProdItemJson.optString("id"); // id*
 			String prodName = catalogProdItemJson.optString("prod_name"); // 商品名稱*
+			String prodTitle = catalogProdItemJson.optString("prod_title"); // 商品敘述*
 			String prodPrice = catalogProdItemJson.optString("prod_price"); // 原價
 			String prodDiscountPrice = catalogProdItemJson.optString("prod_discount_price"); // 促銷價*
 			String prodStockStatus = catalogProdItemJson.optString("prod_stock_status"); // 商品供應情況*
@@ -113,6 +122,14 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				prodItemErrorMsg += "prodName:必填欄位必須輸入資訊;";
 			} else if (prodName.length() > prodNameLimit) {
 				prodItemErrorMsg += "prodName:欄位字數超過" + prodNameLimit + "個字;";
+			}
+			
+			// 商品名稱
+			int prodTitleLimit = 1024;
+			if (prodTitle.isEmpty()) {
+				prodItemErrorMsg += "prodTitle:必填欄位必須輸入資訊;";
+			} else if (prodName.length() > prodTitleLimit) {
+				prodItemErrorMsg += "prodTitle:欄位字數超過" + prodTitleLimit + "個字;";
 			}
 			
 			// 原價
@@ -174,13 +191,17 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				errorDataCount++;
 			} else {
 				// 記錄到正確table
-				PfpCatalog pfpCatalog = new PfpCatalog();
-				pfpCatalog.setCatalogSeq(catalogSeq); // 商品目錄編號
+//				PfpCatalog pfpCatalog = new PfpCatalog();
+//				pfpCatalog.setCatalogSeq(catalogSeq); // 商品目錄編號
+				
+				// 取得商品目錄資料
+				PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
 				
 				PfpCatalogProdEc pfpCatalogProdEc = new PfpCatalogProdEc();
 				pfpCatalogProdEc.setCatalogProdEcSeq(catalogProdEcSeq); // id*
 				pfpCatalogProdEc.setPfpCatalog(pfpCatalog);
 				pfpCatalogProdEc.setProdName(prodName); // 商品名稱*
+				pfpCatalogProdEc.setProdTitle(prodTitle); // 商品敘述
 				pfpCatalogProdEc.setProdUrl(prodUrl); // 連結網址*
 				pfpCatalogProdEc.setProdPrice(Integer.parseInt(prodPrice)); // 原價
 				pfpCatalogProdEc.setProdDiscountPrice(Integer.parseInt(prodDiscountPrice)); // 促銷價*
@@ -192,16 +213,31 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				pfpCatalogProdEc.setUpdateDate(new Date()); // 更新時間
 				pfpCatalogProdEc.setCreateDate(new Date()); // 建立時間
 				
+				
 				System.out.println(pfpCatalogProdEc);
-				if ("1".equals(updateWay)) { // 1.取代:上傳新檔案會取代目前的資料，table內未在新檔案中找到的產品將會遭到刪除。
-				} else {
-					// 2.更新:上傳新檔案會新增產品或更新現有的產品，不會刪除產品。
-					pfpCatalogUploadListDAO.saveOrUpdatePfpCatalogProdEc(pfpCatalogProdEc);
+				
+				
+				// 先更新，如果回傳更新筆數為0表示無資料，改新增
+				System.out.println("商品ID:" + pfpCatalogProdEc.getCatalogProdEcSeq());
+				int updateCount = pfpCatalogUploadListDAO.updatePfpCatalogProdEc(pfpCatalogProdEc);
+				System.out.println("更新筆數:" + updateCount);
+				if (updateCount == 0) {
+					pfpCatalogUploadListDAO.savePfpCatalogProdEc(pfpCatalogProdEc);
 				}
+				
+				if ("1".equals(updateWay)) { // 1.取代:上傳新檔案會取代目前的資料，table內未在新檔案中找到的產品將會遭到刪除。
+					catalogProdEcSeqList.add(pfpCatalogProdEc.getCatalogProdEcSeq());
+				}
+				
 				successDataCount++;
 			}
 		}
 
+		if ("1".equals(updateWay)) {
+			System.out.println(catalogProdEcSeqList);
+			pfpCatalogUploadListDAO.deleteNotInPfpCatalogProdEc(catalogSeq, catalogProdEcSeqList);
+		}
+		
 		dataMap.put("status", "SUCCESS");
 		dataMap.put("msg", "一般購物類資料處理完成!");
 		dataMap.put("successDataCount", successDataCount); // 正確總筆數
@@ -211,6 +247,10 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 
 	
 
+	public void setPfpCatalogService(PfpCatalogService pfpCatalogService) {
+		this.pfpCatalogService = pfpCatalogService;
+	}
+
 	public void setPfpCatalogUploadListDAO(PfpCatalogUploadListDAO pfpCatalogUploadListDAO) {
 		this.pfpCatalogUploadListDAO = pfpCatalogUploadListDAO;
 	}
@@ -219,4 +259,20 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		this.akbPfpServer = akbPfpServer;
 	}
 	
+	
+
+//	if ("1".equals(updateWay)) { // 1.取代:上傳新檔案會取代目前的資料，table內未在新檔案中找到的產品將會遭到刪除。
+//	} else {
+//		// 2.更新:上傳新檔案會新增產品或更新現有的產品，不會刪除產品。
+////		pfpCatalogUploadListDAO.saveOrUpdatePfpCatalogProdEc(pfpCatalogProdEc);
+//		
+//		// 方法2 先更新，如果回傳更新筆數為0表示無資料，改新增
+//		System.out.println("商品ID:" + pfpCatalogProdEc.getCatalogProdEcSeq());
+//		int updateCount = pfpCatalogUploadListDAO.updatePfpCatalogProdEc(pfpCatalogProdEc);
+//		System.out.println("更新筆數:" + updateCount);
+//		if (updateCount == 0) {
+////			pfpCatalogUploadListDAO.insertPfpCatalogProdEc(pfpCatalogProdEc);
+//			pfpCatalogUploadListDAO.savePfpCatalogProdEc(pfpCatalogProdEc);
+//		}
+//	}
 }

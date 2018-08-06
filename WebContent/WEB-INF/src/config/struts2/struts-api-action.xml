@@ -83,9 +83,13 @@
 			<param name="root">dataMap</param>
 		</result>
 	</action>
- 		
-	    
-	    
+	
+ 	<action name="catalogProdFileUploadApi" class="PfpCatalogUploadListAction" method="processCatalogProdJsonDataApi">
+		<result type="json" name="success">
+			<param name="root">dataMap</param>
+		</result>
+	</action>
+	
 	    <!-- 未整理備份用 -->
 <!-- 		<action name="catalogProdFileUpload" class="CatalogUploadListAction" method="fileUploadCSV"> -->
 <!-- 			<result type="json" name="success"> -->

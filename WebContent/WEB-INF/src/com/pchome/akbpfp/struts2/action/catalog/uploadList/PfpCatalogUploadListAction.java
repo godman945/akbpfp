@@ -34,7 +34,8 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	// 在main測試需要加static，static待移除
 	private IPfpCatalogUploadListService pfpCatalogUploadListService;
 	
-//	JSONObject catalogProdJsonData;
+	// api用
+	private String jsonData;
 	
 	/**
 	 * 商品廣告-檔案上傳CSV
@@ -53,14 +54,19 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 //		File createFile = new File("/home/webuser/akb/pfp/csv/" + super.getCustomer_info_id() + "/" + fileUploadFileName);
 //		FileUtils.copyFile(fileUpload, createFile);
 		
-//		String testStr = "{\"catalog_seq\":\"PC201807240000000001\", \"catalog_type\":\"1\", \"update_way\":\"2\", \"pfp_customer_info_id\":\"AC2013071700001\", \"catalog_prod_item\":[{\"id\":\"123456789\", \"prod_name\":\"PS4 PRO\", \"prod_price\":\"12999\", \"prod_discount_price\":\"10000\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJBC19008SGKD/000001_1522029304.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJBC-19008SGKD\", \"prod_category\":\"電玩\"}]}";
-		String testStr = "{\"catalog_seq\":\"PC201807240000000001\", \"catalog_type\":\"1\", \"update_way\":\"2\", \"pfp_customer_info_id\":\"AC2013071700001\", \"catalog_prod_item\":[{\"id\":\"123456789\", \"prod_name\":\"PS4 PRO\", \"prod_price\":\"12999\", \"prod_discount_price\":\"10000\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJBC19008SGKD/000001_1522029304.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJBC-19008SGKD\", \"prod_category\":\"電玩\"}, "
-				+ "{\"id\":\"987654321\", \"prod_name\":\"人中之龍3\", \"prod_price\":\"1290\", \"prod_discount_price\":\"1190\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJDJA90093KJR/000001_1528274186.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJDJ-A90093KJR?q=/S/DGBJ88\", \"prod_category\":\"電玩\"}, "
-				+ "{\"id\":\"\", \"prod_name\":\"\", \"prod_price\":\"\", \"prod_discount_price\":\"\", \"prod_stock_status\":\"\", \"prod_use_status\":\"\", \"prod_img_url\":\"\", \"prod_url\":\"\", \"prod_category\":\"電玩\"}, "
-				+ "{\"id\":\"\", \"prod_name\":\"\", \"prod_price\":\"\", \"prod_discount_price\":\"\", \"prod_stock_status\":\"\", \"prod_use_status\":\"\", \"prod_img_url\":\"https://a.ecimg.tw/items/aaa/000001_1528274186.jpg\", \"prod_url\":\"\", \"prod_category\":\"電玩\"}]}";
+//		String testStr = "{\"catalog_seq\":\"PC201807260000000001\", \"catalog_type\":\"1\", \"update_way\":\"2\", \"pfp_customer_info_id\":\"AC2013071700001\", \"catalog_prod_item\":[{\"id\":\"123456789\", \"prod_name\":\"PS4 PRO\", \"prod_price\":\"12999\", \"prod_discount_price\":\"10000\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJBC19008SGKD/000001_1522029304.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJBC-19008SGKD\", \"prod_category\":\"電玩\"}]}";
+		String testStr = "{\"catalog_seq\":\"PC201807260000000001\", \"catalog_type\":\"1\", \"update_way\":\"1\", \"pfp_customer_info_id\":\"AC2013071700001\", \"catalog_prod_item\":[{\"id\":\"123456789\", \"prod_name\":\"PS4 PRO\", \"prod_title\":\"PS4 PRO_title\", \"prod_price\":\"12999\", \"prod_discount_price\":\"10000\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJBC19008SGKD/000001_1522029304.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJBC-19008SGKD\", \"prod_category\":\"電玩\"}, "
+				+ "{\"id\":\"987654321\", \"prod_name\":\"人中之龍3\", \"prod_title\":\"人中之龍3_title\", \"prod_price\":\"1290\", \"prod_discount_price\":\"1190\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJDJA90093KJR/000001_1528274186.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJDJ-A90093KJR?q=/S/DGBJ88\", \"prod_category\":\"電玩\"}, "
+				+ "{\"id\":\"001\", \"prod_name\":\"GIRLY打褶設計口袋傘裙\", \"prod_title\":\"傘裙\", \"prod_price\":\"20\", \"prod_discount_price\":\"349\", \"prod_stock_status\":\"0\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJDJA90093KJR/000001_1528274186.jpg\", \"prod_url\":\"http://www.pazzo.com.tw/Detail/P401014501204\", \"prod_category\":\"服飾\"}, "
+				+ "{\"id\":\"002\", \"prod_name\":\"洋裝輕夏蕾絲簍空小花洋裝\", \"prod_title\":\"洋裝\", \"prod_price\":\"890\", \"prod_discount_price\":\"549\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJDJA90093KJR/000001_1528274186.jpg\", \"prod_url\":\"http://www.pazzo.com.tw/Detail/P402017880204\", \"prod_category\":\"服飾\"}, "
+				+ "{\"id\":\"003\", \"prod_name\":\"CHIC GIRL激瘦小喇叭吊帶牛仔褲\", \"prod_title\":\"牛仔褲\", \"prod_price\":\"1000\", \"prod_discount_price\":\"880\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJDJA90093KJR/000001_1528274186.jpg\", \"prod_url\":\"http://www.pazzo.com.tw/Detail/P402016801904\", \"prod_category\":\"服飾\"}, "
+				+ "{\"id\":\"\", \"prod_name\":\"\", \"prod_title\":\"\", \"prod_price\":\"\", \"prod_discount_price\":\"\", \"prod_stock_status\":\"\", \"prod_use_status\":\"\", \"prod_img_url\":\"\", \"prod_url\":\"\", \"prod_category\":\"電玩\"}, "
+				+ "{\"id\":\"\", \"prod_name\":\"\", \"prod_title\":\"\", \"prod_price\":\"\", \"prod_discount_price\":\"\", \"prod_stock_status\":\"\", \"prod_use_status\":\"\", \"prod_img_url\":\"https://a.ecimg.tw/items/aaa/000001_1528274186.jpg\", \"prod_url\":\"\", \"prod_category\":\"電玩\"}, "
+				+ "{\"id\":\"3345678\", \"prod_name\":\"最後生還者\", \"prod_title\":\"最後生還者_title\", \"prod_price\":\"800\", \"prod_discount_price\":\"690\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJDJA90093KJR/000001_1528274186.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJDJ-A90093KJR?q=/S/DGBJ88\", \"prod_category\":\"電玩\"}, "
+				+ "{\"id\":\"\", \"prod_name\":\"\", \"prod_title\":\"\", \"prod_price\":\"\", \"prod_discount_price\":\"\", \"prod_stock_status\":\"\", \"prod_use_status\":\"\", \"prod_img_url\":\"https://a.ecimg.tw/items/aaa/000001_1528274186.jpg\", \"prod_url\":\"\", \"prod_category\":\"電玩\"}]} ";
 		JSONObject catalogProdJsonData = new JSONObject(testStr);
-		dataMap = processCatalogProdJsonData(catalogProdJsonData);
 		
+		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
 		System.out.println("finalDataMap:" + dataMap);
 		
 		return SUCCESS;
@@ -68,41 +74,25 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	/**
 	 * 處理上傳的json資料
-	 * @param catalogProdJsonData 
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public Map<String, Object> processCatalogProdJsonData(JSONObject catalogProdJsonData) throws Exception {
+	public String processCatalogProdJsonDataApi() {
 		dataMap = new HashMap<String, Object>();
+		System.out.println("jsonData:" + jsonData);
+//		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
 		
-		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
-		
-		return dataMap;
+		return SUCCESS;
 	}
 	
-	
-	
-	public static void main(String age[]) throws Exception{
-//		System.out.println("AAAOXISJD");
-//		
-//		String testStr = "{\"catalog_seq\":\"PC201807240000000001\", \"catalog_type\":\"1\", \"update_way\":\"2\", \"pfp_customer_info_id\":\"AC2013071700001\", \"catalog_prod_item\":[{\"id\":\"123456789\", \"prod_name\":\"PS4 PRO\", \"prod_price\":\"12999\", \"prod_discount_price\":\"10000\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJBC19008SGKD/000001_1522029304.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJBC-19008SGKD\", \"prod_category\":\"電玩\"}, "
-//				+ "{\"id\":\"987654321\", \"prod_name\":\"人中之龍3\", \"prod_price\":\"1290\", \"prod_discount_price\":\"1190\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJDJA90093KJR/000001_1528274186.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJDJ-A90093KJR?q=/S/DGBJ88\", \"prod_category\":\"電玩\"}, "
-//				+ "{\"id\":\"\", \"prod_name\":\"\", \"prod_price\":\"\", \"prod_discount_price\":\"\", \"prod_stock_status\":\"\", \"prod_use_status\":\"\", \"prod_img_url\":\"\", \"prod_url\":\"\", \"prod_category\":\"電玩\"}]}";
-//		JSONObject apiJsonObject = new JSONObject(testStr);
-//		System.out.println(apiJsonObject);
-//		System.out.println(apiJsonObject.get("catalog_seq"));
-//		catalogUploadListService.processCatalogProdJsonData(apiJsonObject);
-	}
-
-
-
-
-
-
 	public void setFileUploadFileName(String fileUploadFileName) {
 		this.fileUploadFileName = fileUploadFileName;
 	}
 
+	public void setJsonData(String jsonData) {
+		this.jsonData = jsonData;
+	}
+	
 	public void setPfpCatalogUploadListService(IPfpCatalogUploadListService pfpCatalogUploadListService) {
 		this.pfpCatalogUploadListService = pfpCatalogUploadListService;
 	}
@@ -118,6 +108,19 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	public void setDataMap(Map<String, Object> dataMap) {
 		this.dataMap = dataMap;
 	}
+	
+	
+//	public static void main(String age[]) throws Exception{
+//	System.out.println("AAAOXISJD");
+//	
+//	String testStr = "{\"catalog_seq\":\"PC201807260000000001\", \"catalog_type\":\"1\", \"update_way\":\"2\", \"pfp_customer_info_id\":\"AC2013071700001\", \"catalog_prod_item\":[{\"id\":\"123456789\", \"prod_name\":\"PS4 PRO\", \"prod_price\":\"12999\", \"prod_discount_price\":\"10000\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJBC19008SGKD/000001_1522029304.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJBC-19008SGKD\", \"prod_category\":\"電玩\"}, "
+//			+ "{\"id\":\"987654321\", \"prod_name\":\"人中之龍3\", \"prod_price\":\"1290\", \"prod_discount_price\":\"1190\", \"prod_stock_status\":\"1\", \"prod_use_status\":\"1\", \"prod_img_url\":\"https://a.ecimg.tw/items/DGBJDJA90093KJR/000001_1528274186.jpg\", \"prod_url\":\"https://24h.pchome.com.tw/prod/DGBJDJ-A90093KJR?q=/S/DGBJ88\", \"prod_category\":\"電玩\"}, "
+//			+ "{\"id\":\"\", \"prod_name\":\"\", \"prod_price\":\"\", \"prod_discount_price\":\"\", \"prod_stock_status\":\"\", \"prod_use_status\":\"\", \"prod_img_url\":\"\", \"prod_url\":\"\", \"prod_category\":\"電玩\"}]}";
+//	JSONObject apiJsonObject = new JSONObject(testStr);
+//	System.out.println(apiJsonObject);
+//	System.out.println(apiJsonObject.get("catalog_seq"));
+//	catalogUploadListService.processCatalogProdJsonData(apiJsonObject);
+//}
 	
 	
 //	System.out.println("myFile:" + myFile);
