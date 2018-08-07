@@ -64,15 +64,18 @@ public class PfpCatalogUploadListDAO extends BaseDAO<Sequence,String> implements
 	 * @param catalogProdEcSeqList 不被刪除的名單
 	 */
 	public void deleteNotInPfpCatalogProdEc(String catalogSeq, List<String> catalogProdEcSeqList) {
-		// TODO Auto-generated method stub
-//		HashMap<String, Object> sqlParams = new HashMap<String, Object>();
-		
 		String hql = "DELETE FROM pfp_catalog_prod_ec ";
-			   hql += "WHERE catalog_seq = :catalog_seq AND catalog_prod_ec_seq NOT IN(:catalog_prod_ec_seq_list)";
+			   hql += "WHERE catalog_seq = :catalog_seq ";
+			   if (catalogProdEcSeqList.size() != 0) {
+				   hql += "AND catalog_prod_ec_seq NOT IN(:catalog_prod_ec_seq_list)";
+			   }
+
 		Session session = getSession();
 		Query query = session.createSQLQuery(hql);
 		query.setString("catalog_seq", catalogSeq);
-		query.setParameterList("catalog_prod_ec_seq_list", catalogProdEcSeqList);
+		if (catalogProdEcSeqList.size() != 0) {
+			query.setParameterList("catalog_prod_ec_seq_list", catalogProdEcSeqList);
+		}
 		query.executeUpdate();
 		session.flush();
 	}

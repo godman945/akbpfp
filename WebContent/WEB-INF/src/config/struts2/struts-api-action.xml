@@ -97,7 +97,7 @@
 <!-- 			</result> -->
 <!-- 			<interceptor-ref name="fileUpload" > -->
 <!-- 				<param name="allowedTypes">multipart/form-data</param> -->
-<!-- 				<param name="allowedExtensions">csv</param> -->
+<!-- 				<param name="allowedExtensions">csv, xls</param> -->
 <!-- 				<param name="maximumSize">10240000</param> -->
 <!-- 				<param name="savePath">D:/tempCSV</param> -->
 <!-- 			</interceptor-ref> -->

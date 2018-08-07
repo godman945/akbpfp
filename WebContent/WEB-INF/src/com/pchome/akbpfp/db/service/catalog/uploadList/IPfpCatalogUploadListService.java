@@ -1,5 +1,7 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Map;
 
 import org.json.JSONException;
@@ -10,6 +12,8 @@ import com.pchome.akbpfp.db.service.IBaseService;
 public interface IPfpCatalogUploadListService extends IBaseService<String, String> {
 
 	Map<String, Object> processCatalogProdJsonData(JSONObject catalogProdJsonData) throws JSONException, Exception;
+
+	JSONObject getCSVFileDataToJson(String path);
 	
 	
 	

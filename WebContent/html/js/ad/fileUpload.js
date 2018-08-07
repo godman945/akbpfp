@@ -8,7 +8,7 @@ function fileUploadCSV(file) {
 		return false;
 	}
 	
-	// 檢查是否上傳csv檔
+	// 檢查是否上傳CSV檔
 	var type = file.accept;
 	if (type.indexOf("csv") == -1) {
 		alert("檔案格式有誤");
