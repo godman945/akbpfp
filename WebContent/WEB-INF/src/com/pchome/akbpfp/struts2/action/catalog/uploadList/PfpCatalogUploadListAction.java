@@ -11,6 +11,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 
@@ -60,6 +61,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		catalogProdJsonData.put("catalog_seq", "PC201808060000000001");
 		catalogProdJsonData.put("catalog_type", "1");
 		catalogProdJsonData.put("update_way", "1");
+		catalogProdJsonData.put("fileName", fileUploadFileName);
 		catalogProdJsonData.put("pfp_customer_info_id", super.getCustomer_info_id());
 		
 		System.out.println("catalogProdJsonData:" + catalogProdJsonData);

@@ -11,5 +11,7 @@ public interface ISequenceService extends IBaseService<Sequence,String>{
 
 	//取得流水編號 part 2
 	public String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception;
+	
+	public String getId(EnumSequenceTableName enumSequenceTableName, String mid, int totalLength) throws Exception;
 
 }

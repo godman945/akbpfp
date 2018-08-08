@@ -248,6 +248,7 @@
 <!--         <property name="dao" ref="PfpCatalogUploadListDAO" /> -->
         <property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
         <property name="pfpCatalogService" ref="PfpCatalogService" />
+        <property name="sequenceService" ref="SequenceService" /> 
     </bean>
     
 </beans>

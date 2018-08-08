@@ -8,6 +8,8 @@ import org.hibernate.Session;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
+import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
+import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.pojo.Sequence;
 
 public class PfpCatalogUploadListDAO extends BaseDAO<Sequence,String> implements IPfpCatalogUploadListDAO{
@@ -18,7 +20,7 @@ public class PfpCatalogUploadListDAO extends BaseDAO<Sequence,String> implements
 	}
 
 	/**
-	 * 更新一般購物類table資料
+	 * 更新一般購物類資料
 	 * @param pfpCatalogProdEc
 	 * @return 更新筆數
 	 */
@@ -51,7 +53,7 @@ public class PfpCatalogUploadListDAO extends BaseDAO<Sequence,String> implements
 	}
 
 	/**
-	 * 新增一般購物類table資料
+	 * 新增一般購物類資料
 	 * @param pfpCatalogProdEc
 	 */
 	public void savePfpCatalogProdEc(PfpCatalogProdEc pfpCatalogProdEc) {
@@ -59,7 +61,7 @@ public class PfpCatalogUploadListDAO extends BaseDAO<Sequence,String> implements
 	}
 
 	/**
-	 * 刪除
+	 * 刪除不在catalogProdEcSeqList列表內的資料
 	 * @param catalogSeq 商品目錄ID
 	 * @param catalogProdEcSeqList 不被刪除的名單
 	 */
@@ -78,6 +80,22 @@ public class PfpCatalogUploadListDAO extends BaseDAO<Sequence,String> implements
 		}
 		query.executeUpdate();
 		session.flush();
+	}
+
+	/**
+	 * 新增商品目錄更新紀錄
+	 * @param pfpCatalogUploadLog
+	 */
+	public void savePfpCatalogUploadLog(PfpCatalogUploadLog pfpCatalogUploadLog) {
+		super.getHibernateTemplate().save(pfpCatalogUploadLog);
+	}
+
+	/**
+	 * 新增商品目錄更新錯誤紀錄
+	 * @param pfpCatalogUploadErrLog
+	 */
+	public void savePfpCatalogUploadErrLog(PfpCatalogUploadErrLog pfpCatalogUploadErrLog) {
+		super.getHibernateTemplate().save(pfpCatalogUploadErrLog);
 	}
 
 }
