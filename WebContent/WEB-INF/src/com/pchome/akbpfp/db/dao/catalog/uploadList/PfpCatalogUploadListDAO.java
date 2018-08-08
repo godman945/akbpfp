@@ -1,6 +1,5 @@
 package com.pchome.akbpfp.db.dao.catalog.uploadList;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -10,14 +9,8 @@ import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
-import com.pchome.akbpfp.db.pojo.Sequence;
 
-public class PfpCatalogUploadListDAO extends BaseDAO<Sequence,String> implements IPfpCatalogUploadListDAO{
-
-	@Override
-	public void saveOrUpdatePfpCatalogProdEc(PfpCatalogProdEc pfpCatalogProdEc) {
-		super.getHibernateTemplate().saveOrUpdate(pfpCatalogProdEc);
-	}
+public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements IPfpCatalogUploadListDAO {
 
 	/**
 	 * 更新一般購物類資料

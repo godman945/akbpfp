@@ -1,6 +1,5 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
 
@@ -11,17 +10,16 @@ import com.pchome.akbpfp.db.service.IBaseService;
 
 public interface IPfpCatalogUploadListService extends IBaseService<String, String> {
 
+	/**
+	 * 依照商品目錄類別，處理相對應的部分
+	 */
 	Map<String, Object> processCatalogProdJsonData(JSONObject catalogProdJsonData) throws JSONException, Exception;
 
+	/**
+	 * 將csv檔案內容轉成json格式
+	 * @throws IOException 
+	 * @throws JSONException 
+	 */
 	JSONObject getCSVFileDataToJson(String path);
-	
-	
-	
-	
-//	// 取流水編號
-//	public String getSerialNumber(EnumSequenceTableName enumSequenceTableName) throws Exception;
-//
-//	//取得流水編號 part 2
-//	public String getId(EnumSequenceTableName enumSequenceTableName,String mid) throws Exception;
 
 }

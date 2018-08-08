@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -35,6 +34,9 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	
 	private String akbPfpServer;
 	
+	/**
+	 * 依照商品目錄類別，處理相對應的部分
+	 */
 	@Override
 	public Map<String, Object> processCatalogProdJsonData(JSONObject catalogProdJsonData) throws Exception {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
@@ -123,6 +125,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 			String prodUrl = catalogProdItemJson.optString("prod_url"); // 連結網址*
 			String prodCategory = catalogProdItemJson.optString("prod_category"); // 商品類別
 
+			// 檢查每個欄位
 			errorPrdItemArray = checkCatalogProdEcSeq(errorPrdItemArray, catalogProdEcSeq);
 			errorPrdItemArray = checkProdName(errorPrdItemArray, catalogProdEcSeq, prodName);
 			errorPrdItemArray = checkProdTitle(errorPrdItemArray, catalogProdEcSeq, prodTitle);
@@ -201,20 +204,20 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		pfpCatalogUploadListDAO.savePfpCatalogUploadLog(pfpCatalogUploadLog);
 		
 		// 記錄錯誤資料
-//		if(errorPrdItemArray.length() > 0){
+		if(errorPrdItemArray.length() > 0){
 			for (int i = 0; i < errorPrdItemArray.length(); i++) {
 				JSONObject errorPrdItemJson = (JSONObject) errorPrdItemArray.get(i);
 				PfpCatalogUploadErrLog pfpCatalogUploadErrLog = new PfpCatalogUploadErrLog();
-				pfpCatalogUploadErrLog.setPfpCatalogUploadLog(pfpCatalogUploadLog);
-				pfpCatalogUploadErrLog.setCatalogProdEcSeq(errorPrdItemJson.getString("catalog_prod_ec_seq"));
-				pfpCatalogUploadErrLog.setCatalogErrItem(errorPrdItemJson.getString("catalog_err_item"));
-				pfpCatalogUploadErrLog.setCatalogErrReason(errorPrdItemJson.getString("catalog_err_reason"));
-				pfpCatalogUploadErrLog.setCatalogErrRawdata(errorPrdItemJson.getString("catalog_err_rawdata"));
-				pfpCatalogUploadErrLog.setUpdateDate(new Date());
-				pfpCatalogUploadErrLog.setCreateDate(new Date());
+				pfpCatalogUploadErrLog.setPfpCatalogUploadLog(pfpCatalogUploadLog); // 更新紀錄序號
+				pfpCatalogUploadErrLog.setCatalogProdEcSeq(errorPrdItemJson.getString("catalog_prod_ec_seq")); // 商品ID
+				pfpCatalogUploadErrLog.setCatalogErrItem(errorPrdItemJson.getString("catalog_err_item")); // 錯誤欄位
+				pfpCatalogUploadErrLog.setCatalogErrReason(errorPrdItemJson.getString("catalog_err_reason")); // 錯誤原因
+				pfpCatalogUploadErrLog.setCatalogErrRawdata(errorPrdItemJson.getString("catalog_err_rawdata")); // 原始資料
+				pfpCatalogUploadErrLog.setUpdateDate(new Date()); // 更新時間
+				pfpCatalogUploadErrLog.setCreateDate(new Date()); // 建立時間
 				pfpCatalogUploadListDAO.savePfpCatalogUploadErrLog(pfpCatalogUploadErrLog);
 			}
-//		}
+		}
 		
 		dataMap.put("status", "SUCCESS");
 		dataMap.put("msg", "一般購物類資料處理完成!");
