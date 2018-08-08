@@ -1,12 +1,18 @@
 package com.pchome.akbpfp.catalog.prodGroup.factory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupService;
+import com.pchome.enumerate.catalog.EnumProdGroupCondition;
+import com.pchome.enumerate.catalog.EnumProdGroupField;
+
+
 
 
 
@@ -14,11 +20,55 @@ public class EcProdGroup extends AProdGroup {
 	
 	private PfpCatalogGroupService pfpCatalogGroupService;
 	
+	
+	public String pfpCatalogGroupItemTofilterSQL(List<PfpCatalogGroupItem> pfpCatalogGroupItems) throws Exception{
+		
+		StringBuffer filterSQL = new StringBuffer();
+		List<PfpCatalogGroupItem> replaceConditionGroupItemsList = new ArrayList<PfpCatalogGroupItem>(); 
+		
+		if( (!pfpCatalogGroupItems.isEmpty()) && (pfpCatalogGroupItems.size()>0) ){
+			for (PfpCatalogGroupItem pfpCatalogGroupItem : pfpCatalogGroupItems) {
+				PfpCatalogGroupItem replaceConditionGroupItems = new PfpCatalogGroupItem();
+				
+				String condition = pfpCatalogGroupItem.getCatalogGroupItemCondition();
+				EnumProdGroupCondition enumProdGroupCondition = EnumProdGroupCondition.valueOf(condition);
+				replaceConditionGroupItems.setCatalogGroupItemCondition(enumProdGroupCondition.getSymbol());
+				replaceConditionGroupItems.setCatalogGroupItemField(pfpCatalogGroupItem.getCatalogGroupItemField());
+				replaceConditionGroupItems.setCatalogGroupItemValue(pfpCatalogGroupItem.getCatalogGroupItemValue());
+				
+				replaceConditionGroupItemsList.add(replaceConditionGroupItems);
+			}
+			
+			
+			for (PfpCatalogGroupItem replaceConditionGroupItems : replaceConditionGroupItemsList) {
+				filterSQL.append(" and ");
+				filterSQL.append(replaceConditionGroupItems.getCatalogGroupItemField());
+				filterSQL.append(" ");
+				filterSQL.append(replaceConditionGroupItems.getCatalogGroupItemCondition());
+				filterSQL.append(" ");
+				
+				String field = replaceConditionGroupItems.getCatalogGroupItemField();
+				EnumProdGroupField enumProdGroupField = EnumProdGroupField.valueOf(field);
+				
+				if (enumProdGroupField.getFieldType().equals("string")){
+					filterSQL.append("'"+replaceConditionGroupItems.getCatalogGroupItemValue()+"'");
+				}
+				if (enumProdGroupField.getFieldType().equals("int")){
+					filterSQL.append(""+replaceConditionGroupItems.getCatalogGroupItemValue()+"");
+				}
+			}
+			
+		}
+
+		return  filterSQL.toString();
+	}
+	
+	
 	@Override
-	public JSONArray getProdGroupList(String catalogSeq, String filterSQL) throws Exception {
+	public JSONArray getProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception {
 		
 			
-		List<Map<String,Object>> ecProdGroupList = pfpCatalogGroupService.getEcProdGroupList(catalogSeq, filterSQL);
+		List<Map<String,Object>> ecProdGroupList = pfpCatalogGroupService.getEcProdGroupList(catalogSeq, filterSQL,prodNum);
 		
 		JSONArray prodListJson = prodGroupListToArray(ecProdGroupList);
 		

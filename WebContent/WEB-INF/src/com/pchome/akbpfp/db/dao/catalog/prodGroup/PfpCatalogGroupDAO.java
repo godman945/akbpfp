@@ -37,7 +37,7 @@ public class PfpCatalogGroupDAO extends BaseDAO<PfpCatalogGroup,String> implemen
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL) throws Exception{
+	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception{
 
 		StringBuffer hql = new StringBuffer();
 		hql.append(" select  * from ");
@@ -47,11 +47,12 @@ public class PfpCatalogGroupDAO extends BaseDAO<PfpCatalogGroup,String> implemen
 		hql.append(" and prod_check_status = '1' ");
 		hql.append(" and prod_status = '1' ");
 		hql.append(filterSQL);
+		hql.append(" order by rand() limit "+prodNum);
 
 		log.info(hql.toString());
 
 		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); // 这样子返回Map
+		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
 		return query.list();
 	}
 	

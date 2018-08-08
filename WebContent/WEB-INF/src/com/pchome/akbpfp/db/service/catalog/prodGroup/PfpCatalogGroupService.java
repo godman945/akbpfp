@@ -38,8 +38,8 @@ public class PfpCatalogGroupService extends BaseService<PfpCatalogGroup,String> 
 	}
 	
 
-	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL) throws Exception{
-		List<Map<String,Object>> ecProdGroupLists = ((IPfpCatalogGroupDAO)dao).getEcProdGroupList(catalogSeq,filterSQL);
+	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception{
+		List<Map<String,Object>> ecProdGroupLists = ((IPfpCatalogGroupDAO)dao).getEcProdGroupList(catalogSeq,filterSQL,prodNum);
 		
 				
 		return ecProdGroupLists;

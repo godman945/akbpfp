@@ -13,7 +13,7 @@ public interface IPfpCatalogGroupService extends IBaseService<PfpCatalogGroup,St
 	
 	public String getCatalogSeq(String groupId) throws Exception;
 	
-	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL) throws Exception;
+	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception;
 	
 	
 	

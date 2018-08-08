@@ -17,23 +17,10 @@ public class PfpCatalogGroupItemService extends BaseService<PfpCatalogGroupItem,
 //	private PfpUserMemberRefDAO pfpUserMemberRefDAO;
 	
 	
-	public String getCatalogGroupFilterSQL(String groupId) throws Exception{
-		List<PfpCatalogGroupItem> pfpCatalogGroupItems = ((IPfpCatalogGroupItemDAO)dao).getCatalogGroupFilterSQL(groupId);
+	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String groupId) throws Exception{
+		List<PfpCatalogGroupItem> pfpCatalogGroupItems = ((IPfpCatalogGroupItemDAO)dao).getPfpCatalogGroupItemList(groupId);
 		
-		StringBuffer filterSQL = new StringBuffer();
-		
-		if( (!pfpCatalogGroupItems.isEmpty()) && (pfpCatalogGroupItems.size()>0) ){
-			for (PfpCatalogGroupItem pfpCatalogGroupItem : pfpCatalogGroupItems) {
-				filterSQL.append(" and ");
-				filterSQL.append(pfpCatalogGroupItem.getCatalogGroupItemField());
-				filterSQL.append(" ");
-				filterSQL.append(pfpCatalogGroupItem.getCatalogGroupItemCondition());
-				filterSQL.append(" ");
-				filterSQL.append("'"+pfpCatalogGroupItem.getCatalogGroupItemValue()+"'");
-			}
-		}
-		
-		return filterSQL.toString();
+		return pfpCatalogGroupItems;
 	}
 	
 	

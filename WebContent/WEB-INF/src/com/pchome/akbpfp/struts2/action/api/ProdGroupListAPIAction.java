@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.api;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
@@ -9,6 +10,7 @@ import org.json.JSONObject;
 
 import com.pchome.akbpfp.catalog.prodGroup.factory.AProdGroup;
 import com.pchome.akbpfp.catalog.prodGroup.factory.ProdGroupFactory;
+import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.EnumProdGroupList;
@@ -19,6 +21,7 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 	private PfpCatalogGroupService pfpCatalogGroupService;
 	private ProdGroupFactory prodGroupFactory;
 	private String groupId;
+	private int prodNum;
 	private InputStream returnJson;
 	
 	public String getProdGroupListData() throws Exception{
@@ -42,18 +45,21 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 		}
 		
 		
-		String filterSQL = aProdGroup.getCatalogGroupFilterSQL(groupId);
-		log.info(">>> filterSQL : "+filterSQL);
-		if( StringUtils.isBlank(filterSQL)){
+		List<PfpCatalogGroupItem> pfpCatalogGroupItems = aProdGroup.getPfpCatalogGroupItemList(groupId);
+		log.info(">>> pfpCatalogGroupItems size : "+pfpCatalogGroupItems.size());
+		if( (pfpCatalogGroupItems.isEmpty()) && (pfpCatalogGroupItems.size()<=0) ){
 			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E003.getStatus()).toString().getBytes());
 			return SUCCESS;
 		}
-		 
+		
+		//將pfpCatalogGroupItems轉成sql
+		String filterSQL = aProdGroup.pfpCatalogGroupItemTofilterSQL(pfpCatalogGroupItems);
+		
 		 
 		String catalogSeq = pfpCatalogGroupService.getCatalogSeq(groupId) ;
 		log.info(">>> catalogSeq : "+catalogSeq);
 		//撈出該商品組合的list
-		JSONArray returnListJson = aProdGroup.getProdGroupList(catalogSeq,filterSQL);
+		JSONArray returnListJson = aProdGroup.getProdGroupList(catalogSeq,filterSQL,prodNum);
 		log.info(">>> returnListJson length : "+returnListJson.length());
 		if (returnListJson.length()<=0){
 			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E004.getStatus()).toString().getBytes());
@@ -86,6 +92,10 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 
 	public void setGroupId(String groupId) {
 		this.groupId = groupId;
+	}
+
+	public void setProdNum(int prodNum) {
+		this.prodNum = prodNum;
 	}
 
 	public void setProdGroupFactory(ProdGroupFactory prodGroupFactory) {

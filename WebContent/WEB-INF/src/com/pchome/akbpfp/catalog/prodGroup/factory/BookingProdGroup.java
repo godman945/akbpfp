@@ -1,11 +1,19 @@
 package com.pchome.akbpfp.catalog.prodGroup.factory;
 
+import java.util.List;
+
 import org.json.JSONArray;
+
+import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 
 public class BookingProdGroup extends AProdGroup {
 	
+	public String pfpCatalogGroupItemTofilterSQL(List<PfpCatalogGroupItem> pfpCatalogGroupItems) throws Exception{
+		return "booking filterConditionsToSQL";
+	}
+	
 	@Override
-	public JSONArray getProdGroupList(String catalogSeq, String filterSQL) throws Exception {
+	public JSONArray getProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception {
 		JSONArray prodListJson = new JSONArray(); 
 		
 		return prodListJson;

@@ -8,7 +8,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 public class PfpCatalogGroupItemDAO extends BaseDAO<PfpCatalogGroupItem,Integer> implements IPfpCatalogGroupItemDAO{
 	
 	@SuppressWarnings("unchecked")
-	public List<PfpCatalogGroupItem> getCatalogGroupFilterSQL(String groupId) throws Exception{
+	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String groupId) throws Exception{
 		
 		StringBuffer hql = new StringBuffer();
 		hql.append(" from PfpCatalogGroupItem ");

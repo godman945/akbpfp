@@ -9,7 +9,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 
 public interface IPfpCatalogGroupItemDAO extends IBaseDAO<PfpCatalogGroupItem,Integer>{
 		
-	public List<PfpCatalogGroupItem> getCatalogGroupFilterSQL(String groupId) throws Exception;
+	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String groupId) throws Exception;
 	
 
 //	public List<PfpCustomerInfo> findCustomerInfo(String customerInfoId);
