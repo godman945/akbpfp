@@ -19,6 +19,7 @@ import com.pchome.akbpfp.struts2.BaseCookieAction;
 public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	private Map<String,Object> dataMap;
+	private String productFilePath;
 	private File fileUpload;
 	private String fileUploadFileName;
 	
@@ -58,7 +59,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 //		System.out.println("fileUpload:" + fileUploadFileName);
 //		System.out.println(FilenameUtils.getBaseName(fileUploadFileName)); // 取得檔名部分
 //		System.out.println(FilenameUtils.getExtension(fileUploadFileName)); // 取得副檔名(不含小數點)
-		String path = "/home/webuser/akb/pfp/fileUpload/" + super.getCustomer_info_id() + "/" + fileUploadFileName;
+		String path = productFilePath + super.getCustomer_info_id() + "/" + fileUploadFileName;
 //		String fileType = FilenameUtils.getExtension(fileUploadFileName);
 		File createFile = new File(path);
 		FileUtils.copyFile(fileUpload, createFile);
@@ -95,6 +96,10 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
+	public void setProductFilePath(String productFilePath) {
+		this.productFilePath = productFilePath;
+	}
+
 	public void setFileUploadFileName(String fileUploadFileName) {
 		this.fileUploadFileName = fileUploadFileName;
 	}
