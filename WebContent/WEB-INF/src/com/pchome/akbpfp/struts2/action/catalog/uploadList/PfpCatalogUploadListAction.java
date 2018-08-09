@@ -38,6 +38,12 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	// api用
 	private String jsonData;
 	
+	private String catalog_seq;
+	private String catalog_type;
+	private String update_way;
+	private String pfp_customer_info_id;
+	private String catalog_prod_item;
+	
 	/**
 	 * 商品廣告-檔案上傳CSV
 	 * @return
@@ -70,14 +76,21 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	}
 	
 	/**
-	 * 處理上傳的json資料
+	 * 提供API處理商品廣告的json資料
 	 * @return
 	 * @throws Exception
 	 */
-	public String processCatalogProdJsonDataApi() {
+	public String processCatalogProdJsonDataApi() throws Exception {
 		dataMap = new HashMap<String, Object>();
-		System.out.println("jsonData:" + jsonData);
-//		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
+
+		JSONObject apiJsonData = new JSONObject();
+		apiJsonData.put("catalog_seq", catalog_seq);
+		apiJsonData.put("catalog_type", catalog_type);
+		apiJsonData.put("update_way", update_way);
+		apiJsonData.put("pfp_customer_info_id", pfp_customer_info_id);
+		apiJsonData.put("catalog_prod_item", catalog_prod_item);
+		
+		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData);
 		
 		return SUCCESS;
 	}
@@ -104,6 +117,26 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 
 	public void setDataMap(Map<String, Object> dataMap) {
 		this.dataMap = dataMap;
+	}
+
+	public void setCatalog_seq(String catalog_seq) {
+		this.catalog_seq = catalog_seq;
+	}
+
+	public void setCatalog_type(String catalog_type) {
+		this.catalog_type = catalog_type;
+	}
+
+	public void setUpdate_way(String update_way) {
+		this.update_way = update_way;
+	}
+
+	public void setPfp_customer_info_id(String pfp_customer_info_id) {
+		this.pfp_customer_info_id = pfp_customer_info_id;
+	}
+
+	public void setCatalog_prod_item(String catalog_prod_item) {
+		this.catalog_prod_item = catalog_prod_item;
 	}
 	
 	

@@ -223,7 +223,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		dataMap.put("msg", "一般購物類資料處理完成!");
 		dataMap.put("successDataCount", successNum); // 正確總筆數
 		dataMap.put("errorDataCount", errorNum); // 錯誤總筆數
-		dataMap.put("errorPrdItemArray", errorPrdItemArray); // 錯誤總記錄
+		dataMap.put("errorPrdItemArray", errorPrdItemArray.toString()); // 錯誤總記錄
 		return dataMap;
 	}
 
