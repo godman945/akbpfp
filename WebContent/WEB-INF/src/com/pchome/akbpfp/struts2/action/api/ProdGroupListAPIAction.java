@@ -13,6 +13,7 @@ import com.pchome.akbpfp.catalog.prodGroup.factory.ProdGroupFactory;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.catalog.EnumProdGroupFactory;
 import com.pchome.enumerate.catalog.EnumProdGroupList;
 
 
@@ -27,6 +28,7 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 	public String getProdGroupListData() throws Exception{
 		//先依據商品組合id，撈商品組合條件組成sql
 		log.info(">>> groupId: "+groupId);
+		log.info(">>> prodNum: "+prodNum);
 		
 		//商品組合ID 的目錄型態
 		String catalogType = pfpCatalogGroupService.getCatalogType(groupId) ;
@@ -36,8 +38,16 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 			return SUCCESS;
 		}
 
-		
-		AProdGroup aProdGroup = prodGroupFactory.getAProdGroupObj(catalogType);
+		EnumProdGroupFactory enumProdGroupFactory = EnumProdGroupFactory.getCatalogName(catalogType);
+		log.info(">>> enumProdGroupFactory: "+enumProdGroupFactory);
+		if ( enumProdGroupFactory == null ){
+			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E002.getStatus()).toString().getBytes());
+			return SUCCESS;
+		}
+
+		String catalogName = enumProdGroupFactory.getCatalogName();
+		log.info(">>> catalogName: "+catalogName);
+		AProdGroup aProdGroup = prodGroupFactory.getAProdGroupObj(catalogName);
 		log.info(">>> aProdGroup: "+aProdGroup);
 		if (aProdGroup == null){
 			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E002.getStatus()).toString().getBytes());

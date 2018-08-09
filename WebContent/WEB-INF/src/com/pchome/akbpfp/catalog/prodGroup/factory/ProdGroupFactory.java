@@ -4,28 +4,21 @@ public class ProdGroupFactory {
 
 	private EcProdGroup ecProdGroup;
 	private BookingProdGroup bookingProdGroup;
-//	private static Map<String, Object> objectMap = new HashMap<String, Object>();
 
 	public AProdGroup getAProdGroupObj(String catalogType) throws Exception {
 		
 		switch (catalogType) {
-			case "1":
-//				EcProdGroup ecProdGroup = new EcProdGroup();
+			case "EC_PROD_GROUP":
 				return ecProdGroup;
-			case "2":
-//				BookingProdGroup bookingProdGroup = new BookingProdGroup();
+			case "BOOKING_PROD_GROUP":
 				return bookingProdGroup;
-//			case "3":
-//				EcProdGroup ecProdGroup = new EcProdGroup();
+//			case "TRAFFIC_PROD_GROUP":
 //				return ecProdGroup;
-//			case "4":
-//				EcProdGroup ecProdGroup = new EcProdGroup();
+//			case "RENT_PROD_GROUP":
 //				return ecProdGroup;
 			default:
-				break;
+				return null;
 		}
-		return null;
-		
 	}
 
 	public void setEcProdGroup(EcProdGroup ecProdGroup) {
