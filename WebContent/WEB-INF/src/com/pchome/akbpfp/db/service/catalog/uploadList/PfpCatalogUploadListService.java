@@ -1,14 +1,21 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -33,6 +40,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	private PfpCatalogUploadListDAO pfpCatalogUploadListDAO;
 	
 	private String akbPfpServer;
+	private String photoDbPathNew;
 	
 	/**
 	 * 依照商品目錄類別，處理相對應的部分
@@ -79,6 +87,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		
 		// 各欄位資料檢核
 		String errorMsg = "";
+		String pfpCustomerInfoId = catalogProdJsonData.getString("pfp_customer_info_id");
 		String updateWay = catalogProdJsonData.optString("update_way"); // 更新方式 1.取代 2.更新
 		String catalogSeq = catalogProdJsonData.optString("catalog_seq"); // 商品目錄編號
 		String catalogProdItem = catalogProdJsonData.optString("catalog_prod_item"); // 每一項商品
@@ -116,19 +125,19 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 			JSONObject catalogProdItemJson = (JSONObject) catalogProdItemJsonArray.get(i);
 			String catalogProdEcSeq = catalogProdItemJson.optString("id"); // id*
 			String prodName = catalogProdItemJson.optString("prod_name"); // 商品名稱*
-			String prodTitle = catalogProdItemJson.optString("prod_title"); // 商品敘述*
-			String prodPrice = catalogProdItemJson.optString("prod_price"); // 原價
+			String prodTitle = catalogProdItemJson.optString("prod_title", " "); // 商品敘述*
+			String prodPrice = catalogProdItemJson.optString("prod_price", " "); // 原價
 			String prodDiscountPrice = catalogProdItemJson.optString("prod_discount_price"); // 促銷價*
 			String prodStockStatus = catalogProdItemJson.optString("prod_stock_status"); // 商品供應情況*
 			String prodUseStatus = catalogProdItemJson.optString("prod_use_status"); // 商品使用狀況*
 			String prodImgUrl = catalogProdItemJson.optString("prod_img_url"); // 廣告圖像網址*
 			String prodUrl = catalogProdItemJson.optString("prod_url"); // 連結網址*
-			String prodCategory = catalogProdItemJson.optString("prod_category"); // 商品類別
+			String prodCategory = catalogProdItemJson.optString("prod_category", " "); // 商品類別
 
 			// 檢查每個欄位
 			errorPrdItemArray = checkCatalogProdEcSeq(errorPrdItemArray, catalogProdEcSeq);
 			errorPrdItemArray = checkProdName(errorPrdItemArray, catalogProdEcSeq, prodName);
-			errorPrdItemArray = checkProdTitle(errorPrdItemArray, catalogProdEcSeq, prodTitle);
+//			errorPrdItemArray = checkProdTitle(errorPrdItemArray, catalogProdEcSeq, prodTitle);
 			errorPrdItemArray = checkProdPrice(errorPrdItemArray, catalogProdEcSeq, prodPrice);
 			errorPrdItemArray = checkProdDiscountPrice(errorPrdItemArray, catalogProdEcSeq, prodDiscountPrice);
 			errorPrdItemArray = checkProdStockStatus(errorPrdItemArray, catalogProdEcSeq, prodStockStatus);
@@ -148,6 +157,10 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				pfpCatalogProdEc.setPfpCatalog(pfpCatalog); // 商品目錄
 				pfpCatalogProdEc.setProdName(prodName); // 商品名稱
 				pfpCatalogProdEc.setProdTitle(prodTitle); // 商品敘述
+				
+				String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq;
+				pfpCatalogProdEc.setProdImg(processImgPathForCatalogProd(prodImgUrl, photoPath, catalogProdEcSeq)); // 圖片路徑
+				
 				pfpCatalogProdEc.setProdUrl(prodUrl); // 連結網址
 				pfpCatalogProdEc.setProdPrice(Integer.parseInt(prodPrice)); // 原價
 				pfpCatalogProdEc.setProdDiscountPrice(Integer.parseInt(prodDiscountPrice)); // 促銷價*
@@ -240,9 +253,10 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		String prodItemErrorMsg = "";
 		
 		int prodCategoryLimit = 50;
-		if (prodCategory.isEmpty()) {
-			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-		} else if (prodCategory.length() > prodCategoryLimit) {
+//		if (prodCategory.isEmpty()) {
+//			prodItemErrorMsg += "必填欄位必須輸入資訊。";
+//		} else 
+		if (prodCategory.length() > prodCategoryLimit) {
 			prodItemErrorMsg += "欄位字數超過" + prodCategoryLimit + "個字。";
 		}
 		
@@ -421,9 +435,10 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		String prodItemErrorMsg = "";
 		int prodPriceLimit = 11;
 		
-		if (prodPrice.isEmpty()) {
-			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-		} else if (!StringUtils.isNumeric(prodPrice)) {
+//		if (prodPrice.isEmpty()) {
+//			prodItemErrorMsg += "必填欄位必須輸入資訊。";
+//		} else 
+		if (!prodPrice.isEmpty() && !StringUtils.isNumeric(prodPrice.trim())) {
 			prodItemErrorMsg += "必須輸入數字。";
 		} else if (prodPrice.length() > prodPriceLimit) {
 			prodItemErrorMsg += "欄位數值超過" + prodPriceLimit + "位數。";
@@ -537,7 +552,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 					continue;
 				}
 				
-				String[] prdItem = new String[10]; // 每次重建陣列，避免上一筆資料殘留，固定10個明細
+				String[] prdItem = new String[9]; // 每次重建陣列，避免上一筆資料殘留，固定9個明細
 				String[] lineArray = strLine.split(","); // 因為預設是用"，"分開所以用split切開存入字串陣列
 				for (int i = 0; i < lineArray.length; i++) { // 將切出來的陣列資料，放入建立好的陣列數量內，避免超出陣列的問題
 					prdItem[i] = lineArray[i];
@@ -546,13 +561,13 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				System.out.println("第" + rowNumber + "列:" + strLine);
 				
 				JSONObject prdItemObject = new JSONObject();
-				prdItemObject.put("id", prdItem[0]);
+				prdItemObject.put("id", prdItem[0].trim());
 				prdItemObject.put("prod_name", prdItem[1]);
-				prdItemObject.put("prod_title", prdItem[2]);
-				prdItemObject.put("prod_price", prdItem[3]);
-				prdItemObject.put("prod_discount_price", prdItem[4]);
+//				prdItemObject.put("prod_title", prdItem[2]);
+				prdItemObject.put("prod_price", prdItem[2]);
+				prdItemObject.put("prod_discount_price", prdItem[3]);
 				
-				String prodStockStatus = prdItem[5];
+				String prodStockStatus = prdItem[4];
 				if ("無庫存".equals(prodStockStatus)) {
 					prodStockStatus = "0";
 				} else if ("有庫存".equals(prodStockStatus)) {
@@ -560,16 +575,16 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				}
 				prdItemObject.put("prod_stock_status", prodStockStatus);
 				
-				String prodUseStatus = prdItem[6];
+				String prodUseStatus = prdItem[5];
 				if ("全新".equals(prodUseStatus)) {
 					prodUseStatus = "0";
 				} else if ("二手".equals(prodUseStatus)) {
 					prodUseStatus = "1";
 				}
 				prdItemObject.put("prod_use_status", prodUseStatus);
-				prdItemObject.put("prod_img_url", prdItem[7]);
-				prdItemObject.put("prod_url", prdItem[8]);
-				prdItemObject.put("prod_category", prdItem[9]);
+				prdItemObject.put("prod_img_url", prdItem[6]);
+				prdItemObject.put("prod_url", prdItem[7]);
+				prdItemObject.put("prod_category", prdItem[8]);
 				prdItemArray.put(prdItemObject);
 			}
 			
@@ -592,7 +607,55 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		return catalogProdJsonData;
 	}
 	
-	
+	/**
+	 * 處理廣告商品下載圖片
+	 * @param imgURL 下載的圖片網址
+	 * @param photoPath 資料夾位置
+	 * @param customerInfoId pfp id
+	 * @param catalogSeq 商品目錄ID
+	 * @param imgFileName 檔名
+	 * @return 取得圖片存放路徑
+	 * @throws IOException
+	 */
+	private String processImgPathForCatalogProd(String imgURL, String photoPath, String imgFileName) throws IOException {
+		log.info("開始下載圖片。");
+		
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//		Date date = new Date();
+//		String photoPath = photoDbPathNew + customerInfoId + "/" + sdf.format(date) + "/original";
+		File file = new File(photoPath);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		
+		// 取得副檔名，處理圖片如果有被加timestamp等參數從?位置抓取副檔名，沒被加參數則直接依長度取最後3碼
+		int startLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") - 3 : imgURL.length() - 3);
+		int endLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") : imgURL.length());
+		String filenameExtension = imgURL.substring(startLength, endLength);
+        
+		log.info("下載圖片網址:" + imgURL);
+        URL url = new URL(imgURL.replaceFirst("https", "http"));
+        String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
+
+        // 處理圖片下載
+        if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
+            InputStream in = url.openStream();
+            Files.copy(in, new File(imgPathAndName).toPath());
+            in.close();
+        } else { // jpg、png圖片下載方式
+            BufferedImage img = ImageIO.read(url);
+            ImageIO.write(img, filenameExtension, new File(imgPathAndName));
+        }
+        
+//		String imgPath = "img/user/" + customerInfoId + "/catalogProd/" + imgFileName + "." + filenameExtension;
+		String imgPath = photoPath.substring(photoPath.indexOf("img/")) + "/" + imgFileName + "." + filenameExtension;
+		log.info("下載圖片結束");
+		return imgPath;
+	}
+
+	public void setPhotoDbPathNew(String photoDbPathNew) {
+		this.photoDbPathNew = photoDbPathNew;
+	}
 
 	public void setSequenceService(ISequenceService sequenceService) {
 		this.sequenceService = sequenceService;

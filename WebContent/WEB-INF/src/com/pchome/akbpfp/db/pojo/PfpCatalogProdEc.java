@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/8/7 �U�� 01:54:58 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/8/9 �U�� 05:18:46 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -26,6 +26,7 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 	private String catalogProdEcSeq;
 	private String prodName;
 	private String prodTitle;
+	private String prodImg;
 	private String prodUrl;
 	private int prodPrice;
 	private int prodDiscountPrice;
@@ -41,12 +42,14 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 	}
 
 	public PfpCatalogProdEc(PfpCatalog pfpCatalog, String catalogProdEcSeq, String prodName, String prodTitle,
-			String prodUrl, int prodPrice, int prodDiscountPrice, String prodStockStatus, String prodUseStatus,
-			String prodCategory, String prodStatus, String prodCheckStatus, Date updateDate, Date createDate) {
+			String prodImg, String prodUrl, int prodPrice, int prodDiscountPrice, String prodStockStatus,
+			String prodUseStatus, String prodCategory, String prodStatus, String prodCheckStatus, Date updateDate,
+			Date createDate) {
 		this.pfpCatalog = pfpCatalog;
 		this.catalogProdEcSeq = catalogProdEcSeq;
 		this.prodName = prodName;
 		this.prodTitle = prodTitle;
+		this.prodImg = prodImg;
 		this.prodUrl = prodUrl;
 		this.prodPrice = prodPrice;
 		this.prodDiscountPrice = prodDiscountPrice;
@@ -106,6 +109,15 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 
 	public void setProdTitle(String prodTitle) {
 		this.prodTitle = prodTitle;
+	}
+
+	@Column(name = "prod_img", nullable = false, length = 2048)
+	public String getProdImg() {
+		return this.prodImg;
+	}
+
+	public void setProdImg(String prodImg) {
+		this.prodImg = prodImg;
 	}
 
 	@Column(name = "prod_url", nullable = false, length = 2048)
