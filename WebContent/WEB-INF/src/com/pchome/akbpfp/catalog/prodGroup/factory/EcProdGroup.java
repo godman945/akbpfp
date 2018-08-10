@@ -9,8 +9,8 @@ import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupService;
-import com.pchome.enumerate.catalog.EnumProdGroupCondition;
-import com.pchome.enumerate.catalog.EnumProdGroupField;
+import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupCondition;
+import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupField;
 
 
 

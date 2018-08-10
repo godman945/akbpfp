@@ -13,8 +13,8 @@ import com.pchome.akbpfp.catalog.prodGroup.factory.ProdGroupFactory;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
-import com.pchome.enumerate.catalog.EnumProdGroupFactory;
-import com.pchome.enumerate.catalog.EnumProdGroupList;
+import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupFactory;
+import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupList;
 
 
 public class ProdGroupListAPIAction extends BaseCookieAction{

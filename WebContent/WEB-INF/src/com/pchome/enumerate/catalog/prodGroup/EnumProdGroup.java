@@ -1,4 +1,4 @@
-package com.pchome.enumerate.catalog;
+package com.pchome.enumerate.catalog.prodGroup;
 
 public enum EnumProdGroup {
 
