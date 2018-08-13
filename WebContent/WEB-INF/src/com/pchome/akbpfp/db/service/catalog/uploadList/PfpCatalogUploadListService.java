@@ -1,21 +1,15 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.file.Files;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -32,6 +26,7 @@ import com.pchome.akbpfp.db.service.catalog.PfpCatalogService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
+import com.pchome.utils.ImgUtil;
 
 public class PfpCatalogUploadListService extends BaseService<String, String> implements IPfpCatalogUploadListService {
 
@@ -159,7 +154,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				pfpCatalogProdEc.setProdTitle(prodTitle); // 商品敘述
 				
 				String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq;
-				pfpCatalogProdEc.setProdImg(processImgPathForCatalogProd(prodImgUrl, photoPath, catalogProdEcSeq)); // 圖片路徑
+				pfpCatalogProdEc.setProdImg(ImgUtil.processImgPathForCatalogProd(prodImgUrl, photoPath, catalogProdEcSeq)); // 圖片路徑
 				
 				pfpCatalogProdEc.setProdUrl(prodUrl); // 連結網址
 				pfpCatalogProdEc.setProdPrice(Integer.parseInt(prodPrice)); // 原價
@@ -561,7 +556,13 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				System.out.println("第" + rowNumber + "列:" + strLine);
 				
 				JSONObject prdItemObject = new JSONObject();
-				prdItemObject.put("id", prdItem[0].trim());
+				
+				try { // 處理變成科學符號的部分
+					prdItemObject.put("id", new BigDecimal(prdItem[0].trim()).toPlainString());
+				} catch (Exception e) {
+					prdItemObject.put("id", prdItem[0]);
+				}
+				
 				prdItemObject.put("prod_name", prdItem[1]);
 //				prdItemObject.put("prod_title", prdItem[2]);
 				prdItemObject.put("prod_price", prdItem[2]);
@@ -607,52 +608,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		return catalogProdJsonData;
 	}
 	
-	/**
-	 * 處理廣告商品下載圖片
-	 * @param imgURL 下載的圖片網址
-	 * @param photoPath 資料夾位置
-	 * @param customerInfoId pfp id
-	 * @param catalogSeq 商品目錄ID
-	 * @param imgFileName 檔名
-	 * @return 取得圖片存放路徑
-	 * @throws IOException
-	 */
-	private String processImgPathForCatalogProd(String imgURL, String photoPath, String imgFileName) throws IOException {
-		log.info("開始下載圖片。");
-		
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//		Date date = new Date();
-//		String photoPath = photoDbPathNew + customerInfoId + "/" + sdf.format(date) + "/original";
-		File file = new File(photoPath);
-		if (!file.exists()) {
-			file.mkdirs();
-		}
-		
-		// 取得副檔名，處理圖片如果有被加timestamp等參數從?位置抓取副檔名，沒被加參數則直接依長度取最後3碼
-		int startLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") - 3 : imgURL.length() - 3);
-		int endLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") : imgURL.length());
-		String filenameExtension = imgURL.substring(startLength, endLength);
-        
-		log.info("下載圖片網址:" + imgURL);
-        URL url = new URL(imgURL.replaceFirst("https", "http"));
-        String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
-
-        // 處理圖片下載
-        if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
-            InputStream in = url.openStream();
-            Files.copy(in, new File(imgPathAndName).toPath());
-            in.close();
-        } else { // jpg、png圖片下載方式
-            BufferedImage img = ImageIO.read(url);
-            ImageIO.write(img, filenameExtension, new File(imgPathAndName));
-        }
-        
-//		String imgPath = "img/user/" + customerInfoId + "/catalogProd/" + imgFileName + "." + filenameExtension;
-		String imgPath = photoPath.substring(photoPath.indexOf("img/")) + "/" + imgFileName + "." + filenameExtension;
-		log.info("下載圖片結束");
-		return imgPath;
-	}
-
 	public void setPhotoDbPathNew(String photoDbPathNew) {
 		this.photoDbPathNew = photoDbPathNew;
 	}
