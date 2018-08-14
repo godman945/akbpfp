@@ -2,18 +2,14 @@ package com.pchome.akbpfp.struts2.action.catalog.uploadList;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 
@@ -76,7 +72,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		catalogProdJsonData.put("fileName", fileUploadFileName);
 		catalogProdJsonData.put("pfp_customer_info_id", super.getCustomer_info_id());
 		catalogProdJsonData.put("update_datetime", formatter.format(updateDatetime));
-		
 		
 		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
 

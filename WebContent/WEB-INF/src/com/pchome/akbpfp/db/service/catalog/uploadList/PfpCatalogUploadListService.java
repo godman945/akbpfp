@@ -16,12 +16,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.dao.catalog.uploadList.IPfpCatalogUploadListDAO;
 import com.pchome.akbpfp.db.dao.catalog.uploadList.PfpCatalogUploadListDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.BaseService;
+import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.PfpCatalogService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
@@ -30,9 +32,9 @@ import com.pchome.utils.ImgUtil;
 
 public class PfpCatalogUploadListService extends BaseService<String, String> implements IPfpCatalogUploadListService {
 
-	private PfpCatalogService pfpCatalogService;
+	private IPfpCatalogService pfpCatalogService;
 	private ISequenceService sequenceService;
-	private PfpCatalogUploadListDAO pfpCatalogUploadListDAO;
+	private IPfpCatalogUploadListDAO pfpCatalogUploadListDAO;
 	
 	private String akbPfpServer;
 	private String photoDbPathNew;
