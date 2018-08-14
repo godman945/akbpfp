@@ -3,6 +3,8 @@ package com.pchome.akbpfp.struts2.action.catalog.uploadList;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +25,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	private File fileUpload;
 	private String fileUploadFileName;
 	
+	private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //	private String fileName;
 //	private String fileType;
 	
@@ -54,6 +57,8 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		//dataMap中的資料將會被Struts2轉換成JSON字串，所以用Map<String,Object>
 		dataMap = new HashMap<String, Object>();
 		
+		Date updateDatetime = new Date();
+		
 		// 檔案上傳部分
 //		System.out.println("fileUpload:" + fileUpload);
 //		System.out.println("fileUpload:" + fileUploadFileName);
@@ -70,6 +75,8 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		catalogProdJsonData.put("update_way", "1");
 		catalogProdJsonData.put("fileName", fileUploadFileName);
 		catalogProdJsonData.put("pfp_customer_info_id", super.getCustomer_info_id());
+		catalogProdJsonData.put("update_datetime", formatter.format(updateDatetime));
+		
 		
 		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
 
@@ -90,6 +97,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		apiJsonData.put("update_way", update_way);
 		apiJsonData.put("pfp_customer_info_id", pfp_customer_info_id);
 		apiJsonData.put("catalog_prod_item", catalog_prod_item);
+		apiJsonData.put("update_datetime", formatter.format(new Date()));
 		
 		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData);
 		

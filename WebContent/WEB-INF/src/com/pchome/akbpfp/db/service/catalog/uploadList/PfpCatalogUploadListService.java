@@ -197,7 +197,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		pfpCatalogUploadLog.setUpdateWay(updateWay); // 更新方式
 		pfpCatalogUploadLog.setUpdateContent(catalogProdJsonData.optString("fileName")); // 更新內容
 		
-		String updateDatetime = catalogProdJsonData.optString("updateDatetime");
+		String updateDatetime = catalogProdJsonData.optString("update_datetime");
 		if (updateDatetime.isEmpty()) {
 			pfpCatalogUploadLog.setUpdateDatetime(new Date()); // 更新時間
 		} else {
