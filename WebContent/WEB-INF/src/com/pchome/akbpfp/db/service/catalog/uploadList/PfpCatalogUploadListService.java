@@ -618,11 +618,11 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		this.sequenceService = sequenceService;
 	}
 
-	public void setPfpCatalogService(PfpCatalogService pfpCatalogService) {
+	public void setPfpCatalogService(IPfpCatalogService pfpCatalogService) {
 		this.pfpCatalogService = pfpCatalogService;
 	}
 
-	public void setPfpCatalogUploadListDAO(PfpCatalogUploadListDAO pfpCatalogUploadListDAO) {
+	public void setPfpCatalogUploadListDAO(IPfpCatalogUploadListDAO pfpCatalogUploadListDAO) {
 		this.pfpCatalogUploadListDAO = pfpCatalogUploadListDAO;
 	}
 
