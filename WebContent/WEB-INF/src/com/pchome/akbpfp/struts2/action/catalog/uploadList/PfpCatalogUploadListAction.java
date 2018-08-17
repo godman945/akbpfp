@@ -65,7 +65,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		File createFile = new File(path);
 		FileUtils.copyFile(fileUpload, createFile);
 		
-		JSONObject catalogProdJsonData = pfpCatalogUploadListService.getCSVFileDataToJson(path);
+		JSONObject catalogProdJsonData = new JSONObject(pfpCatalogUploadListService.getCSVFileDataToJson(path));
 		catalogProdJsonData.put("catalog_seq", "PC201808060000000001");
 		catalogProdJsonData.put("catalog_type", "1");
 		catalogProdJsonData.put("update_way", "1");
@@ -73,7 +73,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		catalogProdJsonData.put("pfp_customer_info_id", super.getCustomer_info_id());
 		catalogProdJsonData.put("update_datetime", formatter.format(updateDatetime));
 		
-		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
+		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData.toString());
 
 		return SUCCESS;
 	}
@@ -94,7 +94,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		apiJsonData.put("catalog_prod_item", catalog_prod_item);
 		apiJsonData.put("update_datetime", formatter.format(new Date()));
 		
-		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData);
+		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData.toString());
 		
 		return SUCCESS;
 	}

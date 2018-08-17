@@ -242,14 +242,13 @@
         <property name="dao" ref="PfpCatalogDAO" />   
     </bean>
     
-    <!-- 商品廣告-檔案上傳 -->
-    <bean id="PfpCatalogUploadListService" class="com.pchome.akbpfp.db.service.catalog.uploadList.PfpCatalogUploadListService">
-    	<property name="akbPfpServer" value="${akbpfp.server}" />
-    	<property name="photoDbPathNew" value="${photo.db.path.new}" />
-<!--         <property name="dao" ref="PfpCatalogUploadListDAO" /> -->
-        <property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
-        <property name="pfpCatalogService" ref="PfpCatalogService" />
-        <property name="sequenceService" ref="SequenceService" /> 
-    </bean>
+<!--     商品廣告-檔案上傳 -->
+<!--     <bean id="PfpCatalogUploadListService" class="com.pchome.akbpfp.db.service.catalog.uploadList.PfpCatalogUploadListService"> -->
+<!--     	<property name="akbPfpServer" value="${akbpfp.server}" /> -->
+<!--     	<property name="photoDbPathNew" value="${photo.db.path.new}" /> -->
+<!--         <property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" /> -->
+<!--         <property name="pfpCatalogService" ref="PfpCatalogService" /> -->
+<!--         <property name="sequenceService" ref="SequenceService" />  -->
+<!--     </bean> -->
     
 </beans>
