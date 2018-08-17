@@ -10,7 +10,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 
-import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
+import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListRMIService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 
 
@@ -32,8 +32,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 //	private String filename;
 //	private String contenType;
 	
-	// 在main測試需要加static，static待移除
-	private IPfpCatalogUploadListService pfpCatalogUploadListService;
+	private IPfpCatalogUploadListRMIService pfpCatalogUploadListRMIService;
 	
 	// api用
 	private String jsonData;
@@ -65,7 +64,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		File createFile = new File(path);
 		FileUtils.copyFile(fileUpload, createFile);
 		
-		JSONObject catalogProdJsonData = new JSONObject(pfpCatalogUploadListService.getCSVFileDataToJson(path));
+		JSONObject catalogProdJsonData = new JSONObject(pfpCatalogUploadListRMIService.getCSVFileDataToJson(path));
 		catalogProdJsonData.put("catalog_seq", "PC201808060000000001");
 		catalogProdJsonData.put("catalog_type", "1");
 		catalogProdJsonData.put("update_way", "1");
@@ -73,7 +72,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		catalogProdJsonData.put("pfp_customer_info_id", super.getCustomer_info_id());
 		catalogProdJsonData.put("update_datetime", formatter.format(updateDatetime));
 		
-		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData.toString());
+		dataMap = pfpCatalogUploadListRMIService.processCatalogProdJsonData(catalogProdJsonData.toString());
 
 		return SUCCESS;
 	}
@@ -94,7 +93,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		apiJsonData.put("catalog_prod_item", catalog_prod_item);
 		apiJsonData.put("update_datetime", formatter.format(new Date()));
 		
-		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData.toString());
+		dataMap = pfpCatalogUploadListRMIService.processCatalogProdJsonData(apiJsonData.toString());
 		
 		return SUCCESS;
 	}
@@ -111,8 +110,8 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		this.jsonData = jsonData;
 	}
 	
-	public void setPfpCatalogUploadListService(IPfpCatalogUploadListService pfpCatalogUploadListService) {
-		this.pfpCatalogUploadListService = pfpCatalogUploadListService;
+	public void setPfpCatalogUploadListRMIService(IPfpCatalogUploadListRMIService pfpCatalogUploadListRMIService) {
+		this.pfpCatalogUploadListRMIService = pfpCatalogUploadListRMIService;
 	}
 
 	public void setFileUpload(File fileUpload) {

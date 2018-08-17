@@ -87,12 +87,12 @@
    	</bean>
    	
    	<!-- pfp PfpCatalogUpload -->
-	<bean id="PfpCatalogUploadListService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+	<bean id="PfpCatalogUploadListRMIService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
 		<property name="serviceUrl">
 			<value>rmi://${rmi.server}/PfpCatalogUploadListService</value>
 		</property>
 		<property name="serviceInterface">
-			<value>com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService</value>
+			<value>com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListRMIService</value>
 		</property>
 		<property name="refreshStubOnConnectFailure">
 			<value>true</value>
