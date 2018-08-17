@@ -62,7 +62,7 @@
     
     <!-- 廣告商品資料上傳 -->
     <bean id="PfpCatalogUploadListAction" class="com.pchome.akbpfp.struts2.action.catalog.uploadList.PfpCatalogUploadListAction" scope="prototype" >
-		<property name="pfpCatalogUploadListRMIService" ref="PfpCatalogUploadListRMIService" />
+		<property name="pfpCatalogUploadListService" ref="PfpCatalogUploadListService" />
 		<property name="productFilePath" value="${product.file.path}" />
     </bean>
     
