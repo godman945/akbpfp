@@ -237,13 +237,25 @@
 		<property name="springEmailUtil" ref="SpringEmailUtil" />
     </bean>
     
+    <!-- 商品群組、清單-->
     <bean id="PfpCatalogGroupService" class="com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupService">
     	<property name="dao" ref="PfpCatalogGroupDAO" />
     </bean>
     
-        <bean id="PfpCatalogGroupItemService" class="com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupItemService">
+    <bean id="PfpCatalogGroupItemService" class="com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupItemService">
     	<property name="dao" ref="PfpCatalogGroupItemDAO" />
     </bean>
+    
+     <bean id="PfpCatalogService" class="com.pchome.akbpfp.db.service.catalog.TMP.PfpCatalogService">
+    	<property name="dao" ref="PfpCatalogDAO" />
+    </bean>
+    
+ 	<bean id="PfpCatalogProdEcService" class="com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogProdEcService">
+    	<property name="dao" ref="PfpCatalogProdEcDAO" />
+    </bean>
+    
+    
+    <!-- 商品群組、清單END-->
     
     
 </beans>
