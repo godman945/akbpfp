@@ -32,15 +32,13 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 //	private String filename;
 //	private String contenType;
 	
-	// 在main測試需要加static，static待移除
 	private IPfpCatalogUploadListService pfpCatalogUploadListService;
 	
 	// api用
-	private String jsonData;
-	
 	private String catalog_seq;
 	private String catalog_type;
 	private String update_way;
+	private String update_content;
 	private String pfp_customer_info_id;
 	private String catalog_prod_item;
 	
@@ -66,10 +64,10 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		FileUtils.copyFile(fileUpload, createFile);
 		
 		JSONObject catalogProdJsonData = pfpCatalogUploadListService.getCSVFileDataToJson(path);
-		catalogProdJsonData.put("catalog_seq", "PC201808060000000001");
+		catalogProdJsonData.put("catalog_seq", "PC201808220000000001");
 		catalogProdJsonData.put("catalog_type", "1");
 		catalogProdJsonData.put("update_way", "1");
-		catalogProdJsonData.put("fileName", fileUploadFileName);
+		catalogProdJsonData.put("update_content", fileUploadFileName);
 		catalogProdJsonData.put("pfp_customer_info_id", super.getCustomer_info_id());
 		catalogProdJsonData.put("update_datetime", formatter.format(updateDatetime));
 		
@@ -90,6 +88,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		apiJsonData.put("catalog_seq", catalog_seq);
 		apiJsonData.put("catalog_type", catalog_type);
 		apiJsonData.put("update_way", update_way);
+		apiJsonData.put("update_content", update_content);
 		apiJsonData.put("pfp_customer_info_id", pfp_customer_info_id);
 		apiJsonData.put("catalog_prod_item", catalog_prod_item);
 		apiJsonData.put("update_datetime", formatter.format(new Date()));
@@ -107,10 +106,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		this.fileUploadFileName = fileUploadFileName;
 	}
 
-	public void setJsonData(String jsonData) {
-		this.jsonData = jsonData;
-	}
-	
 	public void setPfpCatalogUploadListService(IPfpCatalogUploadListService pfpCatalogUploadListService) {
 		this.pfpCatalogUploadListService = pfpCatalogUploadListService;
 	}
@@ -145,6 +140,10 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 
 	public void setCatalog_prod_item(String catalog_prod_item) {
 		this.catalog_prod_item = catalog_prod_item;
+	}
+
+	public void setUpdate_content(String update_content) {
+		this.update_content = update_content;
 	}
 	
 	
