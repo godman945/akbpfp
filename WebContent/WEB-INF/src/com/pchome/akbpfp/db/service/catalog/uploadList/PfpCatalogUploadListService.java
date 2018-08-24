@@ -17,16 +17,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.catalog.uploadList.IPfpCatalogUploadListDAO;
-import com.pchome.akbpfp.db.dao.catalog.uploadList.PfpCatalogUploadListDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
-import com.pchome.akbpfp.db.service.catalog.PfpCatalogService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
+import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.utils.ImgUtil;
 
@@ -54,14 +53,13 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 			return dataMap;
 		}
 		
-		//後面再改enum
-		if ("1".equals(catalogType)) { // 1:一般購物類
+		if (EnumPfpCatalog.CATALOG_SHOPPING.getType().equals(catalogType)) { // 1:一般購物類
 			dataMap = processShoppingProd(catalogProdJsonData);
-		} else if ("2".equals(catalogType)) { // 2:訂房住宿類
+		} else if (EnumPfpCatalog.CATALOG_STAY.getType().equals(catalogType)) { // 2:訂房住宿類
 			// 功能待開發
-		} else if ("3".equals(catalogType)) { // 3:交通航班類
+		} else if (EnumPfpCatalog.CATALOG_TRAFFIC.getType().equals(catalogType)) { // 3:交通航班類
 			// 功能待開發
-		} else if ("4".equals(catalogType)) { // 4:房產租售類
+		} else if (EnumPfpCatalog.CATALOG_ESTATE.getType().equals(catalogType)) { // 4:房產租售類
 			// 功能待開發
 		}
 		
