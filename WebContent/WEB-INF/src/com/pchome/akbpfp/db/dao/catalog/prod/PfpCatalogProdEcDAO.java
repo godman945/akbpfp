@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.db.dao.catalog.prod;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> implements IPfpCatalogProdEcDAO{
 	
 	@SuppressWarnings("unchecked")
-	public  List<Map<String,Object>>  getProdList(String catalogSeq, String prodStatus, String pfpCustomerInfoId, int page, int pageSize)  throws Exception{
+	public  List<Map<String,Object>> getProdList(String catalogSeq, String prodStatus, String pfpCustomerInfoId, int page, int pageSize)  throws Exception{
 		
 		StringBuffer hql = new StringBuffer();
 		hql.append(" select a.*,b.pfp_customer_info_id ");
@@ -98,5 +99,58 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 	}
 	
 	
+	public List<Map<String,Object>> getProdGroupCount(String catalogSeq, String filterSQL) throws Exception{
+		StringBuffer hql = new StringBuffer();
+		hql.append(" select count(*) as count ");
+		hql.append(" from pfp_catalog_prod_ec ");
+		hql.append(" where 1 = 1 ");
+		hql.append(" and catalog_seq =  '" + catalogSeq + "' ");
+		hql.append( filterSQL );
+		
+		log.info(hql.toString());
+
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
+		
+		return query.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String,Object>> getEcProdGroupListByRandom(String catalogSeq, String filterSQL, int prodNum) throws Exception{
+
+		StringBuffer hql = new StringBuffer();
+		hql.append(" select  * from ");
+		hql.append(" pfp_catalog_prod_ec ");
+		hql.append(" where 1 = 1 ");
+		hql.append(" and catalog_seq =  '" + catalogSeq + "'");
+		hql.append(" and prod_check_status = '1' ");
+		hql.append(" and prod_status = '1' ");
+		hql.append(filterSQL);
+		hql.append(" order by rand() limit "+prodNum);
+
+		log.info(hql.toString());
+
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
+		return query.list();
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL) throws Exception{
+
+		StringBuffer hql = new StringBuffer();
+		hql.append(" select  * from ");
+		hql.append(" pfp_catalog_prod_ec ");
+		hql.append(" where 1 = 1 ");
+		hql.append(" and catalog_seq =  '" + catalogSeq + "'");
+		hql.append(filterSQL);
+		
+		log.info(hql.toString());
+
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
+		return query.list();
+	}
 
 }

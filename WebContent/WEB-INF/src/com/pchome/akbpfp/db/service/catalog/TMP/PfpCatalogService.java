@@ -17,5 +17,9 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 		}
 		return catalogType;
 	}
+	
+	public PfpCatalog getPfpCatalog(String catalogSeq) throws Exception{
+		return ((IPfpCatalogDAO)dao).getPfpCatalog(catalogSeq).get(0);
+	}
 
 }

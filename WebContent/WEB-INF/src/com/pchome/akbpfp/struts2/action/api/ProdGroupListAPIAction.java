@@ -69,7 +69,7 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 		String catalogSeq = pfpCatalogGroupService.getCatalogSeq(groupId) ;
 		log.info(">>> catalogSeq : "+catalogSeq);
 		//撈出該商品組合的list
-		JSONArray returnListJson = aProdGroup.getProdGroupList(catalogSeq,filterSQL,prodNum);
+		JSONArray returnListJson = aProdGroup.getProdGroupListByRandom(catalogSeq,filterSQL,prodNum);
 		log.info(">>> returnListJson length : "+returnListJson.length());
 		if (returnListJson.length()<=0){
 			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E004.getStatus()).toString().getBytes());

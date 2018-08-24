@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.catalog.prodGroup.factory;
 
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 
@@ -10,8 +11,6 @@ import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupItemServic
 public abstract class AProdGroup {
 	
 	public IPfpCatalogGroupItemService pfpCatalogGroupItemService;
-//	public IPfpCatalogGroupService PfpCatalogGroupService;
-//	private AProdGroup aProdGroup;
 	
 
 	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String groupId) throws Exception{
@@ -23,9 +22,18 @@ public abstract class AProdGroup {
 	
 	public abstract String pfpCatalogGroupItemTofilterSQL(List<PfpCatalogGroupItem> pfpCatalogGroupItems) throws Exception;
 	
-	public abstract JSONArray getProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception;
+	public abstract JSONArray getProdGroupListByRandom(String catalogSeq, String filterSQL, int prodNum) throws Exception;
+	
+	public abstract List<Map<String,Object>> getProdGroupList(String catalogSeq, String filterSQL) throws Exception;
+	
+	public abstract String getProdGroupCount(String catalogSeq, String filterSQL) throws Exception;
 	
 
+	
+	
+	
+	
+	
 	
 	
 	public IPfpCatalogGroupItemService getPfpCatalogGroupItemService() {
@@ -38,9 +46,6 @@ public abstract class AProdGroup {
 
 	
 
-//	public void setPfpCatalogGroupService(PfpCatalogGroupService pfpCatalogGroupService) {
-//		this.pfpCatalogGroupService = pfpCatalogGroupService;
-//	}
 	
 	
 }

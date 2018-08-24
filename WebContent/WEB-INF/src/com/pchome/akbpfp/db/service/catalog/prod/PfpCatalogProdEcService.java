@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.catalog.prod.IPfpCatalogProdEcDAO;
+import com.pchome.akbpfp.db.dao.catalog.prodGroup.IPfpCatalogGroupDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.catalog.prodList.PfpCatalogProdEcVO;
@@ -54,4 +55,30 @@ public class PfpCatalogProdEcService extends BaseService<PfpCatalogProdEc,Intege
 	public List<Map<String,Object>> queryProdListDetail(String catalogSeq,String prodId) throws Exception{
 		return ((IPfpCatalogProdEcDAO)dao).queryProdListDetail(catalogSeq, prodId);
 	}
+	
+	public String getProdGroupCount(String catalogSeq, String filterSQL) throws Exception{
+		List<Map<String,Object>>  prodGroupCountMap = ((IPfpCatalogProdEcDAO)dao).getProdGroupCount(catalogSeq, filterSQL);
+		
+		String prodGroupCount = "0";
+		for (Object object : prodGroupCountMap) {
+			
+			Map obj = (Map) object;
+			prodGroupCount = obj.get("count").toString();
+		}
+		
+		return prodGroupCount;
+	}
+	
+	public List<Map<String,Object>> getEcProdGroupListByRandom(String catalogSeq, String filterSQL, int prodNum) throws Exception{
+		List<Map<String,Object>> ecProdGroupLists = ((IPfpCatalogProdEcDAO)dao).getEcProdGroupListByRandom(catalogSeq,filterSQL,prodNum);
+		
+		return ecProdGroupLists;
+	}
+
+	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL) throws Exception{
+		List<Map<String,Object>> ecProdGroupLists = ((IPfpCatalogProdEcDAO)dao).getEcProdGroupList(catalogSeq,filterSQL);
+		
+		return ecProdGroupLists;
+	}
+
 }

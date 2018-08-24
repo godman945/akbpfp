@@ -437,5 +437,13 @@
     	<property name="prodListFactory" ref="ProdListFactory" />
     </bean>
     <!-- 商品清單 END -->
+    
+    <!-- 商品群組 -->
+    <bean id="ProdGroupAction" class="com.pchome.akbpfp.struts2.action.catalog.prodGroup.ProdGroupAction" scope="prototype" >
+    	<property name="pfpCatalogService" ref="PfpCatalogService" />
+    	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
+    	<property name="prodGroupFactory" ref="ProdGroupFactory" />
+    </bean>
+    <!-- 商品群組 END -->
    
 </beans>

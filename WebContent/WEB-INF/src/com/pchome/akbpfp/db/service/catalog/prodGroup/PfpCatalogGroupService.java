@@ -11,11 +11,6 @@ import com.pchome.akbpfp.db.service.BaseService;
 
 
 public class PfpCatalogGroupService extends BaseService<PfpCatalogGroup,String> implements IPfpCatalogGroupService{
-//	private PfpCatalogGroupDAO pfpCatalogGroupDAO;
-	
-	
-//	private IAccesslogProvider accesslogProvider;
-//	private PfpUserMemberRefDAO pfpUserMemberRefDAO;
 	
 	public String getCatalogType(String groupId) throws Exception{
 		List<PfpCatalogGroup> pfpCatalogGroups = ((IPfpCatalogGroupDAO)dao).getCatalogType(groupId);
@@ -37,13 +32,12 @@ public class PfpCatalogGroupService extends BaseService<PfpCatalogGroup,String> 
 		return catalogSeq;
 	}
 	
-
-	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception{
-		List<Map<String,Object>> ecProdGroupLists = ((IPfpCatalogGroupDAO)dao).getEcProdGroupList(catalogSeq,filterSQL,prodNum);
-		
-				
-		return ecProdGroupLists;
+	public List<PfpCatalogGroup> getPfpCatalogGroupList (String catalogSeq) throws Exception{
+		 return ((IPfpCatalogGroupDAO)dao).getPfpCatalogGroupList(catalogSeq);
 	}
+	
+	
+	
 	
 
 

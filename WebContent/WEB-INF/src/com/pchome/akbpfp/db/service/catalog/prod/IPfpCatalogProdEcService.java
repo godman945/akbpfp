@@ -16,5 +16,11 @@ public interface IPfpCatalogProdEcService extends IBaseService<PfpCatalogProdEc,
 	
 	public List<Map<String,Object>> queryProdListDetail(String catalogSeq,String prodId) throws Exception;
 	
+	public String getProdGroupCount(String catalogSeq, String filterSQL) throws Exception;
+	
+	public List<Map<String,Object>> getEcProdGroupListByRandom(String catalogSeq, String filterSQL, int prodNum) throws Exception;
+	
+	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL) throws Exception;
+	
 	
 }

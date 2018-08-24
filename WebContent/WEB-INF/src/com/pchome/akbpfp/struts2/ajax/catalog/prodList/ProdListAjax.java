@@ -33,43 +33,49 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 	/**
 	 * 更新商品清單狀態
 	 */
-	public String updateProdStatusAjax() throws Exception{
-		log.info(">>> catalogSeq: " + catalogSeq);
-		log.info(">>> prodStatus: " + prodStatus);
-		log.info(">>> prodIdArray: " + prodIdArray.toString());
-		
-		//商品組合ID 的目錄型態
-		String catalogType = pfpCatalogService.getCatalogType(catalogSeq);
-		log.info(">>> catalogType: " + catalogType);
-		if (StringUtils.isBlank(catalogType)) {
-			String str = "目錄型態不正確";
+	public String updateProdStatusAjax() {
+		try{
+			log.info(">>> catalogSeq: " + catalogSeq);
+			log.info(">>> prodStatus: " + prodStatus);
+			log.info(">>> prodIdArray: " + prodIdArray.toString());
 			
-//			returnJson = new ByteArrayInputStream(
-//					getReturnJsonObj("error", EnumProdGroupList.E001.getStatus()).toString().getBytes());
-			return SUCCESS;
+			//商品組合ID 的目錄型態
+			String catalogType = pfpCatalogService.getCatalogType(catalogSeq);
+			log.info(">>> catalogType: " + catalogType);
+			if (StringUtils.isBlank(catalogType)) {
+				String str = "目錄型態不正確";
+				
+	//			returnJson = new ByteArrayInputStream(
+	//					getReturnJsonObj("error", EnumProdGroupList.E001.getStatus()).toString().getBytes());
+				return SUCCESS;
+			}
+			
+			EnumProdListFactory enumProdListFactory = EnumProdListFactory.getCatalogName(catalogType);
+			log.info(">>> enumProdListFactory: " + enumProdListFactory);
+			if (enumProdListFactory == null) {
+				String str = "目錄型態不正確";
+	//			returnJson = new ByteArrayInputStream(
+	//					getReturnJsonObj("error", EnumProdGroupList.E002.getStatus()).toString().getBytes());
+				return SUCCESS;
+			}
+			
+			
+			AProdList aProdList = prodListFactory.getAProdListObj(enumProdListFactory.getCatalogName());
+			log.info(">>> aProdList: "+aProdList);
+			if (aProdList == null){
+				String str = "此商品組合ID的目錄型態不正確";
+	//			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E002.getStatus()).toString().getBytes());
+				return SUCCESS;
+			}
+			
+			List<String> prodIdList = Arrays.asList(prodIdArray); 
+			aProdList.updateProdListProdStatus(catalogSeq, prodStatus, prodIdList);
+			
+		} catch (Exception e) {
+//			dataMap.put("status", "ERROR");
+//			dataMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			log.error("error:" + e);
 		}
-		
-		EnumProdListFactory enumProdListFactory = EnumProdListFactory.getCatalogName(catalogType);
-		log.info(">>> enumProdListFactory: " + enumProdListFactory);
-		if (enumProdListFactory == null) {
-			String str = "目錄型態不正確";
-//			returnJson = new ByteArrayInputStream(
-//					getReturnJsonObj("error", EnumProdGroupList.E002.getStatus()).toString().getBytes());
-			return SUCCESS;
-		}
-		
-		
-		AProdList aProdList = prodListFactory.getAProdListObj(enumProdListFactory.getCatalogName());
-		log.info(">>> aProdList: "+aProdList);
-		if (aProdList == null){
-			String str = "此商品組合ID的目錄型態不正確";
-//			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E002.getStatus()).toString().getBytes());
-			return SUCCESS;
-		}
-		
-		List<String> prodIdList = Arrays.asList(prodIdArray); 
-		aProdList.updateProdListProdStatus(catalogSeq, prodStatus, prodIdList);
-		
 
 		return SUCCESS;
 	}
@@ -78,7 +84,7 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 	/**
 	 * 取得商品名細
 	 */
-	public String queryProdListDetailAjax()throws Exception{
+	public String queryProdListDetailAjax(){
 		try{
 			log.info(">>> catalogSeq: " + catalogSeq);
 			log.info(">>> prodId: " + prodId);

@@ -36,92 +36,16 @@ public class PfpCatalogGroupDAO extends BaseDAO<PfpCatalogGroup,String> implemen
 		return super.getHibernateTemplate().find(hql.toString());
 	}
 	
+	
 	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception{
-
+	public List<PfpCatalogGroup> getPfpCatalogGroupList (String catalogSeq) throws Exception{
 		StringBuffer hql = new StringBuffer();
-		hql.append(" select  * from ");
-		hql.append(" pfp_catalog_prod_ec ");
-		hql.append(" where 1 = 1 ");
-		hql.append(" and catalog_seq =  '" + catalogSeq + "'");
-		hql.append(" and prod_check_status = '1' ");
-		hql.append(" and prod_status = '1' ");
-		hql.append(filterSQL);
-		hql.append(" order by rand() limit "+prodNum);
-
-		log.info(hql.toString());
-
-		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
-		return query.list();
+		hql.append(" from PfpCatalogGroup ");
+		hql.append(" where pfpCatalog.catalogSeq = ? ");
+		
+		return super.getHibernateTemplate().find(hql.toString(), catalogSeq);
 	}
 	
-
-
-//	@SuppressWarnings("unchecked")
-//	public List<PfpCustomerInfo> findCustomerInfo(String customerInfoId) {
-//		
-//		StringBuffer hql = new StringBuffer();
-//		
-//		hql.append(" from PfpCustomerInfo ");
-//		hql.append(" where customerInfoId = ? ");
-//		hql.append(" and status != ? ");
-//		
-//		Object[] ob = new Object[]{customerInfoId, 
-//									EnumAccountStatus.DELETE.getStatus()};
-//		
-//		return super.getHibernateTemplate().find(hql.toString(),ob);
-//	}
-//	
-//	@SuppressWarnings("unchecked")
-//	public List<PfpCustomerInfo> findAllPfpCustomerInfo() {
-//		String hql = " from PfpCustomerInfo where status != '2' or status != '3' ";
-//		return super.getHibernateTemplate().find(hql);
-//	}
-//	
-//	@SuppressWarnings("unchecked")
-//	public List<PfpCustomerInfo> findValidCustomerInfos(){
-//		
-//		StringBuffer hql = new StringBuffer();
-//		hql.append(" from PfpCustomerInfo ");
-//		hql.append(" where status = ? or status = ? or status = ? ");
-//		
-//		Object[] ob = new Object[]{EnumAccountStatus.CLOSE.getStatus(),
-//									EnumAccountStatus.START.getStatus(),
-//									EnumAccountStatus.STOP.getStatus()};
-//		
-//		return super.getHibernateTemplate().find(hql.toString(),ob);
-//	}
-//	
-//	@SuppressWarnings("unchecked")
-//	public List<PfpCustomerInfo> findCustomerInfoByMmeberId(String memberId) {
-//		
-//		StringBuffer hql = new StringBuffer();
-//		List<Object> list = new ArrayList<Object>();
-//		
-//		hql.append(" from PfpCustomerInfo ");
-//		hql.append(" where memberId = ? ");
-//		hql.append(" and status != ? ");
-//		hql.append(" order by createDate desc ");
-//		
-//		list.add(memberId);
-//		list.add(EnumAccountStatus.DELETE.getStatus());
-//		
-//		return super.getHibernateTemplate().find(hql.toString(), list.toArray());
-//	}
-//	
-//	public void deleteCustomerInfo(String memberId) throws Exception{
-//		
-//		StringBuffer hql = new StringBuffer();
-//		
-//		hql.append(" delete from PfpCustomerInfo ");
-//		hql.append(" where customerInfoId = ? ");
-//		
-//		this.getSession().createQuery(hql.toString()).
-//							setString(0, memberId)
-//							.executeUpdate();
-//
-//	}
 	
 
 }

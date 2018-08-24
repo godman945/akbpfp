@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.catalog.prodGroup.factory;
 
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 
@@ -13,10 +14,21 @@ public class BookingProdGroup extends AProdGroup {
 	}
 	
 	@Override
-	public JSONArray getProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception {
+	public JSONArray getProdGroupListByRandom(String catalogSeq, String filterSQL, int prodNum) throws Exception {
 		JSONArray prodListJson = new JSONArray(); 
 		
 		return prodListJson;
 	}
+	
+	@Override
+	public List<Map<String,Object>> getProdGroupList(String catalogSeq, String filterSQL) throws Exception{
+		
+		return null;
+	}
+	
+	public String getProdGroupCount(String catalogSeq, String filterSQL) throws Exception{
+		return null;
+	}
+	
 	
 }

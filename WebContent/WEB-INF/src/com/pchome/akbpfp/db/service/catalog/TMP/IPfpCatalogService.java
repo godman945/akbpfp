@@ -7,4 +7,6 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	
 	public String getCatalogType(String catalogSeq) throws Exception;
 	
+	public PfpCatalog getPfpCatalog(String catalogSeq) throws Exception;
+	
 }

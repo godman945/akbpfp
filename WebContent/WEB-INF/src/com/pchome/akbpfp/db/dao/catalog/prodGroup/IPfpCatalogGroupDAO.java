@@ -14,17 +14,6 @@ public interface IPfpCatalogGroupDAO extends IBaseDAO<PfpCatalogGroup,String>{
 	
 	public List<PfpCatalogGroup> getCatalogSeq(String groupId) throws Exception;
 	
-	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception;
+	public List<PfpCatalogGroup> getPfpCatalogGroupList (String catalogSeq) throws Exception;
 	
-	
-
-//	public List<PfpCustomerInfo> findCustomerInfo(String customerInfoId);
-//
-//	public List<PfpCustomerInfo> findAllPfpCustomerInfo();
-//	
-//	public List<PfpCustomerInfo> findValidCustomerInfos();
-//	
-//	//public void deleteCustomerInfo(String memberId) throws Exception;
-//	
-//	public List<PfpCustomerInfo> findCustomerInfoByMmeberId(String memberId);
 }

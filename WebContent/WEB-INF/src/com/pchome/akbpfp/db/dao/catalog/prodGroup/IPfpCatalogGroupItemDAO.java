@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.db.dao.catalog.prodGroup;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.IBaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
@@ -11,6 +12,7 @@ public interface IPfpCatalogGroupItemDAO extends IBaseDAO<PfpCatalogGroupItem,In
 		
 	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String groupId) throws Exception;
 	
+	public List<Map<String,Object>> getCatalogAllGroupItem(String catalogSeq) throws Exception;
 
 //	public List<PfpCustomerInfo> findCustomerInfo(String customerInfoId);
 //

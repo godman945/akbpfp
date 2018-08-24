@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
-import com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupService;
+import com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogProdEcService;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupCondition;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupField;
 
@@ -18,7 +18,7 @@ import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupField;
 
 public class EcProdGroup extends AProdGroup {
 	
-	private PfpCatalogGroupService pfpCatalogGroupService;
+	private PfpCatalogProdEcService pfpCatalogProdEcService;
 	
 	
 	public String pfpCatalogGroupItemTofilterSQL(List<PfpCatalogGroupItem> pfpCatalogGroupItems) throws Exception{
@@ -65,14 +65,22 @@ public class EcProdGroup extends AProdGroup {
 	
 	
 	@Override
-	public JSONArray getProdGroupList(String catalogSeq, String filterSQL, int prodNum) throws Exception {
+	public JSONArray getProdGroupListByRandom(String catalogSeq, String filterSQL, int prodNum) throws Exception {
 		
 			
-		List<Map<String,Object>> ecProdGroupList = pfpCatalogGroupService.getEcProdGroupList(catalogSeq, filterSQL,prodNum);
+		List<Map<String,Object>> ecProdGroupList = pfpCatalogProdEcService.getEcProdGroupListByRandom(catalogSeq, filterSQL,prodNum);
 		
 		JSONArray prodListJson = prodGroupListToArray(ecProdGroupList);
 		
 		return prodListJson;
+	}
+	
+	
+	@Override
+	public List<Map<String,Object>> getProdGroupList(String catalogSeq, String filterSQL) throws Exception{
+		
+		return pfpCatalogProdEcService.getEcProdGroupList(catalogSeq, filterSQL);
+		
 	}
 	
 	
@@ -108,10 +116,21 @@ public class EcProdGroup extends AProdGroup {
 	}
 	
 	
-
-	public void setPfpCatalogGroupService(PfpCatalogGroupService pfpCatalogGroupService) {
-		this.pfpCatalogGroupService = pfpCatalogGroupService;
+	public String getProdGroupCount(String catalogSeq, String filterSQL) throws Exception{
+		return pfpCatalogProdEcService.getProdGroupCount(catalogSeq, filterSQL);
 	}
+	
+
+	
+	
+	
+	
+	public void setPfpCatalogProdEcService(PfpCatalogProdEcService pfpCatalogProdEcService) {
+		this.pfpCatalogProdEcService = pfpCatalogProdEcService;
+	}
+	
+	
+	
 	
 	
 	
