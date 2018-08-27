@@ -239,7 +239,8 @@
     
     <!-- 商品廣告-目錄 -->
     <bean id="PfpCatalogService" class="com.pchome.akbpfp.db.service.catalog.PfpCatalogService">    	     
-        <property name="dao" ref="PfpCatalogDAO" />   
+        <property name="dao" ref="PfpCatalogDAO" />
+        <property name="sequenceService" ref="SequenceService" />
     </bean>
     
     <!-- 商品廣告-檔案上傳 -->
@@ -249,7 +250,7 @@
 <!--         <property name="dao" ref="PfpCatalogUploadListDAO" /> -->
         <property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
         <property name="pfpCatalogService" ref="PfpCatalogService" />
-        <property name="sequenceService" ref="SequenceService" /> 
+        <property name="sequenceService" ref="SequenceService" />
     </bean>
     
 </beans>

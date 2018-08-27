@@ -11,12 +11,16 @@ import org.springframework.context.support.FileSystemXmlApplicationContext;
 import com.pchome.akbpfp.db.dao.catalog.IPfpCatalogDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.BaseService;
+import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.config.TestConfig;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
+import com.pchome.enumerate.sequence.EnumSequenceTableName;
 
 public class PfpCatalogService extends BaseService<PfpCatalog, String> implements IPfpCatalogService {
 
+	private ISequenceService sequenceService;
+	
 	/**
 	 * 查詢商品目錄清單
 	 * @param PfpCatalogVO
@@ -61,6 +65,21 @@ public class PfpCatalogService extends BaseService<PfpCatalog, String> implement
 	}
 
 	/**
+	 * 新增商品目錄
+	 * @param PfpCatalogVO
+	 * @return
+	 * @throws Exception 
+	 */
+	@Override
+	public List<PfpCatalogVO> savePfpCatalog(PfpCatalogVO vo) throws Exception {
+
+		vo.setCatalogSeq(sequenceService.getId(EnumSequenceTableName.PFP_CATALOG, "", 20));
+		((IPfpCatalogDAO) dao).savePfpCatalog(vo);
+		
+		return null;
+	}
+	
+	/**
 	 * 刪除商品目錄
 	 * @param PfpCatalogVO
 	 * @return
@@ -96,7 +115,15 @@ public class PfpCatalogService extends BaseService<PfpCatalog, String> implement
 //		System.out.println(pageCount);
 //		System.out.println(totalCount);
 		
-		vo.setCatalogSeq("PC201808240000000001");
-		service.deletePfpCatalog(vo);
+//		vo.setCatalogSeq("PC201808240000000001");
+		
+		vo.setCatalogName("0827商品目錄");
+		vo.setCatalogType("1");
+		service.savePfpCatalog(vo);
 	}
+
+	public void setSequenceService(ISequenceService sequenceService) {
+		this.sequenceService = sequenceService;
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.db.dao.catalog;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +58,25 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog, String> implements IPfpCa
         return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 	}
 
+	@Override
+	public void savePfpCatalog(PfpCatalogVO vo) {
+		Date now = new Date();
+		
+		PfpCatalog pfpCatalog = new PfpCatalog();
+		pfpCatalog.setCatalogName(vo.getCatalogName());
+		pfpCatalog.setCatalogType(vo.getCatalogType());
+		pfpCatalog.setPfpCustomerInfoId(vo.getPfpCustomerInfoId());
+		pfpCatalog.setCatalogSeq(vo.getCatalogSeq());
+		
+		pfpCatalog.setCatalogUploadType("1");
+		pfpCatalog.setCatalogUploadContent(" ");
+		pfpCatalog.setCatalogImgShowType("1");
+		
+		pfpCatalog.setUpdateDate(now);
+		pfpCatalog.setCreateDate(now);
+		super.save(pfpCatalog);
+	}
+	
 	@Override
 	public void deletePfpCatalog(PfpCatalogVO vo) {
 		StringBuffer hql = new StringBuffer();

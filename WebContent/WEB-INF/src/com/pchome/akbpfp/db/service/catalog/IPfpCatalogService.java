@@ -16,6 +16,14 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog, String> {
 	List<PfpCatalogVO> getPfpCatalogList(PfpCatalogVO vo);
 
 	/**
+	 * 新增商品目錄
+	 * @param PfpCatalogVO
+	 * @return
+	 * @throws Exception 
+	 */
+	List<PfpCatalogVO> savePfpCatalog(PfpCatalogVO vo) throws Exception;
+	
+	/**
 	 * 刪除商品目錄
 	 * @param PfpCatalogVO
 	 * @return

@@ -20,8 +20,15 @@ public class PfpCatalogAction extends BaseCookieAction{
 	private long totalCount = 0;     // 初始化共幾筆
 	private List<PfpCatalogVO> dataList = new ArrayList<PfpCatalogVO>(); // 查詢結果
 
+	private String catalogName;
+	private String catalogType;
+	
 	private String deleteCatalogSeq;
 	
+	/**
+	 * 查詢商品目錄清單
+	 * @return
+	 */
 	public String queryPfpCatalogList() {
 		PfpCatalogVO vo = new PfpCatalogVO();
 		vo.setQueryString(queryString);
@@ -35,7 +42,25 @@ public class PfpCatalogAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
-	public String deletePfpCatalogList() {
+	/**
+	 * 新增商品目錄
+	 * @return
+	 * @throws Exception 
+	 */
+	public String savePfpCatalog() throws Exception {
+		PfpCatalogVO vo = new PfpCatalogVO();
+		vo.setCatalogName(catalogName);
+		vo.setCatalogType(catalogType);
+		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
+		dataList = pfpCatalogService.savePfpCatalog(vo);
+		return SUCCESS;
+	}
+	
+	/**
+	 * 刪除目錄
+	 * @return
+	 */
+	public String deletePfpCatalog() {
 		PfpCatalogVO vo = new PfpCatalogVO();
 		vo.setCatalogSeq(deleteCatalogSeq);
 		dataList = pfpCatalogService.deletePfpCatalog(vo);
@@ -85,6 +110,14 @@ public class PfpCatalogAction extends BaseCookieAction{
 
 	public void setDeleteCatalogSeq(String deleteCatalogSeq) {
 		this.deleteCatalogSeq = deleteCatalogSeq;
+	}
+
+	public void setCatalogName(String catalogName) {
+		this.catalogName = catalogName;
+	}
+
+	public void setCatalogType(String catalogType) {
+		this.catalogType = catalogType;
 	}
 	
 }
