@@ -431,4 +431,8 @@
     	<property name="cookieProccessAPI" ref="CookieProccessAPI" />
     </bean>
    
+   <!-- 商品目錄 -->
+   <bean id="PfpCatalogAction" class="com.pchome.akbpfp.struts2.action.catalog.PfpCatalogAction" scope="prototype" >
+    </bean>
+    
 </beans>

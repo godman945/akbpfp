@@ -734,5 +734,16 @@
      	
     	<!-- 快速刊登廣告 END -->
     	
+    	<!-- 目錄範例檔案下載 -->
+ 		<action name="catalogSampleFileDownload" class="PfpCatalogAction" method="catalogSampleFileDownload">
+<!-- 			<interceptor-ref name="loginCheckStack" /> -->
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
+				<param name="inputName">downloadFileStream</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+      	
     </package>
 </struts>
