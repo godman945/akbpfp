@@ -85,7 +85,7 @@ public class PfpCatalogAction extends BaseCookieAction{
 	 * @throws Exception 
 	 */
 	public String catalogSampleFileDownload() throws Exception {
-		String fileName = "一般購物範例.csv";
+		String fileName = "shoppingSample.csv";
 		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > -1) {
 			downloadFileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
 		} else {
