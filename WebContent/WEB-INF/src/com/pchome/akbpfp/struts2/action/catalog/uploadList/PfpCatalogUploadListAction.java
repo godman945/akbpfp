@@ -51,7 +51,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	public String fileUploadCSV() throws Exception {
 		//dataMap中的資料將會被Struts2轉換成JSON字串，所以用Map<String,Object>
 		dataMap = new HashMap<String, Object>();
-		System.out.println(FilenameUtils.getExtension(fileUploadFileName));
+		
 		if(!"csv".equalsIgnoreCase(FilenameUtils.getExtension(fileUploadFileName))){
 			dataMap.put("status", "ERROR");
 			dataMap.put("msg", "上傳檔案錯誤!");
