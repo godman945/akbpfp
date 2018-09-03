@@ -81,16 +81,18 @@ public class PfpCatalogAction extends BaseCookieAction{
 	
 	/**
 	 * 目錄範例檔案下載
+	 * 參考 https://matthung0807.blogspot.com/2017/09/struts-2.html
 	 * @return
 	 * @throws Exception 
 	 */
 	public String catalogSampleFileDownload() throws Exception {
 		String fileName = "shoppingSample.csv";
-		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > -1) {
-			downloadFileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
-		} else {
-			downloadFileName = URLEncoder.encode(fileName, "UTF-8");
-		}
+//		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > -1) {
+//			downloadFileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+//		} else {
+//			downloadFileName = URLEncoder.encode(fileName, "UTF-8");
+//		}
+		downloadFileName = fileName;
 		
 		// 範例檔案放的位置
 		String serverName = super.request.getServerName();
