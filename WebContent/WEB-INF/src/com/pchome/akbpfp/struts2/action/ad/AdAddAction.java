@@ -377,7 +377,7 @@ public class AdAddAction extends BaseCookieAction{
 	 * @return
 	 * @throws Exception 
 	 */
-	public String doAdAdAddTmgManyURL() throws Exception{
+	public String doAdAdAddTmgManyURL() throws Exception {
 		//TODO 多網址上搞
 		log.info("doAdAdAddTmgManyURL => adGroupSeq = " + adGroupSeq + ",=> adFastPublishUrlInfo =" + adFastPublishUrlInfo + ";");
 		
@@ -392,7 +392,7 @@ public class AdAddAction extends BaseCookieAction{
 		
 		//檢查相關資料是否正確
 		doAdAdAddTmgManyURLCheckData(vo);
-		if(StringUtils.isNotEmpty(vo.getMessage())){
+		if (StringUtils.isNotEmpty(vo.getMessage())) {
 			dataMap.put("status", "ERROR");
 			dataMap.put("msg", vo.getMessage());
 			return SUCCESS;
@@ -411,15 +411,16 @@ public class AdAddAction extends BaseCookieAction{
 		JSONObject redisJsonObject = vo.getRedisJsonObject();
 		String products = redisJsonObject.getJSONArray("products").toString();
 		
+		PfpAdGroup pfpAdGroup = null;
 		JSONObject adFastPublishUrlInfoJson = new JSONObject(adFastPublishUrlInfo); 
 		Iterator adFastPublishUrlInfoJsoIterator = adFastPublishUrlInfoJson.keys();
         while (adFastPublishUrlInfoJsoIterator.hasNext()) {
         	String key = adFastPublishUrlInfoJsoIterator.next().toString();
-        	if("Y".equals(adFastPublishUrlInfoJson.get(key))){ //是選取的資料
+			if ("Y".equals(adFastPublishUrlInfoJson.get(key))) { // 是選取的資料
         		
-        		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+        		pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
         		adSeq = null; //清除adSeq再建立一筆
-        		//新增資料到pfp_ad table
+        		//開始新增資料到pfp_ad table
         		addAd(pfpAdGroup, null);
         		
         		//找到URL位置
@@ -439,6 +440,8 @@ public class AdAddAction extends BaseCookieAction{
         		//新增圖片資料
         		List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, "img", null, adPoolSeq);
         		String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+        		log.info("開始新增pfp_ad_detail資料，ad_seq:" + adSeq);
+        		
         		String imgPath = redisJsonObjectDetail.get("pic_url").toString();
         		imgPath = processImgPath(imgPath);
         		newSaveAdDetail(imgPath, "img", adPoolSeq, defineAdSeq);
@@ -487,9 +490,15 @@ public class AdAddAction extends BaseCookieAction{
         		addKeywords(pfpAdGroup);
         		//新增排除關鍵字
         		addExcludeKeywords(pfpAdGroup);
+        		
+        		log.info("新增ad_seq:" + adSeq + "完成。");
         	}
         }
-
+        
+        // 開啟廣告分類(僅更新一次)
+ 		pfpAdGroup.setAdGroupStatus(4);
+ 		pfpAdGroupService.save(pfpAdGroup);
+ 		
 		return SUCCESS;
 	}
 	
@@ -560,6 +569,8 @@ public class AdAddAction extends BaseCookieAction{
 			return imgPath;
 		}
 		
+		log.info("開始下載圖片。");
+		
 		Date date = new Date();
 		String photoPath = photoDbPathNew + super.getCustomer_info_id() + "/" + sdf.format(date) + "/original";
 		File file = new File(photoPath);
@@ -572,13 +583,15 @@ public class AdAddAction extends BaseCookieAction{
 		int endLength = (imgPath.indexOf("?") > -1 ? imgPath.indexOf("?") : imgPath.length());
 		String filenameExtension = imgPath.substring(startLength, endLength);
         
-        URL url = new URL(imgPath);
+		log.info("下載圖片網址:" + imgPath);
+        URL url = new URL(imgPath.replaceFirst("https", "http"));
         String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension; // 存放路徑 + 檔名
-        
+
+        // 處理圖片下載
         if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
             InputStream in = url.openStream();
             Files.copy(in, new File(imgPathAndName).toPath());
-            
+            in.close();
         } else { // jpg圖片下載方式
             BufferedImage img = ImageIO.read(url);
             int width = img.getWidth();
@@ -619,6 +632,7 @@ public class AdAddAction extends BaseCookieAction{
         }
         
 		imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + "." + filenameExtension;
+		log.info("下載圖片結束");
 		return imgPath;
 	}
 

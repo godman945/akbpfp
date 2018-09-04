@@ -218,8 +218,8 @@ var tempHtml = "";
 /**
  * 處理查詢結果畫面
  */
-function processSearchResultViewHtml(redisData){
-	$.each(redisData, function(index, list){
+function processSearchResultViewHtml(redisData) {
+	$.each(redisData, function(index, list) {
 		var sp_price = "";    //原價
 		var title = "";       //標題
 		var intact_title = "";//完整標題
@@ -229,34 +229,34 @@ function processSearchResultViewHtml(redisData){
 		var link_url = "";    //網頁連結
 		var pic_url = "";     //圖片網址
 		var show_url = "";    //顯示domain
-		$.each(list, function(key, val){
-			if(key == "sp_price"){
+		$.each(list, function(key, val) {
+			if (key == "sp_price") {
 				sp_price = val;
-			}else if(key == "title"){
+			} else if (key == "title") {
 				title = val;
-			}else if(key == "intact_title"){
+			} else if (key == "intact_title") {
 				intact_title = val;
-			}else if(key == "price"){
+			} else if (key == "price") {
 				price = val;
-			}else if(key == "description"){
+			} else if (key == "description") {
 				description = val;
-			}else if(key == "intact_description"){
+			} else if (key == "intact_description") {
 				intact_description = val.replace(/\"/g, "&quot;"); // 處理"符號
-			}else if(key == "link_url"){
+			} else if (key == "link_url") {
 				link_url = val;
-			}else if(key == "pic_url"){
+			} else if (key == "pic_url") {
 				pic_url = val;
-			}else if(key == "show_url"){
+			} else if (key == "show_url") {
 				show_url = val;
 			}
-        });
+		});
 		
 		//組每一筆資料
 	    tempHtml += "<tr role='row'>";
 		//checkbox區塊
-	    if(urlInfoMap[link_url + "_ckeck_flag"] == "Y"){ //判斷此筆資料是否被勾選
+	    if (urlInfoMap[link_url + "_ckeck_flag"] == "Y") { //判斷此筆資料是否被勾選
 	    	tempHtml += "	<td><input type='checkbox' id='chkN_" + index + "' name='chkN' value='" + link_url + "' onclick='checkAd(this,\"" + link_url + "\");' checked='true' ></td>";
-	    }else{
+	    } else {
 	    	tempHtml += "	<td><input type='checkbox' id='chkN_" + index + "' name='chkN' value='" + link_url + "' onclick='checkAd(this,\"" + link_url + "\");'></td>";
 	    }
 		//廣告明細區塊
@@ -319,7 +319,7 @@ function processSearchResultViewHtml(redisData){
 		tempHtml += "			</div>";
 		
 		tempHtml += "			<span class='orgad_content'>完整廣告內容";
-		tempHtml += "				<a href='javascript:void(0);' onclick=\"openNots(this, '" + intact_title + "', '" + intact_description + "')\"><img src='./html/img/question.gif' align='absmiddle'></a>";
+		tempHtml += "				<a href='javascript:void(0);' onclick=\"openNots(this, '" + intact_title + "', '" + intact_description.replace(/\n/g, "\\n") + "')\"><img src='./html/img/question.gif' align='absmiddle'></a>";
 		tempHtml += "			</span>";
 		tempHtml += "		</div>";
 		tempHtml += "	</td>";
@@ -792,21 +792,20 @@ function isURLInaccurate(URL, errorMsgBlock){
 		return true;
 	}else if(!(URL.indexOf("http://24h.pchome.com.tw/", 0) > -1
 			|| URL.indexOf("https://24h.pchome.com.tw/", 0) > -1
-			|| URL.indexOf("24h.pchome.com.tw/", 0) > -1
 			//商店街
 			|| URL.indexOf("http://www.pcstore.com.tw/", 0) > -1
 			|| URL.indexOf("https://www.pcstore.com.tw/", 0) > -1
-			|| URL.indexOf("www.pcstore.com.tw/", 0) > -1
+			|| URL.indexOf("http://pcstore.com.tw/", 0) > -1
 			//個人賣場(商店街)
 			|| URL.indexOf("http://seller.pcstore.com.tw/", 0) > -1
 			|| URL.indexOf("https://seller.pcstore.com.tw/", 0) > -1
-			|| URL.indexOf("seller.pcstore.com.tw/", 0) > -1
 			//露天商品頁
-			|| URL.indexOf("http://goods.ruten.com.tw/item/show?", 0) > -1)	){
+			|| URL.indexOf("http://goods.ruten.com.tw/item/show?", 0) > -1
+			|| URL.indexOf("https://goods.ruten.com.tw/item/show?", 0) > -1)){
 		
-		if(errorMsgBlock == "storeProductURL"){ //輸入為店家刊登商品網址，則顯示在該區塊
+		if (errorMsgBlock == "storeProductURL") { // 輸入為店家刊登商品網址，則顯示在該區塊
 			$("#chkStoreProductURL").show().html(errMsg);
-		}else if(errorMsgBlock == "confirmAddURL"){ //輸入為新增商品網址
+		} else if (errorMsgBlock == "confirmAddURL") { // 輸入為新增商品網址
 			$("#chkConfirmAddURL").show().html(errMsg);
 		}
 		return true;
@@ -862,7 +861,7 @@ function openNots(_this, intact_title, intact_description) {
 	var tempHtml = "<h4>完整廣告內容</h4>";
 	tempHtml += "   <div class='adpopcont'>";
 	tempHtml += "     <h1>" + intact_title + "</h1>";
-	tempHtml += "     <span>" + intact_description + "</span>";
+	tempHtml += "     <span>" + intact_description.replace(/\n/g, "</br>") + "</span>";
 	tempHtml += "   </div>";
 	tempHtml += "   <div class='note_24h'>提醒您，一般廣告因字數限制無法完整呈現，您可按下修改鍵調整內文；詳細完整廣告內容僅適用於搜尋原生廣告版位。</div>";
 	tempHtml += "   <a onclick='closeNots()' style='cursor:pointer;' class='adpopclose'>關閉</a>";
