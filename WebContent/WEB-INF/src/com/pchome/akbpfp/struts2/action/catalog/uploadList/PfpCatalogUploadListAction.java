@@ -23,6 +23,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	private String fileUploadFileName;
 	
 	private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private final SimpleDateFormat formatter2 = new SimpleDateFormat("yyyyMMddHHmmss");
 //	private String fileName;
 //	private String fileType;
 	
@@ -65,7 +66,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 //		System.out.println("fileUpload:" + fileUploadFileName);
 //		System.out.println(FilenameUtils.getBaseName(fileUploadFileName)); // 取得檔名部分
 //		System.out.println(FilenameUtils.getExtension(fileUploadFileName)); // 取得副檔名(不含小數點)
-		String path = productFilePath + super.getCustomer_info_id() + "/" + fileUploadFileName;
+		String path = productFilePath + super.getCustomer_info_id() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName;
 //		String fileType = FilenameUtils.getExtension(fileUploadFileName);
 		File createFile = new File(path);
 		FileUtils.copyFile(fileUpload, createFile);
