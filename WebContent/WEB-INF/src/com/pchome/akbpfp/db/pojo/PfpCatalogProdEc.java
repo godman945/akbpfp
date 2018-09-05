@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/8/9 �U�� 05:18:46 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/9/4 �U�� 03:44:34 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,41 +23,40 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 
 	private Integer id;
 	private PfpCatalog pfpCatalog;
-	private String catalogProdEcSeq;
-	private String prodName;
-	private String prodTitle;
-	private String prodImg;
-	private String prodUrl;
-	private int prodPrice;
-	private int prodDiscountPrice;
-	private String prodStockStatus;
-	private String prodUseStatus;
-	private String prodCategory;
-	private String prodStatus;
-	private String prodCheckStatus;
+	private String catalogProdSeq;
+	private String ecName;
+	private String ecTitle;
+	private String ecImg;
+	private String ecUrl;
+	private int ecPrice;
+	private int ecDiscountPrice;
+	private String ecStockStatus;
+	private String ecUseStatus;
+	private String ecCategory;
+	private String ecStatus;
+	private String ecCheckStatus;
 	private Date updateDate;
 	private Date createDate;
 
 	public PfpCatalogProdEc() {
 	}
 
-	public PfpCatalogProdEc(PfpCatalog pfpCatalog, String catalogProdEcSeq, String prodName, String prodTitle,
-			String prodImg, String prodUrl, int prodPrice, int prodDiscountPrice, String prodStockStatus,
-			String prodUseStatus, String prodCategory, String prodStatus, String prodCheckStatus, Date updateDate,
-			Date createDate) {
+	public PfpCatalogProdEc(PfpCatalog pfpCatalog, String catalogProdSeq, String ecName, String ecTitle, String ecImg,
+			String ecUrl, int ecPrice, int ecDiscountPrice, String ecStockStatus, String ecUseStatus, String ecCategory,
+			String ecStatus, String ecCheckStatus, Date updateDate, Date createDate) {
 		this.pfpCatalog = pfpCatalog;
-		this.catalogProdEcSeq = catalogProdEcSeq;
-		this.prodName = prodName;
-		this.prodTitle = prodTitle;
-		this.prodImg = prodImg;
-		this.prodUrl = prodUrl;
-		this.prodPrice = prodPrice;
-		this.prodDiscountPrice = prodDiscountPrice;
-		this.prodStockStatus = prodStockStatus;
-		this.prodUseStatus = prodUseStatus;
-		this.prodCategory = prodCategory;
-		this.prodStatus = prodStatus;
-		this.prodCheckStatus = prodCheckStatus;
+		this.catalogProdSeq = catalogProdSeq;
+		this.ecName = ecName;
+		this.ecTitle = ecTitle;
+		this.ecImg = ecImg;
+		this.ecUrl = ecUrl;
+		this.ecPrice = ecPrice;
+		this.ecDiscountPrice = ecDiscountPrice;
+		this.ecStockStatus = ecStockStatus;
+		this.ecUseStatus = ecUseStatus;
+		this.ecCategory = ecCategory;
+		this.ecStatus = ecStatus;
+		this.ecCheckStatus = ecCheckStatus;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
@@ -84,112 +83,112 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 		this.pfpCatalog = pfpCatalog;
 	}
 
-	@Column(name = "catalog_prod_ec_seq", nullable = false, length = 1024)
-	public String getCatalogProdEcSeq() {
-		return this.catalogProdEcSeq;
+	@Column(name = "catalog_prod_seq", nullable = false, length = 1024)
+	public String getCatalogProdSeq() {
+		return this.catalogProdSeq;
 	}
 
-	public void setCatalogProdEcSeq(String catalogProdEcSeq) {
-		this.catalogProdEcSeq = catalogProdEcSeq;
+	public void setCatalogProdSeq(String catalogProdSeq) {
+		this.catalogProdSeq = catalogProdSeq;
 	}
 
-	@Column(name = "prod_name", nullable = false, length = 1024)
-	public String getProdName() {
-		return this.prodName;
+	@Column(name = "ec_name", nullable = false, length = 1024)
+	public String getEcName() {
+		return this.ecName;
 	}
 
-	public void setProdName(String prodName) {
-		this.prodName = prodName;
+	public void setEcName(String ecName) {
+		this.ecName = ecName;
 	}
 
-	@Column(name = "prod_title", nullable = false, length = 1024)
-	public String getProdTitle() {
-		return this.prodTitle;
+	@Column(name = "ec_title", nullable = false, length = 1024)
+	public String getEcTitle() {
+		return this.ecTitle;
 	}
 
-	public void setProdTitle(String prodTitle) {
-		this.prodTitle = prodTitle;
+	public void setEcTitle(String ecTitle) {
+		this.ecTitle = ecTitle;
 	}
 
-	@Column(name = "prod_img", nullable = false, length = 2048)
-	public String getProdImg() {
-		return this.prodImg;
+	@Column(name = "ec_img", nullable = false, length = 2048)
+	public String getEcImg() {
+		return this.ecImg;
 	}
 
-	public void setProdImg(String prodImg) {
-		this.prodImg = prodImg;
+	public void setEcImg(String ecImg) {
+		this.ecImg = ecImg;
 	}
 
-	@Column(name = "prod_url", nullable = false, length = 2048)
-	public String getProdUrl() {
-		return this.prodUrl;
+	@Column(name = "ec_url", nullable = false, length = 2048)
+	public String getEcUrl() {
+		return this.ecUrl;
 	}
 
-	public void setProdUrl(String prodUrl) {
-		this.prodUrl = prodUrl;
+	public void setEcUrl(String ecUrl) {
+		this.ecUrl = ecUrl;
 	}
 
-	@Column(name = "prod_price", nullable = false)
-	public int getProdPrice() {
-		return this.prodPrice;
+	@Column(name = "ec_price", nullable = false)
+	public int getEcPrice() {
+		return this.ecPrice;
 	}
 
-	public void setProdPrice(int prodPrice) {
-		this.prodPrice = prodPrice;
+	public void setEcPrice(int ecPrice) {
+		this.ecPrice = ecPrice;
 	}
 
-	@Column(name = "prod_discount_price", nullable = false)
-	public int getProdDiscountPrice() {
-		return this.prodDiscountPrice;
+	@Column(name = "ec_discount_price", nullable = false)
+	public int getEcDiscountPrice() {
+		return this.ecDiscountPrice;
 	}
 
-	public void setProdDiscountPrice(int prodDiscountPrice) {
-		this.prodDiscountPrice = prodDiscountPrice;
+	public void setEcDiscountPrice(int ecDiscountPrice) {
+		this.ecDiscountPrice = ecDiscountPrice;
 	}
 
-	@Column(name = "prod_stock_status", nullable = false, length = 1)
-	public String getProdStockStatus() {
-		return this.prodStockStatus;
+	@Column(name = "ec_stock_status", nullable = false, length = 1)
+	public String getEcStockStatus() {
+		return this.ecStockStatus;
 	}
 
-	public void setProdStockStatus(String prodStockStatus) {
-		this.prodStockStatus = prodStockStatus;
+	public void setEcStockStatus(String ecStockStatus) {
+		this.ecStockStatus = ecStockStatus;
 	}
 
-	@Column(name = "prod_use_status", nullable = false, length = 1)
-	public String getProdUseStatus() {
-		return this.prodUseStatus;
+	@Column(name = "ec_use_status", nullable = false, length = 1)
+	public String getEcUseStatus() {
+		return this.ecUseStatus;
 	}
 
-	public void setProdUseStatus(String prodUseStatus) {
-		this.prodUseStatus = prodUseStatus;
+	public void setEcUseStatus(String ecUseStatus) {
+		this.ecUseStatus = ecUseStatus;
 	}
 
-	@Column(name = "prod_category", nullable = false, length = 50)
-	public String getProdCategory() {
-		return this.prodCategory;
+	@Column(name = "ec_category", nullable = false, length = 50)
+	public String getEcCategory() {
+		return this.ecCategory;
 	}
 
-	public void setProdCategory(String prodCategory) {
-		this.prodCategory = prodCategory;
+	public void setEcCategory(String ecCategory) {
+		this.ecCategory = ecCategory;
 	}
 
-	@Column(name = "prod_status", nullable = false, length = 1)
-	public String getProdStatus() {
-		return this.prodStatus;
+	@Column(name = "ec_status", nullable = false, length = 1)
+	public String getEcStatus() {
+		return this.ecStatus;
 	}
 
-	public void setProdStatus(String prodStatus) {
-		this.prodStatus = prodStatus;
+	public void setEcStatus(String ecStatus) {
+		this.ecStatus = ecStatus;
 	}
 
-	@Column(name = "prod_check_status", nullable = false, length = 1)
-	public String getProdCheckStatus() {
-		return this.prodCheckStatus;
+	@Column(name = "ec_check_status", nullable = false, length = 1)
+	public String getEcCheckStatus() {
+		return this.ecCheckStatus;
 	}
 
-	public void setProdCheckStatus(String prodCheckStatus) {
-		this.prodCheckStatus = prodCheckStatus;
+	public void setEcCheckStatus(String ecCheckStatus) {
+		this.ecCheckStatus = ecCheckStatus;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

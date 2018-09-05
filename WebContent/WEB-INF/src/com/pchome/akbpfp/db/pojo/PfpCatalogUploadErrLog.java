@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/8/9 �U�� 05:18:46 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/9/4 �U�� 03:44:34 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ public class PfpCatalogUploadErrLog implements java.io.Serializable {
 
 	private Integer catalogUploadErrLogSeq;
 	private PfpCatalogUploadLog pfpCatalogUploadLog;
-	private String catalogProdEcSeq;
+	private String catalogProdSeq;
 	private String catalogErrItem;
 	private String catalogErrReason;
 	private String catalogErrRawdata;
@@ -33,11 +33,10 @@ public class PfpCatalogUploadErrLog implements java.io.Serializable {
 	public PfpCatalogUploadErrLog() {
 	}
 
-	public PfpCatalogUploadErrLog(PfpCatalogUploadLog pfpCatalogUploadLog, String catalogProdEcSeq,
-			String catalogErrItem, String catalogErrReason, String catalogErrRawdata, Date updateDate,
-			Date createDate) {
+	public PfpCatalogUploadErrLog(PfpCatalogUploadLog pfpCatalogUploadLog, String catalogProdSeq, String catalogErrItem,
+			String catalogErrReason, String catalogErrRawdata, Date updateDate, Date createDate) {
 		this.pfpCatalogUploadLog = pfpCatalogUploadLog;
-		this.catalogProdEcSeq = catalogProdEcSeq;
+		this.catalogProdSeq = catalogProdSeq;
 		this.catalogErrItem = catalogErrItem;
 		this.catalogErrReason = catalogErrReason;
 		this.catalogErrRawdata = catalogErrRawdata;
@@ -67,13 +66,13 @@ public class PfpCatalogUploadErrLog implements java.io.Serializable {
 		this.pfpCatalogUploadLog = pfpCatalogUploadLog;
 	}
 
-	@Column(name = "catalog_prod_ec_seq", nullable = false, length = 1024)
-	public String getCatalogProdEcSeq() {
-		return this.catalogProdEcSeq;
+	@Column(name = "catalog_prod_seq", nullable = false, length = 1024)
+	public String getCatalogProdSeq() {
+		return this.catalogProdSeq;
 	}
 
-	public void setCatalogProdEcSeq(String catalogProdEcSeq) {
-		this.catalogProdEcSeq = catalogProdEcSeq;
+	public void setCatalogProdSeq(String catalogProdSeq) {
+		this.catalogProdSeq = catalogProdSeq;
 	}
 
 	@Column(name = "catalog_err_item", nullable = false, length = 50)

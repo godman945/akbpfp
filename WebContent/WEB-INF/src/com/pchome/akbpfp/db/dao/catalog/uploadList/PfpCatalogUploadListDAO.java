@@ -19,26 +19,26 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 	 */
 	public int updatePfpCatalogProdEc(PfpCatalogProdEc pfpCatalogProdEc) {
 		String hql = "UPDATE pfp_catalog_prod_ec ";
-			   hql += "SET prod_name = :prod_name, prod_title = :prod_title, prod_url = :prod_url, prod_price = :prod_price, ";
-			   hql += "prod_discount_price = :prod_discount_price, prod_stock_status = :prod_stock_status, prod_use_status = :prod_use_status, ";
-			   hql += "prod_category = :prod_category, prod_status = :prod_status, prod_check_status = :prod_check_status, ";
+			   hql += "SET ec_name = :ec_name, ec_title = :ec_title, ec_url = :ec_url, ec_price = :ec_price, ";
+			   hql += "ec_discount_price = :ec_discount_price, ec_stock_status = :ec_stock_status, ec_use_status = :ec_use_status, ";
+			   hql += "ec_category = :ec_category, ec_status = :ec_status, ec_check_status = :ec_check_status, ";
 			   hql += "update_date = CURRENT_TIMESTAMP() ";
-			   hql += "WHERE catalog_prod_ec_seq = :catalog_prod_ec_seq AND catalog_seq = :catalog_seq";
+			   hql += "WHERE catalog_prod_seq = :catalog_prod_seq AND catalog_seq = :catalog_seq";
 
 		Session session = getSession();
 		Query query = session.createSQLQuery(hql);
-		query.setString("prod_name", pfpCatalogProdEc.getProdName());
-		query.setString("prod_title", pfpCatalogProdEc.getProdTitle());
-		query.setString("prod_url", pfpCatalogProdEc.getProdUrl());
-		query.setInteger("prod_price", pfpCatalogProdEc.getProdPrice());
-		query.setInteger("prod_discount_price", pfpCatalogProdEc.getProdDiscountPrice());
-		query.setString("prod_stock_status", pfpCatalogProdEc.getProdStockStatus());
-		query.setString("prod_use_status", pfpCatalogProdEc.getProdUseStatus());
-		query.setString("prod_category", pfpCatalogProdEc.getProdCategory());
-		query.setString("prod_status", pfpCatalogProdEc.getProdStatus());
-		query.setString("prod_check_status", pfpCatalogProdEc.getProdCheckStatus());
+		query.setString("ec_name", pfpCatalogProdEc.getEcName());
+		query.setString("ec_title", pfpCatalogProdEc.getEcTitle());
+		query.setString("ec_url", pfpCatalogProdEc.getEcUrl());
+		query.setInteger("ec_price", pfpCatalogProdEc.getEcPrice());
+		query.setInteger("ec_discount_price", pfpCatalogProdEc.getEcDiscountPrice());
+		query.setString("ec_stock_status", pfpCatalogProdEc.getEcStockStatus());
+		query.setString("ec_use_status", pfpCatalogProdEc.getEcUseStatus());
+		query.setString("ec_category", pfpCatalogProdEc.getEcCategory());
+		query.setString("ec_status", pfpCatalogProdEc.getEcStatus());
+		query.setString("ec_check_status", pfpCatalogProdEc.getEcCheckStatus());
 		
-		query.setString("catalog_prod_ec_seq", pfpCatalogProdEc.getCatalogProdEcSeq());
+		query.setString("catalog_prod_seq", pfpCatalogProdEc.getCatalogProdSeq());
 		query.setString("catalog_seq", pfpCatalogProdEc.getPfpCatalog().getCatalogSeq());
 		int updateCount = query.executeUpdate();
 		session.flush();
@@ -58,18 +58,18 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 	 * @param catalogSeq 商品目錄ID
 	 * @param catalogProdEcSeqList 不被刪除的名單
 	 */
-	public void deleteNotInPfpCatalogProdEc(String catalogSeq, List<String> catalogProdEcSeqList) {
+	public void deleteNotInPfpCatalogProdEc(String catalogSeq, List<String> catalogProdSeqList) {
 		String hql = "DELETE FROM pfp_catalog_prod_ec ";
 			   hql += "WHERE catalog_seq = :catalog_seq ";
-			   if (catalogProdEcSeqList.size() != 0) {
-				   hql += "AND catalog_prod_ec_seq NOT IN(:catalog_prod_ec_seq_list)";
+			   if (catalogProdSeqList.size() != 0) {
+				   hql += "AND catalog_prod_seq NOT IN(:catalog_prod_seq_list)";
 			   }
 
 		Session session = getSession();
 		Query query = session.createSQLQuery(hql);
 		query.setString("catalog_seq", catalogSeq);
-		if (catalogProdEcSeqList.size() != 0) {
-			query.setParameterList("catalog_prod_ec_seq_list", catalogProdEcSeqList);
+		if (catalogProdSeqList.size() != 0) {
+			query.setParameterList("catalog_prod_seq_list", catalogProdSeqList);
 		}
 		query.executeUpdate();
 		session.flush();

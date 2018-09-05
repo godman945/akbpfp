@@ -29,9 +29,9 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		
 		if (catalogType.isEmpty() || 
 				(!EnumPfpCatalog.CATALOG_SHOPPING.getType().equals(catalogType)
-				&& !EnumPfpCatalog.CATALOG_STAY.getType().equals(catalogType)
+				&& !EnumPfpCatalog.CATALOG_BOOKING.getType().equals(catalogType)
 				&& !EnumPfpCatalog.CATALOG_TRAFFIC.getType().equals(catalogType)
-				&& !EnumPfpCatalog.CATALOG_ESTATE.getType().equals(catalogType))) {
+				&& !EnumPfpCatalog.CATALOG_RENT.getType().equals(catalogType))) {
 			dataMap.put("status", "ERROR");
 			dataMap.put("msg", "商品目錄類型資料錯誤!");
 			return dataMap;
@@ -39,11 +39,11 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		
 		if (EnumPfpCatalog.CATALOG_SHOPPING.getType().equals(catalogType)) { // 1:一般購物類
 			dataMap = shoppingProd.processCatalogProdJsonData(catalogProdJsonData);
-		} else if (EnumPfpCatalog.CATALOG_STAY.getType().equals(catalogType)) { // 2:訂房住宿類
+		} else if (EnumPfpCatalog.CATALOG_BOOKING.getType().equals(catalogType)) { // 2:訂房住宿類
 			// 功能待開發
 		} else if (EnumPfpCatalog.CATALOG_TRAFFIC.getType().equals(catalogType)) { // 3:交通航班類
 			// 功能待開發
-		} else if (EnumPfpCatalog.CATALOG_ESTATE.getType().equals(catalogType)) { // 4:房產租售類
+		} else if (EnumPfpCatalog.CATALOG_RENT.getType().equals(catalogType)) { // 4:房產租售類
 			// 功能待開發
 		}
 		
@@ -87,29 +87,29 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 					prdItemObject.put("id", prdItem[0]);
 				}
 				
-				prdItemObject.put("prod_name", prdItem[1]);
-//				prdItemObject.put("prod_title", prdItem[2]);
-				prdItemObject.put("prod_price", prdItem[2]);
-				prdItemObject.put("prod_discount_price", prdItem[3]);
+				prdItemObject.put("ec_name", prdItem[1]);
+//				prdItemObject.put("ec_title", prdItem[2]);
+				prdItemObject.put("ec_price", prdItem[2]);
+				prdItemObject.put("ec_discount_price", prdItem[3]);
 				
-				String prodStockStatus = prdItem[4];
-				if ("無庫存".equals(prodStockStatus)) {
-					prodStockStatus = "0";
-				} else if ("有庫存".equals(prodStockStatus)) {
-					prodStockStatus = "1";
+				String ecStockStatus = prdItem[4];
+				if ("無庫存".equals(ecStockStatus)) {
+					ecStockStatus = "0";
+				} else if ("有庫存".equals(ecStockStatus)) {
+					ecStockStatus = "1";
 				}
-				prdItemObject.put("prod_stock_status", prodStockStatus);
+				prdItemObject.put("ec_stock_status", ecStockStatus);
 				
-				String prodUseStatus = prdItem[5];
-				if ("全新".equals(prodUseStatus)) {
-					prodUseStatus = "0";
-				} else if ("二手".equals(prodUseStatus)) {
-					prodUseStatus = "1";
+				String ecUseStatus = prdItem[5];
+				if ("全新".equals(ecUseStatus)) {
+					ecUseStatus = "0";
+				} else if ("二手".equals(ecUseStatus)) {
+					ecUseStatus = "1";
 				}
-				prdItemObject.put("prod_use_status", prodUseStatus);
-				prdItemObject.put("prod_img_url", prdItem[6]);
-				prdItemObject.put("prod_url", prdItem[7]);
-				prdItemObject.put("prod_category", prdItem[8]);
+				prdItemObject.put("ec_use_status", ecUseStatus);
+				prdItemObject.put("ec_img_url", prdItem[6]);
+				prdItemObject.put("ec_url", prdItem[7]);
+				prdItemObject.put("ec_category", prdItem[8]);
 				prdItemArray.put(prdItemObject);
 			}
 			

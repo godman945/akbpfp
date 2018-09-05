@@ -16,28 +16,28 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查商品類別
 	 * @param errorPrdItemArray
-	 * @param catalogProdEcSeq
-	 * @param prodCategory
+	 * @param catalogProdSeq
+	 * @param ecCategory
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkProdCategory(JSONArray errorPrdItemArray, String catalogProdEcSeq, String prodCategory) throws JSONException {
+	public JSONArray checkEcCategory(JSONArray errorPrdItemArray, String catalogProdSeq, String ecCategory) throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		String prodItemErrorMsg = "";
 		
-		int prodCategoryLimit = 50;
-//		if (prodCategory.isEmpty()) {
+		int ecCategoryLimit = 50;
+//		if (ecCategory.isEmpty()) {
 //			prodItemErrorMsg += "必填欄位必須輸入資訊。";
 //		} else 
-		if (prodCategory.length() > prodCategoryLimit) {
-			prodItemErrorMsg += "欄位字數超過" + prodCategoryLimit + "個字。";
+		if (ecCategory.length() > ecCategoryLimit) {
+			prodItemErrorMsg += "欄位字數超過" + ecCategoryLimit + "個字。";
 		}
 		
 		if (!prodItemErrorMsg.isEmpty()) {
-			jsonObject.put("catalog_prod_ec_seq", catalogProdEcSeq);
-			jsonObject.put("catalog_err_item", "prod_category");
+			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_err_item", "ec_category");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", prodCategory);
+			jsonObject.put("catalog_err_rawdata", ecCategory);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -46,30 +46,30 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查連結網址
 	 * @param errorPrdItemArray
-	 * @param catalogProdEcSeq
-	 * @param prodUrl
+	 * @param catalogProdSeq
+	 * @param ecUrl
 	 * @return
 	 * @throws Exception 
 	 */
-	public JSONArray checkProdUrl(JSONArray errorPrdItemArray, String catalogProdEcSeq, String prodUrl) throws Exception {
+	public JSONArray checkEcUrl(JSONArray errorPrdItemArray, String catalogProdSeq, String ecUrl) throws Exception {
 		JSONObject jsonObject = new JSONObject();
 		String prodItemErrorMsg = "";
 
-		if (prodUrl.isEmpty()) {
+		if (ecUrl.isEmpty()) {
 			prodItemErrorMsg += "必填欄位必須輸入資訊。";
 		} else {
 			AdUtilAjax adUtilAjax = new AdUtilAjax();
-			String checkResultMsg = adUtilAjax.checkAdShowUrl(prodUrl, akbPfpServer);
+			String checkResultMsg = adUtilAjax.checkAdShowUrl(ecUrl, akbPfpServer);
 			if (!checkResultMsg.isEmpty()) {
 				prodItemErrorMsg += "請輸入正確的連結網址。";
 			}
 		}
 		
 		if (!prodItemErrorMsg.isEmpty()) {
-			jsonObject.put("catalog_prod_ec_seq", catalogProdEcSeq);
-			jsonObject.put("catalog_err_item", "prod_url");
+			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_err_item", "ec_url");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", prodUrl);
+			jsonObject.put("catalog_err_rawdata", ecUrl);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -78,30 +78,30 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查廣告圖像網址
 	 * @param errorPrdItemArray
-	 * @param catalogProdEcSeq
-	 * @param prodImgUrl
+	 * @param catalogProdSeq
+	 * @param ecImgUrl
 	 * @return
 	 * @throws Exception 
 	 */
-	public JSONArray checkProdImgUrl(JSONArray errorPrdItemArray, String catalogProdEcSeq, String prodImgUrl) throws Exception {
+	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, String catalogProdSeq, String ecImgUrl) throws Exception {
 		JSONObject jsonObject = new JSONObject();
 		String prodItemErrorMsg = "";
 
-		if (prodImgUrl.isEmpty()) {
+		if (ecImgUrl.isEmpty()) {
 			prodItemErrorMsg += "必填欄位必須輸入資訊。";
 		} else {
 			AdUtilAjax adUtilAjax = new AdUtilAjax();
-			String checkResultMsg = adUtilAjax.checkAdShowUrl(prodImgUrl, akbPfpServer);
+			String checkResultMsg = adUtilAjax.checkAdShowUrl(ecImgUrl, akbPfpServer);
 			if (!checkResultMsg.isEmpty()) {
 				prodItemErrorMsg += "請輸入正確的廣告圖像網址。";
 			}
 		}
 		
 		if (!prodItemErrorMsg.isEmpty()) {
-			jsonObject.put("catalog_prod_ec_seq", catalogProdEcSeq);
-			jsonObject.put("catalog_err_item", "prod_img_url");
+			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_err_item", "ec_img_url");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", prodImgUrl);
+			jsonObject.put("catalog_err_rawdata", ecImgUrl);
 			errorPrdItemArray.put(jsonObject);
 		}
 		
@@ -111,26 +111,26 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查商品使用狀況
 	 * @param errorPrdItemArray
-	 * @param catalogProdEcSeq
-	 * @param prodUseStatus
+	 * @param catalogProdSeq
+	 * @param ecUseStatus
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkProdUseStatus(JSONArray errorPrdItemArray, String catalogProdEcSeq, String prodUseStatus) throws JSONException {
+	public JSONArray checkEcUseStatus(JSONArray errorPrdItemArray, String catalogProdSeq, String ecUseStatus) throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		String prodItemErrorMsg = "";
 		
-		if (prodUseStatus.isEmpty()) {
+		if (ecUseStatus.isEmpty()) {
 			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-		} else if (!"0".equals(prodUseStatus) && !"1".equals(prodUseStatus)) {
+		} else if (!"0".equals(ecUseStatus) && !"1".equals(ecUseStatus)) {
 			prodItemErrorMsg += "欄位內容不符合規定。";
 		}
 		
 		if (!prodItemErrorMsg.isEmpty()) {
-			jsonObject.put("catalog_prod_ec_seq", catalogProdEcSeq);
-			jsonObject.put("catalog_err_item", "prod_use_status");
+			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_err_item", "ec_use_status");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", prodUseStatus);
+			jsonObject.put("catalog_err_rawdata", ecUseStatus);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -139,26 +139,26 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查商品供應情況
 	 * @param errorPrdItemArray
-	 * @param catalogProdEcSeq
-	 * @param prodStockStatus
+	 * @param catalogProdSeq
+	 * @param ecStockStatus
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkProdStockStatus(JSONArray errorPrdItemArray, String catalogProdEcSeq, String prodStockStatus) throws JSONException {
+	public JSONArray checkEcStockStatus(JSONArray errorPrdItemArray, String catalogProdSeq, String ecStockStatus) throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		String prodItemErrorMsg = "";
 		
-		if (prodStockStatus.isEmpty()) {
+		if (ecStockStatus.isEmpty()) {
 			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-		} else if (!"0".equals(prodStockStatus) && !"1".equals(prodStockStatus)) {
+		} else if (!"0".equals(ecStockStatus) && !"1".equals(ecStockStatus)) {
 			prodItemErrorMsg += "欄位內容不符合規定。";
 		}
 		
 		if (!prodItemErrorMsg.isEmpty()) {
-			jsonObject.put("catalog_prod_ec_seq", catalogProdEcSeq);
-			jsonObject.put("catalog_err_item", "prod_stock_status");
+			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_err_item", "ec_stock_status");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", prodStockStatus);
+			jsonObject.put("catalog_err_rawdata", ecStockStatus);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -167,29 +167,29 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查促銷價
 	 * @param errorPrdItemArray
-	 * @param catalogProdEcSeq
-	 * @param prodDiscountPrice
+	 * @param catalogProdSeq
+	 * @param ecDiscountPrice
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkProdDiscountPrice(JSONArray errorPrdItemArray, String catalogProdEcSeq, String prodDiscountPrice) throws JSONException {
+	public JSONArray checkEcDiscountPrice(JSONArray errorPrdItemArray, String catalogProdSeq, String ecDiscountPrice) throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		String prodItemErrorMsg = "";
-		int prodDiscountPriceLimit = 11;
+		int ecDiscountPriceLimit = 11;
 		
-		if (prodDiscountPrice.isEmpty()) {
+		if (ecDiscountPrice.isEmpty()) {
 			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-		} else if (!StringUtils.isNumeric(prodDiscountPrice)) {
+		} else if (!StringUtils.isNumeric(ecDiscountPrice)) {
 			prodItemErrorMsg += "必須輸入數字。";
-		} else if (prodDiscountPrice.length() > prodDiscountPriceLimit) {
-			prodItemErrorMsg += "欄位數值超過" + prodDiscountPriceLimit + "位數。";
+		} else if (ecDiscountPrice.length() > ecDiscountPriceLimit) {
+			prodItemErrorMsg += "欄位數值超過" + ecDiscountPriceLimit + "位數。";
 		}
 		
 		if (!prodItemErrorMsg.isEmpty()) {
-			jsonObject.put("catalog_prod_ec_seq", catalogProdEcSeq);
-			jsonObject.put("catalog_err_item", "prod_discount_price");
+			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_err_item", "ec_discount_price");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", prodDiscountPrice);
+			jsonObject.put("catalog_err_rawdata", ecDiscountPrice);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -198,30 +198,30 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查原價
 	 * @param errorPrdItemArray
-	 * @param catalogProdEcSeq
-	 * @param prodPrice
+	 * @param catalogProdSeq
+	 * @param ecPrice
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkProdPrice(JSONArray errorPrdItemArray, String catalogProdEcSeq, String prodPrice) throws JSONException {
+	public JSONArray checkEcPrice(JSONArray errorPrdItemArray, String catalogProdSeq, String ecPrice) throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		String prodItemErrorMsg = "";
-		int prodPriceLimit = 11;
+		int ecPriceLimit = 11;
 		
-//		if (prodPrice.isEmpty()) {
+//		if (ecPrice.isEmpty()) {
 //			prodItemErrorMsg += "必填欄位必須輸入資訊。";
 //		} else 
-		if (!prodPrice.isEmpty() && !StringUtils.isNumeric(prodPrice.trim())) {
+		if (!ecPrice.isEmpty() && !StringUtils.isNumeric(ecPrice.trim())) {
 			prodItemErrorMsg += "必須輸入數字。";
-		} else if (prodPrice.length() > prodPriceLimit) {
-			prodItemErrorMsg += "欄位數值超過" + prodPriceLimit + "位數。";
+		} else if (ecPrice.length() > ecPriceLimit) {
+			prodItemErrorMsg += "欄位數值超過" + ecPriceLimit + "位數。";
 		}
 		
 		if (!prodItemErrorMsg.isEmpty()) {
-			jsonObject.put("catalog_prod_ec_seq", catalogProdEcSeq);
-			jsonObject.put("catalog_err_item", "prod_price");
+			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_err_item", "ec_price");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", prodPrice);
+			jsonObject.put("catalog_err_rawdata", ecPrice);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -230,27 +230,27 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查商品敘述
 	 * @param errorPrdItemArray
-	 * @param catalogProdEcSeq
-	 * @param prodTitle
+	 * @param catalogProdSeq
+	 * @param ecTitle
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkProdTitle(JSONArray errorPrdItemArray, String catalogProdEcSeq, String prodTitle) throws JSONException {
+	public JSONArray checkEcTitle(JSONArray errorPrdItemArray, String catalogProdSeq, String ecTitle) throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		String prodItemErrorMsg = "";
-		int prodTitleLimit = 1024;
+		int ecTitleLimit = 1024;
 		
-		if (prodTitle.isEmpty()) {
+		if (ecTitle.isEmpty()) {
 			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-		} else if (prodTitle.length() > prodTitleLimit) {
-			prodItemErrorMsg += "欄位字數超過" + prodTitleLimit + "個字。";
+		} else if (ecTitle.length() > ecTitleLimit) {
+			prodItemErrorMsg += "欄位字數超過" + ecTitleLimit + "個字。";
 		}
 		
 		if (!prodItemErrorMsg.isEmpty()) {
-			jsonObject.put("catalog_prod_ec_seq", catalogProdEcSeq);
-			jsonObject.put("catalog_err_item", "prod_title");
+			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_err_item", "ec_title");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", prodTitle);
+			jsonObject.put("catalog_err_rawdata", ecTitle);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -259,27 +259,27 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查商品名稱
 	 * @param errorPrdItemArray 
-	 * @param catalogProdEcSeq
-	 * @param prodName
+	 * @param catalogProdSeq
+	 * @param ecName
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkProdName(JSONArray errorPrdItemArray, String catalogProdEcSeq, String prodName) throws JSONException {
+	public JSONArray checkEcName(JSONArray errorPrdItemArray, String catalogProdSeq, String ecName) throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		String prodItemErrorMsg = "";
-		int prodNameLimit = 1024;
+		int ecNameLimit = 1024;
 		
-		if (prodName.isEmpty()) {
+		if (ecName.isEmpty()) {
 			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-		} else if (prodName.length() > prodNameLimit) {
-			prodItemErrorMsg += "欄位字數超過" + prodNameLimit + "個字。";
+		} else if (ecName.length() > ecNameLimit) {
+			prodItemErrorMsg += "欄位字數超過" + ecNameLimit + "個字。";
 		}
 	    
 		if (!prodItemErrorMsg.isEmpty()) {
-			jsonObject.put("catalog_prod_ec_seq", catalogProdEcSeq);
-			jsonObject.put("catalog_err_item", "prod_name");
+			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_err_item", "ec_name");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", prodName);
+			jsonObject.put("catalog_err_rawdata", ecName);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -288,17 +288,17 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查商品id
 	 * @param errorPrdItemArray
-	 * @param catalogProdEcSeq
+	 * @param catalogProdSeq
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkCatalogProdEcSeq(JSONArray errorPrdItemArray, String catalogProdEcSeq) throws JSONException {
-		if (catalogProdEcSeq.isEmpty()) {
+	public JSONArray checkCatalogProdSeq(JSONArray errorPrdItemArray, String catalogProdSeq) throws JSONException {
+		if (catalogProdSeq.isEmpty()) {
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("catalog_prod_ec_seq", catalogProdEcSeq);
+			jsonObject.put("catalog_prod_seq", catalogProdSeq);
 			jsonObject.put("catalog_err_item", "id");
 			jsonObject.put("catalog_err_reason", "必填欄位必須輸入資訊。");
-			jsonObject.put("catalog_err_rawdata", catalogProdEcSeq);
+			jsonObject.put("catalog_err_rawdata", catalogProdSeq);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;

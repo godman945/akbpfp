@@ -9,7 +9,7 @@ public enum EnumPfpCatalog {
 	/**
 	 * 商品目錄類型 2:訂房住宿類
 	 */
-	CATALOG_STAY("2", "訂房住宿"),
+	CATALOG_BOOKING("2", "訂房住宿"),
 	/**
 	 * 商品目錄類型 3:交通航班類
 	 */
@@ -17,7 +17,7 @@ public enum EnumPfpCatalog {
 	/**
 	 * 商品目錄類型 4:房產租售類
 	 */
-	CATALOG_ESTATE("4", "房產租售"),
+	CATALOG_RENT("4", "房產租售"),
 	/**
 	 * 上傳方式 1:檔案上傳
 	 */

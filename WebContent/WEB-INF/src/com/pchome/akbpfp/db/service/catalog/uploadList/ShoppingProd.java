@@ -74,35 +74,35 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		int successNum = 0;
 		int errorNum = 0;
 		// 記錄商品品號列表，不在列表內的資料都刪除
-		List<String> catalogProdEcSeqList = new ArrayList<String>();
+		List<String> catalogProdSeqList = new ArrayList<String>();
 		JSONArray errorPrdItemArray = new JSONArray(); // 記錄總錯誤資料
 		int tempErrorPrdItemArrayCount = 0; // 暫存目前總共的錯誤數量
 		
 		JSONArray catalogProdItemJsonArray = new JSONArray(catalogProdItem);
 		for (int i = 0; i < catalogProdItemJsonArray.length(); i++) {
 			JSONObject catalogProdItemJson = (JSONObject) catalogProdItemJsonArray.get(i);
-			String catalogProdEcSeq = catalogProdItemJson.optString("id"); // id*
-			String prodName = catalogProdItemJson.optString("prod_name"); // 商品名稱*
-			String prodTitle = catalogProdItemJson.optString("prod_title", " "); // 商品敘述*
-			String prodPrice = catalogProdItemJson.optString("prod_price", " "); // 原價
-			String prodDiscountPrice = catalogProdItemJson.optString("prod_discount_price"); // 促銷價*
-			String prodStockStatus = catalogProdItemJson.optString("prod_stock_status"); // 商品供應情況*
-			String prodUseStatus = catalogProdItemJson.optString("prod_use_status"); // 商品使用狀況*
-			String prodImgUrl = catalogProdItemJson.optString("prod_img_url"); // 廣告圖像網址*
-			String prodUrl = catalogProdItemJson.optString("prod_url"); // 連結網址*
-			String prodCategory = catalogProdItemJson.optString("prod_category", " "); // 商品類別
+			String catalogProdSeq = catalogProdItemJson.optString("id"); // id*
+			String ecName = catalogProdItemJson.optString("ec_name"); // 商品名稱*
+			String ecTitle = catalogProdItemJson.optString("ec_title", " "); // 商品敘述*
+			String ecPrice = catalogProdItemJson.optString("ec_price", " "); // 原價
+			String ecDiscountPrice = catalogProdItemJson.optString("ec_discount_price"); // 促銷價*
+			String ecStockStatus = catalogProdItemJson.optString("ec_stock_status"); // 商品供應情況*
+			String ecUseStatus = catalogProdItemJson.optString("ec_use_status"); // 商品使用狀況*
+			String ecImgUrl = catalogProdItemJson.optString("ec_img_url"); // 廣告圖像網址*
+			String ecUrl = catalogProdItemJson.optString("ec_url"); // 連結網址*
+			String ecCategory = catalogProdItemJson.optString("ec_category", " "); // 商品類別
 
 			// 檢查每個欄位
-			errorPrdItemArray = super.checkCatalogProdEcSeq(errorPrdItemArray, catalogProdEcSeq);
-			errorPrdItemArray = super.checkProdName(errorPrdItemArray, catalogProdEcSeq, prodName);
-//			errorPrdItemArray = super.checkProdTitle(errorPrdItemArray, catalogProdEcSeq, prodTitle);
-			errorPrdItemArray = super.checkProdPrice(errorPrdItemArray, catalogProdEcSeq, prodPrice);
-			errorPrdItemArray = super.checkProdDiscountPrice(errorPrdItemArray, catalogProdEcSeq, prodDiscountPrice);
-			errorPrdItemArray = super.checkProdStockStatus(errorPrdItemArray, catalogProdEcSeq, prodStockStatus);
-			errorPrdItemArray = super.checkProdUseStatus(errorPrdItemArray, catalogProdEcSeq, prodUseStatus);
-			errorPrdItemArray = super.checkProdImgUrl(errorPrdItemArray, catalogProdEcSeq, prodImgUrl);
-			errorPrdItemArray = super.checkProdUrl(errorPrdItemArray, catalogProdEcSeq, prodUrl);
-			errorPrdItemArray = super.checkProdCategory(errorPrdItemArray, catalogProdEcSeq, prodCategory);
+			errorPrdItemArray = super.checkCatalogProdSeq(errorPrdItemArray, catalogProdSeq);
+			errorPrdItemArray = super.checkEcName(errorPrdItemArray, catalogProdSeq, ecName);
+//			errorPrdItemArray = super.checkEcTitle(errorPrdItemArray, catalogProdSeq, ecTitle);
+			errorPrdItemArray = super.checkEcPrice(errorPrdItemArray, catalogProdSeq, ecPrice);
+			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, catalogProdSeq, ecDiscountPrice);
+			errorPrdItemArray = super.checkEcStockStatus(errorPrdItemArray, catalogProdSeq, ecStockStatus);
+			errorPrdItemArray = super.checkEcUseStatus(errorPrdItemArray, catalogProdSeq, ecUseStatus);
+			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, catalogProdSeq, ecImgUrl);
+			errorPrdItemArray = super.checkEcUrl(errorPrdItemArray, catalogProdSeq, ecUrl);
+			errorPrdItemArray = super.checkEcCategory(errorPrdItemArray, catalogProdSeq, ecCategory);
 			
 			if (errorPrdItemArray.length() > tempErrorPrdItemArrayCount) {
 				// 每一次記錄錯誤陣列長度 超過 暫存的記錄長度，表示這一行資料有新增錯誤項目
@@ -111,22 +111,22 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			} else {
 				// 記錄商品明細，寫入一般購物類table
 				PfpCatalogProdEc pfpCatalogProdEc = new PfpCatalogProdEc();
-				pfpCatalogProdEc.setCatalogProdEcSeq(catalogProdEcSeq); // id
+				pfpCatalogProdEc.setCatalogProdSeq(catalogProdSeq); // id
 				pfpCatalogProdEc.setPfpCatalog(pfpCatalog); // 商品目錄
-				pfpCatalogProdEc.setProdName(prodName); // 商品名稱
-				pfpCatalogProdEc.setProdTitle(prodTitle); // 商品敘述
+				pfpCatalogProdEc.setEcName(ecName); // 商品名稱
+				pfpCatalogProdEc.setEcTitle(ecTitle); // 商品敘述
 				
 				String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq;
-				pfpCatalogProdEc.setProdImg(ImgUtil.processImgPathForCatalogProd(prodImgUrl, photoPath, catalogProdEcSeq)); // 圖片路徑
+				pfpCatalogProdEc.setEcImg(ImgUtil.processImgPathForCatalogProd(ecImgUrl, photoPath, catalogProdSeq)); // 圖片路徑
 				
-				pfpCatalogProdEc.setProdUrl(prodUrl); // 連結網址
-				pfpCatalogProdEc.setProdPrice(Integer.parseInt(prodPrice)); // 原價
-				pfpCatalogProdEc.setProdDiscountPrice(Integer.parseInt(prodDiscountPrice)); // 促銷價*
-				pfpCatalogProdEc.setProdStockStatus(prodStockStatus); // 商品供應情況
-				pfpCatalogProdEc.setProdUseStatus(prodUseStatus); // 商品使用狀況
-				pfpCatalogProdEc.setProdCategory(prodCategory); // 商品類別
-				pfpCatalogProdEc.setProdStatus("0"); // 商品狀態(0:關閉, 1:開啟)
-				pfpCatalogProdEc.setProdCheckStatus("0"); // 商品審核狀態(0:未審核, 1:已審核)
+				pfpCatalogProdEc.setEcUrl(ecUrl); // 連結網址
+				pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
+				pfpCatalogProdEc.setEcDiscountPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
+				pfpCatalogProdEc.setEcStockStatus(ecStockStatus); // 商品供應情況
+				pfpCatalogProdEc.setEcUseStatus(ecUseStatus); // 商品使用狀況
+				pfpCatalogProdEc.setEcCategory(ecCategory); // 商品類別
+				pfpCatalogProdEc.setEcStatus("0"); // 商品狀態(0:關閉, 1:開啟)
+				pfpCatalogProdEc.setEcCheckStatus("0"); // 商品審核狀態(0:未審核, 1:已審核)
 				pfpCatalogProdEc.setUpdateDate(new Date()); // 更新時間
 				pfpCatalogProdEc.setCreateDate(new Date()); // 建立時間
 
@@ -141,7 +141,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				 * 記錄上傳資料的每筆商品ID，最後不在此List內的資料將被全部刪除
 				 */
 				if ("1".equals(updateWay)) {
-					catalogProdEcSeqList.add(pfpCatalogProdEc.getCatalogProdEcSeq());
+					catalogProdSeqList.add(pfpCatalogProdEc.getCatalogProdSeq());
 				}
 				
 				successNum++;
@@ -149,7 +149,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		}
 		
 		if ("1".equals(updateWay)) { // 如果是"取代"，刪除table內，不在最新上傳的名單內資料
-			pfpCatalogUploadListDAO.deleteNotInPfpCatalogProdEc(catalogSeq, catalogProdEcSeqList);
+			pfpCatalogUploadListDAO.deleteNotInPfpCatalogProdEc(catalogSeq, catalogProdSeqList);
 		}
 		
 		// 記錄商品目錄更新紀錄
@@ -180,7 +180,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				JSONObject errorPrdItemJson = (JSONObject) errorPrdItemArray.get(i);
 				PfpCatalogUploadErrLog pfpCatalogUploadErrLog = new PfpCatalogUploadErrLog();
 				pfpCatalogUploadErrLog.setPfpCatalogUploadLog(pfpCatalogUploadLog); // 更新紀錄序號
-				pfpCatalogUploadErrLog.setCatalogProdEcSeq(errorPrdItemJson.getString("catalog_prod_ec_seq")); // 商品ID
+				pfpCatalogUploadErrLog.setCatalogProdSeq(errorPrdItemJson.getString("catalog_prod_seq")); // 商品ID
 				pfpCatalogUploadErrLog.setCatalogErrItem(errorPrdItemJson.getString("catalog_err_item")); // 錯誤欄位
 				pfpCatalogUploadErrLog.setCatalogErrReason(errorPrdItemJson.getString("catalog_err_reason")); // 錯誤原因
 				pfpCatalogUploadErrLog.setCatalogErrRawdata(errorPrdItemJson.getString("catalog_err_rawdata")); // 原始資料
