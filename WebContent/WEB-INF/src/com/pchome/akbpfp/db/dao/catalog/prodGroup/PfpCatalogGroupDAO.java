@@ -1,17 +1,9 @@
 package com.pchome.akbpfp.db.dao.catalog.prodGroup;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.Query;
-import org.hibernate.transform.Transformers;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
-import com.pchome.akbpfp.db.pojo.PfdUserMemberRef;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
-import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 
 public class PfpCatalogGroupDAO extends BaseDAO<PfpCatalogGroup,String> implements IPfpCatalogGroupDAO{
 	
@@ -46,6 +38,22 @@ public class PfpCatalogGroupDAO extends BaseDAO<PfpCatalogGroup,String> implemen
 		return super.getHibernateTemplate().find(hql.toString(), catalogSeq);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<PfpCatalogGroup> getPfpCatalogGroup (String catalogGroupSeq) throws Exception{
+		StringBuffer hql = new StringBuffer();
+		hql.append(" from PfpCatalogGroup ");
+		hql.append(" where catalogGroupSeq = ? ");
+		
+		return super.getHibernateTemplate().find(hql.toString(), catalogGroupSeq);
+		
+	}
+	
+    @Override
+    @SuppressWarnings("unchecked")
+    public void saveOrUpdateWithCommit(PfpCatalogGroup pfpCatalogGroup) throws Exception{
+    	super.getSession().saveOrUpdate(pfpCatalogGroup);
+		super.getSession().beginTransaction().commit();
+    }
 	
 
 }

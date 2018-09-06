@@ -99,16 +99,17 @@ public class EcProdGroup extends AProdGroup {
 			
 			Map obj = (Map) object;
 			prodDataJson.put("id", obj.get("id").toString());
-			prodDataJson.put("catalog_prod_ec_seq", obj.get("catalog_prod_ec_seq").toString());
+			prodDataJson.put("catalog_prod_seq", obj.get("catalog_prod_seq").toString());
 			prodDataJson.put("catalog_seq", obj.get("catalog_seq").toString());
-			prodDataJson.put("prod_name", obj.get("prod_name").toString());
-			prodDataJson.put("prod_title", obj.get("prod_title").toString());
-			prodDataJson.put("prod_url", obj.get("prod_url").toString());
-			prodDataJson.put("prod_price", "NT."+obj.get("prod_price").toString());
-			prodDataJson.put("prod_discount_price", "NT."+obj.get("prod_discount_price").toString());
-			prodDataJson.put("prod_stock_status", obj.get("prod_stock_status").toString());
-			prodDataJson.put("prod_use_status", obj.get("prod_use_status").toString());
-			prodDataJson.put("prod_category", obj.get("prod_category").toString());
+			prodDataJson.put("ec_name", obj.get("ec_name").toString());
+			prodDataJson.put("ec_title", obj.get("ec_title").toString());
+			prodDataJson.put("ec_url", obj.get("ec_url").toString());
+			prodDataJson.put("ec_img", obj.get("ec_img").toString());
+			prodDataJson.put("ec_price", "NT."+obj.get("ec_price").toString());
+			prodDataJson.put("ec_discount_price", "NT."+obj.get("ec_discount_price").toString());
+			prodDataJson.put("ec_stock_status", obj.get("ec_stock_status").toString());
+			prodDataJson.put("ec_use_status", obj.get("ec_use_status").toString());
+			prodDataJson.put("ec_category", obj.get("ec_category").toString());
 			
 			prodListJson.put(prodDataJson);
 		}

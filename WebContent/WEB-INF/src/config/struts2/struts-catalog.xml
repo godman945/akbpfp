@@ -4,6 +4,20 @@
 <struts>
     <package name="struts-catalog" extends="struts-base">  
     
+        <!-- 取得所有商品目錄-->
+	    <action name="catalogAllList" class="ProdListAction" method="queryCatalogAllList">
+	<!--      	<interceptor-ref name="cookieProveStack" /> -->
+	     	<result type="json" name="success">
+	            <param name="noCache">true</param>
+	            <param name="contentType">text/html</param>
+	        </result>
+	<!--             <result type="tiles" name="success">prod.list.view</result> -->
+		</action>
+    
+    
+    
+    
+    
         <!-- 取得商品清單列表 -->
 	    <action name="prodList" class="ProdListAction" method="getProdList">
 	<!--      	<interceptor-ref name="cookieProveStack" /> -->
@@ -75,6 +89,27 @@
 			<param name="contentType">text/html</param>
 		</result>
 	</action>
+	
+	
+	<!-- 查詢建立商品組合篩選條件商品 -->
+	<action name="queryProdGroupFilterList" class="ProdGroupAjax" method="queryProdGroupFilterListAjax">
+		<!-- <interceptor-ref name="cookieProveStack" /> -->
+		<result type="json" name="success">
+			<param name="noCache">true</param>
+			<param name="contentType">text/html</param>
+		</result>
+	</action>
+	
+	
+	<!-- 撈出商品群組篩選資料 -->
+	<action name="queryProdGroupFilterItem" class="ProdGroupAjax" method="queryProdGroupFilterItemAjax">
+		<!-- <interceptor-ref name="cookieProveStack" /> -->
+		<result type="json" name="success">
+			<param name="noCache">true</param>
+			<param name="contentType">text/html</param>
+		</result>
+	</action>
+	
 		
 		
 		

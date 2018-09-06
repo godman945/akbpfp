@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.struts2.action.catalog.prodList;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -22,9 +23,26 @@ public class ProdListAction extends BaseCookieAction{
 	private IPfpCatalogService pfpCatalogService;
 	private ProdListFactory prodListFactory;
 	private List<Object> prodListObjs; 
+	private List<Map<String,Object>> catalogAllList;
+	private String catalogAllListCount;
 	//	private SequenceService sequenceService;
 	
-	
+	public String queryCatalogAllList(){		
+		try{
+			String pfpCustomerInfoId ="AC2013071700001";// super.getCustomer_info_id();
+			System.out.println("pfpCustomerInfoId  : "+pfpCustomerInfoId);
+			
+			catalogAllList = pfpCatalogService.getCatalogAllList(pfpCustomerInfoId);
+			catalogAllListCount = pfpCatalogService.getCatalogAllListCount(pfpCustomerInfoId);
+			
+		} catch (Exception e) {
+//			dataMap.put("status", "ERROR");
+//			dataMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			log.error("error:" + e);
+		}
+		
+		return SUCCESS;
+	}
 	
 	
 	
@@ -126,6 +144,16 @@ public class ProdListAction extends BaseCookieAction{
 	public List<Object> getProdListObjs() {
 		return prodListObjs;
 	}
+
+	public List<Map<String, Object>> getCatalogAllList() {
+		return catalogAllList;
+	}
+
+	public String getCatalogAllListCount() {
+		return catalogAllListCount;
+	}
+	
+	
 	
 	
 	

@@ -2,11 +2,11 @@ package com.pchome.enumerate.catalog.prodGroup;
 
 public enum EnumProdGroupList {
 	
-	E001("E001","沒有此商品組合ID的目錄"),
-	E002("E002","此商品組合ID的目錄型態不正確"),
-	E003("E003","此商品組合ID沒有篩選條件"),
-	E004("E004","此商品組合ID沒有清單資料"),
-	S001("S001","撈取此商品組合ID成功");
+	E001("E001","沒有此商品組合目錄"),
+	E002("E002","此商品組合目錄型態不正確"),
+	E003("E003","此商品組合沒有篩選條件"),
+	E004("E004","此商品組合沒有清單資料"),
+	S001("S001","撈取此商品組合清單成功");
 	
 	private final String status;
 	private final String desc;

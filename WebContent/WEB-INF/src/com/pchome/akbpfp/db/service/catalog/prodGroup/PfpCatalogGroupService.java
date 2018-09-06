@@ -2,11 +2,9 @@ package com.pchome.akbpfp.db.service.catalog.prodGroup;
 
 
 import java.util.List;
-import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.catalog.prodGroup.IPfpCatalogGroupDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
-import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.service.BaseService;
 
 
@@ -35,6 +33,14 @@ public class PfpCatalogGroupService extends BaseService<PfpCatalogGroup,String> 
 	public List<PfpCatalogGroup> getPfpCatalogGroupList (String catalogSeq) throws Exception{
 		 return ((IPfpCatalogGroupDAO)dao).getPfpCatalogGroupList(catalogSeq);
 	}
+	
+	public PfpCatalogGroup getPfpCatalogGroup (String catalogGroupSeq) throws Exception{
+		return ((IPfpCatalogGroupDAO)dao).getPfpCatalogGroup(catalogGroupSeq).get(0);
+	}
+	
+    public void saveOrUpdateWithCommit(PfpCatalogGroup pfpCatalogGroup) throws Exception{
+    	((IPfpCatalogGroupDAO) dao).saveOrUpdateWithCommit(pfpCatalogGroup);
+    }
 	
 	
 	

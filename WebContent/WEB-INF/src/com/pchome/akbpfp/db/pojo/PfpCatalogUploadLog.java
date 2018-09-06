@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/7/27 �W�� 09:49:01 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/9/5 �U�� 12:18:24 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -104,7 +104,7 @@ public class PfpCatalogUploadLog implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_datetime", nullable = false, length = 0)
+	@Column(name = "update_datetime", nullable = false, length = 19)
 	public Date getUpdateDatetime() {
 		return this.updateDatetime;
 	}
@@ -132,7 +132,7 @@ public class PfpCatalogUploadLog implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "update_date", nullable = false, length = 0)
+	@Column(name = "update_date", nullable = false, length = 19)
 	public Date getUpdateDate() {
 		return this.updateDate;
 	}
@@ -142,7 +142,7 @@ public class PfpCatalogUploadLog implements java.io.Serializable {
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date", nullable = false, length = 0)
+	@Column(name = "create_date", nullable = false, length = 19)
 	public Date getCreateDate() {
 		return this.createDate;
 	}

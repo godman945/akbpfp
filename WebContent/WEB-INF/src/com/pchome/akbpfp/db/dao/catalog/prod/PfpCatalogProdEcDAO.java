@@ -47,14 +47,14 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" where 1=1");
 		hql.append(" and pfpCatalog.catalogSeq = :catalogSeq");
 		if (StringUtils.isNotBlank(prodStatus)) {
-			hql.append(" and prodStatus = :prodStatus");
+			hql.append(" and ecStatus = :ecStatus");
 		}
 
 		Query q = session.createQuery(hql.toString())
 					.setString("catalogSeq", catalogSeq);
 		
 		if (StringUtils.isNotBlank(prodStatus)) {
-			q.setString("prodStatus", prodStatus);
+			q.setString("ecStatus", prodStatus);
 		}
 		
 		log.info(" getProdListCount sql  = "+ hql.toString());
@@ -70,12 +70,12 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 	
 	public void updateProdListProdStatus(String catalogSeq, String prodStatus, List<String> prodIdList) throws Exception {
 		StringBuffer sql = new StringBuffer()
-				.append(" update pfp_catalog_prod_ec set prod_status = :prodStatus where catalog_seq = :catalogSeq and id in (:prodListId) ");
+				.append(" update pfp_catalog_prod_ec set prod_status = :ecStatus where catalog_seq = :catalogSeq and id in (:prodListId) ");
 		
 		 log.info("updateProdListProdStatus.sql = " + sql);
 
 		Session session = getSession();
-		session.createSQLQuery(sql.toString()).setString("prodStatus", prodStatus)
+		session.createSQLQuery(sql.toString()).setString("ecStatus", prodStatus)
 				.setString("catalogSeq", catalogSeq)
 				.setParameterList("prodListId", prodIdList).executeUpdate();
 		session.flush();
@@ -123,8 +123,8 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" pfp_catalog_prod_ec ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and catalog_seq =  '" + catalogSeq + "'");
-		hql.append(" and prod_check_status = '1' ");
-		hql.append(" and prod_status = '1' ");
+		hql.append(" and ec_check_status = '1' ");
+		hql.append(" and ec_status = '1' ");
 		hql.append(filterSQL);
 		hql.append(" order by rand() limit "+prodNum);
 

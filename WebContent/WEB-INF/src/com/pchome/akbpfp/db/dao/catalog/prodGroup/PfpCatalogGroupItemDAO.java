@@ -12,11 +12,11 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 public class PfpCatalogGroupItemDAO extends BaseDAO<PfpCatalogGroupItem,Integer> implements IPfpCatalogGroupItemDAO{
 	
 	@SuppressWarnings("unchecked")
-	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String groupId) throws Exception{
+	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String catalogGroupSeq) throws Exception{
 		
 		StringBuffer hql = new StringBuffer();
 		hql.append(" from PfpCatalogGroupItem ");
-		hql.append(" where pfpCatalogGroup.catalogGroupSeq = '"+groupId+"' ");
+		hql.append(" where pfpCatalogGroup.catalogGroupSeq = '"+catalogGroupSeq+"' ");
 		
 		return super.getHibernateTemplate().find(hql.toString());
 	}

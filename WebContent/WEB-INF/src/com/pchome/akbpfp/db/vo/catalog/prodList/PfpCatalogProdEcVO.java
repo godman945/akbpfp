@@ -3,31 +3,30 @@ package com.pchome.akbpfp.db.vo.catalog.prodList;
 public class PfpCatalogProdEcVO {
 	
 	String id; 				//流水號
-	String catalogProdEcSeq;//商品ID	
+	String catalogProdSeq;//商品ID	
 	String catalogSeq;		//商品目錄ID
-	String prodName;		//商品名稱
-	String prodTitle;		//商品敘述
-	String prodImg;			//商品圖像路徑
-	String prodUrl;			//商品網址
-	String prodPrice;		//商品價格
-	String prodDiscountPrice;//商品特價
-	String prodStockStatus;	 //商品庫存
-	String prodUseStatus;	 //商品使用狀態(全新/二手)
-	String prodCategory;	 //商品組合篩選分類
-	String prodStatus;		 //商品狀態(開啟/關閉)
-	String prodCheckStatus;	 //商品審核狀態
-	
+	String ecName;		//商品名稱
+	String ecTitle;		//商品敘述
+	String ecImg;			//商品圖像路徑
+	String ecUrl;			//商品網址
+	String ecPrice;		//商品價格
+	String ecDiscountPrice;//商品特價
+	String ecStockStatus;	 //商品庫存
+	String ecUseStatus;	 //商品使用狀態(全新/二手)
+	String ecCategory;	 //商品組合篩選分類
+	String ecStatus;		 //商品狀態(開啟/關閉)
+	String ecCheckStatus;	 //商品審核狀態
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getCatalogProdEcSeq() {
-		return catalogProdEcSeq;
+	public String getCatalogProdSeq() {
+		return catalogProdSeq;
 	}
-	public void setCatalogProdEcSeq(String catalogProdEcSeq) {
-		this.catalogProdEcSeq = catalogProdEcSeq;
+	public void setCatalogProdSeq(String catalogProdSeq) {
+		this.catalogProdSeq = catalogProdSeq;
 	}
 	public String getCatalogSeq() {
 		return catalogSeq;
@@ -35,71 +34,73 @@ public class PfpCatalogProdEcVO {
 	public void setCatalogSeq(String catalogSeq) {
 		this.catalogSeq = catalogSeq;
 	}
-	public String getProdName() {
-		return prodName;
+	public String getEcName() {
+		return ecName;
 	}
-	public void setProdName(String prodName) {
-		this.prodName = prodName;
+	public void setEcName(String ecName) {
+		this.ecName = ecName;
 	}
-	public String getProdTitle() {
-		return prodTitle;
+	public String getEcTitle() {
+		return ecTitle;
 	}
-	public void setProdTitle(String prodTitle) {
-		this.prodTitle = prodTitle;
+	public void setEcTitle(String ecTitle) {
+		this.ecTitle = ecTitle;
 	}
-	public String getProdImg() {
-		return prodImg;
+	public String getEcImg() {
+		return ecImg;
 	}
-	public void setProdImg(String prodImg) {
-		this.prodImg = prodImg;
+	public void setEcImg(String ecImg) {
+		this.ecImg = ecImg;
 	}
-	public String getProdUrl() {
-		return prodUrl;
+	public String getEcUrl() {
+		return ecUrl;
 	}
-	public void setProdUrl(String prodUrl) {
-		this.prodUrl = prodUrl;
+	public void setEcUrl(String ecUrl) {
+		this.ecUrl = ecUrl;
 	}
-	public String getProdPrice() {
-		return prodPrice;
+	public String getEcPrice() {
+		return ecPrice;
 	}
-	public void setProdPrice(String prodPrice) {
-		this.prodPrice = prodPrice;
+	public void setEcPrice(String ecPrice) {
+		this.ecPrice = ecPrice;
 	}
-	public String getProdDiscountPrice() {
-		return prodDiscountPrice;
+	public String getEcDiscountPrice() {
+		return ecDiscountPrice;
 	}
-	public void setProdDiscountPrice(String prodDiscountPrice) {
-		this.prodDiscountPrice = prodDiscountPrice;
+	public void setEcDiscountPrice(String ecDiscountPrice) {
+		this.ecDiscountPrice = ecDiscountPrice;
 	}
-	public String getProdStockStatus() {
-		return prodStockStatus;
+	public String getEcStockStatus() {
+		return ecStockStatus;
 	}
-	public void setProdStockStatus(String prodStockStatus) {
-		this.prodStockStatus = prodStockStatus;
+	public void setEcStockStatus(String ecStockStatus) {
+		this.ecStockStatus = ecStockStatus;
 	}
-	public String getProdUseStatus() {
-		return prodUseStatus;
+	public String getEcUseStatus() {
+		return ecUseStatus;
 	}
-	public void setProdUseStatus(String prodUseStatus) {
-		this.prodUseStatus = prodUseStatus;
+	public void setEcUseStatus(String ecUseStatus) {
+		this.ecUseStatus = ecUseStatus;
 	}
-	public String getProdCategory() {
-		return prodCategory;
+	public String getEcCategory() {
+		return ecCategory;
 	}
-	public void setProdCategory(String prodCategory) {
-		this.prodCategory = prodCategory;
+	public void setEcCategory(String ecCategory) {
+		this.ecCategory = ecCategory;
 	}
-	public String getProdStatus() {
-		return prodStatus;
+	public String getEcStatus() {
+		return ecStatus;
 	}
-	public void setProdStatus(String prodStatus) {
-		this.prodStatus = prodStatus;
+	public void setEcStatus(String ecStatus) {
+		this.ecStatus = ecStatus;
 	}
-	public String getProdCheckStatus() {
-		return prodCheckStatus;
+	public String getEcCheckStatus() {
+		return ecCheckStatus;
 	}
-	public void setProdCheckStatus(String prodCheckStatus) {
-		this.prodCheckStatus = prodCheckStatus;
+	public void setEcCheckStatus(String ecCheckStatus) {
+		this.ecCheckStatus = ecCheckStatus;
 	}
+	
+	
 }
 

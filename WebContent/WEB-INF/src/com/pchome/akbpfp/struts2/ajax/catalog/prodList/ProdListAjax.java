@@ -36,7 +36,7 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 	public String updateProdStatusAjax() {
 		try{
 			log.info(">>> catalogSeq: " + catalogSeq);
-			log.info(">>> prodStatus: " + prodStatus);
+			log.info(">>> ecStatus: " + prodStatus);
 			log.info(">>> prodIdArray: " + prodIdArray.toString());
 			
 			//商品組合ID 的目錄型態

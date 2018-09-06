@@ -78,6 +78,7 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 		 
 		 
 		JSONObject returnJsonObj = getReturnJsonObj("success",EnumProdGroupList.S001.getStatus());
+		returnJsonObj.put("catalogType", catalogType);
 		returnJsonObj.put("returnNum", returnListJson.length());
 		returnJsonObj.put("prodGroupList", returnListJson);
 		returnJson = new ByteArrayInputStream(returnJsonObj.toString().getBytes("UTF-8"));
