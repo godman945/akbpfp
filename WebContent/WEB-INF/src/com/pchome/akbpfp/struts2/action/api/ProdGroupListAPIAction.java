@@ -89,10 +89,14 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 	
 	public JSONObject getReturnJsonObj(String status, String code) throws Exception {
 		
-		JSONObject prodDataJson = new JSONObject(); 
+		JSONArray returnListJson = new JSONArray(); 
 		
+		JSONObject prodDataJson = new JSONObject(); 
 		prodDataJson.put("status", status);
 		prodDataJson.put("code", code);
+		prodDataJson.put("catalogType", "");
+		prodDataJson.put("returnNum", 0);
+		prodDataJson.put("prodGroupList", returnListJson);
 
 		return prodDataJson;
 	}
