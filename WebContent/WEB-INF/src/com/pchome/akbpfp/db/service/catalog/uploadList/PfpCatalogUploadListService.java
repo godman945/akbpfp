@@ -1,8 +1,10 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,7 +64,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		
 		BufferedReader brdFile = null;
 		try {
-			brdFile = new BufferedReader(new FileReader(path)); // 抓CSV檔進java，bufferedReader
+			brdFile = new BufferedReader(new InputStreamReader(new FileInputStream(path), "BIG5")); // 抓CSV檔進java，bufferedReader
 			String strLine = null;
 			int rowNumber = 0; // 第幾列
 			
