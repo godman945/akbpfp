@@ -19,9 +19,30 @@
     	<property name="pfpOrderService" ref="PfpOrderService" />
     </bean>-->
     
+     <!-- 商品群組、清單-->
+    <bean id="ProdGroupFactory" class="com.pchome.akbpfp.catalog.prodGroup.factory.ProdGroupFactory" scope="prototype" >
+   		<property name="ecProdGroup" ref="EcProdGroup" />
+   		<property name="BookingProdGroup" ref="BookingProdGroup" />
+    </bean>
     
-    
-    
+     <bean id="EcProdGroup" class="com.pchome.akbpfp.catalog.prodGroup.factory.EcProdGroup" scope="prototype" >
+   		<property name="pfpCatalogProdEcService" ref="PfpCatalogProdEcService" />
+   		<property name="pfpCatalogGroupItemService" ref="PfpCatalogGroupItemService" />
+     </bean>
+     
+     <bean id="BookingProdGroup" class="com.pchome.akbpfp.catalog.prodGroup.factory.BookingProdGroup" scope="prototype" >
+   		<property name="pfpCatalogGroupItemService" ref="PfpCatalogGroupItemService" />
+     </bean>
+     
+     <bean id="ProdListFactory" class="com.pchome.akbpfp.catalog.prodList.factory.ProdListFactory" scope="prototype" >
+   		<property name="ecProdList" ref="EcProdList" />
+     </bean>
+     
+      <bean id="EcProdList" class="com.pchome.akbpfp.catalog.prodList.factory.EcProdList" scope="prototype" >
+   		<property name="pfpCatalogProdEcService" ref="PfpCatalogProdEcService" />
+     </bean>
+     
+      <!-- 商品群組、清單END-->
     
     
 <!-- 

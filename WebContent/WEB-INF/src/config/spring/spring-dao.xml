@@ -221,4 +221,25 @@
     <bean id="PfpBuDAO" class="com.pchome.akbpfp.db.dao.bu.PfpBuDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    
+     <!-- 商品群組、清單-->
+     <bean id="PfpCatalogGroupDAO" class="com.pchome.akbpfp.db.dao.catalog.prodGroup.PfpCatalogGroupDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="PfpCatalogGroupItemDAO" class="com.pchome.akbpfp.db.dao.catalog.prodGroup.PfpCatalogGroupItemDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="PfpCatalogDAO" class="com.pchome.akbpfp.db.dao.catalog.TMP.PfpCatalogDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="PfpCatalogProdEcDAO" class="com.pchome.akbpfp.db.dao.catalog.prod.PfpCatalogProdEcDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    
+     <!-- 商品群組、清單END-->
+    
 </beans>

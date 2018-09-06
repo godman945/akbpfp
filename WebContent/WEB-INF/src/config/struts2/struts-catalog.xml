@@ -1,0 +1,86 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <package name="struts-catalog" extends="struts-base">  
+    
+        <!-- 取得商品清單列表 -->
+	    <action name="prodList" class="ProdListAction" method="getProdList">
+	<!--      	<interceptor-ref name="cookieProveStack" /> -->
+	     	<result type="json" name="success">
+	            <param name="noCache">true</param>
+	            <param name="contentType">text/html</param>
+	        </result>
+	<!--             <result type="tiles" name="success">prod.list.view</result> -->
+		</action>
+	    
+	     <!-- 更新商品清單狀態 -->
+	      <action name="updateProdStatus" class="ProdListAjax" method="updateProdStatusAjax">
+	        <result type="json" name="success">
+	            <param name="noCache">true</param>
+	            <param name="contentType">text/html</param>
+	        </result>     		
+	     </action>
+	     
+	     
+	     <!-- 商品清單明細 -->
+	      <action name="queryProdListDetail" class="ProdListAjax" method="queryProdListDetailAjax">
+	        <result type="json" name="success">
+	            <param name="noCache">true</param>
+	            <param name="contentType">text/html</param>
+	        </result>     		
+	     </action>
+
+
+
+
+
+
+	<!-- 取得所有目錄群組 -->
+	<action name="queryCatalogGroup" class="ProdGroupAction" method="queryCatalogGroup">
+		<!-- <interceptor-ref name="cookieProveStack" /> -->
+		<result type="json" name="success">
+			<param name="noCache">true</param>
+			<param name="contentType">text/html</param>
+		</result>
+		<!-- <result type="tiles" name="success">prod.list.view</result> -->
+	</action>
+
+	<!-- 取得選取目錄群組的篩選資料 -->
+	<action name="queryProdGroupFilterContent" class="ProdGroupAjax" method="queryProdGroupFilterContentAjax">
+		<!-- <interceptor-ref name="cookieProveStack" /> -->
+		<result type="json" name="success">
+			<param name="noCache">true</param>
+			<param name="contentType">text/html</param>
+		</result>
+	</action>
+
+
+	<!-- 取得商品群組清單明細 -->
+	<action name="queryProdGroupList" class="ProdGroupAction" method="queryProdGroupList">
+		<!-- <interceptor-ref name="cookieProveStack" /> -->
+		<result type="json" name="success">
+			<param name="noCache">true</param>
+			<param name="contentType">text/html</param>
+		</result>
+		<!-- <result type="tiles" name="success">prod.list.view</result> -->
+	</action>
+		
+	
+	<!-- 建立商品組合目錄 -->
+	<action name="addCatalogProdGroup" class="ProdGroupAjax" method="addCatalogProdGroupAjax">
+		<!-- <interceptor-ref name="cookieProveStack" /> -->
+		<result type="json" name="success">
+			<param name="noCache">true</param>
+			<param name="contentType">text/html</param>
+		</result>
+	</action>
+		
+		
+		
+	     
+    
+   
+     
+    </package>
+</struts>

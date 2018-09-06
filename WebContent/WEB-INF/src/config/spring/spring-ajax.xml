@@ -106,4 +106,23 @@
 		<property name="akbPfpServer" value="${akbpfp.server}" />
     </bean>
     <!-- 圖文廣告-多筆網址刊登 END-->
+    
+    
+    <!-- 商品清單 -->
+    <bean id="ProdListAjax" class="com.pchome.akbpfp.struts2.ajax.catalog.prodList.ProdListAjax" scope="prototype" >
+    	<property name="pfpCatalogService" ref="PfpCatalogService" />
+    	<property name="prodListFactory" ref="ProdListFactory" />
+    </bean>
+    <!-- 商品清單 -->
+    
+    <!-- 商品群組 -->
+    <bean id="ProdGroupAjax" class="com.pchome.akbpfp.struts2.ajax.catalog.prodGroup.ProdGroupAjax" scope="prototype" >
+    	<property name="pfpCatalogGroupItemService" ref="PfpCatalogGroupItemService" />
+    </bean>    
+    <!-- 商品群組 -->
+    
+    
+    
+    
+    
 </beans>

@@ -59,5 +59,15 @@
     	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" />
     	<property name="sequenceService" ref="SequenceService" />
 	</bean>
+	
+	
+	
+	<bean id="ProdGroupListAPIAction" class="com.pchome.akbpfp.struts2.action.api.ProdGroupListAPIAction" scope="prototype" >
+    	<property name="prodGroupFactory" ref="ProdGroupFactory" />
+    	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
+	</bean>
+    
+    
+    
     
 </beans>
