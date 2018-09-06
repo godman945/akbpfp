@@ -17,4 +17,6 @@ public interface IPfpCatalogGroupService extends IBaseService<PfpCatalogGroup,St
 	public PfpCatalogGroup getPfpCatalogGroup (String catalogGroupSeq) throws Exception;
 	
 	public void saveOrUpdateWithCommit(PfpCatalogGroup pfpCatalogGroup)throws Exception;
+	
+	public void deleteCatalogGroup(String catalogGroupSeq) throws Exception;
 }

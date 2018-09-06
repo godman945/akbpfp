@@ -4,6 +4,7 @@ package com.pchome.akbpfp.db.service.catalog.prodGroup;
 import java.util.List;
 
 import com.pchome.akbpfp.db.dao.catalog.prodGroup.IPfpCatalogGroupDAO;
+import com.pchome.akbpfp.db.dao.catalog.prodGroup.IPfpCatalogGroupItemDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
 import com.pchome.akbpfp.db.service.BaseService;
 
@@ -42,6 +43,9 @@ public class PfpCatalogGroupService extends BaseService<PfpCatalogGroup,String> 
     	((IPfpCatalogGroupDAO) dao).saveOrUpdateWithCommit(pfpCatalogGroup);
     }
 	
+	public void deleteCatalogGroup(String catalogGroupSeq) throws Exception{
+		((IPfpCatalogGroupDAO)dao).deleteCatalogGroup(catalogGroupSeq);
+	}
 	
 	
 	

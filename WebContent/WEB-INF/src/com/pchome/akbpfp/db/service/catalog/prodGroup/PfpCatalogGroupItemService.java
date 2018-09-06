@@ -28,6 +28,11 @@ public class PfpCatalogGroupItemService extends BaseService<PfpCatalogGroupItem,
 		return ((IPfpCatalogGroupItemDAO)dao).getCatalogAllGroupItem(catalogSeq);
 	}
 	
+	public void deleteCatalogGroupItem(String catalogGroupSeq) throws Exception{
+		((IPfpCatalogGroupItemDAO)dao).deleteCatalogGroupItem(catalogGroupSeq);
+	}
+	
+	
 	
 
 

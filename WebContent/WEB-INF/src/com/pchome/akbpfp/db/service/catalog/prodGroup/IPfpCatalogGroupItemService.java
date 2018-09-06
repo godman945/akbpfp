@@ -13,16 +13,6 @@ public interface IPfpCatalogGroupItemService extends IBaseService<PfpCatalogGrou
 	
 	public List<Map<String,Object>> getCatalogAllGroupItem(String catalogSeq) throws Exception;
 	
+	public void deleteCatalogGroupItem(String catalogGroupSeq) throws Exception;
 	
-	
-//	public AccountVO getAccountVO(String customerInfoId) throws Exception;
-	
-//	public PfpCustomerInfo findCustomerInfo(String customerInfoId);
-		
-//	public List<PfpCustomerInfo> findAllPfpCustomerInfo();
-	
-	
-//	public void saveOrUpdateWithAccesslog(PfpCustomerInfo customerInfo, String pcId, String userId, String clientIp) throws Exception;
-	
-//	public PfpCustomerInfo findCustomerInfoByMmeberId(String memberId);
 }

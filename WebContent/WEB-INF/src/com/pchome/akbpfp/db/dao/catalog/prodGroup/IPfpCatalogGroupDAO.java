@@ -18,4 +18,6 @@ public interface IPfpCatalogGroupDAO extends IBaseDAO<PfpCatalogGroup,String>{
 	
 	public void saveOrUpdateWithCommit(PfpCatalogGroup pfpCatalogGroup) throws Exception;
 	
+	public void deleteCatalogGroup(String catalogGroupSeq) throws Exception;
+	
 }
