@@ -67,6 +67,8 @@ import com.pchome.akbpfp.db.vo.ad.PfpAdManyURLVO;
 import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.akbpfp.godutil.ImageVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.akbpfp.struts2.action.factory.ad.AdFactory;
+import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
 import com.pchome.enumerate.ad.EnumAdCannelMobileSize;
 import com.pchome.enumerate.ad.EnumAdChannelPCSize;
 import com.pchome.enumerate.ad.EnumAdDetail;
@@ -100,10 +102,10 @@ public class AdAddAction extends BaseCookieAction{
 	private String adActionName;
 	private String adGroupSeq;
 	private String adGroupName;
-	private String adOperatingRule;
+	public String adOperatingRule;
 	private String adSeq;
 	private String adClass;
-	private String adStyle;
+	public String adStyle;
 	private String[] adDetailID;
 	private String[] adDetailContent;
 	private String[] videoDetailMap;
@@ -114,8 +116,8 @@ public class AdAddAction extends BaseCookieAction{
 	private String adDetailSeq;
 	private String adPoolSeq;
 	private String templateProductSeq;
-	private List<PfpAdKeyword> pfpAdKeywords;
-	private List<PfpAdExcludeKeyword> pfpAdExcludeKeywords;
+	public List<PfpAdKeyword> pfpAdKeywords;
+	public List<PfpAdExcludeKeyword> pfpAdExcludeKeywords;
 	private String[] keywords;
 	private String[] excludeKeywords;
 	private String saveAndNew;
@@ -152,7 +154,7 @@ public class AdAddAction extends BaseCookieAction{
 	private List<PfbxSize> channelPCSizeList = null;
 	private List<PfbxSize> channelMobileSizeList = new ArrayList<PfbxSize>();
 	//影音廣告支援尺寸
-	private Map<String,String> adVideoSizeMap;
+	public Map<String,String> adVideoSizeMap;
 	//圖片上傳位置
 	private String imgUploadPath;
 	private ControlPriceAPI controlPriceAPI;
@@ -182,75 +184,104 @@ public class AdAddAction extends BaseCookieAction{
 	private String adFastPublishUrlInfo; //多網址上稿，勾選的資料flag=Y
 	private IPfpAdManyURLSearchService pfpAdManyURLSearchService;
 	
+	private AdFactory adFactory;
+	private CookieUtil cookieUtil;
+	private PfpAdGroup pfpAdGroup;
+	
 	//新增廣告
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
-		String referer = request.getHeader("Referer");
-		backPage = "adActionView.html";
-		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-		if(StringUtils.isNotEmpty(referer)) {
-			if(referer.indexOf("adGroupAdd.html") >= 0 || referer.indexOf("adAdAdd.html") >= 0) {
-				backPage = "adGroupAdd.html?adGroupSeq=" + adGroupSeq;
-			} else {
-				backPage = referer;
+		IAd adObject = null;
+		for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+			if(enumAdStyleType.getTypeName().equals(adOperatingRule)){
+				adObject = adFactory.getaAdObject(enumAdStyleType);
+				break;
 			}
-			if(referer.indexOf("adGroupAdd.html") >= 0 ){
-				// 重算調控金額
-				controlPriceAPI.countProcess(pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()));
-			}
+		}
+		//無廣告類型
+		if(adObject == null){
+			return "notOwner";
+		}
+		pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+		if(!pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId().equals(super.getCustomer_info_id())){
+			log.info(">>>>>> GROUP USER NOT EQUAL LOGIN USER");
+			backPage = "adActionView.html";
+			return "notOwner";
 		}
 		adActionName  = pfpAdGroup.getPfpAdAction().getAdActionName();
 		adGroupName  = pfpAdGroup.getAdGroupName();
 		adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
-//		adOperatingRule = pfpAdGroup.getAdGroupPriceType();
 		adGroupChannelPrice = String.valueOf(pfpAdGroup.getAdGroupChannelPrice());
-		//多媒體廣告
-		if(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName().equals(adOperatingRule)){
-			saveAndNew = "";
-			if(adStyle == null){
-				adStyle = "TMG";
-				//進入多筆網址刊登頁籤，新增cookie
-				if ("fastURLAdAdd".equals(bookmark)) {
-					CookieUtil.writeCookie(response, EnumCookieConstants.COOKIE_PFPCART.getValue(), String.valueOf(new Date().getTime()), EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(), null);
-					//進入多筆網址刊登頁籤，則先清除redis上的資料
-//					redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id());
-				}
+		//重新定向上一頁來源
+		String referer = request.getHeader("Referer");
+		if(StringUtils.isNotEmpty(referer)) {
+			backPage = referer.replace(referer.substring(0, referer.indexOf("pfp/") + 4), "");
+			if(referer.indexOf("adGroupAdd.html") >= 0 ){
+				// 重算調控金額
+				controlPriceAPI.countProcess(pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()));
 			}
-			PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
-			String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
-			String adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
-			if(!customerInfoId.equals(adCustomerInfoId)) {
-				return "notOwner";
-			}
-			// 取出分類所屬關鍵字
-			pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
-			// 取出分類所屬排除關鍵字
-			pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, pfpCustomerInfo.getCustomerInfoId());
-
-			// 上傳圖片暫存檔名(亂數產生)
-			ulTmpName = RandomStringUtils.randomAlphanumeric(30);
-			imgFile = "";
-
-			if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
-				adHiddenType = "YES";
-			}
+		}else{
 			backPage = "adActionView.html";
-			return SUCCESS;
 		}
+		//根據廣告類型個別處理顯示新增廣告畫面需要行為
+		return adObject.AdAdAddInit(this);
 		
-		//影音廣告
-		if(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName().equals(adOperatingRule)){
-			this.adVideoSizeMap = new HashMap<String, String>();
-			for(EnumAdVideoSizePoolType enumAdVideoSize : EnumAdVideoSizePoolType.values()){
-				adVideoSizeMap.put(enumAdVideoSize.name(), enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight());
-			}
-			adOperatingRule = pfpAdGroup.getPfpAdAction().getAdOperatingRule();
-			adStyle = adOperatingRule;
-			backPage = "adActionView.html";
-			return "adVideoAdd";
-		}
+//		//多媒體廣告
+//		if(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName().equals(adOperatingRule) || EnumAdStyleType.AD_STYLE_PRODUCT.getTypeName().equals(adOperatingRule)){
+//			saveAndNew = "";
+//			System.out.println(response);
+//			if(adStyle == null){
+//				adStyle = "TMG";
+//				
+//				//進入多筆網址刊登頁籤，新增cookie
+//				if ("fastURLAdAdd".equals(bookmark)) {
+//					CookieUtil.writeCookie(response, EnumCookieConstants.COOKIE_PFPCART.getValue(), String.valueOf(new Date().getTime()), EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(), null);
+//					//進入多筆網址刊登頁籤，則先清除redis上的資料
+////					redisAPI.delRedisData(manyURLRediskey + super.getCustomer_info_id());
+//				}
+//			}
+//			PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
+//			String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
+//			String adCustomerInfoId = pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
+//			if(!customerInfoId.equals(adCustomerInfoId)) {
+//				return "notOwner";
+//			}
+//			// 取出分類所屬關鍵字
+//			pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
+//			// 取出分類所屬排除關鍵字
+//			pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, pfpCustomerInfo.getCustomerInfoId());
+//
+//			// 上傳圖片暫存檔名(亂數產生)
+//			ulTmpName = RandomStringUtils.randomAlphanumeric(30);
+//			imgFile = "";
+//
+//			if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
+//				adHiddenType = "YES";
+//			}
+//			backPage = "adActionView.html";
+//			//回傳商品廣告頁面
+//			if(adOperatingRule.equals(EnumAdStyleType.AD_STYLE_PRODUCT.getTypeName())){
+//				
+//				
+//				return "adProdAdd";
+//			}
+//			//回傳多媒體廣告頁面
+//			return SUCCESS;
+//		}
+//		
+//		//影音廣告
+//		if(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName().equals(adOperatingRule)){
+//			this.adVideoSizeMap = new HashMap<String, String>();
+//			for(EnumAdVideoSizePoolType enumAdVideoSize : EnumAdVideoSizePoolType.values()){
+//				adVideoSizeMap.put(enumAdVideoSize.name(), enumAdVideoSize.getWidh()+enumAdVideoSize.getHeight());
+//			}
+//			adOperatingRule = pfpAdGroup.getPfpAdAction().getAdOperatingRule();
+//			adStyle = adOperatingRule;
+//			backPage = "adActionView.html";
+//			return "adVideoAdd";
+//		}
 		
-		return "notOwner";
+//		return "notOwner";
 	}
 
 	// 新增圖文式廣告
@@ -2515,6 +2546,51 @@ public class AdAddAction extends BaseCookieAction{
 	public void setAdGroupSearchPrice(String adGroupSearchPrice) {
 		this.adGroupSearchPrice = adGroupSearchPrice;
 	}
+
+	public AdFactory getAdFactory() {
+		return adFactory;
+	}
+
+	public void setAdFactory(AdFactory adFactory) {
+		this.adFactory = adFactory;
+	}
+
+	public CookieUtil getCookieUtil() {
+		return cookieUtil;
+	}
+
+	public void setCookieUtil(CookieUtil cookieUtil) {
+		this.cookieUtil = cookieUtil;
+	}
+
+	public PfpCustomerInfoService getPfpCustomerInfoService() {
+		return pfpCustomerInfoService;
+	}
+
+	public PfpAdGroup getPfpAdGroup() {
+		return pfpAdGroup;
+	}
+
+	public void setPfpAdGroup(PfpAdGroup pfpAdGroup) {
+		this.pfpAdGroup = pfpAdGroup;
+	}
+
+	public PfpAdKeywordService getPfpAdKeywordService() {
+		return pfpAdKeywordService;
+	}
+
+	public void setBackPage(String backPage) {
+		this.backPage = backPage;
+	}
+
+	public void setPfpAdKeywords(List<PfpAdKeyword> pfpAdKeywords) {
+		this.pfpAdKeywords = pfpAdKeywords;
+	}
+
+	public PfpAdExcludeKeywordService getPfpAdExcludeKeywordService() {
+		return pfpAdExcludeKeywordService;
+	}
+	
 	
 }
 

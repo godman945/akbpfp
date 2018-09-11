@@ -120,7 +120,7 @@ public class AdGroupAddAction extends BaseCookieAction{
 			tmpSeq = adActionSeq;
 			PfpAdAction pfpAdAction = pfpAdActionService.getPfpAdActionBySeq(adActionSeq);
 			adGroupName = chkAdGroupName(pfpAdAction.getAdActionName());
-			if(pfpAdAction.getAdOperatingRule().equals(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName())){
+			if(!pfpAdAction.getAdOperatingRule().equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName())){
 //				adActionName  = pfpAdAction.getAdActionName();
 				adActionMax = (int)pfpAdAction.getAdActionMax();
 //				adCustomerInfoId = pfpAdAction.getPfpCustomerInfo().getCustomerInfoId();
@@ -129,8 +129,11 @@ public class AdGroupAddAction extends BaseCookieAction{
 				sysChannelPrice = Integer.toString((int)syspriceOperaterAPI.getAdSuggestPrice(sysPriceAdPoolSeq));
 				adGroupChannelPrice = "3";
 			}
-			if(pfpAdAction.getAdOperatingRule().equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName())){
-				adOperatingRule = pfpAdAction.getAdOperatingRule();
+			for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+				if(pfpAdAction.getAdOperatingRule().equals(enumAdStyleType.getTypeName())){
+					adOperatingRule = pfpAdAction.getAdOperatingRule();
+					break;
+				}
 			}
 			if(EnumAdType.AD_CHANNEL.getType() == pfpAdAction.getAdType()){			//隱藏搜尋廣告設定
 				showSearchPrice = "no";
@@ -234,21 +237,26 @@ public class AdGroupAddAction extends BaseCookieAction{
 			return INPUT;
 		}
 		
-		if(!adOperatingRule.equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName()) && !adOperatingRule.equals(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName())){
+		
+		boolean adOperatingRuleFlag = false;
+		for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+			if(adOperatingRule.equals(enumAdStyleType.getTypeName())){
+				adOperatingRuleFlag = true;
+				break;
+			}
+		}
+		if(!adOperatingRuleFlag){
 			message = "廣告類型錯誤";
 			return INPUT;
 		}
-		
+
 		//影音上稿檢查
 		if(adOperatingRule.equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName())){
 			if(StringUtils.isBlank(adPrice)){
 				message = "影音廣告出價不可為空";
 				return INPUT;
 			}
-		}
-		
-		//多媒體上稿檢查
-		if(adOperatingRule.equals(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName())){
+		}else {
 			if (StringUtils.isEmpty(adGroupSearchPriceType)) {
 				message = "請選擇找東西廣告出價";
 				return INPUT;
@@ -297,6 +305,15 @@ public class AdGroupAddAction extends BaseCookieAction{
 			
 			
 		}
+		
+		if(adOperatingRule.equals(EnumAdStyleType.AD_STYLE_PRODUCT.getTypeName())){
+			pfpAdGroup.setAdGroupSearchPriceType(Integer.parseInt(adGroupSearchPriceType));
+			pfpAdGroup.setAdGroupSearchPrice(Float.parseFloat(adGroupSearchPrice));
+			pfpAdGroup.setAdGroupChannelPrice(Float.parseFloat(adGroupChannelPrice));
+			pfpAdGroup.setAdGroupPriceType(EnumAdPriceType.AD_PRICE_CPC.getDbTypeName());
+		}
+		
+		
 		if(adOperatingRule.equals(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName())){
 			pfpAdGroup.setAdGroupSearchPriceType(1);
 			pfpAdGroup.setAdGroupSearchPrice(3);

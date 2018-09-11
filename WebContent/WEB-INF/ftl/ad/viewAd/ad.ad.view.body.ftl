@@ -42,11 +42,7 @@
 	
 	<div class="grtba borderbox" >
 		<div>
-			<#if adOperatingRule == 'MEDIA'>
-				<a href="adAdAdd.html?adGroupSeq=${adGroup.adGroupSeq!}&adOperatingRule=MEDIA" class="addbtn"><img src="<@s.url value="/" />html/img/btnadd4.gif" border="0"></a>	
-			<#else>
-				<a href="adAdAdd.html?adGroupSeq=${adGroup.adGroupSeq!}&adOperatingRule=VIDEO" class="addbtn"><img src="<@s.url value="/" />html/img/btnadd4.gif" border="0"></a>
-			</#if>
+			<a href="adAdAdd.html?adGroupSeq=${adGroup.adGroupSeq!}&adOperatingRule=${adOperatingRule!}" class="addbtn"><img src="<@s.url value="/" />html/img/btnadd4.gif" border="0"></a>
 		</div>
 		
 		<div style="clear:both">

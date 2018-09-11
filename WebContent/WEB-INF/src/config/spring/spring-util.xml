@@ -18,6 +18,8 @@
     
     <bean id="SpringPdfUtil" class="com.pchome.soft.depot.utils.SpringPdfUtil" />
 	
+	<bean id="CookieUtil" class="com.pchome.soft.depot.utils.CookieUtil" />
+	
 	<bean id="AsidRateUtile" class="com.pchome.akbpfp.api.AsidRateUtile" init-method="init">
 	  <property name="pfpSyspriceRateService" ref="PfpSyspriceRateService" />
 	  <property name="PfpAdRateService" ref="PfpAdRateService" />

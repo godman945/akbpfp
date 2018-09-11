@@ -217,7 +217,7 @@ $(document).ready(function(){
 	});
 	
 	$('#save').click(function(){
-		
+		console.log("SSSSS");
 		//取得驗證回傳值
 		if($("#modifyForm").valid() == 1){
 			var startAge = $("#adActionStartAge").val();

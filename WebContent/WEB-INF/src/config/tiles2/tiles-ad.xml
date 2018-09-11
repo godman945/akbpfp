@@ -78,7 +78,6 @@
     </definition>
 
     <definition name=".ad.ad.edit" extends="ad.layout">
-        <put-attribute name="body" value=".ad.ad.edit.body" />
     </definition>
 
     <definition name=".ad.ad.edit.body" template="/ftl/ad/editAd/adAdEdit.ftl">
@@ -202,6 +201,25 @@
     	<definition name=".ad.ad.vodeo.preview" template="/ftl/ad/newAd/ad.video.preview.ftl">
 	    </definition>
     <!-- 影音廣告  END-->
+    
+    
+    <!-- 商品廣告  START-->
+	    <definition name=".ad.prod.add" extends="ad.nocss.layout">
+	        <put-attribute name="body" value=".ad.prod.add.body" />
+	    </definition>
+	    
+	    <definition name=".ad.prod.add.body" template="/ftl/ad/newAd/adProdAdd.ftl">
+	    	<put-attribute name="includeSource" value="/ftl/ad/prod/source.ftl" />
+	    	<put-attribute name="head" value="/ftl/ad/prod/head.ftl" />
+	    	<!--
+	    	<put-attribute name="adTxt" value="/ftl/ad/newAd/adAdAddTxt.ftl" />
+	    	<put-attribute name="adTmg" value="/ftl/ad/newAd/adAdAddTmg.ftl" />
+	    	<put-attribute name="adTmgManyURL" value="/ftl/ad/newAd/adProdAdd.ftl" />
+	    	<put-attribute name="adKeyword" value="/ftl/ad/newAd/adAdAddKeyword.ftl" />
+	    	  -->
+	    </definition>
+    <!-- 商品廣告  END-->
+    
     
     <!-- 圖片廣告-->
      <definition name="ad.add.img" extends="default.layout">
