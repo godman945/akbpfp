@@ -14,7 +14,7 @@ import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 
 
- public class ProdListAjax extends BaseCookieAction{
+ public class CatalogProdListAjax extends BaseCookieAction{
 
 	private static final long serialVersionUID = 1L;
 //	private IAdmFreeGiftService admFreeGiftService;

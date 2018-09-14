@@ -26,7 +26,7 @@ import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupFactory;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupField;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 
-public class ProdGroupAjax  extends BaseCookieAction{
+public class CatalogProdGroupAjax  extends BaseCookieAction{
 
 	private static final long serialVersionUID = 1L;
 	

@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.struts2.action.catalog.prodList;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -7,11 +8,20 @@ import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.catalog.prodList.factory.AProdList;
 import com.pchome.akbpfp.catalog.prodList.factory.ProdListFactory;
+import com.pchome.akbpfp.db.pojo.PfdContract;
+import com.pchome.akbpfp.db.pojo.PfdCustomerInfo;
+import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
+import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
+import com.pchome.enumerate.pfd.EnumContractStatus;
+import com.pchome.rmi.board.EnumBoardType;
+import com.pchome.rmi.mailbox.EnumCategory;
+import com.pchome.soft.util.DateValueUtil;
 
-public class ProdListAction extends BaseCookieAction{
+public class CatalogProdListAction extends BaseCookieAction{
 	
 	private static final long serialVersionUID = 1L;
 
@@ -26,6 +36,37 @@ public class ProdListAction extends BaseCookieAction{
 	private List<Map<String,Object>> catalogAllList;
 	private String catalogAllListCount;
 	//	private SequenceService sequenceService;
+	
+	
+	
+	//<!--bessieTmp-暫時寫的之後合併拿掉 -->
+	public String execute() throws Exception{
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return SUCCESS;
+	}
+	//<!--bessieTmp-暫時寫的之後合併拿掉 -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public String queryCatalogAllList(){		
 		try{
@@ -83,7 +124,7 @@ public class ProdListAction extends BaseCookieAction{
 			}
 	//		
 	
-			String pfpCustomerInfoId = "AC2014102900001"; //super.getCustomer_info_id();
+			String pfpCustomerInfoId = "AC2013071700001"; //super.getCustomer_info_id();
 			prodListObjs = aProdList.getProdList(catalogSeq, userProdStatus, pfpCustomerInfoId,page,pageSize);
 			
 			catalogProdCount = aProdList.getProdListCount(catalogSeq, userProdStatus);

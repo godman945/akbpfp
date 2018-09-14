@@ -17,7 +17,7 @@ import com.pchome.akbpfp.db.vo.catalog.prodGroup.pfpCatalogGroupVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupFactory;
 
-public class ProdGroupAction  extends BaseCookieAction{
+public class CatalogProdGroupAction  extends BaseCookieAction{
 
 	private static final long serialVersionUID = 1L;
 	

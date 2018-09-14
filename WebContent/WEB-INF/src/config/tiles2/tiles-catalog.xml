@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<definition name="catalog.prod.layout" extends="default.layout" >
+    	<put-attribute name="head" value="catalog.prod.head" />
+    	<put-attribute name="menu" value="catalog.prod.menu" />
+    </definition>
+    
+    <definition name="catalog.prod.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
+    	<put-attribute name="js" value="catalog.prod.defalut.js" />
+    </definition>
+    
+     <definition name="catalog.prod.defalut.js" extends="catalog.prod.js">
+    	<put-attribute name="jsName" value="catalogProd/commonCatalogProd.js" />
+    	<put-attribute name="dateJsName" value="catalogProd/dateRangeSelect.js" />
+    	<put-attribute name="validateJs" value="jquery/jquery.validate.js" />
+    </definition>
+    
+    
+    <definition name="catalog.prod.js" template="/ftl/catalogProd/js.ftl" />
+    
+    
+    <definition name="catalog.prod.menu" extends="default.menu" >
+    	<put-attribute name="submenu" value="/ftl/catalogProd/submenu.ftl" />
+    </definition>
+
+
+  	<!--bessieTmp-暫時寫的之後合併拿掉 小小功能(11所有商品目錄.html)-->
+    <definition name="catalog.prod.action.view" extends="catalog.prod.layout">
+        <put-attribute name="body" value="/ftl/catalogProd/catalog/catalog.prod.view.catalogList.ftl" />
+    </definition>
+    <!--bessieTmp-暫時寫的之後合併拿掉  小小功能-->
+
+
+
+
+    
+</tiles-definitions>

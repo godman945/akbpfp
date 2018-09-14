@@ -109,14 +109,14 @@
     
     
     <!-- 商品清單 -->
-    <bean id="ProdListAjax" class="com.pchome.akbpfp.struts2.ajax.catalog.prodList.ProdListAjax" scope="prototype" >
+    <bean id="CatalogProdListAjax" class="com.pchome.akbpfp.struts2.ajax.catalog.prodList.CatalogProdListAjax" scope="prototype" >
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="prodListFactory" ref="ProdListFactory" />
     </bean>
     <!-- 商品清單 -->
     
     <!-- 商品群組 -->
-    <bean id="ProdGroupAjax" class="com.pchome.akbpfp.struts2.ajax.catalog.prodGroup.ProdGroupAjax" scope="prototype" >
+    <bean id="CatalogProdGroupAjax" class="com.pchome.akbpfp.struts2.ajax.catalog.prodGroup.CatalogProdGroupAjax" scope="prototype" >
     	<property name="sequenceService" ref="SequenceService" />
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
