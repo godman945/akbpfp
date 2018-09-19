@@ -191,6 +191,16 @@
 		<result type="tiles" name="input">.ad.ad.add</result>
     </action>
     
+    <!-- 商品廣告  START-->
+    	<action name="adAddProdSaveAjax" class="AdAddAction" method="doAdAdAddProd">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+       		<result type="json" name="success">
+        		<param name="root">result</param>
+        	</result>
+     	</action>
+    <!-- 商品廣告  END-->
+    
     <!-- 影音廣告  START-->
    		<action name="adAddVideoSaveAjax" class="AdAddAction" method="doAdAdAddVideo">
       		<interceptor-ref name="loginCheckStack" />

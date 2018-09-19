@@ -58,7 +58,6 @@ public class RedirectAction extends BaseCookieAction{
 		
 		return SUCCESS;		
 	}
-	
 	public String logoutAction() throws Exception{
 		
 		// 登出不走 https 協定

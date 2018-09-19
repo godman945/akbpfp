@@ -243,7 +243,7 @@ a.uploadbtn{
     padding: 0;
     margin: 0;
     line-height: 46px;
-    background: url(../img/logostyle-4.png) 0 center no-repeat; 
+    background: url(../../img/logostyle-4.png) 0 center no-repeat; 
     text-indent: 58px;
 }
 
@@ -384,8 +384,8 @@ a.uploadbtn{
 
 .previewarw-left i,.previewarw-right i{ display: block; width: 29px; height: 29px; }
 .previewarw-left,.previewarw-right{ position: absolute; top: 50%; margin-top: 15px;}
-.previewarw-left{ left: 0; background: url(../img/arw-left.png) center center no-repeat; }
-.previewarw-right{ right: 0; background: url(../img/arw-right.png) center center no-repeat; }
+.previewarw-left{ left: 0; background: url(../../img/arw-left.png) center center no-repeat; }
+.previewarw-right{ right: 0; background: url(../../img/arw-right.png) center center no-repeat; }
 
 
 .tbtoggle{ margin-top: 20px; width: 150px; height: 40px; line-height: 40px;  text-indent: 25px; font-size: 15px; color: #055dcb; cursor: pointer; position: relative;}
@@ -431,7 +431,7 @@ a.uploadbtn{
 
 
 #fancybox-close, .fancybox-close{
-    background: transparent url(../img/fancybox_sprite.png) left top no-repeat!important;
+    background: transparent url(../../img/fancybox/fancybox_sprite.png) left top no-repeat!important;
     width: 40px;
     height: 40px;
 }

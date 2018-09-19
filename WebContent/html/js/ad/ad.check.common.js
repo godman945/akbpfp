@@ -52,83 +52,40 @@ function hintAdInputTextLength(type1,textDom,type2,hintDom){
 }
 //檢察連結網址
 //檢查網址是否有效
-function urlCheck(adUrl){
+function urlCheck(type1,domName,type2,checkAdurl){
+	var adUrlDom = null;
+	var hintAdUrlDom = null;
 	
+	if(type1 == 'id'){
+		adUrlDom = $("#"+domName);
+	}else{
+		adUrlDom = $("."+domName);
+	}
 	
+	if(type2 == 'id'){
+		hintAdUrlDom = $("#"+checkAdurl);
+	}else{
+		hintAdUrlDom = $("."+checkAdurl);
+	}
 	
-	
-//	var adUrlHint = urlType != "adShowURL" ? "chkLinkURL" : "chkShowURL";
-//	if(adUrl != "" && urlType.indexOf("show.pchome.com.tw") < 0) {
-//		if(ValidURL(adUrl)) {
-//			$("#"+adUrlHint).text("網址檢查中");
-//			$.ajax({
-//				type: "POST",
-//				url: "checkAdUrl.html",
-//				data: { url: adUrl}
-//			}).done(function( msg ) {
-//				if(msg == "false") {
-//					$("#chkShowURL").css("color","red");
-//					$("#"+adUrlHint).css("color","red");
-//					if(adUrlHint == "chkLinkURL"){
-//						$("#"+adUrlHint).text("請輸入正確的廣告連結網址");
-//					}else if(adUrlHint == "chkShowURL"){
-//						$("#"+adUrlHint).text("請輸入正確的廣告顯示網址");
-//					}
-//					
-//					if(urlType == "adShowURL"){
-//						ShowUrl = false;
-//					}else{
-//						LinkUrl = false;
-//					}
-//				} else {
-//					$("#"+urlType).css("color","");
-//					$("#"+adUrlHint).css("color","green");
-//					$("#"+adUrlHint).text("網址確認正確");
-//					if(urlType == "adShowURL"){
-//						ShowUrl = true;
-//					}else{
-//						LinkUrl = true;
-//					}
-//				}
-//			});
-//		}else {
-//			if(urlType == 'adLinkURL'){
-//				if($("#adLinkURL").length > 0){
-//					$('#chkLinkURL').css("color","red");
-//					$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
-//				}
-//			}
-//			if(urlType == 'adShowURL'){
-//				if($("#adShowURL").length > 0){
-//					$('#chkShowURL').css("color","red");
-//					$("#"+adUrlHint).text("請輸入正確廣告顯示網址.");
-//				}
-//			}
-//		}
-//	}else{
-//		if(urlType == 'adLinkURL'){
-//			if($("#adLinkURL").val().length > 0){
-//				$('#chkLinkURL').css("color","red");
-//				$("#"+adUrlHint).text("請輸入正確廣告連結網址.");
-//				return false;
-//			}else{
-//				$('#chkLinkURL').css("color","red");
-//				$("#"+adUrlHint).text("請輸入廣告連結網址.");
-//				return false;
-//			}
-//			
-//		}
-//		if(urlType == 'adShowURL'){
-//			$("#"+adUrlHint).text("請輸入正確廣告顯示網址.");
-//			return false;
-//		}else{
-//			$("#"+adUrlHint).text("請輸入廣告顯示網址.");
-//			return false;
-//		}
-//	}
-//	//連結網址字數檢查
-//	chkWord($('#adShowURL'), "spanAdShowURL");
-//	chkWord($('#adLinkURL'), "spanAdLinkURL");
+	adUrlDom.bind('blur', function() {
+		hintAdUrlDom.text("檢查網址中");
+		console.log(adUrlDom.val());
+		$.ajax({
+			type: "POST",
+			url: "checkAdUrl.html",
+			data: { url: adUrlDom.val()}
+		}).done(function(msg) {
+			if(msg == 'true'){
+				hintAdUrlDom.text("網址確認正確");
+				hintAdUrlDom.css("color","green");
+				console.log(msg);
+			}else {
+				hintAdUrlDom.text("請輸入正確的廣告連結網址");
+				hintAdUrlDom.css("color","red");
+			}
+		});
+	});
 }
 
 

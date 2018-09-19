@@ -28,6 +28,10 @@ public class MultimediaAd implements IAd {
 		if(adAddAction.pfpAdKeywords.isEmpty() && adAddAction.pfpAdExcludeKeywords.isEmpty()){
 			adAddAction.setAdHiddenType("YES");
 		}
-		return "SUCCESS";
+		return "success";
+	}
+
+	public String doAdAdAdd(AdAddAction adAddAction) throws Exception {
+		return null;
 	}
 }

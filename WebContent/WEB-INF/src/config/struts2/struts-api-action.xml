@@ -60,6 +60,15 @@
 			</result> 		
      </action>
   
+  	<!-- 商品預覽 RMI -->
+  	<action name="adProdModel" class="AdModelAPIAction" method="adModelProdAction">
+     		<result type="stream" name="success">
+        		<param name="contentType">text/html</param>
+				<param name="inputName">returnAdHtml</param> 
+				<param name="noCache">true</param>
+			</result> 		
+     </action>
+  
   
      
      <action name="lifeCheck" class="LifeCheckAPIAction" method="lifeCheck">
