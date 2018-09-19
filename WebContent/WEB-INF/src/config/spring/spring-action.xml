@@ -433,6 +433,7 @@
     
     <!-- 商品清單 -->
      <bean id="CatalogProdListAction" class="com.pchome.akbpfp.struts2.action.catalog.prodList.CatalogProdListAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="prodListFactory" ref="ProdListFactory" />
     </bean>

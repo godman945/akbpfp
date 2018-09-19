@@ -24,12 +24,9 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 		return ((IPfpCatalogDAO)dao).getPfpCatalog(catalogSeq).get(0);
 	}
 	
-	public List<Map<String,Object>> getCatalogAllList(String pfpCustomerInfoId) throws Exception{
-		return ((IPfpCatalogDAO)dao).getCatalogAllList(pfpCustomerInfoId);
-	}
-	
-	public String getCatalogAllListCount(String pfpCustomerInfoId) throws Exception{
-		return ((IPfpCatalogDAO)dao).getCatalogAllListCount(pfpCustomerInfoId);
+	public List<PfpCatalog> getPfpCatalogList(String pfpCustomerInfoId) throws Exception{
+		return ((IPfpCatalogDAO)dao).getPfpCatalogList(pfpCustomerInfoId);
 	}
 
+	
 }

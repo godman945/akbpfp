@@ -12,7 +12,7 @@ public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 	
 	public List<PfpCatalog> getPfpCatalog(String catalogSeq) throws Exception;
 	
-	public List<Map<String,Object>> getCatalogAllList(String pfpCustomerInfoId) throws Exception;
+	public List<PfpCatalog> getPfpCatalogList(String pfpCustomerInfoId) throws Exception;
 	
-	public String getCatalogAllListCount(String pfpCustomerInfoId) throws Exception;
+	
 }

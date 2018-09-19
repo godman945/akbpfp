@@ -105,7 +105,7 @@
                         <!-- row1 -->
                         <div class="txt-row">
                             <div class="txt-cell col-cataname">
-                                <a href="#">2018春季新品外套外套春季新品外套外套外套</a>
+                                <a href="prodListCardStyleView.html?catalogSeq=PC201808220000000001&page=1&pageSize=10">2018春季新品外套外套春季新品外套外套外套</a>
                                 <small>目錄編號：207668739900037</small>
                             </div>
                             <div class="txt-cell col-catagory">

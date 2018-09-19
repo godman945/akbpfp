@@ -37,6 +37,22 @@
     <!--bessieTmp-暫時寫的之後合併拿掉  小小功能-->
 
 
+	<!-- 取得卡片式商品清單列表 -->
+	<definition name="ec.prod.list.card.style.view" extends="catalog.prod.layout">
+	 	<put-attribute name="head" value="ec.prod.list.card.style.head" />
+        <put-attribute name="body" value="/ftl/catalogProd/prodList/ec.prod.list.card.style.view.ftl" />
+    </definition>
+    
+    <definition name="ec.prod.list.card.style.head" extends="catalog.prod.head" >
+    	<put-attribute name="js" value="/ftl/catalogProd/prodList/ec.prod.list.card.style.js.ftl" />
+    </definition>
+    
+    
+	
+	 <definition name="error.prod.list.card.style.view" extends="catalog.prod.layout">
+        <put-attribute name="body" value="/ftl/catalogProd/prodList/error.prod.list.card.style.view.ftl" />
+    </definition>
+	<!-- 取得卡片式商品清單列表 END-->
 
 
     
