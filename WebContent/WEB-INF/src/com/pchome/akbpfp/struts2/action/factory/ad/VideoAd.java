@@ -22,4 +22,9 @@ public class VideoAd  implements IAd {
 		return "adVideoAdd";
 	}
 
+	@Override
+	public String doAdAdAdd(AdAddAction adAddAction) throws Exception {
+		return null;
+	}
+
 }

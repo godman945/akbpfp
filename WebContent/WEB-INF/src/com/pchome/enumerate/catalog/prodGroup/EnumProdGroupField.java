@@ -2,11 +2,12 @@ package com.pchome.enumerate.catalog.prodGroup;
 
 public enum EnumProdGroupField {
 
-	catalog_prod_ec_seq("catalog_prod_ec_seq", "string","EC商品ID"),
-	prod_category("prod_category", "string","商品組合篩選分類"),
-	prod_stock_status("prod_stock_status", "string","商品庫存"),
-	prod_price("prod_price", "int","商品價格"),
-	prod_discount_price("prod_discount_price", "int","商品特價");
+	catalog_prod_seq("catalog_prod_seq", "string","EC商品ID"),
+	ec_category("ec_category", "string","商品組合篩選分類"),
+	ec_stock_status("ec_stock_status", "string","商品庫存"),
+	ec_use_status("ec_use_status", "string","商品使用狀態"),
+	ec_price("ec_price", "int","商品價格"),
+	ec_discount_price("ec_discount_price", "int","商品特價");
 	
 	
 	private final String field;

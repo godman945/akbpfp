@@ -437,14 +437,14 @@
     </bean>
     
     <!-- 商品清單 -->
-     <bean id="ProdListAction" class="com.pchome.akbpfp.struts2.action.catalog.prodList.ProdListAction" scope="prototype" >
+     <bean id="CatalogProdListAction" class="com.pchome.akbpfp.struts2.action.catalog.prodList.CatalogProdListAction" scope="prototype" >
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="prodListFactory" ref="ProdListFactory" />
     </bean>
     <!-- 商品清單 END -->
     
     <!-- 商品群組 -->
-    <bean id="ProdGroupAction" class="com.pchome.akbpfp.struts2.action.catalog.prodGroup.ProdGroupAction" scope="prototype" >
+    <bean id="CatalogProdGroupAction" class="com.pchome.akbpfp.struts2.action.catalog.prodGroup.CatalogProdGroupAction" scope="prototype" >
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
     	<property name="prodGroupFactory" ref="ProdGroupFactory" />

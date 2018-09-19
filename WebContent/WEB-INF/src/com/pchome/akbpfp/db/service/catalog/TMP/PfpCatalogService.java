@@ -1,6 +1,5 @@
 package com.pchome.akbpfp.db.service.catalog.TMP;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -28,6 +27,14 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 	
 	public PfpCatalog getPfpCatalog(String catalogSeq) throws Exception{
 		return ((IPfpCatalogDAO)dao).getPfpCatalog(catalogSeq).get(0);
+	}
+	
+	public List<Map<String,Object>> getCatalogAllList(String pfpCustomerInfoId) throws Exception{
+		return ((IPfpCatalogDAO)dao).getCatalogAllList(pfpCustomerInfoId);
+	}
+	
+	public String getCatalogAllListCount(String pfpCustomerInfoId) throws Exception{
+		return ((IPfpCatalogDAO)dao).getCatalogAllListCount(pfpCustomerInfoId);
 	}
 
 	@Override

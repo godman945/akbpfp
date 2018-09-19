@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
@@ -12,11 +13,11 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 public class PfpCatalogGroupItemDAO extends BaseDAO<PfpCatalogGroupItem,Integer> implements IPfpCatalogGroupItemDAO{
 	
 	@SuppressWarnings("unchecked")
-	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String groupId) throws Exception{
+	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String catalogGroupSeq) throws Exception{
 		
 		StringBuffer hql = new StringBuffer();
 		hql.append(" from PfpCatalogGroupItem ");
-		hql.append(" where pfpCatalogGroup.catalogGroupSeq = '"+groupId+"' ");
+		hql.append(" where pfpCatalogGroup.catalogGroupSeq = '"+catalogGroupSeq+"' ");
 		
 		return super.getHibernateTemplate().find(hql.toString());
 	}
@@ -36,6 +37,14 @@ public class PfpCatalogGroupItemDAO extends BaseDAO<PfpCatalogGroupItem,Integer>
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
 		
 		return query.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deleteCatalogGroupItem(String catalogGroupSeq) throws Exception{
+		String sql = "delete from PfpCatalogGroupItem where pfpCatalogGroup.catalogGroupSeq = :catalogGroupSeq";		
+		Session session = getSession();
+		session.createQuery(sql).setString("catalogGroupSeq", catalogGroupSeq).executeUpdate();
+		session.flush();
 	}
 	
 

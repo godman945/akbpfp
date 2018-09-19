@@ -20,7 +20,8 @@
                 <value>classpath:config/tiles2/tiles-manager.xml</value>
                 <value>classpath:config/tiles2/tiles-msg.xml</value>
                 <value>classpath:config/tiles2/tiles-report.xml</value>
-                <value>classpath:config/tiles2/tiles-summary.xml</value>                
+                <value>classpath:config/tiles2/tiles-summary.xml</value>        
+                <value>classpath:config/tiles2/tiles-catalog.xml</value>        
             </list>
         </property>
     </bean>

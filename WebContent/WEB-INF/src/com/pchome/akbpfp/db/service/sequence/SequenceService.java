@@ -42,6 +42,24 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 
 		return id.toString();
 	}
+	
+	/**
+     * 流水號長度共有20碼
+     */
+	@Override
+	synchronized public String getSerialNumberByLength20(EnumSequenceTableName enumSequenceTableName) throws Exception{
+
+		int limit = 20;
+		Sequence sequence = this.getSequence(enumSequenceTableName);
+
+		StringBuffer id = new StringBuffer();
+		id.append(sequence.getTableChar())
+			.append(sequence.getTableDate());
+		String num = this.getZeroSeq(String.valueOf(sequence.getTableNo()), (limit - id.length()));
+		id.append(num);
+
+		return id.toString();
+	}
 
 	private Sequence getSequence(EnumSequenceTableName enumSequenceTableName) throws Exception{
 

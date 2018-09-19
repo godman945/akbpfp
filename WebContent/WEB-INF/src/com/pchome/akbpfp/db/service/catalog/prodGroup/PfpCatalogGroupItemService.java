@@ -18,8 +18,8 @@ public class PfpCatalogGroupItemService extends BaseService<PfpCatalogGroupItem,
 //	private PfpUserMemberRefDAO pfpUserMemberRefDAO;
 	
 	
-	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String groupId) throws Exception{
-		List<PfpCatalogGroupItem> pfpCatalogGroupItems = ((IPfpCatalogGroupItemDAO)dao).getPfpCatalogGroupItemList(groupId);
+	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String catalogGroupSeq) throws Exception{
+		List<PfpCatalogGroupItem> pfpCatalogGroupItems = ((IPfpCatalogGroupItemDAO)dao).getPfpCatalogGroupItemList(catalogGroupSeq);
 		
 		return pfpCatalogGroupItems;
 	}
@@ -27,6 +27,11 @@ public class PfpCatalogGroupItemService extends BaseService<PfpCatalogGroupItem,
 	public List<Map<String,Object>> getCatalogAllGroupItem(String catalogSeq) throws Exception{
 		return ((IPfpCatalogGroupItemDAO)dao).getCatalogAllGroupItem(catalogSeq);
 	}
+	
+	public void deleteCatalogGroupItem(String catalogGroupSeq) throws Exception{
+		((IPfpCatalogGroupItemDAO)dao).deleteCatalogGroupItem(catalogGroupSeq);
+	}
+	
 	
 	
 
