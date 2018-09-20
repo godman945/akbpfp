@@ -26,7 +26,7 @@ function checkAdInputTextLength(type1,textDom,type2,hintDom){
 		}
 	});
 }
-//提是剩餘字數用
+//提示剩餘字數用
 function hintAdInputTextLength(type1,textDom,type2,hintDom){
 	var text = null;
 	var hint = null;
@@ -42,7 +42,7 @@ function hintAdInputTextLength(type1,textDom,type2,hintDom){
 	}
 	
 	var maxWordLength = text[0].maxLength;
-	text.bind('keyup', function() {
+	text.bind('keyup', function(callback) {
 		var wordLength = text.val().length;
 		var count = maxWordLength - wordLength;
 		if(wordLength > 0 && count >= 0 ){

@@ -82,16 +82,16 @@
 								<ul class="adlogostylebx">
 									<li class="transition"><label class="optradio">
 										<input type="radio" value="type1" name="options" id="option1" autocomplete="off" checked>
-										<p class="logostyle style1">長方形LOGO</p> 
+										<p class="logostyle style1">正方形LOGO</p> 
 									</label></li>
 									<li class="transition"><label class="optradio">
 										<input type="radio" value="type2" name="options" id="option2" autocomplete="off">
-										<p class="logostyle style2">正方形LOGO</p> 
+										<p class="logostyle style2">正方形LOGO + 標題文字 </p> 
 									</label></li>
 									<li class="transition">
 										<label class="optradio">
 											<input type="radio" name="options" value="type3" id="option3" autocomplete="off">
-											<p class="logostyle style3">正方形LOGO + 標題文字 </p> 				</label>
+											<p class="logostyle style3">長方形LOGO</p> 				</label>
 										<div class="setadtitle">
 											<div>
 												<span class="tit">標題文字：</span>
@@ -139,19 +139,17 @@
 						<div class="previewselectsize">
 							<span>預覽廣告尺寸</span>
 							<div class="adsizeselect">
-								<select name="" id="">
+								<select name="" id="adSize">
 									<option value="1">120 x 600</option>	
 									<option value="2">140 x 300</option>	
 									<option value="3">160 x 240</option>
 									<option value="4">160 x 600</option>
 									<option value="5">180 x 150</option>
-
 									<option value="6">250 x 80</option>	
 									<option value="7">300 x 100</option>	
-									<option value="8">300 x 250</option>
+									<option value="8" selected>300 x 250</option>
 									<option value="9">300 x 600</option>
 									<option value="10">320 x 480</option>	
-
 									<option value="11">336 x 280</option>	
 									<option value="12">640 x 390</option>	
 									<option value="13">728 x 90</option>
@@ -161,14 +159,13 @@
 								
 							</div>
 						</div>
-
 						<a href="#" class="previewarw-left"><i></i></a>
 						<a href="#" class="previewarw-right"><i></i></a>
 						<!--廣告預覽 START-->
 						<div class="adcontainr">
 							<div class="adcontent">	
 															
-								<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="300" height="250" allowtransparency="true" allowfullscreen="true" src=""></iframe>							
+								<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" allowtransparency="true" allowfullscreen="true" src=""></iframe>							
 															
 															
 															
@@ -189,7 +186,7 @@
 							<li>
 								<span class="newtbsubliststyle">●</span>按鈕文字：
 								<div class="inputselect">
-									<select name="" id="btnTxt">
+									<select name="" id="btnTxt" onchange="changeActive(this)">
 										<option value="1">立即購買</option>
 										<option value="2">立即預訂</option>
 										<option value="3">立即下載</option>
@@ -234,13 +231,13 @@
 							<li>
 								<span class="newtbsubliststyle">●</span>								
 								<span class="colorpickr">文字顏色：
-									<input id="disFontColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#055dcb">
+									<input id="disFontColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#FFFFFF">
 								</span>
 							</li>
 							<li>
 								<span class="newtbsubliststyle">●</span>								
 								<span class="colorpickr">按鈕底色：
-									<input id="disBgColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#FFFFFF">
+									<input id="disBgColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#0090e7">
 								</span>
 							</li>
 						</ul>									

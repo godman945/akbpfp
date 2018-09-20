@@ -92,9 +92,23 @@
 		
 		//init html
 		initFancyBoxHtml();
-		$(".akb_iframe").attr('src' ,"adProdModel.html");
+		
+		
+		$(".akb_iframe")[0].addEventListener("load", function() {
+			adPreview();
+		});
+		
+		
+		$('input[type=radio][name=options]').change(function() {
+			adPreview();
+		});
+		
+		 $("input").keyup(function(event){
+			 adPreview();
+		 })
 		
 });
+
 
 function initFancyBoxHtml(){
 	var salesEndIframewp = new Object();
@@ -249,6 +263,10 @@ function initFancyBoxHtml(){
 
 function changeBackgroundColor(obj){
 	$(".ad-sample").css("background","#"+obj.value);
+	
+	//變更預覽
+	changeActive(obj);
+	
 }
 
 window.onload = function(){
@@ -772,37 +790,75 @@ function getProdGroup(obj){
 	console.log(catalogGroupId);
 	
 	
+	$(".akb_iframe").width($("#adSize option:selected").text().split(" x ")[0]).height($("#adSize option:selected").text().split(" x ")[1]);
+	var totalWidth = $(".adcontent").width();
+	var adWidth = $("#adSize option:selected").text().split(" x ")[0];
+	var left = (totalWidth - adWidth) / 2;
+	$(".akb_iframe").css("margin-left",left+"px");
+	$(".akb_iframe").attr('src' ,"adProdModel.html?adProdgroupId="+catalogGroupId+"&btnTxt="+$("#btnTxt").val());
+        
 	
 	
 	
-	
-	
-//	 var xhr = new XMLHttpRequest();
-//     xhr.open("GET", "http://showstg.pchome.com.tw/pfp/prodGroupListAPI.html?groupId=PCG20180906000000001&prodNum=8", true);
-//     xhr.withCredentials = true;
-//     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-//     xhr.onreadystatechange = function() {
-//         if (xhr.readyState === 4 && xhr.status === 200) {
-//             console.log("response:" + xhr.response)
-//         }
-//     };
-//     xhr.send();
-	
-	$.ajax({
-		url : "prodGroupListAPI.html?groupId=PCG20180906000000001&prodNum=8",
-		type : "GET",
-		dataType:'  ',
-		data : {
-//			"groupId":catalogGroupId,
-//			"prodNum":10,
-		},
-		success : function(respone) {
-			console.log(respone);
-		},
-		error: function(xtl) {
-			console.log(xtl);//alert("系統繁忙，請稍後再試！");
-		}
-	}).done(function() {
-        console.log('Done!');
-    });
 }
+
+function adPreview(){
+	if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
+		return false;
+	}
+	
+	var css = $(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML;
+	css = css.replace("<#dad_logo_font_color>","#"+$("#logoFontColor").val());
+	css = css.replace("<#dad_logo_bg_color>","#"+$("#logoBgColor").val());
+	css = css.replace("<#dad_buybtn_font_color>","#"+$("#btnFontColor").val());
+	css = css.replace("<#dad_buybtn_bg_color>","#"+$("#btnBgColor").val());
+	css = css.replace("<#dad_dis_font_color>","#"+$("#disFontColor").val());
+	css = css.replace("<#dad_dis_bg_color>","#"+$("#disBgColor").val());
+	$(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML = css;
+	var body = $(".akb_iframe")[0].contentDocument.body;
+	var radioType = $('input[name=options]:checked').val();
+	var typeObj = $(body)[0].getElementsByClassName("ads-container")[0].getElementsByTagName('a')[0].children[0];
+	var typeObjClassName = radioType +" logo-box pos-absolute pos-top pos-left";
+	$(typeObj).attr("class",typeObjClassName);
+	var logoTitleObj = typeObj.getElementsByClassName("logo-txt-title");
+	$(logoTitleObj).text($("#logoText").val());
+	
+	var prodArea = $(body)[0].getElementsByClassName("slid-items")[0].children;
+	$(prodArea).each(function(index) {
+		//變更按鈕文字
+		var disTextObj = this.getElementsByClassName("pos-absolute")[0];
+		disTextObj.innerHTML = '75折';
+	});
+	
+	
+	
+}
+
+function changeActive(obj){
+	var css = $(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML.trim();
+	css.trim().split('\n').forEach(function(v, i) {
+		if(v.indexOf(".logo-box") >=0 ){
+			css = css.replace(v,".logo-box{color:"+"#"+$("#logoFontColor").val()+"!important;background-color:"+"#"+$("#logoBgColor").val()+"}");
+		}
+		if(v.indexOf(".buybtn{color:") >=0 ){
+			css = css.replace(v,".buybtn{color:"+"#"+$("#btnFontColor").val()+";background-color:"+"#"+$("#btnBgColor").val()+"!important}");
+		}
+		if(v.indexOf(".imgbox span{color:") >=0 ){
+			css = css.replace(v,".imgbox span{color:"+"#"+$("#disFontColor").val()+";background-color:"+"#"+$("#disBgColor").val()+"}");
+		}
+	})
+	$(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML = css;
+	
+	var body = $(".akb_iframe")[0].contentDocument.body;
+	var prodArea = $(body)[0].getElementsByClassName("slid-items")[0].children;
+	$(prodArea).each(function(index) {
+		//變更按鈕文字
+		var bybtnTextSmallObj = this.getElementsByClassName("infobox-buytxt")[0];
+		var bybtnTextBigObj = this.getElementsByClassName("txt-tablecell")[1];
+		var bybtnText = $("#btnTxt option:selected").text();
+		bybtnTextSmallObj.innerHTML= bybtnText;
+		bybtnTextBigObj.innerHTML= bybtnText;
+	});
+	
+}
+

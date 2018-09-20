@@ -149,15 +149,15 @@ a.uploadbtn{
 }
 
 .logostyle.style1{
-    background: url(../../img/logostyle-1.png) left center no-repeat;
-}
-
-.logostyle.style2{
     background: url(../../img/logostyle-2.png) left center no-repeat;
 }
 
-.logostyle.style3{
+.logostyle.style2{
     background: url(../../img/logostyle-3.png) left center no-repeat;
+}
+
+.logostyle.style3{
+    background: url(../../img/logostyle-1.png) left center no-repeat;
 }
 
 
@@ -388,6 +388,7 @@ a.uploadbtn{
 .previewarw-right{ right: 0; background: url(../../img/arw-right.png) center center no-repeat; }
 
 
+
 .tbtoggle{ margin-top: 20px; width: 150px; height: 40px; line-height: 40px;  text-indent: 25px; font-size: 15px; color: #055dcb; cursor: pointer; position: relative;}
 .tbtoggle:after{display: block; width: 20px; height: 20px; content: ""; position: absolute; top: 10px; left: 0; z-index: 5; transition: all .3s ease;
     background-position: 50%;
@@ -437,11 +438,10 @@ a.uploadbtn{
 }
 
 
-
 .previewarw-left i,.previewarw-right i{ display: block; width: 29px; height: 29px; }
 .previewarw-left,.previewarw-right{ position: absolute; top: 50%; margin-top: 15px;}
-.previewarw-left{ left: 0; background: url(../img/arw-left.png) center center no-repeat; }
-.previewarw-right{ right: 0; background: url(../img/arw-right.png) center center no-repeat; }
+.previewarw-left{ left: 0; background: url(../../img/arw-left.png) center center no-repeat; }
+.previewarw-right{ right: 0; background: url(../../img/arw-right.png) center center no-repeat; }
 
 
 

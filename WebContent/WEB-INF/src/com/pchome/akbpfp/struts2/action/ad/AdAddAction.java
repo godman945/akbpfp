@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.net.URL;
 import java.nio.file.Files;
@@ -2816,7 +2817,18 @@ public class AdAddAction extends BaseCookieAction{
 			
 			
 			
-			AdAddAction AdAddAction = new AdAddAction();
+//			AdAddAction AdAddAction = new AdAddAction();
+			
+	        String prodData = "{\"prodGroupList\":[{\"ec_stock_status\":\"1\",\"id\":\"3\",\"ec_use_status\":\"1\",\"ec_title\":\"長洋\",\"ec_url\":\"http://www.pazzo.com.tw/Detail/P402018562000\",\"ec_name\":\"漫步小花園一字領荷葉長洋\",\"ec_img\":\"img/user/AC2013071700005/catalogProd/PC2018082\",\"catalog_seq\":\"PC201808210000000001\",\"catalog_prod_seq\":\"P003\",\"ec_category\":\"洋裝\",\"ec_discount_price\":\"NT.1200\",\"ec_price\":\"NT.1500\"},{\"ec_stock_status\":\"1\",\"id\":\"1\",\"ec_use_status\":\"1\",\"ec_title\":\"連身褲\",\"ec_url\":\"http://www.pazzo.com.tw/detail/P402017001303\",\"ec_name\":\"MIT 小性感露肩翻領連身褲\",\"ec_img\":\"img/user/AC2013071700005/catalogProd/PC2018082\",\"catalog_seq\":\"PC201808210000000001\",\"catalog_prod_seq\":\"P001\",\"ec_category\":\"褲子\",\"ec_discount_price\":\"NT.500\",\"ec_price\":\"NT.1000\"},{\"ec_stock_status\":\"1\",\"id\":\"4\",\"ec_use_status\":\"1\",\"ec_title\":\"洋裝\",\"ec_url\":\"http://www.pazzo.com.tw/Detail/P402018090304\",\"ec_name\":\"輕夏蕾絲簍空小花洋裝\",\"ec_img\":\"img/user/AC2013071700005/catalogProd/PC2018082\",\"catalog_seq\":\"PC201808210000000001\",\"catalog_prod_seq\":\"P004\",\"ec_category\":\"洋裝\",\"ec_discount_price\":\"NT.1000\",\"ec_price\":\"NT.2000\"}]}";
+//			String prodData = com.pchome.soft.depot.utils.HttpUtil.getInstance().getResult("http://showstg.pchome.com.tw/pfp/prodGroupListAPI.html?groupId="+adProdgroupId+"&prodNum=10", "UTF-8");
+			JSONObject json = new JSONObject(prodData);
+			JSONArray array = (JSONArray) json.get("prodGroupList");
+			System.out.println(array.length());
+			System.out.println(array.get(0));
+			
+			
+			JSONObject obj = (JSONObject) array.get(0);
+//			String obj.get("")
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -2,8 +2,10 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
 	<link href="<@s.url value="/" />html/css/ad/forprodad2018.css" rel="stylesheet" type="text/css" />
-	<link href="<@s.url value="/" />html/css/ad/forprodad-iframe.css" rel="stylesheet" type="text/css" /> 
+	<link href="<@s.url value="/" />html/css/ad/forprodad-iframe.css" rel="stylesheet" type="text/css" />
+	
 	<script language="JavaScript" src="http://show.pchome.com.tw/html/js/jquery/jquery-1.8.3.min.js"></script>
+	
 	<script language="JavaScript" src=" http://www.gongjuji.net/Content/files/jquery.md5.js"></script>
 	
 	
