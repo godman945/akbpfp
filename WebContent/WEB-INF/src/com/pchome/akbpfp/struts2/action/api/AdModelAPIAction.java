@@ -103,8 +103,11 @@ public class AdModelAPIAction extends BaseCookieAction{
 	 * 吐商品廣告
 	 */
 	public String adModelProdAction() throws Exception{
-		
+		log.info(">>>>>PROD DATA API:"+"http://showstg.pchome.com.tw/pfp/prodGroupListAPI.html?groupId="+adProdgroupId+"&prodNum=10");
 		String prodData = com.pchome.soft.depot.utils.HttpUtil.getInstance().getResult("http://showstg.pchome.com.tw/pfp/prodGroupListAPI.html?groupId="+adProdgroupId+"&prodNum=10", "UTF-8");
+		
+		log.info(">>>>>>DATA:"+prodData);
+		
 //		String prodData = com.pchome.soft.depot.utils.HttpUtil.getInstance().getResult("http://alex.pchome.com.tw:8080/akbpfp//prodGroupListAPI.html?groupId="+adProdgroupId+"&prodNum=10", "UTF-8");
 		JSONObject json = new JSONObject(prodData);
 		JSONArray prodArray = (JSONArray) json.get("prodGroupList");
