@@ -9,13 +9,12 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.opensymphony.oscache.util.StringUtil;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
@@ -25,8 +24,6 @@ import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumProdAdBtnText;
 import com.pchome.enumerate.ad.EnumProdAdDetail;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
-
-import sun.misc.BASE64Decoder;
 
 public class ProdAd implements IAd {
 
@@ -149,9 +146,7 @@ public class ProdAd implements IAd {
 		    String fileExtensionName = data.getString("fileExtensionName").toLowerCase();
 		    
 			BufferedImage image = null;
-	        byte[] imageByte;
-	        BASE64Decoder decoder = new BASE64Decoder();
-            imageByte = decoder.decodeBuffer(bessie64Img);
+	        byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
             ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
             image = ImageIO.read(bis);
             String saveImgPath = saveImgPathBuffer.toString()+fileName+"-"+width+"x"+height+"."+fileExtensionName;
