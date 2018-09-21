@@ -1,4 +1,10 @@
 ﻿$(document).ready(function(){
+	
+	$(".akb_iframe").attr("src","");
+	$("#groupSelect").children()[0].selected = 'selected';
+	
+	
+	
 	if($.browser.msie){
 		if(parseInt($.browser.version) < 9){
 			$("body").block({
@@ -106,12 +112,6 @@
 		 $("input").keyup(function(event){
 			 adPreview();
 		 });
-		 
-		 
-		
-		
-		 
-		
 });
 
 
@@ -631,7 +631,7 @@ function checkSubmit(){
 		return {msg:"請輸入正確網址",flag:false};
 	}
 	var logoText = $("#logoText").val();
-	if(logoText.length == 0){
+	if(logoText.length == 0 && $('input[name=options]:checked').val() == "type3"){
 		$("#logoText")[0].scrollIntoView();
 		return {msg:"請輸入LOGO標題文字",flag:false};
 	}
@@ -737,7 +737,7 @@ function adSubmit(){
 						success : function(respone) {
 							console.log(respone);
 							if(respone == "success"){
-								$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
+								$(location).attr('href','adAddFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
 							} else {
 								alert(respone);
 							}

@@ -686,6 +686,9 @@ public class AdAddAction extends BaseCookieAction{
 			
 			IAd adObject = adFactory.getaAdObject(EnumAdStyleType.AD_STYLE_PRODUCT);
 			adObject.doAdAdAdd(this);
+			
+			result = "success";
+			
 			return SUCCESS;
 		}catch(Exception e){
 			e.printStackTrace();
