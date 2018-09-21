@@ -1,25 +1,19 @@
 package com.pchome.akbpfp.struts2.action.api;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.pchome.akbpfp.struts2.BaseCookieAction;
-import com.pchome.enumerate.ad.EnumProdAdBtnText;
+import com.pchome.config.TestConfig;
 import com.pchome.rmi.api.IAPIProvider;
-import com.pchome.soft.util.HttpUtil;
 
 public class AdModelAPIAction extends BaseCookieAction{
-	
 	private IAPIProvider admAPI;
 	
 	private String tproNo;
@@ -32,40 +26,41 @@ public class AdModelAPIAction extends BaseCookieAction{
 	
 	/* 商品廣告用參數 START*/
 	//行銷結尾圖
-	private String uploadLog;
+	private String uploadLog ="";
 	//logo圖
-	private String uploadLogoLog;
+	private String uploadLogoLog="";
 	//廣告名稱
-	private String adName;
+	private String adName="";
 	//商品目錄ID
-	private String catalogId;
+	private String catalogId="";
 	//商品群組ID
-	private String catalogGroupId;
+	private String catalogGroupId="";
 	//logo類型
-	private String logoType;
+	private String logoType="";
 	//logo標題文字
-	private String logoText;
+	private String logoText="";
 	//logo背景顏色
-	private String logoBgColor;
+	private String logoBgColor="";
 	//logo文字顏色
-	private String logoFontColor;
+	private String logoFontColor="";
 	//按鈕文字
-	private String btnTxt;
+	private String btnTxt="";
 	//按鈕文字顏色
-	private String btnFontColor;
+	private String btnFontColor="";
 	//按鈕背景顏色
-	private String btnBgColor;
+	private String btnBgColor="";
 	//標籤文字
-	private String disTxtType;
+	private String disTxtType="";
 	//標籤背景顏色
-	private String disBgColor;
+	private String disBgColor="";
 	//標籤文字顏色
-	private String disFontColor;
+	private String disFontColor="";
 	
-	private String logoImg;
+	private String logoImg="";
 	
-	private String adProdgroupId;
+	private String adProdgroupId="";
 	
+	private String adbgType="";
 	/* 商品廣告用參數 END*/
 	
 	
@@ -103,114 +98,25 @@ public class AdModelAPIAction extends BaseCookieAction{
 	 * 吐商品廣告
 	 */
 	public String adModelProdAction() throws Exception{
-		log.info(">>>>>PROD DATA API:"+"http://showstg.pchome.com.tw/pfp/prodGroupListAPI.html?groupId="+adProdgroupId+"&prodNum=10");
-		String prodData = com.pchome.soft.depot.utils.HttpUtil.getInstance().getResult("http://showstg.pchome.com.tw/pfp/prodGroupListAPI.html?groupId="+adProdgroupId+"&prodNum=10", "UTF-8");
+		JSONObject pfpProdAdPreviewJson = new JSONObject();
+		pfpProdAdPreviewJson.put("adName",adName );
+		pfpProdAdPreviewJson.put("catalogId", catalogId);
+		pfpProdAdPreviewJson.put("catalogGroupId", catalogGroupId);
+		pfpProdAdPreviewJson.put("logoBgColor",logoBgColor );
+		pfpProdAdPreviewJson.put("logoFontColor", logoFontColor);
+		pfpProdAdPreviewJson.put("logoText",logoText );
+		pfpProdAdPreviewJson.put("logoType", logoType);
+		pfpProdAdPreviewJson.put("btnBgColor", btnBgColor);
+		pfpProdAdPreviewJson.put("btnFontColor", btnFontColor);
+		pfpProdAdPreviewJson.put("btnTxt", btnTxt);
+		pfpProdAdPreviewJson.put("disBgColor",disBgColor );
+		pfpProdAdPreviewJson.put("disFontColor",disFontColor );
+		pfpProdAdPreviewJson.put("disTxtType", disTxtType);
+		pfpProdAdPreviewJson.put("adbgType", adbgType);
 		
-		log.info(">>>>>>DATA:"+prodData);
 		
-//		String prodData = com.pchome.soft.depot.utils.HttpUtil.getInstance().getResult("http://alex.pchome.com.tw:8080/akbpfp//prodGroupListAPI.html?groupId="+adProdgroupId+"&prodNum=10", "UTF-8");
-		JSONObject json = new JSONObject(prodData);
-		JSONArray prodArray = (JSONArray) json.get("prodGroupList");
-		System.out.println(prodArray.length());
-		System.out.println(prodArray.get(0));
-		System.out.println(prodArray.get(1));
-			
-		int tadIndex = 0;
-		InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(new File("/home/webuser/akb/adm/data/tpro/c_x05_pad_tpro_0099.def")), "UTF-8"); 
-		BufferedReader fileReader = new BufferedReader(inputStreamReader);
-//		fileReader = new FileReader(new File("/home/webuser/akb/adm/data/tad/c_x05_pad_tpro_0099.def"));
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		String sCurrentLine;
-		StringBuffer adHtml = new StringBuffer();
-		boolean start = false;
-		while ((sCurrentLine = bufferedReader.readLine()) != null) {
-			if(!start){
-				if("html:".equals(sCurrentLine)){
-					start = true;
-				}
-				continue;
-			}
-			if(start){
-				if(sCurrentLine.indexOf("<#dad_logo_type>") >= 0){
-					sCurrentLine = sCurrentLine.replace("<#dad_logo_type>", "type1");
-				}
-				
-				if(sCurrentLine.indexOf("<#c_x05_pad_tad_0111>") >= 0){
-					InputStreamReader inputStreamReaderTad = new InputStreamReader(new FileInputStream(new File("/home/webuser/akb/adm/data/tad/c_x05_pad_tad_0111.def")), "UTF-8");
-					BufferedReader fileReaderTad = new BufferedReader(inputStreamReaderTad);
-					BufferedReader bufferedReaderTad = new BufferedReader(fileReaderTad);
-					String sCurrentLineTad;
-					StringBuffer tad = new StringBuffer();
-					boolean tadStart = false;
-					while ((sCurrentLineTad = bufferedReaderTad.readLine()) != null) {
-						if(sCurrentLineTad.indexOf("<!--product -->") >=0){
-							tadStart = true;
-							continue;
-						}
-						if(tadStart){
-							JSONObject prodDataInfo = (JSONObject) prodArray.get(tadIndex);
-							if(sCurrentLineTad.indexOf("<#pad_ec_prod_img>") >= 0){
-								String img = "http://showstg.pchome.com.tw/pfp/";
-								img += prodDataInfo.getString("ec_img");
-								sCurrentLineTad = sCurrentLineTad.replace("<#pad_ec_prod_img>", img);
-							}
-							
-							if(sCurrentLineTad.indexOf("<#pad_ec_prod_price_dis>") >= 0){
-								String ecProdPriceDis = prodDataInfo.getString("ec_discount_price");
-								sCurrentLineTad = sCurrentLineTad.replace("<#pad_ec_prod_price_dis>", ecProdPriceDis);
-							}
-							if(sCurrentLineTad.indexOf("<#pad_ec_prod_price>") >= 0){
-								String ecProdPrice = prodDataInfo.getString("ec_price");
-								sCurrentLineTad = sCurrentLineTad.replace("<#pad_ec_prod_price>", ecProdPrice);
-							}
-							if(sCurrentLineTad.indexOf("<#pad_ec_prod_price>") >= 0){
-								String ecProdPrice = prodDataInfo.getString("ec_price");
-								sCurrentLineTad = sCurrentLineTad.replace("<#pad_ec_prod_price>", ecProdPrice);
-							}
-							if(sCurrentLineTad.indexOf("<#pad_ec_prod_name>") >= 0){
-								String ecProdName = prodDataInfo.getString("ec_name");
-								sCurrentLineTad = sCurrentLineTad.replace("<#pad_ec_prod_name>", ecProdName);
-							}
-							
-							if(sCurrentLineTad.indexOf("#dad_buybtn_txt") >= 0){
-								for (EnumProdAdBtnText enumProdAdBtnText : EnumProdAdBtnText.values()) {
-									if(btnTxt.equals(enumProdAdBtnText.getBtnType())){
-										sCurrentLineTad = sCurrentLineTad.replace("<#dad_buybtn_txt>", enumProdAdBtnText.getBtnText());
-										break;
-									}
-								}
-							}
-							if(sCurrentLineTad.indexOf("<#pad_ec_prod_url>") >= 0){
-								String ecUrl = prodDataInfo.getString("ec_url");
-								sCurrentLineTad = sCurrentLineTad.replace("<#pad_ec_prod_url>", ecUrl);
-							}
-							
-							
-							tad.append(sCurrentLineTad);
-						}
-					}
-					sCurrentLine = sCurrentLine.replace("<#c_x05_pad_tad_0111>", tad.toString());
-					tadIndex = tadIndex + 1;
-				}
-				
-				
-				if(sCurrentLine.indexOf("<#dad_logo_sale_img_300x55>") >= 0){
-					sCurrentLine = sCurrentLine.replace("<#dad_logo_sale_img_300x55>", "https://scontent.ftpe8-2.fna.fbcdn.net/v/t1.0-1/p160x160/25446438_1796465407031788_5980907003955603333_n.jpg?_nc_cat=110&oh=c23ff86f03d09665cd8d50bda91d3d1b&oe=5C353FE2");
-				}
-				if(sCurrentLine.indexOf("<#dad_logo_img_url>") >= 0){
-					sCurrentLine = sCurrentLine.replace("<#dad_logo_img_url>", "https://scontent.ftpe8-2.fna.fbcdn.net/v/t1.0-1/p160x160/25446438_1796465407031788_5980907003955603333_n.jpg?_nc_cat=110&oh=c23ff86f03d09665cd8d50bda91d3d1b&oe=5C353FE2");
-				}
-				if(sCurrentLine.indexOf("<#dad_logo_txt>") >= 0){
-					sCurrentLine = sCurrentLine.replace("<#dad_logo_txt>", "");
-				}
-				
-				adHtml.append(sCurrentLine).append("\n");
-			}
-			
-		}
 		
-//		System.out.println(adHtml.toString());
-		
+		String adHtml = admAPI.getAdProdContent(pfpProdAdPreviewJson.toString());
 		returnAdHtml = new ByteArrayInputStream(adHtml.toString().getBytes("UTF-8"));
 		return SUCCESS;
 	}
@@ -330,5 +236,20 @@ public class AdModelAPIAction extends BaseCookieAction{
 	public void setAdProdgroupId(String adProdgroupId) {
 		this.adProdgroupId = adProdgroupId;
 	}
+	
+	public String getAdbgType() {
+		return adbgType;
+	}
 
+
+	public void setAdbgType(String adbgType) {
+		this.adbgType = adbgType;
+	}
+
+
+	public static void main(String[] args) throws Exception{
+		ApplicationContext context = new FileSystemXmlApplicationContext(TestConfig.path);
+		AdModelAPIAction adModelAPIAction = (AdModelAPIAction) context.getBean("AdModelAPIAction");
+		adModelAPIAction.adModelProdAction();
+	}
 }

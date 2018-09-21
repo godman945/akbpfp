@@ -165,7 +165,7 @@
 						<div class="adcontainr">
 							<div class="adcontent">	
 															
-								<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" allowtransparency="true" allowfullscreen="true" src=""></iframe>							
+									<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" allowtransparency="true" allowfullscreen="true" src=""></iframe>						
 															
 															
 															
@@ -220,7 +220,7 @@
 							<li>
 								
 								<div class="inputselect">
-									<select name="" id="disTxtType">
+									<select name="" id="disTxtType" onchange="changeActive(this)">
 										<option value="1">無</option>
 										<option value="2">中文折數 ( ex : 75折 )</option>
 										<option value="3">百分比折數 ( ex : -25% )</option>				

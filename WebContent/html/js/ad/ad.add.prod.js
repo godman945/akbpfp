@@ -105,7 +105,12 @@
 		
 		 $("input").keyup(function(event){
 			 adPreview();
-		 })
+		 });
+		 
+		 
+		
+		
+		 
 		
 });
 
@@ -543,6 +548,8 @@ function closeFancybox(){
 		})
 		$.fancybox.close();
 	}
+	
+	
 }
 
 function submitFancybox(){
@@ -586,6 +593,10 @@ function createSuccessUploadToDom(){
 			'</li>';
 		$(a).append(li);
 	});
+	
+	
+	//變更iframe內容
+	getProdGroup(null);
 }
 
 function clickDeleteUpload(obj,deleteKey){
@@ -785,21 +796,32 @@ function adSubmit(){
 }
 
 function getProdGroup(obj){
-	
+	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
+	var selectSizeHeight = $("#adSize option:selected").text().split(" x ")[1];
 	var catalogGroupId = $("#groupSelect").val().split("_")[1];
+	var adbgType = "noposter";
 	console.log(catalogGroupId);
 	
+	Object.keys(uploadLog).forEach(function(key) {
+		var height = String(uploadLog[key].height);
+		var width = String(uploadLog[key].width);
+		if(width == selectSizeWidth && height == selectSizeHeight){
+			adbgType = "hasposter";
+		}
+	});
 	
-	$(".akb_iframe").width($("#adSize option:selected").text().split(" x ")[0]).height($("#adSize option:selected").text().split(" x ")[1]);
+	
+	
+	$(".akb_iframe").width(selectSizeWidth).height(selectSizeHeight);
 	var totalWidth = $(".adcontent").width();
 	var adWidth = $("#adSize option:selected").text().split(" x ")[0];
 	var left = (totalWidth - adWidth) / 2;
 	$(".akb_iframe").css("margin-left",left+"px");
-	$(".akb_iframe").attr('src' ,"adProdModel.html?adProdgroupId="+catalogGroupId+"&btnTxt="+$("#btnTxt").val());
-        
-	
-	
-	
+	$(".akb_iframe").attr('src' ,"adProdModel.html?catalogGroupId="+catalogGroupId
+	+"&btnTxt="+$("#btnTxt").val()
+	+"&disTxtType="+$("#disTxtType").val()
+	+"&adbgType="+adbgType
+	);
 }
 
 function adPreview(){
@@ -827,14 +849,38 @@ function adPreview(){
 	$(prodArea).each(function(index) {
 		//變更按鈕文字
 		var disTextObj = this.getElementsByClassName("pos-absolute")[0];
-		disTextObj.innerHTML = '75折';
+//		disTextObj.innerHTML = '75折';
 	});
 	
+	//變更蓋圖
+	console.log($(body)[0].getElementsByClassName("adbg-container")[0]);
 	
 	
+	var bgA = $(body)[0].getElementsByClassName("adbg-container")[0].getElementsByTagName("a")[0];
+	var bgDiv = $(body)[0].getElementsByClassName("adbg-container")[0].getElementsByTagName("div")[0];
+	var adurl = $("#adurl").val();
+	if(adurl.length > 0 && adurl.indexOf("http") < 0){
+		adurl = "//"+adurl;
+		$(bgA).attr("href",adurl);
+	}
+	
+	
+	//動態結尾蓋圖
+	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
+	var selectSizeHeight = $("#adSize option:selected").text().split(" x ")[1];
+	Object.keys(uploadLog).forEach(function(key) {
+		var height = String(uploadLog[key].height);
+		var width = String(uploadLog[key].width);
+		if(width == selectSizeWidth && height == selectSizeHeight){
+			var previewSrc = String(uploadLog[key].previewSrc);
+			var bgStyle = $(bgDiv).attr("style","background-image:url("+previewSrc+")");
+		}
+	});
 }
 
 function changeActive(obj){
+	var  disTxtType = $("#disTxtType").val();
+	
 	var css = $(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML.trim();
 	css.trim().split('\n').forEach(function(v, i) {
 		if(v.indexOf(".logo-box") >=0 ){
@@ -848,7 +894,6 @@ function changeActive(obj){
 		}
 	})
 	$(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML = css;
-	
 	var body = $(".akb_iframe")[0].contentDocument.body;
 	var prodArea = $(body)[0].getElementsByClassName("slid-items")[0].children;
 	$(prodArea).each(function(index) {
@@ -858,7 +903,49 @@ function changeActive(obj){
 		var bybtnText = $("#btnTxt option:selected").text();
 		bybtnTextSmallObj.innerHTML= bybtnText;
 		bybtnTextBigObj.innerHTML= bybtnText;
+		
+		//變更折扣標籤內容
+		var disPriceObj = this.getElementsByClassName("infobox-price")[0].innerHTML;
+		var originalPriceObj = this.getElementsByClassName("price-original")[0].innerHTML;
+		var disPrice = disPriceObj.substring(disPriceObj.indexOf("</b>")+8,disPriceObj.length);
+		var originalPrice = originalPriceObj.replace("$NT.","")
+		var imgboxObj = this.getElementsByClassName("imgbox")[0];
+		var disObject = imgboxObj.getElementsByClassName("pos-absolute")[0];
+		var chnineseDiscount = 0;
+		var engDiscount = 0;
+		if(disPrice < originalPrice){
+			chnineseDiscount = parseInt((disPrice * 10) / originalPrice);
+			engDiscount = parseInt((originalPrice - disPrice) * 100 / 1000);
+			if(disTxtType == "1"){
+				$(imgboxObj).attr("class","imgbox crop-height tag-hide");
+			}else if(disTxtType == "2"){
+				$(imgboxObj).attr("class","imgbox crop-height tag-show");
+				disObject.innerHTML = chnineseDiscount+"折";
+			}else if(disTxtType == "3"){
+				$(imgboxObj).attr("class","imgbox crop-height tag-show");
+				disObject.innerHTML = "-"+engDiscount+"%";
+			}
+		}
 	});
+	
+	//變更動態蓋底圖
+//	var adbgType = "noposter";
+//	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
+//	var selectSizeHeight = $("#adSize option:selected").text().split(" x ")[1];
+//	Object.keys(uploadLog).forEach(function(key) {
+//		var height = String(uploadLog[key].height);
+//		var width = String(uploadLog[key].width);
+//		if(width == selectSizeWidth && height == selectSizeHeight){
+//			var previewSrc = String(uploadLog[key].previewSrc);
+//			adbgType = "hasposter";
+//			var adbgObj = body.getElementsByClassName("adbg-container")[0];
+//			var bgImgObject = adbgObj.getElementsByClassName("adbg-box")[0];
+//			$(bgImgObject).attr("style","background-image:url("+previewSrc+")");
+//			$(adbgObj).attr("class","adbg-container pos-absolute pos-top pos-left hasposter");			
+//			console.log(body.getElementsByClassName("adbg-container")[0]);
+//		}
+//	});
+	
 	
 }
 
