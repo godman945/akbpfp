@@ -330,11 +330,6 @@ function openFancyfileLoad(type){
     );
     alex();
 }
-function closePrew(){
-	console.log("closePrew");
-	//$('#test').empty();
-}
-
 
 //開啟fancybox上傳畫面初始化
 var upload_size = null;
@@ -359,9 +354,6 @@ function alex(){
 		uplogData = uploadLogoLog;
 	}
 	
-//	$(uploadlist).find("li").each(function(){
-//		console.log(this);
-//	});
 	
 	Object.keys(uplogData).forEach(function(key) {
 //		console.log(key);
@@ -387,7 +379,6 @@ function alex(){
         $(hasUpload).css("display","");
         $(noUpload).css("display","none");
         $(errorUpload).css("display","none");
-//        console.log(previewSrc);
 	});
 }
 
@@ -499,6 +490,10 @@ function checkUploadRule(file_data){
             }
 		}
 	});
+	
+	
+	//重設定預覽內容
+	adPreview();
 }
 
 function readFile(file, onLoadCallback){
@@ -594,7 +589,7 @@ function createSuccessUploadToDom(){
 		$(a).append(li);
 	});
 	
-	
+
 	//變更iframe內容
 	getProdGroup(null);
 }
@@ -607,6 +602,10 @@ function clickDeleteUpload(obj,deleteKey){
 		delete uploadLogoLog[deleteKey];
 	}
 	$(obj.parentElement).remove();
+	
+	
+	//變更iframe內容
+	getProdGroup(null);
 }
 
 
@@ -655,6 +654,13 @@ function adSubmit(){
 		var adurl = $("#adurl").val();
 		var logoBgColor = $("#logoBgColor").val();
 		var logoType = $('input[name=options]:checked').val();
+		if(Object.keys(uploadLogoLog).length > 0){
+			logoType = "type3";
+		}else{
+			logoType == "type3" ? "type2" : "type1";
+		}
+			
+			
 		var logoText = $("#logoText").val();
 		var logoFontColor = $("#logoFontColor").val();
 		
@@ -717,7 +723,7 @@ function adSubmit(){
 							"catalogId":$("#catalogSelect").val(),
 							"catalogGroupId" : $("#groupSelect").val().split("_")[1],
 			    			"adLinkURL" : $("#adurl").val(),
-			    			"logoType" : $('input[name=options]:checked').val(),
+			    			"logoType" : logoType,
 			    			"logoText" : $("#logoText").val(),
 			    			"logoBgColor":"#"+$("#logoBgColor").val(),
 			    			"logoFontColor":"#"+$("#logoFontColor").val(),
@@ -731,7 +737,7 @@ function adSubmit(){
 						success : function(respone) {
 							console.log(respone);
 							if(respone == "success"){
-	//							$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
+								$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
 							} else {
 								alert(respone);
 							}
@@ -744,10 +750,14 @@ function adSubmit(){
 			});
 		}
 	}
-	
 }
 
 function getProdGroup(obj){
+	var catalogGroupId = $("#groupSelect").val();
+	if(catalogGroupId == ""){
+		return false;
+	}
+	
 	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
 	var selectSizeHeight = $("#adSize option:selected").text().split(" x ")[1];
 	var catalogGroupId = $("#groupSelect").val().split("_")[1];
@@ -761,8 +771,6 @@ function getProdGroup(obj){
 			adbgType = "hasposter";
 		}
 	});
-	
-	
 	
 	$(".akb_iframe").width(selectSizeWidth).height(selectSizeHeight);
 	var totalWidth = $(".adcontent").width();
@@ -790,9 +798,17 @@ function adPreview(){
 	css = css.replace("<#dad_dis_bg_color>","#"+$("#disBgColor").val());
 	$(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML = css;
 	var body = $(".akb_iframe")[0].contentDocument.body;
-	var radioType = $('input[name=options]:checked').val();
+	var htmlRadioType = $('input[name=options]:checked').val();
+	var cssType = "";
 	var typeObj = $(body)[0].getElementsByClassName("ads-container")[0].getElementsByTagName('a')[0].children[0];
-	var typeObjClassName = radioType +" logo-box pos-absolute pos-top pos-left";
+	if(htmlRadioType == "type3"){
+		cssType = "type2";
+	}else if(htmlRadioType == "type2"){
+		cssType = "type3";
+	}else if(htmlRadioType == "type1"){
+		cssType = "type1";
+	}
+	var typeObjClassName = cssType +" logo-box pos-absolute pos-top pos-left";
 	$(typeObj).attr("class",typeObjClassName);
 	var logoTitleObj = typeObj.getElementsByClassName("logo-txt-title");
 	$(logoTitleObj).text($("#logoText").val());
@@ -801,12 +817,7 @@ function adPreview(){
 	$(prodArea).each(function(index) {
 		//變更按鈕文字
 		var disTextObj = this.getElementsByClassName("pos-absolute")[0];
-//		disTextObj.innerHTML = '75折';
 	});
-	
-	//變更蓋圖
-	console.log($(body)[0].getElementsByClassName("adbg-container")[0]);
-	
 	
 	var bgA = $(body)[0].getElementsByClassName("adbg-container")[0].getElementsByTagName("a")[0];
 	var bgDiv = $(body)[0].getElementsByClassName("adbg-container")[0].getElementsByTagName("div")[0];
@@ -815,7 +826,6 @@ function adPreview(){
 		adurl = "//"+adurl;
 		$(bgA).attr("href",adurl);
 	}
-	
 	
 	//動態結尾蓋圖
 	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
@@ -826,6 +836,17 @@ function adPreview(){
 		if(width == selectSizeWidth && height == selectSizeHeight){
 			var previewSrc = String(uploadLog[key].previewSrc);
 			var bgStyle = $(bgDiv).attr("style","background-image:url("+previewSrc+")");
+		}
+	});
+	
+	//商品行銷圖
+	var logoBgImgObj = $(body)[0].getElementsByClassName("logo-img-background")[0];
+	Object.keys(uploadLogoLog).forEach(function(key) {
+		var height = String(uploadLogoLog[key].height);
+		var width = String(uploadLogoLog[key].width);
+		if(width == 300 && selectSizeWidth  == 300  && height == 55 && selectSizeHeight == 250){
+			var previewSrc = String(uploadLogoLog[key].previewSrc);
+			$(logoBgImgObj).attr("src",previewSrc);
 		}
 	});
 }
@@ -879,25 +900,5 @@ function changeActive(obj){
 			}
 		}
 	});
-	
-	//變更動態蓋底圖
-//	var adbgType = "noposter";
-//	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
-//	var selectSizeHeight = $("#adSize option:selected").text().split(" x ")[1];
-//	Object.keys(uploadLog).forEach(function(key) {
-//		var height = String(uploadLog[key].height);
-//		var width = String(uploadLog[key].width);
-//		if(width == selectSizeWidth && height == selectSizeHeight){
-//			var previewSrc = String(uploadLog[key].previewSrc);
-//			adbgType = "hasposter";
-//			var adbgObj = body.getElementsByClassName("adbg-container")[0];
-//			var bgImgObject = adbgObj.getElementsByClassName("adbg-box")[0];
-//			$(bgImgObject).attr("style","background-image:url("+previewSrc+")");
-//			$(adbgObj).attr("class","adbg-container pos-absolute pos-top pos-left hasposter");			
-//			console.log(body.getElementsByClassName("adbg-container")[0]);
-//		}
-//	});
-	
-	
 }
 

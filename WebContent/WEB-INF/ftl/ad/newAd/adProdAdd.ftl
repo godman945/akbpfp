@@ -86,12 +86,12 @@
 									</label></li>
 									<li class="transition"><label class="optradio">
 										<input type="radio" value="type2" name="options" id="option2" autocomplete="off">
-										<p class="logostyle style2">正方形LOGO + 標題文字 </p> 
+										<p class="logostyle style2">長方形LOGO</p> 
 									</label></li>
 									<li class="transition">
 										<label class="optradio">
 											<input type="radio" name="options" value="type3" id="option3" autocomplete="off">
-											<p class="logostyle style3">長方形LOGO</p> 				</label>
+											<p class="logostyle style3">正方形LOGO + 標題文字</p> 				</label>
 										<div class="setadtitle">
 											<div>
 												<span class="tit">標題文字：</span>
