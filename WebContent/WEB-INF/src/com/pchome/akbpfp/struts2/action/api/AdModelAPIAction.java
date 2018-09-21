@@ -117,6 +117,9 @@ public class AdModelAPIAction extends BaseCookieAction{
 		
 		
 		String adHtml = admAPI.getAdProdContent(pfpProdAdPreviewJson.toString());
+		log.info("adHtml:"+adHtml);
+		
+		
 		returnAdHtml = new ByteArrayInputStream(adHtml.toString().getBytes("UTF-8"));
 		return SUCCESS;
 	}
