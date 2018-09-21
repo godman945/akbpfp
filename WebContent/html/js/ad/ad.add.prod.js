@@ -725,72 +725,69 @@ function adSubmit(){
 		
 		//console.log(JSON.stringify(uploadLog));
 		
-//		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
-//		if(confirm(alt)) {
-//			$.blockUI({
-//			    message: "<h1>製作新廣告中，請稍後...</h1>",
-//			    css: {
-//		            width: '500px',
-//		            height: '65px',
-//		            opacity: .9,
-//		            border:         '3px solid #aaa',
-//		            backgroundColor:'#fff',
-//		            textAlign:      'center',
-//		            cursor:         'wait',
-//		            '-webkit-border-radius': '10px',
-//		            '-moz-border-radius':    '10px'
-//		        },
-//		        fadeIn: 1000, 
-//		        timeout:   100, 
-//		        onBlock: function() {
-//		        	console.log(uploadLogoLog);
-//		        	var logoImg = "";
-//		        	Object.keys(uploadLogoLog).forEach(function(key) {
-//		        		logoImg = uploadLogoLog[key].previewSrc;
-//		        	})
-//		        	
-//		        	
-//		        	
-//		        	$(".akb_iframe").attr('src' , "adProdModel.html?logoType=type1");
-//		        	
-////		    		$.ajax({
-////					url : "adAddProdSaveAjax.html",
-////					type : "POST",
-////					dataType:'json',
-////					data : {
-////						"uploadLog":JSON.stringify(uploadLog),
-////						"uploadLogoLog":JSON.stringify(uploadLogoLog),
-////						"adGroupSeq":$("#adGroupSeq").val(),
-////						"adName" : $("#adName").val(),
-////						"catalogId":$("#catalogSelect").val(),
-////						"catalogGroupId" : $("#groupSelect").val().split("_")[1],
-////		    			"adLinkURL" : $("#adurl").val(),
-////		    			"logoType" : $('input[name=options]:checked').val(),
-////		    			"logoText" : $("#logoText").val(),
-////		    			"logoBgColor":$("#logoBgColor").val(),
-////		    			"logoFontColor":$("#logoFontColor").val(),
-////		    			"btnTxt":$("#btnTxt").val(),
-////		    			"btnFontColor":$("#btnFontColor").val(),
-////		    			"btnBgColor":$("#btnBgColor").val(),
-////		    			"disFontColor":$("#disFontColor").val(),
-////		    			"disBgColor":$("#disBgColor").val(),
-////		    			"disTxtType":$("#disTxtType").val(),
-////					},
-////					success : function(respone) {
-//////						console.log(respone);
-////						if(respone == "success"){
-//////							$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
-////						} else {
-////							alert(respone);
-////						}
-////					},
-////					error: function(xtl) {
-////						alert("系統繁忙，請稍後再試！");
-////					}
-////				});
-//		        }
-//			});
-//		}
+		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
+		if(confirm(alt)) {
+			$.blockUI({
+			    message: "<h1>製作新廣告中，請稍後...</h1>",
+			    css: {
+		            width: '500px',
+		            height: '65px',
+		            opacity: .9,
+		            border:         '3px solid #aaa',
+		            backgroundColor:'#fff',
+		            textAlign:      'center',
+		            cursor:         'wait',
+		            '-webkit-border-radius': '10px',
+		            '-moz-border-radius':    '10px'
+		        },
+		        fadeIn: 1000, 
+		        timeout:   100, 
+		        onBlock: function() {
+		        	console.log(uploadLogoLog);
+		        	var logoImg = "";
+		        	Object.keys(uploadLogoLog).forEach(function(key) {
+		        		logoImg = uploadLogoLog[key].previewSrc;
+		        	})
+		        	
+		        	$(".akb_iframe").attr('src' , "adProdModel.html?logoType=type1");
+			    		$.ajax({
+						url : "adAddProdSaveAjax.html",
+						type : "POST",
+						dataType:'json',
+						data : {
+							"uploadLog":JSON.stringify(uploadLog),
+							"uploadLogoLog":JSON.stringify(uploadLogoLog),
+							"adGroupSeq":$("#adGroupSeq").val(),
+							"adName" : $("#adName").val(),
+							"catalogId":$("#catalogSelect").val(),
+							"catalogGroupId" : $("#groupSelect").val().split("_")[1],
+			    			"adLinkURL" : $("#adurl").val(),
+			    			"logoType" : $('input[name=options]:checked').val(),
+			    			"logoText" : $("#logoText").val(),
+			    			"logoBgColor":$("#logoBgColor").val(),
+			    			"logoFontColor":$("#logoFontColor").val(),
+			    			"btnTxt":$("#btnTxt").val(),
+			    			"btnFontColor":$("#btnFontColor").val(),
+			    			"btnBgColor":$("#btnBgColor").val(),
+			    			"disFontColor":$("#disFontColor").val(),
+			    			"disBgColor":$("#disBgColor").val(),
+			    			"disTxtType":$("#disTxtType").val(),
+						},
+						success : function(respone) {
+							console.log(respone);
+							if(respone == "success"){
+	//							$(location).attr('href','adAddVideoFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
+							} else {
+								alert(respone);
+							}
+						},
+						error: function(xtl) {
+							alert("系統繁忙，請稍後再試！");
+						}
+					});
+		        }
+			});
+		}
 	}
 	
 }
