@@ -7,8 +7,7 @@
 <!-- menu start -->
 <#if user_id?exists>
 
-	<@s.if test="%{#uri.indexOf('/summary') > -1 ||
-					#uri.indexOf('/board') > -1 }">
+	<@s.if test="%{#uri.indexOf('/summary') > -1 || #uri.indexOf('/board') > -1 }">
 		<div class="tab_on"><a href="<@s.url value="/" />summary.html">帳戶總覽</a></div>
 	</@s.if>
 	<@s.else>
@@ -49,6 +48,15 @@
 	    	<div class="tab"><a href="<@s.url value="/" />adActionView.html">廣告管理</a></div> 
 		</@s.else>
 	</#if>
+
+	<#if user_privilege == "0" || user_privilege == "1" || user_privilege == "2" >
+		<@s.if test="%{#uri.indexOf('/catalogProd') > -1 || #uri.indexOf('/catalogProd') > -1 }">
+			<div class="tab_on"><a href="<@s.url value="/" />catalogProd.html">商品管理</a></div> 
+		</@s.if>
+		<@s.else>
+	    	<div class="tab"><a href="<@s.url value="/" />catalogProd.html">商品管理</a></div> 
+		</@s.else>
+	</#if>
 	
 	<#if user_privilege == "0" || user_privilege == "1" || user_privilege == "2" || user_privilege == "3">
 		<@s.if test="%{#uri.indexOf('/report') > -1 }">
@@ -70,7 +78,7 @@
 	<div class="rbtn">
 		<a href="<@s.url value="/" />faq.html" target="_blank">常見問題</a>
 	</div>
-		<br clear="both"/>
+	<br clear="both"/>
 </#if>
 
 <!-- menu end -->
@@ -80,4 +88,3 @@
 <!-- submenu end -->
 
 </div>
-

@@ -3,16 +3,21 @@ package com.pchome.akbpfp.struts2.action.catalog.uploadList;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumPfpCatalog;
 
 
 public class PfpCatalogUploadListAction extends BaseCookieAction{
@@ -35,6 +40,12 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 //	private String contenType;
 	
 	private IPfpCatalogUploadListService pfpCatalogUploadListService;
+	private IPfpCatalogService pfpCatalogService;
+	
+	private List<PfpCatalogVO> catalogList = new ArrayList<PfpCatalogVO>(); // 查詢結果
+	private String catalogSeq; // 商品目錄ID
+	private String selectUploadFlag; // 選擇上傳方式flag帶入相對畫面
+	private String updateWay; // 更新方式(1.取代,2.更新)
 	
 	// api用
 	private String catalog_seq;
@@ -43,6 +54,40 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	private String update_content;
 	private String pfp_customer_info_id;
 	private String catalog_prod_item;
+	
+	/**
+	 * 選擇商品資料上傳方式
+	 * @return
+	 * @throws Exception
+	 */
+	public String selectProductDataSource() throws Exception {
+		
+		System.out.println("catalogSeq:" + catalogSeq);
+		catalogDropDownMenu();
+		return SUCCESS;
+	}
+	
+	/**
+	 * 根據選擇上傳方式，導相對畫面
+	 * @return
+	 * @throws Exception
+	 */
+	public String selectUpload() throws Exception {
+		System.out.println("catalogSeq:" + catalogSeq);
+
+		catalogDropDownMenu();
+		
+		if (selectUploadFlag.equals(EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType())) {
+			return "fileUpload";
+		} else if (selectUploadFlag.equals(EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType())) {
+			return "automaticScheduling";
+		} else if (selectUploadFlag.equals(EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType())) {
+			return "storeURL";
+		} else if (selectUploadFlag.equals(EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType())) {
+			return "manualUpload";
+		}
+		return SUCCESS;
+	}
 	
 	/**
 	 * 商品廣告-檔案上傳CSV
@@ -72,9 +117,9 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		FileUtils.copyFile(fileUpload, createFile);
 		
 		JSONObject catalogProdJsonData = pfpCatalogUploadListService.getCSVFileDataToJson(path);
-		catalogProdJsonData.put("catalog_seq", "PC201808220000000001");
+		catalogProdJsonData.put("catalog_seq", catalogSeq);
 		catalogProdJsonData.put("catalog_type", "1");
-		catalogProdJsonData.put("update_way", "1");
+		catalogProdJsonData.put("update_way", updateWay);
 		catalogProdJsonData.put("update_content", fileUploadFileName);
 		catalogProdJsonData.put("pfp_customer_info_id", super.getCustomer_info_id());
 		catalogProdJsonData.put("update_datetime", formatter.format(updateDatetime));
@@ -104,6 +149,17 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData);
 		
 		return SUCCESS;
+	}
+	
+	/**
+	 * 目錄下拉式選單資料
+	 */
+	private void catalogDropDownMenu() {
+		PfpCatalogVO vo = new PfpCatalogVO();
+		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
+		vo.setPaginationFlag(false);
+		catalogList = pfpCatalogService.getPfpCatalogList(vo);
+		System.out.println("catalogList:" + catalogList);
 	}
 	
 	public void setProductFilePath(String productFilePath) {
@@ -152,6 +208,30 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 
 	public void setUpdate_content(String update_content) {
 		this.update_content = update_content;
+	}
+
+	public void setCatalogSeq(String catalogSeq) {
+		this.catalogSeq = catalogSeq;
+	}
+
+	public String getCatalogSeq() {
+		return catalogSeq;
+	}
+
+	public void setSelectUploadFlag(String selectUploadFlag) {
+		this.selectUploadFlag = selectUploadFlag;
+	}
+
+	public void setUpdateWay(String updateWay) {
+		this.updateWay = updateWay;
+	}
+
+	public void setPfpCatalogService(IPfpCatalogService pfpCatalogService) {
+		this.pfpCatalogService = pfpCatalogService;
+	}
+
+	public List<PfpCatalogVO> getCatalogList() {
+		return catalogList;
 	}
 	
 	

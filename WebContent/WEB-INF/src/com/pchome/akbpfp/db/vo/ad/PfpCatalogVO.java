@@ -9,15 +9,19 @@ public class PfpCatalogVO {
 	private int pageSize = 10;       // 初始化每頁幾筆
 	private int pageCount = 0;       // 初始化共幾頁
 	private int totalCount = 0;      // 初始化共幾筆
+	private boolean paginationFlag = true; // 判斷是否做分頁，預設是
 	
 	private String catalogSeq;        // 商品目錄ID
 	private String catalogName;       // 商品目錄名稱
 	private String catalogType;       // 商品目錄類型(1:一般購物類, 2:訂房住宿類, 3:交通航班類, 4:房產租售類)
+	private String catalogTypeName;   // 商品目錄類型中文
 	private String catalogUploadType; // 上傳方式(1:檔案上傳, 2:自動排程上傳, 3:賣場網址上傳, 4:手動上傳)
+	private String catalogUploadTypeName; //上傳方式中文
 	private String updateContent;     // 更新內容(檔名或網址)
 	private String updateDatetime;    // 執行更新時間
 	private String successNum;        // 成功筆數
 	private String errorNum;          // 失敗筆數
+	private String nextUpdateDatetime;// 下次執行更新時間
 	
 	public String getPfpCustomerInfoId() {
 		return pfpCustomerInfoId;
@@ -129,6 +133,38 @@ public class PfpCatalogVO {
 
 	public void setErrorNum(String errorNum) {
 		this.errorNum = errorNum;
+	}
+
+	public String getCatalogTypeName() {
+		return catalogTypeName;
+	}
+
+	public void setCatalogTypeName(String catalogTypeName) {
+		this.catalogTypeName = catalogTypeName;
+	}
+
+	public String getCatalogUploadTypeName() {
+		return catalogUploadTypeName;
+	}
+
+	public void setCatalogUploadTypeName(String catalogUploadTypeName) {
+		this.catalogUploadTypeName = catalogUploadTypeName;
+	}
+
+	public String getNextUpdateDatetime() {
+		return nextUpdateDatetime;
+	}
+
+	public void setNextUpdateDatetime(String nextUpdateDatetime) {
+		this.nextUpdateDatetime = nextUpdateDatetime;
+	}
+
+	public boolean isPaginationFlag() {
+		return paginationFlag;
+	}
+
+	public void setPaginationFlag(boolean paginationFlag) {
+		this.paginationFlag = paginationFlag;
 	}
 	
 }

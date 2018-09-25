@@ -4,7 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.transform.Transformers;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
@@ -26,7 +28,7 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog, String> implements IPfpCa
 		hql.append("   pcul.update_datetime,                                                                                                                 ");
 		hql.append("   pcul.success_num,                                                                                                                     ");
 		hql.append("   pcul.error_num                                                                                                                        ");
-		hql.append(" FROM pfp_catalog pc, (SELECT                                                                                                            ");
+		hql.append(" FROM pfp_catalog pc LEFT JOIN(SELECT                                                                                                    ");
 		hql.append(" 						  T1.catalog_seq,                                                                                                ");
 		hql.append(" 						  T1.update_content,                                                                                             ");
 		hql.append(" 						  T1.update_datetime,                                                                                            ");
@@ -41,23 +43,37 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog, String> implements IPfpCa
 		hql.append(" 						   GROUP BY catalog_seq) T2                                                                                      ");
 		hql.append(" 						WHERE T1.catalog_seq = T2.catalog_seq                                                                            ");
 		hql.append(" 						AND T1.update_datetime = T2.update_datetime) pcul                                                                ");
-		hql.append(" WHERE pc.catalog_seq = pcul.catalog_seq                                                                                                 ");
+		hql.append(" ON pc.catalog_seq = pcul.catalog_seq                                                                                                    ");
+		hql.append(" WHERE pc.pfp_customer_info_id = :pfp_customer_info_id                                                                                   ");
+		
+		if (StringUtils.isNotBlank(vo.getQueryString())) {
+			hql.append(" AND pc.catalog_name like :catalog_name                                                                                              ");
+		}
 		
         Query query = super.getSession().createSQLQuery(hql.toString());
 		query.setString("pfp_customer_info_id", vo.getPfpCustomerInfoId());
 
+		if (StringUtils.isNotBlank(vo.getQueryString())) {
+			query.setString("catalog_name", "%" + vo.getQueryString() + "%");
+		}
+		
 		// 記錄總筆數
 		vo.setTotalCount(query.list().size());
 		// 計算總頁數
 		vo.setPageCount(CommonUtils.getTotalPage(vo.getTotalCount(), vo.getPageSize()));
 		
-		//取得分頁
-		query.setFirstResult((vo.getPageNo() - 1) * vo.getPageSize());
-		query.setMaxResults(vo.getPageSize());
+		if (vo.isPaginationFlag()) {
+			// 取得分頁
+			query.setFirstResult((vo.getPageNo() - 1) * vo.getPageSize());
+			query.setMaxResults(vo.getPageSize());
+		}
 		
         return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 	}
 
+	/**
+	 * 新增目錄
+	 */
 	@Override
 	public void savePfpCatalog(PfpCatalogVO vo) {
 		Date now = new Date();
@@ -68,7 +84,7 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog, String> implements IPfpCa
 		pfpCatalog.setPfpCustomerInfoId(vo.getPfpCustomerInfoId());
 		pfpCatalog.setCatalogSeq(vo.getCatalogSeq());
 		
-		pfpCatalog.setCatalogUploadType("1");
+		pfpCatalog.setCatalogUploadType(" ");
 		pfpCatalog.setCatalogUploadContent(" ");
 		pfpCatalog.setCatalogImgShowType("1");
 		
@@ -77,6 +93,9 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog, String> implements IPfpCa
 		super.save(pfpCatalog);
 	}
 	
+	/**
+	 * 刪除目錄
+	 */
 	@Override
 	public void deletePfpCatalog(PfpCatalogVO vo) {
 		StringBuffer hql = new StringBuffer();

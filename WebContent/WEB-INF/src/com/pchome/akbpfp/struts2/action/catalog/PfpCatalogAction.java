@@ -9,7 +9,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
@@ -27,20 +29,42 @@ public class PfpCatalogAction extends BaseCookieAction{
 	private long totalCount = 0;     // 初始化共幾筆
 	private List<PfpCatalogVO> dataList = new ArrayList<PfpCatalogVO>(); // 查詢結果
 
-	private String catalogName;
-	private String catalogType;
+	private String catalogSeq;
+	private String catalogName; // 商品目錄名稱
+//	private String catalogType; // 商品目錄類型(1:一般購物類, 2:訂房住宿類, 3:交通航班類, 4:房產租售類)
 	
 	private String deleteCatalogSeq;
+	
+	private Map<String,Object> dataMap;
 	
 	// 下載相關
 	private InputStream downloadFileStream; // input stream
 	private String downloadFileName; // 下載檔名
 	
 	/**
+	 * 一進入檢查是否有目錄，有目錄無目錄各自導不同畫面
+	 * @return
+	 */
+	public String initPfpCatalogList() {
+		PfpCatalogVO vo = new PfpCatalogVO();
+		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
+		
+		dataList = pfpCatalogService.getPfpCatalogList(vo);
+		pageCount = vo.getPageCount();
+		totalCount = vo.getTotalCount();
+		
+		if (totalCount == 0) {
+			return "noData";
+		} else {
+			return SUCCESS;
+		}
+	}
+	
+	/**
 	 * 查詢商品目錄清單
 	 * @return
 	 */
-	public String queryPfpCatalogList() {
+	public String ajaxQueryPfpCatalogList() {
 		PfpCatalogVO vo = new PfpCatalogVO();
 		vo.setQueryString(queryString);
 		vo.setPageNo(pageNo);
@@ -50,6 +74,16 @@ public class PfpCatalogAction extends BaseCookieAction{
 		dataList = pfpCatalogService.getPfpCatalogList(vo);
 		pageCount = vo.getPageCount();
 		totalCount = vo.getTotalCount();
+		
+		return SUCCESS;
+	}
+	
+	/**
+	 * 點選新增按鈕後，到新增頁時執行部分
+	 * @return
+	 * @throws Exception
+	 */
+	public String addPfpCatalog() throws Exception {
 		return SUCCESS;
 	}
 	
@@ -59,11 +93,16 @@ public class PfpCatalogAction extends BaseCookieAction{
 	 * @throws Exception 
 	 */
 	public String savePfpCatalog() throws Exception {
+		dataMap = new HashMap<String, Object>();
+		
 		PfpCatalogVO vo = new PfpCatalogVO();
 		vo.setCatalogName(catalogName);
-		vo.setCatalogType(catalogType);
+		vo.setCatalogType("1"); // 目前僅提供一般購物，故先寫固定值
 		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
-		dataList = pfpCatalogService.savePfpCatalog(vo);
+		pfpCatalogService.savePfpCatalog(vo);
+		
+		catalogSeq = vo.getCatalogSeq();
+//		dataMap.put("catalogSeq", vo.getCatalogSeq());
 		return SUCCESS;
 	}
 	
@@ -71,11 +110,11 @@ public class PfpCatalogAction extends BaseCookieAction{
 	 * 刪除目錄
 	 * @return
 	 */
-	public String deletePfpCatalog() {
+	public String ajaxDeletePfpCatalog() {
 		PfpCatalogVO vo = new PfpCatalogVO();
 		vo.setCatalogSeq(deleteCatalogSeq);
-		dataList = pfpCatalogService.deletePfpCatalog(vo);
-		
+		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
+		pfpCatalogService.deletePfpCatalog(vo);
 		return SUCCESS;
 	}
 	
@@ -152,6 +191,10 @@ public class PfpCatalogAction extends BaseCookieAction{
 		this.pfpCatalogService = pfpCatalogService;
 	}
 
+	public String getQueryString() {
+		return queryString;
+	}
+
 	public void setQueryString(String queryString) {
 		this.queryString = queryString;
 	}
@@ -196,12 +239,20 @@ public class PfpCatalogAction extends BaseCookieAction{
 		this.catalogName = catalogName;
 	}
 
-	public void setCatalogType(String catalogType) {
-		this.catalogType = catalogType;
-	}
+//	public void setCatalogType(String catalogType) {
+//		this.catalogType = catalogType;
+//	}
 
 	public String getDownloadFileName() {
 		return downloadFileName;
 	}
-	
+
+	public Map<String, Object> getDataMap() {
+		return dataMap;
+	}
+
+	public String getCatalogSeq() {
+		return catalogSeq;
+	}
+
 }

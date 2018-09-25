@@ -21,13 +21,13 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog, String> {
 	 * @return
 	 * @throws Exception 
 	 */
-	List<PfpCatalogVO> savePfpCatalog(PfpCatalogVO vo) throws Exception;
+	void savePfpCatalog(PfpCatalogVO vo) throws Exception;
 	
 	/**
 	 * 刪除商品目錄
 	 * @param PfpCatalogVO
 	 * @return
 	 */
-	List<PfpCatalogVO> deletePfpCatalog(PfpCatalogVO vo);
+	void deletePfpCatalog(PfpCatalogVO vo);
 
 }
