@@ -70,7 +70,7 @@
 .charactertext{ font-size: 11px; color: #808080; float:right; line-height: 18px; margin: 0 5px 0 0;}
 .notetext{ font-size: 11px; color: rgb(255, 0, 0); line-height: 18px; font-style: normal; }
 
-.inputselect{ width: 100%; height: 30px; line-height: 30px; border-radius: 5px; border: none; background: url(../img/dropdownicon.gif) right 10px center no-repeat #fff;  box-sizing: border-box;}
+.inputselect{ width: 100%; height: 30px; line-height: 30px; border-radius: 5px; border: none; background: url(../../img/dropdownicon.gif) right 10px center no-repeat #fff;  box-sizing: border-box;}
 .inputselect select{    
     -webkit-appearance: none;
     background-color: transparent;
