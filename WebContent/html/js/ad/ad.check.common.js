@@ -6,7 +6,7 @@
 
 
 //檢查字數用
-function checkAdInputTextLength(type1,textDom,type2,hintDom){
+function checkAdInputTextLength(type1,textDom,type2,hintDom,isShow,msg){
 	var text = null;
 	var hint = null;
 	if(type1 == 'id'){
@@ -21,8 +21,8 @@ function checkAdInputTextLength(type1,textDom,type2,hintDom){
 	}
 	
 	text.bind('blur', function() {
-		if(text.val().length > 0 && text.val().length <= 4) {
-			alert("廣告標題太短，將影響您的廣告效果。\n\n廣告標題應重點說明您推廣的產品、活動、服務，依您的目標客群，撰寫他們有興趣的廣告標題。");
+		if(text.val().length > 0 && text.val().length <= 4 && isShow) {
+			alert(msg);
 		}
 	});
 }

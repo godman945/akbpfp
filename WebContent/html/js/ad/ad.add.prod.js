@@ -54,8 +54,8 @@
 			$('.fancybox').fancybox();
 		});
 		//檢查字數
-		checkAdInputTextLength('id','adName','id','checkHintAdName');
-		checkAdInputTextLength('id','logoText','id','checkHintLogoText');
+		checkAdInputTextLength('id','adName','id','checkHintAdName',false,'');
+		checkAdInputTextLength('id','logoText','id','checkHintLogoText',true,'廣告標題太短，將影響您的廣告效果。\n\n廣告標題應重點說明您推廣的產品、活動、服務，依您的目標客群，撰寫他們有興趣的廣告標題。');
 		
 		//提示剩餘字數
 		hintAdInputTextLength('id','adName','id','checkHintAdName');
