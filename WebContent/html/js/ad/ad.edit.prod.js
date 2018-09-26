@@ -1,9 +1,31 @@
-﻿$(document).ready(function(){
+﻿	//各圖片支援尺寸
+	var salesEndIframewp = new Object();
+	salesEndIframewp["data"] = {
+			index_1:"120_600",
+			index_2:"140_300",
+			index_3:"160_240",
+			index_4:"160_600",
+			index_5:"180_150",
+			index_6:"250_80",
+			index_7:"300_100",
+			index_8:"300_250",
+			index_9:"300_600",
+			index_10:"320_480",
+			index_11:"336_280",
+			index_12:"640_390",
+			index_13:"782_90",
+			index_14:"950_390",
+			index_15:"970_250"
+	};
 	
+	var salesIframewp = new Object();
+	salesIframewp["data"] = {
+			index_1:"300_55"
+	};
+
+$(document).ready(function(){
 	$(".akb_iframe").attr("src","");
 	$("#groupSelect").children()[0].selected = 'selected';
-	
-	
 	
 	if($.browser.msie){
 		if(parseInt($.browser.version) < 9){
@@ -67,7 +89,8 @@
 		$("#catalogSelect").change(function() {
 			initCatalogSelect();
 		});
-	
+		
+		
 		
 		$(function () {
 		    $('#fileupload').fileupload({
@@ -95,11 +118,6 @@
 		    })
 		});
 		
-		
-		//init html
-		initFancyBoxHtml();
-		
-		
 		$(".akb_iframe")[0].addEventListener("load", function() {
 			adPreview();
 		});
@@ -109,36 +127,80 @@
 			adPreview();
 		});
 		
-		 $("input").keyup(function(event){
+		$("input").keyup(function(event){
 			 adPreview();
-		 });
+		});
 });
+
+window.onload = function(){
+	//init html
+	initFancyBoxHtml();
+	
+	initCatalogSelect();
+	//init 已存資料
+	initSaveData();
+	$("#saleEndImgUploadBtn").attr("disabled", false);
+}
+
+//初始化已存資料
+function initSaveData(){
+	console.log("222222222222222222222");
+	$("#adName").val($("#saveAdName").val()).trigger("keyup");
+	$("#adurl").val($("#saveAdLinkURL").val()).trigger("blur");
+	$("#btnTxt").val($("#saveBtnTxt").val()).trigger("change");
+	$("#disTxtType").val($("#saveDisTxtType").val()).trigger("change");
+	$("#catalogSelect").val($("#saveCatalogId").val()).trigger("change");
+	$("#groupSelect").val($("#saveCatalogId").val()+"_"+$("#saveCatalogGroupId").val()).trigger("change");
+	
+	
+	$("#logoBgColor").val($("#saveLogoBgColor").val());
+	$("#logoFontColor").val($("#saveLogoFontColor").val());
+	$("#btnBgColor").val($("#saveBtnBgColor").val());
+	$("#disBgColor").val($("#saveDisBgColor").val());
+//	console.log($("#saveDisFontColor").val());
+	$("#disFontColor").val($("#saveDisFontColor").val());
+	
+	var uploadLogTextArea = JSON.parse($("#saveSaleImg").text());
+	
+	for(var key in uploadLogTextArea){
+		console.log(key);
+		console.log(uploadLogTextArea[key]);
+		var size = key.split("_")[2];
+		size = size.replace("x","_");
+		
+		console.log(size);
+		
+		for (var key in salesEndIframewp.data) {
+			console.log(size+":"+salesEndIframewp.data[key]);	
+			
+			if(size == salesEndIframewp.data[key]){
+				console.log(key);
+				console.log(salesEndIframewp.data[key]);
+			}
+		}
+	}
+	
+	
+	
+	
+//	console.log(uploadLogTextArea);
+//	console.log(uploadLog);
+//	var uploadLog = new Object();
+//	var uploadLogoLog = new Object();
+	
+}
+
+
+
 
 
 function initFancyBoxHtml(){
-	var salesEndIframewp = new Object();
-	salesEndIframewp["data"] = {
-			index_1:"120_600",
-			index_2:"140_300",
-			index_3:"160_240",
-			index_4:"160_600",
-			index_5:"180_150",
-			index_6:"250_80",
-			index_7:"300_100",
-			index_8:"300_250",
-			index_9:"300_600",
-			index_10:"320_480",
-			index_11:"336_280",
-			index_12:"640_390",
-			index_13:"782_90",
-			index_14:"950_390",
-			index_15:"970_250"
-	};
+	console.log("111111111111111111111");
 	
-	var salesIframewp = new Object();
-	salesIframewp["data"] = {
-			index_1:"300_55"
-	};
+	
+	
+
+	
 	
 	var fancyboxSaleEndHtml = [];
 	fancyboxSaleEndHtml.push('<div class="iframewp">');
@@ -274,19 +336,16 @@ function changeBackgroundColor(obj){
 	
 }
 
-window.onload = function(){
-	initCatalogSelect();
-	$("#saleEndImgUploadBtn").attr("disabled", false);
-}
-
 
 function initCatalogSelect(){
 	var catalogSelectValue = $("#catalogSelect").val();
+	$("#groupSelect").val("");
 	$("#groupSelect option").each(function(){
-		if(this.value !=""){
+		if(this.value != ""){
 			var groupInfo = this.value.split("_");
 			if(groupInfo[0] != catalogSelectValue){
 				$(this).css("display","none");
+				$(this).hide();
 			}else{
 				$(this).css("display","");
 			}
@@ -857,7 +916,6 @@ function changeActive(obj){
 	}
 	
 	var  disTxtType = $("#disTxtType").val();
-	
 	var css = $(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML.trim();
 	css.trim().split('\n').forEach(function(v, i) {
 		if(v.indexOf(".logo-box") >=0 ){

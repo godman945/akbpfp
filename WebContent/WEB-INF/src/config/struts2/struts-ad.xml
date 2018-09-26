@@ -199,6 +199,20 @@
         		<param name="root">result</param>
         	</result>
      	</action>
+     	
+     	<action name="adAdEditProd" class="AdEditAction" method="adAdEditProd">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">51200</param>
+			</interceptor-ref>
+			<result type="redirectAction" name="input">
+				<param name="actionName">${adActionName}</param>  
+				<param name="adGroupSeq">${adGroupSeq}</param>
+			</result>
+			<result type="tiles" name="success">.ad.ad.prod.edit</result>
+    	</action>
+     	
     <!-- 商品廣告  END-->
     
     <!-- 影音廣告  START-->

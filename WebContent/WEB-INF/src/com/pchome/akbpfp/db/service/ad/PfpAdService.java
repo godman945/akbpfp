@@ -141,7 +141,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				PfpAdAdViewVO pfpAdAdViewVO = new PfpAdAdViewVO();
 				pfpAdAdViewVO.setAdActionSeq(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionSeq());
 				pfpAdAdViewVO.setAdActionName(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName());
-				
+				pfpAdAdViewVO.setAdOperatingRule(pfpAd.getPfpAdGroup().getPfpAdAction().getAdOperatingRule());
 				System.out.println(pfpAd.getPfpAdGroup().getAdGroupPriceType());
 				// 計費方式
 				for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {

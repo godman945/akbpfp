@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.db.vo.ad;
 
 public class PfpAdAdViewVO {
+	private String adOperatingRule = "";
 	private String adActionSeq = "";
 	private String adActionName = "";
 	private String adType = "";
@@ -205,6 +206,12 @@ public class PfpAdAdViewVO {
 	}
 	public void setAdPriceType(String adPriceType) {
 		this.adPriceType = adPriceType;
+	}
+	public String getAdOperatingRule() {
+		return adOperatingRule;
+	}
+	public void setAdOperatingRule(String adOperatingRule) {
+		this.adOperatingRule = adOperatingRule;
 	}
     
 }

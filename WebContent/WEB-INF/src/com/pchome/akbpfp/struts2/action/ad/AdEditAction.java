@@ -29,7 +29,10 @@ import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.akbpfp.struts2.action.factory.ad.AdFactory;
+import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
 import com.pchome.enumerate.ad.EnumAdStyle;
+import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
@@ -40,10 +43,10 @@ import com.pchome.utils.CommonUtils;
 public class AdEditAction extends BaseCookieAction{
 
 	private static final long serialVersionUID = 1L;
-
+	private AdFactory adFactory;
 	private String message = "";
 	private String result;
-
+	private PfpAd pfpAd;
 	private String adActionName;
 	private String adGroupSeq;
 	private String adGroupName;
@@ -102,6 +105,44 @@ public class AdEditAction extends BaseCookieAction{
 	private String adKeywordOpen;			//廣泛比對
 	private String adKeywordPhraseOpen;		//詞組比對
 	private String adKeywordPrecisionOpen;	//精準比對
+	
+	
+	/* 商品廣告用參數 START*/
+	//行銷結尾圖
+	private String uploadLog;
+	//logo圖
+	private String uploadLogoLog;
+	//廣告名稱
+	private String adName;
+	//商品目錄ID
+	private String catalogId;
+	//商品群組ID
+	private String catalogGroupId;
+	//logo類型
+	private String logoType;
+	//logo標題文字
+	private String logoText;
+	//logo背景顏色
+	private String logoBgColor;
+	//logo文字顏色
+	private String logoFontColor;
+	//按鈕文字
+	private String btnTxt;
+	//按鈕文字顏色
+	private String btnFontColor;
+	//按鈕背景顏色
+	private String btnBgColor;
+	//標籤文字
+	private String disTxtType;
+	//標籤背景顏色
+	private String disBgColor;
+	//標籤文字顏色
+	private String disFontColor;
+	/* 商品廣告用參數 END*/
+	
+	
+	
+	
 	
 	public String AdAdEdit() throws Exception {
 		log.info("AdAdEdit => adSeq = " + adSeq);
@@ -733,6 +774,36 @@ public class AdEditAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * 修改商品廣告初始畫面
+	 * @throws Exception 
+	 * */
+	public String adAdEditProd() throws Exception{
+		pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
+		if(pfpAd == null){
+			adActionName = "adAdView";
+			adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();
+			result = "廣告序號錯誤";
+			return INPUT;
+		}
+		String customerInfoId = pfpAd.getPfpAdGroup().getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
+		if(!customerInfoId.equals(super.getCustomer_info_id())){
+			adActionName = "adAdView";
+			adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();
+			result = "廣告帳戶錯誤";
+			return INPUT;
+		}
+		
+		adActionName = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName();
+		adGroupName = pfpAd.getPfpAdGroup().getAdGroupName();
+		
+		IAd adObject = adFactory.getaAdObject(EnumAdStyleType.AD_STYLE_PRODUCT);
+		adObject.adAdEdit(this);
+		
+		System.out.println("DDDD");
+		
+		return SUCCESS;
+	}
 	private void chkAdStyle() {
 		if (StringUtils.isEmpty(adStyle) || (!adStyle.equals("TXT") && !adStyle.equals("TMG") && !adStyle.equals("IMG"))) {
 			message = "請選擇廣告樣式！";
@@ -1378,6 +1449,146 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setPhotoDbPathNew(String photoDbPathNew) {
 		this.photoDbPathNew = photoDbPathNew;
+	}
+
+	public AdFactory getAdFactory() {
+		return adFactory;
+	}
+
+	public void setAdFactory(AdFactory adFactory) {
+		this.adFactory = adFactory;
+	}
+
+	public String getUploadLog() {
+		return uploadLog;
+	}
+
+	public void setUploadLog(String uploadLog) {
+		this.uploadLog = uploadLog;
+	}
+
+	public String getUploadLogoLog() {
+		return uploadLogoLog;
+	}
+
+	public void setUploadLogoLog(String uploadLogoLog) {
+		this.uploadLogoLog = uploadLogoLog;
+	}
+
+	public String getAdName() {
+		return adName;
+	}
+
+	public void setAdName(String adName) {
+		this.adName = adName;
+	}
+
+	public String getCatalogId() {
+		return catalogId;
+	}
+
+	public void setCatalogId(String catalogId) {
+		this.catalogId = catalogId;
+	}
+
+	public String getCatalogGroupId() {
+		return catalogGroupId;
+	}
+
+	public void setCatalogGroupId(String catalogGroupId) {
+		this.catalogGroupId = catalogGroupId;
+	}
+
+	public String getLogoType() {
+		return logoType;
+	}
+
+	public void setLogoType(String logoType) {
+		this.logoType = logoType;
+	}
+
+	public String getLogoText() {
+		return logoText;
+	}
+
+	public void setLogoText(String logoText) {
+		this.logoText = logoText;
+	}
+
+	public String getLogoBgColor() {
+		return logoBgColor;
+	}
+
+	public void setLogoBgColor(String logoBgColor) {
+		this.logoBgColor = logoBgColor;
+	}
+
+	public String getLogoFontColor() {
+		return logoFontColor;
+	}
+
+	public void setLogoFontColor(String logoFontColor) {
+		this.logoFontColor = logoFontColor;
+	}
+
+	public String getBtnTxt() {
+		return btnTxt;
+	}
+
+	public void setBtnTxt(String btnTxt) {
+		this.btnTxt = btnTxt;
+	}
+
+	public String getBtnFontColor() {
+		return btnFontColor;
+	}
+
+	public void setBtnFontColor(String btnFontColor) {
+		this.btnFontColor = btnFontColor;
+	}
+
+	public String getBtnBgColor() {
+		return btnBgColor;
+	}
+
+	public void setBtnBgColor(String btnBgColor) {
+		this.btnBgColor = btnBgColor;
+	}
+
+	public String getDisTxtType() {
+		return disTxtType;
+	}
+
+	public void setDisTxtType(String disTxtType) {
+		this.disTxtType = disTxtType;
+	}
+
+	public String getDisBgColor() {
+		return disBgColor;
+	}
+
+	public void setDisBgColor(String disBgColor) {
+		this.disBgColor = disBgColor;
+	}
+
+	public String getDisFontColor() {
+		return disFontColor;
+	}
+
+	public void setDisFontColor(String disFontColor) {
+		this.disFontColor = disFontColor;
+	}
+
+	public void setDivBatchWord(String divBatchWord) {
+		this.divBatchWord = divBatchWord;
+	}
+
+	public PfpAd getPfpAd() {
+		return pfpAd;
+	}
+
+	public void setPfpAd(PfpAd pfpAd) {
+		this.pfpAd = pfpAd;
 	}
 
 }

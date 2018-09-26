@@ -207,16 +207,24 @@
 	    <definition name=".ad.prod.add" extends="ad.nocss.layout">
 	        <put-attribute name="body" value=".ad.prod.add.body" />
 	    </definition>
-	    
 	    <definition name=".ad.prod.add.body" template="/ftl/ad/newAd/adProdAdd.ftl">
-	    	<put-attribute name="includeSource" value="/ftl/ad/prod/source.ftl" />
+	    	<put-attribute name="includeSource" value=".ad.prod.add.includeSource" />
 	    	<put-attribute name="head" value="/ftl/ad/prod/head.ftl" />
-	    	<!--
-	    	<put-attribute name="adTxt" value="/ftl/ad/newAd/adAdAddTxt.ftl" />
-	    	<put-attribute name="adTmg" value="/ftl/ad/newAd/adAdAddTmg.ftl" />
-	    	<put-attribute name="adTmgManyURL" value="/ftl/ad/newAd/adProdAdd.ftl" />
-	    	<put-attribute name="adKeyword" value="/ftl/ad/newAd/adAdAddKeyword.ftl" />
-	    	  -->
+	    </definition>
+	    <definition name=".ad.prod.add.includeSource" template="/ftl/ad/prod/source.ftl">
+	    	<put-attribute name="jsSource" value="/ftl/ad/prod/add.js.ftl" />
+	    </definition>
+	    
+	    
+	    <definition name=".ad.ad.prod.edit" extends="ad.layout">
+	        <put-attribute name="body" value=".ad.ad.prod.edit.body" />
+	    </definition>
+	    <definition name=".ad.ad.prod.edit.body" template="/ftl/ad/editAd/adAdEditProd.ftl">
+	    	<put-attribute name="includeSource" value=".ad.prod.edit.includeSource" />
+	    	<put-attribute name="head" value="/ftl/ad/prod/head.ftl" />
+	    </definition>
+	    <definition name=".ad.prod.edit.includeSource" template="/ftl/ad/prod/source.ftl">
+	    	<put-attribute name="jsSource" value="/ftl/ad/prod/edit.js.ftl" />
 	    </definition>
     <!-- 商品廣告  END-->
     

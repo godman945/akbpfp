@@ -299,6 +299,7 @@
     </bean>
 
     <bean id="AdEditAction" class="com.pchome.akbpfp.struts2.action.ad.AdEditAction" scope="prototype" >
+    	<property name="adFactory" ref="AdFactory" />
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
 		<property name="sequenceService" ref="SequenceService" />
     	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 

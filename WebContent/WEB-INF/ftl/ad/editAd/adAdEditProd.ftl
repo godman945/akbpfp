@@ -1,7 +1,6 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 <@t.insertAttribute name="includeSource" />
-
 	<div class="cont">
 	<@t.insertAttribute name="head" />
     <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
@@ -332,5 +331,26 @@
 
 <div id ="test2" class="test2" style="display:none;">
 </div>
+
+
+
+
+<input type="" id="saveAdName" value="${adName!}"><br>
+<input type="" id="saveAdLinkURL" value="${adLinkURL!}"><br>
+<input type="" id="saveCatalogId" value="${catalogId!}"><br>
+<input type="" id="saveCatalogGroupId" value="${catalogGroupId!}"><br>
+<input type="" id="saveLogoType" value="${logoType!}"><br>
+<input type="" id="saveLogoText" value="${logoText!}"><br>
+<input type="" id="saveLogoBgColor" value="${logoBgColor!}"><br>
+<input type="" id="saveLogoFontColor" value="${logoFontColor!}"><br>
+<input type="" id="saveBtnTxt" value="${btnTxt!}"><br>
+<input type="" id="saveBtnFontColor" value="${btnFontColor!}"><br>
+<input type="" id="saveBtnBgColor" value="${btnBgColor!}"><br>
+<input type="" id="saveDisTxtType" value="${disTxtType!}"><br>
+<input type="" id="saveDisBgColor" value="${disBgColor!}"><br>
+<input type="" id="saveDisFontColor" value="${disFontColor!}"><br>
+
+<textarea type="" id="saveLogoSaleImg">${uploadLogoLog!}</textarea><br>
+<textarea type="" id="saveSaleImg">${uploadLog!}</textarea><br>
 
 

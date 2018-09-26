@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.pchome.akbpfp.struts2.action.ad.AdAddAction;
+import com.pchome.akbpfp.struts2.action.ad.AdEditAction;
 import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
 import com.pchome.enumerate.ad.EnumAdVideoSizePoolType;
 
@@ -24,6 +25,12 @@ public class VideoAd  implements IAd {
 
 	@Override
 	public String doAdAdAdd(AdAddAction adAddAction) throws Exception {
+		return null;
+	}
+
+	@Override
+	public String adAdEdit(AdEditAction adEditAction) throws Exception {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

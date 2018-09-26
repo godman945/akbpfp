@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -15,10 +16,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
 import com.pchome.akbpfp.struts2.action.ad.AdAddAction;
+import com.pchome.akbpfp.struts2.action.ad.AdEditAction;
 import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
 import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumProdAdBtnText;
@@ -122,9 +125,9 @@ public class ProdAd implements IAd {
 		StringBuffer saveImgPathBuffer = new StringBuffer();
 		saveImgPathBuffer.append(adAddAction.getPhotoDbPathNew()).append(adAddAction.getCustomer_info_id()).append("/").append(adAddAction.getSdf().format(date)).append("/original/").append(adSeq).append("/");
 		JSONObject uploadLogJson = new JSONObject(adAddAction.getUploadLog());
-		saveImg(uploadLogJson,"logoImg",saveImgPathBuffer);
+		saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer);
 		JSONObject uploadLogoLogJson = new JSONObject(adAddAction.getUploadLogoLog());
-		saveImg(uploadLogoLogJson,"salesEngImg",saveImgPathBuffer);
+		saveImg(uploadLogoLogJson,"logoImg",saveImgPathBuffer);
 		
 		return null;
 	}
@@ -181,5 +184,78 @@ public class ProdAd implements IAd {
 
 	public void setAlex(List<PfpCatalog> alex) {
 		this.alex = alex;
+	}
+
+	@Override
+	public String adAdEdit(AdEditAction adEditAction) throws Exception {
+		
+		Set<PfpAdDetail> detailSet = adEditAction.getPfpAd().getPfpAdDetails();
+		JSONObject uploadLogJson = new JSONObject();
+		JSONObject uploadLogoLogJson = new JSONObject();
+		for (PfpAdDetail pfpAdDetail : detailSet) {
+			if(EnumProdAdDetail.PROD_REPORT_NAME.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setAdName(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.PROD_LIST.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setCatalogId(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.PROD_GROUP.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setCatalogGroupId(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.PROD_AD_URL.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setAdLinkURL(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.LOGO_TYPE.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setLogoType(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.LOGO_TXT.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setLogoText(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.LOGO_FONT_COLOR.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setLogoFontColor(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.LOGO_BG_COLOR.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setLogoBgColor(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.BTN_TXT.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				
+				for (EnumProdAdBtnText enumProdAdBtnText : EnumProdAdBtnText.values()) {
+					if(enumProdAdBtnText.getBtnText().equals(pfpAdDetail.getAdDetailContent())){
+						adEditAction.setBtnTxt(enumProdAdBtnText.getBtnType());
+						break;
+					}
+				}
+			}
+			if(EnumProdAdDetail.BTN_FONT_COLOR.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setBtnFontColor(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.BTN_BG_COLOR.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setBtnBgColor(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.DIS_TXT_TYPE.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setDisTxtType(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.DIS_FONT_COLOR.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setDisFontColor(pfpAdDetail.getAdDetailContent());
+			}
+			if(EnumProdAdDetail.DIS_BG_COLOR.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setDisBgColor(pfpAdDetail.getAdDetailContent());
+			}
+			
+			if(pfpAdDetail.getAdDetailId().indexOf("logo_sale") >= 0){
+				uploadLogJson.put(pfpAdDetail.getAdDetailId(), pfpAdDetail.getAdDetailContent());
+				continue;
+			}
+			if(pfpAdDetail.getAdDetailId().indexOf("sale_img") >= 0){
+				uploadLogoLogJson.put(pfpAdDetail.getAdDetailId(), pfpAdDetail.getAdDetailContent());
+				continue;
+			}
+		}
+		adEditAction.setUploadLogoLog(uploadLogoLogJson.toString());
+		adEditAction.setUploadLog(uploadLogJson.toString());
+		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adEditAction.getCustomer_info_id());
+		System.out.println(alex.size());
+		adEditAction.getRequest().setAttribute("alex", alex);
+		return null;
 	}
 }

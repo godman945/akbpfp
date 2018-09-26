@@ -70,7 +70,7 @@ function urlCheck(type1,domName,type2,checkAdurl){
 	
 	adUrlDom.bind('blur', function() {
 		hintAdUrlDom.text("檢查網址中");
-		console.log(adUrlDom.val());
+//		console.log(adUrlDom.val());
 		$.ajax({
 			type: "POST",
 			url: "checkAdUrl.html",
