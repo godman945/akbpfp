@@ -373,8 +373,8 @@
     </definition>
 
 	<!-- 檔案上傳畫面 -->
-	<definition name=".catalog.upload.view.selectUploadFileUpload" extends="catalog.prod.layout">
-        <put-attribute name="body" value="/ftl/catalogProd/catalogUpload/catalog.upload.view.selectUploadFileUpload.ftl" />
+	<definition name=".catalog.upload.view.fileUpload" extends="catalog.prod.layout">
+        <put-attribute name="body" value="/ftl/catalogProd/catalogUpload/catalog.upload.view.fileUpload.ftl" />
     </definition>
 
     

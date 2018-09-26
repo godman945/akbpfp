@@ -802,7 +802,7 @@
 		<action name="selectUpload" class="PfpCatalogUploadListAction" method="selectUpload">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="adPrivilegeInterceptor" />
-            <result type="tiles" name="fileUpload">.catalog.upload.view.selectUploadFileUpload</result>
+            <result type="tiles" name="fileUpload">.catalog.upload.view.fileUpload</result>
             <!-- 下面畫面待做 -->
             <result type="tiles" name="automaticScheduling">.catalog.upload.view.selectUploadAutoJob</result>
             <result type="tiles" name="storeURL">.catalog.upload.view.selectUploadPchomeStoreURL</result>

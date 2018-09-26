@@ -7,10 +7,10 @@
 
 	<div class="container-prodmanage">
 	
-	    <!-- 次目錄導覽列 開始 -->
-	    <!-- hidden 隱藏所有牙齒 -->
-	    <!-- hidetabs 只顯示第一顆牙齒 -->
-	    <!-- tab1 tab2 tab3 tab4 tab5 牙齒由左至右底線 -->
+	    <#-- 次目錄導覽列 開始 -->
+	    <#-- hidden 隱藏所有牙齒 -->
+	    <#-- hidetabs 只顯示第一顆牙齒 -->
+	    <#-- tab1 tab2 tab3 tab4 tab5 牙齒由左至右底線 -->
 	    <div class="nav-wrap pos-relative">
 	        <div class="nav-box pos-relative">
 	            <ul class="txt-table">
@@ -35,7 +35,7 @@
 	            <div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>${customer_info_title}</div>
 	        </div>
 	    </div>
-	    <!-- 次目錄導覽列 結束 -->
+	    <#-- 次目錄導覽列 結束 -->
 	
 	<#-- 測試用而已，之後再刪除 -->
 			<input type="text" id="updateWay" name="updateWay" value="1">
@@ -58,31 +58,32 @@
 			</div>
 	<#-- 測試用而已，之後再刪除 end -->
 	
-	    <!-- 選擇商品資料來源 開始 -->
+	    <#-- 選擇商品資料來源 開始 -->
 	    <div class="content-wrap bg-white">
 	        <div class="content-box bg-white w-900">
 	
-	            <!-- 上傳CSV 開始 -->
+	            <#-- 上傳CSV 開始 -->
 	            <div class="section-box">
 	                <p class="title-box h2">建立商品資料</p>
 	                <div class="scvupload-wrap">
-	                    <!-- select  :選擇檔案  -->
-	                    <!-- progress:上 傳 中  -->
-	                    <!-- success :上傳成功  -->
-	                    <!-- failure :上傳失敗  -->
+	                    <#-- select  :選擇檔案  -->
+	                    <#-- progress:上 傳 中  -->
+	                    <#-- success :上傳成功  -->
+	                    <#-- failure :上傳失敗  -->
 	                    <div class="scvupload-box select">
 	
-	                        <!-- 上傳檔案 畫面1 選擇檔案 -->
+	                        <#-- 上傳檔案 畫面1 選擇檔案 -->
 	                        <div class="txt-table select">
 	                            <div class="txt-cell">
 	                                <div class="svg-box medium">
-	                                    <object class="svg-img" data="img/icon-doc-csv.svg" type="image/svg+xml"></object>
+	                                    <object class="svg-img" data="<@s.url value="/" />/html/img/catalogProd/catalogUpload/icon-doc-csv.svg" type="image/svg+xml"></object>
 	                                </div>
-	                                <u>將檔案拖放到這裡，或 <a>選擇要上傳的檔案</a></u><br><small>支援檔案格式為 .csv，請參考範例檔案。<br>檔案上傳成功後，請至商品清單查看結果。</small>
+	                                <u>將檔案拖放到這裡，或 <a>選擇要上傳的檔案</a></u>
+	                                <br><small>支援檔案格式為 .csv，請參考範例檔案。<br>檔案上傳成功後，請至商品清單查看結果。</small>
 	                            </div>
 	                        </div>
 	
-	                        <!-- 上傳檔案 畫面2 上傳中 -->
+	                        <#-- 上傳檔案 畫面2 上傳中 -->
 	                        <div class="txt-table progress">
 	                            <div class="txt-cell">
 	                                <div class="step-box txt-left">
@@ -97,7 +98,7 @@
 	                            </div>
 	                        </div>
 	
-	                        <!-- 上傳檔案 畫面3 上傳成功 -->
+	                        <#-- 上傳檔案 畫面3 上傳成功 -->
 	                        <div class="txt-table success">
 	                            <div class="txt-cell">
 	                                <div class="step-box txt-left">
@@ -112,7 +113,7 @@
 	                            </div>
 	                        </div>
 	
-	                        <!-- 上傳檔案 畫面4 上傳失敗 -->
+	                        <#-- 上傳檔案 畫面4 上傳失敗 -->
 	                        <div class="txt-table failure">
 	                            <div class="txt-cell">
 	                                <div class="step-box txt-left">
@@ -128,10 +129,10 @@
 	                        </div>
 	
 	                    </div>
-	                    <div class="link-download p-t5 txt-right"><a href="#"><em>下載範例</em></a></div>
+	                    <div class="link-download p-t5 txt-right"><a href="catalogSampleFileDownload.html"><em>下載範例</em></a></div>
 	                </div>
 	            </div>
-	            <!-- 上傳方式 結束 -->
+	            <#-- 上傳方式 結束 -->
 	
 	            <div class="p-t30">
 					<div class="datarewrite-wrap">
@@ -160,7 +161,7 @@
 	        </div>
 	
 	    </div>
-	    <!-- 選擇商品資料來源 結束 -->
+	    <#-- 選擇商品資料來源 結束 -->
 	
 	
 	</div>
