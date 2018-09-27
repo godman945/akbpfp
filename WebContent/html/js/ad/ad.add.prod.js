@@ -774,11 +774,31 @@ function getProdGroup(obj){
 	var adWidth = $("#adSize option:selected").text().split(" x ")[0];
 	var left = (totalWidth - adWidth) / 2;
 	$(".akb_iframe").css("margin-left",left+"px");
-	$(".akb_iframe").attr('src' ,"adProdModel.html?catalogGroupId="+catalogGroupId
-	+"&btnTxt="+$("#btnTxt").val()
-	+"&disTxtType="+$("#disTxtType").val()
-	+"&adbgType="+adbgType
-	);
+	var src = 'adProdModel.html'
+		+'?catalogGroupId='+catalogGroupId
+		+'&btnTxt='+encodeURIComponent($("#btnTxt").val())
+		+'&btnFontColor='+encodeURIComponent(btnFontColor)
+		+'&btnBgColor='+encodeURIComponent(btnBgColor)
+		+'&disTxtType='+encodeURIComponent($("#disTxtType").val())
+		+'&disBgColor='+encodeURIComponent(disBgColor)
+		+'&disFontColor='+encodeURIComponent(disFontColor)
+		+"&adbgType="+adbgType
+		+"&logoType="+adbgType
+		+"&logoText="+encodeURIComponent($("#logoText").val())
+		+"&logoBgColor="+encodeURIComponent(logoBgColor)
+		+"&logoFontColor="+encodeURIComponent(logoFontColor)
+		+"&prodLogoType="+encodeURIComponent($('input[name=options]:checked').val())
+	console.log(src);
+	$(".akb_iframe").attr('src' ,src);
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
 function adPreview(){
