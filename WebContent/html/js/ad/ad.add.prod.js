@@ -785,7 +785,7 @@ function adPreview(){
 	if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
 		return false;
 	}
-	
+	console.log('====adPreview start====');
 	var css = $(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML;
 	css = css.replace("<#dad_logo_font_color>","#"+$("#logoFontColor").val());
 	css = css.replace("<#dad_logo_bg_color>","#"+$("#logoBgColor").val());
@@ -796,16 +796,8 @@ function adPreview(){
 	$(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML = css;
 	var body = $(".akb_iframe")[0].contentDocument.body;
 	var htmlRadioType = $('input[name=options]:checked').val();
-	var cssType = "";
 	var typeObj = $(body)[0].getElementsByClassName("ads-container")[0].getElementsByTagName('a')[0].children[0];
-	if(htmlRadioType == "type3"){
-		cssType = "type2";
-	}else if(htmlRadioType == "type2"){
-		cssType = "type3";
-	}else if(htmlRadioType == "type1"){
-		cssType = "type1";
-	}
-	var typeObjClassName = cssType +" logo-box pos-absolute pos-top pos-left";
+	var typeObjClassName = htmlRadioType +" logo-box pos-absolute pos-top pos-left";
 	$(typeObj).attr("class",typeObjClassName);
 	var logoTitleObj = typeObj.getElementsByClassName("logo-txt-title");
 	$(logoTitleObj).text($("#logoText").val());
@@ -827,6 +819,7 @@ function adPreview(){
 	//動態結尾蓋圖
 	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
 	var selectSizeHeight = $("#adSize option:selected").text().split(" x ")[1];
+	
 	Object.keys(uploadLog).forEach(function(key) {
 		var height = String(uploadLog[key].height);
 		var width = String(uploadLog[key].width);

@@ -54,8 +54,6 @@ public class ProdAd implements IAd {
 		log.info(">>>>>> process do add prod ad");
 		this.adAddAction = adAddAction;
 		String adSeq = adAddAction.getSequenceService().getId(EnumSequenceTableName.PFP_AD, "_");
-		System.out.println(adSeq);
-		System.out.println(adAddAction.getPhotoDbPathNew());
 		PfpAdGroup pfpAdGroup = adAddAction.getPfpAdGroup();
 		adAddAction.setAdSeq(adSeq);
 		adAddAction.setTemplateProductSeq(EnumAdStyle.TMG.getTproSeq());
@@ -194,6 +192,12 @@ public class ProdAd implements IAd {
 			if(EnumProdAdDetail.DIS_BG_COLOR.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
 				adEditAction.setDisBgColor(pfpAdDetail.getAdDetailContent());
 			}
+			if(EnumProdAdDetail.PROD_RADIO_LOGO_TYPE.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
+				adEditAction.setProdLogoType(pfpAdDetail.getAdDetailContent());
+			}
+			
+			
+			
 			
 			if(pfpAdDetail.getAdDetailId().indexOf("logo_sale") >= 0){
 				JSONObject uploadLogoLogJson = new JSONObject();
@@ -201,7 +205,10 @@ public class ProdAd implements IAd {
 				String fileExtensionNameArray[] = imgPath.split("\\.");
 				String fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
 				File file = new File(imgPath);
-				String imgBase64 = imgBase64(file,fileExtensionName);
+				String imgBase64 = "";
+				if(file.exists()){
+					imgBase64 = imgBase64(file,fileExtensionName);
+				}
 				String fileNameArray[] = imgPath.split("/");
 				fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
 				String fileName = fileNameArray[0];
@@ -224,7 +231,10 @@ public class ProdAd implements IAd {
 				String fileExtensionNameArray[] = imgPath.split("\\.");
 				String fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
 				File file = new File(imgPath);
-				String imgBase64 = imgBase64(file,fileExtensionName);
+				String imgBase64 = "";
+				if(file.exists()){
+					imgBase64 = imgBase64(file,fileExtensionName);
+				}
 				String fileNameArray[] = imgPath.split("/");
 				fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
 				String fileName = fileNameArray[0];
@@ -254,14 +264,9 @@ public class ProdAd implements IAd {
 		this.adEditAction = adEditAction;
 		//1.刪除所有detail
 		Set<PfpAdDetail> detailSet = adEditAction.getPfpAd().getPfpAdDetails();
-		
-		System.out.println(adEditAction.getPfpAdDetailService() == null);
-		
 		for (PfpAdDetail pfpAdDetail : detailSet) {
 			adEditAction.getPfpAdDetailService().deletePfpAdDetail(pfpAdDetail.getAdDetailSeq());
 		}
-		
-		
 		for (EnumProdAdDetail enumProdAdDetail : EnumProdAdDetail.values()) {
 			switch(enumProdAdDetail) { 
 	        case PROD_REPORT_NAME:
@@ -322,7 +327,7 @@ public class ProdAd implements IAd {
 				adEditAction.saveAdDetail(adEditAction.getDisBgColor(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case PROD_RADIO_LOGO_TYPE:
-				adAddAction.saveAdDetail(adEditAction.getProdLogoType(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
+				adEditAction.saveAdDetail(adEditAction.getProdLogoType(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			}
 		}
@@ -342,7 +347,6 @@ public class ProdAd implements IAd {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ImageIO.write(bi, fileExtensionName, baos);
 		byte[] bytes = baos.toByteArray();
-		System.out.println("data:image/"+fileExtensionName+";base64,"+ new Base64().encodeToString(bytes));
 		String imgBase64 = "data:image/"+fileExtensionName+";base64,"+ new Base64().encodeToString(bytes);
 		imgBase64 = imgBase64.replaceAll("\\s", "");
 		return imgBase64;
@@ -381,11 +385,10 @@ public class ProdAd implements IAd {
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
             	ImageIO.write(image, fileExtensionName, new File(saveImgPath));
             	if(type.equals("add")){
-            		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201303070003",defineAdSeq);	
+            		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201303070001",defineAdSeq);	
             	}else if(type.equals("edit")){
-            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201303070003",defineAdSeq);	
+            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201303070001",defineAdSeq);	
             	}
-            	
             }
             bis.close();
 		}

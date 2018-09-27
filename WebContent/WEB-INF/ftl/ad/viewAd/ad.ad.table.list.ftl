@@ -79,7 +79,7 @@
 									&logoText=${vo.logoText!}
 									&logoBgColor=${vo.logoBgColor!}
 									&logoFontColor=${vo.logoFontColor!}
-
+									&prodLogoType=type1
 									&adbgType=hasposter
 									">
 								</iframe>

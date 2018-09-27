@@ -326,6 +326,8 @@
 
 <div id ="test2" class="test2" style="display:none;">
 </div>
+
+<input type="hidden" id="saveProdLogoType" value="${prodLogoType!}">
 <input type="hidden" id="messageId" value="${message!!}">
 <input type="hidden" id="messageId" value="">
 <input type="hidden" id="adSeq" value="${adSeq!}">

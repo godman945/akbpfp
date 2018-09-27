@@ -95,6 +95,7 @@ $(document).ready(function(){
 		
 		$("#catalogSelect").change(function() {
 			initCatalogSelect();
+			$(".akb_iframe").attr("src","");
 		});
 		
 		
@@ -212,10 +213,9 @@ function initSaveData(){
 	$("#btnBgColor").val($("#saveBtnBgColor").val());
 	$("#disBgColor").val($("#saveDisBgColor").val());
 	$("#disFontColor").val($("#saveDisFontColor").val());
-	//呼叫API故放在最後一位置
+	$("#logoText").val($("#saveLogoText").val()).trigger("keyup");
+	$('input:radio[name=options]').val([$("#saveProdLogoType").val()]);
 	$("#groupSelect").val($("#saveCatalogId").val()+"_"+$("#saveCatalogGroupId").val()).trigger("change");
-	
-	
 }
 
 function initFancyBoxHtml(){
@@ -850,39 +850,47 @@ function getProdGroup(obj){
 	$(".akb_iframe").css("margin-left",left+"px");
 	
 	
-	console.log("adbgType:"+adbgType);
 	
+	var btnFontColor = $("#btnFontColor").val();
+	var btnBgColor = $("#btnBgColor").val();
+	var logoBgColor = $("#logoBgColor").val();
+	var logoFontColor = $("#logoFontColor").val();
+	var disBgColor = $("#disBgColor").val();
+	var disFontColor = $("#disFontColor").val();
+	if(btnFontColor.indexOf("#") < 0){
+		btnFontColor = "#"+btnFontColor;
+	}
+	if(btnBgColor.indexOf("#") < 0){
+		btnBgColor = "#"+btnBgColor;
+	}
+	if(logoBgColor.indexOf("#") < 0){
+		logoBgColor = "#"+logoBgColor;
+	}
+	if(logoFontColor.indexOf("#") < 0){
+		logoFontColor = "#"+logoFontColor;
+	}
+	if(disBgColor.indexOf("#") < 0){
+		disBgColor = "#"+disBgColor;
+	}
+	if(disFontColor.indexOf("#") < 0){
+		disFontColor = "#"+disFontColor;
+	}
 	var src = 'adProdModel.html'
 		+'?catalogGroupId='+catalogGroupId
 		+'&btnTxt='+encodeURIComponent($("#btnTxt").val())
-		+'&btnFontColor='+encodeURIComponent($("#btnFontColor").val())
-		+'&btnBgColor='+encodeURIComponent($("#btnBgColor").val())
+		+'&btnFontColor='+encodeURIComponent(btnFontColor)
+		+'&btnBgColor='+encodeURIComponent(btnBgColor)
 		+'&disTxtType='+encodeURIComponent($("#disTxtType").val())
-		+'&disBgColor='+encodeURIComponent($("#disBgColor").val())
-		+'&disFontColor='+encodeURIComponent($("#disFontColor").val())
+		+'&disBgColor='+encodeURIComponent(disBgColor)
+		+'&disFontColor='+encodeURIComponent(disFontColor)
 		+"&adbgType="+adbgType
 		+"&logoType="+adbgType
 		+"&logoText="+encodeURIComponent($("#logoText").val())
-		+"&logoBgColor="+encodeURIComponent($("#logoBgColor").val())
-		+"&logoFontColor="+encodeURIComponent($("#logoFontColor").val())
-		
-		
-		
+		+"&logoBgColor="+encodeURIComponent(logoBgColor)
+		+"&logoFontColor="+encodeURIComponent(logoFontColor)
+		+"&prodLogoType="+encodeURIComponent($('input[name=options]:checked').val())
 	console.log(src);
 	$(".akb_iframe").attr('src' ,src);
-//	$(".akb_iframe").attr('src' ,"adProdModel.html" 
-//	+"?catalogGroupId="+catalogGroupId
-//	+"&disTxtType="+$("#disTxtType").val()
-//	+"&disBgColor="+encodeURIComponent($("#disBgColor").val())
-//	+"&disFontColor="+encodeURIComponent($("#disFontColor").val())
-//	+"&btnTxt="+$("#").val()
-//	+"&btnFontColor="+$("#").val()
-//	+"&btnBgColor="+$("#").val()
-//	+"&logoType="+adbgType
-//	+"&logoText="+$("#").val()
-//	+"&logoBgColor="+$("#").val()
-//	+"&logoFontColor="+$("#").val()
-//	);
 }
 
 function adPreview(){
@@ -900,16 +908,8 @@ function adPreview(){
 	$(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML = css;
 	var body = $(".akb_iframe")[0].contentDocument.body;
 	var htmlRadioType = $('input[name=options]:checked').val();
-	var cssType = "";
 	var typeObj = $(body)[0].getElementsByClassName("ads-container")[0].getElementsByTagName('a')[0].children[0];
-	if(htmlRadioType == "type3"){
-		cssType = "type2";
-	}else if(htmlRadioType == "type2"){
-		cssType = "type3";
-	}else if(htmlRadioType == "type1"){
-		cssType = "type1";
-	}
-	var typeObjClassName = cssType +" logo-box pos-absolute pos-top pos-left";
+	var typeObjClassName = htmlRadioType +" logo-box pos-absolute pos-top pos-left";
 	$(typeObj).attr("class",typeObjClassName);
 	var logoTitleObj = typeObj.getElementsByClassName("logo-txt-title");
 	$(logoTitleObj).text($("#logoText").val());

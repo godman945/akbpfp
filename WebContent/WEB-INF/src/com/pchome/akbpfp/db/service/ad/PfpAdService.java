@@ -323,6 +323,10 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 									//標籤背景顏色
 									pfpAdAdViewVO.setDisBgColor(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
 							 		break;
+								case PROD_RADIO_LOGO_TYPE:
+									//標籤背景顏色
+									pfpAdAdViewVO.setProdLogoType(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
+							 		break;
 								}
 							}
 						}

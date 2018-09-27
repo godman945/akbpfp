@@ -63,6 +63,9 @@ public class PfpAdAdViewVO {
 	private String disBgColor;
 	//標籤文字顏色
 	private String disFontColor;
+	//logo類型
+	private String prodLogoType;
+	
 	/* 商品廣告用參數 END*/
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -333,6 +336,12 @@ public class PfpAdAdViewVO {
 	}
 	public void setDisFontColor(String disFontColor) {
 		this.disFontColor = disFontColor;
+	}
+	public String getProdLogoType() {
+		return prodLogoType;
+	}
+	public void setProdLogoType(String prodLogoType) {
+		this.prodLogoType = prodLogoType;
 	}
     
 }
