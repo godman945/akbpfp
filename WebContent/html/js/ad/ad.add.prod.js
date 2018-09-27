@@ -588,10 +588,6 @@ function createSuccessUploadToDom(){
 			'</li>';
 		$(a).append(li);
 	});
-	
-
-	//變更iframe內容
-	getProdGroup(null);
 }
 
 function clickDeleteUpload(obj,deleteKey){
@@ -733,6 +729,7 @@ function adSubmit(){
 			    			"disFontColor":"#"+$("#disFontColor").val(),
 			    			"disBgColor":"#"+$("#disBgColor").val(),
 			    			"disTxtType":$("#disTxtType").val(),
+			    			"prodLogoType":$('input[name=options]:checked').val()
 						},
 						success : function(respone) {
 							console.log(respone);

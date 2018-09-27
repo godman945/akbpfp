@@ -34,4 +34,10 @@ public class VideoAd  implements IAd {
 		return null;
 	}
 
+	@Override
+	public String doAdAdEdit(AdEditAction adEditAction) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

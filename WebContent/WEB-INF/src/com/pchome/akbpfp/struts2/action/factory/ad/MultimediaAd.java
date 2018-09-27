@@ -41,4 +41,10 @@ public class MultimediaAd implements IAd {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String doAdAdEdit(AdEditAction adEditAction) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -213,6 +213,16 @@
 			<result type="tiles" name="success">.ad.ad.prod.edit</result>
     	</action>
      	
+     	
+     	<action name="adProdEditSaveAjax" class="AdEditAction" method="doAdEditProd">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+       		<result type="json" name="success">
+        		<param name="root">result</param>
+        	</result>
+     	</action>
+     	
+     	
     <!-- 商品廣告  END-->
     
     <!-- 影音廣告  START-->

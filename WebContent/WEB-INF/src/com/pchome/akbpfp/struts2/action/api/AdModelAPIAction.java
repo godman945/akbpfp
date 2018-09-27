@@ -99,18 +99,18 @@ public class AdModelAPIAction extends BaseCookieAction{
 	 */
 	public String adModelProdAction() throws Exception{
 		JSONObject pfpProdAdPreviewJson = new JSONObject();
-		pfpProdAdPreviewJson.put("adName",adName );
+		pfpProdAdPreviewJson.put("adName",adName);
 		pfpProdAdPreviewJson.put("catalogId", catalogId);
 		pfpProdAdPreviewJson.put("catalogGroupId", catalogGroupId);
-		pfpProdAdPreviewJson.put("logoBgColor",logoBgColor );
+		pfpProdAdPreviewJson.put("logoBgColor",logoBgColor);
 		pfpProdAdPreviewJson.put("logoFontColor", logoFontColor);
-		pfpProdAdPreviewJson.put("logoText",logoText );
+		pfpProdAdPreviewJson.put("logoText",logoText);
 		pfpProdAdPreviewJson.put("logoType", logoType);
-		pfpProdAdPreviewJson.put("btnBgColor", btnBgColor);
+		pfpProdAdPreviewJson.put("btnBgColor",btnBgColor);
 		pfpProdAdPreviewJson.put("btnFontColor", btnFontColor);
-		pfpProdAdPreviewJson.put("btnTxt", btnTxt);
-		pfpProdAdPreviewJson.put("disBgColor",disBgColor );
-		pfpProdAdPreviewJson.put("disFontColor",disFontColor );
+		pfpProdAdPreviewJson.put("btnTxt",btnTxt);
+		pfpProdAdPreviewJson.put("disBgColor",disBgColor);
+		pfpProdAdPreviewJson.put("disFontColor",disFontColor);
 		pfpProdAdPreviewJson.put("disTxtType", disTxtType);
 		pfpProdAdPreviewJson.put("adbgType", adbgType);
 		

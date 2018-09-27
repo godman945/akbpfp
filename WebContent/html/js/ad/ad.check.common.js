@@ -79,7 +79,7 @@ function urlCheck(type1,domName,type2,checkAdurl){
 			if(msg == 'true'){
 				hintAdUrlDom.text("網址確認正確");
 				hintAdUrlDom.css("color","green");
-				console.log(msg);
+//				console.log(msg);
 			}else {
 				hintAdUrlDom.text("請輸入正確的廣告連結網址");
 				hintAdUrlDom.css("color","red");

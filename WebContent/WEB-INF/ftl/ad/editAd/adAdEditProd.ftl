@@ -314,16 +314,11 @@
 		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
 		<center style="margin-top:10px;width:70%">	            
             <input type="button" id="cancel" value="取 消" class="btn-cancel"> 
-            <input type="button" id="save" value="送出審核" class="btn-save" onclick="adSubmit();">
+            <input type="button" id="save" value="送出審核" class="btn-save" onclick="adEditSubmit();">
 		</center>
 	</form>
-
-<input type="hidden" id="messageId" value="">
-<input type="hidden" id="adGroupSeq" value="${adGroupSeq!}">
-
 </div>
 <input type="file" serialize id="fileupload" name="fileupload"  style="display:none;">
-<input type="hidden" id="messageId" value="${message!!}">
 
 
 <div id ="test" class="test" style="display:none;">
@@ -331,26 +326,24 @@
 
 <div id ="test2" class="test2" style="display:none;">
 </div>
-
-
-
-
-<input type="" id="saveAdName" value="${adName!}"><br>
-<input type="" id="saveAdLinkURL" value="${adLinkURL!}"><br>
-<input type="" id="saveCatalogId" value="${catalogId!}"><br>
-<input type="" id="saveCatalogGroupId" value="${catalogGroupId!}"><br>
-<input type="" id="saveLogoType" value="${logoType!}"><br>
-<input type="" id="saveLogoText" value="${logoText!}"><br>
-<input type="" id="saveLogoBgColor" value="${logoBgColor!}"><br>
-<input type="" id="saveLogoFontColor" value="${logoFontColor!}"><br>
-<input type="" id="saveBtnTxt" value="${btnTxt!}"><br>
-<input type="" id="saveBtnFontColor" value="${btnFontColor!}"><br>
-<input type="" id="saveBtnBgColor" value="${btnBgColor!}"><br>
-<input type="" id="saveDisTxtType" value="${disTxtType!}"><br>
-<input type="" id="saveDisBgColor" value="${disBgColor!}"><br>
-<input type="" id="saveDisFontColor" value="${disFontColor!}"><br>
-
-<textarea type="" id="saveLogoSaleImg">${uploadLogoLog!}</textarea><br>
-<textarea type="" id="saveSaleImg">${uploadLog!}</textarea><br>
-
+<input type="hidden" id="messageId" value="${message!!}">
+<input type="hidden" id="messageId" value="">
+<input type="hidden" id="adSeq" value="${adSeq!}">
+<input type="hidden" id="adGroupSeq" value="${adGroupSeq!}">
+<input type="hidden" id="saveAdName" value="${adName!}">
+<input type="hidden" id="saveAdLinkURL" value="${adLinkURL!}">
+<input type="hidden" id="saveCatalogId" value="${catalogId!}">
+<input type="hidden" id="saveCatalogGroupId" value="${catalogGroupId!}">
+<input type="hidden" id="saveLogoType" value="${logoType!}">
+<input type="hidden" id="saveLogoText" value="${logoText!}">
+<input type="hidden" id="saveLogoBgColor" value="${logoBgColor!}">
+<input type="hidden" id="saveLogoFontColor" value="${logoFontColor!}">
+<input type="hidden" id="saveBtnTxt" value="${btnTxt!}">
+<input type="hidden" id="saveBtnFontColor" value="${btnFontColor!}">
+<input type="hidden" id="saveBtnBgColor" value="${btnBgColor!}">
+<input type="hidden" id="saveDisTxtType" value="${disTxtType!}">
+<input type="hidden" id="saveDisBgColor" value="${disBgColor!}">
+<input type="hidden" id="saveDisFontColor" value="${disFontColor!}">
+<textarea style="display:none;" id="saveLogoSaleImg">${uploadLogoLog!}</textarea>
+<textarea style="display:none;" id="saveSaleImg">${uploadLog!}</textarea>
 

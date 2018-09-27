@@ -32,7 +32,38 @@ public class PfpAdAdViewVO {
 	private String adPriceType = "";
 	private float thousandsCost;
 	
-
+	/* 商品廣告用參數 START*/
+	//行銷結尾圖
+	private String uploadLog;
+	//logo圖
+	private String uploadLogoLog;
+	//廣告名稱
+	private String adName;
+	//商品目錄ID
+	private String catalogId;
+	//商品群組ID
+	private String catalogGroupId;
+	//logo類型
+	private String logoType;
+	//logo標題文字
+	private String logoText;
+	//logo背景顏色
+	private String logoBgColor;
+	//logo文字顏色
+	private String logoFontColor;
+	//按鈕文字
+	private String btnTxt;
+	//按鈕文字顏色
+	private String btnFontColor;
+	//按鈕背景顏色
+	private String btnBgColor;
+	//標籤文字
+	private String disTxtType;
+	//標籤背景顏色
+	private String disBgColor;
+	//標籤文字顏色
+	private String disFontColor;
+	/* 商品廣告用參數 END*/
 	public String getAdActionSeq() {
 		return adActionSeq;
 	}
@@ -212,6 +243,96 @@ public class PfpAdAdViewVO {
 	}
 	public void setAdOperatingRule(String adOperatingRule) {
 		this.adOperatingRule = adOperatingRule;
+	}
+	public String getUploadLog() {
+		return uploadLog;
+	}
+	public void setUploadLog(String uploadLog) {
+		this.uploadLog = uploadLog;
+	}
+	public String getUploadLogoLog() {
+		return uploadLogoLog;
+	}
+	public void setUploadLogoLog(String uploadLogoLog) {
+		this.uploadLogoLog = uploadLogoLog;
+	}
+	public String getAdName() {
+		return adName;
+	}
+	public void setAdName(String adName) {
+		this.adName = adName;
+	}
+	public String getCatalogId() {
+		return catalogId;
+	}
+	public void setCatalogId(String catalogId) {
+		this.catalogId = catalogId;
+	}
+	public String getCatalogGroupId() {
+		return catalogGroupId;
+	}
+	public void setCatalogGroupId(String catalogGroupId) {
+		this.catalogGroupId = catalogGroupId;
+	}
+	public String getLogoType() {
+		return logoType;
+	}
+	public void setLogoType(String logoType) {
+		this.logoType = logoType;
+	}
+	public String getLogoText() {
+		return logoText;
+	}
+	public void setLogoText(String logoText) {
+		this.logoText = logoText;
+	}
+	public String getLogoBgColor() {
+		return logoBgColor;
+	}
+	public void setLogoBgColor(String logoBgColor) {
+		this.logoBgColor = logoBgColor;
+	}
+	public String getLogoFontColor() {
+		return logoFontColor;
+	}
+	public void setLogoFontColor(String logoFontColor) {
+		this.logoFontColor = logoFontColor;
+	}
+	public String getBtnTxt() {
+		return btnTxt;
+	}
+	public void setBtnTxt(String btnTxt) {
+		this.btnTxt = btnTxt;
+	}
+	public String getBtnFontColor() {
+		return btnFontColor;
+	}
+	public void setBtnFontColor(String btnFontColor) {
+		this.btnFontColor = btnFontColor;
+	}
+	public String getBtnBgColor() {
+		return btnBgColor;
+	}
+	public void setBtnBgColor(String btnBgColor) {
+		this.btnBgColor = btnBgColor;
+	}
+	public String getDisTxtType() {
+		return disTxtType;
+	}
+	public void setDisTxtType(String disTxtType) {
+		this.disTxtType = disTxtType;
+	}
+	public String getDisBgColor() {
+		return disBgColor;
+	}
+	public void setDisBgColor(String disBgColor) {
+		this.disBgColor = disBgColor;
+	}
+	public String getDisFontColor() {
+		return disFontColor;
+	}
+	public void setDisFontColor(String disFontColor) {
+		this.disFontColor = disFontColor;
 	}
     
 }

@@ -43,6 +43,7 @@ import com.pchome.utils.CommonUtils;
 public class AdEditAction extends BaseCookieAction{
 
 	private static final long serialVersionUID = 1L;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	private AdFactory adFactory;
 	private String message = "";
 	private String result;
@@ -138,6 +139,8 @@ public class AdEditAction extends BaseCookieAction{
 	private String disBgColor;
 	//標籤文字顏色
 	private String disFontColor;
+	//logo類型
+	private String prodLogoType;
 	/* 商品廣告用參數 END*/
 	
 	
@@ -796,14 +799,39 @@ public class AdEditAction extends BaseCookieAction{
 		
 		adActionName = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName();
 		adGroupName = pfpAd.getPfpAdGroup().getAdGroupName();
-		
+		adGroupSeq =  pfpAd.getPfpAdGroup().getAdGroupSeq();
 		IAd adObject = adFactory.getaAdObject(EnumAdStyleType.AD_STYLE_PRODUCT);
 		adObject.adAdEdit(this);
-		
-		System.out.println("DDDD");
-		
 		return SUCCESS;
 	}
+	
+	/**
+	 * 儲存修改商品廣告
+	 * @throws Exception 
+	 * */
+	public String doAdEditProd() throws Exception{
+		pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
+		if(pfpAd == null){
+			result = "廣告序號錯誤";
+			return SUCCESS;
+		}
+		String customerInfoId = pfpAd.getPfpAdGroup().getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId();
+		if(!customerInfoId.equals(super.getCustomer_info_id())){
+			result = "廣告帳戶錯誤";
+			return SUCCESS;
+		}
+		IAd adObject = adFactory.getaAdObject(EnumAdStyleType.AD_STYLE_PRODUCT);
+		adObject.doAdAdEdit(this);
+		Date date = new Date();
+		pfpAd.setAdStatus(EnumStatus.NoVerify.getStatusId());
+		pfpAd.setAdSendVerifyTime(date);
+		pfpAd.setAdUpdateTime(date);
+		pfpAdService.updatePfpAd(pfpAd);
+		result = "success";
+		return SUCCESS;
+	}
+	
+	
 	private void chkAdStyle() {
 		if (StringUtils.isEmpty(adStyle) || (!adStyle.equals("TXT") && !adStyle.equals("TMG") && !adStyle.equals("IMG"))) {
 			message = "請選擇廣告樣式！";
@@ -1086,6 +1114,34 @@ public class AdEditAction extends BaseCookieAction{
 		
 		return SUCCESS;
 	}
+	
+	
+	/**
+	 * 新增廣告明細
+	 * @param content     廣告明細內容
+	 * @param adDetailId  元件id
+	 * @param adPoolSeq   資料來源序號
+	 * @param defineAdSeq 廣告定義序號
+	 * @throws Exception
+	 */
+	public void saveAdDetail(String content, String adDetailId, String adPoolSeq, String defineAdSeq) throws Exception {
+		String templateProductSeq = EnumAdStyle.IMG.getTproSeq();
+		String adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+		PfpAdDetail pfpAdDetail = new PfpAdDetail();
+		pfpAdDetail.setAdDetailSeq(adDetailSeq);
+		pfpAdDetail.setPfpAd(pfpAdService.getPfpAdBySeq(adSeq));
+		pfpAdDetail.setAdDetailId(adDetailId);
+		pfpAdDetail.setAdDetailContent(content);
+		pfpAdDetail.setAdPoolSeq(adPoolSeq);
+		pfpAdDetail.setDefineAdSeq(defineAdSeq);
+		pfpAdDetail.setVerifyFlag("y");
+		pfpAdDetail.setVerifyStatus("n");
+		pfpAdDetail.setAdDetailCreateTime(new Date());
+		pfpAdDetail.setAdDetailUpdateTime(new Date());
+		pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
+	}
+	
+	
 	
 	private void addAccesslog(EnumAccesslogAction enumAccesslogAction,String accesslogMessage) throws Exception{
 		admAccesslogService.recordAdLog(enumAccesslogAction, accesslogMessage, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
@@ -1589,6 +1645,26 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setPfpAd(PfpAd pfpAd) {
 		this.pfpAd = pfpAd;
+	}
+
+	public PfpAdDetailService getPfpAdDetailService() {
+		return pfpAdDetailService;
+	}
+
+	public SimpleDateFormat getSdf() {
+		return sdf;
+	}
+
+	public void setSdf(SimpleDateFormat sdf) {
+		this.sdf = sdf;
+	}
+
+	public String getProdLogoType() {
+		return prodLogoType;
+	}
+
+	public void setProdLogoType(String prodLogoType) {
+		this.prodLogoType = prodLogoType;
 	}
 
 }

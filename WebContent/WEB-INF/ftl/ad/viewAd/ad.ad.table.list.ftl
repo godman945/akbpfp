@@ -29,9 +29,8 @@
 	</tr>
 </thead>
 <tbody>
-	<#if adAdViewVO?exists>
-	    <#list adAdViewVO as vo>
-	   E:${vo.adOperatingRule!}
+	<#if adAdViewVOList?exists>
+	    <#list adAdViewVOList as vo>
 			<tr>
 				<td>
 					<#if vo.adStatus == 4 || vo.adStatus == 9>
@@ -68,9 +67,19 @@
 					<#else>
 						<#if vo.adOperatingRule =='PROD'>
 								<iframe height="250" width="300" class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" allowtransparency="true" allowfullscreen="true" 
-									src="adProdModel.html?catalogGroupId=PCG20180919000000001
-									&btnTxt=1
-									&disTxtType=2
+									src="adProdModel.html
+									?catalogGroupId=${vo.catalogGroupId!}
+									&disTxtType=${vo.disTxtType!}
+									&disBgColor=${vo.disBgColor!}
+									&disFontColor=${vo.disFontColor!}
+									&btnTxt=${vo.btnTxt!}
+									&btnFontColor=${vo.btnFontColor!}
+									&btnBgColor=${vo.btnBgColor!}
+									&logoType=type1
+									&logoText=${vo.logoText!}
+									&logoBgColor=${vo.logoBgColor!}
+									&logoFontColor=${vo.logoFontColor!}
+
 									&adbgType=hasposter
 									">
 								</iframe>

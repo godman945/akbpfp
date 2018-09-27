@@ -23,6 +23,13 @@
 			index_1:"300_55"
 	};
 
+	//開啟fancybox上傳畫面初始化
+	var upload_size = null;
+	var uploadDom = null;
+	var uploadLog = new Object();
+	var uploadLogoLog = new Object();
+	var initFancyBoxType = null;
+	
 $(document).ready(function(){
 	$(".akb_iframe").attr("src","");
 	$("#groupSelect").children()[0].selected = 'selected';
@@ -140,68 +147,78 @@ window.onload = function(){
 	//init 已存資料
 	initSaveData();
 	$("#saleEndImgUploadBtn").attr("disabled", false);
+	
 }
 
 //初始化已存資料
 function initSaveData(){
-	console.log("222222222222222222222");
+	var uploadLogTextArea = JSON.parse($("#saveSaleImg").text());
+	var uploadLogTextFlag = false;
+	for(var key in uploadLogTextArea){
+		var imgWidth = uploadLogTextArea[key].width;
+		var imgHeight = uploadLogTextArea[key].heigth;
+		var fileSize = uploadLogTextArea[key].fileSize;
+		var fileName = uploadLogTextArea[key].fileName;
+		var previewSrc = uploadLogTextArea[key].previewSrc;
+		var fileExtensionName = uploadLogTextArea[key].fileExtensionName;
+		for (var salesEndIframewpKey in salesEndIframewp.data) {
+			var width = salesEndIframewp.data[salesEndIframewpKey].split("_")[0];
+			var height = salesEndIframewp.data[salesEndIframewpKey].split("_")[1];
+			if(imgWidth == width && imgHeight == height){
+				var index = (salesEndIframewpKey.split("_")[1]) - 1;
+				uploadLog["uploadLiDom_"+index] = {fileExtensionName:fileExtensionName,fileName:fileName,fileSize:fileSize,height:height,index:index,previewSrc:previewSrc,width:width};
+				uploadLogTextFlag = true;
+			}
+		}
+	}
+	
+	var uploadLogoLogTextArea = JSON.parse($("#saveLogoSaleImg").text());
+	var uploadLogoLogTextFlag = false;
+	for(var key in uploadLogoLogTextArea){
+		var imgWidth = uploadLogoLogTextArea[key].width;
+		var imgHeight = uploadLogoLogTextArea[key].heigth;
+		var fileSize = uploadLogoLogTextArea[key].fileSize;
+		var fileName = uploadLogoLogTextArea[key].fileName;
+		var previewSrc = uploadLogoLogTextArea[key].previewSrc;
+		var fileExtensionName = uploadLogoLogTextArea[key].fileExtensionName;
+		for (var salesIframewpKey in salesIframewp.data) {
+			var width = salesIframewp.data[salesIframewpKey].split("_")[0];
+			var height = salesIframewp.data[salesIframewpKey].split("_")[1];
+			if(imgWidth == width && imgHeight == height){
+				var index = (salesIframewpKey.split("_")[1]) - 1;
+				uploadLogoLog["uploadLiDom_"+index] = {fileExtensionName:fileExtensionName,fileName:fileName,fileSize:fileSize,height:height,index:index,previewSrc:previewSrc,width:width};
+				uploadLogoLogTextFlag = true;
+			}
+		}
+	}
+	if(uploadLogTextFlag){
+		initFancyBoxType = 'endSales';
+		createSuccessUploadToDom();
+	}
+	if(uploadLogoLogTextFlag){
+		initFancyBoxType = 'logo';
+		createSuccessUploadToDom();
+	}
+	initFancyBoxType = null;
+	
 	$("#adName").val($("#saveAdName").val()).trigger("keyup");
 	$("#adurl").val($("#saveAdLinkURL").val()).trigger("blur");
 	$("#btnTxt").val($("#saveBtnTxt").val()).trigger("change");
 	$("#disTxtType").val($("#saveDisTxtType").val()).trigger("change");
 	$("#catalogSelect").val($("#saveCatalogId").val()).trigger("change");
+	$("#logoBgColor").val($("#saveLogoBgColor").val());
+	$("#logoFontColor").val($("#saveLogoFontColor").val());
+	$("#btnFontColor").val($("#saveBtnFontColor").val());
+	$("#btnBgColor").val($("#saveBtnBgColor").val());
+	$("#disBgColor").val($("#saveDisBgColor").val());
+	$("#disFontColor").val($("#saveDisFontColor").val());
+	//呼叫API故放在最後一位置
 	$("#groupSelect").val($("#saveCatalogId").val()+"_"+$("#saveCatalogGroupId").val()).trigger("change");
 	
 	
-	$("#logoBgColor").val($("#saveLogoBgColor").val());
-	$("#logoFontColor").val($("#saveLogoFontColor").val());
-	$("#btnBgColor").val($("#saveBtnBgColor").val());
-	$("#disBgColor").val($("#saveDisBgColor").val());
-//	console.log($("#saveDisFontColor").val());
-	$("#disFontColor").val($("#saveDisFontColor").val());
-	
-	var uploadLogTextArea = JSON.parse($("#saveSaleImg").text());
-	
-	for(var key in uploadLogTextArea){
-		console.log(key);
-		console.log(uploadLogTextArea[key]);
-		var size = key.split("_")[2];
-		size = size.replace("x","_");
-		
-		console.log(size);
-		
-		for (var key in salesEndIframewp.data) {
-			console.log(size+":"+salesEndIframewp.data[key]);	
-			
-			if(size == salesEndIframewp.data[key]){
-				console.log(key);
-				console.log(salesEndIframewp.data[key]);
-			}
-		}
-	}
-	
-	
-	
-	
-//	console.log(uploadLogTextArea);
-//	console.log(uploadLog);
-//	var uploadLog = new Object();
-//	var uploadLogoLog = new Object();
-	
 }
 
-
-
-
-
 function initFancyBoxHtml(){
-	console.log("111111111111111111111");
-	
-	
-	
-
-	
-	
 	var fancyboxSaleEndHtml = [];
 	fancyboxSaleEndHtml.push('<div class="iframewp">');
 	fancyboxSaleEndHtml.push('<div class="containr">');
@@ -390,12 +407,7 @@ function openFancyfileLoad(type){
     alex();
 }
 
-//開啟fancybox上傳畫面初始化
-var upload_size = null;
-var uploadDom = null;
-var uploadLog = new Object();
-var uploadLogoLog = new Object();
-var initFancyBoxType = null;
+
 function alex(){
 //	console.log("alex");
 //	console.log(initFancyBoxType);
@@ -625,32 +637,33 @@ function createSuccessUploadToDom(){
 	}
 	
 	$(a).empty();
-	Object.keys(uploadData).forEach(function(key) {
-		var fileName = uploadData[key].fileName;
-		var width = uploadData[key].width;
-		var height = uploadData[key].height;
-		var fileExtensionName = uploadData[key].fileExtensionName;
-		var previewSrc = uploadData[key].previewSrc;
-		var index = uploadData[key].index;
-		var li = 
-			'<li class="transition">'+
-			'<div class="picuploadtb" onclick="clickDeleteUpload(this,\''+key+'\');">'+
-				'<div class="del transition"></div>'+
-				'<div class="picuploadcell">'+
-					'<img src="'+previewSrc+'">'+
-				'</div>'+
-			'</div>'+
-			'<p class="adbnrinfo">檔名：'+
-				fileName+
-				'<span>尺寸：'+width+' x '+height+' ‧ '+fileExtensionName+'</span>'+
-			'</p>'+
-			'</li>';
-		$(a).append(li);
-	});
 	
-
-	//變更iframe內容
-	getProdGroup(null);
+	if(uploadData != null){
+		Object.keys(uploadData).forEach(function(key) {
+			var fileName = uploadData[key].fileName;
+			var width = uploadData[key].width;
+			var height = uploadData[key].height;
+			var fileExtensionName = uploadData[key].fileExtensionName;
+			var previewSrc = uploadData[key].previewSrc;
+			var index = uploadData[key].index;
+			var li = 
+				'<li class="transition">'+
+				'<div class="picuploadtb" onclick="clickDeleteUpload(this,\''+key+'\');">'+
+					'<div class="del transition"></div>'+
+					'<div class="picuploadcell">'+
+						'<img src="'+previewSrc+'">'+
+					'</div>'+
+				'</div>'+
+				'<p class="adbnrinfo">檔名：'+
+					fileName+
+					'<span>尺寸：'+width+' x '+height+' ‧ '+fileExtensionName+'</span>'+
+				'</p>'+
+				'</li>';
+			$(a).append(li);
+		});
+		//變更iframe內容
+		getProdGroup(null);
+	}
 }
 
 function clickDeleteUpload(obj,deleteKey){
@@ -661,8 +674,6 @@ function clickDeleteUpload(obj,deleteKey){
 		delete uploadLogoLog[deleteKey];
 	}
 	$(obj.parentElement).remove();
-	
-	
 	//變更iframe內容
 	getProdGroup(null);
 }
@@ -698,7 +709,7 @@ function checkSubmit(){
 }
 
 //點擊送出審核
-function adSubmit(){
+function adEditSubmit(){
 	var submitFlag = true;
 	if(checkSubmit().flag == false){
 		submitFlag = checkSubmit().flag;
@@ -769,12 +780,13 @@ function adSubmit(){
 		        		logoImg = uploadLogoLog[key].previewSrc;
 		        	})
 		        	
-		        	$(".akb_iframe").attr('src' , "adProdModel.html?logoType=type1");
-			    		$.ajax({
-						url : "adAddProdSaveAjax.html",
+			    		
+		        	$.ajax({
+						url : "adProdEditSaveAjax.html",
 						type : "POST",
 						dataType:'json',
 						data : {
+							"adSeq":$("#adSeq").val(),
 							"uploadLog":JSON.stringify(uploadLog),
 							"uploadLogoLog":JSON.stringify(uploadLogoLog),
 							"adGroupSeq":$("#adGroupSeq").val(),
@@ -792,11 +804,12 @@ function adSubmit(){
 			    			"disFontColor":"#"+$("#disFontColor").val(),
 			    			"disBgColor":"#"+$("#disBgColor").val(),
 			    			"disTxtType":$("#disTxtType").val(),
+			    			"prodLogoType":$('input[name=options]:checked').val()
 						},
 						success : function(respone) {
 							console.log(respone);
 							if(respone == "success"){
-								$(location).attr('href','adAddFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
+								$(location).attr('href','adAdView.html?adGroupSeq='+$("#adGroupSeq").val());	
 							} else {
 								alert(respone);
 							}
@@ -830,24 +843,53 @@ function getProdGroup(obj){
 			adbgType = "hasposter";
 		}
 	});
-	
 	$(".akb_iframe").width(selectSizeWidth).height(selectSizeHeight);
 	var totalWidth = $(".adcontent").width();
 	var adWidth = $("#adSize option:selected").text().split(" x ")[0];
 	var left = (totalWidth - adWidth) / 2;
 	$(".akb_iframe").css("margin-left",left+"px");
-	$(".akb_iframe").attr('src' ,"adProdModel.html?catalogGroupId="+catalogGroupId
-	+"&btnTxt="+$("#btnTxt").val()
-	+"&disTxtType="+$("#disTxtType").val()
-	+"&adbgType="+adbgType
-	);
+	
+	
+	console.log("adbgType:"+adbgType);
+	
+	var src = 'adProdModel.html'
+		+'?catalogGroupId='+catalogGroupId
+		+'&btnTxt='+encodeURIComponent($("#btnTxt").val())
+		+'&btnFontColor='+encodeURIComponent($("#btnFontColor").val())
+		+'&btnBgColor='+encodeURIComponent($("#btnBgColor").val())
+		+'&disTxtType='+encodeURIComponent($("#disTxtType").val())
+		+'&disBgColor='+encodeURIComponent($("#disBgColor").val())
+		+'&disFontColor='+encodeURIComponent($("#disFontColor").val())
+		+"&adbgType="+adbgType
+		+"&logoType="+adbgType
+		+"&logoText="+encodeURIComponent($("#logoText").val())
+		+"&logoBgColor="+encodeURIComponent($("#logoBgColor").val())
+		+"&logoFontColor="+encodeURIComponent($("#logoFontColor").val())
+		
+		
+		
+	console.log(src);
+	$(".akb_iframe").attr('src' ,src);
+//	$(".akb_iframe").attr('src' ,"adProdModel.html" 
+//	+"?catalogGroupId="+catalogGroupId
+//	+"&disTxtType="+$("#disTxtType").val()
+//	+"&disBgColor="+encodeURIComponent($("#disBgColor").val())
+//	+"&disFontColor="+encodeURIComponent($("#disFontColor").val())
+//	+"&btnTxt="+$("#").val()
+//	+"&btnFontColor="+$("#").val()
+//	+"&btnBgColor="+$("#").val()
+//	+"&logoType="+adbgType
+//	+"&logoText="+$("#").val()
+//	+"&logoBgColor="+$("#").val()
+//	+"&logoFontColor="+$("#").val()
+//	);
 }
 
 function adPreview(){
 	if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
 		return false;
 	}
-	
+	console.log('====adPreview start====');
 	var css = $(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML;
 	css = css.replace("<#dad_logo_font_color>","#"+$("#logoFontColor").val());
 	css = css.replace("<#dad_logo_bg_color>","#"+$("#logoBgColor").val());
@@ -889,6 +931,7 @@ function adPreview(){
 	//動態結尾蓋圖
 	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
 	var selectSizeHeight = $("#adSize option:selected").text().split(" x ")[1];
+	
 	Object.keys(uploadLog).forEach(function(key) {
 		var height = String(uploadLog[key].height);
 		var width = String(uploadLog[key].width);

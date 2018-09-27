@@ -11,4 +11,6 @@ public interface  IAd {
 	public String doAdAdAdd(AdAddAction adAddAction) throws Exception;
 	//修改廣告
 	public String adAdEdit(AdEditAction adEditAction) throws Exception;
+	//儲存修改廣告
+	public String doAdAdEdit(AdEditAction adEditAction) throws Exception;
 }

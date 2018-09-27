@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.db.service.ad;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,7 +16,10 @@ import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.enumerate.ad.EnumAdPriceType;
+import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.ad.EnumProdAdBtnText;
+import com.pchome.enumerate.ad.EnumProdAdDetail;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
@@ -137,12 +141,14 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				if(adAdViewVOs == null){
 					adAdViewVOs = new ArrayList<PfpAdAdViewVO>();
 				}
-
+				String operating = pfpAd.getPfpAdGroup().getPfpAdAction().getAdOperatingRule();
+						
+						
+						
 				PfpAdAdViewVO pfpAdAdViewVO = new PfpAdAdViewVO();
 				pfpAdAdViewVO.setAdActionSeq(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionSeq());
 				pfpAdAdViewVO.setAdActionName(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName());
 				pfpAdAdViewVO.setAdOperatingRule(pfpAd.getPfpAdGroup().getPfpAdAction().getAdOperatingRule());
-				System.out.println(pfpAd.getPfpAdGroup().getAdGroupPriceType());
 				// 計費方式
 				for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
 					if(enumAdPriceType.getDbTypeName().equals(pfpAd.getPfpAdGroup().getAdGroupPriceType())){
@@ -253,8 +259,76 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 	                        }
 	                    }
 				    }
+				    
+				    //商品廣告明細用
+					if(operating.equals(EnumAdStyleType.AD_STYLE_PRODUCT.getTypeName())){
+						for (EnumProdAdDetail enumProdAdDetail : EnumProdAdDetail.values()) {
+							if(pfpAdDetail.getAdDetailId().equals(enumProdAdDetail.getAdDetailId())){
+								switch(enumProdAdDetail) { 
+						        case PROD_REPORT_NAME:
+						        	pfpAdAdViewVO.setAdName(pfpAdDetail.getAdDetailContent());						        	
+						        	break;
+							 	case PROD_LIST:
+							 		pfpAdAdViewVO.setCatalogId(pfpAdDetail.getAdDetailContent());
+							 		break;
+								case PROD_GROUP:
+									pfpAdAdViewVO.setCatalogGroupId(pfpAdDetail.getAdDetailContent());
+							 		break;
+								case PROD_AD_URL:
+									//商品連結網址
+									pfpAdAdViewVO.setRealUrl(pfpAdDetail.getAdDetailContent());
+							 		break;
+								case LOGO_TYPE:
+									pfpAdAdViewVO.setLogoType(pfpAdDetail.getAdDetailContent());
+							 		break;
+								case LOGO_TXT:
+									//logo標題文字
+									pfpAdAdViewVO.setLogoText(pfpAdDetail.getAdDetailContent());
+							 		break;
+								case LOGO_FONT_COLOR:
+									//logo標題文字顏色
+									pfpAdAdViewVO.setLogoFontColor(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
+							 		break;
+								case LOGO_BG_COLOR:
+									//logo背景顏色
+									pfpAdAdViewVO.setLogoBgColor(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
+							 		break;
+								case BTN_TXT:
+									//按鈕文字
+									String btnTxt = pfpAdDetail.getAdDetailContent();
+									for (EnumProdAdBtnText enumProdAdBtnText : EnumProdAdBtnText.values()) {
+										if(btnTxt.equals(enumProdAdBtnText.getBtnText())){
+											pfpAdAdViewVO.setBtnTxt(enumProdAdBtnText.getBtnType());
+											break;
+										}
+									}
+							 		break;
+								case BTN_FONT_COLOR:
+									//按鈕文字顏色
+									pfpAdAdViewVO.setBtnFontColor(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
+							 		break;
+								case BTN_BG_COLOR:
+									//按鈕背景顏色
+									pfpAdAdViewVO.setBtnBgColor(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
+									break;
+								case DIS_TXT_TYPE:
+									//標籤文字
+									pfpAdAdViewVO.setDisTxtType(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
+							 		break;
+								case DIS_FONT_COLOR:
+									//標籤文字顏色
+									pfpAdAdViewVO.setDisFontColor(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
+							 		break;
+								case DIS_BG_COLOR:
+									//標籤背景顏色
+									pfpAdAdViewVO.setDisBgColor(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
+							 		break;
+								}
+							}
+						}
+					}
+					
 				}
-
 				adAdViewVOs.add(pfpAdAdViewVO);
 			}
 		}
