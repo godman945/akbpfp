@@ -706,7 +706,6 @@ function adSubmit(){
 		        		logoImg = uploadLogoLog[key].previewSrc;
 		        	})
 		        	
-		        	$(".akb_iframe").attr('src' , "adProdModel.html?logoType=type1");
 			    		$.ajax({
 						url : "adAddProdSaveAjax.html",
 						type : "POST",
