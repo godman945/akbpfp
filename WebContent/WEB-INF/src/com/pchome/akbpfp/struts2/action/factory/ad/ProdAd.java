@@ -50,7 +50,12 @@ public class ProdAd implements IAd {
 		log.info(">>>>>> process ProdAd");
 		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
 		PfpCatalogLogo pfpCatalogLogo = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
-		adAddAction.setUserLogoType(pfpCatalogLogo.getCatalogLogoType());
+		if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
+			adAddAction.setUserLogoType("crop-height");
+		}
+		if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
+			adAddAction.setUserLogoType("");
+		}
 		adAddAction.setUserLogoPath(pfpCatalogLogo.getCatalogLogoUrl());
 		adAddAction.getRequest().setAttribute("alex", alex);
 		return "adProdAdd";

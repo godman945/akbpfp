@@ -321,7 +321,8 @@
 
 <input type="hidden" id="messageId" value="">
 <input type="hidden" id="adGroupSeq" value="${adGroupSeq!}">
-
+<input type="hidden" id="userLogoType" value="${userLogoType!}">
+<input type="hidden" id="userLogoPath" value="${userLogoPath!}">
 </div>
 <input type="file" serialize id="fileupload" name="fileupload"  style="display:none;">
 <input type="hidden" id="messageId" value="${message!!}">
@@ -332,5 +333,4 @@
 
 <div id ="test2" class="test2" style="display:none;">
 </div>
-
 

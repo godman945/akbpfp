@@ -63,6 +63,11 @@ public class AdModelAPIAction extends BaseCookieAction{
 	private String adbgType="";
 	//logo類型
 	private String prodLogoType;
+	
+	private String userLogoType;
+	
+	private String userLogoPath;
+	
 	/* 商品廣告用參數 END*/
 	
 	
@@ -116,7 +121,8 @@ public class AdModelAPIAction extends BaseCookieAction{
 		pfpProdAdPreviewJson.put("disTxtType", disTxtType);
 		pfpProdAdPreviewJson.put("adbgType", adbgType);
 		pfpProdAdPreviewJson.put("prodLogoType", prodLogoType);
-		
+		pfpProdAdPreviewJson.put("userLogoType", userLogoType);
+		pfpProdAdPreviewJson.put("userLogoPath", userLogoPath);
 		String adHtml = admAPI.getAdProdContent(pfpProdAdPreviewJson.toString());
 //		log.info("adHtml:"+adHtml);
 		
@@ -253,6 +259,26 @@ public class AdModelAPIAction extends BaseCookieAction{
 
 	public void setProdLogoType(String prodLogoType) {
 		this.prodLogoType = prodLogoType;
+	}
+
+
+	public String getUserLogoType() {
+		return userLogoType;
+	}
+
+
+	public void setUserLogoType(String userLogoType) {
+		this.userLogoType = userLogoType;
+	}
+
+
+	public String getUserLogoPath() {
+		return userLogoPath;
+	}
+
+
+	public void setUserLogoPath(String userLogoPath) {
+		this.userLogoPath = userLogoPath;
 	}
 
 
