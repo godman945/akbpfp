@@ -827,6 +827,7 @@ function adEditSubmit(){
 function getProdGroup(obj){
 	var catalogGroupId = $("#groupSelect").val();
 	if(catalogGroupId == ""){
+		$(".akb_iframe").attr("src","");
 		return false;
 	}
 	

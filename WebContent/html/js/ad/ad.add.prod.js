@@ -588,6 +588,8 @@ function createSuccessUploadToDom(){
 			'</li>';
 		$(a).append(li);
 	});
+	//變更iframe內容
+	getProdGroup(null);
 }
 
 function clickDeleteUpload(obj,deleteKey){
