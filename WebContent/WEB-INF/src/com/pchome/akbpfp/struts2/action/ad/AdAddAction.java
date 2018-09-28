@@ -228,6 +228,10 @@ public class AdAddAction extends BaseCookieAction{
 	private String disFontColor;
 	//logo類型
 	private String prodLogoType;
+	
+	private String userLogoType;
+	
+	private String userLogoPath;
 	/* 商品廣告用參數 END*/
 	
 	//新增廣告
@@ -2754,6 +2758,22 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setProdLogoType(String prodLogoType) {
 		this.prodLogoType = prodLogoType;
+	}
+
+	public String getUserLogoType() {
+		return userLogoType;
+	}
+
+	public void setUserLogoType(String userLogoType) {
+		this.userLogoType = userLogoType;
+	}
+
+	public String getUserLogoPath() {
+		return userLogoPath;
+	}
+
+	public void setUserLogoPath(String userLogoPath) {
+		this.userLogoPath = userLogoPath;
 	}
 
 	public static void main(String args[]){

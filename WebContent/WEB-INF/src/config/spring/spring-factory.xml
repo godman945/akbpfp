@@ -53,6 +53,7 @@
     <bean id="MultimediaAd" class="com.pchome.akbpfp.struts2.action.factory.ad.MultimediaAd" scope="prototype"/>
     <bean id="ProdAd" class="com.pchome.akbpfp.struts2.action.factory.ad.ProdAd" scope="prototype"  >
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
+    	<property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
     </bean>
     <bean id="VideoAd" class="com.pchome.akbpfp.struts2.action.factory.ad.VideoAd" scope="prototype"  />
     <!-- 廣告行為工廠 END -->

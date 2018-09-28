@@ -242,4 +242,9 @@
     
      <!-- 商品群組、清單END-->
     
+    <!-- 商品LOGO START-->
+    <bean id="PfpCatalogLogoDAO" class="com.pchome.akbpfp.db.dao.catalog.prod.PfpCatalogLogoDAO">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <!-- 商品LOGO END-->
 </beans>

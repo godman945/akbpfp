@@ -257,5 +257,9 @@
     
     <!-- 商品群組、清單END-->
     
-    
+    <!-- 商品LOGO START-->
+    <bean id="PfpCatalogLogoService" class="com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogLogoService">
+    	<property name="dao" ref="PfpCatalogLogoDAO" />
+    </bean>
+    <!-- 商品LOGO END-->
 </beans>

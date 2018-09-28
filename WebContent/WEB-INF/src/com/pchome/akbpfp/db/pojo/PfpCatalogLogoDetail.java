@@ -1,12 +1,15 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/9/5 �U�� 12:18:24 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/9/28 �W�� 11:49:37 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,6 +22,7 @@ import javax.persistence.TemporalType;
 public class PfpCatalogLogoDetail implements java.io.Serializable {
 
 	private Integer catalogLogoDetailSeq;
+	private PfpCatalogLogo pfpCatalogLogo;
 	private String pfpCustomerInfoId;
 	private String catalogLogoRgb;
 	private Date updateDate;
@@ -27,7 +31,9 @@ public class PfpCatalogLogoDetail implements java.io.Serializable {
 	public PfpCatalogLogoDetail() {
 	}
 
-	public PfpCatalogLogoDetail(String pfpCustomerInfoId, String catalogLogoRgb, Date updateDate, Date createDate) {
+	public PfpCatalogLogoDetail(PfpCatalogLogo pfpCatalogLogo, String pfpCustomerInfoId, String catalogLogoRgb,
+			Date updateDate, Date createDate) {
+		this.pfpCatalogLogo = pfpCatalogLogo;
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
 		this.catalogLogoRgb = catalogLogoRgb;
 		this.updateDate = updateDate;
@@ -44,6 +50,16 @@ public class PfpCatalogLogoDetail implements java.io.Serializable {
 
 	public void setCatalogLogoDetailSeq(Integer catalogLogoDetailSeq) {
 		this.catalogLogoDetailSeq = catalogLogoDetailSeq;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "catalog_logo_seq", nullable = false)
+	public PfpCatalogLogo getPfpCatalogLogo() {
+		return this.pfpCatalogLogo;
+	}
+
+	public void setPfpCatalogLogo(PfpCatalogLogo pfpCatalogLogo) {
+		this.pfpCatalogLogo = pfpCatalogLogo;
 	}
 
 	@Column(name = "pfp_customer_info_id", nullable = false, length = 20)
