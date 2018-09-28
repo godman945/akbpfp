@@ -15,14 +15,15 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.castor.core.util.Base64Encoder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
+import com.pchome.akbpfp.db.pojo.PfpCatalogLogo;
 import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
+import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.struts2.action.ad.AdAddAction;
 import com.pchome.akbpfp.struts2.action.ad.AdEditAction;
 import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
@@ -37,6 +38,8 @@ public class ProdAd implements IAd {
 
 	private  IPfpCatalogService pfpCatalogService;
 	
+	private IPfpCatalogLogoService pfpCatalogLogoService;
+	
 	private List<PfpCatalog> alex;
 	
 	
@@ -46,6 +49,9 @@ public class ProdAd implements IAd {
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
 		log.info(">>>>>> process ProdAd");
 		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
+		PfpCatalogLogo pfpCatalogLogo = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
+		adAddAction.setUserLogoType(pfpCatalogLogo.getCatalogLogoType());
+		adAddAction.setUserLogoPath(pfpCatalogLogo.getCatalogLogoUrl());
 		adAddAction.getRequest().setAttribute("alex", alex);
 		return "adProdAdd";
 	}
@@ -385,9 +391,9 @@ public class ProdAd implements IAd {
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
             	ImageIO.write(image, fileExtensionName, new File(saveImgPath));
             	if(type.equals("add")){
-            		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201303070001",defineAdSeq);	
+            		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
             	}else if(type.equals("edit")){
-            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201303070001",defineAdSeq);	
+            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
             	}
             }
             bis.close();
@@ -412,6 +418,14 @@ public class ProdAd implements IAd {
 
 	public void setAlex(List<PfpCatalog> alex) {
 		this.alex = alex;
+	}
+
+	public IPfpCatalogLogoService getPfpCatalogLogoService() {
+		return pfpCatalogLogoService;
+	}
+
+	public void setPfpCatalogLogoService(IPfpCatalogLogoService pfpCatalogLogoService) {
+		this.pfpCatalogLogoService = pfpCatalogLogoService;
 	}
 
 
