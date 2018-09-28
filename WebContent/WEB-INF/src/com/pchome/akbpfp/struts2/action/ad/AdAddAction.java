@@ -686,15 +686,14 @@ public class AdAddAction extends BaseCookieAction{
 			if(!pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId().equals(super.getCustomer_info_id())){
 				result = "分類帳戶錯誤";
 			}
-			
-//			System.out.println(uploadLog);
-//			System.out.println(uploadLogoLog);
-			
 			IAd adObject = adFactory.getaAdObject(EnumAdStyleType.AD_STYLE_PRODUCT);
 			adObject.doAdAdAdd(this);
-			
+			// 開啟廣告分類
+			if(pfpAdGroup.getAdGroupStatus() != 4){
+				pfpAdGroup.setAdGroupStatus(4);
+				pfpAdGroupService.save(pfpAdGroup);
+			}
 			result = "success";
-			
 			return SUCCESS;
 		}catch(Exception e){
 			e.printStackTrace();
@@ -702,17 +701,6 @@ public class AdAddAction extends BaseCookieAction{
 			return SUCCESS;
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/*
 	 * 儲存影音上稿資料
