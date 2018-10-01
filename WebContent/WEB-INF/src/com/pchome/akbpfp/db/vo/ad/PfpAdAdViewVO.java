@@ -66,6 +66,10 @@ public class PfpAdAdViewVO {
 	//logo類型
 	private String prodLogoType;
 	
+	private String userLogoType;
+	
+	private String userLogoPath;
+	
 	/* 商品廣告用參數 END*/
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -342,6 +346,18 @@ public class PfpAdAdViewVO {
 	}
 	public void setProdLogoType(String prodLogoType) {
 		this.prodLogoType = prodLogoType;
+	}
+	public String getUserLogoType() {
+		return userLogoType;
+	}
+	public void setUserLogoType(String userLogoType) {
+		this.userLogoType = userLogoType;
+	}
+	public String getUserLogoPath() {
+		return userLogoPath;
+	}
+	public void setUserLogoPath(String userLogoPath) {
+		this.userLogoPath = userLogoPath;
 	}
     
 }

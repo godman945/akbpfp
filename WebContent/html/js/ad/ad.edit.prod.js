@@ -890,6 +890,8 @@ function getProdGroup(obj){
 		+"&logoBgColor="+encodeURIComponent(logoBgColor)
 		+"&logoFontColor="+encodeURIComponent(logoFontColor)
 		+"&prodLogoType="+encodeURIComponent($('input[name=options]:checked').val())
+		+"&userLogoType="+encodeURIComponent($("#saveUserLogoType").val())
+		+"&userLogoPath="+encodeURIComponent($("#saveUserLogoPath").val())
 	console.log(src);
 	$(".akb_iframe").attr('src' ,src);
 }

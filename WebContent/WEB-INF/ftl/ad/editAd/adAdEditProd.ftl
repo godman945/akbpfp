@@ -346,6 +346,8 @@
 <input type="hidden" id="saveDisTxtType" value="${disTxtType!}">
 <input type="hidden" id="saveDisBgColor" value="${disBgColor!}">
 <input type="hidden" id="saveDisFontColor" value="${disFontColor!}">
+<input type="hidden" id="saveUserLogoType" value="${userLogoType!}">
+<input type="hidden" id="saveUserLogoPath" value="${userLogoPath!}">
 <textarea style="display:none;" id="saveLogoSaleImg">${uploadLogoLog!}</textarea>
 <textarea style="display:none;" id="saveSaleImg">${uploadLog!}</textarea>
 

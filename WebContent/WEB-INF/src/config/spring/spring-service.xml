@@ -138,6 +138,7 @@
 
 	<!-- Ad -->
     <bean id="PfpAdService" class="com.pchome.akbpfp.db.service.ad.PfpAdService">    	     
+        <property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" /> 
         <property name="dao" ref="PfpAdDAO" />   
     </bean>
 

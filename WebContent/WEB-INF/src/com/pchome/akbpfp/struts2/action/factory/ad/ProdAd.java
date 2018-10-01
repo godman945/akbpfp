@@ -151,9 +151,16 @@ public class ProdAd implements IAd {
 	@Override
 	public String adAdEdit(AdEditAction adEditAction) throws Exception {
 		Set<PfpAdDetail> detailSet = adEditAction.getPfpAd().getPfpAdDetails();
+		PfpCatalogLogo pfpCatalogLogo = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adEditAction.getCustomer_info_id());
+		if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
+			adEditAction.setUserLogoType("crop-height");
+		}
+		if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
+			adEditAction.setUserLogoType("");
+		}
+		adEditAction.setUserLogoPath(pfpCatalogLogo.getCatalogLogoUrl());
 		JSONArray uploadLogJsonArray = new JSONArray();
 		JSONArray uploadLogoLogJsonArray = new JSONArray();
-		
 		for (PfpAdDetail pfpAdDetail : detailSet) {
 			if(EnumProdAdDetail.PROD_REPORT_NAME.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
 				adEditAction.setAdName(pfpAdDetail.getAdDetailContent());

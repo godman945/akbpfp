@@ -12,7 +12,9 @@ import com.pchome.akbpfp.db.dao.ad.PfpAdDAO;
 import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
+import com.pchome.akbpfp.db.pojo.PfpCatalogLogo;
 import com.pchome.akbpfp.db.service.BaseService;
+import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.enumerate.ad.EnumAdPriceType;
@@ -24,6 +26,8 @@ import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
 public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdService{
+	
+	private IPfpCatalogLogoService pfpCatalogLogoService;
 	
 	public List<PfpAd> getAllPfpAds() throws Exception{
 		return ((PfpAdDAO)dao).loadAll();
@@ -276,7 +280,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 							 		break;
 								case PROD_AD_URL:
 									//商品連結網址
-									pfpAdAdViewVO.setRealUrl(pfpAdDetail.getAdDetailContent());
+									pfpAdAdViewVO.setRealUrl(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
 							 		break;
 								case LOGO_TYPE:
 									pfpAdAdViewVO.setLogoType(pfpAdDetail.getAdDetailContent());
@@ -330,8 +334,16 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 								}
 							}
 						}
+						
+						PfpCatalogLogo pfpCatalogLogo = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(customerInfoId);
+						if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
+							pfpAdAdViewVO.setUserLogoType("crop-height");
+						}
+						if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
+							pfpAdAdViewVO.setUserLogoType("");
+						}
+						pfpAdAdViewVO.setUserLogoPath(URLEncoder.encode(pfpCatalogLogo.getCatalogLogoUrl()));
 					}
-					
 				}
 				adAdViewVOs.add(pfpAdAdViewVO);
 			}
@@ -446,6 +458,16 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 		}
 		return adReportVOList;
 	}
+
+	public IPfpCatalogLogoService getPfpCatalogLogoService() {
+		return pfpCatalogLogoService;
+	}
+
+	public void setPfpCatalogLogoService(IPfpCatalogLogoService pfpCatalogLogoService) {
+		this.pfpCatalogLogoService = pfpCatalogLogoService;
+	}
+	
+	
 }
 
 

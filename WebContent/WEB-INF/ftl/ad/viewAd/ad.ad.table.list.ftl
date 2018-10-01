@@ -81,6 +81,9 @@
 									&logoFontColor=${vo.logoFontColor!}
 									&prodLogoType=type1
 									&adbgType=hasposter
+									&userLogoType=${vo.userLogoType!}
+									&userLogoPath=${vo.userLogoPath!}
+									&prodAdUrl=${vo.realUrl!}
 									">
 								</iframe>
 							<#else>

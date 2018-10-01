@@ -123,6 +123,7 @@ public class AdModelAPIAction extends BaseCookieAction{
 		pfpProdAdPreviewJson.put("prodLogoType", prodLogoType);
 		pfpProdAdPreviewJson.put("userLogoType", userLogoType);
 		pfpProdAdPreviewJson.put("userLogoPath", userLogoPath);
+		pfpProdAdPreviewJson.put("realUrl", realUrl);
 		String adHtml = admAPI.getAdProdContent(pfpProdAdPreviewJson.toString());
 //		log.info("adHtml:"+adHtml);
 		
