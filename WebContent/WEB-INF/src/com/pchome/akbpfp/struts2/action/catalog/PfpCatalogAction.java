@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
+import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 
@@ -21,6 +22,7 @@ import com.pchome.akbpfp.struts2.BaseCookieAction;
 public class PfpCatalogAction extends BaseCookieAction{
 	
 	private IPfpCatalogService pfpCatalogService;
+	private IPfpCatalogUploadListService pfpCatalogUploadListService;
 	
 	private String queryString = ""; // 預設為空
 	private int pageNo = 1;          // 初始化目前頁數
@@ -114,7 +116,15 @@ public class PfpCatalogAction extends BaseCookieAction{
 		PfpCatalogVO vo = new PfpCatalogVO();
 		vo.setCatalogSeq(deleteCatalogSeq);
 		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
+		
+		// table有FK，由明細先刪除資料再刪主PK PfpCatalog商品目錄資料
+		pfpCatalogUploadListService.deletePfpCatalogUploadErrLog(vo);
+		pfpCatalogUploadListService.deletePfpCatalogUploadLog(vo);
+		pfpCatalogUploadListService.deletePfpCatalogProdEc(vo);
+		pfpCatalogUploadListService.deletePfpCatalogGroupItem(vo); // 刪除 商品目錄群組明細 先寫在這，之後移到相對應的Service
+		pfpCatalogUploadListService.deletePfpCatalogGroup(vo); // 刪除 商品目錄群組 先寫在這，之後移到相對應的Service
 		pfpCatalogService.deletePfpCatalog(vo);
+		
 		return SUCCESS;
 	}
 	
@@ -189,6 +199,10 @@ public class PfpCatalogAction extends BaseCookieAction{
 	
 	public void setPfpCatalogService(IPfpCatalogService pfpCatalogService) {
 		this.pfpCatalogService = pfpCatalogService;
+	}
+
+	public void setPfpCatalogUploadListService(IPfpCatalogUploadListService pfpCatalogUploadListService) {
+		this.pfpCatalogUploadListService = pfpCatalogUploadListService;
 	}
 
 	public String getQueryString() {

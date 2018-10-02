@@ -48,7 +48,7 @@ public class PfpCatalogService extends BaseService<PfpCatalog, String> implement
 			
 			if (dataMap.get("catalog_upload_type") != null) { // 上傳方式
 				String catalog_upload_type = (String) dataMap.get("catalog_upload_type");
-				pfpCatalogVO.setCatalogUploadType(catalog_upload_type);
+				pfpCatalogVO.setCatalogUploadType(catalog_upload_type.trim());
 				if (EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType().equals(catalog_upload_type)) {
 					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getTypeName());
 				} else if (EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(catalog_upload_type)) {

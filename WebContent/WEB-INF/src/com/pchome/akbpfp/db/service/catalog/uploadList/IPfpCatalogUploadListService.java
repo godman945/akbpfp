@@ -7,6 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.service.IBaseService;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadListVO;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 
 public interface IPfpCatalogUploadListService extends IBaseService<String, String> {
 
@@ -20,6 +22,44 @@ public interface IPfpCatalogUploadListService extends IBaseService<String, Strin
 	 * @throws IOException 
 	 * @throws JSONException 
 	 */
-	JSONObject getCSVFileDataToJson(String path);
+	JSONObject getCSVFileDataToJson(PfpCatalogUploadListVO vo);
+	
+	/**
+	 * 檢查檔案格式是否為我們提供的CSV檔格式
+	 * @param vo
+	 * @return
+	 */
+	Map<String, Object> checkCSVFile(PfpCatalogUploadListVO vo);
 
+	/**
+	 * 刪除 一般購物類商品清單
+	 * @param vo
+	 */
+	void deletePfpCatalogProdEc(PfpCatalogVO vo);
+
+	/**
+	 * 刪除 商品目錄更新紀錄
+	 * @param vo
+	 */
+	void deletePfpCatalogUploadLog(PfpCatalogVO vo);
+	
+	/**
+	 * 刪除 商品目錄更新錯誤紀錄
+	 * @param vo
+	 */
+	void deletePfpCatalogUploadErrLog(PfpCatalogVO vo);
+
+	/**
+	 * 刪除 商品目錄群組
+	 * @param vo
+	 */
+	void deletePfpCatalogGroup(PfpCatalogVO vo);
+
+	/**
+	 * 刪除 商品目錄群組明細
+	 * @param vo
+	 */
+	void deletePfpCatalogGroupItem(PfpCatalogVO vo);
+
+	
 }

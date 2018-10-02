@@ -98,6 +98,12 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog, String> implements IPfpCa
 	 */
 	@Override
 	public void deletePfpCatalog(PfpCatalogVO vo) {
+//		String sql = "DELETE FROM PfpCatalog WHERE catalogSeq = '" + vo.getCatalogSeq() + "'";
+//			   sql += " AND pfpCustomerInfoId = '" + vo.getPfpCustomerInfoId() + "'";
+//        Session session = getSession();
+//        session.createQuery(sql).executeUpdate();
+//        session.flush();
+        
 		StringBuffer hql = new StringBuffer();
 		hql.append(" DELETE FROM pfp_catalog          ");
 		hql.append(" WHERE catalog_seq = :catalog_seq ");

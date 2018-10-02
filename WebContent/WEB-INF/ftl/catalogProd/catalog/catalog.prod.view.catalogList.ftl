@@ -88,32 +88,46 @@
 							</div>
 							
 							<div class="txt-cell col-upload">
-								${vo.catalogUploadTypeName!}
+								<#if vo.catalogUploadTypeName??>
+	                            	${vo.catalogUploadTypeName!}
+	                            <#else>
+	                            	-
+	                            </#if>
                         	</div>
                         	
                         	<div class="txt-cell col-source">
-	                            ${vo.updateContent!}
-	                            <small>最近更新：${vo.updateDatetime!}</small>
+                        		<#if vo.updateContent??>
+	                            	${vo.updateContent!}
+	                            	<small>最近更新：${vo.updateDatetime!}</small>
+	                            <#else>
+	                            	-
+	                            </#if>
 	                        </div>
                         	
                         	<div class="txt-cell col-success">
-	                            ${vo.successNum!}<em>筆</em>
+                        		<#if vo.successNum??>
+	                            	${vo.successNum!}<em>筆</em>
+	                            <#else>
+	                            	-
+	                            </#if>
 	                        </div>
 	                        
 	                        <div class="txt-cell col-failure">
-	                        	<#if vo.errorNum != "0">
-	                            	<a href="11所有商品目錄-錯誤列表.html">${vo.errorNum!}<em>筆</em></a>
-	                            <#else>
-									-
-								</#if>
+	                        	<#if vo.errorNum?? && vo.errorNum != "0">
+	                        		<a href="11所有商品目錄-錯誤列表.html">${vo.errorNum!}<em>筆</em></a>
+	                        	<#else>
+	                            	-
+	                            </#if>
 	                        </div>
 	                        
 	                        <div class="txt-cell col-renew">
-	                        	<#if vo.catalogUploadType == "2" || vo.catalogUploadType == "3">
+								<#if vo.catalogUploadType == "1" || vo.catalogUploadType == "4">
+									<a href="selectUpload.html?catalogSeq=${vo.catalogSeq!}&selectUploadFlag=${vo.catalogUploadType!}">上傳檔案</a>
+								<#elseif vo.catalogUploadType == "2" || vo.catalogUploadType == "3">
 		                            <small>下次更新時間</small>
 		                            ${vo.nextUpdateDatetime!}
 								<#else>
-									<a href="#">上傳檔案</a>
+									<a href="catalogUpload.html?catalogSeq=${vo.catalogSeq!}">上傳檔案</a>
 								</#if>
 	                        </div>
 	                        

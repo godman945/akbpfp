@@ -6,6 +6,7 @@ import com.pchome.akbpfp.db.dao.IBaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 
 public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 
@@ -40,5 +41,36 @@ public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 	 * @param pfpCatalogUploadErrLog
 	 */
 	void savePfpCatalogUploadErrLog(PfpCatalogUploadErrLog pfpCatalogUploadErrLog);
+
+	/**
+	 * 刪除 商品目錄更新錯誤紀錄
+	 * @param vo
+	 */
+	void deletePfpCatalogUploadErrLog(PfpCatalogVO vo);
+
+	/**
+	 * 刪除 一般購物類商品清單
+	 * @param vo
+	 */
+	void deletePfpCatalogProdEc(PfpCatalogVO vo);
+
+	/**
+	 * 刪除 商品目錄更新紀錄
+	 * @param vo
+	 */
+	void deletePfpCatalogUploadLog(PfpCatalogVO vo);
+
+	/**
+	 * 刪除 商品目錄群組
+	 * @param vo
+	 */
+	void deletePfpCatalogGroup(PfpCatalogVO vo);
+
+	/**
+	 * 刪除 商品目錄群組明細
+	 * @param vo
+	 */
+	void deletePfpCatalogGroupItem(PfpCatalogVO vo);
+
 
 }

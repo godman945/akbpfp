@@ -65,6 +65,7 @@
 		<property name="pfpCatalogUploadListService" ref="PfpCatalogUploadListService" />
 		<property name="pfpCatalogService" ref="PfpCatalogService" />
 		<property name="productFilePath" value="${product.file.path}" />
+		<property name="akbPfpServer" value="${akbpfp.server}" />
     </bean>
     
 </beans>

@@ -804,10 +804,37 @@
         	<interceptor-ref name="adPrivilegeInterceptor" />
             <result type="tiles" name="fileUpload">.catalog.upload.view.fileUpload</result>
             <!-- 下面畫面待做 -->
-            <result type="tiles" name="automaticScheduling">.catalog.upload.view.selectUploadAutoJob</result>
-            <result type="tiles" name="storeURL">.catalog.upload.view.selectUploadPchomeStoreURL</result>
-            <result type="tiles" name="manualUpload">.catalog.upload.view.selectUploadManualInput</result>
+            <result type="tiles" name="automaticScheduling">.catalog.upload.view.autoJob</result>
+            <result type="tiles" name="storeURL">.catalog.upload.view.pchomeStoreURL</result>
+            <result type="tiles" name="manualUpload">.catalog.upload.view.manualInput</result>
         </action>
+      	
+      	<!-- 廣告商品-檢查檔案資料 -->
+		<action name="catalogUploadCheckFileData" class="PfpCatalogUploadListAction" method="catalogUploadCheckFileData">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="json" name="success">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+		<!-- 廣告商品-檢查輸入的排程網址 -->
+		<action name="processCheckJobURL" class="PfpCatalogUploadListAction" method="ajaxCheckJobURL">
+			<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="adPrivilegeInterceptor" />
+        	<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+     	
+     	<!-- 廣告商品-新增或更新自動排程資料 -->
+		<action name="catalogProdAutoJob" class="PfpCatalogUploadListAction" method="catalogProdAutoJob">
+			<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="adPrivilegeInterceptor" />
+        	<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
       	
     </package>
 </struts>
