@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,14 +18,22 @@ import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.catalog.IPfpCatalogDAO;
 import com.pchome.akbpfp.db.dao.catalog.uploadList.IPfpCatalogUploadListDAO;
+import com.pchome.akbpfp.db.pojo.PfpCatalog;
+import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.BaseService;
+import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
+import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadListVO;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadLogVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
+import com.pchome.enumerate.sequence.EnumSequenceTableName;
 
 public class PfpCatalogUploadListService extends BaseService<String, String> implements IPfpCatalogUploadListService {
 
 	private ShoppingProd shoppingProd;
+	private IPfpCatalogService pfpCatalogService;
+	private ISequenceService sequenceService;
 	private IPfpCatalogUploadListDAO pfpCatalogUploadListDAO;
 	
 	/**
@@ -305,7 +315,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	 */
 	@Override
 	public void deletePfpCatalogProdEc(PfpCatalogVO vo) {
-		// TODO Auto-generated method stub
 		pfpCatalogUploadListDAO.deletePfpCatalogProdEc(vo);
 	}
 
@@ -315,7 +324,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	 */
 	@Override
 	public void deletePfpCatalogUploadLog(PfpCatalogVO vo) {
-		// TODO Auto-generated method stub
 		pfpCatalogUploadListDAO.deletePfpCatalogUploadLog(vo);
 	}
 
@@ -325,9 +333,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	 */
 	@Override
 	public void deletePfpCatalogUploadErrLog(PfpCatalogVO vo) {
-		// TODO Auto-generated method stub
 		pfpCatalogUploadListDAO.deletePfpCatalogUploadErrLog(vo);
-//		((IPfpCatalogDAO) dao).deletePfpCatalog(vo);
 	}
 
 	/**
@@ -336,7 +342,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	 */
 	@Override
 	public void deletePfpCatalogGroup(PfpCatalogVO vo) {
-		// TODO Auto-generated method stub
 		pfpCatalogUploadListDAO.deletePfpCatalogGroup(vo);
 	}
 
@@ -346,8 +351,40 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	 */
 	@Override
 	public void deletePfpCatalogGroupItem(PfpCatalogVO vo) {
-		// TODO Auto-generated method stub
 		pfpCatalogUploadListDAO.deletePfpCatalogGroupItem(vo);
+	}
+
+	/**
+	 * 新增log記錄
+	 * @throws Exception 
+	 */
+	@Override
+	public void savePfpCatalogUploadLog(PfpCatalogUploadLogVO vo) throws Exception {
+		PfpCatalogUploadLog pfpCatalogUploadLog = new PfpCatalogUploadLog();
+		
+		String catalogUploadLogSeq = sequenceService.getId(EnumSequenceTableName.PFP_CATALOG_UPLOAD_LOG, "", 20);
+		pfpCatalogUploadLog.setCatalogUploadLogSeq(catalogUploadLogSeq); // 更新紀錄序號
+		
+		PfpCatalog pfpCatalog = pfpCatalogService.get(vo.getCatalogSeq());
+		pfpCatalogUploadLog.setPfpCatalog(pfpCatalog); // 商品目錄
+		
+		pfpCatalogUploadLog.setUpdateWay(vo.getUpdateWay()); // 更新方式
+		pfpCatalogUploadLog.setUpdateContent(vo.getUpdateContent()); // 更新內容
+		pfpCatalogUploadLog.setUpdateDatetime(new Date()); // 更新時間
+		pfpCatalogUploadLog.setErrorNum(vo.getErrorNum()); // 錯誤筆數
+		pfpCatalogUploadLog.setSuccessNum(vo.getSuccessNum()); // 成功筆數
+		pfpCatalogUploadLog.setUpdateDate(new Date()); // 更新時間
+		pfpCatalogUploadLog.setCreateDate(new Date()); // 建立時間
+		
+		pfpCatalogUploadListDAO.savePfpCatalogUploadLog(pfpCatalogUploadLog);
+	}
+
+	public void setPfpCatalogService(IPfpCatalogService pfpCatalogService) {
+		this.pfpCatalogService = pfpCatalogService;
+	}
+
+	public void setSequenceService(ISequenceService sequenceService) {
+		this.sequenceService = sequenceService;
 	}
 
 	

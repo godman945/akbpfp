@@ -63,7 +63,7 @@ public class PfpCatalogService extends BaseService<PfpCatalog, String> implement
 			}
 			
 			if (dataMap.get("update_content") != null) { // 資料來源
-				pfpCatalogVO.setUpdateContent((String) dataMap.get("update_content"));
+				pfpCatalogVO.setUploadContent((String) dataMap.get("update_content"));
 			}
 			
 			if (dataMap.get("update_datetime") != null) { // 最近更新
@@ -86,7 +86,6 @@ public class PfpCatalogService extends BaseService<PfpCatalog, String> implement
 
 	/**
 	 * 新增商品目錄
-	 * @param PfpCatalogVO
 	 * @throws Exception 
 	 */
 	@Override
@@ -97,11 +96,18 @@ public class PfpCatalogService extends BaseService<PfpCatalog, String> implement
 	
 	/**
 	 * 刪除商品目錄
-	 * @param PfpCatalogVO
 	 */
 	@Override
 	public void deletePfpCatalog(PfpCatalogVO vo) {
 		((IPfpCatalogDAO) dao).deletePfpCatalog(vo);
+	}
+	
+	/**
+	 * 更新商品目錄
+	 */
+	@Override
+	public void updatePfpCatalog(PfpCatalogVO vo) {
+		((IPfpCatalogDAO) dao).updatePfpCatalog(vo);
 	}
 	
 	/**

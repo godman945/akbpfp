@@ -9,7 +9,7 @@
     <#-- hidden 隱藏所有牙齒 -->
     <#-- hidetabs 只顯示第一顆牙齒 -->
     <#-- tab1 tab2 tab3 tab4 tab5 牙齒由左至右底線 -->
-    <div class="nav-wrap pos-relative">
+    <div class="nav-wrap pos-relative tab4">
         <div class="nav-box pos-relative">
             <ul class="txt-table">
                 <li class="txt-cell pos-relative p-r10">

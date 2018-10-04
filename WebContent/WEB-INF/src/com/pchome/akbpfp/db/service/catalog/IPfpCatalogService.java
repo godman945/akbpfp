@@ -30,4 +30,10 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog, String> {
 	 */
 	void deletePfpCatalog(PfpCatalogVO vo);
 
+	/**
+	 * 更新商品目錄
+	 * @param PfpCatalogVO
+	 */
+	void updatePfpCatalog(PfpCatalogVO vo);
+
 }

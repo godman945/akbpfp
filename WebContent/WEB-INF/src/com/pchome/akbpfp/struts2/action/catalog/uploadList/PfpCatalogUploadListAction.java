@@ -21,9 +21,11 @@ import org.json.JSONObject;
 
 
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
+import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadListVO;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadLogVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
@@ -61,9 +63,12 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	private String updateWay; // 更新方式(1.取代,2.更新)
 	private String akbPfpServer;
 	
-	//自動排程
+	// 自動排程上傳
 	private String jobURL; // 輸入的自動排程網址
 	private String uploadContent;
+	
+	// 商店網址上傳
+	private String pchomeStoreURL; // 輸入的商店網址
 	
 	// api用
 	private String catalog_seq;
@@ -107,6 +112,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			uploadContent = pfpCatalog.getCatalogUploadContent().trim();
 			return "automaticScheduling";
 		} else if (selectUploadFlag.equals(EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType())) {
+			uploadContent = pfpCatalog.getCatalogUploadContent().trim();
 			return "storeURL";
 		} else if (selectUploadFlag.equals(EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType())) {
 			return "manualUpload";
@@ -246,6 +252,49 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
 		}
 		
+		return SUCCESS;
+	}
+	
+	/**
+	 * 檢查輸入的pchome賣場網址
+	 * @return
+	 * @throws Exception
+	 */
+	public String ajaxCheckPchomeStoreURL() throws Exception {
+		dataMap = new HashMap<String, Object>();
+
+		AdUtilAjax adUtilAjax = new AdUtilAjax();
+		boolean checkUrlStatus = adUtilAjax.checkUrl(pchomeStoreURL, akbPfpServer);
+		if (!checkUrlStatus) {
+			dataMap.put("status", "ERROR");
+		}
+		
+		return SUCCESS;
+	}
+	
+	/**
+	 * pchome賣場網址 新增更新
+	 * @return
+	 * @throws Exception
+	 */
+	public String catalogProdPchomeStoreURL() throws Exception {
+		dataMap = new HashMap<String, Object>();
+		
+		// 更新目錄
+		PfpCatalogVO vo = new PfpCatalogVO();
+		vo.setCatalogSeq(catalogSeq);
+		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
+		vo.setCatalogUploadType("3");
+		vo.setUploadContent(pchomeStoreURL);
+		pfpCatalogService.updatePfpCatalog(vo);
+		
+		//新增Log記錄
+		PfpCatalogUploadLogVO pfpCatalogUploadLogVO = new PfpCatalogUploadLogVO();
+		pfpCatalogUploadLogVO.setCatalogSeq(catalogSeq);
+		pfpCatalogUploadLogVO.setUpdateWay(updateWay);
+		pfpCatalogUploadLogVO.setUpdateContent(pchomeStoreURL);
+		pfpCatalogUploadListService.savePfpCatalogUploadLog(pfpCatalogUploadLogVO);
+
 		return SUCCESS;
 	}
 	
@@ -395,6 +444,10 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 
 	public String getUploadContent() {
 		return uploadContent;
+	}
+
+	public void setPchomeStoreURL(String pchomeStoreURL) {
+		this.pchomeStoreURL = pchomeStoreURL;
 	}
 	
 	

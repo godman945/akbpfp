@@ -15,4 +15,6 @@ public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 
 	void savePfpCatalog(PfpCatalogVO vo);
 
+	void updatePfpCatalog(PfpCatalogVO vo);
+
 }

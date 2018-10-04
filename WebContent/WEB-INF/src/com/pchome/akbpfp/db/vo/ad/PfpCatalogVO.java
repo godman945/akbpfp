@@ -17,7 +17,7 @@ public class PfpCatalogVO {
 	private String catalogTypeName;   // 商品目錄類型中文
 	private String catalogUploadType; // 上傳方式(1:檔案上傳, 2:自動排程上傳, 3:賣場網址上傳, 4:手動上傳)
 	private String catalogUploadTypeName; //上傳方式中文
-	private String updateContent;     // 更新內容(檔名或網址)
+	private String uploadContent;     // 更新內容(檔名或網址)
 	private String updateDatetime;    // 執行更新時間
 	private String successNum;        // 成功筆數
 	private String errorNum;          // 失敗筆數
@@ -103,12 +103,12 @@ public class PfpCatalogVO {
 		this.catalogUploadType = catalogUploadType;
 	}
 
-	public String getUpdateContent() {
-		return updateContent;
+	public String getUploadContent() {
+		return uploadContent;
 	}
 
-	public void setUpdateContent(String updateContent) {
-		this.updateContent = updateContent;
+	public void setUploadContent(String uploadContent) {
+		this.uploadContent = uploadContent;
 	}
 
 	public String getUpdateDatetime() {
