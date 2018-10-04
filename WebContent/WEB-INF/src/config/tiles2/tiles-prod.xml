@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<definition name=".prod.logo" extends="default.layout" >
+    	<!-- 
+    	
+    	<put-attribute name="menu" value="prod.logo.menu" />
+    	 -->
+    	<put-attribute name="head" value="prod.logo.head" />
+    	<put-attribute name="body" value="/ftl/prodLogo/logo.ftl" />
+    </definition>
+    
+    <definition name="prod.logo.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
+    	<put-attribute name="js" value="prod.logo.defalut.js" />
+    </definition>
+    
+     <definition name="prod.logo.defalut.js" template="/ftl/prodLogo/logo.default.js.ftl">
+    	<!-- 
+    	<put-attribute name="jsName" value="catalogProd/commonCatalogProd.js" />
+    	<put-attribute name="dateJsName" value="catalogProd/dateRangeSelect.js" />
+    	<put-attribute name="validateJs" value="jquery/jquery.validate.js" />
+    	-->
+    </definition>
+    
+</tiles-definitions>

@@ -7,14 +7,18 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.ad.PfpAdDAO;
 import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAd;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpCatalogLogo;
+import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
+import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewConditionVO;
 import com.pchome.akbpfp.db.vo.ad.PfpAdAdViewVO;
 import com.pchome.enumerate.ad.EnumAdPriceType;
@@ -28,7 +32,7 @@ import com.pchome.utils.CommonUtils;
 public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdService{
 	
 	private IPfpCatalogLogoService pfpCatalogLogoService;
-	
+	private IPfpCatalogSetupService pfpCatalogSetupService;
 	public List<PfpAd> getAllPfpAds() throws Exception{
 		return ((PfpAdDAO)dao).loadAll();
 	}
@@ -335,14 +339,36 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 							}
 						}
 						
-						PfpCatalogLogo pfpCatalogLogo = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(customerInfoId);
-						if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
-							pfpAdAdViewVO.setUserLogoType("crop-height");
+						PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCustomerInfoId(customerInfoId);
+						if(pfpCatalogSetup != null){
+							if(pfpCatalogSetup.getCatalogSetupValue().equals("0")){
+								pfpAdAdViewVO.setUserLogoType("crop-height");
+							}
+							if(pfpCatalogSetup.getCatalogSetupValue().equals("1")){
+								pfpAdAdViewVO.setUserLogoType("crop-width");
+							}
 						}
-						if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
-							pfpAdAdViewVO.setUserLogoType("");
+						
+						List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(customerInfoId);
+						JSONArray array = new JSONArray();
+						if(pfpCatalogSetup != null){
+							for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
+								JSONObject catalogLogoUrlJson = new JSONObject();
+								catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getCatalogLogoUrl());
+								catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
+								if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
+									JSONObject json = new JSONObject();
+									json.put("square", catalogLogoUrlJson);
+									array.put(json);
+								}
+								if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
+									JSONObject json = new JSONObject();
+									json.put("rectangle", catalogLogoUrlJson);
+									array.put(json);
+								}
+							}
 						}
-						pfpAdAdViewVO.setUserLogoPath(URLEncoder.encode(pfpCatalogLogo.getCatalogLogoUrl()));
+						pfpAdAdViewVO.setUserLogoPath(array.toString());
 					}
 				}
 				adAdViewVOs.add(pfpAdAdViewVO);
@@ -465,6 +491,14 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 
 	public void setPfpCatalogLogoService(IPfpCatalogLogoService pfpCatalogLogoService) {
 		this.pfpCatalogLogoService = pfpCatalogLogoService;
+	}
+
+	public IPfpCatalogSetupService getPfpCatalogSetupService() {
+		return pfpCatalogSetupService;
+	}
+
+	public void setPfpCatalogSetupService(IPfpCatalogSetupService pfpCatalogSetupService) {
+		this.pfpCatalogSetupService = pfpCatalogSetupService;
 	}
 	
 	

@@ -24,4 +24,5 @@
     <include file="config/struts2/struts-report.xml"/>
 	<include file="config/struts2/struts-summary.xml"/>
 	<include file="config/struts2/struts-catalog.xml"/>
+	<include file="config/struts2/struts-prod.xml"/>
 </struts>

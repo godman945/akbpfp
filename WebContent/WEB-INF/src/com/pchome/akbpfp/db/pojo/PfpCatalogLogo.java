@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/9/28 �W�� 11:49:37 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/10/4 �W�� 10:06:38 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -24,6 +24,7 @@ public class PfpCatalogLogo implements java.io.Serializable {
 	private String pfpCustomerInfoId;
 	private String catalogLogoType;
 	private String catalogLogoUrl;
+	private int status;
 	private Date updateDate;
 	private Date createDate;
 	private Set<PfpCatalogLogoDetail> pfpCatalogLogoDetails = new HashSet<PfpCatalogLogoDetail>(0);
@@ -32,21 +33,24 @@ public class PfpCatalogLogo implements java.io.Serializable {
 	}
 
 	public PfpCatalogLogo(String catalogLogoSeq, String pfpCustomerInfoId, String catalogLogoType,
-			String catalogLogoUrl, Date updateDate, Date createDate) {
+			String catalogLogoUrl, int status, Date updateDate, Date createDate) {
 		this.catalogLogoSeq = catalogLogoSeq;
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
 		this.catalogLogoType = catalogLogoType;
 		this.catalogLogoUrl = catalogLogoUrl;
+		this.status = status;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
 
 	public PfpCatalogLogo(String catalogLogoSeq, String pfpCustomerInfoId, String catalogLogoType,
-			String catalogLogoUrl, Date updateDate, Date createDate, Set<PfpCatalogLogoDetail> pfpCatalogLogoDetails) {
+			String catalogLogoUrl, int status, Date updateDate, Date createDate,
+			Set<PfpCatalogLogoDetail> pfpCatalogLogoDetails) {
 		this.catalogLogoSeq = catalogLogoSeq;
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
 		this.catalogLogoType = catalogLogoType;
 		this.catalogLogoUrl = catalogLogoUrl;
+		this.status = status;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 		this.pfpCatalogLogoDetails = pfpCatalogLogoDetails;
@@ -88,6 +92,15 @@ public class PfpCatalogLogo implements java.io.Serializable {
 
 	public void setCatalogLogoUrl(String catalogLogoUrl) {
 		this.catalogLogoUrl = catalogLogoUrl;
+	}
+
+	@Column(name = "status", nullable = false)
+	public int getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

@@ -29,10 +29,10 @@ public enum EnumSequenceTableName {
 	PFP_AD_SPECIFIC_WEBSITE("pfp_ad_specific_website","aasw"),
 	// 影片序號
 	PFP_AD_VIDEO_SOURCE("pfp_ad_video_source","adv"),
-	
 	// 商品目錄群組序號
-	PFP_CATALOG_GROUP("pfp_catalog_group","PCG");
-	
+	PFP_CATALOG_GROUP("pfp_catalog_group","PCG"),
+	// 商品LOGO
+	PFP_CATALOG_LOG_SEQ("pfp_catalog_log_seq","PCL");
 	
 	private String snoName;
 	private String charName;

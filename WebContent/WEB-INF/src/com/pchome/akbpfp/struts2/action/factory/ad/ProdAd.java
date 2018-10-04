@@ -22,8 +22,11 @@ import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogLogo;
+import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
 import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
+import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
+import com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogLogoService;
 import com.pchome.akbpfp.struts2.action.ad.AdAddAction;
 import com.pchome.akbpfp.struts2.action.ad.AdEditAction;
 import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
@@ -39,7 +42,7 @@ public class ProdAd implements IAd {
 	private  IPfpCatalogService pfpCatalogService;
 	
 	private IPfpCatalogLogoService pfpCatalogLogoService;
-	
+	private IPfpCatalogSetupService pfpCatalogSetupService;
 	private List<PfpCatalog> alex;
 	
 	
@@ -49,14 +52,31 @@ public class ProdAd implements IAd {
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
 		log.info(">>>>>> process ProdAd");
 		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
-		PfpCatalogLogo pfpCatalogLogo = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
-		if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
-			adAddAction.setUserLogoType("crop-height");
+		PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCustomerInfoId(adAddAction.getCustomer_info_id());
+		if(pfpCatalogSetup != null){
+			if(pfpCatalogSetup.getCatalogSetupValue().equals("0")){
+				adAddAction.setUserLogoType("crop-height");
+			}
+			if(pfpCatalogSetup.getCatalogSetupValue().equals("1")){
+				adAddAction.setUserLogoType("crop-width");
+			}
 		}
-		if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
-			adAddAction.setUserLogoType("");
+		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
+		JSONObject json = new JSONObject();
+		if(pfpCatalogSetup != null){
+			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
+				JSONObject catalogLogoUrlJson = new JSONObject();
+				catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getCatalogLogoUrl());
+				catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
+				if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
+					json.put("square", catalogLogoUrlJson);
+				}
+				if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
+					json.put("rectangle", catalogLogoUrlJson);
+				}
+			}
 		}
-		adAddAction.setUserLogoPath(pfpCatalogLogo.getCatalogLogoUrl());
+		adAddAction.setUserLogoPath(json.toString());
 		adAddAction.getRequest().setAttribute("alex", alex);
 		return "adProdAdd";
 	}
@@ -133,6 +153,9 @@ public class ProdAd implements IAd {
 			case PROD_RADIO_LOGO_TYPE:
 				adAddAction.saveAdDetail(adAddAction.getProdLogoType(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
+			case SALE_IMG_SHOW_TYPE:
+				adAddAction.saveAdDetail(adAddAction.getProdLogoType(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
+		 		break;
 			}
 
 		}
@@ -150,15 +173,37 @@ public class ProdAd implements IAd {
 	
 	@Override
 	public String adAdEdit(AdEditAction adEditAction) throws Exception {
+		PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCustomerInfoId(adAddAction.getCustomer_info_id());
+		if(pfpCatalogSetup != null){
+			if(pfpCatalogSetup.getCatalogSetupValue().equals("0")){
+				adAddAction.setUserLogoType("crop-height");
+			}
+			if(pfpCatalogSetup.getCatalogSetupValue().equals("1")){
+				adAddAction.setUserLogoType("crop-width");
+			}
+		}
+		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
+		JSONArray array = new JSONArray();
+		if(pfpCatalogSetup != null){
+			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
+				JSONObject catalogLogoUrlJson = new JSONObject();
+				catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getCatalogLogoUrl());
+				catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getStatus());
+				if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
+					JSONObject json = new JSONObject();
+					json.put("square", catalogLogoUrlJson);
+					array.put(json);
+				}
+				if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
+					JSONObject json = new JSONObject();
+					json.put("rectangle", catalogLogoUrlJson);
+					array.put(json);
+				}
+			}
+		}
+		adAddAction.setUserLogoPath(array.toString());
+		
 		Set<PfpAdDetail> detailSet = adEditAction.getPfpAd().getPfpAdDetails();
-		PfpCatalogLogo pfpCatalogLogo = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adEditAction.getCustomer_info_id());
-		if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
-			adEditAction.setUserLogoType("crop-height");
-		}
-		if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
-			adEditAction.setUserLogoType("");
-		}
-		adEditAction.setUserLogoPath(pfpCatalogLogo.getCatalogLogoUrl());
 		JSONArray uploadLogJsonArray = new JSONArray();
 		JSONArray uploadLogoLogJsonArray = new JSONArray();
 		for (PfpAdDetail pfpAdDetail : detailSet) {
@@ -440,5 +485,11 @@ public class ProdAd implements IAd {
 		this.pfpCatalogLogoService = pfpCatalogLogoService;
 	}
 
+	public IPfpCatalogSetupService getPfpCatalogSetupService() {
+		return pfpCatalogSetupService;
+	}
 
+	public void setPfpCatalogSetupService(IPfpCatalogSetupService pfpCatalogSetupService) {
+		this.pfpCatalogSetupService = pfpCatalogSetupService;
+	}
 }

@@ -451,5 +451,13 @@
     	<property name="prodGroupFactory" ref="ProdGroupFactory" />
     </bean>
     <!-- 商品群組 END -->
-   
+    
+    <!-- 商品LOGO -->
+    <bean id="ProdLogoAction" class="com.pchome.akbpfp.struts2.action.prod.ProdLogoAction" scope="prototype" >
+		<property name="photoDbPathNew" value="${photo.db.path.new}" />
+		<property name="sequenceService" ref="SequenceService" />
+		<property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+		<property name="pfpCatalogLogoDetailService" ref="PfpCatalogLogoDetailService" />
+    </bean>
+    <!-- 商品LOGO END -->
 </beans>

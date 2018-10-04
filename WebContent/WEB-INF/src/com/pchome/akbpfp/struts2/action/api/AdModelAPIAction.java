@@ -35,8 +35,6 @@ public class AdModelAPIAction extends BaseCookieAction{
 	private String catalogId="";
 	//商品群組ID
 	private String catalogGroupId="";
-	//logo類型
-	private String logoType="";
 	//logo標題文字
 	private String logoText="";
 	//logo背景顏色
@@ -60,7 +58,7 @@ public class AdModelAPIAction extends BaseCookieAction{
 	
 	private String adProdgroupId="";
 	
-	private String adbgType="";
+	private String imgShowType="";
 	//logo類型
 	private String prodLogoType;
 	
@@ -112,14 +110,13 @@ public class AdModelAPIAction extends BaseCookieAction{
 		pfpProdAdPreviewJson.put("logoBgColor",logoBgColor);
 		pfpProdAdPreviewJson.put("logoFontColor", logoFontColor);
 		pfpProdAdPreviewJson.put("logoText",logoText);
-		pfpProdAdPreviewJson.put("logoType", logoType);
 		pfpProdAdPreviewJson.put("btnBgColor",btnBgColor);
 		pfpProdAdPreviewJson.put("btnFontColor", btnFontColor);
 		pfpProdAdPreviewJson.put("btnTxt",btnTxt);
 		pfpProdAdPreviewJson.put("disBgColor",disBgColor);
 		pfpProdAdPreviewJson.put("disFontColor",disFontColor);
 		pfpProdAdPreviewJson.put("disTxtType", disTxtType);
-		pfpProdAdPreviewJson.put("adbgType", adbgType);
+		pfpProdAdPreviewJson.put("imgShowType", imgShowType);
 		pfpProdAdPreviewJson.put("prodLogoType", prodLogoType);
 		pfpProdAdPreviewJson.put("userLogoType", userLogoType);
 		pfpProdAdPreviewJson.put("userLogoPath", userLogoPath);
@@ -179,9 +176,6 @@ public class AdModelAPIAction extends BaseCookieAction{
 	}
 
 
-	public void setLogoType(String logoType) {
-		this.logoType = logoType;
-	}
 
 
 	public void setLogoText(String logoText) {
@@ -248,13 +242,15 @@ public class AdModelAPIAction extends BaseCookieAction{
 		this.adProdgroupId = adProdgroupId;
 	}
 	
-	public String getAdbgType() {
-		return adbgType;
+
+
+	public String getImgShowType() {
+		return imgShowType;
 	}
 
 
-	public void setAdbgType(String adbgType) {
-		this.adbgType = adbgType;
+	public void setImgShowType(String imgShowType) {
+		this.imgShowType = imgShowType;
 	}
 
 

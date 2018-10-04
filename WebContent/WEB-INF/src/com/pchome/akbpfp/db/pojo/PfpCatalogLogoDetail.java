@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/9/28 �W�� 11:49:37 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/10/4 �W�� 10:06:38 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,19 +23,17 @@ public class PfpCatalogLogoDetail implements java.io.Serializable {
 
 	private Integer catalogLogoDetailSeq;
 	private PfpCatalogLogo pfpCatalogLogo;
-	private String pfpCustomerInfoId;
-	private String catalogLogoRgb;
+	private String catalogLogoHexColor;
 	private Date updateDate;
 	private Date createDate;
 
 	public PfpCatalogLogoDetail() {
 	}
 
-	public PfpCatalogLogoDetail(PfpCatalogLogo pfpCatalogLogo, String pfpCustomerInfoId, String catalogLogoRgb,
-			Date updateDate, Date createDate) {
+	public PfpCatalogLogoDetail(PfpCatalogLogo pfpCatalogLogo, String catalogLogoHexColor, Date updateDate,
+			Date createDate) {
 		this.pfpCatalogLogo = pfpCatalogLogo;
-		this.pfpCustomerInfoId = pfpCustomerInfoId;
-		this.catalogLogoRgb = catalogLogoRgb;
+		this.catalogLogoHexColor = catalogLogoHexColor;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
@@ -62,22 +60,13 @@ public class PfpCatalogLogoDetail implements java.io.Serializable {
 		this.pfpCatalogLogo = pfpCatalogLogo;
 	}
 
-	@Column(name = "pfp_customer_info_id", nullable = false, length = 20)
-	public String getPfpCustomerInfoId() {
-		return this.pfpCustomerInfoId;
+	@Column(name = "catalog_logo_hex_color", nullable = false, length = 20)
+	public String getCatalogLogoHexColor() {
+		return this.catalogLogoHexColor;
 	}
 
-	public void setPfpCustomerInfoId(String pfpCustomerInfoId) {
-		this.pfpCustomerInfoId = pfpCustomerInfoId;
-	}
-
-	@Column(name = "catalog_logo_rgb", nullable = false, length = 20)
-	public String getCatalogLogoRgb() {
-		return this.catalogLogoRgb;
-	}
-
-	public void setCatalogLogoRgb(String catalogLogoRgb) {
-		this.catalogLogoRgb = catalogLogoRgb;
+	public void setCatalogLogoHexColor(String catalogLogoHexColor) {
+		this.catalogLogoHexColor = catalogLogoHexColor;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
