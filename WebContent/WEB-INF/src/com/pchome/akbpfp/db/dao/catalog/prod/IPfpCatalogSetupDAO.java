@@ -5,5 +5,5 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
 
 public interface IPfpCatalogSetupDAO extends IBaseDAO<PfpCatalogSetup,Integer>{
 	
-	public PfpCatalogSetup findSetupByCustomerInfoId(String customerInfoId) throws Exception;
+	public PfpCatalogSetup findSetupByCatalogSeq(String catalogSeq) throws Exception;
 }
