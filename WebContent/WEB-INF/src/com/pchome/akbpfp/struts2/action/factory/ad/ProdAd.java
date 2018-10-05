@@ -50,16 +50,8 @@ public class ProdAd implements IAd {
 	private AdEditAction adEditAction;
 	
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
-		
-		
-		System.out.println(adAddAction.getRequest().getAttribute("webAppRootKey"));
-		
 		log.info(">>>>>> process ProdAd");
 		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
-		PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(adAddAction.getCatalogGroupId());
-		if(pfpCatalogSetup != null){
-			adAddAction.setImgProportiona(pfpCatalogSetup.getCatalogSetupValue());
-		}
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
 		JSONObject json = new JSONObject();
 		if(pfpCatalogLogoList != null){
@@ -172,30 +164,21 @@ public class ProdAd implements IAd {
 	
 	@Override
 	public String adAdEdit(AdEditAction adEditAction) throws Exception {
-		PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(adEditAction.getCatalogGroupId());
-		if(pfpCatalogSetup != null){
-			adEditAction.setImgProportiona(pfpCatalogSetup.getCatalogSetupValue());
-		}
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adEditAction.getCustomer_info_id());
-		JSONArray array = new JSONArray();
+		JSONObject json = new JSONObject();
 		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
 				JSONObject catalogLogoUrlJson = new JSONObject();
 				catalogLogoUrlJson.put("logoPath", adEditAction.getPhotoDbPathPrefix()+pfpCatalogLogo.getCatalogLogoUrl());
-				catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getStatus());
+				catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
 				if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
-					JSONObject json = new JSONObject();
 					json.put("square", catalogLogoUrlJson);
-					array.put(json);
 				}
 				if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
-					JSONObject json = new JSONObject();
 					json.put("rectangle", catalogLogoUrlJson);
-					array.put(json);
 				}
 			}
 		}
-		adAddAction.setUserLogoPath(array.toString());
 		
 		Set<PfpAdDetail> detailSet = adEditAction.getPfpAd().getPfpAdDetails();
 		JSONArray uploadLogJsonArray = new JSONArray();
@@ -287,26 +270,28 @@ public class ProdAd implements IAd {
 				String imgPath = pfpAdDetail.getAdDetailContent();
 				String fileExtensionNameArray[] = imgPath.split("\\.");
 				String fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
-				File file = new File(imgPath);
+				
+				System.out.println(adEditAction.getPhotoDbPathPrefix() + imgPath);
+				File file = new File(adEditAction.getPhotoDbPathPrefix()+imgPath);
 				String imgBase64 = "";
 				if(file.exists()){
 					imgBase64 = imgBase64(file,fileExtensionName);
+					String fileNameArray[] = imgPath.split("/");
+					fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
+					String fileName = fileNameArray[0];
+					int width = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[0]);
+					int heigth = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[1]);
+					long fileSize = file.length() / 1024;
+					
+					uploadLogJson.put("width", width);
+					uploadLogJson.put("heigth", heigth);
+					uploadLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
+					uploadLogJson.put("previewSrc", imgBase64);
+					uploadLogJson.put("fileName", fileName);
+					uploadLogJson.put("fileSize", fileSize);
+					uploadLogJsonArray.put(uploadLogJson);
+					continue;
 				}
-				String fileNameArray[] = imgPath.split("/");
-				fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
-				String fileName = fileNameArray[0];
-				int width = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[0]);
-				int heigth = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[1]);
-				long fileSize = file.length() / 1024;
-				
-				uploadLogJson.put("width", width);
-				uploadLogJson.put("heigth", heigth);
-				uploadLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
-				uploadLogJson.put("previewSrc", imgBase64);
-				uploadLogJson.put("fileName", fileName);
-				uploadLogJson.put("fileSize", fileSize);
-				uploadLogJsonArray.put(uploadLogJson);
-				continue;
 			}
 		}
 		adEditAction.setUploadLogoLog(uploadLogoLogJsonArray.toString());

@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/9/28 �W�� 10:58:33 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -33,6 +33,7 @@ public class PfpAdVideo implements java.io.Serializable {
 	private int adVideoReplay;
 	private int adVideoProcess;
 	private int adVideoProcessAmount;
+	private int adVideoIdc;
 	private Date createDate;
 	private Date updateDate;
 
@@ -41,8 +42,8 @@ public class PfpAdVideo implements java.io.Serializable {
 
 	public PfpAdVideo(Date adVideoDate, int adVideoTime, String pfdCustomerInfoId, String customerInfoId, String adSeq,
 			int adType, String templateProductSeq, String adPriceType, String adPvclkDevice, int adVideoPlay,
-			int adVideoMusic, int adVideoReplay, int adVideoProcess, int adVideoProcessAmount, Date createDate,
-			Date updateDate) {
+			int adVideoMusic, int adVideoReplay, int adVideoProcess, int adVideoProcessAmount, int adVideoIdc,
+			Date createDate, Date updateDate) {
 		this.adVideoDate = adVideoDate;
 		this.adVideoTime = adVideoTime;
 		this.pfdCustomerInfoId = pfdCustomerInfoId;
@@ -57,6 +58,7 @@ public class PfpAdVideo implements java.io.Serializable {
 		this.adVideoReplay = adVideoReplay;
 		this.adVideoProcess = adVideoProcess;
 		this.adVideoProcessAmount = adVideoProcessAmount;
+		this.adVideoIdc = adVideoIdc;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 	}
@@ -198,6 +200,15 @@ public class PfpAdVideo implements java.io.Serializable {
 
 	public void setAdVideoProcessAmount(int adVideoProcessAmount) {
 		this.adVideoProcessAmount = adVideoProcessAmount;
+	}
+
+	@Column(name = "ad_video_idc", nullable = false)
+	public int getAdVideoIdc() {
+		return this.adVideoIdc;
+	}
+
+	public void setAdVideoIdc(int adVideoIdc) {
+		this.adVideoIdc = adVideoIdc;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

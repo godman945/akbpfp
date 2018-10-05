@@ -1,11 +1,9 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/9/28 �W�� 10:58:33 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,7 +16,7 @@ import javax.persistence.TemporalType;
 @Table(name = "adm_uniq_data")
 public class AdmUniqData implements java.io.Serializable {
 
-	private Integer uniqSeq;
+	private String uniqSeq;
 	private Date recordDate;
 	private String uniqName;
 	private int uniqCount;
@@ -28,7 +26,9 @@ public class AdmUniqData implements java.io.Serializable {
 	public AdmUniqData() {
 	}
 
-	public AdmUniqData(Date recordDate, String uniqName, int uniqCount, Date createDate, Date updateDate) {
+	public AdmUniqData(String uniqSeq, Date recordDate, String uniqName, int uniqCount, Date createDate,
+			Date updateDate) {
+		this.uniqSeq = uniqSeq;
 		this.recordDate = recordDate;
 		this.uniqName = uniqName;
 		this.uniqCount = uniqCount;
@@ -37,14 +37,13 @@ public class AdmUniqData implements java.io.Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "uniq_seq", unique = true, nullable = false)
-	public Integer getUniqSeq() {
+	@Column(name = "uniq_seq", unique = true, nullable = false, length = 30)
+	public String getUniqSeq() {
 		return this.uniqSeq;
 	}
 
-	public void setUniqSeq(Integer uniqSeq) {
+	public void setUniqSeq(String uniqSeq) {
 		this.uniqSeq = uniqSeq;
 	}
 

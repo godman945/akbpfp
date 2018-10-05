@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/9/28 �W�� 10:58:33 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -22,12 +22,16 @@ public class AdmClientCountReport implements java.io.Serializable {
 	private Date countDate;
 	private int pfpClientCount;
 	private int pfdClientCount;
+	private int salesClientCount;
 	private float pfpAdClkPrice;
 	private float pfdAdClkPrice;
+	private float salesAdClkPrice;
 	private float pfpAdActionMaxPrice;
 	private float pfdAdActionMaxPrice;
+	private float salesAdActionMaxPrice;
 	private int pfpAdCount;
 	private int pfdAdCount;
+	private int salesAdCount;
 	private int adPv;
 	private int adClk;
 	private int adInvalidClk;
@@ -43,25 +47,33 @@ public class AdmClientCountReport implements java.io.Serializable {
 	private float pfdSave;
 	private float pfdFree;
 	private float pfdPostpaid;
+	private float totalSavePrice;
+	private int totalSaveCount;
 	private Date createDate;
 
 	public AdmClientCountReport() {
 	}
 
-	public AdmClientCountReport(Date countDate, int pfpClientCount, int pfdClientCount, float pfpAdClkPrice,
-			float pfdAdClkPrice, float pfpAdActionMaxPrice, float pfdAdActionMaxPrice, int pfpAdCount, int pfdAdCount,
+	public AdmClientCountReport(Date countDate, int pfpClientCount, int pfdClientCount, int salesClientCount,
+			float pfpAdClkPrice, float pfdAdClkPrice, float salesAdClkPrice, float pfpAdActionMaxPrice,
+			float pfdAdActionMaxPrice, float salesAdActionMaxPrice, int pfpAdCount, int pfdAdCount, int salesAdCount,
 			int adPv, int adClk, int adInvalidClk, float adClkPrice, float adInvalidClkPrice, float lossCost,
 			float pfpSave, float pfpFree, float pfpPostpaid, float pfbSave, float pfbFree, float pfbPostpaid,
-			float pfdSave, float pfdFree, float pfdPostpaid, Date createDate) {
+			float pfdSave, float pfdFree, float pfdPostpaid, float totalSavePrice, int totalSaveCount,
+			Date createDate) {
 		this.countDate = countDate;
 		this.pfpClientCount = pfpClientCount;
 		this.pfdClientCount = pfdClientCount;
+		this.salesClientCount = salesClientCount;
 		this.pfpAdClkPrice = pfpAdClkPrice;
 		this.pfdAdClkPrice = pfdAdClkPrice;
+		this.salesAdClkPrice = salesAdClkPrice;
 		this.pfpAdActionMaxPrice = pfpAdActionMaxPrice;
 		this.pfdAdActionMaxPrice = pfdAdActionMaxPrice;
+		this.salesAdActionMaxPrice = salesAdActionMaxPrice;
 		this.pfpAdCount = pfpAdCount;
 		this.pfdAdCount = pfdAdCount;
+		this.salesAdCount = salesAdCount;
 		this.adPv = adPv;
 		this.adClk = adClk;
 		this.adInvalidClk = adInvalidClk;
@@ -77,6 +89,8 @@ public class AdmClientCountReport implements java.io.Serializable {
 		this.pfdSave = pfdSave;
 		this.pfdFree = pfdFree;
 		this.pfdPostpaid = pfdPostpaid;
+		this.totalSavePrice = totalSavePrice;
+		this.totalSaveCount = totalSaveCount;
 		this.createDate = createDate;
 	}
 
@@ -120,6 +134,15 @@ public class AdmClientCountReport implements java.io.Serializable {
 		this.pfdClientCount = pfdClientCount;
 	}
 
+	@Column(name = "sales_client_count", nullable = false)
+	public int getSalesClientCount() {
+		return this.salesClientCount;
+	}
+
+	public void setSalesClientCount(int salesClientCount) {
+		this.salesClientCount = salesClientCount;
+	}
+
 	@Column(name = "pfp_ad_clk_price", nullable = false, precision = 10, scale = 3)
 	public float getPfpAdClkPrice() {
 		return this.pfpAdClkPrice;
@@ -136,6 +159,15 @@ public class AdmClientCountReport implements java.io.Serializable {
 
 	public void setPfdAdClkPrice(float pfdAdClkPrice) {
 		this.pfdAdClkPrice = pfdAdClkPrice;
+	}
+
+	@Column(name = "sales_ad_clk_price", nullable = false, precision = 10, scale = 3)
+	public float getSalesAdClkPrice() {
+		return this.salesAdClkPrice;
+	}
+
+	public void setSalesAdClkPrice(float salesAdClkPrice) {
+		this.salesAdClkPrice = salesAdClkPrice;
 	}
 
 	@Column(name = "pfp_ad_action_max_price", nullable = false, precision = 16)
@@ -156,6 +188,15 @@ public class AdmClientCountReport implements java.io.Serializable {
 		this.pfdAdActionMaxPrice = pfdAdActionMaxPrice;
 	}
 
+	@Column(name = "sales_ad_action_max_price", nullable = false, precision = 16)
+	public float getSalesAdActionMaxPrice() {
+		return this.salesAdActionMaxPrice;
+	}
+
+	public void setSalesAdActionMaxPrice(float salesAdActionMaxPrice) {
+		this.salesAdActionMaxPrice = salesAdActionMaxPrice;
+	}
+
 	@Column(name = "pfp_ad_count", nullable = false)
 	public int getPfpAdCount() {
 		return this.pfpAdCount;
@@ -172,6 +213,15 @@ public class AdmClientCountReport implements java.io.Serializable {
 
 	public void setPfdAdCount(int pfdAdCount) {
 		this.pfdAdCount = pfdAdCount;
+	}
+
+	@Column(name = "sales_ad_count", nullable = false)
+	public int getSalesAdCount() {
+		return this.salesAdCount;
+	}
+
+	public void setSalesAdCount(int salesAdCount) {
+		this.salesAdCount = salesAdCount;
 	}
 
 	@Column(name = "ad_pv", nullable = false)
@@ -307,6 +357,24 @@ public class AdmClientCountReport implements java.io.Serializable {
 
 	public void setPfdPostpaid(float pfdPostpaid) {
 		this.pfdPostpaid = pfdPostpaid;
+	}
+
+	@Column(name = "total_save_price", nullable = false, precision = 10, scale = 3)
+	public float getTotalSavePrice() {
+		return this.totalSavePrice;
+	}
+
+	public void setTotalSavePrice(float totalSavePrice) {
+		this.totalSavePrice = totalSavePrice;
+	}
+
+	@Column(name = "total_save_count", nullable = false)
+	public int getTotalSaveCount() {
+		return this.totalSaveCount;
+	}
+
+	public void setTotalSaveCount(int totalSaveCount) {
+		this.totalSaveCount = totalSaveCount;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

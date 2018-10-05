@@ -1,20 +1,10 @@
 package com.pchome.config;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-//import com.pchome.akbpfp.api.RedisAPI;
-import com.pchome.akbpfp.db.pojo.PfpAdGroup;
-import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
-import com.pchome.akbpfp.db.service.ad.PfpAdGroupService;
+import com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogSetupService;
 
 
 
@@ -24,30 +14,39 @@ public class TestConfig {
 	static String  contentTitle = "WebContent/WEB-INF/src/";
 //	static String  prop = "　";
 	public static String[] path = {
+			contentTitle + "config/spring/local/spring-prop.xml",
+			contentTitle + "config/spring/spring-action.xml",
+			contentTitle + "config/spring/spring-api.xml",
+			contentTitle + "config/spring/spring-api-action.xml",
+			contentTitle + "config/spring/spring-factory.xml",
+			contentTitle + "config/spring/spring-dao.xml",
+			contentTitle + "config/spring/spring-service.xml",
+			contentTitle + "config/spring/spring-hibernate.xml",
+			contentTitle + "config/spring/spring-datasource.xml",
+			contentTitle + "config/spring/spring-rmi-client.xml",
+			contentTitle + "config/spring/spring-util.xml",
+			contentTitle + "config/spring/spring-mail-config.xml",
+			contentTitle + "config/log4j/log4j.xml",
 			
-//			contentTitle + "config/spring/spring-action.xml",
-//			contentTitle + "config/spring/spring-api.xml",
-//			contentTitle + "config/spring/spring-dao.xml",
-//			contentTitle + "config/spring/spring-datasource.xml",
+			
 //			contentTitle + "config/spring/spring-factory.xml",
-//			contentTitle + "config/spring/spring-hibernate.xml",
 //			contentTitle + "config/spring/spring-log4j.xml",
+//			contentTitle + "config/spring/local/spring-prop.xml",
 //			contentTitle + "config/spring/spring-service.xml",
-//			contentTitle + "config/spring/local/local-spring-prop.xml",
 			
 			
 //		contentTitle+"config/spring/spring-action.xml",
-		contentTitle+"config/spring/spring-service.xml",
-		contentTitle+"config/spring/spring-dao.xml",
-		contentTitle+"config/spring/spring-datasource.xml",
-		contentTitle+"config/spring/spring-hibernate.xml",
-		contentTitle+"config/spring/spring-log4j.xml",
-		contentTitle+"config/spring/local/spring-prop.xml",
-		contentTitle+"config/spring/spring-api.xml",
-		contentTitle+"config/spring/spring-mail-config.xml",
-		contentTitle+"config/spring/spring-util.xml",
-		contentTitle+"config/spring/spring-factory.xml",
-		contentTitle+"config/spring/spring-rmi-client.xml"
+//		contentTitle+"config/spring/spring-service.xml",
+//		contentTitle+"config/spring/spring-dao.xml",
+//		contentTitle+"config/spring/spring-datasource.xml",
+//		contentTitle+"config/spring/spring-hibernate.xml",
+//		contentTitle+"config/spring/spring-log4j.xml",
+//		contentTitle+"config/spring/local/spring-prop.xml",
+//		contentTitle+"config/spring/spring-api.xml",
+//		contentTitle+"config/spring/spring-mail-config.xml",
+//		contentTitle+"config/spring/spring-util.xml",
+//		contentTitle+"config/spring/spring-factory.xml",
+//		contentTitle+"config/spring/spring-rmi-client.xml"
     };
 	
 	
@@ -55,8 +54,32 @@ public class TestConfig {
 		  
 		
 		ApplicationContext context = new FileSystemXmlApplicationContext(TestConfig.path);
-//		RedisAPI redisAPI = (RedisAPI) context.getBean("RedisAPI");
+//		PfpCatalogLogoService a = (PfpCatalogLogoService) context.getBean("PfpCatalogLogoService");
+//		PfpCatalogLogo pfpCatalogLogo = a.findCatalogLogoByCustomerInfoId("AC2013071700005");
+//		
+//		System.out.println(pfpCatalogLogo.getCatalogLogoUrl());
+//		Set<PfpCatalogLogoDetail> set = pfpCatalogLogo.getPfpCatalogLogoDetails();
+//		for (PfpCatalogLogoDetail pfpCatalogLogoDetail : set) {
+//			System.out.println(pfpCatalogLogoDetail.getCatalogLogoRgb());
+//		}
+//		PfpAdService b = (PfpAdService) context.getBean("PfpAdService");
+//		PfpAd h = b.get("ad_201804230004");
 		
+		PfpCatalogSetupService a = (PfpCatalogSetupService) context.getBean("PfpCatalogSetupService");
+		System.out.println(a == null);
+		System.out.println(a.loadAllSize());
+		
+		
+//		System.out.println(a == null);
+//		System.out.println(a.getProdGroupListDataByServer("PCG20180919000000001", 10));
+		
+		
+//		AsidRateUtile AsidRateUtile = (AsidRateUtile) context.getBean("AsidRateUtile");
+		
+//		a.getProdGroupListData();
+//		log.info(">>>>>PROD DATA API:"+"http://showstg.pchome.com.tw/pfp/prodGroupListAPI.html?groupId="+adProdgroupId+"&prodNum=10");
+//		String prodData = com.pchome.soft.depot.utils.HttpUtil.getInstance().getResult("http://showstg.pchome.com.tw/pfp/prodGroupListAPI.html?groupId="+adProdgroupId+"&prodNum=10", "UTF-8");
+//		log.info(">>>>>>DATA:"+prodData);
 		
 		
 //		System.out.println(pfpAdGroup.getPfpAdKeywords() == null);
@@ -68,17 +91,17 @@ public class TestConfig {
 //			System.out.println(pfpAdKeyword.getAdKeyword());
 //		}
 		
-		List<String> keyWordList = new ArrayList<>();
-		keyWordList.add("液晶電視");
-		String[] stockArr = new String[keyWordList.size()];
-		stockArr = keyWordList.toArray(stockArr);
-
-		for (String string : stockArr) {
-			System.out.println("比對用:"+string);
-		}
-		
-		
-		String redisKey = "pfpcart_AC2013071700001";
+//		List<String> keyWordList = new ArrayList<>();
+//		keyWordList.add("液晶電視");
+//		String[] stockArr = new String[keyWordList.size()];
+//		stockArr = keyWordList.toArray(stockArr);
+//
+//		for (String string : stockArr) {
+//			System.out.println("比對用:"+string);
+//		}
+//		
+//		
+//		String redisKey = "pfpcart_AC2013071700001";
 //		String redisData = redisAPI.getRedisData(redisKey);
 //		JSONObject redisJson = new JSONObject(redisData);
 //		JSONArray  redisAdArrayJson = (JSONArray) redisJson.get("products");

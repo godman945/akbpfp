@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/9/28 �W�� 10:58:33 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -87,7 +87,7 @@ public class PfpAdDetail implements java.io.Serializable {
 		this.pfpAd = pfpAd;
 	}
 
-	@Column(name = "ad_detail_id", nullable = false, length = 20)
+	@Column(name = "ad_detail_id", nullable = false, length = 30)
 	public String getAdDetailId() {
 		return this.adDetailId;
 	}
@@ -114,7 +114,7 @@ public class PfpAdDetail implements java.io.Serializable {
 		this.adPoolSeq = adPoolSeq;
 	}
 
-	@Column(name = "define_ad_seq", length = 20)
+	@Column(name = "define_ad_seq", length = 30)
 	public String getDefineAdSeq() {
 		return this.defineAdSeq;
 	}

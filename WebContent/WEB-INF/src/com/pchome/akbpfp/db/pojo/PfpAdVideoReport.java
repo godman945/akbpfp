@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2017/11/1 �U�� 02:28:26 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/9/28 �W�� 10:58:33 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -40,6 +40,7 @@ public class PfpAdVideoReport implements java.io.Serializable {
 	private int adVideoProcess75;
 	private int adVideoProcess100;
 	private int adVideoUniq;
+	private int adVideoIdc;
 	private Date createDate;
 	private Date updateDate;
 
@@ -49,8 +50,8 @@ public class PfpAdVideoReport implements java.io.Serializable {
 	public PfpAdVideoReport(Date adVideoDate, int adVideoTime, String pfdCustomerInfoId, String customerInfoId,
 			String adSeq, String templateProductSeq, String adPriceType, float adPrice, String adPvclkDevice, int adVpv,
 			int adPv, int adClk, int adView, int adVideoPlay, int adVideoMusic, int adVideoReplay, int adVideoProcess25,
-			int adVideoProcess50, int adVideoProcess75, int adVideoProcess100, int adVideoUniq, Date createDate,
-			Date updateDate) {
+			int adVideoProcess50, int adVideoProcess75, int adVideoProcess100, int adVideoUniq, int adVideoIdc,
+			Date createDate, Date updateDate) {
 		this.adVideoDate = adVideoDate;
 		this.adVideoTime = adVideoTime;
 		this.pfdCustomerInfoId = pfdCustomerInfoId;
@@ -72,6 +73,7 @@ public class PfpAdVideoReport implements java.io.Serializable {
 		this.adVideoProcess75 = adVideoProcess75;
 		this.adVideoProcess100 = adVideoProcess100;
 		this.adVideoUniq = adVideoUniq;
+		this.adVideoIdc = adVideoIdc;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 	}
@@ -276,6 +278,15 @@ public class PfpAdVideoReport implements java.io.Serializable {
 
 	public void setAdVideoUniq(int adVideoUniq) {
 		this.adVideoUniq = adVideoUniq;
+	}
+
+	@Column(name = "ad_video_idc", nullable = false)
+	public int getAdVideoIdc() {
+		return this.adVideoIdc;
+	}
+
+	public void setAdVideoIdc(int adVideoIdc) {
+		this.adVideoIdc = adVideoIdc;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
