@@ -62,7 +62,7 @@ public class AdModelAPIAction extends BaseCookieAction{
 	//logo類型
 	private String prodLogoType;
 	
-	private String userLogoType;
+	private String imgProportiona;
 	
 	private String userLogoPath;
 	
@@ -118,7 +118,7 @@ public class AdModelAPIAction extends BaseCookieAction{
 		pfpProdAdPreviewJson.put("disTxtType", disTxtType);
 		pfpProdAdPreviewJson.put("imgShowType", imgShowType);
 		pfpProdAdPreviewJson.put("prodLogoType", prodLogoType);
-		pfpProdAdPreviewJson.put("userLogoType", userLogoType);
+		pfpProdAdPreviewJson.put("imgProportiona", imgProportiona);
 		pfpProdAdPreviewJson.put("userLogoPath", userLogoPath);
 		pfpProdAdPreviewJson.put("realUrl", realUrl);
 		String adHtml = admAPI.getAdProdContent(pfpProdAdPreviewJson.toString());
@@ -259,13 +259,13 @@ public class AdModelAPIAction extends BaseCookieAction{
 	}
 
 
-	public String getUserLogoType() {
-		return userLogoType;
+	public String getImgProportiona() {
+		return imgProportiona;
 	}
 
 
-	public void setUserLogoType(String userLogoType) {
-		this.userLogoType = userLogoType;
+	public void setImgProportiona(String imgProportiona) {
+		this.imgProportiona = imgProportiona;
 	}
 
 
