@@ -779,8 +779,6 @@ function getProdGroup(obj){
 	var adWidth = $("#adSize option:selected").text().split(" x ")[0];
 	var left = (totalWidth - adWidth) / 2;
 	$(".akb_iframe").css("margin-left",left+"px");
-	
-	
 	var radioType = $('input[name=options]:checked').val();
 	var logoData = JSON.parse($("#userLogoPath").text());
 	var prodLogoType = "";
@@ -797,16 +795,15 @@ function getProdGroup(obj){
 		prodLogoType = "type2";
 		logoPath = encodeURIComponent(logoData.square.logoPath);
 	}
-	
 	console.log(imgProportiona);
 	var src = 'adProdModel.html'
 		+'?catalogGroupId='+encodeURIComponent(catalogGroupId)
 		+'&btnTxt='+encodeURIComponent($("#btnTxt").val())
-		+'&btnFontColor='+encodeURIComponent(btnFontColor)
-		+'&btnBgColor='+encodeURIComponent(btnBgColor)
+		+'&btnFontColor='+encodeURIComponent("#"+btnFontColor.value)
+		+'&btnBgColor='+encodeURIComponent("#"+btnBgColor.value)
 		+'&disTxtType='+encodeURIComponent($("#disTxtType").val())
-		+'&disBgColor='+encodeURIComponent(disBgColor)
-		+'&disFontColor='+encodeURIComponent(disFontColor)
+		+'&disBgColor='+encodeURIComponent("#"+disBgColor.value)
+		+'&disFontColor='+encodeURIComponent("#"+disFontColor.value)
 		+"&imgShowType="+imgShowType
 		+"&logoText="+encodeURIComponent($("#logoText").val())
 		+"&logoBgColor="+encodeURIComponent("#"+logoBgColor.value)
@@ -814,17 +811,8 @@ function getProdGroup(obj){
 		+"&prodLogoType="+encodeURIComponent(prodLogoType)
 		+"&imgProportiona="+encodeURIComponent(imgProportiona)
 		+"&userLogoPath="+logoPath
-	console.log(src);
-	$(".akb_iframe").attr('src' ,src);
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		$(".akb_iframe").attr('src' ,src);
+		console.log(src);
 }
 
 function adPreview(){
