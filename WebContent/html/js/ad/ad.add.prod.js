@@ -762,6 +762,7 @@ function getProdGroup(obj){
 	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
 	var selectSizeHeight = $("#adSize option:selected").text().split(" x ")[1];
 	var catalogGroupId = $("#groupSelect").val().split("_")[1];
+	var imgProportiona = $("#groupSelect").val().split("_")[2];
 	var imgShowType = "noposter";
 	console.log(catalogGroupId);
 	
@@ -797,8 +798,9 @@ function getProdGroup(obj){
 		logoPath = encodeURIComponent(logoData.square.logoPath);
 	}
 	
+	console.log(imgProportiona);
 	var src = 'adProdModel.html'
-		+'?catalogGroupId='+catalogGroupId
+		+'?catalogGroupId='+encodeURIComponent(catalogGroupId)
 		+'&btnTxt='+encodeURIComponent($("#btnTxt").val())
 		+'&btnFontColor='+encodeURIComponent(btnFontColor)
 		+'&btnBgColor='+encodeURIComponent(btnBgColor)
@@ -810,7 +812,7 @@ function getProdGroup(obj){
 		+"&logoBgColor="+encodeURIComponent("#"+logoBgColor.value)
 		+"&logoFontColor="+encodeURIComponent("#"+logoFontColor.value)
 		+"&prodLogoType="+encodeURIComponent(prodLogoType)
-		+"&userLogoType="+encodeURIComponent($('#userLogoType').val())
+		+"&imgProportiona="+encodeURIComponent(imgProportiona)
 		+"&userLogoPath="+logoPath
 	console.log(src);
 	$(".akb_iframe").attr('src' ,src);
