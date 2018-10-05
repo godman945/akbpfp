@@ -111,7 +111,7 @@ function changeErrorView() {
 	$("#errPchomeStoreURL").val(globalUrl);
 }
 
-// 判斷
+// 判斷顯示哪一區塊的哪一個icon
 function processShowHideIcon(url, block){
 	$(".logoIcon").hide();
 	if (url.indexOf("24h") > -1) {
