@@ -107,4 +107,6 @@
 	<table-filter match-name="pfp_catalog_prod_ec"></table-filter>
 	<table-filter match-name="pfp_catalog_upload_err_log"></table-filter>
 	<table-filter match-name="pfp_catalog_upload_log"></table-filter>
+	<table-filter match-name="pfp_catalog_setup"></table-filter>
+	
 </hibernate-reverse-engineering>

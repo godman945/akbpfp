@@ -1,19 +1,8 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.ba-dotimeout.min.js"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.floatingscroll.min.js"></script>
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" />
 <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script> 
-
-<!--
-<link href="<@s.url value="/html/css/ad/adPlugInStyle.css" />" rel="stylesheet" type="text/css" />
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adActionAdd.js" ></script>
-<style type="text/css">
-.level1 {width: 23px; height: 32px;}
-.level2 {width: 38px; height: 32px;}
-.level3 {width: 53px; height: 32px;}
-.level4 {width: 68px; height: 32px;}
-.selectTop:hover{text-decoration:underline}
-</style>	
--->
 
  <div class="container-prodmanage">
 
@@ -66,8 +55,8 @@
 
                 <!-- data-list:                 商品排列 -->
                 <!-- data-list='row'            資料以條列顯示 -->
-                <!-- data-list='box'            資料以卡片顯示 -->
-                <div class="nav-wrap prodtable pos-relative" data-filter="all" data-menu="default" data-list="box">
+                <!-- data-list='box'            資料以區塊顯示 -->
+                <div class="nav-wrap prodtable" data-filter="all" data-menu="default" data-list="row" >
                     <div class="nav-box pos-relative">
                         <!--左-->
                         <ul class="txt-table txt-regular">
@@ -77,7 +66,7 @@
                             <li class="txt-cell group-default "><a class="btn-filter" href="javascript:void(0)" data-filter="sealed">已封存</a></li>
                             
                             <!--左 全選 取消全選 功能 預設隱藏-->
-                            <li class="txt-cell group-detail p-r10">已選取<em class="txt-quantity">6</em>項</li>
+                            <li class="txt-cell group-detail p-r10">已選取<em class="txt-quantity">0</em>項</li>
                             <li class="txt-cell group-detail toseal p-r10"><a class="btn-toseal" href="javascript:void(0)">封存</a></li>
                             <li class="txt-cell group-detail toenable p-r10"><a class="btn-toenable" href="javascript:void(0)">啟用</a></li>
                             <li class="txt-cell group-detail p-r10"><a class="btn-selectnone" href="javascript:void(0)">取消選取</a></li>
@@ -93,23 +82,7 @@
                                 </div>
                             </li>
 
-                            <!-- 篩選下拉選單 -->
-                            <li class="txt-cell select-menu w-130 p-l20">
-                                <div class="select-box pos-relative">
-                                    <span class="pos-absolute pointer-events-none">篩選商品資訊</span>
-                                    <div class="menu-box" onclick="$('.menu-items').toggle()"></div>
-                                    <ul class="menu-items pos-absolute pos-left" style="display:none">
-                                        <li data-filetr-name="prodname"     data-select="true"  ><em></em>名稱</li>
-                                        <li data-filetr-name="listprice"    data-select="false" ><em></em>原價</li>
-                                        <li data-filetr-name="promoprice"   data-select="true" ><em></em>促銷價</li>
-                                        <li data-filetr-name="serial"       data-select="false" ><em></em>ID</li>
-                                        <li data-filetr-name="supplement"   data-select="false" ><em></em>供應情況</li>
-                                        <li data-filetr-name="neworused"    data-select="false"  ><em></em>使用狀況</li>
-                                        <li data-filetr-name="class"        data-select="false"  ><em></em>類別</li>
-                                        <li data-filetr-name="weburl"       data-select="false" ><em></em>連結網址</li>
-                                    </ul>
-                                </div>
-                            </li>
+
 
                             <li class="txt-cell p-l20 txt-noselect">
                                 <div class="select-box pos-relative">
@@ -122,11 +95,10 @@
                                         <option value="40" <#if pageSizeSelected==40>selected</#if> >40則</option>
                                         <option value="50" <#if pageSizeSelected==50>selected</#if> >50則</option>
                                     </select>
-                                    
                                 </div>
                             </li>
                             <li class="txt-cell p-l20">
-                                <a id="tableView" class="btn-listtype" href="#" data-list="row"></a>
+                             	<a id="tableView" class="btn-listtype" href="#" data-list="row"></a>
                                 <a id="cardView" class="btn-listtype" href="#" data-list="box"></a>
                             </li>
                         </ul>
@@ -134,7 +106,7 @@
                 </div>
                 <!-- (商品清單) 表格目錄功能列 結束 -->
 
-                <!-- 卡片內容 開始 -->
+                <!-- 表格內容 開始 -->
                 <!-- data-filter:               商品篩選 -->
                 <!-- data-filter='all'          顯示所有商品 -->
                 <!-- data-filter='enable'       只顯示啟用商品 -->
@@ -143,67 +115,58 @@
                 <!-- data-type:                 商品列型態 -->
                 <!-- data-type='enable'         已啟用商品列 -->
                 <!-- data-type='sealed'         已封存商品列 -->
-                <div class="prodcard-wrap m-b30" data-filter="all">
-                    
-                    <!--隱藏區塊-->
-                    <!-- checkbox-checkAll -->
-                    <div class="input-check" style="display:none">
-                        <input type="checkbox" id="checkAll" value="checkAll"><label for="checkAll"></label>
+                <div class="prodtable-wrap m-b30 floatingscroll" data-filter="all">
+                    <div class="prodtable-box txt-noselect">
+                        
+                        <!-- 表格欄位標題 -->
+                        <div class="txt-row header">
+                            <div class="txt-cell col-checkbox   "><div class="input-check"><input type="checkbox" id="checkAll" value="checkAll"><label for="checkAll"></label></div></div>
+                            <div class="txt-cell col-serial     ">商品編號</div>
+                            <div class="txt-cell col-prodname   ">商品名稱</div>
+                            <div class="txt-cell col-listprice  ">原價</div>
+                            <div class="txt-cell col-promoprice ">特價</div>
+                            <div class="txt-cell col-supplement ">供應情況</div>
+                            <div class="txt-cell col-neworused  ">使用狀況</div>
+                            <div class="txt-cell col-picture    ">商品圖</div>
+                            <div class="txt-cell col-class      ">類別</div>
+                            <div class="txt-cell col-weburl     ">商品網址</div>
+                        </div>
+
+                        <!-- row1 -->
+                        <div id="prodListDiv">
+                        	<#if prodList?exists>
+                        		<#if prodList?size != 0>
+                        			<#assign index1 = 1>
+                        			<#list prodList as prods>
+                        				<#if prods.ecStatus == "1">
+					                        <div class="txt-row txt-row-data" data-type="enable">
+					                    <#else>
+					                    	<div class="txt-row txt-row-data" data-type="sealed">
+					                    </#if>   
+					                            <div class="txt-cell col-checkbox   "><div class="input-check"><input type="checkbox" id="check${index1}" value=${prods.id!} ><label for="check${index1}"></label></div></div>
+					                            <div class="txt-cell col-serial     ">${prods.catalogProdSeq!}</div>
+					                            <div class="txt-cell col-prodname   ">${prods.ecName!}</div>
+					                            <div class="txt-cell col-listprice  "><span>$</span>${prods.ecPrice!}</div>
+					                            <div class="txt-cell col-promoprice "><span>$</span>${prods.ecDiscountPrice!}</div>
+					                            <div class="txt-cell col-supplement ">${prods.ecStockStatus!}</div>
+					                            <div class="txt-cell col-neworused  ">${prods.ecUseStatus!}</div>
+					                            <div class="txt-cell col-picture    "><img src="http://showstg.pchome.com.tw/pfp/${prods.ecImg!}"></div>
+					                            <div class="txt-cell col-class      ">${prods.ecCategory!}</div>
+					                            <div class="txt-cell col-weburl     "><a href=${prods.ecUrl!} target="_blank"></a></div>
+					                        </div>
+				                        <#assign index1 = index1 + 1>
+			                    	</#list>
+		                        </#if>
+	                        </#if>	
+                        </div>
                     </div>
-                    
-                    
-
-
-                    <!--item1-->
-                  <div id="prodListDiv">
-                  	<#if prodList?exists>
-	                    <#if prodList?size != 0>
-	                    	<#assign index1 = 1>
-	                    	<#list prodList as prods>
-								<#if prods.ecStatus == "1">
-				                    <div class="prodcard-box txt-noselect pos-relative" data-type="enable">
-								<#else>
-									<div class="prodcard-box txt-noselect pos-relative" data-type="sealed">
-								</#if>
-				                        <div class="prodcard-checkbox"><div class="input-check"><input type="checkbox" id="check${index1}" value=${prods.id!} ><label for="check${index1}"></label></div></div>
-				
-				                        <div onclick="viewDetail(this)">
-				                            <div class="prodcard-imgbox">
-				                                <img src="http://showstg.pchome.com.tw/pfp/${prods.ecImg!}">
-				                            </div>
-				                            <div class="prodcard-infobox">
-				                                <div class="group g1">
-				                                    <div data-info-name="prodname" id="prodnameDetailData" >${prods.ecName!}</div>
-				                                </div>
-				                                <div class="group g2">
-				                                    <div data-info-name="listprice" id="listpriceDetailData" >原價<span>$</span>${prods.ecPrice!}</div>
-				                                    <div data-info-name="promoprice" id="promopriceDetailData" >特價<span>$</span><i>${prods.ecDiscountPrice!}</i></div>
-				                                </div>
-				                                <div class="group g3">
-				                                    <div data-info-name="serial" id="serialDetailData" >${prods.catalogProdSeq!}</div>
-				                                    <div data-info-name="supplement" id="supplementDetailData" >${prods.ecStockStatus!}</div>
-				                                    <div data-info-name="neworused" id="neworusedDetailData" >${prods.ecUseStatus!}</div>
-				                                    <div data-info-name="class" id="classDetailData" >${prods.ecCategory!}</div>
-				                                </div>
-				                                <div class="group g4">
-				                                    <div data-info-name="weburl" id="weburlDetailData" ><a href=${prods.ecUrl!} target="_blank" ></a></div>
-				                                </div>
-				                            </div>
-				                        </div>
-				                    </div>
-			                    <#assign index1 = index1 + 1>
-			            	</#list>
-	   					</#if>
-	   				</#if>	
-	   				</div>
-	   				
                 </div>
-                <!-- 卡片內容 結束 -->
+                <!-- 表格內容 結束 -->
 
                 <!-- 頁碼 pagination 開始 -->
                 <!-- data-order: 目前頁碼 -->
                 <!-- data-quantity: 頁數 -->
-                 <div id="pageData"  class="pagination-wrap txt-noselect m-b30" data-order=${currentPage!} data-quantity=${pageCount!}> 
+                <div id="pageData" class="pagination-wrap txt-noselect m-b30" data-order=${currentPage!} data-quantity=${pageCount!}>
                 <!--<div class="pagination-wrap txt-noselect m-b30" data-order="10000" data-quantity="10000"> -->
                     <!-- data-num: 頁碼 -->
                     <ul class="pagination-box txt-table">
@@ -232,12 +195,12 @@
                         </li>
                     </ul>
 
-                   
+                    
                 </div>
                 <!-- 頁碼 pagination 結束 -->
 
             </div>
         </div>
     </div>
-    <input id="catalogSeqData" type="hidden" value="${catalogSeq}">
-    
+	<input id="catalogSeqData" type="hidden" value="${catalogSeq}">
+	

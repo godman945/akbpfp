@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogProdEcService;
+import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupCondition;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupField;
 
@@ -77,9 +79,9 @@ public class EcProdGroup extends AProdGroup {
 	
 	
 	@Override
-	public List<Map<String,Object>> getProdGroupList(String catalogSeq, String filterSQL) throws Exception{
+	public List<Object> getProdGroupList(ProdGroupConditionVO prodGroupConditionVO) throws Exception{
 		
-		return pfpCatalogProdEcService.getEcProdGroupList(catalogSeq, filterSQL);
+		return pfpCatalogProdEcService.getEcProdGroupList(prodGroupConditionVO);
 		
 	}
 	
@@ -104,12 +106,21 @@ public class EcProdGroup extends AProdGroup {
 			prodDataJson.put("ec_name", obj.get("ec_name").toString());
 			prodDataJson.put("ec_title", obj.get("ec_title").toString());
 			prodDataJson.put("ec_url", obj.get("ec_url").toString());
+			
+			if (StringUtils.equals( obj.get("ec_img_region").toString(), "V")){
+				prodDataJson.put("ec_img_region","vertical");
+			}
+			if (StringUtils.equals( obj.get("ec_img_region").toString(), "H")){
+				prodDataJson.put("ec_img_region","horizontal");
+			}
+			
 			prodDataJson.put("ec_img", obj.get("ec_img").toString());
 			prodDataJson.put("ec_price", "NT."+obj.get("ec_price").toString());
 			prodDataJson.put("ec_discount_price", "NT."+obj.get("ec_discount_price").toString());
 			prodDataJson.put("ec_stock_status", obj.get("ec_stock_status").toString());
 			prodDataJson.put("ec_use_status", obj.get("ec_use_status").toString());
 			prodDataJson.put("ec_category", obj.get("ec_category").toString());
+			prodDataJson.put("crop_type", obj.get("catalog_setup_value").toString());
 			
 			prodListJson.put(prodDataJson);
 		}

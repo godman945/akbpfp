@@ -6,6 +6,7 @@ import java.util.Map;
 import org.json.JSONArray;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
+import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
 
 public class BookingProdGroup extends AProdGroup {
 	
@@ -21,7 +22,7 @@ public class BookingProdGroup extends AProdGroup {
 	}
 	
 	@Override
-	public List<Map<String,Object>> getProdGroupList(String catalogSeq, String filterSQL) throws Exception{
+	public List<Object> getProdGroupList(ProdGroupConditionVO prodGroupConditionVO) throws Exception{
 		
 		return null;
 	}

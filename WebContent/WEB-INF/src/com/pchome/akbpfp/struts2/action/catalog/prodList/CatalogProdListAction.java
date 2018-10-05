@@ -9,6 +9,7 @@ import com.pchome.akbpfp.catalog.prodList.factory.ProdListFactory;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
+import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 
@@ -16,11 +17,13 @@ public class CatalogProdListAction extends BaseCookieAction{
 	
 	private static final long serialVersionUID = 1L;
 
+	private int currentPage = 1;      //第幾頁(初始預設第1頁)
+	private int pageSizeSelected = 10; //每頁筆數(初始預設每頁10筆)
+	private int pageCount = 0; //總頁數
+	private int totalCount = 0; //資料總筆數
 	private String catalogSeq;
-	private String userProdStatus;
-	private int page; 
-	private int pageSize; 
-	private String catalogProdCount;
+	private String prodStatus;
+//	private String catalogProdCount;
 	private IPfpCatalogService pfpCatalogService;
 	private IPfpCustomerInfoService pfpCustomerInfoService;
 	private ProdListFactory prodListFactory;
@@ -53,15 +56,15 @@ public class CatalogProdListAction extends BaseCookieAction{
 	public String queryProdListByCardStyle(){		
 		try{
 			log.info(">>> catalogSeq: " + catalogSeq);
-			log.info(">>> userProdStatus: " + userProdStatus);
-			log.info(">>> page: " + page);
-			log.info(">>> pageSize: " + pageSize);
+			log.info(">>> prodStatus: " + prodStatus);
+			log.info(">>> currentPage: " + currentPage);
+			log.info(">>> pageSizeSelected: " + pageSizeSelected);
 			
 			System.out.println("test  : "+catalogSeq);
 			
-			pfpCatalogList = pfpCatalogService.getPfpCatalogList("AC2013071700001");//super.getCustomer_info_id()
+			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());//super.getCustomer_info_id()
 			
-			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo("AC2013071700001").getCustomerInfoTitle();
+			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();//AC2013071700001
 			
 			
 			
@@ -92,24 +95,39 @@ public class CatalogProdListAction extends BaseCookieAction{
 				returnMsg = "此商品組合ID的目錄型態不正確";
 				return ERROR;
 			}
-	//		
 	
-			String pfpCustomerInfoId = "AC2013071700001"; //super.getCustomer_info_id();
-			prodList = aProdList.getProdList(catalogSeq, userProdStatus, pfpCustomerInfoId,page,pageSize);
+			String pfpCustomerInfoId = super.getCustomer_info_id(); //super.getCustomer_info_id();
+			
+			ProdListConditionVO prodListConditionVO =  new ProdListConditionVO();
+			prodListConditionVO.setCatalogSeq(catalogSeq);
+			prodListConditionVO.setProdStatus(prodStatus);
+			prodListConditionVO.setPfpCustomerInfoId(pfpCustomerInfoId);
+			prodListConditionVO.setPage(currentPage);
+			prodListConditionVO.setPageSize(pageSizeSelected);
+			
+			prodList = aProdList.getProdList(prodListConditionVO);
 			if (prodList.size() <= 0){
 				returnMsg = "沒有商品清單資料";
 				return ERROR;
 			}
 			
-			catalogProdCount = aProdList.getProdListCount(catalogSeq, userProdStatus);
+			//商品清單資料總筆數
+			totalCount =  Integer.valueOf(aProdList.getProdListCount(prodListConditionVO));
+			
+			//總頁數
+			pageCount = (int)Math.ceil((float)totalCount / pageSizeSelected);
 			
 //			//依據商品目錄型態回傳各別ftl(一般購物類、訂房住宿類、交通航班類、房產租售類)
 			returnFtlName = enumProdListFactory.getCatalogName();
 			
+			
+			
+			
+			
 		} catch (Exception e) {
-//			dataMap.put("status", "ERROR");
-//			dataMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
 			log.error("error:" + e);
+			return ERROR;
 		}
 		
 		return returnFtlName;
@@ -127,12 +145,12 @@ public class CatalogProdListAction extends BaseCookieAction{
 		return catalogSeq;
 	}
 
-	public String getUserProdStatus() {
-		return userProdStatus;
+	public String getProdStatus() {
+		return prodStatus;
 	}
 
-	public void setUserProdStatus(String userProdStatus) {
-		this.userProdStatus = userProdStatus;
+	public void setProdStatus(String prodStatus) {
+		this.prodStatus = prodStatus;
 	}
 
 	public void setPfpCatalogService(IPfpCatalogService pfpCatalogService) {
@@ -143,25 +161,20 @@ public class CatalogProdListAction extends BaseCookieAction{
 		this.prodListFactory = prodListFactory;
 	}
 
-
-	public void setPage(int page) {
-		this.page = page;
+	public int getCurrentPage() {
+		return currentPage;
 	}
 
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
 	
-	public int getPage() {
-		return page;
+	public int getPageSizeSelected() {
+		return pageSizeSelected;
 	}
 
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public String getCatalogProdCount() {
-		return catalogProdCount;
+	public void setPageSizeSelected(int pageSizeSelected) {
+		this.pageSizeSelected = pageSizeSelected;
 	}
 
 	public List<Object> getProdList() {
@@ -187,8 +200,22 @@ public class CatalogProdListAction extends BaseCookieAction{
 	public String getCustomerInfoTitle() {
 		return customerInfoTitle;
 	}
-	
-	
+
+	public int getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
 	
 	
 	

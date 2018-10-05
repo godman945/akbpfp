@@ -443,6 +443,7 @@
     <bean id="CatalogProdGroupAction" class="com.pchome.akbpfp.struts2.action.catalog.prodGroup.CatalogProdGroupAction" scope="prototype" >
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
     	<property name="prodGroupFactory" ref="ProdGroupFactory" />
     </bean>
     <!-- 商品群組 END -->

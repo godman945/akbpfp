@@ -1,12 +1,15 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/9/5 �U�� 12:18:24 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/10/5 �W�� 11:02:40 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,17 +22,18 @@ import javax.persistence.TemporalType;
 public class PfpCatalogLogoDetail implements java.io.Serializable {
 
 	private Integer catalogLogoDetailSeq;
-	private String pfpCustomerInfoId;
-	private String catalogLogoRgb;
+	private PfpCatalogLogo pfpCatalogLogo;
+	private String catalogLogoHexColor;
 	private Date updateDate;
 	private Date createDate;
 
 	public PfpCatalogLogoDetail() {
 	}
 
-	public PfpCatalogLogoDetail(String pfpCustomerInfoId, String catalogLogoRgb, Date updateDate, Date createDate) {
-		this.pfpCustomerInfoId = pfpCustomerInfoId;
-		this.catalogLogoRgb = catalogLogoRgb;
+	public PfpCatalogLogoDetail(PfpCatalogLogo pfpCatalogLogo, String catalogLogoHexColor, Date updateDate,
+			Date createDate) {
+		this.pfpCatalogLogo = pfpCatalogLogo;
+		this.catalogLogoHexColor = catalogLogoHexColor;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
@@ -46,22 +50,23 @@ public class PfpCatalogLogoDetail implements java.io.Serializable {
 		this.catalogLogoDetailSeq = catalogLogoDetailSeq;
 	}
 
-	@Column(name = "pfp_customer_info_id", nullable = false, length = 20)
-	public String getPfpCustomerInfoId() {
-		return this.pfpCustomerInfoId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "catalog_logo_seq", nullable = false)
+	public PfpCatalogLogo getPfpCatalogLogo() {
+		return this.pfpCatalogLogo;
 	}
 
-	public void setPfpCustomerInfoId(String pfpCustomerInfoId) {
-		this.pfpCustomerInfoId = pfpCustomerInfoId;
+	public void setPfpCatalogLogo(PfpCatalogLogo pfpCatalogLogo) {
+		this.pfpCatalogLogo = pfpCatalogLogo;
 	}
 
-	@Column(name = "catalog_logo_rgb", nullable = false, length = 20)
-	public String getCatalogLogoRgb() {
-		return this.catalogLogoRgb;
+	@Column(name = "catalog_logo_hex_color", nullable = false, length = 20)
+	public String getCatalogLogoHexColor() {
+		return this.catalogLogoHexColor;
 	}
 
-	public void setCatalogLogoRgb(String catalogLogoRgb) {
-		this.catalogLogoRgb = catalogLogoRgb;
+	public void setCatalogLogoHexColor(String catalogLogoHexColor) {
+		this.catalogLogoHexColor = catalogLogoHexColor;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)
