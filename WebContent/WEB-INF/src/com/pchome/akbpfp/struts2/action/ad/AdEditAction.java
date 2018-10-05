@@ -84,7 +84,7 @@ public class AdEditAction extends BaseCookieAction{
 	private String photoPath;
 	private String photoDbPath;
 	private String photoDbPathNew;
-
+	private String photoDbPathPrefix;
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdGroupService pfpAdGroupService;
@@ -141,8 +141,10 @@ public class AdEditAction extends BaseCookieAction{
 	private String disFontColor;
 	//logo類型
 	private String prodLogoType;
-	
-	private String userLogoType;
+	//底圖
+	private String saleImgShowType;
+	//比例
+	private String imgProportiona;
 	
 	private String userLogoPath;
 	/* 商品廣告用參數 END*/
@@ -1671,12 +1673,20 @@ public class AdEditAction extends BaseCookieAction{
 		this.prodLogoType = prodLogoType;
 	}
 
-	public String getUserLogoType() {
-		return userLogoType;
+	public String getSaleImgShowType() {
+		return saleImgShowType;
 	}
 
-	public void setUserLogoType(String userLogoType) {
-		this.userLogoType = userLogoType;
+	public void setSaleImgShowType(String saleImgShowType) {
+		this.saleImgShowType = saleImgShowType;
+	}
+
+	public String getImgProportiona() {
+		return imgProportiona;
+	}
+
+	public void setImgProportiona(String imgProportiona) {
+		this.imgProportiona = imgProportiona;
 	}
 
 	public String getUserLogoPath() {
@@ -1685,6 +1695,14 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setUserLogoPath(String userLogoPath) {
 		this.userLogoPath = userLogoPath;
+	}
+
+	public String getPhotoDbPathPrefix() {
+		return photoDbPathPrefix;
+	}
+
+	public void setPhotoDbPathPrefix(String photoDbPathPrefix) {
+		this.photoDbPathPrefix = photoDbPathPrefix;
 	}
 
 }

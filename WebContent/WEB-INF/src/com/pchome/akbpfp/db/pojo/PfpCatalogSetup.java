@@ -1,12 +1,15 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/10/4 �W�� 10:06:38 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/10/4 �U�� 04:15:54 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,7 +22,7 @@ import javax.persistence.TemporalType;
 public class PfpCatalogSetup implements java.io.Serializable {
 
 	private Integer catalogSetupSeq;
-	private String pfpCustomerInfoId;
+	private PfpCatalog pfpCatalog;
 	private String catalogSetupKey;
 	private String catalogSetupValue;
 	private Date updateDate;
@@ -28,9 +31,9 @@ public class PfpCatalogSetup implements java.io.Serializable {
 	public PfpCatalogSetup() {
 	}
 
-	public PfpCatalogSetup(String pfpCustomerInfoId, String catalogSetupKey, String catalogSetupValue, Date updateDate,
+	public PfpCatalogSetup(PfpCatalog pfpCatalog, String catalogSetupKey, String catalogSetupValue, Date updateDate,
 			Date createDate) {
-		this.pfpCustomerInfoId = pfpCustomerInfoId;
+		this.pfpCatalog = pfpCatalog;
 		this.catalogSetupKey = catalogSetupKey;
 		this.catalogSetupValue = catalogSetupValue;
 		this.updateDate = updateDate;
@@ -49,13 +52,14 @@ public class PfpCatalogSetup implements java.io.Serializable {
 		this.catalogSetupSeq = catalogSetupSeq;
 	}
 
-	@Column(name = "pfp_customer_info_id", nullable = false, length = 20)
-	public String getPfpCustomerInfoId() {
-		return this.pfpCustomerInfoId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "catalog_seq", nullable = false)
+	public PfpCatalog getPfpCatalog() {
+		return this.pfpCatalog;
 	}
 
-	public void setPfpCustomerInfoId(String pfpCustomerInfoId) {
-		this.pfpCustomerInfoId = pfpCustomerInfoId;
+	public void setPfpCatalog(PfpCatalog pfpCatalog) {
+		this.pfpCatalog = pfpCatalog;
 	}
 
 	@Column(name = "catalog_setup_key", nullable = false, length = 20)

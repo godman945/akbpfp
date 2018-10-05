@@ -50,23 +50,22 @@ public class ProdAd implements IAd {
 	private AdEditAction adEditAction;
 	
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
+		
+		
+		System.out.println(adAddAction.getRequest().getAttribute("webAppRootKey"));
+		
 		log.info(">>>>>> process ProdAd");
 		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
-		PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCustomerInfoId(adAddAction.getCustomer_info_id());
+		PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(adAddAction.getCatalogGroupId());
 		if(pfpCatalogSetup != null){
-			if(pfpCatalogSetup.getCatalogSetupValue().equals("0")){
-				adAddAction.setUserLogoType("crop-height");
-			}
-			if(pfpCatalogSetup.getCatalogSetupValue().equals("1")){
-				adAddAction.setUserLogoType("crop-width");
-			}
+			adAddAction.setImgProportiona(pfpCatalogSetup.getCatalogSetupValue());
 		}
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
 		JSONObject json = new JSONObject();
-		if(pfpCatalogSetup != null){
+		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
 				JSONObject catalogLogoUrlJson = new JSONObject();
-				catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getCatalogLogoUrl());
+				catalogLogoUrlJson.put("logoPath", adAddAction.getPhotoDbPathPrefix()+pfpCatalogLogo.getCatalogLogoUrl());
 				catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
 				if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
 					json.put("square", catalogLogoUrlJson);
@@ -173,21 +172,16 @@ public class ProdAd implements IAd {
 	
 	@Override
 	public String adAdEdit(AdEditAction adEditAction) throws Exception {
-		PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCustomerInfoId(adAddAction.getCustomer_info_id());
+		PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(adEditAction.getCatalogGroupId());
 		if(pfpCatalogSetup != null){
-			if(pfpCatalogSetup.getCatalogSetupValue().equals("0")){
-				adAddAction.setUserLogoType("crop-height");
-			}
-			if(pfpCatalogSetup.getCatalogSetupValue().equals("1")){
-				adAddAction.setUserLogoType("crop-width");
-			}
+			adEditAction.setImgProportiona(pfpCatalogSetup.getCatalogSetupValue());
 		}
-		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
+		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adEditAction.getCustomer_info_id());
 		JSONArray array = new JSONArray();
-		if(pfpCatalogSetup != null){
+		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
 				JSONObject catalogLogoUrlJson = new JSONObject();
-				catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getCatalogLogoUrl());
+				catalogLogoUrlJson.put("logoPath", adEditAction.getPhotoDbPathPrefix()+pfpCatalogLogo.getCatalogLogoUrl());
 				catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getStatus());
 				if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
 					JSONObject json = new JSONObject();

@@ -39,37 +39,7 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 
 	@Override
 	public List<PfpCatalog> getPfpCatalogByCustomerInfoId(String customerInfoId) throws Exception {
-		
-		JSONObject resultJson = new JSONObject();
-		
-		
-//		List<Map<String,Map<String,Object>>> list = new HashMap<>();
-		
 		List<PfpCatalog> data = ((IPfpCatalogDAO)dao).getPfpCatalogByCustomerInfoId(customerInfoId);
-		
-		for (PfpCatalog pfpCatalog : data) {
-			
-			
-			
-			
-			System.out.println(pfpCatalog.getCatalogName());
-			Set<PfpCatalogGroup> groups = pfpCatalog.getPfpCatalogGroups();
-			for (PfpCatalogGroup pfpCatalogGroup : groups) {
-				
-				
-//				System.out.println(pfpCatalogGroup.getCatalogGroupName());
-			}
-			
-			
-//			resultJson.put(pfpCatalog.getCatalogSeq(), value);
-			
-			
-			System.out.println("----------");
-		}
-		
-		
-		
-		
 		return data;
 	}
 

@@ -339,7 +339,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 							}
 						}
 						
-						PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCustomerInfoId(customerInfoId);
+						PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(customerInfoId);
 						if(pfpCatalogSetup != null){
 							if(pfpCatalogSetup.getCatalogSetupValue().equals("0")){
 								pfpAdAdViewVO.setUserLogoType("crop-height");
