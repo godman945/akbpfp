@@ -45,10 +45,18 @@
 							<select name="" id="groupSelect" onchange="getProdGroup(this)">
 								<option value ="">請選擇</option>
 								<#if alex?exists>
-									<#list alex as adReportVO>
-										<#if adReportVO.pfpCatalogGroups?exists>
-											<#list adReportVO.pfpCatalogGroups as pfpCatalogGroup>
-												<option value="${adReportVO.catalogSeq!}_${pfpCatalogGroup.catalogGroupSeq!}">${pfpCatalogGroup.catalogGroupName!}</option>
+									<#list alex as pfpCatalog>
+										<#if pfpCatalog.pfpCatalogGroups?exists>
+											<#list pfpCatalog.pfpCatalogGroups as pfpCatalogGroup>
+												<#if pfpCatalog.pfpCatalogSetups?exists>
+														<#if pfpCatalog.pfpCatalogSetups?exists>
+															<#list pfpCatalog.pfpCatalogSetups as pfpCatalogSetup>
+																<#if pfpCatalogSetup.catalogSetupKey == 'img_proportiona'>
+																	<option value="${pfpCatalog.catalogSeq!}_${pfpCatalogGroup.catalogGroupSeq!}_${pfpCatalogSetup.catalogSetupValue!}">${pfpCatalogGroup.catalogGroupName!}</option>
+																</#if>
+															</#list>
+														</#if>	
+												</#if>
 											</#list>
 										</#if>
 									</#list>
