@@ -181,25 +181,22 @@
 	</action>
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-		
-		
-	     
-    
-   
+	<!-- 商品設定 -->
+	<action name="setup" class="CatalogProdListAction" method="setupInit">
+		<interceptor-ref name="loginCheckStack" />
+		<interceptor-ref name="adPrivilegeInterceptor" />
+		<result type="tiles" name="success">ec.prod.setup.init</result>
+		<result type="redirectAction" name="error">
+			<param name="actionName">prodListCardStyleView.html?catalogSeq=${catalogSeq}</param>  
+		</result>
+	</action>
+   	<action name="catalogSetupSaveAjax" class="CatalogProdListAction" method="catalogSetupSaveAjax">
+		<interceptor-ref name="loginCheckStack" />
+		<interceptor-ref name="adPrivilegeInterceptor" />
+		<result type="json" name="success">
+        		<param name="root">result</param>
+       	</result>
+	</action>
      
     </package>
 </struts>

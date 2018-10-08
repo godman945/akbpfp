@@ -444,6 +444,7 @@
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="prodListFactory" ref="ProdListFactory" />
+    	<property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
     </bean>
     <!-- 商品清單 END -->
     

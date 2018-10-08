@@ -1,13 +1,17 @@
 package com.pchome.akbpfp.struts2.action.catalog.prodList;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.catalog.prodList.factory.AProdList;
 import com.pchome.akbpfp.catalog.prodList.factory.ProdListFactory;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
+import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
 import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
+import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -32,6 +36,12 @@ public class CatalogProdListAction extends BaseCookieAction{
 	private String customerInfoTitle;
 	private String returnFtlName;
 	private String returnMsg;
+	
+	//設定內容值 0:crop,1:nocrop
+	private String cropType;
+	//ajax回傳內容
+	private String result;
+	private IPfpCatalogSetupService pfpCatalogSetupService;
 	//	private SequenceService sequenceService;
 	
 	
@@ -134,6 +144,72 @@ public class CatalogProdListAction extends BaseCookieAction{
 	}
 
 
+	/**
+	 * 商品設定功能初始畫面
+	 * */
+	public String setupInit() throws Exception{
+		//user catalog清單
+		pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());
+		customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();
+		
+		
+		PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(catalogSeq);
+		if(pfpCatalogSetup != null){
+			String crop = pfpCatalogSetup.getCatalogSetupValue();
+			cropType = crop.equals("crop")? "0" : "1";
+		}
+		System.out.println(catalogSeq);
+		return SUCCESS;
+	}
+	
+	/**
+	 * 儲存設定
+	 * */
+	public String catalogSetupSaveAjax() throws Exception{
+		JSONObject json = new JSONObject();
+		PfpCatalog pfpCatalog = pfpCatalogService.getPfpCatalog(catalogSeq);
+		if(pfpCatalog == null){
+			json.put("result", "fail");
+			result = json.toString();
+			return SUCCESS;
+		}
+		String crop = null;
+		if(cropType.equals("0")){
+			crop = "crop"; 
+		}else if(cropType.equals("1")){
+			crop = "nocrop";
+		}
+		if(StringUtils.isBlank(crop)){
+			json.put("result", "fail");
+			result = json.toString();
+			return SUCCESS;
+		}
+		Date date = new Date();
+		PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(catalogSeq);
+		if(pfpCatalogSetup == null){
+			pfpCatalogSetup = new PfpCatalogSetup();
+			pfpCatalogSetup.setPfpCatalog(pfpCatalog);
+			pfpCatalogSetup.setCatalogSetupKey("img_proportiona");
+			pfpCatalogSetup.setCatalogSetupValue(crop);
+			pfpCatalogSetup.setUpdateDate(date);
+			pfpCatalogSetup.setCreateDate(date);
+			pfpCatalogSetupService.saveOrUpdate(pfpCatalogSetup);
+			
+			json.put("result", "success");
+			result = json.toString();
+			return SUCCESS;
+		}else{
+			pfpCatalogSetup.setCatalogSetupKey("img_proportiona");
+			pfpCatalogSetup.setCatalogSetupValue(crop);
+			pfpCatalogSetup.setPfpCatalog(pfpCatalog);
+			pfpCatalogSetup.setUpdateDate(date);
+			json.put("result", "success");
+			result = json.toString();
+			return SUCCESS;
+		}
+		
+	}
+	
 	
 	
 
@@ -208,15 +284,29 @@ public class CatalogProdListAction extends BaseCookieAction{
 	public void setPageCount(int pageCount) {
 		this.pageCount = pageCount;
 	}
-
 	public int getTotalCount() {
 		return totalCount;
 	}
-
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
-	
-	
+	public String getResult() {
+		return result;
+	}
+	public void setResult(String result) {
+		this.result = result;
+	}
+	public IPfpCatalogSetupService getPfpCatalogSetupService() {
+		return pfpCatalogSetupService;
+	}
+	public void setPfpCatalogSetupService(IPfpCatalogSetupService pfpCatalogSetupService) {
+		this.pfpCatalogSetupService = pfpCatalogSetupService;
+	}
+	public String getCropType() {
+		return cropType;
+	}
+	public void setCropType(String cropType) {
+		this.cropType = cropType;
+	}
 	
 }

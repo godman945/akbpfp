@@ -5,6 +5,7 @@
 
 <tiles-definitions>
 
+	<!-- LOGO START -->
 	<definition name=".prod.logo" extends="default.layout" >
     	<!-- 
     	
@@ -26,5 +27,23 @@
     	<put-attribute name="validateJs" value="jquery/jquery.validate.js" />
     	-->
     </definition>
+    <!-- LOGO END -->
+    
+    <!-- SETUP START -->
+    <definition name="ec.prod.setup.init" extends="default.layout">
+       <put-attribute name="head" value="/ftl/catalogProd/setup/ec.prod.source.ftl" />
+       <put-attribute name="body" value="ec.prod.setup.init.body" />
+    </definition>
+    
+    
+    <definition name="ec.prod.setup.init.body" template="/ftl/catalogProd/setup/ec.prod.setup.view.ftl">
+       <put-attribute name="prodlistMenu" value="/ftl/catalogProd/setup/prodlistMenu.ftl" />
+       <put-attribute name="include.js" value="/ftl/catalogProd/setup/ec.prod.setup.include.js.ftl" />
+    </definition>
+    
+    
+    <!-- SETUP end -->
+    
+    
     
 </tiles-definitions>

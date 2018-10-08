@@ -44,7 +44,7 @@
                     <li class="txt-cell pos-relative"><a href="#">商品清單</a></li>
                     <li class="txt-cell pos-relative"><a href="queryCatalogGroup.html?catalogSeq=${catalogSeq}">商品組合</a></li>
                     <li class="txt-cell pos-relative"><a href="#">商品資料</a></li>
-                    <li class="txt-cell pos-relative"><a href="#">設定</a></li>
+                    <li class="txt-cell pos-relative"><a href="setup.html?catalogSeq=${catalogSeq}">設定</a></li>
                 </ul>
                 <div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>${customerInfoTitle!}</div>
             </div>
