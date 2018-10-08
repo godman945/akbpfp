@@ -144,9 +144,6 @@ public class ProdAd implements IAd {
 			case PROD_RADIO_LOGO_TYPE:
 				adAddAction.saveAdDetail(adAddAction.getProdLogoType(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
-			case SALE_IMG_SHOW_TYPE:
-				adAddAction.saveAdDetail(adAddAction.getProdLogoType(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
-		 		break;
 			}
 
 		}
@@ -179,6 +176,7 @@ public class ProdAd implements IAd {
 				}
 			}
 		}
+		adEditAction.setUserLogoPath(json.toString());
 		
 		Set<PfpAdDetail> detailSet = adEditAction.getPfpAd().getPfpAdDetails();
 		JSONArray uploadLogJsonArray = new JSONArray();
@@ -235,9 +233,6 @@ public class ProdAd implements IAd {
 			if(EnumProdAdDetail.PROD_RADIO_LOGO_TYPE.getAdDetailId().equals(pfpAdDetail.getAdDetailId())){
 				adEditAction.setProdLogoType(pfpAdDetail.getAdDetailContent());
 			}
-			
-			
-			
 			
 			if(pfpAdDetail.getAdDetailId().indexOf("logo_sale") >= 0){
 				JSONObject uploadLogoLogJson = new JSONObject();

@@ -3,6 +3,14 @@
 <@t.insertAttribute name="includeSource" />
 	<div class="cont">
 	<@t.insertAttribute name="head" />
+
+
+								
+
+
+
+
+
     <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
     	<div class="grtba">
 
@@ -44,10 +52,18 @@
 							<select name="" id="groupSelect" onchange="getProdGroup(this)">
 								<option value ="">請選擇</option>
 								<#if alex?exists>
-									<#list alex as adReportVO>
-										<#if adReportVO.pfpCatalogGroups?exists>
-											<#list adReportVO.pfpCatalogGroups as pfpCatalogGroup>
-												<option value="${adReportVO.catalogSeq!}_${pfpCatalogGroup.catalogGroupSeq!}">${pfpCatalogGroup.catalogGroupName!}</option>
+									<#list alex as pfpCatalog>
+										<#if pfpCatalog.pfpCatalogGroups?exists>
+											<#list pfpCatalog.pfpCatalogGroups as pfpCatalogGroup>
+												<#if pfpCatalog.pfpCatalogSetups?exists>
+														<#if pfpCatalog.pfpCatalogSetups?exists>
+															<#list pfpCatalog.pfpCatalogSetups as pfpCatalogSetup>
+																<#if pfpCatalogSetup.catalogSetupKey == 'img_proportiona'>
+																	<option value="${pfpCatalog.catalogSeq!}_${pfpCatalogGroup.catalogGroupSeq!}_${pfpCatalogSetup.catalogSetupValue!}">${pfpCatalogGroup.catalogGroupName!}</option>
+																</#if>
+															</#list>
+														</#if>	
+												</#if>
 											</#list>
 										</#if>
 									</#list>
@@ -326,7 +342,7 @@
 
 <div id ="test2" class="test2" style="display:none;">
 </div>
-
+<textarea style="display:;" id="saveUserLogoPath">${userLogoPath!}</textarea>
 <input type="hidden" id="saveProdLogoType" value="${prodLogoType!}">
 <input type="hidden" id="messageId" value="${message!!}">
 <input type="hidden" id="messageId" value="">
@@ -347,7 +363,6 @@
 <input type="hidden" id="saveDisBgColor" value="${disBgColor!}">
 <input type="hidden" id="saveDisFontColor" value="${disFontColor!}">
 <input type="hidden" id="saveUserLogoType" value="${userLogoType!}">
-<input type="hidden" id="saveUserLogoPath" value="${userLogoPath!}">
 <textarea style="display:none;" id="saveLogoSaleImg">${uploadLogoLog!}</textarea>
 <textarea style="display:none;" id="saveSaleImg">${uploadLog!}</textarea>
 

@@ -106,7 +106,6 @@
 		
 		
 		$('input[type=radio][name=options]').change(function() {
-//			adPreview();
 			getProdGroup(null);
 		});
 		
@@ -779,10 +778,11 @@ function getProdGroup(obj){
 	var adWidth = $("#adSize option:selected").text().split(" x ")[0];
 	var left = (totalWidth - adWidth) / 2;
 	$(".akb_iframe").css("margin-left",left+"px");
-	var radioType = $('input[name=options]:checked').val();
 	var logoData = JSON.parse($("#userLogoPath").text());
 	var prodLogoType = "";
 	var logoPath = "";
+	
+	var radioType = $('input[name=options]:checked').val();
 	if(radioType == "type1"){
 		prodLogoType = "type1";
 		logoPath = encodeURIComponent(logoData.square.logoPath);

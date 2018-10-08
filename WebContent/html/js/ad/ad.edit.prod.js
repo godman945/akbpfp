@@ -130,9 +130,8 @@ $(document).ready(function(){
 			adPreview();
 		});
 		
-		
 		$('input[type=radio][name=options]').change(function() {
-			adPreview();
+			getProdGroup(null);
 		});
 		
 		$("input").keyup(function(event){
@@ -215,7 +214,12 @@ function initSaveData(){
 	$("#disFontColor").val($("#saveDisFontColor").val());
 	$("#logoText").val($("#saveLogoText").val()).trigger("keyup");
 	$('input:radio[name=options]').val([$("#saveProdLogoType").val()]);
-	$("#groupSelect").val($("#saveCatalogId").val()+"_"+$("#saveCatalogGroupId").val()).trigger("change");
+	
+	$("#groupSelect option").each(function(){
+		if(this.value.indexOf($("#saveCatalogId").val()+"_"+$("#saveCatalogGroupId").val()) >=0){
+			$("#groupSelect").val(this.value).trigger("change");
+		}
+	})
 }
 
 function initFancyBoxHtml(){
@@ -834,14 +838,15 @@ function getProdGroup(obj){
 	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
 	var selectSizeHeight = $("#adSize option:selected").text().split(" x ")[1];
 	var catalogGroupId = $("#groupSelect").val().split("_")[1];
-	var adbgType = "noposter";
+	var imgProportiona = $("#groupSelect").val().split("_")[2];
+	var imgShowType = "noposter";
 	console.log(catalogGroupId);
 	
 	Object.keys(uploadLog).forEach(function(key) {
 		var height = String(uploadLog[key].height);
 		var width = String(uploadLog[key].width);
 		if(width == selectSizeWidth && height == selectSizeHeight){
-			adbgType = "hasposter";
+			imgShowType = "hasposter";
 		}
 	});
 	$(".akb_iframe").width(selectSizeWidth).height(selectSizeHeight);
@@ -876,24 +881,45 @@ function getProdGroup(obj){
 	if(disFontColor.indexOf("#") < 0){
 		disFontColor = "#"+disFontColor;
 	}
-	var src = 'adProdModel.html'
-		+'?catalogGroupId='+catalogGroupId
+	
+	var logoData = JSON.parse($("#saveUserLogoPath").text());
+	var prodLogoType = "";
+	var logoPath = "";
+	var radioType = $('input[name=options]:checked').val();
+	if(radioType == "type1"){
+		prodLogoType = "type1";
+		logoPath = encodeURIComponent(logoData.square.logoPath);
+	}
+	if(radioType == "type2"){
+		prodLogoType = "type1";
+		logoPath = encodeURIComponent(logoData.rectangle.logoPath);
+	}
+	if(radioType == "type3"){
+		prodLogoType = "type2";
+		logoPath = encodeURIComponent(logoData.square.logoPath);
+	}
+	console.log(imgProportiona);
+	console.log(prodLogoType);
+	
+	
+		var src = 'adProdModel.html'
+		+'?catalogGroupId='+encodeURIComponent(catalogGroupId)
 		+'&btnTxt='+encodeURIComponent($("#btnTxt").val())
 		+'&btnFontColor='+encodeURIComponent(btnFontColor)
 		+'&btnBgColor='+encodeURIComponent(btnBgColor)
 		+'&disTxtType='+encodeURIComponent($("#disTxtType").val())
 		+'&disBgColor='+encodeURIComponent(disBgColor)
 		+'&disFontColor='+encodeURIComponent(disFontColor)
-		+"&adbgType="+adbgType
-		+"&logoType="+adbgType
+		+"&imgShowType="+imgShowType
 		+"&logoText="+encodeURIComponent($("#logoText").val())
 		+"&logoBgColor="+encodeURIComponent(logoBgColor)
 		+"&logoFontColor="+encodeURIComponent(logoFontColor)
-		+"&prodLogoType="+encodeURIComponent($('input[name=options]:checked').val())
-		+"&userLogoType="+encodeURIComponent($("#saveUserLogoType").val())
-		+"&userLogoPath="+encodeURIComponent($("#saveUserLogoPath").val())
-	console.log(src);
-	$(".akb_iframe").attr('src' ,src);
+		+"&prodLogoType="+encodeURIComponent(prodLogoType)
+		+"&imgProportiona="+encodeURIComponent(imgProportiona)
+		+"&userLogoPath="+logoPath
+		$(".akb_iframe").attr('src' ,src);
+	
+		console.log(src);
 }
 
 function adPreview(){
@@ -910,10 +936,7 @@ function adPreview(){
 	css = css.replace("<#dad_dis_bg_color>","#"+$("#disBgColor").val());
 	$(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML = css;
 	var body = $(".akb_iframe")[0].contentDocument.body;
-	var htmlRadioType = $('input[name=options]:checked').val();
 	var typeObj = $(body)[0].getElementsByClassName("ads-container")[0].getElementsByTagName('a')[0].children[0];
-	var typeObjClassName = htmlRadioType +" logo-box pos-absolute pos-top pos-left";
-	$(typeObj).attr("class",typeObjClassName);
 	var logoTitleObj = typeObj.getElementsByClassName("logo-txt-title");
 	$(logoTitleObj).text($("#logoText").val());
 	
