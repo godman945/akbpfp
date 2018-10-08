@@ -1,9 +1,10 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/manualInput.js?t=20181005007"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/manualInput.js?t=20181008007"></script>
 
 <div class="container-prodmanage">
+<#--<input type="file" serialize id="fileupload" name="fileupload"  style="display:none;">-->
 
     <#-- 次目錄導覽列 開始 -->
     <#-- hidden 隱藏所有牙齒 -->
@@ -134,15 +135,15 @@
 
                         <#-- select  :選擇圖片   -->
                         <#-- success :圖片已上傳 -->
-                        <div class="pdimgupload-box success">
+                        <div class="pdimgupload-box select">
 
                             <#--左欄上傳圖片:選擇圖片-->
-                            <div class="selectimg">  
-                                <div class="txt-cell">                        
-                                <div class="svg-box icon-uploadpic">
-                                    <object data="img/prodpic-upload.svg" type="image/svg+xml"></object>
-                                </div>
-                                <u>將商品圖拖放到這裡<br>或 <a>選擇要上傳的檔案</a></u>                  
+                            <div class="selectimg">
+                                <div class="txt-cell" id="test" >
+	                                <div class="svg-box icon-uploadpic">
+	                                    <object data="<@s.url value="/" />/html/img/catalogProd/catalogUpload/prodpic-upload.svg" type="image/svg+xml"></object>
+	                                </div>
+                                	<u>將商品圖拖放到這裡<br>或 <a onclick="openFileLoad(this)">選擇要上傳的檔案</a></u>                  
                                 </div>
                             </div>
 
@@ -154,7 +155,8 @@
                                     </u>
                                 </div>
                                 <div class="txt-cell">
-                                    <img src="https://adpic.pchome.com.tw/adpics/pic_1186426_688580.jpg">
+                                    <img src="">
+                                    <#-- https://adpic.pchome.com.tw/adpics/pic_1186426_688580.jpg -->
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,15 @@
 ﻿$(document).ready(function() {
+//	$('html, #test').on('drop click',function(event){
+//	    alert('111');
+//	    console.log(event.preventDefault());
+//	    console.log(event.stopPropagation());
+//	});
 	
+	$('#test').on('dragover', false).on('drop', function (e) {
+        // do something
+		alert('222');
+        return false;
+    });
 	
 	$('#addProd').click(function() {
 		// 資料檢查
@@ -68,6 +78,58 @@ function delProd(index) {
 	prodCount--;
 	$(".manualprod-box p span").attr("data-value", prodCount); // 商品數量
 	$(".prod" + index).remove();
+}
+
+// 點擊選擇要上傳的檔案
+function openFileLoad(obj){
+//	alex = 'alex';
+	clickObj = obj.parentElement.parentElement;
+	$("#fileupload").click();
+}
+
+// 將檔案丟到範圍內
+function drop(ev) {
+	alert("FUCK2");
+	console.log("333333");
+	var file = ev.dataTransfer.files[0];
+//	checkUploadFile(file, obj);
+	console.log("666666");
+	console.log("12345" + file);
+}
+
+function checkUploadFile(file,obj){
+
+	var flag = true;
+	var fileName = file.name;
+	var fileSizeKb = Math.round(file.size/1024);
+	var fileType = file.type;
+	console.log(fileSizeKb);
+	var select = null;
+	var review = null;
+	var success = null;
+	var notebox = null;
+	var img = null;
+		
+	if(fileType !='image/jpeg' && fileType !='image/png' && fileType !='image/gif'){
+		flag = false;
+		$("#errMsg").text("請上傳jpg、png 或 gif格式");
+		return false;
+	}
+		
+	readFile(file, function(e) {
+		var base64Img = e.target.result;
+		img.src = base64Img;
+		img.onload = function(){
+		
+		}
+	});
+	
+}
+
+function readFile(file, onLoadCallback) {
+	var reader = new FileReader();
+	reader.onload = onLoadCallback;
+	reader.readAsDataURL(file);
 }
 
 //處理千分位逗號
