@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogProdEcService;
+import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 
 
 
@@ -16,9 +17,9 @@ public class EcProdList extends AProdList {
 	private PfpCatalogProdEcService pfpCatalogProdEcService;
 	
 	
-	public List<Object> getProdList(String catalogSeq, String prodStatus, String pfpCustomerInfoId, int page, int pageSize) throws Exception{
+	public List<Object> getProdList(ProdListConditionVO prodListConditionVO) throws Exception{
 		
-		 List<Object> prodLists = pfpCatalogProdEcService.getProdList(catalogSeq, prodStatus, pfpCustomerInfoId, page, pageSize);
+		 List<Object> prodLists = pfpCatalogProdEcService.getProdList(prodListConditionVO);
 		
 		
 		return prodLists;
@@ -34,8 +35,8 @@ public class EcProdList extends AProdList {
 	}
 	
 	
-	public String getProdListCount(String catalogSeq, String prodStatus) throws Exception{
-		return  pfpCatalogProdEcService.getProdListCount(catalogSeq, prodStatus);
+	public String getProdListCount(ProdListConditionVO prodListConditionVO) throws Exception{
+		return  pfpCatalogProdEcService.getProdListCount(prodListConditionVO);
 	}
 
 	

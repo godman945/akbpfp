@@ -41,36 +41,16 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getCatalogAllList(String pfpCustomerInfoId) throws Exception{
-		StringBuffer hql = new StringBuffer();
-		hql.append(" select * ");
-		hql.append(" from pfp_catalog as a ");
-		hql.append(" join pfp_catalog_upload_log as b ");
-		hql.append(" on a.catalog_seq = b.catalog_seq ");
-		hql.append(" where a.pfp_customer_info_id = '"+pfpCustomerInfoId+"'");
-		log.info(hql.toString());
-		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
-		return query.list();
-	}
-	
-	public String getCatalogAllListCount(String pfpCustomerInfoId) throws Exception{
-		StringBuffer hql = new StringBuffer();
-		hql.append(" select count(*) ");
-		hql.append(" from pfp_catalog as a ");
-		hql.append(" join pfp_catalog_upload_log as b ");
-		hql.append(" on a.catalog_seq = b.catalog_seq ");
-		hql.append(" where a.pfp_customer_info_id = '"+pfpCustomerInfoId+"'");
 
-		log.info(hql.toString());
-
-		Query query = super.getSession().createSQLQuery(hql.toString());
-		String count =  String.valueOf(query.list().get(0));
+	public List<PfpCatalog> getPfpCatalogList(String pfpCustomerInfoId) throws Exception{
+		StringBuffer hql = new StringBuffer();
+		hql.append(" from PfpCatalog ");
+		hql.append(" where pfpCustomerInfoId = ? ");
 		
-		return  count;
+		return super.getHibernateTemplate().find(hql.toString(), pfpCustomerInfoId);
 	}
 	
+
 	public List<PfpCatalog> getPfpCatalogByCustomerInfoId(String customerInfoId) throws Exception {
 		StringBuffer hql = new StringBuffer();
 		hql.append(" from PfpCatalog ");
@@ -80,6 +60,4 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
         query.setParameter("customerInfoId", customerInfoId);
         return query.list();
 	}
-	
-
 }

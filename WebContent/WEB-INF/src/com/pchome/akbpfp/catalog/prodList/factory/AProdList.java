@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
+import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 
 public abstract class AProdList {
 	
@@ -19,9 +20,9 @@ public abstract class AProdList {
 		return catalogType;
 	}
 	
-	public abstract List<Object> getProdList(String catalogSeq, String prodStatus, String pfpCustomerInfoId, int page, int pageSize) throws Exception;
+	public abstract List<Object> getProdList(ProdListConditionVO prodListConditionVO) throws Exception;
 	
-	public abstract String getProdListCount(String catalogSeq, String prodStatus) throws Exception;
+	public abstract String getProdListCount(ProdListConditionVO prodListConditionVO) throws Exception;
 	
 	public abstract void updateProdListProdStatus(String catalogSeq, String prodStatus, List<String> prodIdList) throws Exception;
 	

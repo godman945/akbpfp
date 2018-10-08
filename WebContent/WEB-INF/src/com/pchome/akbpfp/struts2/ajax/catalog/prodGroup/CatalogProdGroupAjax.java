@@ -44,6 +44,7 @@ public class CatalogProdGroupAjax  extends BaseCookieAction{
 	private List<Map<String,Object>> rtnProdGroupListMap;
 	private String rtnProdGroupListSize;
 	private String result;
+	private Map<String,Object> resultMap;
 	
 
 	/**
@@ -280,8 +281,8 @@ public class CatalogProdGroupAjax  extends BaseCookieAction{
 			String filterSQL = aProdGroup.pfpCatalogGroupItemTofilterSQL(pfpCatalogGroupItemList);
 			 
 			//撈出該商品組合的list
-			rtnProdGroupListMap = aProdGroup.getProdGroupList(catalogSeq, filterSQL);
-			log.info(">>> rtnProdGroupListMap : "+rtnProdGroupListMap);
+//			rtnProdGroupListMap = aProdGroup.getProdGroupList(catalogSeq, filterSQL);
+//			log.info(">>> rtnProdGroupListMap : "+rtnProdGroupListMap);
 			
 			rtnProdGroupListSize = Integer.toString(rtnProdGroupListMap.size());
 			log.info(">>> rtnProdGroupListSize length : "+rtnProdGroupListSize);
@@ -363,62 +364,31 @@ public class CatalogProdGroupAjax  extends BaseCookieAction{
 		try{
 			log.info(">>> catalogGroupSeq: " + catalogGroupSeq);
 			
-			pfpCatalogGroupItemService.deleteCatalogGroupItem(catalogGroupSeq);
+			resultMap = new HashMap<String, Object>();
 			
+			PfpCatalogGroup pfpCatalogGroup = pfpCatalogGroupService.get(catalogGroupSeq);
+			
+			String catalogCustomerInfoId = pfpCatalogGroup.getPfpCatalog().getPfpCustomerInfoId();
+			
+			if(!StringUtils.equals(super.getCustomer_info_id(), catalogCustomerInfoId)){
+				resultMap.put("status", "ERROR");
+				resultMap.put("msg", "僅能刪除有權限之商品組合");
+				return SUCCESS;
+			}
+			
+			pfpCatalogGroupItemService.deleteCatalogGroupItem(catalogGroupSeq);
 			pfpCatalogGroupService.deleteCatalogGroup(catalogGroupSeq);	
 			
-			result = "刪除商品組合成功";
-			
-			
-			
-			
-//			
-//			List<PfpCatalogGroupItem> ProdGroupFilterItemList = pfpCatalogGroupItemService.getPfpCatalogGroupItemList(catalogGroupSeq);
-//			
-//			result = "建立商品組合成功";
-//			System.out.println("ProdGroupFilterItemList : "+ProdGroupFilterItemList.toString());
-//			
-//			//用MAP格式回傳json
-//			Map<String, List<Map<String, String>>> catalogGroupItemMapList = new LinkedHashMap<String, List<Map<String, String>>>();
-//			List<Map<String, String>> catalogGroupItemList = new ArrayList<Map<String, String>>();
-//			for (PfpCatalogGroupItem pfpCatalogGroupItem : ProdGroupFilterItemList) {
-//				Map<String, String> catalogGroupItemMap = new LinkedHashMap<String, String>();
-//				catalogGroupItemMap.put("field", pfpCatalogGroupItem.getCatalogGroupItemField());
-//				catalogGroupItemMap.put("condition", pfpCatalogGroupItem.getCatalogGroupItemCondition());
-//				catalogGroupItemMap.put("value", pfpCatalogGroupItem.getCatalogGroupItemValue());
-//				catalogGroupItemList.add(catalogGroupItemMap);
-//			}
-//			catalogGroupItemMapList.put("catalogGroupItemList", catalogGroupItemList);
-//			JSONObject catalogGroupItemObj = new JSONObject(catalogGroupItemMapList);
-//			result = catalogGroupItemObj.toString();
-//			System.out.println(result);
-//			 
-//			
-//			/*用JSON格式回傳json
-//			JSONArray catalogGroupItemAry = new JSONArray();
-//			for (PfpCatalogGroupItem pfpCatalogGroupItem : ProdGroupFilterItemList) {
-//				JSONObject catalogGroupItemObj = new JSONObject();
-//				catalogGroupItemObj.put("field", pfpCatalogGroupItem.getCatalogGroupItemField());
-//				catalogGroupItemObj.put("condition", pfpCatalogGroupItem.getCatalogGroupItemCondition());
-//				catalogGroupItemObj.put("value", pfpCatalogGroupItem.getCatalogGroupItemValue());
-//				catalogGroupItemAry.put(catalogGroupItemObj);
-//			}
-//			JSONObject returnObj = new JSONObject();
-//			returnObj.put("catalogGroupItemList", catalogGroupItemAry);
-//			result = returnObj.toString();
-//			System.out.println("bessie sucess~~~");
-//			 */
-			
+			resultMap.put("status", "SUCCESS");
+			resultMap.put("msg", "刪除商品組合成功");			
 			
 		} catch (Exception e) {
-//			dataMap.put("status", "ERROR");
-//			dataMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
-			result = "刪除商品組合失敗";
+			resultMap.put("status", "ERROR");
+			resultMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
 			log.error("error:" + e);
 		}
 		
 		return SUCCESS;
-		
 	}
 	
 	
@@ -489,6 +459,14 @@ public class CatalogProdGroupAjax  extends BaseCookieAction{
 
 	public String getRtnProdGroupListSize() {
 		return rtnProdGroupListSize;
+	}
+
+	public Map<String, Object> getResultMap() {
+		return resultMap;
+	}
+
+	public void setResultMap(Map<String, Object> resultMap) {
+		this.resultMap = resultMap;
 	}
 
 	

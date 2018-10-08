@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.db.service.catalog.TMP;
 
 import java.util.List;
-import java.util.Map;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.IBaseService;
@@ -12,12 +11,8 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	
 	public PfpCatalog getPfpCatalog(String catalogSeq) throws Exception;
 	
-	//根據帳戶取得目錄資訊
-	public List<PfpCatalog> getPfpCatalogByCustomerInfoId(String customerInfoId) throws Exception;
-
-	public List<Map<String,Object>> getCatalogAllList(String pfpCustomerInfoId) throws Exception;
+	public List<PfpCatalog> getPfpCatalogList(String pfpCustomerInfoId) throws Exception;
 	
-	public String getCatalogAllListCount(String pfpCustomerInfoId) throws Exception;
-
+	public List<PfpCatalog> getPfpCatalogByCustomerInfoId(String customerInfoId) throws Exception;
 	
 }

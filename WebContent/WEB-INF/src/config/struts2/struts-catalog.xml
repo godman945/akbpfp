@@ -34,29 +34,45 @@
     
     
     
-        <!-- 取得所有商品目錄-->
-	    <action name="catalogAllList" class="CatalogProdListAction" method="queryCatalogAllList">
-	<!--      	<interceptor-ref name="cookieProveStack" /> -->
-	     	<result type="json" name="success">
-	            <param name="noCache">true</param>
-	            <param name="contentType">text/html</param>
-	        </result>
-	<!--             <result type="tiles" name="success">prod.list.view</result> -->
+    
+    
+        <!-- 取得卡片式商品清單 -->
+	    <action name="prodListCardStyleView" class="CatalogProdListAction" method="queryProdListByCardStyle">
+	     	<interceptor-ref name="cookieProveStack" />
+            <result type="tiles" name="EC_PROD_LIST">ec.prod.list.card.style.view</result>
+            <result type="tiles" name="error">error.prod.list.card.style.view</result>
+<!-- 	     	<result type="json" name="success"> -->
+<!-- 	            <param name="noCache">true</param> -->
+<!-- 	            <param name="contentType">text/html</param> -->
+<!-- 	        </result> -->
 		</action>
-    
-    
-    
-    
-    
-        <!-- 取得商品清單列表 -->
-	    <action name="prodList" class="CatalogProdListAction" method="getProdList">
-	<!--      	<interceptor-ref name="cookieProveStack" /> -->
-	     	<result type="json" name="success">
-	            <param name="noCache">true</param>
-	            <param name="contentType">text/html</param>
-	        </result>
-	<!--             <result type="tiles" name="success">prod.list.view</result> -->
+		
+		
+		  <!-- 取得表格式商品清單 -->
+	    <action name="prodListTableStyleView" class="CatalogProdListAction" method="queryProdListByCardStyle">
+	     	<interceptor-ref name="cookieProveStack" />
+            <result type="tiles" name="EC_PROD_LIST">ec.prod.list.table.style.view</result>
+            <result type="tiles" name="error">error.prod.list.table.style.view</result>
+<!-- 	     	<result type="json" name="success"> -->
+<!-- 	            <param name="noCache">true</param> -->
+<!-- 	            <param name="contentType">text/html</param> -->
+<!-- 	        </result> -->
 		</action>
+		
+		
+		<!--取得商品清單Ajax-->
+	    <action name="queryProdListAjax" class="CatalogProdListAjax" method="queryProdListAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
+    
+	    
+	    
+		
+		
 	    
 	     <!-- 更新商品清單狀態 -->
 	      <action name="updateProdStatus" class="CatalogProdListAjax" method="updateProdStatusAjax">
@@ -78,17 +94,20 @@
 
 
 
-
-
-	<!-- 取得所有目錄群組 -->
+	<!-- 取得目錄所有商品組合 -->
 	<action name="queryCatalogGroup" class="CatalogProdGroupAction" method="queryCatalogGroup">
-		<!-- <interceptor-ref name="cookieProveStack" /> -->
-		<result type="json" name="success">
-			<param name="noCache">true</param>
-			<param name="contentType">text/html</param>
-		</result>
-		<!-- <result type="tiles" name="success">prod.list.view</result> -->
+		<interceptor-ref name="cookieProveStack" />
+		<result type="tiles" name="success">prod.group.view</result>
 	</action>
+	
+		
+	
+	
+	
+	
+	
+	
+	
 
 	<!-- 取得選取目錄群組的篩選資料 -->
 	<action name="queryProdGroupFilterContent" class="CatalogProdGroupAjax" method="queryProdGroupFilterContentAjax">
@@ -100,15 +119,25 @@
 	</action>
 
 
-	<!-- 取得商品群組清單明細 -->
+
+	<!-- 取得商品組合清單明細 -->
 	<action name="queryProdGroupList" class="CatalogProdGroupAction" method="queryProdGroupList">
-		<!-- <interceptor-ref name="cookieProveStack" /> -->
-		<result type="json" name="success">
-			<param name="noCache">true</param>
-			<param name="contentType">text/html</param>
-		</result>
-		<!-- <result type="tiles" name="success">prod.list.view</result> -->
+		<interceptor-ref name="cookieProveStack" />
+		<result type="tiles" name="EC_PROD_GROUP">ec.prod.group.table.view</result>
+        <result type="tiles" name="error">error.prod.group.table.view</result>
+<!-- 		<result type="json" name="success"> -->
+<!-- 			<param name="noCache">true</param> -->
+<!-- 			<param name="contentType">text/html</param> -->
+<!-- 		</result> -->
+		
 	</action>
+	
+	
+		
+		
+		
+		
+		
 		
 	
 	<!-- 建立商品組合目錄 -->
@@ -131,7 +160,7 @@
 	</action>
 	
 	
-	<!-- 撈出商品群組篩選資料 -->
+	<!-- 撈出商品組合篩選資料 -->
 	<action name="queryProdGroupFilterItem" class="CatalogProdGroupAjax" method="queryProdGroupFilterItemAjax">
 		<!-- <interceptor-ref name="cookieProveStack" /> -->
 		<result type="json" name="success">

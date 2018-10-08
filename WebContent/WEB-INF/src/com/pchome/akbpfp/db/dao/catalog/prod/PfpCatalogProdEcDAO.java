@@ -1,6 +1,5 @@
 package com.pchome.akbpfp.db.dao.catalog.prod;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -11,66 +10,73 @@ import org.hibernate.transform.Transformers;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
+import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
+import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
+import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupField;
 
 public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> implements IPfpCatalogProdEcDAO{
 	
 	@SuppressWarnings("unchecked")
-	public  List<Map<String,Object>> getProdList(String catalogSeq, String prodStatus, String pfpCustomerInfoId, int page, int pageSize)  throws Exception{
+	public  List<Map<String,Object>> getProdList(ProdListConditionVO prodListConditionVO)  throws Exception{
 		
 		StringBuffer hql = new StringBuffer();
 		hql.append(" select a.*,b.pfp_customer_info_id ");
 		hql.append(" from pfp_catalog_prod_ec as a ");
 		hql.append(" join pfp_catalog as b ");
 		hql.append(" on a.catalog_seq = b.catalog_seq  ");
-		hql.append(" where a.catalog_seq = '"+catalogSeq+"' ");
-		hql.append(" and b.pfp_customer_info_id = '"+pfpCustomerInfoId+"' ");
+		hql.append(" where a.catalog_seq = '"+prodListConditionVO.getCatalogSeq()+"' ");
+		hql.append(" and b.pfp_customer_info_id = '"+prodListConditionVO.getPfpCustomerInfoId()+"' ");
 		
-		if (StringUtils.isNotBlank(prodStatus)){
-			hql.append(" and a.prod_status = '"+prodStatus+"' ");
+		if (StringUtils.isNotBlank(prodListConditionVO.getProdStatus())){
+			hql.append(" and a.ec_status = '"+prodListConditionVO.getProdStatus()+"' ");
 		}
+		
+		if (StringUtils.isNotBlank(prodListConditionVO.getProdName())){
+			hql.append(" and a.ec_name like '%"+prodListConditionVO.getProdName()+"%' ");
+		}
+		
 
 		log.info(hql.toString());
 
 		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setFirstResult((page-1)*pageSize);
-		query.setMaxResults(pageSize);
+		query.setFirstResult((prodListConditionVO.getPage()-1)*prodListConditionVO.getPageSize());
+		query.setMaxResults(prodListConditionVO.getPageSize());
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
 		
 		return query.list();
 	}
 	
-	public String getProdListCount(String catalogSeq, String prodStatus) throws Exception{
-		Session session = getSession();
-
+	public String getProdListCount(ProdListConditionVO prodListConditionVO) throws Exception{
+		
 		StringBuffer hql = new StringBuffer();
-		hql.append("select count(*) from PfpCatalogProdEc ");
-		hql.append(" where 1=1");
-		hql.append(" and pfpCatalog.catalogSeq = :catalogSeq");
-		if (StringUtils.isNotBlank(prodStatus)) {
-			hql.append(" and ecStatus = :ecStatus");
-		}
-
-		Query q = session.createQuery(hql.toString())
-					.setString("catalogSeq", catalogSeq);
+		hql.append(" select count(*) ");
+		hql.append(" from pfp_catalog_prod_ec as a ");
+		hql.append(" join pfp_catalog as b ");
+		hql.append(" on a.catalog_seq = b.catalog_seq  ");
+		hql.append(" where a.catalog_seq = '"+prodListConditionVO.getCatalogSeq()+"' ");
+		hql.append(" and b.pfp_customer_info_id = '"+prodListConditionVO.getPfpCustomerInfoId()+"' ");
 		
-		if (StringUtils.isNotBlank(prodStatus)) {
-			q.setString("ecStatus", prodStatus);
+		if (StringUtils.isNotBlank(prodListConditionVO.getProdStatus())){
+			hql.append(" and a.ec_status = '"+prodListConditionVO.getProdStatus()+"' ");
 		}
 		
-		log.info(" getProdListCount sql  = "+ hql.toString());
-		log.info(" resultData size  = "+ q.list().size());
+		if (StringUtils.isNotBlank(prodListConditionVO.getProdName())){
+			hql.append(" and a.ec_name like '%"+prodListConditionVO.getProdName()+"%' ");
+		}
+		
 
-		List<Object> resultData = q.list();
-//		if(resultData != null) {
-//			count = Long.parseLong(resultData.get(0).toString());
-//		}
+		log.info(hql.toString());
 
-		return resultData.get(0).toString();
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		String prodListCount = String.valueOf(query.list().get(0));
+		
+		return prodListCount;
+		
 	}
 	
 	public void updateProdListProdStatus(String catalogSeq, String prodStatus, List<String> prodIdList) throws Exception {
 		StringBuffer sql = new StringBuffer()
-				.append(" update pfp_catalog_prod_ec set prod_status = :ecStatus where catalog_seq = :catalogSeq and id in (:prodListId) ");
+				.append(" update pfp_catalog_prod_ec set ec_status = :ecStatus where catalog_seq = :catalogSeq and id in (:prodListId) ");
 		
 		 log.info("updateProdListProdStatus.sql = " + sql);
 
@@ -105,6 +111,7 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" from pfp_catalog_prod_ec ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and catalog_seq =  '" + catalogSeq + "' ");
+		hql.append(" and ec_status = '1' ");
 		hql.append( filterSQL );
 		
 		log.info(hql.toString());
@@ -119,12 +126,15 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 	public List<Map<String,Object>> getEcProdGroupListByRandom(String catalogSeq, String filterSQL, int prodNum) throws Exception{
 
 		StringBuffer hql = new StringBuffer();
-		hql.append(" select  * from ");
-		hql.append(" pfp_catalog_prod_ec ");
+		hql.append(" select a.*,b.catalog_setup_value  ");
+		hql.append(" from pfp_catalog_prod_ec a ");
+		hql.append(" join pfp_catalog_setup as b ");
+		hql.append(" on a.catalog_seq = b.catalog_seq ");
 		hql.append(" where 1 = 1 ");
-		hql.append(" and catalog_seq =  '" + catalogSeq + "'");
-		hql.append(" and ec_check_status = '1' ");
-		hql.append(" and ec_status = '1' ");
+		hql.append(" and a.catalog_seq =  '" + catalogSeq + "'");
+		hql.append(" and a.ec_check_status = '1' ");
+		hql.append(" and a.ec_status = '1' ");
+		hql.append(" and b.catalog_setup_key='img_proportiona' ");
 		hql.append(filterSQL);
 		hql.append(" order by rand() limit "+prodNum);
 
@@ -137,19 +147,25 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 	
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String,Object>> getEcProdGroupList(String catalogSeq, String filterSQL) throws Exception{
+	public List<Map<String,Object>> getEcProdGroupList(ProdGroupConditionVO prodGroupConditionVO) throws Exception{
 
 		StringBuffer hql = new StringBuffer();
-		hql.append(" select  * from ");
-		hql.append(" pfp_catalog_prod_ec ");
-		hql.append(" where 1 = 1 ");
-		hql.append(" and catalog_seq =  '" + catalogSeq + "'");
-		hql.append(filterSQL);
+		hql.append(" select a.*,b.pfp_customer_info_id ");
+		hql.append(" from pfp_catalog_prod_ec as a ");
+		hql.append(" join pfp_catalog as b ");
+		hql.append(" on a.catalog_seq = b.catalog_seq  ");
+		hql.append(" where a.catalog_seq = '"+prodGroupConditionVO.getCatalogSeq()+"' ");
+		hql.append(" and b.pfp_customer_info_id = '"+prodGroupConditionVO.getPfpCustomerInfoId()+"' ");
+		hql.append(" and a.ec_status = '1' ");
+		hql.append(prodGroupConditionVO.getFilterSQL());
 		
 		log.info(hql.toString());
 
 		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setFirstResult((prodGroupConditionVO.getPage()-1)*prodGroupConditionVO.getPageSize());
+		query.setMaxResults(prodGroupConditionVO.getPageSize());
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
+		
 		return query.list();
 	}
 

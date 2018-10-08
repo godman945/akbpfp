@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/10/4 �U�� 04:15:54 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/10/8 �U�� 02:19:47 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -30,6 +30,8 @@ public class PfpCatalog implements java.io.Serializable {
 	private String catalogImgShowType;
 	private Date updateDate;
 	private Date createDate;
+	private Set<PfpCatalogProdEc> pfpCatalogProdEcs = new HashSet<PfpCatalogProdEc>(0);
+	private Set<PfpCatalogUploadLog> pfpCatalogUploadLogs = new HashSet<PfpCatalogUploadLog>(0);
 	private Set<PfpCatalogSetup> pfpCatalogSetups = new HashSet<PfpCatalogSetup>(0);
 	private Set<PfpCatalogGroup> pfpCatalogGroups = new HashSet<PfpCatalogGroup>(0);
 
@@ -53,7 +55,8 @@ public class PfpCatalog implements java.io.Serializable {
 
 	public PfpCatalog(String catalogSeq, String catalogName, String catalogType, String pfpCustomerInfoId,
 			String catalogUploadType, String catalogUploadContent, int catalogProdNum, String catalogImgShowType,
-			Date updateDate, Date createDate, Set<PfpCatalogSetup> pfpCatalogSetups,
+			Date updateDate, Date createDate, Set<PfpCatalogProdEc> pfpCatalogProdEcs,
+			Set<PfpCatalogUploadLog> pfpCatalogUploadLogs, Set<PfpCatalogSetup> pfpCatalogSetups,
 			Set<PfpCatalogGroup> pfpCatalogGroups) {
 		this.catalogSeq = catalogSeq;
 		this.catalogName = catalogName;
@@ -65,6 +68,8 @@ public class PfpCatalog implements java.io.Serializable {
 		this.catalogImgShowType = catalogImgShowType;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
+		this.pfpCatalogProdEcs = pfpCatalogProdEcs;
+		this.pfpCatalogUploadLogs = pfpCatalogUploadLogs;
 		this.pfpCatalogSetups = pfpCatalogSetups;
 		this.pfpCatalogGroups = pfpCatalogGroups;
 	}
@@ -161,6 +166,24 @@ public class PfpCatalog implements java.io.Serializable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpCatalog")
+	public Set<PfpCatalogProdEc> getPfpCatalogProdEcs() {
+		return this.pfpCatalogProdEcs;
+	}
+
+	public void setPfpCatalogProdEcs(Set<PfpCatalogProdEc> pfpCatalogProdEcs) {
+		this.pfpCatalogProdEcs = pfpCatalogProdEcs;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpCatalog")
+	public Set<PfpCatalogUploadLog> getPfpCatalogUploadLogs() {
+		return this.pfpCatalogUploadLogs;
+	}
+
+	public void setPfpCatalogUploadLogs(Set<PfpCatalogUploadLog> pfpCatalogUploadLogs) {
+		this.pfpCatalogUploadLogs = pfpCatalogUploadLogs;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpCatalog")

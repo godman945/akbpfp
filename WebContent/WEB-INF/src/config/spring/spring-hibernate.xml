@@ -106,8 +106,6 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalog</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogGroup</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem</value>
-				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogo</value>
-				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogProdEc</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog</value>
@@ -117,7 +115,6 @@
 				<!-- PFB pojo -->
 				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
 				<value>com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory</value>
-				
 	            <!-- Sequence pojo -->
                 <value>com.pchome.akbpfp.db.pojo.Sequence</value>                
             </list>
@@ -225,7 +222,6 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogGroup</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogo</value>
-				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogProdEc</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog</value>
@@ -235,7 +231,6 @@
 				<!-- PFB pojo -->
 				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
 				<value>com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory</value>               
-
 	            <!-- Sequence pojo -->
                 <value>com.pchome.akbpfp.db.pojo.Sequence</value>                
             </list>

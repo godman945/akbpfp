@@ -342,7 +342,7 @@
 
 <div id ="test2" class="test2" style="display:none;">
 </div>
-<textarea style="display:;" id="saveUserLogoPath">${userLogoPath!}</textarea>
+<textarea style="display:none;" id="saveUserLogoPath">${userLogoPath!}</textarea>
 <input type="hidden" id="saveProdLogoType" value="${prodLogoType!}">
 <input type="hidden" id="messageId" value="${message!!}">
 <input type="hidden" id="messageId" value="">

@@ -105,7 +105,7 @@
                         <!-- row1 -->
                         <div class="txt-row">
                             <div class="txt-cell col-cataname">
-                                <a href="#">2018春季新品外套外套春季新品外套外套外套</a>
+                                <a href="prodListCardStyleView.html?catalogSeq=PC201808220000000002&currentPage=1&pageSizeSelected=10">排程測試11</a>
                                 <small>目錄編號：207668739900037</small>
                             </div>
                             <div class="txt-cell col-catagory">
@@ -136,7 +136,7 @@
                         <!-- row2 -->
                         <div class="txt-row">
                             <div class="txt-cell col-cataname">
-                                <a href="#">夏季運動會20180718</a>
+                                <a href="prodListCardStyleView.html?catalogSeq=PC201809190000000002&currentPage=1&pageSizeSelected=10">pazzo服飾227</a>
                                 <small>目錄編號：207668739900011</small>
                             </div>
                             <div class="txt-cell col-catagory">

@@ -25,6 +25,7 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 	private int prodNum;
 	private InputStream returnJson;
 	
+	
 	public String getProdGroupListData() throws Exception{
 		//先依據商品組合id，撈商品組合條件組成sql
 		log.info(">>> groupId: "+groupId);
@@ -84,8 +85,6 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 		returnJson = new ByteArrayInputStream(returnJsonObj.toString().getBytes("UTF-8"));
 		return SUCCESS;		
 	}
-	
-	
 	
 	public JSONObject getReturnJsonObj(String status, String code) throws Exception {
 		

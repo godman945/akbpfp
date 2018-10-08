@@ -899,8 +899,6 @@ function getProdGroup(obj){
 		logoPath = encodeURIComponent(logoData.square.logoPath);
 	}
 	console.log(imgProportiona);
-	console.log(prodLogoType);
-	
 	
 		var src = 'adProdModel.html'
 		+'?catalogGroupId='+encodeURIComponent(catalogGroupId)
@@ -918,7 +916,6 @@ function getProdGroup(obj){
 		+"&imgProportiona="+encodeURIComponent(imgProportiona)
 		+"&userLogoPath="+logoPath
 		$(".akb_iframe").attr('src' ,src);
-	
 		console.log(src);
 }
 
@@ -975,6 +972,7 @@ function adPreview(){
 		if(width == 300 && selectSizeWidth  == 300  && height == 55 && selectSizeHeight == 250){
 			var previewSrc = String(uploadLogoLog[key].previewSrc);
 			$(logoBgImgObj).attr("src",previewSrc);
+			logoBgImgObj.parentElement.parentElement.className ="type3 logo-box pos-absolute pos-top pos-left";
 		}
 	});
 }

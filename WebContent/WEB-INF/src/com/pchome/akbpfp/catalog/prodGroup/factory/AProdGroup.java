@@ -7,6 +7,7 @@ import org.json.JSONArray;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupItemService;
+import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
 
 public abstract class AProdGroup {
 	
@@ -24,7 +25,7 @@ public abstract class AProdGroup {
 	
 	public abstract JSONArray getProdGroupListByRandom(String catalogSeq, String filterSQL, int prodNum) throws Exception;
 	
-	public abstract List<Map<String,Object>> getProdGroupList(String catalogSeq, String filterSQL) throws Exception;
+	public abstract List<Object> getProdGroupList(ProdGroupConditionVO prodGroupConditionVO) throws Exception;
 	
 	public abstract String getProdGroupCount(String catalogSeq, String filterSQL) throws Exception;
 	
