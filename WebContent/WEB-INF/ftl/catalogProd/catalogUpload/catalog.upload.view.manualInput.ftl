@@ -1,10 +1,10 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/manualInput.js?t=20181008007"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/manualInput.js?t=20181009018"></script>
 
+<input type="file" serialize id="fileupload" name="fileupload" style="display:none;" accept="image/jpeg, image/png, image/gif" onchange="selectImg(this)">
 <div class="container-prodmanage">
-<#--<input type="file" serialize id="fileupload" name="fileupload"  style="display:none;">-->
 
     <#-- 次目錄導覽列 開始 -->
     <#-- hidden 隱藏所有牙齒 -->
@@ -52,35 +52,35 @@
                         <div class="manual-item">
                             <i class="input-tit">商品名稱</i>
                             <div class="input-text">
-                               <input type="text" id="ecName" name="ecName" maxlength="20" value="" required="" placeholder="限20字內"> 
-                               <p class="txt-descript"></p>
+                               <input type="text" id="ecName" name="ecName" maxlength="20" value="" required="" placeholder="限20字內" onblur="checkEcNameIsErr();"> 
+                               <p class="txt-descript" id="ecNameErrMsg"></p>
                             </div>
-                            
                         </div><#--manual-item end-->
 
                         <div class="manual-item">
                             <i class="input-tit">商品網址</i>
                             <div class="input-text">
                                <input type="text" id="ecUrl" name="ecUrl" maxlength="" value="" required="" placeholder=""> 
-                               <p class="txt-descript"></p>
+                               <p class="txt-descript" id="ecUrlErrMsg"></p>
                             </div>
                         </div><#--manual-item end-->
 
                         <div class="manual-item">
                             <i class="input-tit">原價</i>
                             <div class="input-number">
-                                NT<input type="text" id="ecPrice" name="ecPrice" maxlength="6" value="1000">
+                                NT<input type="text" id="ecPrice" name="ecPrice" maxlength="6" value="" onblur="checkEcPriceIsErr();" onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))">
                                 <span>元</span>
-                                <p class="txt-descript"></p>
+                                <p class="txt-descript" id="ecPriceErrMsg"></p>
                             </div>
                         </div><#--manual-item end-->
 
                         <div class="manual-item">
                             <i class="input-tit">特價</i>
                             <div class="input-number">
-                                NT<input type="text" id="ecDiscountPrice" name="ecDiscountPrice" maxlength="6" value="1000">
+                            	<#-- onkeypress 只能輸入數字-->
+                                NT<input type="number" id="ecDiscountPrice" name="ecDiscountPrice" min="0" max="999999" value="0" required onblur="checkEcDiscountPriceIsErr();" onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))">
                                 <span>元</span>
-                                <p class="txt-descript"></p>
+                                <p class="txt-descript" id="ecDiscountPriceErrMsg"></p>
                             </div>
                         </div><#--manual-item end-->
 
@@ -110,8 +110,8 @@
                         <div class="manual-item">                            
                             <i class="input-tit">商品編號</i>                            
                             <div class="input-text no-invalid">                               
-                               <input type="text" id="catalogProdSeq" name="catalogProdSeq" maxlength="30" value="" required="" placeholder="限30字內">
-                               <p class="txt-descript"></p>
+                               <input type="text" id="catalogProdSeq" name="catalogProdSeq" maxlength="30" value="" required="" placeholder="限30字內" onblur="checkCatalogProdSeqIsErr();">
+                               <p class="txt-descript" id="catalogProdSeqErrMsg"></p>
                             </div>
                             <div class="msg-btn" onclick="$(this).children('em').fadeToggle('fast');">
                                 <em style="display: none;">您可以透過ID來辨識每個商品，建議使用商品的SKU做為ID的值。</em>
@@ -121,8 +121,8 @@
                         <div class="manual-item">                            
                             <i class="input-tit">商品類別</i>                            
                             <div class="input-text no-invalid">                               
-                               <input type="text" id="ecCategory" name="ecCategory" maxlength="15" value="" required="" placeholder="限15字內"> 
-                               <p class="txt-descript"></p>
+                               <input type="text" id="ecCategory" name="ecCategory" maxlength="15" value="" placeholder="限15字內" onblur="checkEcCategoryIsErr();"> 
+                               <p class="txt-descript" id="ecCategoryErrMsg"></p>
                             </div> 
                             <em class="note">非必填</em>                           
                         </div><#--manual-item end-->
@@ -139,7 +139,7 @@
 
                             <#--左欄上傳圖片:選擇圖片-->
                             <div class="selectimg">
-                                <div class="txt-cell" id="test" >
+                                <div class="txt-cell" id="dropImg" ondrop="drop(event)">
 	                                <div class="svg-box icon-uploadpic">
 	                                    <object data="<@s.url value="/" />/html/img/catalogProd/catalogUpload/prodpic-upload.svg" type="image/svg+xml"></object>
 	                                </div>
@@ -149,13 +149,13 @@
 
                             <#--左欄上傳圖片:圖片已上傳-->
                             <div class="imguploadbox success">                                  
-                                <div class="txt-cell delbtn">
+                                <div class="txt-cell delbtn" onclick="deleteImg()">
                                     <u class="svg-box icon-delete">
                                         <object data="<@s.url value="/" />/html/img/catalogProd/catalogUpload/deleteimg.svg" type="image/svg+xml"></object>
                                     </u>
                                 </div>
                                 <div class="txt-cell">
-                                    <img src="">
+                                    <img id="successImg" src="">
                                     <#-- https://adpic.pchome.com.tw/adpics/pic_1186426_688580.jpg -->
                                 </div>
                             </div>
