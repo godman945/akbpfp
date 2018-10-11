@@ -37,28 +37,32 @@ public class ProdLogoAction extends BaseCookieAction{
 	private ISequenceService sequenceService;
 	private IPfpCatalogLogoDetailService pfpCatalogLogoDetailService;
 	private IPfpCatalogLogoService pfpCatalogLogoService;
+	private String photoDbPathPrefix;
 	private String result;
 	private String logoDataObj;
 	private String photoDbPathNew;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	
 	
-	
+	/**
+	 * LOGO初始化畫面
+	 * 圖片狀態 0:審核中 1:審核成功 2:上傳成功
+	 * */
 	public String logoInit() throws Exception{
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(super.getCustomer_info_id());
 		JSONObject imgJson = new JSONObject();
 		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
-				String path = pfpCatalogLogo.getCatalogLogoUrl();
+				String path = photoDbPathPrefix+pfpCatalogLogo.getCatalogLogoUrl();
 				File file = new File(path);
 				if(file.exists()){
 					String fileExtensionName = path.split("\\.")[1];
 					String imgBase64 = imgBase64(file,fileExtensionName);
 					JSONObject data = new JSONObject();
-					System.out.println(imgBase64);
 					data.put("base64", imgBase64);
 					data.put("file_name", file.getName().split("\\.")[0]);
 					data.put("file_extension_name", fileExtensionName);
+					data.put("status", pfpCatalogLogo.getStatus());
 					System.out.println(file.getName().split("\\.")[0]);
 					if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
 						imgJson.put("square", data);
@@ -78,7 +82,7 @@ public class ProdLogoAction extends BaseCookieAction{
 		Date date = new Date();
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(super.getCustomer_info_id());
 		StringBuffer saveImgPathBuffer = new StringBuffer();
-		saveImgPathBuffer.append(photoDbPathNew).append(super.getCustomer_info_id()).append("/").append(sdf.format(date)).append("/logo/");
+		saveImgPathBuffer.append(photoDbPathNew).append(super.getCustomer_info_id()).append("/catalog/").append("logo/");
 		if(pfpCatalogLogoList == null){
 			JSONObject imgJson = new JSONObject(logoDataObj);
 			Iterator<String> keys = imgJson.keys();
@@ -94,11 +98,13 @@ public class ProdLogoAction extends BaseCookieAction{
 	            image = ImageIO.read(bis);
 			    //1.寫入圖片
 	            String logoSeq = sequenceService.getId(EnumSequenceTableName.PFP_CATALOG_LOG_SEQ, "_");
-	            File path = new File(saveImgPathBuffer.toString()+logoSeq+"/"+fileName);
+	            File path = new File(saveImgPathBuffer.toString());
 	            if(!path.exists()){
 	            	path.mkdirs();
 	            }
-	            ImageIO.write(image, fileExtensionName.replace("image/", ""), path);
+	            String writeImgPath = path.getPath()+"\\"+logoType+"."+fileName.split("\\.")[1];
+	            String dbImgPath = "img/user/"+super.getCustomer_info_id()+"/catalog/logo/"+logoType+"."+fileName.split("\\.")[1];
+	            ImageIO.write(image, fileExtensionName.replace("image/", ""), new File(writeImgPath));
 	            PfpCatalogLogo pfpCatalogLogo = new PfpCatalogLogo();
 	            pfpCatalogLogo.setCatalogLogoSeq(logoSeq);
 	            if(logoType.equals("rectangle")){
@@ -108,7 +114,7 @@ public class ProdLogoAction extends BaseCookieAction{
 	            	 pfpCatalogLogo.setCatalogLogoType("0");
 	            }
 	            pfpCatalogLogo.setPfpCustomerInfoId(super.getCustomer_info_id());
-	            pfpCatalogLogo.setCatalogLogoUrl(path.getPath());
+	            pfpCatalogLogo.setCatalogLogoUrl(dbImgPath);
 	            pfpCatalogLogo.setCreateDate(date);
 	            pfpCatalogLogo.setUpdateDate(date);
 	            pfpCatalogLogoService.saveOrUpdate(pfpCatalogLogo);
@@ -135,27 +141,25 @@ public class ProdLogoAction extends BaseCookieAction{
 				}
 				
 				JSONObject imgData =  (JSONObject) imgJson.get(type);
-			    String fileName = imgData.getString("file_name").split("\\.")[0];
+			    String fileName = type;
 			    String base64Img = imgData.getString("base64").split(",")[1];
+			    System.out.println(imgData.getString("base64"));
 			    String fileExtensionName = imgData.getString("file_extension_name");
-				
-				String existfileName = "";
-				String path = pfpCatalogLogo.getCatalogLogoUrl();
-				File file = new File(path);
-				if(file.exists()){
-					existfileName = file.getName().split("\\.")[0];
-				}
-				
-				if(StringUtils.isNotBlank(existfileName) && fileName.equals(existfileName)){
-					continue;
-				}
-				
+			    int status = imgData.getInt("status");
+			    //狀態為審核中不可變更
+			    if(status == 0){
+			    	continue;
+			    }
+			    
+				String path = photoDbPathPrefix+pfpCatalogLogo.getCatalogLogoUrl();
 			    BufferedImage image = null;
 		        byte[] imageByte = Base64.decodeBase64(base64Img.getBytes());
 	            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
 	            image = ImageIO.read(bis);
 	            //1.寫入圖片
 	            ImageIO.write(image, fileExtensionName.replace("image/", ""), new File(path));
+	            //2.更新審核狀態
+	            pfpCatalogLogo.setStatus(0);
 	            pfpCatalogLogoService.saveOrUpdate(pfpCatalogLogo);
 	            //推薦顏色
 	            Map<String, Integer> colormap = color(image);
@@ -299,6 +303,16 @@ public class ProdLogoAction extends BaseCookieAction{
 
 	public void setPfpCatalogLogoService(IPfpCatalogLogoService pfpCatalogLogoService) {
 		this.pfpCatalogLogoService = pfpCatalogLogoService;
+	}
+
+
+	public String getPhotoDbPathPrefix() {
+		return photoDbPathPrefix;
+	}
+
+
+	public void setPhotoDbPathPrefix(String photoDbPathPrefix) {
+		this.photoDbPathPrefix = photoDbPathPrefix;
 	}
 	
 }

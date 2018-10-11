@@ -1,5 +1,5 @@
 ﻿var logoDataObj = new Object();
-logoDataObj = {square:{base64:null,file_name:null,file_extension_name:null},rectangle:{base64:null,file_name:null,file_extension_name:null}};
+logoDataObj = {square:{base64:null,file_name:null,file_extension_name:null,status:null},rectangle:{base64:null,file_name:null,file_extension_name:null,status:null}};
 $(document).ready(function(){
 	
 //	$(".akb_iframe").attr("src","");
@@ -66,30 +66,55 @@ function initLogoSave(){
 		logoDataObj = JSON.parse($("#saveLogoImg").text());
 		var squareBase64 = logoDataObj.square.base64;
 		var rectangleBase64 = logoDataObj.rectangle.base64;
+		var squareStatus = logoDataObj.square.status;
+		var rectangleStatus = logoDataObj.rectangle.status;
 		
 		var select = document.getElementsByClassName("select")[0];
 		var review = document.getElementsByClassName("review")[0];
 		var success = document.getElementsByClassName("success")[0];
-		var img = $(review).find(".logomanage-imgbox")[0].getElementsByTagName("img")[0];
-		var notebox = $(review)[0].getElementsByClassName("notebox")[0];
-		
-		img.src = squareBase64;
-		$(success).css("display","none");
-		$(select).css("display","none");
-		$(review).css("display","block");
-		notebox.innerHTML = "審核中";
-		
+		if(squareStatus == 1){
+			var img = $(success).find(".logomanage-imgbox")[0].getElementsByTagName("img")[0];
+			img.src = squareBase64;
+			$(success).css("display","block");
+			$(select).css("display","none");
+			$(review).css("display","none");
+//			notebox.innerHTML = "審核中";
+		}else if(squareStatus == 0){
+			var deleteBtn = $(review).find(".delbtn")[0];
+			$(deleteBtn).css("display","none");
+			var dropDom = $(review).find(".squarelogo-box")[0];
+			dropDom.removeAttribute("ondrop");
+			var img = $(review).find(".logomanage-imgbox")[0].getElementsByTagName("img")[0];
+			var notebox = $(review)[0].getElementsByClassName("notebox")[0];
+			img.src = squareBase64;
+			$(success).css("display","none");
+			$(select).css("display","none");
+			$(review).css("display","block");
+			notebox.innerHTML = "審核中";
+		}
 		var select = document.getElementsByClassName("select")[1];
 		var review = document.getElementsByClassName("review")[1];
 		var success = document.getElementsByClassName("success")[1];
-		var img = $(review).find(".logomanage-imgbox")[0].getElementsByTagName("img")[0];
-		var notebox = $(review)[0].getElementsByClassName("notebox")[0];
-		
-		img.src = rectangleBase64;
-		$(success).css("display","none");
-		$(select).css("display","none");
-		$(review).css("display","block");
-		notebox.innerHTML = "審核中";
+		if(rectangleStatus == 0){
+			var deleteBtn = $(review).find(".delbtn")[0];
+			$(deleteBtn).css("display","none");
+			var dropDom = $(review).find(".rectanglelogo-box")[0];
+			dropDom.removeAttribute("ondrop");
+			var img = $(review).find(".logomanage-imgbox")[0].getElementsByTagName("img")[0];
+			var notebox = $(review)[0].getElementsByClassName("notebox")[0];
+			img.src = rectangleBase64;
+			$(success).css("display","none");
+			$(select).css("display","none");
+			$(review).css("display","block");
+			notebox.innerHTML = "審核中";
+			$(review).find(".logomanage-imgbox")[0].style.display = "inherit";
+		}else if(rectangleStatus == 1){
+			var img = $(success).find(".logomanage-imgbox")[0].getElementsByTagName("img")[0];
+			img.src = rectangleBase64;
+			$(success).css("display","block");
+			$(select).css("display","none");
+			$(review).css("display","none");
+		}
 		$(review).find(".logomanage-imgbox")[0].style.display = "inherit";
 	}
 }
@@ -171,6 +196,7 @@ function checkUploadFile(file,obj){
 						logoDataObj.square.base64 = base64Img;
 						logoDataObj.square.file_name = fileName;
 						logoDataObj.square.file_extension_name = fileType;
+						logoDataObj.square.status = 2;
 					}else{
 						img.src = '';
 						$(select).css("display","block");
@@ -179,6 +205,7 @@ function checkUploadFile(file,obj){
 						logoDataObj.base64 = null;
 						logoDataObj.file_name = null;
 						logoDataObj.file_extension_name = null;
+						logoDataObj.square.status = null;
 					}
 				}else if(typeClassName.indexOf("rectanglelogo") >=0){
 					if(img.naturalWidth != 1000 || img.naturalHeight != 250){
@@ -195,6 +222,7 @@ function checkUploadFile(file,obj){
 						logoDataObj.rectangle.base64 = base64Img;
 						logoDataObj.rectangle.file_name = fileName;
 						logoDataObj.rectangle.file_extension_name = fileType;
+						logoDataObj.rectangle.status = 2;
 					}else{
 						img.src = '';
 						$(select).css("display","block");
@@ -203,6 +231,7 @@ function checkUploadFile(file,obj){
 						logoDataObj.rectangle.base64 = null;
 						logoDataObj.rectangle.file_name = null;
 						logoDataObj.rectangle.file_extension_name = null;
+						logoDataObj.rectangle.status = null;
 					}
 				}
 			}
@@ -259,7 +288,6 @@ function saveLogo(){
 		},
 		success : function(respone) {
 			if(respone == "success"){
-				alert("success");
 				location.href='logo.html'; 
 			} else {
 				console.log(respone);

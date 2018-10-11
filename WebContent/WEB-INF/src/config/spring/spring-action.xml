@@ -459,6 +459,7 @@
     
     <!-- 商品LOGO -->
     <bean id="ProdLogoAction" class="com.pchome.akbpfp.struts2.action.prod.ProdLogoAction" scope="prototype" >
+		<property name="photoDbPathPrefix" value="${photo.db.path.prefix}" />
 		<property name="photoDbPathNew" value="${photo.db.path.new}" />
 		<property name="sequenceService" ref="SequenceService" />
 		<property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
