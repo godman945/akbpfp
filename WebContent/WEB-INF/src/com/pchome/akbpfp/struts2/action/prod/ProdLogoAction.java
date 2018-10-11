@@ -82,7 +82,7 @@ public class ProdLogoAction extends BaseCookieAction{
 		Date date = new Date();
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(super.getCustomer_info_id());
 		StringBuffer saveImgPathBuffer = new StringBuffer();
-		saveImgPathBuffer.append(photoDbPathNew).append(super.getCustomer_info_id()).append("/catalog/").append("logo/");
+		saveImgPathBuffer.append(photoDbPathPrefix).append("img/").append("user/").append(super.getCustomer_info_id()).append("/catalog/").append("logo/");
 		if(pfpCatalogLogoList == null){
 			JSONObject imgJson = new JSONObject(logoDataObj);
 			Iterator<String> keys = imgJson.keys();
