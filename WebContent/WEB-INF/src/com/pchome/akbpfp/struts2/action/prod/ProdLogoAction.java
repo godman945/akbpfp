@@ -99,11 +99,18 @@ public class ProdLogoAction extends BaseCookieAction{
 			    //1.寫入圖片
 	            String logoSeq = sequenceService.getId(EnumSequenceTableName.PFP_CATALOG_LOG_SEQ, "_");
 	            File path = new File(saveImgPathBuffer.toString());
+	            
+	            log.info(">>>>>>path:"+path);
+	            
 	            if(!path.exists()){
 	            	path.mkdirs();
 	            }
 	            String writeImgPath = path.getPath()+"\\"+logoType+"."+fileName.split("\\.")[1];
 	            String dbImgPath = "img/user/"+super.getCustomer_info_id()+"/catalog/logo/"+logoType+"."+fileName.split("\\.")[1];
+	            
+	            log.info(">>>>>>writeImgPath:"+writeImgPath);
+	            log.info(">>>>>>dbImgPath:"+dbImgPath);
+	            
 	            ImageIO.write(image, fileExtensionName.replace("image/", ""), new File(writeImgPath));
 	            PfpCatalogLogo pfpCatalogLogo = new PfpCatalogLogo();
 	            pfpCatalogLogo.setCatalogLogoSeq(logoSeq);
