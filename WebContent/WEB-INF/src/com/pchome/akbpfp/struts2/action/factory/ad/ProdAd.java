@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -22,11 +23,10 @@ import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogLogo;
-import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
+import com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail;
 import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
-import com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogLogoService;
 import com.pchome.akbpfp.struts2.action.ad.AdAddAction;
 import com.pchome.akbpfp.struts2.action.ad.AdEditAction;
 import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
@@ -59,6 +59,13 @@ public class ProdAd implements IAd {
 				JSONObject catalogLogoUrlJson = new JSONObject();
 				catalogLogoUrlJson.put("logoPath", adAddAction.getPhotoDbPathPrefix()+pfpCatalogLogo.getCatalogLogoUrl());
 				catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
+				List<String> colorList = new ArrayList<String>();
+				Set<PfpCatalogLogoDetail> pfpCatalogLogoDetailSet = pfpCatalogLogo.getPfpCatalogLogoDetails();
+				for (PfpCatalogLogoDetail pfpCatalogLogoDetail : pfpCatalogLogoDetailSet) {
+					String color = pfpCatalogLogoDetail.getCatalogLogoHexColor();
+					colorList.add(color);
+				}
+				catalogLogoUrlJson.put("color", colorList);
 				if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
 					json.put("square", catalogLogoUrlJson);
 				}
@@ -168,6 +175,13 @@ public class ProdAd implements IAd {
 				JSONObject catalogLogoUrlJson = new JSONObject();
 				catalogLogoUrlJson.put("logoPath", adEditAction.getPhotoDbPathPrefix()+pfpCatalogLogo.getCatalogLogoUrl());
 				catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
+				List<String> colorList = new ArrayList<String>();
+				Set<PfpCatalogLogoDetail> pfpCatalogLogoDetailSet = pfpCatalogLogo.getPfpCatalogLogoDetails();
+				for (PfpCatalogLogoDetail pfpCatalogLogoDetail : pfpCatalogLogoDetailSet) {
+					String color = pfpCatalogLogoDetail.getCatalogLogoHexColor();
+					colorList.add(color);
+				}
+				catalogLogoUrlJson.put("color", colorList);
 				if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
 					json.put("square", catalogLogoUrlJson);
 				}

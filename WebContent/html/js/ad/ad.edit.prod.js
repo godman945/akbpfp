@@ -98,8 +98,6 @@ $(document).ready(function(){
 			$(".akb_iframe").attr("src","");
 		});
 		
-		
-		
 		$(function () {
 		    $('#fileupload').fileupload({
 		        url: 'adAddImgAjax.html',
@@ -132,6 +130,7 @@ $(document).ready(function(){
 		
 		$('input[type=radio][name=options]').change(function() {
 			getProdGroup(null);
+			initLogoColor();
 		});
 		
 		$("input").keyup(function(event){
@@ -147,6 +146,31 @@ window.onload = function(){
 	//init 已存資料
 	initSaveData();
 	$("#saleEndImgUploadBtn").attr("disabled", false);
+	
+	initLogoColor();
+	
+}
+
+
+function initLogoColor(){
+	var logoData = JSON.parse($("#saveUserLogoPath").text());
+	var colorArray = null;
+	var logoRadioType = $('input[name=options]:checked').val()
+	if(logoRadioType == "type1"){
+		colorArray = logoData.square.color;
+	}
+	if(logoRadioType == "type2"){
+		colorArray = logoData.rectangle.color;
+	}
+	if(logoRadioType == "type3"){
+		colorArray = logoData.square.color;
+	}
+	var colorInputs = $($(".colorpickr")[0]).find("input");
+	$(colorInputs).each(function(index,obj){
+		var color = colorArray[index];
+		$(obj).css("background-color",color);
+		$(obj).val(color.replace("#",""));
+	})
 	
 }
 

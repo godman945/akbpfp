@@ -1,10 +1,6 @@
 ﻿$(document).ready(function(){
-	
 	$(".akb_iframe").attr("src","");
 	$("#groupSelect").children()[0].selected = 'selected';
-	
-	
-	
 	if($.browser.msie){
 		if(parseInt($.browser.version) < 9){
 			$("body").block({
@@ -66,6 +62,7 @@
 		
 		$("#catalogSelect").change(function() {
 			initCatalogSelect();
+			$(".akb_iframe").attr("src","");
 		});
 	
 		
@@ -98,7 +95,8 @@
 		
 		//init html
 		initFancyBoxHtml();
-		
+		//init logo color
+		initLogoColor();
 		
 		$(".akb_iframe")[0].addEventListener("load", function() {
 			adPreview();
@@ -107,6 +105,7 @@
 		
 		$('input[type=radio][name=options]').change(function() {
 			getProdGroup(null);
+			initLogoColor();
 		});
 		
 		 $("input").keyup(function(event){
@@ -114,6 +113,28 @@
 		 });
 });
 
+
+function initLogoColor(){
+	var logoData = JSON.parse($("#userLogoPath").text());
+	var colorArray = null;
+	var logoRadioType = $('input[name=options]:checked').val()
+	if(logoRadioType == "type1"){
+		colorArray = logoData.square.color;
+	}
+	if(logoRadioType == "type2"){
+		colorArray = logoData.rectangle.color;
+	}
+	if(logoRadioType == "type3"){
+		colorArray = logoData.square.color;
+	}
+	var colorInputs = $($(".colorpickr")[0]).find("input");
+	$(colorInputs).each(function(index,obj){
+		var color = colorArray[index];
+		$(obj).css("background-color",color);
+		$(obj).val(color.replace("#",""));
+	})
+	
+}
 
 function initFancyBoxHtml(){
 	var salesEndIframewp = new Object();
@@ -282,6 +303,7 @@ window.onload = function(){
 
 function initCatalogSelect(){
 	var catalogSelectValue = $("#catalogSelect").val();
+	$("#groupSelect").val("");
 	$("#groupSelect option").each(function(){
 		if(this.value !=""){
 			var groupInfo = this.value.split("_");
@@ -927,4 +949,5 @@ function changeActive(obj){
 		}
 	});
 }
+
 

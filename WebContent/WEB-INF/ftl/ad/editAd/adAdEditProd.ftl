@@ -88,6 +88,18 @@
 						<ul class="newtbsublist">
 							<li>
 								<span class="newtbsubliststyle">●</span>								
+								<span class="colorpickr">LOGO 推薦顏色：<br>
+									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
+									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
+									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
+									<br>
+									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
+									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
+									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
+								</span>
+							</li>
+							<li>
+								<span class="newtbsubliststyle">●</span>								
 								<span class="colorpickr"> 商標區塊底色：
 									<input id="logoBgColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#FFFFFF">
 								</span>
