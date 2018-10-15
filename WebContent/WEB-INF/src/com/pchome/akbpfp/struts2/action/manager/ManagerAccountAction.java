@@ -35,6 +35,7 @@ public class ManagerAccountAction extends BaseCookieAction{
 		//log.info(" vos: "+vos.size());
 		// 無資料就導首頁
 		if(vos.isEmpty()){
+			log.info(">>>>>> vos is null");
 			return "index";
 		}
 		
