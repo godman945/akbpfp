@@ -39,7 +39,7 @@ public class CatalogProdListAction extends BaseCookieAction{
 	//<!--bessieTmp-暫時寫的之後合併拿掉 -->
 	public String execute() throws Exception{
 		
-		
+		customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();//AC2013071700001
 		
 		
 		return SUCCESS;

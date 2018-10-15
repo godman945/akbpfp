@@ -444,6 +444,7 @@
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="pfpCatalogGroupItemService" ref="PfpCatalogGroupItemService" />
     	<property name="prodGroupFactory" ref="ProdGroupFactory" />
     </bean>
     <!-- 商品群組 END -->

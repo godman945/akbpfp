@@ -12,7 +12,7 @@ import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
 import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
-import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupField;
+import com.pchome.enumerate.catalog.prodGroup.EnumEcProdGroupField;
 
 public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> implements IPfpCatalogProdEcDAO{
 	

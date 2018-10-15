@@ -106,6 +106,31 @@
 
 
 
+	<!-- 查詢建立商品組合篩選條件與商品組合清單view Start-->
+	<definition name="ec.prod.group.filter.prod.list.view" extends="catalog.prod.layout">
+	 	<put-attribute name="head" value="ec.prod.group.filter.prod.list.head" />
+        <put-attribute name="body" value="/ftl/catalogProd/prodGroup/ec.prod.group.filter.prod.list.view.ftl" />
+    </definition>
+    
+    <definition name="ec.prod.group.filter.prod.list.head" extends="catalog.prod.head" >
+    	<put-attribute name="js" value="/ftl/catalogProd/prodGroup/ec.prod.group.filter.prod.list.view.js.ftl" />
+    </definition>
+	<!-- 查詢建立商品組合篩選條件與商品組合清單view End-->
+	
+
+
+
+	<!-- 複製商品組合篩選條件與商品組合清單view Start-->
+	<definition name="ec.copy.prod.group.filter.prod.list.view" extends="catalog.prod.layout">
+	 	<put-attribute name="head" value="ec.copy.prod.group.filter.prod.list.head" />
+        <put-attribute name="body" value="/ftl/catalogProd/prodGroup/ec.copy.prod.group.filter.prod.list.view.ftl" />
+    </definition>
+    
+    <definition name="ec.copy.prod.group.filter.prod.list.head" extends="catalog.prod.head" >
+    	<put-attribute name="js" value="/ftl/catalogProd/prodGroup/ec.copy.prod.group.filter.prod.list.view.js.ftl" />
+    </definition>
+	<!-- 複製商品組合篩選條件與商品組合清單view End-->
+
 
 
     

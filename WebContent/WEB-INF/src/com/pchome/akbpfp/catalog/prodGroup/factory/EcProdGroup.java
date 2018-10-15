@@ -11,8 +11,8 @@ import org.json.JSONObject;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogProdEcService;
 import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
-import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupCondition;
-import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupField;
+import com.pchome.enumerate.catalog.prodGroup.EnumEcProdGroupCondition;
+import com.pchome.enumerate.catalog.prodGroup.EnumEcProdGroupField;
 
 
 
@@ -33,8 +33,8 @@ public class EcProdGroup extends AProdGroup {
 				PfpCatalogGroupItem replaceConditionGroupItems = new PfpCatalogGroupItem();
 				
 				String condition = pfpCatalogGroupItem.getCatalogGroupItemCondition();
-				EnumProdGroupCondition enumProdGroupCondition = EnumProdGroupCondition.valueOf(condition);
-				replaceConditionGroupItems.setCatalogGroupItemCondition(enumProdGroupCondition.getSymbol());
+				EnumEcProdGroupCondition enumEcProdGroupCondition = EnumEcProdGroupCondition.valueOf(condition);
+				replaceConditionGroupItems.setCatalogGroupItemCondition(enumEcProdGroupCondition.getSymbol());
 				replaceConditionGroupItems.setCatalogGroupItemField(pfpCatalogGroupItem.getCatalogGroupItemField());
 				replaceConditionGroupItems.setCatalogGroupItemValue(pfpCatalogGroupItem.getCatalogGroupItemValue());
 				
@@ -50,14 +50,20 @@ public class EcProdGroup extends AProdGroup {
 				filterSQL.append(" ");
 				
 				String field = replaceConditionGroupItems.getCatalogGroupItemField();
-				EnumProdGroupField enumProdGroupField = EnumProdGroupField.valueOf(field);
+				EnumEcProdGroupField enumEcProdGroupField = EnumEcProdGroupField.valueOf(field);
 				
-				if (enumProdGroupField.getFieldType().equals("string")){
-					filterSQL.append("'"+replaceConditionGroupItems.getCatalogGroupItemValue()+"'");
+				if (enumEcProdGroupField.getFieldType().equals("string")){
+					if ( StringUtils.equals("catalog_prod_seq", field) || StringUtils.equals("ec_name", field) ){
+						filterSQL.append("'%"+replaceConditionGroupItems.getCatalogGroupItemValue()+"%'");
+					}else{
+						filterSQL.append("'"+replaceConditionGroupItems.getCatalogGroupItemValue()+"'");
+					}
 				}
-				if (enumProdGroupField.getFieldType().equals("int")){
+				if (enumEcProdGroupField.getFieldType().equals("int")){
 					filterSQL.append(""+replaceConditionGroupItems.getCatalogGroupItemValue()+"");
 				}
+				
+				
 			}
 			
 		}

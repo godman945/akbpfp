@@ -5,6 +5,7 @@
 <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.floatingscroll.min.js"></script>
 
 
+
     <div class="container-prodmanage">
         <!-- 次目錄導覽列 開始 -->
         <!-- hidden 隱藏所有牙齒 -->
@@ -51,115 +52,9 @@
 
                     <!-- 新增按鈕 開始 -->
                     <div class="btn-create pos-absolute pos-right">
-                        <a href="javascript:void(0)" onclick="createPortfolio()"><em></em></a>
+                        <a href="queryProdGroupFilterProdList.html?catalogSeq=${catalogSeq}&catalogGroupSeq=${catalogGroupSeq!}" ><em></em></a>
                     </div>
                     <!-- 新增按鈕 結束 -->
-
-                    <!-- 圖像廣告預覽畫面 -->
-                    <div style="display:none;" id="createPortfolioDIV">
-                        <div class="createportfolio-wrap">
-                            <div class="createportfolio-box">
-                                <p>建立商品組合</p>
-                                <div class="input-text">
-                                    <input type="text" name="" maxlength="20" value="" required placeholder="填寫組合名稱，最多20字">
-                                    <div class="msg-error">請填寫組合名稱</div>
-                                </div>
-
-                                <div class="p-t40">
-                                    <p>篩選條件</p>
-                                    <!-- 條件1 -->
-                                    <div class="filter-group">
-                                        <div class="select-box">
-                                            <select>
-                                                <option value="1">供應情況</option>
-                                                <option value="2">供應情況</option>
-                                                <option value="3">供應情況</option>
-                                            </select>
-                                        </div>
-                                        <div class="select-box">
-                                            <select>
-                                                <option value="1">不屬於</option>
-                                                <option value="2">不屬於</option>
-                                                <option value="3">不屬於</option>
-                                            </select>
-                                        </div>
-                                        <div class="select-box">
-                                            <select>
-                                                <option value="1">預購</option>
-                                                <option value="2">預購</option>
-                                                <option value="3">預購</option>
-                                            </select>
-                                        </div>
-                                        <div class="icon-kill" onclick="$(this).parent().css('display','none')"></div>
-                                    </div>
-
-                                    <!-- 條件2 -->
-                                    <div class="filter-group">
-                                        <div class="select-box">
-                                            <select>
-                                                <option value="1">價格</option>
-                                                <option value="2">價格</option>
-                                                <option value="3">價格</option>
-                                            </select>
-                                        </div>
-                                        <div class="select-box">
-                                            <select>
-                                                <option value="1">小於</option>
-                                                <option value="2">小於</option>
-                                                <option value="3">小於</option>
-                                            </select>
-                                        </div>
-                                        <div class="input-number">
-                                            NT<input type="text" name="" maxlength="6" value="">元
-                                            <p class="txt-descript"></p>
-                                        </div>
-                                        <div class="icon-kill" onclick="$(this).parent().css('display','none')"></div>
-                                    </div>
-
-                                    
-                                    <a class="link-addfilter">＋增加篩選條件</a>
-                                </div>
-                                
-                                <div class="txt-center">
-                                    <div class="input-button"><input type="button" value="新增商品"></div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <script>
-                        //參考用
-
-                        function stopBubble(e){ 
-                        alert("111")
-                            if ( e && e.stopPropagation) {
-                                e.stopPropagation(); 
-                            }else{ 
-                                window.event.cancelBubble = true; 
-                            }
-                        }
-
-                        function createPortfolio(){
-                         alert("222")
-                            $.fancybox(
-                                $('#createPortfolioDIV').html(),
-                                {
-                                    'autoDimensions'	: false,
-                                    'width'         	: 785,
-                                    'height'        	: 435,
-                                    'autoSize'			: false,
-                                    'autoHeight'		: false,
-                                    'autoScale'			: false,
-                                    'padding'			: 0,
-                                    'overlayOpacity'    : .70,
-                                    'overlayColor'      : '#000',
-                                    'scrolling'			: 'no' 
-                                }
-                            );
-                        }
-                    </script>
-
 
                 </div>
 
@@ -176,7 +71,7 @@
 			                                    <em class="icon-arrow-r"></em>${dataVo.catalogGroupName!}
 			                                </div>
 			                                <div class="txt-cell col-quantity"><a href="queryProdGroupList.html?catalogGroupSeq=${dataVo.catalogGroupSeq!}&currentPage=1&pageSizeSelected=10">${dataVo.catalogProdNum!}項商品</a></div>
-			                                <div class="txt-cell col-addnew"><a href="vascript:void(0)" onclick="stopBubble(event);createPortfolio()"></a></div>
+			                                <div class="txt-cell col-addnew"><a href="javascript:void(0)" onclick="stopBubble(event);createPortfolio('${catalogSeq}','${dataVo.catalogGroupSeq!}')"></a></div>
 			                                <div class="txt-cell col-delete"><a href="#" value="${dataVo.catalogGroupSeq!}" onclick="deleteCatalogGroupAjax(this)" ></a></div>
 			                            </div>
 			                            <div class="col-detail">
@@ -199,4 +94,4 @@
         <!-- 選擇商品資料來源 結束 -->
     </div>
 
-	
+	<input id="catalogSeqData" type="hidden" value="${catalogSeq}">

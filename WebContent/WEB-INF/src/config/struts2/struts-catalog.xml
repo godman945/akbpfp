@@ -4,28 +4,12 @@
 <struts>
     <package name="struts-catalog" extends="struts-base">  
     
-    
-    
-    
     <!--bessieTmp-暫時寫的之後合併拿掉 -->
 	    <action name="catalog" class="CatalogProdListAction" method="execute">
 			<interceptor-ref name="cookieProveStack" />
 			<result type="tiles" name="success">catalog.prod.action.view</result>
 	    </action>
 		<!--bessieTmp-暫時寫的之後合併拿掉 -->
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     
@@ -102,9 +86,13 @@
 	
 		
 	
-	
-	
-	
+	<!-- 取得商品組合清單ajax -->
+	<action name="queryProdGroupListAjax" class="CatalogProdGroupAjax" method="queryProdGroupListAjax">
+		<interceptor-ref name="cookieProveStack" />
+	    <result type="json" name="success">
+			<param name="root">resultMap</param>
+       	</result>  		
+	</action>
 	
 	
 	
@@ -133,7 +121,11 @@
 	</action>
 	
 	
-		
+	<!-- 複製商品組合篩選條件與商品組合清單view-->
+	<action name="queryProdGroupFilterItem" class="CatalogProdGroupAction" method="queryProdGroupFilterItem">
+		<interceptor-ref name="cookieProveStack" />
+		<result type="tiles" name="EC_PROD_GROUP">ec.copy.prod.group.filter.prod.list.view</result>
+	</action>
 		
 		
 		
@@ -142,34 +134,27 @@
 	
 	<!-- 建立商品組合目錄 -->
 	<action name="addCatalogProdGroup" class="CatalogProdGroupAjax" method="addCatalogProdGroupAjax">
-		<!-- <interceptor-ref name="cookieProveStack" /> -->
-		<result type="json" name="success">
-			<param name="noCache">true</param>
-			<param name="contentType">text/html</param>
-		</result>
+		<interceptor-ref name="cookieProveStack" />
+	    <result type="json" name="success">
+			<param name="root">resultMap</param>
+       	</result>  
 	</action>
 	
 	
-	<!-- 查詢建立商品組合篩選條件商品 -->
+	
+	
+	
+	<!-- 查詢建立商品組合篩選條件商品 (預設4筆)-->
 	<action name="queryProdGroupFilterList" class="CatalogProdGroupAjax" method="queryProdGroupFilterListAjax">
-		<!-- <interceptor-ref name="cookieProveStack" /> -->
-		<result type="json" name="success">
-			<param name="noCache">true</param>
-			<param name="contentType">text/html</param>
-		</result>
+		<interceptor-ref name="cookieProveStack" />
+	    <result type="json" name="success">
+			<param name="root">resultMap</param>
+       	</result> 
 	</action>
 	
 	
-	<!-- 撈出商品組合篩選資料 -->
-	<action name="queryProdGroupFilterItem" class="CatalogProdGroupAjax" method="queryProdGroupFilterItemAjax">
-		<!-- <interceptor-ref name="cookieProveStack" /> -->
-		<result type="json" name="success">
-			<param name="noCache">true</param>
-			<param name="contentType">text/html</param>
-		</result>
-	</action>
 	
-		
+	
 		
 	<!-- 刪除商品組合群組 -->
 	<action name="deleteCatalogGroup" class="CatalogProdGroupAjax" method="deleteCatalogGroupAjax">
@@ -184,7 +169,16 @@
 	
 	
 	
-	
+	<!-- 查詢建立商品組合篩選條件與商品組合清單view -->
+	<action name="queryProdGroupFilterProdList" class="CatalogProdGroupAction" method="queryProdGroupFilterProdList">
+		<interceptor-ref name="cookieProveStack" />
+		<result type="tiles" name="EC_PROD_GROUP">ec.prod.group.filter.prod.list.view</result>
+<!-- 		<result type="json" name="success">  -->
+<!-- 			<param name="noCache">true</param> -->
+<!-- 			<param name="contentType">text/html</param> -->
+<!-- 		</result> -->
+		
+	</action>
 	
 	
 	

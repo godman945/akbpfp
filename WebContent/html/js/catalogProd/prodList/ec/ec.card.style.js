@@ -1,11 +1,8 @@
 ﻿$(document).ready(function(){
-	console.log("#####################");
 	
 	if($("#catalogSeqData").val() !=""){
-		console.log("#####################999999999");
 		$("#catalog").val($("#catalogSeqData").val());
 	}
-	
 	
 	//切換成卡片模式
 	 $('#tableView').on('click',function() {
@@ -41,17 +38,11 @@
     });
 	
 	
-	
-	
-	
-	//script1---start
 	//牙齒底色 && 表格內容篩選                              
     var $btn_filter=$('.btn-filter');
     $btn_filter.on('click',function() {
-//    	alert("全部、已啟用、已封存")
         var filtertype=$(this).attr('data-filter');
         $('.nav-wrap.prodtable, .prodtable-wrap, .prodcard-wrap').attr('data-filter',filtertype);
-//        alert(filtertype)
         $('.pagination-wrap').data('order', "1");
         queryProdListAjax()
     });
@@ -75,7 +66,6 @@
     //取消全選按鈕
     var $btn_selectnone=$('.btn-selectnone');
     $btn_selectnone.on('click',function() {
-//    	alert("取消")
         $('.nav-wrap.prodtable').attr('data-menu','default');
 
         $('#checkAll, .txt-row input[type="checkbox"],.prodcard-box input[type="checkbox"]').each(function(){
@@ -83,7 +73,6 @@
 	        $(this).parent().parent().parent().removeClass('selected');
         });
     });
-    //script1---END
     
     
     // table 第一列 目錄的全選核取按鈕功能 + 被選取的物件改底色為白色
@@ -135,7 +124,7 @@
 	//1~10頁碼
 	$('.pagination-buttongroup a').click(function(){
 		$('.pagination-wrap').data('order', $(this).attr('data-num'));
-		queryProdListAjax()
+		queryProdListAjax();
 	});
 	
 	//上10頁
@@ -154,7 +143,7 @@
       	var _order =parseInt( pageHeaderNoStr.toString()+"1");
       	$('.pagination-wrap').data('order', _order.toString());
 
-      	processPageAndTotalPage();
+      	queryProdListAjax();
 	});
 	
 	//下10頁
@@ -173,7 +162,7 @@
       	var _order =parseInt( pageHeaderNoStr.toString()+"1");
       	$('.pagination-wrap').data('order', _order.toString());
       	
-      	processPageAndTotalPage();
+      	queryProdListAjax();
 	});
 	
 	
@@ -183,28 +172,13 @@
 	//搜尋商品名稱
 	searchProdName();
 	
-	
 });
-
-//var currentPage; //目前頁數
-//var pageSize;//一頁幾筆
-
-
-////closeViewDetail
-//function closeViewDetail(){
-//$('#viewDetailDom').find('.prodcard-infobox').find('.g4').find('#weburlDetailData').find('a').click(function(){
-//	alert('close')
-////	$('#fancybox-outer').css('display', 'none');
-//	$('#detailDiv').css('display', 'none');
-//});
-//}
 
 
 //查看商品名細
 function viewDetail(dataObj){
 	
   $.fancybox(
-//      $('#detailDiv').html(),	:none
 		  '<div style="display;" id="detailDiv">'+
 		  '	<div class="detail-wrap txt-noselect">'+
 		  '		<div class="detail-box">'+
@@ -261,7 +235,7 @@ function updateProdStatusAjax(updateProdStatus, prodIdArray) {
 		data : {
 			"catalogSeq" : $('#catalog option:selected').val(),
 			"updateProdStatus" : updateProdStatus,
-			"prodIdArray" : JSON.stringify(prodIdArray),//prodIdArray, 
+			"prodIdArray" : JSON.stringify(prodIdArray), 
 			"currentPage" : 1,
 			"pageSizeSelected" : $('#pageSizeSelect option:selected').val(),
 			"prodStatus" : filtertype,
@@ -281,12 +255,7 @@ function updateProdStatusAjax(updateProdStatus, prodIdArray) {
 		
 		// 更新頁碼與清單資料
 		$('.pagination-wrap').data('order', response.currentPage.toString());
-		console.log('done : '+response.currentPage.toString());
-//		$('.pagination-wrap').data('quantity', response.pageCount.toString());
-//		$('#prodQuantityTxt').empty();
-//		$('#prodQuantityTxt').append(response.totalCount.toString());
 
-		alert(response.resultMap.status)
 
 		if (response.resultMap.status == "ERROR") {
 			// alert("ajax error")
@@ -301,10 +270,6 @@ function updateProdStatusAjax(updateProdStatus, prodIdArray) {
 		}
 	});
 }
-
-
-
-
 
 
 // 已封存列物件選取
@@ -329,9 +294,7 @@ function checkboxSealed(){
 // 已啟用物件選取
 function checkboxEnable(){
 	$('.txt-row[data-type="enable"] input[type="checkbox"], .prodcard-box[data-type="enable"] input[type="checkbox"]').click(function () {
-//  	alert("**start 999**");
       if ($(this).is(":checked")) {
-//      	alert("**if9**");
       	$('.nav-wrap.prodtable').attr('data-menu','detail');
           var isAllChecked = 0;
           $('.txt-row[data-type="enable"] input[type="checkbox"], .prodcard-box[data-type="enable"] input[type="checkbox"]').each(function() {
@@ -342,7 +305,6 @@ function checkboxEnable(){
           if(isAllChecked == 0){$('#checkAll').prop("checked", true);}     
       }
       else {
-//      	alert("**else9**");
       	$('#checkAll').prop("checked", false);
       }
   });
@@ -352,21 +314,13 @@ function checkboxEnable(){
 //被選取的物件改style
 function checkboxChange(){
 	$('.txt-row input[type="checkbox"], .prodcard-box input[type="checkbox"]').change(function() {
-//    	alert("**8**");
         if (this.checked) {
-//        	alert("**8if**");
             $(this).parent().parent().parent().addClass('selected');
-            console.log("*8*parent()1");
-            console.log($(this).parent().parent().parent()[0]);
         }else{
-//        	alert("**8else**");
             $(this).parent().parent().parent().removeClass('selected');
-            console.log("*8*parent()2");
-        	console.log($(this).parent().parent().parent()[0]);
         }
         
         sumSelectedPord();
-        
     });
 }
 
@@ -385,7 +339,6 @@ function sumSelectedPord(){
 //table 第一列 目錄的全選核取按鈕功能 + 被選取的物件改底色為白色
 function checkall(){
 $('#checkAll').change(function() {
-//alert("全選");	
   var _filter = $('.prodtable-wrap, .prodcard-wrap').attr('data-filter');
   if (this.checked) {
 	  $('.nav-wrap.prodtable').attr('data-menu','detail');
@@ -393,15 +346,11 @@ $('#checkAll').change(function() {
     	  $('.txt-row[data-type="sealed"] input[type="checkbox"], .prodcard-box[data-type="sealed"] input[type="checkbox"]').each(function(){
               this.checked=true;
               $(this).parent().parent().parent().addClass('selected');
-              console.log("全選parent()1");
-              console.log($(this).parent().parent().parent()[0]);
           });
       }else{
     	  $('.txt-row[data-type="enable"] input[type="checkbox"], .prodcard-box[data-type="enable"] input[type="checkbox"]').each(function(){
               this.checked=true;
               $(this).parent().parent().parent().addClass('selected');
-              console.log("全選parent()2");
-              console.log($(this).parent().parent().parent()[0]);
           });
       }
   } else {
@@ -410,21 +359,16 @@ $('#checkAll').change(function() {
     	  $('.txt-row[data-type="sealed"] input[type="checkbox"], .prodcard-box[data-type="sealed"] input[type="checkbox"]').each(function(){
               this.checked=false;
               $(this).parent().parent().parent().removeClass('selected');
-              console.log("全選parent()3");
-              console.log($(this).parent().parent().parent()[0]);
           });
       }else{
     	  $('.txt-row[data-type="enable"] input[type="checkbox"], .prodcard-box[data-type="enable"] input[type="checkbox"]').each(function(){
               this.checked=false;
               $(this).parent().parent().parent().removeClass('selected');
-              console.log("全選parent()4");
-              console.log($(this).parent().parent().parent()[0]);
           });
       }
   }
 });
 }
-
 
 
 //初始篩選商品資訊 下拉選單
@@ -492,12 +436,9 @@ function queryProdListAjax(){
     	$('#prodQuantityTxt').append(response.totalCount.toString());
         
     	if (response.status=="ERROR"){
-//    		alert("ajax error")
     		$("#prodListDiv").empty();
     		alert(response.msg)
     	}else{
-//    		alert("ajax ok")
-//    		alert("OK")
     		$("#prodListDiv").empty();
     		var tempHtml = "";
     		var i=0;
@@ -632,8 +573,6 @@ function processPageAndTotalPage(){
             
           //區間1~10
             if(order<=_length){ 
-//            	alert("aaa");
-            	
             	$('#previousPageBtn').css('display', 'none');
 	           	 var _order=(order<=_length)?1:order;
 	           	
@@ -648,10 +587,7 @@ function processPageAndTotalPage(){
 	           		$('#finalPageBtn').css('display', '');
 	           		$('#nextPageBtn').css('display', '');
 	           	 }
-           	 
             }else if ( (quantity-orderTmp) < _length){//區間位於後段不足10頁
-//	           	 alert("bbb");
-	           	 
 	           	 var pageHeaderNoStr= orderTmp.toString();
 	           	 var pageHeaderNoStr= pageHeaderNoStr.substring(0, pageHeaderNoStr.length-1);
 	           	 var _order =parseInt( pageHeaderNoStr.toString()+"1");
@@ -659,8 +595,6 @@ function processPageAndTotalPage(){
            		$('#previousPageBtn').css('display', '');
            		$('#nextPageBtn').css('display', 'none');
             } else if(orderTmp>_length){ //區間位於中間
-//	           	 alert("ccc");
-	           	 
 	             var pageHeaderNoStr= orderTmp.toString();
 	           	 var pageHeaderNoStr= pageHeaderNoStr.substring(0, pageHeaderNoStr.length-1);
 	           	 var _order =parseInt( pageHeaderNoStr.toString()+"1");
@@ -726,7 +660,6 @@ function clearPaginationButton() {
 	
 	//每次ajax回來更新篩選商品資訊
 	refreshShowHideInfo();
-	
 }
 
 

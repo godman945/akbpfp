@@ -1,11 +1,13 @@
 package com.pchome.enumerate.catalog.prodGroup;
 
-public enum EnumProdGroupCondition {
+public enum EnumEcProdGroupCondition {
 
-	eq("eq", "=","相等"),
-	neq("neq", "<>","不相等"),
+	like("like", "like","包含"),
+	notlike("notlike", "not like","不包含"),
 	gt("gt", ">","大於"),
 	lt("lt", "<","小於"),
+	eq("eq", "=","等於或屬於"),
+	neq("neq", "<>","不等於或不屬於"),
 	gte("gte", ">=","大於等於"),
 	lte("lte", "<=","小於等於");
 	
@@ -13,7 +15,7 @@ public enum EnumProdGroupCondition {
 	private final String symbol;
 	private final String conditionDesc;
 
-	private EnumProdGroupCondition(String condition, String symbol, String conditionDesc) {
+	private EnumEcProdGroupCondition(String condition, String symbol, String conditionDesc) {
 		this.condition = condition;
 		this.symbol = symbol;
 		this.conditionDesc = conditionDesc;
