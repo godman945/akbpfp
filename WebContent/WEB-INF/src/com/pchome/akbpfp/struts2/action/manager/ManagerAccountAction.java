@@ -31,11 +31,10 @@ public class ManagerAccountAction extends BaseCookieAction{
 		log.info(">>>login  ip = " + ip);
 		
 		vos = pfpProviderProxy.findPfpAccount(super.getId_pchome(),ip);
-		
+		log.info(">>>>>> vos:"+vos);
 		//log.info(" vos: "+vos.size());
 		// 無資料就導首頁
 		if(vos.isEmpty()){
-			log.info(">>>>>> vos is null");
 			return "index";
 		}
 		
