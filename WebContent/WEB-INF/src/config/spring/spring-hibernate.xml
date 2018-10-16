@@ -104,11 +104,16 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpBuAccount</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpAdVideoSource</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalog</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogo</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogProdEc</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogo</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCatalogGroup</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCatalogSetup</value>
 				<!-- PFB pojo -->
 				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
 				<value>com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory</value>
@@ -217,11 +222,16 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpRefundOrder</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpAdVideoSource</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalog</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogo</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogProdEc</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogo</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCatalogGroup</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCatalogSetup</value>
 				<!-- PFB pojo -->
 				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
 				<value>com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory</value>               
