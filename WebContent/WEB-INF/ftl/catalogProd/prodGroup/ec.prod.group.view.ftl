@@ -1,11 +1,3 @@
-<#assign s=JspTaglibs["/struts-tags"]>
-
-<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" />
-<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script> 
-<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.floatingscroll.min.js"></script>
-
-
-
     <div class="container-prodmanage">
         <!-- 次目錄導覽列 開始 -->
         <!-- hidden 隱藏所有牙齒 -->

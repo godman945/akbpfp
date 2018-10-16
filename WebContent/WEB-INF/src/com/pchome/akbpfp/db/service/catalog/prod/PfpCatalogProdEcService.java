@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.pchome.akbpfp.db.dao.catalog.prod.IPfpCatalogProdEcDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
 import com.pchome.akbpfp.db.vo.catalog.prodList.PfpCatalogProdEcVO;
 import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
+import com.pchome.enumerate.catalogprod.EnumEcCheckStatusType;
+import com.pchome.enumerate.catalogprod.EnumEcStatusType;
+import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
+import com.pchome.enumerate.catalogprod.EnumEcUseStatusType;
 
 public class PfpCatalogProdEcService extends BaseService<PfpCatalogProdEc,Integer> implements IPfpCatalogProdEcService{
 	
@@ -38,6 +44,38 @@ public class PfpCatalogProdEcService extends BaseService<PfpCatalogProdEc,Intege
 				prodListBean.setEcCategory(obj.get("ec_category").toString());			 //商品組合篩選分類
 				prodListBean.setEcStatus(obj.get("ec_status").toString());				 //商品狀態(開啟/關閉)
 				prodListBean.setEcCheckStatus(obj.get("ec_check_status").toString());	 //商品審核狀態
+				
+				//商品庫存中文
+				for(EnumEcStockStatusType ecStockStatusType:EnumEcStockStatusType.values()){
+					if( StringUtils.equals(ecStockStatusType.getType(), obj.get("ec_stock_status").toString()) ){
+						prodListBean.setEcStockStatusDesc(ecStockStatusType.getChName());
+						break;
+					}
+				}
+				
+				//商品使用狀態(全新/二手)中文
+				for(EnumEcUseStatusType ecUseStatusType:EnumEcUseStatusType.values()){
+					if( StringUtils.equals(ecUseStatusType.getType(), obj.get("ec_use_status").toString()) ){
+						prodListBean.setEcUseStatusDesc(ecUseStatusType.getChName());
+						break;
+					}
+				}
+				
+				//商品狀態(開啟/關閉)中文
+				for(EnumEcStatusType ecStatusType:EnumEcStatusType.values()){
+					if( StringUtils.equals(ecStatusType.getType(),obj.get("ec_status").toString()) ){
+						prodListBean.setEcStatusDesc(ecStatusType.getChName());
+						break;
+					}
+				}
+				
+				//商品審核狀態中文
+				for(EnumEcCheckStatusType ecCheckStatusType:EnumEcCheckStatusType.values()){
+					if( StringUtils.equals(ecCheckStatusType.getType(),obj.get("ec_check_status").toString()) ){
+						prodListBean.setEcCheckStatusDesc(ecCheckStatusType.getChName());
+						break;
+					}
+				}
 				
 				prodBeanLists.add(prodListBean);
 			}
@@ -100,6 +138,38 @@ public class PfpCatalogProdEcService extends BaseService<PfpCatalogProdEc,Intege
 				prodListBean.setEcCategory(obj.get("ec_category").toString());			 //商品組合篩選分類
 				prodListBean.setEcStatus(obj.get("ec_status").toString());				 //商品狀態(開啟/關閉)
 				prodListBean.setEcCheckStatus(obj.get("ec_check_status").toString());	 //商品審核狀態
+				
+				//商品庫存中文
+				for(EnumEcStockStatusType ecStockStatusType:EnumEcStockStatusType.values()){
+					if( StringUtils.equals(ecStockStatusType.getType(), obj.get("ec_stock_status").toString()) ){
+						prodListBean.setEcStockStatusDesc(ecStockStatusType.getChName());
+						break;
+					}
+				}
+				
+				//商品使用狀態(全新/二手)中文
+				for(EnumEcUseStatusType ecUseStatusType:EnumEcUseStatusType.values()){
+					if( StringUtils.equals(ecUseStatusType.getType(), obj.get("ec_use_status").toString()) ){
+						prodListBean.setEcUseStatusDesc(ecUseStatusType.getChName());
+						break;
+					}
+				}
+				
+				//商品狀態(開啟/關閉)中文
+				for(EnumEcStatusType ecStatusType:EnumEcStatusType.values()){
+					if( StringUtils.equals(ecStatusType.getType(),obj.get("ec_status").toString()) ){
+						prodListBean.setEcStatusDesc(ecStatusType.getChName());
+						break;
+					}
+				}
+				
+				//商品審核狀態中文
+				for(EnumEcCheckStatusType ecCheckStatusType:EnumEcCheckStatusType.values()){
+					if( StringUtils.equals(ecCheckStatusType.getType(),obj.get("ec_check_status").toString()) ){
+						prodListBean.setEcCheckStatusDesc(ecCheckStatusType.getChName());
+						break;
+					}
+				}
 				
 				prodBeanLists.add(prodListBean);
 			}

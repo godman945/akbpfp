@@ -478,8 +478,14 @@ function queryProdListAjax(){
 	    			if(key == "ecStockStatus"){
 	    				ecStockStatus = val;
 	    			}
+	    			if(key == "ecStockStatusDesc"){
+	    				ecStockStatusDesc = val;
+	    			}
 	    			if(key == "ecUseStatus"){
 	    				ecUseStatus = val;
+	    			}
+	    			if(key == "ecUseStatusDesc"){
+	    				ecUseStatusDesc = val;
 	    			}
 	    			if(key == "ecCategory"){
 	    				ecCategory = val;
@@ -511,8 +517,8 @@ function queryProdListAjax(){
 	    			tempHtml += "	        </div>	";
 	    			tempHtml += "	        <div class='group g3'> ";
 	    			tempHtml += "	        	<div data-info-name='serial' id='serialDetailData' >"+catalogProdSeq+"</div>	";
-	    			tempHtml += "	            <div data-info-name='supplement' id='supplementDetailData' >"+ecStockStatus+"</div>	";
-	    			tempHtml += "            	<div data-info-name='neworused' id='neworusedDetailData' >"+ecUseStatus+"</div>	";
+	    			tempHtml += "	            <div data-info-name='supplement' id='supplementDetailData' >"+ecStockStatusDesc+"</div>	";
+	    			tempHtml += "            	<div data-info-name='neworused' id='neworusedDetailData' >"+ecUseStatusDesc+"</div>	";
 	    			tempHtml += "            	<div data-info-name='class' id='classDetailData' >"+ecCategory+"</div>	";
 	    			tempHtml += " 	        </div>	";
 	    			tempHtml += "        	<div class='group g4'>	";

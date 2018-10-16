@@ -406,8 +406,14 @@ function queryProdListAjax(){
 	    			if(key == "ecStockStatus"){
 	    				ecStockStatus = val;
 	    			}
+	    			if(key == "ecStockStatusDesc"){
+	    				ecStockStatusDesc = val;
+	    			}
 	    			if(key == "ecUseStatus"){
 	    				ecUseStatus = val;
+	    			}
+	    			if(key == "ecUseStatusDesc"){
+	    				ecUseStatusDesc = val;
 	    			}
 	    			if(key == "ecCategory"){
 	    				ecCategory = val;
@@ -429,8 +435,8 @@ function queryProdListAjax(){
 	    			tempHtml += " <div class='txt-cell col-prodname'>"+ecName+"</div> ";
 	    			tempHtml += " <div class='txt-cell col-listprice'><span>$</span>"+ecPrice+"</div> ";
 	    			tempHtml += " <div class='txt-cell col-promoprice'><span>$</span>"+ecDiscountPrice+"</div> ";
-	    			tempHtml += " <div class='txt-cell col-supplement'>"+ecStockStatus+"</div> ";
-	    			tempHtml += " <div class='txt-cell col-neworused'>"+ecUseStatus+"</div> ";
+	    			tempHtml += " <div class='txt-cell col-supplement'>"+ecStockStatusDesc+"</div> ";
+	    			tempHtml += " <div class='txt-cell col-neworused'>"+ecUseStatusDesc+"</div> ";
 	    			tempHtml += " <div class='txt-cell col-picture'><img src='http://showstg.pchome.com.tw/pfp/"+ecImg+"'></div> ";
 	    			tempHtml += " <div class='txt-cell col-class'>"+ecCategory+"</div> ";
 	    			tempHtml += " <div class='txt-cell col-weburl'><a href="+ecUrl+" target='_blank'></a></div> ";

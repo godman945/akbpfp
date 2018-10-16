@@ -1,12 +1,9 @@
 package com.pchome.akbpfp.struts2.action.catalog.prodGroup;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.json.JSONObject;
 
 import com.pchome.akbpfp.catalog.prodGroup.factory.AProdGroup;
 import com.pchome.akbpfp.catalog.prodGroup.factory.ProdGroupFactory;

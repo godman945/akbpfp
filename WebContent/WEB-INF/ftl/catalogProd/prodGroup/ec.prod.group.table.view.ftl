@@ -1,9 +1,3 @@
-<#assign s=JspTaglibs["/struts-tags"]>
-<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" />
-<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.floatingscroll.min.js"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/clipboard.min.js"></script> 
-
     <div class="container-prodmanage">
 
         <!-- 次目錄導覽列 開始 -->
@@ -100,8 +94,8 @@
 				                            <div class="txt-cell col-prodname   ">${prods.ecName!}</div>
 				                            <div class="txt-cell col-listprice  "><span>$</span>${prods.ecPrice!}</div>
 				                            <div class="txt-cell col-promoprice "><span>$</span>${prods.ecDiscountPrice!}</div>
-				                            <div class="txt-cell col-supplement ">${prods.ecStockStatus!}</div>
-				                            <div class="txt-cell col-neworused  ">${prods.ecUseStatus!}</div>
+				                            <div class="txt-cell col-supplement ">${prods.ecStockStatusDesc!}</div>
+				                            <div class="txt-cell col-neworused  ">${prods.ecUseStatusDesc!}</div>
 				                            <div class="txt-cell col-picture    "><img src="http://showstg.pchome.com.tw/pfp/${prods.ecImg!}"></div>
 				                            <div class="txt-cell col-class      ">${prods.ecCategory!}</div>
 				                            <div class="txt-cell col-weburl     "><a href=${prods.ecUrl!} target="_blank"></a></div>

@@ -12,10 +12,15 @@ public class PfpCatalogProdEcVO {
 	String ecPrice;		//商品價格
 	String ecDiscountPrice;//商品特價
 	String ecStockStatus;	 //商品庫存
+	String ecStockStatusDesc;	 //商品庫存中文	
 	String ecUseStatus;	 //商品使用狀態(全新/二手)
+	String ecUseStatusDesc;	 //商品使用狀態(全新/二手)中文
 	String ecCategory;	 //商品組合篩選分類
 	String ecStatus;		 //商品狀態(開啟/關閉)
+	String ecStatusDesc;		 //商品狀態(開啟/關閉)中文
 	String ecCheckStatus;	 //商品審核狀態
+	String ecCheckStatusDesc;	 //商品審核狀態中文
+	
 	public String getId() {
 		return id;
 	}
@@ -100,7 +105,30 @@ public class PfpCatalogProdEcVO {
 	public void setEcCheckStatus(String ecCheckStatus) {
 		this.ecCheckStatus = ecCheckStatus;
 	}
-	
+	public String getEcStockStatusDesc() {
+		return ecStockStatusDesc;
+	}
+	public void setEcStockStatusDesc(String ecStockStatusDesc) {
+		this.ecStockStatusDesc = ecStockStatusDesc;
+	}
+	public String getEcUseStatusDesc() {
+		return ecUseStatusDesc;
+	}
+	public void setEcUseStatusDesc(String ecUseStatusDesc) {
+		this.ecUseStatusDesc = ecUseStatusDesc;
+	}
+	public String getEcStatusDesc() {
+		return ecStatusDesc;
+	}
+	public void setEcStatusDesc(String ecStatusDesc) {
+		this.ecStatusDesc = ecStatusDesc;
+	}
+	public String getEcCheckStatusDesc() {
+		return ecCheckStatusDesc;
+	}
+	public void setEcCheckStatusDesc(String ecCheckStatusDesc) {
+		this.ecCheckStatusDesc = ecCheckStatusDesc;
+	}
 	
 }
 
