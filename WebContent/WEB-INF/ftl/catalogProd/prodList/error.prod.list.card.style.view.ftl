@@ -1,22 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 
-<!--
-<link href="<@s.url value="/html/css/ad/adPlugInStyle.css" />" rel="stylesheet" type="text/css" />
-<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" />
-<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script> 
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/adActionAdd.js" ></script>
-<style type="text/css">
-.level1 {width: 23px; height: 32px;}
-.level2 {width: 38px; height: 32px;}
-.level3 {width: 53px; height: 32px;}
-.level4 {width: 68px; height: 32px;}
-.selectTop:hover{text-decoration:underline}
-</style>	
--->
-
 
 <div class="container-prodmanage">
-
         <!-- 次目錄導覽列 開始 -->
         <!-- hidden 隱藏所有牙齒 -->
         <!-- hidetabs 只顯示第一顆牙齒 -->

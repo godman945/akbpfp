@@ -136,30 +136,23 @@ $(document).ready(function(){
 	//按上一頁
 	$('.prev').on('click', function() {
 		currentPage = currentPage-1;
-//		alert('前currentPage');
-//		alert(currentPage);
 		$('#currentPage').text(currentPage)
 		$('#pageCount').text(pageCount)
 		if (currentPage<=1){
 			$('.prev').css('display', 'none');
 		}
-		
 		queryProdGroupFilterListAjax();
-		
 	 });
 	
 	
 	//按下一頁
 	$('.next').on('click', function() {
 		currentPage = currentPage+1;
-//		alert('後currentPage');
-//		alert(currentPage);
 		$('#currentPage').text(currentPage)
 		$('#pageCount').text(pageCount)
 		if (currentPage>=pageCount){
 			$('.next').css('display', 'none');
 		}
-		
 		queryProdGroupFilterListAjax();
 	 });
 	
@@ -183,30 +176,15 @@ $(document).ready(function(){
 
     // 增加篩選條件
     $('.link-addfilter').click(function(){
-    	console.log('增加篩選條件NEW----------')
-    	
     	$('.filter-wrap')[0].insertAdjacentHTML('beforeend', '<div class="filter-group" data-level1="1" data-level2="1" data-level3="1">'+defaultTemplate+'</div>');
     	
-//    	console.log($('.filter-wrap'));
-    	
-    	
-    	
-    	
-    	
-//    	.appendTo(defaultTemplate.innerHTML);
-    	
-//        $('.filter-group').eq(0).clone().appendTo('.filter-wrap');
-
-//        
         //新增條件重新綁定監聽
         $(".filter-wrap select").unbind("change");
         $(".filter-wrap input").unbind("keyup");
         
         $(".filter-wrap select").bind("change", handler);
         $(".filter-wrap input").bind("keyup", handler);
-        
     })
-	
 	
 	if($("#catalogSeqData").val() !=""){
 		console.log("#####################999999999");
@@ -221,7 +199,6 @@ $(document).ready(function(){
     	handler(e);
     	addCatalogProdGroupAjax();
     })
-    
     
 });
 
@@ -258,7 +235,6 @@ var filterContentMap= [];
 * 寫入商品組合篩選條件Ajax
 */
 function addCatalogProdGroupAjax(){
-	alert("建立")
 	$.ajax({
 	    type: "post",
 	    dataType: "json",
@@ -292,7 +268,6 @@ function addCatalogProdGroupAjax(){
 */
 function handler(e) {
 	filterContentMap = [];
-//	console.log(e.type);
  	//全部群組資料
  	$(".filter-group").each(function(index,obj) {
  		var map = new Object();
