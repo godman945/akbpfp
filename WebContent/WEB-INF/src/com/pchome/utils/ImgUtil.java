@@ -1,6 +1,7 @@
 package com.pchome.utils;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +12,8 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import sun.misc.BASE64Decoder;
 
 public class ImgUtil {
 	private static final Log log = LogFactory.getLog(ImgUtil.class);
@@ -55,6 +58,30 @@ public class ImgUtil {
 		String imgPath = photoPath.substring(photoPath.indexOf("img/")) + "/" + imgFileName + "." + filenameExtension;
 		log.info("下載圖片結束");
 		return imgPath;
+	}
+
+	/**
+	 * 
+	 * @param imgBase64String 圖片的Base64字串
+	 * @param photoPath 資料夾位置
+	 * @param imgFileName 檔名
+	 * @return
+	 */
+	public static String processImgBase64StringToImage(String imgBase64String, String photoPath, String imgFileName) {
+		// TODO Auto-generated method stub
+		try {
+			String imgPathAndName = photoPath + "/" + imgFileName;
+			BASE64Decoder decoder = new BASE64Decoder();
+			byte[] bytes1 = decoder.decodeBuffer(imgBase64String);
+			ByteArrayInputStream bais = new ByteArrayInputStream(bytes1);
+			BufferedImage bi1 = ImageIO.read(bais);
+			File f1 = new File("d://out.jpg");
+			ImageIO.write(bi1, "jpg", f1);
+			bais.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 }

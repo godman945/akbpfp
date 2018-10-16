@@ -1,9 +1,12 @@
 package com.pchome.akbpfp.db.dao.catalog.uploadList;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
@@ -182,6 +185,42 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 
 		query.executeUpdate();
 		super.getSession().flush();
+	}
+
+	/**
+	 * 取得一般購物類商品清單 資料
+	 */
+	@Override
+	public List<Map<String, Object>> getPfpCatalogProdEc(String catalogSeq, String catalogProdSeq) {
+		// TODO Auto-generated method stub
+		StringBuffer hql = new StringBuffer();
+		hql.append(" SELECT ");
+		hql.append(" id, catalog_prod_seq, catalog_seq, ec_name, ec_title, ");
+		hql.append(" ec_img, ec_img_region, ec_img_md5, ec_url, ec_price, ");
+		hql.append(" ec_discount_price, ec_stock_status, ec_use_status, ec_category, ec_status, ");
+		hql.append(" ec_check_status, update_date, create_date ");
+		hql.append(" FROM pfp_catalog_prod_ec ");
+		hql.append(" WHERE 1 = 1 ");
+		
+		if (StringUtils.isNotBlank(catalogSeq)) {
+			hql.append(" AND catalog_seq = :catalog_seq ");
+		}
+		
+		if (StringUtils.isNotBlank(catalogProdSeq)) {
+			hql.append(" AND catalog_prod_seq = :catalog_prod_seq ");
+		}
+		
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		
+		if (StringUtils.isNotBlank(catalogSeq)) {
+			query.setString("catalog_seq", catalogSeq);
+		}
+		
+		if (StringUtils.isNotBlank(catalogProdSeq)) {
+			query.setString("catalog_prod_seq", catalogProdSeq);
+		}
+		
+		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 	}
 	
 }

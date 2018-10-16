@@ -80,20 +80,24 @@ public abstract class APfpCatalogUploadListData {
 	 * @param errorPrdItemArray
 	 * @param catalogProdSeq
 	 * @param ecImgUrl
+	 * @param ecImgBase64 
 	 * @return
 	 * @throws Exception 
 	 */
-	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, String catalogProdSeq, String ecImgUrl) throws Exception {
+	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, String catalogProdSeq, String ecImgUrl, String ecImgBase64) throws Exception {
 		JSONObject jsonObject = new JSONObject();
 		String prodItemErrorMsg = "";
 
-		if (ecImgUrl.isEmpty()) {
-			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-		} else {
-			AdUtilAjax adUtilAjax = new AdUtilAjax();
-			String checkResultMsg = adUtilAjax.checkAdShowUrl(ecImgUrl, akbPfpServer);
-			if (!checkResultMsg.isEmpty()) {
-				prodItemErrorMsg += "請輸入正確的廣告圖像網址。";
+		// ecImgBase64為空格表示非手動上傳，非手動上傳才需檢查圖片網址
+		if (ecImgBase64.trim().isEmpty()) {
+			if (ecImgUrl.isEmpty()) {
+				prodItemErrorMsg += "必填欄位必須輸入資訊。";
+			} else {
+				AdUtilAjax adUtilAjax = new AdUtilAjax();
+				String checkResultMsg = adUtilAjax.checkAdShowUrl(ecImgUrl, akbPfpServer);
+				if (!checkResultMsg.isEmpty()) {
+					prodItemErrorMsg += "請輸入正確的廣告圖像網址。";
+				}
 			}
 		}
 		

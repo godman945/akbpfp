@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.compass.retrotranslator.edu.emory.mathcs.backport.java.util.Arrays;
@@ -43,7 +44,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	public Map<String, Object> processCatalogProdJsonData(JSONObject catalogProdJsonData) throws Exception {
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		
-		String catalogType = catalogProdJsonData.optString("catalog_type");
+		String catalogType = catalogProdJsonData.optString("catalogType");
 		
 		if (catalogType.isEmpty() || 
 				(!EnumPfpCatalog.CATALOG_SHOPPING.getType().equals(catalogType)
@@ -297,18 +298,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		return catalogProdJsonData;
 	}
 
-	public void setShoppingProd(ShoppingProd shoppingProd) {
-		this.shoppingProd = shoppingProd;
-	}
-
-	public ShoppingProd getShoppingProd() {
-		return shoppingProd;
-	}
-
-	public void setPfpCatalogUploadListDAO(IPfpCatalogUploadListDAO pfpCatalogUploadListDAO) {
-		this.pfpCatalogUploadListDAO = pfpCatalogUploadListDAO;
-	}
-
 	/**
 	 * 刪除 一般購物類商品清單
 	 * @param vo
@@ -379,6 +368,31 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		pfpCatalogUploadListDAO.savePfpCatalogUploadLog(pfpCatalogUploadLog);
 	}
 
+	/**
+	 * 檢查商品編號是否在此目錄下已重複
+	 * @param catalogSeq 商品目錄
+	 * @param catalogProdSeq 商品編號
+	 * @return 重複:1  不重複:0
+	 */
+	@Override
+	public int checkCatalogProdSeq(String catalogSeq, String catalogProdSeq) {
+		// 取得商品清單,DAO之後應該調整寫到 pfp_catalog_prod_ec 的DAO去
+		List<Map<String, Object>> pfpCatalogProdEcList = pfpCatalogUploadListDAO.getPfpCatalogProdEc(catalogSeq, catalogProdSeq);
+		return pfpCatalogProdEcList.size();
+	}
+	
+	public void setShoppingProd(ShoppingProd shoppingProd) {
+		this.shoppingProd = shoppingProd;
+	}
+
+	public ShoppingProd getShoppingProd() {
+		return shoppingProd;
+	}
+
+	public void setPfpCatalogUploadListDAO(IPfpCatalogUploadListDAO pfpCatalogUploadListDAO) {
+		this.pfpCatalogUploadListDAO = pfpCatalogUploadListDAO;
+	}
+	
 	public void setPfpCatalogService(IPfpCatalogService pfpCatalogService) {
 		this.pfpCatalogService = pfpCatalogService;
 	}
@@ -386,7 +400,5 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	public void setSequenceService(ISequenceService sequenceService) {
 		this.sequenceService = sequenceService;
 	}
-
-	
 
 }

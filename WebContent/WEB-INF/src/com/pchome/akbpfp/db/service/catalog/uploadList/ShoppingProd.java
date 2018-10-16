@@ -45,11 +45,11 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		
 		// 各欄位資料檢核
 		String errorMsg = "";
-		String pfpCustomerInfoId = catalogProdJsonData.getString("pfp_customer_info_id");
-		String updateWay = catalogProdJsonData.optString("update_way"); // 更新方式 1.取代 2.更新
-		String catalogSeq = catalogProdJsonData.optString("catalog_seq"); // 商品目錄編號
-		String catalogProdItem = catalogProdJsonData.optString("catalog_prod_item"); // 每一項商品
-		if (updateWay.isEmpty() || !("1".equals(updateWay) || "2".equals(updateWay))) {
+		String pfpCustomerInfoId = catalogProdJsonData.getString("pfpCustomerInfoId");
+		String updateWay = catalogProdJsonData.optString("updateWay"); // 更新方式 1.取代 2.更新
+		String catalogSeq = catalogProdJsonData.optString("catalogSeq"); // 商品目錄編號
+		String catalogProdItem = catalogProdJsonData.optString("catalogProdItem"); // 每一項商品
+		if (updateWay.isEmpty() || !("1".equals(updateWay) || "2".equals(updateWay) || " ".equals(updateWay))) {
 			errorMsg += "更新方式資料錯誤!";
 		}
 		
@@ -89,6 +89,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			String ecStockStatus = catalogProdItemJson.optString("ec_stock_status"); // 商品供應情況*
 			String ecUseStatus = catalogProdItemJson.optString("ec_use_status"); // 商品使用狀況*
 			String ecImgUrl = catalogProdItemJson.optString("ec_img_url"); // 廣告圖像網址*
+			String ecImgBase64 = catalogProdItemJson.optString("ec_Img_Base64", " "); // 手動上傳圖片的Base64編碼
 			String ecUrl = catalogProdItemJson.optString("ec_url"); // 連結網址*
 			String ecCategory = catalogProdItemJson.optString("ec_category", " "); // 商品類別
 
@@ -100,7 +101,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, catalogProdSeq, ecDiscountPrice);
 			errorPrdItemArray = super.checkEcStockStatus(errorPrdItemArray, catalogProdSeq, ecStockStatus);
 			errorPrdItemArray = super.checkEcUseStatus(errorPrdItemArray, catalogProdSeq, ecUseStatus);
-			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, catalogProdSeq, ecImgUrl);
+			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, catalogProdSeq, ecImgUrl, ecImgBase64);
 			errorPrdItemArray = super.checkEcUrl(errorPrdItemArray, catalogProdSeq, ecUrl);
 			errorPrdItemArray = super.checkEcCategory(errorPrdItemArray, catalogProdSeq, ecCategory);
 			
@@ -117,7 +118,12 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setEcTitle(ecTitle); // 商品敘述
 				
 				String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq;
-				pfpCatalogProdEc.setEcImg(ImgUtil.processImgPathForCatalogProd(ecImgUrl, photoPath, catalogProdSeq)); // 圖片路徑
+				if (ecImgBase64.trim().isEmpty()) { // ecImgBase64為空表示非手動上傳，會有圖片網址需下載圖片
+					pfpCatalogProdEc.setEcImg(ImgUtil.processImgPathForCatalogProd(ecImgUrl, photoPath, catalogProdSeq)); // 圖片路徑
+				} else {
+					pfpCatalogProdEc.setEcImg(ImgUtil.processImgBase64StringToImage(ecImgBase64, photoPath, catalogProdSeq));
+				}
+				// 圖片下載好後 取得圖片長寬 判斷ec_img_region 商品影像長寬(V / H)，禮拜一重跑pojo
 				
 				pfpCatalogProdEc.setEcUrl(ecUrl); // 連結網址
 				pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價

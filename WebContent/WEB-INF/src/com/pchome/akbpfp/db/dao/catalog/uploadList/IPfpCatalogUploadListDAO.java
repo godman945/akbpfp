@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.db.dao.catalog.uploadList;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.IBaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
@@ -71,6 +72,14 @@ public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 	 * @param vo
 	 */
 	void deletePfpCatalogGroupItem(PfpCatalogVO vo);
+
+	/**
+	 * 取得一般購物類商品清單 資料
+	 * @param catalogSeq 商品目錄
+	 * @param catalogProdSeq 商品編號
+	 * @return
+	 */
+	List<Map<String, Object>> getPfpCatalogProdEc(String catalogSeq, String catalogProdSeq);
 
 
 }

@@ -854,5 +854,23 @@
         	</result>
      	</action>
       	
+     	<!-- 廣告商品-檢查輸入的手動上傳商品資料 -->
+		<action name="processCheckManualInputData" class="PfpCatalogUploadListAction" method="ajaxCheckManualInputData">
+			<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="adPrivilegeInterceptor" />
+        	<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+      	
+      	<!-- 廣告商品-新增手動上傳商品資料 -->
+		<action name="catalogProdManualInput" class="PfpCatalogUploadListAction" method="catalogProdManualInput">
+			<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="adPrivilegeInterceptor" />
+        	<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+      	
     </package>
 </struts>

@@ -69,5 +69,13 @@ public interface IPfpCatalogUploadListService extends IBaseService<String, Strin
 	 * @throws Exception 
 	 */
 	void savePfpCatalogUploadLog(PfpCatalogUploadLogVO pfpCatalogUploadLogVO) throws Exception;
+
+	/**
+	 * 檢查商品編號是否在此目錄下已重複
+	 * @param catalogSeq 商品目錄
+	 * @param catalogProdSeq 商品編號
+	 * @return 重複:1  不重複:0
+	 */
+	int checkCatalogProdSeq(String catalogSeq, String catalogProdSeq);
 	
 }

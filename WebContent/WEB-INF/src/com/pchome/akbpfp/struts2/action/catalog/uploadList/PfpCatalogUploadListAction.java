@@ -17,6 +17,7 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 
@@ -69,6 +70,11 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	// 商店網址上傳
 	private String pchomeStoreURL; // 輸入的商店網址
+	
+	// 手動上傳
+	private String ecUrl; // 輸入的商品網址
+	private String manualInputDataMap;
+	private String catalogProdSeq;
 	
 	// api用
 	private String catalog_seq;
@@ -159,6 +165,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 * @throws Exception 
 	 */
 	public String catalogProdFileUploadCSV() throws Exception {
+		//TODO 檔案上傳
 		//dataMap中的資料將會被Struts2轉換成JSON字串，所以用Map<String,Object>
 		dataMap = new HashMap<String, Object>();
 		
@@ -187,12 +194,12 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		FileUtils.copyFile(fileUpload, createFile);
 		
 		JSONObject catalogProdJsonData = pfpCatalogUploadListService.getCSVFileDataToJson(vo);
-		catalogProdJsonData.put("catalog_seq", catalogSeq);
-		catalogProdJsonData.put("catalog_type", pfpCatalog.getCatalogType());
-		catalogProdJsonData.put("update_way", updateWay);
-		catalogProdJsonData.put("update_content", fileUploadFileName);
-		catalogProdJsonData.put("pfp_customer_info_id", super.getCustomer_info_id());
-		catalogProdJsonData.put("update_datetime", formatter.format(updateDatetime));
+		catalogProdJsonData.put("catalogSeq", catalogSeq);
+		catalogProdJsonData.put("catalogType", pfpCatalog.getCatalogType());
+		catalogProdJsonData.put("updateWay", updateWay);
+		catalogProdJsonData.put("updateContent", fileUploadFileName);
+		catalogProdJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
+		catalogProdJsonData.put("updateDatetime", formatter.format(updateDatetime));
 		
 		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
 
@@ -226,6 +233,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 * @throws Exception
 	 */
 	public String catalogProdAutoJob() throws Exception {
+		//TODO 自動排程上傳
 		//待測試
 		
 		// 取得商品目錄 table資料
@@ -242,12 +250,12 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		if (downloadStatus) {
 			vo.setFileUploadPath(downloadPath);
 			JSONObject catalogProdJsonData = pfpCatalogUploadListService.getCSVFileDataToJson(vo);
-			catalogProdJsonData.put("catalog_seq", catalogSeq);
-			catalogProdJsonData.put("catalog_type", pfpCatalog.getCatalogType());
-			catalogProdJsonData.put("update_way", updateWay);
-			catalogProdJsonData.put("update_content", fileUploadFileName);
-			catalogProdJsonData.put("pfp_customer_info_id", super.getCustomer_info_id());
-			catalogProdJsonData.put("update_datetime", formatter.format(updateDatetime));
+			catalogProdJsonData.put("catalogSeq", catalogSeq);
+			catalogProdJsonData.put("catalogType", pfpCatalog.getCatalogType());
+			catalogProdJsonData.put("updateWay", updateWay);
+			catalogProdJsonData.put("updateContent", fileUploadFileName);
+			catalogProdJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
+			catalogProdJsonData.put("updateDatetime", formatter.format(updateDatetime));
 			
 			dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
 		}
@@ -278,6 +286,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 * @throws Exception
 	 */
 	public String catalogProdPchomeStoreURL() throws Exception {
+		//TODO pchome賣場網址上傳
 		dataMap = new HashMap<String, Object>();
 		
 		// 更新目錄
@@ -299,6 +308,80 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	}
 	
 	/**
+	 * 檢查手動上傳輸入資料
+	 * 1.網址是否OK
+	 * 2.商品編號是否重複
+	 * @return
+	 * @throws Exception
+	 */
+	public String ajaxCheckManualInputData() throws Exception {
+		dataMap = new HashMap<String, Object>();
+		
+		// 檢查網址
+		AdUtilAjax adUtilAjax = new AdUtilAjax();
+		boolean checkUrlStatus = adUtilAjax.checkUrl(ecUrl, akbPfpServer);
+		if (!checkUrlStatus) {
+			dataMap.put("checkURLStatus", "ERROR");
+		}
+		
+		// 檢查商品編號是否重複
+		int count = pfpCatalogUploadListService.checkCatalogProdSeq(catalogSeq, catalogProdSeq);
+		if (count > 0) {
+			dataMap.put("checkCatalogProdSeqStatus", "ERROR");
+		}
+		
+		return SUCCESS;
+	}
+	
+	/**
+	 * 手動上傳 新增
+	 * @return
+	 * @throws Exception
+	 */
+	public String catalogProdManualInput() throws Exception {
+		//TODO 手動上傳
+		System.out.println("manualInputDataMap:" + manualInputDataMap);
+		
+		// 將JSONArray內的字串資料轉成JSONObject
+		JSONArray catalogProdManualInputItemJsonArray = new JSONArray(manualInputDataMap);
+		JSONArray catalogProdItemJSONArray = new JSONArray();
+		for (int i = 0; i < catalogProdManualInputItemJsonArray.length(); i++) {
+			// 畫面上的欄位 調整成pfpCatalogUploadListService.processCatalogProdJsonData內要用的對應key
+			JSONObject tempViewJSONObject = new JSONObject(catalogProdManualInputItemJsonArray.get(i).toString());
+			JSONObject tempSetDBJSONObject = new JSONObject();
+			tempSetDBJSONObject.put("id", tempViewJSONObject.get("catalogProdSeq"));
+			tempSetDBJSONObject.put("ec_name", tempViewJSONObject.get("ecName"));
+			tempSetDBJSONObject.put("ec_title", " ");
+			tempSetDBJSONObject.put("ec_price", tempViewJSONObject.get("ecPrice"));
+			tempSetDBJSONObject.put("ec_discount_price", tempViewJSONObject.get("ecDiscountPrice"));
+			tempSetDBJSONObject.put("ec_stock_status", tempViewJSONObject.get("ecStockStatus"));
+			tempSetDBJSONObject.put("ec_use_status", tempViewJSONObject.get("ecUseStatus"));
+			tempSetDBJSONObject.put("ec_img_url", " ");
+			tempSetDBJSONObject.put("ec_Img_Base64", tempViewJSONObject.get("ecImgBase64"));
+			tempSetDBJSONObject.put("ec_url", tempViewJSONObject.get("ecUrl"));
+			tempSetDBJSONObject.put("ec_category", tempViewJSONObject.get("ecCategory"));
+			catalogProdItemJSONArray.put(tempSetDBJSONObject);
+		}
+		System.out.println("catalogProdItemJSONArray:" + catalogProdItemJSONArray);
+		
+		// 取得商品目錄 table資料
+		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
+				
+		JSONObject apiJsonData = new JSONObject();
+		apiJsonData.put("catalogSeq", catalogSeq);
+		apiJsonData.put("catalogType", pfpCatalog.getCatalogType());
+		apiJsonData.put("updateWay", " "); // 手動上傳沒有更新方式
+		apiJsonData.put("updateContent", " ");
+		apiJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
+		apiJsonData.put("catalogProdItem", catalogProdItemJSONArray);
+		apiJsonData.put("updateDatetime", formatter.format(new Date()));
+		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData);
+		
+		//[{"id":"28825252", "ec_name":"達美樂",  "ec_price":"1999", "ec_discount_price":"99", "ec_stock_status":"1", "ec_use_status":"1", "ec_img_url":"https://www.dominos.com.tw/images/logo_foot.png", "ec_url":"https://www.dominos.com.tw/", "ec_category":"食品"}]
+		return SUCCESS;
+	}
+	
+	/**
 	 * 提供API處理商品廣告的json資料
 	 * @return
 	 * @throws Exception
@@ -307,13 +390,13 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		dataMap = new HashMap<String, Object>();
 
 		JSONObject apiJsonData = new JSONObject();
-		apiJsonData.put("catalog_seq", catalog_seq);
-		apiJsonData.put("catalog_type", catalog_type);
-		apiJsonData.put("update_way", update_way);
-		apiJsonData.put("update_content", update_content);
-		apiJsonData.put("pfp_customer_info_id", pfp_customer_info_id);
-		apiJsonData.put("catalog_prod_item", catalog_prod_item);
-		apiJsonData.put("update_datetime", formatter.format(new Date()));
+		apiJsonData.put("catalogSeq", catalog_seq);
+		apiJsonData.put("catalogType", catalog_type);
+		apiJsonData.put("updateWay", update_way);
+		apiJsonData.put("updateContent", update_content);
+		apiJsonData.put("pfpCustomerInfoId", pfp_customer_info_id);
+		apiJsonData.put("catalogProdItem", catalog_prod_item);
+		apiJsonData.put("updateDatetime", formatter.format(new Date()));
 		
 		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData);
 		
@@ -448,6 +531,18 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 
 	public void setPchomeStoreURL(String pchomeStoreURL) {
 		this.pchomeStoreURL = pchomeStoreURL;
+	}
+
+	public void setEcUrl(String ecUrl) {
+		this.ecUrl = ecUrl;
+	}
+
+	public void setManualInputDataMap(String manualInputDataMap) {
+		this.manualInputDataMap = manualInputDataMap;
+	}
+
+	public void setCatalogProdSeq(String catalogProdSeq) {
+		this.catalogProdSeq = catalogProdSeq;
 	}
 	
 	
