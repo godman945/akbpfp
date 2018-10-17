@@ -5,8 +5,8 @@ public enum EnumEcProdGroupFilterContentType {
 	catalog_prod_seq_like("catalog_prod_seq_like","ID","like","包含"),
 	catalog_prod_seq_notlike("catalog_prod_seq_like_not like","ID","not like,","不包含"),
 	
-	ec_name_like("ec_name_like","ID","like","包含"),
-	ec_name_notlike("ec_name_not like","ID","not like,","不包含"),
+	ec_name_like("ec_name_like","名稱","like","包含"),
+	ec_name_notlike("ec_name_not like","名稱","not like,","不包含"),
 	
 	ec_price_gt("ec_price_gt", "原價","gt","大於"),
 	ec_price_lt("ec_price_lt", "原價","lt","小於"),
@@ -24,8 +24,8 @@ public enum EnumEcProdGroupFilterContentType {
 	ec_use_status_eq("ec_use_status_eq","使用情況","eq","屬於"),
 	ec_use_status_neq("ec_use_status_neq","使用情況","neq","不屬於"),
 	
-	ec_category_eq("ec_category_eq","類別","eq","屬於"),
-	ec_category_neq("ec_category_neq","類別","neq","不屬於");
+	ec_category_eq("ec_category_eq","商品類型","eq","屬於"),
+	ec_category_neq("ec_category_neq","商品類型","neq","不屬於");
 	
 	
 	private final String fieldCondition;

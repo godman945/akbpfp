@@ -1,4 +1,8 @@
-﻿var defaultTemplate = 
+﻿var currentPage = 1;
+var pageCount = 1;
+var totalCount = 0;
+
+var defaultTemplate = 
 	    '<!-- 篩選第一層 -->'+
 		'<div class="txt-inlineblock level1">'+
        '<div class="select-box">'+
@@ -134,25 +138,33 @@ $(document).ready(function(){
 	initPage();
 	
 	//按上一頁
-	$('.prev').on('click', function() {
-		currentPage = currentPage-1;
+	$('.prev').click(function(e){
+		currentPage =  parseInt(currentPage)-1;
 		$('#currentPage').text(currentPage)
 		$('#pageCount').text(pageCount)
 		if (currentPage<=1){
 			$('.prev').css('display', 'none');
 		}
+		//新增條件重新綁定監聽
+        $(".filter-wrap select").unbind("click");
+        $(".filter-wrap select").bind("click", handler);
+        handler(e);
 		queryProdGroupFilterListAjax();
 	 });
 	
 	
 	//按下一頁
-	$('.next').on('click', function() {
-		currentPage = currentPage+1;
+	$('.next').click(function(e){
+		currentPage = parseInt(currentPage)+1;
 		$('#currentPage').text(currentPage)
 		$('#pageCount').text(pageCount)
 		if (currentPage>=pageCount){
 			$('.next').css('display', 'none');
 		}
+		//新增條件重新綁定監聽
+        $(".filter-wrap select").unbind("click");
+        $(".filter-wrap select").bind("click", handler);
+        handler(e);
 		queryProdGroupFilterListAjax();
 	 });
 	
@@ -205,6 +217,11 @@ $(document).ready(function(){
 
 //初始頁面按鈕
 function initPage(){
+	currentPage = $('#currentPage').text();
+	pageCount = $('#pageCount').text();
+	totalCount = $('#totalCount').text();
+
+	
 	$('.prev').css('display','');
 	$('.next').css('display','');
 	
@@ -386,7 +403,6 @@ function handler(e) {
 * 依據商品組合篩選條件撈出符合的商品list
 */
 function queryProdGroupFilterListAjax(){
-//    alert("過濾")
 	$.ajax({
 	    type: "post",
 	    dataType: "json",
@@ -465,9 +481,7 @@ function queryProdGroupFilterListAjax(){
 }
 
 
-var currentPage = 1;
-var pageCount = 1;
-var totalCount = 0;
+
 //整理頁碼
 function processPageAndTotalPage(response){
 //	alert("頁碼")
@@ -480,6 +494,8 @@ function processPageAndTotalPage(response){
 	console.log(pageCount)
 	console.log(totalCount)
 	
+	$('#currentPage').text(response.currentPage);
+	$('#pageCount').text(response.pageCount);
 	$('#totalCount').text(response.totalCount);
 }
 
@@ -498,10 +514,6 @@ function deleteFilterCondition(event,obj){
 
 function filterDisplayRule(val, obj) {
 	
-	
-	
-	
-		
 	obj[0].innerHTML = '';
 	obj[0].innerHTML = defaultTemplate;
 	
@@ -568,8 +580,6 @@ function filterDisplayRule(val, obj) {
 //	console.log(obj.index(), val, level1, level2, level3);
 	
 }
-
-
 
 
 

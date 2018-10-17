@@ -135,7 +135,7 @@ $(document).ready(function(){
 	
 	//按上一頁
 	$('.prev').on('click', function() {
-		currentPage = currentPage-1;
+		currentPage =  parseInt(currentPage)-1;
 //		alert('前currentPage');
 //		alert(currentPage);
 		$('#currentPage').text(currentPage)
@@ -151,7 +151,7 @@ $(document).ready(function(){
 	
 	//按下一頁
 	$('.next').on('click', function() {
-		currentPage = currentPage+1;
+		currentPage =  parseInt(currentPage)+1;
 //		alert('後currentPage');
 //		alert(currentPage);
 		$('#currentPage').text(currentPage)

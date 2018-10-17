@@ -379,10 +379,14 @@ function queryProdListAjax(){
 	    		var ecDiscountPrice ="";
 	    		var catalogProdSeq ="";
 	    		var ecStockStatus ="";
+	    		var ecStockStatusDesc ="";
 	    		var ecUseStatus ="";
+	    		var ecUseStatusDesc ="";
 	    		var ecCategory ="";
 	    		var ecUrl ="";
 	    		var ecStatus ="";
+	    		var ecCheckStatus ="";
+	    		var ecCheckStatusDesc ="";
 	    		$.each(list, function(key, val){
 	    			
 	    			if(key == "id"){
@@ -424,6 +428,12 @@ function queryProdListAjax(){
 	    			if(key == "ecStatus"){
 	    				ecStatus = val;
 	    			}
+	    			if(key == "ecCheckStatus"){
+	    				ecCheckStatus = val;
+	    			}
+	    			if(key == "ecCheckStatusDesc"){
+	    				ecCheckStatusDesc = val;
+	    			}
 	    		});
 	    			if (ecStatus == "1"){
 	    				tempHtml += " <div class='txt-row txt-row-data' data-type='enable'> ";
@@ -433,6 +443,21 @@ function queryProdListAjax(){
 	    			tempHtml += " <div class='txt-cell col-checkbox'><div class='input-check'><input type='checkbox' id='check"+i+"' value='"+id+"'><label for='check"+i+"'></label></div></div> ";
 	    			tempHtml += " <div class='txt-cell col-serial'>"+catalogProdSeq+"</div> ";
 	    			tempHtml += " <div class='txt-cell col-prodname'>"+ecName+"</div> ";
+	    			
+	    			if (ecCheckStatus == "2"){
+	    				tempHtml += "	<div class='txt-cell col-verify' data-verify='reject'> "+ecCheckStatusDesc;
+	    				tempHtml += "		<div class='notice-btn' onclick=$(this).children('em').fadeToggle('fast');> ";
+	    				tempHtml += "	 		<em style='display:none'>error reason</em> ";
+	    				tempHtml += "		</div> ";
+	    				tempHtml += "	</div> ";
+	    			}else{
+	    				tempHtml += "	<div class='txt-cell col-verify' data-verify=''> "+ecCheckStatusDesc;
+	    				tempHtml += "		<div class='notice-btn' onclick=$(this).children('em').fadeToggle('fast');> ";
+	    				tempHtml += "	 		<em style='display:none'></em> ";
+	    				tempHtml += "		</div> ";
+	    				tempHtml += "	</div> ";
+	    			}
+	    			
 	    			tempHtml += " <div class='txt-cell col-listprice'><span>$</span>"+ecPrice+"</div> ";
 	    			tempHtml += " <div class='txt-cell col-promoprice'><span>$</span>"+ecDiscountPrice+"</div> ";
 	    			tempHtml += " <div class='txt-cell col-supplement'>"+ecStockStatusDesc+"</div> ";

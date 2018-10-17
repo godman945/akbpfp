@@ -117,6 +117,7 @@
                             <div class="txt-cell col-checkbox   "><div class="input-check"><input type="checkbox" id="checkAll" value="checkAll"><label for="checkAll"></label></div></div>
                             <div class="txt-cell col-serial     ">商品編號</div>
                             <div class="txt-cell col-prodname   ">商品名稱</div>
+                            <div class="txt-cell col-verify     ">審核</div>
                             <div class="txt-cell col-listprice  ">原價</div>
                             <div class="txt-cell col-promoprice ">特價</div>
                             <div class="txt-cell col-supplement ">供應情況</div>
@@ -140,6 +141,21 @@
 					                            <div class="txt-cell col-checkbox   "><div class="input-check"><input type="checkbox" id="check${index1}" value=${prods.id!} ><label for="check${index1}"></label></div></div>
 					                            <div class="txt-cell col-serial     ">${prods.catalogProdSeq!}</div>
 					                            <div class="txt-cell col-prodname   ">${prods.ecName!}</div>
+							                   
+							                    <#if prods.ecCheckStatus == "2">
+			                        				<div class="txt-cell col-verify     " data-verify="reject">${prods.ecCheckStatusDesc!}
+                                    					<div class="notice-btn" onclick="$(this).children('em').fadeToggle('fast');">
+                                        					<em style="display:none">error reason！</em>
+                                    					</div>
+                                					</div>
+			                        			<#else>
+			                        				<div class="txt-cell col-verify     " data-verify="">${prods.ecCheckStatusDesc!}
+                                    					<div class="notice-btn" onclick="$(this).children('em').fadeToggle('fast');">
+                                        					<em style="display:none"></em>
+                                    					</div>
+                                					</div>
+		                        				</#if>	
+					                     
 					                            <div class="txt-cell col-listprice  "><span>$</span>${prods.ecPrice!}</div>
 					                            <div class="txt-cell col-promoprice "><span>$</span>${prods.ecDiscountPrice!}</div>
 					                            <div class="txt-cell col-supplement ">${prods.ecStockStatusDesc!}</div>

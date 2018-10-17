@@ -18,7 +18,7 @@ function stopBubble(e) {
 
 
 function createPortfolio(catalogSeqStr,catalogGroupSeqStr) {
-	location.href = "queryProdGroupFilterItem.html?catalogSeq="+catalogSeqStr+"&catalogGroupSeq="+catalogGroupSeqStr;
+	location.href = "queryProdGroupFilterItem.html?catalogSeq="+catalogSeqStr+"&catalogGroupSeq="+catalogGroupSeqStr+"&currentPage="+1+"&pageSizeSelected="+4;
 }
     
 

@@ -160,10 +160,10 @@
 
                             <!--符合條件商品列表-->
                             <div class="p-t40" >
-                                <p>共<span id="totalCount">0</span>筆商品
+                                <p>共<span id="totalCount">${totalCount!}</span>筆商品
 								<div style="text-align:right;">
-									第<span id="currentPage">0</span>頁 / 
-									 共<span id="pageCount">0</span>頁</p>
+									第<span id="currentPage">${currentPage!}</span>頁 / 
+									 共<span id="pageCount">${pageCount!}</span>頁</p>
 								<div>
 
                                 <div class="prodslider-wrap">
@@ -175,22 +175,25 @@
                                             <div class="prodslider-item">
                                                 <!--item1-->
                                                 <div id="prodListDiv">
-                                                
-	                                               <!-- <div class="prodcard-box txt-noselect">
-	                                                    <div class="prodcard-imgbox">
-	                                                        <img src="https://e.ecimg.tw/items/DICY17A90081WF0/000001_1492588581.jpg">
-	                                                    </div>
-	                                                    <div class="prodcard-infobox">
-	                                                        <div class="group g1">
-	                                                            <div data-info-name="prodname">Samsonite新秀麗 20吋Lite Shock極輕Curv四 輪拉桿頂級硬殼箱(黑)</div>
-	                                                        </div>
-	                                                        <div class="group g2">
-	                                                            <div data-info-name="promoprice">特價<span>$</span><i>11,000</i></div>
-	                                                        </div>
-	                                                    </div>
-	                                                </div>-->
-	                                                
-	                                                
+                                                	<#if prodList?exists>
+	                    								<#if prodList?size != 0>
+	                    									<#list prodList as prods>
+				                                               <div class="prodcard-box txt-noselect">
+				                                                    <div class="prodcard-imgbox">
+				                                                        <img src="http://showstg.pchome.com.tw/pfp/${prods.ecImg!}">
+				                                                    </div>
+				                                                    <div class="prodcard-infobox">
+				                                                        <div class="group g1">
+				                                                            <div data-info-name="prodname">${prods.ecName!}</div>
+				                                                        </div>
+				                                                        <div class="group g2">
+				                                                            <div data-info-name="promoprice">特價<span>$</span><i>$</span><i>${prods.ecDiscountPrice!}</i></div>
+				                                                        </div>
+				                                                    </div>
+				                                             	</div>
+	                                            			</#list>
+	   													</#if>
+	   												</#if>	
                                                 </div>
                                             </div><!--slide1-->
 

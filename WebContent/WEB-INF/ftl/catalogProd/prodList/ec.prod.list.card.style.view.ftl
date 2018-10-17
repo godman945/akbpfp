@@ -137,7 +137,7 @@
                     
 
 
-                    <!--item1-->
+                  <!--item1-->
                   <div id="prodListDiv">
                   	<#if prodList?exists>
 	                    <#if prodList?size != 0>
@@ -173,6 +173,25 @@
 				                                </div>
 				                            </div>
 				                        </div>
+				                        
+				                        
+				                        
+				                        <#if prods.ecCheckStatus == "2">
+					                        <div class="prodcard-verify" data-verify="reject">${prods.ecCheckStatusDesc!}
+	                            				<div class="notice-btn up" onclick="$(this).children('em').fadeToggle('fast');">
+	                               					 <em style="display:none">"error reason！"</em>
+	                           					</div>
+	                        				</div>
+	                        			<#else>
+	                        				<div class="prodcard-verify" data-verify="">${prods.ecCheckStatusDesc!}
+	                            				<div class="notice-btn up" onclick="$(this).children('em').fadeToggle('fast');">
+	                                				<em style="display:none"></em>
+	                            				</div>
+	                        				</div>
+                        				</#if>	
+                        				
+                        				
+				                        
 				                    </div>
 			                    <#assign index1 = index1 + 1>
 			            	</#list>

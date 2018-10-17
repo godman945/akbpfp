@@ -451,10 +451,14 @@ function queryProdListAjax(){
 	    		var ecDiscountPrice ="";
 	    		var catalogProdSeq ="";
 	    		var ecStockStatus ="";
+	    		var ecStockStatusDesc ="";
 	    		var ecUseStatus ="";
+	    		var ecUseStatusDesc ="";
 	    		var ecCategory ="";
 	    		var ecUrl ="";
 	    		var ecStatus ="";
+	    		var ecCheckStatus ="";
+	    		var ecCheckStatusDesc ="";
 	    		$.each(list, function(key, val){
 	    			
 	    			if(key == "id"){
@@ -496,6 +500,12 @@ function queryProdListAjax(){
 	    			if(key == "ecStatus"){
 	    				ecStatus = val;
 	    			}
+	    			if(key == "ecCheckStatus"){
+	    				ecCheckStatus = val;
+	    			}
+	    			if(key == "ecCheckStatusDesc"){
+	    				ecCheckStatusDesc = val;
+	    			}
 	    		});
 	    			if (ecStatus == "1"){
 	    				tempHtml += " <div class='prodcard-box txt-noselect pos-relative' data-type='enable'> ";
@@ -526,6 +536,19 @@ function queryProdListAjax(){
 	    			tempHtml += "	        </div>	";
 	    			tempHtml += "	    </div>	";
 	    			tempHtml += "	</div>	";
+	    			if (ecCheckStatus == "2"){
+	    				tempHtml += "<div class='prodcard-verify' data-verify='reject'> "+ecCheckStatusDesc;
+	    				tempHtml += "	<div class='notice-btn up' onclick=$(this).children('em').fadeToggle('fast');> ";
+	    				tempHtml += "		<em style='display:none'>error reason！</em> ";
+	    				tempHtml += "	</div> ";
+	    				tempHtml += "</div> ";
+	    			}else{
+	    				tempHtml += "<div class='prodcard-verify' data-verify=''> "+ecCheckStatusDesc;
+	    				tempHtml += "	<div class='notice-btn up' onclick=$(this).children('em').fadeToggle('fast');> ";
+	    				tempHtml += "		<em style='display:none'></em> ";
+	    				tempHtml += "	</div> ";
+	    				tempHtml += "</div> ";
+	    			}
 	    			tempHtml += "</div>	";
 	    	
 	    	});
