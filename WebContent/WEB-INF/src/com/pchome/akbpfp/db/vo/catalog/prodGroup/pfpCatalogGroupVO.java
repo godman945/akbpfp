@@ -5,6 +5,7 @@ public class pfpCatalogGroupVO {
 	String catalogGroupSeq;
 	String catalogGroupName;
 	String catalogProdNum;
+	String filterContent;
 	
 	public String getCatalogGroupSeq() {
 		return catalogGroupSeq;
@@ -24,5 +25,13 @@ public class pfpCatalogGroupVO {
 	public void setCatalogProdNum(String catalogProdNum) {
 		this.catalogProdNum = catalogProdNum;
 	}
+	public String getFilterContent() {
+		return filterContent;
+	}
+	public void setFilterContent(String filterContent) {
+		this.filterContent = filterContent;
+	}
+	
+	
 	
 }

@@ -67,9 +67,10 @@
 			                                <div class="txt-cell col-delete"><a href="#" value="${dataVo.catalogGroupSeq!}" onclick="deleteCatalogGroupAjax(this)" ></a></div>
 			                            </div>
 			                            <div class="col-detail">
-			                                <span>商品類型：<b><em>不屬於</em>硬殼行李箱</b></span>
+			                            	${dataVo.filterContent!}
+			                               <!-- <span>商品類型：<b><em>不屬於</em>硬殼行李箱</b></span>
 			                                <span>價格：<b><em>低於</em>$3,000</b></span>
-			                                <span>供應情況：<b><em>屬於</em>預售</b></span>
+			                                <span>供應情況：<b><em>屬於</em>預售</b></span> -->
 			                            </div>
 			                        </div>
 			                	</#list> 

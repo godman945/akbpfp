@@ -18,6 +18,8 @@ import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
 import com.pchome.akbpfp.db.vo.catalog.prodGroup.pfpCatalogGroupVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupFactory;
+import com.pchome.enumerate.catalogprod.EnumEcProdGroupFilterContentType;
+import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
 
 public class CatalogProdGroupAction  extends BaseCookieAction{
 
@@ -88,11 +90,25 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 				//撈出該商品組合的總數量
 				String prodGroupCount = aProdGroup.getProdGroupCount(catalogSeq,filterSQL);
 				
+				
+				
+				// 撈出商品組合篩選條件資料
+				String filterContent = queryProdGroupFilterContentAjax(pfpCatalogGroupItems);
+				
+				
+				
 				pfpCatalogGroupVO.setCatalogGroupSeq(pfpCatalogGroup.getCatalogGroupSeq());
 				pfpCatalogGroupVO.setCatalogGroupName(pfpCatalogGroup.getCatalogGroupName());
 				pfpCatalogGroupVO.setCatalogProdNum(prodGroupCount);
+				pfpCatalogGroupVO.setFilterContent(filterContent);
 				pfpCatalogGroupVOList.add(pfpCatalogGroupVO);
 			}
+			
+			
+			
+			
+			
+			
 			
 		} catch (Exception e) {
 //			dataMap.put("status", "ERROR");
@@ -101,6 +117,50 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 		}
 		
 		return SUCCESS;
+	}
+
+
+	/**
+	 * 撈出商品組合篩選條件資料
+	 */
+	public String queryProdGroupFilterContentAjax(List<PfpCatalogGroupItem> pfpCatalogGroupItems) {
+		StringBuffer filterContent = new StringBuffer();
+		try {
+			String field;
+			String condition;
+			String value;
+			for (PfpCatalogGroupItem pfpCatalogGroupItem : pfpCatalogGroupItems) {
+				field = pfpCatalogGroupItem.getCatalogGroupItemField();
+				condition = pfpCatalogGroupItem.getCatalogGroupItemCondition();
+				value = pfpCatalogGroupItem.getCatalogGroupItemValue();
+				String fieldCondition=field+"_"+condition;
+				
+				for(EnumEcProdGroupFilterContentType ecProdGroupFilterContentType:EnumEcProdGroupFilterContentType.values()){
+					if(StringUtils.equals(ecProdGroupFilterContentType.getFieldCondition(), fieldCondition) ){
+						field= ecProdGroupFilterContentType.getFieldDesc();
+						condition = ecProdGroupFilterContentType.getConditionDesc();
+						break;
+					}
+				}
+				
+				filterContent.append("<span>").append(field).append(" : <b><em>");
+				filterContent.append(condition).append("</em>&nbsp;</b>");
+				filterContent.append(value).append("</span><br>");
+				
+				
+//				  <span>商品類型：<b><em>不屬於</em>硬殼行李箱</b></span>
+//                 <span>價格：<b><em>低於</em>$3,000</b></span>
+//                 <span>供應情況：<b><em>屬於</em>預售</b></span> 
+				
+				
+				
+			}
+
+		} catch (Exception e) {
+			log.error("error:" + e);
+		}
+		
+		return filterContent.toString();
 	}
 
 	

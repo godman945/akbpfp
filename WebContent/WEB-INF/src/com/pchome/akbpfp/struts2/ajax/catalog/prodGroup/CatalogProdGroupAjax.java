@@ -157,46 +157,7 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 		return errorMsgMap;
 	}
 
-	/**
-	 * 更新商品清單狀態
-	 */
-	public String queryProdGroupFilterContentAjax() {
-		try {
-			log.info(">>> catalogGroupSeq: " + catalogGroupSeq);
-
-			List<PfpCatalogGroupItem> pfpCatalogGroupItemList = pfpCatalogGroupItemService
-					.getPfpCatalogGroupItemList(catalogGroupSeq);
-
-			StringBuffer filterContent = new StringBuffer();
-			String field;
-			String condition;
-			String value;
-			for (PfpCatalogGroupItem pfpCatalogGroupItem : pfpCatalogGroupItemList) {
-				field = pfpCatalogGroupItem.getCatalogGroupItemField();
-				EnumEcProdGroupField enumEcProdGroupField = EnumEcProdGroupField.valueOf(field);
-				field = enumEcProdGroupField.getFieldDesc();
-
-				condition = pfpCatalogGroupItem.getCatalogGroupItemCondition();
-				EnumEcProdGroupCondition enumEcProdGroupCondition = EnumEcProdGroupCondition.valueOf(condition);
-				condition = enumEcProdGroupCondition.getConditionDesc();
-
-				value = pfpCatalogGroupItem.getCatalogGroupItemValue();
-
-				filterContent.append(field).append(" : ");
-				filterContent.append(condition).append("&nbsp;");
-				filterContent.append(value).append("<br>");
-			}
-			prodGroupFilterContent = filterContent.toString();
-
-		} catch (Exception e) {
-			// dataMap.put("status", "ERROR");
-			// dataMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
-			log.error("error:" + e);
-		}
-
-		return SUCCESS;
-
-	}
+	
 
 	/**
 	 * 建立目錄商品組合
