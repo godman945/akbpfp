@@ -123,7 +123,9 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				} else {
 					pfpCatalogProdEc.setEcImg(ImgUtil.processImgBase64StringToImage(ecImgBase64, photoPath, catalogProdSeq));
 				}
-				// 圖片下載好後 取得圖片長寬 判斷ec_img_region 商品影像長寬(V / H)，禮拜一重跑pojo
+				
+				pfpCatalogProdEc.setEcImgRegion(ImgUtil.getImgLongWidthCode(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg()));
+				pfpCatalogProdEc.setEcImgMd5(ImgUtil.getImgMD5Code(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg()));
 				
 				pfpCatalogProdEc.setEcUrl(ecUrl); // 連結網址
 				pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價

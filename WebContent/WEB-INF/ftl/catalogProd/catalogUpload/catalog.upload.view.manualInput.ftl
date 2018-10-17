@@ -1,7 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/manualInput.js?t=20181012006"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/manualInput.js?t=20181016001"></script>
 
 <input type="file" serialize id="fileupload" name="fileupload" style="display:none;" accept="image/jpeg, image/png, image/gif" onchange="selectImg(this)">
 <div class="container-prodmanage">

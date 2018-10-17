@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.compass.retrotranslator.edu.emory.mathcs.backport.java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +38,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	private IPfpCatalogService pfpCatalogService;
 	private ISequenceService sequenceService;
 	private IPfpCatalogUploadListDAO pfpCatalogUploadListDAO;
+	private String photoDbPathNew;
 	
 	/**
 	 * 依照商品目錄類別，處理相對應的部分
@@ -381,6 +384,17 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		return pfpCatalogProdEcList.size();
 	}
 	
+	/**
+	 * 刪除哪位客戶的哪個目錄資料夾內容
+	 * @param vo.getPfpCustomerInfoId() pfp_id
+	 * @param vo.getCatalogSeq() 商品目錄編號
+	 */
+	@Override
+	public void deleteFolderAndData(PfpCatalogVO vo) {
+		String folderPath = photoDbPathNew + vo.getPfpCustomerInfoId() + "/catalogProd/" + vo.getCatalogSeq();
+		FileUtils.deleteQuietly(new File(folderPath));
+	}
+	
 	public void setShoppingProd(ShoppingProd shoppingProd) {
 		this.shoppingProd = shoppingProd;
 	}
@@ -399,6 +413,10 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 
 	public void setSequenceService(ISequenceService sequenceService) {
 		this.sequenceService = sequenceService;
+	}
+
+	public void setPhotoDbPathNew(String photoDbPathNew) {
+		this.photoDbPathNew = photoDbPathNew;
 	}
 
 }

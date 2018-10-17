@@ -456,8 +456,7 @@ function manualInputFinish() {
 			alert('Ajax request 發生錯誤');
 		},
 		success : function(response, status) {
-			console.log("END");
-//			window.location = "adActionFastPublishUrlViewAction.html";
+			window.location.replace("catalogProd.html");
 		}
 	});
 	

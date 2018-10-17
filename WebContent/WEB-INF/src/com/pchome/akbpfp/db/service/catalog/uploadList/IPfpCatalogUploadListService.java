@@ -77,5 +77,12 @@ public interface IPfpCatalogUploadListService extends IBaseService<String, Strin
 	 * @return 重複:1  不重複:0
 	 */
 	int checkCatalogProdSeq(String catalogSeq, String catalogProdSeq);
+
+	/**
+	 * 刪除哪位客戶的哪個目錄資料夾內容
+	 * @param vo.getPfpCustomerInfoId() pfp_id
+	 * @param vo.getCatalogSeq() 商品目錄編號
+	 */
+	void deleteFolderAndData(PfpCatalogVO vo);
 	
 }
