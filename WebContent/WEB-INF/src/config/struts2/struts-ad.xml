@@ -803,7 +803,6 @@
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="adPrivilegeInterceptor" />
             <result type="tiles" name="fileUpload">.catalog.upload.view.fileUpload</result>
-            <!-- 下面畫面待做 -->
             <result type="tiles" name="automaticScheduling">.catalog.upload.view.autoJob</result>
             <result type="tiles" name="storeURL">.catalog.upload.view.pchomeStoreURL</result>
             <result type="tiles" name="manualUpload">.catalog.upload.view.manualInput</result>
@@ -865,6 +864,15 @@
       	
       	<!-- 廣告商品-新增手動上傳商品資料 -->
 		<action name="catalogProdManualInput" class="PfpCatalogUploadListAction" method="catalogProdManualInput">
+			<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="adPrivilegeInterceptor" />
+        	<result type="json" name="success">
+        		<param name="root">dataMap</param>
+        	</result>
+     	</action>
+      	
+      	<!-- 取得上傳方式代碼 -->
+		<action name="getCatalogUploadType" class="PfpCatalogUploadListAction" method="getCatalogUploadType">
 			<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="adPrivilegeInterceptor" />
         	<result type="json" name="success">

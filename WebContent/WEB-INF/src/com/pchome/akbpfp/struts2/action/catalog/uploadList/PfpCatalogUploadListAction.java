@@ -127,6 +127,17 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	}
 	
 	/**
+	 * 取得上傳方式代碼
+	 * @return
+	 */
+	public String getCatalogUploadType() {
+		dataMap = new HashMap<String, Object>();
+		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
+		dataMap.put("catalogUploadType", pfpCatalog.getCatalogUploadType().trim());
+		return SUCCESS;
+	}
+	
+	/**
 	 * 檢查檔案
 	 * @return
 	 * @throws Exception
