@@ -144,16 +144,8 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 				}
 				
 				filterContent.append("<span>").append(field).append(" : <b><em>");
-				filterContent.append(condition).append("</em>&nbsp;</b>");
-				filterContent.append(value).append("</span><br>");
-				
-				
-//				  <span>商品類型：<b><em>不屬於</em>硬殼行李箱</b></span>
-//                 <span>價格：<b><em>低於</em>$3,000</b></span>
-//                 <span>供應情況：<b><em>屬於</em>預售</b></span> 
-				
-				
-				
+				filterContent.append(condition).append("</em>");
+				filterContent.append(value).append("</b>").append("</span><br>");
 			}
 
 		} catch (Exception e) {
