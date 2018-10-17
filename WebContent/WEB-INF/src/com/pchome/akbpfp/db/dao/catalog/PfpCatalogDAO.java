@@ -140,4 +140,28 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog, String> implements IPfpCa
 		super.getSession().flush();
 	}
 
+	/**
+	 * 更新目錄資料，一般購物類使用
+	 */
+	@Override
+	public void updatePfpCatalogForShoppingProd(PfpCatalogVO vo) {
+		StringBuffer hql = new StringBuffer();
+		hql.append(" UPDATE pfp_catalog ");
+		hql.append(" SET catalog_upload_type = :catalog_upload_type, ");
+		hql.append(" catalog_upload_content = :catalog_upload_content, ");
+		hql.append(" catalog_prod_num = (SELECT COUNT(catalog_prod_seq) FROM pfp_catalog_prod_ec WHERE catalog_seq = :catalog_seq), ");
+		hql.append(" update_date = CURRENT_TIMESTAMP() ");
+		hql.append(" WHERE catalog_seq = :catalog_seq ");
+		hql.append(" AND pfp_customer_info_id = :pfp_customer_info_id ");
+		
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setString("catalog_upload_content", vo.getUploadContent());
+		query.setString("catalog_upload_type", vo.getCatalogUploadType());
+		query.setString("catalog_seq", vo.getCatalogSeq());
+		query.setString("pfp_customer_info_id", vo.getPfpCustomerInfoId());
+
+		query.executeUpdate();
+		super.getSession().flush();
+	}
+
 }

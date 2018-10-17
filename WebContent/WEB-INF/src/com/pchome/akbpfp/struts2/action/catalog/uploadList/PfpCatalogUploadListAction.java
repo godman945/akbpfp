@@ -197,6 +197,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		catalogProdJsonData.put("catalogSeq", catalogSeq);
 		catalogProdJsonData.put("catalogType", pfpCatalog.getCatalogType());
 		catalogProdJsonData.put("updateWay", updateWay);
+		catalogProdJsonData.put("catalogUploadType", "1");
 		catalogProdJsonData.put("updateContent", fileUploadFileName);
 		catalogProdJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
 		catalogProdJsonData.put("updateDatetime", formatter.format(updateDatetime));
@@ -253,6 +254,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			catalogProdJsonData.put("catalogSeq", catalogSeq);
 			catalogProdJsonData.put("catalogType", pfpCatalog.getCatalogType());
 			catalogProdJsonData.put("updateWay", updateWay);
+			catalogProdJsonData.put("catalogUploadType", "2");
 			catalogProdJsonData.put("updateContent", fileUploadFileName);
 			catalogProdJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
 			catalogProdJsonData.put("updateDatetime", formatter.format(updateDatetime));
@@ -371,10 +373,12 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		apiJsonData.put("catalogSeq", catalogSeq);
 		apiJsonData.put("catalogType", pfpCatalog.getCatalogType());
 		apiJsonData.put("updateWay", " "); // 手動上傳沒有更新方式
+		apiJsonData.put("catalogUploadType", "4");
 		apiJsonData.put("updateContent", " ");
 		apiJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
 		apiJsonData.put("catalogProdItem", catalogProdItemJSONArray);
 		apiJsonData.put("updateDatetime", formatter.format(new Date()));
+		
 		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData);
 		
 		//[{"id":"28825252", "ec_name":"達美樂",  "ec_price":"1999", "ec_discount_price":"99", "ec_stock_status":"1", "ec_use_status":"1", "ec_img_url":"https://www.dominos.com.tw/images/logo_foot.png", "ec_url":"https://www.dominos.com.tw/", "ec_category":"食品"}]

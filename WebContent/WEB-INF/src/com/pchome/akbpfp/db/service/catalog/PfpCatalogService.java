@@ -111,6 +111,15 @@ public class PfpCatalogService extends BaseService<PfpCatalog, String> implement
 	}
 	
 	/**
+	 * 更新目錄資料，一般購物類使用
+	 * @param pfpCatalogVO
+	 */
+	@Override
+	public void updatePfpCatalogForShoppingProd(PfpCatalogVO vo) {
+		((IPfpCatalogDAO) dao).updatePfpCatalogForShoppingProd(vo);
+	}
+	
+	/**
 	 * 計算下次更新時間
 	 * 當天凌晨1、2點查看，則顯示當日，超過凌晨1、2點則顯示明天
 	 * @param catalog_upload_type

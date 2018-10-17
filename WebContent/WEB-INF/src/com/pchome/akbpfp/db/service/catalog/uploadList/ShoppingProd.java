@@ -17,6 +17,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.utils.ImgUtil;
 
@@ -48,6 +49,8 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		String pfpCustomerInfoId = catalogProdJsonData.getString("pfpCustomerInfoId");
 		String updateWay = catalogProdJsonData.optString("updateWay"); // 更新方式 1.取代 2.更新
 		String catalogSeq = catalogProdJsonData.optString("catalogSeq"); // 商品目錄編號
+		String catalogUploadType = catalogProdJsonData.optString("catalogUploadType"); // 上傳方式(1:檔案上傳, 2:自動排程上傳, 3:賣場網址上傳, 4:手動上傳)
+		String updateContent = catalogProdJsonData.optString("updateContent");
 		String catalogProdItem = catalogProdJsonData.optString("catalogProdItem"); // 每一項商品
 		if (updateWay.isEmpty() || !("1".equals(updateWay) || "2".equals(updateWay) || " ".equals(updateWay))) {
 			errorMsg += "更新方式資料錯誤!";
@@ -84,6 +87,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			String catalogProdSeq = catalogProdItemJson.optString("id"); // id*
 			String ecName = catalogProdItemJson.optString("ec_name"); // 商品名稱*
 			String ecTitle = catalogProdItemJson.optString("ec_title", " "); // 商品敘述*
+			ecTitle = " "; // 商品敘述尚未使用，先固定寫入空
 			String ecPrice = catalogProdItemJson.optString("ec_price", " "); // 原價
 			String ecDiscountPrice = catalogProdItemJson.optString("ec_discount_price"); // 促銷價*
 			String ecStockStatus = catalogProdItemJson.optString("ec_stock_status"); // 商品供應情況*
@@ -124,9 +128,8 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 					pfpCatalogProdEc.setEcImg(ImgUtil.processImgBase64StringToImage(ecImgBase64, photoPath, catalogProdSeq));
 				}
 				
-				pfpCatalogProdEc.setEcImgRegion(ImgUtil.getImgLongWidthCode(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg()));
-				pfpCatalogProdEc.setEcImgMd5(ImgUtil.getImgMD5Code(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg()));
-				
+				pfpCatalogProdEc.setEcImgRegion(ImgUtil.getImgLongWidthCode(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg())); // 商品影像長寬(V/H)
+				pfpCatalogProdEc.setEcImgMd5(ImgUtil.getImgMD5Code(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg())); // 商品影像MD5
 				pfpCatalogProdEc.setEcUrl(ecUrl); // 連結網址
 				pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
 				pfpCatalogProdEc.setEcDiscountPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
@@ -138,6 +141,28 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setUpdateDate(new Date()); // 更新時間
 				pfpCatalogProdEc.setCreateDate(new Date()); // 建立時間
 
+				// 檢查輸入的資料是否與DB內完全相同，相同則不做更新、新增處理
+				List<Map<String, Object>> pfpCatalogProdEcList = pfpCatalogUploadListDAO.getPfpCatalogProdEc(catalogSeq, catalogProdSeq);
+				if (pfpCatalogProdEcList.size() > 0) {
+					Map<String, Object> prodEcMap = new HashMap<String, Object>();
+					prodEcMap = pfpCatalogProdEcList.get(0);
+					if (catalogProdSeq.equals((String) prodEcMap.get("catalog_prod_seq"))
+							&& catalogSeq.equals((String) prodEcMap.get("catalog_seq"))
+							&& ecName.equals((String) prodEcMap.get("ec_name"))
+							&& ecTitle.equals((String) prodEcMap.get("ec_title"))
+							&& pfpCatalogProdEc.getEcImg().equals((String) prodEcMap.get("ec_img"))
+							&& pfpCatalogProdEc.getEcImgRegion().equals((String) prodEcMap.get("ec_img_region"))
+							&& pfpCatalogProdEc.getEcImgMd5().equals((String) prodEcMap.get("ec_img_md5"))
+							&& ecUrl.equals((String) prodEcMap.get("ec_url"))
+							&& ecPrice.equals((String) prodEcMap.get("ec_price"))
+							&& ecDiscountPrice.equals((String) prodEcMap.get("ec_discount_price"))
+							&& ecStockStatus.equals((String) prodEcMap.get("ec_stock_status"))
+							&& ecUseStatus.equals((String) prodEcMap.get("ec_use_status"))
+							&& ecCategory.equals((String) prodEcMap.get("ec_category"))) {
+						continue;
+					}
+				}
+				
 				// 先更新，如果回傳更新筆數為0表示無資料，則新增
 				int updateCount = pfpCatalogUploadListDAO.updatePfpCatalogProdEc(pfpCatalogProdEc);
 				if (updateCount == 0) {
@@ -160,13 +185,13 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			pfpCatalogUploadListDAO.deleteNotInPfpCatalogProdEc(catalogSeq, catalogProdSeqList);
 		}
 		
-		// 記錄商品目錄更新紀錄
+		// 記錄商品目錄更新紀錄pfp_catalog_upload_log
 		PfpCatalogUploadLog pfpCatalogUploadLog = new PfpCatalogUploadLog();
 		String catalogUploadLogSeq = sequenceService.getId(EnumSequenceTableName.PFP_CATALOG_UPLOAD_LOG, "", 20);
 		pfpCatalogUploadLog.setCatalogUploadLogSeq(catalogUploadLogSeq); // 更新紀錄序號
 		pfpCatalogUploadLog.setPfpCatalog(pfpCatalog); // 商品目錄
 		pfpCatalogUploadLog.setUpdateWay(updateWay); // 更新方式
-		pfpCatalogUploadLog.setUpdateContent(catalogProdJsonData.optString("update_content")); // 更新內容
+		pfpCatalogUploadLog.setUpdateContent(updateContent); // 更新內容
 		
 		String updateDatetime = catalogProdJsonData.optString("update_datetime");
 		if (updateDatetime.isEmpty()) {
@@ -182,7 +207,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		pfpCatalogUploadLog.setCreateDate(new Date()); // 建立時間
 		pfpCatalogUploadListDAO.savePfpCatalogUploadLog(pfpCatalogUploadLog);
 		
-		// 記錄錯誤資料
+		// 記錄錯誤資料pfp_catalog_upload_err_log
 		if (errorPrdItemArray.length() > 0) {
 			for (int i = 0; i < errorPrdItemArray.length(); i++) {
 				JSONObject errorPrdItemJson = (JSONObject) errorPrdItemArray.get(i);
@@ -197,6 +222,14 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogUploadListDAO.savePfpCatalogUploadErrLog(pfpCatalogUploadErrLog);
 			}
 		}
+		
+		// 更新 pfp_catalog "商品目錄" 資料
+		PfpCatalogVO pfpCatalogVO = new PfpCatalogVO();
+		pfpCatalogVO.setCatalogSeq(catalogSeq);
+		pfpCatalogVO.setPfpCustomerInfoId(pfpCustomerInfoId);
+		pfpCatalogVO.setCatalogUploadType(catalogUploadType);
+		pfpCatalogVO.setUploadContent(updateContent);
+		pfpCatalogService.updatePfpCatalogForShoppingProd(pfpCatalogVO);
 		
 		dataMap.put("status", "SUCCESS");
 		dataMap.put("msg", "一般購物類資料處理完成!");
