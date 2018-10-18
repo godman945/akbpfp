@@ -40,9 +40,10 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 				log.error("getAdCrawlerAPIData error:status != 200");
 				vo.setMessage("系統忙碌中，請稍後再試。");
 			} else if (apiJsonObject.length() == 0) { // 檢查輸入網址是否正確
-				log.info("getAdCrawlerAPIData error:URL error " + vo.getSearchURL());
+				log.error("getAdCrawlerAPIData error:URL error " + vo.getSearchURL());
 				vo.setMessage("查無資料，請確認輸入網址是否正確。");
 			} else {
+				log.info("爬蟲已完成。");
 				// 正確，將資料寫入vo
 				vo.setApiJsonArray(apiJsonObject.getJSONArray("products"));
 			}
@@ -114,6 +115,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		for (int arrayLength = 0; arrayLength < apiJsonArray.length(); arrayLength++) {
 			JSONObject apiJsonObjectDetail = new JSONObject(apiJsonArray.get(arrayLength).toString());
 			JSONObject jsonObjectDetail = new JSONObject();
+			log.info("圖片路徑:" + apiJsonObjectDetail.get("pic_url").toString());
 			jsonObjectDetail.put("pic_url", processPicURL(apiJsonObjectDetail.get("pic_url").toString()));
 			
 			String title = apiJsonObjectDetail.get("title").toString();
@@ -418,7 +420,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 	 * 2.有圖片路徑修正
 	 * @param picURL
 	 * @return
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	private String processPicURL(String picURL) throws IOException {
 		// 沒有商品圖
@@ -427,6 +429,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			return picURL;
 		}
 		
+		log.info("開始處理圖片路徑。");
 		// 處理圖片路徑
 		String URLHttp = picURL.substring(0, 6);
 		if (URLHttp.indexOf("//") > -1) {
@@ -436,9 +439,12 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 		}
 		
 		String filenameExtension = picURL.substring(picURL.length() -3 , picURL.length()); // 取得副檔名
+		
 		//長方形 GIF，圖片擋掉只留文字廣告
 		if ("gif".equalsIgnoreCase(filenameExtension)) {
-			URL url = new URL(picURL);
+			log.info("處理完後的gif圖片路徑:" + picURL.replaceFirst("https", "http"));
+			URL url = new URL(picURL.replaceFirst("https", "http"));
+			
 			BufferedImage img = ImageIO.read(url);
 			int width = img.getWidth();
 			int height = img.getHeight();
@@ -448,6 +454,7 @@ public class PfpAdManyURLSearchService extends BaseService<PfpAdManyURLVO, Strin
 			}
 		}
 		
+		log.info("處理圖片路徑結束。");
 		return picURL;
 	}
 	
