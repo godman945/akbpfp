@@ -231,15 +231,13 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    <bean id="PfpCatalogDAO" class="com.pchome.akbpfp.db.dao.catalog.TMP.PfpCatalogDAO">
+    <bean id="PfpCatalogDAO" class="com.pchome.akbpfp.db.dao.catalog.PfpCatalogDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
     <bean id="PfpCatalogProdEcDAO" class="com.pchome.akbpfp.db.dao.catalog.prod.PfpCatalogProdEcDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-    
-    
-     <!-- 商品群組、清單END-->
+    <!-- 商品群組、清單END-->
     
 </beans>

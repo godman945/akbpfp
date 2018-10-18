@@ -246,7 +246,7 @@
     	<property name="dao" ref="PfpCatalogGroupItemDAO" />
     </bean>
     
-     <bean id="PfpCatalogService" class="com.pchome.akbpfp.db.service.catalog.TMP.PfpCatalogService">
+     <bean id="PfpCatalogService" class="com.pchome.akbpfp.db.service.catalog.PfpCatalogService">
     	<property name="dao" ref="PfpCatalogDAO" />
     </bean>
     

@@ -18,7 +18,7 @@ import com.pchome.akbpfp.catalog.prodList.factory.AProdList;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
-import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
+import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupItemService;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupService;
 import com.pchome.akbpfp.db.service.sequence.SequenceService;

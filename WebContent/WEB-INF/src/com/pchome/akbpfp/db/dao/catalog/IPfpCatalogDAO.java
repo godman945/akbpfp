@@ -1,4 +1,4 @@
-package com.pchome.akbpfp.db.dao.catalog.TMP;
+package com.pchome.akbpfp.db.dao.catalog;
 
 import java.util.List;
 import java.util.Map;

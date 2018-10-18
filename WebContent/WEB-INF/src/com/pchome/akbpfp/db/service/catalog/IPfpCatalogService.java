@@ -1,4 +1,4 @@
-package com.pchome.akbpfp.db.service.catalog.TMP;
+package com.pchome.akbpfp.db.service.catalog;
 
 import java.util.List;
 import java.util.Map;

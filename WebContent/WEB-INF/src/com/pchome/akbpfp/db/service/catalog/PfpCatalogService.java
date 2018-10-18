@@ -1,9 +1,9 @@
-package com.pchome.akbpfp.db.service.catalog.TMP;
+package com.pchome.akbpfp.db.service.catalog;
 
 import java.util.List;
 import java.util.Map;
 
-import com.pchome.akbpfp.db.dao.catalog.TMP.IPfpCatalogDAO;
+import com.pchome.akbpfp.db.dao.catalog.IPfpCatalogDAO;
 import com.pchome.akbpfp.db.dao.catalog.prod.IPfpCatalogProdEcDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.BaseService;

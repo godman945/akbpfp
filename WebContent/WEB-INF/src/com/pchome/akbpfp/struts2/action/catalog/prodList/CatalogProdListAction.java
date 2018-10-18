@@ -7,7 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import com.pchome.akbpfp.catalog.prodList.factory.AProdList;
 import com.pchome.akbpfp.catalog.prodList.factory.ProdListFactory;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
-import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
+import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;

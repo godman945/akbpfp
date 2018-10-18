@@ -3,7 +3,7 @@ package com.pchome.akbpfp.catalog.prodList.factory;
 import java.util.List;
 import java.util.Map;
 
-import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
+import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 
 public abstract class AProdList {

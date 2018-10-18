@@ -12,7 +12,7 @@ import org.json.JSONObject;
 
 import com.pchome.akbpfp.catalog.prodList.factory.AProdList;
 import com.pchome.akbpfp.catalog.prodList.factory.ProdListFactory;
-import com.pchome.akbpfp.db.service.catalog.TMP.IPfpCatalogService;
+import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
