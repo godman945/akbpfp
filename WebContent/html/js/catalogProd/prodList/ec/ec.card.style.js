@@ -4,7 +4,7 @@
 		$("#catalog").val($("#catalogSeqData").val());
 	}
 	
-	//切換成卡片模式
+	//切換成表格模式
 	 $('#tableView').on('click',function() {
 		 location.href = "prodListTableStyleView.html?catalogSeq="+ $('#catalog option:selected').val() + "&currentPage=1&pageSizeSelected=10";
 	 });
