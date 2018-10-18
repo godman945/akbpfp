@@ -1,10 +1,14 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalog/catalog.js?t=20180914001"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.ba-dotimeout.js"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalog/catalog.js?t=20181018039"></script>
 
 <div class="container-prodmanage">
-
+	<input type="text" id="pageNo" name="pageNo" value="${pageNo!}">
+	<input type="text" id="pageCount" name="pageCount" value="${pageCount!}">
+	<input type="text" id="totalCount" name="totalCount" value="${totalCount!}">
+	
 	<#-- 次目錄導覽列 開始 -->
 	<div class="nav-wrap pos-relative hidetabs tab1">
 	    <div class="nav-box pos-relative">
@@ -142,11 +146,11 @@
             </div>
             <#-- 表格內容 結束 -->
 
-            <!-- 頁碼 pagination 開始 -->
-            <!-- data-order: 目前頁碼 -->
-            <!-- data-quantity: 頁數 -->
+            <#-- 頁碼 pagination 開始 -->
+            <#-- data-order: 目前頁碼 -->
+            <#-- data-quantity: 頁數 -->
             <div class="pagination-wrap txt-noselect m-b30" data-order="79" data-quantity="150">
-                <!-- data-num: 頁碼 -->
+                <#-- data-num: 頁碼 -->
                 <ul class="pagination-box txt-table">
                     <li class="txt-cell txt-left">
                         <a data-num="1" class="pagination-button left" href="#"></a>
@@ -165,16 +169,15 @@
                             <a data-num="" class="pagination-button" href="#"></a>
                             <a data-num="" class="pagination-button" href="#"></a>
                         </span>
-                        <!-- <a data-num="..." class="pagination-button ellipsis" href="#"></a> -->
+                        <#-- <a data-num="..." class="pagination-button ellipsis" href="#"></a> -->
                         <a class="pagination-button next" href="#" title="下10頁"></a>
                     </li>
                     <li class="txt-cell txt-right">
                         <a data-num="" class="pagination-button right" href="#"></a>
                     </li>
                 </ul>
-
             </div>
-            <!-- 頁碼 pagination 結束 -->
+            <#-- 頁碼 pagination 結束 -->
             
         </div>
     </div>
