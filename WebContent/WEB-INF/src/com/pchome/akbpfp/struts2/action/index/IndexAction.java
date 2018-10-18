@@ -96,7 +96,7 @@ public class IndexAction extends BaseCookieAction {
 		 * } }
 		 */
 
-//		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_index");
+		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_index");
 		return result;
 	}
 
@@ -108,7 +108,7 @@ public class IndexAction extends BaseCookieAction {
 	 */
 	public String advantage() throws Exception {
 
-//		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_advantage");
+		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_advantage");
 		return result;
 	}
 
@@ -120,7 +120,7 @@ public class IndexAction extends BaseCookieAction {
 	 */
 	public String click() throws Exception {
 
-//		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_click");
+		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_click");
 		return result;
 	}
 
@@ -231,7 +231,7 @@ public class IndexAction extends BaseCookieAction {
 			}
 		}
 
-		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_faq");
+		HttpUtil.doGet("http://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_faq");
 		return result;
 	}
 
