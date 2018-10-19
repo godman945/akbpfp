@@ -8,15 +8,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-
 import com.pchome.akbpfp.db.dao.catalog.IPfpCatalogDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
-import com.pchome.config.TestConfig;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 
@@ -32,7 +28,6 @@ public class PfpCatalogService extends BaseService<PfpCatalog, String> implement
 	@Override
 	public List<PfpCatalogVO> getPfpCatalogList(PfpCatalogVO vo) {
 		List<Map<String,Object>> pfpCatalogList = ((IPfpCatalogDAO) dao).getPfpCatalogList(vo);
-		System.out.println("AAA " + pfpCatalogList);
 		
 		List<PfpCatalogVO> pfpCatalogVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : pfpCatalogList) {

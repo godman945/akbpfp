@@ -756,11 +756,6 @@
         	<result type="json" name="success">
         		<param name="root">result</param>
         	</result>
-        	<!-- 刪除後，畫面到catalogProd 初始畫面 -->
-<!--         	<result type="redirectAction" name="success"> -->
-<!--             	<param name="actionName">catalogProd</param> -->
-<!--             </result> -->
-<!--             <result type="redirectAction" name="success">catalogProd</result> -->
      	</action>
 
 		<!-- 商品目錄-點選新增後到新增頁 -->

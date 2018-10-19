@@ -26,9 +26,7 @@ public abstract class APfpCatalogUploadListData {
 		String prodItemErrorMsg = "";
 		
 		int ecCategoryLimit = 50;
-//		if (ecCategory.isEmpty()) {
-//			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-//		} else 
+
 		if (ecCategory.length() > ecCategoryLimit) {
 			prodItemErrorMsg += "欄位字數超過" + ecCategoryLimit + "個字。";
 		}
@@ -212,9 +210,6 @@ public abstract class APfpCatalogUploadListData {
 		String prodItemErrorMsg = "";
 		int ecPriceLimit = 11;
 		
-//		if (ecPrice.isEmpty()) {
-//			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-//		} else 
 		if (!ecPrice.isEmpty() && !StringUtils.isNumeric(ecPrice.trim())) {
 			prodItemErrorMsg += "必須輸入數字。";
 		} else if (ecPrice.length() > ecPriceLimit) {

@@ -1,6 +1,5 @@
 package com.pchome.akbpfp.struts2.action.catalog.uploadList;
 
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,9 +19,7 @@ import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
-import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadListVO;
@@ -33,8 +30,6 @@ import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.soft.depot.utils.HttpUtil;
 
-
-
 public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	private Map<String,Object> dataMap;
@@ -44,15 +39,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private final SimpleDateFormat formatter2 = new SimpleDateFormat("yyyyMMddHHmmss");
-//	private String fileName;
-//	private String fileType;
-	
-//	private File myFile;
-//	private String myFileFileName;
-//	private String myFileContentType;
-	
-//	private String filename;
-//	private String contenType;
 	
 	private IPfpCatalogUploadListService pfpCatalogUploadListService;
 	private IPfpCatalogService pfpCatalogService;
@@ -90,8 +76,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 * @throws Exception
 	 */
 	public String selectProductDataSource() throws Exception {
-		
-		System.out.println("catalogSeq:" + catalogSeq);
 		catalogDropDownMenu();
 		return SUCCESS;
 	}
@@ -102,8 +86,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 * @throws Exception
 	 */
 	public String selectUpload() throws Exception {
-		System.out.println("catalogSeq:" + catalogSeq);
-
 		catalogDropDownMenu();
 		
 		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq); // 取得商品目錄 table資料
@@ -143,8 +125,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 * @throws Exception
 	 */
 	public String catalogUploadCheckFileData() throws Exception {
-		System.out.println("catalogSeq:" + catalogSeq);
-		
 		dataMap = new HashMap<String, Object>();
 		if (!"csv".equalsIgnoreCase(FilenameUtils.getExtension(fileUploadFileName))) {
 			dataMap.put("status", "ERROR");
@@ -193,14 +173,8 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		PfpCatalogUploadListVO vo = new PfpCatalogUploadListVO();
 		vo.setCatalogType(pfpCatalog.getCatalogType());
 		
-		
 		// 檔案上傳部分
-//		System.out.println("fileUpload:" + fileUpload);
-//		System.out.println("fileUpload:" + fileUploadFileName);
-//		System.out.println(FilenameUtils.getBaseName(fileUploadFileName)); // 取得檔名部分
-//		System.out.println(FilenameUtils.getExtension(fileUploadFileName)); // 取得副檔名(不含小數點)
 		vo.setFileUploadPath(productFilePath + super.getCustomer_info_id() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName);
-//		String fileType = FilenameUtils.getExtension(fileUploadFileName);
 		File createFile = new File(vo.getFileUploadPath());
 		FileUtils.copyFile(fileUpload, createFile);
 		
@@ -246,8 +220,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 */
 	public String catalogProdAutoJob() throws Exception {
 		//TODO 自動排程上傳
-		//待測試
-		
 		// 取得商品目錄 table資料
 		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
 		
@@ -353,8 +325,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 */
 	public String catalogProdManualInput() throws Exception {
 		//TODO 手動上傳
-		System.out.println("manualInputDataMap:" + manualInputDataMap);
-		
 		// 將JSONArray內的字串資料轉成JSONObject
 		JSONArray catalogProdManualInputItemJsonArray = new JSONArray(manualInputDataMap);
 		JSONArray catalogProdItemJSONArray = new JSONArray();
@@ -375,7 +345,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			tempSetDBJSONObject.put("ec_category", tempViewJSONObject.get("ecCategory"));
 			catalogProdItemJSONArray.put(tempSetDBJSONObject);
 		}
-		System.out.println("catalogProdItemJSONArray:" + catalogProdItemJSONArray);
 		
 		// 取得商品目錄 table資料
 		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
@@ -392,7 +361,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		
 		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData);
 		
-		//[{"id":"28825252", "ec_name":"達美樂",  "ec_price":"1999", "ec_discount_price":"99", "ec_stock_status":"1", "ec_use_status":"1", "ec_img_url":"https://www.dominos.com.tw/images/logo_foot.png", "ec_url":"https://www.dominos.com.tw/", "ec_category":"食品"}]
 		return SUCCESS;
 	}
 	
@@ -426,7 +394,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
 		vo.setPaginationFlag(false);
 		catalogList = pfpCatalogService.getPfpCatalogList(vo);
-		System.out.println("catalogList:" + catalogList);
 	}
 	
 	/**
@@ -560,37 +527,4 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		this.catalogProdSeq = catalogProdSeq;
 	}
 	
-	
-
-	
-	
-//	System.out.println("myFile:" + myFile);
-//	System.out.println(fileUpload.getName());
-//	System.out.println("filename:" + fileName);
-//	System.out.println("contenType:" + contenType);
-	
-//	System.out.println("filename:" + filename);
-//	System.out.println("fileType:" + fileType);
-	
-	// 用struts2的功能取myFileFileName
-	// 參考 http://hubertjava.blogspot.com/2009/03/struts2-file-upload.html
-//	System.out.println("myFile:" + myFile);
-//	System.out.println("myFileFileName:" + myFileFileName);
-//	System.out.println("myFileContentType:" + myFileContentType);
-	
-	/* 
-	 * FileUtils.copyFile(srcFile, destFile);
-	 * https://blog.csdn.net/shb_derek1/article/details/8530398
-	 * 等於說 我在我要放檔案的位置先開一個，再用這個API就直接把檔案copy過去 
-	*/
-//	File createFile = new File("/home/webuser/akb/pfp/fileUpload/" + fileName + fileType);
-//	InputStream is = new FileInputStream(fileUpload);
-//	OutputStream os = new FileOutputStream(createFile);
-//	byte[] buffer = new byte[1024];
-//	int length = 0;
-//	while((length = is.read(buffer)) > 0) {
-//		os.write(buffer, 0, length);
-//	}
-//	is.close();
-//	os.close();
 }

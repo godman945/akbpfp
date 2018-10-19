@@ -1,14 +1,9 @@
 package com.pchome.akbpfp.struts2.action.catalog;
 
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +12,6 @@ import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
-
 
 public class PfpCatalogAction extends BaseCookieAction{
 	
@@ -33,7 +27,6 @@ public class PfpCatalogAction extends BaseCookieAction{
 
 	private String catalogSeq;
 	private String catalogName; // 商品目錄名稱
-//	private String catalogType; // 商品目錄類型(1:一般購物類, 2:訂房住宿類, 3:交通航班類, 4:房產租售類)
 	
 	private String deleteCatalogSeq;
 	
@@ -104,7 +97,6 @@ public class PfpCatalogAction extends BaseCookieAction{
 		pfpCatalogService.savePfpCatalog(vo);
 		
 		catalogSeq = vo.getCatalogSeq();
-//		dataMap.put("catalogSeq", vo.getCatalogSeq());
 		return SUCCESS;
 	}
 	
@@ -137,11 +129,6 @@ public class PfpCatalogAction extends BaseCookieAction{
 	 */
 	public String catalogSampleFileDownload() throws Exception {
 		String fileName = "shoppingSample.csv";
-//		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > -1) {
-//			downloadFileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
-//		} else {
-//			downloadFileName = URLEncoder.encode(fileName, "UTF-8");
-//		}
 		downloadFileName = fileName;
 		
 		// 範例檔案放的位置
@@ -165,38 +152,6 @@ public class PfpCatalogAction extends BaseCookieAction{
 	public void setDownloadFileStream(InputStream downloadFileStream) {
 		this.downloadFileStream = downloadFileStream;
 	}
-	
-	/**
-	 * 目錄範例檔案下載
-	 * @return
-	 * @throws Exception 
-	 */
-//	public String catalogSampleFileDownload() throws Exception{
-//		String fileName = "一般購物.csv";
-////		downloadFileName = fileName;
-//		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > -1) {
-//			downloadFileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
-//		} else {
-//			downloadFileName = URLEncoder.encode(fileName, "UTF-8");			
-//		}
-//		
-//		return SUCCESS;
-//	}
-	
-	
-
-	/**
-	 * 下載檔案的檔案位置設定 
-	 * 參考https://ifun01.com/OD48FKT.html
-	 * @return
-	 * @throws FileNotFoundException
-	 */
-//	public InputStream getDownloadFileStream() throws FileNotFoundException {
-////		FileInputStream fis = new FileInputStream("F;/upload/" + filename);
-//		FileInputStream fis = new FileInputStream("D:/Users/twkuo/Desktop/需求/商品廣告/欄位名稱整理 0809_假的都有資料的檔案.csv"); 
-//        return fis;
-////		return downloadFileStream;
-//	}
 	
 	public void setPfpCatalogService(IPfpCatalogService pfpCatalogService) {
 		this.pfpCatalogService = pfpCatalogService;
@@ -253,10 +208,6 @@ public class PfpCatalogAction extends BaseCookieAction{
 	public void setCatalogName(String catalogName) {
 		this.catalogName = catalogName;
 	}
-
-//	public void setCatalogType(String catalogType) {
-//		this.catalogType = catalogType;
-//	}
 
 	public String getDownloadFileName() {
 		return downloadFileName;

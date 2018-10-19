@@ -49,10 +49,6 @@ function processQueryAjax(changePageNo){
 function processPageNumber() {
 	var pageNo = $("#pageNo").val(); // 目前第幾頁
 	var pageCount = $("#pageCount").val(); // 共幾頁(總頁數)
-//	pageNo = 31;
-//	pageCount = 39;
-	console.log("目前第" + pageNo + "頁");
-	console.log("共" + pageCount + "頁");
 	
 	var currentlyStartPage; // 目前開始頁碼
 	var currentlyEndPage; // 目前結束頁碼
@@ -110,7 +106,6 @@ function processPageNumber() {
 		tempHtml += "  <a data-num=\"" + pageCount + "\" class=\"pagination-button right\" href=\"javascript:processQueryAjax('" + pageCount + "');\"></a>";
 		tempHtml += "</li>";
 	}
-	tempHtml += "";
 	$(".pagination-box").html(tempHtml);
 }
 

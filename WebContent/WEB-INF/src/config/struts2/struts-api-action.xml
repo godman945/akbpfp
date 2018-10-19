@@ -77,32 +77,18 @@
      </action>
  -->
 
-	<!-- 廣告商品-檔案上傳CSV -->
-	<action name="catalogProdFileUploadCSV" class="PfpCatalogUploadListAction" method="catalogProdFileUploadCSV">
-		<result type="json" name="success">
-			<param name="root">dataMap</param>
-		</result>
-	</action>
-	
- 	<action name="catalogProdFileUploadApi" class="PfpCatalogUploadListAction" method="processCatalogProdJsonDataApi">
-		<result type="json" name="success">
-			<param name="root">dataMap</param>
-		</result>
-	</action>
-	
-	    <!-- 未整理備份用 -->
-<!-- 		<action name="catalogProdFileUpload" class="CatalogUploadListAction" method="fileUploadCSV"> -->
-<!-- 			<result type="json" name="success"> -->
-<!-- 				<param name="root">dataMap</param> -->
-<!-- 			</result> -->
-<!-- 			<interceptor-ref name="fileUpload" > -->
-<!-- 				<param name="allowedTypes">multipart/form-data</param> -->
-<!-- 				<param name="allowedExtensions">csv, xls</param> -->
-<!-- 				<param name="maximumSize">10240000</param> -->
-<!-- 				<param name="savePath">D:/tempCSV</param> -->
-<!-- 			</interceptor-ref> -->
-<!-- 			<interceptor-ref name="defaultStack" /> -->
-<!-- 		</action> -->
+		<!-- 廣告商品-檔案上傳CSV -->
+		<action name="catalogProdFileUploadCSV" class="PfpCatalogUploadListAction" method="catalogProdFileUploadCSV">
+			<result type="json" name="success">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
+		
+	 	<action name="catalogProdFileUploadApi" class="PfpCatalogUploadListAction" method="processCatalogProdJsonDataApi">
+			<result type="json" name="success">
+				<param name="root">dataMap</param>
+			</result>
+		</action>
  		<!-- 廣告商品-檔案上傳 end-->
  
     </package>

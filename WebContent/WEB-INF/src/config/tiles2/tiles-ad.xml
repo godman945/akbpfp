@@ -345,7 +345,6 @@
     	<put-attribute name="submenu" value="/ftl/catalogProd/submenu.ftl" />
     </definition>
     
-    
     <!-- 進入商品管理，沒有商品目錄的畫面 -->
     <definition name=".catalog.prod.view.index" extends="catalog.prod.layout">
         <put-attribute name="body" value=".catalog.prod.view.index.body" />
@@ -391,8 +390,6 @@
     <definition name=".catalog.upload.view.manualInput" extends="catalog.prod.layout">
         <put-attribute name="body" value="/ftl/catalogProd/catalogUpload/catalog.upload.view.manualInput.ftl" />
     </definition>
-
-    
     <!-- 商品目錄、上傳 END -->
     
 </tiles-definitions>

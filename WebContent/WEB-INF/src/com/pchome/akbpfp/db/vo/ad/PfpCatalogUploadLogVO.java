@@ -48,8 +48,4 @@ public class PfpCatalogUploadLogVO {
 		this.successNum = successNum;
 	}
 
-	
-
-	
-	
 }

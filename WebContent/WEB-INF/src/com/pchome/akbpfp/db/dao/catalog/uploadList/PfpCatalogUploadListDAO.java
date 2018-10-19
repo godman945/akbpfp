@@ -105,12 +105,7 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 		hql.append(" DELETE FROM pfp_catalog_upload_err_log ");
 		hql.append(" WHERE catalog_upload_log_seq IN ");
 		hql.append(" (SELECT catalog_upload_log_seq FROM pfp_catalog_upload_log WHERE catalog_seq = :catalog_seq) ");
-		
-//		hql.append(" WHERE catalog_prod_seq IN ");
-//		hql.append(" (SELECT catalog_prod_seq FROM pfp_catalog_prod_ec WHERE catalog_seq = :catalog_seq) ");
-//		hql.append(" AND catalog_upload_log_seq IN ");
-//		hql.append(" (SELECT catalog_upload_log_seq FROM pfp_catalog_upload_log WHERE catalog_seq = :catalog_seq) ");
-		
+
 		Query query = super.getSession().createSQLQuery(hql.toString());
 		query.setString("catalog_seq", vo.getCatalogSeq());
 
@@ -192,7 +187,6 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 	 */
 	@Override
 	public List<Map<String, Object>> getPfpCatalogProdEc(String catalogSeq, String catalogProdSeq) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append(" SELECT ");
 		hql.append(" id, catalog_prod_seq, catalog_seq, ec_name, ec_title, ");

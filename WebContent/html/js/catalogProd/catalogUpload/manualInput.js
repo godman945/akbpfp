@@ -30,7 +30,6 @@ $(document).ready(function() {
 		$.ajax({
 			type: "post",
 			dataType: "json",
-//			async:false,
 			url: "processCheckManualInputData.html",
 			data: {
 				"ecUrl" : $("#ecUrl").val(),
@@ -58,8 +57,7 @@ $(document).ready(function() {
 					prodListView();
 					cleanData();
 				}
-				
-				console.log("success");
+
 				$('#loadingWaitBlock').unblock();
 			}
 		});
@@ -120,7 +118,6 @@ function prodListView() {
 	$(".manualprod-box").append(tempHtml);
 	
 	prodList.push(JSON.stringify(prodObject)); // 將json轉成字串，才push的進去
-	console.log("prodList:" + JSON.stringify(prodList));
 }
 
 /**
@@ -155,7 +152,6 @@ function delProd(index) {
 		}
 	});
 	prodList = tempList; // 要被刪除的資料，不會存入暫存清單，將最後清單資料放回商品清單
-//	console.log("刪除後的prodList:" + JSON.stringify(prodList));
 }
 
 /**
@@ -230,7 +226,6 @@ function checkUploadFile(file) {
 		});
 
 	});
-
 }
 
 /**
@@ -459,5 +454,4 @@ function manualInputFinish() {
 			window.location.replace("catalogProd.html");
 		}
 	});
-	
 }

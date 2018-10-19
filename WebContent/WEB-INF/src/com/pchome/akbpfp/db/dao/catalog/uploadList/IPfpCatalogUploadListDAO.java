@@ -81,5 +81,4 @@ public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 	 */
 	List<Map<String, Object>> getPfpCatalogProdEc(String catalogSeq, String catalogProdSeq);
 
-
 }

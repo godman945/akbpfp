@@ -6,11 +6,9 @@
  * 建立目錄按鈕事件
  */
 function addPfpCatalog() {
-
 	if (checkValue()) {
 		return false;
 	}
-
 	$("#savePfpCatalogFrom").submit();
 }
 
@@ -19,6 +17,5 @@ function checkValue() {
 		alert("請輸入目錄名稱。");
 		return true;
 	}
-
 	return false;
 }

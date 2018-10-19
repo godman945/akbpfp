@@ -1,11 +1,11 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/fileUpload.js?t=20180928003"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/fileUpload.js?t=20181019001"></script>
 
 <form id="fileUploadForm" name="fileUploadForm" method="post" enctype="multipart/form-data" action="catalogUploadCheckFileData.html">
-<#-- <form id="fileUploadForm" name="fileUploadForm" method="post" enctype="multipart/form-data" target="fileUploadCSV" action="catalogProdFileUploadCSV.html" onsubmit="return fileUploadSubmit()">  -->
-
+	<input type="file" id="fileUpload" name="fileUpload" accept=".csv" onchange="checkFile(this)" >
+	
 	<div class="container-prodmanage">
 	
 	    <#-- 次目錄導覽列 開始 -->
@@ -37,21 +37,7 @@
 	        </div>
 	    </div>
 	    <#-- 次目錄導覽列 結束 -->
-	
-	<#-- 測試用而已，之後再刪除 -->
-			<div>
-				<table>
-					<th height="35" style="width:12%">檔案上傳測試</th>
-					<td style="min-width:250px;background:#f9f9f9">
-						<input type="file" id="fileUpload" name="fileUpload" accept=".csv" onchange="checkFile(this)">
-						<input type="submit" id="submitBtn" name="submitBtn" value="建立"/>
-						<#--<input type="file" id="fileUpload" name="fileUpload" accept=".csv" onchange="fileUploadCSV(this)">
-						<input type="submit" id="submitBtn" name="submitBtn" value="建立"/>-->
-					</td>
-				</table>
-			</div>
-	<#-- 測試用而已，之後再刪除 end -->
-	
+
 		<div id="loadingWaitBlock">
 		    <#-- 選擇商品資料來源 開始 -->
 		    <div class="content-wrap bg-white">

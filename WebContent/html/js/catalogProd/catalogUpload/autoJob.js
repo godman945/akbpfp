@@ -18,7 +18,6 @@ var maskingConfig = {
 var url = "";
 $(document).ready(function() {
 	
-	console.log("autoJob");
 	if ($("#uploadContent").val()) { 
 		// 一進入先判斷此目錄是否已經有設定網址，有則調整預設畫面
 		$("div.urlupload-box").removeClass('select');
@@ -27,10 +26,8 @@ $(document).ready(function() {
 		$("#dataTypeContent").html("網址：<em data-fileUrl=\"" + url + "\"></em>");
 	}
 	
-	
 	// 檢查輸入網址
 	$("#autoJobURL, #errAutoJobURL").blur(function(){
-		console.log("checkJobURL:" + $(this).val());
 		url = $(this).val();
 		
 		// 檢查輸入網址是否正確
@@ -61,7 +58,6 @@ $(document).ready(function() {
 					$("div.urlupload-box.failure").addClass('select');
 					$("#errAutoJobURL").val(url);
 					$("#errContent").html("<em class=\"icon-error\"></em>請輸入正確網址，或您所輸入的網址未開放存取權限。");
-					console.log("請輸入正確網址，或您所輸入的網址未開放存取權限。");
 				} else {
 					$("div.urlupload-box.success").addClass('select');
 					$("#successFileName").attr("data-fileName", url.substring(url.lastIndexOf("/") +1));
@@ -118,5 +114,4 @@ function autoJobFinish() {
 			alert("系統繁忙，請稍後再試！");
 		}
 	});
-    
 }

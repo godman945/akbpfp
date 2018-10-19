@@ -3,23 +3,19 @@ package com.pchome.akbpfp.db.service.catalog.uploadList;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
-import org.compass.retrotranslator.edu.emory.mathcs.backport.java.util.Arrays;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.pchome.akbpfp.db.dao.catalog.IPfpCatalogDAO;
 import com.pchome.akbpfp.db.dao.catalog.uploadList.IPfpCatalogUploadListDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
@@ -232,8 +228,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 					for (int i = 0; i < lineArray.length; i++) { // 將切出來的陣列資料，放入建立好的陣列數量內，避免超出陣列的問題
 						prdItem[i] = lineArray[i];
 					}
-					
-					System.out.println("第" + rowNumber + "列:" + strLine);
 					
 					JSONObject prdItemObject = new JSONObject();
 					

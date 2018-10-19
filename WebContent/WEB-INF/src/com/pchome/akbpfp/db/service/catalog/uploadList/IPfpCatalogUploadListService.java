@@ -6,7 +6,6 @@ import java.util.Map;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.IBaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadListVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadLogVO;
