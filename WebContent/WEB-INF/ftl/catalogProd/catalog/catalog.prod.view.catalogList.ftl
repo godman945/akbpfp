@@ -1,459 +1,186 @@
 <#assign s=JspTaglibs["/struts-tags"]>
+<#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
+<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.ba-dotimeout.js"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalog/catalog.js?t=20181018039"></script>
 
 <div class="container-prodmanage">
-        <!-- 次目錄導覽列 開始 -->
-        <!-- hidden 隱藏所有牙齒 -->
-        <!-- hidetabs 只顯示第一顆牙齒 -->
-        <!-- tab1 tab2 tab3 tab4 tab5 牙齒由左至右底線 -->
-        <div class="nav-wrap pos-relative hidetabs tab1">
-            <div class="nav-box pos-relative">
-                <ul class="txt-table">
-                    <li class="txt-cell pos-relative p-r10">
-                        <span class="icon-box list arrow-right">
-                            <a href="#">所有商品目錄</a>
-                            <em class="icon-arrow-r"></em>
-                        </span>
-                        <div class="select-box">
-                            <select>
-                                <option value="1">2018春季特賣</option>
-                                <option value="2">2018夏季特賣</option>
-                                <option value="3">2018秋季特賣</option>
-                                <option value="4">2018冬季特賣</option>
-                                <option value="5">春季特賣春季特賣春季特賣春季特賣春季特賣</option>
-                            </select>
-                        </div>
-                    </li>
-                    <li class="txt-cell pos-relative"><a href="#">商品清單</a></li>
-                    <li class="txt-cell pos-relative"><a href="#">商品組合</a></li>
-                    <li class="txt-cell pos-relative"><a href="#">商品資料</a></li>
-                    <li class="txt-cell pos-relative"><a href="#">設定</a></li>
-                </ul>
-                <div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>${customerInfoTitle!}</div>
-            </div>
-        </div>
-        <!-- 次目錄導覽列 結束 -->
+	<input type="hidden" id="pageNo" name="pageNo" value="${pageNo!}">
+	<input type="hidden" id="pageCount" name="pageCount" value="${pageCount!}">
+	
+	<#-- 次目錄導覽列 開始 -->
+	<div class="nav-wrap pos-relative hidetabs tab1">
+	    <div class="nav-box pos-relative">
+	        <ul class="txt-table">
+	            <li class="txt-cell pos-relative p-r10">
+	                <span class="icon-box list arrow-right">
+	                    <a href="javascript:void(0);">所有商品目錄</a>
+	                </span>
+	            </li>
+	        </ul>
+	        <div class="altername-box pos-absolute pos-right pos-top">
+	        	<span>帳戶：</span>${customer_info_title}
+			</div>
+	    </div>
+	</div>
+	<#-- 次目錄導覽列 結束 -->
+	
+	<div class="content-wrap p-lr60 transition-all">
+        <div class="content-box p-none">
 
-        <div class="content-wrap p-lr60 transition-all">
-            <div class="content-box p-none">
-
-                <!-- 表格目錄功能列 開始 -->
-                <div class="nav-wrap prodtable">
-                    <div class="nav-box pos-relative">
-                        
-                        <!-- 新增按鈕 開始 -->
-                        <div class="btn-create pos-absolute pos-right">
-                            <a href="#"><em></em></a>
-                            <style>.altername-box{right:80px}</style>
-                        </div>
-                        <!-- 新增按鈕 結束 -->
-
-                        <ul class="txt-table txt-regular">
-                            <li class="txt-cell p-r20">共<em class="txt-quantity">35</em>件商品目錄</li>
-                            <li class="txt-cell p-r20">
-                                <div class="select-box pos-relative">
-                                    <span class="pos-absolute">顯示</span>
-                                    <select>
-                                        <option value="1">10則</option>
-                                        <option value="2">20則</option>
-                                        <option value="3">30則</option>
-                                        <option value="4">40則</option>
-                                        <option value="5">50則</option>
-                                    </select>
-                                </div>
-                            </li>
-                            <li class="txt-cell">
-                                <div class="input-text">
-                                    <input type="text" name="" maxlength="20" value="" required placeholder="尋找目錄">
-                                </div>
-                            </li>
-                        </ul>
+            <#-- 表格目錄功能列 開始 -->
+            <div class="nav-wrap prodtable">
+                <div class="nav-box pos-relative">
+                    
+                    <#-- 新增按鈕 開始 -->
+                    <div class="btn-create pos-absolute pos-right">
+                        <a id="addCatalog" href="addCatalog.html"><em></em></a>
+                        <style>.altername-box{right:80px}</style>
                     </div>
-                </div>
-                <!-- 表格目錄功能列 結束 -->
+                    <#-- 新增按鈕 結束 -->
 
-                <!-- 表格內容 開始 -->
-                <div class="prodtable-wrap m-b30">
-                    <div class="prodtable-box txt-noselect">
-                        <!-- 表格欄位標題 -->
-                        <div class="txt-row header">
-                            <div class="txt-cell col-cataname">目錄</div>
-                            <div class="txt-cell col-catagory">目錄類型</div>
-                            <div class="txt-cell col-upload">資料更新方式</div>
-                            <div class="txt-cell col-source">資料來源</div>
-                            <div class="txt-cell col-success">成功筆數</div>
-                            <div class="txt-cell col-failure">失敗筆數</div>
-                            <div class="txt-cell col-renew">檔案更新</div>
-                            <div class="txt-cell col-delete"></div>
-                        </div>
-
-                        <!-- row1 -->
-                        <div class="txt-row">
-                            <div class="txt-cell col-cataname">
-                                <a href="prodListCardStyleView.html?catalogSeq=PC201808220000000002&currentPage=1&pageSizeSelected=10">排程測試11</a>
-                                <small>目錄編號：207668739900037</small>
+                    <ul class="txt-table txt-regular">
+                        <li class="txt-cell p-r20">共<em class="txt-quantity">${totalCount}</em>件商品目錄</li>
+                        <li class="txt-cell p-r20">
+                            <div class="select-box pos-relative">
+                                <span class="pos-absolute">顯示</span>
+                                <select id="pageSizeSelect">
+                                    <option value="10" <#if pageSize == 10>selected</#if> >10則</option>
+                                    <option value="20" <#if pageSize == 20>selected</#if> >20則</option>
+                                    <option value="30" <#if pageSize == 30>selected</#if> >30則</option>
+                                    <option value="40" <#if pageSize == 40>selected</#if> >40則</option>
+                                    <option value="50" <#if pageSize == 50>selected</#if> >50則</option>
+                                </select>
                             </div>
-                            <div class="txt-cell col-catagory">
-                                一般購物
-                            </div>
-                            <div class="txt-cell col-upload">
-                                排程自動更新
-                            </div>
-                            <div class="txt-cell col-source">
-                                PAZZO春季新品上市2018080156-1111111111111111111111111111111111111111111111111111111111111111111.csv
-                                <small>最近更新：2018/06/28 09:35AM</small>
-                            </div>
-                            <div class="txt-cell col-success">
-                                2560009<em>筆</em>
-                            </div>
-                            <div class="txt-cell col-failure">
-                                <a href="11所有商品目錄-錯誤列表.html">159<em>筆</em></a>
-                            </div>
-                            <div class="txt-cell col-renew">
-                                <small>下次更新時間</small>
-                                2018/06/29 01:00AM
-                            </div>
-                            <div class="txt-cell col-delete">
-                                <a href="#"></a>
-                            </div>
-                        </div>
-
-                        <!-- row2 -->
-                        <div class="txt-row">
-                            <div class="txt-cell col-cataname">
-                                <a href="prodListCardStyleView.html?catalogSeq=PC201809190000000002&currentPage=1&pageSizeSelected=10">pazzo服飾227</a>
-                                <small>目錄編號：207668739900011</small>
-                            </div>
-                            <div class="txt-cell col-catagory">
-                                一般購物
-                            </div>
-                            <div class="txt-cell col-upload">
-                                檔案上傳
-                            </div>
-                            <div class="txt-cell col-source">
-                                海妃丝街访商品0728.csv
-                                <small>最近更新：2018/05/02 11:35AM</small>
-                            </div>
-                            <div class="txt-cell col-success">
-                                159<em>筆</em>
-                            </div>
-                            <div class="txt-cell col-failure">
-                                <a href="11所有商品目錄-錯誤列表.html">2560009<em>筆</em></a>
-                            </div>
-                            <div class="txt-cell col-renew">
-                                <a href="#">上傳檔案</a>
-                            </div>
-                            <div class="txt-cell col-delete">
-                                <a href="#"></a>
-                            </div>
-                        </div>
-
-                        <!-- row3 -->
-                        <div class="txt-row">
-                            <div class="txt-cell col-cataname">
-                                <a href="#">de | 第一化妝品</a>
-                                <small>目錄編號：207668739900037</small>
-                            </div>
-                            <div class="txt-cell col-catagory">
-                                一般購物
-                            </div>
-                            <div class="txt-cell col-upload">
-                                賣場網址上傳
-                            </div>
-                            <div class="txt-cell col-source">
-                                <a href="#"><img src="img/24h-logo.png">de | 第一化妝品</a>
-                                <small>最近更新：2018/06/28 02:00AM</small>
-                            </div>
-                            <div class="txt-cell col-success">
-                                25<em>筆</em>
-                            </div>
-                            <div class="txt-cell col-failure">
-                                -
-                            </div>
-                            <div class="txt-cell col-renew">
-                                <small>下次更新時間</small>
-                                2018/06/29 02:00AM
-                            </div>
-                            <div class="txt-cell col-delete">
-                                <a href="#"></a>
-                            </div>
-                        </div>
-
-                        <!-- row4 -->
-                        <div class="txt-row">
-                            <div class="txt-cell col-cataname">
-                                <a href="#">de | 第一化妝品</a>
-                                <small>目錄編號：207668739900037</small>
-                            </div>
-                            <div class="txt-cell col-catagory">
-                                一般購物
-                            </div>
-                            <div class="txt-cell col-upload">
-                                賣場網址上傳
-                            </div>
-                            <div class="txt-cell col-source">
-                                <a href="#"><img src="img/ruten-logo.png">de | 第一化妝品</a>
-                                <small>最近更新：2018/06/28 02:00AM</small>
-                            </div>
-                            <div class="txt-cell col-success">
-                                25<em>筆</em>
-                            </div>
-                            <div class="txt-cell col-failure">
-                                -
-                            </div>
-                            <div class="txt-cell col-renew">
-                                <small>下次更新時間</small>
-                                2018/06/29 02:00AM
-                            </div>
-                            <div class="txt-cell col-delete">
-                                <a href="#"></a>
-                            </div>
-                        </div>
-
-                        <!-- row5 -->
-                        <div class="txt-row">
-                            <div class="txt-cell col-cataname">
-                                <a href="#">de | 第一化妝品</a>
-                                <small>目錄編號：207668739900037</small>
-                            </div>
-                            <div class="txt-cell col-catagory">
-                                一般購物
-                            </div>
-                            <div class="txt-cell col-upload">
-                                賣場網址上傳
-                            </div>
-                            <div class="txt-cell col-source">
-                                <a href="#"><img src="img/pcstore-logo.png">de | 第一化妝品</a>
-                                <small>最近更新：2018/06/28 02:00AM</small>
-                            </div>
-                            <div class="txt-cell col-success">
-                                25<em>筆</em>
-                            </div>
-                            <div class="txt-cell col-failure">
-                                -
-                            </div>
-                            <div class="txt-cell col-renew">
-                                <small>下次更新時間</small>
-                                2018/06/29 02:00AM
-                            </div>
-                            <div class="txt-cell col-delete">
-                                <a href="#"></a>
-                            </div>
-                        </div>
-
-                        <!-- row6 -->
-                        <div class="txt-row">
-                            <div class="txt-cell col-cataname">
-                                <a href="#">de | 第一化妝品</a>
-                                <small>目錄編號：207668739900037</small>
-                            </div>
-                            <div class="txt-cell col-catagory">
-                                一般購物
-                            </div>
-                            <div class="txt-cell col-upload">
-                                賣場網址上傳
-                            </div>
-                            <div class="txt-cell col-source">
-                                <a href="#"><img src="img/sellerpcstore-logo.png">de | 第一化妝品</a>
-                                <small>最近更新：2018/06/28 02:00AM</small>
-                            </div>
-                            <div class="txt-cell col-success">
-                                25<em>筆</em>
-                            </div>
-                            <div class="txt-cell col-failure">
-                                -
-                            </div>
-                            <div class="txt-cell col-renew">
-                                <small>下次更新時間</small>
-                                2018/06/29 02:00AM
-                            </div>
-                            <div class="txt-cell col-delete">
-                                <a href="#"></a>
-                            </div>
-                        </div>
-
-                        <!-- row7 -->
-                        <div class="txt-row">
-                            <div class="txt-cell col-cataname">
-                                <a href="#">de | 第一化妝品</a>
-                                <small>目錄編號：207668739900037</small>
-                            </div>
-                            <div class="txt-cell col-catagory">
-                                一般購物
-                            </div>
-                            <div class="txt-cell col-upload">
-                                賣場網址上傳
-                            </div>
-                            <div class="txt-cell col-source">
-                                <a href="#"><img src="img/mallpchome-logo.png">de | 第一化妝品</a>
-                                <small>最近更新：2018/06/28 02:00AM</small>
-                            </div>
-                            <div class="txt-cell col-success">
-                                25<em>筆</em>
-                            </div>
-                            <div class="txt-cell col-failure">
-                                -
-                            </div>
-                            <div class="txt-cell col-renew">
-                                <small>下次更新時間</small>
-                                2018/06/29 02:00AM
-                            </div>
-                            <div class="txt-cell col-delete">
-                                <a href="#"></a>
-                            </div>
-                        </div>
-
-                        <!-- row8 -->
-                        <div class="txt-row">
-                            <div class="txt-cell col-cataname">
-                                <a href="#">夏季運動會20180718</a>
-                                <small>目錄編號：207668739900011</small>
-                            </div>
-                            <div class="txt-cell col-catagory">
-                                一般購物
-                            </div>
-                            <div class="txt-cell col-upload">
-                                手動上傳
-                            </div>
-                            <div class="txt-cell col-source">
-                                -
-                            </div>
-                            <div class="txt-cell col-success">
-                                184<em>筆</em>
-                            </div>
-                            <div class="txt-cell col-failure">
-                                -
-                            </div>
-                            <div class="txt-cell col-renew">
-                                <a href="#">上傳檔案</a>
-                            </div>
-                            <div class="txt-cell col-delete">
-                                <a href="#"></a>
-                            </div>
-                        </div>
-
-                        <!-- row9 -->
-                        <div class="txt-row">
-                            <div class="txt-cell col-cataname">
-                                <a href="#">2018春季新品外套外套春季新品外套外套外套</a>
-                                <small>目錄編號：207668739900037</small>
-                            </div>
-                            <div class="txt-cell col-catagory">
-                                一般購物
-                            </div>
-                            <div class="txt-cell col-upload">
-                                排程自動更新
-                            </div>
-                            <div class="txt-cell col-source">
-                                PAZZO春季新品上市2018080156.csv
-                                <small>最近更新：2018/06/28 09:35AM</small>
-                            </div>
-                            <div class="txt-cell col-success">
-                                2560009<em>筆</em>
-                            </div>
-                            <div class="txt-cell col-failure">
-                                <a href="#">159<em>筆</em></a>
-                            </div>
-                            <div class="txt-cell col-renew">
-                                <small>下次更新時間</small>
-                                2018/06/29 01:00AM
-                            </div>
-                            <div class="txt-cell col-delete">
-                                <a href="#"></a>
-                            </div>
-                        </div>
-
-                        <!-- row10 -->
-                        <div class="txt-row">
-                            <div class="txt-cell col-cataname">
-                                <a href="#">夏季運動會20180718</a>
-                                <small>目錄編號：207668739900011</small>
-                            </div>
-                            <div class="txt-cell col-catagory">
-                                一般購物
-                            </div>
-                            <div class="txt-cell col-upload">
-                                檔案上傳
-                            </div>
-                            <div class="txt-cell col-source">
-                                海妃丝街访商品0728.csv
-                                <small>最近更新：2018/05/02 11:35AM</small>
-                            </div>
-                            <div class="txt-cell col-success">
-                                159<em>筆</em>
-                            </div>
-                            <div class="txt-cell col-failure">
-                                <a href="#">2560009<em>筆</em></a>
-                            </div>
-                            <div class="txt-cell col-renew">
-                                <a href="#">上傳檔案</a>
-                            </div>
-                            <div class="txt-cell col-delete">
-                                <a href="#"></a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- 表格內容 結束 -->
-
-                <!-- 頁碼 pagination 開始 -->
-                <!-- data-order: 目前頁碼 -->
-                <!-- data-quantity: 頁數 -->
-                <div class="pagination-wrap txt-noselect m-b30" data-order="79" data-quantity="150">
-                    <!-- data-num: 頁碼 -->
-                    <ul class="pagination-box txt-table">
-                        <li class="txt-cell txt-left">
-                            <a data-num="1" class="pagination-button left" href="#"></a>
                         </li>
                         <li class="txt-cell">
-                            <a class="pagination-button prev" href="#"></a>
-                            <span class="pagination-buttongroup">
-                                <a data-num="" class="pagination-button" href="#"></a>
-                                <a data-num="" class="pagination-button" href="#"></a>
-                                <a data-num="" class="pagination-button" href="#"></a>
-                                <a data-num="" class="pagination-button" href="#"></a>
-                            </span>
-                            <a data-num="..." class="pagination-button ellipsis" href="#"></a>
-                            <a class="pagination-button next" href="#"></a>
-                        </li>
-                        <li class="txt-cell txt-right">
-                            <a data-num="" class="pagination-button right" href="#"></a>
+                            <div class="input-text">
+                                <input type="text" id="queryString" name="queryString" maxlength="20" required placeholder="尋找目錄" value="${queryString}">
+                            </div>
                         </li>
                     </ul>
-
-                    <script>
-                        //參考用
-                        $(function () {
-                            var pagedata = $('.pagination-wrap').data();
-                            var order = pagedata.order;
-                            var quantity = pagedata.quantity;
-
-                            //設定頁碼
-                            setPagination(order, quantity);
-
-                            function setPagination(order, quantity){
-                                var $buttongroup=$('.pagination-buttongroup a');
-                                var $buttonright=$('a.pagination-button.right');
-                                //計算頁碼起始顯示值 +修改目前所在頁碼按鈕底色
-                                var _length=$buttongroup.length;
-                                var _order=(order<=_length)?1:order;
-                                    _order=(quantity-order<=_length)?quantity-_length+1:_order;
-                                    _order=(_order>_length &&_order%_length!=0)?(_order-_order%_length+1):_order;
-                                //寫入頁碼
-                                for(var i=0;i<_length;i++){
-                                    $buttongroup.eq(i).attr('data-num',_order+i);
-                                    if((_order+i)==order) $buttongroup.eq(i).addClass('active');
-                                }
-                                //寫入最後一頁頁碼 + 最後一頁時修改按鈕底色
-                                $buttonright.attr('data-num', quantity);
-                                if(order==quantity) $buttonright.addClass('active');
-                            }
-                        });
-                    </script>
                 </div>
-                <!-- 頁碼 pagination 結束 -->
             </div>
+            <#-- 表格目錄功能列 結束 -->
+
+            <#-- 表格內容 開始 -->
+            <div class="prodtable-wrap m-b30">
+                <div class="prodtable-box txt-noselect">
+                    <#-- 表格欄位標題 -->
+                    <div class="txt-row header">
+                        <div class="txt-cell col-cataname">目錄</div>
+                        <div class="txt-cell col-catagory">目錄類型</div>
+                        <div class="txt-cell col-upload">資料更新方式</div>
+                        <div class="txt-cell col-source">資料來源</div>
+                        <div class="txt-cell col-success">成功筆數</div>
+                        <div class="txt-cell col-failure">失敗筆數</div>
+                        <div class="txt-cell col-renew">檔案更新</div>
+                        <div class="txt-cell col-delete"></div>
+                    </div>
+
+					<#list dataList as vo>
+						<div class="txt-row">
+							<div class="txt-cell col-cataname">
+	                            <a href="#">${vo.catalogName!}</a>
+	                            <small>目錄編號：${vo.catalogSeq!}</small>
+	                        </div>
+	                        
+	                        <div class="txt-cell col-catagory">
+								${vo.catalogTypeName!}
+							</div>
+							
+							<div class="txt-cell col-upload">
+								<#if vo.catalogUploadTypeName??>
+	                            	${vo.catalogUploadTypeName!}
+	                            <#else>
+	                            	-
+	                            </#if>
+                        	</div>
+                        	
+                        	<div class="txt-cell col-source">
+                        		<#if vo.uploadContent??>
+	                            	${vo.uploadContent!}
+	                            	<small>最近更新：${vo.updateDatetime!}</small>
+	                            <#else>
+	                            	-
+	                            </#if>
+	                        </div>
+                        	
+                        	<div class="txt-cell col-success">
+                        		<#if vo.successNum??>
+	                            	${vo.successNum!}<em>筆</em>
+	                            <#else>
+	                            	-
+	                            </#if>
+	                        </div>
+	                        
+	                        <div class="txt-cell col-failure">
+	                        	<#if vo.errorNum?? && vo.errorNum != "0">
+	                        		<a href="11所有商品目錄-錯誤列表.html">${vo.errorNum!}<em>筆</em></a>
+	                        	<#else>
+	                            	-
+	                            </#if>
+	                        </div>
+	                        
+	                        <div class="txt-cell col-renew">
+								<#if vo.catalogUploadType == "1" || vo.catalogUploadType == "4">
+									<a href="selectUpload.html?catalogSeq=${vo.catalogSeq!}&selectUploadFlag=${vo.catalogUploadType!}">上傳檔案</a>
+								<#elseif vo.catalogUploadType == "2" || vo.catalogUploadType == "3">
+		                            <small>下次更新時間</small>
+		                            ${vo.nextUpdateDatetime!}
+								<#else>
+									<a href="catalogUpload.html?catalogSeq=${vo.catalogSeq!}">上傳檔案</a>
+								</#if>
+	                        </div>
+	                        
+	                        <div class="txt-cell col-delete">
+	                            <a href="javascript:deletePfpCatalog('${vo.catalogSeq!}')"></a>
+	                        </div>
+                        	
+						</div>
+					</#list>
+
+                </div>
+            </div>
+            <#-- 表格內容 結束 -->
+
+            <#-- 頁碼 pagination 開始 -->
+            <#-- data-order: 目前頁碼 -->
+            <#-- data-quantity: 頁數 -->
+            <div class="pagination-wrap txt-noselect m-b30" data-order="79" data-quantity="150">
+                <#-- data-num: 頁碼 -->
+                <ul class="pagination-box txt-table">
+                    
+                    <#-- 留者查看用，不需要可刪
+                    <li class="txt-cell txt-left">
+                        <a data-num="1" class="pagination-button left" href="#"></a>
+                    </li>
+                    <li class="txt-cell">
+                        <a class="pagination-button prev" href="#" title="上10頁"></a>
+                        <span class="pagination-buttongroup">
+                            <a data-num="" class="pagination-button" href="#"></a>
+                            <a data-num="" class="pagination-button" href="#"></a>
+                            <a data-num="" class="pagination-button" href="#"></a>
+                            <a data-num="" class="pagination-button" href="#"></a>
+                            <a data-num="" class="pagination-button" href="#"></a>
+                            <a data-num="" class="pagination-button" href="#"></a>
+                            <a data-num="" class="pagination-button" href="#"></a>
+                            <a data-num="" class="pagination-button" href="#"></a>
+                            <a data-num="" class="pagination-button" href="#"></a>
+                            <a data-num="" class="pagination-button" href="#"></a>
+                        </span>
+                        <#-- <a data-num="..." class="pagination-button ellipsis" href="#"></a> -->
+                    <#-- <a class="pagination-button next" href="#" title="下10頁"></a>
+                    </li>
+                    <li class="txt-cell txt-right">
+                        <a data-num="" class="pagination-button right" href="#"></a>
+                    </li> -->
+                    
+                </ul>
+            </div>
+            <#-- 頁碼 pagination 結束 -->
+            
         </div>
     </div>
 
+</div>

@@ -467,4 +467,11 @@
 		<property name="pfpCatalogLogoDetailService" ref="PfpCatalogLogoDetailService" />
     </bean>
     <!-- 商品LOGO END -->
+    
+    <!-- 商品目錄 -->
+    <bean id="PfpCatalogAction" class="com.pchome.akbpfp.struts2.action.catalog.PfpCatalogAction" scope="prototype" >
+    	<property name="pfpCatalogService" ref="PfpCatalogService" />
+    	<property name="pfpCatalogUploadListService" ref="PfpCatalogUploadListService" />
+    </bean>
+
 </beans>

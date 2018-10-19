@@ -12,6 +12,29 @@
 	<@t.insertAttribute name="includeJs" />
 </#if>
 
+<script language="JavaScript" src="<@s.url value="/" />html/js/ad/fileUpload.js?t=20180725001"></script>
+
+<form id="fileUploadForm" name="fileUploadForm" method="post" enctype="multipart/form-data" target="fileUploadCSV" action="catalogProdFileUploadCSV.html" onsubmit="return fileUploadSubmit()">
+	<div>
+		<table>
+			<#-- 測試用而已，之後移code再刪除 -->
+			<th height="35" style="width:12%">檔案上傳測試</th>
+			<td style="min-width:250px;background:#f9f9f9">
+				<input type="file" id="fileUpload" name="fileUpload" accept=".csv" onchange="fileUploadCSV(this)">
+				<#--<input type="text" id="fileName" name="fileName" value=""/>
+				<input type="text" id="fileType" name="fileType" value=""/>
+				 <input type="file" id="myFile" name="myFile" accept=".csv" onchange="fileUploadCSV(this)">
+				<input type="button" id="upload_file" onclick="fileUp()" value="上傳"> 
+				<input type="submit" value="提交" onclick="abc()"/>-->
+
+				<input type="submit" id="submitBtn" name="submitBtn" value="建立"/>
+				<#-- <input type="button" id="submitBtn" name="submitBtn" value="提交" onclick="fileUploadSubmit()"/>-->
+			</td>
+			<#-- 測試用而已，之後移code再刪除 end -->
+		</table>
+	</div>
+</form>
+	
 <div class="cont">
 <#if adStyle == "TXT">
     <form method="post" id="modifyForm" name="modifyForm" action="doAdAdAddTxt.html">

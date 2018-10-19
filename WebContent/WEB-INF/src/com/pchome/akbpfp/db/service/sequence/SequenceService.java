@@ -157,6 +157,39 @@ public class SequenceService extends BaseService<Sequence,String> implements ISe
 	    return this.getIDForTable(enumSequenceTableName, mid);
 	}
 
+	/**
+	 * 可輸入欄位總長度，補滿需要的位數
+	 * ex:totalLength=20 結果:PCUL2018080800000001
+	 * @param enumSequenceTableName
+	 * @param mid 中間要輸入甚麼參數
+	 * @param totalLength 總長度
+	 * @return 
+	 * @throws Exception
+	 */
+	@Override
+	public String getId(EnumSequenceTableName enumSequenceTableName, String mid, int totalLength) throws Exception {
+		Sequence sequence = getSequence(enumSequenceTableName);
+		String tableDate = sequence.getTableDate();
+		int no = sequence.getTableNo();
+		
+		// 輸入總欄位數 - 序號前面的代碼長度 - 底線等等的長度 - 日期長度 - DB內目前序號長度
+		totalLength = totalLength - sequence.getTableChar().length() - mid.length() - tableDate.length() - String.valueOf(no).length();
+
+		StringBuffer tableNo = new StringBuffer();
+		for (int i = 0; i < totalLength; i++) {
+			tableNo.append("0");
+		}
+		tableNo.append(no);
+
+		StringBuffer id = new StringBuffer();
+		id.append(sequence.getTableChar())
+		  .append(mid)
+		  .append(tableDate)
+		  .append(tableNo);
+		
+		return id.toString();
+	}
+	
 	public static void main(String arg[]) throws Exception{
 		ApplicationContext context = new FileSystemXmlApplicationContext(TestConfig.path);
 

@@ -59,7 +59,14 @@
     <bean id="VideoAd" class="com.pchome.akbpfp.struts2.action.factory.ad.VideoAd" scope="prototype"  />
     <!-- 廣告行為工廠 END -->
     
-    
+    <!-- 商品廣告-檔案上傳(一般購物類) -->
+    <bean id="ShoppingProd" class="com.pchome.akbpfp.db.service.catalog.uploadList.ShoppingProd">
+    	<property name="akbPfpServer" value="${akbpfp.server}" />
+    	<property name="photoDbPathNew" value="${photo.db.path.new}" />
+        <property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
+        <property name="pfpCatalogService" ref="PfpCatalogService" />
+        <property name="sequenceService" ref="SequenceService" />
+    </bean>
     
     
 <!-- 

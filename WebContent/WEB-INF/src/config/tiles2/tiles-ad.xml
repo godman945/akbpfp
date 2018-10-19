@@ -356,5 +356,66 @@
     
     <!-- 快速刊登廣告 END -->
     
+    <!-- 商品目錄、上傳 START -->
+    <definition name="catalog.prod.layout" extends="default.layout" >
+    	<put-attribute name="head" value="catalog.prod.head" />
+    	<put-attribute name="menu" value="catalog.prod.menu" />
+    </definition>
+	
+	<definition name="catalog.prod.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
+    	<put-attribute name="js" value="/ftl/catalogProd/js.ftl" />
+    </definition>
+	
+	<definition name="catalog.prod.menu" extends="default.menu" >
+    	<put-attribute name="submenu" value="/ftl/catalogProd/submenu.ftl" />
+    </definition>
+    
+    <!-- 進入商品管理，沒有商品目錄的畫面 -->
+    <definition name=".catalog.prod.view.index" extends="catalog.prod.layout">
+        <put-attribute name="body" value=".catalog.prod.view.index.body" />
+    </definition>
+    
+	<definition name=".catalog.prod.view.index.body" template="/ftl/catalogProd/catalog/catalog.prod.view.index.ftl" >
+	</definition>
+    
+    <!-- 進入商品管理，有商品目錄的畫面 -->
+    <definition name=".catalog.prod.view.catalogList" extends="catalog.prod.layout">
+        <put-attribute name="body" value=".catalog.prod.view.catalogList.body" />
+    </definition>
+    
+	<definition name=".catalog.prod.view.catalogList.body" template="/ftl/catalogProd/catalog/catalog.prod.view.catalogList.ftl" >
+	</definition>
+	
+	<!-- 進入新增目錄的畫面 -->
+    <definition name=".catalog.prod.view.addCatalog" extends="catalog.prod.layout">
+        <put-attribute name="body" value="/ftl/catalogProd/catalog/catalog.prod.view.addCatalog.ftl" />
+    </definition>
+    
+	<!-- 選擇商品資料來源 -->
+    <definition name=".catalog.upload.view.selectProductDataSource" extends="catalog.prod.layout">
+        <put-attribute name="body" value="/ftl/catalogProd/catalogUpload/catalog.upload.view.selectProductDataSource.ftl" />
+    </definition>
+
+	<!-- 商品 檔案上傳 -->
+	<definition name=".catalog.upload.view.fileUpload" extends="catalog.prod.layout">
+        <put-attribute name="body" value="/ftl/catalogProd/catalogUpload/catalog.upload.view.fileUpload.ftl" />
+    </definition>
+    
+    <!-- 商品 自動排程 -->
+    <definition name=".catalog.upload.view.autoJob" extends="catalog.prod.layout">
+        <put-attribute name="body" value="/ftl/catalogProd/catalogUpload/catalog.upload.view.autoJob.ftl" />
+    </definition>
+    
+    <!-- 商品 賣場網址 -->
+    <definition name=".catalog.upload.view.pchomeStoreURL" extends="catalog.prod.layout">
+        <put-attribute name="body" value="/ftl/catalogProd/catalogUpload/catalog.upload.view.pchomeStoreURL.ftl" />
+    </definition>
+    
+    <!-- 商品 手動上傳 -->
+    <definition name=".catalog.upload.view.manualInput" extends="catalog.prod.layout">
+        <put-attribute name="body" value="/ftl/catalogProd/catalogUpload/catalog.upload.view.manualInput.ftl" />
+    </definition>
+    <!-- 商品目錄、上傳 END -->
     
 </tiles-definitions>

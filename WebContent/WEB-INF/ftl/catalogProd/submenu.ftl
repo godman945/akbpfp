@@ -1,8 +1,8 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <@s.set var="uri" value="%{#request['javax.servlet.forward.request_uri']}" />
-<!-- submenu start -->
+<#-- submenu start -->
 
-<!--商品管理 -->
+<#--商品管理 -->
 <div class="submn">
 	<@s.if test="%{#uri.indexOf('/catalog') > -1 ||
 				   #uri.indexOf('/prodListCardStyleView') > -1 ||
@@ -10,16 +10,15 @@
 				   #uri.indexOf('/queryCatalogGroup') > -1 ||
 				   #uri.indexOf('/queryProdGroupFilterProdList') > -1 ||
 				   #uri.indexOf('/queryProdGroupFilterItem') > -1 ||
-				   #uri.indexOf('/queryProdGroupList') > -1}">
-        <a href="<@s.url value="/" />catalog.html"><b>商品目錄</b></a>
+				   #uri.indexOf('/queryProdGroupList') > -1 ||
+				   #uri.indexOf('/catalogProd') > -1 ||
+				   #uri.indexOf('/addCatalog') > -1 }">
+        <a href="<@s.url value="/" />catalogProd.html"><b>商品目錄</b></a>
     </@s.if>
     <@s.else>
-       	<a href="<@s.url value="/" />catalog.html" style="color:#db0000;text-decoration:underline">商品目錄</a>
+       	<a href="<@s.url value="/" />catalogProd.html" style="color:#db0000;text-decoration:underline">商品目錄</a>
     </@s.else>
 </div>
-
-
-
 
 <div class="submn">
 	<@s.if test="%{#uri.indexOf('/logo') > -1 ||
@@ -31,4 +30,4 @@
        	<a href="<@s.url value="/" />logo.html">LOGO管理</a>
     </@s.else>
 </div>
-<!--商品管理 -->
+<#--商品管理 -->

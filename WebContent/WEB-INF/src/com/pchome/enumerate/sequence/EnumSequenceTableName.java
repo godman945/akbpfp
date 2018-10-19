@@ -32,7 +32,17 @@ public enum EnumSequenceTableName {
 	// 商品目錄群組序號
 	PFP_CATALOG_GROUP("pfp_catalog_group","PCG"),
 	// 商品LOGO
-	PFP_CATALOG_LOG_SEQ("pfp_catalog_log_seq","PCL");
+	PFP_CATALOG_LOG_SEQ("pfp_catalog_log_seq","PCL"),
+	
+	/**
+	 * 商品目錄ID
+	 */
+	PFP_CATALOG("catalog_seq", "PC"),
+	
+	/**
+	 * 商品目錄更新紀錄id
+	 */
+	PFP_CATALOG_UPLOAD_LOG("catalog_upload_log_seq", "PCUL");
 	
 	private String snoName;
 	private String charName;

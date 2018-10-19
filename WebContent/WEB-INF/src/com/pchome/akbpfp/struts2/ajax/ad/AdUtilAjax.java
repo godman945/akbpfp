@@ -51,6 +51,23 @@ public class AdUtilAjax extends BaseCookieAction{
 	}
 	
 	/**
+	 * 檢查輸入網址，確認是否為危險網址
+	 * @param adShowUrl
+	 * @param akbPfpServer 
+	 * @return false:網址有誤，true:正常
+	 * @throws Exception
+	 */
+	public boolean checkUrl(String adShowUrl, String akbPfpServer) throws Exception {
+		url = adShowUrl;
+		this.akbPfpServer = akbPfpServer;
+		checkAdUrl();
+		if (urlState < 200 || urlState >= 300) {
+			return false;
+		}
+		return true;
+	}
+	
+	/**
 	 * 檢查輸入的廣告網址，確認是否為危險網址
 	 * @return
 	 * @throws Exception
