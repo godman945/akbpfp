@@ -14,6 +14,6 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	
 	public List<PfpCatalog> getPfpCatalogList(String pfpCustomerInfoId) throws Exception;
 	
-	
+	public List<PfpCatalog> getPfpCatalogByCustomerInfoId(String customerInfoId) throws Exception;
 	
 }

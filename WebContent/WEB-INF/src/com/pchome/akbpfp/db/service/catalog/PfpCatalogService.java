@@ -28,5 +28,8 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 		return ((IPfpCatalogDAO)dao).getPfpCatalogList(pfpCustomerInfoId);
 	}
 
-	
+	public List<PfpCatalog> getPfpCatalogByCustomerInfoId(String customerInfoId) throws Exception {
+		List<PfpCatalog> data = ((IPfpCatalogDAO)dao).getPfpCatalogByCustomerInfoId(customerInfoId);
+		return data;
+	}
 }

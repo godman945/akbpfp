@@ -42,7 +42,24 @@
    		<property name="pfpCatalogProdEcService" ref="PfpCatalogProdEcService" />
      </bean>
      
-      <!-- 商品群組、清單END-->
+     <!-- 商品群組、清單END-->
+     
+	<!-- 廣告行為工廠 START -->
+    <bean id="AdFactory" class="com.pchome.akbpfp.struts2.action.factory.ad.AdFactory">
+    	<property name="multimediaAd" ref="MultimediaAd" />
+    	<property name="prodAd" ref="ProdAd" />
+    	<property name="videoAd" ref="VideoAd" />
+    </bean>
+    <bean id="MultimediaAd" class="com.pchome.akbpfp.struts2.action.factory.ad.MultimediaAd" scope="prototype"/>
+    <bean id="ProdAd" class="com.pchome.akbpfp.struts2.action.factory.ad.ProdAd" scope="prototype"  >
+    	<property name="pfpCatalogService" ref="PfpCatalogService" />
+    	<property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+    	<property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
+    </bean>
+    <bean id="VideoAd" class="com.pchome.akbpfp.struts2.action.factory.ad.VideoAd" scope="prototype"  />
+    <!-- 廣告行為工廠 END -->
+    
+    
     
     
 <!-- 

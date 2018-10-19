@@ -29,8 +29,8 @@
 	</tr>
 </thead>
 <tbody>
-	<#if adAdViewVO?exists>
-	    <#list adAdViewVO as vo>
+	<#if adAdViewVOList?exists>
+	    <#list adAdViewVOList as vo>
 			<tr>
 				<td>
 					<#if vo.adStatus == 4 || vo.adStatus == 9>
@@ -65,7 +65,30 @@
 				        	</span>
 			        	</div>
 					<#else>
-						<span><iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span>
+						<#if vo.adOperatingRule =='PROD'>
+								<iframe height="250" width="300" class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" allowtransparency="true" allowfullscreen="true" 
+									src="adProdModel.html
+									?catalogGroupId=${vo.catalogGroupId!}
+									&disTxtType=${vo.disTxtType!}
+									&disBgColor=${vo.disBgColor!}
+									&disFontColor=${vo.disFontColor!}
+									&btnTxt=${vo.btnTxt!}
+									&btnFontColor=${vo.btnFontColor!}
+									&btnBgColor=${vo.btnBgColor!}
+									&logoType=type1
+									&logoText=${vo.logoText!}
+									&logoBgColor=${vo.logoBgColor!}
+									&logoFontColor=${vo.logoFontColor!}
+									&prodLogoType=type1
+									&adbgType=hasposter
+									&imgProportiona=${vo.userLogoType!}
+									&userLogoPath=${vo.userLogoPath!}
+									&prodAdUrl=${vo.realUrl!}
+									">
+								</iframe>
+							<#else>
+								<span><iframe height="120" width="350" src="adModel.html?adNo=${vo.adSeq!}&tproNo=${vo.adTemplateNo!}" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span>
+						</#if>
 		        	</#if>
 		        </td>
 		        
@@ -84,18 +107,26 @@
 				<td class="td01">NT$ ${vo.adClkPrice?string('#,###')!}</td>
 				<td class="td02">
 					<#if vo.adStatus != 9>
-						<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}&adOperatingRule=MEDIA">製作新廣告</a><br>
+						<#if vo.adOperatingRule == 'MEDIA'>
+							<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}&adOperatingRule=MEDIA">製作新廣告</a><br>
+						<#elseif vo.adOperatingRule == 'PROD'>
+							<a href="adAdAdd.html?adGroupSeq=${vo.adGroupSeq!}&adOperatingRule=PROD">製作新廣告</a><br>
+						</#if>
 						<#if adType == "0" || adType == "1" >
 						<a href="adKeywordAdd.html?adGroupSeq=${vo.adGroupSeq!}">新增關鍵字</a><br>
 						</#if>
 					</#if>
 					<#if vo.adStatus != 2 && vo.adStatus != 13>	
-						<#if vo.adStyle == "TXT">			
-							<a href="adAdEdit.html?adSeq=${vo.adSeq!}">修改</a>
-						<#elseif vo.adStyle == "TMG">
-							<a href="adAdEdit.html?adSeq=${vo.adSeq!}">修改</a>
-						<#elseif vo.adStyle == "IMG">
-							<a href="adAdEditImg.html?adSeq=${vo.adSeq!}">修改</a>
+						<#if vo.adOperatingRule == 'MEDIA'>
+							<#if vo.adStyle == "TXT">			
+								<a href="adAdEdit.html?adSeq=${vo.adSeq!}">修改</a>
+							<#elseif vo.adStyle == "TMG">
+								<a href="adAdEdit.html?adSeq=${vo.adSeq!}">修改</a>
+							<#elseif vo.adStyle == "IMG">
+								<a href="adAdEditImg.html?adSeq=${vo.adSeq!}">修改</a>
+							</#if>
+						<#elseif vo.adOperatingRule == 'PROD'>
+							<a href="adAdEditProd.html?adSeq=${vo.adSeq!}">修改</a>
 						</#if>
 						<#if vo.adStatus == 0 || vo.adStatus == 1 || vo.adStatus == 3 || vo.adStatus == 6 >
 							<a href="#" onclick="closeAdAdStatus('${vo.adSeq!}','10')">關閉</a>

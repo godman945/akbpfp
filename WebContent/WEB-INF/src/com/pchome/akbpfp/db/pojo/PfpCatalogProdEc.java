@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/10/5 �W�� 11:02:40 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/10/8 �U�� 02:19:47 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -28,6 +28,7 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 	private String ecTitle;
 	private String ecImg;
 	private String ecImgRegion;
+	private String ecImgMd5;
 	private String ecUrl;
 	private int ecPrice;
 	private int ecDiscountPrice;
@@ -43,7 +44,7 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 	}
 
 	public PfpCatalogProdEc(PfpCatalog pfpCatalog, String catalogProdSeq, String ecName, String ecTitle, String ecImg,
-			String ecImgRegion, String ecUrl, int ecPrice, int ecDiscountPrice, String ecStockStatus,
+			String ecImgRegion, String ecImgMd5, String ecUrl, int ecPrice, int ecDiscountPrice, String ecStockStatus,
 			String ecUseStatus, String ecCategory, String ecStatus, String ecCheckStatus, Date updateDate,
 			Date createDate) {
 		this.pfpCatalog = pfpCatalog;
@@ -52,6 +53,7 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 		this.ecTitle = ecTitle;
 		this.ecImg = ecImg;
 		this.ecImgRegion = ecImgRegion;
+		this.ecImgMd5 = ecImgMd5;
 		this.ecUrl = ecUrl;
 		this.ecPrice = ecPrice;
 		this.ecDiscountPrice = ecDiscountPrice;
@@ -129,6 +131,15 @@ public class PfpCatalogProdEc implements java.io.Serializable {
 
 	public void setEcImgRegion(String ecImgRegion) {
 		this.ecImgRegion = ecImgRegion;
+	}
+
+	@Column(name = "ec_img_md5", nullable = false, length = 50)
+	public String getEcImgMd5() {
+		return this.ecImgMd5;
+	}
+
+	public void setEcImgMd5(String ecImgMd5) {
+		this.ecImgMd5 = ecImgMd5;
 	}
 
 	@Column(name = "ec_url", nullable = false, length = 2048)

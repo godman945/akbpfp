@@ -51,9 +51,8 @@ public class MemberAPI {
 		
 		Map<String,String> map = new LinkedHashMap<String,String>();
 		
-		String url = memberServer+EnumRedirectAction.MEMBER_API_FIND_MEMBER.getAction()+
-					"?ad_user_id="+memberId;
-		log.info(" url = "+url);
+		String url = memberServer+EnumRedirectAction.MEMBER_API_FIND_MEMBER.getAction()+"?ad_user_id="+memberId;
+		log.info("url = "+url);
 		
 		String json = HttpUtil.getInstance().getResult(url, "UTF-8");		
 		log.info(" member json = "+json);
@@ -67,7 +66,7 @@ public class MemberAPI {
 			String value = jsonObject.get(key).toString();
 			map.put(key, value);
 		}
-		
+		log.info("map:"+map);
 		return map;
 	}
 	

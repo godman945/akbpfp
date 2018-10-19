@@ -12,6 +12,12 @@ public interface IAPIProvider {
 	 */
 	public String getAdVideoContent(String adPreviewVideoURL,String adPreviewVideoBgImg,String realUrl) throws Exception;
 	
+	
+	/**
+	 * 取Prod廣告內容 
+	 */
+	public String getAdProdContent(String pfpProdAdPreviewJson) throws Exception;
+	
 	/**
 	 * 偵測 RMI 系統是否可運行
 	 */

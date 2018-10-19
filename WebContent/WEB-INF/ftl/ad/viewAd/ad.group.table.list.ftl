@@ -16,8 +16,8 @@
 <table id="tableView" class="tablesorter" width="100%" border="0" cellpadding="0" cellspacing="1">
 <thead>
 	<tr>
-		<!-- MEDIA廣告 -->
-		<#if adOperatingRule?exists && adOperatingRule == "MEDIA">
+		<!-- MEDIA或是商品廣告 -->
+		<#if adOperatingRule?exists && (adOperatingRule == "MEDIA" || adOperatingRule == "PROD")>
 				<th width="50"><a href="#" onclick="checkAll()">全選</a></th>
 				<th height="35">分類</th>
 				<th>裝置</th>
@@ -66,7 +66,7 @@
 					</#if>	
 				</td>
 				
-		    	<#if adOperatingRule?exists && adOperatingRule == "MEDIA">
+		    	<#if adOperatingRule?exists && (adOperatingRule == "MEDIA" || adOperatingRule == "PROD")>
 					<td height="35" class="td02">
 					    <#if vo.adGroupStatus != 9 >
 					    	<a href="adAdView.html?adGroupSeq=${vo.adGroupSeq!}&groupMaxPrice=${groupMaxPrice!}">${vo.adGroupName!}</a>
@@ -178,7 +178,7 @@
 	</#if>
 </tbody>
 	<tr class="tbg">
-		<#if adOperatingRule?exists && adOperatingRule=="MEDIA">
+		<#if adOperatingRule?exists && (adOperatingRule=="MEDIA" || adOperatingRule=="PROD")>
 			<#if adType == '0'>
 				<td colspan="7">總計：${totalSize!}筆</td>
 			<#else>
@@ -208,6 +208,9 @@
 <input type="hidden" id="userPrice" name="userPrice" />
 <input type="hidden" id="searchPriceType" name="searchPriceType" />
 <input type="hidden" id="adGroupSearchPrice" name="adGroupSearchPrice" />
+
+>>>>>>>>>>${adOperatingRule!}
+
 </form>
 <span style="padding:10px;display:block">
 	<input type="button" name="stop" onClick="modifyAdStatus('9')" value="暫 停" /> &nbsp; 

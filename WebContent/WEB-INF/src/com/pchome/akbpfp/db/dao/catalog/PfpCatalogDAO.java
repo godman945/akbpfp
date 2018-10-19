@@ -53,7 +53,15 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 	}
 	
 
-	
+	public List<PfpCatalog> getPfpCatalogByCustomerInfoId(String customerInfoId) throws Exception {
+		StringBuffer hql = new StringBuffer();
+		hql.append(" from PfpCatalog ");
+		hql.append(" where pfpCustomerInfoId =:customerInfoId ");
+		Session session = super.getSession();
+        Query query = session.createQuery(hql.toString());
+        query.setParameter("customerInfoId", customerInfoId);
+        return query.list();
+	}
 
 	
 }

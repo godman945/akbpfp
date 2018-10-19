@@ -470,14 +470,14 @@ public class AdActionAddAction extends BaseCookieAction{
 		if(pfpAdActionService.getAdGroupCounts(adActionSeq) <= 0) {
 			pfpAdAction.setAdActionStatus(EnumStatus.UnDone.getStatusId());		// 新增廣告時，status 設定為未完成
 		}
-		if(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getValue() == Integer.parseInt(adOperatingRule)){
-			pfpAdAction.setAdOperatingRule(EnumAdStyleType.AD_STYLE_MULTIMEDIA.getTypeName());
-		}else if(EnumAdStyleType.AD_STYLE_VIDEO.getValue() == Integer.parseInt(adOperatingRule)){
-			pfpAdAction.setAdOperatingRule(EnumAdStyleType.AD_STYLE_VIDEO.getTypeName());
+		for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+			if(Integer.parseInt(adOperatingRule) == enumAdStyleType.getValue()){
+				pfpAdAction.setAdOperatingRule(enumAdStyleType.getTypeName());
+				break;
+			}
 		}
 		pfpAdAction.setAdType(Integer.parseInt(adType));
 		pfpAdAction.setAdDevice(Integer.parseInt(adDevice));	
-		
 		String mon = reversionString(timeCode.substring(0,24));
 		String tue = reversionString(timeCode.substring(24,48));
 		String wed = reversionString(timeCode.substring(48,72));

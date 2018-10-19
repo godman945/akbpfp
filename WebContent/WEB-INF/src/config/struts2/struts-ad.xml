@@ -157,8 +157,9 @@
 		<interceptor-ref name="adPrivilegeInterceptor" />
 		<result type="tiles" name="success">.ad.ad.add</result>
 		<result type="tiles" name="adVideoAdd">.ad.video.add</result>
+		<result type="tiles" name="adProdAdd">.ad.prod.add</result>
 		<result type="redirectAction" name="notOwner">
-			<param name="actionName">adActionView</param>  
+			<param name="actionName">${backPage}</param>  
 		</result>
     </action>
     
@@ -189,6 +190,40 @@
 		</result>
 		<result type="tiles" name="input">.ad.ad.add</result>
     </action>
+    
+    <!-- 商品廣告  START-->
+    	<action name="adAddProdSaveAjax" class="AdAddAction" method="doAdAdAddProd">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+       		<result type="json" name="success">
+        		<param name="root">result</param>
+        	</result>
+     	</action>
+     	
+     	<action name="adAdEditProd" class="AdEditAction" method="adAdEditProd">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">51200</param>
+			</interceptor-ref>
+			<result type="redirectAction" name="input">
+				<param name="actionName">${adActionName}</param>  
+				<param name="adGroupSeq">${adGroupSeq}</param>
+			</result>
+			<result type="tiles" name="success">.ad.ad.prod.edit</result>
+    	</action>
+     	
+     	
+     	<action name="adProdEditSaveAjax" class="AdEditAction" method="doAdEditProd">
+      		<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+       		<result type="json" name="success">
+        		<param name="root">result</param>
+        	</result>
+     	</action>
+     	
+     	
+    <!-- 商品廣告  END-->
     
     <!-- 影音廣告  START-->
    		<action name="adAddVideoSaveAjax" class="AdAddAction" method="doAdAdAddVideo">

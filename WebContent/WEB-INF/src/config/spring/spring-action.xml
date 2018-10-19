@@ -248,6 +248,7 @@
         <property name="photoTmpPath" value="${photo.tmp.path}" />
         <property name="photoPath" value="${photo.path}" />
         <property name="photoDbPathNew" value="${photo.db.path.new}" />
+        <property name="photoDbPathPrefix" value="${photo.db.path.prefix}" />
 		<property name="controlPriceAPI" ref="ControlPriceAPI" />
 		<property name="pfbSizeService" ref="PfbSizeService" />
 		<property name="photoDbPath" value="${photo.db.path}" />
@@ -255,7 +256,12 @@
 		<property name="pfpAdActionService" ref="PfpAdActionService" />
 		<property name="pfpAdManyURLSearchService" ref="PfpAdManyURLSearchService" />
 		<property name="manyURLRediskey" value="${redis.manyURL.rediskey}" />
+		<property name="adFactory" ref="AdFactory" />
+		<property name="cookieUtil" ref="CookieUtil" />
+		
     </bean>
+	
+
 
     <bean id="AdKeywordAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdKeywordAddAction" scope="prototype" >
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
@@ -294,6 +300,7 @@
     </bean>
 
     <bean id="AdEditAction" class="com.pchome.akbpfp.struts2.action.ad.AdEditAction" scope="prototype" >
+    	<property name="adFactory" ref="AdFactory" />
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
 		<property name="sequenceService" ref="SequenceService" />
     	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
@@ -307,6 +314,7 @@
         <property name="photoPath" value="${photo.path}" />
         <property name="photoDbPath" value="${photo.db.path}" />
         <property name="photoDbPathNew" value="${photo.db.path.new}" />
+        <property name="photoDbPathPrefix" value="${photo.db.path.prefix}" />
     </bean>
 
 	<!-- Ad View -->
@@ -436,6 +444,7 @@
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="prodListFactory" ref="ProdListFactory" />
+    	<property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
     </bean>
     <!-- 商品清單 END -->
     
@@ -448,5 +457,14 @@
     	<property name="prodGroupFactory" ref="ProdGroupFactory" />
     </bean>
     <!-- 商品群組 END -->
-   
+    
+    <!-- 商品LOGO -->
+    <bean id="ProdLogoAction" class="com.pchome.akbpfp.struts2.action.prod.ProdLogoAction" scope="prototype" >
+		<property name="photoDbPathPrefix" value="${photo.db.path.prefix}" />
+		<property name="photoDbPathNew" value="${photo.db.path.new}" />
+		<property name="sequenceService" ref="SequenceService" />
+		<property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+		<property name="pfpCatalogLogoDetailService" ref="PfpCatalogLogoDetailService" />
+    </bean>
+    <!-- 商品LOGO END -->
 </beans>

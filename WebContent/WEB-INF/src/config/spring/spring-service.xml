@@ -138,6 +138,8 @@
 
 	<!-- Ad -->
     <bean id="PfpAdService" class="com.pchome.akbpfp.db.service.ad.PfpAdService">    	     
+        <property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+        <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
         <property name="dao" ref="PfpAdDAO" />   
     </bean>
 
@@ -257,5 +259,15 @@
     
     <!-- 商品群組、清單END-->
     
-    
+    <!-- 商品 START-->
+    <bean id="PfpCatalogLogoService" class="com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogLogoService">
+    	<property name="dao" ref="PfpCatalogLogoDAO" />
+    </bean>
+    <bean id="PfpCatalogLogoDetailService" class="com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogLogoDetailService">
+    	<property name="dao" ref="PfpCatalogLogoDetailDAO" />
+    </bean>
+    <bean id="PfpCatalogSetupService" class="com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogSetupService">
+    	<property name="dao" ref="PfpCatalogSetupDAO" />
+    </bean>
+    <!-- 商品 END-->
 </beans>

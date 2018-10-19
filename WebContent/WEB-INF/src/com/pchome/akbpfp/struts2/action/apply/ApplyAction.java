@@ -3,6 +3,7 @@ package com.pchome.akbpfp.struts2.action.apply;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +48,7 @@ import com.pchome.enumerate.account.EnumPfdAccountPayType;
 import com.pchome.enumerate.account.EnumPfpAuthorizAtion;
 import com.pchome.enumerate.apply.EnumSaveMoney;
 import com.pchome.enumerate.billing.EnumBillingStatus;
+import com.pchome.enumerate.bu.EnumBuGift;
 import com.pchome.enumerate.freeAction.EnumGiftSnoPayment;
 import com.pchome.enumerate.freeAction.EnumGiftSnoStyle;
 import com.pchome.enumerate.freeAction.EnumGiftSnoUsed;
@@ -61,7 +63,8 @@ import com.pchome.rmi.accesslog.EnumAccesslogAction;
 public class ApplyAction extends BaseSSLAction{
 	
 	private static final long serialVersionUID = 1L;
-	
+	private String buFreeGiftTimeFlag;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private MemberAPI memberAPI;
 	private IPfpCustomerInfoService pfpCustomerInfoService;
 	private SequenceService sequenceService;
@@ -168,9 +171,17 @@ public class ApplyAction extends BaseSSLAction{
 				this.buAccountVO = new BuAccountVO();
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
-				buAccountVO.setGiftSno("");
-				log.info(">>>>>>>>>>>giftSno:"+giftSno);
-				log.info(">>>>>>>>>>>giftSno:"+accountVO.getGiftSno());
+				buAccountVO.setGiftSno(EnumBuGift.GIFT_NO.getContent());
+				Date giftEndDate = admFreeGiftService.findAdmFreeGiftBySno(buAccountVO.getGiftSno()).getAdmFreeAction().getActionEndDate();
+				Calendar  calendar  = Calendar.getInstance();
+				Date now = sdf.parse(sdf.format(calendar.getTime()));
+				if(now.compareTo(giftEndDate) > 0){
+					buAccountVO.setGiftSno("");
+					accountVO.setGiftSno("");
+					buFreeGiftTimeFlag = "Y";
+				}else{
+					buFreeGiftTimeFlag = "N";
+				}
 			}
 		}
 		// 帳戶申請中
@@ -199,7 +210,6 @@ public class ApplyAction extends BaseSSLAction{
 			}
 			this.accountVO.setMemberVO(memberVO);
 			
-			
 			// BU資料
 			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(userMemberId);
 			if(pfpBuAccountList.size() > 0){
@@ -207,13 +217,19 @@ public class ApplyAction extends BaseSSLAction{
 				this.buAccountVO = new BuAccountVO();
 				buAccountVO.setBuUrl(pfpBuAccount.getBuUrl());
 				buAccountVO.setBuId(pfpBuAccount.getBuId());
-				buAccountVO.setGiftSno("");
-				accountVO.setGiftSno("");
-				log.info(">>>>>>>>>>>giftSno:"+giftSno);
-				log.info(">>>>>>>>>>>giftSno:"+accountVO.getGiftSno());
+				buAccountVO.setGiftSno(EnumBuGift.GIFT_NO.getContent());
+				Date giftEndDate = admFreeGiftService.findAdmFreeGiftBySno(buAccountVO.getGiftSno()).getAdmFreeAction().getActionEndDate();
+				Calendar  calendar  = Calendar.getInstance();
+				Date now = sdf.parse(sdf.format(calendar.getTime()));
+				if(now.compareTo(giftEndDate) > 0){
+					buAccountVO.setGiftSno("");
+					accountVO.setGiftSno("");
+					buFreeGiftTimeFlag = "Y";
+				}else{
+					buFreeGiftTimeFlag = "N";
+				}
 				return "success";
 			}
-			
 			result = "wait";
 		}else{
 			// 帳戶已啟用、停權、關閉
@@ -542,10 +558,6 @@ public class ApplyAction extends BaseSSLAction{
 		this.accountVO.setAddTax(order.getTax());			
 		this.accountVO.setGiftSno(order.getGiftSno());		
 		this.accountVO.setGiftMoney(order.getGiftMoney());
-		
-		
-		log.info(">>>>alex2:"+accountVO.getGiftSno());
-		
 	}
 	
 	/**
@@ -970,6 +982,12 @@ public class ApplyAction extends BaseSSLAction{
 	}
 	public void setBuPortalPfdc(String buPortalPfdc) {
 		this.buPortalPfdc = buPortalPfdc;
+	}
+	public String getBuFreeGiftTimeFlag() {
+		return buFreeGiftTimeFlag;
+	}
+	public void setBuFreeGiftTimeFlag(String buFreeGiftTimeFlag) {
+		this.buFreeGiftTimeFlag = buFreeGiftTimeFlag;
 	}
 
 }

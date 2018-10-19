@@ -240,4 +240,17 @@
     </bean>
     <!-- 商品群組、清單END-->
     
+    <!-- 商品 START-->
+    <bean id="PfpCatalogLogoDAO" class="com.pchome.akbpfp.db.dao.catalog.prod.PfpCatalogLogoDAO">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="PfpCatalogLogoDetailDAO" class="com.pchome.akbpfp.db.dao.catalog.prod.PfpCatalogLogoDetailDAO">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    <bean id="PfpCatalogSetupDAO" class="com.pchome.akbpfp.db.dao.catalog.prod.PfpCatalogSetupDAO">
+    	<property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    
+    <!-- 商品 END-->
 </beans>

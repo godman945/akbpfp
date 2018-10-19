@@ -29,9 +29,9 @@ public class ManagerAccountAction extends BaseCookieAction{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String ip = request.getRemoteAddr();
 		log.info(">>>login  ip = " + ip);
-		
+		log.info(">>>login  Id_pchome = " + super.getId_pchome());
 		vos = pfpProviderProxy.findPfpAccount(super.getId_pchome(),ip);
-		
+		log.info(">>>>>> vos is null:"+ vos == null);
 		//log.info(" vos: "+vos.size());
 		// 無資料就導首頁
 		if(vos.isEmpty()){

@@ -4,7 +4,8 @@ public enum EnumAdStyle {
 	VIDEO("tpro_201306280004", "c_x05_mo_tad_0080", "影音式樣板", "adp_201303070003"),
 	TXT("tpro_201306280003", "tad_201303070002", "文字式樣板", "adp_201303070002"),
 	TMG("tpro_201306280001", "tad_201303070003", "圖文式樣板", "adp_201303070003"),
-    IMG("tpro_201306280004", "tad_201303070004", "圖式樣板", "adp_201507210001");
+    IMG("tpro_201306280004", "tad_201303070004", "圖式樣板", "adp_201507210001"),
+    PROD("tpro_201306280004", "tad_201303070004", "圖式樣板", "adp_201303070001");
 	private final String tproSeq;
 	private final String tadSeq;
 	private final String tadName;

@@ -14,5 +14,5 @@ public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 	
 	public List<PfpCatalog> getPfpCatalogList(String pfpCustomerInfoId) throws Exception;
 	
-	
+	public List<PfpCatalog> getPfpCatalogByCustomerInfoId(String customerInfoId) throws Exception;
 }
