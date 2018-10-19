@@ -282,7 +282,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				}
 			}
 			
-			catalogProdJsonData.put("catalog_prod_item", prdItemArray);
+			catalogProdJsonData.put("catalogProdItem", prdItemArray);
 			
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -99,8 +99,8 @@
                         	</div>
                         	
                         	<div class="txt-cell col-source">
-                        		<#if vo.updateContent??>
-	                            	${vo.updateContent!}
+                        		<#if vo.uploadContent??>
+	                            	${vo.uploadContent!}
 	                            	<small>最近更新：${vo.updateDatetime!}</small>
 	                            <#else>
 	                            	-
