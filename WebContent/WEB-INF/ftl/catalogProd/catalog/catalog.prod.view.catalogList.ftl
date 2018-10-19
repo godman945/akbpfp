@@ -5,9 +5,8 @@
 <script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalog/catalog.js?t=20181018039"></script>
 
 <div class="container-prodmanage">
-	<input type="text" id="pageNo" name="pageNo" value="${pageNo!}">
-	<input type="text" id="pageCount" name="pageCount" value="${pageCount!}">
-	<input type="text" id="totalCount" name="totalCount" value="${totalCount!}">
+	<input type="hidden" id="pageNo" name="pageNo" value="${pageNo!}">
+	<input type="hidden" id="pageCount" name="pageCount" value="${pageCount!}">
 	
 	<#-- 次目錄導覽列 開始 -->
 	<div class="nav-wrap pos-relative hidetabs tab1">
