@@ -3,7 +3,6 @@ package com.pchome.akbpfp.struts2.ajax.catalog.prodGroup;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -14,7 +13,6 @@ import org.json.JSONObject;
 
 import com.pchome.akbpfp.catalog.prodGroup.factory.AProdGroup;
 import com.pchome.akbpfp.catalog.prodGroup.factory.ProdGroupFactory;
-import com.pchome.akbpfp.catalog.prodList.factory.AProdList;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
@@ -23,12 +21,8 @@ import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupItemServic
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupService;
 import com.pchome.akbpfp.db.service.sequence.SequenceService;
 import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
-import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
-import com.pchome.enumerate.catalog.prodGroup.EnumEcProdGroupCondition;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupFactory;
-import com.pchome.enumerate.catalog.prodGroup.EnumEcProdGroupField;
-import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 
 public class CatalogProdGroupAjax extends BaseCookieAction {
@@ -105,16 +99,12 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			// 取得商品組合清單
 			ProdGroupConditionVO prodGroupConditionVO = new ProdGroupConditionVO();
 			prodGroupConditionVO.setCatalogSeq(catalogSeq);
-
-			// prodGroupConditionVO.setPfpCustomerInfoId("AC2013071700005");
 			prodGroupConditionVO.setPfpCustomerInfoId(super.getCustomer_info_id());
-
 			prodGroupConditionVO.setPage(currentPage);
 			prodGroupConditionVO.setPageSize(pageSizeSelected);
 			prodGroupConditionVO.setFilterSQL(filterSQL);
 
 			prodList = aProdGroup.getProdGroupList(prodGroupConditionVO);
-
 			if (prodList.size() <= 0) {
 				resultMap = returnErrorMsgMap("沒有商品清單資料");
 				return SUCCESS;
@@ -122,7 +112,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 
 			// 商品清單資料總筆數
 			totalCount = Integer.valueOf(aProdGroup.getProdGroupCount(catalogSeq, filterSQL));
-
 			// 總頁數
 			pageCount = (int) Math.ceil((float) totalCount / pageSizeSelected);
 
@@ -134,8 +123,8 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			resultMap.put("status", "SUCCESS");
 
 		} catch (Exception e) {
-			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
 			log.error("error:" + e);
+			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
 			return SUCCESS;
 		}
 
@@ -168,17 +157,13 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			log.info(">>> catalogGroupName: " + catalogGroupName);
 			log.info(">>> filterContentMap: " + filterContentMap);
 
-			System.out.println("MAP : " + filterContentMap);
-
 			resultMap = new HashMap<String, Object>();
-			
 
 			if( catalogGroupName.trim().length() > 20){
 				resultMap.put("msg", "組合名稱最多20字");
 				resultMap.put("status", "ERROR");
 				return SUCCESS;
 			}
-			
 			
 			if( StringUtils.isBlank(catalogGroupName)){
 				resultMap.put("msg", "組合名稱不得為空");
@@ -196,10 +181,8 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			}
 			
 			
-			
 			// 新增的篩選條件
 			JSONArray filterContentArray = new JSONArray(filterContentMap[0].toString());
-			
 			
 			// 將db篩選條件資料塞進map
 			Map<String, List<Object>> dbCompareGroupItemMap = new HashMap<String, List<Object>>();
@@ -233,9 +216,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 					dbItemArray.add(dbPfpCatalogGroupItem);
 				}
 			}
-			System.out.println("dbCompareItemMap rawdata : " + dbCompareGroupItemMap);
-
-			
 			
 			Map<String, List<Object>> dbCompareGroupItemMapNew = new HashMap<String, List<Object>>();
 			// db群組篩選條件數量要與新增的數量相同才比較
@@ -244,7 +224,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 					dbCompareGroupItemMapNew.put(entry.getKey(), entry.getValue());
 				}
 			}
-			System.out.println("dbCompareGroupItemMapNew: " + dbCompareGroupItemMapNew);
 
 			// 將新增的篩選條件與db所有篩選條件比對是否一模一樣
 			boolean isDuplicate = false;
@@ -278,7 +257,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			}
 
 			if (isDuplicate) {
-				System.out.println("篩選條件重覆: " + isDuplicate);
 				resultMap.put("msg", "篩選條件重覆");
 				resultMap.put("status", "ERROR");
 				return SUCCESS;
@@ -286,7 +264,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 
 			// 寫入pfp_catalog_group
 			String catalogGroupSeq = sequenceService.getSerialNumberByLength20(EnumSequenceTableName.PFP_CATALOG_GROUP);
-			System.out.println("catalogGroupSeq 20 : " + catalogGroupSeq);
 			PfpCatalog pfpCatalog = pfpCatalogService.getPfpCatalog(catalogSeq);
 
 			PfpCatalogGroup pfpCatalogGroup = new PfpCatalogGroup();
@@ -297,7 +274,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			pfpCatalogGroup.setCreateDate(new Date());
 			pfpCatalogGroupService.saveOrUpdateWithCommit(pfpCatalogGroup);
 
-			System.out.println("bessie success1");
 
 			// 寫入pfp_catalog_group_item
 			PfpCatalogGroup pfpCatalogGroupDb = pfpCatalogGroupService.getPfpCatalogGroup(catalogGroupSeq);
@@ -317,7 +293,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 				pfpCatalogGroupItemService.saveOrUpdate(pfpCatalogGroupItem);
 			}
 
-			System.out.println("bessie success2222");
 			resultMap.put("msg", "建立商品組合成功");
 			resultMap.put("status", "SUCCESS");
 
@@ -436,8 +411,8 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			resultMap.put("status", "SUCCESS");
 
 		} catch (Exception e) {
-			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
 			log.error("error:" + e);
+			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
 			return SUCCESS;
 		}
 

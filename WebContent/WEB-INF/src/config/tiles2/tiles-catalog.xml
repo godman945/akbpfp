@@ -18,7 +18,13 @@
     </definition>
 	
 	 <definition name="error.prod.list.card.style.view" extends="catalog.prod.layout">
+	 	<put-attribute name="head" value="error.prod.list.card.style.head" />
         <put-attribute name="body" value="/ftl/catalogProd/prodList/error.prod.list.card.style.view.ftl" />
+    </definition>
+    
+    <definition name="error.prod.list.card.style.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
+    	<put-attribute name="js" value="/ftl/catalogProd/prodList/error.prod.list.card.style.js.ftl" />
     </definition>
 	<!-- 取得卡片式商品清單 END-->
 	
@@ -35,7 +41,13 @@
     </definition>
 	
 	 <definition name="error.prod.list.table.style.view" extends="catalog.prod.layout">
+	 	<put-attribute name="head" value="error.prod.list.table.style.head" />
         <put-attribute name="body" value="/ftl/catalogProd/prodList/error.prod.list.table.style.view.ftl" />
+    </definition>
+    
+    <definition name="error.prod.list.table.style.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
+    	<put-attribute name="js" value="/ftl/catalogProd/prodList/error.prod.list.table.style.js.ftl" />
     </definition>
 	<!-- 取得表格式商品清單 END-->
 	
@@ -49,6 +61,16 @@
     <definition name="prod.group.view.head" extends="default.head" >
     	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
     	<put-attribute name="js" value="/ftl/catalogProd/prodGroup/ec.prod.group.js.ftl" />
+    </definition>
+    
+    <definition name="error.prod.group.view" extends="catalog.prod.layout">
+	 	<put-attribute name="head" value="error.prod.group.view.head" />
+        <put-attribute name="body" value="/ftl/catalogProd/prodGroup/error.prod.group.view.ftl" />
+    </definition>
+    
+    <definition name="error.prod.group.view.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
+    	<put-attribute name="js" value="/ftl/catalogProd/prodGroup/error.prod.group.js.ftl" />
     </definition>
 	<!-- 取得目錄所有群組 End-->
 	

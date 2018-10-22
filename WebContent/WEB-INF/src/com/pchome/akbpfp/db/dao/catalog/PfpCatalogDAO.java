@@ -64,6 +64,23 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
         query.setParameter("customerInfoId", customerInfoId);
         return query.list();
 	}
+	
+	
+	public List<PfpCatalog> checkPfpCatalogPrivilege(String customerInfoId,String catalogSeq) throws Exception {
+		StringBuffer hql = new StringBuffer();
+		hql.append(" from PfpCatalog ");
+		hql.append(" where pfpCustomerInfoId =:customerInfoId ");
+		hql.append(" and catalogSeq =:catalogSeq ");
+		Session session = super.getSession();
+        Query query = session.createQuery(hql.toString());
+        query.setParameter("customerInfoId", customerInfoId);
+        query.setParameter("catalogSeq", catalogSeq);
+        return query.list();
+	}
+	
+	
+	
+	
 
 	@Override
 	public List<Map<String, Object>> getPfpCatalogList(PfpCatalogVO vo) {

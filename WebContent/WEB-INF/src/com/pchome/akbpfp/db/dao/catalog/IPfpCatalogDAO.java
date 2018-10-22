@@ -17,6 +17,8 @@ public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 	
 	public List<PfpCatalog> getPfpCatalogByCustomerInfoId(String customerInfoId) throws Exception;
 	
+	public List<PfpCatalog> checkPfpCatalogPrivilege(String customerInfoId,String catalogSeq) throws Exception;
+	
 	List<Map<String, Object>> getPfpCatalogList(PfpCatalogVO vo);
 
 	void deletePfpCatalog(PfpCatalogVO vo);

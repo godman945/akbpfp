@@ -15,12 +15,14 @@
                             <em class="icon-arrow-r"></em>
                         </span>
                         <div class="select-box">
-                            <select>
-                                <option value="1">2018春季特賣</option>
-                                <option value="2">2018夏季特賣</option>
-                                <option value="3">2018秋季特賣</option>
-                                <option value="4">2018冬季特賣</option>
-                                <option value="5">春季特賣春季特賣春季特賣春季特賣春季特賣</option>
+                            <select id="catalog">
+                            	<#list pfpCatalogList as catalogList> 
+	                            	<#if catalogList.catalogSeq == catalogSeq >
+										<option value="${catalogList.catalogSeq!}" selected >${catalogList.catalogName!}</option>
+									<#else>
+										<option value="${catalogList.catalogSeq!}" >${catalogList.catalogName!}</option>
+									</#if>
+                                </#list>
                             </select>
                         </div>
                     </li>
@@ -29,7 +31,7 @@
                     <li class="txt-cell pos-relative"><a href="#">商品資料</a></li>
                     <li class="txt-cell pos-relative"><a href="#">設定</a></li>
                 </ul>
-                <div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>showad1234showad1234</div>
+                <div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>${customerInfoTitle!}</div>
             </div>
         </div>
         <!-- 次目錄導覽列 結束 -->
@@ -41,3 +43,4 @@
             </div>
         </div>
     </div>
+    <input id="catalogSeqData" type="hidden" value="${catalogSeq}">

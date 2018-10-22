@@ -15,8 +15,14 @@
                             <em class="icon-arrow-r"></em>
                         </span>
                         <div class="select-box">
-                            <select>
-                                <option value="">"      "</option>
+                            <select id="catalog">
+                            	<#list pfpCatalogList as catalogList> 
+	                            	<#if catalogList.catalogSeq == catalogSeq >
+										<option value="${catalogList.catalogSeq!}" selected >${catalogList.catalogName!}</option>
+									<#else>
+										<option value="${catalogList.catalogSeq!}" >${catalogList.catalogName!}</option>
+									</#if>
+                                </#list>
                             </select>
                         </div>
                     </li>
@@ -25,7 +31,7 @@
                     <li class="txt-cell pos-relative"><a href="#">商品資料</a></li>
                     <li class="txt-cell pos-relative"><a href="#">設定</a></li>
                 </ul>
-                <div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>""</div>
+                <div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>${customerInfoTitle!}</div>
             </div>
         </div>
         <!-- 次目錄導覽列 結束 -->

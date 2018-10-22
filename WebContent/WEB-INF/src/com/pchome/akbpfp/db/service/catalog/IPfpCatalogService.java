@@ -16,6 +16,8 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	
 	public List<PfpCatalog> getPfpCatalogByCustomerInfoId(String customerInfoId) throws Exception;
 	
+	public List<PfpCatalog> checkPfpCatalogPrivilege(String customerInfoId,String catalogSeq) throws Exception;
+	
 	/**
 	 * 查詢商品目錄清單
 	 * @param PfpCatalogVO

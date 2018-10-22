@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.struts2.ajax.catalog.prodList;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -26,7 +25,7 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 	private int currentPage;
 	private int pageSizeSelected;
 	private String prodStatus;
-	private String updateProdStatus;	//更新商品狀態
+	private String updateProdStatus; //更新商品狀態
 	private String prodName;
 	private String prodIdArray;
 	private IPfpCatalogService pfpCatalogService;
@@ -51,10 +50,7 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 			log.info(">>> prodStatus: " + prodStatus);
 			log.info(">>> prodName: " + prodName);
 			
-			System.out.println("test  : "+catalogSeq);
-			
 			resultMap = new HashMap<String, Object>();
-			
 	
 			//商品組合ID 的目錄型態
 			String catalogType = pfpCatalogService.getCatalogType(catalogSeq);
@@ -71,7 +67,6 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 				return SUCCESS;
 			}
 			
-			
 			AProdList aProdList = prodListFactory.getAProdListObj(enumProdListFactory.getCatalogName());
 			log.info(">>> aProdList: "+aProdList);
 			if (aProdList == null){
@@ -79,7 +74,7 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 				return SUCCESS;
 			}
 	
-			String pfpCustomerInfoId = super.getCustomer_info_id(); //super.getCustomer_info_id();
+			String pfpCustomerInfoId = super.getCustomer_info_id();
 			
 			ProdListConditionVO prodListConditionVO =  new ProdListConditionVO();
 			prodListConditionVO.setCatalogSeq(catalogSeq);
@@ -111,10 +106,10 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 			resultMap.put("prodList", prodList);
 			resultMap.put("status", "SUCCESS");
 			
-			
 		} catch (Exception e) {
-			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
 			log.error("error:" + e);
+			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			return SUCCESS;
 		}
 		
 		return SUCCESS;
@@ -174,15 +169,12 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 				return SUCCESS;
 			}
 			
-			
 			AProdList aProdList = prodListFactory.getAProdListObj(enumProdListFactory.getCatalogName());
 			log.info(">>> aProdList: "+aProdList);
 			if (aProdList == null){
 				resultMap = returnErrorMsgMap("此商品組合ID的目錄型態不正確");
 				return SUCCESS;
 			}
-			//[[12,5]]
-			
 			
 			JSONObject prodIdJson = new JSONObject(prodIdArray);
 			Iterator<String> keys = prodIdJson.keys();
@@ -204,8 +196,9 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 			resultMap.put("status", "SUCCESS");
 			
 		} catch (Exception e) {
-			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
 			log.error("error:" + e);
+			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			return SUCCESS;
 		}
 
 		return SUCCESS;
@@ -219,33 +212,31 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 		try{
 			log.info(">>> catalogSeq: " + catalogSeq);
 			log.info(">>> prodId: " + prodId);
+
+			resultMap = new HashMap<String, Object>();
 			
 			//商品組合ID 的目錄型態
 			String catalogType = pfpCatalogService.getCatalogType(catalogSeq);
 			log.info(">>> catalogType: " + catalogType);
 			if (StringUtils.isBlank(catalogType)) {
-				String str = "目錄型態不正確";
-				
-	//			returnJson = new ByteArrayInputStream(
-	//					getReturnJsonObj("error", EnumProdGroupList.E001.getStatus()).toString().getBytes());
+				resultMap.put("msg", "目錄型態不正確");
+				resultMap.put("status", "ERROR");
 				return SUCCESS;
 			}
 			
 			EnumProdListFactory enumProdListFactory = EnumProdListFactory.getCatalogName(catalogType);
 			log.info(">>> enumProdListFactory: " + enumProdListFactory);
 			if (enumProdListFactory == null) {
-				String str = "目錄型態不正確";
-	//			returnJson = new ByteArrayInputStream(
-	//					getReturnJsonObj("error", EnumProdGroupList.E002.getStatus()).toString().getBytes());
+				resultMap.put("msg", "目錄型態不正確");
+				resultMap.put("status", "ERROR");
 				return SUCCESS;
 			}
-			
 			
 			AProdList aProdList = prodListFactory.getAProdListObj(enumProdListFactory.getCatalogName());
 			log.info(">>> aProdList: "+aProdList);
 			if (aProdList == null){
-				String str = "此商品組合ID的目錄型態不正確";
-	//			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E002.getStatus()).toString().getBytes());
+				resultMap.put("msg", "此商品組合ID的目錄型態不正確");
+				resultMap.put("status", "ERROR");
 				return SUCCESS;
 			}
 			
@@ -253,13 +244,13 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 			prodDetailMap = aProdList.queryProdListDetail(catalogSeq,prodId).get(0);
 			
 		} catch (Exception e) {
-//			dataMap.put("status", "ERROR");
-//			dataMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
 			log.error("error:" + e);
+			resultMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			resultMap.put("status", "ERROR");
+			return SUCCESS;
 		}
 		
 		return SUCCESS;
-		
 	}
 	
 
@@ -301,13 +292,9 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 		return prodStatus;
 	}
 
-
 	public String getProdIdArray() {
 		return prodIdArray;
 	}
-
-
-
 
 	public void setProdStatus(String prodStatus) {
 		this.prodStatus = prodStatus;
@@ -369,14 +356,8 @@ import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
 		this.updateProdStatus = updateProdStatus;
 	}
 
-
-
-
 	public void setProdIdArray(String prodIdArray) {
 		this.prodIdArray = prodIdArray;
 	}
-	
-	
-	
 	
 }

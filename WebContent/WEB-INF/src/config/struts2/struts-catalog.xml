@@ -60,6 +60,7 @@
 			<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="adPrivilegeInterceptor" />
 			<result type="tiles" name="success">prod.group.view</result>
+			<result type="tiles" name="error">error.prod.group.view</result>
 		</action>
 		
 	

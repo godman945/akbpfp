@@ -68,14 +68,14 @@
 			                            </div>
 			                            <div class="col-detail">
 			                            	${dataVo.filterContent!}
-			                               <!-- <span>商品類型：<b><em>不屬於</em>硬殼行李箱</b></span>
-			                                <span>價格：<b><em>低於</em>$3,000</b></span>
-			                                <span>供應情況：<b><em>屬於</em>預售</b></span> -->
+			                               <!-- <span>商品類型：<b><em>不屬於</em>硬殼行李箱</b></span> -->
 			                            </div>
 			                        </div>
 			                	</#list> 
 			               	<#else>
-			               		此目錄沒有商品群組
+			               		<div class="portfolio-item empty txt-center">
+                            		<p class="p-tb30">尚未建立商品組合</p>
+                       			</div>
 							</#if>
 	                    </#if>	
 

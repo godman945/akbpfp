@@ -43,6 +43,11 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 		return data;
 	}
 	
+	public List<PfpCatalog> checkPfpCatalogPrivilege(String customerInfoId,String catalogSeq) throws Exception{
+		return ((IPfpCatalogDAO)dao).checkPfpCatalogPrivilege(customerInfoId,catalogSeq);
+	}
+	
+	
 	/**
 	 * 查詢商品目錄清單
 	 * @param PfpCatalogVO
