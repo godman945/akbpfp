@@ -149,7 +149,7 @@
 	
 	        <div class="button-box w-900 txt-center p-tb60">
 	            <div class="link-button"><a href="javascript:void(0);" onclick="back();">上一步</a></div>
-	            <div class="input-button"><input type="button" onclick="pchomeStoreURLFinish();" value="完成"></div>
+	            <div class="input-button"><input type="button" onclick="pchomeStoreURLFinish();" value="送出審核"></div>
 	        </div>
 	
 	    </div>
