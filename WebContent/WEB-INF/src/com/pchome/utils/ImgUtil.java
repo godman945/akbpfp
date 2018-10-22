@@ -20,8 +20,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-//import sun.misc.BASE64Decoder;
-
 public class ImgUtil {
 	private static final Log log = LogFactory.getLog(ImgUtil.class);
 	
@@ -81,9 +79,7 @@ public class ImgUtil {
 			filenameExtension = "jpg";
 		}
 		String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
-			
-//		BASE64Decoder decoder = new BASE64Decoder();
-//		byte[] bytes = decoder.decodeBuffer(imgBase64String.split(",")[1]);
+
 		byte[] bytes = Base64.decodeBase64(imgBase64String.split(",")[1].getBytes());
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 		if ("gif".equalsIgnoreCase(filenameExtension)) {// gif圖片產生方式，此方式圖片才有動畫
