@@ -98,7 +98,6 @@
                                 <div class="select-box pos-relative">
                                     <span class="pos-absolute pointer-events-none">顯示</span>
                                     <select id="pageSizeSelect">
-                                    	<option value="5" <#if pageSizeSelected==5>selected</#if> >5則</option>
                                         <option value="10" <#if pageSizeSelected==10>selected</#if> >10則</option>
                                         <option value="20" <#if pageSizeSelected==20>selected</#if> >20則</option>
                                         <option value="30" <#if pageSizeSelected==30>selected</#if> >30則</option>
