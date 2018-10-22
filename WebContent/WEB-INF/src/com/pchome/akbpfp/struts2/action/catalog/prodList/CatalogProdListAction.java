@@ -27,7 +27,6 @@ public class CatalogProdListAction extends BaseCookieAction{
 	private int totalCount = 0; //資料總筆數
 	private String catalogSeq;
 	private String prodStatus;
-//	private String catalogProdCount;
 	private IPfpCatalogService pfpCatalogService;
 	private IPfpCustomerInfoService pfpCustomerInfoService;
 	private ProdListFactory prodListFactory;
@@ -42,25 +41,6 @@ public class CatalogProdListAction extends BaseCookieAction{
 	//ajax回傳內容
 	private String result;
 	private IPfpCatalogSetupService pfpCatalogSetupService;
-	//	private SequenceService sequenceService;
-	
-	
-	
-	//<!--bessieTmp-暫時寫的之後合併拿掉 -->
-	public String execute() throws Exception{
-		
-		customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();//AC2013071700001
-		
-		
-		return SUCCESS;
-	}
-	//<!--bessieTmp-暫時寫的之後合併拿掉 -->
-	
-	
-	
-	
-
-	
 	
 	
 	public String queryProdListByCardStyle(){		
@@ -70,24 +50,14 @@ public class CatalogProdListAction extends BaseCookieAction{
 			log.info(">>> currentPage: " + currentPage);
 			log.info(">>> pageSizeSelected: " + pageSizeSelected);
 			
-			System.out.println("test  : "+catalogSeq);
-			
-			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());//super.getCustomer_info_id()
-			
-			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();//AC2013071700001
-			
-			
-			
-			
-			
+			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());
+			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();
 	
 			//商品組合ID 的目錄型態
 			String catalogType = pfpCatalogService.getCatalogType(catalogSeq);
 			log.info(">>> catalogType: " + catalogType);
 			if (StringUtils.isBlank(catalogType)) {
 				returnMsg = "目錄型態不正確";
-	//			returnJson = new ByteArrayInputStream(
-	//					getReturnJsonObj("error", EnumProdGroupList.E001.getStatus()).toString().getBytes());
 				return ERROR;
 			}
 			
@@ -106,7 +76,7 @@ public class CatalogProdListAction extends BaseCookieAction{
 				return ERROR;
 			}
 	
-			String pfpCustomerInfoId = super.getCustomer_info_id(); //super.getCustomer_info_id();
+			String pfpCustomerInfoId = super.getCustomer_info_id();
 			
 			ProdListConditionVO prodListConditionVO =  new ProdListConditionVO();
 			prodListConditionVO.setCatalogSeq(catalogSeq);
@@ -127,16 +97,12 @@ public class CatalogProdListAction extends BaseCookieAction{
 			//總頁數
 			pageCount = (int)Math.ceil((float)totalCount / pageSizeSelected);
 			
-//			//依據商品目錄型態回傳各別ftl(一般購物類、訂房住宿類、交通航班類、房產租售類)
+			//依據商品目錄型態回傳各別ftl(一般購物類、訂房住宿類、交通航班類、房產租售類)
 			returnFtlName = enumProdListFactory.getCatalogName();
 			
-			
-			
-			
-			
 		} catch (Exception e) {
-			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
 			log.error("error:" + e);
+			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
 			return ERROR;
 		}
 		
