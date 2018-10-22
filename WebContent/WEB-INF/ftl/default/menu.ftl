@@ -50,35 +50,23 @@
 	</#if>
 
 	<#if user_privilege == "0" || user_privilege == "1" || user_privilege == "2" >
-		<@s.if test="%{#uri.indexOf('/catalogProd') > -1 || #uri.indexOf('/catalogProd') > -1 }">
+		<@s.if test="%{#uri.indexOf('/catalogProd') > -1 ||
+					   #uri.indexOf('/catalogUpload') > -1 ||
+					   #uri.indexOf('/selectUpload') > -1 ||
+					   #uri.indexOf('/prodListCardStyleView') > -1 ||					  
+					   #uri.indexOf('/prodListTableStyleView') > -1 ||
+					   #uri.indexOf('/queryCatalogGroup') > -1 ||
+					   #uri.indexOf('/queryProdGroupFilterProdList') > -1 ||
+					   #uri.indexOf('/queryProdGroupFilterItem') > -1 ||
+					   #uri.indexOf('/queryProdGroupList') > -1 ||
+					   #uri.indexOf('/logo') > -1 }">
 			<div class="tab_on"><a href="<@s.url value="/" />catalogProd.html">商品管理</a></div> 
 		</@s.if>
 		<@s.else>
 	    	<div class="tab"><a href="<@s.url value="/" />catalogProd.html">商品管理</a></div> 
 		</@s.else>
 	</#if>
-	
-	
-	
-	<!--商品管理 -->
-	<#if user_privilege == "0" || user_privilege == "1" || user_privilege == "2" >
-		<@s.if test="%{#uri.indexOf('/catalog') > -1 ||
-					   #uri.indexOf('/prodListCardStyleView') > -1 ||					  
-					   #uri.indexOf('/prodListTableStyleView') > -1 ||
-					   #uri.indexOf('/queryCatalogGroup') > -1 ||
-					   #uri.indexOf('/queryProdGroupFilterProdList') > -1 ||
-					   #uri.indexOf('/queryProdGroupFilterItem') > -1 ||
-					   #uri.indexOf('/queryProdGroupList') > -1}">
-			<div class="tab_on"><a href="<@s.url value="/" />catalog.html">商品管理</a></div> 
-		</@s.if>
-		<@s.else>
-	    	<div class="tab"><a href="<@s.url value="/" />catalog.html">商品管理</a></div> 
-		</@s.else>
-		</#if>
-	<!--商品管理 -->
-	
-	
-		
+
 	<#if user_privilege == "0" || user_privilege == "1" || user_privilege == "2" || user_privilege == "3">
 		<@s.if test="%{#uri.indexOf('/report') > -1 }">
 			<div class="tab_on"><a href="<@s.url value="/" />reportExcerpt.html">報表管理</a></div>

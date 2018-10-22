@@ -166,7 +166,7 @@
             </div>
 
             <div class="button-box w-900 txt-center p-tb30">
-                <div class="link-button"><a href="catalog.html">取消</a></div>
+                <div class="link-button"><a href="catalogProd.html">取消</a></div>
                 <div class="input-button"><input type="button" value="送出審核" onclick="saveLogo()"></div>
             </div>
 
