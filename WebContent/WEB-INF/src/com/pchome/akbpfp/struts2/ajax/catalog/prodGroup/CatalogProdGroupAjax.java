@@ -172,6 +172,14 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 
 			resultMap = new HashMap<String, Object>();
 			
+
+			if( catalogGroupName.trim().length() > 20){
+				resultMap.put("msg", "組合名稱最多20字");
+				resultMap.put("status", "ERROR");
+				return SUCCESS;
+			}
+			
+			
 			if( StringUtils.isBlank(catalogGroupName)){
 				resultMap.put("msg", "組合名稱不得為空");
 				resultMap.put("status", "ERROR");
