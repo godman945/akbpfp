@@ -15,9 +15,6 @@ import com.pchome.enumerate.catalog.prodGroup.EnumEcProdGroupCondition;
 import com.pchome.enumerate.catalog.prodGroup.EnumEcProdGroupField;
 
 
-
-
-
 public class EcProdGroup extends AProdGroup {
 	
 	private PfpCatalogProdEcService pfpCatalogProdEcService;
@@ -62,10 +59,7 @@ public class EcProdGroup extends AProdGroup {
 				if (enumEcProdGroupField.getFieldType().equals("int")){
 					filterSQL.append(""+replaceConditionGroupItems.getCatalogGroupItemValue()+"");
 				}
-				
-				
 			}
-			
 		}
 
 		return  filterSQL.toString();
@@ -74,10 +68,8 @@ public class EcProdGroup extends AProdGroup {
 	
 	@Override
 	public JSONArray getProdGroupListByRandom(String catalogSeq, String filterSQL, int prodNum) throws Exception {
-		
 			
 		List<Map<String,Object>> ecProdGroupList = pfpCatalogProdEcService.getEcProdGroupListByRandom(catalogSeq, filterSQL,prodNum);
-		
 		JSONArray prodListJson = prodGroupListToArray(ecProdGroupList);
 		
 		return prodListJson;
@@ -90,8 +82,6 @@ public class EcProdGroup extends AProdGroup {
 		return pfpCatalogProdEcService.getEcProdGroupList(prodGroupConditionVO);
 		
 	}
-	
-	
 	
 	
 	public JSONArray prodGroupListToArray(List<Map<String,Object>> ecProdGroupList) throws Exception {
@@ -147,10 +137,4 @@ public class EcProdGroup extends AProdGroup {
 		this.pfpCatalogProdEcService = pfpCatalogProdEcService;
 	}
 	
-	
-	
-	
-	
-	
-
 }
