@@ -8,6 +8,10 @@
 			$(".dataupload-wrap").find(".displayimg-box")[1].className = 'displayimg-box selected';
 		}
 	}
+	
+	$("#catalog").change(function() {
+		$(location).attr('href','prodListCardStyleView.html?catalogSeq='+this.value+'&currentPage=1&pageSizeSelected=10');	
+	});
 });
 
 
