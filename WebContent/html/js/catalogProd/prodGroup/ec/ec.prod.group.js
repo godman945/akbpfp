@@ -1,10 +1,8 @@
 ﻿$(document).ready(function(){
-	
-//	if($("#catalogSeqData").val() !=""){
-//		console.log("#####################999999999");
-//		$("#catalog").val($("#catalogSeqData").val());
-//	}
-
+	//切換商品目錄
+	$("#catalog").change(function() {
+		location.href = "prodListCardStyleView.html?catalogSeq="+ $('#catalog option:selected').val() + "&currentPage=1&pageSizeSelected=10";
+	 });
 });
 
 

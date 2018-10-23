@@ -4,7 +4,6 @@ package com.pchome.akbpfp.db.service.catalog.prodGroup;
 import java.util.List;
 
 import com.pchome.akbpfp.db.dao.catalog.prodGroup.IPfpCatalogGroupDAO;
-import com.pchome.akbpfp.db.dao.catalog.prodGroup.IPfpCatalogGroupItemDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
 import com.pchome.akbpfp.db.service.BaseService;
 

@@ -25,8 +25,8 @@
                     </li>
                     <li class="txt-cell pos-relative"><a href="prodListCardStyleView.html?catalogSeq=${catalogSeq}&currentPage=1&pageSizeSelected=10">商品清單</a></li>
                     <li class="txt-cell pos-relative"><a href="#">商品組合</a></li>
-                    <li class="txt-cell pos-relative"><a href="#">商品資料</a></li>
-                    <li class="txt-cell pos-relative"><a href="#">設定</a></li>
+                    <li class="txt-cell pos-relative"><a href="selectUpload.html?catalogSeq=${catalogSeq}">商品資料</a></li>
+                    <li class="txt-cell pos-relative"><a href="setup.html?catalogSeq=${catalogSeq}">設定</a></li>
                 </ul>
                 <div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>${customerInfoTitle!}</div>
             </div>
@@ -68,14 +68,14 @@
 			                            </div>
 			                            <div class="col-detail">
 			                            	${dataVo.filterContent!}
-			                               <!-- <span>商品類型：<b><em>不屬於</em>硬殼行李箱</b></span>
-			                                <span>價格：<b><em>低於</em>$3,000</b></span>
-			                                <span>供應情況：<b><em>屬於</em>預售</b></span> -->
+			                               <!-- <span>商品類型：<b><em>不屬於</em>硬殼行李箱</b></span> -->
 			                            </div>
 			                        </div>
 			                	</#list> 
 			               	<#else>
-			               		此目錄沒有商品群組
+			               		<div class="portfolio-item empty txt-center">
+                            		<p class="p-tb30">尚未建立商品組合</p>
+                       			</div>
 							</#if>
 	                    </#if>	
 

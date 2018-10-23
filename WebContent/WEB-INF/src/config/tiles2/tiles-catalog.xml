@@ -5,14 +5,7 @@
 
 <tiles-definitions>
 
-  	<!--bessieTmp-暫時寫的之後合併拿掉 (11所有商品目錄.html)-->
-    <definition name="catalog.prod.action.view" extends="catalog.prod.layout">
-    	<put-attribute name="body" value="/ftl/catalogProd/catalog/catalog.prod.view.catalogList.ftl" />
-    </definition>
-    <!--bessieTmp-暫時寫的之後合併拿掉 -->
-
-
-
+<!-- 商品清單、商品組合 Start -->
 	<!-- 取得卡片式商品清單 -->
 	<definition name="ec.prod.list.card.style.view" extends="catalog.prod.layout">
 	 	<put-attribute name="head" value="ec.prod.list.card.style.head" />
@@ -25,7 +18,13 @@
     </definition>
 	
 	 <definition name="error.prod.list.card.style.view" extends="catalog.prod.layout">
+	 	<put-attribute name="head" value="error.prod.list.card.style.head" />
         <put-attribute name="body" value="/ftl/catalogProd/prodList/error.prod.list.card.style.view.ftl" />
+    </definition>
+    
+    <definition name="error.prod.list.card.style.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
+    	<put-attribute name="js" value="/ftl/catalogProd/prodList/error.prod.list.card.style.js.ftl" />
     </definition>
 	<!-- 取得卡片式商品清單 END-->
 	
@@ -42,7 +41,13 @@
     </definition>
 	
 	 <definition name="error.prod.list.table.style.view" extends="catalog.prod.layout">
+	 	<put-attribute name="head" value="error.prod.list.table.style.head" />
         <put-attribute name="body" value="/ftl/catalogProd/prodList/error.prod.list.table.style.view.ftl" />
+    </definition>
+    
+    <definition name="error.prod.list.table.style.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
+    	<put-attribute name="js" value="/ftl/catalogProd/prodList/error.prod.list.table.style.js.ftl" />
     </definition>
 	<!-- 取得表格式商品清單 END-->
 	
@@ -56,6 +61,16 @@
     <definition name="prod.group.view.head" extends="default.head" >
     	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
     	<put-attribute name="js" value="/ftl/catalogProd/prodGroup/ec.prod.group.js.ftl" />
+    </definition>
+    
+    <definition name="error.prod.group.view" extends="catalog.prod.layout">
+	 	<put-attribute name="head" value="error.prod.group.view.head" />
+        <put-attribute name="body" value="/ftl/catalogProd/prodGroup/error.prod.group.view.ftl" />
+    </definition>
+    
+    <definition name="error.prod.group.view.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
+    	<put-attribute name="js" value="/ftl/catalogProd/prodGroup/error.prod.group.js.ftl" />
     </definition>
 	<!-- 取得目錄所有群組 End-->
 	
@@ -101,6 +116,9 @@
     	<put-attribute name="js" value="/ftl/catalogProd/prodGroup/ec.copy.prod.group.filter.prod.list.view.js.ftl" />
     </definition>
 	<!-- 複製商品組合篩選條件與商品組合清單view End-->
+<!-- 商品清單、商品組合 End -->	
+	
+	
 
 	<!-- 商品目錄、上傳 START -->
     <definition name="catalog.prod.layout" extends="default.layout" >

@@ -19,7 +19,6 @@ import com.pchome.akbpfp.db.vo.catalog.prodGroup.pfpCatalogGroupVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupFactory;
 import com.pchome.enumerate.catalogprod.EnumEcProdGroupFilterContentType;
-import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
 
 public class CatalogProdGroupAction  extends BaseCookieAction{
 
@@ -49,10 +48,7 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 	private int totalCount = 0; //資料總筆數
 	private int pageCount = 0; //總頁數
 	private List<Object> prodList; 
-	
 	private List<PfpCatalogGroupItem> ProdGroupFilterItemList;
-	
-	
 	
 	
 	public String queryCatalogGroup(){
@@ -60,16 +56,19 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 			log.info(">>> catalogSeq: " + catalogSeq);
 			
 			//user catalog清單
-			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());//super.getCustomer_info_id()
+			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());
+			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();
 			
-			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();//AC2013071700001
-			
+			//確認有無查看商品組合的權限
+			List<PfpCatalog> privilege = pfpCatalogService.checkPfpCatalogPrivilege(super.getCustomer_info_id(),catalogSeq);
+			if (privilege.size()<= 0){
+				returnMsg = "僅能查看有權限之商品組合";
+				return ERROR;
+			}
 			
 			//全部商品組合數量
 			pfpCatalog =  pfpCatalogService.getPfpCatalog(catalogSeq);
 			catalogProdAllNum = Integer.toString(pfpCatalog.getCatalogProdNum());
-			
-			
 			
 			EnumProdGroupFactory enumProdGroupFactory = EnumProdGroupFactory.getCatalogName(pfpCatalog.getCatalogType());
 			String catalogFactoryName = enumProdGroupFactory.getCatalogName();
@@ -90,12 +89,8 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 				//撈出該商品組合的總數量
 				String prodGroupCount = aProdGroup.getProdGroupCount(catalogSeq,filterSQL);
 				
-				
-				
 				// 撈出商品組合篩選條件資料
-				String filterContent = queryProdGroupFilterContentAjax(pfpCatalogGroupItems);
-				
-				
+				String filterContent = queryProdGroupFilterContent(pfpCatalogGroupItems);
 				
 				pfpCatalogGroupVO.setCatalogGroupSeq(pfpCatalogGroup.getCatalogGroupSeq());
 				pfpCatalogGroupVO.setCatalogGroupName(pfpCatalogGroup.getCatalogGroupName());
@@ -104,16 +99,10 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 				pfpCatalogGroupVOList.add(pfpCatalogGroupVO);
 			}
 			
-			
-			
-			
-			
-			
-			
 		} catch (Exception e) {
-//			dataMap.put("status", "ERROR");
-//			dataMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
 			log.error("error:" + e);
+			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
+			return ERROR;
 		}
 		
 		return SUCCESS;
@@ -123,7 +112,7 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 	/**
 	 * 撈出商品組合篩選條件資料
 	 */
-	public String queryProdGroupFilterContentAjax(List<PfpCatalogGroupItem> pfpCatalogGroupItems) {
+	public String queryProdGroupFilterContent(List<PfpCatalogGroupItem> pfpCatalogGroupItems) {
 		StringBuffer filterContent = new StringBuffer();
 		try {
 			String field;
@@ -164,20 +153,14 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 			log.info(">>> totalCount: " + totalCount);
 			log.info(">>> pageCount: " + pageCount);
 			
-
-			
-			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());//AC2013071700005
-			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();//AC2013071700001
-			
+			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());
+			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();
 			
 			PfpCatalogGroup pfpCatalogGroup = pfpCatalogGroupService.get(catalogGroupSeq);
 			if(pfpCatalogGroup == null){
 				returnMsg = "商品組合編號不正確";
 				return ERROR;
 			}
-			
-			
-			
 			
 			String catalogCustomerInfoId = pfpCatalogGroup.getPfpCatalog().getPfpCustomerInfoId();
 			if(!StringUtils.equals(super.getCustomer_info_id(), catalogCustomerInfoId )){
@@ -194,7 +177,6 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 				return ERROR;
 			}
 			
-			
 			catalogSeq = pfpCatalogGroup.getPfpCatalog().getCatalogSeq();
 			//取得商品目錄類型
 			pfpCatalog =  pfpCatalogService.getPfpCatalog(catalogSeq);
@@ -209,21 +191,16 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 			//取得商品組合清單
 			ProdGroupConditionVO prodGroupConditionVO =  new ProdGroupConditionVO();
 			prodGroupConditionVO.setCatalogSeq(catalogSeq);
-			
-//			prodGroupConditionVO.setPfpCustomerInfoId("AC2013071700005");
 			prodGroupConditionVO.setPfpCustomerInfoId(super.getCustomer_info_id());
-			
 			prodGroupConditionVO.setPage(currentPage);
 			prodGroupConditionVO.setPageSize(pageSizeSelected);
 			prodGroupConditionVO.setFilterSQL(filterSQL);
 
 			prodList = aProdGroup.getProdGroupList(prodGroupConditionVO);
-			
 			if(prodList.size() <= 0){
 				returnMsg = "沒有商品清單資料";
 				return ERROR;
 			}
-			
 			
 			//商品清單資料總筆數
 			totalCount =  Integer.valueOf(aProdGroup.getProdGroupCount(catalogSeq,filterSQL));
@@ -231,16 +208,14 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 			//總頁數
 			pageCount = (int)Math.ceil((float)totalCount / pageSizeSelected);
 			
-//			//依據商品目錄型態回傳各別ftl(一般購物類、訂房住宿類、交通航班類、房產租售類)
+			//依據商品目錄型態回傳各別ftl(一般購物類、訂房住宿類、交通航班類、房產租售類)
 			returnFtlName = enumProdGroupFactory.getCatalogName();
-			
 			
 			catalogGroupName = pfpCatalogGroupService.get(catalogGroupSeq).getCatalogGroupName();
 			
-			
 		} catch (Exception e) {
-			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
 			log.error("error:" + e);
+			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
 			return ERROR;
 		}
 		
@@ -251,51 +226,41 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 	
 	public String queryProdGroupFilterProdList(){
 		try{
-			System.out.println("商品篩選清單");
-			
-			log.info("商品篩選清單");
 			log.info(">>> catalogSeq: " + catalogSeq);
 			log.info(">>> catalogGroupSeq: " + catalogGroupSeq);
 			
-			System.out.println(">>>---- catalogSeq: " + catalogSeq);
-			System.out.println(">>>---- catalogGroupSeq: " + catalogGroupSeq);
-			
-			
-			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());//AC2013071700005
-			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();//AC2013071700001
-			
-			
-			
+			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());
+			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();
+
+			//依據商品目錄型態回傳各別ftl(一般購物類、訂房住宿類、交通航班類、房產租售類)
+			pfpCatalog =  pfpCatalogService.getPfpCatalog(catalogSeq);
+			EnumProdGroupFactory enumProdGroupFactory = EnumProdGroupFactory.getCatalogName(pfpCatalog.getCatalogType());
+			returnFtlName = enumProdGroupFactory.getCatalogName();
 			
 		} catch (Exception e) {
-			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
 			log.error("error:" + e);
+			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
 			return ERROR;
 		}
 		
-		return "EC_PROD_GROUP";
+		return returnFtlName;
 	}
 	
 	
 	/**
-	 * 撈出商品群組篩選資料
+	 * 撈出商品組合篩選資料
 	 */
 	public String queryProdGroupFilterItem() {
 		try {
-			log.info("複製商品組合篩選條件與商品組合清單");
 			log.info(">>> catalogSeq: " + catalogSeq);
 			log.info(">>> catalogGroupSeq: " + catalogGroupSeq);
 			
-			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());//AC2013071700005
-			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();//AC2013071700001
+			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());
+			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();
 			
-			
-			
+			//撈出商品組合篩選資料
 			ProdGroupFilterItemList = pfpCatalogGroupItemService.getPfpCatalogGroupItemList(catalogGroupSeq);
 
-			System.out.println("ProdGroupFilterItemList : " + ProdGroupFilterItemList.toString());
-
-			
 			//全部商品組合數量
 			pfpCatalog =  pfpCatalogService.getPfpCatalog(catalogSeq);
 			//商品組合ID 的目錄型態
@@ -305,7 +270,6 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 				returnMsg = "目錄型態不正確";
 				return ERROR;
 			}
-			
 			
 			// 商品組合ID 的目錄型態
 			String catalogType = pfpCatalogService.getPfpCatalog(catalogSeq).getCatalogType();
@@ -340,13 +304,12 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 			returnFtlName = enumProdGroupFactory.getCatalogName();
 
 		} catch (Exception e) {
-			// dataMap.put("status", "ERROR");
-			// dataMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
 			log.error("error:" + e);
+			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
+			return ERROR;
 		}
-
+		
 		return returnFtlName;
-
 	}
 	
 
@@ -469,9 +432,6 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 	public void setProdGroupFilterItemList(List<PfpCatalogGroupItem> prodGroupFilterItemList) {
 		ProdGroupFilterItemList = prodGroupFilterItemList;
 	}
-	
-	
-	
 	
 	
 }
