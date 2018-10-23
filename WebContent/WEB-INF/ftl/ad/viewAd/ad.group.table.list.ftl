@@ -209,8 +209,6 @@
 <input type="hidden" id="searchPriceType" name="searchPriceType" />
 <input type="hidden" id="adGroupSearchPrice" name="adGroupSearchPrice" />
 
->>>>>>>>>>${adOperatingRule!}
-
 </form>
 <span style="padding:10px;display:block">
 	<input type="button" name="stop" onClick="modifyAdStatus('9')" value="暫 停" /> &nbsp; 
