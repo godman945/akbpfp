@@ -2,7 +2,7 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
 <script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/commonCatalogProd.js?t=20181023004"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/autoJob.js?t=20181002011"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/autoJob.js?t=20181023004"></script>
 
 <div class="container-prodmanage">
 
@@ -143,7 +143,7 @@
 	        </div>
 	
 	        <div class="button-box w-900 txt-center p-tb60">
-	            <div class="link-button"><a href="javascript:void(0);" onclick="back();">上一步</a></div>
+	            <div class="link-button"><a href="javascript:history.go(-1);">上一步</a></div>
 	            <div class="input-button"><input type="button" onclick="autoJobFinish();" value="送出審核"></div>
 	        </div>
 	

@@ -18,9 +18,9 @@
  * 上一步
  * 根據商品目錄下拉選單所選擇得目錄返回
  */
-function back() {
-	window.location = "catalogUpload.html?catalogSeq=" + $("#catalogSeq").val();
-}
+//function back() {
+//	window.location = "selectUpload.html?catalogSeq=" + $("#catalogSeq").val();
+//}
 
 /**
  * 藉由觸發事件
