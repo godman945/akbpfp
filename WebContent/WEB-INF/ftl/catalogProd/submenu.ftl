@@ -16,7 +16,7 @@
         <a href="<@s.url value="/" />catalogProd.html"><b>商品目錄</b></a>
     </@s.if>
     <@s.else>
-       	<a href="<@s.url value="/" />catalogProd.html" style="color:#db0000;text-decoration:underline">商品目錄</a>
+       	<a href="<@s.url value="/" />catalogProd.html" style="color:#1d5ed6;text-decoration:underline">商品目錄</a>
     </@s.else>
 </div>
 

@@ -7,20 +7,18 @@
 
 	<!-- LOGO START -->
 	<definition name=".prod.logo" extends="default.layout" >
-    	<!-- 
-    	
-    	<put-attribute name="menu" value="prod.logo.menu" />
-    	 -->
+		<put-attribute name="menu" value="catalog.prod.menu" />
     	<put-attribute name="head" value="prod.logo.head" />
     	<put-attribute name="body" value="/ftl/prodLogo/logo.ftl" />
     </definition>
-    
+    <definition name="catalog.prod.menu" extends="default.menu" >
+    	<put-attribute name="submenu" value="/ftl/catalogProd/submenu.ftl" />
+    </definition>
     <definition name="prod.logo.head" extends="default.head" >
     	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
     	<put-attribute name="js" value="prod.logo.defalut.js" />
     </definition>
-    
-     <definition name="prod.logo.defalut.js" template="/ftl/prodLogo/logo.default.js.ftl">
+   	<definition name="prod.logo.defalut.js" template="/ftl/prodLogo/logo.default.js.ftl">
     	<!-- 
     	<put-attribute name="jsName" value="catalogProd/commonCatalogProd.js" />
     	<put-attribute name="dateJsName" value="catalogProd/dateRangeSelect.js" />
