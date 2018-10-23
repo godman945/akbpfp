@@ -12,7 +12,8 @@ import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
 import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
-import com.pchome.enumerate.catalog.prodGroup.EnumEcProdGroupField;
+import com.pchome.enumerate.catalogprod.EnumEcCheckStatusType;
+import com.pchome.enumerate.catalogprod.EnumEcStatusType;
 
 public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> implements IPfpCatalogProdEcDAO{
 	
@@ -78,7 +79,7 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		StringBuffer sql = new StringBuffer()
 				.append(" update pfp_catalog_prod_ec set ec_status = :ecStatus where catalog_seq = :catalogSeq and id in (:prodListId) ");
 		
-		 log.info("updateProdListProdStatus.sql = " + sql);
+		 log.info("updateProdListProdStatus.sql = " + sql.toString());
 
 		Session session = getSession();
 		session.createSQLQuery(sql.toString()).setString("ecStatus", prodStatus)
@@ -111,7 +112,7 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" from pfp_catalog_prod_ec ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and catalog_seq =  '" + catalogSeq + "' ");
-		hql.append(" and ec_status = '1' ");
+		hql.append(" and ec_status = '"+EnumEcStatusType.Open_Prod.getType()+"' ");
 		hql.append( filterSQL );
 		
 		log.info(hql.toString());
@@ -132,8 +133,8 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" on a.catalog_seq = b.catalog_seq ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and a.catalog_seq =  '" + catalogSeq + "'");
-		hql.append(" and a.ec_check_status = '1' ");
-		hql.append(" and a.ec_status = '1' ");
+		hql.append(" and a.ec_check_status = '"+EnumEcCheckStatusType.Reviewed_Passed.getType()+"' ");
+		hql.append(" and a.ec_status = '"+EnumEcStatusType.Open_Prod.getType()+"' ");
 		hql.append(" and b.catalog_setup_key='img_proportiona' ");
 		hql.append(filterSQL);
 		hql.append(" order by rand() limit "+prodNum);
@@ -156,7 +157,7 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" on a.catalog_seq = b.catalog_seq  ");
 		hql.append(" where a.catalog_seq = '"+prodGroupConditionVO.getCatalogSeq()+"' ");
 		hql.append(" and b.pfp_customer_info_id = '"+prodGroupConditionVO.getPfpCustomerInfoId()+"' ");
-		hql.append(" and a.ec_status = '1' ");
+		hql.append(" and a.ec_status = '"+EnumEcStatusType.Open_Prod.getType()+"' ");
 		hql.append(prodGroupConditionVO.getFilterSQL());
 		
 		log.info(hql.toString());

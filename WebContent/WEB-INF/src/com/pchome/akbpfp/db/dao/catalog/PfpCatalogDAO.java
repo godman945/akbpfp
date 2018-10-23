@@ -35,14 +35,6 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		hql.append(" where catalogSeq = ? ");
 		
 		return super.getHibernateTemplate().find(hql.toString(), catalogSeq);
-		
-		
-//		StringBuffer hql = new StringBuffer();
-//		hql.append(" from PfpCatalog ");
-//		hql.append(" where catalogSeq = '"+catalogSeq+"' ");
-//		
-//		return super.getHibernateTemplate().find(hql.toString());
-		
 	}
 	
 
