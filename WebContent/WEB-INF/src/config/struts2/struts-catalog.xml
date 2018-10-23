@@ -226,7 +226,7 @@
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="adPrivilegeInterceptor" />
             <result type="redirectAction" name="success">
-            	<param name="actionName">catalogUpload</param>
+            	<param name="actionName">selectUpload</param>
             	<param name="catalogSeq">${catalogSeq}</param>
             </result>
         </action>
@@ -242,17 +242,11 @@
 			</result>
 		</action>
 		
-		<!-- 商品資料-選擇商品資料上傳方式 -->
-		<action name="catalogUpload" class="PfpCatalogUploadListAction" method="selectProductDataSource">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="adPrivilegeInterceptor" />
-            <result type="tiles" name="success">.catalog.upload.view.selectProductDataSource</result>
-        </action>
-		
 		<!-- 商品資料-選擇上傳方式轉各自的畫面 -->
 		<action name="selectUpload" class="PfpCatalogUploadListAction" method="selectUpload">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="adPrivilegeInterceptor" />
+        	<result type="tiles" name="noUploadType">.catalog.upload.view.selectProductDataSource</result>
             <result type="tiles" name="fileUpload">.catalog.upload.view.fileUpload</result>
             <result type="tiles" name="automaticScheduling">.catalog.upload.view.autoJob</result>
             <result type="tiles" name="storeURL">.catalog.upload.view.pchomeStoreURL</result>
@@ -323,13 +317,19 @@
      	</action>
       	
       	<!-- 取得上傳方式代碼 -->
-		<action name="getCatalogUploadType" class="PfpCatalogUploadListAction" method="getCatalogUploadType">
-			<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="adPrivilegeInterceptor" />
-        	<result type="json" name="success">
-        		<param name="root">dataMap</param>
-        	</result>
-     	</action>
+<!-- 		<action name="getCatalogUploadType" class="PfpCatalogUploadListAction" method="getCatalogUploadType"> -->
+<!-- 			<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="adPrivilegeInterceptor" /> -->
+<!--         	<result type="json" name="success"> -->
+<!--         		<param name="root">dataMap</param> -->
+<!--         	</result> -->
+<!--      	</action> -->
 	
+		<!-- 商品目錄更新錯誤紀錄 -->
+ 		<action name="catalogProdUploadErrLog" class="PfpCatalogUploadErrLogAction" method="queryCatalogProdUploadErrLog">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="success">.catalog.upload.view.catalogProdUploadErrList</result>
+		</action>
     </package>
 </struts>

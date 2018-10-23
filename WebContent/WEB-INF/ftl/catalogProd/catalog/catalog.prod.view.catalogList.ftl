@@ -81,7 +81,7 @@
 					<#list dataList as vo>
 						<div class="txt-row">
 							<div class="txt-cell col-cataname">
-	                            <a href="#">${vo.catalogName!}</a>
+	                            <a href="prodListCardStyleView.html?catalogSeq=${vo.catalogSeq!}&currentPage=1&pageSizeSelected=10">${vo.catalogName!}</a>
 	                            <small>目錄編號：${vo.catalogSeq!}</small>
 	                        </div>
 	                        
@@ -116,20 +116,18 @@
 	                        
 	                        <div class="txt-cell col-failure">
 	                        	<#if vo.errorNum?? && vo.errorNum != "0">
-	                        		<a href="11所有商品目錄-錯誤列表.html">${vo.errorNum!}<em>筆</em></a>
+	                        		<a href="catalogProdUploadErrLog.html?catalogUploadLogSeq=${vo.catalogUploadLogSeq!}">${vo.errorNum!}<em>筆</em></a>
 	                        	<#else>
 	                            	-
 	                            </#if>
 	                        </div>
 	                        
 	                        <div class="txt-cell col-renew">
-								<#if vo.catalogUploadType == "1" || vo.catalogUploadType == "4">
-									<a href="selectUpload.html?catalogSeq=${vo.catalogSeq!}&selectUploadFlag=${vo.catalogUploadType!}">上傳檔案</a>
-								<#elseif vo.catalogUploadType == "2" || vo.catalogUploadType == "3">
-		                            <small>下次更新時間</small>
+	                        	<#if vo.catalogUploadType == "2" || vo.catalogUploadType == "3">
+	                        		<small>下次更新時間</small>
 		                            ${vo.nextUpdateDatetime!}
 								<#else>
-									<a href="catalogUpload.html?catalogSeq=${vo.catalogSeq!}">上傳檔案</a>
+									<a href="selectUpload.html?catalogSeq=${vo.catalogSeq!}">上傳檔案</a>
 								</#if>
 	                        </div>
 	                        

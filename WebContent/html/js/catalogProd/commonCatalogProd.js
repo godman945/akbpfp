@@ -22,25 +22,29 @@ $(document).ready(function() {
 		$('#loadingWaitBlock').block(maskingConfig);
 		
 		var catalogSeq = $(this).val();
-		$.ajax({
-			type : "post",
-			dataType : "json",
-			url : "getCatalogUploadType.html",
-			data : {
-				catalogSeq : catalogSeq
-			},
-			timeout : 30000,
-			error : function(xhr) {
-				alert('Ajax request 發生錯誤');
-			},
-			success : function(response, status) {
-				if (response.catalogUploadType != "") {
-					window.location.replace("selectUpload.html?catalogSeq=" + catalogSeq + "&selectUploadFlag=" + response.catalogUploadType);
-				} else {
-					window.location.replace("catalogUpload.html?catalogSeq=" + catalogSeq);
-				}
-			}
-		});
+		//回上頁待測試
+		location.href = "prodListCardStyleView.html?catalogSeq=" + catalogSeq + "&currentPage=1&pageSizeSelected=10";
+//		window.location.replace("prodListCardStyleView.html?catalogSeq=" + catalogSeq + "&currentPage=1&pageSizeSelected=10");
+
+//		$.ajax({
+//			type : "post",
+//			dataType : "json",
+//			url : "getCatalogUploadType.html",
+//			data : {
+//				catalogSeq : catalogSeq
+//			},
+//			timeout : 30000,
+//			error : function(xhr) {
+//				alert('Ajax request 發生錯誤');
+//			},
+//			success : function(response, status) {
+//				if (response.catalogUploadType != "") {
+//					window.location.replace("selectUpload.html?catalogSeq=" + catalogSeq + "&selectUploadFlag=" + response.catalogUploadType);
+//				} else {
+//					window.location.replace("catalogUpload.html?catalogSeq=" + catalogSeq);
+//				}
+//			}
+//		});
 		
 	});
 

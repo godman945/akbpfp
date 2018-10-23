@@ -21,6 +21,7 @@ public class PfpCatalogVO {
 	private String updateDatetime;    // 執行更新時間
 	private String successNum;        // 成功筆數
 	private String errorNum;          // 失敗筆數
+	private String catalogUploadLogSeq; // 更新紀錄編號
 	private String nextUpdateDatetime;// 下次執行更新時間
 	
 	public String getPfpCustomerInfoId() {
@@ -165,6 +166,14 @@ public class PfpCatalogVO {
 
 	public void setPaginationFlag(boolean paginationFlag) {
 		this.paginationFlag = paginationFlag;
+	}
+
+	public String getCatalogUploadLogSeq() {
+		return catalogUploadLogSeq;
+	}
+
+	public void setCatalogUploadLogSeq(String catalogUploadLogSeq) {
+		this.catalogUploadLogSeq = catalogUploadLogSeq;
 	}
 	
 }

@@ -59,7 +59,8 @@
 					   #uri.indexOf('/queryProdGroupFilterProdList') > -1 ||
 					   #uri.indexOf('/queryProdGroupFilterItem') > -1 ||
 					   #uri.indexOf('/queryProdGroupList') > -1 ||
-					   #uri.indexOf('/logo') > -1 }">
+					   #uri.indexOf('/logo') > -1 ||
+					   #uri.indexOf('/setup') > -1 }">
 			<div class="tab_on"><a href="<@s.url value="/" />catalogProd.html">商品管理</a></div> 
 		</@s.if>
 		<@s.else>

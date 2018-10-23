@@ -97,6 +97,10 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 				pfpCatalogVO.setErrorNum(String.valueOf(dataMap.get("error_num")));
 			}
 			
+			if (dataMap.get("catalog_upload_log_seq") != null) { // 更新紀錄編號
+				pfpCatalogVO.setCatalogUploadLogSeq(String.valueOf(dataMap.get("catalog_upload_log_seq")));
+			}
+			
 			pfpCatalogVOList.add(pfpCatalogVO);
 		}
 		return pfpCatalogVOList;

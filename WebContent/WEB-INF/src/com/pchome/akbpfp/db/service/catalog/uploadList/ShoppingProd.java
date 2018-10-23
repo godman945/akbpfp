@@ -114,6 +114,9 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				tempErrorPrdItemArrayCount = errorPrdItemArray.length();
 				errorNum++;
 			} else {
+				// 檢查輸入的資料是否與DB內完全相同，相同則不做更新、新增處理
+				List<Map<String, Object>> pfpCatalogProdEcList = pfpCatalogUploadListDAO.getPfpCatalogProdEc(catalogSeq, catalogProdSeq);
+				
 				// 記錄商品明細，寫入一般購物類table
 				PfpCatalogProdEc pfpCatalogProdEc = new PfpCatalogProdEc();
 				pfpCatalogProdEc.setCatalogProdSeq(catalogProdSeq); // id
@@ -141,8 +144,6 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setUpdateDate(new Date()); // 更新時間
 				pfpCatalogProdEc.setCreateDate(new Date()); // 建立時間
 
-				// 檢查輸入的資料是否與DB內完全相同，相同則不做更新、新增處理
-				List<Map<String, Object>> pfpCatalogProdEcList = pfpCatalogUploadListDAO.getPfpCatalogProdEc(catalogSeq, catalogProdSeq);
 				if (pfpCatalogProdEcList.size() > 0) {
 					Map<String, Object> prodEcMap = new HashMap<String, Object>();
 					prodEcMap = pfpCatalogProdEcList.get(0);
@@ -154,8 +155,8 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 							&& pfpCatalogProdEc.getEcImgRegion().equals((String) prodEcMap.get("ec_img_region"))
 							&& pfpCatalogProdEc.getEcImgMd5().equals((String) prodEcMap.get("ec_img_md5"))
 							&& ecUrl.equals((String) prodEcMap.get("ec_url"))
-							&& ecPrice.equals((String) prodEcMap.get("ec_price"))
-							&& ecDiscountPrice.equals((String) prodEcMap.get("ec_discount_price"))
+							&& ecPrice.equals(String.valueOf((int) prodEcMap.get("ec_price")))
+							&& ecDiscountPrice.equals(String.valueOf((int) prodEcMap.get("ec_discount_price")))
 							&& ecStockStatus.equals((String) prodEcMap.get("ec_stock_status"))
 							&& ecUseStatus.equals((String) prodEcMap.get("ec_use_status"))
 							&& ecCategory.equals((String) prodEcMap.get("ec_category"))) {

@@ -161,5 +161,10 @@
     <definition name=".catalog.upload.view.manualInput" extends="catalog.prod.layout">
         <put-attribute name="body" value="/ftl/catalogProd/catalogUpload/catalog.upload.view.manualInput.ftl" />
     </definition>
+    
+    <!-- 商品目錄更新錯誤紀錄 -->
+    <definition name=".catalog.upload.view.catalogProdUploadErrList" extends="catalog.prod.layout">
+        <put-attribute name="body" value="/ftl/catalogProd/catalogUpload/catalog.upload.view.catalogProdUploadErrList.ftl" />
+    </definition>
     <!-- 商品目錄、上傳 END -->
 </tiles-definitions>

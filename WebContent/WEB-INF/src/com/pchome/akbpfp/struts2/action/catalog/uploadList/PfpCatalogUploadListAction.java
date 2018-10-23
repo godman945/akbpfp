@@ -71,16 +71,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	private String catalog_prod_item;
 	
 	/**
-	 * 選擇商品資料上傳方式
-	 * @return
-	 * @throws Exception
-	 */
-	public String selectProductDataSource() throws Exception {
-		catalogDropDownMenu();
-		return SUCCESS;
-	}
-	
-	/**
 	 * 根據選擇上傳方式，導相對畫面
 	 * @return
 	 * @throws Exception
@@ -89,21 +79,33 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		catalogDropDownMenu();
 		
 		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq); // 取得商品目錄 table資料
-		if (StringUtils.isNotBlank(pfpCatalog.getCatalogUploadType()) && !selectUploadFlag.equals(pfpCatalog.getCatalogUploadType())) {
-			// 參數確認，如果table有資料，與傳進來的資料不符，表示前端被修改值，則傳出去
-			return SUCCESS;
-		}
-		
-		if (selectUploadFlag.equals(EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType())) {
+		String catalogUploadType = pfpCatalog.getCatalogUploadType().trim();
+
+		// 依據傳入的Flag帶到相對應的畫面，如果DB有資料，上傳方式為1，或DB沒資料但是有傳上傳方式flag為1，則導檔案上傳頁
+		if ((StringUtils.isNotBlank(catalogUploadType)
+				&& EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType().equals(catalogUploadType))
+				|| (catalogUploadType.isEmpty()
+						&& EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType().equals(selectUploadFlag))) {
 			return "fileUpload";
-		} else if (selectUploadFlag.equals(EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType())) {
+		} else if ((StringUtils.isNotBlank(catalogUploadType)
+				&& EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(catalogUploadType))
+				|| (catalogUploadType.isEmpty()
+						&& EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(selectUploadFlag))) {
 			uploadContent = pfpCatalog.getCatalogUploadContent().trim();
 			return "automaticScheduling";
-		} else if (selectUploadFlag.equals(EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType())) {
+		} else if ((StringUtils.isNotBlank(catalogUploadType)
+				&& EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(catalogUploadType))
+				|| (catalogUploadType.isEmpty()
+						&& EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(selectUploadFlag))) {
 			uploadContent = pfpCatalog.getCatalogUploadContent().trim();
 			return "storeURL";
-		} else if (selectUploadFlag.equals(EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType())) {
+		} else if ((StringUtils.isNotBlank(catalogUploadType)
+				&& EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType().equals(catalogUploadType))
+				|| (catalogUploadType.isEmpty()
+						&& EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType().equals(selectUploadFlag))) {
 			return "manualUpload";
+		} else if (catalogUploadType.isEmpty()) {
+			return "noUploadType";
 		}
 		return SUCCESS;
 	}
@@ -112,12 +114,12 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 * 取得上傳方式代碼
 	 * @return
 	 */
-	public String getCatalogUploadType() {
-		dataMap = new HashMap<String, Object>();
-		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
-		dataMap.put("catalogUploadType", pfpCatalog.getCatalogUploadType().trim());
-		return SUCCESS;
-	}
+//	public String getCatalogUploadType() {
+//		dataMap = new HashMap<String, Object>();
+//		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
+//		dataMap.put("catalogUploadType", pfpCatalog.getCatalogUploadType().trim());
+//		return SUCCESS;
+//	}
 	
 	/**
 	 * 檢查檔案

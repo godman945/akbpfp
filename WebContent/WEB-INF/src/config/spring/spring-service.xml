@@ -280,4 +280,8 @@
 		<property name="shoppingProd" ref="ShoppingProd" />
     </bean>
     
+    <!-- 商品廣告-更新錯誤紀錄 -->
+    <bean id="PfpCatalogUploadErrLogService" class="com.pchome.akbpfp.db.service.catalog.uploadErrLogList.PfpCatalogUploadErrLogService">    	     
+        <property name="dao" ref="PfpCatalogUploadErrLogDAO" />
+    </bean>
 </beans>
