@@ -4,15 +4,16 @@
 
 <#--商品管理 -->
 <div class="submn">
-	<@s.if test="%{#uri.indexOf('/catalog') > -1 ||
+	<@s.if test="%{#uri.indexOf('/catalogProd') > -1 ||
+				   #uri.indexOf('/addCatalog') > -1 ||
+				   #uri.indexOf('/catalogUpload') > -1 ||
+				   #uri.indexOf('/selectUpload') > -1 ||
 				   #uri.indexOf('/prodListCardStyleView') > -1 ||
 				   #uri.indexOf('/prodListTableStyleView') > -1 ||
 				   #uri.indexOf('/queryCatalogGroup') > -1 ||
 				   #uri.indexOf('/queryProdGroupFilterProdList') > -1 ||
 				   #uri.indexOf('/queryProdGroupFilterItem') > -1 ||
-				   #uri.indexOf('/queryProdGroupList') > -1 ||
-				   #uri.indexOf('/catalogProd') > -1 ||
-				   #uri.indexOf('/addCatalog') > -1 }">
+				   #uri.indexOf('/queryProdGroupList') > -1 }">
         <a href="<@s.url value="/" />catalogProd.html"><b>商品目錄</b></a>
     </@s.if>
     <@s.else>
