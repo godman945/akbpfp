@@ -6,25 +6,15 @@ import java.util.Map;
 import com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogProdEcService;
 import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 
-
-
-
-
 public class EcProdList extends AProdList {
-	
-//	private PfpCatalogGroupService pfpCatalogGroupService;
 	
 	private PfpCatalogProdEcService pfpCatalogProdEcService;
 	
-	
 	public List<Object> getProdList(ProdListConditionVO prodListConditionVO) throws Exception{
-		
-		 List<Object> prodLists = pfpCatalogProdEcService.getProdList(prodListConditionVO);
-		
+		List<Object> prodLists = pfpCatalogProdEcService.getProdList(prodListConditionVO);
 		
 		return prodLists;
 	}
-	
 	
 	public void updateProdListProdStatus(String catalogSeq, String prodStatus, List<String> prodIdList) throws Exception{
 		pfpCatalogProdEcService.updateProdListProdStatus(catalogSeq, prodStatus, prodIdList);
@@ -35,21 +25,15 @@ public class EcProdList extends AProdList {
 	}
 	
 	
+	
+	
+	
 	public String getProdListCount(ProdListConditionVO prodListConditionVO) throws Exception{
 		return  pfpCatalogProdEcService.getProdListCount(prodListConditionVO);
 	}
-
-	
-	
-	
-	
-	
 	
 	public void setPfpCatalogProdEcService(PfpCatalogProdEcService pfpCatalogProdEcService) {
 		this.pfpCatalogProdEcService = pfpCatalogProdEcService;
 	}
-
-	
-	
 
 }

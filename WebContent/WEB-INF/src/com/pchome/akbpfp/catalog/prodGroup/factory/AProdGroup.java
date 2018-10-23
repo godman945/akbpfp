@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.catalog.prodGroup.factory;
 
 import java.util.List;
-import java.util.Map;
 
 import org.json.JSONArray;
 
@@ -29,13 +28,9 @@ public abstract class AProdGroup {
 	
 	public abstract String getProdGroupCount(String catalogSeq, String filterSQL) throws Exception;
 	
+	
+	
 
-	
-	
-	
-	
-	
-	
 	
 	public IPfpCatalogGroupItemService getPfpCatalogGroupItemService() {
 		return pfpCatalogGroupItemService;
@@ -44,9 +39,5 @@ public abstract class AProdGroup {
 	public void setPfpCatalogGroupItemService(IPfpCatalogGroupItemService pfpCatalogGroupItemService) {
 		this.pfpCatalogGroupItemService = pfpCatalogGroupItemService;
 	}
-
-	
-
-	
 	
 }

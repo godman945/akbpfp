@@ -9,14 +9,10 @@ import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 public abstract class AProdList {
 	
 	public IPfpCatalogService pfpCatalogService;
-//	public IPfpCatalogGroupService PfpCatalogGroupService;
-//	private AProdList aProdGroup;
 	
 
 	public String getCatalogType(String catalogSeq) throws Exception{
-		
 		String catalogType = pfpCatalogService.getCatalogType(catalogSeq);
-		
 		return catalogType;
 	}
 	
@@ -28,10 +24,10 @@ public abstract class AProdList {
 	
 	public abstract List<Map<String,Object>> queryProdListDetail(String catalogSeq,String prodId) throws Exception;
 
-	
-	
-	
 
+	
+	
+	
 	public IPfpCatalogService getPfpCatalogService() {
 		return pfpCatalogService;
 	}
