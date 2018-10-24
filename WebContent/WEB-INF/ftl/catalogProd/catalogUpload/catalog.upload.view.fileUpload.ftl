@@ -44,6 +44,19 @@
 		    <div class="content-wrap bg-white">
 		        <div class="content-box bg-white w-900">
 		
+					<#if uploadContent !="">
+					<#--商品資料來源型態-->
+			        <div class="p-b30 m-b20">
+			            <p class="title-box h2">商品資料來源</p>
+			            <div class="datainfo-csv">
+			                <div class="svg-box medium p-r10">
+			                    <object class="svg-img" data="<@s.url value="/" />/html/img/catalogProd/catalogUpload/datasource-csv.svg" type="image/svg+xml"></object>
+			                </div>
+			                <p>${uploadContent!}<span>最後更新時間：${updateDate!}</span></p>
+			            </div>
+			        </div>
+			        </#if>
+					
 		            <#-- 上傳CSV 開始 -->
 		            <div class="section-box">
 		                <p class="title-box h2">建立商品資料</p>

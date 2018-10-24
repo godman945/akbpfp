@@ -39,7 +39,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private final SimpleDateFormat formatter2 = new SimpleDateFormat("yyyyMMddHHmmss");
-	private final SimpleDateFormat formatter3 = new SimpleDateFormat("yyyy/MM/dd hh:mma");
+	private final SimpleDateFormat formatter3 = new SimpleDateFormat("yyyy/MM/dd ahh:mm");
 	
 	private IPfpCatalogUploadListService pfpCatalogUploadListService;
 	private IPfpCatalogService pfpCatalogService;

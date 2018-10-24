@@ -139,7 +139,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setEcStockStatus(ecStockStatus); // 商品供應情況
 				pfpCatalogProdEc.setEcUseStatus(ecUseStatus); // 商品使用狀況
 				pfpCatalogProdEc.setEcCategory(ecCategory); // 商品類別
-				pfpCatalogProdEc.setEcStatus("0"); // 商品狀態(0:關閉, 1:開啟)
+				pfpCatalogProdEc.setEcStatus("1"); // 商品狀態(0:關閉, 1:開啟)
 				pfpCatalogProdEc.setEcCheckStatus("0"); // 商品審核狀態(0:未審核, 1:已審核)
 				pfpCatalogProdEc.setUpdateDate(new Date()); // 更新時間
 				pfpCatalogProdEc.setCreateDate(new Date()); // 建立時間
