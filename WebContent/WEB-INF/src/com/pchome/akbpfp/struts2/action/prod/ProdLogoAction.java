@@ -123,14 +123,14 @@ public class ProdLogoAction extends BaseCookieAction{
 	            pfpCatalogLogoService.saveOrUpdate(pfpCatalogLogo);
 			    //2.推薦顏色
 	            Map<String, Integer> colormap = color(image);
-	            List colorKeys = new ArrayList(colormap.keySet());
-	            Set<PfpCatalogLogoDetail> set =  pfpCatalogLogo.getPfpCatalogLogoDetails();
-	            int index = 0;
-	            for (PfpCatalogLogoDetail pfpCatalogLogoDetail : set) {
-	            	pfpCatalogLogoDetail.setCatalogLogoHexColor(colorKeys.get(index).toString());
+	            System.out.println(colormap);
+	            for (Entry<String, Integer> data : colormap.entrySet()) {
+	            	PfpCatalogLogoDetail pfpCatalogLogoDetail = new PfpCatalogLogoDetail();
+	            	pfpCatalogLogoDetail.setCatalogLogoHexColor(data.getKey());
+	            	pfpCatalogLogoDetail.setCreateDate(date);
 	            	pfpCatalogLogoDetail.setUpdateDate(date);
+	            	pfpCatalogLogoDetail.setPfpCatalogLogo(pfpCatalogLogo);
 	            	pfpCatalogLogoDetailService.saveOrUpdate(pfpCatalogLogoDetail);
-	            	index = index + 1;
 				}
 			}
 		}else{
