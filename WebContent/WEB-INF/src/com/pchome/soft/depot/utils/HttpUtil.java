@@ -276,7 +276,9 @@ public class HttpUtil {
 				if (statusCode == HttpStatus.SC_FORBIDDEN) {
 					statusCode = getURLConnectionStatus(url);
 				}
-
+				if(statusCode == 404){
+					statusCode = getURLConnectionStatus(url);
+				}
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 				statusCode = getURLConnectionStatus(url);
