@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -125,7 +126,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setEcTitle(ecTitle); // 商品敘述
 				
 				String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq;
-				if (ecImgBase64.trim().isEmpty()) { // ecImgBase64為空表示非手動上傳，會有圖片網址需下載圖片
+				if (StringUtils.isBlank(ecImgBase64)) { // ecImgBase64為空表示非手動上傳，會有圖片網址需下載圖片
 					pfpCatalogProdEc.setEcImg(ImgUtil.processImgPathForCatalogProd(ecImgUrl, photoPath, catalogProdSeq)); // 圖片路徑
 				} else {
 					pfpCatalogProdEc.setEcImg(ImgUtil.processImgBase64StringToImage(ecImgBase64, photoPath, catalogProdSeq));
@@ -134,7 +135,11 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setEcImgRegion(ImgUtil.getImgLongWidthCode(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg())); // 商品影像長寬(V/H)
 				pfpCatalogProdEc.setEcImgMd5(ImgUtil.getImgMD5Code(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg())); // 商品影像MD5
 				pfpCatalogProdEc.setEcUrl(ecUrl); // 連結網址
-				pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
+				if (StringUtils.isBlank(ecPrice)) { // 沒有原價則帶入促銷價
+					pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
+				} else {
+					pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
+				}
 				pfpCatalogProdEc.setEcDiscountPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
 				pfpCatalogProdEc.setEcStockStatus(ecStockStatus); // 商品供應情況
 				pfpCatalogProdEc.setEcUseStatus(ecUseStatus); // 商品使用狀況

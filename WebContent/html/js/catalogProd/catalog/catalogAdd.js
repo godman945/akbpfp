@@ -14,7 +14,7 @@ function addPfpCatalog() {
 
 function checkValue() {
 	if ($('#catalogName').val().length == 0) {
-		alert("請輸入目錄名稱。");
+		$(".msg-error").html("請輸入目錄名稱。");
 		return true;
 	}
 	return false;
