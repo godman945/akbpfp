@@ -96,7 +96,7 @@ public class IndexAction extends BaseCookieAction {
 		 * } }
 		 */
 
-//		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_index");
+		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_index");
 		return result;
 	}
 
@@ -396,16 +396,6 @@ public class IndexAction extends BaseCookieAction {
 		return result;
 	}
 
-	// public String rule() throws Exception{
-	//
-	// return result;
-	// }
-
-	public String alex() throws Exception {
-		System.out.println("SSSSS");
-		return "summary";
-
-	}
 
 	public List<FaqListVO> getFaqListVOs() {
 		return faqListVOs;
