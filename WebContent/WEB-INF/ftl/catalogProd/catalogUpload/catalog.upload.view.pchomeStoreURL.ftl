@@ -36,7 +36,8 @@
     </div>
     <#-- 次目錄導覽列 結束 -->
 
-	<input type="text" id="uploadContent" name="uploadContent" value="${uploadContent!}">
+	<input type="hidden" id="uploadContent" name="uploadContent" value="${uploadContent!}">
+	
 	<div id="loadingWaitBlock">    
 		<#-- 選擇商品資料來源 開始 -->
 	    <div class="content-wrap bg-white">
