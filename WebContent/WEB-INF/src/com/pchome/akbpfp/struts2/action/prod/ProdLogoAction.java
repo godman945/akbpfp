@@ -103,7 +103,7 @@ public class ProdLogoAction extends BaseCookieAction{
 	            if(!path.exists()){
 	            	path.mkdirs();
 	            }
-	            String writeImgPath = path.getPath()+"\\"+fileName+"."+fileExtensionName.replace("image/", "");
+	            String writeImgPath = path+"\\"+fileName+"."+fileExtensionName.replace("image/", "");
 	            String dbImgPath = "img/user/"+super.getCustomer_info_id()+"/catalog/logo/"+fileName+"."+fileExtensionName.replace("image/", "");
 	            log.info(">>>>>>writeImgPath:"+writeImgPath);
 	            log.info(">>>>>>dbImgPath:"+dbImgPath);
