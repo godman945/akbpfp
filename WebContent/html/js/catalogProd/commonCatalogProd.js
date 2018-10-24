@@ -17,12 +17,20 @@ var maskingConfig = {
 
 $(document).ready(function() {
 	
+	// 處理點回上一頁 目錄下拉選單的值還原回正確值
+	var url = location.href;
+	if (url.indexOf("catalogSeq=") > -1) {
+		var urlCatalogSeq = url.substring(url.indexOf("catalogSeq="), url.length).replace("catalogSeq=", "");
+		$("#catalogSeq").val(urlCatalogSeq);
+	}
+	
 	// 切換商品目錄下拉選單，依據目錄上傳方式帶到相對應畫面
 	$("#catalogSeq").change(function(){
 		$('#loadingWaitBlock').block(maskingConfig);
 		
 		var catalogSeq = $(this).val();
 		//回上頁待測試
+//		window.location = "prodListCardStyleView.html?catalogSeq=" + catalogSeq + "&currentPage=1&pageSizeSelected=10";
 		location.href = "prodListCardStyleView.html?catalogSeq=" + catalogSeq + "&currentPage=1&pageSizeSelected=10";
 //		window.location.replace("prodListCardStyleView.html?catalogSeq=" + catalogSeq + "&currentPage=1&pageSizeSelected=10");
 

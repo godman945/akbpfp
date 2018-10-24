@@ -14,6 +14,7 @@ public class PfpCatalogUploadErrLogService extends BaseService<PfpCatalogUploadL
 
 	@Override
 	public List<PfpCatalogVO> getCatalogProdUploadErrList(PfpCatalogUploadLogVO vo) {
+		System.out.println("getCatalogProdUploadErrList Service");
 		List<Map<String, Object>> catalogProdUploadErrList = ((IPfpCatalogUploadErrLogDAO) dao).getPfpCatalogList(vo);
 		
 		List<PfpCatalogVO> pfpCatalogVOList = new ArrayList<>();

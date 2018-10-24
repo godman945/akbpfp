@@ -39,16 +39,19 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	private final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private final SimpleDateFormat formatter2 = new SimpleDateFormat("yyyyMMddHHmmss");
+	private final SimpleDateFormat formatter3 = new SimpleDateFormat("yyyy/MM/dd hh:mma");
 	
 	private IPfpCatalogUploadListService pfpCatalogUploadListService;
 	private IPfpCatalogService pfpCatalogService;
+	
 	protected final int bufferReaderKB = 8; // 讀取資料使用的buffer大小(預設8KB)
+	private String akbPfpServer;
 	
 	private List<PfpCatalogVO> catalogList = new ArrayList<PfpCatalogVO>(); // 查詢結果
 	private String catalogSeq; // 商品目錄ID
 	private String selectUploadFlag; // 選擇上傳方式flag帶入相對畫面
 	private String updateWay; // 更新方式(1.取代,2.更新)
-	private String akbPfpServer;
+	private String updateDate; // 更新時間
 	
 	// 自動排程上傳
 	private String jobURL; // 輸入的自動排程網址
@@ -86,6 +89,8 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 				&& EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType().equals(catalogUploadType))
 				|| (catalogUploadType.isEmpty()
 						&& EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType().equals(selectUploadFlag))) {
+			uploadContent = pfpCatalog.getCatalogUploadContent().trim();
+			updateDate = formatter3.format(pfpCatalog.getUpdateDate());
 			return "fileUpload";
 		} else if ((StringUtils.isNotBlank(catalogUploadType)
 				&& EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(catalogUploadType))
@@ -527,6 +532,10 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 
 	public void setCatalogProdSeq(String catalogProdSeq) {
 		this.catalogProdSeq = catalogProdSeq;
+	}
+
+	public String getUpdateDate() {
+		return updateDate;
 	}
 	
 }

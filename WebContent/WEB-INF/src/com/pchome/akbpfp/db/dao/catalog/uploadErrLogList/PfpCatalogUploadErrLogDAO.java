@@ -12,6 +12,7 @@ public class PfpCatalogUploadErrLogDAO extends BaseDAO<PfpCatalogUploadLog, Stri
 	@Override
 	public List<Map<String, Object>> getPfpCatalogList(PfpCatalogUploadLogVO vo) {
 		// TODO Auto-generated method stub
+		System.out.println("getPfpCatalogListDAO");
 		return null;
 	}
 

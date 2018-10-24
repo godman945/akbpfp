@@ -1,5 +1,5 @@
 ﻿$(document).ready(function() {
-	
+
 	// 調整檔案上傳css
 	$("#fileUpload").css({
 		"width" : $(".scvupload-wrap").width(),

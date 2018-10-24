@@ -1,7 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/commonCatalogProd.js?t=20181023004"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/commonCatalogProd.js?t=20181023011"></script>
 <script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/autoJob.js?t=20181023004"></script>
 
 <div class="container-prodmanage">
