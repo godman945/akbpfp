@@ -99,18 +99,14 @@ public class ProdLogoAction extends BaseCookieAction{
 			    //1.寫入圖片
 	            String logoSeq = sequenceService.getId(EnumSequenceTableName.PFP_CATALOG_LOG_SEQ, "_");
 	            File path = new File(saveImgPathBuffer.toString());
-	            
 	            log.info(">>>>>>path:"+path);
-	            
 	            if(!path.exists()){
 	            	path.mkdirs();
 	            }
-	            String writeImgPath = path.getPath()+"/"+logoType+"."+fileName.split("\\.")[1];
-	            String dbImgPath = "img/user/"+super.getCustomer_info_id()+"/catalog/logo/"+logoType+"."+fileName.split("\\.")[1];
-	            
+	            String writeImgPath = path.getPath()+"\\"+fileName+"."+fileExtensionName.replace("image/", "");
+	            String dbImgPath = "img/user/"+super.getCustomer_info_id()+"/catalog/logo/"+fileName+"."+fileExtensionName.replace("image/", "");
 	            log.info(">>>>>>writeImgPath:"+writeImgPath);
 	            log.info(">>>>>>dbImgPath:"+dbImgPath);
-	            
 	            ImageIO.write(image, fileExtensionName.replace("image/", ""), new File(writeImgPath));
 	            PfpCatalogLogo pfpCatalogLogo = new PfpCatalogLogo();
 	            pfpCatalogLogo.setCatalogLogoSeq(logoSeq);
@@ -149,9 +145,7 @@ public class ProdLogoAction extends BaseCookieAction{
 				}
 				
 				JSONObject imgData =  (JSONObject) imgJson.get(type);
-			    String fileName = type;
 			    String base64Img = imgData.getString("base64").split(",")[1];
-			    System.out.println(imgData.getString("base64"));
 			    String fileExtensionName = imgData.getString("file_extension_name");
 			    int status = imgData.getInt("status");
 			    //狀態為審核中不可變更
