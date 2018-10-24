@@ -100,16 +100,16 @@ $(document).ready(function(){
 		
 		$(function () {
 		    $('#fileupload').fileupload({
-		        url: 'adAddImgAjax.html',
-		        fileElementId: 'fileupload',
-		        success: function (respone) {
-		        	imgSeq = respone;
-		        	jsonObj =  JSON.parse(respone);
-		        },
-		        done: function (e, data) {
-		        },
-		        dataType: 'json',
-		        async: false,
+//		        url: 'adAddImgAjax.html',
+//		        fileElementId: 'fileupload',
+//		        success: function (respone) {
+//		        	imgSeq = respone;
+//		        	jsonObj =  JSON.parse(respone);
+//		        },
+//		        done: function (e, data) {
+//		        },
+//		        dataType: 'json',
+//		        async: false,
 		    }).on('fileuploadadd', function (e, data) {
 		    	checkUploadRule(data);
 		    	return false;
