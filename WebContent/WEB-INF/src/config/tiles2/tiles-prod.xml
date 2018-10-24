@@ -11,9 +11,7 @@
     	<put-attribute name="head" value="prod.logo.head" />
     	<put-attribute name="body" value="/ftl/prodLogo/logo.ftl" />
     </definition>
-    <definition name="catalog.prod.menu" extends="default.menu" >
-    	<put-attribute name="submenu" value="/ftl/catalogProd/submenu.ftl" />
-    </definition>
+   
     <definition name="prod.logo.head" extends="default.head" >
     	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
     	<put-attribute name="js" value="prod.logo.defalut.js" />
@@ -29,8 +27,9 @@
     
     <!-- SETUP START -->
     <definition name="ec.prod.setup.init" extends="default.layout">
-       <put-attribute name="head" value="/ftl/catalogProd/setup/ec.prod.source.ftl" />
-       <put-attribute name="body" value="ec.prod.setup.init.body" />
+		<put-attribute name="menu" value="catalog.prod.menu" />
+		<put-attribute name="head" value="/ftl/catalogProd/setup/ec.prod.source.ftl" />
+		<put-attribute name="body" value="ec.prod.setup.init.body" />
     </definition>
     
     
@@ -39,6 +38,10 @@
        <put-attribute name="include.js" value="/ftl/catalogProd/setup/ec.prod.setup.include.js.ftl" />
     </definition>
     
+    
+    <definition name="catalog.prod.menu" extends="default.menu" >
+    	<put-attribute name="submenu" value="/ftl/catalogProd/submenu.ftl" />
+    </definition>
     
     <!-- SETUP end -->
     

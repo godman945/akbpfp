@@ -12,6 +12,7 @@
 				   #uri.indexOf('/queryProdGroupFilterItem') > -1 ||
 				   #uri.indexOf('/queryProdGroupList') > -1 ||
 				   #uri.indexOf('/catalogProd') > -1 ||
+				   #uri.indexOf('/setup') > -1 ||
 				   #uri.indexOf('/addCatalog') > -1 }">
         <a href="<@s.url value="/" />catalogProd.html"><b>商品目錄</b></a>
     </@s.if>
