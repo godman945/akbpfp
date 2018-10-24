@@ -32,16 +32,16 @@ $(document).ready(function(){
 	
 	$(function () {
 		$('#fileupload').fileupload({
-			url: 'adAddImgAjax.html',
-			fileElementId: 'fileupload',
-			success: function (respone) {
-				imgSeq = respone;
-				jsonObj =  JSON.parse(respone);
-			},
-			done: function (e, data) {
-			},
-			dataType: 'json',
-			async: false,
+//			url: 'adAddImgAjax.html',
+//			fileElementId: 'fileupload',
+//			success: function (respone) {
+//				imgSeq = respone;
+//				jsonObj =  JSON.parse(respone);
+//			},
+//			done: function (e, data) {
+//			},
+//			dataType: 'json',
+//			async: false,
 		}).on('fileuploadadd', function (e, data) {
 		    	
 		}).on('fileuploaddone', function (e, data) {
@@ -194,7 +194,7 @@ function checkUploadFile(file,obj){
 						$(review).css("display","none");
 						$(success).css("display","block");
 						logoDataObj.square.base64 = base64Img;
-						logoDataObj.square.file_name = fileName;
+						logoDataObj.square.file_name = 'square';
 						logoDataObj.square.file_extension_name = fileType;
 						logoDataObj.square.status = 2;
 					}else{
@@ -220,7 +220,7 @@ function checkUploadFile(file,obj){
 						$(select).css("display","none");
 						$(review).css("display","none");
 						logoDataObj.rectangle.base64 = base64Img;
-						logoDataObj.rectangle.file_name = fileName;
+						logoDataObj.rectangle.file_name = 'rectangle';
 						logoDataObj.rectangle.file_extension_name = fileType;
 						logoDataObj.rectangle.status = 2;
 					}else{
@@ -275,9 +275,9 @@ function deleteImg(obj){
 function saveLogo(){
 	var saveFlag = true;
 	if(logoDataObj.square.base64 == null || logoDataObj.rectangle.base64 == null){
-		console.log("---");
 		saveFlag = false;
 	}
+	
 	if(saveFlag){
 		$.ajax({
 		url : "saveLogoAjax.html",

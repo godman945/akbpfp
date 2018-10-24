@@ -33,7 +33,7 @@ public class ReplaceValuesInterceptor  extends AbstractInterceptor {
 			
 			map.put(key, valueArrayList.toArray(new String[valueArrayList.size()]));
 			
-			log.info("-----------------" + key + ":" + ((String[]) map.get(key))[0]);
+//			log.info("-----------------" + key + ":" + ((String[]) map.get(key))[0]);
 		}
 		ActionContext actionContext = invocation.getInvocationContext();
 		actionContext.setParameters(map);
