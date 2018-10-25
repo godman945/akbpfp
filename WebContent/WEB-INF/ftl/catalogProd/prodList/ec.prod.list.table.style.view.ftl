@@ -9,7 +9,7 @@
                 <ul class="txt-table">
                     <li class="txt-cell pos-relative p-r10">
                         <span class="icon-box list arrow-right">
-                            <a href="#">所有商品目錄</a>
+                            <a href="catalogProd.html">所有商品目錄</a>
                             <em class="icon-arrow-r"></em>
                         </span>
                         <div class="select-box">
@@ -54,7 +54,7 @@
                     <div class="nav-box pos-relative">
                         <!--左-->
                         <ul class="txt-table txt-regular">
-                            <li class="txt-cell group-default p-r10">共<em id="prodQuantityTxt" class="txt-quantity">${totalCount!}</em>件商品目錄</li>
+                            <li class="txt-cell group-default p-r10">共<em id="prodQuantityTxt" class="txt-quantity">${totalCount!}</em>件商品</li>
                             <li class="txt-cell group-default p-r10"><a class="btn-filter" href="javascript:void(0)" data-filter="all">全部商品</a></li>
                             <li class="txt-cell group-default p-r10"><a class="btn-filter" href="javascript:void(0)" data-filter="enable">已啟用</a></li>
                             <li class="txt-cell group-default "><a class="btn-filter" href="javascript:void(0)" data-filter="sealed">已封存</a></li>
