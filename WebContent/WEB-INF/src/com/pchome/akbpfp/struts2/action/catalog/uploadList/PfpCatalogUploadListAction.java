@@ -33,7 +33,7 @@ import com.pchome.soft.depot.utils.HttpUtil;
 public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	private Map<String,Object> dataMap;
-	private String productFilePath;
+	private String catalogProdCsvFilePath;
 	private File fileUpload;
 	private String fileUploadFileName;
 	
@@ -147,7 +147,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		vo.setCatalogType(pfpCatalog.getCatalogType());
 		
 		// 檔案上傳部分
-		vo.setFileUploadPath(productFilePath + super.getCustomer_info_id() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName);
+		vo.setFileUploadPath(catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName);
 		File createFile = new File(vo.getFileUploadPath());
 		FileUtils.copyFile(fileUpload, createFile);
 		
@@ -181,7 +181,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		vo.setCatalogType(pfpCatalog.getCatalogType());
 		
 		// 檔案上傳部分
-		vo.setFileUploadPath(productFilePath + super.getCustomer_info_id() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName);
+		vo.setFileUploadPath(catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName);
 		File createFile = new File(vo.getFileUploadPath());
 		FileUtils.copyFile(fileUpload, createFile);
 		
@@ -235,7 +235,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		
 		Date updateDatetime = new Date();
 		fileUploadFileName = jobURL.substring(jobURL.lastIndexOf("/") + 1);
-		String downloadPath = productFilePath + super.getCustomer_info_id() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName;
+		String downloadPath = catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName;
 		boolean downloadStatus = loadURLFile(jobURL, downloadPath);
 		
 		if (downloadStatus) {
@@ -434,8 +434,8 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		return true;
 	}
 	
-	public void setProductFilePath(String productFilePath) {
-		this.productFilePath = productFilePath;
+	public void setCatalogProdCsvFilePath(String catalogProdCsvFilePath) {
+		this.catalogProdCsvFilePath = catalogProdCsvFilePath;
 	}
 
 	public void setFileUploadFileName(String fileUploadFileName) {
