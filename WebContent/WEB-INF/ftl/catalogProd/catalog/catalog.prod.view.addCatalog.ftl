@@ -1,7 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalog/catalogAdd.js?t=20180914001"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalog/catalogAdd.js?t=20181024001"></script>
 
 <form id="savePfpCatalogFrom" action="savePfpCatalog.html" method="post">
 	
@@ -44,7 +44,7 @@
 		            <p class="title-box h2">目錄名稱</p>
 		            <div class="input-text">
 		                <input type="text" id="catalogName" name="catalogName" maxlength="20" value="" required placeholder="填寫目錄名稱，最多20字">
-		                <div class="msg-error">聯播廣告出價最少為3元</div>
+		                <div class="msg-error"></div>
 		            </div>
 		        </div>
 		        <#-- 目錄名稱 結束 -->

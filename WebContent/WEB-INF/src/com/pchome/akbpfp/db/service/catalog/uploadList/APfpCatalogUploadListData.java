@@ -87,7 +87,7 @@ public abstract class APfpCatalogUploadListData {
 		String prodItemErrorMsg = "";
 
 		// ecImgBase64為空格表示非手動上傳，非手動上傳才需檢查圖片網址
-		if (ecImgBase64.trim().isEmpty()) {
+		if (StringUtils.isBlank(ecImgBase64)) {
 			if (ecImgUrl.isEmpty()) {
 				prodItemErrorMsg += "必填欄位必須輸入資訊。";
 			} else {
@@ -112,6 +112,7 @@ public abstract class APfpCatalogUploadListData {
 
 	/**
 	 * 檢查商品使用狀況
+	 * 0:全新,1:二手,2:福利品
 	 * @param errorPrdItemArray
 	 * @param catalogProdSeq
 	 * @param ecUseStatus
@@ -124,7 +125,7 @@ public abstract class APfpCatalogUploadListData {
 		
 		if (ecUseStatus.isEmpty()) {
 			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-		} else if (!"0".equals(ecUseStatus) && !"1".equals(ecUseStatus)) {
+		} else if (!"0".equals(ecUseStatus) && !"1".equals(ecUseStatus) && !"2".equals(ecUseStatus)) {
 			prodItemErrorMsg += "欄位內容不符合規定。";
 		}
 		
@@ -140,6 +141,7 @@ public abstract class APfpCatalogUploadListData {
 
 	/**
 	 * 檢查商品供應情況
+	 * 0:無庫存,1:有庫存,2:預購,3:停售
 	 * @param errorPrdItemArray
 	 * @param catalogProdSeq
 	 * @param ecStockStatus
@@ -152,7 +154,8 @@ public abstract class APfpCatalogUploadListData {
 		
 		if (ecStockStatus.isEmpty()) {
 			prodItemErrorMsg += "必填欄位必須輸入資訊。";
-		} else if (!"0".equals(ecStockStatus) && !"1".equals(ecStockStatus)) {
+		} else if (!"0".equals(ecStockStatus) && !"1".equals(ecStockStatus) && !"2".equals(ecStockStatus)
+				&& !"3".equals(ecStockStatus)) {
 			prodItemErrorMsg += "欄位內容不符合規定。";
 		}
 		

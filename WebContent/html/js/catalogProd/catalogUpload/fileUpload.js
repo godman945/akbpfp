@@ -1,6 +1,18 @@
 ﻿$(document).ready(function() {
 
-	// 調整檔案上傳css
+	// 一進入畫面先調整檔案上傳css
+	updateFileUploadCss();
+	// 調整瀏覽器視窗大小時，重新調整檔案上傳的位置
+	$(window).resize(function() {
+		updateFileUploadCss();
+	});
+	
+});
+
+/**
+ * 調整檔案上傳css
+ */
+function updateFileUploadCss() {
 	$("#fileUpload").css({
 		"width" : $(".scvupload-wrap").width(),
 		"height" : $(".scvupload-wrap").height() - 21,
@@ -11,8 +23,7 @@
 		"cursor" : "pointer", // 調整鼠標
 		"opacity" : 0 // 完全透明
 	});
-	
-});
+}
 
 /**
  * 上一步

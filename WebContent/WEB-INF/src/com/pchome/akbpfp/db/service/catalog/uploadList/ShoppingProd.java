@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -114,7 +115,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				tempErrorPrdItemArrayCount = errorPrdItemArray.length();
 				errorNum++;
 			} else {
-				// 檢查輸入的資料是否與DB內完全相同，相同則不做更新、新增處理
+				// 檢查輸入的資料是否與DB內完全相同，相同則不做更新、新增處理，避免每次更新就需要重新審核商品
 				List<Map<String, Object>> pfpCatalogProdEcList = pfpCatalogUploadListDAO.getPfpCatalogProdEc(catalogSeq, catalogProdSeq);
 				
 				// 記錄商品明細，寫入一般購物類table
@@ -125,7 +126,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setEcTitle(ecTitle); // 商品敘述
 				
 				String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq;
-				if (ecImgBase64.trim().isEmpty()) { // ecImgBase64為空表示非手動上傳，會有圖片網址需下載圖片
+				if (StringUtils.isBlank(ecImgBase64)) { // ecImgBase64為空表示非手動上傳，會有圖片網址需下載圖片
 					pfpCatalogProdEc.setEcImg(ImgUtil.processImgPathForCatalogProd(ecImgUrl, photoPath, catalogProdSeq)); // 圖片路徑
 				} else {
 					pfpCatalogProdEc.setEcImg(ImgUtil.processImgBase64StringToImage(ecImgBase64, photoPath, catalogProdSeq));
@@ -134,7 +135,11 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setEcImgRegion(ImgUtil.getImgLongWidthCode(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg())); // 商品影像長寬(V/H)
 				pfpCatalogProdEc.setEcImgMd5(ImgUtil.getImgMD5Code(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg())); // 商品影像MD5
 				pfpCatalogProdEc.setEcUrl(ecUrl); // 連結網址
-				pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
+				if (StringUtils.isBlank(ecPrice)) { // 沒有原價則帶入促銷價
+					pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
+				} else {
+					pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
+				}
 				pfpCatalogProdEc.setEcDiscountPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
 				pfpCatalogProdEc.setEcStockStatus(ecStockStatus); // 商品供應情況
 				pfpCatalogProdEc.setEcUseStatus(ecUseStatus); // 商品使用狀況
@@ -144,6 +149,11 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setUpdateDate(new Date()); // 更新時間
 				pfpCatalogProdEc.setCreateDate(new Date()); // 建立時間
 
+				// 紀錄本次上傳哪些商品編號，最後不在此List內的資料將被全部刪除，updateWay為1:"取代"會需要使用
+				catalogProdSeqList.add(pfpCatalogProdEc.getCatalogProdSeq());
+				successNum++; // 成功筆數
+				
+				// 檢查輸入的資料是否與DB內完全相同，相同則不做更新、新增處理，避免每次更新就需要重新審核商品
 				if (pfpCatalogProdEcList.size() > 0) {
 					Map<String, Object> prodEcMap = new HashMap<String, Object>();
 					prodEcMap = pfpCatalogProdEcList.get(0);
@@ -174,15 +184,15 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				 * 1.取代:上傳新檔案會取代目前的資料，table內未在新檔案中找到的產品將會遭到刪除。
 				 * 記錄上傳資料的每筆商品ID，最後不在此List內的資料將被全部刪除
 				 */
-				if ("1".equals(updateWay)) {
-					catalogProdSeqList.add(pfpCatalogProdEc.getCatalogProdSeq());
-				}
+//				if ("1".equals(updateWay)) {
+//					catalogProdSeqList.add(pfpCatalogProdEc.getCatalogProdSeq());
+//				}
 				
-				successNum++;
+//				successNum++;
 			}
 		}
 		
-		if ("1".equals(updateWay)) { // 如果是"取代"，刪除table內，不在最新上傳的名單內資料
+		if ("1".equals(updateWay)) { // 如果是"取代"，刪除table內，不在本次上傳的名單內資料
 			pfpCatalogUploadListDAO.deleteNotInPfpCatalogProdEc(catalogSeq, catalogProdSeqList);
 		}
 		

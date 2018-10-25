@@ -274,6 +274,7 @@
     <!-- 商品廣告-檔案上傳 -->
     <bean id="PfpCatalogUploadListService" class="com.pchome.akbpfp.db.service.catalog.uploadList.PfpCatalogUploadListService">
 		<property name="photoDbPathNew" value="${photo.db.path.new}" />
+		<property name="catalogProdCsvFilePath" value="${catalogProd.csv.file.path}" />
 		<property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
 		<property name="pfpCatalogService" ref="PfpCatalogService" />
 		<property name="sequenceService" ref="SequenceService" />

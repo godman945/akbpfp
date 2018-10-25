@@ -35,6 +35,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	private ISequenceService sequenceService;
 	private IPfpCatalogUploadListDAO pfpCatalogUploadListDAO;
 	private String photoDbPathNew;
+	private String catalogProdCsvFilePath;
 	
 	/**
 	 * 依照商品目錄類別，處理相對應的部分
@@ -379,13 +380,24 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	}
 	
 	/**
-	 * 刪除哪位客戶的哪個目錄資料夾內容
+	 * 刪除哪位客戶的哪個商品目錄的圖片資料夾內容
 	 * @param vo.getPfpCustomerInfoId() pfp_id
 	 * @param vo.getCatalogSeq() 商品目錄編號
 	 */
 	@Override
-	public void deleteFolderAndData(PfpCatalogVO vo) {
+	public void deleteCatalogProdImgFolderAndData(PfpCatalogVO vo) {
 		String folderPath = photoDbPathNew + vo.getPfpCustomerInfoId() + "/catalogProd/" + vo.getCatalogSeq();
+		FileUtils.deleteQuietly(new File(folderPath));
+	}
+	
+	/**
+	 * 刪除哪位客戶的哪個商品目錄上傳過的CSV
+	 * @param vo.getPfpCustomerInfoId() pfp_id
+	 * @param vo.getCatalogSeq() 商品目錄編號
+	 */
+	@Override
+	public void deleteCatalogProdCSVFolderAndData(PfpCatalogVO vo) {
+		String folderPath = catalogProdCsvFilePath + vo.getPfpCustomerInfoId() + "/" + vo.getCatalogSeq();
 		FileUtils.deleteQuietly(new File(folderPath));
 	}
 	
@@ -411,6 +423,10 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 
 	public void setPhotoDbPathNew(String photoDbPathNew) {
 		this.photoDbPathNew = photoDbPathNew;
+	}
+
+	public void setCatalogProdCsvFilePath(String catalogProdCsvFilePath) {
+		this.catalogProdCsvFilePath = catalogProdCsvFilePath;
 	}
 
 }
