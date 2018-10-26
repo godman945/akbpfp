@@ -1,4 +1,4 @@
-﻿$(document).ready(function(){
+﻿﻿$(document).ready(function(){
 	$(".akb_iframe").attr("src","");
 	$("#groupSelect").children()[0].selected = 'selected';
 	if($.browser.msie){

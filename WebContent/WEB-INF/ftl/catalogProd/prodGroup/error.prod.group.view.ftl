@@ -8,7 +8,7 @@
                 <ul class="txt-table">
                     <li class="txt-cell pos-relative p-r10">
                         <span class="icon-box list arrow-right">
-                            <a href="#">所有商品目錄</a>
+                            <a href="catalogProd.html">所有商品目錄</a>
                             <em class="icon-arrow-r"></em>
                         </span>
                         <div class="select-box">

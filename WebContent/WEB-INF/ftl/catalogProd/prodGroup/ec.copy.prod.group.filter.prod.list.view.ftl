@@ -8,7 +8,7 @@
                 <ul class="txt-table">
                     <li class="txt-cell pos-relative p-r10">
                         <span class="icon-box list arrow-right">
-                            <a href="#">所有商品目錄</a>
+                            <a href="catalogProd.html">所有商品目錄</a>
                             <em class="icon-arrow-r"></em>
                         </span>
                         <div class="select-box">
@@ -51,7 +51,7 @@
                             <p>建立商品組合</p>
                             <div class="input-text">
                                 <input type="text" id="catalogGroupName" name="" maxlength="20" value="" required placeholder="填寫組合名稱，最多20字">
-                                <div class="msg-error">請填寫組合名稱</div>
+                                <div id="groupNameMsgError" class="msg-error" style="display:none">請填寫組合名稱</div>
                             </div>
 
                             <!-- 篩選條件 -->
@@ -126,11 +126,11 @@
 			                                    <div class="txt-inlineblock level3">
 				                                        <div class="input-text" data-level="1" >
 				                                            <input type="text" name="" maxlength="6" value="${filterItem.catalogGroupItemValue!}">
-				                                            <div class="msg-error">請填寫篩選條件</div>
+				                                            <div class="msg-error" style="display:none">請填寫篩選條件</div>
 				                                        </div>
 				                                        <div class="input-number" data-level="2">
 				                                            NT<input type="text" name="" maxlength="6" value="${filterItem.catalogGroupItemValue!}">元
-				                                            <div class="msg-error">請填寫數字</div>
+				                                            <div class="msg-error" style="display:none">請填寫數字</div>
 				                                        </div>
 				                                        <div class="select-box" data-level="3">
 				                                            <select>

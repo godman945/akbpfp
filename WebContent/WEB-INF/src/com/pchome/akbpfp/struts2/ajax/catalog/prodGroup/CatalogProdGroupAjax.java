@@ -338,29 +338,29 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 				return SUCCESS;
 			}
 			
-			// 檢查篩選條件value是否符合型態
-			for (int i = 0; i < filterContentArray.length(); i++) {
-				JSONObject filterContentObj = new JSONObject(filterContentArray.get(i).toString());
-				String newField = filterContentObj.getString("field");
-				String newCondition = filterContentObj.getString("condition");
-				String newValue = filterContentObj.getString("value");
-				
-				if (StringUtils.equals("ec_price", newField)){
-					boolean isIntegerFlag = isInteger(newValue);
-					if (!isIntegerFlag){
-						resultMap = returnErrorMsgMap("原價請填寫數字");
-						return SUCCESS;
-					}
-				}
-				
-				if (StringUtils.equals("ec_discount_price", newField)){
-					boolean isIntegerFlag = isInteger(newValue);
-					if (!isIntegerFlag){
-						resultMap = returnErrorMsgMap("特價請填寫數字");
-						return SUCCESS;
-					}
-				}
-			}
+//			// 檢查篩選條件value是否符合型態
+//			for (int i = 0; i < filterContentArray.length(); i++) {
+//				JSONObject filterContentObj = new JSONObject(filterContentArray.get(i).toString());
+//				String newField = filterContentObj.getString("field");
+//				String newCondition = filterContentObj.getString("condition");
+//				String newValue = filterContentObj.getString("value");
+//				
+//				if (StringUtils.equals("ec_price", newField)){
+//					boolean isIntegerFlag = isInteger(newValue);
+//					if (!isIntegerFlag){
+//						resultMap = returnErrorMsgMap("原價請填寫數字");
+//						return SUCCESS;
+//					}
+//				}
+//				
+//				if (StringUtils.equals("ec_discount_price", newField)){
+//					boolean isIntegerFlag = isInteger(newValue);
+//					if (!isIntegerFlag){
+//						resultMap = returnErrorMsgMap("特價請填寫數字");
+//						return SUCCESS;
+//					}
+//				}
+//			}
 			
 			
 			List<PfpCatalogGroupItem> pfpCatalogGroupItemList = new ArrayList<PfpCatalogGroupItem>();

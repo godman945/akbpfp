@@ -4,7 +4,6 @@
 
 	<div class="cont">
 	<@t.insertAttribute name="head" />
-    <form method="post" id="modifyForm" name="modifyForm" enctype="multipart/form-data" action="doAdAdAddTmg.html">
     	<div class="grtba">
 
 			<!-- IE 沒有 placeholder 效果，用此 code 模擬 placeholder(Jack指導版) --> 
@@ -337,7 +336,6 @@
             <input type="button" id="cancel" value="取 消" class="btn-cancel"> 
             <input type="button" id="save" value="送出審核" class="btn-save" onclick="adSubmit();">
 		</center>
-	</form>
 
 <input type="hidden" id="messageId" value="">
 <input type="hidden" id="adGroupSeq" value="${adGroupSeq!}">
