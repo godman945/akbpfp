@@ -1,9 +1,6 @@
 package com.pchome.utils;
 
-import java.awt.Graphics;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
@@ -21,7 +18,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
@@ -154,17 +150,12 @@ public class ImgUtil {
 	 * 圖片resize
 	 * */
 	public BufferedImage imgResize(BufferedImage img,int resizeWidth,int resizeHeight) throws Exception{
-		// 進行圖片縮放
-		Image image = new ImageIcon(img).getImage();
-		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		GraphicsDevice gs = ge.getDefaultScreenDevice();
-		GraphicsConfiguration gc = gs.getDefaultConfiguration();
-		int transparency = Transparency.OPAQUE;
-		BufferedImage bimage = gc.createCompatibleImage(resizeWidth, resizeHeight, transparency);
-		Graphics g = bimage.createGraphics();
-		g.drawImage(image, 0, 0, null);
-        g.dispose();
-		return bimage;
+		Image image = img.getScaledInstance(resizeWidth, resizeHeight, Transparency.OPAQUE);
+		BufferedImage resized = new BufferedImage(resizeWidth, resizeHeight, BufferedImage.TYPE_INT_RGB);
+		Graphics2D graphics2D = resized.createGraphics();
+		graphics2D.drawImage(image, 0, 0, null);
+		graphics2D.dispose();
+		return resized;
 	}
 	
 	/**
