@@ -51,11 +51,8 @@ public class ImgUtil {
 
 		createFolder(photoPath);
 		
-		// 取得副檔名，處理圖片如果有被加timestamp等參數從?位置抓取副檔名，沒被加參數則直接依長度取最後3碼
-		int startLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") - 3 : imgURL.length() - 3);
-		int endLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") : imgURL.length());
-		String filenameExtension = imgURL.substring(startLength, endLength);
-        
+        String filenameExtension = getImgURLFilenameExtension(imgURL);
+		
 		log.info("下載圖片網址:" + imgURL);
         URL url = new URL(imgURL.replaceFirst("https", "http")); // 將https網址改成http
         String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
@@ -87,7 +84,7 @@ public class ImgUtil {
 		log.info("開始將Base64圖片產生存放。");
 		createFolder(photoPath);
 		
-		String filenameExtension = imgBase64String.substring(imgBase64String.indexOf("/") + 1, imgBase64String.indexOf(";"));
+		String filenameExtension = getImgBase64FilenameExtension(imgBase64String);
 		if ("jpeg".equalsIgnoreCase(filenameExtension)) {
 			filenameExtension = "jpg";
 		}
@@ -148,6 +145,7 @@ public class ImgUtil {
 		}
 		BigInteger bigInt = new BigInteger(1, md.digest());
 		log.info("圖片MD5值處理完成，MD5值:" + bigInt.toString(16));
+		fis.close();
 		return bigInt.toString(16);
 	}
 	
@@ -167,6 +165,27 @@ public class ImgUtil {
 		g.drawImage(image, 0, 0, null);
         g.dispose();
 		return bimage;
+	}
+	
+	/**
+	 * 從圖片網址取得附檔名
+	 * @param imgURL
+	 * @return
+	 */
+	public static String getImgURLFilenameExtension(String imgURL) {
+		// 處理圖片如果有被加timestamp等參數從?位置抓取副檔名，沒被加參數則直接依長度取最後3碼
+		int startLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") - 3 : imgURL.length() - 3);
+		int endLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") : imgURL.length());
+		return imgURL.substring(startLength, endLength);
+	}
+	
+	/**
+	 * 從圖片Base64取得附檔名
+	 * @param imgBase64String
+	 * @return
+	 */
+	public static String getImgBase64FilenameExtension(String imgBase64String) {
+		return imgBase64String.substring(imgBase64String.indexOf("/") + 1, imgBase64String.indexOf(";"));
 	}
 	
 	/**

@@ -44,11 +44,9 @@ function fileUpload() {
  * 檢查檔案格式
  */
 function checkFile(file) {
-	// 選擇檔案時，未選擇檔案(選取消)則回到初始畫面
+	// 選擇檔案時，未選擇檔案(選取消)不做處理
 	fileCount = file.files.length;
 	if (fileCount == 0) {
-		$("div.txt-table").removeClass('select');
-		$("div.txt-table.init").addClass('select');
 		return false;
 	}
 	

@@ -98,6 +98,8 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			String ecUrl = catalogProdItemJson.optString("ec_url"); // 連結網址*
 			String ecCategory = catalogProdItemJson.optString("ec_category", " "); // 商品類別
 
+			String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq;
+			
 			// 檢查每個欄位
 			errorPrdItemArray = super.checkCatalogProdSeq(errorPrdItemArray, catalogProdSeq);
 			errorPrdItemArray = super.checkEcName(errorPrdItemArray, catalogProdSeq, ecName);
@@ -106,7 +108,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, catalogProdSeq, ecDiscountPrice);
 			errorPrdItemArray = super.checkEcStockStatus(errorPrdItemArray, catalogProdSeq, ecStockStatus);
 			errorPrdItemArray = super.checkEcUseStatus(errorPrdItemArray, catalogProdSeq, ecUseStatus);
-			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, catalogProdSeq, ecImgUrl, ecImgBase64);
+			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, photoPath, catalogProdSeq, ecImgUrl, ecImgBase64, catalogUploadType);
 			errorPrdItemArray = super.checkEcUrl(errorPrdItemArray, catalogProdSeq, ecUrl);
 			errorPrdItemArray = super.checkEcCategory(errorPrdItemArray, catalogProdSeq, ecCategory);
 			
@@ -125,7 +127,6 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setEcName(ecName); // 商品名稱
 				pfpCatalogProdEc.setEcTitle(ecTitle); // 商品敘述
 				
-				String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq;
 				if (StringUtils.isBlank(ecImgBase64)) { // ecImgBase64為空表示非手動上傳，會有圖片網址需下載圖片
 					pfpCatalogProdEc.setEcImg(ImgUtil.processImgPathForCatalogProd(ecImgUrl, photoPath, catalogProdSeq)); // 圖片路徑
 				} else {
@@ -180,15 +181,6 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 					pfpCatalogUploadListDAO.savePfpCatalogProdEc(pfpCatalogProdEc);
 				}
 				
-				/* 
-				 * 1.取代:上傳新檔案會取代目前的資料，table內未在新檔案中找到的產品將會遭到刪除。
-				 * 記錄上傳資料的每筆商品ID，最後不在此List內的資料將被全部刪除
-				 */
-//				if ("1".equals(updateWay)) {
-//					catalogProdSeqList.add(pfpCatalogProdEc.getCatalogProdSeq());
-//				}
-				
-//				successNum++;
 			}
 		}
 		
