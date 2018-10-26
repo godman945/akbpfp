@@ -1,5 +1,8 @@
 package com.pchome.utils;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -23,6 +26,12 @@ import org.apache.commons.logging.LogFactory;
 public class ImgUtil {
 	private static final Log log = LogFactory.getLog(ImgUtil.class);
 	
+	private static ImgUtil instance = new ImgUtil();
+	
+	public static synchronized ImgUtil getInstance() {
+		return instance;
+	}
+	
 	/**
 	 * 處理廣告商品下載圖片
 	 * @param imgURL 下載的圖片網址
@@ -38,11 +47,8 @@ public class ImgUtil {
 
 		createFolder(photoPath);
 		
-		// 取得副檔名，處理圖片如果有被加timestamp等參數從?位置抓取副檔名，沒被加參數則直接依長度取最後3碼
-		int startLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") - 3 : imgURL.length() - 3);
-		int endLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") : imgURL.length());
-		String filenameExtension = imgURL.substring(startLength, endLength);
-        
+        String filenameExtension = getImgURLFilenameExtension(imgURL);
+		
 		log.info("下載圖片網址:" + imgURL);
         URL url = new URL(imgURL.replaceFirst("https", "http")); // 將https網址改成http
         String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
@@ -74,7 +80,7 @@ public class ImgUtil {
 		log.info("開始將Base64圖片產生存放。");
 		createFolder(photoPath);
 		
-		String filenameExtension = imgBase64String.substring(imgBase64String.indexOf("/") + 1, imgBase64String.indexOf(";"));
+		String filenameExtension = getImgBase64FilenameExtension(imgBase64String);
 		if ("jpeg".equalsIgnoreCase(filenameExtension)) {
 			filenameExtension = "jpg";
 		}
@@ -135,7 +141,42 @@ public class ImgUtil {
 		}
 		BigInteger bigInt = new BigInteger(1, md.digest());
 		log.info("圖片MD5值處理完成，MD5值:" + bigInt.toString(16));
+		fis.close();
 		return bigInt.toString(16);
+	}
+	
+	
+	/**
+	 * 圖片resize
+	 * */
+	public BufferedImage imgResize(BufferedImage img,int resizeWidth,int resizeHeight) throws Exception{
+		Image image = img.getScaledInstance(resizeWidth, resizeHeight, Transparency.OPAQUE);
+		BufferedImage resized = new BufferedImage(resizeWidth, resizeHeight, BufferedImage.TYPE_INT_RGB);
+		Graphics2D graphics2D = resized.createGraphics();
+		graphics2D.drawImage(image, 0, 0, null);
+		graphics2D.dispose();
+		return resized;
+	}
+	
+	/**
+	 * 從圖片網址取得附檔名
+	 * @param imgURL
+	 * @return
+	 */
+	public static String getImgURLFilenameExtension(String imgURL) {
+		// 處理圖片如果有被加timestamp等參數從?位置抓取副檔名，沒被加參數則直接依長度取最後3碼
+		int startLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") - 3 : imgURL.length() - 3);
+		int endLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") : imgURL.length());
+		return imgURL.substring(startLength, endLength);
+	}
+	
+	/**
+	 * 從圖片Base64取得附檔名
+	 * @param imgBase64String
+	 * @return
+	 */
+	public static String getImgBase64FilenameExtension(String imgBase64String) {
+		return imgBase64String.substring(imgBase64String.indexOf("/") + 1, imgBase64String.indexOf(";"));
 	}
 	
 	/**
@@ -148,5 +189,4 @@ public class ImgUtil {
 			file.mkdirs(); // 建立資料夾
 		}
 	}
-
 }

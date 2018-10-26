@@ -1,9 +1,6 @@
 ﻿var logoDataObj = new Object();
 logoDataObj = {square:{base64:null,file_name:null,file_extension_name:null,status:null},rectangle:{base64:null,file_name:null,file_extension_name:null,status:null}};
 $(document).ready(function(){
-	
-//	$(".akb_iframe").attr("src","");
-//	$("#groupSelect").children()[0].selected = 'selected';
 	if($.browser.msie){
 		if(parseInt($.browser.version) < 9){
 			$("body").block({
@@ -32,16 +29,6 @@ $(document).ready(function(){
 	
 	$(function () {
 		$('#fileupload').fileupload({
-//			url: 'adAddImgAjax.html',
-//			fileElementId: 'fileupload',
-//			success: function (respone) {
-//				imgSeq = respone;
-//				jsonObj =  JSON.parse(respone);
-//			},
-//			done: function (e, data) {
-//			},
-//			dataType: 'json',
-//			async: false,
 		}).on('fileuploadadd', function (e, data) {
 		    	
 		}).on('fileuploaddone', function (e, data) {
@@ -183,11 +170,17 @@ function checkUploadFile(file,obj){
 			img.src = base64Img;
 			img.onload = function(){
 				if(typeClassName.indexOf("squarelogo") >=0){
-					if(img.naturalWidth != 250 || img.naturalHeight != 250){
+					if(img.naturalWidth != img.naturalHeight){
 						flag = false;
-						$("#errMsg").text("請上傳圖片解析度250x250尺寸");
+						$("#errMsg").text("請上傳1:1圖片尺寸");
+					}
+					if(img.naturalWidth < 250 || img.naturalHeight < 250){
+						flag = false;
+						$("#errMsg").text("請上傳圖片解析度大於250x250尺寸");
 					}
 					if(flag){
+						img.width = 250;
+						img.height = 250;
 						$("#errMsg").text("");
 						$(notebox)[0].innerHTML = '上傳成功';
 						$(select).css("display","none");
@@ -208,11 +201,14 @@ function checkUploadFile(file,obj){
 						logoDataObj.square.status = null;
 					}
 				}else if(typeClassName.indexOf("rectanglelogo") >=0){
-					if(img.naturalWidth != 1000 || img.naturalHeight != 250){
+					if(img.naturalWidth < 1000 || img.naturalHeight < 250){
 						flag = false;
-						$("#errMsg2").text("請上傳圖片解析度1000x250尺寸");
+						$("#errMsg2").text("請上傳圖片解析度大於1000x250尺寸");
 					}
-					
+					if((img.naturalWidth / img.naturalHeight) != 4){
+						flag = false;
+						$("#errMsg2").text("請上傳4:1圖片尺寸");
+					}
 					if(flag){
 						$("#errMsg2").text("");
 						$(notebox)[0].innerHTML = '上傳成功';
@@ -277,7 +273,6 @@ function saveLogo(){
 	if(logoDataObj.square.base64 == null || logoDataObj.rectangle.base64 == null){
 		saveFlag = false;
 	}
-	
 	if(saveFlag){
 		$.ajax({
 		url : "saveLogoAjax.html",

@@ -61,7 +61,8 @@
 		                </div>
 		                <div class="link-download p-t10"><a href="catalogSampleFileDownload.html"><em>下載範例</em></a></div>
 		            </div>
-		            <div class="topic-wrap txt-center txt-noselect disable">
+		            
+		            <div class="topic-wrap txt-center txt-noselect disable" style="display:none;">
 		                <div class="topic-box">
 		                    <p>訂房住宿</p>
 		                    <div class="svg-box">
@@ -70,7 +71,8 @@
 		                </div>
 		                <div class="link-download p-t10">即將推出</div>
 		            </div>
-		            <div class="topic-wrap txt-center txt-noselect disable">
+		            
+		            <div class="topic-wrap txt-center txt-noselect disable" style="display:none;">
 		                <div class="topic-box">
 		                    <p>交通航班</p>
 		                    <div class="svg-box">
@@ -79,7 +81,8 @@
 		                </div>
 		                <div class="link-download p-t10">即將推出</div>
 		            </div>
-		            <div class="topic-wrap txt-center txt-noselect disable">
+		            
+		            <div class="topic-wrap txt-center txt-noselect disable" style="display:none;">
 		                <div class="topic-box">
 		                    <p>房產租售</p>
 		                    <div class="svg-box">

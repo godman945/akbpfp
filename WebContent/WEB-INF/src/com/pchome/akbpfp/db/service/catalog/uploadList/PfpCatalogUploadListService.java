@@ -254,6 +254,10 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 						ecStockStatus = "0";
 					} else if ("有庫存".equals(ecStockStatus)) {
 						ecStockStatus = "1";
+					} else if ("預購".equals(ecStockStatus)) {
+						ecStockStatus = "2";
+					} else if ("停售".equals(ecStockStatus)) {
+						ecStockStatus = "3";
 					}
 					prdItemObject.put("ec_stock_status", ecStockStatus);
 					
@@ -262,6 +266,8 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 						ecUseStatus = "0";
 					} else if ("二手".equals(ecUseStatus)) {
 						ecUseStatus = "1";
+					} else if ("福利品".equals(ecUseStatus)) {
+						ecUseStatus = "2";
 					}
 					prdItemObject.put("ec_use_status", ecUseStatus);
 					prdItemObject.put("ec_img_url", prdItem[ecImgUrlArrayIndex]);

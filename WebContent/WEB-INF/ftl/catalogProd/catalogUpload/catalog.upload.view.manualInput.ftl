@@ -79,7 +79,7 @@
 	                            <i class="input-tit">特價</i>
 	                            <div class="input-number">
 	                            	<#-- onkeypress 只能輸入數字-->
-	                                NT<input type="number" id="ecDiscountPrice" name="ecDiscountPrice" min="0" max="999999" value="0" required onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))">
+	                                NT<input type="number" id="ecDiscountPrice" name="ecDiscountPrice" min="0" max="999999" value="" required onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))">
 	                                <span>元</span>
 	                                <p class="txt-descript" id="ecDiscountPriceErrMsg"></p>
 	                            </div>
