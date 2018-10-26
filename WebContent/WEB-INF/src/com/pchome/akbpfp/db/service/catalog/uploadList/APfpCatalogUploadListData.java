@@ -1,11 +1,19 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+
+import javax.imageio.ImageIO;
+
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
+import com.pchome.enumerate.ad.EnumPfpCatalog;
+import com.pchome.utils.ImgUtil;
 
 public abstract class APfpCatalogUploadListData {
 
@@ -74,31 +82,106 @@ public abstract class APfpCatalogUploadListData {
 	}
 
 	/**
-	 * 檢查廣告圖像網址
+	 * 檢查廣告圖像網址及圖片是否符合規範
 	 * @param errorPrdItemArray
-	 * @param catalogProdSeq
-	 * @param ecImgUrl
-	 * @param ecImgBase64 
+	 * @param photoPath // 圖片路徑
+	 * @param catalogProdSeq // 商品編號
+	 * @param ecImgUrl // 圖片網址
+	 * @param ecImgBase64 // 圖片Base64編碼
+	 * @param catalogUploadType // 上傳方式
 	 * @return
 	 * @throws Exception 
 	 */
-	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, String catalogProdSeq, String ecImgUrl, String ecImgBase64) throws Exception {
+	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, String photoPath, String catalogProdSeq, String ecImgUrl, String ecImgBase64, String catalogUploadType) throws Exception {
 		JSONObject jsonObject = new JSONObject();
-		String prodItemErrorMsg = "";
+		String prodItemErrorMsg = ""; // 檢查到一個有錯誤，剩下檢查則略過
+		
+		// 將圖片下載至每個user自己的暫存圖片資料夾檢查
+		String imgTempPath = photoPath + "/temp";
+		String imgPath = "";
 
-		// ecImgBase64為空格表示非手動上傳，非手動上傳才需檢查圖片網址
 		if (StringUtils.isBlank(ecImgBase64)) {
-			if (ecImgUrl.isEmpty()) {
-				prodItemErrorMsg += "必填欄位必須輸入資訊。";
-			} else {
+			// 沒有Base64，有圖片網址則是用檔案上傳、自動排程上傳、PChome賣場上傳
+			if (StringUtils.isBlank(prodItemErrorMsg)) {
+				if (ecImgUrl.isEmpty()) {
+					prodItemErrorMsg = "必填欄位必須輸入資訊";
+				}
+			}
+			
+			if (StringUtils.isBlank(prodItemErrorMsg)) {
 				AdUtilAjax adUtilAjax = new AdUtilAjax();
 				String checkResultMsg = adUtilAjax.checkAdShowUrl(ecImgUrl, akbPfpServer);
 				if (!checkResultMsg.isEmpty()) {
-					prodItemErrorMsg += "請輸入正確的廣告圖像網址。";
+					prodItemErrorMsg = "請輸入正確的廣告圖像網址";
 				}
 			}
+			
+			if (StringUtils.isBlank(prodItemErrorMsg)) {
+				String filenameExtension = ImgUtil.getImgURLFilenameExtension(ecImgUrl);
+				if (!"jpg".equalsIgnoreCase(filenameExtension) && !"gif".equalsIgnoreCase(filenameExtension)
+						&& !"png".equalsIgnoreCase(filenameExtension)) {
+					prodItemErrorMsg = "請輸入正確的廣告圖像網址，圖片類型只能jpg、gif、png";
+				}
+			}
+			
+			File imgFile = null;
+			if (StringUtils.isBlank(prodItemErrorMsg)) {
+				imgPath = ImgUtil.processImgPathForCatalogProd(ecImgUrl, imgTempPath, catalogProdSeq);
+				String completePath = imgTempPath.substring(0, imgTempPath.indexOf("img/user/")) + imgPath;
+				imgFile = new File(completePath);
+				if (imgFile.length() > (180 * 1024)) {
+					prodItemErrorMsg = "檔案大小超過180K";
+				}
+			}
+			
+			if (StringUtils.isBlank(prodItemErrorMsg)) {
+				FileInputStream fis = new FileInputStream(imgFile);
+				BufferedImage bufferedImage = ImageIO.read(fis);
+				if (!EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(catalogUploadType) && 
+						bufferedImage.getWidth() < 300 && bufferedImage.getHeight() < 300) {
+					// 賣場網址上傳不檢查解析度
+					prodItemErrorMsg = "解析度錯誤";
+				}
+				fis.close();
+			}
+			
+			if (imgFile != null) {
+				imgFile.delete(); // 結束後刪除暫存圖片
+			}
+			
+		} else {
+			//有Base64則用手動上傳
+			if (StringUtils.isBlank(prodItemErrorMsg)) {
+				String filenameExtension = ImgUtil.getImgBase64FilenameExtension(ecImgBase64);
+				if (!"jpg".equalsIgnoreCase(filenameExtension) && !"gif".equalsIgnoreCase(filenameExtension)
+						&& !"png".equalsIgnoreCase(filenameExtension)) {
+					prodItemErrorMsg = "圖片類型只能jpg、gif、png";
+				}
+			}
+			
+			File imgFile = null;
+			if (StringUtils.isBlank(prodItemErrorMsg)) {
+				imgPath = ImgUtil.processImgBase64StringToImage(ecImgBase64, imgTempPath, catalogProdSeq);
+				imgFile = new File(imgPath);
+				if (imgFile.length() > (180 * 1024)) {
+					prodItemErrorMsg = "檔案大小超過180K";
+				}
+			}
+			
+			if (StringUtils.isBlank(prodItemErrorMsg)) {
+				FileInputStream fis = new FileInputStream(imgFile);
+				BufferedImage bufferedImage = ImageIO.read(fis);
+				if (bufferedImage.getWidth() < 300 && bufferedImage.getHeight() < 300) {
+					prodItemErrorMsg = "解析度錯誤";
+				}
+			}
+			
+			if (imgFile != null) {
+				imgFile.delete(); // 結束後刪除暫存圖片
+			}
+
 		}
-		
+
 		if (!prodItemErrorMsg.isEmpty()) {
 			jsonObject.put("catalog_prod_seq", catalogProdSeq);
 			jsonObject.put("catalog_err_item", "ec_img_url");
