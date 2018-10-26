@@ -388,11 +388,10 @@ a.uploadbtn{
 .previewarw-right{ right: 0; background: url(../../img/arw-right.png) center center no-repeat; }
 
 
-
 .tbtoggle{ margin-top: 20px; width: 150px; height: 40px; line-height: 40px;  text-indent: 25px; font-size: 15px; color: #055dcb; cursor: pointer; position: relative;}
 .tbtoggle:after{display: block; width: 20px; height: 20px; content: ""; position: absolute; top: 10px; left: 0; z-index: 5; transition: all .3s ease;
     background-position: 50%;
-    background-repeat: no-repeat;  background: url(../img/tbtoggleicon.png); transform: rotate(90deg);  }
+    background-repeat: no-repeat;  background: url(../../img/tbtoggleicon.png); transform: rotate(90deg);  }
 
 
 
@@ -432,10 +431,11 @@ a.uploadbtn{
 
 
 #fancybox-close, .fancybox-close{
-    background: transparent url(../../img/fancybox/fancybox_sprite.png) left top no-repeat!important;
+    background: transparent url(../../img/fancybox_sprite.png) left top no-repeat!important;
     width: 40px;
     height: 40px;
 }
+
 
 
 .previewarw-left i,.previewarw-right i{ display: block; width: 29px; height: 29px; }
@@ -443,6 +443,343 @@ a.uploadbtn{
 .previewarw-left{ left: 0; background: url(../../img/arw-left.png) center center no-repeat; }
 .previewarw-right{ right: 0; background: url(../../img/arw-right.png) center center no-repeat; }
 
+
+
+/*iframe*/
+
+.iframewp{
+    width: 770px;
+    height: 550px;
+    background: #ffffff;     
+    position: relative;
+}
+
+.containr{
+    width: 770px;
+    height: 550px;
+    overflow-y: scroll;
+}
+
+
+.containr::-webkit-scrollbar-track{
+    border-radius: 0;
+    background-color: rgba(255,255,255,0);
+}
+
+.containr::-webkit-scrollbar{
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10; 
+    width: 7px;
+    background-color: rgba(0,0,0,0);
+}
+
+.containr::-webkit-scrollbar-thumb{
+    border-radius: 7px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+
+
+.containr h1{
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    font-size: 16px;
+    background: #f5f5f5;
+    padding: 0 40px;
+    margin: 0;
+    box-sizing: border-box;
+    position: relative;
+    text-indent: 10px;
+}
+
+.containr h1:before{
+    content: "";
+    display: block;
+    height: 16px;
+    width: 3px;
+    border-radius: 1.5px;
+    background: #ff6600;
+    position: absolute;
+    left: 40px;
+    top: 17px;
+}
+
+.containr h1 span{
+   color: #808080;
+   font-size: 13px;
+}
+
+.bottombar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    box-shadow: 0 -5px 5px rgba(0,0,0,.15);
+}
+
+.bottombar input{
+    display: block;
+    width: 385px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 14px;
+    text-align: center;
+    float: left;
+    border:0;
+    padding: 0;
+    outline:0;
+    font-family: 微軟正黑體,arial;    
+}
+
+.save-btn{
+    background: #055dcb;
+    color: #ffffff;
+}
+
+.cancel-btn{
+    background: #e5e5e5;
+    color: #055dcb;
+}
+
+
+
+.uploadlist{
+    display: table;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 10px 40px 40px 40px;
+    list-style-type: none;
+}
+
+
+.uploadlist li{
+    display: table-cell;
+    width: 200px;
+    height: 170px;    
+    float: left;
+    padding: 0;
+    margin: 0 35px 30px 0;
+}
+
+.uploadlist li:nth-child(3n+0){
+    margin: 0 0 30px 0;
+}
+
+
+
+
+.upload-lab{
+    text-align: center;
+}
+
+
+
+input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+.custom-file-upload {
+    display: block;
+    width: 200px;
+    height: 170px;
+    background: #f8f8f8;
+    border: 3px dashed #efefef;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+
+.icon-uploadfile{
+    display: block;
+    width: 44px;
+    height: 48px;
+    margin: 25px auto 15px auto;
+    background-image: url(../../img/icon-uploadfile.svg);
+    -webkit-background-size: 90%;
+    background-size: 90%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+}
+
+
+
+
+
+.btn-uploadimg{
+    display: block;
+    width: 130px;
+    height: 30px;
+    line-height: 30px;
+    box-sizing: border-box;
+    border: 1px solid #bbbbbb;
+    border-radius: 3px;
+    margin: 10px auto;
+    background: #ebebec;
+    color: #808080;
+}
+
+
+.uploadedbx{   
+    width: 200px;
+    height: 170px;
+}
+
+.picbx{
+    width: 200px;
+    height: 120px;
+    position: relative;
+}
+
+.picbx .pic{
+    display:  flex;
+    width: 200px;
+    height: 120px;
+    align-items: center;
+    justify-content:  center;
+    background-color: #f5f5f5;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.pic img{
+    max-width: 200px;
+    max-height: 120px;    
+}
+
+.picinfo{    
+    width: 200px;
+    padding: 5px 0 0 0; 
+}
+
+.picinfo p{
+    display: block;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    font-weight: bold;
+    text-overflow: ellipsis;
+    -o-text-overflow: 
+    ellipsis;white-space: nowrap; 
+}
+
+.picinfo u{
+    font-size: 12px;
+    color: #808080;
+    text-decoration: none;
+}
+
+.picbx .picbx-hover{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: table;
+    width: 200px;
+    height: 120px;
+    background: rgba(0,0,0,.7);
+    z-index: 1;
+    padding: 30px 0 0 0;
+    box-sizing: border-box;
+    opacity: 0;
+}
+
+.picbx:hover .picbx-hover{
+    opacity: 1;
+}
+
+.picbx-hover > div{
+    display: inline-block;
+    width: 49.5%;
+    height: 60px;
+    cursor: pointer;
+    text-align: center;
+    color: #fff;
+    padding: 5px 0 0 0;
+    box-sizing: border-box;
+}
+
+.delbx{
+    border-right: 1px solid #717171;
+}
+
+.delbx i,.reuploadbx i{
+    display: block;
+    width: 100%;
+    height: 30px;
+}
+
+.delbx i{
+    background: url(../../img/icon-del.png) center center no-repeat;
+}
+
+
+.reuploadbx i{
+     background: url(../../img/icon-upload.png) center center no-repeat;
+}
+
+.delbx:hover i,.reuploadbx:hover i{
+    background-position: center top;
+}
+
+.reuploadbx-file-upload{
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.uploadedbx.error .picbx-hover{
+    display: none;
+}
+
+.form-error{
+    height: 65px;
+    width: 100%;
+    text-align: center;
+    padding: 30px 0 0 0;
+    box-sizing: border-box;
+    background: url(../../img/icon-error.png) center 5px no-repeat; 
+}
+
+.form-error a{
+    color: #055dcb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.form-error a:hover{
+    text-decoration: underline;
+}
+
+
+.reuploadlab{
+    display: inline;
+    background: none;
+    color: #055dcb;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.reuploadlab:hover{
+    text-decoration: underline;
+}
 
 
 

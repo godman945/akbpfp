@@ -1,5 +1,11 @@
 package com.pchome.utils;
 
+import java.awt.Graphics;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -15,6 +21,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
@@ -22,6 +29,12 @@ import org.apache.commons.logging.LogFactory;
 
 public class ImgUtil {
 	private static final Log log = LogFactory.getLog(ImgUtil.class);
+	
+	private static ImgUtil instance = new ImgUtil();
+	
+	public static synchronized ImgUtil getInstance() {
+		return instance;
+	}
 	
 	/**
 	 * 處理廣告商品下載圖片
@@ -138,6 +151,24 @@ public class ImgUtil {
 		return bigInt.toString(16);
 	}
 	
+	
+	/**
+	 * 圖片resize
+	 * */
+	public BufferedImage imgResize(BufferedImage img,int resizeWidth,int resizeHeight) throws Exception{
+		// 進行圖片縮放
+		Image image = new ImageIcon(img).getImage();
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice gs = ge.getDefaultScreenDevice();
+		GraphicsConfiguration gc = gs.getDefaultConfiguration();
+		int transparency = Transparency.OPAQUE;
+		BufferedImage bimage = gc.createCompatibleImage(resizeWidth, resizeHeight, transparency);
+		Graphics g = bimage.createGraphics();
+		g.drawImage(image, 0, 0, null);
+        g.dispose();
+		return bimage;
+	}
+	
 	/**
 	 * 如果此目錄路徑沒有資料夾，則建立資料夾
 	 * @param path
@@ -148,5 +179,4 @@ public class ImgUtil {
 			file.mkdirs(); // 建立資料夾
 		}
 	}
-
 }

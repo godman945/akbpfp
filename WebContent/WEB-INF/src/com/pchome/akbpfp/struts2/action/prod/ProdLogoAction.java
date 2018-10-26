@@ -30,6 +30,7 @@ import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
+import com.pchome.utils.ImgUtil;
 
 public class ProdLogoAction extends BaseCookieAction{
 
@@ -42,7 +43,10 @@ public class ProdLogoAction extends BaseCookieAction{
 	private String logoDataObj;
 	private String photoDbPathNew;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-	
+	private final int square_width = 250;
+	private final int square_height = 250;
+	private final int rectangle_width = 1000;
+	private final int rectangle_height = 250;
 	
 	/**
 	 * LOGO初始化畫面
@@ -107,15 +111,24 @@ public class ProdLogoAction extends BaseCookieAction{
 	            String dbImgPath = "img/user/"+super.getCustomer_info_id()+"/catalog/logo/"+fileName+"."+fileExtensionName.replace("image/", "");
 	            log.info(">>>>>>writeImgPath:"+writeImgPath);
 	            log.info(">>>>>>dbImgPath:"+dbImgPath);
-	            ImageIO.write(image, fileExtensionName.replace("image/", ""), new File(writeImgPath));
+	           
 	            PfpCatalogLogo pfpCatalogLogo = new PfpCatalogLogo();
 	            pfpCatalogLogo.setCatalogLogoSeq(logoSeq);
+	            int imgWidth = 0;
+				int imgHeight = 0;
 	            if(logoType.equals("rectangle")){
 	            	 pfpCatalogLogo.setCatalogLogoType("1");
+	            	 imgWidth = rectangle_width;
+	            	 imgHeight = rectangle_height;
 	            }
 	            if(logoType.equals("square")){
 	            	 pfpCatalogLogo.setCatalogLogoType("0");
+	            	 imgWidth = square_width;
+	            	 imgHeight = square_height;
 	            }
+	            image = ImgUtil.getInstance().imgResize(image,imgWidth,imgHeight);
+	            ImageIO.write(image, fileExtensionName.replace("image/", ""), new File(writeImgPath));
+	            
 	            pfpCatalogLogo.setPfpCustomerInfoId(super.getCustomer_info_id());
 	            pfpCatalogLogo.setCatalogLogoUrl(dbImgPath);
 	            pfpCatalogLogo.setCreateDate(date);
@@ -123,7 +136,6 @@ public class ProdLogoAction extends BaseCookieAction{
 	            pfpCatalogLogoService.saveOrUpdate(pfpCatalogLogo);
 			    //2.推薦顏色
 	            Map<String, Integer> colormap = color(image);
-	            System.out.println(colormap);
 	            for (Entry<String, Integer> data : colormap.entrySet()) {
 	            	PfpCatalogLogoDetail pfpCatalogLogoDetail = new PfpCatalogLogoDetail();
 	            	pfpCatalogLogoDetail.setCatalogLogoHexColor(data.getKey());
@@ -137,11 +149,17 @@ public class ProdLogoAction extends BaseCookieAction{
 			JSONObject imgJson = new JSONObject(logoDataObj);
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
 				String type = "";
+				int imgWidth = 0;
+				int imgHeight = 0;
 				if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
 					type = "square";
+					imgWidth = square_width;
+					imgHeight = square_height;
 				}
 				if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
 					type = "rectangle";
+					imgWidth = rectangle_width;
+					imgHeight = rectangle_height;
 				}
 				
 				JSONObject imgData =  (JSONObject) imgJson.get(type);
@@ -158,6 +176,7 @@ public class ProdLogoAction extends BaseCookieAction{
 		        byte[] imageByte = Base64.decodeBase64(base64Img.getBytes());
 	            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
 	            image = ImageIO.read(bis);
+	            image = ImgUtil.getInstance().imgResize(image,imgWidth,imgHeight);
 	            //1.寫入圖片
 	            ImageIO.write(image, fileExtensionName.replace("image/", ""), new File(path));
 	            //2.更新審核狀態
