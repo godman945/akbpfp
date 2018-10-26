@@ -1,12 +1,12 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-
-<link href="<@s.url value="/" />html/css/ad/forprodad2018.css" rel="stylesheet" type="text/css" />
-<script language="JavaScript" src="http://show.pchome.com.tw/html/js/jquery/jquery-1.8.3.min.js"></script>
-<script language="JavaScript" src=" http://www.gongjuji.net/Content/files/jquery.md5.js"></script>
-<@t.insertAttribute name="jsSource" />
-<script language="JavaScript" src="<@s.url value="/" />html/js/ad/ad.check.common.js"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/fileupload/load-image.all.min.js"></script>
+	<link href="<@s.url value="/" />html/css/ad/forprodad-iframe.css" rel="stylesheet" type="text/css" />
+	<link href="<@s.url value="/" />html/css/ad/forprodad2018.css" rel="stylesheet" type="text/css" />
+	<script language="JavaScript" src="http://show.pchome.com.tw/html/js/jquery/jquery-1.8.3.min.js"></script>
+	<script language="JavaScript" src=" http://www.gongjuji.net/Content/files/jquery.md5.js"></script>
+	<@t.insertAttribute name="jsSource" />
+	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/ad.check.common.js"></script>
+	<script language="JavaScript" src="<@s.url value="/" />html/js/fileupload/load-image.all.min.js"></script>
 	<!--檔案上傳-->
 	<script language="JavaScript" src="http://show.pchome.com.tw/html/js/jquery/jquery-common.js"></script>
 	<script language="JavaScript" src="http://show.pchome.com.tw/html/js/jquery/jquery.blockUI.js"></script>
@@ -27,7 +27,6 @@
 	<link href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" rel="stylesheet" type="text/css" />
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/common/jscolor.js"></script>
-
 
 
     
