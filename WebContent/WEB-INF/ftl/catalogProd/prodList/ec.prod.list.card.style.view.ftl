@@ -54,7 +54,7 @@
                     <div class="nav-box pos-relative">
                         <!--左-->
                         <ul class="txt-table txt-regular">
-                            <li class="txt-cell group-default p-r10">共<em id="prodQuantityTxt" class="txt-quantity">${totalCount!}</em>件商品</li>
+                            <li class="txt-cell group-default p-r10">共<em id="prodQuantityTxt" class="txt-quantity">${totalCount!}</em>項商品</li>
                             <li class="txt-cell group-default p-r10"><a class="btn-filter" href="javascript:void(0)" data-filter="all">全部商品</a></li>
                             <li class="txt-cell group-default p-r10"><a class="btn-filter" href="javascript:void(0)" data-filter="enable">已啟用</a></li>
                             <li class="txt-cell group-default "><a class="btn-filter" href="javascript:void(0)" data-filter="sealed">已封存</a></li>

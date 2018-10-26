@@ -91,9 +91,17 @@
     
 	//點選篩選商品資訊 下拉選單
     $('.select-menu li').on('click',function(){
-        $(this).attr('data-select',function(_, attr){return!(attr=='true')});
-        var _datafiltername= $(this).attr('data-filetr-name');
-        var _dataselect= $(this).attr('data-select');
+    	 var _datafiltername= $(this).attr('data-filetr-name');
+         var _dataselect= $(this).attr('data-select');
+         
+        if(_datafiltername == 'prodname' || _datafiltername == 'promoprice' ){
+        	return;
+        }else{ 
+        	 $(this).attr('data-select',function(_, attr){return!(attr=='true')});
+        	 var _datafiltername= $(this).attr('data-filetr-name');
+             var _dataselect= $(this).attr('data-select');
+       }
+        
         showHideInfo(_datafiltername,_dataselect);
     });
     
