@@ -90,5 +90,11 @@ public interface IPfpCatalogUploadListService extends IBaseService<String, Strin
 	 * @param vo.getCatalogSeq() 商品目錄編號
 	 */
 	void deleteCatalogProdCSVFolderAndData(PfpCatalogVO vo);
+
+	/**
+	 * 刪除 商品目錄設定 
+	 * @param vo
+	 */
+	void deletePfpCatalogSetup(PfpCatalogVO vo);
 	
 }

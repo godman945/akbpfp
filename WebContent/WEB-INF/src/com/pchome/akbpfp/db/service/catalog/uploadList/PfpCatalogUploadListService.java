@@ -328,6 +328,15 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	}
 
 	/**
+	 * 刪除 商品目錄設定 
+	 * @param vo
+	 */
+	@Override
+	public void deletePfpCatalogSetup(PfpCatalogVO vo) {
+		pfpCatalogUploadListDAO.deletePfpCatalogSetup(vo);
+	}
+	
+	/**
 	 * 新增log記錄
 	 * @throws Exception 
 	 */

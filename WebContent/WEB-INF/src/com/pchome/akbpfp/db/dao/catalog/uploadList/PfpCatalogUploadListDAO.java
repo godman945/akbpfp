@@ -181,6 +181,23 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 		query.executeUpdate();
 		super.getSession().flush();
 	}
+	
+	/**
+	 * 刪除 商品目錄設定 
+	 * @param vo
+	 */
+	@Override
+	public void deletePfpCatalogSetup(PfpCatalogVO vo) {
+		StringBuffer hql = new StringBuffer();
+		hql.append(" DELETE FROM pfp_catalog_setup ");
+		hql.append(" WHERE catalog_seq = :catalog_seq");
+		
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setString("catalog_seq", vo.getCatalogSeq());
+
+		query.executeUpdate();
+		super.getSession().flush();
+	}
 
 	/**
 	 * 取得一般購物類商品清單 資料
@@ -216,5 +233,5 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 		
 		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 	}
-	
+
 }

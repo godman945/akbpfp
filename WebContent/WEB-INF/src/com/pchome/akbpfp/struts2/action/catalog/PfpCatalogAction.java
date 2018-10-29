@@ -115,6 +115,7 @@ public class PfpCatalogAction extends BaseCookieAction{
 		pfpCatalogUploadListService.deletePfpCatalogProdEc(vo);
 		pfpCatalogUploadListService.deletePfpCatalogGroupItem(vo); // 刪除 商品目錄群組明細 先寫在這，之後移到相對應的Service
 		pfpCatalogUploadListService.deletePfpCatalogGroup(vo); // 刪除 商品目錄群組 先寫在這，之後移到相對應的Service
+		pfpCatalogUploadListService.deletePfpCatalogSetup(vo); // 刪除 商品目錄設定 
 		pfpCatalogService.deletePfpCatalog(vo);
 		pfpCatalogUploadListService.deleteCatalogProdImgFolderAndData(vo);
 		pfpCatalogUploadListService.deleteCatalogProdCSVFolderAndData(vo);
