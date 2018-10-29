@@ -10,8 +10,17 @@
 	});
 	
 	//切換成表格模式
-	 $('#tableView').on('click',function() {
-		 location.href = "prodListTableStyleView.html?catalogSeq="+ $('#catalog option:selected').val() + "&currentPage=1&pageSizeSelected=10";
+	$('#tableView').on('click',function() {
+		var filtertype = $('.nav-wrap.prodtable, .prodtable-wrap, .prodcard-wrap').attr('data-filter');
+		if (filtertype=="all"){
+			filtertype ='';
+		}else if(filtertype=="enable"){
+			filtertype ="1";
+		}else if(filtertype=="sealed"){
+			filtertype ="0";
+		}
+		 
+		location.href = "prodListTableStyleView.html?catalogSeq="+ $('#catalog option:selected').val() + "&currentPage="+$('#pageData').data('order')+"&pageSizeSelected="+$('#pageSizeSelect option:selected').val()+"&prodStatus="+filtertype+"&prodName="+$('#txtProdName').val();
 	 });
 	
 	//點選封存-將商品更新為封存

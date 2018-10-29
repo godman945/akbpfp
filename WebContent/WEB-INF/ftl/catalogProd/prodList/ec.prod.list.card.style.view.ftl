@@ -50,7 +50,7 @@
                 <!-- data-list:                 商品排列 -->
                 <!-- data-list='row'            資料以條列顯示 -->
                 <!-- data-list='box'            資料以卡片顯示 -->
-                <div class="nav-wrap prodtable pos-relative" data-filter="all" data-menu="default" data-list="box">
+                <div class="nav-wrap prodtable pos-relative" data-filter=${prodStatusType!} data-menu="default" data-list="box">
                     <div class="nav-box pos-relative">
                         <!--左-->
                         <ul class="txt-table txt-regular">
@@ -72,7 +72,7 @@
                         <ul class="txt-table txt-regular pos-absolute pos-right pos-top">
                             <li class="txt-cell w-200">
                                 <div class="input-text">
-                                    <input type="text" id="txtProdName" name="" maxlength="20" value="" required placeholder="尋找商品">
+                                    <input type="text" id="txtProdName" name="" maxlength="20" value="${prodName!}" required placeholder="尋找商品">
                                 </div>
                             </li>
 
@@ -125,7 +125,7 @@
                 <!-- data-type:                 商品列型態 -->
                 <!-- data-type='enable'         已啟用商品列 -->
                 <!-- data-type='sealed'         已封存商品列 -->
-                <div class="prodcard-wrap m-b30" data-filter="all">
+                <div class="prodcard-wrap m-b30" data-filter=${prodStatusType!} >
                     
                     <!--隱藏區塊-->
                     <!-- checkbox-checkAll -->

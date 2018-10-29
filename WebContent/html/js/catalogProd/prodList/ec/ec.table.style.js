@@ -10,8 +10,18 @@
 	
 	
 	//切換成卡片模式
-	 $('#cardView').on('click',function() {
-		 location.href = "prodListCardStyleView.html?catalogSeq="+ $('#catalog option:selected').val() + "&currentPage=1&pageSizeSelected=10";
+	$('#cardView').on('click',function() {
+		
+		var filtertype = $('.prodtable-wrap').attr('data-filter');
+		if (filtertype=="all"){
+			filtertype ='';
+		}else if(filtertype=="enable"){
+			filtertype ="1";
+		}else if(filtertype=="sealed"){
+			filtertype ="0";
+		}
+		
+		location.href = "prodListCardStyleView.html?catalogSeq="+ $('#catalog option:selected').val() + "&currentPage="+$('#pageData').data('order')+"&pageSizeSelected="+$('#pageSizeSelect option:selected').val()+"&prodStatus="+filtertype+"&prodName="+$('#txtProdName').val();
 	 });
 	
 	//切換商品目錄

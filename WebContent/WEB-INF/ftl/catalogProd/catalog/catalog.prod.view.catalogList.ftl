@@ -81,7 +81,7 @@
 					<#list dataList as vo>
 						<div class="txt-row">
 							<div class="txt-cell col-cataname">
-	                            <a href="prodListCardStyleView.html?catalogSeq=${vo.catalogSeq!}&currentPage=1&pageSizeSelected=10">${vo.catalogName!}</a>
+	                            <a href="prodListCardStyleView.html?catalogSeq=${vo.catalogSeq!}&currentPage=1&pageSizeSelected=10&prodStatus=&prodName=">${vo.catalogName!}</a>
 	                            <small>目錄編號：${vo.catalogSeq!}</small>
 	                        </div>
 	                        
