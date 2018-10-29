@@ -261,8 +261,52 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 				resultMap.put("status", "ERROR");
 				return SUCCESS;
 			}
+			
+			
+			
+			//如果篩選條件商品清單數量為0，即不可建立商品組合
+			String catalogType = pfpCatalogService.getPfpCatalog(catalogSeq).getCatalogType();
+			log.info(">>> catalogType: " + catalogType);
 
-			// 寫入pfp_catalog_group
+			EnumProdGroupFactory enumProdGroupFactory = EnumProdGroupFactory.getCatalogName(catalogType);
+			log.info(">>> enumProdGroupFactory: " + enumProdGroupFactory);
+
+			String catalogName = enumProdGroupFactory.getCatalogName();
+			log.info(">>> catalogName: " + catalogName);
+
+			AProdGroup aProdGroup = prodGroupFactory.getAProdGroupObj(catalogName);
+
+			List<PfpCatalogGroupItem> pfpCatalogGroupItemList = new ArrayList<PfpCatalogGroupItem>();
+			// 查詢的篩選條件
+			for (int i = 0; i < filterContentArray.length(); i++) {
+				JSONObject filterContentObj = new JSONObject(filterContentArray.get(i).toString());
+				String newField = filterContentObj.getString("field");
+				String newCondition = filterContentObj.getString("condition");
+				String newValue = filterContentObj.getString("value");
+
+				PfpCatalogGroupItem pfpCatalogGroupItem = new PfpCatalogGroupItem();
+				pfpCatalogGroupItem.setCatalogGroupItemField(newField);
+				pfpCatalogGroupItem.setCatalogGroupItemCondition(newCondition);
+				pfpCatalogGroupItem.setCatalogGroupItemValue(newValue);
+
+				pfpCatalogGroupItemList.add(pfpCatalogGroupItem);
+			}
+
+			// 將pfpCatalogGroupItems轉成sql
+			String filterSQL = aProdGroup.pfpCatalogGroupItemTofilterSQL(pfpCatalogGroupItemList);
+			
+			// 商品清單資料總筆數
+			totalCount = Integer.valueOf(aProdGroup.getProdGroupCount(catalogSeq, filterSQL));
+
+			if (totalCount <= 0) {
+				resultMap.put("msg", "商品數量為0，不得建立商品組合！");
+				resultMap.put("status", "ERROR");
+				return SUCCESS;
+			}
+
+			
+			
+			// 建立商品組合，寫入pfp_catalog_group
 			String catalogGroupSeq = sequenceService.getSerialNumberByLength20(EnumSequenceTableName.PFP_CATALOG_GROUP);
 			PfpCatalog pfpCatalog = pfpCatalogService.getPfpCatalog(catalogSeq);
 
