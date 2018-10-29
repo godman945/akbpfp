@@ -86,8 +86,8 @@ function prodListView() {
 		prodObject.ecPrice = $("#ecPrice").val(); // 原價
 	}
 	prodObject.ecDiscountPrice = $("#ecDiscountPrice").val(); // 特價
-	prodObject.ecStockStatus = $('#ecStockStatus :selected').val(); // 供應情況
-	prodObject.ecUseStatus = $('#ecUseStatus :selected').val(); // 使用狀況
+	prodObject.ecStockStatus = $('#ecStockStatus :selected').text(); // 供應情況
+	prodObject.ecUseStatus = $('#ecUseStatus :selected').text(); // 使用狀況
 	prodObject.ecCategory = $('#ecCategory').val(); // 商品類別
 	prodObject.ecImgBase64 = base64Img; // 圖片base64路徑
 	
@@ -285,12 +285,16 @@ function checkKeyInDataIsError() {
 function checkEcNameIsErr() {
 	var ecName = $("#ecName").val();
 	if (ecName.length <= 0) {
-		$("#ecNameErrMsg").html("此欄位為必填。");
+		$("#ecNameErrMsg").html("必填欄位。");
 		return true;
 	} else if (ecName.length > 20) {
-		$("#ecNameErrMsg").html("輸入字數大於限制字數。");
+		$("#ecNameErrMsg").html("字數限制20字。");
 		return true;
 	}
+//	else if (ecName.match(/[\ud800-\udbff]|[\udc00-\udfff]|[\ud800-\udfff]/)){
+//		$("#ecNameErrMsg").html("內含特殊字元。");
+//		return true;
+//	}
 	
 	$("#ecNameErrMsg").html("");
 	return false;

@@ -38,6 +38,8 @@ public class ImgUtil {
 
 		createFolder(photoPath);
 		
+		// 將特殊符號取代為空，處理圖片時才不會因為有特殊符號而出錯
+		imgFileName = CommonUtils.getReplaceSpecialSymbolsStr(imgFileName);
         String filenameExtension = getImgURLFilenameExtension(imgURL);
 		
 		log.info("下載圖片網址:" + imgURL);
@@ -71,6 +73,8 @@ public class ImgUtil {
 		log.info("開始將Base64圖片產生存放。");
 		createFolder(photoPath);
 		
+		// 將特殊符號取代為空，處理圖片時才不會因為有特殊符號而出錯
+		imgFileName = CommonUtils.getReplaceSpecialSymbolsStr(imgFileName);
 		String filenameExtension = getImgBase64FilenameExtension(imgBase64String);
 		if ("jpeg".equalsIgnoreCase(filenameExtension)) {
 			filenameExtension = "jpg";

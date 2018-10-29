@@ -244,32 +244,12 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 					if (ecCategoryArrayIndex != 999) {
 						prdItemObject.put("ec_price", prdItem[ecPriceArrayIndex]);
 					} else {
-						prdItemObject.put("ec_price", "0"); // 先給0測試，DB欄位資料待確認
+						prdItemObject.put("ec_price", " ");
 					}
 					
 					prdItemObject.put("ec_discount_price", prdItem[ecDiscountPriceArrayIndex]);
-					
-					String ecStockStatus = prdItem[ecStockStatusArrayIndex];
-					if ("無庫存".equals(ecStockStatus)) {
-						ecStockStatus = "0";
-					} else if ("有庫存".equals(ecStockStatus)) {
-						ecStockStatus = "1";
-					} else if ("預購".equals(ecStockStatus)) {
-						ecStockStatus = "2";
-					} else if ("停售".equals(ecStockStatus)) {
-						ecStockStatus = "3";
-					}
-					prdItemObject.put("ec_stock_status", ecStockStatus);
-					
-					String ecUseStatus = prdItem[ecUseStatusArrayIndex];
-					if ("全新".equals(ecUseStatus)) {
-						ecUseStatus = "0";
-					} else if ("二手".equals(ecUseStatus)) {
-						ecUseStatus = "1";
-					} else if ("福利品".equals(ecUseStatus)) {
-						ecUseStatus = "2";
-					}
-					prdItemObject.put("ec_use_status", ecUseStatus);
+					prdItemObject.put("ec_stock_status", prdItem[ecStockStatusArrayIndex]);
+					prdItemObject.put("ec_use_status", prdItem[ecUseStatusArrayIndex]);
 					prdItemObject.put("ec_img_url", prdItem[ecImgUrlArrayIndex]);
 					prdItemObject.put("ec_url", prdItem[ecUrlArrayIndex]);
 					

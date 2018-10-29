@@ -19,6 +19,8 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
+import com.pchome.enumerate.catalogprod.EnumEcUseStatusType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.utils.ImgUtil;
 
@@ -103,7 +105,6 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			// 檢查每個欄位
 			errorPrdItemArray = super.checkCatalogProdSeq(errorPrdItemArray, catalogProdSeq);
 			errorPrdItemArray = super.checkEcName(errorPrdItemArray, catalogProdSeq, ecName);
-//			errorPrdItemArray = super.checkEcTitle(errorPrdItemArray, catalogProdSeq, ecTitle);
 			errorPrdItemArray = super.checkEcPrice(errorPrdItemArray, catalogProdSeq, ecPrice);
 			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, catalogProdSeq, ecDiscountPrice);
 			errorPrdItemArray = super.checkEcStockStatus(errorPrdItemArray, catalogProdSeq, ecStockStatus);
@@ -142,8 +143,27 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 					pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
 				}
 				pfpCatalogProdEc.setEcDiscountPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
+				
+				if (EnumEcStockStatusType.Out_Of_Stock.getChName().equals(ecStockStatus)) {
+					ecStockStatus = EnumEcStockStatusType.Out_Of_Stock.getType();
+				} else if (EnumEcStockStatusType.In_Stock.getChName().equals(ecStockStatus)) {
+					ecStockStatus = EnumEcStockStatusType.In_Stock.getType();
+				} else if (EnumEcStockStatusType.Pre_Order.getChName().equals(ecStockStatus)) {
+					ecStockStatus = EnumEcStockStatusType.Pre_Order.getType();
+				} else if (EnumEcStockStatusType.Discontinued.getChName().equals(ecStockStatus)) {
+					ecStockStatus = EnumEcStockStatusType.Discontinued.getType();
+				}
 				pfpCatalogProdEc.setEcStockStatus(ecStockStatus); // 商品供應情況
+				
+				if (EnumEcUseStatusType.New_Goods.getChName().equals(ecUseStatus)) {
+					ecUseStatus = EnumEcUseStatusType.New_Goods.getType();
+				} else if (EnumEcUseStatusType.Used_Goods.getChName().equals(ecUseStatus)) {
+					ecUseStatus = EnumEcUseStatusType.Used_Goods.getType();
+				} else if (EnumEcUseStatusType.Welfare_Goods.getChName().equals(ecUseStatus)) {
+					ecUseStatus = EnumEcUseStatusType.Welfare_Goods.getType();
+				}
 				pfpCatalogProdEc.setEcUseStatus(ecUseStatus); // 商品使用狀況
+				
 				pfpCatalogProdEc.setEcCategory(ecCategory); // 商品類別
 				pfpCatalogProdEc.setEcStatus("1"); // 商品狀態(0:關閉, 1:開啟)
 				pfpCatalogProdEc.setEcCheckStatus("0"); // 商品審核狀態(0:未審核, 1:已審核)
