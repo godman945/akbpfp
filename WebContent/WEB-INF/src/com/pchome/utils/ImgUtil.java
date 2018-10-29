@@ -1,5 +1,8 @@
 package com.pchome.utils;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -22,6 +25,12 @@ import org.apache.commons.logging.LogFactory;
 
 public class ImgUtil {
 	private static final Log log = LogFactory.getLog(ImgUtil.class);
+	
+	private static ImgUtil instance = new ImgUtil();
+	
+	public static synchronized ImgUtil getInstance() {
+		return instance;
+	}
 	
 	/**
 	 * 處理廣告商品下載圖片
@@ -140,6 +149,19 @@ public class ImgUtil {
 		return bigInt.toString(16);
 	}
 	
+	
+	/**
+	 * 圖片resize
+	 * */
+	public BufferedImage imgResize(BufferedImage img,int resizeWidth,int resizeHeight) throws Exception{
+		Image image = img.getScaledInstance(resizeWidth, resizeHeight, Transparency.OPAQUE);
+		BufferedImage resized = new BufferedImage(resizeWidth, resizeHeight, BufferedImage.TYPE_INT_RGB);
+		Graphics2D graphics2D = resized.createGraphics();
+		graphics2D.drawImage(image, 0, 0, null);
+		graphics2D.dispose();
+		return resized;
+	}
+	
 	/**
 	 * 從圖片網址取得附檔名
 	 * @param imgURL
@@ -171,5 +193,4 @@ public class ImgUtil {
 			file.mkdirs(); // 建立資料夾
 		}
 	}
-
 }

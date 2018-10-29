@@ -50,11 +50,11 @@
                 <!-- data-list:                 商品排列 -->
                 <!-- data-list='row'            資料以條列顯示 -->
                 <!-- data-list='box'            資料以區塊顯示 -->
-                <div class="nav-wrap prodtable" data-filter="all" data-menu="default" data-list="row" >
+                <div class="nav-wrap prodtable" data-filter=${prodStatusType!} data-menu="default" data-list="row" >
                     <div class="nav-box pos-relative">
                         <!--左-->
                         <ul class="txt-table txt-regular">
-                            <li class="txt-cell group-default p-r10">共<em id="prodQuantityTxt" class="txt-quantity">${totalCount!}</em>件商品</li>
+                            <li class="txt-cell group-default p-r10">共<em id="prodQuantityTxt" class="txt-quantity">${totalCount!}</em>項商品</li>
                             <li class="txt-cell group-default p-r10"><a class="btn-filter" href="javascript:void(0)" data-filter="all">全部商品</a></li>
                             <li class="txt-cell group-default p-r10"><a class="btn-filter" href="javascript:void(0)" data-filter="enable">已啟用</a></li>
                             <li class="txt-cell group-default "><a class="btn-filter" href="javascript:void(0)" data-filter="sealed">已封存</a></li>
@@ -72,7 +72,7 @@
                         <ul class="txt-table txt-regular pos-absolute pos-right pos-top">
                             <li class="txt-cell w-200">
                                 <div class="input-text">
-                                    <input type="text" id="txtProdName" name="" maxlength="20" value="" required placeholder="尋找商品">
+                                    <input type="text" id="txtProdName" name="" maxlength="20" value="${prodName!}" required placeholder="尋找商品">
                                 </div>
                             </li>
 
@@ -108,7 +108,7 @@
                 <!-- data-type:                 商品列型態 -->
                 <!-- data-type='enable'         已啟用商品列 -->
                 <!-- data-type='sealed'         已封存商品列 -->
-                <div class="prodtable-wrap m-b30 floatingscroll" data-filter="all">
+                <div class="prodtable-wrap m-b30 floatingscroll" data-filter=${prodStatusType!}>
                     <div class="prodtable-box txt-noselect">
                         
                         <!-- 表格欄位標題 -->

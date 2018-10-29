@@ -81,18 +81,18 @@
 							<li>
 								<span class="newtbsubliststyle">●</span>								
 								<span class="colorpickr">LOGO 推薦顏色：<br>
-									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
-									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
-									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
+									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" ">
+									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" >
+									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" >
 									<br>
-									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
-									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
-									<input readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="">
+									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" >
+									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" >
+									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" >
 								</span>
 							</li>
 							<li>
 								<span class="newtbsubliststyle">●</span>								
-								<span class="colorpickr"> 商標區塊底色：
+								<span class="colorpickr"> LOGO區塊底色：
 									<input id="logoBgColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#FFFFFF">
 								</span>
 							</li>
@@ -141,16 +141,23 @@
 
 								<ul class="adlogostylebx">
 									<li>									
-										<p class="lgbnrtit">行銷圖像 <a href="#"><img src="<@s.url value="/" />html/img/question.gif"></a>：
+										<p class="lgbnrtit">行銷圖像 <a href="javascript:void(0);" onclick="opennots('1');">
+											<img src="<@s.url value="/" />html/img/question.gif"></a>：
 											<input type="button" value="瀏覽檔案" onclick="openFancyfileLoad('logo')">
 										</p> 
-										<a href="#" target="" onclick="approveSize('bannerDiv');" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
-									</p></li>
+											<a href="javascript:void(0);" target="" onclick="approveSize(this);" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
+										</p>
+									</li>
 								</ul>
 
 								<ul class="adbannerpicbx">
 								</ul>
 							</div>
+						</div>
+						<div id="shownotes1" style="visibility: hidden;margin-left:-10px;" class="adnoticepop">
+							<h4>行銷圖像設定</h4>
+							<div class="adpopcont">針對不同廣告尺寸設計行銷圖像。請注意，行銷圖像會覆蓋整個LOGO區塊。</div>
+							<a onclick="closenots(1)" style="cursor:pointer;" class="adpopclose">關閉</a>
 						</div>
 					</td>
 
@@ -267,7 +274,7 @@
 
 
 
-			<div class="advancedtbbx open">
+			<div class="advancedtbbx">
 
 			<b class="logobnr-togglebtn">進階選項 <i></i></b>
 
@@ -307,19 +314,25 @@
 
 						<div class="uploadbx" id="salesEndImgArea">
 
-								<ul class="adlogostylebx" style="padding: 0;">
+								<ul class="adlogostylebx">
 									<li>									
-										<p class="lgbnrtit adendpic">結尾行銷圖像 <a href="#"><img src="<@s.url value="/" />html/img/question.gif"></a>：										
+										<p class="lgbnrtit adendpic">結尾行銷圖像
+											<a href="javascript:void(0);" onclick="opennots('2');">
+											<img src="<@s.url value="/" />html/img/question.gif"></a>：
 											<input type="button" id="saleEndImgUploadBtn" disabled name="fileButton" value="瀏覽檔案" onclick="openFancyfileLoad('endSales')" >
 										</p>
-										<a href="#" target="" onclick="approveSize('bannerDiv');" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
+										<a href="javascript:void(0);" target="" onclick="approveSize(this);" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
 									</li>
 								</ul>
 
 								<ul class="adbannerpicbx" style="display:grid;">
 								</ul>
 							</div>
-															
+							<div id="shownotes2" style="visibility: hidden;margin-left:-10px;" class="adnoticepop">
+								<h4>結尾行銷圖像設定</h4>
+								<div class="adpopcont">商品輪播結尾的行銷圖像，圖片尺寸大小須與廣告版型大小一致。</div>
+								<a onclick="closenots(2)" style="cursor:pointer;" class="adpopclose">關閉</a>
+							</div>
 					</td>
 				</tr>
 
@@ -352,3 +365,23 @@
 
 <div id ="test2" class="test2" style="display:none;">
 </div>
+
+
+
+	
+	<div id ="approveSize" style="display:none">
+		<table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
+	        <tbody>
+	            <tr>
+	                <th height="20">圖片格式</th>
+	                <td>JPG、PNG、GIF檔</td>
+	            </tr>
+	            <tr>
+	                <th height="20">圖片大小上限</th>
+	                <td>
+	                	 180 KB
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
+	</div>

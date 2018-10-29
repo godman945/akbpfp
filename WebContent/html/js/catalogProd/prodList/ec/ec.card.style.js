@@ -10,8 +10,17 @@
 	});
 	
 	//切換成表格模式
-	 $('#tableView').on('click',function() {
-		 location.href = "prodListTableStyleView.html?catalogSeq="+ $('#catalog option:selected').val() + "&currentPage=1&pageSizeSelected=10";
+	$('#tableView').on('click',function() {
+		var filtertype = $('.nav-wrap.prodtable, .prodtable-wrap, .prodcard-wrap').attr('data-filter');
+		if (filtertype=="all"){
+			filtertype ='';
+		}else if(filtertype=="enable"){
+			filtertype ="1";
+		}else if(filtertype=="sealed"){
+			filtertype ="0";
+		}
+		 
+		location.href = "prodListTableStyleView.html?catalogSeq="+ $('#catalog option:selected').val() + "&currentPage="+$('#pageData').data('order')+"&pageSizeSelected="+$('#pageSizeSelect option:selected').val()+"&prodStatus="+filtertype+"&prodName="+$('#txtProdName').val();
 	 });
 	
 	//點選封存-將商品更新為封存
@@ -91,9 +100,17 @@
     
 	//點選篩選商品資訊 下拉選單
     $('.select-menu li').on('click',function(){
-        $(this).attr('data-select',function(_, attr){return!(attr=='true')});
-        var _datafiltername= $(this).attr('data-filetr-name');
-        var _dataselect= $(this).attr('data-select');
+    	 var _datafiltername= $(this).attr('data-filetr-name');
+         var _dataselect= $(this).attr('data-select');
+         
+        if(_datafiltername == 'prodname' || _datafiltername == 'promoprice' ){
+        	return;
+        }else{ 
+        	 $(this).attr('data-select',function(_, attr){return!(attr=='true')});
+        	 var _datafiltername= $(this).attr('data-filetr-name');
+             var _dataselect= $(this).attr('data-select');
+       }
+        
         showHideInfo(_datafiltername,_dataselect);
     });
     
