@@ -1055,3 +1055,37 @@ function changeActive(obj){
 	});
 }
 
+function clickColor(obj){
+	$("#logoBgColor").val(obj.value);
+	$("#logoBgColor").css("background","#"+obj.value);
+	//變更預覽
+	changeActive(obj);
+}
+
+function approveSize(obj){
+	$.fancybox(
+	$("#approveSize").html(),
+	{
+		'autoDimensions'	: false,
+		'width'         	: "500",
+		'height'        	: "auto",
+		'autoSize'			: true,
+		'autoHeight'		: true,
+		'autoScale'			: false,
+		'transitionIn'		: 'none',
+		'transitionOut'		: 'none',
+		'padding'			: 0,
+		'overlayOpacity'    : .75,
+		'overlayColor'      : '#fff',
+		'scrolling'			: 'no',
+	}
+);
+}
+
+function opennots(id){
+	$("#shownotes"+id).css("visibility", "visible");
+}
+
+function closenots(id) {
+	$("#shownotes"+id).css("visibility", "hidden");
+}

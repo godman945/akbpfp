@@ -1,6 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 	<link href="<@s.url value="/" />html/css/ad/forprodad2018.css" rel="stylesheet" type="text/css" />
+	<link href="<@s.url value="/html/css/ad/adPlugInStyle.css" />" rel="stylesheet" type="text/css" /> 
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery-1.8.3.min.js"></script>
 	<@t.insertAttribute name="jsSource" />
 	<script language="JavaScript" src="<@s.url value="/" />html/js/ad/ad.check.common.js"></script>
