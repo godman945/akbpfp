@@ -43,12 +43,19 @@ function fileUpload() {
 /**
  * 檢查檔案格式
  */
+var fileCount = 0; // 判斷目前是否有上傳檔案 0:沒有 1:有
+var fileTemp; //檔案暫存，按取消後回復
 function checkFile(file) {
-	// 選擇檔案時，未選擇檔案(選取消)不做處理
+
+	// 選擇檔案時，未選擇檔案(選取消)，將剛剛上傳的檔案還原
 	fileCount = file.files.length;
 	if (fileCount == 0) {
+		$("#fileUpload").remove(); // 將目前被清空的tag刪除
+		$(".container-prodmanage").after(fileTemp); // 重新插入剛剛放入temp內的整個tag資料
+		fileCount = 1; // 回復後將目前上傳數量調回1
 		return false;
 	}
+	fileTemp = $("#fileUpload").clone(); // 將目前上傳的檔案資料放入temp
 	
 	// 切換成上傳中畫面
 	$("div.txt-table").removeClass('select');
