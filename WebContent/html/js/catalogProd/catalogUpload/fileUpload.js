@@ -45,8 +45,9 @@ function fileUpload() {
  */
 var fileCount = 0; // 判斷目前是否有上傳檔案 0:沒有 1:有
 var fileTemp; //檔案暫存，按取消後回復
+var fileFormatIsErr = false; // 檔案格式有錯
 function checkFile(file) {
-
+	fileFormatIsErr = false;
 	// 選擇檔案時，未選擇檔案(選取消)，將剛剛上傳的檔案還原
 	fileCount = file.files.length;
 	if (fileCount == 0) {
@@ -81,6 +82,7 @@ function checkFile(file) {
 			$("div.txt-table.success").addClass('select');
 			$("div.txt-table.success .txt-filename").html(file.files[0].name);
 		} else { // 切換到失敗畫面
+			fileFormatIsErr = true;
 			$("div.txt-table.failure").addClass('select');
 			$("div.txt-table.failure .txt-filename").html(file.files[0].name);
 		}
@@ -100,6 +102,7 @@ function checkFile(file) {
       }
     }).fail(function(){
     	// 切換到失敗畫面
+    	fileFormatIsErr = true;
     	$("div.txt-table").removeClass('select');
     	$("div.txt-table.failure").addClass('select');
 		$("div.txt-table.failure .txt-filename").html(file.files[0].name);
@@ -115,6 +118,9 @@ function checkFile(file) {
 function fileUploadFinish() {
 	if (fileCount == 0) {
 		alert("未選擇檔案!");
+		return false;
+	} else if(fileFormatIsErr){
+		alert("檔案格式錯誤!");
 		return false;
 	}
 	
