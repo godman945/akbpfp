@@ -82,16 +82,15 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		hql.append("   pc.catalog_name,                                                                                                                      ");
 		hql.append("   pc.catalog_type,                                                                                                                      ");
 		hql.append("   pc.catalog_upload_type,                                                                                                               ");
+		hql.append("   pc.catalog_prod_num,                                                                                                                  ");
 		hql.append("   pcul.update_content,                                                                                                                  ");
 		hql.append("   pcul.update_datetime,                                                                                                                 ");
-		hql.append("   pcul.success_num,                                                                                                                     ");
 		hql.append("   pcul.error_num,                                                                                                                       ");
 		hql.append("   pcul.catalog_upload_log_seq                                                                                                           ");
 		hql.append(" FROM pfp_catalog pc LEFT JOIN(SELECT                                                                                                    ");
 		hql.append(" 						  T1.catalog_seq,                                                                                                ");
 		hql.append(" 						  T1.update_content,                                                                                             ");
 		hql.append(" 						  T1.update_datetime,                                                                                            ");
-		hql.append(" 						  T1.success_num,                                                                                                ");
 		hql.append(" 						  T1.error_num,                                                                                                  ");
 		hql.append(" 						  T1.catalog_upload_log_seq                                                                                      ");
 		hql.append(" 						FROM pfp_catalog_upload_log T1,                                                                                  ");

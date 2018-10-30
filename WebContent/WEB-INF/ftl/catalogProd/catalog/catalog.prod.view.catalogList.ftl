@@ -72,8 +72,8 @@
                         <div class="txt-cell col-catagory">目錄類型</div>
                         <div class="txt-cell col-upload">資料更新方式</div>
                         <div class="txt-cell col-source">資料來源</div>
-                        <div class="txt-cell col-success">成功筆數</div>
-                        <div class="txt-cell col-failure">失敗筆數</div>
+                        <div class="txt-cell col-success">商品總數</div>
+                        <div class="txt-cell col-failure">失敗項目</div>
                         <div class="txt-cell col-renew">檔案更新</div>
                         <div class="txt-cell col-delete"></div>
                     </div>
@@ -107,16 +107,12 @@
 	                        </div>
                         	
                         	<div class="txt-cell col-success">
-                        		<#if vo.successNum??>
-	                            	${vo.successNum!}<em>筆</em>
-	                            <#else>
-	                            	-
-	                            </#if>
+	                            	${vo.catalogProdNum!}<em>項</em>
 	                        </div>
 	                        
 	                        <div class="txt-cell col-failure">
 	                        	<#if vo.errorNum?? && vo.errorNum != "0">
-	                        		<a href="catalogProdUploadErrLog.html?catalogUploadLogSeq=${vo.catalogUploadLogSeq!}">${vo.errorNum!}<em>筆</em></a>
+	                        		<a href="catalogProdUploadErrLog.html?catalogUploadLogSeq=${vo.catalogUploadLogSeq!}">${vo.errorNum!}<em>項</em></a>
 	                        	<#else>
 	                            	-
 	                            </#if>
