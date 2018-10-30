@@ -756,27 +756,48 @@ function checkSubmit(){
 	var adName = $("#adName").val();
 	if(adName.length == 0){
 		$("#adName")[0].scrollIntoView();
+		$("#adTextMsg").val("廣告名稱不可為空");
+		$("#adTextMsg").css("display","");
 		return {msg:"廣告名稱不可為空",flag:false};
+	}else{
+		$("#adTextMsg").val("");
+		$("#adTextMsg").css("display","none");
 	}
+	
 	var catalogId = $("#catalogSelect").val();
 	if(catalogId == null){
 		$("#catalogSelect")[0].scrollIntoView();
 		return {msg:"請先建立商品目錄",flag:false};
 	}
+	
 	var catalogGroupId = $("#groupSelect").val();
 	if(catalogGroupId == ""){
 		$("#groupSelect")[0].scrollIntoView();
-		return {msg:"請先建立商品群組",flag:false};
+		$("#groupSelectMsg").css("display","");
+		$("#groupSelectMsg")[0].innerHTML = "目前無商品群組，請檢查是否建立或等待審核中";
+		return {msg:"目前無商品群組，請檢查是否建立或等待審核中",flag:false};
+	}else{
+		$("#groupSelectMsg")[0].innerHTML = "";
+		$("#groupSelectMsg").css("display","none");
 	}
+	
 	var checkAdurl = $("#checkAdurl").text();
 	if(checkAdurl != "網址確認正確"){
 		$("#adurl")[0].scrollIntoView();
+		$("#checkAdurl").css("display","");
+		$("#checkAdurl")[0].innerHTML = "請輸入正確網址";
 		return {msg:"請輸入正確網址",flag:false};
 	}
+	
 	var logoText = $("#logoText").val();
 	if(logoText.length == 0 && $('input[name=options]:checked').val() == "type3"){
 		$("#logoText")[0].scrollIntoView();
+		$("#logoTextMsg").css("display","");
+		$("#logoTextMsg")[0].innerHTML = '請輸入LOGO標題文字';
 		return {msg:"請輸入LOGO標題文字",flag:false};
+	}else{
+		$("#logoTextMsg").css("display","none");
+		$("#logoTextMsg")[0].innerHTML = '';
 	}
 	return {msg:"",flag:true};
 }
@@ -786,7 +807,7 @@ function adEditSubmit(){
 	var submitFlag = true;
 	if(checkSubmit().flag == false){
 		submitFlag = checkSubmit().flag;
-		alert(checkSubmit().msg);
+//		alert(checkSubmit().msg);
 	}
 	
 	if(submitFlag){

@@ -19,7 +19,7 @@
 					<th>商品廣告名稱</th>
 					<td colspan="2">
 						<input id="adName" type="text" placeholder="" value="" maxlength="17">
-						<em class="notetext">請輸入廣告名稱</em>
+						<em id="adTextMsg" style="display:none;" class="notetext">請輸入廣告名稱</em>
 						<span id="checkHintAdName" class="charactertext">已輸入0字，剩17字</span>
 					</td>
 				</tr>
@@ -61,7 +61,8 @@
 									</#list>
 								</#if>	
 							</select>
-						</div>												
+						</div>
+						<em id="groupSelectMsg" style="display:none;" class="notetext"></em>													
 					</td>
 				</tr>
 				
@@ -117,7 +118,7 @@
 												<span class="tit">標題文字：</span>
 												<input id="logoText" type="text" placeholder="限17字" maxlength="17">
 												<span id="checkHintLogoText" class="charactertext">已輸入0字，剩17字</span>
-												<em class="notetext">請輸入文字</em>
+												<em id="logoTextMsg" class="notetext" style="display:none;"></em>
 											</div>
 
 											<div>
