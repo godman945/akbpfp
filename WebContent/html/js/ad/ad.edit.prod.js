@@ -303,7 +303,7 @@ function initFancyBoxHtml(){
 	fancyboxSaleEndHtml.push('</div>');
 	fancyboxSaleEndHtml.push('<div class="bottombar">');
 	fancyboxSaleEndHtml.push('<input type="button" id="" value="取 消" class="cancel-btn" onclick="closeFancybox();">');
-	fancyboxSaleEndHtml.push('<input type="button" id="" value="確認送出" class="save-btn" onclick="submitFancybox();">');
+	fancyboxSaleEndHtml.push('<input type="button" id="" value="確認送出" class="save-btn" onclick="submitFancybox(this);">');
 	fancyboxSaleEndHtml.push('</div>');
 	fancyboxSaleEndHtml.push('</div>');
 	$("#test").append(fancyboxSaleEndHtml.join(""));
@@ -366,7 +366,7 @@ function initFancyBoxHtml(){
 	fancyboxSaleEndHtml.push('</div>');
 	fancyboxSaleEndHtml.push('<div class="bottombar">');
 	fancyboxSaleEndHtml.push('<input type="button" id="" value="取 消" class="cancel-btn" onclick="closeFancybox();">');
-	fancyboxSaleEndHtml.push('<input type="button" id="" value="確認送出" class="save-btn" onclick="submitFancybox();">');
+	fancyboxSaleEndHtml.push('<input type="button" id="" value="確認送出" class="save-btn" onclick="submitFancybox(this);">');
 	fancyboxSaleEndHtml.push('</div>');
 	fancyboxSaleEndHtml.push('</div>');
 	$("#test2").append(fancyboxSaleEndHtml.join(""));
@@ -427,6 +427,9 @@ function openFancyfileLoad(type){
 			'overlayOpacity'    : .75,
 			'overlayColor'      : '#fff',
 			'scrolling'			: 'no',
+			'hideOnOverlayClick': false,
+			'enableEscapeButton': false,
+			'showCloseButton'	: false,
 			onClosed    :   function() {
 			    createSuccessUploadToDom();
 			}  
@@ -435,7 +438,7 @@ function openFancyfileLoad(type){
     alex();
 }
 
-
+var succesImageDataMap = new Object();
 function alex(){
 //	console.log("alex");
 //	console.log(initFancyBoxType);
@@ -499,18 +502,24 @@ function fileLoad(obj){
 	$("#fileupload").click();
 }
 
+function drop(ev,obj) {
+	uploadDom = obj.parentElement.parentElement;
+}
+
+
 //檢查上傳圖片合法性
 function checkUploadRule(file_data){
 	console.log("checkUploadRule");
+	var imgArea = $(uploadDom.parentElement.parentElement).find('li');
 	readFile(file_data.files[0], function(e) {
 		var index = $(uploadDom).index();
+		upload_size = imgArea[index].children[3].innerHTML;
         var image = new Image();
 		image.src = e.target.result;
 		image.onload = function () {
 			var sizeFlag = false;
 			var fileSizeFlag = false;
 			var fileExtensionNameFlag = false;
-			
 			var height = this.height;
             var width = this.width;
             var validityWidth = upload_size.split("_")[0];
@@ -553,14 +562,15 @@ function checkUploadRule(file_data){
                 $(errorUpload).css("display","none");
                 $(noUpload).css("display","none");
                 if(initFancyBoxType == 'endSales'){
-                	uploadLog["uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};	
+//                	uploadLog["uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
+                	succesImageDataMap["endSales_uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
                 }
                 if(initFancyBoxType == 'logo'){
-                	uploadLogoLog["uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
+                	succesImageDataMap["logo_uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
+//                	uploadLogoLog["uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
                 }
             }else{
             	console.log("FAIL UPLOAD");
-            	
             	var noUpload = $(uploadDom).find(".upload-lab");
             	var hasUpload = $(uploadDom).find(".uploadedbx");
             	var picinfo = $(hasUpload).find(".picinfo");
@@ -581,10 +591,10 @@ function checkUploadRule(file_data){
             	var errorUpload = $(uploadDom).find(".uploadedbx.error");
             	$(errorUpload).css("display","");
             	if(initFancyBoxType == 'endSales'){
-            		delete uploadLog['uploadLiDom_'+index];
+//            		delete uploadLog['uploadLiDom_'+index];
             	}
             	if(initFancyBoxType == 'logo'){
-            		delete uploadLogoLog['uploadLiDom_'+index];
+//            		delete uploadLogoLog['uploadLiDom_'+index];
             	}
             }
 		}
@@ -630,25 +640,60 @@ function deletePreview(obj){
 
 
 function closeFancybox(){
-	var alt = "提醒您，上傳檔案將被清空是否仍要關閉";
-	if(confirm(alt)) {
-		Object.keys(uploadLog).forEach(function(key) {
-			if(initFancyBoxType == 'endSales'){
-		    	delete uploadLog[key];
-			}
-			if(initFancyBoxType == 'logo'){
-				delete uploadLogoLog[key];
-			}
-		})
-		$.fancybox.close();
-	}
-	
+//	var alt = "提醒您，上傳檔案將被清空是否仍要關閉";
+//	if(confirm(alt)) {
+//		Object.keys(uploadLog).forEach(function(key) {
+//			if(initFancyBoxType == 'endSales'){
+//		    	delete uploadLog[key];
+//			}
+//			if(initFancyBoxType == 'logo'){
+//				delete uploadLogoLog[key];
+//			}
+//		})
+//	}
+	$.fancybox.close();	
 	
 }
 
-function submitFancybox(){
+function submitFancybox(obj){
 	console.log("submitFancybox");
-	$.fancybox.close();
+	console.log(obj);
+//	$.fancybox.close();
+	
+	
+	var hasFailImg = false;
+	var llDom = $(obj.parentElement.parentElement).find('li');
+	$(llDom).each(function(index) {
+		if($($(this).find('.error')[0]).css("display") == 'block'){
+			hasFailImg = true;
+		}
+	});
+	
+	
+	if(!hasFailImg){
+		Object.keys(succesImageDataMap).forEach(function(key) {
+			if(key.indexOf("endSales") >=0){
+				var index = succesImageDataMap[key].index;
+				var fileName = succesImageDataMap[key].fileName;
+				var width = succesImageDataMap[key].width;
+				var height = succesImageDataMap[key].height;
+				var previewSrc = succesImageDataMap[key].previewSrc;
+				var fileExtensionName = succesImageDataMap[key].fileExtensionName;
+				var fileSize = succesImageDataMap[key].fileSize;
+				uploadLog[key.replace("endSales_","")] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
+			}
+			if(key.indexOf("logo") >=0){
+				
+			}
+		});
+		
+		
+		succesImageDataMap = new Object();
+		console.log(succesImageDataMap);
+		console.log(uploadLog);
+		$.fancybox.close();
+	}
+	
 }
 
 //上傳合法的檔案建立到頁面
@@ -1055,6 +1100,24 @@ function changeActive(obj){
 	});
 }
 
+function changeLogoUrl(){
+	if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
+		return false;
+	}
+	var logoAhref = $($(".akb_iframe")[0].contentDocument.body.children[0]).find("a")[0];
+	var realUrl = null;
+	if(($("#checkAdurl")[0].innerHTML) == '網址確認正確'){
+		if($("#adurl").val().indexOf("http") >=0){
+			realUrl = $("#adurl").val();
+		}else{
+			realUrl = "//"+$("#adurl").val()
+		}
+	}else{
+		realUrl = "javascript:void(0);";
+	}
+	logoAhref.href = realUrl;
+}
+
 function clickColor(obj){
 	$("#logoBgColor").val(obj.value);
 	$("#logoBgColor").css("background","#"+obj.value);
@@ -1063,6 +1126,8 @@ function clickColor(obj){
 }
 
 function approveSize(obj){
+	$("#approveSize").find("h4")[0].innerHTML = obj;
+	//行銷圖像支援規格查詢
 	$.fancybox(
 	$("#approveSize").html(),
 	{

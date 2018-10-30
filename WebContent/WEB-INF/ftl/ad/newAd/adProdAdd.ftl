@@ -19,7 +19,7 @@
 					<th>商品廣告名稱</th>
 					<td colspan="2">
 						<input id="adName" type="text" placeholder="" value="" maxlength="17">
-						<em class="notetext">請輸入廣告名稱</em>
+						<em id="adTextMsg" style="display:none;" class="notetext">請輸入廣告名稱</em>
 						<span id="checkHintAdName" class="charactertext">已輸入0字，剩17字</span>
 					</td>
 				</tr>
@@ -61,7 +61,8 @@
 									</#list>
 								</#if>	
 							</select>
-						</div>												
+						</div>
+						<em id="groupSelectMsg" style="display:none;" class="notetext"></em>											
 					</td>
 				</tr>
 				
@@ -69,7 +70,7 @@
 					<th>連結網址</th>
 					<td colspan="2">
 						<input id="adurl" type="text" placeholder="" maxlength="">
-						<em id="checkAdurl" class="notetext">請輸入廣告連結網址</em>
+						<em id="checkAdurl"  class="notetext"></em>
 					</td>
 				</tr>
 
@@ -117,7 +118,7 @@
 												<span class="tit">標題文字：</span>
 												<input id="logoText" type="text" placeholder="限17字" maxlength="17">
 												<span id="checkHintLogoText" class="charactertext">已輸入0字，剩17字</span>
-												<em class="notetext">請輸入文字</em>
+												<em id="logoTextMsg" class="notetext" style="display:none;"></em>
 											</div>
 
 											<div>
@@ -145,7 +146,7 @@
 											<img src="<@s.url value="/" />html/img/question.gif"></a>：
 											<input type="button" value="瀏覽檔案" onclick="openFancyfileLoad('logo')">
 										</p> 
-											<a href="javascript:void(0);" target="" onclick="approveSize(this);" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
+											<a href="javascript:void(0);" target="" onclick="approveSize('行銷圖像支援規格查詢');" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
 										</p>
 									</li>
 								</ul>
@@ -321,7 +322,7 @@
 											<img src="<@s.url value="/" />html/img/question.gif"></a>：
 											<input type="button" id="saleEndImgUploadBtn" disabled name="fileButton" value="瀏覽檔案" onclick="openFancyfileLoad('endSales')" >
 										</p>
-										<a href="javascript:void(0);" target="" onclick="approveSize(this);" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
+										<a href="javascript:void(0);" target="" onclick="approveSize('結尾行銷圖像支援規格查詢');" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
 									</li>
 								</ul>
 
@@ -369,8 +370,10 @@
 
 
 	
-	<div id ="approveSize" style="display:none">
-		<table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
+<div id ="approveSize" style="display:none" >
+		<div class="noticepop" style="width:auto;">
+		<h4 id="title"></h4><div>
+	    <table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
 	        <tbody>
 	            <tr>
 	                <th height="20">圖片格式</th>
@@ -384,4 +387,6 @@
 	            </tr>
 	        </tbody>
 	    </table>
-	</div>
+	    </div>
+	   </div>
+</div>

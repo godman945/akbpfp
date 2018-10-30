@@ -146,7 +146,7 @@
 											<img src="<@s.url value="/" />html/img/question.gif"></a>：
 											<input type="button" value="瀏覽檔案" onclick="openFancyfileLoad('logo')">
 										</p> 
-										<a href="javascript:void(0);" target="" onclick="approveSize(this);" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
+										<a href="javascript:void(0);" target="" onclick="approveSize('行銷圖像支援規格查詢');" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
 									</p></li>
 								</ul>
 
@@ -321,7 +321,7 @@
 											<img src="<@s.url value="/" />html/img/question.gif"></a>：								
 											<input type="button" id="saleEndImgUploadBtn" disabled name="fileButton" value="瀏覽檔案" onclick="openFancyfileLoad('endSales')" >
 										</p>
-										<a href="javascript:void(0);" target="" onclick="approveSize(this);" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
+										<a href="javascript:void(0);" target="" onclick="approveSize('結尾行銷圖像支援規格查詢');" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
 									</li>
 								</ul>
 
@@ -360,8 +360,10 @@
 <div id ="test2" class="test2" style="display:none;">
 </div>
 
-<div id ="approveSize" style="display:none">
-		<table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
+<div id ="approveSize" style="display:none" >
+		<div class="noticepop" style="width:auto;">
+		<h4 id="title"></h4><div>
+	    <table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
 	        <tbody>
 	            <tr>
 	                <th height="20">圖片格式</th>
@@ -375,7 +377,9 @@
 	            </tr>
 	        </tbody>
 	    </table>
-	</div>
+	    </div>
+	   </div>
+</div>
 
 <textarea style="display:none;" id="saveUserLogoPath">${userLogoPath!}</textarea>
 <input type="hidden" id="saveProdLogoType" value="${prodLogoType!}">

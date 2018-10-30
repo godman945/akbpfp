@@ -1,6 +1,5 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-
     <div class="container-prodmanage">
 
 
@@ -8,7 +7,7 @@
         <!-- hidden 隱藏所有牙齒 -->
         <!-- hidetabs 只顯示第一顆牙齒 -->
         <!-- tab1 tab2 tab3 tab4 tab5 牙齒由左至右底線 -->
-        <div class="nav-wrap pos-relative hidden">
+        <div class="nav-wrap pos-relative hidetabs tab6">
             <div class="nav-box pos-relative">
                 <ul class="txt-table">
                     <li class="txt-cell pos-relative p-r10">
@@ -30,8 +29,14 @@
                     <li class="txt-cell pos-relative"><a href="#">商品組合</a></li>
                     <li class="txt-cell pos-relative"><a href="#">商品資料</a></li>
                     <li class="txt-cell pos-relative"><a href="#">設定</a></li>
+                    <li class="txt-cell pos-relative p-r10">
+                        <span class="icon-box tab-logomanage p-r10">
+                            <a href="#">LOGO管理<em class="icon-error"></em></a>                                                        
+                        </span>
+                    </li>
+                    <div class="p-b10 note-text">提醒您，必須完整建立商品目錄與LOGO才能投放商品廣告</div>
                 </ul>
-                <div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>showad1234showad1234</div>
+				<div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>${id_pchome}</div>
             </div>
         </div>
         <!-- 次目錄導覽列 結束 -->
@@ -40,8 +45,8 @@
         <!-- 建立商品目錄 開始 -->
         <div class="content-wrap">
             <p class="title-box h1 txt-center logomanagetit">
-                LOGO管理<br>
-                <span class="txt-descript">您可上傳商店的 logo 以在 PChome 聯播網廣告中展示您的商家， 店家 logo 必須先獲得批准才能顯示。</span>
+               <br>
+               
             </p>
             
             <div class="content-box bg-white w-900 txt-table">
