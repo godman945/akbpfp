@@ -74,6 +74,12 @@ public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 	void deletePfpCatalogGroupItem(PfpCatalogVO vo);
 
 	/**
+	 * 刪除 商品目錄設定 
+	 * @param vo
+	 */
+	void deletePfpCatalogSetup(PfpCatalogVO vo);
+	
+	/**
 	 * 取得一般購物類商品清單 資料
 	 * @param catalogSeq 商品目錄
 	 * @param catalogProdSeq 商品編號

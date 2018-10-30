@@ -1,7 +1,6 @@
 package com.pchome.utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -98,5 +97,47 @@ public class CommonUtils {
 			totalPage += 1;
 		}
 		return totalPage;
+	}
+
+	/**
+	 * 檢查字串是否有 Emoji圖片 字串
+	 * @param checkStr
+	 * @return
+	 */
+	public static boolean isHaveEmojiString(String str) {
+		int strLength = str.length();
+		int strReplaceEmojiLength = str.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", "").length();
+		if (strLength != strReplaceEmojiLength) { // 將Emoji字串取代完後，長度不同表示字串內有Emoji
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * 判斷字串是否非英文和數字
+	 * @param str
+	 * @return true:有非英文和數字 false:只有英文和數字
+	 */
+	public static boolean checkStringNonEnglishNumbers(String str) {
+		return !str.matches("^[A-Za-z0-9]+$");
+	}
+	
+	/**
+	 * 取得取代掉特殊符號的字串
+	 * @param str
+	 * @return
+	 */
+	public static String getReplaceSpecialSymbolsStr(String str) {
+		return str.replaceAll("[^A-Za-z0-9]+$", "");
+	}
+	
+	/**
+	 * 取得取代掉Emoji圖片的字串
+	 * @param str
+	 * @return
+	 */
+	public static String getReplaceEmojiStr(String str) {
+		return str.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", "");
 	}
 }

@@ -27,6 +27,8 @@ public class CatalogProdListAction extends BaseCookieAction{
 	private int totalCount = 0; //資料總筆數
 	private String catalogSeq;
 	private String prodStatus;
+	private String prodName;
+	private String prodStatusType;
 	private IPfpCatalogService pfpCatalogService;
 	private IPfpCustomerInfoService pfpCustomerInfoService;
 	private ProdListFactory prodListFactory;
@@ -46,9 +48,21 @@ public class CatalogProdListAction extends BaseCookieAction{
 	public String queryProdListByCardStyle(){		
 		try{
 			log.info(">>> catalogSeq: " + catalogSeq);
-			log.info(">>> prodStatus: " + prodStatus);
 			log.info(">>> currentPage: " + currentPage);
 			log.info(">>> pageSizeSelected: " + pageSizeSelected);
+			log.info(">>> prodStatus: " + prodStatus);
+			log.info(">>> prodName: " + prodName);
+			
+			
+			//全部商品 or 已啟用 or 已封存類型
+			if (StringUtils.isBlank(prodStatus)){
+				prodStatusType = "all";
+			}else if(StringUtils.equals("1", prodStatus)){
+				prodStatusType = "enable";
+			}else if(StringUtils.equals("0", prodStatus)){
+				prodStatusType = "sealed";
+			}
+			log.info(">>> prodStatusType: " + prodStatusType);
 			
 			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());
 			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();
@@ -80,10 +94,11 @@ public class CatalogProdListAction extends BaseCookieAction{
 			
 			ProdListConditionVO prodListConditionVO =  new ProdListConditionVO();
 			prodListConditionVO.setCatalogSeq(catalogSeq);
-			prodListConditionVO.setProdStatus(prodStatus);
-			prodListConditionVO.setPfpCustomerInfoId(pfpCustomerInfoId);
 			prodListConditionVO.setPage(currentPage);
 			prodListConditionVO.setPageSize(pageSizeSelected);
+			prodListConditionVO.setProdStatus(prodStatus);
+			prodListConditionVO.setProdName(prodName);
+			prodListConditionVO.setPfpCustomerInfoId(pfpCustomerInfoId);
 			
 			prodList = aProdList.getProdList(prodListConditionVO);
 			if (prodList.size() <= 0){
@@ -193,6 +208,22 @@ public class CatalogProdListAction extends BaseCookieAction{
 
 	public void setProdStatus(String prodStatus) {
 		this.prodStatus = prodStatus;
+	}
+	
+	public String getProdStatusType() {
+		return prodStatusType;
+	}
+
+	public void setProdStatusType(String prodStatusType) {
+		this.prodStatusType = prodStatusType;
+	}
+
+	public String getProdName() {
+		return prodName;
+	}
+
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
 	}
 
 	public void setPfpCatalogService(IPfpCatalogService pfpCatalogService) {
