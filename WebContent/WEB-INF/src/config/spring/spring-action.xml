@@ -471,7 +471,10 @@
     <!-- 商品目錄 -->
     <bean id="PfpCatalogAction" class="com.pchome.akbpfp.struts2.action.catalog.PfpCatalogAction" scope="prototype" >
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
+    	<property name="sequenceService" ref="SequenceService" />
     	<property name="pfpCatalogUploadListService" ref="PfpCatalogUploadListService" />
+        <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
+        <property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
     </bean>
 
 	<!-- 商品目錄更新錯誤紀錄 -->

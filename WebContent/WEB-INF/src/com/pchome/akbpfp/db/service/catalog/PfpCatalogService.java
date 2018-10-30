@@ -10,11 +10,7 @@ import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.catalog.IPfpCatalogDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
-import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
-import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
 import com.pchome.akbpfp.db.service.BaseService;
-import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
-import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
@@ -23,9 +19,6 @@ import com.pchome.enumerate.sequence.EnumSequenceTableName;
 public class PfpCatalogService extends BaseService<PfpCatalog,String> implements IPfpCatalogService{
 	
 	private ISequenceService sequenceService;
-	private IPfpCatalogService pfpCatalogService;
-	private IPfpCatalogSetupService pfpCatalogSetupService;
-	private IPfpCatalogGroupService pfpCatalogGroupService;
 	
 	public String getCatalogType(String catalogSeq) throws Exception{
 		List<PfpCatalog> pfpCatalog = ((IPfpCatalogDAO)dao).getCatalogType(catalogSeq);
@@ -127,28 +120,6 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 		// 新增 pfp_catalog "商品目錄"
 		vo.setCatalogSeq(sequenceService.getId(EnumSequenceTableName.PFP_CATALOG, "", 20));
 		((IPfpCatalogDAO) dao).savePfpCatalog(vo);
-		
-		// 新增 pfp_catalog_setup "商品目錄設定"
-		PfpCatalog pfpCatalog = pfpCatalogService.get(vo.getCatalogSeq());
-
-		Date date = new Date();
-		PfpCatalogSetup pfpCatalogSetup = new PfpCatalogSetup();
-		pfpCatalogSetup.setPfpCatalog(pfpCatalog);
-		pfpCatalogSetup.setCatalogSetupKey("img_proportiona");
-		pfpCatalogSetup.setCatalogSetupValue("crop");
-		pfpCatalogSetup.setUpdateDate(date);
-		pfpCatalogSetup.setCreateDate(date);
-		pfpCatalogSetupService.saveOrUpdate(pfpCatalogSetup);
-		
-		// 新增 pfp_catalog_group "商品目錄群組"
-		String catalogGroupSeq = sequenceService.getSerialNumberByLength20(EnumSequenceTableName.PFP_CATALOG_GROUP);
-		PfpCatalogGroup pfpCatalogGroup = new PfpCatalogGroup();
-		pfpCatalogGroup.setCatalogGroupSeq(catalogGroupSeq);
-		pfpCatalogGroup.setPfpCatalog(pfpCatalog);
-		pfpCatalogGroup.setCatalogGroupName("全部商品");
-		pfpCatalogGroup.setUpdateDate(date);
-		pfpCatalogGroup.setCreateDate(date);
-		pfpCatalogGroupService.saveOrUpdateWithCommit(pfpCatalogGroup);
 	}
 	
 	/**
@@ -243,18 +214,6 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 
 	public void setSequenceService(ISequenceService sequenceService) {
 		this.sequenceService = sequenceService;
-	}
-
-	public void setPfpCatalogService(IPfpCatalogService pfpCatalogService) {
-		this.pfpCatalogService = pfpCatalogService;
-	}
-
-	public void setPfpCatalogSetupService(IPfpCatalogSetupService pfpCatalogSetupService) {
-		this.pfpCatalogSetupService = pfpCatalogSetupService;
-	}
-
-	public void setPfpCatalogGroupService(IPfpCatalogGroupService pfpCatalogGroupService) {
-		this.pfpCatalogGroupService = pfpCatalogGroupService;
 	}
 	
 }
