@@ -32,8 +32,13 @@
             </div>
         </div>
         <!-- 次目錄導覽列 結束 -->
-
-
+        
+ <div class="ui-widget">
+	  <input id="tagss">
+	  <label for="tagss"></label>
+	  </div> 
+	  
+	  
         <!-- 建立商品組合 開始 -->
         <div class="content-wrap bg-white">
 
@@ -75,7 +80,7 @@
 			                                <#elseif filterItem.catalogGroupItemField == 'ec_use_status' >
 			                                	<div class="filter-group" data-level1="6" data-level2="3" data-level3="4">
 			                                <#elseif filterItem.catalogGroupItemField == 'ec_category' >
-			                                	<div class="filter-group" data-level1="7" data-level2="3" data-level3="1">	
+			                                	<div class="filter-group" data-level1="7" data-level2="3" data-level3="5"> I : 735
 			                                </#if>    
 			                     
 			                                    <!-- 篩選第一層 -->
@@ -140,6 +145,20 @@
 				                                             	<option value="3" <#if filterItem.catalogGroupItemValue == '3' >selected</#if> >停售</option>
 				                                            </select>
 				                                        </div>
+				                                        <div class="select-box" data-level="4">
+				                                            <select>
+				                                            	<option value="0" <#if filterItem.catalogGroupItemValue == '0' >selected</#if> >全新</option>
+				                                            	<option value="1" <#if filterItem.catalogGroupItemValue == '1' >selected</#if> >二手</option>
+				                                             	<option value="2" <#if filterItem.catalogGroupItemValue == '2' >selected</#if> >福利品</option>
+				                                            </select>
+				                                        </div>
+				                                           
+				                               			 <div class="input-text" data-level="5">
+				                                            <input class="tags" type="text" name="" maxlength="6" value="${filterItem.catalogGroupItemValue!}">
+				                                           	<label for="tags"></label>
+				                                            <div class="msg-error" style="display:none">請填寫篩選條件</div>
+				                                        </div>
+				                                        
 			                                    </div>
 			
 			                                    <!--刪除篩選 -->
@@ -229,6 +248,12 @@
 
         </div>
         <!-- 建立商品組合 結束 -->
+        
+	</div>
+        
+        
     </div>
 
 	<input id="catalogSeqData" type="hidden" value="${catalogSeq}">
+	
+	

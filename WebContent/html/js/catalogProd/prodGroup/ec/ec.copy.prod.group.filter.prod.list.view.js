@@ -65,11 +65,77 @@ var defaultTemplate =
              '<option value="2">福利品</option>'+
           '</select>'+
        '</div>'+
+       '<div class="input-text" data-level="5">'+
+       		'<input class="tags" type="text" name="" maxlength="6" value="">'+
+       		'<label for="tags"></label>'+
+       		'<div class="msg-error" style="display:none">請填寫篩選條件</div>'+
+       '</div>'+
     '</div>'+
     '<!--刪除篩選 -->'+
     '<div class="icon-kill" onclick="deleteFilterCondition(event,$(this))"></div>';
 
+var availableTags = [];
+
 $(document).ready(function(){
+	
+	//分類選單
+	initCategoryVal();
+	jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
+	var tagsArray = document.getElementsByClassName("tags");
+	$.each(tagsArray, function(index, obj){
+		
+		console.log('obj old')
+    	console.log(obj)
+		
+		$(obj).autocomplete({
+		    source: availableTags,   //資料來源                
+	        minLength: 0    //輸入最少字數 
+		})
+		    
+		// 自動完成focus ; Click文字盒就顯示全部List
+	    $(obj).focus(function () {
+	    	if (this.value == "") {
+	    		$(this).autocomplete("search");
+	        }
+	     });
+	});
+	
+	
+	
+//	$( function() {
+////	    var availableTags = [
+////	      "ActionScript",
+////	      "a成功",
+////	      "AppleScript",
+////	      "貝西",
+////	      "Asp",
+////	      "a貝寶",
+////	      "BASIC"
+////	    ];
+//	    $( "#tagss" ).autocomplete({
+//	      source: availableTags,   //資料來源                
+//          minLength: 0    //輸入最少字數 
+//	    })
+//	    
+////		 // 自動完成focus ; Click文字盒就顯示全部List
+//        $('#tagss').focus(function () {
+////        	alert('22');
+//            if (this.value == "") {
+//                $(this).autocomplete("search");
+//            }
+//        });
+//	    
+//} );
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//切換商品目錄
 	$("#catalog").change(function() {
@@ -202,7 +268,52 @@ $(document).ready(function(){
         
         $(".filter-wrap select").bind("change", handler);
         $(".filter-wrap input").bind("keyup", handler);
+        
+        
+        
+        var tagsArray = document.getElementsByClassName("tags");
+        
+        console.log(tagsArray);
+        
+        
+    		$(tagsArray[2])[0].autocomplete({
+    		    source: availableTags,   //資料來源                
+    	        minLength: 0    //輸入最少字數 
+    		})
+    		    
+    		// 自動完成focus ; Click文字盒就顯示全部List
+    	    $(tagsArray[2])[0].focus(function () {
+    	    	console.log("EEEEE");
+    	    	if (this.value == "") {
+    	    		$(this).autocomplete("search");
+    	        }
+    	     });
+        
+        
+        
+        
+//    	$.each(tagsArray, function(index, obj){
+//    		console.log('obj new')
+//        	console.log(obj)
+//    		$(obj).autocomplete({
+//    		    source: availableTags,   //資料來源                
+//    	        minLength: 0    //輸入最少字數 
+//    		})
+//    		    
+//    		// 自動完成focus ; Click文字盒就顯示全部List
+//    	    $(obj).focus(function () {
+//    	    	console.log("EEEEE");
+//    	    	if (this.value == "") {
+//    	    		$(this).autocomplete("search");
+//    	        }
+//    	     });
+//    	});
+        
+        
     })
+    
+    
+    
 	
 	if($("#catalogSeqData").val() !=""){
 		console.log("#####################999999999");
@@ -261,6 +372,33 @@ function initPage(){
 	$('#pageCount').text(pageCount)
 	
 }
+
+
+/**
+* 撈分類資料
+*/
+function initCategoryVal(){
+		$.ajax({
+		    type: "post",
+		    dataType: "json",
+		    url: "queryCategoryGroupByVal.html",
+		    data: {
+	    	    "catalogSeq": $('#catalog option:selected').val()
+		    },
+		    timeout: 30000,
+		    error: function(xhr){
+		    	alert("系統繁忙，請稍後再試！");
+		    },
+		    success:function(response, status){
+		    	
+			}
+		}).done(function (response) {
+			$.each(response.categoryGroupByVal, function(index, val){
+				availableTags.push(val);
+			});
+		});
+}
+
 
 //全域
 var filterContentMap= [];
@@ -665,6 +803,7 @@ function deleteFilterCondition(event,obj){
 
 
 function filterDisplayRule(val, obj) {
+	alert('522')
 	
 	obj[0].innerHTML = '';
 	obj[0].innerHTML = defaultTemplate;
@@ -721,7 +860,7 @@ function filterDisplayRule(val, obj) {
 	case 'ec_category'://class
 		level1 = '7';
 		level2 = '3';
-		level3 = '1';
+		level3 = '5';
 		break;
 	default:
 		;

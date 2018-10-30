@@ -504,6 +504,43 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 
 		return SUCCESS;
 	}
+	
+	
+	
+	/**
+	 * 取得目錄分類資料Ajax
+	 */
+	public String queryCategoryGroupByValAjax() {
+		try {
+			log.info(">>> catalogSeq: " + catalogSeq);
+
+			resultMap = new HashMap<String, Object>();
+
+			// 取得商品目錄類型
+			pfpCatalog = pfpCatalogService.getPfpCatalog(catalogSeq);
+			EnumProdGroupFactory enumProdGroupFactory = EnumProdGroupFactory.getCatalogName(pfpCatalog.getCatalogType());
+			String catalogFactoryName = enumProdGroupFactory.getCatalogName();
+			AProdGroup aProdGroup = prodGroupFactory.getAProdGroupObj(catalogFactoryName);
+			// 商品群組條件
+			List<String> categoryGroupByVal = aProdGroup.queryCategoryGroupByVal(catalogSeq);
+
+			resultMap.put("categoryGroupByVal", categoryGroupByVal);
+			resultMap.put("status", "SUCCESS");
+
+		} catch (Exception e) {
+			log.error("error:" + e);
+			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			return SUCCESS;
+		}
+
+		return SUCCESS;
+	}
+
+	
+	
+	
+	
+	
 
 	public String getCatalogSeq() {
 		return catalogSeq;

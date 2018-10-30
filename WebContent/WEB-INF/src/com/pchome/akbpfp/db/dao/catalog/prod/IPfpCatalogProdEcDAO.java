@@ -24,4 +24,6 @@ public interface IPfpCatalogProdEcDAO extends IBaseDAO<PfpCatalogProdEc,Integer>
 	
 	public List<Map<String,Object>> getEcProdGroupList(ProdGroupConditionVO prodGroupConditionVO) throws Exception;
 	
+	public List<Map<String,Object>> queryCategoryGroupByVal(String catalogSeq)  throws Exception;
+	
 }

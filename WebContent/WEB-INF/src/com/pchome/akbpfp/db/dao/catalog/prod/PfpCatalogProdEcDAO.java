@@ -169,5 +169,22 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		
 		return query.list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String,Object>> queryCategoryGroupByVal(String catalogSeq)  throws Exception{
+		StringBuffer hql = new StringBuffer();
+		hql.append(" select ec_category ");
+		hql.append(" from pfp_catalog_prod_ec ");
+		hql.append(" where 1=1 ");
+		hql.append(" and catalog_seq = '"+catalogSeq+"' ");
+		hql.append(" group by ec_category ");
+		
+		log.info(hql.toString());
+
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
+		
+		return query.list();
+	}
 
 }

@@ -28,6 +28,8 @@ public abstract class AProdGroup {
 	
 	public abstract String getProdGroupCount(String catalogSeq, String filterSQL) throws Exception;
 	
+	public abstract List<String> queryCategoryGroupByVal(String catalogSeq) throws Exception;
+	
 	
 	
 
