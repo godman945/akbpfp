@@ -1164,6 +1164,8 @@ function approveSize(obj){
 		'overlayOpacity'    : .75,
 		'overlayColor'      : '#fff',
 		'scrolling'			: 'no',
+		'enableEscapeButton': false,
+		'showCloseButton'	: false,
 	}
 );
 }
