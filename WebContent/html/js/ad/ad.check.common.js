@@ -70,7 +70,6 @@ function urlCheck(type1,domName,type2,checkAdurl){
 	
 	adUrlDom.bind('blur', function() {
 		hintAdUrlDom.text("檢查網址中");
-//		console.log(adUrlDom.val());
 		$.ajax({
 			type: "POST",
 			url: "checkAdUrl.html",
@@ -79,11 +78,12 @@ function urlCheck(type1,domName,type2,checkAdurl){
 			if(msg == 'true'){
 				hintAdUrlDom.text("網址確認正確");
 				hintAdUrlDom.css("color","green");
-//				console.log(msg);
 			}else {
 				hintAdUrlDom.text("請輸入正確的廣告連結網址");
 				hintAdUrlDom.css("color","red");
 			}
+			
+			changeLogoUrl();
 		});
 	});
 }
