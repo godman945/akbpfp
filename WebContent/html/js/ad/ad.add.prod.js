@@ -340,9 +340,11 @@ function openFancyfileLoad(type){
 			'hideOnOverlayClick': false,
 			'enableEscapeButton': false,
 			'showCloseButton'	: false,
-			onClosed    :   function() {
+			 onClosed    :   function() {
 			    createSuccessUploadToDom();
-			}  
+			},
+    		"onComplete": function(){
+    		},
 		}
     );
     alex();
@@ -419,7 +421,6 @@ function fileLoad(obj){
 }
 
 function drop(ev,obj) {
-	
 	uploadDom = obj.parentElement.parentElement;
 }
 
@@ -473,8 +474,6 @@ function checkUploadRule(file_data){
                 $(errorUpload).css("display","none");
                 $(noUpload).css("display","none");
                 
-                console.log(initFancyBoxType);
-                
                 if(initFancyBoxType == 'endSales'){
                 	succesImageDataMap["endSales_uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
 //                	uploadLog["uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};	
@@ -524,9 +523,10 @@ function readFile(file, onLoadCallback){
     reader.readAsDataURL(file);
 }
 
-//刪除上傳檔案
+//預覽中刪除上傳檔案
 function deletePreview(obj){
 	console.log("刪除上傳檔案");
+	console.log(succesImageDataMap);
 	var uploadDom = obj.parentElement.parentElement.parentElement.parentElement;
 	var index = $(uploadDom).index();
 	var noUpload = $(uploadDom).find(".upload-lab");
@@ -536,19 +536,17 @@ function deletePreview(obj){
     var u = $(picinfo).find("u");
     var imgDom = $(hasUpload).find("img");
     var errorUpload = $(uploadDom).find(".uploadedbx.error");
-    
     $(p).empty();
     $(u).empty();
     $(imgDom).attr("src","");
     $(noUpload).css("display","");
     $(hasUpload).css("display","none");
     $(errorUpload).css("display","none");
-    
     if(initFancyBoxType == 'endSales'){
-    	delete uploadLog['uploadLiDom_'+index]; 
+//    	delete uploadLog['uploadLiDom_'+index]; 
 	}
 	if(initFancyBoxType == 'logo'){
-		delete uploadLogoLog['uploadLiDom_'+index];
+//		delete uploadLogoLog['uploadLiDom_'+index];
 	}
 }
 
@@ -571,9 +569,6 @@ function closeFancybox(){
 
 //點擊送出上傳圖片
 function submitFancybox(obj){
-//	uploadLog["uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
-//	uploadLogoLog["uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
-	
 	var hasFailImg = false;
 	var llDom = $(obj.parentElement.parentElement).find('li');
 	$(llDom).each(function(index) {
@@ -581,8 +576,6 @@ function submitFancybox(obj){
 			hasFailImg = true;
 		}
 	});
-	
-	
 	if(!hasFailImg){
 		Object.keys(succesImageDataMap).forEach(function(key) {
 			var index = succesImageDataMap[key].index;
@@ -594,26 +587,31 @@ function submitFancybox(obj){
 			var fileSize = succesImageDataMap[key].fileSize;
 			if(key.indexOf("endSales") >=0){
 				uploadLog[key.replace("endSales_","")] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
+				delete succesImageDataMap[key];
 			}
 			if(key.indexOf("logo") >=0){
 				uploadLogoLog[key.replace("logo_","")] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
+				delete succesImageDataMap[key];
 			}
 		});
-		
-		
-		succesImageDataMap = new Object();
 //		console.log(succesImageDataMap);
 //		console.log(uploadLog);
+//		console.log(uploadLogoLog);
+		$(llDom).each(function(index) {
+			if($(this).children()[0].style.display == ""){
+				if(initFancyBoxType == 'logo'){
+					delete uploadLogoLog["uploadLiDom_"+index];
+				}else if(initFancyBoxType == 'endSales'){
+					delete uploadLog["uploadLiDom_"+index];
+				}
+			}
+		});
 		$.fancybox.close();
 	}
 }
 
 //上傳合法的檔案建立到頁面
 function createSuccessUploadToDom(){
-	
-	console.log("FFFFF");
-	
-	
 	var a = null;
 	var uploadData = null;
 	if(initFancyBoxType == 'endSales'){
@@ -1078,3 +1076,4 @@ function opennots(id){
 function closenots(id) {
 	$("#shownotes"+id).css("visibility", "hidden");
 }
+
