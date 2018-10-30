@@ -100,16 +100,6 @@ $(document).ready(function(){
 		
 		$(function () {
 		    $('#fileupload').fileupload({
-//		        url: 'adAddImgAjax.html',
-//		        fileElementId: 'fileupload',
-//		        success: function (respone) {
-//		        	imgSeq = respone;
-//		        	jsonObj =  JSON.parse(respone);
-//		        },
-//		        done: function (e, data) {
-//		        },
-//		        dataType: 'json',
-//		        async: false,
 		    }).on('fileuploadadd', function (e, data) {
 		    	checkUploadRule(data);
 		    	return false;
@@ -175,6 +165,7 @@ function initLogoColor(){
 }
 
 //初始化已存資料
+var first = true;
 function initSaveData(){
 	var uploadLogTextArea = JSON.parse($("#saveSaleImg").text());
 	var uploadLogTextFlag = false;
@@ -487,7 +478,7 @@ function alex(){
 
 //上傳資料
 function fileLoad(obj){
-	console.log("fileLoad");
+//	console.log("fileLoad");
 	var sourceClassName = $(obj.parentElement).attr("class");
 	if(sourceClassName == 'form-error'){
 		uploadDom = obj.parentElement.parentElement.parentElement.parentElement.parentElement;
@@ -509,7 +500,7 @@ function drop(ev,obj) {
 
 //檢查上傳圖片合法性
 function checkUploadRule(file_data){
-	console.log("checkUploadRule");
+//	console.log("checkUploadRule");
 	var imgArea = $(uploadDom.parentElement.parentElement).find('li');
 	readFile(file_data.files[0], function(e) {
 		var index = $(uploadDom).index();
@@ -538,7 +529,7 @@ function checkUploadRule(file_data){
             }
             
             if(sizeFlag && fileExtensionNameFlag){
-            	console.log(initFancyBoxType + " SUCCESS UPLOAD");
+//            	console.log(initFancyBoxType + " SUCCESS UPLOAD");
             	
             	var previewSrc = e.target.result;
                 var noUpload = $(uploadDom).find(".upload-lab");
@@ -602,7 +593,7 @@ function checkUploadRule(file_data){
 	
 	
 	//重設定預覽內容
-	adPreview();
+	//adPreview();
 }
 
 function readFile(file, onLoadCallback){
@@ -657,10 +648,7 @@ function closeFancybox(){
 
 function submitFancybox(obj){
 	console.log("submitFancybox");
-	console.log(obj);
 //	$.fancybox.close();
-	
-	
 	var hasFailImg = false;
 	var llDom = $(obj.parentElement.parentElement).find('li');
 	$(llDom).each(function(index) {
@@ -672,25 +660,26 @@ function submitFancybox(obj){
 	
 	if(!hasFailImg){
 		Object.keys(succesImageDataMap).forEach(function(key) {
+			var index = succesImageDataMap[key].index;
+			var fileName = succesImageDataMap[key].fileName;
+			var width = succesImageDataMap[key].width;
+			var height = succesImageDataMap[key].height;
+			var previewSrc = succesImageDataMap[key].previewSrc;
+			var fileExtensionName = succesImageDataMap[key].fileExtensionName;
+			var fileSize = succesImageDataMap[key].fileSize;
 			if(key.indexOf("endSales") >=0){
-				var index = succesImageDataMap[key].index;
-				var fileName = succesImageDataMap[key].fileName;
-				var width = succesImageDataMap[key].width;
-				var height = succesImageDataMap[key].height;
-				var previewSrc = succesImageDataMap[key].previewSrc;
-				var fileExtensionName = succesImageDataMap[key].fileExtensionName;
-				var fileSize = succesImageDataMap[key].fileSize;
 				uploadLog[key.replace("endSales_","")] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
 			}
 			if(key.indexOf("logo") >=0){
-				
+				uploadLogoLog["logo_uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
 			}
 		});
 		
 		
 		succesImageDataMap = new Object();
-		console.log(succesImageDataMap);
-		console.log(uploadLog);
+//		console.log(succesImageDataMap);
+//		console.log(uploadLog);
+//		console.log(uploadLogoLog);
 		$.fancybox.close();
 	}
 	
@@ -930,7 +919,7 @@ function getProdGroup(obj){
 	var catalogGroupId = $("#groupSelect").val().split("_")[1];
 	var imgProportiona = $("#groupSelect").val().split("_")[2];
 	var imgShowType = "noposter";
-	console.log(catalogGroupId);
+//	console.log(catalogGroupId);
 	
 	Object.keys(uploadLog).forEach(function(key) {
 		var height = String(uploadLog[key].height);
@@ -988,6 +977,25 @@ function getProdGroup(obj){
 		prodLogoType = "type2";
 		logoPath = encodeURIComponent(logoData.square.logoPath);
 	}
+	
+	var realUrl = null;
+	if(($("#checkAdurl")[0].innerHTML) == '網址確認正確'){
+		if($("#adurl").val().indexOf("http") >=0){
+			realUrl = $("#adurl").val();
+		}else{
+			realUrl = "//"+$("#adurl").val()
+		}
+	}else{
+		realUrl = "javascript:void(0);";
+	}
+	if(first){
+		if($("#adurl").val().indexOf("http") >=0){
+			realUrl = $("#adurl").val();
+		}else{
+			realUrl = "//"+$("#adurl").val()
+		}
+		first = false;
+	}
 	console.log(imgProportiona);
 	
 		var src = 'adProdModel.html'
@@ -1005,6 +1013,7 @@ function getProdGroup(obj){
 		+"&prodLogoType="+encodeURIComponent(prodLogoType)
 		+"&imgProportiona="+encodeURIComponent(imgProportiona)
 		+"&userLogoPath="+logoPath
+		+"&realUrl="+encodeURIComponent(realUrl)
 		$(".akb_iframe").attr('src' ,src);
 		console.log(src);
 }
@@ -1013,7 +1022,7 @@ function adPreview(){
 	if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
 		return false;
 	}
-	console.log('====adPreview start====');
+//	console.log('====adPreview start====');
 	var css = $(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML;
 	css = css.replace("<#dad_logo_font_color>","#"+$("#logoFontColor").val());
 	css = css.replace("<#dad_logo_bg_color>","#"+$("#logoBgColor").val());
@@ -1137,6 +1146,9 @@ function changeLogoUrl(){
 		realUrl = "javascript:void(0);";
 	}
 	logoAhref.href = realUrl;
+	var adUrlDom = $($($(".akb_iframe")[0].contentDocument.body.children[0]).find("nav-box").context.getElementsByClassName("slid-box"))[0]; 
+	var left = $(adUrlDom).children()[1].href = realUrl;
+	var right = $(adUrlDom).children()[2].href = realUrl;
 }
 
 function clickColor(obj){

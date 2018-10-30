@@ -472,6 +472,9 @@ function checkUploadRule(file_data){
                 $(hasUpload).css("display","block");
                 $(errorUpload).css("display","none");
                 $(noUpload).css("display","none");
+                
+                console.log(initFancyBoxType);
+                
                 if(initFancyBoxType == 'endSales'){
                 	succesImageDataMap["endSales_uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
 //                	uploadLog["uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};	
@@ -541,10 +544,6 @@ function deletePreview(obj){
     $(hasUpload).css("display","none");
     $(errorUpload).css("display","none");
     
-    console.log(initFancyBoxType);
-    console.log(uploadLog);
-    
-    
     if(initFancyBoxType == 'endSales'){
     	delete uploadLog['uploadLiDom_'+index]; 
 	}
@@ -586,25 +585,25 @@ function submitFancybox(obj){
 	
 	if(!hasFailImg){
 		Object.keys(succesImageDataMap).forEach(function(key) {
+			var index = succesImageDataMap[key].index;
+			var fileName = succesImageDataMap[key].fileName;
+			var width = succesImageDataMap[key].width;
+			var height = succesImageDataMap[key].height;
+			var previewSrc = succesImageDataMap[key].previewSrc;
+			var fileExtensionName = succesImageDataMap[key].fileExtensionName;
+			var fileSize = succesImageDataMap[key].fileSize;
 			if(key.indexOf("endSales") >=0){
-				var index = succesImageDataMap[key].index;
-				var fileName = succesImageDataMap[key].fileName;
-				var width = succesImageDataMap[key].width;
-				var height = succesImageDataMap[key].height;
-				var previewSrc = succesImageDataMap[key].previewSrc;
-				var fileExtensionName = succesImageDataMap[key].fileExtensionName;
-				var fileSize = succesImageDataMap[key].fileSize;
 				uploadLog[key.replace("endSales_","")] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
 			}
 			if(key.indexOf("logo") >=0){
-				
+				uploadLogoLog[key.replace("logo_","")] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
 			}
 		});
 		
 		
 		succesImageDataMap = new Object();
-		console.log(succesImageDataMap);
-		console.log(uploadLog);
+//		console.log(succesImageDataMap);
+//		console.log(uploadLog);
 		$.fancybox.close();
 	}
 }
@@ -1037,6 +1036,9 @@ function changeLogoUrl(){
 		realUrl = "javascript:void(0);";
 	}
 	logoAhref.href = realUrl;
+	var adUrlDom = $($($(".akb_iframe")[0].contentDocument.body.children[0]).find("nav-box").context.getElementsByClassName("slid-box"))[0]; 
+	var left = $(adUrlDom).children()[1].href = realUrl;
+	var right = $(adUrlDom).children()[2].href = realUrl;
 }
 
 function clickColor(obj){

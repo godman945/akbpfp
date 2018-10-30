@@ -347,7 +347,7 @@
 		<!--grtba end-->
 		<span class="t_s01">※※※ 提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放 ※※※</span>
 		<center style="margin-top:10px;width:70%">	            
-            <input type="button" id="cancel" value="取 消" class="btn-cancel"> 
+            <input type="button" id="cancel" value="取 消" class="btn-cancel"  onclick="javascript:location.href='adAdView.html?adGroupSeq=${adGroupSeq!}'" > 
             <input type="button" id="save" value="送出審核" class="btn-save" onclick="adSubmit();">
 		</center>
 
