@@ -17,12 +17,28 @@
 			index_14:"950_390",
 			index_15:"970_250"
 	};
-	
+
 	var salesIframewp = new Object();
 	salesIframewp["data"] = {
-			index_1:"300_55"
+			index_1:"120_120",
+			index_2:"140_80",
+			index_3:"160_40",
+			index_4:"160_100",
+			index_5:"180_50",
+			index_6:"80_80",
+			index_7:"95_100",
+			index_8:"300_55",
+			index_9:"300_95",
+			index_10:"320_70",
+			index_11:"336_60",
+			index_12:"640_90",
+			index_13:"245_90",
+			index_14:"950_100",
+			index_15:"250_250"
 	};
 
+	
+	
 	//開啟fancybox上傳畫面初始化
 	var upload_size = null;
 	var uploadDom = null;
