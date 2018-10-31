@@ -58,6 +58,7 @@
                         			</#list>
 								</#if>
 		                    </select>
+		                    <em id="adStyleMsg" style="color:red" class="error"></em>
                         </td>
                     </tr>
                     <tr>

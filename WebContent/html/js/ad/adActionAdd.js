@@ -74,28 +74,12 @@ $(document).ready(function(){
 		if($("#adStyle").val() == 2 && $("#prodAdMsg").val() != ""){
 			console.log($("#adStyle").val());
 			console.log($("#prodAdMsg").val());
+			$("#adStyleMsg")[0].innerHTML = $("#prodAdMsg").val();
 		}
-		
 	});
 	
 	initDate();
 	function initDate() {
-
-		/*if ($('#adActionStartDate').length > 0) {
-//			$('#adActionStartDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionStartDate').val().replace(/-/g,"/"))) );
-            if($('#adActionStartDate').val() != "") {
-                $('#adActionStartDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionStartDate').val().replace(/-/g,"/"))) );
-            } else {
-                $("#adActionStartDate").datepicker({
-                    dateFormat: "yy-mm-dd",
-                    yearRange:"-10:+10",
-                    minDate: "-6M",
-                    maxDate: 0
-                });
-            }
-
-		}*/
-
 		$("#adActionStartDate").datepicker({
             dateFormat: "yy-mm-dd",
             yearRange:"-10:+10",
@@ -109,46 +93,6 @@ $(document).ready(function(){
             minDate: "-6M",
             maxDate: 0
 		});
-		
-		/*if ($('#adActionEndDate').length > 0) {
-            if($('#adActionEndDate').val() != "") {
-            	if($('#adActionStartDate').val() != ""){
-            		if(new Date(Date.parse($('#adActionStartDate').val().replace(/-/g,"/"))) < new Date()){
-            			$('#adActionEndDate').datepicker( "option", "minDate", new Date() );	
-            		} else {
-            			$('#adActionStartDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionEndDate').val().replace(/-/g,"/"))) );
-            		}
-            	}
-                $('#adActionEndDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionEndDate').val().replace(/-/g,"/"))) );
-            } else {
-                $("#adActionEndDate").datepicker({
-                    dateFormat: "yy-mm-dd",
-                    yearRange:"-10:+10",
-                    minDate: "-6M",
-                    maxDate: 0
-                });
-            }
-		}*/
-		
-		
-		/*if ($('#adActionEndDate').length > 0) {
-            	if($('#adActionStartDate').val() != ""){
-            		if(new Date(Date.parse($('#adActionStartDate').val().replace(/-/g,"/"))) < new Date()){
-            			$("#adActionStartDate").datepicker({
-            	            dateFormat: "yy-mm-dd",
-            	            yearRange:"-10:+10",
-            	            minDate: "-6M",
-            	            maxDate: 0
-            	        });
-            		} else {
-            			$('#adActionEndDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionStartDate').val().replace(/-/g,"/"))) );
-            		}
-            	}else {
-            		$('#adActionEndDate').datepicker( "option", "minDate", new Date() );
-            	}
-                //$('#adActionEndDate').datepicker( "option", "minDate", new Date(Date.parse($('#adActionEndDate').val().replace(/-/g,"/"))) );
-		}*/
-		
 	}
 
 	// validate field
@@ -187,7 +131,7 @@ $(document).ready(function(){
 				digits: true,
 				min: 100,
 				max: 999999
-			}
+			},
 		},
 		messages: {
 			adActionName: {
@@ -222,8 +166,8 @@ $(document).ready(function(){
 		}
 	});
 	
+	//點擊繼續
 	$('#save').click(function(){
-		console.log("SSSSS");
 		//取得驗證回傳值
 		if($("#modifyForm").valid() == 1){
 			var startAge = $("#adActionStartAge").val();
@@ -283,7 +227,14 @@ $(document).ready(function(){
 					return false;
 				}
 			}
-			
+			//判斷商品廣告權限是否新增廣告活動
+			if($("#adStyle").val() == 2 && $("#prodAdMsg").val() != ""){
+				if($("#adStyleMsg")[0].innerHTML != ""){
+					return false;
+				}
+			}else{
+				$("#adStyleMsg")[0].innerHTML = "";
+			}
 			// form submit
 			$("#adActionStartAge").removeAttr("disabled");
 			$("#adActionEndAge").removeAttr("disabled");
