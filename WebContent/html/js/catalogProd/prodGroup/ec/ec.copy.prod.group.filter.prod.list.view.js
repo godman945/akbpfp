@@ -469,7 +469,7 @@ function checkColumnValue() {
  				
  				//類別
  				if (fieldStr == "ec_category"){
- 					console.log('類---------------別')
+ 					console.log('--VAL----------------2222222222')
  					console.log($($(obj2).children()[4]).children()[0].value);
  					
  					filterValStr = $($(obj2).children()[4]).children()[0].value;
@@ -597,11 +597,12 @@ function handler(e) {
  				
  				//類別
  				if (fieldStr == "ec_category"){
- 					console.log('--*******VAL**********---')
+ 					console.log('--*******VAL**********---1111111111')
+ 					console.log($($(obj2).children()[4]).children()[0].value);
  					console.log($(obj2));
  					
  					filterValStr = $($(obj2).children()[4]).children()[0].value;
- 					console.log(filterValStr);
+ 					
  				}
 // 				
  				//第3層值塞map
