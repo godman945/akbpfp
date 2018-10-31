@@ -78,6 +78,13 @@ var availableTags = [];
 
 $(document).ready(function(){
 	
+//	document.addEventListener('insertAdjacentHTML',function(e){
+//		console.log("HHH");
+//	
+//	})
+	
+	
+	
 	//分類選單
 	initCategoryVal();
 	jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
@@ -253,6 +260,18 @@ $(document).ready(function(){
     	
     	
     	$('.filter-wrap')[0].insertAdjacentHTML('beforeend', '<div class="filter-group" data-level1="1" data-level2="1" data-level3="1">'+defaultTemplate+'</div>');
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
     	
 		//針對類別條件綁定jquery查詢套件
 		 var tagsArray = document.getElementsByClassName("tags");
@@ -464,25 +483,6 @@ $(document).ready(function(){
 });
 
 
-function bessie(){
-	console.log("FFF");
-	var tagsArray = document.getElementsByClassName("tags");
- 	$.each(tagsArray, function(index, obj){
-// 		console.log('obj old')
-     	console.log(obj)
- 		$(obj).autocomplete({
- 		    source: availableTags,   //資料來源                
- 	        minLength: 0    //輸入最少字數 
- 		})
- 		// 自動完成focus ; Click文字盒就顯示全部List
- 	    $(obj).focus(function () {
- 	    	console.log("EEEEEEEEEe")
- 	    	if (this.value == "") {
- 	    		$(this).autocomplete("search");
- 	        }
- 	     });
- 	});
-}
 
 //初始頁面按鈕
 function initPage(){
