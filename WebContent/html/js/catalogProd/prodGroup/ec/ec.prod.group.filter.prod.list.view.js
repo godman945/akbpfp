@@ -230,6 +230,11 @@ $(document).ready(function(){
 
 //初始頁面按鈕
 function initPage(){
+	currentPage = $('#currentPage').text();
+	pageCount = $('#pageCount').text();
+	totalCount = $('#totalCount').text();
+
+	
 	$('.prev').css('display','');
 	$('.next').css('display','');
 	
@@ -250,6 +255,7 @@ function initPage(){
 	
 	$('#currentPage').text(currentPage)
 	$('#pageCount').text(pageCount)
+	
 	
 }
 

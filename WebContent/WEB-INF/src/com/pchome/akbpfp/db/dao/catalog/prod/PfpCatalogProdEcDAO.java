@@ -113,6 +113,7 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" where 1 = 1 ");
 		hql.append(" and catalog_seq =  '" + catalogSeq + "' ");
 		hql.append(" and ec_status = '"+EnumEcStatusType.Open_Prod.getType()+"' ");
+		hql.append(" and ec_check_status  = '"+EnumEcCheckStatusType.Reviewed_Passed.getType()+"' ");
 		hql.append( filterSQL );
 		
 		log.info(hql.toString());

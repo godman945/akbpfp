@@ -81,60 +81,6 @@ $(document).ready(function(){
 	//分類選單
 	initCategoryVal();
 	jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
-	var tagsArray = document.getElementsByClassName("tags");
-	$.each(tagsArray, function(index, obj){
-		
-		console.log('obj old')
-    	console.log(obj)
-		
-		$(obj).autocomplete({
-		    source: availableTags,   //資料來源                
-	        minLength: 0    //輸入最少字數 
-		})
-		    
-		// 自動完成focus ; Click文字盒就顯示全部List
-	    $(obj).focus(function () {
-	    	if (this.value == "") {
-	    		$(this).autocomplete("search");
-	        }
-	     });
-	});
-	
-	
-	
-//	$( function() {
-////	    var availableTags = [
-////	      "ActionScript",
-////	      "a成功",
-////	      "AppleScript",
-////	      "貝西",
-////	      "Asp",
-////	      "a貝寶",
-////	      "BASIC"
-////	    ];
-//	    $( "#tagss" ).autocomplete({
-//	      source: availableTags,   //資料來源                
-//          minLength: 0    //輸入最少字數 
-//	    })
-//	    
-////		 // 自動完成focus ; Click文字盒就顯示全部List
-//        $('#tagss').focus(function () {
-////        	alert('22');
-//            if (this.value == "") {
-//                $(this).autocomplete("search");
-//            }
-//        });
-//	    
-//} );
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	//切換商品目錄
@@ -287,11 +233,11 @@ $(document).ready(function(){
 					source: availableTags,
 					minLength: 0,
 					select: function(event, ui) {
-						console.log(event);
+//						console.log(event.handleObj.type);
 						console.log("CCCCCCC");
 					},
 					search: function(event, ui) {
-						console.log(event);
+//						console.log(event.handleObj.type);
 						console.log("BBBBBBBBBBb"); 
 					},
 				}).focus(function() {
@@ -451,13 +397,16 @@ function checkGroupName() {
 */
 function checkColumnValue() {
 	var checkFlag = true;
-	
+	alert('check')
  	//如果資料值為空，不撈db
  	$(".filter-group").each(function(index,obj) {
+// 		alert('in ckeck')
+// 		console.log('22222')
  		var fieldStr ="";
  		var conditionStr ="";
  		var filterValStr ="";
  		$(obj).find(".txt-inlineblock").each(function(index2,obj2) {
+// 			alert('in ckeck1')
  			//篩選第一層
  			if(index2 == 0){
  				fieldStr = $(obj2).find("select")[0].value;
@@ -520,12 +469,16 @@ function checkColumnValue() {
  				
  				//類別
  				if (fieldStr == "ec_category"){
- 					filterValStr = $($(obj2).children()[0]).children()[0].value;
+ 					console.log('類---------------別')
+ 					console.log($($(obj2).children()[4]).children()[0].value);
+ 					
+ 					filterValStr = $($(obj2).children()[4]).children()[0].value;
  					if (filterValStr == ""){
- 						$($($(obj2).children()[0]).children()[1]).css("display", "");
+// 						alert('類別空')
+ 						$($($(obj2).children()[4]).children()[2]).css("display", "");
  						checkFlag = false;
  					}else{
- 						$($($(obj2).children()[0]).children()[1]).css("display", "none");
+ 						$($($(obj2).children()[4]).children()[2]).css("display", "none");
  					}
  				}
  			}
@@ -540,6 +493,7 @@ function checkColumnValue() {
 * loop畫面全部篩選條件塞入全域filterContentMap
 */
 function handler(e) {
+	alert('00')
 	
 	if (checkColumnValue() != true){
 		return;
@@ -553,6 +507,9 @@ function handler(e) {
 	var flag = true;
  	//全部群組資料
  	$(".filter-group").each(function(index,obj) {
+ 		
+ 		console.log('333');
+ 		
  		var map = new Object();
  		var fieldStr ="";
  		var conditionStr ="";
@@ -597,6 +554,7 @@ function handler(e) {
  				
  				//類別
  				if (fieldStr == "ec_category"){
+ 					console.log($(obj2));
  					conditionStr = $($(obj2).children()[2]).children()[0].value;
  				}
  				//第2層值塞map
@@ -639,7 +597,11 @@ function handler(e) {
  				
  				//類別
  				if (fieldStr == "ec_category"){
- 					filterValStr = $($(obj2).children()[0]).children()[0].value;
+ 					console.log('--*******VAL**********---')
+ 					console.log($(obj2));
+ 					
+ 					filterValStr = $($(obj2).children()[4]).children()[0].value;
+ 					console.log(filterValStr);
  				}
 // 				
  				//第3層值塞map
@@ -652,7 +614,7 @@ function handler(e) {
  				}
  			}
  		});
- 		console.log("--map----");	
+ 		console.log("--map222----");	
  		//篩選條件map
 		filterContentMap.push(map);
 	   	console.log(filterContentMap);
@@ -668,6 +630,12 @@ function handler(e) {
 	 		queryProdGroupFilterListAjax();
 	 	}
  	}
+ 	
+ 	
+ 	
+ 	
+ 	
+ 	
  	
 };
 
@@ -863,11 +831,11 @@ function filterDisplayRule(val, obj) {
 				source: availableTags,
 				minLength: 0,
 				select: function(event, ui) {
-					console.log(event);
+//					console.log(event.handleObj.type);
 					console.log("CCCCCCC");
 				},
 				search: function(event, ui) {
-					console.log(event);
+//					console.log(event.handleObj.type);
 					console.log("BBBBBBBBBBb"); 
 				},
 			}).focus(function() {
