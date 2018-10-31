@@ -200,12 +200,12 @@ function checkUploadFile(file) {
 	var fileType = file.type;
 
 	if (fileSizeKb > 180) {
-		alert("檔案須小於180kb");
+		alert("檔案大小限制180K以下");
 		return false;
 	}
 
 	if (fileType != 'image/jpeg' && fileType != 'image/png' && fileType != 'image/gif') {
-		alert("請上傳jpg、png 或 gif格式");
+		alert("檔案格式錯誤，請上傳JPG、GIF、PNG檔");
 		return false;
 	}
 
@@ -216,7 +216,7 @@ function checkUploadFile(file) {
 		// 去除重複執行unbind 再重新綁定
 		$('#successImg').unbind('load').load(function(){ // 圖片完成後判斷"原生圖片"長寬
 			if ($(this)[0].naturalHeight < 300 && $(this)[0].naturalWidth < 300) {
-				alert("請上傳圖片解析度300x300以上尺寸");
+				alert("檔案解析度須達300*300以上");
 				deleteImg();
 				return false;
 			} else {
@@ -411,7 +411,7 @@ function checkEcCategoryIsErr() {
 function checkImgIsErr() {
 	//拖曳上傳和選擇檔案上傳最後都會產生base64，皆無資料則請上傳圖片
 	if(base64Img.length == 0){
-		alert("請上傳圖片。");
+		alert("請上傳商品圖。");
 		return true;
 	}
 	return false;
