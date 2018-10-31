@@ -2,7 +2,7 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
 <script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/commonCatalogProd.js?t=20181023011"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/manualInput.js?t=20181029004"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/manualInput.js?t=20181031005"></script>
 
 <input type="file" serialize id="fileupload" name="fileupload" style="display:none;" accept="image/jpeg, image/png, image/gif" onchange="selectImg(this)">
 <div class="container-prodmanage">
@@ -79,7 +79,7 @@
 	                            <i class="input-tit">特價</i>
 	                            <div class="input-number">
 	                            	<#-- onkeypress 只能輸入數字-->
-	                                NT<input type="number" id="ecDiscountPrice" name="ecDiscountPrice" min="0" max="999999" value="" required onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))">
+	                                NT<input type="text" id="ecDiscountPrice" name="ecDiscountPrice" maxlength="6" value="" required onkeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))">
 	                                <span>元</span>
 	                                <p class="txt-descript" id="ecDiscountPriceErrMsg"></p>
 	                            </div>
