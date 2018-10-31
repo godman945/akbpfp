@@ -69,10 +69,16 @@ $(document).ready(function(){
 	
 	$("#adStyle").change(function(){
 		$("#adOperatingRule").val($("#adStyle").val());
+		
+		//判斷商品廣告權限是否新增廣告活動
+		if($("#adStyle").val() == 2 && $("#prodAdMsg").val() != ""){
+			console.log($("#adStyle").val());
+			console.log($("#prodAdMsg").val());
+		}
+		
 	});
 	
 	initDate();
-	
 	function initDate() {
 
 		/*if ($('#adActionStartDate').length > 0) {

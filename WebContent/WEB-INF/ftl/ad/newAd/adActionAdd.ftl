@@ -407,3 +407,4 @@
 <div id="introDialog" style="display:none"></div>
 <input type="hidden" id="messageId" value="${message!!}">
 <input type="hidden" id="oldwebsiteCategory" value="${oldWebsiteCategory!}" />
+<input type="hidden" id="prodAdMsg" value="${prodAdMsg!}" />

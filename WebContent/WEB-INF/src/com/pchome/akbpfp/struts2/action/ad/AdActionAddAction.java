@@ -18,11 +18,14 @@ import com.pchome.akbpfp.db.pojo.PfdUserAdAccountRef;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdSpecificWebsite;
+import com.pchome.akbpfp.db.pojo.PfpCatalogLogo;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.ad.IPfbxWebsiteCategoryService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdSpecificWebsiteService;
 import com.pchome.akbpfp.db.service.ad.PfpAdActionService;
+import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
+import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfd.user.IPfdUserAdAccountRefService;
@@ -33,6 +36,7 @@ import com.pchome.enumerate.ad.EnumAdPvLimitPeriod;
 import com.pchome.enumerate.ad.EnumAdPvLimitStyle;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.ad.EnumCatalogLogoStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
 
@@ -67,6 +71,9 @@ public class AdActionAddAction extends BaseCookieAction{
 	private IPfdUserAdAccountRefService pfdUserAdAccountRefService;
 	private IPfpAdSpecificWebsiteService pfpAdSpecificWebsiteService;
 	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
+	private IPfpCatalogLogoService pfpCatalogLogoService;
+	private IPfpCatalogService pfpCatalogService;
+	
 	private String hasActionRecord;
 	
 	//key:0  搜尋廣告+聯播網廣告(觸及廣告族群最廣泛),1 搜尋廣告(PChome找東西搜尋和搜尋夥伴),2 聯播網廣告(PChome的合作網站聯播網)
@@ -113,11 +120,30 @@ public class AdActionAddAction extends BaseCookieAction{
 	private Map<String,String> adPvLimitStyleMap;
 	private Map<String,String> adPvLimitPeriodMap;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	
 	private SyspriceOperaterAPI syspriceOperaterAPI;
+	private String prodAdMsg ="";
 	
 	public String adActionAdd() throws Exception{
 		log.info("adActionAdd => adActionSeq = " + adActionSeq);
+		
+		//商品廣告權限檢查START
+		if(pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id()).size() == 0){
+			prodAdMsg = "商品目錄未上傳";
+		}
+		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(super.getCustomer_info_id());
+		if(pfpCatalogLogoList == null){
+			prodAdMsg = "商品LOGO未上傳";
+		}else{
+			boolean flag = false;
+			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
+				if(pfpCatalogLogo.getStatus() == EnumCatalogLogoStatus.LOGO_STATUS_NOVERIFY.getStatus()){
+					prodAdMsg = "LOGO等待審核中";
+					break;
+				}
+			}
+		}
+		
+		
 		String referer = request.getHeader("Referer");
 		log.info("referer = " + referer);
 		backPage = "adActionView.html";
@@ -1003,6 +1029,30 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public void setDefaultAdGroupChannelPrice(int defaultAdGroupChannelPrice) {
 		this.defaultAdGroupChannelPrice = defaultAdGroupChannelPrice;
+	}
+
+	public IPfpCatalogLogoService getPfpCatalogLogoService() {
+		return pfpCatalogLogoService;
+	}
+
+	public void setPfpCatalogLogoService(IPfpCatalogLogoService pfpCatalogLogoService) {
+		this.pfpCatalogLogoService = pfpCatalogLogoService;
+	}
+
+	public IPfpCatalogService getPfpCatalogService() {
+		return pfpCatalogService;
+	}
+
+	public void setPfpCatalogService(IPfpCatalogService pfpCatalogService) {
+		this.pfpCatalogService = pfpCatalogService;
+	}
+
+	public String getProdAdMsg() {
+		return prodAdMsg;
+	}
+
+	public void setProdAdMsg(String prodAdMsg) {
+		this.prodAdMsg = prodAdMsg;
 	}
 
 }
