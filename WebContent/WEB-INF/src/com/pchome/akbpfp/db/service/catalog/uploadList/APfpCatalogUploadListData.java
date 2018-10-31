@@ -369,7 +369,9 @@ public abstract class APfpCatalogUploadListData {
 			prodItemErrorMsg = "必填欄位";
 		} else if (catalogProdSeq.length() > catalogProdSeqLimit) {
 			prodItemErrorMsg = "字數限制" + catalogProdSeqLimit + "字";
-		} else if (CommonUtils.isHaveEmojiString(catalogProdSeq) || CommonUtils.checkStringNonEnglishNumbers(catalogProdSeq)) {
+		} else if (CommonUtils.isHaveEmojiString(catalogProdSeq)
+				|| CommonUtils.containsSpecialSymbolsThatAreNotAllowedByFileName(catalogProdSeq)
+				|| CommonUtils.containsChineseStr(catalogProdSeq)) {
 			prodItemErrorMsg = "內含特殊字元";
 			// 將Emoji圖片字串取代為空，寫入DB會噴錯
 			catalogProdSeq = CommonUtils.getReplaceEmojiStr(catalogProdSeq);

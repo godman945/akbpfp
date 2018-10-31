@@ -124,6 +124,24 @@ public class CommonUtils {
 	}
 	
 	/**
+	 * 包含檔名不能使用的特殊符號
+	 * @param str
+	 * @return true:有 false:沒有
+	 */
+	public static boolean containsSpecialSymbolsThatAreNotAllowedByFileName(String str) {
+		return str.matches("^.*[(/) | (\\\\) | (:) | (\\*) | (\\?) | (\") | (<) | (>)].*$");
+	}
+	
+	/**
+	 * 包含中文
+	 * @param str
+	 * @return true:有 false:沒有
+	 */
+	public static boolean containsChineseStr(String str) {
+		return str.matches("^.*[\u4e00-\u9fa5].*$");
+	}
+	
+	/**
 	 * 取得取代掉特殊符號的字串
 	 * @param str
 	 * @return
@@ -140,4 +158,14 @@ public class CommonUtils {
 	public static String getReplaceEmojiStr(String str) {
 		return str.replaceAll("[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]", "");
 	}
+
+	/**
+	 * 取得取代掉檔案名稱不允許輸入的9個特殊符號
+	 * @param fileName
+	 * @return
+	 */
+	public static String getReplaceSpecialSymbolsThatAreNotAllowedByFileName(String fileName) {
+		return fileName.replaceAll("[(/) | (\\\\) | (:) | (\\*) | (\\?) | (\") | (<) | (>)]", "");
+	}
+
 }
