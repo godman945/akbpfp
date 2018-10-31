@@ -49,7 +49,7 @@ $(document).ready(function() {
 				}
 				
 				if (response.checkCatalogProdSeqStatus == "ERROR") {
-					$("#catalogProdSeqErrMsg").html("此目錄下，商品編號已重複。");
+					$("#catalogProdSeqErrMsg").html("重複的商品編號。");
 					isOK = false;
 				}
 					
@@ -380,7 +380,7 @@ function checkCatalogProdSeqIsErr() {
 	$.each(prodList, function(indexNum, object) { // 跑商品清單每筆資料來比對
 		var currentData = JSON.parse(object); // 將字串轉成json格式
 		if (currentData.catalogProdSeq == catalogProdSeq) {
-			$("#catalogProdSeqErrMsg").html("已與下列建立商品的商品編號重複。");
+			$("#catalogProdSeqErrMsg").html("重複的商品編號。");
 			checkFlag = true;
 			return false; // 跳出each
 		}
