@@ -36,39 +36,40 @@ public class ImgUtil {
 	 * 處理廣告商品下載圖片
 	 * @param imgURL 下載的圖片網址
 	 * @param photoPath 資料夾位置
-	 * @param customerInfoId pfp id
-	 * @param catalogSeq 商品目錄ID
 	 * @param imgFileName 檔名
-	 * @return 取得圖片存放路徑
-	 * @throws IOException
+	 * @return 正常下載圖片:取得圖片存放路徑 出錯:無圖片路徑
 	 */
-	public static String processImgPathForCatalogProd(String imgURL, String photoPath, String imgFileName) throws IOException {
+	public static String processImgPathForCatalogProd(String imgURL, String photoPath, String imgFileName) {
 		log.info("開始下載圖片。");
-
-		createFolder(photoPath);
-		
-		// 將特殊符號取代為空，處理圖片時才不會因為有特殊符號而出錯
-		imgFileName = CommonUtils.getReplaceSpecialSymbolsStr(imgFileName);
-		imgFileName = CommonUtils.getReplaceSpecialSymbolsThatAreNotAllowedByFileName(imgFileName);
-        String filenameExtension = getImgURLFilenameExtension(imgURL);
-		
-		log.info("下載圖片網址:" + imgURL);
-        URL url = new URL(imgURL.replaceFirst("https", "http")); // 將https網址改成http
-        String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
-
-        // 處理圖片下載
-        if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
-            InputStream in = url.openStream();
-            Files.copy(in, new File(imgPathAndName).toPath(), StandardCopyOption.REPLACE_EXISTING);
-            in.close();
-        } else { // jpg、png圖片下載方式
-            BufferedImage img = ImageIO.read(url);
-            ImageIO.write(img, filenameExtension, new File(imgPathAndName));
-        }
-        
-		String imgPath = photoPath.substring(photoPath.indexOf("img/")) + "/" + imgFileName + "." + filenameExtension;
-		log.info("下載圖片結束");
-		return imgPath;
+		String imgPath = "";
+    	try {
+			createFolder(photoPath);
+			
+			// 將特殊符號取代為空，處理圖片時才不會因為有特殊符號而出錯
+			imgFileName = CommonUtils.getReplaceSpecialSymbolsStr(imgFileName);
+			imgFileName = CommonUtils.getReplaceSpecialSymbolsThatAreNotAllowedByFileName(imgFileName);
+	        String filenameExtension = getImgURLFilenameExtension(imgURL);
+			
+			log.info("下載圖片網址:" + imgURL);
+	        URL url = new URL(imgURL.replaceFirst("https", "http")); // 將https網址改成http
+	        String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
+	
+	        // 處理圖片下載
+	        if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
+	            InputStream in = url.openStream();
+	            Files.copy(in, new File(imgPathAndName).toPath(), StandardCopyOption.REPLACE_EXISTING);
+	            in.close();
+			} else { // jpg、png圖片下載方式
+				BufferedImage img = ImageIO.read(url);
+				ImageIO.write(img, filenameExtension, new File(imgPathAndName));
+			}
+	        
+			imgPath = photoPath.substring(photoPath.indexOf("img/")) + "/" + imgFileName + "." + filenameExtension;
+			log.info("下載圖片結束");
+			return imgPath;
+        } catch (Exception e) {
+        	return imgPath;
+		}
 	}
 
 	/**

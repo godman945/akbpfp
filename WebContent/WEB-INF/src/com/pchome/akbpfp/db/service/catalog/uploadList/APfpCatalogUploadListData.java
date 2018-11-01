@@ -128,6 +128,13 @@ public abstract class APfpCatalogUploadListData {
 			File imgFile = null;
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
 				imgPath = ImgUtil.processImgPathForCatalogProd(ecImgUrl, imgTempPath, catalogProdSeq);
+				if (StringUtils.isBlank(imgPath)) { 
+					// 空的表示連不到或是HTTP 403沒有權限訪問此站，伺服器收到請求但拒絕提供服務。
+					prodItemErrorMsg = "連結錯誤";
+				}
+			}
+			
+			if (StringUtils.isBlank(prodItemErrorMsg)) {
 				String completePath = imgTempPath.substring(0, imgTempPath.indexOf("img/user/")) + imgPath;
 				imgFile = new File(completePath);
 				if (imgFile.length() > (180 * 1024)) {
@@ -262,12 +269,13 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查促銷價
 	 * @param errorPrdItemArray
-	 * @param catalogProdSeq
-	 * @param ecDiscountPrice
+	 * @param catalogProdSeq 商品編號
+	 * @param ecDiscountPrice 促銷價
+	 * @param ecPrice 原價
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkEcDiscountPrice(JSONArray errorPrdItemArray, String catalogProdSeq, String ecDiscountPrice) throws JSONException {
+	public JSONArray checkEcDiscountPrice(JSONArray errorPrdItemArray, String catalogProdSeq, String ecDiscountPrice, String ecPrice) throws JSONException {
 		String prodItemErrorMsg = "";
 		int ecDiscountPriceLimit = 6;
 
@@ -277,6 +285,8 @@ public abstract class APfpCatalogUploadListData {
 			prodItemErrorMsg = "格式錯誤";
 		} else if (ecDiscountPrice.length() > ecDiscountPriceLimit) {
 			prodItemErrorMsg = "超出金額位數限制";
+		} else if (Integer.parseInt(ecDiscountPrice) > Integer.parseInt(ecPrice)) {
+			prodItemErrorMsg = "特價大於原價";
 		}
 
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
@@ -388,7 +398,31 @@ public abstract class APfpCatalogUploadListData {
 		return errorPrdItemArray;
 	}
 	
+	/**
+	 * 網址前面沒有協定的話，先補上https，測試連線若無法則再改補http
+	 * @param url
+	 * @return "https://" + url  OR  "http://" + url
+	 * @throws Exception 
+	 */
+	public String urlAddHttpOrHttps(String url) throws Exception {
+		String tempUrl = url.substring(0, 5);
+		
+		if (tempUrl.indexOf("http") == -1 && tempUrl.indexOf("https") == -1) {
+			tempUrl = "https://" + url;
+
+			AdUtilAjax adUtilAjax = new AdUtilAjax();
+			String checkResultMsg = adUtilAjax.checkAdShowUrl(tempUrl, akbPfpServer);
+			if (StringUtils.isNotBlank(checkResultMsg)) {
+				tempUrl = "http://" + url;
+			}
+			return tempUrl;
+		}
+		
+		return url;
+	}
+	
 	public void setAkbPfpServer(String akbPfpServer) {
 		this.akbPfpServer = akbPfpServer;
 	}
+
 }

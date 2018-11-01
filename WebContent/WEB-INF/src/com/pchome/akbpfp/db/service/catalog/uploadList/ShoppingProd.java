@@ -19,6 +19,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
 import com.pchome.enumerate.catalogprod.EnumEcUseStatusType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -83,6 +84,9 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		List<String> catalogProdSeqList = new ArrayList<String>();
 		JSONArray errorPrdItemArray = new JSONArray(); // 記錄總錯誤資料
 		int tempErrorPrdItemArrayCount = 0; // 暫存目前總共的錯誤數量
+		// 上傳方式為1:檔案上傳 2:自動排程上傳 項目編號由excel 2開始
+		int itemSeq = EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType().equals(catalogUploadType)
+				|| EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(catalogUploadType) ? 2 : 1;
 		
 		JSONArray catalogProdItemJsonArray = new JSONArray(catalogProdItem);
 		for (int i = 0; i < catalogProdItemJsonArray.length(); i++) {
@@ -92,6 +96,9 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			String ecTitle = catalogProdItemJson.optString("ec_title", " "); // 商品敘述*
 			ecTitle = " "; // 商品敘述尚未使用，先固定寫入空
 			String ecPrice = catalogProdItemJson.optString("ec_price", " "); // 原價
+			if (StringUtils.isBlank(ecPrice)) { // 沒有原價則帶入促銷價
+				ecPrice = catalogProdItemJson.optString("ec_discount_price"); // 促銷價*
+			}
 			String ecDiscountPrice = catalogProdItemJson.optString("ec_discount_price"); // 促銷價*
 			String ecStockStatus = catalogProdItemJson.optString("ec_stock_status"); // 商品供應情況*
 			String ecUseStatus = catalogProdItemJson.optString("ec_use_status"); // 商品使用狀況*
@@ -106,7 +113,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			errorPrdItemArray = super.checkCatalogProdSeq(errorPrdItemArray, catalogProdSeq);
 			errorPrdItemArray = super.checkEcName(errorPrdItemArray, catalogProdSeq, ecName);
 			errorPrdItemArray = super.checkEcPrice(errorPrdItemArray, catalogProdSeq, ecPrice);
-			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, catalogProdSeq, ecDiscountPrice);
+			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, catalogProdSeq, ecDiscountPrice, ecPrice);
 			errorPrdItemArray = super.checkEcStockStatus(errorPrdItemArray, catalogProdSeq, ecStockStatus);
 			errorPrdItemArray = super.checkEcUseStatus(errorPrdItemArray, catalogProdSeq, ecUseStatus);
 			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, photoPath, catalogProdSeq, ecImgUrl, ecImgBase64, catalogUploadType);
@@ -117,6 +124,9 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				// 每一次記錄錯誤陣列長度 超過 暫存的記錄長度，表示這一行資料有新增錯誤項目
 				tempErrorPrdItemArrayCount = errorPrdItemArray.length();
 				errorNum++;
+				
+//				PfpCatalogProdEcError pfpCatalogProdEcError = new PfpCatalogProdEcError();
+				
 			} else {
 				// 檢查輸入的資料是否與DB內完全相同，相同則不做更新、新增處理，避免每次更新就需要重新審核商品
 				List<Map<String, Object>> pfpCatalogProdEcList = pfpCatalogUploadListDAO.getPfpCatalogProdEc(catalogSeq, catalogProdSeq);
@@ -136,12 +146,8 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				
 				pfpCatalogProdEc.setEcImgRegion(ImgUtil.getImgLongWidthCode(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg())); // 商品影像長寬(V/H)
 				pfpCatalogProdEc.setEcImgMd5(ImgUtil.getImgMD5Code(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg())); // 商品影像MD5
-				pfpCatalogProdEc.setEcUrl(ecUrl); // 連結網址
-				if (StringUtils.isBlank(ecPrice)) { // 沒有原價則帶入促銷價
-					pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
-				} else {
-					pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
-				}
+				pfpCatalogProdEc.setEcUrl(super.urlAddHttpOrHttps(ecUrl)); // 連結網址
+				pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
 				pfpCatalogProdEc.setEcDiscountPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
 				
 				if (EnumEcStockStatusType.Out_Of_Stock.getChName().equals(ecStockStatus)) {
@@ -163,7 +169,6 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 					ecUseStatus = EnumEcUseStatusType.Welfare_Goods.getType();
 				}
 				pfpCatalogProdEc.setEcUseStatus(ecUseStatus); // 商品使用狀況
-				
 				pfpCatalogProdEc.setEcCategory(ecCategory); // 商品類別
 				pfpCatalogProdEc.setEcStatus("1"); // 商品狀態(0:關閉, 1:開啟)
 				pfpCatalogProdEc.setEcCheckStatus("0"); // 商品審核狀態(0:未審核, 1:已審核)
@@ -192,6 +197,10 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 							&& ecUseStatus.equals((String) prodEcMap.get("ec_use_status"))
 							&& ecCategory.equals((String) prodEcMap.get("ec_category"))) {
 						continue;
+					} else if (EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType().equals(catalogUploadType)
+							&& catalogProdSeq.equals((String) prodEcMap.get("catalog_prod_seq"))) {
+						// 如果是手動上傳，商品編號已重複，則不做更新、新增處理(此處檢核為避免一個帳號多人使用手動上傳時商品編號重複)
+						continue;
 					}
 				}
 				
@@ -202,6 +211,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				}
 				
 			}
+			itemSeq++;
 		}
 		
 		if ("1".equals(updateWay)) { // 如果是"取代"，刪除table內，不在本次上傳的名單內資料
@@ -230,6 +240,11 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		pfpCatalogUploadLog.setCreateDate(new Date()); // 建立時間
 		pfpCatalogUploadListDAO.savePfpCatalogUploadLog(pfpCatalogUploadLog);
 		
+		// 刪除錯誤資料pfp_catalog_upload_err_log(每個目錄只有一組對應錯誤資料)
+		PfpCatalogVO pfpCatalogVO = new PfpCatalogVO();
+		pfpCatalogVO.setCatalogSeq(catalogSeq);
+		pfpCatalogUploadListDAO.deletePfpCatalogUploadErrLog(pfpCatalogVO);
+		
 		// 記錄錯誤資料pfp_catalog_upload_err_log
 		if (errorPrdItemArray.length() > 0) {
 			for (int i = 0; i < errorPrdItemArray.length(); i++) {
@@ -247,7 +262,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		}
 		
 		// 更新 pfp_catalog "商品目錄" 資料
-		PfpCatalogVO pfpCatalogVO = new PfpCatalogVO();
+		pfpCatalogVO = new PfpCatalogVO();
 		pfpCatalogVO.setCatalogSeq(catalogSeq);
 		pfpCatalogVO.setPfpCustomerInfoId(pfpCustomerInfoId);
 		pfpCatalogVO.setCatalogUploadType(catalogUploadType);
