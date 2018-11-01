@@ -338,6 +338,7 @@ function checkEcPriceIsErr() {
  */
 function checkEcDiscountPriceIsErr() {
 	var ecDiscountPrice = $("#ecDiscountPrice").val();
+	var ecPrice = $("#ecPrice").val();
 	$("#ecDiscountPriceErrMsg").html("");
 	
 	if (ecDiscountPrice.length <= 0) {
@@ -348,6 +349,9 @@ function checkEcDiscountPriceIsErr() {
 		return true;
 	} else if (!isNum(ecDiscountPrice)) {
 		$("#ecDiscountPriceErrMsg").html("格式錯誤，請填寫數字。");
+		return true;
+	} else if (parseInt(ecDiscountPrice, 10) > parseInt(ecPrice, 10)) {
+		$("#ecDiscountPriceErrMsg").html("特價大於原價。");
 		return true;
 	}
 	return false;

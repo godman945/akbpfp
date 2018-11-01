@@ -2,7 +2,7 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
 <script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/commonCatalogProd.js?t=20181023011"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/manualInput.js?t=20181031005"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/manualInput.js?t=20181101001"></script>
 
 <input type="file" serialize id="fileupload" name="fileupload" style="display:none;" accept="image/jpeg, image/png, image/gif" onchange="selectImg(this)">
 <div class="container-prodmanage">
