@@ -33,12 +33,6 @@
         </div>
         <!-- 次目錄導覽列 結束 -->
         
- <div class="ui-widget">
-	  <input id="tagss">
-	  <label for="tagss"></label>
-	  </div> 
-	  
-	  
         <!-- 建立商品組合 開始 -->
         <div class="content-wrap bg-white">
 
@@ -80,7 +74,7 @@
 			                                <#elseif filterItem.catalogGroupItemField == 'ec_use_status' >
 			                                	<div class="filter-group" data-level1="6" data-level2="3" data-level3="4">
 			                                <#elseif filterItem.catalogGroupItemField == 'ec_category' >
-			                                	<div class="filter-group" data-level1="7" data-level2="3" data-level3="5"> I : 735
+			                                	<div class="filter-group" data-level1="7" data-level2="3" data-level3="5">
 			                                </#if>    
 			                     
 			                                    <!-- 篩選第一層 -->

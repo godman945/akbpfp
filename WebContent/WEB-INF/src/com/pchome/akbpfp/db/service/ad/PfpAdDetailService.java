@@ -3,9 +3,11 @@ package com.pchome.akbpfp.db.service.ad;
 import java.util.List;
 
 import com.pchome.akbpfp.db.dao.ad.PfpAdDetailDAO;
+import com.pchome.akbpfp.db.dao.catalog.prod.IPfpCatalogProdEcDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpAdDetailVO;
+import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 import com.pchome.utils.CommonUtils;
 
 public class PfpAdDetailService extends BaseService<PfpAdDetail,String> implements IPfpAdDetailService{
@@ -59,6 +61,10 @@ public class PfpAdDetailService extends BaseService<PfpAdDetail,String> implemen
 		adGroupSeq = CommonUtils.filterSqlInjection(adGroupSeq);
 		
 		return pfpAdDetailDAO.getPfpAdDetailsForAdGroup(customerInfoId, adGroupSeq, adDetailId, adDetailContent);
+	}
+	
+	public String checkCatalogGroupAdStatusCount(String catalogGroupSeq, String prodGroup ) throws Exception{
+		return pfpAdDetailDAO.checkCatalogGroupAdStatusCount(catalogGroupSeq,prodGroup);
 	}
 	
 	public static void main(String arg[]) throws Exception{

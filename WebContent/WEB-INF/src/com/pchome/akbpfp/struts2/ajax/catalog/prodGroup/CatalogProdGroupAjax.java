@@ -16,6 +16,8 @@ import com.pchome.akbpfp.catalog.prodGroup.factory.ProdGroupFactory;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
+import com.pchome.akbpfp.db.service.ad.IPfpAdDetailService;
+import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupItemService;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupService;
@@ -49,6 +51,9 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 	private int totalCount = 0; // 資料總筆數
 	private int pageCount = 0; // 總頁數
 	private List<Object> prodList;
+	
+	private IPfpAdService pfpAdService;
+	private IPfpAdDetailService pfpAdDetailService;
 
 	/**
 	 * 取得商品組合清單
@@ -469,7 +474,33 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 	    return pattern.matcher(value).matches();
 	}
 	
+	
+	
+	/**
+	 * 檢查廣告是否有綁定的商品組合
+	 */
+	public String checkCatalogGroupAdStatusAjax() {
+		try {
+			log.info(">>> catalogGroupSeq: " + catalogGroupSeq);
 
+			resultMap = new HashMap<String, Object>();
+			
+			String groupBindAdCount =  pfpAdDetailService.checkCatalogGroupAdStatusCount(catalogGroupSeq, "prod_group");
+			
+			resultMap.put("status", "SUCCESS");
+			resultMap.put("count", groupBindAdCount);
+
+		} catch (Exception e) {
+			log.error("error:" + e);
+			resultMap.put("status", "ERROR");
+			resultMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			return SUCCESS;
+		}
+
+		return SUCCESS;
+	}
+	
+	
 	/**
 	 * 刪除商品組合群組
 	 */
@@ -491,7 +522,11 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 
 			pfpCatalogGroupItemService.deleteCatalogGroupItem(catalogGroupSeq);
 			pfpCatalogGroupService.deleteCatalogGroup(catalogGroupSeq);
+			
+			//刪除商品組合時要更新廣告狀態為暫停
+			pfpAdService.updateAdStatusByCatalogGroupSeq(catalogGroupSeq, "9");
 
+			
 			resultMap.put("status", "SUCCESS");
 			resultMap.put("msg", "刪除商品組合成功");
 
@@ -638,4 +673,19 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 		return prodList;
 	}
 
+	public IPfpAdService getPfpAdService() {
+		return pfpAdService;
+	}
+
+	public void setPfpAdService(IPfpAdService pfpAdService) {
+		this.pfpAdService = pfpAdService;
+	}
+
+	public IPfpAdDetailService getPfpAdDetailService() {
+		return pfpAdDetailService;
+	}
+
+	public void setPfpAdDetailService(IPfpAdDetailService pfpAdDetailService) {
+		this.pfpAdDetailService = pfpAdDetailService;
+	}
 }

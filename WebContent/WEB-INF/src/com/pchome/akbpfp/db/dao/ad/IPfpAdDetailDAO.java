@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pchome.akbpfp.db.dao.IBaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
+import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 
 public interface IPfpAdDetailDAO extends IBaseDAO<PfpAdDetail,String>{
 
@@ -20,4 +21,6 @@ public interface IPfpAdDetailDAO extends IBaseDAO<PfpAdDetail,String>{
 	public void updatePfpAdDetail(PfpAdDetail pfpAdDetail) throws Exception;
 	
 	public void deletePfpAdDetail(String adDetailSeq) throws Exception;
+	
+	public String checkCatalogGroupAdStatusCount(String catalogGroupSeq, String prodGroup ) throws Exception;
 }

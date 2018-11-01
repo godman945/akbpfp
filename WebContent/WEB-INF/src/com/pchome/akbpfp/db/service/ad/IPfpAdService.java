@@ -31,4 +31,7 @@ public interface IPfpAdService extends IBaseService<PfpAd,String>{
 	public List<AdReportVO> getAdAdVideoDetailView(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception;
 	//取得影音廣告總計資訊
 	public AdReportVO getAdAdVideoDetailViewCount(PfpAdAdViewConditionVO pfpAdAdViewConditionVO) throws Exception;
+	
+	//刪除商品組合時更新廣告狀態為暫停
+	public void updateAdStatusByCatalogGroupSeq(String catalogGroupSeq, String adStatus) throws Exception;
 }

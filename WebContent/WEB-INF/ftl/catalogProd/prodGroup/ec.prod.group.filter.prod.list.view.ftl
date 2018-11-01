@@ -124,6 +124,12 @@
                                                 <option value="2">福利品</option>
                                             </select>
                                         </div>
+                                        
+                                        <div class="input-text" data-level="5">
+				                        	<input class="tags" type="text" name="" maxlength="6" value="${filterItem.catalogGroupItemValue!}">
+				                           	<label for="tags"></label>
+				                            <div class="msg-error" style="display:none">請填寫篩選條件</div>
+				                        </div>
 
                                     </div>
 

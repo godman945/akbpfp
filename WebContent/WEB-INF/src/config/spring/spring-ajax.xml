@@ -122,7 +122,8 @@
     	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
     	<property name="pfpCatalogGroupItemService" ref="PfpCatalogGroupItemService" />
     	<property name="prodGroupFactory" ref="ProdGroupFactory" />
-    	
+    	<property name="pfpAdService" ref="PfpAdService" />
+    	<property name="pfpAdDetailService" ref="PfpAdDetailService" />
     </bean>    
     <!-- 商品群組 -->
     

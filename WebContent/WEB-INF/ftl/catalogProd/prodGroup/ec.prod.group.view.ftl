@@ -72,8 +72,9 @@
 				                                    <em class="icon-arrow-r"></em>${dataVo.catalogGroupName!} (${dataVo.catalogGroupSeq!})
 				                                </div>
 				                                <div class="txt-cell col-quantity"><a href="queryProdGroupList.html?catalogGroupSeq=${dataVo.catalogGroupSeq!}&currentPage=1&pageSizeSelected=10">${dataVo.catalogProdNum!}項商品</a></div>
+				                                <!-- <div class="txt-cell col-addnew"><a href="javascript:void(0)" onclick="stopBubble(event);createPortfolio('${catalogSeq}','${dataVo.catalogGroupSeq!}')"></a></div> -->
 				                                <div class="txt-cell col-addnew"><a href="javascript:void(0)" onclick="stopBubble(event);createPortfolio('${catalogSeq}','${dataVo.catalogGroupSeq!}')"></a></div>
-				                                <div class="txt-cell col-delete"><a href="#" value="${dataVo.catalogGroupSeq!}" onclick="deleteCatalogGroupAjax(this)" ></a></div>
+				                                <div class="txt-cell col-delete"><a href="#" value="${dataVo.catalogGroupSeq!}" onclick="checkCatalogGroupAdStatus(this)" ></a></div>
 				                            </div>
 				                            <div class="col-detail">
 				                            	${dataVo.filterContent!}

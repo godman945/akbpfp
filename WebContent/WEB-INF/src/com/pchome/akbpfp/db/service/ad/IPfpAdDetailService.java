@@ -27,4 +27,6 @@ public interface IPfpAdDetailService extends IBaseService<PfpAdDetail,String>{
 	
 	public void setPfpAdDetailDAO(PfpAdDetailDAO pfpAdDetailDAO) throws Exception;
 	
+	public String checkCatalogGroupAdStatusCount(String catalogGroupSeq, String prodGroup) throws Exception;
+	
 }

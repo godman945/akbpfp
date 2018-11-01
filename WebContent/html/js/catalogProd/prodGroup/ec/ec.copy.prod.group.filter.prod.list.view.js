@@ -221,7 +221,7 @@ $(document).ready(function(){
     
 	
 	if($("#catalogSeqData").val() !=""){
-		console.log("#####################999999999");
+//		console.log("#####################999999999");
 		$("#catalog").val($("#catalogSeqData").val());
 		
 		//針對類別條件綁定jquery查詢套件
@@ -233,12 +233,31 @@ $(document).ready(function(){
 					source: availableTags,
 					minLength: 0,
 					select: function(event, ui) {
+						console.log("-------------select event-------------");
+						console.log(event);
 //						console.log(event.handleObj.type);
-						console.log("CCCCCCC");
+						
+						handler('click');
+					    queryProdGroupFilterListAjax();
+						
+					},
+					close: function(event, ui) {
+						console.log("-------------close event-------------");
+						console.log(event);
+//						console.log(event.handleObj.type);
+						
+						handler('click');
+					    queryProdGroupFilterListAjax();
 					},
 					search: function(event, ui) {
+						console.log("-------------search search event-------------");
+						console.log(event);
 //						console.log(event.handleObj.type);
-						console.log("BBBBBBBBBBb"); 
+						
+						var map = new Object();
+						map["type"] = "keyup";
+						handler(map);
+					    queryProdGroupFilterListAjax();
 					},
 				}).focus(function() {
 					if (this.value == "") {
@@ -366,7 +385,7 @@ function addCatalogProdGroupAjax(){
 			}
 		}).done(function (response) {
 	    	if (response.status=="SUCCESS"){
-	    		alert(response.msg)
+//	    		alert(response.msg)
 	    		$(location).attr( 'href' ,"queryCatalogGroup.html?catalogSeq="+ $('#catalog option:selected').val());
 	    	}else{
 	    		alert(response.msg)
@@ -397,7 +416,7 @@ function checkGroupName() {
 */
 function checkColumnValue() {
 	var checkFlag = true;
-	alert('check')
+//	alert('check')
  	//如果資料值為空，不撈db
  	$(".filter-group").each(function(index,obj) {
 // 		alert('in ckeck')
@@ -417,44 +436,56 @@ function checkColumnValue() {
  				//商品ID
  				if (fieldStr == "catalog_prod_seq"){
  					filterValStr = $($(obj2).children()[0]).children()[0].value;
- 					if (filterValStr == ""){
- 						$($($(obj2).children()[0]).children()[1]).css("display", "");
- 						 checkFlag = false;
- 					}else{
- 						$($($(obj2).children()[0]).children()[1]).css("display", "none");
- 					}
+// 					if (filterValStr == ""){
+// 						$($($(obj2).children()[0]).children()[1]).css("display", "");
+// 						 checkFlag = false;
+// 					}else{
+// 						$($($(obj2).children()[0]).children()[1]).css("display", "none");
+// 					}
  				}
  				//商品名稱
  				if (fieldStr == "ec_name"){
  					filterValStr = $($(obj2).children()[0]).children()[0].value;
- 					if (filterValStr == ""){
- 						$($($(obj2).children()[0]).children()[1]).css("display", "");
- 						checkFlag = false;
- 					}else{
- 						$($($(obj2).children()[0]).children()[1]).css("display", "none");
- 					}
+// 					if (filterValStr == ""){
+// 						$($($(obj2).children()[0]).children()[1]).css("display", "");
+// 						checkFlag = false;
+// 					}else{
+// 						$($($(obj2).children()[0]).children()[1]).css("display", "none");
+// 					}
  				}
  				
  				//原價
  				if (fieldStr == "ec_price"){
  					filterValStr = $($(obj2).children()[1]).children()[0].value;
- 					if ( (filterValStr == "") || (isNaN(filterValStr)) ){
+ 					if ( (isNaN(filterValStr)) ){
  						$($($(obj2).children()[1]).children()[1]).css("display", "");
  						checkFlag = false;
  					}else{
  						$($($(obj2).children()[1]).children()[1]).css("display", "none");
  					}
+// 					if ( (filterValStr == "") || (isNaN(filterValStr)) ){
+// 						$($($(obj2).children()[1]).children()[1]).css("display", "");
+// 						checkFlag = false;
+// 					}else{
+// 						$($($(obj2).children()[1]).children()[1]).css("display", "none");
+// 					}
  				}
  				
  				//特價
  				if (fieldStr == "ec_discount_price"){
  					filterValStr = $($(obj2).children()[1]).children()[0].value;
- 					if (filterValStr == "" || (isNaN(filterValStr)) ){
+ 					if ((isNaN(filterValStr)) ){
  						$($($(obj2).children()[1]).children()[1]).css("display", "");
  						checkFlag = false;
  					}else{
  						$($($(obj2).children()[1]).children()[1]).css("display", "none");
  					}
+// 					if (filterValStr == "" || (isNaN(filterValStr)) ){
+// 						$($($(obj2).children()[1]).children()[1]).css("display", "");
+// 						checkFlag = false;
+// 					}else{
+// 						$($($(obj2).children()[1]).children()[1]).css("display", "none");
+// 					}
  				}
  				
  				//供應情況
@@ -469,17 +500,14 @@ function checkColumnValue() {
  				
  				//類別
  				if (fieldStr == "ec_category"){
- 					console.log('--VAL----------------2222222222')
- 					console.log($($(obj2).children()[4]).children()[0].value);
  					
- 					filterValStr = $($(obj2).children()[4]).children()[0].value;
- 					if (filterValStr == ""){
-// 						alert('類別空')
- 						$($($(obj2).children()[4]).children()[2]).css("display", "");
- 						checkFlag = false;
- 					}else{
- 						$($($(obj2).children()[4]).children()[2]).css("display", "none");
- 					}
+ 					filterValStr = $($(obj2).children()[4]).children()[1].value;
+// 					if (filterValStr == ""){
+// 						$($($(obj2).children()[4]).children()[3]).css("display", "");
+// 						checkFlag = false;
+// 					}else{
+// 						$($($(obj2).children()[4]).children()[3]).css("display", "none");
+// 					}
  				}
  			}
  		});
@@ -493,22 +521,19 @@ function checkColumnValue() {
 * loop畫面全部篩選條件塞入全域filterContentMap
 */
 function handler(e) {
-	alert('00')
+//	alert('00')
 	
 	if (checkColumnValue() != true){
 		return;
 	}
 	
-	if (checkGroupName() != true){
-		return;
-	}
-	
+		
 	filterContentMap = [];
 	var flag = true;
  	//全部群組資料
  	$(".filter-group").each(function(index,obj) {
  		
- 		console.log('333');
+// 		console.log('333');
  		
  		var map = new Object();
  		var fieldStr ="";
@@ -554,7 +579,7 @@ function handler(e) {
  				
  				//類別
  				if (fieldStr == "ec_category"){
- 					console.log($(obj2));
+// 					console.log($(obj2));
  					conditionStr = $($(obj2).children()[2]).children()[0].value;
  				}
  				//第2層值塞map
@@ -597,27 +622,30 @@ function handler(e) {
  				
  				//類別
  				if (fieldStr == "ec_category"){
- 					console.log('--*******VAL**********---1111111111')
- 					console.log($($(obj2).children()[4]).children()[0].value);
- 					console.log($(obj2));
+// 					console.log('--*******VAL**********---1111111111')
+// 					console.log($(obj2)[0]);
+// 					console.log($($(obj2).children()[4]).children()[1].value);
  					
- 					filterValStr = $($(obj2).children()[4]).children()[0].value;
+ 					
+ 					filterValStr = $($(obj2).children()[4]).children()[1].value;
  					
  				}
 // 				
  				//第3層值塞map
  				map["value"] = filterValStr;
  				
- 				//如果第3層值為空，即不撈DB
- 				if (filterValStr == ""){
- 					flag = false;
- 					return;
- 				}
+// 				//如果第3層值為空，即不撈DB
+// 				if (filterValStr == ""){
+// 					flag = false;
+// 					return;
+// 				}
  			}
  		});
  		console.log("--map222----");	
  		//篩選條件map
-		filterContentMap.push(map);
+ 		if (filterValStr != ""){
+ 			filterContentMap.push(map);
+ 		}
 	   	console.log(filterContentMap);
  	});
  	
@@ -633,11 +661,6 @@ function handler(e) {
  	}
  	
  	
- 	
- 	
- 	
- 	
- 	
 };
 
 
@@ -645,6 +668,7 @@ function handler(e) {
 * 依據商品組合篩選條件撈出符合的商品list
 */
 function queryProdGroupFilterListAjax(){
+	console.log('query');
 	
 	$.ajax({
 	    type: "post",
@@ -675,7 +699,7 @@ function queryProdGroupFilterListAjax(){
     	if (response.status=="ERROR"){
 //    		alert("ajax error")
     		$("#prodListDiv").empty();
-    		alert(response.msg)
+//    		alert(response.msg)
     	}else{
 //    		alert("ajax ok")
 //    		alert("OK")
@@ -733,9 +757,9 @@ function processPageAndTotalPage(response){
 	totalCount = response.totalCount;
 	
 	
-	console.log(currentPage)
-	console.log(pageCount)
-	console.log(totalCount)
+//	console.log(currentPage)
+//	console.log(pageCount)
+//	console.log(totalCount)
 	
 	$('#currentPage').text(response.currentPage);
 	$('#pageCount').text(response.pageCount);
@@ -747,8 +771,6 @@ function processPageAndTotalPage(response){
 function deleteFilterCondition(event,obj){
 	obj.parent().remove();
 	handler(event);
-	
-	
 	console.log("del OK");
 	
 }
@@ -832,12 +854,30 @@ function filterDisplayRule(val, obj) {
 				source: availableTags,
 				minLength: 0,
 				select: function(event, ui) {
+					console.log("*********************select**event");
+					console.log(event);
 //					console.log(event.handleObj.type);
-					console.log("CCCCCCC");
+					handler('click');
+					queryProdGroupFilterListAjax();
+					
+				},
+				close: function(event, ui) {
+					console.log("-------------close event-------------");
+					console.log(event);
+//					console.log(event.handleObj.type);
+					
+					handler('click');
+				    queryProdGroupFilterListAjax();
 				},
 				search: function(event, ui) {
+					console.log("**********search***********search**event");
+					console.log(event);
 //					console.log(event.handleObj.type);
-					console.log("BBBBBBBBBBb"); 
+					var map = new Object();
+					map["type"] = "keyup";
+					handler(map);
+				    queryProdGroupFilterListAjax();
+					
 				},
 			}).focus(function() {
 				if (this.value == "") {
