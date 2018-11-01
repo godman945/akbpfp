@@ -269,8 +269,8 @@ $(document).ready(function(){
     $(".filter-wrap select").bind("change", handler);
     $(".filter-wrap input").bind("keyup", handler);
     
-    //重bind事件
-    $("#catalogGroupName").bind("keyup", handler);
+//    //重bind事件
+//    $("#catalogGroupName").bind("keyup", handler);
     
     
     $('#addCatalogProdGroup').click(function(e){    	
@@ -278,12 +278,12 @@ $(document).ready(function(){
     })
   
     
-     // 請填寫組合名稱
-    $('#catalogGroupName').click(function(){
-        //組合名稱重新綁定監聽
-        $("#catalogGroupName").unbind("keyup");
-        $("#catalogGroupName").bind("keyup", handler);
-    })
+//     // 請填寫組合名稱
+//    $('#catalogGroupName').click(function(){
+//        //組合名稱重新綁定監聽
+//        $("#catalogGroupName").unbind("keyup");
+//        $("#catalogGroupName").bind("keyup", handler);
+//    })
     
 });
 
