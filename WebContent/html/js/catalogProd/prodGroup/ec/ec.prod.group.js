@@ -22,7 +22,7 @@ function createPortfolio(catalogSeqStr,catalogGroupSeqStr) {
 
 //檢查廣告是否有綁定的商品組合
 function checkCatalogGroupAdStatus(dataObj){
-	alert($(dataObj).attr('value'))
+//	alert($(dataObj).attr('value'))
 	var catalogGroupSeq = $(dataObj).attr('value');
 	var alt = "";
 		$.ajax({
@@ -40,22 +40,20 @@ function checkCatalogGroupAdStatus(dataObj){
 				
 			}
 		}).done(function(response) {
-			alert('response.resultMap.status')
-			alert(response)
-			alert('status')
-			if (response.resultMap.status == "SUCCESS") {
-				if (response.resultMap.count != "0"){
-					alert("有bind ad！");
+			console.log(response.status);
+			if (response.status == "SUCCESS") {
+				if (response.count != "0"){
+//					alert("有bind ad！");
 					if(confirm("此商品組合有綁定廣告，請確認是否刪除！")) {
 						deleteCatalogGroupAjax(catalogGroupSeq)
 					}
 				}else{
-					alert("沒有bind ad ---------！");
+//					alert("沒有bind ad ---------！");
 					deleteCatalogGroupAjax(catalogGroupSeq)
 				}
 			} else {
-				alert(response);
-				alert(response.resultMap.msg)
+//				alert(response);
+				alert(response.msg)
 			}
 		});
 }
@@ -77,11 +75,12 @@ function deleteCatalogGroupAjax(catalogGroupSeq){
 			
 		}
 	}).done(function(response) {
-		if (response.resultMap.status == "SUCCESS") {
-//			alert(response.resultMap.msg)
+		if (response.status == "SUCCESS") {
+//			alert(response.msg)
 			$(location).attr('href',"queryCatalogGroup.html?catalogSeq="+ $('#catalog option:selected').val());
 		} else {
-			alert(response.resultMap.msg)
+//			alert(response.resultMap.msg)
+			alert(response.msg)
 		}
 	});
 }
