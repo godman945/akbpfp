@@ -58,6 +58,7 @@
                         			</#list>
 								</#if>
 		                    </select>
+		                    <em id="adStyleMsg" style="color:red" class="error"></em>
                         </td>
                     </tr>
                     <tr>
@@ -407,3 +408,4 @@
 <div id="introDialog" style="display:none"></div>
 <input type="hidden" id="messageId" value="${message!!}">
 <input type="hidden" id="oldwebsiteCategory" value="${oldWebsiteCategory!}" />
+<input type="hidden" id="prodAdMsg" value="${prodAdMsg!}" />

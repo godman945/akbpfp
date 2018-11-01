@@ -44,12 +44,12 @@ $(document).ready(function() {
 			success: function(response, status){
 				var isOK = true;
 				if (response.checkURLStatus == "ERROR") {
-					$("#ecUrlErrMsg").html("請確認輸入網址是否正確。");
+					$("#ecUrlErrMsg").html("連結錯誤。");
 					isOK = false;
 				}
 				
 				if (response.checkCatalogProdSeqStatus == "ERROR") {
-					$("#catalogProdSeqErrMsg").html("此目錄下，商品編號已重複。");
+					$("#catalogProdSeqErrMsg").html("重複的商品編號。");
 					isOK = false;
 				}
 					
@@ -86,8 +86,8 @@ function prodListView() {
 		prodObject.ecPrice = $("#ecPrice").val(); // 原價
 	}
 	prodObject.ecDiscountPrice = $("#ecDiscountPrice").val(); // 特價
-	prodObject.ecStockStatus = $('#ecStockStatus :selected').val(); // 供應情況
-	prodObject.ecUseStatus = $('#ecUseStatus :selected').val(); // 使用狀況
+	prodObject.ecStockStatus = $('#ecStockStatus :selected').text(); // 供應情況
+	prodObject.ecUseStatus = $('#ecUseStatus :selected').text(); // 使用狀況
 	prodObject.ecCategory = $('#ecCategory').val(); // 商品類別
 	prodObject.ecImgBase64 = base64Img; // 圖片base64路徑
 	
@@ -200,12 +200,12 @@ function checkUploadFile(file) {
 	var fileType = file.type;
 
 	if (fileSizeKb > 180) {
-		alert("檔案須小於180kb");
+		alert("檔案大小限制180K以下");
 		return false;
 	}
 
 	if (fileType != 'image/jpeg' && fileType != 'image/png' && fileType != 'image/gif') {
-		alert("請上傳jpg、png 或 gif格式");
+		alert("檔案格式錯誤，請上傳JPG、GIF、PNG檔");
 		return false;
 	}
 
@@ -216,7 +216,7 @@ function checkUploadFile(file) {
 		// 去除重複執行unbind 再重新綁定
 		$('#successImg').unbind('load').load(function(){ // 圖片完成後判斷"原生圖片"長寬
 			if ($(this)[0].naturalHeight < 300 && $(this)[0].naturalWidth < 300) {
-				alert("請上傳圖片解析度300x300以上尺寸");
+				alert("檔案解析度須達300*300以上");
 				deleteImg();
 				return false;
 			} else {
@@ -284,15 +284,18 @@ function checkKeyInDataIsError() {
  */
 function checkEcNameIsErr() {
 	var ecName = $("#ecName").val();
+	$("#ecNameErrMsg").html("");
+	
 	if (ecName.length <= 0) {
-		$("#ecNameErrMsg").html("此欄位為必填。");
+		$("#ecNameErrMsg").html("必填欄位。");
 		return true;
 	} else if (ecName.length > 20) {
-		$("#ecNameErrMsg").html("輸入字數大於限制字數。");
+		$("#ecNameErrMsg").html("字數限制20字。");
+		return true;
+	} else if (isHaveEmojiString(ecName)) {
+		$("#ecNameErrMsg").html("內含特殊字元。");
 		return true;
 	}
-	
-	$("#ecNameErrMsg").html("");
 	return false;
 }
 
@@ -302,15 +305,13 @@ function checkEcNameIsErr() {
  */
 function checkEcUrlIsErr() {
 	var ecUrl = $("#ecUrl").val();
-	var isErr = false;
 	$("#ecUrlErrMsg").html("");
 	
 	if (ecUrl.length <= 0) {
-		$("#ecUrlErrMsg").html("此欄位為必填。");
+		$("#ecUrlErrMsg").html("必填欄位。");
 		return true;
 	}
-	
-	return isErr;
+	return false;
 }
 
 /**
@@ -319,15 +320,15 @@ function checkEcUrlIsErr() {
  */
 function checkEcPriceIsErr() {
 	var ecPrice = $("#ecPrice").val();
+	$("#ecPriceErrMsg").html("");
+	
 	if (ecPrice.length > 6) {
 		$("#ecPriceErrMsg").html("輸入數字超過6位數。");
 		return true;
 	} else if (!isNum(ecPrice)) {
-		$("#ecPriceErrMsg").html("只能輸入數字。");
+		$("#ecPriceErrMsg").html("格式錯誤，請填寫數字。");
 		return true;
 	}
-	
-	$("#ecPriceErrMsg").html("");
 	return false;
 }
 
@@ -337,18 +338,18 @@ function checkEcPriceIsErr() {
  */
 function checkEcDiscountPriceIsErr() {
 	var ecDiscountPrice = $("#ecDiscountPrice").val();
+	$("#ecDiscountPriceErrMsg").html("");
+	
 	if (ecDiscountPrice.length <= 0) {
-		$("#ecDiscountPriceErrMsg").html("此欄位為必填。");
+		$("#ecDiscountPriceErrMsg").html("必填欄位。");
 		return true;
 	} else if (ecDiscountPrice.length > 6) {
 		$("#ecDiscountPriceErrMsg").html("輸入數字超過6位數。");
 		return true;
 	} else if (!isNum(ecDiscountPrice)) {
-		$("#ecDiscountPriceErrMsg").html("只能輸入數字。");
+		$("#ecDiscountPriceErrMsg").html("格式錯誤，請填寫數字。");
 		return true;
 	}
-	
-	$("#ecDiscountPriceErrMsg").html("");
 	return false;
 }
 
@@ -358,23 +359,28 @@ function checkEcDiscountPriceIsErr() {
  */
 function checkCatalogProdSeqIsErr() {
 	var catalogProdSeq = $("#catalogProdSeq").val();
+	$("#catalogProdSeqErrMsg").html("");
+	
 	if (catalogProdSeq.length <= 0) {
-		$("#catalogProdSeqErrMsg").html("此欄位為必填。");
+		$("#catalogProdSeqErrMsg").html("必填欄位。");
 		return true;
 	} else if (catalogProdSeq.length > 30) {
 		$("#catalogProdSeqErrMsg").html("輸入字數大於限制字數。");
+		return true;
+	} else if (isHaveEmojiString(catalogProdSeq)
+			|| containsSpecialSymbolsThatAreNotAllowedByFileName(catalogProdSeq)
+			|| containsChineseStr(catalogProdSeq)) {
+		$("#catalogProdSeqErrMsg").html("內含特殊字元。");
 		return true;
 	}
 	
 	// 檢查商品編號是否重複
 	var checkFlag = false;
-	$("#catalogProdSeqErrMsg").html("");
-	
 	// 先檢查畫面上輸入的商品編號是否重複
 	$.each(prodList, function(indexNum, object) { // 跑商品清單每筆資料來比對
 		var currentData = JSON.parse(object); // 將字串轉成json格式
 		if (currentData.catalogProdSeq == catalogProdSeq) {
-			$("#catalogProdSeqErrMsg").html("此目錄下，商品編號已重複。");
+			$("#catalogProdSeqErrMsg").html("重複的商品編號。");
 			checkFlag = true;
 			return false; // 跳出each
 		}
@@ -389,12 +395,12 @@ function checkCatalogProdSeqIsErr() {
  */
 function checkEcCategoryIsErr() {
 	var ecCategory = $("#ecCategory").val();
+	$("#ecCategoryErrMsg").html("");
+	
 	if (ecCategory.length > 15) {
 		$("#ecCategoryErrMsg").html("輸入字數大於限制字數。");
 		return true;
-	}
-	
-	$("#ecCategoryErrMsg").html("");
+	}	
 	return false;
 }
 
@@ -405,10 +411,9 @@ function checkEcCategoryIsErr() {
 function checkImgIsErr() {
 	//拖曳上傳和選擇檔案上傳最後都會產生base64，皆無資料則請上傳圖片
 	if(base64Img.length == 0){
-		alert("請上傳圖片。");
+		alert("請上傳商品圖。");
 		return true;
 	}
-	
 	return false;
 }
 
@@ -419,6 +424,32 @@ function checkImgIsErr() {
  */
 function isNum(val) {
 	return /^[0-9]*$/.test(val);
+}
+
+/**
+ * 檢查是否包含Emoji圖片
+ * @param val
+ * @returns
+ */
+function isHaveEmojiString(val) {
+	return val.match(/[\ud800-\udbff]|[\udc00-\udfff]|[\ud800-\udfff]/);
+}
+
+/**
+ * 包含檔名不能使用的特殊符號
+ * @param val
+ */
+function containsSpecialSymbolsThatAreNotAllowedByFileName(val) {
+	return val.match(/[(/) | (\\\\) | (:) | (\\*) | (\\?) | (\") | (<) | (>)]/);
+}
+
+/**
+ * 包含中文
+ * @param val
+ * @returns
+ */
+function containsChineseStr(val) {
+	return val.match(/^.*[\u4e00-\u9fa5].*$/);
 }
 
 /**

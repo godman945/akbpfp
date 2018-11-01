@@ -94,8 +94,8 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 				pfpCatalogVO.setUpdateDatetime(formatter.format(dataMap.get("update_datetime")));
 			}
 			
-			if (dataMap.get("success_num") != null) { // 成功筆數
-				pfpCatalogVO.setSuccessNum(String.valueOf(dataMap.get("success_num")));
+			if (dataMap.get("catalog_prod_num") != null) { // 所有商品數量
+				pfpCatalogVO.setCatalogProdNum((int)dataMap.get("catalog_prod_num"));
 			}
 			
 			if (dataMap.get("error_num") != null) { // 失敗筆數
@@ -117,6 +117,7 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 	 */
 	@Override
 	public void savePfpCatalog(PfpCatalogVO vo) throws Exception {
+		// 新增 pfp_catalog "商品目錄"
 		vo.setCatalogSeq(sequenceService.getId(EnumSequenceTableName.PFP_CATALOG, "", 20));
 		((IPfpCatalogDAO) dao).savePfpCatalog(vo);
 	}
@@ -214,4 +215,5 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 	public void setSequenceService(ISequenceService sequenceService) {
 		this.sequenceService = sequenceService;
 	}
+	
 }

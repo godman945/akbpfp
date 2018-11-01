@@ -2,7 +2,7 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
 <script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/commonCatalogProd.js?t=20181023011"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/fileUpload.js?t=20181026001"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/fileUpload.js?t=20181030002"></script>
 
 <form id="fileUploadForm" name="fileUploadForm" method="post" enctype="multipart/form-data" action="catalogUploadCheckFileData.html">
 	

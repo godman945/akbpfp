@@ -431,7 +431,7 @@ a.uploadbtn{
 
 
 #fancybox-close, .fancybox-close{
-    background: transparent url(../../img/fancybox_sprite.png) left top no-repeat!important;
+    background: transparent url(../../img/fancybox/fancybox_sprite.png) left top no-repeat!important;
     width: 40px;
     height: 40px;
 }
