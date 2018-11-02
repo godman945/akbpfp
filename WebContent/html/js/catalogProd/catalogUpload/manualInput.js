@@ -140,18 +140,20 @@ function cleanData() {
  * @param index
  */
 function delProd(index) {
-	prodCount--;
-	$(".manualprod-box p span").attr("data-value", prodCount); // 商品數量
-	$(".prod" + index).remove();
-	
-	var tempList = new Array(); // 暫存清單
-	$.each(prodList, function(indexNum, object) { // 跑商品清單每筆資料來比對
-		var currentData = JSON.parse(object); // 將字串轉成json格式
-		if (currentData.seqIndex != index) { // 目前跑到的資料與要刪除資料不同，則先存入暫存清單
-			tempList.push(object);
-		}
-	});
-	prodList = tempList; // 要被刪除的資料，不會存入暫存清單，將最後清單資料放回商品清單
+	if (confirm("確定刪除此商品?")) {
+		prodCount--;
+		$(".manualprod-box p span").attr("data-value", prodCount); // 商品數量
+		$(".prod" + index).remove();
+
+		var tempList = new Array(); // 暫存清單
+		$.each(prodList, function(indexNum, object) { // 跑商品清單每筆資料來比對
+			var currentData = JSON.parse(object); // 將字串轉成json格式
+			if (currentData.seqIndex != index) { // 目前跑到的資料與要刪除資料不同，則先存入暫存清單
+				tempList.push(object);
+			}
+		});
+		prodList = tempList; // 要被刪除的資料，不會存入暫存清單，將最後清單資料放回商品清單
+	}
 }
 
 /**
