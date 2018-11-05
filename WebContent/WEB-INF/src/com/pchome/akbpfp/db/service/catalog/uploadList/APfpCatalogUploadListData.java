@@ -156,8 +156,8 @@ public abstract class APfpCatalogUploadListData {
 			//有Base64則用手動上傳
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
 				String filenameExtension = ImgUtil.getImgBase64FilenameExtension(ecImgBase64);
-				if (!"jpeg".equalsIgnoreCase(filenameExtension) && !"jpg".equalsIgnoreCase(filenameExtension)
-						&& !"gif".equalsIgnoreCase(filenameExtension) && !"png".equalsIgnoreCase(filenameExtension)) {
+				if (!"jpg".equalsIgnoreCase(filenameExtension) && !"gif".equalsIgnoreCase(filenameExtension)
+						&& !"png".equalsIgnoreCase(filenameExtension)) {
 					prodItemErrorMsg = "檔案格式錯誤";
 				}
 			}

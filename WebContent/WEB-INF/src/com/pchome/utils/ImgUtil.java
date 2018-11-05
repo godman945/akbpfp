@@ -96,9 +96,6 @@ public class ImgUtil {
 		imgFileName = CommonUtils.getReplaceSpecialSymbolsStr(imgFileName);
 		imgFileName = CommonUtils.getReplaceSpecialSymbolsThatAreNotAllowedByFileName(imgFileName);
 		String filenameExtension = getImgBase64FilenameExtension(imgBase64String);
-		if ("jpeg".equalsIgnoreCase(filenameExtension)) {
-			filenameExtension = "jpg";
-		}
 		String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
 
 		byte[] bytes = Base64.decodeBase64(imgBase64String.split(",")[1].getBytes());
@@ -191,7 +188,11 @@ public class ImgUtil {
 	 * @return
 	 */
 	public static String getImgBase64FilenameExtension(String imgBase64String) {
-		return imgBase64String.substring(imgBase64String.indexOf("/") + 1, imgBase64String.indexOf(";"));
+		String filenameExtension = imgBase64String.substring(imgBase64String.indexOf("/") + 1, imgBase64String.indexOf(";"));
+		if ("jpeg".equalsIgnoreCase(filenameExtension)) {
+			filenameExtension = "jpg";
+		}
+		return filenameExtension;
 	}
 	
 	/**
