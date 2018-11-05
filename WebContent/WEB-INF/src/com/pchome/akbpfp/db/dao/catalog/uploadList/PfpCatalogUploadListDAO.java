@@ -10,6 +10,7 @@ import org.hibernate.transform.Transformers;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
+import com.pchome.akbpfp.db.pojo.PfpCatalogProdEcError;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
@@ -113,6 +114,33 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 		super.getSession().flush();
 	}
 
+	/**
+	 * 新增商品目錄更新錯誤紀錄
+	 * @param pfpCatalogUploadErrLog
+	 */
+	@Override
+	public void savePfpCatalogProdEcError(PfpCatalogProdEcError pfpCatalogProdEcError) {
+		super.getHibernateTemplate().save(pfpCatalogProdEcError);
+	}
+	
+	/**
+	 * 刪除 一般購物類商品上傳錯誤清單
+	 * @param vo
+	 */
+	@Override
+	public void deletePfpCatalogProdEcError(PfpCatalogVO vo) {
+		StringBuffer hql = new StringBuffer();
+		hql.append(" DELETE FROM pfp_catalog_upload_err_log ");
+		hql.append(" WHERE catalog_upload_log_seq IN ");
+		hql.append(" (SELECT catalog_upload_log_seq FROM pfp_catalog_upload_log WHERE catalog_seq = :catalog_seq) ");
+
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setString("catalog_seq", vo.getCatalogSeq());
+
+		query.executeUpdate();
+		super.getSession().flush();
+	}
+	
 	/**
 	 * 刪除 商品目錄更新紀錄
 	 * @param vo

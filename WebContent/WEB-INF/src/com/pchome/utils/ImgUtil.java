@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -20,8 +21,11 @@ import java.security.NoSuchAlgorithmException;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+
 
 public class ImgUtil {
 	private static final Log log = LogFactory.getLog(ImgUtil.class);
@@ -60,7 +64,11 @@ public class ImgUtil {
 	            Files.copy(in, new File(imgPathAndName).toPath(), StandardCopyOption.REPLACE_EXISTING);
 	            in.close();
 			} else { // jpg、png圖片下載方式
-				BufferedImage img = ImageIO.read(url);
+				// 增加User-Agent，避免被發現是機器人被阻擋掉
+				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+				urlConnection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+				urlConnection.setRequestMethod("GET");
+				BufferedImage img = ImageIO.read(urlConnection.getInputStream());
 				ImageIO.write(img, filenameExtension, new File(imgPathAndName));
 			}
 	        
@@ -187,6 +195,20 @@ public class ImgUtil {
 	}
 	
 	/**
+	 * 從圖片網址取得附檔名或圖片Base64取得附檔名
+	 * @param ecImgUrl
+	 * @param ecImgBase64
+	 * @return
+	 */
+	public static String getImgFilenameExtensionFromImgBase64OrImgURL(String ecImgUrl, String ecImgBase64) {
+		if (StringUtils.isBlank(ecImgBase64)) {
+			return getImgURLFilenameExtension(ecImgUrl);
+		} else {
+			return getImgBase64FilenameExtension(ecImgBase64);
+		}
+	}
+	
+	/**
 	 * 如果此目錄路徑沒有資料夾，則建立資料夾
 	 * @param path
 	 */
@@ -196,4 +218,5 @@ public class ImgUtil {
 			file.mkdirs(); // 建立資料夾
 		}
 	}
+
 }

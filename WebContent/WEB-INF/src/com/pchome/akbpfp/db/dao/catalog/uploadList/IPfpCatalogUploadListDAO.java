@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.IBaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
+import com.pchome.akbpfp.db.pojo.PfpCatalogProdEcError;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
@@ -44,11 +45,23 @@ public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 	void savePfpCatalogUploadErrLog(PfpCatalogUploadErrLog pfpCatalogUploadErrLog);
 
 	/**
+	 * 新增一般購物類商品上傳錯誤清單
+	 * @param pfpCatalogProdEcError
+	 */
+	void savePfpCatalogProdEcError(PfpCatalogProdEcError pfpCatalogProdEcError);
+	
+	/**
 	 * 刪除 商品目錄更新錯誤紀錄
 	 * @param vo
 	 */
 	void deletePfpCatalogUploadErrLog(PfpCatalogVO vo);
 
+	/**
+	 * 刪除 一般購物類商品上傳錯誤清單
+	 * @param vo
+	 */
+	void deletePfpCatalogProdEcError(PfpCatalogVO vo);
+	
 	/**
 	 * 刪除 一般購物類商品清單
 	 * @param vo

@@ -27,12 +27,12 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查商品類別(非必填)
 	 * @param errorPrdItemArray
-	 * @param catalogProdSeq
+	 * @param itemSeq
 	 * @param ecCategory
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkEcCategory(JSONArray errorPrdItemArray, String catalogProdSeq, String ecCategory) throws JSONException {
+	public JSONArray checkEcCategory(JSONArray errorPrdItemArray, int itemSeq, String ecCategory) throws JSONException {
 		String prodItemErrorMsg = "";
 		int ecCategoryLimit = 20;
 
@@ -42,10 +42,9 @@ public abstract class APfpCatalogUploadListData {
 		
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_prod_err_item", itemSeq);
 			jsonObject.put("catalog_err_item", "ec_category");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", ecCategory);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -54,12 +53,12 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查連結網址
 	 * @param errorPrdItemArray
-	 * @param catalogProdSeq
+	 * @param itemSeq
 	 * @param ecUrl
 	 * @return
 	 * @throws Exception 
 	 */
-	public JSONArray checkEcUrl(JSONArray errorPrdItemArray, String catalogProdSeq, String ecUrl) throws Exception {
+	public JSONArray checkEcUrl(JSONArray errorPrdItemArray, int itemSeq, String ecUrl) throws Exception {
 		String prodItemErrorMsg = "";
 
 		if (StringUtils.isBlank(ecUrl)) {
@@ -74,10 +73,9 @@ public abstract class APfpCatalogUploadListData {
 		
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_prod_err_item", itemSeq);
 			jsonObject.put("catalog_err_item", "ec_url");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", ecUrl);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -86,6 +84,7 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查廣告圖像網址及圖片是否符合規範
 	 * @param errorPrdItemArray
+	 * @param itemSeq // 項目序號
 	 * @param photoPath // 圖片路徑
 	 * @param catalogProdSeq // 商品編號
 	 * @param ecImgUrl // 圖片網址
@@ -94,7 +93,7 @@ public abstract class APfpCatalogUploadListData {
 	 * @return
 	 * @throws Exception 
 	 */
-	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, String photoPath, String catalogProdSeq, String ecImgUrl, String ecImgBase64, String catalogUploadType) throws Exception {
+	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, int itemSeq, String photoPath, String catalogProdSeq, String ecImgUrl, String ecImgBase64, String catalogUploadType) throws Exception {
 		String prodItemErrorMsg = ""; // 檢查到一個有錯誤，剩下檢查則略過
 		
 		// 將圖片下載至每個user自己的暫存圖片資料夾檢查
@@ -153,10 +152,6 @@ public abstract class APfpCatalogUploadListData {
 				fis.close();
 			}
 			
-			if (imgFile != null) {
-				imgFile.delete(); // 結束後刪除暫存圖片
-			}
-			
 		} else {
 			//有Base64則用手動上傳
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
@@ -186,18 +181,13 @@ public abstract class APfpCatalogUploadListData {
 				fis.close();
 			}
 			
-			if (imgFile != null) {
-				imgFile.delete(); // 結束後刪除暫存圖片
-			}
-
 		}
 
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_prod_err_item", itemSeq);
 			jsonObject.put("catalog_err_item", "ec_img_url");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", ecImgUrl);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -207,12 +197,12 @@ public abstract class APfpCatalogUploadListData {
 	 * 檢查商品使用狀況
 	 * 0:全新,1:二手,2:福利品
 	 * @param errorPrdItemArray
-	 * @param catalogProdSeq
+	 * @param itemSeq
 	 * @param ecUseStatus
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkEcUseStatus(JSONArray errorPrdItemArray, String catalogProdSeq, String ecUseStatus) throws JSONException {
+	public JSONArray checkEcUseStatus(JSONArray errorPrdItemArray, int itemSeq, String ecUseStatus) throws JSONException {
 		String prodItemErrorMsg = "";
 		
 		if (StringUtils.isBlank(ecUseStatus)) {
@@ -225,10 +215,9 @@ public abstract class APfpCatalogUploadListData {
 		
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_prod_err_item", itemSeq);
 			jsonObject.put("catalog_err_item", "ec_use_status");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", ecUseStatus);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -238,12 +227,12 @@ public abstract class APfpCatalogUploadListData {
 	 * 檢查商品供應情況
 	 * 0:無庫存,1:有庫存,2:預購,3:停售
 	 * @param errorPrdItemArray
-	 * @param catalogProdSeq
+	 * @param itemSeq
 	 * @param ecStockStatus
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkEcStockStatus(JSONArray errorPrdItemArray, String catalogProdSeq, String ecStockStatus) throws JSONException {
+	public JSONArray checkEcStockStatus(JSONArray errorPrdItemArray, int itemSeq, String ecStockStatus) throws JSONException {
 		String prodItemErrorMsg = "";
 		
 		if (StringUtils.isBlank(ecStockStatus)) {
@@ -257,10 +246,9 @@ public abstract class APfpCatalogUploadListData {
 		
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_prod_err_item", itemSeq);
 			jsonObject.put("catalog_err_item", "ec_stock_status");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", ecStockStatus);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -269,13 +257,13 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查促銷價
 	 * @param errorPrdItemArray
-	 * @param catalogProdSeq 商品編號
+	 * @param itemSeq 項目序號
 	 * @param ecDiscountPrice 促銷價
 	 * @param ecPrice 原價
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkEcDiscountPrice(JSONArray errorPrdItemArray, String catalogProdSeq, String ecDiscountPrice, String ecPrice) throws JSONException {
+	public JSONArray checkEcDiscountPrice(JSONArray errorPrdItemArray, int itemSeq, String ecDiscountPrice, String ecPrice) throws JSONException {
 		String prodItemErrorMsg = "";
 		int ecDiscountPriceLimit = 6;
 
@@ -291,10 +279,9 @@ public abstract class APfpCatalogUploadListData {
 
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_prod_err_item", itemSeq);
 			jsonObject.put("catalog_err_item", "ec_discount_price");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", ecDiscountPrice);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -303,12 +290,12 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查原價(非必填欄位)
 	 * @param errorPrdItemArray
-	 * @param catalogProdSeq
+	 * @param itemSeq
 	 * @param ecPrice
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkEcPrice(JSONArray errorPrdItemArray, String catalogProdSeq, String ecPrice) throws JSONException {
+	public JSONArray checkEcPrice(JSONArray errorPrdItemArray, int itemSeq, String ecPrice) throws JSONException {
 		String prodItemErrorMsg = "";
 		int ecPriceLimit = 6;
 		
@@ -322,10 +309,9 @@ public abstract class APfpCatalogUploadListData {
 
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_prod_err_item", itemSeq);
 			jsonObject.put("catalog_err_item", "ec_price");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", ecPrice);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -334,12 +320,12 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查商品名稱
 	 * @param errorPrdItemArray 
-	 * @param catalogProdSeq
+	 * @param itemSeq
 	 * @param ecName
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkEcName(JSONArray errorPrdItemArray, String catalogProdSeq, String ecName) throws JSONException {
+	public JSONArray checkEcName(JSONArray errorPrdItemArray, int itemSeq, String ecName) throws JSONException {
 		String prodItemErrorMsg = "";
 		int ecNameLimit = 20;
 		
@@ -355,10 +341,9 @@ public abstract class APfpCatalogUploadListData {
 	    
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_prod_err_item", itemSeq);
 			jsonObject.put("catalog_err_item", "ec_name");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", ecName);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;
@@ -367,11 +352,12 @@ public abstract class APfpCatalogUploadListData {
 	/**
 	 * 檢查商品id
 	 * @param errorPrdItemArray
-	 * @param catalogProdSeq
+	 * @param catalogProdSeq 商品ID
+	 * @param itemSeq 項目序號
 	 * @return
 	 * @throws JSONException 
 	 */
-	public JSONArray checkCatalogProdSeq(JSONArray errorPrdItemArray, String catalogProdSeq) throws JSONException {
+	public JSONArray checkCatalogProdSeq(JSONArray errorPrdItemArray, int itemSeq, String catalogProdSeq) throws JSONException {
 		String prodItemErrorMsg = "";
 		int catalogProdSeqLimit = 30;
 		
@@ -389,10 +375,9 @@ public abstract class APfpCatalogUploadListData {
 		
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
 			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("catalog_prod_seq", catalogProdSeq);
+			jsonObject.put("catalog_prod_err_item", itemSeq);
 			jsonObject.put("catalog_err_item", "id");
 			jsonObject.put("catalog_err_reason", prodItemErrorMsg);
-			jsonObject.put("catalog_err_rawdata", catalogProdSeq);
 			errorPrdItemArray.put(jsonObject);
 		}
 		return errorPrdItemArray;

@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/10/8 �U�� 02:19:47 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/11/2 �W�� 09:57:28 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -31,6 +31,7 @@ public class PfpCatalogUploadLog implements java.io.Serializable {
 	private int successNum;
 	private Date updateDate;
 	private Date createDate;
+	private Set<PfpCatalogProdEcError> pfpCatalogProdEcErrors = new HashSet<PfpCatalogProdEcError>(0);
 	private Set<PfpCatalogUploadErrLog> pfpCatalogUploadErrLogs = new HashSet<PfpCatalogUploadErrLog>(0);
 
 	public PfpCatalogUploadLog() {
@@ -51,7 +52,7 @@ public class PfpCatalogUploadLog implements java.io.Serializable {
 
 	public PfpCatalogUploadLog(String catalogUploadLogSeq, PfpCatalog pfpCatalog, String updateWay,
 			String updateContent, Date updateDatetime, int errorNum, int successNum, Date updateDate, Date createDate,
-			Set<PfpCatalogUploadErrLog> pfpCatalogUploadErrLogs) {
+			Set<PfpCatalogProdEcError> pfpCatalogProdEcErrors, Set<PfpCatalogUploadErrLog> pfpCatalogUploadErrLogs) {
 		this.catalogUploadLogSeq = catalogUploadLogSeq;
 		this.pfpCatalog = pfpCatalog;
 		this.updateWay = updateWay;
@@ -61,6 +62,7 @@ public class PfpCatalogUploadLog implements java.io.Serializable {
 		this.successNum = successNum;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
+		this.pfpCatalogProdEcErrors = pfpCatalogProdEcErrors;
 		this.pfpCatalogUploadErrLogs = pfpCatalogUploadErrLogs;
 	}
 
@@ -149,6 +151,15 @@ public class PfpCatalogUploadLog implements java.io.Serializable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpCatalogUploadLog")
+	public Set<PfpCatalogProdEcError> getPfpCatalogProdEcErrors() {
+		return this.pfpCatalogProdEcErrors;
+	}
+
+	public void setPfpCatalogProdEcErrors(Set<PfpCatalogProdEcError> pfpCatalogProdEcErrors) {
+		this.pfpCatalogProdEcErrors = pfpCatalogProdEcErrors;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpCatalogUploadLog")

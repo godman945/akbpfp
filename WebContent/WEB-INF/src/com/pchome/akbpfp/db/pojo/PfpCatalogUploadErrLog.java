@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/10/8 �U�� 02:19:47 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/11/2 �W�� 09:57:28 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,23 +23,21 @@ public class PfpCatalogUploadErrLog implements java.io.Serializable {
 
 	private Integer catalogUploadErrLogSeq;
 	private PfpCatalogUploadLog pfpCatalogUploadLog;
-	private String catalogProdSeq;
+	private int catalogProdErrItem;
 	private String catalogErrItem;
 	private String catalogErrReason;
-	private String catalogErrRawdata;
 	private Date updateDate;
 	private Date createDate;
 
 	public PfpCatalogUploadErrLog() {
 	}
 
-	public PfpCatalogUploadErrLog(PfpCatalogUploadLog pfpCatalogUploadLog, String catalogProdSeq, String catalogErrItem,
-			String catalogErrReason, String catalogErrRawdata, Date updateDate, Date createDate) {
+	public PfpCatalogUploadErrLog(PfpCatalogUploadLog pfpCatalogUploadLog, int catalogProdErrItem,
+			String catalogErrItem, String catalogErrReason, Date updateDate, Date createDate) {
 		this.pfpCatalogUploadLog = pfpCatalogUploadLog;
-		this.catalogProdSeq = catalogProdSeq;
+		this.catalogProdErrItem = catalogProdErrItem;
 		this.catalogErrItem = catalogErrItem;
 		this.catalogErrReason = catalogErrReason;
-		this.catalogErrRawdata = catalogErrRawdata;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
@@ -66,13 +64,13 @@ public class PfpCatalogUploadErrLog implements java.io.Serializable {
 		this.pfpCatalogUploadLog = pfpCatalogUploadLog;
 	}
 
-	@Column(name = "catalog_prod_seq", nullable = false, length = 1024)
-	public String getCatalogProdSeq() {
-		return this.catalogProdSeq;
+	@Column(name = "catalog_prod_err_item", nullable = false)
+	public int getCatalogProdErrItem() {
+		return this.catalogProdErrItem;
 	}
 
-	public void setCatalogProdSeq(String catalogProdSeq) {
-		this.catalogProdSeq = catalogProdSeq;
+	public void setCatalogProdErrItem(int catalogProdErrItem) {
+		this.catalogProdErrItem = catalogProdErrItem;
 	}
 
 	@Column(name = "catalog_err_item", nullable = false, length = 50)
@@ -91,15 +89,6 @@ public class PfpCatalogUploadErrLog implements java.io.Serializable {
 
 	public void setCatalogErrReason(String catalogErrReason) {
 		this.catalogErrReason = catalogErrReason;
-	}
-
-	@Column(name = "catalog_err_rawdata", nullable = false, length = 2048)
-	public String getCatalogErrRawdata() {
-		return this.catalogErrRawdata;
-	}
-
-	public void setCatalogErrRawdata(String catalogErrRawdata) {
-		this.catalogErrRawdata = catalogErrRawdata;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

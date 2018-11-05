@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/10/8 �U�� 02:19:47 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/11/2 �W�� 09:57:28 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -28,6 +28,7 @@ public class PfpCatalog implements java.io.Serializable {
 	private String catalogUploadContent;
 	private int catalogProdNum;
 	private String catalogImgShowType;
+	private String uploadStatus;
 	private Date updateDate;
 	private Date createDate;
 	private Set<PfpCatalogProdEc> pfpCatalogProdEcs = new HashSet<PfpCatalogProdEc>(0);
@@ -40,7 +41,7 @@ public class PfpCatalog implements java.io.Serializable {
 
 	public PfpCatalog(String catalogSeq, String catalogName, String catalogType, String pfpCustomerInfoId,
 			String catalogUploadType, String catalogUploadContent, int catalogProdNum, String catalogImgShowType,
-			Date updateDate, Date createDate) {
+			String uploadStatus, Date updateDate, Date createDate) {
 		this.catalogSeq = catalogSeq;
 		this.catalogName = catalogName;
 		this.catalogType = catalogType;
@@ -49,13 +50,14 @@ public class PfpCatalog implements java.io.Serializable {
 		this.catalogUploadContent = catalogUploadContent;
 		this.catalogProdNum = catalogProdNum;
 		this.catalogImgShowType = catalogImgShowType;
+		this.uploadStatus = uploadStatus;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
 
 	public PfpCatalog(String catalogSeq, String catalogName, String catalogType, String pfpCustomerInfoId,
 			String catalogUploadType, String catalogUploadContent, int catalogProdNum, String catalogImgShowType,
-			Date updateDate, Date createDate, Set<PfpCatalogProdEc> pfpCatalogProdEcs,
+			String uploadStatus, Date updateDate, Date createDate, Set<PfpCatalogProdEc> pfpCatalogProdEcs,
 			Set<PfpCatalogUploadLog> pfpCatalogUploadLogs, Set<PfpCatalogSetup> pfpCatalogSetups,
 			Set<PfpCatalogGroup> pfpCatalogGroups) {
 		this.catalogSeq = catalogSeq;
@@ -66,6 +68,7 @@ public class PfpCatalog implements java.io.Serializable {
 		this.catalogUploadContent = catalogUploadContent;
 		this.catalogProdNum = catalogProdNum;
 		this.catalogImgShowType = catalogImgShowType;
+		this.uploadStatus = uploadStatus;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 		this.pfpCatalogProdEcs = pfpCatalogProdEcs;
@@ -146,6 +149,15 @@ public class PfpCatalog implements java.io.Serializable {
 
 	public void setCatalogImgShowType(String catalogImgShowType) {
 		this.catalogImgShowType = catalogImgShowType;
+	}
+
+	@Column(name = "upload_status", nullable = false, length = 1)
+	public String getUploadStatus() {
+		return this.uploadStatus;
+	}
+
+	public void setUploadStatus(String uploadStatus) {
+		this.uploadStatus = uploadStatus;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

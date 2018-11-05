@@ -1,5 +1,8 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +18,7 @@ import org.json.JSONObject;
 import com.pchome.akbpfp.db.dao.catalog.uploadList.IPfpCatalogUploadListDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
+import com.pchome.akbpfp.db.pojo.PfpCatalogProdEcError;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
@@ -80,13 +85,21 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		// 處理每筆商品資料
 		int successNum = 0;
 		int errorNum = 0;
-		// 記錄商品品號列表，不在列表內的資料都刪除
-		List<String> catalogProdSeqList = new ArrayList<String>();
+		List<String> catalogProdSeqList = new ArrayList<String>(); // 記錄商品品號列表，不在列表內的資料都刪除
 		JSONArray errorPrdItemArray = new JSONArray(); // 記錄總錯誤資料
+		JSONArray pfpCatalogProdEcErrorArray = new JSONArray(); // 記錄該筆項目 主要寫入一般購物類商品上傳錯誤清單用
 		int tempErrorPrdItemArrayCount = 0; // 暫存目前總共的錯誤數量
 		// 上傳方式為1:檔案上傳 2:自動排程上傳 項目編號由excel 2開始
 		int itemSeq = EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType().equals(catalogUploadType)
 				|| EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(catalogUploadType) ? 2 : 1;
+		
+		String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq; // 商品圖片存放路徑
+		String imgTempFolder = photoPath + "/temp"; // 商品圖片暫存路徑
+		if ("1".equals(updateWay)) { // 如果是"取代"，直接刪除全部商品圖片，全部資料重新開始
+			FileUtils.deleteQuietly(new File(photoPath));
+		} else {
+			FileUtils.deleteQuietly(new File(imgTempFolder)); // 每次上傳先刪除暫存圖片
+		}
 		
 		JSONArray catalogProdItemJsonArray = new JSONArray(catalogProdItem);
 		for (int i = 0; i < catalogProdItemJsonArray.length(); i++) {
@@ -107,26 +120,103 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			String ecUrl = catalogProdItemJson.optString("ec_url"); // 連結網址*
 			String ecCategory = catalogProdItemJson.optString("ec_category", " "); // 商品類別
 
-			String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq;
+			// 檢查每個欄位  有錯塞入空值
+			JSONObject addPfpCatalogProdEcErrorObject = new JSONObject();
+			int tempErrorPrdItemLength = 0; // 暫存目前錯誤數量
+			addPfpCatalogProdEcErrorObject.put("itemSeq", itemSeq);
+			errorPrdItemArray = super.checkCatalogProdSeq(errorPrdItemArray, itemSeq, catalogProdSeq);
+			if (errorPrdItemArray.length() > tempErrorPrdItemLength) { // 有增加表示目前項目有錯，錯誤則將該筆資料設定為空格
+				tempErrorPrdItemLength = errorPrdItemArray.length();
+				addPfpCatalogProdEcErrorObject.put("catalogProdSeq", " ");
+			} else {
+				addPfpCatalogProdEcErrorObject.put("catalogProdSeq", catalogProdSeq);
+			}
 			
-			// 檢查每個欄位
-			errorPrdItemArray = super.checkCatalogProdSeq(errorPrdItemArray, catalogProdSeq);
-			errorPrdItemArray = super.checkEcName(errorPrdItemArray, catalogProdSeq, ecName);
-			errorPrdItemArray = super.checkEcPrice(errorPrdItemArray, catalogProdSeq, ecPrice);
-			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, catalogProdSeq, ecDiscountPrice, ecPrice);
-			errorPrdItemArray = super.checkEcStockStatus(errorPrdItemArray, catalogProdSeq, ecStockStatus);
-			errorPrdItemArray = super.checkEcUseStatus(errorPrdItemArray, catalogProdSeq, ecUseStatus);
-			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, photoPath, catalogProdSeq, ecImgUrl, ecImgBase64, catalogUploadType);
-			errorPrdItemArray = super.checkEcUrl(errorPrdItemArray, catalogProdSeq, ecUrl);
-			errorPrdItemArray = super.checkEcCategory(errorPrdItemArray, catalogProdSeq, ecCategory);
+			errorPrdItemArray = super.checkEcName(errorPrdItemArray, itemSeq, ecName);
+			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
+				tempErrorPrdItemLength = errorPrdItemArray.length();
+				addPfpCatalogProdEcErrorObject.put("ecName", " ");
+			} else {
+				addPfpCatalogProdEcErrorObject.put("ecName", ecName);
+			}
+			
+			errorPrdItemArray = super.checkEcPrice(errorPrdItemArray, itemSeq, ecPrice);
+			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
+				tempErrorPrdItemLength = errorPrdItemArray.length();
+				addPfpCatalogProdEcErrorObject.put("ecPrice", "0");
+			} else {
+				addPfpCatalogProdEcErrorObject.put("ecPrice", ecPrice);
+			}
+			
+			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, itemSeq, ecDiscountPrice, ecPrice);
+			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
+				tempErrorPrdItemLength = errorPrdItemArray.length();
+				addPfpCatalogProdEcErrorObject.put("ecDiscountPrice", "0");
+			} else {
+				addPfpCatalogProdEcErrorObject.put("ecDiscountPrice", ecDiscountPrice);
+			}
+			
+			errorPrdItemArray = super.checkEcStockStatus(errorPrdItemArray, itemSeq, ecStockStatus);
+			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
+				tempErrorPrdItemLength = errorPrdItemArray.length();
+				addPfpCatalogProdEcErrorObject.put("ecStockStatus", " ");
+			} else {
+				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.Out_Of_Stock.getChName(), EnumEcStockStatusType.Out_Of_Stock.getType());
+				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.In_Stock.getChName(), EnumEcStockStatusType.In_Stock.getType());
+				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.Pre_Order.getChName(), EnumEcStockStatusType.Pre_Order.getType());
+				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.Discontinued.getChName(), EnumEcStockStatusType.Discontinued.getType());
+				addPfpCatalogProdEcErrorObject.put("ecStockStatus", ecStockStatus);
+			}
+			
+			errorPrdItemArray = super.checkEcUseStatus(errorPrdItemArray, itemSeq, ecUseStatus);
+			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
+				tempErrorPrdItemLength = errorPrdItemArray.length();
+				addPfpCatalogProdEcErrorObject.put("ecUseStatus", " ");
+			} else {
+				ecUseStatus = ecUseStatus.replace(EnumEcUseStatusType.New_Goods.getChName(), EnumEcUseStatusType.New_Goods.getType());
+				ecUseStatus = ecUseStatus.replace(EnumEcUseStatusType.Used_Goods.getChName(), EnumEcUseStatusType.Used_Goods.getType());
+				ecUseStatus = ecUseStatus.replace(EnumEcUseStatusType.Welfare_Goods.getChName(), EnumEcUseStatusType.Welfare_Goods.getType());
+				addPfpCatalogProdEcErrorObject.put("ecUseStatus", ecUseStatus);
+			}
+			
+			String imgTempCompletePath = ""; // 暫存圖片完整路徑
+			String imgCompletePath = ""; // 正式圖片完整路徑
+			String addDbImgPath = ""; // 寫入DB欄位路徑
+			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, itemSeq, photoPath, catalogProdSeq, ecImgUrl, ecImgBase64, catalogUploadType);
+			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
+				tempErrorPrdItemLength = errorPrdItemArray.length();
+				addPfpCatalogProdEcErrorObject.put("ecImg", " ");
+			} else {
+				String filenameExtension = ImgUtil.getImgFilenameExtensionFromImgBase64OrImgURL(ecImgUrl, ecImgBase64);
+				imgTempCompletePath = imgTempFolder + "/" + catalogProdSeq + "." + filenameExtension;
+				imgCompletePath = imgTempCompletePath.replace("/temp", "");
+				addDbImgPath = imgCompletePath.substring(imgCompletePath.indexOf("img/"));
+				String addDbImgTempPath = imgTempCompletePath.substring(imgCompletePath.indexOf("img/")); // 寫入DB錯誤清單圖片暫存位置
+				addPfpCatalogProdEcErrorObject.put("ecImg", addDbImgTempPath);
+			}
+			
+			errorPrdItemArray = super.checkEcUrl(errorPrdItemArray, itemSeq, ecUrl);
+			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
+				tempErrorPrdItemLength = errorPrdItemArray.length();
+				addPfpCatalogProdEcErrorObject.put("ecUrl", " ");
+			} else {
+				addPfpCatalogProdEcErrorObject.put("ecUrl", ecUrl);
+			}
+			
+			errorPrdItemArray = super.checkEcCategory(errorPrdItemArray, itemSeq, ecCategory);
+			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
+				tempErrorPrdItemLength = errorPrdItemArray.length();
+				addPfpCatalogProdEcErrorObject.put("ecCategory", " ");
+			} else {
+				addPfpCatalogProdEcErrorObject.put("ecCategory", ecCategory);
+			}
 			
 			if (errorPrdItemArray.length() > tempErrorPrdItemArrayCount) {
 				// 每一次記錄錯誤陣列長度 超過 暫存的記錄長度，表示這一行資料有新增錯誤項目
 				tempErrorPrdItemArrayCount = errorPrdItemArray.length();
 				errorNum++;
 				
-//				PfpCatalogProdEcError pfpCatalogProdEcError = new PfpCatalogProdEcError();
-				
+				pfpCatalogProdEcErrorArray.put(addPfpCatalogProdEcErrorObject);
 			} else {
 				// 檢查輸入的資料是否與DB內完全相同，相同則不做更新、新增處理，避免每次更新就需要重新審核商品
 				List<Map<String, Object>> pfpCatalogProdEcList = pfpCatalogUploadListDAO.getPfpCatalogProdEc(catalogSeq, catalogProdSeq);
@@ -138,36 +228,20 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEc.setEcName(ecName); // 商品名稱
 				pfpCatalogProdEc.setEcTitle(ecTitle); // 商品敘述
 				
-				if (StringUtils.isBlank(ecImgBase64)) { // ecImgBase64為空表示非手動上傳，會有圖片網址需下載圖片
-					pfpCatalogProdEc.setEcImg(ImgUtil.processImgPathForCatalogProd(ecImgUrl, photoPath, catalogProdSeq)); // 圖片路徑
-				} else {
-					pfpCatalogProdEc.setEcImg(ImgUtil.processImgBase64StringToImage(ecImgBase64, photoPath, catalogProdSeq));
-				}
+				/* 將放在暫存資料夾內的圖片複製到外面正式位置
+				 * 不用複製的話，如果一筆錯誤的再一筆正確的資料圖片都相同的話，錯誤的資料在錯誤清單顯示圖片時會取不到圖片
+				 */
+				File f1 = new File(imgTempCompletePath);
+				File f2 = new File(imgCompletePath);
+				Files.copy(f1.toPath(), f2.toPath(), StandardCopyOption.REPLACE_EXISTING);
+				pfpCatalogProdEc.setEcImg(addDbImgPath);
 				
-				pfpCatalogProdEc.setEcImgRegion(ImgUtil.getImgLongWidthCode(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg())); // 商品影像長寬(V/H)
-				pfpCatalogProdEc.setEcImgMd5(ImgUtil.getImgMD5Code(photoDbPathNew.replace("img/user/", "") + pfpCatalogProdEc.getEcImg())); // 商品影像MD5
+				pfpCatalogProdEc.setEcImgRegion(ImgUtil.getImgLongWidthCode(imgCompletePath)); // 商品影像長寬(V/H)
+				pfpCatalogProdEc.setEcImgMd5(ImgUtil.getImgMD5Code(imgCompletePath)); // 商品影像MD5
 				pfpCatalogProdEc.setEcUrl(super.urlAddHttpOrHttps(ecUrl)); // 連結網址
 				pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
 				pfpCatalogProdEc.setEcDiscountPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
-				
-				if (EnumEcStockStatusType.Out_Of_Stock.getChName().equals(ecStockStatus)) {
-					ecStockStatus = EnumEcStockStatusType.Out_Of_Stock.getType();
-				} else if (EnumEcStockStatusType.In_Stock.getChName().equals(ecStockStatus)) {
-					ecStockStatus = EnumEcStockStatusType.In_Stock.getType();
-				} else if (EnumEcStockStatusType.Pre_Order.getChName().equals(ecStockStatus)) {
-					ecStockStatus = EnumEcStockStatusType.Pre_Order.getType();
-				} else if (EnumEcStockStatusType.Discontinued.getChName().equals(ecStockStatus)) {
-					ecStockStatus = EnumEcStockStatusType.Discontinued.getType();
-				}
 				pfpCatalogProdEc.setEcStockStatus(ecStockStatus); // 商品供應情況
-				
-				if (EnumEcUseStatusType.New_Goods.getChName().equals(ecUseStatus)) {
-					ecUseStatus = EnumEcUseStatusType.New_Goods.getType();
-				} else if (EnumEcUseStatusType.Used_Goods.getChName().equals(ecUseStatus)) {
-					ecUseStatus = EnumEcUseStatusType.Used_Goods.getType();
-				} else if (EnumEcUseStatusType.Welfare_Goods.getChName().equals(ecUseStatus)) {
-					ecUseStatus = EnumEcUseStatusType.Welfare_Goods.getType();
-				}
 				pfpCatalogProdEc.setEcUseStatus(ecUseStatus); // 商品使用狀況
 				pfpCatalogProdEc.setEcCategory(ecCategory); // 商品類別
 				pfpCatalogProdEc.setEcStatus("1"); // 商品狀態(0:關閉, 1:開啟)
@@ -240,25 +314,50 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		pfpCatalogUploadLog.setCreateDate(new Date()); // 建立時間
 		pfpCatalogUploadListDAO.savePfpCatalogUploadLog(pfpCatalogUploadLog);
 		
-		// 刪除錯誤資料pfp_catalog_upload_err_log(每個目錄只有一組對應錯誤資料)
+		// 先刪除錯誤紀錄pfp_catalog_upload_err_log、pfp_catalog_prod_ec_error(每個目錄只有一組對應錯誤資料)
 		PfpCatalogVO pfpCatalogVO = new PfpCatalogVO();
 		pfpCatalogVO.setCatalogSeq(catalogSeq);
 		pfpCatalogUploadListDAO.deletePfpCatalogUploadErrLog(pfpCatalogVO);
+		pfpCatalogUploadListDAO.deletePfpCatalogProdEcError(pfpCatalogVO);
 		
-		// 記錄錯誤資料pfp_catalog_upload_err_log
+		// 有錯誤再記錄2個錯誤相關table內
 		if (errorPrdItemArray.length() > 0) {
+			// 記錄錯誤資料 pfp_catalog_upload_err_log "商品目錄更新錯誤紀錄"
 			for (int i = 0; i < errorPrdItemArray.length(); i++) {
 				JSONObject errorPrdItemJson = (JSONObject) errorPrdItemArray.get(i);
 				PfpCatalogUploadErrLog pfpCatalogUploadErrLog = new PfpCatalogUploadErrLog();
 				pfpCatalogUploadErrLog.setPfpCatalogUploadLog(pfpCatalogUploadLog); // 更新紀錄序號
-				pfpCatalogUploadErrLog.setCatalogProdSeq(errorPrdItemJson.getString("catalog_prod_seq")); // 商品ID
+				pfpCatalogUploadErrLog.setCatalogProdErrItem(errorPrdItemJson.getInt("catalog_prod_err_item")); // 上傳錯誤清單ID(EXCEL欄位號碼)
 				pfpCatalogUploadErrLog.setCatalogErrItem(errorPrdItemJson.getString("catalog_err_item")); // 錯誤欄位
 				pfpCatalogUploadErrLog.setCatalogErrReason(errorPrdItemJson.getString("catalog_err_reason")); // 錯誤原因
-				pfpCatalogUploadErrLog.setCatalogErrRawdata(errorPrdItemJson.getString("catalog_err_rawdata")); // 原始資料
 				pfpCatalogUploadErrLog.setUpdateDate(new Date()); // 更新時間
 				pfpCatalogUploadErrLog.setCreateDate(new Date()); // 建立時間
 				pfpCatalogUploadListDAO.savePfpCatalogUploadErrLog(pfpCatalogUploadErrLog);
 			}
+			
+			// 記錄錯誤資料 pfp_catalog_prod_ec_error "一般購物類商品上傳錯誤清單"
+			for (int i = 0; i < pfpCatalogProdEcErrorArray.length(); i++) {
+				JSONObject pfpCatalogProdEcErrorObjectJson = (JSONObject) pfpCatalogProdEcErrorArray.get(i);
+				PfpCatalogProdEcError pfpCatalogProdEcError = new PfpCatalogProdEcError();
+				pfpCatalogProdEcError.setPfpCatalogUploadLog(pfpCatalogUploadLog); // 更新紀錄序號
+				pfpCatalogProdEcError.setCatalogProdErrItem(pfpCatalogProdEcErrorObjectJson.getInt("itemSeq"));
+				pfpCatalogProdEcError.setCatalogSeq(catalogSeq);
+				pfpCatalogProdEcError.setCatalogProdSeq(pfpCatalogProdEcErrorObjectJson.getString("catalogProdSeq"));
+				pfpCatalogProdEcError.setEcName(pfpCatalogProdEcErrorObjectJson.getString("ecName"));
+				pfpCatalogProdEcError.setEcTitle(" ");
+				pfpCatalogProdEcError.setEcImg(pfpCatalogProdEcErrorObjectJson.getString("ecImg"));
+				pfpCatalogProdEcError.setEcUrl(pfpCatalogProdEcErrorObjectJson.getString("ecUrl"));
+				pfpCatalogProdEcError.setEcPrice(pfpCatalogProdEcErrorObjectJson.getInt("ecPrice"));
+				pfpCatalogProdEcError.setEcDiscountPrice(pfpCatalogProdEcErrorObjectJson.getInt("ecDiscountPrice"));
+				pfpCatalogProdEcError.setEcStockStatus(pfpCatalogProdEcErrorObjectJson.getString("ecStockStatus"));
+				pfpCatalogProdEcError.setEcUseStatus(pfpCatalogProdEcErrorObjectJson.getString("ecUseStatus"));
+				pfpCatalogProdEcError.setEcCategory(pfpCatalogProdEcErrorObjectJson.getString("ecCategory"));
+				pfpCatalogProdEcError.setCreateDate(new Date());
+				pfpCatalogUploadListDAO.savePfpCatalogProdEcError(pfpCatalogProdEcError);
+			}
+		} else { // 沒有錯誤
+			// 刪除暫存資料夾圖片
+			FileUtils.deleteQuietly(new File(imgTempFolder));
 		}
 		
 		// 更新 pfp_catalog "商品目錄" 資料

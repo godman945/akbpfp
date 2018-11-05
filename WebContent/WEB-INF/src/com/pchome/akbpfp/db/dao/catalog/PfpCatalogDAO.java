@@ -136,17 +136,15 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 	@Override
 	public void savePfpCatalog(PfpCatalogVO vo) {
 		Date now = new Date();
-		
 		PfpCatalog pfpCatalog = new PfpCatalog();
 		pfpCatalog.setCatalogName(vo.getCatalogName());
 		pfpCatalog.setCatalogType(vo.getCatalogType());
 		pfpCatalog.setPfpCustomerInfoId(vo.getPfpCustomerInfoId());
 		pfpCatalog.setCatalogSeq(vo.getCatalogSeq());
-		
 		pfpCatalog.setCatalogUploadType(" ");
 		pfpCatalog.setCatalogUploadContent(" ");
 		pfpCatalog.setCatalogImgShowType("1");
-		
+		pfpCatalog.setUploadStatus("0");
 		pfpCatalog.setUpdateDate(now);
 		pfpCatalog.setCreateDate(now);
 		super.save(pfpCatalog);
