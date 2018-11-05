@@ -130,7 +130,7 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 	@Override
 	public void deletePfpCatalogProdEcError(PfpCatalogVO vo) {
 		StringBuffer hql = new StringBuffer();
-		hql.append(" DELETE FROM pfp_catalog_upload_err_log ");
+		hql.append(" DELETE FROM pfp_catalog_prod_ec_error ");
 		hql.append(" WHERE catalog_upload_log_seq IN ");
 		hql.append(" (SELECT catalog_upload_log_seq FROM pfp_catalog_upload_log WHERE catalog_seq = :catalog_seq) ");
 
