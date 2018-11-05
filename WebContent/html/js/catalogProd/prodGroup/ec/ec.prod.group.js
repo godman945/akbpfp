@@ -18,6 +18,11 @@ function stopBubble(e) {
 function createPortfolio(catalogSeqStr,catalogGroupSeqStr) {
 	location.href = "queryProdGroupFilterItem.html?catalogSeq="+catalogSeqStr+"&catalogGroupSeq="+catalogGroupSeqStr+"&currentPage="+1+"&pageSizeSelected="+4;
 }
+
+//編輯篩選條件
+function editPortfolio(catalogSeqStr,catalogGroupSeqStr) {
+	location.href = "editProdGroupFilterItem.html?catalogSeq="+catalogSeqStr+"&catalogGroupSeq="+catalogGroupSeqStr+"&currentPage="+1+"&pageSizeSelected="+4;
+}
     
 
 //檢查廣告是否有綁定的商品組合

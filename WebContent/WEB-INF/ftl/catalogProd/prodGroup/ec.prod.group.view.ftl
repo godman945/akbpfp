@@ -69,16 +69,11 @@
 				                        <div class="portfolio-item" onclick="$(this).toggleClass('opened')">
 				                            <div class="txt-row">
 				                                <div class="txt-cell col-protfolioname">
-				                                    <em class="icon-arrow-r"></em>${dataVo.catalogGroupName!} 
-				                                    <p>
-				                                    <em class="icon-arrow-r" style="visibility:hidden"></em>
-				                            			${dataVo.catalogGroupSeq!}
-					                            	</span>
-					                            	</p>
+				                                    <em class="icon-arrow-r"></em>${dataVo.catalogGroupName!} (${dataVo.catalogGroupSeq!})
 				                                </div>
 				                                <div class="txt-cell col-quantity"><a href="queryProdGroupList.html?catalogGroupSeq=${dataVo.catalogGroupSeq!}&currentPage=1&pageSizeSelected=10">${dataVo.catalogProdNum!}項商品</a></div>
 				                                <!-- <div class="txt-cell col-addnew"><a href="javascript:void(0)" onclick="stopBubble(event);createPortfolio('${catalogSeq}','${dataVo.catalogGroupSeq!}')"></a></div> -->
-				                                <div class="txt-cell col-addnew"><a href="javascript:void(0)" onclick="stopBubble(event);createPortfolio('${catalogSeq}','${dataVo.catalogGroupSeq!}')"></a></div>
+				                                <div class="txt-cell col-addnew"><a href="javascript:void(0)" onclick="stopBubble(event);editPortfolio('${catalogSeq}','${dataVo.catalogGroupSeq!}')"></a></div>
 				                                <div class="txt-cell col-delete"><a href="#" value="${dataVo.catalogGroupSeq!}" onclick="checkCatalogGroupAdStatus(this)" ></a></div>
 				                            	
 				                            	 

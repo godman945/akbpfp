@@ -192,7 +192,7 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			// 將db篩選條件資料塞進map
 			Map<String, List<Object>> dbCompareGroupItemMap = new HashMap<String, List<Object>>();
 			List<Map<String, Object>> dbCatalogGroupItemList = pfpCatalogGroupItemService
-					.getCatalogAllGroupItem(catalogSeq);
+					.getCatalogAllGroupItem(catalogSeq,"");
 			for (Object object : dbCatalogGroupItemList) {
 				Map obj = (Map) object;
 				String dbGroupSeq = obj.get("catalog_group_seq").toString();
@@ -343,6 +343,212 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			}
 
 			resultMap.put("msg", "建立商品組合成功");
+			resultMap.put("status", "SUCCESS");
+
+		} catch (Exception e) {
+			log.error("error:" + e);
+			resultMap.put("status", "ERROR");
+			resultMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			return SUCCESS;
+		}
+
+		return SUCCESS;
+
+	}
+	
+	/**
+	 * 編輯目錄商品組合
+	 */
+	public String editCatalogProdGroupAjax() {
+		try {
+			log.info(">>> catalogSeq: " + catalogSeq);
+			log.info(">>> catalogGroupSeq: " + catalogGroupSeq);
+			log.info(">>> catalogGroupName: " + catalogGroupName);
+			log.info(">>> filterContentMap: " + filterContentMap);
+
+			resultMap = new HashMap<String, Object>();
+
+			if( catalogGroupName.trim().length() > 20){
+				resultMap.put("msg", "組合名稱最多20字");
+				resultMap.put("status", "ERROR");
+				return SUCCESS;
+			}
+			
+			if( StringUtils.isBlank(catalogGroupName)){
+				resultMap.put("msg", "組合名稱不得為空");
+				resultMap.put("status", "ERROR");
+				return SUCCESS;
+			}
+			
+			List<PfpCatalogGroup> pfpCatalogGroupList= pfpCatalogGroupService.getPfpCatalogGroupList(catalogSeq);
+			for (PfpCatalogGroup pfpCatalogGroup : pfpCatalogGroupList) {
+				if (StringUtils.equals(catalogGroupSeq, pfpCatalogGroup.getCatalogGroupSeq()) ){
+					continue;
+				}
+				
+				if( StringUtils.equals(catalogGroupName.trim(), pfpCatalogGroup.getCatalogGroupName().trim()) ){
+					resultMap.put("msg", "組合名稱重覆");
+					resultMap.put("status", "ERROR");
+					return SUCCESS;
+				}
+			}
+			
+			
+			// 新增的篩選條件
+			JSONArray filterContentArray = new JSONArray(filterContentMap[0].toString());
+			
+			// 將db篩選條件資料塞進map
+			Map<String, List<Object>> dbCompareGroupItemMap = new HashMap<String, List<Object>>();
+			List<Map<String, Object>> dbCatalogGroupItemList = pfpCatalogGroupItemService
+					.getCatalogAllGroupItem(catalogSeq,catalogGroupSeq);
+			for (Object object : dbCatalogGroupItemList) {
+				Map obj = (Map) object;
+				String dbGroupSeq = obj.get("catalog_group_seq").toString();
+				String dbField = obj.get("catalog_group_item_field").toString();
+				String dbCondition = obj.get("catalog_group_item_condition").toString();
+				String dbValue = obj.get("catalog_group_item_value").toString();
+
+				if (dbCompareGroupItemMap.get(dbGroupSeq) == null) {
+
+					List<Object> dbItemArray = new ArrayList<Object>();
+					PfpCatalogGroupItem dbPfpCatalogGroupItem = new PfpCatalogGroupItem();
+					dbPfpCatalogGroupItem.setCatalogGroupItemField(dbField);
+					dbPfpCatalogGroupItem.setCatalogGroupItemCondition(dbCondition);
+					dbPfpCatalogGroupItem.setCatalogGroupItemValue(dbValue);
+
+					dbItemArray.add(dbPfpCatalogGroupItem);
+					dbCompareGroupItemMap.put(dbGroupSeq, dbItemArray);
+
+				} else {
+					List<Object> dbItemArray = dbCompareGroupItemMap.get(dbGroupSeq);
+					PfpCatalogGroupItem dbPfpCatalogGroupItem = new PfpCatalogGroupItem();
+					dbPfpCatalogGroupItem.setCatalogGroupItemField(dbField);
+					dbPfpCatalogGroupItem.setCatalogGroupItemCondition(dbCondition);
+					dbPfpCatalogGroupItem.setCatalogGroupItemValue(dbValue);
+
+					dbItemArray.add(dbPfpCatalogGroupItem);
+				}
+			}
+			
+			Map<String, List<Object>> dbCompareGroupItemMapNew = new HashMap<String, List<Object>>();
+			// db群組篩選條件數量要與新增的數量相同才比較
+			for (Map.Entry<String, List<Object>> entry : dbCompareGroupItemMap.entrySet()) {
+				if (filterContentArray.length() == entry.getValue().size()) {
+					dbCompareGroupItemMapNew.put(entry.getKey(), entry.getValue());
+				}
+			}
+
+			// 將新增的篩選條件與db所有篩選條件比對是否一模一樣
+			boolean isDuplicate = false;
+			for (Map.Entry<String, List<Object>> entry : dbCompareGroupItemMapNew.entrySet()) {// db所有篩選條件
+				if (isDuplicate) {
+					break;
+				}
+				int count = 0;
+				List<Object> dbCompareGroupItemList = entry.getValue();
+				for (int j = 0; j < dbCompareGroupItemList.size(); j++) {
+					PfpCatalogGroupItem dbPfpCatalogGroupItem = (PfpCatalogGroupItem) dbCompareGroupItemList.get(j);
+					// 新增的篩選條件
+					for (int i = 0; i < filterContentArray.length(); i++) {
+						JSONObject filterContentObj = new JSONObject(filterContentArray.get(i).toString());
+						String newField = filterContentObj.getString("field");
+						String newCondition = filterContentObj.getString("condition");
+						String newValue = filterContentObj.getString("value");
+						// 將新增的篩選條件與db所有條件相比
+						if (StringUtils.equals(newField, dbPfpCatalogGroupItem.getCatalogGroupItemField())) {
+							if (StringUtils.equals(newCondition, dbPfpCatalogGroupItem.getCatalogGroupItemCondition())
+									&& StringUtils.equals(newValue, dbPfpCatalogGroupItem.getCatalogGroupItemValue())) {
+								count = count + 1;
+								if (count == filterContentArray.length()) {
+									isDuplicate = true;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (isDuplicate) {
+				resultMap.put("msg", "篩選條件重覆");
+				resultMap.put("status", "ERROR");
+				return SUCCESS;
+			}
+			
+			
+			
+			//如果篩選條件商品清單數量為0，即不可建立商品組合
+			String catalogType = pfpCatalogService.getPfpCatalog(catalogSeq).getCatalogType();
+			log.info(">>> catalogType: " + catalogType);
+
+			EnumProdGroupFactory enumProdGroupFactory = EnumProdGroupFactory.getCatalogName(catalogType);
+			log.info(">>> enumProdGroupFactory: " + enumProdGroupFactory);
+
+			String catalogName = enumProdGroupFactory.getCatalogName();
+			log.info(">>> catalogName: " + catalogName);
+
+			AProdGroup aProdGroup = prodGroupFactory.getAProdGroupObj(catalogName);
+
+			List<PfpCatalogGroupItem> pfpCatalogGroupItemList = new ArrayList<PfpCatalogGroupItem>();
+			// 查詢的篩選條件
+			for (int i = 0; i < filterContentArray.length(); i++) {
+				JSONObject filterContentObj = new JSONObject(filterContentArray.get(i).toString());
+				String newField = filterContentObj.getString("field");
+				String newCondition = filterContentObj.getString("condition");
+				String newValue = filterContentObj.getString("value");
+
+				PfpCatalogGroupItem pfpCatalogGroupItem = new PfpCatalogGroupItem();
+				pfpCatalogGroupItem.setCatalogGroupItemField(newField);
+				pfpCatalogGroupItem.setCatalogGroupItemCondition(newCondition);
+				pfpCatalogGroupItem.setCatalogGroupItemValue(newValue);
+
+				pfpCatalogGroupItemList.add(pfpCatalogGroupItem);
+			}
+
+			// 將pfpCatalogGroupItems轉成sql
+			String filterSQL = aProdGroup.pfpCatalogGroupItemTofilterSQL(pfpCatalogGroupItemList);
+			
+			// 商品清單資料總筆數
+			totalCount = Integer.valueOf(aProdGroup.getProdGroupCount(catalogSeq, filterSQL));
+
+			if (totalCount <= 0) {
+				resultMap.put("msg", "商品數量為0，不得修改組合內容！");
+				resultMap.put("status", "ERROR");
+				return SUCCESS;
+			}
+
+			
+			
+			// 編輯pfp_catalog_group的組合名稱
+			PfpCatalogGroup pfpCatalogGroupDb = pfpCatalogGroupService.getPfpCatalogGroup(catalogGroupSeq);
+			pfpCatalogGroupDb.setCatalogGroupName(catalogGroupName);
+			pfpCatalogGroupDb.setUpdateDate(new Date());
+			pfpCatalogGroupService.saveOrUpdateWithCommit(pfpCatalogGroupDb);
+
+			
+			
+			// 編輯商品組合條件，先刪除pfp_catalog_group_item
+			pfpCatalogGroupItemService.deleteCatalogGroupItem(catalogGroupSeq);
+
+			// 寫入pfp_catalog_group_item
+			pfpCatalogGroupDb = pfpCatalogGroupService.getPfpCatalogGroup(catalogGroupSeq);
+			for (int i = 0; i < filterContentArray.length(); i++) {
+				JSONObject filterContentObj = new JSONObject(filterContentArray.get(i).toString());
+				String newField = filterContentObj.getString("field");
+				String newCondition = filterContentObj.getString("condition");
+				String newValue = filterContentObj.getString("value");
+
+				PfpCatalogGroupItem pfpCatalogGroupItem = new PfpCatalogGroupItem();
+				pfpCatalogGroupItem.setPfpCatalogGroup(pfpCatalogGroupDb);
+				pfpCatalogGroupItem.setCatalogGroupItemField(newField);
+				pfpCatalogGroupItem.setCatalogGroupItemCondition(newCondition);
+				pfpCatalogGroupItem.setCatalogGroupItemValue(newValue);
+				pfpCatalogGroupItem.setCreateDate(new Date());
+				pfpCatalogGroupItem.setUpdateDate(new Date());
+				pfpCatalogGroupItemService.saveOrUpdate(pfpCatalogGroupItem);
+			}
+
+			resultMap.put("msg", "編輯商品組合成功");
 			resultMap.put("status", "SUCCESS");
 
 		} catch (Exception e) {

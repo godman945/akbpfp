@@ -101,9 +101,26 @@
 			<result type="tiles" name="EC_PROD_GROUP">ec.copy.prod.group.filter.prod.list.view</result>
 		</action>
 		
+		<!-- 編輯商品組合篩選條件與商品組合清單view-->
+		<action name="editProdGroupFilterItem" class="CatalogProdGroupAction" method="editProdGroupFilterItem">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="EC_PROD_GROUP">ec.edit.prod.group.filter.prod.list.view</result>
+		</action>
+		
 	
 		<!-- 建立商品組合目錄 -->
 		<action name="addCatalogProdGroup" class="CatalogProdGroupAjax" method="addCatalogProdGroupAjax">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+		    <result type="json" name="success">
+				<param name="root">resultMap</param>
+	       	</result>  
+		</action>
+		
+			
+		<!-- 編輯商品組合目錄 -->
+		<action name="editCatalogProdGroupAjax" class="CatalogProdGroupAjax" method="editCatalogProdGroupAjax">
 			<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="adPrivilegeInterceptor" />
 		    <result type="json" name="success">

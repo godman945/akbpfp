@@ -348,7 +348,72 @@ public class CatalogProdGroupAction  extends BaseCookieAction{
 	}
 	
 
-	
+	/**
+	 * 編輯商品組合篩選資料
+	 */
+	public String editProdGroupFilterItem() {
+		try {
+			log.info(">>> catalogSeq: " + catalogSeq);
+			log.info(">>> catalogGroupSeq: " + catalogGroupSeq);
+			
+			pfpCatalogList = pfpCatalogService.getPfpCatalogList(super.getCustomer_info_id());
+			customerInfoTitle = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getCustomerInfoTitle();
+			
+			catalogGroupName = pfpCatalogGroupService.getPfpCatalogGroup(catalogGroupSeq).getCatalogGroupName();
+			
+			//撈出商品組合篩選資料
+			ProdGroupFilterItemList = pfpCatalogGroupItemService.getPfpCatalogGroupItemList(catalogGroupSeq);
+
+			//全部商品組合數量
+			pfpCatalog =  pfpCatalogService.getPfpCatalog(catalogSeq);
+			//商品組合ID 的目錄型態
+			EnumProdGroupFactory enumProdGroupFactory = EnumProdGroupFactory.getCatalogName(pfpCatalog.getCatalogType());
+			log.info(">>> enumProdGroupFactory: " + enumProdGroupFactory);
+			if (enumProdGroupFactory == null) {
+				returnMsg = "目錄型態不正確";
+				return ERROR;
+			}
+			
+			// 商品組合ID 的目錄型態
+			String catalogType = pfpCatalogService.getPfpCatalog(catalogSeq).getCatalogType();
+			log.info(">>> catalogType: " + catalogType);
+
+			enumProdGroupFactory = EnumProdGroupFactory.getCatalogName(catalogType);
+			log.info(">>> enumProdGroupFactory: " + enumProdGroupFactory);
+
+			String catalogName = enumProdGroupFactory.getCatalogName();
+			log.info(">>> catalogName: " + catalogName);
+
+			AProdGroup aProdGroup = prodGroupFactory.getAProdGroupObj(catalogName);
+			
+			// 依據商品篩選條件撈出商品組合清單
+			String filterSQL = aProdGroup.pfpCatalogGroupItemTofilterSQL(ProdGroupFilterItemList);
+
+			// 撈出該商品組合篩選條件的list商品
+			ProdGroupConditionVO prodGroupConditionVO = new ProdGroupConditionVO();
+			prodGroupConditionVO.setCatalogSeq(catalogSeq);
+			prodGroupConditionVO.setPfpCustomerInfoId(super.getCustomer_info_id());
+			prodGroupConditionVO.setPage(currentPage);
+			prodGroupConditionVO.setPageSize(pageSizeSelected);
+			prodGroupConditionVO.setFilterSQL(filterSQL);
+			// 商品清單資料
+			prodList = aProdGroup.getProdGroupList(prodGroupConditionVO);
+			// 商品清單資料總筆數
+			totalCount = Integer.valueOf(aProdGroup.getProdGroupCount(catalogSeq, filterSQL));
+			// 總頁數
+			pageCount = (int) Math.ceil((float) totalCount / pageSizeSelected);
+
+			// 依據商品目錄型態回傳各別ftl(一般購物類、訂房住宿類、交通航班類、房產租售類)
+			returnFtlName = enumProdGroupFactory.getCatalogName();
+
+		} catch (Exception e) {
+			log.error("error:" + e);
+			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
+			return ERROR;
+		}
+		
+		return returnFtlName;
+	}
 	
 	
 

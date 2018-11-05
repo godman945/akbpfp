@@ -16,8 +16,8 @@ public class PfpCatalogGroupItemService extends BaseService<PfpCatalogGroupItem,
 		return pfpCatalogGroupItems;
 	}
 	
-	public List<Map<String,Object>> getCatalogAllGroupItem(String catalogSeq) throws Exception{
-		return ((IPfpCatalogGroupItemDAO)dao).getCatalogAllGroupItem(catalogSeq);
+	public List<Map<String,Object>> getCatalogAllGroupItem(String catalogSeq, String catalogGroupSeq) throws Exception{
+		return ((IPfpCatalogGroupItemDAO)dao).getCatalogAllGroupItem(catalogSeq,catalogGroupSeq);
 	}
 	
 	public void deleteCatalogGroupItem(String catalogGroupSeq) throws Exception{

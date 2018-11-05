@@ -11,7 +11,7 @@ public interface IPfpCatalogGroupItemService extends IBaseService<PfpCatalogGrou
 	
 	public List<PfpCatalogGroupItem> getPfpCatalogGroupItemList(String catalogGroupSeq) throws Exception;
 	
-	public List<Map<String,Object>> getCatalogAllGroupItem(String catalogSeq) throws Exception;
+	public List<Map<String,Object>> getCatalogAllGroupItem(String catalogSeq, String catalogGroupSeq) throws Exception;
 	
 	public void deleteCatalogGroupItem(String catalogGroupSeq) throws Exception;
 	
