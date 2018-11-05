@@ -31,5 +31,9 @@ public class BookingProdGroup extends AProdGroup {
 		return null;
 	}
 	
+	public List<String> queryCategoryGroupByVal(String catalogSeq) throws Exception{
+		return null;
+	}
+	
 	
 }

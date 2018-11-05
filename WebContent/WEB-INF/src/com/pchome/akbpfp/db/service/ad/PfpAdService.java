@@ -484,6 +484,13 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 		}
 		return adReportVOList;
 	}
+	
+	
+	public void updateAdStatusByCatalogGroupSeq(String catalogGroupSeq, String adStatus) throws Exception {
+		((PfpAdDAO)dao).updateAdStatusByCatalogGroupSeq(catalogGroupSeq, adStatus);
+	}
+	
+	
 
 	public IPfpCatalogLogoService getPfpCatalogLogoService() {
 		return pfpCatalogLogoService;

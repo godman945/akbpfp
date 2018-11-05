@@ -49,7 +49,7 @@
                             <!-- 組合名稱 -->
                             <p>商品組合名稱</p>
                             <div class="input-text">
-                                <input type="text" id="catalogGroupName" name="" maxlength="20" value="" required placeholder="填寫組合名稱，最多20字">
+                                <input type="text" id="catalogGroupName" name="" maxlength="20" value="${catalogGroupName!}" required placeholder="填寫組合名稱，最多20字">
                                 <div id="groupNameMsgError" class="msg-error" style="display:none">請填寫組合名稱</div>
                             </div>
 
@@ -236,7 +236,7 @@
             <!-- 建立or取消按鈕 開始 -->            
             <div class="button-box w-900 txt-center p-tb60">
                 <div class="link-button"><a href="queryCatalogGroup.html?catalogSeq=${catalogSeq}">取消</a></div>
-                <div class="input-button" id = "addCatalogProdGroup"><input type="button" value="建立商品組合"></div>
+                <div class="input-button" id = "editCatalogProdGroup"><input type="button" value="編輯商品組合"></div>
             </div>
             <!-- 建立or取消按鈕 結束 --> 
 
@@ -249,5 +249,6 @@
     </div>
 
 	<input id="catalogSeqData" type="hidden" value="${catalogSeq}">
+	<input id="catalogGroupSeq" type="hidden" value="${catalogGroupSeq}">
 	
 	

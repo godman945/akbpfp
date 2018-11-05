@@ -1,12 +1,11 @@
 package com.pchome.akbpfp.db.dao.ad;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
@@ -157,6 +156,25 @@ public class PfpAdDetailDAO extends BaseDAO<PfpAdDetail,String> implements IPfpA
         }
 		List<PfpAdDetail> pfpAdDetails = q.list();
 		return pfpAdDetails;
+	}
+	
+	
+	public String checkCatalogGroupAdStatusCount(String catalogGroupSeq, String prodGroup ) throws Exception{
+		
+		StringBuffer hql = new StringBuffer();
+		hql.append(" select count(*) ");
+		hql.append(" from pfp_ad_detail ");
+		hql.append(" where 1=1 ");
+		hql.append(" and ad_detail_content = '"+catalogGroupSeq+"' ");
+		hql.append(" and ad_detail_id = '"+prodGroup+"' ");
+		
+		log.info(hql.toString());
+
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		String prodListCount = String.valueOf(query.list().get(0));
+		
+		return prodListCount;
+		
 	}
 	
 }

@@ -220,6 +220,8 @@
     	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" /> 
     	<property name="pfpAdSpecificWebsiteService" ref="PfpAdSpecificWebsiteService" />
     	<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" />
+    	<property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+    	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
     	<property name="sysPriceAdPoolSeq" value="${ad.sysprice.adPoolSeq}" />
     </bean>

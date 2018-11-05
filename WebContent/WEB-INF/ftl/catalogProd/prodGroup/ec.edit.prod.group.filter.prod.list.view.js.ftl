@@ -6,12 +6,13 @@
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.floatingscroll.min.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/clipboard.min.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.ba-dotimeout.min.js"></script>
-	<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/prodGroup/ec/ec.prod.group.filter.prod.list.view.js?t=20180917001"></script>
-	
-
+	<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/prodGroup/ec/ec.edit.prod.group.filter.prod.list.view.js?t=20180917001"></script>
 	
 	
-	<link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+	
+	
+	
+	 <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
  <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
   <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
   <link rel="stylesheet" href="jqueryui/style.css">
@@ -23,3 +24,6 @@
     line-height: 1.5;
   }
   </style>
+  
+	
+	

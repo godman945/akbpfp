@@ -1059,4 +1059,14 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		return query.list();
 		
 	}
+	
+	
+	public void updateAdStatusByCatalogGroupSeq(String catalogGroupSeq, String adStatus) throws Exception {
+		String sql = " update pfp_ad set ad_status = :adStatus where ad_seq in (select ad_seq from  pfp_ad_detail where 1 =1 and ad_detail_content = :catalogGroupSeq and ad_detail_id = 'prod_group') ";
+		log.info(sql);
+		
+        Session session = getSession();
+        session.createSQLQuery(sql).setString("catalogGroupSeq", catalogGroupSeq).setString("adStatus", adStatus).executeUpdate();
+        session.flush();
+	}
 }

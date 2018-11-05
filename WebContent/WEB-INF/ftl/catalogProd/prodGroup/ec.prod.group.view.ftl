@@ -36,19 +36,6 @@
 
         <!-- 選擇商品資料來源 開始 -->
         <div class="content-wrap bg-white">
-            <div class="content-box bg-white w-900">
-
-                <div class="portfolio-header pos-relative transition-all">
-                    <p class="portfolio-title p-t15 p-b25">商品組合<small>使用篩選條件建立商品組合，以決定廣告中的商品項目。</small></p>
-                    <p class="portfolio-name p-tb25">全部商品<small>${catalogProdAllNum!}項商品</small></p>
-
-                    <!-- 新增按鈕 開始 -->
-                    <div class="btn-create pos-absolute pos-right">
-                        <a href="queryProdGroupFilterProdList.html?catalogSeq=${catalogSeq}&catalogGroupSeq=${catalogGroupSeq!}" ><em></em></a>
-                    </div>
-                    <!-- 新增按鈕 結束 -->
-
-                </div>
 
                 <div class="portfolio-wrap m-b30 transition-all">
                     <div class="portfolio-box txt-noselect p-b50 pos-relative">
@@ -57,20 +44,48 @@
                         <#if pfpCatalogGroupVOList?exists>
                         	<#if pfpCatalogGroupVOList?size != 0>
                         		<#list pfpCatalogGroupVOList as dataVo>
-			                        <div class="portfolio-item" onclick="$(this).toggleClass('opened')">
-			                            <div class="txt-row">
-			                                <div class="txt-cell col-protfolioname">
-			                                    <em class="icon-arrow-r"></em>${dataVo.catalogGroupName!}
-			                                </div>
-			                                <div class="txt-cell col-quantity"><a href="queryProdGroupList.html?catalogGroupSeq=${dataVo.catalogGroupSeq!}&currentPage=1&pageSizeSelected=10">${dataVo.catalogProdNum!}項商品</a></div>
-			                                <div class="txt-cell col-addnew"><a href="javascript:void(0)" onclick="stopBubble(event);createPortfolio('${catalogSeq}','${dataVo.catalogGroupSeq!}')"></a></div>
-			                                <div class="txt-cell col-delete"><a href="#" value="${dataVo.catalogGroupSeq!}" onclick="deleteCatalogGroupAjax(this)" ></a></div>
-			                            </div>
-			                            <div class="col-detail">
-			                            	${dataVo.filterContent!}
-			                               <!-- <span>商品類型：<b><em>不屬於</em>硬殼行李箱</b></span> -->
-			                            </div>
-			                        </div>
+	                        		<#if dataVo.catalogGroupName == "全部商品">
+	                        			<div class="content-box bg-white w-900">
+			                					<div class="portfolio-header pos-relative transition-all">
+			                    				<p class="portfolio-title p-t15 p-b25">商品組合<small>使用篩選條件建立商品組合，以決定廣告中的商品項目。</small></p>
+												<div class="portfolio-item" >
+							    				<div class="txt-row">
+										   		<div class="txt-cell col-protfolioname">
+										        	<em class="icon-arrow-r"></em>全部商品(${dataVo.catalogGroupSeq!})
+										        </div>
+									        	<div class="txt-cell col-quantity"><a href="prodListCardStyleView.html?catalogSeq=${catalogSeq}&currentPage=1&pageSizeSelected=10">${dataVo.catalogProdNum!}項商品</a></div>
+												<div class="txt-cell col-addnew" style="visibility:hidden"></div>
+										        <div class="txt-cell col-delete" style="visibility:hidden"></div>
+							        			</div>
+												</div>
+	
+							                    <!-- 新增按鈕 開始 -->
+							                    <div class="btn-create pos-absolute pos-right">
+							                        <a href="queryProdGroupFilterProdList.html?catalogSeq=${catalogSeq}&catalogGroupSeq=${catalogGroupSeq!}&currentPage=1&pageSizeSelected=4" ><em></em></a>
+							                    </div>
+							                    <!-- 新增按鈕 結束 -->
+	                					</div>
+	                        		<#else>
+				                        <div class="portfolio-item" onclick="$(this).toggleClass('opened')">
+				                            <div class="txt-row">
+				                                <div class="txt-cell col-protfolioname">
+				                                    <em class="icon-arrow-r"></em>${dataVo.catalogGroupName!} (${dataVo.catalogGroupSeq!})
+				                                </div>
+				                                <div class="txt-cell col-quantity"><a href="queryProdGroupList.html?catalogGroupSeq=${dataVo.catalogGroupSeq!}&currentPage=1&pageSizeSelected=10">${dataVo.catalogProdNum!}項商品</a></div>
+				                                <!-- <div class="txt-cell col-addnew"><a href="javascript:void(0)" onclick="stopBubble(event);createPortfolio('${catalogSeq}','${dataVo.catalogGroupSeq!}')"></a></div> -->
+				                                <div class="txt-cell col-addnew"><a href="javascript:void(0)" onclick="stopBubble(event);editPortfolio('${catalogSeq}','${dataVo.catalogGroupSeq!}')"></a></div>
+				                                <div class="txt-cell col-delete"><a href="#" value="${dataVo.catalogGroupSeq!}" onclick="checkCatalogGroupAdStatus(this)" ></a></div>
+				                            	
+				                            	 
+				                            	
+				                            </div>
+				                           
+				                            <div class="col-detail">
+				                            	${dataVo.filterContent!}
+				                               <!-- <span>商品類型：<b><em>不屬於</em>硬殼行李箱</b></span> -->
+				                            </div>
+				                        </div>
+				                    </#if>	    
 			                	</#list> 
 			               	<#else>
 			               		<div class="portfolio-item empty txt-center">

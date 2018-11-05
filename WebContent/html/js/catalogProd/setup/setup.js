@@ -35,11 +35,11 @@ function submitSetup(){
 			"cropType":cropType
 		},
 		success : function(respone) {
-			console.log(respone);
-			if(respone == "success"){
+			if(JSON.parse(respone).result == "success"){
+				alert("儲存成功");
 //				$(location).attr('href','adAddFinish.html?adGroupSeq='+$("#adGroupSeq").val());	
 			} else {
-				alert(respone);
+				alert("系統繁忙，請稍後再試！");
 			}
 		},
 		error: function(xtl) {

@@ -126,4 +126,6 @@ public interface IPfpAdDAO extends IBaseDAO<PfpAd,String>{
 	public HashMap<String, Object> getAdReportByAdsList(String customerInfoId, String adGroupSeq, List<String> adSeqList, int adType, Date startDate, Date endDate) throws Exception;
 
 	public List<PfpAd> validAdAd(String adGroupSeq) throws Exception;
+	
+	public void updateAdStatusByCatalogGroupSeq(String catalogGroupSeq, String adStatus) throws Exception;
 }

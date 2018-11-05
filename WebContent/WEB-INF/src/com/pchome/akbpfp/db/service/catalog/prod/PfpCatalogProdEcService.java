@@ -177,5 +177,19 @@ public class PfpCatalogProdEcService extends BaseService<PfpCatalogProdEc,Intege
 		return prodBeanLists;
 		
 	}
+	
+	public List<String> queryCategoryGroupByVal(String catalogSeq)  throws Exception{
+		List<Map<String,Object>>  categoryMapList = ((IPfpCatalogProdEcDAO)dao).queryCategoryGroupByVal(catalogSeq);
+		List<String> categoryList = new ArrayList<String>();
+		
+		if( (!categoryMapList.isEmpty()) && (categoryMapList.size()>0) ){
+			for (Object object : categoryMapList) {
+				Map obj = (Map) object;
+				String category= obj.get("ec_category").toString(); 
+				categoryList.add(category);
+			}
+		}
+		return categoryList;
+	}
 
 }

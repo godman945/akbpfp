@@ -132,6 +132,12 @@ public class EcProdGroup extends AProdGroup {
 	
 	
 	
+	public List<String> queryCategoryGroupByVal(String catalogSeq) throws Exception{
+		return pfpCatalogProdEcService.queryCategoryGroupByVal(catalogSeq);
+	}
+	
+	
+	
 	
 	public void setPfpCatalogProdEcService(PfpCatalogProdEcService pfpCatalogProdEcService) {
 		this.pfpCatalogProdEcService = pfpCatalogProdEcService;

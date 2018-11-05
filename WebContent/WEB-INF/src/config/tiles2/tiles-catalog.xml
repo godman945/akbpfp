@@ -116,6 +116,18 @@
     	<put-attribute name="js" value="/ftl/catalogProd/prodGroup/ec.copy.prod.group.filter.prod.list.view.js.ftl" />
     </definition>
 	<!-- 複製商品組合篩選條件與商品組合清單view End-->
+	
+	<!-- 編輯商品組合篩選條件與商品組合清單view Start-->
+	<definition name="ec.edit.prod.group.filter.prod.list.view" extends="catalog.prod.layout">
+	 	<put-attribute name="head" value="ec.edit.prod.group.filter.prod.list.head" />
+        <put-attribute name="body" value="/ftl/catalogProd/prodGroup/ec.edit.prod.group.filter.prod.list.view.ftl" />
+    </definition>
+    
+    <definition name="ec.edit.prod.group.filter.prod.list.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
+    	<put-attribute name="js" value="/ftl/catalogProd/prodGroup/ec.edit.prod.group.filter.prod.list.view.js.ftl" />
+    </definition>
+	<!-- 編輯商品組合篩選條件與商品組合清單view End-->
 <!-- 商品清單、商品組合 End -->	
 	
 	

@@ -101,9 +101,26 @@
 			<result type="tiles" name="EC_PROD_GROUP">ec.copy.prod.group.filter.prod.list.view</result>
 		</action>
 		
+		<!-- 編輯商品組合篩選條件與商品組合清單view-->
+		<action name="editProdGroupFilterItem" class="CatalogProdGroupAction" method="editProdGroupFilterItem">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="tiles" name="EC_PROD_GROUP">ec.edit.prod.group.filter.prod.list.view</result>
+		</action>
+		
 	
 		<!-- 建立商品組合目錄 -->
 		<action name="addCatalogProdGroup" class="CatalogProdGroupAjax" method="addCatalogProdGroupAjax">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+		    <result type="json" name="success">
+				<param name="root">resultMap</param>
+	       	</result>  
+		</action>
+		
+			
+		<!-- 編輯商品組合目錄 -->
+		<action name="editCatalogProdGroupAjax" class="CatalogProdGroupAjax" method="editCatalogProdGroupAjax">
 			<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="adPrivilegeInterceptor" />
 		    <result type="json" name="success">
@@ -121,15 +138,22 @@
 	       	</result> 
 		</action>
 	
+		<!-- 檢查廣告是否有綁定的商品組合 -->
+		<action name="checkCatalogGroupAdStatus" class="CatalogProdGroupAjax" method="checkCatalogGroupAdStatusAjax">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+		    <result type="json" name="success">
+				<param name="root">resultMap</param>
+	       	</result> 
+		</action>
 		
 		<!-- 刪除商品組合群組 -->
 		<action name="deleteCatalogGroup" class="CatalogProdGroupAjax" method="deleteCatalogGroupAjax">
 			<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="adPrivilegeInterceptor" />
-			<result type="json" name="success">
-				<param name="noCache">true</param>
-				<param name="contentType">text/html</param>
-			</result>
+		    <result type="json" name="success">
+				<param name="root">resultMap</param>
+	       	</result> 
 		</action>
 	
 	
@@ -139,6 +163,15 @@
 			<interceptor-ref name="adPrivilegeInterceptor" />
 			<result type="tiles" name="EC_PROD_GROUP">ec.prod.group.filter.prod.list.view</result>
 		</action>
+		
+		<!--取得目錄分類資料Ajax-->
+	    <action name="queryCategoryGroupByVal" class="CatalogProdGroupAjax" method="queryCategoryGroupByValAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
 	<!-- 商品清單、商品組合 End -->
 	
 		

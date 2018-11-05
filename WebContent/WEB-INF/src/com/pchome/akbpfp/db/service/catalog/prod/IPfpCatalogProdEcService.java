@@ -24,5 +24,7 @@ public interface IPfpCatalogProdEcService extends IBaseService<PfpCatalogProdEc,
 	
 	public List<Object> getEcProdGroupList(ProdGroupConditionVO prodGroupConditionVO) throws Exception;
 	
+	public List<String> queryCategoryGroupByVal(String catalogSeq)  throws Exception;
+	
 	
 }

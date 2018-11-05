@@ -113,6 +113,7 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" where 1 = 1 ");
 		hql.append(" and catalog_seq =  '" + catalogSeq + "' ");
 		hql.append(" and ec_status = '"+EnumEcStatusType.Open_Prod.getType()+"' ");
+		hql.append(" and ec_check_status  = '"+EnumEcCheckStatusType.Reviewed_Passed.getType()+"' ");
 		hql.append( filterSQL );
 		
 		log.info(hql.toString());
@@ -158,6 +159,7 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" where a.catalog_seq = '"+prodGroupConditionVO.getCatalogSeq()+"' ");
 		hql.append(" and b.pfp_customer_info_id = '"+prodGroupConditionVO.getPfpCustomerInfoId()+"' ");
 		hql.append(" and a.ec_status = '"+EnumEcStatusType.Open_Prod.getType()+"' ");
+		hql.append(" and a.ec_check_status  = '"+EnumEcCheckStatusType.Reviewed_Passed.getType()+"' ");
 		hql.append(prodGroupConditionVO.getFilterSQL());
 		
 		log.info(hql.toString());
@@ -165,6 +167,23 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		Query query = super.getSession().createSQLQuery(hql.toString());
 		query.setFirstResult((prodGroupConditionVO.getPage()-1)*prodGroupConditionVO.getPageSize());
 		query.setMaxResults(prodGroupConditionVO.getPageSize());
+		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
+		
+		return query.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String,Object>> queryCategoryGroupByVal(String catalogSeq)  throws Exception{
+		StringBuffer hql = new StringBuffer();
+		hql.append(" select ec_category ");
+		hql.append(" from pfp_catalog_prod_ec ");
+		hql.append(" where 1=1 ");
+		hql.append(" and catalog_seq = '"+catalogSeq+"' ");
+		hql.append(" group by ec_category ");
+		
+		log.info(hql.toString());
+
+		Query query = super.getSession().createSQLQuery(hql.toString());
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
 		
 		return query.list();
