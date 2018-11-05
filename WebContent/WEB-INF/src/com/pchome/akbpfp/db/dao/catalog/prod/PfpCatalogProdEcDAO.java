@@ -159,6 +159,7 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" where a.catalog_seq = '"+prodGroupConditionVO.getCatalogSeq()+"' ");
 		hql.append(" and b.pfp_customer_info_id = '"+prodGroupConditionVO.getPfpCustomerInfoId()+"' ");
 		hql.append(" and a.ec_status = '"+EnumEcStatusType.Open_Prod.getType()+"' ");
+		hql.append(" and a.ec_check_status  = '"+EnumEcCheckStatusType.Reviewed_Passed.getType()+"' ");
 		hql.append(prodGroupConditionVO.getFilterSQL());
 		
 		log.info(hql.toString());
