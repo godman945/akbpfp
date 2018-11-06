@@ -358,6 +358,12 @@ function addCatalogProdGroupAjax(){
 	if (checkGroupName() != true){
 		return;
 	}
+	
+	//第3個欄位要有值才可新增商品組合
+	if (checkColumnValueCount() !=true){
+		alert('建立商品組合請至少填一項條件');
+		return;
+	}
   		
 	if (checkColumnValue() != true){
 		return;
@@ -668,9 +674,9 @@ function handler(e) {
 
 
 /**
-* query商品資料時確定篩選條件第3欄有值
+* 確認篩選條件第3欄是否有值
 */
-function checkConditionVal() {
+function checkColumnValueCount() {
 	var count = 0;
  	//全部群組資料
  	$(".filter-group").each(function(index,obj) {
@@ -739,7 +745,7 @@ function checkConditionVal() {
 */
 function queryProdGroupFilterListAjax(){
 	
-	if (checkConditionVal() != true){
+	if (checkColumnValueCount() != true){
 		return;
 	}
 	

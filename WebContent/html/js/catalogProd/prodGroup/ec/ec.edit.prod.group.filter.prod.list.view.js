@@ -360,6 +360,12 @@ function editCatalogProdGroupAjax(){
 	if (checkGroupName() != true){
 		return;
 	}
+	
+	//第3個欄位要有值才可新增商品組合
+	if (checkColumnValueCount() !=true){
+		alert('編輯商品組合請至少填一項條件');
+		return;
+	}
   		
 	if (checkColumnValue() != true){
 		return;
@@ -393,6 +399,73 @@ function editCatalogProdGroupAjax(){
 	    	}
 		});
 }
+
+/**
+* 確認篩選條件第3欄是否有值
+*/
+function checkColumnValueCount() {
+	var count = 0;
+ 	//全部群組資料
+ 	$(".filter-group").each(function(index,obj) {
+ 		var fieldStr ="";
+ 		var filterValStr ="";
+ 		$(obj).find(".txt-inlineblock").each(function(index2,obj2) {
+ 			//篩選第一層
+ 			if(index2 == 0){
+ 				fieldStr = $(obj2).find("select")[0].value;
+ 			}
+ 			
+ 			//篩選第三層
+ 			if(index2 == 2){
+ 				//商品ID
+ 				if (fieldStr == "catalog_prod_seq"){
+ 					filterValStr = $($(obj2).children()[0]).children()[0].value;
+ 				}
+ 				//商品名稱
+ 				if (fieldStr == "ec_name"){
+ 					filterValStr = $($(obj2).children()[0]).children()[0].value;
+ 				}
+ 				
+ 				//原價
+ 				if (fieldStr == "ec_price"){
+ 					filterValStr = $($(obj2).children()[1]).children()[0].value;
+ 				}
+ 				
+ 				//特價
+ 				if (fieldStr == "ec_discount_price"){
+ 					filterValStr = $($(obj2).children()[1]).children()[0].value;
+ 				}
+ 				
+ 				//供應情況
+ 				if (fieldStr == "ec_stock_status"){
+ 					filterValStr = $($(obj2).children()[2]).children()[0].value;
+ 				}
+ 				
+ 				//使用狀況
+ 				if (fieldStr == "ec_use_status"){
+ 					filterValStr = $($(obj2).children()[3]).children()[0].value;
+ 				}
+ 				
+ 				//類別
+ 				if (fieldStr == "ec_category"){
+ 					filterValStr = $($(obj2).children()[4]).children()[1].value;
+ 				}
+ 			}
+ 			
+ 			if (filterValStr != ""){
+ 				count = count+1;
+		 	}
+ 		});
+ 	});
+ 	console.log('count')
+ 	console.log(count)
+ 	if (count<=0){
+ 		 return false;
+ 	}else{
+ 		 return true;
+ 	}
+};
+
 
 /**
 * 檢查商品組合名稱
@@ -669,6 +742,11 @@ function handler(e) {
 * 依據商品組合篩選條件撈出符合的商品list
 */
 function queryProdGroupFilterListAjax(){
+	
+	if (checkColumnValueCount() != true){
+		return;
+	}
+	
 	console.log('query');
 	
 	$.ajax({
