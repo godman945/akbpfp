@@ -17,7 +17,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.pchome.akbpfp.db.dao.catalog.uploadErrLogList.IPfpCatalogUploadErrLogDAO;
 import com.pchome.akbpfp.db.dao.catalog.uploadList.IPfpCatalogUploadListDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
