@@ -99,19 +99,14 @@ $(document).ready(function(){
 					select: function(event, ui) {
 //						console.log(event.handleObj.type);
 						prepareConditionData('click');
-					    queryProdGroupFilterListAjax();
 					},
 					close: function(event, ui) {
 //						console.log(event.handleObj.type);
 						prepareConditionData('click');
-					    queryProdGroupFilterListAjax();
 					},
 					search: function(event, ui) {
 //						console.log(event.handleObj.type);
-						var map = new Object();
-						map["type"] = "keyup";
-						prepareConditionData(map);
-					    queryProdGroupFilterListAjax();
+						prepareConditionData("keyup");
 					},
 				}).focus(function() {
 					if (this.value == "") {
@@ -199,26 +194,26 @@ $(document).ready(function(){
 	}
 	
 	//按上一頁
-	$('.prev').click(function(e){
+	$('.prev').on('click', function() {
 		currentPage =  parseInt(currentPage)-1;
 		$('#currentPage').text(currentPage)
 		$('#pageCount').text(pageCount)
 		if (currentPage<=1){
 			$('.prev').css('display', 'none');
 		}
-        queryProdGroupFilterListAjax('prev');
+		prepareConditionData("prev");
 	 });
 	
 	
 	//按下一頁
-	$('.next').click(function(e){
+	$('.next').on('click', function() {
 		currentPage = parseInt(currentPage)+1;
 		$('#currentPage').text(currentPage)
 		$('#pageCount').text(pageCount)
 		if (currentPage>=pageCount){
 			$('.next').css('display', 'none');
 		}
-    	queryProdGroupFilterListAjax('next');
+		prepareConditionData("next");
 	 });
 	
     // 增加篩選條件
@@ -239,6 +234,7 @@ $(document).ready(function(){
     $('#editCatalogProdGroup').click(function(e){
     	editCatalogProdGroupAjax();
     })
+    
 });
 
 
@@ -400,7 +396,7 @@ function checkColumnValue() {
 /**
 * loop畫面全部篩選條件塞入全域filterContentMap
 */
-function prepareConditionData(e) {
+function prepareConditionData(event) {
 	
 	//欄位的值皆為非必填，只要求原價、特價一定要為數字
 	if (checkColumnValue() != true){
@@ -505,17 +501,18 @@ function prepareConditionData(e) {
  		if (filterValStr != ""){
  			filterContentMap.push(map);
  		}
-// 		console.log("--map222----");
-//	   	console.log(filterContentMap);
  	});
  	
+//	console.log("--map222----");
+//   	console.log(filterContentMap);
+   	
  	if (flag == true){	
-	 	if(e.type == 'keyup'){
+	 	if(event == 'keyup'){
 	 		$(this).doTimeout("findProdName", 1000, function() {
-	 			queryProdGroupFilterListAjax();
+	 			queryProdGroupFilterListAjax(event);
 			});
 	 	}else{
-	 		queryProdGroupFilterListAjax();
+	 		queryProdGroupFilterListAjax(event);
 	 	}
  	}
 };
@@ -698,7 +695,7 @@ function initPage(){
 //刪除篩選條件
 function deleteFilterCondition(event,obj){
 	obj.parent().remove();
-	prepareConditionData(event);
+	prepareConditionData("click");
 }
 
 //篩選條件畫面呈現
@@ -771,19 +768,14 @@ function filterDisplayRule(val, obj) {
 				select: function(event, ui) {
 //					console.log(event.handleObj.type);
 					prepareConditionData('click');
-					queryProdGroupFilterListAjax();
 				},
 				close: function(event, ui) {
 //					console.log(event.handleObj.type);
 					prepareConditionData('click');
-				    queryProdGroupFilterListAjax();
 				},
 				search: function(event, ui) {
 //					console.log(event.handleObj.type);
-					var map = new Object();
-					map["type"] = "keyup";
-					prepareConditionData(map);
-				    queryProdGroupFilterListAjax();
+					prepareConditionData("keyup");
 				},
 			}).focus(function() {
 				if (this.value == "") {
