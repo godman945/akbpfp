@@ -335,8 +335,6 @@ public abstract class APfpCatalogUploadListData {
 			prodItemErrorMsg = "字數限制" + ecNameLimit + "字";
 		} else if (CommonUtils.isHaveEmojiString(ecName)) {
 			prodItemErrorMsg = "內含特殊字元";
-			// 將Emoji圖片字串取代為空，寫入DB會噴錯
-			ecName = CommonUtils.getReplaceEmojiStr(ecName);
 		}
 	    
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄
@@ -369,8 +367,6 @@ public abstract class APfpCatalogUploadListData {
 				|| CommonUtils.containsSpecialSymbolsThatAreNotAllowedByFileName(catalogProdSeq)
 				|| CommonUtils.containsChineseStr(catalogProdSeq)) {
 			prodItemErrorMsg = "內含特殊字元";
-			// 將Emoji圖片字串取代為空，寫入DB會噴錯
-			catalogProdSeq = CommonUtils.getReplaceEmojiStr(catalogProdSeq);
 		}
 		
 		if (StringUtils.isNotBlank(prodItemErrorMsg)) { // 錯誤訊息非空值則記錄

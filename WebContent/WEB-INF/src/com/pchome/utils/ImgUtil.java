@@ -68,8 +68,10 @@ public class ImgUtil {
 				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 				urlConnection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
 				urlConnection.setRequestMethod("GET");
-				BufferedImage img = ImageIO.read(urlConnection.getInputStream());
+				InputStream in = urlConnection.getInputStream();
+				BufferedImage img = ImageIO.read(in);
 				ImageIO.write(img, filenameExtension, new File(imgPathAndName));
+				in.close();
 			}
 	        
 			imgPath = photoPath.substring(photoPath.indexOf("img/")) + "/" + imgFileName + "." + filenameExtension;
