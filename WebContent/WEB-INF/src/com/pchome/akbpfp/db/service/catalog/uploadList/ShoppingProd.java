@@ -89,6 +89,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		JSONArray errorPrdItemArray = new JSONArray(); // 記錄總錯誤資料
 		JSONArray pfpCatalogProdEcErrorArray = new JSONArray(); // 記錄該筆項目 主要寫入一般購物類商品上傳錯誤清單用
 		int tempErrorPrdItemArrayCount = 0; // 暫存目前總共的錯誤數量
+		int tempErrorPrdDetailItemCount = 0; // 暫存明細項目錯誤總數量
 		// 上傳方式為1:檔案上傳 2:自動排程上傳 項目編號由excel 2開始
 		int itemSeq = EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType().equals(catalogUploadType)
 				|| EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(catalogUploadType) ? 2 : 1;
@@ -122,43 +123,43 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 
 			// 檢查每個欄位  有錯塞入空值
 			JSONObject addPfpCatalogProdEcErrorObject = new JSONObject();
-			int tempErrorPrdItemLength = 0; // 暫存目前錯誤數量
 			addPfpCatalogProdEcErrorObject.put("itemSeq", itemSeq);
 			errorPrdItemArray = super.checkCatalogProdSeq(errorPrdItemArray, itemSeq, catalogProdSeq);
-			if (errorPrdItemArray.length() > tempErrorPrdItemLength) { // 有增加表示目前項目有錯，錯誤則將該筆資料設定為空格
-				tempErrorPrdItemLength = errorPrdItemArray.length();
+			// 有增加表示目前項目有錯，錯誤則將該筆資料設定為空格，如果直接將錯誤資料寫進DB，錯誤資料含emoji DB不支援的部分會直接出錯
+			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
+				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("catalogProdSeq", " ");
 			} else {
 				addPfpCatalogProdEcErrorObject.put("catalogProdSeq", catalogProdSeq);
 			}
 			
 			errorPrdItemArray = super.checkEcName(errorPrdItemArray, itemSeq, ecName);
-			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
-				tempErrorPrdItemLength = errorPrdItemArray.length();
+			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
+				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecName", " ");
 			} else {
 				addPfpCatalogProdEcErrorObject.put("ecName", ecName);
 			}
 			
 			errorPrdItemArray = super.checkEcPrice(errorPrdItemArray, itemSeq, ecPrice);
-			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
-				tempErrorPrdItemLength = errorPrdItemArray.length();
+			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
+				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecPrice", "0");
 			} else {
 				addPfpCatalogProdEcErrorObject.put("ecPrice", ecPrice);
 			}
 			
 			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, itemSeq, ecDiscountPrice, ecPrice);
-			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
-				tempErrorPrdItemLength = errorPrdItemArray.length();
+			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
+				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecDiscountPrice", "0");
 			} else {
 				addPfpCatalogProdEcErrorObject.put("ecDiscountPrice", ecDiscountPrice);
 			}
 			
 			errorPrdItemArray = super.checkEcStockStatus(errorPrdItemArray, itemSeq, ecStockStatus);
-			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
-				tempErrorPrdItemLength = errorPrdItemArray.length();
+			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
+				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecStockStatus", " ");
 			} else {
 				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.Out_Of_Stock.getChName(), EnumEcStockStatusType.Out_Of_Stock.getType());
@@ -169,8 +170,8 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			}
 			
 			errorPrdItemArray = super.checkEcUseStatus(errorPrdItemArray, itemSeq, ecUseStatus);
-			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
-				tempErrorPrdItemLength = errorPrdItemArray.length();
+			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
+				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecUseStatus", " ");
 			} else {
 				ecUseStatus = ecUseStatus.replace(EnumEcUseStatusType.New_Goods.getChName(), EnumEcUseStatusType.New_Goods.getType());
@@ -183,8 +184,8 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			String imgCompletePath = ""; // 正式圖片完整路徑
 			String addDbImgPath = ""; // 寫入DB欄位路徑
 			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, itemSeq, photoPath, catalogProdSeq, ecImgUrl, ecImgBase64, catalogUploadType);
-			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
-				tempErrorPrdItemLength = errorPrdItemArray.length();
+			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
+				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecImg", " ");
 			} else {
 				String filenameExtension = ImgUtil.getImgFilenameExtensionFromImgBase64OrImgURL(ecImgUrl, ecImgBase64);
@@ -196,21 +197,22 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			}
 			
 			errorPrdItemArray = super.checkEcUrl(errorPrdItemArray, itemSeq, ecUrl);
-			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
-				tempErrorPrdItemLength = errorPrdItemArray.length();
+			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
+				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecUrl", " ");
 			} else {
 				addPfpCatalogProdEcErrorObject.put("ecUrl", ecUrl);
 			}
 			
 			errorPrdItemArray = super.checkEcCategory(errorPrdItemArray, itemSeq, ecCategory);
-			if (errorPrdItemArray.length() > tempErrorPrdItemLength) {
-				tempErrorPrdItemLength = errorPrdItemArray.length();
+			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
+				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecCategory", " ");
 			} else {
 				addPfpCatalogProdEcErrorObject.put("ecCategory", ecCategory);
 			}
 			
+			itemSeq++; // 因為下面寫入table資料 if判斷有continue，避免沒累加到，先在這邊做這筆項目結束累加，準備進入下一筆
 			if (errorPrdItemArray.length() > tempErrorPrdItemArrayCount) {
 				// 每一次記錄錯誤陣列長度 超過 暫存的記錄長度，表示這一行資料有新增錯誤項目
 				tempErrorPrdItemArrayCount = errorPrdItemArray.length();
@@ -285,7 +287,6 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				}
 				
 			}
-			itemSeq++;
 		}
 		
 		if ("1".equals(updateWay)) { // 如果是"取代"，刪除table內，不在本次上傳的名單內資料

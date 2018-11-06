@@ -588,10 +588,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			log.info(">>> aProdGroup: " + aProdGroup);
 
 			JSONArray filterContentArray = new JSONArray(filterContentMap[0].toString());
-			if (filterContentArray.length()<=0){
-				resultMap = returnErrorMsgMap("請填選商品組合篩選條件");
-				return SUCCESS;
-			}
 			
 //			// 檢查篩選條件value是否符合型態
 //			for (int i = 0; i < filterContentArray.length(); i++) {

@@ -1,4 +1,6 @@
-﻿﻿var currentPage = 1;
+﻿var filterContentMap= [];
+var availableTags = [];
+﻿var currentPage = 1;
 var pageCount = 1;
 var totalCount = 0;
 
@@ -74,14 +76,53 @@ var defaultTemplate =
     '<!--刪除篩選 -->'+
     '<div class="icon-kill" onclick="deleteFilterCondition(event,$(this))"></div>';
 
-var availableTags = [];
 
 $(document).ready(function(){
-	
+	jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
 	//分類選單
 	initCategoryVal();
-	jQuery.browser={};(function(){jQuery.browser.msie=false; jQuery.browser.version=0;if(navigator.userAgent.match(/MSIE ([0-9]+)./)){ jQuery.browser.msie=true;jQuery.browser.version=RegExp.$1;}})();
 	
+	//初始頁碼
+	initPage();
+	
+	if($("#catalogSeqData").val() !=""){
+		$("#catalog").val($("#catalogSeqData").val());
+		
+		//針對類別條件綁定jquery查詢套件
+		var tagsArray = document.getElementsByClassName("tags");
+		$(function() {
+			$.each(tagsArray, function(index, obj){
+				$(obj).unbind();
+				$(obj).autocomplete({
+					source: availableTags,
+					minLength: 0,
+					select: function(event, ui) {
+//						console.log(event.handleObj.type);
+						prepareConditionData('click');
+					},
+					close: function(event, ui) {
+//						console.log(event.handleObj.type);
+						prepareConditionData('click');
+					},
+					search: function(event, ui) {
+//						console.log(event.handleObj.type);
+						prepareConditionData("keyup");
+					},
+				}).focus(function() {
+					if (this.value == "") {
+						$(this).autocomplete("search");
+					}
+				});
+			});
+		 });
+		
+		//新增條件重新綁定監聽
+	    $(".filter-wrap select").unbind("change");
+	    $(".filter-wrap input").unbind("keyup");
+	    
+	    $(".filter-wrap select").bind("change", prepareConditionData);
+	    $(".filter-wrap input").bind("keyup", prepareConditionData);
+	}
 	
 	//切換商品目錄
 	$("#catalog").change(function() {
@@ -152,175 +193,49 @@ $(document).ready(function(){
          })();
 	}
 	
-	//初始頁碼
-	initPage();
-	
 	//按上一頁
-	$('.prev').click(function(e){
+	$('.prev').on('click', function() {
 		currentPage =  parseInt(currentPage)-1;
 		$('#currentPage').text(currentPage)
 		$('#pageCount').text(pageCount)
 		if (currentPage<=1){
 			$('.prev').css('display', 'none');
 		}
-		//新增條件重新綁定監聽
-        $(".filter-wrap select").unbind("click");
-        $(".filter-wrap select").bind("click", handler);
-        handler(e);
-		queryProdGroupFilterListAjax();
+		prepareConditionData("prev");
 	 });
 	
 	
 	//按下一頁
-	$('.next').click(function(e){
+	$('.next').on('click', function() {
 		currentPage = parseInt(currentPage)+1;
 		$('#currentPage').text(currentPage)
 		$('#pageCount').text(pageCount)
 		if (currentPage>=pageCount){
 			$('.next').css('display', 'none');
 		}
-		//新增條件重新綁定監聽
-        $(".filter-wrap select").unbind("click");
-        $(".filter-wrap select").bind("click", handler);
-        handler(e);
-		queryProdGroupFilterListAjax();
+		prepareConditionData("next");
 	 });
 	
-	
-//	$('.prodslider-navbtn').on('click', function() {
-////        clearTimeout(slidTimeout);
-//        if($(this).hasClass('next')){
-//        	
-//            if(activeID<slid_count-1){
-//                activeID++;
-//                navigateSlide();
-//            }
-//        }else{
-//            if(activeID>0){
-//                activeID--;
-//                navigateSlide();
-//            }
-//        };
-//    });
-	
-
     // 增加篩選條件
     $('.link-addfilter').click(function(){
     	$('.filter-wrap')[0].insertAdjacentHTML('beforeend', '<div class="filter-group" data-level1="1" data-level2="1" data-level3="1">'+defaultTemplate+'</div>');
-    	
         //新增條件重新綁定監聽
         $(".filter-wrap select").unbind("change");
         $(".filter-wrap input").unbind("keyup");
-        
-        $(".filter-wrap select").bind("change", handler);
-        $(".filter-wrap input").bind("keyup", handler);
-        
+        $(".filter-wrap select").bind("change", prepareConditionData);
+        $(".filter-wrap input").bind("keyup", prepareConditionData);
     })
     
-    
-    
-	
-	if($("#catalogSeqData").val() !=""){
-//		console.log("#####################999999999");
-		$("#catalog").val($("#catalogSeqData").val());
-		
-		//針對類別條件綁定jquery查詢套件
-		var tagsArray = document.getElementsByClassName("tags");
-		$(function() {
-			$.each(tagsArray, function(index, obj){
-				$(obj).unbind();
-				$(obj).autocomplete({
-					source: availableTags,
-					minLength: 0,
-					select: function(event, ui) {
-						console.log("-------------select event-------------");
-						console.log(event);
-//						console.log(event.handleObj.type);
-						
-						handler('click');
-					    queryProdGroupFilterListAjax();
-						
-					},
-					close: function(event, ui) {
-						console.log("-------------close event-------------");
-						console.log(event);
-//						console.log(event.handleObj.type);
-						
-						handler('click');
-					    queryProdGroupFilterListAjax();
-					},
-					search: function(event, ui) {
-						console.log("-------------search search event-------------");
-						console.log(event);
-//						console.log(event.handleObj.type);
-						
-						var map = new Object();
-						map["type"] = "keyup";
-						handler(map);
-					    queryProdGroupFilterListAjax();
-					},
-				}).focus(function() {
-					if (this.value == "") {
-						$(this).autocomplete("search");
-					}
-				});
-			});
-		 });
-		
-	}
-	
     //重bind事件
-    $(".filter-wrap select").bind("change", handler);
-    $(".filter-wrap input").bind("keyup", handler);
+    $(".filter-wrap select").bind("change", prepareConditionData);
+    $(".filter-wrap input").bind("keyup", prepareConditionData);
     
-    //重bind事件
-    $("#catalogGroupName").bind("keyup", handler);
-    
-    
+    //編輯商品組合
     $('#editCatalogProdGroup').click(function(e){
     	editCatalogProdGroupAjax();
     })
     
-    
-    // 請填寫組合名稱
-    $('#catalogGroupName').click(function(){
-        //組合名稱重新綁定監聽
-        $("#catalogGroupName").unbind("keyup");
-        $("#catalogGroupName").bind("keyup", handler);
-    })
-    
 });
-
-
-//初始頁面按鈕
-function initPage(){
-	currentPage = $('#currentPage').text();
-	pageCount = $('#pageCount').text();
-	totalCount = $('#totalCount').text();
-
-	
-	$('.prev').css('display','');
-	$('.next').css('display','');
-	
-	if (pageCount==1 ){
-		$('.prev').css('display', 'none')
-		$('.next').css('display', 'none')
-	}else if(currentPage<pageCount){
-		$('.next').css('display','');
-	}
-	
-	if(currentPage==pageCount){
-		$('.next').css('display', 'none')
-	}
-	
-	if(currentPage==1){
-		$('.prev').css('display', 'none')
-	}
-	
-	$('#currentPage').text(currentPage)
-	$('#pageCount').text(pageCount)
-	
-}
 
 
 /**
@@ -348,15 +263,11 @@ function initCategoryVal(){
 		});
 }
 
-
-//全域
-var filterContentMap= [];
-
 /**
 * 編輯商品組合篩選條件Ajax
 */
 function editCatalogProdGroupAjax(){
-	
+	//檢查商品組合名稱
 	if (checkGroupName() != true){
 		return;
 	}
@@ -366,12 +277,14 @@ function editCatalogProdGroupAjax(){
 		alert('編輯商品組合請至少填一項條件');
 		return;
 	}
-  		
+	
+	//欄位的值皆為非必填，只要求原價、特價一定要為數字
 	if (checkColumnValue() != true){
 		return;
 	}
 		
-		handler('click');
+	//篩選條件塞filterContentMap
+	prepareConditionData('click');
 		
 		$.ajax({
 		    type: "post",
@@ -392,13 +305,217 @@ function editCatalogProdGroupAjax(){
 			}
 		}).done(function (response) {
 	    	if (response.status=="SUCCESS"){
-//	    		alert(response.msg)
 	    		$(location).attr( 'href' ,"queryCatalogGroup.html?catalogSeq="+ $('#catalog option:selected').val());
 	    	}else{
 	    		alert(response.msg)
 	    	}
 		});
 }
+
+/**
+* 檢查商品組合名稱
+*/
+function checkGroupName() {
+	var checkFlag = true;
+	
+	if ($('#catalogGroupName').val() == ""){
+		$('#groupNameMsgError').css("display", "");
+		checkFlag = false;
+	}else{
+		$('#groupNameMsgError').css("display", "none");
+	}
+	
+	return checkFlag;
+};
+
+
+/**
+* 新增商品組合前檢查欄位(欄位的值皆為非必填，只要求原價、特價一定要為數字)
+*/
+function checkColumnValue() {
+	var checkFlag = true;
+ 	$(".filter-group").each(function(index,obj) {
+ 		var fieldStr ="";
+ 		var conditionStr ="";
+ 		var filterValStr ="";
+ 		$(obj).find(".txt-inlineblock").each(function(index2,obj2) {
+ 			//篩選第一層
+ 			if(index2 == 0){
+ 				fieldStr = $(obj2).find("select")[0].value;
+ 			}
+ 			
+ 			//篩選第三層
+ 			if(index2 == 2){
+// 				//商品ID
+// 				if (fieldStr == "catalog_prod_seq"){
+// 					filterValStr = $($(obj2).children()[0]).children()[0].value;
+// 				}
+// 				//商品名稱
+// 				if (fieldStr == "ec_name"){
+// 					filterValStr = $($(obj2).children()[0]).children()[0].value;
+// 				}
+ 				//原價
+ 				if (fieldStr == "ec_price"){
+ 					filterValStr = $($(obj2).children()[1]).children()[0].value;
+ 					if ( (isNaN(filterValStr)) ){
+ 						$($($(obj2).children()[1]).children()[1]).css("display", "");
+ 						checkFlag = false;
+ 					}else{
+ 						$($($(obj2).children()[1]).children()[1]).css("display", "none");
+ 					}
+ 				}
+ 				//特價
+ 				if (fieldStr == "ec_discount_price"){
+ 					filterValStr = $($(obj2).children()[1]).children()[0].value;
+ 					if ((isNaN(filterValStr)) ){
+ 						$($($(obj2).children()[1]).children()[1]).css("display", "");
+ 						checkFlag = false;
+ 					}else{
+ 						$($($(obj2).children()[1]).children()[1]).css("display", "none");
+ 					}
+ 				}
+// 				//供應情況
+// 				if (fieldStr == "ec_stock_status"){
+// 					filterValStr = $($(obj2).children()[2]).children()[0].value;
+// 				}
+// 				//使用狀況
+// 				if (fieldStr == "ec_use_status"){
+// 					filterValStr = $($(obj2).children()[3]).children()[0].value;
+// 				}
+// 				//類別
+// 				if (fieldStr == "ec_category"){
+// 					filterValStr = $($(obj2).children()[4]).children()[1].value;
+// 				}
+ 			}
+ 		});
+ 	});
+ 	
+ 	return checkFlag; 
+};
+
+/**
+* loop畫面全部篩選條件塞入全域filterContentMap
+*/
+function prepareConditionData(event) {
+	
+	//欄位的值皆為非必填，只要求原價、特價一定要為數字
+	if (checkColumnValue() != true){
+		return;
+	}
+		
+	filterContentMap = [];
+	var flag = true;
+ 	//全部群組資料
+ 	$(".filter-group").each(function(index,obj) {
+ 		var map = new Object();
+ 		var fieldStr ="";
+ 		var conditionStr ="";
+ 		var filterValStr ="";
+ 		$(obj).find(".txt-inlineblock").each(function(index2,obj2) {
+ 			//篩選第一層
+ 			if(index2 == 0){
+ 				fieldStr = $(obj2).find("select")[0].value;
+ 				//第1層值塞map
+ 				map["field"] = fieldStr;
+ 			}
+ 			
+ 			//篩選第二層
+ 			if(index2 == 1){
+ 				//商品ID
+ 				if (fieldStr == "catalog_prod_seq"){
+ 					conditionStr = $($(obj2).children()[0]).children()[0].value;
+ 				}
+ 				//商品名稱
+ 				if (fieldStr == "ec_name"){
+ 					conditionStr = $($(obj2).children()[0]).children()[0].value;
+ 				}
+ 				//原價
+ 				if (fieldStr == "ec_price"){
+ 					conditionStr = $($(obj2).children()[1]).children()[0].value;
+ 				}
+ 				//特價
+ 				if (fieldStr == "ec_discount_price"){
+ 					conditionStr = $($(obj2).children()[1]).children()[0].value;
+ 				}
+ 				//供應情況
+ 				if (fieldStr == "ec_stock_status"){
+ 					conditionStr = $($(obj2).children()[2]).children()[0].value;
+ 				}
+ 				
+ 				//使用狀況
+ 				if (fieldStr == "ec_use_status"){
+ 					conditionStr = $($(obj2).children()[2]).children()[0].value;
+ 				}
+ 				
+ 				//類別
+ 				if (fieldStr == "ec_category"){
+ 					conditionStr = $($(obj2).children()[2]).children()[0].value;
+ 				}
+ 				//第2層值塞map
+ 				map["condition"] = conditionStr;
+ 			}
+ 			
+ 			//篩選第三層
+ 			if(index2 == 2){
+ 				//商品ID
+ 				if (fieldStr == "catalog_prod_seq"){
+ 					filterValStr = $($(obj2).children()[0]).children()[0].value;
+ 				}
+ 				//商品名稱
+ 				if (fieldStr == "ec_name"){
+ 					filterValStr = $($(obj2).children()[0]).children()[0].value;
+ 				}
+ 				
+ 				//原價
+ 				if (fieldStr == "ec_price"){
+ 					filterValStr = $($(obj2).children()[1]).children()[0].value;
+ 				}
+ 				
+ 				//特價
+ 				if (fieldStr == "ec_discount_price"){
+ 					filterValStr = $($(obj2).children()[1]).children()[0].value;
+ 				}
+ 				
+ 				//供應情況
+ 				if (fieldStr == "ec_stock_status"){
+ 					filterValStr = $($(obj2).children()[2]).children()[0].value;
+ 				}
+ 				
+ 				//使用狀況
+ 				if (fieldStr == "ec_use_status"){
+ 					filterValStr = $($(obj2).children()[3]).children()[0].value;
+ 				}
+ 				
+ 				//類別
+ 				if (fieldStr == "ec_category"){
+ 					filterValStr = $($(obj2).children()[4]).children()[1].value;
+ 				}
+ 				
+ 				//第3層值塞map
+ 				map["value"] = filterValStr;
+ 				
+ 			}
+ 		});
+	
+ 		//篩選條件map
+ 		if (filterValStr != ""){
+ 			filterContentMap.push(map);
+ 		}
+ 	});
+ 	
+//	console.log("--map222----");
+//   	console.log(filterContentMap);
+   	
+ 	if (flag == true){	
+	 	if(event == 'keyup'){
+	 		$(this).doTimeout("findProdName", 1000, function() {
+	 			queryProdGroupFilterListAjax(event);
+			});
+	 	}else{
+	 		queryProdGroupFilterListAjax(event);
+	 	}
+ 	}
+};
 
 /**
 * 確認篩選條件第3欄是否有值
@@ -457,8 +574,8 @@ function checkColumnValueCount() {
 		 	}
  		});
  	});
- 	console.log('count')
- 	console.log(count)
+// 	console.log('count')
+// 	console.log(count)
  	if (count<=0){
  		 return false;
  	}else{
@@ -466,288 +583,18 @@ function checkColumnValueCount() {
  	}
 };
 
-
-/**
-* 檢查商品組合名稱
-*/
-function checkGroupName() {
-	var checkFlag = true;
-	
-	if ($('#catalogGroupName').val() == ""){
-		$('#groupNameMsgError').css("display", "");
-		checkFlag = false;
-	}else{
-		$('#groupNameMsgError').css("display", "none");
-	}
-	
-	return checkFlag;
-};
-
-
-
-/**
-* 新增商品組合前檢查欄位
-*/
-function checkColumnValue() {
-	var checkFlag = true;
-//	alert('check')
- 	//如果資料值為空，不撈db
- 	$(".filter-group").each(function(index,obj) {
-// 		alert('in ckeck')
-// 		console.log('22222')
- 		var fieldStr ="";
- 		var conditionStr ="";
- 		var filterValStr ="";
- 		$(obj).find(".txt-inlineblock").each(function(index2,obj2) {
-// 			alert('in ckeck1')
- 			//篩選第一層
- 			if(index2 == 0){
- 				fieldStr = $(obj2).find("select")[0].value;
- 			}
- 			
- 			//篩選第三層
- 			if(index2 == 2){
- 				//商品ID
- 				if (fieldStr == "catalog_prod_seq"){
- 					filterValStr = $($(obj2).children()[0]).children()[0].value;
-// 					if (filterValStr == ""){
-// 						$($($(obj2).children()[0]).children()[1]).css("display", "");
-// 						 checkFlag = false;
-// 					}else{
-// 						$($($(obj2).children()[0]).children()[1]).css("display", "none");
-// 					}
- 				}
- 				//商品名稱
- 				if (fieldStr == "ec_name"){
- 					filterValStr = $($(obj2).children()[0]).children()[0].value;
-// 					if (filterValStr == ""){
-// 						$($($(obj2).children()[0]).children()[1]).css("display", "");
-// 						checkFlag = false;
-// 					}else{
-// 						$($($(obj2).children()[0]).children()[1]).css("display", "none");
-// 					}
- 				}
- 				
- 				//原價
- 				if (fieldStr == "ec_price"){
- 					filterValStr = $($(obj2).children()[1]).children()[0].value;
- 					if ( (isNaN(filterValStr)) ){
- 						$($($(obj2).children()[1]).children()[1]).css("display", "");
- 						checkFlag = false;
- 					}else{
- 						$($($(obj2).children()[1]).children()[1]).css("display", "none");
- 					}
-// 					if ( (filterValStr == "") || (isNaN(filterValStr)) ){
-// 						$($($(obj2).children()[1]).children()[1]).css("display", "");
-// 						checkFlag = false;
-// 					}else{
-// 						$($($(obj2).children()[1]).children()[1]).css("display", "none");
-// 					}
- 				}
- 				
- 				//特價
- 				if (fieldStr == "ec_discount_price"){
- 					filterValStr = $($(obj2).children()[1]).children()[0].value;
- 					if ((isNaN(filterValStr)) ){
- 						$($($(obj2).children()[1]).children()[1]).css("display", "");
- 						checkFlag = false;
- 					}else{
- 						$($($(obj2).children()[1]).children()[1]).css("display", "none");
- 					}
-// 					if (filterValStr == "" || (isNaN(filterValStr)) ){
-// 						$($($(obj2).children()[1]).children()[1]).css("display", "");
-// 						checkFlag = false;
-// 					}else{
-// 						$($($(obj2).children()[1]).children()[1]).css("display", "none");
-// 					}
- 				}
- 				
- 				//供應情況
- 				if (fieldStr == "ec_stock_status"){
- 					filterValStr = $($(obj2).children()[2]).children()[0].value;
- 				}
- 				
- 				//使用狀況
- 				if (fieldStr == "ec_use_status"){
- 					filterValStr = $($(obj2).children()[3]).children()[0].value;
- 				}
- 				
- 				//類別
- 				if (fieldStr == "ec_category"){
- 					
- 					filterValStr = $($(obj2).children()[4]).children()[1].value;
-// 					if (filterValStr == ""){
-// 						$($($(obj2).children()[4]).children()[3]).css("display", "");
-// 						checkFlag = false;
-// 					}else{
-// 						$($($(obj2).children()[4]).children()[3]).css("display", "none");
-// 					}
- 				}
- 			}
- 		});
- 	});
- 	
- 	return checkFlag; 
-};
-
-
-/**
-* loop畫面全部篩選條件塞入全域filterContentMap
-*/
-function handler(e) {
-//	alert('00')
-	
-	if (checkColumnValue() != true){
-		return;
-	}
-	
-		
-	filterContentMap = [];
-	var flag = true;
- 	//全部群組資料
- 	$(".filter-group").each(function(index,obj) {
- 		
-// 		console.log('333');
- 		
- 		var map = new Object();
- 		var fieldStr ="";
- 		var conditionStr ="";
- 		var filterValStr ="";
- 		$(obj).find(".txt-inlineblock").each(function(index2,obj2) {
- 			//篩選第一層
- 			if(index2 == 0){
- 				fieldStr = $(obj2).find("select")[0].value;
- 				//第1層值塞map
- 				map["field"] = fieldStr;
- 			}
-// 			console.log("第1層");
-// 			console.log(fieldStr);
- 			
- 			//篩選第二層
- 			if(index2 == 1){
- 				//商品ID
- 				if (fieldStr == "catalog_prod_seq"){
- 					conditionStr = $($(obj2).children()[0]).children()[0].value;
- 				}
- 				//商品名稱
- 				if (fieldStr == "ec_name"){
- 					conditionStr = $($(obj2).children()[0]).children()[0].value;
- 				}
- 				//原價
- 				if (fieldStr == "ec_price"){
- 					conditionStr = $($(obj2).children()[1]).children()[0].value;
- 				}
- 				//特價
- 				if (fieldStr == "ec_discount_price"){
- 					conditionStr = $($(obj2).children()[1]).children()[0].value;
- 				}
- 				//供應情況
- 				if (fieldStr == "ec_stock_status"){
- 					conditionStr = $($(obj2).children()[2]).children()[0].value;
- 				}
- 				
- 				//使用狀況
- 				if (fieldStr == "ec_use_status"){
- 					conditionStr = $($(obj2).children()[2]).children()[0].value;
- 				}
- 				
- 				//類別
- 				if (fieldStr == "ec_category"){
-// 					console.log($(obj2));
- 					conditionStr = $($(obj2).children()[2]).children()[0].value;
- 				}
- 				//第2層值塞map
- 				map["condition"] = conditionStr;
- 			}
-// 			console.log("第2層");
-// 			console.log(conditionStr);
- 			
- 			
- 			//篩選第三層
- 			if(index2 == 2){
- 				//商品ID
- 				if (fieldStr == "catalog_prod_seq"){
- 					filterValStr = $($(obj2).children()[0]).children()[0].value;
- 				}
- 				//商品名稱
- 				if (fieldStr == "ec_name"){
- 					filterValStr = $($(obj2).children()[0]).children()[0].value;
- 				}
- 				
- 				//原價
- 				if (fieldStr == "ec_price"){
- 					filterValStr = $($(obj2).children()[1]).children()[0].value;
- 				}
- 				
- 				//特價
- 				if (fieldStr == "ec_discount_price"){
- 					filterValStr = $($(obj2).children()[1]).children()[0].value;
- 				}
- 				
- 				//供應情況
- 				if (fieldStr == "ec_stock_status"){
- 					filterValStr = $($(obj2).children()[2]).children()[0].value;
- 				}
- 				
- 				//使用狀況
- 				if (fieldStr == "ec_use_status"){
- 					filterValStr = $($(obj2).children()[3]).children()[0].value;
- 				}
- 				
- 				//類別
- 				if (fieldStr == "ec_category"){
-// 					console.log('--*******VAL**********---1111111111')
-// 					console.log($(obj2)[0]);
-// 					console.log($($(obj2).children()[4]).children()[1].value);
- 					
- 					
- 					filterValStr = $($(obj2).children()[4]).children()[1].value;
- 					
- 				}
-// 				
- 				//第3層值塞map
- 				map["value"] = filterValStr;
- 				
-// 				//如果第3層值為空，即不撈DB
-// 				if (filterValStr == ""){
-// 					flag = false;
-// 					return;
-// 				}
- 			}
- 		});
- 		console.log("--map222----");	
- 		//篩選條件map
- 		if (filterValStr != ""){
- 			filterContentMap.push(map);
- 		}
-	   	console.log(filterContentMap);
- 	});
- 	
- 	
- 	if (flag == true){	
-	 	if(e.type == 'keyup'){
-	 		$(this).doTimeout("findProdName", 1000, function() {
-	 			queryProdGroupFilterListAjax();
-			});
-	 	}else{
-	 		queryProdGroupFilterListAjax();
-	 	}
- 	}
- 	
- 	
-};
-
-
 /**
 * 依據商品組合篩選條件撈出符合的商品list
 */
-function queryProdGroupFilterListAjax(){
+function queryProdGroupFilterListAjax(clickEvent){
 	
-	if (checkColumnValueCount() != true){
-		return;
+	//如果不是按上一頁或是下一頁，目前頁碼設為1
+	if ( (clickEvent != 'prev') && (clickEvent != 'next') ){
+		currentPage = 1;
 	}
 	
-	console.log('query');
+//	console.log('編輯query PAGE-------------');
+//	console.log(currentPage);
 	
 	$.ajax({
 	    type: "post",
@@ -767,21 +614,9 @@ function queryProdGroupFilterListAjax(){
 	    	
 		}
 	}).done(function (response) {
-//		alert(response)
-    	
-//    	//更新頁碼與清單資料
-//    	$('.pagination-wrap').data('order', response.currentPage.toString());
-//    	$('.pagination-wrap').data('quantity', response.pageCount.toString());
-//    	$('#prodQuantityTxt').empty();
-//    	$('#prodQuantityTxt').append(response.totalCount.toString());
-        
     	if (response.status=="ERROR"){
-//    		alert("ajax error")
     		$("#prodListDiv").empty();
-//    		alert(response.msg)
     	}else{
-//    		alert("ajax ok")
-//    		alert("OK")
     		$("#prodListDiv").empty();
     		var tempHtml = "";
 	    	$.each(response.prodList, function(index, list){
@@ -816,60 +651,60 @@ function queryProdGroupFilterListAjax(){
 	    	
 	    	});
 	    	$('#prodListDiv').html(tempHtml);
-	    	
     	}
-//	    	//整理頁碼
-	    	processPageAndTotalPage(response);
-	    	//初始頁碼
-	    	initPage();
-	    });
-	
+	    //整理頁碼
+    	processPageAndTotalPage(response);
+    	//初始頁碼
+    	initPage();
+    });
 }
-
-
 
 //整理頁碼
 function processPageAndTotalPage(response){
-//	alert("頁碼")
-	currentPage = response.currentPage;
-	pageCount = response.pageCount;
-	totalCount = response.totalCount;
-	
-	
-//	console.log(currentPage)
-//	console.log(pageCount)
-//	console.log(totalCount)
-	
 	$('#currentPage').text(response.currentPage);
 	$('#pageCount').text(response.pageCount);
 	$('#totalCount').text(response.totalCount);
 }
 
+//初始頁面按鈕
+function initPage(){
+	currentPage = $('#currentPage').text();
+	pageCount = $('#pageCount').text();
+	totalCount = $('#totalCount').text();
 
-//call ajax
-function deleteFilterCondition(event,obj){
-	obj.parent().remove();
-	handler(event);
-	console.log("del OK");
 	
+	$('.prev').css('display','');
+	$('.next').css('display','');
+	
+	if (pageCount==1 ){
+		$('.prev').css('display', 'none')
+		$('.next').css('display', 'none')
+	}else if(currentPage<pageCount){
+		$('.next').css('display','');
+	}
+	
+	if(currentPage==pageCount){
+		$('.next').css('display', 'none')
+	}
+	
+	if(currentPage==1){
+		$('.prev').css('display', 'none')
+	}
 }
 
+//刪除篩選條件
+function deleteFilterCondition(event,obj){
+	obj.parent().remove();
+	prepareConditionData("click");
+}
 
-
+//篩選條件畫面呈現
 function filterDisplayRule(val, obj) {
+	
 	obj[0].innerHTML = '';
 	obj[0].innerHTML = defaultTemplate;
 	
-	
-	//新增條件重新綁定監聽
-    $(".filter-wrap select").unbind("change");
-    $(".filter-wrap input").unbind("keyup");
-    
-    $(".filter-wrap select").bind("change", handler);
-    $(".filter-wrap input").bind("keyup", handler);
-	
-//	console.log(val);
-//	console.log(obj[0]);
+    //判斷第一層選擇哪一個值
 	$(obj).find('select').each(function(index, object){
 		if(index == 0){
 			var selectObj = object;
@@ -884,32 +719,32 @@ function filterDisplayRule(val, obj) {
 		level2 = '1';
 		level3 = '1';
 		break;
-	case 'ec_name'://prodname
+	case 'ec_name'://商品名稱prodname
 		level1 = '2';
 		level2 = '1';
 		level3 = '1';
 		break;
-	case 'ec_price'://listprice
+	case 'ec_price'://原價listprice
 		level1 = '3';
 		level2 = '2';
 		level3 = '2';
 		break;
-	case 'ec_discount_price'://promoprice
+	case 'ec_discount_price'://特價promoprice
 		level1 = '4';
 		level2 = '2';
 		level3 = '2';
 		break;
-	case 'ec_stock_status'://supplement
+	case 'ec_stock_status'://供應情況supplement
 		level1 = '5';
 		level2 = '3';
 		level3 = '3';
 		break;
-	case 'ec_use_status'://neworused
+	case 'ec_use_status'://使用狀況neworused
 		level1 = '6';
 		level2 = '3';
 		level3 = '4';
 		break;
-	case 'ec_category'://class
+	case 'ec_category'://類別class
 		level1 = '7';
 		level2 = '3';
 		level3 = '5';
@@ -922,8 +757,6 @@ function filterDisplayRule(val, obj) {
 	obj.attr('data-level3', level3);
 //	console.log(obj.index(), val, level1, level2, level3);
 	
-	
-	
 	//針對類別條件綁定jquery查詢套件
 	var tagsArray = document.getElementsByClassName("tags");
 	$(function() {
@@ -933,30 +766,16 @@ function filterDisplayRule(val, obj) {
 				source: availableTags,
 				minLength: 0,
 				select: function(event, ui) {
-					console.log("*********************select**event");
-					console.log(event);
 //					console.log(event.handleObj.type);
-					handler('click');
-					queryProdGroupFilterListAjax();
-					
+					prepareConditionData('click');
 				},
 				close: function(event, ui) {
-					console.log("-------------close event-------------");
-					console.log(event);
 //					console.log(event.handleObj.type);
-					
-					handler('click');
-				    queryProdGroupFilterListAjax();
+					prepareConditionData('click');
 				},
 				search: function(event, ui) {
-					console.log("**********search***********search**event");
-					console.log(event);
 //					console.log(event.handleObj.type);
-					var map = new Object();
-					map["type"] = "keyup";
-					handler(map);
-				    queryProdGroupFilterListAjax();
-					
+					prepareConditionData("keyup");
 				},
 			}).focus(function() {
 				if (this.value == "") {
@@ -965,6 +784,13 @@ function filterDisplayRule(val, obj) {
 			});
 		});
 	 });
+	
+	//新增條件重新綁定監聽
+    $(".filter-wrap select").unbind("change");
+    $(".filter-wrap input").unbind("keyup");
+    
+    $(".filter-wrap select").bind("change", prepareConditionData);
+    $(".filter-wrap input").bind("keyup", prepareConditionData);
 }
 
 
