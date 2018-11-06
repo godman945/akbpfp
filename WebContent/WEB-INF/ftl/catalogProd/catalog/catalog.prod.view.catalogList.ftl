@@ -112,7 +112,7 @@
 	                        
 	                        <div class="txt-cell col-failure">
 	                        	<#if vo.errorNum?? && vo.errorNum != "0">
-	                        		<a href="catalogProdUploadErrLog.html?catalogUploadLogSeq=${vo.catalogUploadLogSeq!}">${vo.errorNum!}<em>項</em></a>
+	                        		<a href="catalogProdUploadErrLog.html?catalogUploadLogSeq=${vo.catalogUploadLogSeq!}&catalogSeq=${vo.catalogSeq!}">${vo.errorNum!}<em>項</em></a>
 	                        	<#else>
 	                            	-
 	                            </#if>

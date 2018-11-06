@@ -480,8 +480,8 @@
     </bean>
 
 	<!-- 商品目錄更新錯誤紀錄 -->
-    <bean id="PfpCatalogUploadErrLogAction" class="com.pchome.akbpfp.struts2.action.catalog.uploadErrLogList.PfpCatalogUploadErrLogAction" scope="prototype" >
+<!--     <bean id="PfpCatalogUploadErrLogAction" class="com.pchome.akbpfp.struts2.action.catalog.uploadErrLogList.PfpCatalogUploadErrLogAction" scope="prototype" > -->
 <!--     	<property name="pfpCatalogService" ref="PfpCatalogService" /> -->
-    	<property name="pfpCatalogUploadErrLogService" ref="PfpCatalogUploadErrLogService" />
-    </bean>
+<!--     	<property name="pfpCatalogUploadErrLogService" ref="PfpCatalogUploadErrLogService" /> -->
+<!--     </bean> -->
 </beans>

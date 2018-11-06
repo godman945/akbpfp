@@ -14,6 +14,6 @@ public interface IPfpCatalogUploadErrLogDAO extends IBaseDAO<PfpCatalogUploadLog
 	 * @param vo
 	 * @return
 	 */
-	List<Map<String, Object>> getPfpCatalogList(PfpCatalogUploadLogVO vo);
+	List<Map<String, Object>> getCatalogProdUploadErrList(PfpCatalogUploadLogVO vo);
 
 }

@@ -319,22 +319,12 @@
         	</result>
      	</action>
       	
-      	<!-- 取得上傳方式代碼 -->
-<!-- 		<action name="getCatalogUploadType" class="PfpCatalogUploadListAction" method="getCatalogUploadType"> -->
-<!-- 			<interceptor-ref name="loginCheckStack" /> -->
-<!--         	<interceptor-ref name="adPrivilegeInterceptor" /> -->
-<!--         	<result type="json" name="success"> -->
-<!--         		<param name="root">dataMap</param> -->
-<!--         	</result> -->
-<!--      	</action> -->
-	
-		<!-- 商品目錄更新錯誤紀錄 -->
- 		<action name="catalogProdUploadErrLog" class="PfpCatalogUploadErrLogAction" method="queryCatalogProdUploadErrLog">
+		<!-- 商品目錄資料上傳新增、更新錯誤紀錄 -->
+ 		<action name="catalogProdUploadErrLog" class="PfpCatalogUploadListAction" method="queryCatalogProdUploadErrLog">
 			<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="adPrivilegeInterceptor" />
 			<result type="tiles" name="success">.catalog.upload.view.catalogProdUploadErrList</result>
 		</action>
-	
 	
     </package>
 </struts>

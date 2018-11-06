@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.IBaseService;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogProdEcErrorVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadLogVO;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 
 public interface IPfpCatalogUploadErrLogService extends IBaseService<PfpCatalogUploadLog, String> {
 
@@ -14,6 +14,6 @@ public interface IPfpCatalogUploadErrLogService extends IBaseService<PfpCatalogU
 	 * @param vo
 	 * @return
 	 */
-	List<PfpCatalogVO> getCatalogProdUploadErrList(PfpCatalogUploadLogVO vo);
+	List<PfpCatalogProdEcErrorVO> getCatalogProdUploadErrList(PfpCatalogUploadLogVO vo);
 
 }

@@ -1,12 +1,14 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.service.IBaseService;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogProdEcErrorVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadListVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadLogVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
@@ -96,5 +98,12 @@ public interface IPfpCatalogUploadListService extends IBaseService<String, Strin
 	 * @param vo
 	 */
 	void deletePfpCatalogSetup(PfpCatalogVO vo);
+
+	/**
+	 * 查詢目錄商品上傳錯誤記錄清單
+	 * @param vo
+	 * @return
+	 */
+	List<PfpCatalogProdEcErrorVO> getCatalogProdUploadErrList(PfpCatalogProdEcErrorVO vo);
 	
 }

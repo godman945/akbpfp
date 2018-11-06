@@ -259,7 +259,7 @@
     </bean>
     
     <!-- 商品廣告-更新錯誤紀錄 -->
-    <bean id="PfpCatalogUploadErrLogDAO" class="com.pchome.akbpfp.db.dao.catalog.uploadErrLogList.PfpCatalogUploadErrLogDAO">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
+<!--     <bean id="PfpCatalogUploadErrLogDAO" class="com.pchome.akbpfp.db.dao.catalog.uploadErrLogList.PfpCatalogUploadErrLogDAO"> -->
+<!--         <property name="sessionFactory" ref="sessionFactory" /> -->
+<!--     </bean> -->
 </beans>
