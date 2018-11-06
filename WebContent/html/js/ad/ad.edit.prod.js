@@ -1138,19 +1138,22 @@ function changeActive(obj){
 		var originalPrice = originalPriceObj.replace("$NT.","")
 		var imgboxObj = this.getElementsByClassName("imgbox")[0];
 		var disObject = imgboxObj.getElementsByClassName("pos-absolute")[0];
-		var chnineseDiscount = 0;
+		var chineseDiscount = 0;
 		var engDiscount = 0;
 		if(disPrice < originalPrice){
-			chnineseDiscount = parseInt((disPrice * 10) / originalPrice);
-			engDiscount = parseInt((originalPrice - disPrice) * 100 / 1000);
+			chineseDiscount = parseInt(((disPrice / originalPrice) * 10));
+			engDiscount =  ((disPrice / originalPrice) - 1) * 100;
+			engDiscount = (engDiscount.toFixed(1));
+//			chineseDiscount = parseInt((disPrice * 10) / originalPrice);
+//			engDiscount = parseInt((originalPrice - disPrice) * 100 / 1000);
 			if(disTxtType == "1"){
 				$(imgboxObj).attr("class","imgbox crop-height tag-hide");
 			}else if(disTxtType == "2"){
 				$(imgboxObj).attr("class","imgbox crop-height tag-show");
-				disObject.innerHTML = chnineseDiscount+"折";
+				disObject.innerHTML = chineseDiscount+"折";
 			}else if(disTxtType == "3"){
 				$(imgboxObj).attr("class","imgbox crop-height tag-show");
-				disObject.innerHTML = "-"+engDiscount+"%";
+				disObject.innerHTML = engDiscount+"%";
 			}
 		}
 	});
