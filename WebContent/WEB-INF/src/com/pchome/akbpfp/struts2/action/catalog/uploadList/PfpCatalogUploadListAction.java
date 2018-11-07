@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogProdEcErrorVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadListVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadLogVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
@@ -52,6 +53,13 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	private String selectUploadFlag; // 選擇上傳方式flag帶入相對畫面
 	private String updateWay; // 更新方式(1.取代,2.更新)
 	private String updateDate; // 更新時間
+	
+	// 查詢錯誤記錄清單
+	private List<PfpCatalogProdEcErrorVO> catalogProdUploadErrDataList = new ArrayList<PfpCatalogProdEcErrorVO>(); // 查詢結果
+	private String catalogUploadLogSeq; // 更新紀錄編號
+	private int pageNo = 1;          // 初始化目前頁數
+	private int pageCount = 0;       // 初始化共幾頁
+	private long totalCount = 0;     // 初始化共幾筆
 	
 	// 自動排程上傳
 	private String jobURL; // 輸入的自動排程網址
@@ -114,17 +122,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		}
 		return SUCCESS;
 	}
-	
-	/**
-	 * 取得上傳方式代碼
-	 * @return
-	 */
-//	public String getCatalogUploadType() {
-//		dataMap = new HashMap<String, Object>();
-//		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
-//		dataMap.put("catalogUploadType", pfpCatalog.getCatalogUploadType().trim());
-//		return SUCCESS;
-//	}
 	
 	/**
 	 * 檢查檔案
@@ -394,6 +391,26 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	}
 	
 	/**
+	 * 查詢目錄商品上傳錯誤紀錄
+	 * @return
+	 */
+	public String queryCatalogProdUploadErrLog() {
+		//TODO 錯誤紀錄
+		System.out.println("catalogUploadLogSeq:" + catalogUploadLogSeq);
+
+		catalogDropDownMenu();
+		
+		PfpCatalogProdEcErrorVO vo = new PfpCatalogProdEcErrorVO();
+		vo.setCatalogUploadLogSeq(catalogUploadLogSeq);
+		vo.setPageNo(pageNo);
+		catalogProdUploadErrDataList = pfpCatalogUploadListService.getCatalogProdUploadErrList(vo);
+		pageCount = vo.getPageCount();
+		totalCount = vo.getTotalCount(); // 總共多少筆上傳失敗商品
+
+		return SUCCESS;
+	}
+	
+	/**
 	 * 目錄下拉式選單資料
 	 */
 	private void catalogDropDownMenu() {
@@ -536,6 +553,30 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 
 	public String getUpdateDate() {
 		return updateDate;
+	}
+	
+	public void setCatalogUploadLogSeq(String catalogUploadLogSeq) {
+		this.catalogUploadLogSeq = catalogUploadLogSeq;
+	}
+	
+	public int getPageNo() {
+		return pageNo;
+	}
+
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
+	public int getPageCount() {
+		return pageCount;
+	}
+
+	public long getTotalCount() {
+		return totalCount;
+	}
+
+	public List<PfpCatalogProdEcErrorVO> getCatalogProdUploadErrDataList() {
+		return catalogProdUploadErrDataList;
 	}
 	
 }

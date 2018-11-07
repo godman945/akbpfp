@@ -8,6 +8,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEcError;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogProdEcErrorVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 
 public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
@@ -99,5 +100,12 @@ public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 	 * @return
 	 */
 	List<Map<String, Object>> getPfpCatalogProdEc(String catalogSeq, String catalogProdSeq);
+
+	/**
+	 * 查詢目錄商品上傳錯誤記錄清單
+	 * @param vo
+	 * @return
+	 */
+	List<Map<String, Object>> getCatalogProdUploadErrList(PfpCatalogProdEcErrorVO vo);
 
 }

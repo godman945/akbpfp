@@ -85,7 +85,7 @@
 	    </#list>
 	<#else>
 	<tr>
-		<td colspan="13">
+		<td colspan="15">
 			沒有資料。請按「新增廣告」按鈕，新增廣告。
 		</td>
 	</tr>

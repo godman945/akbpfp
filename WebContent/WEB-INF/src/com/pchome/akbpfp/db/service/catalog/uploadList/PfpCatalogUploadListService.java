@@ -6,12 +6,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,10 +24,13 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
+import com.pchome.akbpfp.db.vo.ad.PfpCatalogProdEcErrorVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadListVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadLogVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
+import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
+import com.pchome.enumerate.catalogprod.EnumEcUseStatusType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 
 public class PfpCatalogUploadListService extends BaseService<String, String> implements IPfpCatalogUploadListService {
@@ -34,6 +39,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	private IPfpCatalogService pfpCatalogService;
 	private ISequenceService sequenceService;
 	private IPfpCatalogUploadListDAO pfpCatalogUploadListDAO;
+	private String akbPfpServer;
 	private String photoDbPathNew;
 	private String catalogProdCsvFilePath;
 	
@@ -283,6 +289,75 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	}
 
 	/**
+	 * 查詢目錄商品上傳錯誤記錄清單
+	 * @param vo
+	 * @return
+	 */
+	@Override
+	public List<PfpCatalogProdEcErrorVO> getCatalogProdUploadErrList(PfpCatalogProdEcErrorVO vo) {
+		List<Map<String, Object>> catalogProdUploadErrList = pfpCatalogUploadListDAO.getCatalogProdUploadErrList(vo);
+		
+		List<PfpCatalogProdEcErrorVO> pfpCatalogProdEcErrorList = new ArrayList<>();
+		for (Map<String, Object> dataMap : catalogProdUploadErrList) {
+			PfpCatalogProdEcErrorVO pfpCatalogProdEcErrorVO = new PfpCatalogProdEcErrorVO();
+			pfpCatalogProdEcErrorVO.setCatalogProdErrItem(String.valueOf(dataMap.get("catalog_prod_err_item"))); // 上傳錯誤清單ID
+			
+			pfpCatalogProdEcErrorVO.setCatalogProdSeqErrstatus((String) dataMap.get("catalog_prod_seq_errstatus"));
+			pfpCatalogProdEcErrorVO.setCatalogProdSeq((String) dataMap.get("catalog_prod_seq")); // 商品ID
+			
+			pfpCatalogProdEcErrorVO.setEcNameErrstatus((String) dataMap.get("ec_name_errstatus"));
+			pfpCatalogProdEcErrorVO.setEcName((String) dataMap.get("ec_name")); // 商品名稱
+			
+			pfpCatalogProdEcErrorVO.setEcImgErrstatus((String) dataMap.get("ec_img_errstatus"));
+			String ecImg = (String) dataMap.get("ec_img");
+			if (StringUtils.isBlank(pfpCatalogProdEcErrorVO.getEcImgErrstatus())) {
+				pfpCatalogProdEcErrorVO.setEcImg(akbPfpServer + ecImg); // 商品圖像路徑
+			} else {
+				pfpCatalogProdEcErrorVO.setEcImg(ecImg); // 商品圖像錯誤訊息
+			}
+			
+			pfpCatalogProdEcErrorVO.setEcUrlErrstatus((String) dataMap.get("ec_url_errstatus"));
+			pfpCatalogProdEcErrorVO.setEcUrl((String) dataMap.get("ec_url")); // 商品網址
+			
+			pfpCatalogProdEcErrorVO.setEcPriceErrstatus((String) dataMap.get("ec_price_errstatus"));
+			pfpCatalogProdEcErrorVO.setEcPrice((String) dataMap.get("ec_price")); // 商品價格
+			
+			pfpCatalogProdEcErrorVO.setEcDiscountPriceErrstatus((String) dataMap.get("ec_discount_price_errstatus"));
+			pfpCatalogProdEcErrorVO.setEcDiscountPrice((String) dataMap.get("ec_discount_price")); // 商品特價
+			
+			pfpCatalogProdEcErrorVO.setEcStockStatusErrstatus((String) dataMap.get("ec_stock_status_errstatus"));
+			// 商品庫存(0:無庫存, 1:有庫存, 2:預購, 3:停售)
+			String ecStockStatus = (String) dataMap.get("ec_stock_status");
+			if (EnumEcStockStatusType.Out_Of_Stock.getType().equals(ecStockStatus)) {
+				pfpCatalogProdEcErrorVO.setEcStockStatus(EnumEcStockStatusType.Out_Of_Stock.getChName());
+			} else if (EnumEcStockStatusType.In_Stock.getType().equals(ecStockStatus)) {
+				pfpCatalogProdEcErrorVO.setEcStockStatus(EnumEcStockStatusType.In_Stock.getChName());
+			} else if (EnumEcStockStatusType.Pre_Order.getType().equals(ecStockStatus)) {
+				pfpCatalogProdEcErrorVO.setEcStockStatus(EnumEcStockStatusType.Pre_Order.getChName());
+			} else if (EnumEcStockStatusType.Discontinued.getType().equals(ecStockStatus)) {
+				pfpCatalogProdEcErrorVO.setEcStockStatus(EnumEcStockStatusType.Discontinued.getChName());
+			}
+			
+			pfpCatalogProdEcErrorVO.setEcUseStatusErrstatus((String) dataMap.get("ec_use_status_errstatus"));
+			// 商品使用狀態(0:全新, 1:二手, 2:福利品)
+			String ecUseStatus = (String) dataMap.get("ec_use_status");
+			if (EnumEcUseStatusType.New_Goods.getType().equals(ecUseStatus)) {
+				pfpCatalogProdEcErrorVO.setEcUseStatus(EnumEcUseStatusType.New_Goods.getChName());
+			} else if (EnumEcUseStatusType.Used_Goods.getType().equals(ecUseStatus)) {
+				pfpCatalogProdEcErrorVO.setEcUseStatus(EnumEcUseStatusType.Used_Goods.getChName());
+			} else if (EnumEcUseStatusType.Welfare_Goods.getType().equals(ecUseStatus)) {
+				pfpCatalogProdEcErrorVO.setEcUseStatus(EnumEcUseStatusType.Welfare_Goods.getChName());
+			}
+			
+			pfpCatalogProdEcErrorVO.setEcCategoryErrstatus((String) dataMap.get("ec_category_errstatus"));
+			pfpCatalogProdEcErrorVO.setEcCategory((String) dataMap.get("ec_category")); // 商品組合篩選分類
+			
+			pfpCatalogProdEcErrorList.add(pfpCatalogProdEcErrorVO);
+		}
+		return pfpCatalogProdEcErrorList;
+	}
+	
+	/**
 	 * 刪除 一般購物類商品清單
 	 * @param vo
 	 */
@@ -422,6 +497,10 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 
 	public void setCatalogProdCsvFilePath(String catalogProdCsvFilePath) {
 		this.catalogProdCsvFilePath = catalogProdCsvFilePath;
+	}
+
+	public void setAkbPfpServer(String akbPfpServer) {
+		this.akbPfpServer = akbPfpServer;
 	}
 
 }
