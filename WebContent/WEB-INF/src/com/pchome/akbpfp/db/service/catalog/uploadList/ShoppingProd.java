@@ -183,6 +183,11 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			String imgTempCompletePath = ""; // 暫存圖片完整路徑
 			String imgCompletePath = ""; // 正式圖片完整路徑
 			String addDbImgPath = ""; // 寫入DB欄位路徑
+			if (StringUtils.isBlank((String) addPfpCatalogProdEcErrorObject.get("catalogProdSeq"))) {
+				// 如果商品編號錯誤，圖片檔名用序號取代
+				catalogProdSeq = String.valueOf(itemSeq);
+			}
+				
 			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, itemSeq, photoPath, catalogProdSeq, ecImgUrl, ecImgBase64, catalogUploadType);
 			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
 				tempErrorPrdDetailItemCount = errorPrdItemArray.length();

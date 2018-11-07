@@ -90,13 +90,13 @@
 	                            <#if vo.ecPriceErrstatus == "isErr">
 	                            	<div class="txt-cell col-listprice  "><b class="txt-error">${vo.ecPrice!}</b></div>
 								<#else>
-									<div class="txt-cell col-listprice  ">${vo.ecPrice!}</div>
+									<div class="txt-cell col-listprice  "><span>$</span>${vo.ecPrice?number?string('#,###')!}</div>
 								</#if>
 	                            
 	                            <#if vo.ecDiscountPriceErrstatus == "isErr">
 	                            	<div class="txt-cell col-promoprice "><b class="txt-error">${vo.ecDiscountPrice!}</b></div>
 								<#else>
-									<div class="txt-cell col-promoprice ">${vo.ecDiscountPrice!}</div>
+									<div class="txt-cell col-promoprice "><span>$</span>${vo.ecDiscountPrice?number?string('#,###')!}</div>
 								</#if>
 	                            
 	                            <#if vo.ecStockStatusErrstatus == "isErr">
@@ -114,7 +114,7 @@
 	                            <#if vo.ecImgErrstatus == "isErr">
 	                            	<div class="txt-cell col-picture    "><b class="txt-error">${vo.ecImg!}</b></div>
 								<#else>
-									<div class="txt-cell col-picture    ">${vo.ecImg!}</div>
+									<div class="txt-cell col-picture    "><img src="${vo.ecImg!}"></div>
 								</#if>
 	                            
 	                            <#if vo.ecCategoryErrstatus == "isErr">
