@@ -18,9 +18,9 @@
 				<tr>
 					<th>商品廣告名稱</th>
 					<td colspan="2">
-						<input id="adName" type="text" placeholder="" value="" maxlength="17">
+						<input id="adName" type="text" placeholder="" value="" maxlength="20">
 						<em id="adTextMsg" style="display:none;" class="notetext">請輸入廣告名稱</em>
-						<span id="checkHintAdName" class="charactertext">已輸入0字，剩17字</span>
+						<span id="checkHintAdName" class="charactertext">已輸入0字，剩20字</span>
 					</td>
 				</tr>
 				<tr>
