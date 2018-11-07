@@ -45,20 +45,16 @@
             <#-- 表格目錄功能列 開始 -->
             <div class="nav-wrap prodtable">
                 <div class="nav-box pos-relative">
-                    
                     <ul class="txt-table txt-regular">
                         <li class="txt-cell p-r20" style="font-size:16px">共<em class="txt-quantity">${totalCount}</em>筆上傳失敗商品</li>
                     </ul>
-
                 </div>
             </div>
             <#-- 表格目錄功能列 結束 -->
 
             <#-- 表格內容 開始 -->
             <div class="prodtable-wrap m-b30 floatingscroll">
-
                 <div class="prodtable-box txt-noselect">
-
                     <div class="txt-table w-full">
                         
                         <#-- 表格欄位標題 -->
@@ -138,50 +134,7 @@
 							</div>
 						</#list>
 
-                        <#-- row1 提供參考，不需要可刪除
-                        <div class="txt-row" data-type="error">
-                            <div class="txt-cell col-number     ">9</div>
-                            <div class="txt-cell col-serial     ">product_201807301</div>
-                            <div class="txt-cell col-prodname   ">Samsonite新秀麗 20吋Lite Shock極輕Curv四 輪拉桿頂級硬殼箱(黑)</div>
-                            <div class="txt-cell col-listprice  "><span>$</span>12,999</div>
-                            <div class="txt-cell col-promoprice "><span>$</span>11,000</div>
-                            <div class="txt-cell col-supplement ">有庫存</div>
-                            <div class="txt-cell col-neworused  ">福利品</div>
-                            <div class="txt-cell col-picture    "><b class="txt-error">解析度錯誤</b></div>
-                            <div class="txt-cell col-class      ">硬殼箱</div>
-                            <div class="txt-cell col-weburl     "><a href="https://24h.pchome.com.tw/prod/DICY17-A90081WF0?fq=/S/DIBKPH" target="_blank"></a></div>
-                        </div>
-
-                        <#-- row2 
-                        <div class="txt-row" data-type="error">
-                            <div class="txt-cell col-number     ">13</div>
-                            <div class="txt-cell col-serial     ">product_201807302</div>
-                            <div class="txt-cell col-prodname   "><b class="txt-error">必須輸入資訊(必填欄位)</b></div>
-                            <div class="txt-cell col-listprice  "><span>$</span>10,900</div>
-                            <div class="txt-cell col-promoprice "><span>$</span>4,000</div>
-                            <div class="txt-cell col-supplement ">預購</div>
-                            <div class="txt-cell col-neworused  ">全新</div>
-                            <div class="txt-cell col-picture    "><b class="txt-error">連結錯誤</b></div>
-                            <div class="txt-cell col-class      ">硬殼箱</div>
-                            <div class="txt-cell col-weburl     "><a href="https://24h.pchome.com.tw/prod/DIY17-A90087LLH" target="_blank"></a></div>
-                        </div>
-
-                        <#-- row3 
-                        <div class="txt-row" data-type="error">
-                            <div class="txt-cell col-number     ">335</div>
-                            <div class="txt-cell col-serial     ">product_201807304</div>
-                            <div class="txt-cell col-prodname   ">Samsonite新秀麗 20吋Starfire飛機輪TSA防刮耐磨PC登機箱(石墨黑)</div>
-                            <div class="txt-cell col-listprice  "><span>$</span>8,840</div>
-                            <div class="txt-cell col-promoprice "><b class="txt-error">格式錯誤</b></div>
-                            <div class="txt-cell col-supplement ">有庫存</div>
-                            <div class="txt-cell col-neworused  ">全新</div>
-                            <div class="txt-cell col-picture    "><img src="https://d.ecimg.tw/items/DICY17A9007XRRS/000001_1488518863.jpg"></div>
-                            <div class="txt-cell col-class      ">登機箱</div>
-                            <div class="txt-cell col-weburl     "><a href="https://24h.pchome.com.tw/prod/DICY17-A9007XRRS" target="_blank"></a></div>
-                        </div>-->
-
                     </div>
-
                 </div>
             </div>
             <#-- 表格內容 結束 -->
@@ -193,35 +146,10 @@
                 <#-- data-num: 頁碼 -->
                 <ul class="pagination-box txt-table">
                 
-                	<#-- 留者查看用，不需要可刪
-                    <li class="txt-cell txt-left">
-                        <a data-num="1" class="pagination-button left" href="#"></a>
-                    </li>
-                    <li class="txt-cell">
-                        <a class="pagination-button prev" href="#" title="上10頁"></a>
-                        <span class="pagination-buttongroup">
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                        </span>
-                        <#-- <a data-num="..." class="pagination-button ellipsis" href="#"></a> -->
-                        <#--<a class="pagination-button next" href="#" title="下10頁"></a>
-                    </li>
-                    <li class="txt-cell txt-right">
-                        <a data-num="" class="pagination-button right" href="#"></a>
-                    </li>
-                    -->
-                    
                 </ul>
             </div>
             <#-- 頁碼 pagination 結束 -->
+
         </div>
     </div>
 </div>
