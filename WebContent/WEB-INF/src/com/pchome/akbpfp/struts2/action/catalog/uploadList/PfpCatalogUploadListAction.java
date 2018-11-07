@@ -559,6 +559,10 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		this.catalogUploadLogSeq = catalogUploadLogSeq;
 	}
 	
+	public String getCatalogUploadLogSeq() {
+		return catalogUploadLogSeq;
+	}
+
 	public int getPageNo() {
 		return pageNo;
 	}

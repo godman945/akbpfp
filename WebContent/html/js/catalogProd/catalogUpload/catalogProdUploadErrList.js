@@ -10,14 +10,15 @@ function processQueryAjax(changePageNo){
 	    type: "post",
 	    url: "catalogProdUploadErrLog.html",
 	    data: {
-	          "pageNo": changePageNo
+	          "pageNo": changePageNo,
+	          "catalogUploadLogSeq": $("#catalogUploadLogSeq").val()
 	    },
 	    timeout: 30000,
 	    error: function(xhr){
 	        alert('Ajax request 發生錯誤');
 	    },
 	    success: function(response){
-	        $('.container-prodmanage').html(response);
+	        $('body').html(response);
 	        processPageNumber();
 	    }
 	});

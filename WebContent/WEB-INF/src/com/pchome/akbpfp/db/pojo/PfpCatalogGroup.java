@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/10/8 �U�� 02:19:47 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/11/7 �U�� 12:02:22 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -25,6 +25,7 @@ public class PfpCatalogGroup implements java.io.Serializable {
 	private String catalogGroupSeq;
 	private PfpCatalog pfpCatalog;
 	private String catalogGroupName;
+	private String catalogGroupDeleteStatus;
 	private Date updateDate;
 	private Date createDate;
 	private Set<PfpCatalogGroupItem> pfpCatalogGroupItems = new HashSet<PfpCatalogGroupItem>(0);
@@ -32,20 +33,23 @@ public class PfpCatalogGroup implements java.io.Serializable {
 	public PfpCatalogGroup() {
 	}
 
-	public PfpCatalogGroup(String catalogGroupSeq, PfpCatalog pfpCatalog, String catalogGroupName, Date updateDate,
-			Date createDate) {
+	public PfpCatalogGroup(String catalogGroupSeq, PfpCatalog pfpCatalog, String catalogGroupName,
+			String catalogGroupDeleteStatus, Date updateDate, Date createDate) {
 		this.catalogGroupSeq = catalogGroupSeq;
 		this.pfpCatalog = pfpCatalog;
 		this.catalogGroupName = catalogGroupName;
+		this.catalogGroupDeleteStatus = catalogGroupDeleteStatus;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
 
-	public PfpCatalogGroup(String catalogGroupSeq, PfpCatalog pfpCatalog, String catalogGroupName, Date updateDate,
-			Date createDate, Set<PfpCatalogGroupItem> pfpCatalogGroupItems) {
+	public PfpCatalogGroup(String catalogGroupSeq, PfpCatalog pfpCatalog, String catalogGroupName,
+			String catalogGroupDeleteStatus, Date updateDate, Date createDate,
+			Set<PfpCatalogGroupItem> pfpCatalogGroupItems) {
 		this.catalogGroupSeq = catalogGroupSeq;
 		this.pfpCatalog = pfpCatalog;
 		this.catalogGroupName = catalogGroupName;
+		this.catalogGroupDeleteStatus = catalogGroupDeleteStatus;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 		this.pfpCatalogGroupItems = pfpCatalogGroupItems;
@@ -79,6 +83,15 @@ public class PfpCatalogGroup implements java.io.Serializable {
 
 	public void setCatalogGroupName(String catalogGroupName) {
 		this.catalogGroupName = catalogGroupName;
+	}
+
+	@Column(name = "catalog_group_delete_status", nullable = false, length = 1)
+	public String getCatalogGroupDeleteStatus() {
+		return this.catalogGroupDeleteStatus;
+	}
+
+	public void setCatalogGroupDeleteStatus(String catalogGroupDeleteStatus) {
+		this.catalogGroupDeleteStatus = catalogGroupDeleteStatus;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

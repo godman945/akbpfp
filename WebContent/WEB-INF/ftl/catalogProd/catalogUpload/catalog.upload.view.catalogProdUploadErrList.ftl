@@ -2,11 +2,12 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
 <script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/commonCatalogProd.js?t=20181023011"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/catalogProdUploadErrList.js?t=20181107001"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/catalogProdUploadErrList.js?t=20181107003"></script>
 
 <div class="container-prodmanage">
-	<input type="text" id="pageNo" name="pageNo" value="${pageNo!}">
-	<input type="text" id="pageCount" name="pageCount" value="${pageCount!}">
+	<input type="hidden" id="pageNo" name="pageNo" value="${pageNo!}">
+	<input type="hidden" id="pageCount" name="pageCount" value="${pageCount!}">
+	<input type="hidden" id="catalogUploadLogSeq" name="catalogUploadLogSeq" value="${catalogUploadLogSeq!}">
 	
     <#-- 次目錄導覽列 開始 -->
     <#-- hidden 隱藏所有牙齒 -->
@@ -92,8 +93,10 @@
 	                            
 	                            <#if vo.ecPriceErrstatus == "isErr">
 	                            	<div class="txt-cell col-listprice  "><b class="txt-error">${vo.ecPrice!}</b></div>
-								<#else>
+								<#elseif vo.ecPrice != "">
 									<div class="txt-cell col-listprice  "><span>$</span>${vo.ecPrice?number?string('#,###')!}</div>
+								<#else>
+									<div class="txt-cell col-listprice  "></div>
 								</#if>
 	                            
 	                            <#if vo.ecDiscountPriceErrstatus == "isErr">
