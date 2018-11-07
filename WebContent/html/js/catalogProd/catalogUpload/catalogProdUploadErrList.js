@@ -11,7 +11,8 @@ function processQueryAjax(changePageNo){
 	    url: "catalogProdUploadErrLog.html",
 	    data: {
 	          "pageNo": changePageNo,
-	          "catalogUploadLogSeq": $("#catalogUploadLogSeq").val()
+	          "catalogUploadLogSeq": $("#catalogUploadLogSeq").val(),
+	          "catalogSeq":$("#catalogSeq").val()
 	    },
 	    timeout: 30000,
 	    error: function(xhr){

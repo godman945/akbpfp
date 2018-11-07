@@ -396,8 +396,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 */
 	public String queryCatalogProdUploadErrLog() {
 		//TODO 錯誤紀錄
-		System.out.println("catalogUploadLogSeq:" + catalogUploadLogSeq);
-
 		catalogDropDownMenu();
 		
 		PfpCatalogProdEcErrorVO vo = new PfpCatalogProdEcErrorVO();
