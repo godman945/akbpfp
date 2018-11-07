@@ -336,6 +336,8 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				pfpCatalogProdEcErrorVO.setEcStockStatus(EnumEcStockStatusType.Pre_Order.getChName());
 			} else if (EnumEcStockStatusType.Discontinued.getType().equals(ecStockStatus)) {
 				pfpCatalogProdEcErrorVO.setEcStockStatus(EnumEcStockStatusType.Discontinued.getChName());
+			} else {
+				pfpCatalogProdEcErrorVO.setEcStockStatus(ecStockStatus);
 			}
 			
 			pfpCatalogProdEcErrorVO.setEcUseStatusErrstatus((String) dataMap.get("ec_use_status_errstatus"));
@@ -347,6 +349,8 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				pfpCatalogProdEcErrorVO.setEcUseStatus(EnumEcUseStatusType.Used_Goods.getChName());
 			} else if (EnumEcUseStatusType.Welfare_Goods.getType().equals(ecUseStatus)) {
 				pfpCatalogProdEcErrorVO.setEcUseStatus(EnumEcUseStatusType.Welfare_Goods.getChName());
+			} else {
+				pfpCatalogProdEcErrorVO.setEcUseStatus(ecUseStatus);
 			}
 			
 			pfpCatalogProdEcErrorVO.setEcCategoryErrstatus((String) dataMap.get("ec_category_errstatus"));

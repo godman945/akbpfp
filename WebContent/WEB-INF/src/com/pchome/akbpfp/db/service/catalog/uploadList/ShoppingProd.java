@@ -353,7 +353,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEcError.setEcTitle(" ");
 				pfpCatalogProdEcError.setEcImg(pfpCatalogProdEcErrorObjectJson.getString("ecImg"));
 				pfpCatalogProdEcError.setEcUrl(pfpCatalogProdEcErrorObjectJson.getString("ecUrl"));
-				pfpCatalogProdEcError.setEcPrice(pfpCatalogProdEcErrorObjectJson.getInt("ecPrice"));
+				pfpCatalogProdEcError.setEcPrice(pfpCatalogProdEcErrorObjectJson.getString("ecPrice"));
 				pfpCatalogProdEcError.setEcDiscountPrice(pfpCatalogProdEcErrorObjectJson.getInt("ecDiscountPrice"));
 				pfpCatalogProdEcError.setEcStockStatus(pfpCatalogProdEcErrorObjectJson.getString("ecStockStatus"));
 				pfpCatalogProdEcError.setEcUseStatus(pfpCatalogProdEcErrorObjectJson.getString("ecUseStatus"));

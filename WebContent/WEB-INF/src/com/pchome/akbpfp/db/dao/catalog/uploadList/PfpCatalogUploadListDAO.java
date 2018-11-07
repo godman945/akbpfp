@@ -297,12 +297,12 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 		hql.append(" 	if((SELECT pcuel.catalog_err_reason FROM pfp_catalog_upload_err_log pcuel                                             ");
 		hql.append(" 			WHERE pcpee.catalog_upload_log_seq = pcuel.catalog_upload_log_seq                                             ");
 		hql.append(" 			AND pcpee.catalog_prod_err_item = pcuel.catalog_prod_err_item                                                 ");
-		hql.append(" 			AND pcuel.catalog_err_item = 'ec_img') != 'null', 'isErr', '') AS ec_img_errstatus,	                          ");
+		hql.append(" 			AND pcuel.catalog_err_item = 'ec_img_url') != 'null', 'isErr', '') AS ec_img_errstatus,	                      ");
 		hql.append(" 	                                                                                                                      ");
 		hql.append(" 	IFNULL((SELECT pcuel.catalog_err_reason FROM pfp_catalog_upload_err_log pcuel                                         ");
 		hql.append(" 			WHERE pcpee.catalog_upload_log_seq = pcuel.catalog_upload_log_seq                                             ");
 		hql.append(" 			AND pcpee.catalog_prod_err_item = pcuel.catalog_prod_err_item                                                 ");
-		hql.append(" 			AND pcuel.catalog_err_item = 'ec_img'), pcpee.ec_img) AS ec_img,                                              ");
+		hql.append(" 			AND pcuel.catalog_err_item = 'ec_img_url'), pcpee.ec_img) AS ec_img,                                          ");
 		hql.append(" 	                                                                                                                      ");
 		hql.append(" 	if((SELECT pcuel.catalog_err_reason FROM pfp_catalog_upload_err_log pcuel                                             ");
 		hql.append(" 			WHERE pcpee.catalog_upload_log_seq = pcuel.catalog_upload_log_seq                                             ");

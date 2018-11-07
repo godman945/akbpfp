@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/11/2 �W�� 09:57:28 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/11/7 �U�� 12:02:22 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -30,7 +30,7 @@ public class PfpCatalogProdEcError implements java.io.Serializable {
 	private String ecTitle;
 	private String ecImg;
 	private String ecUrl;
-	private int ecPrice;
+	private String ecPrice;
 	private int ecDiscountPrice;
 	private String ecStockStatus;
 	private String ecUseStatus;
@@ -41,7 +41,7 @@ public class PfpCatalogProdEcError implements java.io.Serializable {
 	}
 
 	public PfpCatalogProdEcError(PfpCatalogUploadLog pfpCatalogUploadLog, int catalogProdErrItem, String catalogProdSeq,
-			String catalogSeq, String ecName, String ecTitle, String ecImg, String ecUrl, int ecPrice,
+			String catalogSeq, String ecName, String ecTitle, String ecImg, String ecUrl, String ecPrice,
 			int ecDiscountPrice, String ecStockStatus, String ecUseStatus, String ecCategory, Date createDate) {
 		this.pfpCatalogUploadLog = pfpCatalogUploadLog;
 		this.catalogProdErrItem = catalogProdErrItem;
@@ -144,12 +144,12 @@ public class PfpCatalogProdEcError implements java.io.Serializable {
 		this.ecUrl = ecUrl;
 	}
 
-	@Column(name = "ec_price", nullable = false)
-	public int getEcPrice() {
+	@Column(name = "ec_price", nullable = false, length = 11)
+	public String getEcPrice() {
 		return this.ecPrice;
 	}
 
-	public void setEcPrice(int ecPrice) {
+	public void setEcPrice(String ecPrice) {
 		this.ecPrice = ecPrice;
 	}
 
