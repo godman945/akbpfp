@@ -138,7 +138,7 @@
 							</div>
 						</#list>
 
-                        <#-- row1 
+                        <#-- row1 提供參考，不需要可刪除
                         <div class="txt-row" data-type="error">
                             <div class="txt-cell col-number     ">9</div>
                             <div class="txt-cell col-serial     ">product_201807301</div>
@@ -192,6 +192,8 @@
             <div class="pagination-wrap txt-noselect m-b30" data-order="79" data-quantity="150">
                 <#-- data-num: 頁碼 -->
                 <ul class="pagination-box txt-table">
+                
+                	<#-- 留者查看用，不需要可刪
                     <li class="txt-cell txt-left">
                         <a data-num="1" class="pagination-button left" href="#"></a>
                     </li>
@@ -210,13 +212,14 @@
                             <a data-num="" class="pagination-button" href="#"></a>
                         </span>
                         <#-- <a data-num="..." class="pagination-button ellipsis" href="#"></a> -->
-                        <a class="pagination-button next" href="#" title="下10頁"></a>
+                        <#--<a class="pagination-button next" href="#" title="下10頁"></a>
                     </li>
                     <li class="txt-cell txt-right">
                         <a data-num="" class="pagination-button right" href="#"></a>
                     </li>
+                    -->
+                    
                 </ul>
-
             </div>
             <#-- 頁碼 pagination 結束 -->
         </div>
