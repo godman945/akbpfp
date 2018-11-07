@@ -49,12 +49,14 @@ function checkCatalogGroupAdStatus(dataObj){
 			if (response.status == "SUCCESS") {
 				if (response.count != "0"){
 //					alert("有bind ad！");
-					if(confirm("此商品組合有綁定廣告，請確認是否刪除！")) {
+					if(confirm("提醒您，刪除商品組合將有可能會影響正在播放中的廣告，您確定要刪除嗎?")) {
 						deleteCatalogGroupAjax(catalogGroupSeq)
 					}
 				}else{
 //					alert("沒有bind ad ---------！");
-					deleteCatalogGroupAjax(catalogGroupSeq)
+					if(confirm("您確定要刪除此商品組合嗎?")) {
+						deleteCatalogGroupAjax(catalogGroupSeq)
+					}
 				}
 			} else {
 //				alert(response);

@@ -25,6 +25,7 @@ import com.pchome.akbpfp.db.service.sequence.SequenceService;
 import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupFactory;
+import com.pchome.enumerate.catalogprod.EnumCatalogGroupDeleteStatusType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 
 public class CatalogProdGroupAjax extends BaseCookieAction {
@@ -191,82 +192,83 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			
 			// 將db篩選條件資料塞進map
 			Map<String, List<Object>> dbCompareGroupItemMap = new HashMap<String, List<Object>>();
-			List<Map<String, Object>> dbCatalogGroupItemList = pfpCatalogGroupItemService
-					.getCatalogAllGroupItem(catalogSeq,"");
-			for (Object object : dbCatalogGroupItemList) {
-				Map obj = (Map) object;
-				String dbGroupSeq = obj.get("catalog_group_seq").toString();
-				String dbField = obj.get("catalog_group_item_field").toString();
-				String dbCondition = obj.get("catalog_group_item_condition").toString();
-				String dbValue = obj.get("catalog_group_item_value").toString();
-
-				if (dbCompareGroupItemMap.get(dbGroupSeq) == null) {
-
-					List<Object> dbItemArray = new ArrayList<Object>();
-					PfpCatalogGroupItem dbPfpCatalogGroupItem = new PfpCatalogGroupItem();
-					dbPfpCatalogGroupItem.setCatalogGroupItemField(dbField);
-					dbPfpCatalogGroupItem.setCatalogGroupItemCondition(dbCondition);
-					dbPfpCatalogGroupItem.setCatalogGroupItemValue(dbValue);
-
-					dbItemArray.add(dbPfpCatalogGroupItem);
-					dbCompareGroupItemMap.put(dbGroupSeq, dbItemArray);
-
-				} else {
-					List<Object> dbItemArray = dbCompareGroupItemMap.get(dbGroupSeq);
-					PfpCatalogGroupItem dbPfpCatalogGroupItem = new PfpCatalogGroupItem();
-					dbPfpCatalogGroupItem.setCatalogGroupItemField(dbField);
-					dbPfpCatalogGroupItem.setCatalogGroupItemCondition(dbCondition);
-					dbPfpCatalogGroupItem.setCatalogGroupItemValue(dbValue);
-
-					dbItemArray.add(dbPfpCatalogGroupItem);
+			List<Map<String, Object>> dbCatalogGroupItemList = pfpCatalogGroupItemService.getCatalogAllGroupItem(catalogSeq,"");
+			//撈出的篩選條件至少有一項可比較是否條件理覆
+			if (dbCatalogGroupItemList.size()>0){
+				for (Object object : dbCatalogGroupItemList) {
+					Map obj = (Map) object;
+					String dbGroupSeq = obj.get("catalog_group_seq").toString();
+					String dbField = obj.get("catalog_group_item_field").toString();
+					String dbCondition = obj.get("catalog_group_item_condition").toString();
+					String dbValue = obj.get("catalog_group_item_value").toString();
+	
+					if (dbCompareGroupItemMap.get(dbGroupSeq) == null) {
+	
+						List<Object> dbItemArray = new ArrayList<Object>();
+						PfpCatalogGroupItem dbPfpCatalogGroupItem = new PfpCatalogGroupItem();
+						dbPfpCatalogGroupItem.setCatalogGroupItemField(dbField);
+						dbPfpCatalogGroupItem.setCatalogGroupItemCondition(dbCondition);
+						dbPfpCatalogGroupItem.setCatalogGroupItemValue(dbValue);
+	
+						dbItemArray.add(dbPfpCatalogGroupItem);
+						dbCompareGroupItemMap.put(dbGroupSeq, dbItemArray);
+	
+					} else {
+						List<Object> dbItemArray = dbCompareGroupItemMap.get(dbGroupSeq);
+						PfpCatalogGroupItem dbPfpCatalogGroupItem = new PfpCatalogGroupItem();
+						dbPfpCatalogGroupItem.setCatalogGroupItemField(dbField);
+						dbPfpCatalogGroupItem.setCatalogGroupItemCondition(dbCondition);
+						dbPfpCatalogGroupItem.setCatalogGroupItemValue(dbValue);
+	
+						dbItemArray.add(dbPfpCatalogGroupItem);
+					}
 				}
-			}
-			
-			Map<String, List<Object>> dbCompareGroupItemMapNew = new HashMap<String, List<Object>>();
-			// db群組篩選條件數量要與新增的數量相同才比較
-			for (Map.Entry<String, List<Object>> entry : dbCompareGroupItemMap.entrySet()) {
-				if (filterContentArray.length() == entry.getValue().size()) {
-					dbCompareGroupItemMapNew.put(entry.getKey(), entry.getValue());
+				
+				Map<String, List<Object>> dbCompareGroupItemMapNew = new HashMap<String, List<Object>>();
+				// db群組篩選條件數量要與新增的數量相同才比較
+				for (Map.Entry<String, List<Object>> entry : dbCompareGroupItemMap.entrySet()) {
+					if (filterContentArray.length() == entry.getValue().size()) {
+						dbCompareGroupItemMapNew.put(entry.getKey(), entry.getValue());
+					}
 				}
-			}
-
-			// 將新增的篩選條件與db所有篩選條件比對是否一模一樣
-			boolean isDuplicate = false;
-			for (Map.Entry<String, List<Object>> entry : dbCompareGroupItemMapNew.entrySet()) {// db所有篩選條件
-				if (isDuplicate) {
-					break;
-				}
-				int count = 0;
-				List<Object> dbCompareGroupItemList = entry.getValue();
-				for (int j = 0; j < dbCompareGroupItemList.size(); j++) {
-					PfpCatalogGroupItem dbPfpCatalogGroupItem = (PfpCatalogGroupItem) dbCompareGroupItemList.get(j);
-					// 新增的篩選條件
-					for (int i = 0; i < filterContentArray.length(); i++) {
-						JSONObject filterContentObj = new JSONObject(filterContentArray.get(i).toString());
-						String newField = filterContentObj.getString("field");
-						String newCondition = filterContentObj.getString("condition");
-						String newValue = filterContentObj.getString("value");
-						// 將新增的篩選條件與db所有條件相比
-						if (StringUtils.equals(newField, dbPfpCatalogGroupItem.getCatalogGroupItemField())) {
-							if (StringUtils.equals(newCondition, dbPfpCatalogGroupItem.getCatalogGroupItemCondition())
-									&& StringUtils.equals(newValue, dbPfpCatalogGroupItem.getCatalogGroupItemValue())) {
-								count = count + 1;
-								if (count == filterContentArray.length()) {
-									isDuplicate = true;
-									break;
+	
+				// 將新增的篩選條件與db所有篩選條件比對是否一模一樣
+				boolean isDuplicate = false;
+				for (Map.Entry<String, List<Object>> entry : dbCompareGroupItemMapNew.entrySet()) {// db所有篩選條件
+					if (isDuplicate) {
+						break;
+					}
+					int count = 0;
+					List<Object> dbCompareGroupItemList = entry.getValue();
+					for (int j = 0; j < dbCompareGroupItemList.size(); j++) {
+						PfpCatalogGroupItem dbPfpCatalogGroupItem = (PfpCatalogGroupItem) dbCompareGroupItemList.get(j);
+						// 新增的篩選條件
+						for (int i = 0; i < filterContentArray.length(); i++) {
+							JSONObject filterContentObj = new JSONObject(filterContentArray.get(i).toString());
+							String newField = filterContentObj.getString("field");
+							String newCondition = filterContentObj.getString("condition");
+							String newValue = filterContentObj.getString("value");
+							// 將新增的篩選條件與db所有條件相比
+							if (StringUtils.equals(newField, dbPfpCatalogGroupItem.getCatalogGroupItemField())) {
+								if (StringUtils.equals(newCondition, dbPfpCatalogGroupItem.getCatalogGroupItemCondition())
+										&& StringUtils.equals(newValue, dbPfpCatalogGroupItem.getCatalogGroupItemValue())) {
+									count = count + 1;
+									if (count == filterContentArray.length()) {
+										isDuplicate = true;
+										break;
+									}
 								}
 							}
 						}
 					}
 				}
+	
+				if (isDuplicate) {
+					resultMap.put("msg", "篩選條件重覆");
+					resultMap.put("status", "ERROR");
+					return SUCCESS;
+				}
 			}
-
-			if (isDuplicate) {
-				resultMap.put("msg", "篩選條件重覆");
-				resultMap.put("status", "ERROR");
-				return SUCCESS;
-			}
-			
 			
 			
 			//如果篩選條件商品清單數量為0，即不可建立商品組合
@@ -319,6 +321,7 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			pfpCatalogGroup.setCatalogGroupSeq(catalogGroupSeq);
 			pfpCatalogGroup.setPfpCatalog(pfpCatalog);
 			pfpCatalogGroup.setCatalogGroupName(catalogGroupName);
+			pfpCatalogGroup.setCatalogGroupDeleteStatus(EnumCatalogGroupDeleteStatusType.NotDeleted.getType());
 			pfpCatalogGroup.setUpdateDate(new Date());
 			pfpCatalogGroup.setCreateDate(new Date());
 			pfpCatalogGroupService.saveOrUpdateWithCommit(pfpCatalogGroup);

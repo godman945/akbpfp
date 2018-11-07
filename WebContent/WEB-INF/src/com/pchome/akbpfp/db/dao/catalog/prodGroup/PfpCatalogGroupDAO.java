@@ -1,11 +1,14 @@
 package com.pchome.akbpfp.db.dao.catalog.prodGroup;
 
+import java.util.HashMap;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
+import com.pchome.enumerate.catalogprod.EnumCatalogGroupDeleteStatusType;
 
 public class PfpCatalogGroupDAO extends BaseDAO<PfpCatalogGroup,String> implements IPfpCatalogGroupDAO{
 	
@@ -36,8 +39,11 @@ public class PfpCatalogGroupDAO extends BaseDAO<PfpCatalogGroup,String> implemen
 		StringBuffer hql = new StringBuffer();
 		hql.append(" from PfpCatalogGroup ");
 		hql.append(" where pfpCatalog.catalogSeq = ? ");
+		hql.append(" and catalogGroupDeleteStatus = ? ");
 		
-		return super.getHibernateTemplate().find(hql.toString(), catalogSeq);
+		log.info("getPfpCatalogGroupList.sql = " + hql.toString());
+		
+		return super.getHibernateTemplate().find(hql.toString(), catalogSeq, EnumCatalogGroupDeleteStatusType.NotDeleted.getType());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -61,7 +67,7 @@ public class PfpCatalogGroupDAO extends BaseDAO<PfpCatalogGroup,String> implemen
     @Override
 	@SuppressWarnings("unchecked")
 	public void deleteCatalogGroup(String catalogGroupSeq) throws Exception{
-		String sql = "delete from PfpCatalogGroup where catalogGroupSeq = :catalogGroupSeq";		
+		String sql = " update PfpCatalogGroup set catalogGroupDeleteStatus = '"+EnumCatalogGroupDeleteStatusType.Deleted.getType()+"' where catalogGroupSeq = :catalogGroupSeq ";		
 		Session session = getSession();
 		session.createQuery(sql).setString("catalogGroupSeq", catalogGroupSeq).executeUpdate();
 		session.flush();
