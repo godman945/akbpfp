@@ -96,7 +96,7 @@ public class IndexAction extends BaseCookieAction {
 		 * } }
 		 */
 
-		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_index");
+//		HttpUtil.doGet("https://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_index");
 		return result;
 	}
 
