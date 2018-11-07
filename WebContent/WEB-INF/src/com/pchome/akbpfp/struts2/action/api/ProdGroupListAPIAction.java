@@ -58,10 +58,10 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 		
 		List<PfpCatalogGroupItem> pfpCatalogGroupItems = aProdGroup.getPfpCatalogGroupItemList(groupId);
 		log.info(">>> pfpCatalogGroupItems size : "+pfpCatalogGroupItems.size());
-		if( (pfpCatalogGroupItems.isEmpty()) && (pfpCatalogGroupItems.size()<=0) ){
-			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E003.getStatus()).toString().getBytes());
-			return SUCCESS;
-		}
+//		if( (pfpCatalogGroupItems.isEmpty()) && (pfpCatalogGroupItems.size()<=0) ){
+//			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E003.getStatus()).toString().getBytes());
+//			return SUCCESS;
+//		}
 		
 		//將pfpCatalogGroupItems轉成sql
 		String filterSQL = aProdGroup.pfpCatalogGroupItemTofilterSQL(pfpCatalogGroupItems);
