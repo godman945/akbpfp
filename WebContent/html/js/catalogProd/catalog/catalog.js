@@ -114,18 +114,21 @@ function processPageNumber() {
  * @param catalogSeq
  */
 function deletePfpCatalog(catalogSeq) {
-	$.ajax({
-		type : "post",
-		url : "deleteCatalog.html",
-		data : {
-			"deleteCatalogSeq" : catalogSeq
-		},
-		timeout : 30000,
-		error : function(xhr) {
-			alert('Ajax request 發生錯誤');
-		},
-		success : function(response) {
-			window.location = "catalogProd.html";
-		}
-	});
+	var alt = "提醒您，刪除商品目錄將有可能會影響正在播放中的廣告，您確定要刪除嗎?";
+	if(confirm(alt)) {
+		$.ajax({
+			type : "post",
+			url : "deleteCatalog.html",
+			data : {
+				"deleteCatalogSeq" : catalogSeq
+			},
+			timeout : 30000,
+			error : function(xhr) {
+				alert('Ajax request 發生錯誤');
+			},
+			success : function(response) {
+				window.location = "catalogProd.html";
+			}
+		});
+	}
 }
