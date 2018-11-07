@@ -1,10 +1,13 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/catalogProdUploadErrList.js?t=20181106001"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/commonCatalogProd.js?t=20181023011"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalogUpload/catalogProdUploadErrList.js?t=20181107001"></script>
 
 <div class="container-prodmanage">
-
+	<input type="text" id="pageNo" name="pageNo" value="${pageNo!}">
+	<input type="text" id="pageCount" name="pageCount" value="${pageCount!}">
+	
     <#-- 次目錄導覽列 開始 -->
     <#-- hidden 隱藏所有牙齒 -->
     <#-- hidetabs 只顯示第一顆牙齒 -->
