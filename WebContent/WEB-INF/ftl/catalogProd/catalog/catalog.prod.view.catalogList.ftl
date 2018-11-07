@@ -17,6 +17,18 @@
 	                    <a href="catalogProd.html">所有商品目錄</a>
 	                </span>
 	            </li>
+	            
+	            <li class="txt-cell pos-relative"><a href="#">商品清單</a></li>
+                <li class="txt-cell pos-relative"><a href="#">商品組合</a></li>
+                <li class="txt-cell pos-relative"><a href="#">商品資料</a></li>
+                <li class="txt-cell pos-relative"><a href="#">設定</a></li>
+	            
+	            <li class="txt-cell pos-relative p-r10">
+                    <span class="icon-box tab-logomanage p-r10">
+                        <a href="logo.html">LOGO管理<em class="icon-error"></em></a>                                                        
+                    </span>
+                </li>
+                <div class="p-b10 note-text">提醒您，必須完整建立商品目錄與LOGO才能投放商品廣告</div>
 	        </ul>
 	        <div class="altername-box pos-absolute pos-right pos-top">
 	        	<span>帳戶：</span>${customer_info_title}
@@ -144,31 +156,6 @@
             <div class="pagination-wrap txt-noselect m-b30" data-order="79" data-quantity="150">
                 <#-- data-num: 頁碼 -->
                 <ul class="pagination-box txt-table">
-                    
-                    <#-- 留者查看用，不需要可刪
-                    <li class="txt-cell txt-left">
-                        <a data-num="1" class="pagination-button left" href="#"></a>
-                    </li>
-                    <li class="txt-cell">
-                        <a class="pagination-button prev" href="#" title="上10頁"></a>
-                        <span class="pagination-buttongroup">
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                            <a data-num="" class="pagination-button" href="#"></a>
-                        </span>
-                        <#-- <a data-num="..." class="pagination-button ellipsis" href="#"></a> -->
-                    <#-- <a class="pagination-button next" href="#" title="下10頁"></a>
-                    </li>
-                    <li class="txt-cell txt-right">
-                        <a data-num="" class="pagination-button right" href="#"></a>
-                    </li> -->
                     
                 </ul>
             </div>
