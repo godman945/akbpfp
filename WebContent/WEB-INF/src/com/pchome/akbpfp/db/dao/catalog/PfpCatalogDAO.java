@@ -83,6 +83,7 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		hql.append("   pc.catalog_type,                                                                                                                      ");
 		hql.append("   pc.catalog_upload_type,                                                                                                               ");
 		hql.append("   pc.catalog_prod_num,                                                                                                                  ");
+		hql.append("   pc.upload_status,                                                                                                                  ");
 		hql.append("   pcul.update_content,                                                                                                                  ");
 		hql.append("   pcul.update_datetime,                                                                                                                 ");
 		hql.append("   pcul.error_num,                                                                                                                       ");
@@ -141,6 +142,7 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		pfpCatalog.setCatalogType(vo.getCatalogType());
 		pfpCatalog.setPfpCustomerInfoId(vo.getPfpCustomerInfoId());
 		pfpCatalog.setCatalogSeq(vo.getCatalogSeq());
+		pfpCatalog.setCatalogDeleteStatus("0");
 		pfpCatalog.setCatalogUploadType(" ");
 		pfpCatalog.setCatalogUploadContent(" ");
 		pfpCatalog.setCatalogImgShowType("1");
