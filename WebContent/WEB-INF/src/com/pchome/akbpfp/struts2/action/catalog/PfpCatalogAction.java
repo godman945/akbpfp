@@ -133,6 +133,7 @@ public class PfpCatalogAction extends BaseCookieAction{
 		pfpCatalogGroup.setCatalogGroupSeq(catalogGroupSeq);
 		pfpCatalogGroup.setPfpCatalog(pfpCatalog);
 		pfpCatalogGroup.setCatalogGroupName("全部商品");
+		pfpCatalogGroup.setCatalogGroupDeleteStatus("0");
 		pfpCatalogGroup.setUpdateDate(date);
 		pfpCatalogGroup.setCreateDate(date);
 		pfpCatalogGroupService.saveOrUpdateWithCommit(pfpCatalogGroup);
