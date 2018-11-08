@@ -607,6 +607,7 @@ function processPageAndTotalPage(){
             
           //區間1~10
             if(order<=_length){ 
+//            	alert('111')
             	$('#previousPageBtn').css('display', 'none');
 	           	 var _order=(order<=_length)?1:order;
 	           	
@@ -622,6 +623,7 @@ function processPageAndTotalPage(){
 	           		$('#nextPageBtn').css('display', '');
 	           	 }
             }else if ( (quantity-orderTmp) < _length){//區間位於後段不足10頁
+//            	alert('222')
 	           	 var pageHeaderNoStr= orderTmp.toString();
 	           	 var pageHeaderNoStr= pageHeaderNoStr.substring(0, pageHeaderNoStr.length-1);
 	           	 var _order =parseInt( pageHeaderNoStr.toString()+"1");
@@ -629,6 +631,7 @@ function processPageAndTotalPage(){
            		$('#previousPageBtn').css('display', '');
            		$('#nextPageBtn').css('display', 'none');
             } else if(orderTmp>_length){ //區間位於中間
+//            	alert('333333')
 	             var pageHeaderNoStr= orderTmp.toString();
 	           	 var pageHeaderNoStr= pageHeaderNoStr.substring(0, pageHeaderNoStr.length-1);
 	           	 var _order =parseInt( pageHeaderNoStr.toString()+"1");
@@ -637,7 +640,6 @@ function processPageAndTotalPage(){
            		$('#finalPageBtn').css('display', '');
            		$('#nextPageBtn').css('display', '');
             }
-
             
             //寫入頁碼
             for(var i=0;i<_length;i++){
@@ -673,6 +675,13 @@ function processPageAndTotalPage(){
             	$buttonleft.removeClass('left');
             }else{
             	$('#firstPageBtn').addClass('left');
+            }
+            
+            //如果頁碼跟最後一頁一樣，將下一頁按鈕隱藏
+            for(var i=0;i<_length;i++){
+                if ( ($buttongroup.eq(i).attr('data-num').toString()) == (quantity.toString()) ){
+                	$('#nextPageBtn').css('display', 'none');
+                }
             }
         }
         

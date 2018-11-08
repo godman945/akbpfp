@@ -278,6 +278,13 @@ function processPageAndTotalPage(){
             }else{
             	$('#firstPageBtn').addClass('left');
             }
+            
+            //如果頁碼跟最後一頁一樣，將下一頁按鈕隱藏
+            for(var i=0;i<_length;i++){
+                if ( ($buttongroup.eq(i).attr('data-num').toString()) == (quantity.toString()) ){
+                	$('#nextPageBtn').css('display', 'none');
+                }
+            }
         }
         
         ///將無頁碼的button清除
