@@ -1069,4 +1069,42 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
         session.createSQLQuery(sql).setString("catalogGroupSeq", catalogGroupSeq).setString("adStatus", adStatus).executeUpdate();
         session.flush();
 	}
+
+	@Override
+	public void updateAdStatusByCatalogSeq(String catalogSeq, String adStatus,String customerInfoId) throws Exception {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" UPDATE pfp_ad ");
+		sql.append(" SET    ad_status = :adStatus ");
+		sql.append(" WHERE  1 = 1 ");
+		sql.append(" AND    ad_seq IN ");
+		sql.append(" ( ");
+		sql.append(" SELECT b.ad_seq ");
+		sql.append(" /*    a.catalog_seq, ");
+		sql.append("     a.catalog_group_seq, ");
+		sql.append("     a.pfp_customer_info_id ");
+		sql.append(" */ ");
+		sql.append(" FROM   ( ");
+		sql.append(" SELECT g.catalog_group_seq, ");
+		sql.append(" c.pfp_customer_info_id, ");
+		sql.append(" c.catalog_seq ");
+		sql.append(" FROM   pfp_catalog c, ");
+		sql.append(" pfp_catalog_group g ");
+		sql.append(" WHERE  1 = 1 ");
+		sql.append(" AND    c.pfp_customer_info_id = :customerInfoId ");
+		sql.append(" AND    c.catalog_seq = :catalogSeq ");
+		sql.append(" AND    g.catalog_seq = c.catalog_seq)a, ");
+		sql.append(" ( ");
+		sql.append(" SELECT d.ad_seq, ");
+		sql.append(" d.ad_detail_content ");
+		sql.append(" FROM   pfp_ad_detail d ");
+		sql.append(" WHERE  1 = 1 ");
+		sql.append(" AND    d.ad_detail_id = 'prod_group') b ");
+		sql.append(" WHERE  1 = 1 ");
+		sql.append(" AND    a.catalog_group_seq = b.ad_detail_content )");
+		Query query = getSession().createSQLQuery(sql.toString());
+		query.setString("adStatus", adStatus);
+		query.setString("customerInfoId", customerInfoId);
+		query.setString("catalogSeq", catalogSeq);
+		query.executeUpdate();
+	}
 }

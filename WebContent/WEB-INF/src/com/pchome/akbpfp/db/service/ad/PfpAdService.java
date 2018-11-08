@@ -490,7 +490,9 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 		((PfpAdDAO)dao).updateAdStatusByCatalogGroupSeq(catalogGroupSeq, adStatus);
 	}
 	
-	
+	public void updateAdStatusByCatalogSeq(String catalogSeq, String adStatus,String customerInfoId) throws Exception {
+		((PfpAdDAO)dao).updateAdStatusByCatalogSeq(catalogSeq, adStatus,customerInfoId);
+	}
 
 	public IPfpCatalogLogoService getPfpCatalogLogoService() {
 		return pfpCatalogLogoService;
@@ -507,6 +509,8 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 	public void setPfpCatalogSetupService(IPfpCatalogSetupService pfpCatalogSetupService) {
 		this.pfpCatalogSetupService = pfpCatalogSetupService;
 	}
+
+	
 	
 	
 }

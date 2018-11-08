@@ -128,4 +128,7 @@ public interface IPfpAdDAO extends IBaseDAO<PfpAd,String>{
 	public List<PfpAd> validAdAd(String adGroupSeq) throws Exception;
 	
 	public void updateAdStatusByCatalogGroupSeq(String catalogGroupSeq, String adStatus) throws Exception;
+	
+	public void updateAdStatusByCatalogSeq(String catalogSeq, String adStatus,String customerInfoId) throws Exception;
+	
 }
