@@ -34,4 +34,7 @@ public interface IPfpAdService extends IBaseService<PfpAd,String>{
 	
 	//刪除商品組合時更新廣告狀態為暫停
 	public void updateAdStatusByCatalogGroupSeq(String catalogGroupSeq, String adStatus) throws Exception;
+	
+	//商品廣告刪除目錄更新廣告狀態為暫停
+	public void updateAdStatusByCatalogSeq(String catalogSeq, String adStatus,String customerInfoId) throws Exception;
 }

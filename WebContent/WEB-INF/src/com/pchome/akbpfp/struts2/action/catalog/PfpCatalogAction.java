@@ -14,6 +14,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
+import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupItemService;
@@ -23,6 +24,7 @@ import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
+import com.pchome.enumerate.utils.EnumStatus;
 
 public class PfpCatalogAction extends BaseCookieAction{
 	
@@ -32,6 +34,9 @@ public class PfpCatalogAction extends BaseCookieAction{
 	private IPfpCatalogGroupService pfpCatalogGroupService;
 	private IPfpCatalogUploadListService pfpCatalogUploadListService;
 	private IPfpCatalogGroupItemService pfpCatalogGroupItemService;
+	private IPfpAdService pfpAdService;
+	
+	
 	private String queryString = ""; // 預設為空
 	private int pageNo = 1;          // 初始化目前頁數
 	private int pageSize = 10;       // 初始化每頁幾筆
@@ -156,24 +161,28 @@ public class PfpCatalogAction extends BaseCookieAction{
 				for (PfpCatalogGroupItem pfpCatalogGroupItem : pfpCatalogGroupItemSet) {
 					pfpCatalogGroupItemService.delete(pfpCatalogGroupItem);
 				}
-				pfpCatalogGroupService.delete(pfpCatalogGroup);
+				pfpCatalogGroup.setCatalogGroupDeleteStatus("1");
+				pfpCatalogGroupService.saveOrUpdate(pfpCatalogGroup);
 			}
 		}
 		pfpCatalog.setCatalogDeleteStatus("1");
+		//更新廣告狀態為暫停
+		pfpAdService.updateAdStatusByCatalogSeq(deleteCatalogSeq, String.valueOf(EnumStatus.Pause.getStatusId()), super.getCustomer_info_id());
 		
-		PfpCatalogVO vo = new PfpCatalogVO();
-		vo.setCatalogSeq(deleteCatalogSeq);
-		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
-		// table有FK，由明細先刪除資料再刪主PK PfpCatalog商品目錄資料
-		pfpCatalogUploadListService.deletePfpCatalogUploadErrLog(vo);
-		pfpCatalogUploadListService.deletePfpCatalogUploadLog(vo);
-		pfpCatalogUploadListService.deletePfpCatalogProdEc(vo);
-		pfpCatalogUploadListService.deletePfpCatalogGroupItem(vo); // 刪除 商品目錄群組明細 先寫在這，之後移到相對應的Service
-		pfpCatalogUploadListService.deletePfpCatalogGroup(vo); // 刪除 商品目錄群組 先寫在這，之後移到相對應的Service
-		pfpCatalogUploadListService.deletePfpCatalogSetup(vo); // 刪除 商品目錄設定 
+		
+//		PfpCatalogVO vo = new PfpCatalogVO();
+//		vo.setCatalogSeq(deleteCatalogSeq);
+//		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
+//		// table有FK，由明細先刪除資料再刪主PK PfpCatalog商品目錄資料
+//		pfpCatalogUploadListService.deletePfpCatalogUploadErrLog(vo);
+//		pfpCatalogUploadListService.deletePfpCatalogUploadLog(vo);
+//		pfpCatalogUploadListService.deletePfpCatalogProdEc(vo);
+//		pfpCatalogUploadListService.deletePfpCatalogGroupItem(vo); // 刪除 商品目錄群組明細 先寫在這，之後移到相對應的Service
+//		pfpCatalogUploadListService.deletePfpCatalogGroup(vo); // 刪除 商品目錄群組 先寫在這，之後移到相對應的Service
+//		pfpCatalogUploadListService.deletePfpCatalogSetup(vo); // 刪除 商品目錄設定 
 //		pfpCatalogService.deletePfpCatalog(vo);
-		pfpCatalogUploadListService.deleteCatalogProdImgFolderAndData(vo);
-		pfpCatalogUploadListService.deleteCatalogProdCSVFolderAndData(vo);
+//		pfpCatalogUploadListService.deleteCatalogProdImgFolderAndData(vo);
+//		pfpCatalogUploadListService.deleteCatalogProdCSVFolderAndData(vo);
 		return SUCCESS;
 	}
 	
@@ -295,6 +304,14 @@ public class PfpCatalogAction extends BaseCookieAction{
 
 	public void setPfpCatalogGroupItemService(IPfpCatalogGroupItemService pfpCatalogGroupItemService) {
 		this.pfpCatalogGroupItemService = pfpCatalogGroupItemService;
+	}
+
+	public IPfpAdService getPfpAdService() {
+		return pfpAdService;
+	}
+
+	public void setPfpAdService(IPfpAdService pfpAdService) {
+		this.pfpAdService = pfpAdService;
 	}
 
 }

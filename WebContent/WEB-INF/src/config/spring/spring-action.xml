@@ -478,6 +478,7 @@
         <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
         <property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
         <property name="pfpCatalogGroupItemService" ref="PfpCatalogGroupItemService" />
+        <property name="pfpAdService" ref="PfpAdService" />
     </bean>
 
 </beans>
