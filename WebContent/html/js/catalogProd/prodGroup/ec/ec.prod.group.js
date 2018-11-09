@@ -48,18 +48,13 @@ function checkCatalogGroupAdStatus(dataObj){
 			console.log(response.status);
 			if (response.status == "SUCCESS") {
 				if (response.count != "0"){
-//					alert("有bind ad！");
-					if(confirm("提醒您，刪除商品組合將有可能會影響正在播放中的廣告，您確定要刪除嗎?")) {
-						deleteCatalogGroupAjax(catalogGroupSeq)
-					}
+					alert("提醒您，刪除商品組合將有可能會影響正在播放中的廣告，無法刪除");
 				}else{
-//					alert("沒有bind ad ---------！");
 					if(confirm("您確定要刪除此商品組合嗎?")) {
 						deleteCatalogGroupAjax(catalogGroupSeq)
 					}
 				}
 			} else {
-//				alert(response);
 				alert(response.msg)
 			}
 		});
