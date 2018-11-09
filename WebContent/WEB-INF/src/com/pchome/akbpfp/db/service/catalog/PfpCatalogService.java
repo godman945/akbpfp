@@ -10,8 +10,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.catalog.IPfpCatalogDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;

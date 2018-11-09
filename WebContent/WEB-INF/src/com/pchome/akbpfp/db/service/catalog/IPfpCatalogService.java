@@ -3,8 +3,6 @@ package com.pchome.akbpfp.db.service.catalog;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONException;
-
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.IBaseService;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
