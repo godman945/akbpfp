@@ -4,9 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.catalog.IPfpCatalogDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
@@ -106,6 +111,10 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 				pfpCatalogVO.setCatalogUploadLogSeq(String.valueOf(dataMap.get("catalog_upload_log_seq")));
 			}
 			
+			if (dataMap.get("upload_status") != null) { // 資料上傳狀態(0:未上傳 (預設值), 1:上傳中, 2:上傳完成)
+				pfpCatalogVO.setUploadStatus((String)dataMap.get("upload_status"));
+			}
+			
 			pfpCatalogVOList.add(pfpCatalogVO);
 		}
 		return pfpCatalogVOList;
@@ -120,6 +129,38 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 		// 新增 pfp_catalog "商品目錄"
 		vo.setCatalogSeq(sequenceService.getId(EnumSequenceTableName.PFP_CATALOG, "", 20));
 		((IPfpCatalogDAO) dao).savePfpCatalog(vo);
+	}
+	
+	/**
+	 * 查詢目前目錄資料上傳狀態
+	 * @param uploadingCatalogSeqList
+	 * @return
+	 */
+	@Override
+	public List<Map<String, String>> getCatalogUploadingStatus(String uploadingCatalogSeqList) {
+		List<Map<String, String>> resultData = new ArrayList<Map<String, String>>();
+		try {
+			JSONArray jsonArray = new JSONArray(uploadingCatalogSeqList);
+
+			// 將jsonArray轉ArrayList，hibernate查詢用
+			List<String> catalogSeqList = new ArrayList<String>();
+			for (int i = 0; i < jsonArray.length(); i++) {
+				catalogSeqList.add(jsonArray.getString(i));
+			}
+			
+			List<Map<String, Object>> list = ((IPfpCatalogDAO) dao).getCatalogUploadingStatus(catalogSeqList);
+			for (int i = 0; i < list.size(); i++) {
+				Map<String, Object> objArray = list.get(i);
+				HashMap<String, String> map = new HashMap<String, String>();
+				map.put("catalogSeq", objArray.get("catalog_seq").toString());
+				map.put("uploadStatus", objArray.get("upload_status").toString());
+				resultData.add(map);
+			}
+			
+			return resultData;
+		} catch (Exception e) {
+			return resultData;
+		}
 	}
 	
 	/**
@@ -215,5 +256,5 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 	public void setSequenceService(ISequenceService sequenceService) {
 		this.sequenceService = sequenceService;
 	}
-	
+
 }

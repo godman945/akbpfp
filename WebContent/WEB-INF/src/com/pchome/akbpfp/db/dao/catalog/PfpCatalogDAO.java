@@ -216,4 +216,24 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		query.executeUpdate();
 		super.getSession().flush();
 	}
+	
+	/**
+	 * 查詢目前目錄資料上傳狀態
+	 */
+	@Override
+	public List<Map<String, Object>> getCatalogUploadingStatus(List<String> uploadingCatalogSeqList) {
+		StringBuffer hql = new StringBuffer();
+		hql.append(" SELECT              ");
+		hql.append("   pc.catalog_seq,   ");
+		hql.append("   pc.upload_status  ");
+		hql.append(" FROM pfp_catalog pc ");
+		hql.append(" WHERE pc.catalog_seq IN(:catalog_seq) ");
+		
+        Query query = super.getSession().createSQLQuery(hql.toString());
+        if (uploadingCatalogSeqList.size() != 0) {
+			query.setParameterList("catalog_seq", uploadingCatalogSeqList);
+		}
+		
+        return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
 }

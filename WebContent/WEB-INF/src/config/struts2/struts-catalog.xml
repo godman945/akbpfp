@@ -205,7 +205,7 @@
 		<action name="queryCatalog" class="PfpCatalogAction" method="ajaxQueryPfpCatalogList">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="adPrivilegeInterceptor" />
-            <result type="tiles" name="success">.catalog.prod.view.catalogList.body</result>
+            <result type="tiles" name="success">.catalog.prod.view.catalogList.body.DetailList</result>
         </action>
         
         <!-- 商品目錄-刪除目錄 -->
@@ -242,6 +242,15 @@
 				<param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
 				<param name="inputName">downloadFileStream</param>
 				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+		
+		<!-- 廣告商品-檢查目錄資料上傳狀態 -->
+		<action name="checkCatalogUploadingStatus" class="PfpCatalogAction" method="ajaxCheckCatalogUploadingStatus">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+			<result type="json" name="success">
+				<param name="root">dataMap</param>
 			</result>
 		</action>
 		

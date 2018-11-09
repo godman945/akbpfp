@@ -159,8 +159,12 @@
         <put-attribute name="body" value=".catalog.prod.view.catalogList.body" />
     </definition>
     
-	<definition name=".catalog.prod.view.catalogList.body" template="/ftl/catalogProd/catalog/catalog.prod.view.catalogList.ftl" >
-	</definition>
+    <definition name=".catalog.prod.view.catalogList.body" template="/ftl/catalogProd/catalog/catalog.prod.view.catalogList.ftl" >
+    	<put-attribute name="catalogDetailList" value=".catalog.prod.view.catalogList.body.DetailList" />
+    </definition>
+    
+    <definition name=".catalog.prod.view.catalogList.body.DetailList" template="/ftl/catalogProd/catalog/catalog.prod.view.catalogDetailList.ftl" >
+    </definition>
 	
 	<!-- 進入新增目錄的畫面 -->
     <definition name=".catalog.prod.view.addCatalog" extends="catalog.prod.layout">

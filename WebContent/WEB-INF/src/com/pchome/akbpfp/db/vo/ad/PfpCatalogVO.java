@@ -24,6 +24,7 @@ public class PfpCatalogVO {
 	private String errorNum;          // 失敗筆數
 	private String catalogUploadLogSeq; // 更新紀錄編號
 	private String nextUpdateDatetime;// 下次執行更新時間
+	private String uploadStatus; // 資料上傳狀態(0:未上傳 (預設值), 1:上傳中, 2:上傳完成)
 	
 	public String getPfpCustomerInfoId() {
 		return pfpCustomerInfoId;
@@ -183,6 +184,14 @@ public class PfpCatalogVO {
 
 	public void setCatalogProdNum(int catalogProdNum) {
 		this.catalogProdNum = catalogProdNum;
+	}
+
+	public String getUploadStatus() {
+		return uploadStatus;
+	}
+
+	public void setUploadStatus(String uploadStatus) {
+		this.uploadStatus = uploadStatus;
 	}
 	
 }

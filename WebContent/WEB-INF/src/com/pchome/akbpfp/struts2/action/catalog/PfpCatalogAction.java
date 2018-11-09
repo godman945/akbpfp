@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.json.JSONException;
+
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
@@ -48,7 +50,7 @@ public class PfpCatalogAction extends BaseCookieAction{
 	private String catalogName; // 商品目錄名稱
 	
 	private String deleteCatalogSeq;
-	
+	private String uploadingCatalogSeqList; // 目前畫面顯示上傳中的目錄清單
 	private Map<String,Object> dataMap;
 	
 	// 下載相關
@@ -188,6 +190,25 @@ public class PfpCatalogAction extends BaseCookieAction{
 	}
 	
 	/**
+	 * 檢查目錄資料上傳狀態
+	 * @return
+	 * @throws JSONException 
+	 */
+	public String ajaxCheckCatalogUploadingStatus() throws JSONException {
+		dataMap = new HashMap<String, Object>();
+		
+		List<Map<String, String>> catalogUploadingStatusList = pfpCatalogService.getCatalogUploadingStatus(uploadingCatalogSeqList);
+		if (catalogUploadingStatusList.size() > 0) {
+			dataMap.put("status", "SUCCESS");
+			dataMap.put("dataMap", catalogUploadingStatusList);
+		} else {
+			dataMap.put("status", "ERROR");
+		}
+		
+		return SUCCESS;
+	}
+	
+	/**
 	 * 目錄範例檔案下載
 	 * 參考 https://matthung0807.blogspot.com/2017/09/struts-2.html
 	 * @return
@@ -313,6 +334,10 @@ public class PfpCatalogAction extends BaseCookieAction{
 
 	public void setPfpAdService(IPfpAdService pfpAdService) {
 		this.pfpAdService = pfpAdService;
+	}
+
+	public void setUploadingCatalogSeqList(String uploadingCatalogSeqList) {
+		this.uploadingCatalogSeqList = uploadingCatalogSeqList;
 	}
 
 }

@@ -1,6 +1,9 @@
 package com.pchome.akbpfp.db.service.catalog;
 
 import java.util.List;
+import java.util.Map;
+
+import org.json.JSONException;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.IBaseService;
@@ -51,4 +54,12 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	 * @param pfpCatalogVO
 	 */
 	void updatePfpCatalogForShoppingProd(PfpCatalogVO pfpCatalogVO);
+
+	/**
+	 * 查詢目前目錄資料上傳狀態
+	 * @param uploadingCatalogSeqList
+	 * @return
+	 */
+	public List<Map<String, String>> getCatalogUploadingStatus(String uploadingCatalogSeqList);
+
 }
