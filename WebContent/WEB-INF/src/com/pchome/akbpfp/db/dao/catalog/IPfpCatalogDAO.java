@@ -21,8 +21,6 @@ public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 	
 	List<Map<String, Object>> getPfpCatalogList(PfpCatalogVO vo);
 
-	void deletePfpCatalog(PfpCatalogVO vo);
-
 	void savePfpCatalog(PfpCatalogVO vo);
 
 	void updatePfpCatalog(PfpCatalogVO vo);

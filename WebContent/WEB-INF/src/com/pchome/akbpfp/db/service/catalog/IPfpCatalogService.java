@@ -35,13 +35,6 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	void savePfpCatalog(PfpCatalogVO vo) throws Exception;
 	
 	/**
-	 * 刪除商品目錄
-	 * @param PfpCatalogVO
-	 * @return
-	 */
-	void deletePfpCatalog(PfpCatalogVO vo);
-
-	/**
 	 * 更新商品目錄
 	 * @param PfpCatalogVO
 	 */

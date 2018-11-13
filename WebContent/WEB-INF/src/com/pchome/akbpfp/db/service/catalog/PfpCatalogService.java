@@ -162,14 +162,6 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 	}
 	
 	/**
-	 * 刪除商品目錄
-	 */
-	@Override
-	public void deletePfpCatalog(PfpCatalogVO vo) {
-		((IPfpCatalogDAO) dao).deletePfpCatalog(vo);
-	}
-	
-	/**
 	 * 更新商品目錄
 	 */
 	@Override

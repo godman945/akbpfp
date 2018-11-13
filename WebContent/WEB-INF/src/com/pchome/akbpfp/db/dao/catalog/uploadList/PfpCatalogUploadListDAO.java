@@ -161,58 +161,6 @@ public class PfpCatalogUploadListDAO extends BaseDAO<String, String> implements 
 	}
 
 	/**
-	 * 刪除 一般購物類商品清單
-	 * @param vo
-	 */
-	@Override
-	public void deletePfpCatalogProdEc(PfpCatalogVO vo) {
-		StringBuffer hql = new StringBuffer();
-		hql.append(" DELETE FROM pfp_catalog_prod_ec ");
-		hql.append(" WHERE catalog_seq = :catalog_seq ");
-		
-		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setString("catalog_seq", vo.getCatalogSeq());
-
-		query.executeUpdate();
-		super.getSession().flush();
-	}
-	
-	/**
-	 * 刪除 商品目錄群組明細
-	 * @param vo
-	 */
-	@Override
-	public void deletePfpCatalogGroupItem(PfpCatalogVO vo) {
-		StringBuffer hql = new StringBuffer();
-		hql.append(" DELETE FROM pfp_catalog_group_item ");
-		hql.append(" WHERE catalog_group_seq = ");
-		hql.append(" (SELECT catalog_group_seq FROM pfp_catalog_group WHERE catalog_seq = :catalog_seq) ");
-		
-		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setString("catalog_seq", vo.getCatalogSeq());
-
-		query.executeUpdate();
-		super.getSession().flush();
-	}
-
-	/**
-	 * 刪除 商品目錄群組
-	 * @param vo
-	 */
-	@Override
-	public void deletePfpCatalogGroup(PfpCatalogVO vo) {
-		StringBuffer hql = new StringBuffer();
-		hql.append(" DELETE FROM pfp_catalog_group ");
-		hql.append(" WHERE catalog_seq = :catalog_seq");
-		
-		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setString("catalog_seq", vo.getCatalogSeq());
-
-		query.executeUpdate();
-		super.getSession().flush();
-	}
-	
-	/**
 	 * 刪除 商品目錄設定 
 	 * @param vo
 	 */

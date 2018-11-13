@@ -35,12 +35,6 @@ public interface IPfpCatalogUploadListService extends IBaseService<String, Strin
 	Map<String, Object> checkCSVFile(PfpCatalogUploadListVO vo);
 
 	/**
-	 * 刪除 一般購物類商品清單
-	 * @param vo
-	 */
-	void deletePfpCatalogProdEc(PfpCatalogVO vo);
-
-	/**
 	 * 刪除 商品目錄更新紀錄
 	 * @param vo
 	 */
@@ -51,18 +45,6 @@ public interface IPfpCatalogUploadListService extends IBaseService<String, Strin
 	 * @param vo
 	 */
 	void deletePfpCatalogUploadErrLog(PfpCatalogVO vo);
-
-	/**
-	 * 刪除 商品目錄群組
-	 * @param vo
-	 */
-	void deletePfpCatalogGroup(PfpCatalogVO vo);
-
-	/**
-	 * 刪除 商品目錄群組明細
-	 * @param vo
-	 */
-	void deletePfpCatalogGroupItem(PfpCatalogVO vo);
 
 	/**
 	 * 新增log記錄
@@ -105,5 +87,11 @@ public interface IPfpCatalogUploadListService extends IBaseService<String, Strin
 	 * @return
 	 */
 	List<PfpCatalogProdEcErrorVO> getCatalogProdUploadErrList(PfpCatalogProdEcErrorVO vo);
+
+	/**
+	 * 刪除 一般購物類商品上傳錯誤清單
+	 * @param vo
+	 */
+	void deletePfpCatalogProdEcError(PfpCatalogVO vo);
 	
 }

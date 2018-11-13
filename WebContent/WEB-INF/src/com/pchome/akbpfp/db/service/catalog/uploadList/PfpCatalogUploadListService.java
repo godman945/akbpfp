@@ -491,15 +491,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	}
 	
 	/**
-	 * 刪除 一般購物類商品清單
-	 * @param vo
-	 */
-	@Override
-	public void deletePfpCatalogProdEc(PfpCatalogVO vo) {
-		pfpCatalogUploadListDAO.deletePfpCatalogProdEc(vo);
-	}
-
-	/**
 	 * 刪除 商品目錄更新紀錄
 	 * @param vo
 	 */
@@ -509,30 +500,21 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	}
 
 	/**
+	 * 刪除 一般購物類商品上傳錯誤清單
+	 * @param vo
+	 */
+	@Override
+	public void deletePfpCatalogProdEcError(PfpCatalogVO vo) {
+		pfpCatalogUploadListDAO.deletePfpCatalogProdEcError(vo);
+	}
+	
+	/**
 	 * 刪除 商品目錄更新錯誤紀錄
 	 * @param vo
 	 */
 	@Override
 	public void deletePfpCatalogUploadErrLog(PfpCatalogVO vo) {
 		pfpCatalogUploadListDAO.deletePfpCatalogUploadErrLog(vo);
-	}
-
-	/**
-	 * 刪除 商品目錄群組
-	 * @param vo
-	 */
-	@Override
-	public void deletePfpCatalogGroup(PfpCatalogVO vo) {
-		pfpCatalogUploadListDAO.deletePfpCatalogGroup(vo);
-	}
-
-	/**
-	 * 刪除 商品目錄群組明細
-	 * @param vo
-	 */
-	@Override
-	public void deletePfpCatalogGroupItem(PfpCatalogVO vo) {
-		pfpCatalogUploadListDAO.deletePfpCatalogGroupItem(vo);
 	}
 
 	/**

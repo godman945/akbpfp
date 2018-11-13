@@ -64,28 +64,10 @@ public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 	void deletePfpCatalogProdEcError(PfpCatalogVO vo);
 	
 	/**
-	 * 刪除 一般購物類商品清單
-	 * @param vo
-	 */
-	void deletePfpCatalogProdEc(PfpCatalogVO vo);
-
-	/**
 	 * 刪除 商品目錄更新紀錄
 	 * @param vo
 	 */
 	void deletePfpCatalogUploadLog(PfpCatalogVO vo);
-
-	/**
-	 * 刪除 商品目錄群組
-	 * @param vo
-	 */
-	void deletePfpCatalogGroup(PfpCatalogVO vo);
-
-	/**
-	 * 刪除 商品目錄群組明細
-	 * @param vo
-	 */
-	void deletePfpCatalogGroupItem(PfpCatalogVO vo);
 
 	/**
 	 * 刪除 商品目錄設定 

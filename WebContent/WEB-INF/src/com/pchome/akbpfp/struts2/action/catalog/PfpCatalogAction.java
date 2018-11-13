@@ -150,42 +150,44 @@ public class PfpCatalogAction extends BaseCookieAction{
 	 * @throws Exception 
 	 */
 	public String ajaxDeletePfpCatalog() throws Exception {
-		//更新目錄狀態為刪除
+		// 更新目錄狀態為刪除
 		PfpCatalog pfpCatalog = pfpCatalogService.get(deleteCatalogSeq);
-		if(!pfpCatalog.getPfpCustomerInfoId().equals(super.getCustomer_info_id())){
+		if (!pfpCatalog.getPfpCustomerInfoId().equals(super.getCustomer_info_id())) {
 			return SUCCESS;
 		}
+		
+		// 更新商品目錄群組狀態為刪除
 		Set<PfpCatalogGroup> group = pfpCatalog.getPfpCatalogGroups();
 		for (PfpCatalogGroup pfpCatalogGroup : group) {
-			if(pfpCatalogGroup.getCatalogGroupName().equals("全部商品")){
+			// "全部商品"的目錄群組狀態不更新
+			if (pfpCatalogGroup.getCatalogGroupName().equals("全部商品")) {
 				continue;
-			}else{
+			} else {
 				Set<PfpCatalogGroupItem> pfpCatalogGroupItemSet = pfpCatalogGroup.getPfpCatalogGroupItems();
 				for (PfpCatalogGroupItem pfpCatalogGroupItem : pfpCatalogGroupItemSet) {
+					// "商品目錄群組明細"，依據pfp_catalog_group刪除明細
 					pfpCatalogGroupItemService.delete(pfpCatalogGroupItem);
 				}
 				pfpCatalogGroup.setCatalogGroupDeleteStatus("1");
 				pfpCatalogGroupService.saveOrUpdate(pfpCatalogGroup);
 			}
 		}
+		
+		// 更改目錄刪除狀態
 		pfpCatalog.setCatalogDeleteStatus("1");
-		//更新廣告狀態為暫停
+		
+		// 更新廣告狀態為暫停
 		pfpAdService.updateAdStatusByCatalogSeq(deleteCatalogSeq, String.valueOf(EnumStatus.Pause.getStatusId()), super.getCustomer_info_id());
 		
-		
-//		PfpCatalogVO vo = new PfpCatalogVO();
-//		vo.setCatalogSeq(deleteCatalogSeq);
-//		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
-//		// table有FK，由明細先刪除資料再刪主PK PfpCatalog商品目錄資料
-//		pfpCatalogUploadListService.deletePfpCatalogUploadErrLog(vo);
-//		pfpCatalogUploadListService.deletePfpCatalogUploadLog(vo);
-//		pfpCatalogUploadListService.deletePfpCatalogProdEc(vo);
-//		pfpCatalogUploadListService.deletePfpCatalogGroupItem(vo); // 刪除 商品目錄群組明細 先寫在這，之後移到相對應的Service
-//		pfpCatalogUploadListService.deletePfpCatalogGroup(vo); // 刪除 商品目錄群組 先寫在這，之後移到相對應的Service
-//		pfpCatalogUploadListService.deletePfpCatalogSetup(vo); // 刪除 商品目錄設定 
-//		pfpCatalogService.deletePfpCatalog(vo);
-//		pfpCatalogUploadListService.deleteCatalogProdImgFolderAndData(vo);
-//		pfpCatalogUploadListService.deleteCatalogProdCSVFolderAndData(vo);
+		PfpCatalogVO vo = new PfpCatalogVO();
+		vo.setCatalogSeq(deleteCatalogSeq);
+		vo.setPfpCustomerInfoId(super.getCustomer_info_id());
+		pfpCatalogUploadListService.deletePfpCatalogUploadErrLog(vo);
+		pfpCatalogUploadListService.deletePfpCatalogProdEcError(vo);
+		pfpCatalogUploadListService.deletePfpCatalogUploadLog(vo);
+		pfpCatalogUploadListService.deletePfpCatalogSetup(vo);
+		pfpCatalogUploadListService.deleteCatalogProdImgFolderAndData(vo);
+		pfpCatalogUploadListService.deleteCatalogProdCSVFolderAndData(vo);
 		return SUCCESS;
 	}
 	

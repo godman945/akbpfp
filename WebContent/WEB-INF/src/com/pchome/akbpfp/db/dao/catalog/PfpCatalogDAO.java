@@ -153,24 +153,6 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 	}
 	
 	/**
-	 * 刪除目錄
-	 */
-	@Override
-	public void deletePfpCatalog(PfpCatalogVO vo) {
-		StringBuffer hql = new StringBuffer();
-		hql.append(" DELETE FROM pfp_catalog          ");
-		hql.append(" WHERE catalog_seq = :catalog_seq ");
-		hql.append(" AND pfp_customer_info_id = :pfp_customer_info_id ");
-		
-		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setString("catalog_seq", vo.getCatalogSeq());
-		query.setString("pfp_customer_info_id", vo.getPfpCustomerInfoId());
-
-		query.executeUpdate();
-		super.getSession().flush();
-	}
-
-	/**
 	 * 更新目錄
 	 */
 	@Override
