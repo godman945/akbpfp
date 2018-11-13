@@ -60,4 +60,6 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	 */
 	public List<Map<String, String>> getCatalogUploadingStatus(String uploadingCatalogSeqList);
 
+	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog);
+
 }

@@ -15,6 +15,7 @@
 /**
  * 檢查處理上傳狀態
  */
+var uploadingCompleteCatalogSeqList = new Array(); // 上傳完成的目錄清單
 function processUploadStatus() {
 	
 	var uploadingCatalogSeqList = new Array(); // 上傳中的目錄清單
@@ -38,10 +39,12 @@ function processUploadStatus() {
 				if(response.status == "SUCCESS"){
 					var dataMap = response.dataMap;
 					$.each(dataMap, function(indexNum, object) {
-						if (object.uploadStatus == "2") { // 狀態為上傳完成調整畫面
-							$('[uploadingcatalogseq="' + object.catalogSeq + '"]').removeClass('process').removeAttr("uploadingcatalogseq").html('上傳成功');
+						if (object.uploadStatus == "2") { // 狀態為上傳完成紀錄目錄資料
+							uploadingCompleteCatalogSeqList.push(object.catalogSeq);
 						}
 					});
+					
+					processQueryAjax($("#pageNo").val());
 				}
 			}
 		});
@@ -80,6 +83,13 @@ function processQueryAjax(changePageNo){
 	        $('.prodtable-wrap').html(response);
 	        processPageNumber();
 	        $('.txt-quantity').html($("#totalCount").val()); // 處理共X件商品目錄
+	        
+	        // 如果有目錄狀態為上傳成功，執行迴圈改變畫面
+	        $.each(uploadingCompleteCatalogSeqList, function(indexNum, catalogSeq) {
+	        	console.log(catalogSeq);
+	        	$('[catalogSeq="' + catalogSeq + '"]').append("<u class=\"uploading-txt\">上傳成功</u>");
+//        		$('[uploadingcatalogseq="' + catalogSeq + '"]').removeClass('process').removeAttr("uploadingcatalogseq").html('上傳成功');
+        	})
 	    }
 	});
 }

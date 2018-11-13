@@ -30,4 +30,6 @@ public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 	void updatePfpCatalogForShoppingProd(PfpCatalogVO vo);
 
 	public List<Map<String, Object>> getCatalogUploadingStatus(List<String> catalogSeqList);
+
+	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog);
 }

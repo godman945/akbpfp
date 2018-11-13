@@ -220,6 +220,11 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 		}
 	}
 	
+	@Override
+	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog) {
+		((IPfpCatalogDAO) dao).saveOrUpdateWithCommit(pfpCatalog);
+	}
+	
 	/**
 	 * 測試用
 	 * @param arg
