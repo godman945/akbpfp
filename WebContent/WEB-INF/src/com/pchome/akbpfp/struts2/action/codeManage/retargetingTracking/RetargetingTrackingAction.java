@@ -38,22 +38,26 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 			log.info(">>> pfpCustomerInfoId: " + super.getCustomer_info_id());
 			
 			PfpCode pfpCode = pfpCodeService.getPfpCode(super.getCustomer_info_id());
+			log.info(" getpfpCodeDb >>> OK");
 			
 			//如尚未建立過paid者，打api建立
 			if (pfpCode == null){
+				log.info("addRetargetingTrackingView null");
 //				System.out.println("pfp ID : "+super.getCustomer_info_id());
 				String memberId = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getMemberId();
 //				System.out.println("memberID : "+memberId);
+				log.info(" getPaIdCode >>> 1113");
 				StringBuffer paIdSB= HttpUtil.getInstance().doGet("http://showstg.pchome.com.tw/paadm/api/getPaCode?memberId=" + memberId);
-				String[] paIdSBAry = paIdSB.toString().split(",");
-				
+				log.info(" getPaIdCode >>> 222");
 				if (paIdSB.toString().indexOf("status:200") == -1) { 
 					log.error(" getPaIdCode Error >>> pfpCustomerInfoId : "+super.getCustomer_info_id());
 					returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
 					return ERROR;
 				}
+				String[] paIdSBAry = paIdSB.toString().split(",");
 				paId = paIdSBAry[0];
 			}else{
+				log.info("addRetargetingTrackingView not null");
 				paId = pfpCode.getPaId();
 			}
 			
