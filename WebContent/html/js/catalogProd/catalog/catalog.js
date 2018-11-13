@@ -86,9 +86,7 @@ function processQueryAjax(changePageNo){
 	        
 	        // 如果有目錄狀態為上傳成功，執行迴圈改變畫面
 	        $.each(uploadingCompleteCatalogSeqList, function(indexNum, catalogSeq) {
-	        	console.log(catalogSeq);
 	        	$('[catalogSeq="' + catalogSeq + '"]').append("<u class=\"uploading-txt\">上傳成功</u>");
-//        		$('[uploadingcatalogseq="' + catalogSeq + '"]').removeClass('process').removeAttr("uploadingcatalogseq").html('上傳成功');
         	})
 	    }
 	});
