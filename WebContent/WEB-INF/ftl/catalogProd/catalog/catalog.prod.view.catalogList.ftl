@@ -2,11 +2,9 @@
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
 <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.ba-dotimeout.js"></script>
-<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalog/catalog.js?t=20181018039"></script>
+<script language="JavaScript" src="<@s.url value="/" />html/js/catalogProd/catalog/catalog.js?t=20181113001"></script>
 
 <div class="container-prodmanage">
-	<input type="hidden" id="pageNo" name="pageNo" value="${pageNo!}">
-	<input type="hidden" id="pageCount" name="pageCount" value="${pageCount!}">
 	
 	<#-- 次目錄導覽列 開始 -->
 	<div class="nav-wrap pos-relative hidetabs tab1">
@@ -75,92 +73,18 @@
             </div>
             <#-- 表格目錄功能列 結束 -->
 
-            <#-- 表格內容 開始 -->
-            <div class="prodtable-wrap m-b30">
-                <div class="prodtable-box txt-noselect">
-                    <#-- 表格欄位標題 -->
-                    <div class="txt-row header">
-                        <div class="txt-cell col-cataname">目錄</div>
-                        <div class="txt-cell col-catagory">目錄類型</div>
-                        <div class="txt-cell col-upload">資料更新方式</div>
-                        <div class="txt-cell col-source">資料來源</div>
-                        <div class="txt-cell col-success">商品總數</div>
-                        <div class="txt-cell col-failure">失敗項目</div>
-                        <div class="txt-cell col-renew">檔案更新</div>
-                        <div class="txt-cell col-delete"></div>
-                    </div>
+			<@t.insertAttribute name="catalogDetailList" />
 
-					<#list dataList as vo>
-						<div class="txt-row">
-							<div class="txt-cell col-cataname">
-	                            <a href="prodListCardStyleView.html?catalogSeq=${vo.catalogSeq!}&currentPage=1&pageSizeSelected=10&prodStatus=&prodName=">${vo.catalogName!}</a>
-	                            <small>目錄編號：${vo.catalogSeq!}</small>
-	                        </div>
-	                        
-	                        <div class="txt-cell col-catagory">
-								${vo.catalogTypeName!}
-							</div>
-							
-							<div class="txt-cell col-upload">
-								<#if vo.catalogUploadTypeName??>
-	                            	${vo.catalogUploadTypeName!}
-	                            <#else>
-	                            	-
-	                            </#if>
-                        	</div>
-                        	
-                        	<div class="txt-cell col-source">
-                        		<#if vo.uploadContent??>
-	                            	${vo.uploadContent!}
-	                            	<small>最近更新：${vo.updateDatetime!}</small>
-	                            <#else>
-	                            	-
-	                            </#if>
-	                        </div>
-                        	
-                        	<div class="txt-cell col-success">
-	                            	${vo.catalogProdNum!}<em>項</em>
-	                        </div>
-	                        
-	                        <div class="txt-cell col-failure">
-	                        	<#if vo.errorNum?? && vo.errorNum != "0">
-	                        		<a href="catalogProdUploadErrLog.html?catalogUploadLogSeq=${vo.catalogUploadLogSeq!}&catalogSeq=${vo.catalogSeq!}">${vo.errorNum!}<em>項</em></a>
-	                        	<#else>
-	                            	-
-	                            </#if>
-	                        </div>
-	                        
-	                        <div class="txt-cell col-renew">
-	                        	<#if vo.catalogUploadType == "2" || vo.catalogUploadType == "3">
-	                        		<small>下次更新時間</small>
-		                            ${vo.nextUpdateDatetime!}
-								<#else>
-									<a href="selectUpload.html?catalogSeq=${vo.catalogSeq!}">上傳檔案</a>
-								</#if>
-	                        </div>
-	                        
-	                        <div class="txt-cell col-delete">
-	                            <a href="javascript:deletePfpCatalog('${vo.catalogSeq!}')"></a>
-	                        </div>
-                        	
-						</div>
-					</#list>
-
-                </div>
-            </div>
-            <#-- 表格內容 結束 -->
-
-            <#-- 頁碼 pagination 開始 -->
-            <#-- data-order: 目前頁碼 -->
-            <#-- data-quantity: 頁數 -->
-            <div class="pagination-wrap txt-noselect m-b30" data-order="79" data-quantity="150">
-                <#-- data-num: 頁碼 -->
-                <ul class="pagination-box txt-table">
-                    
-                </ul>
-            </div>
-            <#-- 頁碼 pagination 結束 -->
-            
+			<#-- 頁碼 pagination 開始 -->
+			<#-- data-order: 目前頁碼 -->
+			<#-- data-quantity: 頁數 -->
+			<div class="pagination-wrap txt-noselect m-b30" data-order="79" data-quantity="150">
+			    <#-- data-num: 頁碼 -->
+			    <ul class="pagination-box txt-table">
+			        
+			    </ul>
+			</div>
+			<#-- 頁碼 pagination 結束 -->
         </div>
     </div>
 

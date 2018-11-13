@@ -81,6 +81,9 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		
 		// 取得商品目錄資料
 		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
+		pfpCatalog.setUploadStatus("1"); // 目錄資料上傳狀態調整為上傳中
+		//更新有Commit，馬上改變狀態
+		pfpCatalogService.saveOrUpdateWithCommit(pfpCatalog);
 		
 		// 處理每筆商品資料
 		int successNum = 0;
@@ -372,6 +375,7 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		pfpCatalogVO.setPfpCustomerInfoId(pfpCustomerInfoId);
 		pfpCatalogVO.setCatalogUploadType(catalogUploadType);
 		pfpCatalogVO.setUploadContent(updateContent);
+		pfpCatalogVO.setUploadStatus("2");
 		pfpCatalogService.updatePfpCatalogForShoppingProd(pfpCatalogVO);
 		
 		dataMap.put("status", "SUCCESS");

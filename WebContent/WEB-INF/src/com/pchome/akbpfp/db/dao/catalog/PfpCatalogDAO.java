@@ -83,6 +83,7 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		hql.append("   pc.catalog_type,                                                                                                                      ");
 		hql.append("   pc.catalog_upload_type,                                                                                                               ");
 		hql.append("   pc.catalog_prod_num,                                                                                                                  ");
+		hql.append("   pc.upload_status,                                                                                                                  ");
 		hql.append("   pcul.update_content,                                                                                                                  ");
 		hql.append("   pcul.update_datetime,                                                                                                                 ");
 		hql.append("   pcul.error_num,                                                                                                                       ");
@@ -104,6 +105,7 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		hql.append(" 						AND T1.update_datetime = T2.update_datetime) pcul                                                                ");
 		hql.append(" ON pc.catalog_seq = pcul.catalog_seq                                                                                                    ");
 		hql.append(" WHERE pc.pfp_customer_info_id = :pfp_customer_info_id                                                                                   ");
+		hql.append(" AND pc.catalog_delete_status = 0                                                                                                        ");
 		
 		if (StringUtils.isNotBlank(vo.getQueryString())) {
 			hql.append(" AND pc.catalog_name like :catalog_name                                                                                              ");
@@ -141,6 +143,7 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		pfpCatalog.setCatalogType(vo.getCatalogType());
 		pfpCatalog.setPfpCustomerInfoId(vo.getPfpCustomerInfoId());
 		pfpCatalog.setCatalogSeq(vo.getCatalogSeq());
+		pfpCatalog.setCatalogDeleteStatus("0");
 		pfpCatalog.setCatalogUploadType(" ");
 		pfpCatalog.setCatalogUploadContent(" ");
 		pfpCatalog.setCatalogImgShowType("1");
@@ -150,24 +153,6 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		super.save(pfpCatalog);
 	}
 	
-	/**
-	 * 刪除目錄
-	 */
-	@Override
-	public void deletePfpCatalog(PfpCatalogVO vo) {
-		StringBuffer hql = new StringBuffer();
-		hql.append(" DELETE FROM pfp_catalog          ");
-		hql.append(" WHERE catalog_seq = :catalog_seq ");
-		hql.append(" AND pfp_customer_info_id = :pfp_customer_info_id ");
-		
-		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setString("catalog_seq", vo.getCatalogSeq());
-		query.setString("pfp_customer_info_id", vo.getPfpCustomerInfoId());
-
-		query.executeUpdate();
-		super.getSession().flush();
-	}
-
 	/**
 	 * 更新目錄
 	 */
@@ -200,12 +185,14 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		hql.append(" UPDATE pfp_catalog ");
 		hql.append(" SET catalog_upload_type = :catalog_upload_type, ");
 		hql.append(" catalog_upload_content = :catalog_upload_content, ");
+		hql.append(" upload_status = :upload_status, ");
 		hql.append(" catalog_prod_num = (SELECT COUNT(catalog_prod_seq) FROM pfp_catalog_prod_ec WHERE catalog_seq = :catalog_seq), ");
 		hql.append(" update_date = CURRENT_TIMESTAMP() ");
 		hql.append(" WHERE catalog_seq = :catalog_seq ");
 		hql.append(" AND pfp_customer_info_id = :pfp_customer_info_id ");
 		
 		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setString("upload_status", vo.getUploadStatus());
 		query.setString("catalog_upload_content", vo.getUploadContent());
 		query.setString("catalog_upload_type", vo.getCatalogUploadType());
 		query.setString("catalog_seq", vo.getCatalogSeq());
@@ -214,4 +201,31 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		query.executeUpdate();
 		super.getSession().flush();
 	}
+	
+	/**
+	 * 查詢目前目錄資料上傳狀態
+	 */
+	@Override
+	public List<Map<String, Object>> getCatalogUploadingStatus(List<String> uploadingCatalogSeqList) {
+		StringBuffer hql = new StringBuffer();
+		hql.append(" SELECT              ");
+		hql.append("   pc.catalog_seq,   ");
+		hql.append("   pc.upload_status  ");
+		hql.append(" FROM pfp_catalog pc ");
+		hql.append(" WHERE pc.catalog_seq IN(:catalog_seq) ");
+		
+        Query query = super.getSession().createSQLQuery(hql.toString());
+        if (uploadingCatalogSeqList.size() != 0) {
+			query.setParameterList("catalog_seq", uploadingCatalogSeqList);
+		}
+		
+        return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+
+	@Override
+	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog) {
+		super.getSession().saveOrUpdate(pfpCatalog);
+		super.getSession().beginTransaction().commit();
+	}
+	
 }

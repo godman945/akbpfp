@@ -6,7 +6,50 @@
 	
 	processKeyupQuery();
 	processPageNumber();
+	
+	setInterval(function() {
+		processUploadStatus();
+	}, 10000);
 });
+
+/**
+ * 檢查處理上傳狀態
+ */
+var uploadingCompleteCatalogSeqList = new Array(); // 上傳完成的目錄清單
+function processUploadStatus() {
+	
+	var uploadingCatalogSeqList = new Array(); // 上傳中的目錄清單
+	$.each($("[uploadingcatalogseq]"), function(indexNum, object) {
+		uploadingCatalogSeqList.push($(this).attr("uploadingCatalogSeq"));
+	});
+	
+	if (uploadingCatalogSeqList.length > 0) {
+		$.ajax({
+			type : "post",
+			dataType : "json",
+			url : "checkCatalogUploadingStatus.html",
+			data : {
+				"uploadingCatalogSeqList" : JSON.stringify(uploadingCatalogSeqList)
+			},
+			timeout : 30000,
+			error : function(xhr) {
+				console.log("Ajax request 發生錯誤");
+			},
+			success : function(response, status) {
+				if(response.status == "SUCCESS"){
+					var dataMap = response.dataMap;
+					$.each(dataMap, function(indexNum, object) {
+						if (object.uploadStatus == "2") { // 狀態為上傳完成紀錄目錄資料
+							uploadingCompleteCatalogSeqList.push(object.catalogSeq);
+						}
+					});
+					
+					processQueryAjax($("#pageNo").val());
+				}
+			}
+		});
+	}
+}
 
 /**
  * 輸入完成後等待再執行查詢
@@ -37,8 +80,14 @@ function processQueryAjax(changePageNo){
 	        alert('Ajax request 發生錯誤');
 	    },
 	    success: function(response){
-	        $('.container-prodmanage').html(response);
+	        $('.prodtable-wrap').html(response);
 	        processPageNumber();
+	        $('.txt-quantity').html($("#totalCount").val()); // 處理共X件商品目錄
+	        
+	        // 如果有目錄狀態為上傳成功，執行迴圈改變畫面
+	        $.each(uploadingCompleteCatalogSeqList, function(indexNum, catalogSeq) {
+	        	$('[catalogSeq="' + catalogSeq + '"]').append("<u class=\"uploading-txt\">上傳成功</u>");
+        	})
 	    }
 	});
 }

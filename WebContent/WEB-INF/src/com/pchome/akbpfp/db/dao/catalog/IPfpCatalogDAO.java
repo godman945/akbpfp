@@ -21,11 +21,13 @@ public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 	
 	List<Map<String, Object>> getPfpCatalogList(PfpCatalogVO vo);
 
-	void deletePfpCatalog(PfpCatalogVO vo);
-
 	void savePfpCatalog(PfpCatalogVO vo);
 
 	void updatePfpCatalog(PfpCatalogVO vo);
 
 	void updatePfpCatalogForShoppingProd(PfpCatalogVO vo);
+
+	public List<Map<String, Object>> getCatalogUploadingStatus(List<String> catalogSeqList);
+
+	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog);
 }
