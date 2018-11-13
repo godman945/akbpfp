@@ -22,7 +22,8 @@
                 <value>classpath:config/tiles2/tiles-report.xml</value>
                 <value>classpath:config/tiles2/tiles-summary.xml</value>        
                 <value>classpath:config/tiles2/tiles-catalog.xml</value>
-                <value>classpath:config/tiles2/tiles-prod.xml</value>      
+                <value>classpath:config/tiles2/tiles-prod.xml</value>
+                <value>classpath:config/tiles2/tiles-codemanage.xml</value>           
             </list>
         </property>
     </bean>

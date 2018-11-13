@@ -113,6 +113,11 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogo</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogSetup</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCode</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCodeTracking</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCodeConvert</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCodeConvertTrans</value>
+				
 				<!-- PFB pojo -->
 				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
 				<value>com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory</value>
@@ -229,6 +234,11 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogo</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCatalogSetup</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCode</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCodeTracking</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCodeConvert</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCodeConvertTrans</value>
+				
 				<!-- PFB pojo -->
 				<value>com.pchome.akbpfp.db.pojo.PfbxSize</value>
 				<value>com.pchome.akbpfp.db.pojo.PfbxWebsiteCategory</value>               

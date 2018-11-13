@@ -1,0 +1,48 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <package name="struts-codemanage" extends="struts-base">  
+    
+     <!-- 代碼管理 Start -->
+        <!-- 再行銷追蹤 -->
+	    <action name="retargetingTracking" class="RetargetingTrackingAction" method="queryRetargetingTrackingView">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+            <result type="tiles" name="success">retargeting.tracking.view</result>
+<!--             <result type="tiles" name="error">error.prod.list.card.style.view</result> -->
+		</action>
+		
+		<action name="addRetargetingTrackingView" class="RetargetingTrackingAction" method="addRetargetingTrackingView">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+            <result type="tiles" name="success">add.retargeting.tracking.view</result>
+<!--             <result type="tiles" name="error">error.prod.list.card.style.view</result> -->
+		</action>
+		
+		
+<!-- 	<action name="adActionAdd" class="AdActionAddAction" method="adActionAdd"> -->
+<!-- 		<interceptor-ref name="loginCheckStack" /> -->
+<!-- 		<interceptor-ref name="adPrivilegeInterceptor" /> -->
+<!-- 		<result type="tiles" name="success">.ad.action.add</result> -->
+<!-- 		<result type="redirectAction" name="notOwner"> -->
+<!-- 			<param name="actionName">adActionView</param>   -->
+<!-- 		</result> -->
+<!--     </action> -->
+		
+		
+		<!--取得商品清單Ajax-->
+	    <action name="sendRetargetingTrackingMailAjax" class="RetargetingTrackingAjax" method="sendRetargetingTrackingMailAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
+		
+
+
+	
+    </package>
+</struts>

@@ -42,7 +42,11 @@ public enum EnumSequenceTableName {
 	/**
 	 * 商品目錄更新紀錄id
 	 */
-	PFP_CATALOG_UPLOAD_LOG("catalog_upload_log_seq", "PCUL");
+	PFP_CATALOG_UPLOAD_LOG("catalog_upload_log_seq", "PCUL"),
+	
+	// 再行銷追蹤代號
+	PFP_CODE_TRACKING("pfp_code_tracking","TAC");
+	
 	
 	private String snoName;
 	private String charName;
