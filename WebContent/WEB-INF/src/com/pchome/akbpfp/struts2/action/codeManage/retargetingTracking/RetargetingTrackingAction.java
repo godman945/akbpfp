@@ -47,7 +47,11 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 				String memberId = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getMemberId();
 //				System.out.println("memberID : "+memberId);
 				log.info(" getPaIdCode >>> 1113");
-				StringBuffer paIdSB= HttpUtil.getInstance().doGet("http://showstg.pchome.com.tw/paadm/api/getPaCode?memberId=" + memberId);
+//				StringBuffer paIdSB= HttpUtil.getInstance().doGet("http://showstg.pchome.com.tw/paadm/api/getPaCode?memberId=" + memberId);
+				StringBuffer paIdSB= HttpUtil.getInstance().doGet("http://showstg.pchome.com.tw:8080/paadm/api/getPaCode?memberId=" + memberId);
+				
+				 http://showstg.mypchome.com.tw:8080/paadm/api/getPaCode?memberId=showad
+					 log.info("getPaIdCode String : "+paIdSB.toString());
 				log.info(" getPaIdCode >>> 222");
 				if (paIdSB.toString().indexOf("status:200") == -1) { 
 					log.error(" getPaIdCode Error >>> pfpCustomerInfoId : "+super.getCustomer_info_id());
@@ -57,7 +61,7 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 				String[] paIdSBAry = paIdSB.toString().split(",");
 				paId = paIdSBAry[0];
 			}else{
-				log.info("addRetargetingTrackingView not null");
+				log.info("addRetargetingTrackingView null");
 				paId = pfpCode.getPaId();
 			}
 			
