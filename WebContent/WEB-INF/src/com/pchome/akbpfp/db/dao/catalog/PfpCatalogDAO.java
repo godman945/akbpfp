@@ -105,6 +105,7 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		hql.append(" 						AND T1.update_datetime = T2.update_datetime) pcul                                                                ");
 		hql.append(" ON pc.catalog_seq = pcul.catalog_seq                                                                                                    ");
 		hql.append(" WHERE pc.pfp_customer_info_id = :pfp_customer_info_id                                                                                   ");
+		hql.append(" AND pc.catalog_delete_status = 0                                                                                                        ");
 		
 		if (StringUtils.isNotBlank(vo.getQueryString())) {
 			hql.append(" AND pc.catalog_name like :catalog_name                                                                                              ");
