@@ -116,20 +116,22 @@ public abstract class APfpCatalogUploadListData {
 				}
 			}
 			
-			if (StringUtils.isBlank(prodItemErrorMsg)) {
-				String filenameExtension = ImgUtil.getImgURLFilenameExtension(ecImgUrl);
-				if (!"jpg".equalsIgnoreCase(filenameExtension) && !"gif".equalsIgnoreCase(filenameExtension)
-						&& !"png".equalsIgnoreCase(filenameExtension)) {
-					prodItemErrorMsg = "檔案格式錯誤";
-				}
-			}
+//			if (StringUtils.isBlank(prodItemErrorMsg)) {
+//				String filenameExtension = ImgUtil.getImgURLFilenameExtension(ecImgUrl);
+//				if (!"jpg".equalsIgnoreCase(filenameExtension) && !"gif".equalsIgnoreCase(filenameExtension)
+//						&& !"png".equalsIgnoreCase(filenameExtension)) {
+//					prodItemErrorMsg = "檔案格式錯誤";
+//				}
+//			}
 			
 			File imgFile = null;
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
 				imgPath = ImgUtil.processImgPathForCatalogProd(ecImgUrl, imgTempPath, catalogProdSeq);
-				if (StringUtils.isBlank(imgPath)) { 
+				if (StringUtils.isBlank(imgPath)) {
 					// 空的表示連不到或是HTTP 403沒有權限訪問此站，伺服器收到請求但拒絕提供服務。
 					prodItemErrorMsg = "連結錯誤";
+				} else if ("檔案格式錯誤".equals(imgPath)) { // 非jpg、gif、png
+					prodItemErrorMsg = "檔案格式錯誤";
 				}
 			}
 			
@@ -144,8 +146,8 @@ public abstract class APfpCatalogUploadListData {
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
 				FileInputStream fis = new FileInputStream(imgFile);
 				BufferedImage bufferedImage = ImageIO.read(fis);
-				if (!EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(catalogUploadType) && 
-						bufferedImage.getWidth() < 300 && bufferedImage.getHeight() < 300) {
+				if (!EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(catalogUploadType)
+						&& bufferedImage.getWidth() < 300 && bufferedImage.getHeight() < 300) {
 					// 賣場網址上傳不檢查解析度
 					prodItemErrorMsg = "解析度不足";
 				}

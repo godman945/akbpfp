@@ -112,11 +112,12 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			String ecName = catalogProdItemJson.optString("ec_name"); // 商品名稱*
 			String ecTitle = catalogProdItemJson.optString("ec_title", " "); // 商品敘述*
 			ecTitle = " "; // 商品敘述尚未使用，先固定寫入空
-			String ecPrice = catalogProdItemJson.optString("ec_price", " "); // 原價
+			String ecPrice = catalogProdItemJson.optString("ec_price", " ").replace(",", ""); // 原價
+			String ecDiscountPrice = catalogProdItemJson.optString("ec_discount_price").replace(",", ""); // 促銷價*
 			if (StringUtils.isBlank(ecPrice)) { // 沒有原價則帶入促銷價
-				ecPrice = catalogProdItemJson.optString("ec_discount_price"); // 促銷價*
+				ecPrice = ecDiscountPrice; // 促銷價*
 			}
-			String ecDiscountPrice = catalogProdItemJson.optString("ec_discount_price"); // 促銷價*
+			
 			String ecStockStatus = catalogProdItemJson.optString("ec_stock_status"); // 商品供應情況*
 			String ecUseStatus = catalogProdItemJson.optString("ec_use_status"); // 商品使用狀況*
 			String ecImgUrl = catalogProdItemJson.optString("ec_img_url"); // 廣告圖像網址*

@@ -41,7 +41,7 @@ public class ImgUtil {
 	 * @param imgURL 下載的圖片網址
 	 * @param photoPath 資料夾位置
 	 * @param imgFileName 檔名
-	 * @return 正常下載圖片:取得圖片存放路徑 出錯:無圖片路徑
+	 * @return 正常下載圖片:取得圖片存放路徑 出錯:無圖片路徑，非jpg、gif、png回傳"檔案格式錯誤"
 	 */
 	public static String processImgPathForCatalogProd(String imgURL, String photoPath, String imgFileName) {
 		log.info("開始下載圖片。");
@@ -52,27 +52,43 @@ public class ImgUtil {
 			// 將特殊符號取代為空，處理圖片時才不會因為有特殊符號而出錯
 			imgFileName = CommonUtils.getReplaceSpecialSymbolsStr(imgFileName);
 			imgFileName = CommonUtils.getReplaceSpecialSymbolsThatAreNotAllowedByFileName(imgFileName);
-	        String filenameExtension = getImgURLFilenameExtension(imgURL);
 			
 			log.info("下載圖片網址:" + imgURL);
 	        URL url = new URL(imgURL.replaceFirst("https", "http")); // 將https網址改成http
+	        // 增加User-Agent，避免被發現是機器人被阻擋掉
+			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+			urlConnection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+			urlConnection.setRequestMethod("GET");
+			
+//			String filenameExtension = getImgURLFilenameExtension(imgURL);
+//			// 從網址副檔名不正確，再由Header內容判斷一次
+//			if (!"gif".equalsIgnoreCase(filenameExtension) && !"jpg".equalsIgnoreCase(filenameExtension)
+//					&& !"png".equalsIgnoreCase(filenameExtension)) {
+//				// Header內容取得副檔名，避免輸入的網址沒有副檔名無法判斷的問題
+//				String contentType = urlConnection.getHeaderField("Content-Type");
+//				filenameExtension = contentType.replace("jpeg", "jpg").substring(contentType.indexOf("/") + 1);
+//				log.error("contentType 副檔名:" + filenameExtension);
+//			}
+			
+			// Header內容取得副檔名，避免輸入的網址沒有副檔名無法判斷的問題
+			String contentType = urlConnection.getHeaderField("Content-Type");
+			String filenameExtension = contentType.replace("jpeg", "jpg").substring(contentType.indexOf("/") + 1);
+			
+			InputStream in = urlConnection.getInputStream();
 	        String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
 	
 	        // 處理圖片下載
 	        if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
-	            InputStream in = url.openStream();
-	            Files.copy(in, new File(imgPathAndName).toPath(), StandardCopyOption.REPLACE_EXISTING);
-	            in.close();
-			} else { // jpg、png圖片下載方式
-				// 增加User-Agent，避免被發現是機器人被阻擋掉
-				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-				urlConnection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-				urlConnection.setRequestMethod("GET");
-				InputStream in = urlConnection.getInputStream();
+//	        	InputStream in = url.openStream();
+	        	Files.copy(in, new File(imgPathAndName).toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} else if("jpg".equalsIgnoreCase(filenameExtension) || "png".equalsIgnoreCase(filenameExtension)) { // jpg、png圖片下載方式
 				BufferedImage img = ImageIO.read(in);
 				ImageIO.write(img, filenameExtension, new File(imgPathAndName));
+			} else {
 				in.close();
+				return "檔案格式錯誤";
 			}
+	        in.close();
 	        
 			imgPath = photoPath.substring(photoPath.indexOf("img/")) + "/" + imgFileName + "." + filenameExtension;
 			log.info("下載圖片結束");

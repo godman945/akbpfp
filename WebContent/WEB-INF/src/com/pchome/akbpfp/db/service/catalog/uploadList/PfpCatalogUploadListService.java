@@ -96,99 +96,37 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 			CSVReader reader = new CSVReader(isr);
 			String [] csvTitleArray;
 			boolean flagCheck = true;
+			
 			if (vo.getCatalogType().equals(EnumPfpCatalog.CATALOG_SHOPPING.getType())) {
 				while ((csvTitleArray = reader.readNext()) != null) {
-					//1.判斷csv標題是否重複
+					// 1.判斷csv標題是否重複
 					HashSet<String> titleSet = new HashSet<>(Arrays.asList(csvTitleArray));
-					if(titleSet.size() < csvTitleArray.length){
+					if (titleSet.size() < csvTitleArray.length) {
 						flagCheck = false;
 						break;
 					}
-					//2.檢查必填欄位是否存在
+					
+					// 2.檢查必填欄位是否存在
 					int countMustCount = 0;
 					for (String csvTitleStr : csvTitleArray) {
 						for (EnumEcCsvCheck enumEcCsvCheck : EnumEcCsvCheck.values()) {
-							if(enumEcCsvCheck.isNeedFlag() && csvTitleStr.equals(enumEcCsvCheck.getTitleName())){
-								countMustCount = countMustCount +1;
+							if (enumEcCsvCheck.isNeedFlag() && csvTitleStr.equals(enumEcCsvCheck.getTitleName())) {
+								countMustCount = countMustCount + 1;
 							}
 						}
 					}
-					if(countMustCount == 7){
+					
+					if (countMustCount == 7) {
 						flagCheck = true;
 					}
 					break;
-				  }
+				}
 			}
-			if(flagCheck){
+			
+			if (flagCheck) {
 				dataMap.put("status", "SUCCESS");
 			}
-//			BufferedReader brdFile = null;
-//			brdFile = new BufferedReader(new InputStreamReader(new FileInputStream(vo.getFileUploadPath()), "BIG5")); // 抓CSV檔進java，bufferedReader
-//			String strLine = null;
-//			
-//			while ((strLine = brdFile.readLine()) != null) { // 將CSV檔字串一列一列讀入並存起來直到沒有列為止
-//				String[] lineArray = strLine.split(","); // 因為預設是用"，"分開所以用split切開存入字串陣列
-//				
-//				// 一般購物類檢查方式
-//				if (vo.getCatalogType().equals(EnumPfpCatalog.CATALOG_SHOPPING.getType())) {
-//					dataMap.put("status", "SUCCESS");
-//					
-//					// 999表示沒有此欄位
-//					int idArrayIndex = 999;
-//					int ecNameArrayIndex = 999;
-//					int ecPriceArrayIndex = 999;
-//					int ecDiscountPriceArrayIndex = 999;
-//					int ecStockStatusArrayIndex = 999;
-//					int ecUseStatusArrayIndex = 999;
-//					int ecImgUrlArrayIndex = 999;
-//					int ecUrlArrayIndex = 999;
-//					int ecCategoryArrayIndex = 999;
-//					
-//					for (int i = 0; i < lineArray.length; i++) {
-//						if (idArrayIndex == 999 && "id*".equals(lineArray[i])) {
-//							idArrayIndex = i;
-//						} else if (ecNameArrayIndex == 999 && "商品名稱*".equals(lineArray[i])) {
-//							ecNameArrayIndex = i;
-//						} else if (ecPriceArrayIndex == 999 && "原價".equals(lineArray[i])) {
-//							ecPriceArrayIndex = i;
-//						} else if (ecDiscountPriceArrayIndex == 999 && "促銷價*".equals(lineArray[i])) {
-//							ecDiscountPriceArrayIndex = i;
-//						} else if (ecStockStatusArrayIndex == 999 && "商品供應情況*".equals(lineArray[i])) {
-//							ecStockStatusArrayIndex = i;
-//						} else if (ecUseStatusArrayIndex == 999 && "商品使用狀況*".equals(lineArray[i])) {
-//							ecUseStatusArrayIndex = i;
-//						} else if (ecImgUrlArrayIndex == 999 && "廣告圖像網址*".equals(lineArray[i])) {
-//							ecImgUrlArrayIndex = i;
-//						} else if (ecUrlArrayIndex == 999 && "連結網址*".equals(lineArray[i])) {
-//							ecUrlArrayIndex = i;
-//						} else if (ecCategoryArrayIndex == 999 && "商品類別".equals(lineArray[i])) {
-//							ecCategoryArrayIndex = i;
-//						} else if ((idArrayIndex != 999 && "id*".equals(lineArray[i]))
-//								|| (ecNameArrayIndex != 999 && "商品名稱*".equals(lineArray[i]))
-//								|| (ecPriceArrayIndex != 999 && "原價".equals(lineArray[i]))
-//								|| (ecDiscountPriceArrayIndex != 999 && "促銷價*".equals(lineArray[i]))
-//								|| (ecStockStatusArrayIndex != 999 && "商品供應情況*".equals(lineArray[i]))
-//								|| (ecUseStatusArrayIndex != 999 && "商品使用狀況*".equals(lineArray[i]))
-//								|| (ecImgUrlArrayIndex != 999 && "廣告圖像網址*".equals(lineArray[i]))
-//								|| (ecUrlArrayIndex != 999 && "連結網址*".equals(lineArray[i]))
-//								|| (ecCategoryArrayIndex != 999 && "商品類別".equals(lineArray[i]))) {
-//							// 判斷到有重複欄位
-//							dataMap.put("status", "ERROR");
-//						}
-//					}
-//					
-//					// 沒有必填欄位
-//					if (idArrayIndex == 999 || ecNameArrayIndex == 999 || ecDiscountPriceArrayIndex == 999
-//							|| ecStockStatusArrayIndex == 999 || ecUseStatusArrayIndex == 999
-//							|| ecImgUrlArrayIndex == 999 || ecUrlArrayIndex == 999) {
-//						dataMap.put("status", "ERROR");
-//					}
-//					
-//					// 僅檢查第一列
-//					break;
-//				}
-//			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			dataMap.put("status", "ERROR");
@@ -196,7 +134,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		} finally {
 			return	dataMap;
 		}
-		
 	}
 	
 	/**
@@ -213,6 +150,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 			InputStreamReader isr = new InputStreamReader(new FileInputStream(file),"big5");
 			CSVReader reader = new CSVReader(isr);
 			String [] csvTitleArray;
+			
 			if (vo.getCatalogType().equals(EnumPfpCatalog.CATALOG_SHOPPING.getType())) {
 				int row = 0;
 				Integer idArrayIndex = null;
@@ -226,36 +164,36 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				Integer ecCategoryArrayIndex = null;
 				
 				while ((csvTitleArray = reader.readNext()) != null) {
-					if(row == 0){
-						for (int i = 0;i<csvTitleArray.length; i++) {
-							switch(csvTitleArray[i]){
-								case "id*":
-									idArrayIndex = i;
-									break;
-								case "商品名稱*":
-									ecNameArrayIndex = i;
-									break;
-								case "促銷價*":
-									ecDiscountPriceArrayIndex = i;
-									break;
-								case "商品供應情況*":
-									ecStockStatusArrayIndex = i;
-									break;
-								case "商品使用狀況*":
-									ecUseStatusArrayIndex = i;
-									break;
-								case "廣告圖像網址*":
-									ecImgUrlArrayIndex = i;
-									break;
-								case "連結網址*":
-									ecUrlArrayIndex = i;
-									break;
-								case "原價":
-									ecPriceArrayIndex = i;
-									break;
-								case "商品類別":
-									ecCategoryArrayIndex = i;
-									break;
+					if (row == 0) {
+						for (int i = 0; i < csvTitleArray.length; i++) {
+							switch (csvTitleArray[i]) {
+							case "id*":
+								idArrayIndex = i;
+								break;
+							case "商品名稱*":
+								ecNameArrayIndex = i;
+								break;
+							case "促銷價*":
+								ecDiscountPriceArrayIndex = i;
+								break;
+							case "商品供應情況*":
+								ecStockStatusArrayIndex = i;
+								break;
+							case "商品使用狀況*":
+								ecUseStatusArrayIndex = i;
+								break;
+							case "廣告圖像網址*":
+								ecImgUrlArrayIndex = i;
+								break;
+							case "連結網址*":
+								ecUrlArrayIndex = i;
+								break;
+							case "原價":
+								ecPriceArrayIndex = i;
+								break;
+							case "商品類別":
+								ecCategoryArrayIndex = i;
+								break;
 							}
 						}
 						row = row + 1;
@@ -263,158 +201,57 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 					}
 					
 					JSONObject prdItemObject = new JSONObject();
-					if(idArrayIndex != null){
+					if (idArrayIndex != null) {
 						prdItemObject.put("id", csvTitleArray[idArrayIndex]);
 					}
-					if(ecNameArrayIndex != null){
+					
+					if (ecNameArrayIndex != null) {
 						prdItemObject.put("ec_name", csvTitleArray[ecNameArrayIndex]);
 					}
-					if(ecPriceArrayIndex != null){
+					
+					if (ecPriceArrayIndex != null) {
 						prdItemObject.put("ec_price", csvTitleArray[ecPriceArrayIndex].replaceAll(",", ""));
-					}else{
+					} else {
 						prdItemObject.put("ec_price", " ");
 					}
-					if(ecDiscountPriceArrayIndex != null){
+					
+					if (ecDiscountPriceArrayIndex != null) {
 						prdItemObject.put("ec_discount_price", csvTitleArray[ecDiscountPriceArrayIndex].replaceAll(",", ""));
 					}
-					if(ecStockStatusArrayIndex != null){
+					
+					if (ecStockStatusArrayIndex != null) {
 						prdItemObject.put("ec_stock_status", csvTitleArray[ecStockStatusArrayIndex]);
 					}
-					if(ecUseStatusArrayIndex != null){
+					
+					if (ecUseStatusArrayIndex != null) {
 						prdItemObject.put("ec_use_status", csvTitleArray[ecUseStatusArrayIndex]);
 					}
-					if(ecImgUrlArrayIndex != null){
+					
+					if (ecImgUrlArrayIndex != null) {
 						prdItemObject.put("ec_img_url", csvTitleArray[ecImgUrlArrayIndex]);
 					}
-					if(ecUrlArrayIndex != null){
+					
+					if (ecUrlArrayIndex != null) {
 						prdItemObject.put("ec_url", csvTitleArray[ecUrlArrayIndex]);
 					}
-					if(ecCategoryArrayIndex != null){
-						prdItemObject.put("catalogProdItem", csvTitleArray[ecCategoryArrayIndex]);
-					}else{
-						prdItemObject.put("catalogProdItem"," ");
+					
+					if (ecCategoryArrayIndex != null) {
+						prdItemObject.put("ec_category", csvTitleArray[ecCategoryArrayIndex]);
+					} else {
+						prdItemObject.put("ec_category", " ");
 					}
+					
 					prdItemArray.put(prdItemObject);
 				}
 			}
+			
 			catalogProdJsonData.put("catalogProdItem", prdItemArray);
-		}catch(Exception e){
-//			catalogProdJsonData.put("catalogProdItem", prdItemArray);
+		} catch (Exception e) {
 			e.printStackTrace();
 			return catalogProdJsonData;
 		}
 		
 		return catalogProdJsonData;
-//		JSONObject catalogProdJsonData = new JSONObject();
-//		JSONArray prdItemArray = new JSONArray();
-//		
-//		BufferedReader brdFile = null;
-//		try {
-//			brdFile = new BufferedReader(new InputStreamReader(new FileInputStream(vo.getFileUploadPath()), "BIG5")); // 抓CSV檔進java，bufferedReader
-//			String strLine = null;
-//			int rowNumber = 0; // 第幾列
-//			
-//			// 一般購物類
-//			if (vo.getCatalogType().equals(EnumPfpCatalog.CATALOG_SHOPPING.getType())) {
-//				// 999表示沒有此欄位
-//				int idArrayIndex = 999;
-//				int ecNameArrayIndex = 999;
-//				int ecPriceArrayIndex = 999;
-//				int ecDiscountPriceArrayIndex = 999;
-//				int ecStockStatusArrayIndex = 999;
-//				int ecUseStatusArrayIndex = 999;
-//				int ecImgUrlArrayIndex = 999;
-//				int ecUrlArrayIndex = 999;
-//				int ecCategoryArrayIndex = 999;
-//				int indexLength = 0; // 由第一列來判斷此文件陣列長度多長
-//				
-//				while ((strLine = brdFile.readLine()) != null) { // 將CSV檔字串一列一列讀入並存起來直到沒有列為止
-//					String[] lineArray = strLine.split(","); // 因為預設是用"，"分開所以用split切開存入字串陣列
-//					
-//					// 第一列處理，先知道哪個資料在哪一欄位
-//					if (++rowNumber == 1) {
-//						indexLength = lineArray.length; // 記陣列多長，僅確認一次就好，再來都使用這個長度
-//						for (int index = 0; index < lineArray.length; index++) {
-//							if (idArrayIndex == 999 && "id*".equals(lineArray[index])) {
-//								idArrayIndex = index;
-//							} else if (ecNameArrayIndex == 999 && "商品名稱*".equals(lineArray[index])) {
-//								ecNameArrayIndex = index;
-//							} else if (ecPriceArrayIndex == 999 && "原價".equals(lineArray[index])) {
-//								ecPriceArrayIndex = index;
-//							} else if (ecDiscountPriceArrayIndex == 999 && "促銷價*".equals(lineArray[index])) {
-//								ecDiscountPriceArrayIndex = index;
-//							} else if (ecStockStatusArrayIndex == 999 && "商品供應情況*".equals(lineArray[index])) {
-//								ecStockStatusArrayIndex = index;
-//							} else if (ecUseStatusArrayIndex == 999 && "商品使用狀況*".equals(lineArray[index])) {
-//								ecUseStatusArrayIndex = index;
-//							} else if (ecImgUrlArrayIndex == 999 && "廣告圖像網址*".equals(lineArray[index])) {
-//								ecImgUrlArrayIndex = index;
-//							} else if (ecUrlArrayIndex == 999 && "連結網址*".equals(lineArray[index])) {
-//								ecUrlArrayIndex = index;
-//							} else if (ecCategoryArrayIndex == 999 && "商品類別".equals(lineArray[index])) {
-//								ecCategoryArrayIndex = index;
-//							}
-//						}
-//						continue;
-//					}
-//					
-//					String[] prdItem = new String[indexLength]; // 每次重建陣列，避免上一筆資料殘留
-//					
-//					// 第二列開始
-//					for (int i = 0; i < lineArray.length; i++) { // 將切出來的陣列資料，放入建立好的陣列數量內，避免超出陣列的問題
-//						prdItem[i] = lineArray[i];
-//					}
-//					
-//					JSONObject prdItemObject = new JSONObject();
-//					
-//					try { // 處理變成科學符號的部分
-//						prdItemObject.put("id", new BigDecimal(prdItem[idArrayIndex].trim()).toPlainString());
-//					} catch (Exception e) {
-//						prdItemObject.put("id", prdItem[idArrayIndex]);
-//					}
-//					
-//					prdItemObject.put("ec_name", prdItem[ecNameArrayIndex]);
-//	//				prdItemObject.put("ec_title", prdItem[2]);
-//					// 非999表示，此份文件有原價非必填欄位的資料
-//					if (ecCategoryArrayIndex != 999) {
-//						prdItemObject.put("ec_price", prdItem[ecPriceArrayIndex]);
-//					} else {
-//						prdItemObject.put("ec_price", " ");
-//					}
-//					
-//					prdItemObject.put("ec_discount_price", prdItem[ecDiscountPriceArrayIndex]);
-//					prdItemObject.put("ec_stock_status", prdItem[ecStockStatusArrayIndex]);
-//					prdItemObject.put("ec_use_status", prdItem[ecUseStatusArrayIndex]);
-//					prdItemObject.put("ec_img_url", prdItem[ecImgUrlArrayIndex]);
-//					prdItemObject.put("ec_url", prdItem[ecUrlArrayIndex]);
-//					
-//					// 非999表示，此份文件有商品類別非必填欄位的資料
-//					if (ecCategoryArrayIndex != 999) {
-//						prdItemObject.put("ec_category", prdItem[ecCategoryArrayIndex]);
-//					} else {
-//						prdItemObject.put("ec_category", " ");
-//					}
-//					prdItemArray.put(prdItemObject);
-//				}
-//			}
-//			System.out.println(prdItemArray);
-//			catalogProdJsonData.put("catalogProdItem", prdItemArray);
-//			
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		} finally {
-//			if (brdFile != null) {
-//				try {
-//					brdFile.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-		
-//		return catalogProdJsonData;
 	}
 
 	/**
