@@ -116,14 +116,6 @@ public abstract class APfpCatalogUploadListData {
 				}
 			}
 			
-//			if (StringUtils.isBlank(prodItemErrorMsg)) {
-//				String filenameExtension = ImgUtil.getImgURLFilenameExtension(ecImgUrl);
-//				if (!"jpg".equalsIgnoreCase(filenameExtension) && !"gif".equalsIgnoreCase(filenameExtension)
-//						&& !"png".equalsIgnoreCase(filenameExtension)) {
-//					prodItemErrorMsg = "檔案格式錯誤";
-//				}
-//			}
-			
 			File imgFile = null;
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
 				imgPath = ImgUtil.processImgPathForCatalogProd(ecImgUrl, imgTempPath, catalogProdSeq);

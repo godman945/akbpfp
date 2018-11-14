@@ -60,16 +60,6 @@ public class ImgUtil {
 			urlConnection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
 			urlConnection.setRequestMethod("GET");
 			
-//			String filenameExtension = getImgURLFilenameExtension(imgURL);
-//			// 從網址副檔名不正確，再由Header內容判斷一次
-//			if (!"gif".equalsIgnoreCase(filenameExtension) && !"jpg".equalsIgnoreCase(filenameExtension)
-//					&& !"png".equalsIgnoreCase(filenameExtension)) {
-//				// Header內容取得副檔名，避免輸入的網址沒有副檔名無法判斷的問題
-//				String contentType = urlConnection.getHeaderField("Content-Type");
-//				filenameExtension = contentType.replace("jpeg", "jpg").substring(contentType.indexOf("/") + 1);
-//				log.error("contentType 副檔名:" + filenameExtension);
-//			}
-			
 			// Header內容取得副檔名，避免輸入的網址沒有副檔名無法判斷的問題
 			String contentType = urlConnection.getHeaderField("Content-Type");
 			String filenameExtension = contentType.replace("jpeg", "jpg").substring(contentType.indexOf("/") + 1);
@@ -79,7 +69,6 @@ public class ImgUtil {
 	
 	        // 處理圖片下載
 	        if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
-//	        	InputStream in = url.openStream();
 	        	Files.copy(in, new File(imgPathAndName).toPath(), StandardCopyOption.REPLACE_EXISTING);
 			} else if("jpg".equalsIgnoreCase(filenameExtension) || "png".equalsIgnoreCase(filenameExtension)) { // jpg、png圖片下載方式
 				BufferedImage img = ImageIO.read(in);
