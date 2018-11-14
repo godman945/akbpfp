@@ -55,4 +55,11 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 
 	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog);
 
+	/**
+	 * 檢查"商品目錄"及"商品目錄logo"資料是否顯示提示訊息
+	 * @param customer_info_id
+	 * @return
+	 */
+	public boolean checkCatalogAndCatalogLogoIsShowMessage(String customer_info_id);
+
 }

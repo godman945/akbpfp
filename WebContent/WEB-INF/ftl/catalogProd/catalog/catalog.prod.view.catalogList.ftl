@@ -26,7 +26,7 @@
                         <a href="logo.html">LOGO管理<em class="icon-error"></em></a>                                                        
                     </span>
                 </li>
-                <div class="p-b10 note-text">提醒您，必須完整建立商品目錄與LOGO才能投放商品廣告</div>
+                <#if showPromptMessage == true><div class="p-b10 note-text">提醒您，必須完整建立商品目錄與LOGO才能投放商品廣告</div></#if>
 	        </ul>
 	        <div class="altername-box pos-absolute pos-right pos-top">
 	        	<span>帳戶：</span>${customer_info_title}
