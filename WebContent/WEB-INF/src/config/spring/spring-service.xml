@@ -281,5 +281,10 @@
 		<property name="sequenceService" ref="SequenceService" />
 		<property name="shoppingProd" ref="ShoppingProd" />
     </bean>
+    
+    <bean id="PfpCodeService" class="com.pchome.akbpfp.db.service.codeManage.code.PfpCodeService">    	     
+        <property name="dao" ref="PfpCodeDAO" />
+    </bean>
+    
 
 </beans>

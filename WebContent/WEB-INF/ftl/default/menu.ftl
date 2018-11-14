@@ -86,6 +86,16 @@
 	    <div class="tab"><a href="<@s.url value="/" />transDetail.html">帳單管理</a></div>
 	</@s.else>
 	
+	<#if user_privilege == "0" || user_privilege == "1" || user_privilege == "2" >
+		<@s.if test="%{#uri.indexOf('/retargetingTracking') > -1 ||
+					   #uri.indexOf('/retargetingTracking') > -1 }">
+			<div class="tab_on"><a href="<@s.url value="/" />retargetingTracking.html">代碼管理</a></div> 
+		</@s.if>
+		<@s.else>
+	    	<div class="tab"><a href="<@s.url value="/" />retargetingTracking.html">代碼管理</a></div> 
+		</@s.else>
+	</#if>
+	
 	<div class="rbtn">
 		<a href="<@s.url value="/" />faq.html" target="_blank">常見問題</a>
 	</div>
