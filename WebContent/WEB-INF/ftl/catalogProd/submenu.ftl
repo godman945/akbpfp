@@ -3,6 +3,7 @@
 <#-- submenu start -->
 
 <#--商品管理 -->
+<#-- 2018/11/16 不用menu
 <div class="submn">
 	<@s.if test="%{#uri.indexOf('/catalogProd') > -1 ||
 				   #uri.indexOf('/addCatalog') > -1 ||
@@ -32,4 +33,5 @@
        	<a href="<@s.url value="/" />logo.html">LOGO管理</a>
     </@s.else>
 </div>
+-->
 <#--商品管理 -->
