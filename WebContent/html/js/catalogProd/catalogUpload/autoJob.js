@@ -31,10 +31,10 @@ $(document).ready(function() {
 		url = $(this).val();
 		
 		// 檢查輸入網址是否正確
-		if (url.substr(url.length - 4,url.length).toLowerCase() != ".csv") {
-			alert("網址請輸入規定的格式。\n\n http://******.csv、https://******.csv");
-			return false;
-		}
+//		if (url.substr(url.length - 4,url.length).toLowerCase() != ".csv") {
+//			alert("網址請輸入規定的格式。\n\n http://******.csv、https://******.csv");
+//			return false;
+//		}
 		
 		//顯示遮罩
 		$('#loadingWaitBlock').block(maskingConfig);
@@ -57,10 +57,10 @@ $(document).ready(function() {
 				if (response.status == "ERROR") {
 					$("div.urlupload-box.failure").addClass('select');
 					$("#errAutoJobURL").val(url);
-					$("#errContent").html("<em class=\"icon-error\"></em>請輸入正確網址，或您所輸入的網址未開放存取權限。");
+					$("#errContent").html("<em class=\"icon-error\"></em>請輸入正確網址。");
 				} else {
 					$("div.urlupload-box.success").addClass('select');
-					$("#successFileName").attr("data-fileName", url.substring(url.lastIndexOf("/") +1));
+					$("#successFileName").attr("data-fileName", response.fileName);
 					$("#successContent").html("網址：<em data-fileUrl=\"" + url + "\"></em>");
 				}
 				
@@ -79,15 +79,7 @@ $(document).ready(function() {
 });
 
 /**
- * 上一步
- * 根據商品目錄下拉選單所選擇得目錄返回
- */
-//function back() {
-//	window.location = "selectUpload.html?catalogSeq=" + $("#catalogSeq").val();
-//}
-
-/**
- * 完成按鈕事件(待測試)
+ * 完成按鈕事件
  * @returns {Boolean}
  */
 function autoJobFinish() {

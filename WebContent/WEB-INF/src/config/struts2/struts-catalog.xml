@@ -239,7 +239,7 @@
 			<interceptor-ref name="loginCheckStack" />
 			<result name="success" type="stream">
 				<param name="contentType">application/octet-stream</param>
-				<param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
+				<param name="contentDisposition">attachment; filename="${downloadFileName}"</param>
 				<param name="inputName">downloadFileStream</param>
 				<param name="bufferSize">1024</param>
 			</result>

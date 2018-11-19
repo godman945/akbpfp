@@ -1,11 +1,12 @@
 package com.pchome.akbpfp.struts2.action.catalog.uploadList;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -211,9 +212,64 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
+		Map<String, String> map = getDataFromUrl(jobURL);
+		if (StringUtils.isBlank(map.get("fileName").toString())
+				&& StringUtils.isBlank(map.get("filenameExtension").toString())) {
+			dataMap.put("status", "ERROR");
+			return SUCCESS;
+		}
+		
+		dataMap.put("fileName", map.get("fileName").toString());
 		return SUCCESS;
 	}
 	
+	/**
+	 * 由網址判斷是否為csv檔
+	 * @param url
+	 * @return 正確回傳檔名fileName及副檔名filenameExtension  錯誤則檔名副檔名皆為空
+	 */
+	private Map<String, String> getDataFromUrl(String url) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("fileName", "");
+		map.put("filenameExtension", "");
+
+		try {
+			// 先由網址判斷取得檔名副檔名，判斷有問題或再從url Header判斷
+			int startLength = url.lastIndexOf("/") + 1;
+			int endLength = (url.indexOf("?") > -1 ? url.indexOf("?") : url.length());
+			String fileName = url.substring(startLength, endLength);
+			String filenameExtension = fileName.substring(fileName.length() - 4);
+			if (".csv".equalsIgnoreCase(filenameExtension)) {
+				map.put("fileName", fileName);
+				map.put("filenameExtension", "csv");
+			} else {
+			
+				HttpUtil.disableCertificateValidation();
+				
+				URL urlData = new URL(url);
+				// 增加User-Agent，避免被發現是機器人被阻擋掉
+				HttpURLConnection urlConnection = (HttpURLConnection) urlData.openConnection();
+				urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+				urlConnection.setRequestMethod("GET");
+				
+				// 取得檔名，由檔名判斷
+				String contentDisposition = urlConnection.getHeaderField("Content-Disposition");
+				if (contentDisposition != null) {
+					fileName = contentDisposition.substring(contentDisposition.indexOf("filename=\"") + 10, contentDisposition.length() - 1);
+					filenameExtension = fileName.substring(fileName.length() - 4);
+					if (".csv".equalsIgnoreCase(filenameExtension)) {
+						map.put("fileName", fileName);
+						map.put("filenameExtension", "csv");
+					}
+				}
+				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
 	/**
 	 * 自動排程上傳 
 	 * 1.下載檔案
@@ -230,9 +286,16 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		PfpCatalogUploadListVO vo = new PfpCatalogUploadListVO();
 		vo.setCatalogType(pfpCatalog.getCatalogType());
 		
+		String downloadPath = catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq();
+		File file = new File(downloadPath);
+		if (!file.exists()) {
+			file.mkdirs(); // 建立資料夾
+		}
+		
 		Date updateDatetime = new Date();
-		fileUploadFileName = jobURL.substring(jobURL.lastIndexOf("/") + 1);
-		String downloadPath = catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName;
+		Map<String, String> map = getDataFromUrl(jobURL);
+		fileUploadFileName = map.get("fileName").toString();
+		downloadPath += "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName;
 		boolean downloadStatus = loadURLFile(jobURL, downloadPath);
 		
 		if (downloadStatus) {
@@ -430,17 +493,13 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		try {
 			HttpUtil.disableCertificateValidation();
 			URL zeroFile = new URL(urlPath);
+			// 增加User-Agent，避免被發現是機器人被阻擋掉
+			HttpURLConnection urlConnection = (HttpURLConnection) zeroFile.openConnection();
+			urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+			urlConnection.setRequestMethod("GET");
+			
 			InputStream is = zeroFile.openStream();
-			BufferedInputStream bs = new BufferedInputStream(is, bufferReaderKB * 1024);
-			byte[] b = new byte[1024]; // 一次取得 1024 個 bytes
-			FileOutputStream fs = new FileOutputStream(savePath);
-			int len;
-			while ((len = bs.read(b, 0, b.length)) != -1) {
-				fs.write(b, 0, len);
-			}
-
-			bs.close();
-			fs.close();
+			Files.copy(is, new File(savePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
