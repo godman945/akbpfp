@@ -186,7 +186,7 @@ public class ImgUtil {
 		// 處理圖片如果有被加timestamp等參數從?位置抓取副檔名，沒被加參數則直接依長度取最後3碼
 		int startLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") - 3 : imgURL.length() - 3);
 		int endLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") : imgURL.length());
-		return imgURL.substring(startLength, endLength);
+		return imgURL.substring(startLength, endLength).toLowerCase();
 	}
 	
 	/**

@@ -297,7 +297,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		fileUploadFileName = map.get("fileName").toString();
 		downloadPath += "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName;
 		boolean downloadStatus = loadURLFile(jobURL, downloadPath);
-		
 		if (downloadStatus) {
 			vo.setFileUploadPath(downloadPath);
 			JSONObject catalogProdJsonData = pfpCatalogUploadListService.getCSVFileDataToJson(vo);
@@ -310,6 +309,22 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			catalogProdJsonData.put("updateDatetime", formatter.format(updateDatetime));
 			
 			dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
+		} else {
+			// 更新 pfp_catalog "商品目錄" 資料
+			PfpCatalogVO pfpCatalogVO = new PfpCatalogVO();
+			pfpCatalogVO.setCatalogSeq(catalogSeq);
+			pfpCatalogVO.setPfpCustomerInfoId(super.getCustomer_info_id());
+			pfpCatalogVO.setCatalogUploadType("2");
+			pfpCatalogVO.setUploadContent(" ");
+			pfpCatalogVO.setUploadStatus("2");
+			pfpCatalogService.updatePfpCatalogForShoppingProd(pfpCatalogVO);
+			
+			// 更新pfp_catalog_upload_log "商品目錄更新紀錄"
+			PfpCatalogUploadLogVO pfpCatalogUploadLogVO = new PfpCatalogUploadLogVO();
+			pfpCatalogUploadLogVO.setCatalogSeq(catalogSeq);
+			pfpCatalogUploadLogVO.setUpdateWay(updateWay);
+			pfpCatalogUploadLogVO.setUpdateContent("上傳失敗");
+			pfpCatalogUploadListService.savePfpCatalogUploadLog(pfpCatalogUploadLogVO);
 		}
 		
 		return SUCCESS;

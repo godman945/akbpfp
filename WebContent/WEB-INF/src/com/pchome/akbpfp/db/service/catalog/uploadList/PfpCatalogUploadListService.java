@@ -1,11 +1,9 @@
 package com.pchome.akbpfp.db.service.catalog.uploadList;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -13,7 +11,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -33,7 +30,6 @@ import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadListVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadLogVO;
 import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
-import com.pchome.enumerate.ad.EnumProdAdDetail;
 import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
 import com.pchome.enumerate.catalogprod.EnumEcUseStatusType;
 import com.pchome.enumerate.prod.EnumEcCsvCheck;
@@ -370,6 +366,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	@Override
 	public void savePfpCatalogUploadLog(PfpCatalogUploadLogVO vo) throws Exception {
 		PfpCatalogUploadLog pfpCatalogUploadLog = new PfpCatalogUploadLog();
+		Date date = new Date();
 		
 		String catalogUploadLogSeq = sequenceService.getId(EnumSequenceTableName.PFP_CATALOG_UPLOAD_LOG, "", 20);
 		pfpCatalogUploadLog.setCatalogUploadLogSeq(catalogUploadLogSeq); // 更新紀錄序號
@@ -379,11 +376,11 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		
 		pfpCatalogUploadLog.setUpdateWay(vo.getUpdateWay()); // 更新方式
 		pfpCatalogUploadLog.setUpdateContent(vo.getUpdateContent()); // 更新內容
-		pfpCatalogUploadLog.setUpdateDatetime(new Date()); // 更新時間
+		pfpCatalogUploadLog.setUpdateDatetime(date); // 更新時間
 		pfpCatalogUploadLog.setErrorNum(vo.getErrorNum()); // 錯誤筆數
 		pfpCatalogUploadLog.setSuccessNum(vo.getSuccessNum()); // 成功筆數
-		pfpCatalogUploadLog.setUpdateDate(new Date()); // 更新時間
-		pfpCatalogUploadLog.setCreateDate(new Date()); // 建立時間
+		pfpCatalogUploadLog.setUpdateDate(date); // 更新時間
+		pfpCatalogUploadLog.setCreateDate(date); // 建立時間
 		
 		pfpCatalogUploadListDAO.savePfpCatalogUploadLog(pfpCatalogUploadLog);
 	}
