@@ -102,13 +102,21 @@
 								</#if>
 	                            
 	                            <#if vo.ecStockStatusErrstatus == "isErr">
-	                            	<div class="txt-cell col-supplement "><b class="txt-error">${vo.ecStockStatus!}</b></div>
+	                            	<div class="txt-cell col-supplement "><b class="txt-error">${vo.ecStockStatus!}</b>
+	                            		<div class="msg-btn" onclick="$(this).children('em').fadeToggle('fast');">
+	                                		<em style="display: none;">供應情況:僅支援:有庫存/預購/無庫存/停售。</em>
+	                            		</div>
+	                            	</div>
 								<#else>
 									<div class="txt-cell col-supplement ">${vo.ecStockStatus!}</div>
 								</#if>
 	                            
 	                            <#if vo.ecUseStatusErrstatus == "isErr">
-	                            	<div class="txt-cell col-neworused  "><b class="txt-error">${vo.ecUseStatus!}</b></div>
+	                            	<div class="txt-cell col-neworused  "><b class="txt-error">${vo.ecUseStatus!}</b>
+	                            		<div class="msg-btn" onclick="$(this).children('em').fadeToggle('fast');">
+	                                		<em style="display: none;">使用狀況:僅支援:全新/福利品/二手。</em>
+	                            		</div>
+	                            	</div>
 								<#else>
 									<div class="txt-cell col-neworused  ">${vo.ecUseStatus!}</div>
 								</#if>
