@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.IBaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 
 public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 	

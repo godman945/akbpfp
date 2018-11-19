@@ -11,7 +11,7 @@ import org.hibernate.transform.Transformers;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 import com.pchome.utils.CommonUtils;
 
 public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCatalogDAO{

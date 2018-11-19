@@ -23,7 +23,7 @@ import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupItemServic
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupService;
 import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;

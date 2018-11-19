@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.IBaseService;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 
 public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	

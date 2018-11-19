@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.vo.catalog.uploadList.ShoppingProdVO;
 import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
@@ -90,10 +91,11 @@ public abstract class APfpCatalogUploadListData {
 	 * @param ecImgUrl // 圖片網址
 	 * @param ecImgBase64 // 圖片Base64編碼
 	 * @param catalogUploadType // 上傳方式
+	 * @param shoppingProdItemVO 
 	 * @return
 	 * @throws Exception 
 	 */
-	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, int itemSeq, String photoPath, String catalogProdSeq, String ecImgUrl, String ecImgBase64, String catalogUploadType) throws Exception {
+	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, int itemSeq, String photoPath, String catalogProdSeq, String ecImgUrl, String ecImgBase64, String catalogUploadType, ShoppingProdVO shoppingProdItemVO) throws Exception {
 		String prodItemErrorMsg = ""; // 檢查到一個有錯誤，剩下檢查則略過
 		
 		// 將圖片下載至每個user自己的暫存圖片資料夾檢查
@@ -118,7 +120,7 @@ public abstract class APfpCatalogUploadListData {
 			
 			File imgFile = null;
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
-				imgPath = ImgUtil.processImgPathForCatalogProd(ecImgUrl, imgTempPath, catalogProdSeq);
+				imgPath = ImgUtil.processImgPathForCatalogProd(ecImgUrl, imgTempPath, catalogProdSeq, shoppingProdItemVO);
 				if (StringUtils.isBlank(imgPath)) {
 					// 空的表示連不到或是HTTP 403沒有權限訪問此站，伺服器收到請求但拒絕提供服務。
 					prodItemErrorMsg = "連結錯誤";

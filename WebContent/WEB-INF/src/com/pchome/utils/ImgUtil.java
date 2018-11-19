@@ -25,6 +25,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.pchome.akbpfp.db.vo.catalog.uploadList.ShoppingProdVO;
+import com.pchome.soft.depot.utils.HttpUtil;
+
 
 
 public class ImgUtil {
@@ -44,6 +47,18 @@ public class ImgUtil {
 	 * @return 正常下載圖片:取得圖片存放路徑 出錯:無圖片路徑，非jpg、gif、png回傳"檔案格式錯誤"
 	 */
 	public static String processImgPathForCatalogProd(String imgURL, String photoPath, String imgFileName) {
+		return processImgPathForCatalogProd(imgURL, photoPath, imgFileName, null);
+	}
+	
+	/**
+	 * 處理廣告商品下載圖片
+	 * @param imgURL 下載的圖片網址
+	 * @param photoPath 資料夾位置
+	 * @param imgFileName 檔名
+	 * @param shoppingProdItemVO 購物商品用來紀錄圖片副檔名用
+	 * @return 正常下載圖片:取得圖片存放路徑 出錯:無圖片路徑，非jpg、gif、png回傳"檔案格式錯誤"
+	 */
+	public static String processImgPathForCatalogProd(String imgURL, String photoPath, String imgFileName, ShoppingProdVO shoppingProdItemVO) {
 		log.info("開始下載圖片。");
 		String imgPath = "";
     	try {
@@ -63,6 +78,10 @@ public class ImgUtil {
 			// Header內容取得副檔名，避免輸入的網址沒有副檔名無法判斷的問題
 			String contentType = urlConnection.getHeaderField("Content-Type");
 			String filenameExtension = contentType.replace("jpeg", "jpg").substring(contentType.indexOf("/") + 1);
+			
+			if (shoppingProdItemVO != null) { // 購物商品用來紀錄圖片副檔名用
+				shoppingProdItemVO.setEcImgFilenameExtension(filenameExtension);
+			}
 			
 			InputStream in = urlConnection.getInputStream();
 	        String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
@@ -178,7 +197,7 @@ public class ImgUtil {
 	}
 	
 	/**
-	 * 從圖片網址取得附檔名
+	 * 從圖片網址取得副檔名
 	 * @param imgURL
 	 * @return
 	 */
@@ -190,7 +209,7 @@ public class ImgUtil {
 	}
 	
 	/**
-	 * 從圖片Base64取得附檔名
+	 * 從圖片Base64取得副檔名
 	 * @param imgBase64String
 	 * @return
 	 */
@@ -204,11 +223,11 @@ public class ImgUtil {
 	
 	/**
 	 * 從圖片網址取得附檔名或圖片Base64取得附檔名
-	 * @param ecImgUrl
 	 * @param ecImgBase64
+	 * @param ecImgUrl
 	 * @return
 	 */
-	public static String getImgFilenameExtensionFromImgBase64OrImgURL(String ecImgUrl, String ecImgBase64) {
+	public static String getImgFilenameExtensionFromImgBase64OrImgURL(String ecImgBase64, String ecImgUrl) {
 		if (StringUtils.isBlank(ecImgBase64)) {
 			return getImgURLFilenameExtension(ecImgUrl);
 		} else {

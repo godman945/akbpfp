@@ -23,7 +23,9 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.prodList.PfpCatalogProdEcVO;
+import com.pchome.akbpfp.db.vo.catalog.uploadList.ShoppingProdVO;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
 import com.pchome.enumerate.catalogprod.EnumEcUseStatusType;
@@ -108,80 +110,118 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		JSONArray catalogProdItemJsonArray = new JSONArray(catalogProdItem);
 		for (int i = 0; i < catalogProdItemJsonArray.length(); i++) {
 			JSONObject catalogProdItemJson = (JSONObject) catalogProdItemJsonArray.get(i);
-			String catalogProdSeq = catalogProdItemJson.optString("id"); // id*
-			String ecName = catalogProdItemJson.optString("ec_name"); // 商品名稱*
-			String ecTitle = catalogProdItemJson.optString("ec_title", " "); // 商品敘述*
-			ecTitle = " "; // 商品敘述尚未使用，先固定寫入空
-			String ecPrice = catalogProdItemJson.optString("ec_price", " ").replace(",", ""); // 原價
-			String ecDiscountPrice = catalogProdItemJson.optString("ec_discount_price").replace(",", ""); // 促銷價*
-			if (StringUtils.isBlank(ecPrice)) { // 沒有原價則帶入促銷價
-				ecPrice = ecDiscountPrice; // 促銷價*
+			ShoppingProdVO shoppingProdItemVO = new ShoppingProdVO();
+			shoppingProdItemVO.setCatalogProdSeq(catalogProdItemJson.optString("id")); // id*
+			shoppingProdItemVO.setEcName(catalogProdItemJson.optString("ec_name")); // 商品名稱*
+			shoppingProdItemVO.setEcTitle(" "); // 商品敘述尚未使用，先固定寫入空
+			shoppingProdItemVO.setEcPrice(catalogProdItemJson.optString("ec_price", " ").replace(",", "")); // 原價
+			shoppingProdItemVO.setEcDiscountPrice(catalogProdItemJson.optString("ec_discount_price").replace(",", "")); // 促銷價*
+			// 沒有原價則帶入促銷價
+			if (StringUtils.isBlank(shoppingProdItemVO.getEcPrice())) {
+				shoppingProdItemVO.setEcPrice(shoppingProdItemVO.getEcDiscountPrice());
 			}
 			
-			String ecStockStatus = catalogProdItemJson.optString("ec_stock_status"); // 商品供應情況*
-			String ecUseStatus = catalogProdItemJson.optString("ec_use_status"); // 商品使用狀況*
-			String ecImgUrl = catalogProdItemJson.optString("ec_img_url"); // 廣告圖像網址*
-			String ecImgBase64 = catalogProdItemJson.optString("ec_Img_Base64", " "); // 手動上傳圖片的Base64編碼
-			String ecUrl = catalogProdItemJson.optString("ec_url"); // 連結網址*
-			String ecCategory = catalogProdItemJson.optString("ec_category", " "); // 商品類別
+			shoppingProdItemVO.setEcStockStatusDesc(catalogProdItemJson.optString("ec_stock_status")); // 商品供應情況*(中文)
+			shoppingProdItemVO.setEcUseStatusDesc(catalogProdItemJson.optString("ec_use_status")); // 商品使用狀況*(中文)
+			shoppingProdItemVO.setEcImgUrl(catalogProdItemJson.optString("ec_img_url")); // 廣告圖像網址*
+			shoppingProdItemVO.setEcImgBase64(catalogProdItemJson.optString("ec_Img_Base64", " ")); // 手動上傳圖片的Base64編碼
+			shoppingProdItemVO.setEcUrl(catalogProdItemJson.optString("ec_url")); // 連結網址*
+			shoppingProdItemVO.setEcCategory(catalogProdItemJson.optString("ec_category", " ")); // 商品類別
+			
+//			String catalogProdSeq = catalogProdItemJson.optString("id"); // id*
+//			String ecName = catalogProdItemJson.optString("ec_name"); // 商品名稱*
+//			String ecTitle = catalogProdItemJson.optString("ec_title", " "); // 商品敘述*
+//			ecTitle = " "; // 商品敘述尚未使用，先固定寫入空
+//			String ecPrice = catalogProdItemJson.optString("ec_price", " ").replace(",", ""); // 原價
+//			String ecDiscountPrice = catalogProdItemJson.optString("ec_discount_price").replace(",", ""); // 促銷價*
+//			if (StringUtils.isBlank(ecPrice)) { // 沒有原價則帶入促銷價
+//				ecPrice = ecDiscountPrice; // 促銷價*
+//			}
+//			
+//			String ecStockStatus = catalogProdItemJson.optString("ec_stock_status"); // 商品供應情況*
+//			String ecUseStatus = catalogProdItemJson.optString("ec_use_status"); // 商品使用狀況*
+//			String ecImgUrl = catalogProdItemJson.optString("ec_img_url"); // 廣告圖像網址*
+//			String ecImgBase64 = catalogProdItemJson.optString("ec_Img_Base64", " "); // 手動上傳圖片的Base64編碼
+//			String ecUrl = catalogProdItemJson.optString("ec_url"); // 連結網址*
+//			String ecCategory = catalogProdItemJson.optString("ec_category", " "); // 商品類別
 
 			// 檢查每個欄位  有錯塞入空值
 			JSONObject addPfpCatalogProdEcErrorObject = new JSONObject();
 			addPfpCatalogProdEcErrorObject.put("itemSeq", itemSeq);
-			errorPrdItemArray = super.checkCatalogProdSeq(errorPrdItemArray, itemSeq, catalogProdSeq);
+			errorPrdItemArray = super.checkCatalogProdSeq(errorPrdItemArray, itemSeq, shoppingProdItemVO.getCatalogProdSeq());
 			// 有增加表示目前項目有錯，錯誤則將該筆資料設定為空格，如果直接將錯誤資料寫進DB，錯誤資料含emoji DB不支援的部分會直接出錯
 			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
 				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("catalogProdSeq", " ");
 			} else {
-				addPfpCatalogProdEcErrorObject.put("catalogProdSeq", catalogProdSeq);
+				addPfpCatalogProdEcErrorObject.put("catalogProdSeq", shoppingProdItemVO.getCatalogProdSeq());
 			}
 			
-			errorPrdItemArray = super.checkEcName(errorPrdItemArray, itemSeq, ecName);
+			errorPrdItemArray = super.checkEcName(errorPrdItemArray, itemSeq, shoppingProdItemVO.getEcName());
 			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
 				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecName", " ");
 			} else {
-				addPfpCatalogProdEcErrorObject.put("ecName", ecName);
+				addPfpCatalogProdEcErrorObject.put("ecName", shoppingProdItemVO.getEcName());
 			}
 			
-			errorPrdItemArray = super.checkEcPrice(errorPrdItemArray, itemSeq, ecPrice);
+			errorPrdItemArray = super.checkEcPrice(errorPrdItemArray, itemSeq, shoppingProdItemVO.getEcPrice());
 			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
 				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecPrice", "0");
 			} else {
-				addPfpCatalogProdEcErrorObject.put("ecPrice", ecPrice);
+				addPfpCatalogProdEcErrorObject.put("ecPrice", shoppingProdItemVO.getEcPrice());
 			}
 			
-			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, itemSeq, ecDiscountPrice, ecPrice);
+			errorPrdItemArray = super.checkEcDiscountPrice(errorPrdItemArray, itemSeq, shoppingProdItemVO.getEcDiscountPrice(), shoppingProdItemVO.getEcPrice());
 			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
 				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecDiscountPrice", "0");
 			} else {
-				addPfpCatalogProdEcErrorObject.put("ecDiscountPrice", ecDiscountPrice);
+				addPfpCatalogProdEcErrorObject.put("ecDiscountPrice", shoppingProdItemVO.getEcDiscountPrice());
 			}
 			
-			errorPrdItemArray = super.checkEcStockStatus(errorPrdItemArray, itemSeq, ecStockStatus);
+			errorPrdItemArray = super.checkEcStockStatus(errorPrdItemArray, itemSeq, shoppingProdItemVO.getEcStockStatusDesc());
 			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
 				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecStockStatus", " ");
 			} else {
-				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.Out_Of_Stock.getChName(), EnumEcStockStatusType.Out_Of_Stock.getType());
-				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.In_Stock.getChName(), EnumEcStockStatusType.In_Stock.getType());
-				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.Pre_Order.getChName(), EnumEcStockStatusType.Pre_Order.getType());
-				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.Discontinued.getChName(), EnumEcStockStatusType.Discontinued.getType());
-				addPfpCatalogProdEcErrorObject.put("ecStockStatus", ecStockStatus);
+				if (shoppingProdItemVO.getEcStockStatusDesc().equals(EnumEcStockStatusType.Out_Of_Stock.getChName())) {
+					shoppingProdItemVO.setEcStockStatus(EnumEcStockStatusType.Out_Of_Stock.getType());
+				} else if (shoppingProdItemVO.getEcStockStatusDesc().equals(EnumEcStockStatusType.In_Stock.getChName())) {
+					shoppingProdItemVO.setEcStockStatus(EnumEcStockStatusType.In_Stock.getType());
+				} else if (shoppingProdItemVO.getEcStockStatusDesc().equals(EnumEcStockStatusType.Pre_Order.getChName())) {
+					shoppingProdItemVO.setEcStockStatus(EnumEcStockStatusType.Pre_Order.getType());
+				} else if (shoppingProdItemVO.getEcStockStatusDesc().equals(EnumEcStockStatusType.Discontinued.getChName())) {
+					shoppingProdItemVO.setEcStockStatus(EnumEcStockStatusType.Discontinued.getType());
+				}
+				addPfpCatalogProdEcErrorObject.put("ecStockStatus", shoppingProdItemVO.getEcStockStatus());
+				
+//				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.Out_Of_Stock.getChName(), EnumEcStockStatusType.Out_Of_Stock.getType());
+//				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.In_Stock.getChName(), EnumEcStockStatusType.In_Stock.getType());
+//				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.Pre_Order.getChName(), EnumEcStockStatusType.Pre_Order.getType());
+//				ecStockStatus = ecStockStatus.replace(EnumEcStockStatusType.Discontinued.getChName(), EnumEcStockStatusType.Discontinued.getType());
+//				addPfpCatalogProdEcErrorObject.put("ecStockStatus", ecStockStatus);
 			}
 			
-			errorPrdItemArray = super.checkEcUseStatus(errorPrdItemArray, itemSeq, ecUseStatus);
+			errorPrdItemArray = super.checkEcUseStatus(errorPrdItemArray, itemSeq, shoppingProdItemVO.getEcUseStatusDesc());
 			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
 				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecUseStatus", " ");
 			} else {
-				ecUseStatus = ecUseStatus.replace(EnumEcUseStatusType.New_Goods.getChName(), EnumEcUseStatusType.New_Goods.getType());
-				ecUseStatus = ecUseStatus.replace(EnumEcUseStatusType.Used_Goods.getChName(), EnumEcUseStatusType.Used_Goods.getType());
-				ecUseStatus = ecUseStatus.replace(EnumEcUseStatusType.Welfare_Goods.getChName(), EnumEcUseStatusType.Welfare_Goods.getType());
-				addPfpCatalogProdEcErrorObject.put("ecUseStatus", ecUseStatus);
+				if (shoppingProdItemVO.getEcUseStatusDesc().equals(EnumEcUseStatusType.New_Goods.getChName())) {
+					shoppingProdItemVO.setEcUseStatus(EnumEcUseStatusType.New_Goods.getType());
+				} else if (shoppingProdItemVO.getEcUseStatusDesc().equals(EnumEcUseStatusType.Used_Goods.getChName())) {
+					shoppingProdItemVO.setEcUseStatus(EnumEcUseStatusType.Used_Goods.getType());
+				} else if (shoppingProdItemVO.getEcUseStatusDesc().equals(EnumEcUseStatusType.Welfare_Goods.getChName())) {
+					shoppingProdItemVO.setEcUseStatus(EnumEcUseStatusType.Welfare_Goods.getType());
+				}
+				addPfpCatalogProdEcErrorObject.put("ecUseStatus", shoppingProdItemVO.getEcUseStatus());
+				
+//				ecUseStatus = ecUseStatus.replace(EnumEcUseStatusType.New_Goods.getChName(), EnumEcUseStatusType.New_Goods.getType());
+//				ecUseStatus = ecUseStatus.replace(EnumEcUseStatusType.Used_Goods.getChName(), EnumEcUseStatusType.Used_Goods.getType());
+//				ecUseStatus = ecUseStatus.replace(EnumEcUseStatusType.Welfare_Goods.getChName(), EnumEcUseStatusType.Welfare_Goods.getType());
+//				addPfpCatalogProdEcErrorObject.put("ecUseStatus", ecUseStatus);
 			}
 			
 			String imgTempCompletePath = ""; // 暫存圖片完整路徑
@@ -189,36 +229,37 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			String addDbImgPath = ""; // 寫入DB欄位路徑
 			if (StringUtils.isBlank((String) addPfpCatalogProdEcErrorObject.get("catalogProdSeq"))) {
 				// 如果商品編號錯誤，圖片檔名用序號取代
-				catalogProdSeq = String.valueOf(itemSeq);
+				shoppingProdItemVO.setCatalogProdSeq(String.valueOf(itemSeq));
+//				catalogProdSeq = String.valueOf(itemSeq);
 			}
 				
-			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, itemSeq, photoPath, catalogProdSeq, ecImgUrl, ecImgBase64, catalogUploadType);
+			errorPrdItemArray = super.checkEcImgUrl(errorPrdItemArray, itemSeq, photoPath, shoppingProdItemVO.getCatalogProdSeq(), shoppingProdItemVO.getEcImgUrl(), shoppingProdItemVO.getEcImgBase64(), catalogUploadType, shoppingProdItemVO);
 			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
 				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecImg", " ");
 			} else {
-				String filenameExtension = ImgUtil.getImgFilenameExtensionFromImgBase64OrImgURL(ecImgUrl, ecImgBase64);
-				imgTempCompletePath = imgTempFolder + "/" + catalogProdSeq + "." + filenameExtension;
+//				String filenameExtension = ImgUtil.getImgFilenameExtensionFromImgBase64OrImgURL(shoppingProdItemVO.getEcImgBase64(), shoppingProdItemVO.getEcImgUrl());
+				imgTempCompletePath = imgTempFolder + "/" + shoppingProdItemVO.getCatalogProdSeq() + "." + shoppingProdItemVO.getEcImgFilenameExtension();
 				imgCompletePath = imgTempCompletePath.replace("/temp", "");
 				addDbImgPath = imgCompletePath.substring(imgCompletePath.indexOf("img/"));
 				String addDbImgTempPath = imgTempCompletePath.substring(imgCompletePath.indexOf("img/")); // 寫入DB錯誤清單圖片暫存位置
 				addPfpCatalogProdEcErrorObject.put("ecImg", addDbImgTempPath);
 			}
 			
-			errorPrdItemArray = super.checkEcUrl(errorPrdItemArray, itemSeq, ecUrl);
+			errorPrdItemArray = super.checkEcUrl(errorPrdItemArray, itemSeq, shoppingProdItemVO.getEcUrl());
 			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
 				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecUrl", " ");
 			} else {
-				addPfpCatalogProdEcErrorObject.put("ecUrl", ecUrl);
+				addPfpCatalogProdEcErrorObject.put("ecUrl", shoppingProdItemVO.getEcUrl());
 			}
 			
-			errorPrdItemArray = super.checkEcCategory(errorPrdItemArray, itemSeq, ecCategory);
+			errorPrdItemArray = super.checkEcCategory(errorPrdItemArray, itemSeq, shoppingProdItemVO.getEcCategory());
 			if (errorPrdItemArray.length() > tempErrorPrdDetailItemCount) {
 				tempErrorPrdDetailItemCount = errorPrdItemArray.length();
 				addPfpCatalogProdEcErrorObject.put("ecCategory", " ");
 			} else {
-				addPfpCatalogProdEcErrorObject.put("ecCategory", ecCategory);
+				addPfpCatalogProdEcErrorObject.put("ecCategory", shoppingProdItemVO.getEcCategory());
 			}
 			
 			itemSeq++; // 因為下面寫入table資料 if判斷有continue，避免沒累加到，先在這邊做這筆項目結束累加，準備進入下一筆
@@ -230,14 +271,14 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				pfpCatalogProdEcErrorArray.put(addPfpCatalogProdEcErrorObject);
 			} else {
 				// 檢查輸入的資料是否與DB內完全相同，相同則不做更新、新增處理，避免每次更新就需要重新審核商品
-				List<Map<String, Object>> pfpCatalogProdEcList = pfpCatalogUploadListDAO.getPfpCatalogProdEc(catalogSeq, catalogProdSeq);
+				List<Map<String, Object>> pfpCatalogProdEcList = pfpCatalogUploadListDAO.getPfpCatalogProdEc(catalogSeq, shoppingProdItemVO.getCatalogProdSeq());
 				
 				// 記錄商品明細，寫入一般購物類table
 				PfpCatalogProdEc pfpCatalogProdEc = new PfpCatalogProdEc();
-				pfpCatalogProdEc.setCatalogProdSeq(catalogProdSeq); // id
+				pfpCatalogProdEc.setCatalogProdSeq(shoppingProdItemVO.getCatalogProdSeq()); // id
 				pfpCatalogProdEc.setPfpCatalog(pfpCatalog); // 商品目錄
-				pfpCatalogProdEc.setEcName(ecName); // 商品名稱
-				pfpCatalogProdEc.setEcTitle(ecTitle); // 商品敘述
+				pfpCatalogProdEc.setEcName(shoppingProdItemVO.getEcName()); // 商品名稱
+				pfpCatalogProdEc.setEcTitle(shoppingProdItemVO.getEcTitle()); // 商品敘述
 				
 				/* 將放在暫存資料夾內的圖片複製到外面正式位置
 				 * 不用複製的話，如果一筆錯誤的再一筆正確的資料圖片都相同的話，錯誤的資料在錯誤清單顯示圖片時會取不到圖片
@@ -249,12 +290,12 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				
 				pfpCatalogProdEc.setEcImgRegion(ImgUtil.getImgLongWidthCode(imgCompletePath)); // 商品影像長寬(V/H)
 				pfpCatalogProdEc.setEcImgMd5(ImgUtil.getImgMD5Code(imgCompletePath)); // 商品影像MD5
-				pfpCatalogProdEc.setEcUrl(super.urlAddHttpOrHttps(ecUrl)); // 連結網址
-				pfpCatalogProdEc.setEcPrice(Integer.parseInt(ecPrice)); // 原價
-				pfpCatalogProdEc.setEcDiscountPrice(Integer.parseInt(ecDiscountPrice)); // 促銷價*
-				pfpCatalogProdEc.setEcStockStatus(ecStockStatus); // 商品供應情況
-				pfpCatalogProdEc.setEcUseStatus(ecUseStatus); // 商品使用狀況
-				pfpCatalogProdEc.setEcCategory(ecCategory); // 商品類別
+				pfpCatalogProdEc.setEcUrl(super.urlAddHttpOrHttps(shoppingProdItemVO.getEcUrl())); // 連結網址
+				pfpCatalogProdEc.setEcPrice(Integer.parseInt(shoppingProdItemVO.getEcPrice())); // 原價
+				pfpCatalogProdEc.setEcDiscountPrice(Integer.parseInt(shoppingProdItemVO.getEcDiscountPrice())); // 促銷價*
+				pfpCatalogProdEc.setEcStockStatus(shoppingProdItemVO.getEcStockStatus()); // 商品供應情況
+				pfpCatalogProdEc.setEcUseStatus(shoppingProdItemVO.getEcUseStatus()); // 商品使用狀況
+				pfpCatalogProdEc.setEcCategory(shoppingProdItemVO.getEcCategory()); // 商品類別
 				pfpCatalogProdEc.setEcStatus("1"); // 商品狀態(0:關閉, 1:開啟)
 				pfpCatalogProdEc.setEcCheckStatus("0"); // 商品審核狀態(0:未審核, 1:已審核)
 				pfpCatalogProdEc.setUpdateDate(new Date()); // 更新時間
@@ -268,22 +309,22 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				if (pfpCatalogProdEcList.size() > 0) {
 					Map<String, Object> prodEcMap = new HashMap<String, Object>();
 					prodEcMap = pfpCatalogProdEcList.get(0);
-					if (catalogProdSeq.equals((String) prodEcMap.get("catalog_prod_seq"))
+					if (shoppingProdItemVO.getCatalogProdSeq().equals((String) prodEcMap.get("catalog_prod_seq"))
 							&& catalogSeq.equals((String) prodEcMap.get("catalog_seq"))
-							&& ecName.equals((String) prodEcMap.get("ec_name"))
-							&& ecTitle.equals((String) prodEcMap.get("ec_title"))
+							&& shoppingProdItemVO.getEcName().equals((String) prodEcMap.get("ec_name"))
+							&& shoppingProdItemVO.getEcTitle().equals((String) prodEcMap.get("ec_title"))
 							&& pfpCatalogProdEc.getEcImg().equals((String) prodEcMap.get("ec_img"))
 							&& pfpCatalogProdEc.getEcImgRegion().equals((String) prodEcMap.get("ec_img_region"))
 							&& pfpCatalogProdEc.getEcImgMd5().equals((String) prodEcMap.get("ec_img_md5"))
-							&& ecUrl.equals((String) prodEcMap.get("ec_url"))
-							&& ecPrice.equals(String.valueOf((int) prodEcMap.get("ec_price")))
-							&& ecDiscountPrice.equals(String.valueOf((int) prodEcMap.get("ec_discount_price")))
-							&& ecStockStatus.equals((String) prodEcMap.get("ec_stock_status"))
-							&& ecUseStatus.equals((String) prodEcMap.get("ec_use_status"))
-							&& ecCategory.equals((String) prodEcMap.get("ec_category"))) {
+							&& shoppingProdItemVO.getEcUrl().equals((String) prodEcMap.get("ec_url"))
+							&& shoppingProdItemVO.getEcPrice().equals(String.valueOf((int) prodEcMap.get("ec_price")))
+							&& shoppingProdItemVO.getEcDiscountPrice().equals(String.valueOf((int) prodEcMap.get("ec_discount_price")))
+							&& shoppingProdItemVO.getEcStockStatus().equals((String) prodEcMap.get("ec_stock_status"))
+							&& shoppingProdItemVO.getEcUseStatus().equals((String) prodEcMap.get("ec_use_status"))
+							&& shoppingProdItemVO.getEcCategory().equals((String) prodEcMap.get("ec_category"))) {
 						continue;
 					} else if (EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType().equals(catalogUploadType)
-							&& catalogProdSeq.equals((String) prodEcMap.get("catalog_prod_seq"))) {
+							&& shoppingProdItemVO.getCatalogProdSeq().equals((String) prodEcMap.get("catalog_prod_seq"))) {
 						// 如果是手動上傳，商品編號已重複，則不做更新、新增處理(此處檢核為避免一個帳號多人使用手動上傳時商品編號重複)
 						continue;
 					}

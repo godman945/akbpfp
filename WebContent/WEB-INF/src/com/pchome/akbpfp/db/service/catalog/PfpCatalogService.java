@@ -16,7 +16,7 @@ import com.pchome.akbpfp.db.dao.catalog.IPfpCatalogDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 
