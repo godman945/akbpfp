@@ -87,7 +87,6 @@ public abstract class APfpCatalogUploadListData {
 	 * @param errorPrdItemArray
 	 * @param itemSeq // 項目序號
 	 * @param photoPath // 圖片路徑
-	 * @param catalogProdSeq // 商品編號
 	 * @param ecImgUrl // 圖片網址
 	 * @param ecImgBase64 // 圖片Base64編碼
 	 * @param catalogUploadType // 上傳方式
@@ -95,7 +94,7 @@ public abstract class APfpCatalogUploadListData {
 	 * @return
 	 * @throws Exception 
 	 */
-	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, int itemSeq, String photoPath, String catalogProdSeq, String ecImgUrl, String ecImgBase64, String catalogUploadType, ShoppingProdVO shoppingProdItemVO) throws Exception {
+	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, int itemSeq, String photoPath, String ecImgUrl, String ecImgBase64, String catalogUploadType, ShoppingProdVO shoppingProdItemVO) throws Exception {
 		String prodItemErrorMsg = ""; // 檢查到一個有錯誤，剩下檢查則略過
 		
 		// 將圖片下載至每個user自己的暫存圖片資料夾檢查
@@ -120,7 +119,7 @@ public abstract class APfpCatalogUploadListData {
 			
 			File imgFile = null;
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
-				imgPath = ImgUtil.processImgPathForCatalogProd(ecImgUrl, imgTempPath, catalogProdSeq, shoppingProdItemVO);
+				imgPath = ImgUtil.processImgPathForCatalogProd(ecImgUrl, imgTempPath, String.valueOf(itemSeq), shoppingProdItemVO);
 				if (StringUtils.isBlank(imgPath)) {
 					// 空的表示連不到或是HTTP 403沒有權限訪問此站，伺服器收到請求但拒絕提供服務。
 					prodItemErrorMsg = "連結錯誤";
@@ -160,7 +159,7 @@ public abstract class APfpCatalogUploadListData {
 			
 			File imgFile = null;
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
-				imgPath = ImgUtil.processImgBase64StringToImage(ecImgBase64, imgTempPath, catalogProdSeq);
+				imgPath = ImgUtil.processImgBase64StringToImage(ecImgBase64, imgTempPath, String.valueOf(itemSeq));
 				String completePath = imgTempPath.substring(0, imgTempPath.indexOf("img/user/")) + imgPath;
 				imgFile = new File(completePath);
 				if (imgFile.length() > (180 * 1024)) {

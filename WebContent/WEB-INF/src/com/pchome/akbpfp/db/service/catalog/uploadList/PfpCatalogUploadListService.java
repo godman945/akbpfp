@@ -231,7 +231,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 						prdItemObject.put("ec_url", csvTitleArray[ecUrlArrayIndex]);
 					}
 					
-					if (ecCategoryArrayIndex != null) {
+					if (ecCategoryArrayIndex != null && ecCategoryArrayIndex < csvTitleArray.length) {
 						prdItemObject.put("ec_category", csvTitleArray[ecCategoryArrayIndex]);
 					} else {
 						prdItemObject.put("ec_category", " ");
