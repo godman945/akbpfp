@@ -238,7 +238,11 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			int startLength = url.lastIndexOf("/") + 1;
 			int endLength = (url.indexOf("?") > -1 ? url.indexOf("?") : url.length());
 			String fileName = url.substring(startLength, endLength);
-			String filenameExtension = fileName.substring(fileName.length() - 4);
+			String filenameExtension = "";
+			if (fileName.length() >= 4) {
+				filenameExtension = fileName.substring(fileName.length() - 4);
+			}
+			
 			if (".csv".equalsIgnoreCase(filenameExtension)) {
 				map.put("fileName", fileName);
 				map.put("filenameExtension", "csv");
@@ -251,6 +255,12 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 				HttpURLConnection urlConnection = (HttpURLConnection) urlData.openConnection();
 				urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
 				urlConnection.setRequestMethod("GET");
+				
+				// 測試用看Header有些甚麼
+//				Map<String, List<String>> headers = urlConnection.getHeaderFields();
+//				for (String key : headers.keySet()) {
+//					System.out.printf("[%s] %s%n", key, headers.get(key));
+//				}
 				
 				// 取得檔名，由檔名判斷
 				String contentDisposition = urlConnection.getHeaderField("Content-Disposition");

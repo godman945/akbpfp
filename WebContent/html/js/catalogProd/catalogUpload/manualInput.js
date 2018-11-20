@@ -101,12 +101,12 @@ function prodListView() {
 	    tempHtml += "    <h5 class=\"h2 txt-ellipsis\" data-pdName=\" " + prodObject.ecName + " \"></h5>";
 	    tempHtml += "    <small class=\"prodNum\">編號<em data-prodnum=\" " + prodObject.catalogProdSeq + " \"></em></small>";
 	    tempHtml += "    <small class=\"prod-opt\">";
-	    tempHtml += "      <i>原價NT$ <em class=\"price\" data-info=\" " + processCommaStyle(prodObject.ecPrice) + " \"></em></i>";
-	    tempHtml += "      <i>特價NT$ <em class=\"price\" data-info=\" " + processCommaStyle(prodObject.ecDiscountPrice) + " \"></em></i>";
-	    tempHtml += "      <i><em data-info=\" " + $('#ecStockStatus :selected').text() + " \"></em></i>";
-	    tempHtml += "      <i><em data-info=\" " + $('#ecUseStatus :selected').text() + " \"></em></i>";
+	    tempHtml += "      <i>原價NT$ <em class=\"price\" data-priceorig=\" " + processCommaStyle(prodObject.ecPrice) + " \"></em></i>";
+	    tempHtml += "      <i>特價NT$ <em class=\"price\" data-pricesell=\" " + processCommaStyle(prodObject.ecDiscountPrice) + " \"></em></i>";
+	    tempHtml += "      <i><em data-itema=\" " + prodObject.ecStockStatus + " \"></em></i>";
+	    tempHtml += "      <i><em data-itemb=\" " + prodObject.ecUseStatus + " \"></em></i>";
 	    if (prodObject.ecCategory.length != 0) { // 商品類別有輸入在組此部分
-	    	tempHtml += "      <i><em data-info=\" " + prodObject.ecCategory + " \"></em></i>";
+	    	tempHtml += "      <i><em data-itemc=\" " + prodObject.ecCategory + " \"></em></i>";
 		}
 	    tempHtml += "    </small>";
 	    tempHtml += "    <small class=\"prodLink txt-ellipsis\" data-prodlink=\" " + prodObject.ecUrl + " \"></small>";
@@ -127,7 +127,7 @@ function cleanData() {
 	$("#ecName").val("");
 	$("#ecUrl").val("");
 	$("#ecPrice").val("");
-	$("#ecDiscountPrice").val("0");
+	$("#ecDiscountPrice").val("");
 	$("#ecStockStatus").val("1");
 	$("#ecUseStatus").val("0");
 	$("#catalogProdSeq").val("");

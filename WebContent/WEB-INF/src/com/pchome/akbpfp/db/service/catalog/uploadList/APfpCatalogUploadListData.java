@@ -148,12 +148,15 @@ public abstract class APfpCatalogUploadListData {
 			}
 			
 		} else {
-			//有Base64則用手動上傳
+			// 有Base64則用手動上傳
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
 				String filenameExtension = ImgUtil.getImgBase64FilenameExtension(ecImgBase64);
 				if (!"jpg".equalsIgnoreCase(filenameExtension) && !"gif".equalsIgnoreCase(filenameExtension)
 						&& !"png".equalsIgnoreCase(filenameExtension)) {
 					prodItemErrorMsg = "檔案格式錯誤";
+				} else {
+					// 紀錄檔案副檔名
+					shoppingProdItemVO.setEcImgFilenameExtension(filenameExtension);
 				}
 			}
 			
