@@ -132,6 +132,18 @@ $(document).ready(function(){
 			$(".akb_iframe").attr("src","");
 		});
 		
+		
+		$("#adSize").change(function() {
+			var tpro = $("#adSize option:selected").val();
+			var tproArray = tproObject.data[tpro].split(",");
+			previewTpro = tproArray[0];
+			previewTproIndex = 0;
+			if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
+				return false;
+			}
+			getProdGroup(null);
+		});
+		
 		$(function () {
 		    $('#fileupload').fileupload({
 		    }).on('fileuploadadd', function (e, data) {
