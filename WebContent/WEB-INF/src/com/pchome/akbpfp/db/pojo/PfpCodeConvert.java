@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/11/8 �U�� 04:48:58 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/11/16 �W�� 10:31:23 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -31,6 +31,7 @@ public class PfpCodeConvert implements java.io.Serializable {
 	private String convertStatus;
 	private String convertBelong;
 	private String convertNumType;
+	private int convertRuleNum;
 	private Date updateDate;
 	private Date createDate;
 
@@ -39,7 +40,8 @@ public class PfpCodeConvert implements java.io.Serializable {
 
 	public PfpCodeConvert(String convertSeq, PfpCode pfpCode, String convertName, String pfpCustomerInfoId,
 			int clickRangeDate, int impRangeDate, String convertClass, String convertPriceType, float convertPrice,
-			String convertStatus, String convertBelong, String convertNumType, Date updateDate, Date createDate) {
+			String convertStatus, String convertBelong, String convertNumType, int convertRuleNum, Date updateDate,
+			Date createDate) {
 		this.convertSeq = convertSeq;
 		this.pfpCode = pfpCode;
 		this.convertName = convertName;
@@ -52,6 +54,7 @@ public class PfpCodeConvert implements java.io.Serializable {
 		this.convertStatus = convertStatus;
 		this.convertBelong = convertBelong;
 		this.convertNumType = convertNumType;
+		this.convertRuleNum = convertRuleNum;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
 	}
@@ -165,6 +168,15 @@ public class PfpCodeConvert implements java.io.Serializable {
 
 	public void setConvertNumType(String convertNumType) {
 		this.convertNumType = convertNumType;
+	}
+
+	@Column(name = "convert_rule_num", nullable = false)
+	public int getConvertRuleNum() {
+		return this.convertRuleNum;
+	}
+
+	public void setConvertRuleNum(int convertRuleNum) {
+		this.convertRuleNum = convertRuleNum;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

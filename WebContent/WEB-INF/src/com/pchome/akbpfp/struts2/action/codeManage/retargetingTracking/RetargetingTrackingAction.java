@@ -1,9 +1,14 @@
 package com.pchome.akbpfp.struts2.action.codeManage.retargetingTracking;
 
+import java.util.List;
+
 import com.pchome.akbpfp.db.pojo.PfpCode;
-import com.pchome.akbpfp.db.service.codeManage.code.IPfpCodeService;
+import com.pchome.akbpfp.db.pojo.PfpCodeTracking;
+import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
+import com.pchome.akbpfp.db.service.codeManage.IPfpCodeTrackingService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
+import com.pchome.akbpfp.db.vo.codeManage.RetargetingTrackingVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.soft.depot.utils.HttpUtil;
@@ -12,8 +17,18 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 
 	private static final long serialVersionUID = 1L;
 	
+	
+	
+	
+	private int currentPage = 1;      //第幾頁(初始預設第1頁)
+	private int pageSizeSelected = 10; //每頁筆數(初始預設每頁10筆)
+	private int totalCount = 0; //資料總筆數
+	private int pageCount = 0; //總頁數
+	private List<Object> retargetingList; 
+	
 	private IPfpCustomerInfoService pfpCustomerInfoService;
 	private IPfpCodeService pfpCodeService;
+	private IPfpCodeTrackingService pfpCodeTrackingService;
 	private ISequenceService sequenceService;
 	
 	private String paId;
@@ -22,14 +37,21 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 
 	public String queryRetargetingTrackingView(){		
 		try{
+			log.info(">>> pfpCustomerInfoId: " + super.getCustomer_info_id());
 			
+			RetargetingTrackingVO retargetingTrackingVO = new RetargetingTrackingVO();
+			retargetingTrackingVO.setPfpCustomerInfoId(super.getCustomer_info_id());
+			int retargetingTrackingCount = Integer.parseInt(pfpCodeTrackingService.getRetargetingTrackingCount(retargetingTrackingVO));
+			if (retargetingTrackingCount>0){
+				return SUCCESS;
+			}else{
+				return "input";
+			}
 		} catch (Exception e) {
 			log.error("error:" + e);
 			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
 			return ERROR;
 		}
-		
-		return SUCCESS;
 	}
 
 	
@@ -42,58 +64,25 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 			
 			//如尚未建立過paid者，打api建立
 			if (pfpCode == null){
-				log.info("addRetargetingTrackingView null");
-//				System.out.println("pfp ID : "+super.getCustomer_info_id());
+				log.info("get pfpCode is null");
 				String memberId = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()).getMemberId();
-//				System.out.println("memberID : "+memberId);
-				log.info(" getPaIdCode >>> 1113");
-//				StringBuffer paIdSB= HttpUtil.getInstance().doGet("http://showstg.pchome.com.tw/paadm/api/getPaCode?memberId=" + memberId);
-				StringBuffer paIdSB= HttpUtil.getInstance().doGet("http://showstg.pchome.com.tw:8080/paadm/api/getPaCode?memberId=" + memberId);
-				
-				 http://showstg.mypchome.com.tw:8080/paadm/api/getPaCode?memberId=showad
-					 log.info("getPaIdCode String : "+paIdSB.toString());
-				log.info(" getPaIdCode >>> 222");
+				String apiStr = "http://showstg.pchome.com.tw:8080/paadm/api/getPaCode?memberId=" + memberId;
+				log.info("get getPaCode API : "+apiStr);
+				StringBuffer paIdSB= HttpUtil.getInstance().doGet(apiStr);
+				log.info("getPaIdCode String : "+paIdSB.toString());
 				if (paIdSB.toString().indexOf("status:200") == -1) { 
-					log.error(" getPaIdCode Error >>> pfpCustomerInfoId : "+super.getCustomer_info_id());
+					log.error(" getPaIdCode Error >>>  "+paIdSB.toString());
 					returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
 					return ERROR;
 				}
 				String[] paIdSBAry = paIdSB.toString().split(",");
 				paId = paIdSBAry[0];
 			}else{
-				log.info("addRetargetingTrackingView null");
 				paId = pfpCode.getPaId();
 			}
 			
-			
 			//取流水號
 			trackingSeq = sequenceService.getSerialNumberByLength20(EnumSequenceTableName.PFP_CODE_TRACKING);
-			System.out.println("trackingSeq");
-			
-			System.out.println(trackingSeq);
-			
-			
-			
-			
-			System.out.println("str----");
-			System.out.println(paId.toString());
-			
-			
-			
-			
-			
-//			JSONObject apiJsonObject = new JSONObject(adCrawlerResult.toString());
-//			if (adCrawlerResult.toString().indexOf("status:200") == -1) { // 檢查連線是否正常
-//				log.error("getAdCrawlerAPIData error:status != 200");
-//				vo.setMessage("系統忙碌中，請稍後再試。");
-//			} else if (apiJsonObject.length() == 0) { // 檢查輸入網址是否正確
-//				log.error("getAdCrawlerAPIData error:URL error " + vo.getSearchURL());
-//				vo.setMessage("查無資料，請確認輸入網址是否正確。");
-//			} else {
-//				log.info("爬蟲已完成。");
-//				// 正確，將資料寫入vo
-//				vo.setApiJsonArray(apiJsonObject.getJSONArray("products"));
-//			}
 			
 		} catch (Exception e) {
 			log.error("error:" + e);
@@ -106,7 +95,93 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 
 
 	
+	public String queryRetargetingTrackingListView(){		
+		try{
+			log.info(">>> currentPage: " + currentPage);
+			log.info(">>> pageSizeSelected: " + pageSizeSelected);
+			log.info(">>> totalCount: " + totalCount);
+			log.info(">>> pageCount: " + pageCount);
+			
+			RetargetingTrackingVO retargetingTrackingVO = new RetargetingTrackingVO();
+			retargetingTrackingVO.setPage(currentPage);
+			retargetingTrackingVO.setPageSize(pageSizeSelected);
+			retargetingTrackingVO.setPfpCustomerInfoId(super.getCustomer_info_id());
+			
+			retargetingList = pfpCodeTrackingService.getRetargetingTrackingList(retargetingTrackingVO);
+			
+			if(retargetingList.size() <= 0){
+				returnMsg = "沒有商品清單資料";
+				return ERROR;
+			}
+			
+			//商品清單資料總筆數
+			totalCount =  Integer.valueOf(pfpCodeTrackingService.getRetargetingTrackingCount(retargetingTrackingVO));
+			
+//			//總頁數
+			pageCount = (int)Math.ceil((float)totalCount / pageSizeSelected);
+			
+		} catch (Exception e) {
+			log.error("error:" + e);
+			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
+			return ERROR;
+		}
+		
+		return SUCCESS;
+	}
 	
+	
+
+	
+	
+	public int getCurrentPage() {
+		return currentPage;
+	}
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+	public int getPageSizeSelected() {
+		return pageSizeSelected;
+	}
+	public void setPageSizeSelected(int pageSizeSelected) {
+		this.pageSizeSelected = pageSizeSelected;
+	}
+	
+	public int getTotalCount() {
+		return totalCount;
+	}
+	
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
+	
+	public int getPageCount() {
+		return pageCount;
+	}
+	
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public List<Object> getRetargetingList() {
+		return retargetingList;
+	}
+
+
+	public void setRetargetingList(List<Object> retargetingList) {
+		this.retargetingList = retargetingList;
+	}
+
+
+	public String getReturnMsg() {
+		return returnMsg;
+	}
+
+
+	public void setReturnMsg(String returnMsg) {
+		this.returnMsg = returnMsg;
+	}
+
+
 	public IPfpCustomerInfoService getPfpCustomerInfoService() {
 		return pfpCustomerInfoService;
 	}
@@ -137,7 +212,14 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 	public void setPaId(String paId) {
 		this.paId = paId;
 	}
-	
+	public IPfpCodeTrackingService getPfpCodeTrackingService() {
+		return pfpCodeTrackingService;
+	}
+	public void setPfpCodeTrackingService(IPfpCodeTrackingService pfpCodeTrackingService) {
+		this.pfpCodeTrackingService = pfpCodeTrackingService;
+	}
+
+
 	
 	
 }

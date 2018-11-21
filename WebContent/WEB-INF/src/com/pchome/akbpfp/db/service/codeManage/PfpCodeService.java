@@ -1,8 +1,8 @@
-package com.pchome.akbpfp.db.service.codeManage.code;
+package com.pchome.akbpfp.db.service.codeManage;
 
 import java.util.List;
 
-import com.pchome.akbpfp.db.dao.codeManage.code.IPfpCodeDAO;
+import com.pchome.akbpfp.db.dao.codeManage.IPfpCodeDAO;
 import com.pchome.akbpfp.db.pojo.PfpCode;
 import com.pchome.akbpfp.db.service.BaseService;
 
@@ -14,6 +14,10 @@ public class PfpCodeService extends BaseService<PfpCode,String> implements IPfpC
 			return pfpCodeList.get(0);
 		}
 		return null;
+	}
+	
+	public void saveOrUpdateWithCommit(PfpCode pfpCode) throws Exception{
+	    	((IPfpCodeDAO) dao).saveOrUpdateWithCommit(pfpCode);
 	}
 	
 	

@@ -1,4 +1,4 @@
-package com.pchome.akbpfp.db.dao.codeManage.code;
+package com.pchome.akbpfp.db.dao.codeManage;
 
 import java.util.List;
 
@@ -9,7 +9,6 @@ public class PfpCodeDAO extends BaseDAO<PfpCode,String> implements IPfpCodeDAO{
 	
 	@SuppressWarnings("unchecked")
 	public List<PfpCode> getPfpCode(String pfpCustomerInfoId) throws Exception{
-		
 		StringBuffer hql = new StringBuffer();
 		hql.append(" from PfpCode ");
 		hql.append(" where pfpCustomerInfoId = ? ");
@@ -17,8 +16,13 @@ public class PfpCodeDAO extends BaseDAO<PfpCode,String> implements IPfpCodeDAO{
 		log.info("getPfpCode.sql = " + hql.toString());
 		
 		return super.getHibernateTemplate().find(hql.toString(), pfpCustomerInfoId);
-		
 	}
+	
+    @SuppressWarnings("unchecked")
+    public void saveOrUpdateWithCommit(PfpCode pfpCode) throws Exception{
+    	super.getSession().saveOrUpdate(pfpCode);
+		super.getSession().beginTransaction().commit();
+    }
 	
 	
 

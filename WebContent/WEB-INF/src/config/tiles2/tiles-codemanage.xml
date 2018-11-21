@@ -44,6 +44,19 @@
     
     
     
+    <!-- 再行銷追蹤清單view  -->
+	<definition name="retargeting.tracking.list.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="retargeting.tracking.list.head" />
+        <put-attribute name="body" value="/ftl/codeManage/retargeting/retargeting.tracking.list.view.ftl" />
+    </definition>
+    
+    <definition name="retargeting.tracking.list.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/retargeting/retargeting.tracking.list.js.ftl" />
+    </definition>
+    
+    
+    
     
     
 	

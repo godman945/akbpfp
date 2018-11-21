@@ -282,8 +282,14 @@
 		<property name="shoppingProd" ref="ShoppingProd" />
     </bean>
     
-    <bean id="PfpCodeService" class="com.pchome.akbpfp.db.service.codeManage.code.PfpCodeService">    	     
+    <bean id="PfpCodeService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeService">    	     
         <property name="dao" ref="PfpCodeDAO" />
+    </bean>
+    
+    <bean id="PfpCodeTrackingService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeTrackingService">    	     
+        <property name="dao" ref="PfpCodeTrackingDAO" />
+        <property name="redisAPI" ref="RedisAPI" />
+        <property name="codeManageRediskey" value="${redis.codeManage.rediskey}" />
     </bean>
     
 

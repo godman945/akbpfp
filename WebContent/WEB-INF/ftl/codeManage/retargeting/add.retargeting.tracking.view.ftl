@@ -42,7 +42,7 @@
                 <div class="section-box p-b60">
                     <p class="title-box h2">代碼名稱</p>
                     <div class="input-text">
-                        <input type="text" name="" maxlength="20" value="" required placeholder="填寫代碼名稱，最多20字">
+                        <input id="retargetingName" type="text" name="" maxlength="20" value="" required placeholder="填寫代碼名稱，最多20字">
                         <div class="msg-error">最多20字</div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                     <p class="title-box h2">選擇代碼類型</p>
 
                     <div class="topic-wrap txt-center txt-noselect w-360">
-                        <div class="topic-box selected" onclick="changeTopicboxStyle(this,1)">
+                        <div class="topic-box selected" onclick="changeTopicboxStyle(this,0)">
                             <img src="img/ptagtype1.png">
                             <p>一般網頁追蹤</p>
                             <span>一般網頁追蹤適用於所有廣告類型</span>
@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="topic-wrap txt-center txt-noselect w-360">
-                        <div class="topic-box" onclick="changeTopicboxStyle(this,2)">
+                        <div class="topic-box" onclick="changeTopicboxStyle(this,1)">
                             <img src="img/ptagtype2.png">
                             <p>動態商品廣告追蹤</p>
                             <span>廣告中的商品將與消費者所接觸過的商品頁相關</span>
@@ -156,7 +156,7 @@
 
         <!-- 按鈕 下一步 -->
         <div class="button-box w-900 txt-center p-tb30">
-            <div class="input-button"><input type="button" value="完成"></div>
+            <div class="input-button"><input id="addRetargetingTracking" type="button" value="完成"></div>
         </div>
 
     </div>

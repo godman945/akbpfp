@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/11/8 �U�� 04:48:58 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/11/16 �W�� 10:31:23 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -23,6 +23,7 @@ public class PfpCodeTracking implements java.io.Serializable {
 	private PfpCode pfpCode;
 	private String trackingName;
 	private String pfpCustomerInfoId;
+	private String trackingStatus;
 	private String codeType;
 	private int trackingRangeDate;
 	private Date updateDate;
@@ -32,11 +33,12 @@ public class PfpCodeTracking implements java.io.Serializable {
 	}
 
 	public PfpCodeTracking(String trackingSeq, PfpCode pfpCode, String trackingName, String pfpCustomerInfoId,
-			String codeType, int trackingRangeDate, Date updateDate, Date createDate) {
+			String trackingStatus, String codeType, int trackingRangeDate, Date updateDate, Date createDate) {
 		this.trackingSeq = trackingSeq;
 		this.pfpCode = pfpCode;
 		this.trackingName = trackingName;
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
+		this.trackingStatus = trackingStatus;
 		this.codeType = codeType;
 		this.trackingRangeDate = trackingRangeDate;
 		this.updateDate = updateDate;
@@ -80,6 +82,15 @@ public class PfpCodeTracking implements java.io.Serializable {
 
 	public void setPfpCustomerInfoId(String pfpCustomerInfoId) {
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
+	}
+
+	@Column(name = "tracking_status", nullable = false, length = 1)
+	public String getTrackingStatus() {
+		return this.trackingStatus;
+	}
+
+	public void setTrackingStatus(String trackingStatus) {
+		this.trackingStatus = trackingStatus;
 	}
 
 	@Column(name = "code_type", nullable = false, length = 1)
