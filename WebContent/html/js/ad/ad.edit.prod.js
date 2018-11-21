@@ -833,12 +833,18 @@ function adEditSubmit(){
 		var adurl = $("#adurl").val();
 		var logoBgColor = $("#logoBgColor").val();
 		var logoType = $('input[name=options]:checked').val();
-		if(Object.keys(uploadLogoLog).length > 0){
-			logoType = "type3";
-		}else{
-			logoType == "type3" ? "type2" : "type1";
+		var radioType = $('input[name=options]:checked').val();
+		if(radioType == "type1"){
+			logoType = "type1";
 		}
-			
+		if(radioType == "type2"){
+			logoType = "type1";
+		}
+		if(radioType == "type3"){
+			logoType = "type2";
+		}
+		
+		
 			
 		var logoText = $("#logoText").val();
 		var logoFontColor = $("#logoFontColor").val();
