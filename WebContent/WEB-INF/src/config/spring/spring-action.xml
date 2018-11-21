@@ -483,20 +483,11 @@
     
     <!-- 再行銷追蹤 Start-->
      <bean id="RetargetingTrackingAction" class="com.pchome.akbpfp.struts2.action.codeManage.retargetingTracking.RetargetingTrackingAction" scope="prototype" >
-     <property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
-     <property name="pfpCodeService" ref="PfpCodeService" />
-     <property name="sequenceService" ref="SequenceService" />
-    	
-<!--     	<property name="pfpCatalogService" ref="PfpCatalogService" /> -->
-<!--     	<property name="sequenceService" ref="SequenceService" /> -->
-<!--     	<property name="pfpCatalogUploadListService" ref="PfpCatalogUploadListService" /> -->
-<!--         <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" /> -->
-<!--         <property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" /> -->
-<!--         <property name="pfpCatalogGroupItemService" ref="PfpCatalogGroupItemService" /> -->
-<!--         <property name="pfpAdService" ref="PfpAdService" /> -->
+	     <property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+	     <property name="pfpCodeService" ref="PfpCodeService" />
+	     <property name="pfpCodeTrackingService" ref="PfpCodeTrackingService" />
+	     <property name="sequenceService" ref="SequenceService" />
     </bean>
-    
-    
     
     
     <!-- 再行銷追蹤 End-->

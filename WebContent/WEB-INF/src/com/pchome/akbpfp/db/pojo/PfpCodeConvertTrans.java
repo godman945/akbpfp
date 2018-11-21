@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/11/8 �U�� 04:48:58 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/11/16 �W�� 10:31:23 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;

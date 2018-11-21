@@ -258,7 +258,11 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-     <bean id="PfpCodeDAO" class="com.pchome.akbpfp.db.dao.codeManage.code.PfpCodeDAO">
+     <bean id="PfpCodeDAO" class="com.pchome.akbpfp.db.dao.codeManage.PfpCodeDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+     <bean id="PfpCodeTrackingDAO" class="com.pchome.akbpfp.db.dao.codeManage.PfpCodeTrackingDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
