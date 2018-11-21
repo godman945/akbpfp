@@ -23,9 +23,10 @@ $(document).ready(function() {
 	$('#sendMail').on('click',function(){
 		console.log('mail')
 		//檢查全部mail是否合法
-		checkMailReceivers();
-		//send mail
-		sendMailAjax();
+		if (checkMailReceivers()==true){
+			//send mail
+			sendMailAjax();
+		}
 	})
 	
 	//新增再行銷追蹤
@@ -69,7 +70,43 @@ function addRetargetingTrackingAjax(){
 
 //檢查全部mail是否合法
 function checkMailReceivers(){
+	//檢查mail是否為空
+	if ($('#mailReceivers').val()==""){
+			$("#emailMsgError").text("email不得為空");
+			$("#emailMsgError").css('display', "");
+			return false;
+	}else{
+		$("#emailMsgError").text("");
+		$("#emailMsgError").css('display', "none");
+	}
+	
+	
+	//檢查mail是否合法
+	var mailReceiversAry = [];
+	var mailReceiversStr = $('#mailReceivers').val();
+	mailReceiversAry= mailReceiversStr.split(";");
+	for (i = 0; i < mailReceiversAry.length; i++) { 
+		if (!verifyEmail(mailReceiversAry[i])){
+			$("#emailMsgError").text("請填寫正確的電子郵件地址");
+			$("#emailMsgError").css('display', "");
+			return false;
+		}else{
+			$("#emailMsgError").text("");
+			$("#emailMsgError").css('display', "none");
+		}
+	}
+	
+	return true;
+}
 
+//檢查email是否合法
+function verifyEmail(email) { 
+	var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	if(!regex.test(email)) {
+		return false;
+	}else{
+		return true;
+	}
 }
 
 //send mail

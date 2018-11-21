@@ -1,6 +1,5 @@
 ﻿$(document).ready(function(){
 	
-
 //	alert('retargeting list')
 	//floating scrollbar
     $('.floatingscroll').floatingScrollbar();
@@ -119,7 +118,7 @@
 	
 	//搜尋商品名稱
 	searchProdName();
-	
+
 });
 
 
@@ -187,11 +186,11 @@ function getpTag(codeType,paid,trackingSeq,trackingName){
 	                          '<p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以逗號分隔</small></p>'+
 	                          '<div class="input-text inputemail">'+
 	                              '<input id="mailReceivers" type="text" name="" maxlength="200" value="" required placeholder="you@email.com">'+
-	                              '<div class="msg-error">錯誤訊息</div>'+
+	                              '<div id="emailMsgError" class="msg-error" style="display:none">錯誤訊息</div>'+
 	                          '</div>'+
 	                      '</div>        '+                    
 	                      '<div class="button-box p-t10">'+
-	                          '<div class="input-button"><input id ="sendMail" type="button" value="傳送至Email"></div>'+
+	                          '<div class="input-button"><input id ="sendMail" type="button" onclick="sendMail()" value="傳送至Email" ></div>'+
 	                      '</div>'+
 	                  '</div>'+
 	              '</div>'+
@@ -252,11 +251,11 @@ function getpTag(codeType,paid,trackingSeq,trackingName){
 				                          '<p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以逗號分隔</small></p>'+
 				                          '<div class="input-text inputemail">'+
 				                          '<input id="mailReceivers" type="text" name="" maxlength="200" value="" required placeholder="you@email.com">'+
-				                              '<div class="msg-error">錯誤訊息</div>'+
+				                              '<div id="emailMsgError" class="msg-error" style="display:none">錯誤訊息</div>'+
 				                          '</div>'+
 				                      '</div>        '+                    
 				                      '<div class="button-box p-t10">'+
-				                      	  '<div class="input-button"><input id ="sendMail" type="button" value="傳送至Email"></div>'+
+				                      	  '<div class="input-button"><input id ="sendMail" type="button" onclick="sendMail()" value="傳送至Email"></div>'+
 				                      '</div>'+
 				                  '</div>'+
 				              '</div>'+
@@ -691,22 +690,58 @@ function deleteRetargetingAjax(retargetingIdArray) {
 }
 
 //發送mail
-$('#sendMail').on('click',function(){
-	console.log('mail')
+function sendMail(){
 	//檢查全部mail是否合法
-	checkMailReceivers();
-	//send mail
-	sendMailAjax();
-})
+	if (checkMailReceivers()==true){
+		//send mail
+		sendMailAjax();
+	}
+}
 
 //檢查全部mail是否合法
 function checkMailReceivers(){
+	//檢查mail是否為空
+	if ($('#mailReceivers').val()==""){
+			$("#emailMsgError").text("email不得為空");
+			$("#emailMsgError").css('display', "");
+			return false;
+	}else{
+		$("#emailMsgError").text("");
+		$("#emailMsgError").css('display', "none");
+	}
+	
+	
+	//檢查mail是否合法
+	var mailReceiversAry = [];
+	var mailReceiversStr = $('#mailReceivers').val();
+	mailReceiversAry= mailReceiversStr.split(";");
+	for (i = 0; i < mailReceiversAry.length; i++) { 
+		if (!verifyEmail(mailReceiversAry[i])){
+			$("#emailMsgError").text("請填寫正確的電子郵件地址");
+			$("#emailMsgError").css('display', "");
+			return false;
+		}else{
+			$("#emailMsgError").text("");
+			$("#emailMsgError").css('display', "none");
+		}
+	}
+	
+	return true;
+}
 
+//檢查email是否合法
+function verifyEmail(email) { 
+	var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	if(!regex.test(email)) {
+		return false;
+	}else{
+		return true;
+	}
 }
 
 //send mail
 function sendMailAjax(){
-	
+	console.log('可send mail');
 	$.ajax({
 		type : "post",
 		dataType : "json",
