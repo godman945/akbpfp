@@ -200,22 +200,19 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 			
 			String mailContent=
 			"<html><body>"+
-			"請複製下方再行銷代碼，並貼到欲追蹤網頁中，以利完成相關設定。<br/>";
+			"請複製下方再行銷代碼，並貼到欲追蹤網頁中，以利完成相關設定。<br/>"+
+			"&#60;script  id='pcadscript' language='javascript' async src='https://kdpic.pchome.com.tw/js/ptag.js'&#62;&#60;/script&#62;<br/>"+
+			"&#60;script&#62;<br/>";					
 			if (StringUtils.equals(codeType, EnumRetargetingCodeType.GeneralWebTracking.getType())){
 				mailContent = mailContent+
-						"<script  id='pcadscript' language='javascript' async src='https://kdpic.pchome.com.tw/js/ptag.js'></script><br/>"+
-						"<script><br/>"+
 						"  window.dataLayer = window.dataLayer || [];<br/>"+
 						"  function ptag(){dataLayer.push(arguments);}<br/>"+
 						"  ptag({'paid':"+paId+"});<br/>"+
 						"  ptag('event','tracking',{<br/>"+
 						"  'tracking_id':"+trackingSeq+"<br/>"+
-						"  '});<br/>"+
-						"</script><br/>";
+						"  '});<br/>";
 			}else if (StringUtils.equals(codeType, EnumRetargetingCodeType.DynamicProductAdTracking.getType())){
 				mailContent = mailContent+
-						"<script  id='pcadscript' language='javascript' async src='https://kdpic.pchome.com.tw/js/ptag.js'></script><br/>"+
-						"<script><br/>"+
 						"  window.dataLayer = window.dataLayer || [];<br/>"+
 						"  function ptag(){dataLayer.push(arguments);}<br/>"+
 						"  ptag({'paid':"+paId+"});<br/>"+
@@ -227,10 +224,11 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 						"  'ec_stock_status':'',<br/>"+
 						"  'op1':'',<br/>"+
 						"  'op2':''<br/>"+
-						"  '});<br/>"+   
-						"</script><br/>";
+						"  '});<br/>";
 			}
-			mailContent=mailContent+"若有相關問題，請聯絡客服中心。<br/>PChome聯播網小組 敬上";
+			mailContent=mailContent+"&#60;/script&#62;<br/>"+
+									"若有相關問題，請聯絡客服中心。<br/>PChome聯播網小組 敬上</body></html>";
+			
 			mail.setMsg(mailContent);
 			springEmailUtil.sendHtmlEmail(subject, mailFrom, mail.getMailTo(), mail.getMailBcc(), mail.getMsg());
 
