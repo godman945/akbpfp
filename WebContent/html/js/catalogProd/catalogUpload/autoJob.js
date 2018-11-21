@@ -100,10 +100,11 @@ function autoJobFinish() {
 			updateWay:$('input[name=updateWay]:checked').val()
 		},
 		success : function(respone) {
-			window.location.replace("catalogProd.html");
 		},
 		error: function(xtl) {
 			alert("系統繁忙，請稍後再試！");
 		}
 	});
+    
+    window.location.replace("catalogProd.html");
 }

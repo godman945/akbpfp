@@ -100,7 +100,9 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 				|| EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(catalogUploadType) ? 2 : 1;
 		
 		String photoPath = photoDbPathNew + pfpCustomerInfoId + "/catalogProd/" + catalogSeq; // 商品圖片存放路徑
+		System.out.println("11111111111111.photoPath:" + photoPath);
 		String imgTempFolder = photoPath + "/temp"; // 商品圖片暫存路徑
+		System.out.println("2222222222.imgTempFolder:" + imgTempFolder);
 		if ("1".equals(updateWay)) { // 如果是"取代"，直接刪除全部商品圖片，全部資料重新開始
 			FileUtils.deleteQuietly(new File(photoPath));
 		} else {
@@ -206,10 +208,14 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 			} else {
 				// 正式圖片完整路徑(此筆資料正確時使用商品編號當檔名)
 				imgCompletePath = photoPath + "/" + shoppingProdItemVO.getCatalogProdSeq() + "." + shoppingProdItemVO.getEcImgFilenameExtension();
+				System.out.println("3333333.imgCompletePath:" + imgCompletePath);
 				addDbImgPath = imgCompletePath.substring(imgCompletePath.indexOf("img/"));
+				System.out.println("44444444.addDbImgPath:" + addDbImgPath);
 				// 暫存圖片完整路徑(此筆資料錯誤時使用匯入序號當檔名)
 				imgTempCompletePath = imgTempFolder + "/" + itemSeq + "." + shoppingProdItemVO.getEcImgFilenameExtension();
+				System.out.println("55555555.addDbImgPath:" + imgTempCompletePath);
 				String addDbImgTempPath = imgTempCompletePath.substring(imgTempCompletePath.indexOf("img/")); // 暫存圖片寫入DB欄位路徑
+				System.out.println("6666666.addDbImgTempPath:" + addDbImgTempPath);
 				addPfpCatalogProdEcErrorObject.put("ecImg", addDbImgTempPath);
 			}
 			
