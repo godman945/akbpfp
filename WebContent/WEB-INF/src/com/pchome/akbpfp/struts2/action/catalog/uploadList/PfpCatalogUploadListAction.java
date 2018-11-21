@@ -203,13 +203,11 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	/**
 	 * 檢查輸入的自動排程網址
 	 * @return
-	 * @throws IOException 
 	 */
 	public String ajaxCheckJobURL() {
 		dataMap = new HashMap<String, Object>();
 
 		try {
-			log.info("1.jobURL:" + jobURL);
 			// 先檢查網址
 			Map<String, String> map = getDataFromUrl(jobURL);
 			if (StringUtils.isBlank(map.get("fileName").toString())
@@ -218,7 +216,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 				return SUCCESS;
 			}
 			
-			log.info("2.連線機制檢查");
 			// 網址OK再做連線機制檢查
 			HttpUtil.disableCertificateValidation();
 			URL urlData = new URL(jobURL);
@@ -230,14 +227,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 				dataMap.put("status", "ERROR");
 				return SUCCESS;
 			}
-						
-//			AdUtilAjax adUtilAjax = new AdUtilAjax();
-//			boolean checkUrlStatus = adUtilAjax.checkUrl(jobURL, akbPfpServer);
-//			if (!checkUrlStatus) {
-//				dataMap.put("status", "ERROR");
-//				return SUCCESS;
-//			}
-						
+			
 			dataMap.put("fileName", map.get("fileName").toString());
 			return SUCCESS;
 		} catch (Exception e) {
