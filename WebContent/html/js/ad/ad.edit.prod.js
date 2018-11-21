@@ -21,8 +21,8 @@
 	var salesIframewp = new Object();
 	salesIframewp["data"] = {
 			index_1:"120_120",
-			index_2:"140_80",
-			index_3:"160_40",
+			index_2:"140_70",
+			index_3:"160_50",
 			index_4:"160_100",
 			index_5:"180_50",
 			index_6:"80_80",

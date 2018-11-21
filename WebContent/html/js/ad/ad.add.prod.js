@@ -1,4 +1,25 @@
-﻿﻿$(document).ready(function(){
+﻿﻿
+var tproObject = new Object();
+tproObject["data"] = {
+		tpro_300_250:"c_x05_pad_tpro_0100,c_x05_pad_tpro_0101,c_x05_pad_tpro_0099",
+		tpro_250_80:"c_x05_pad_tpro_0102",
+		tpro_728_90:"c_x05_pad_tpro_0103",
+		tpro_120_600:"c_x05_pad_tpro_0104",
+		tpro_140_300:"c_x05_pad_tpro_0105",
+		tpro_160_240:"c_x05_pad_tpro_0106",
+		tpro_160_600:"c_x05_pad_tpro_0107",
+		tpro_180_150:"c_x05_pad_tpro_0108",
+		tpro_300_100:"c_x05_pad_tpro_0109",
+		tpro_300_600:"c_x05_pad_tpro_0110",
+		tpro_320_480:"c_x05_pad_tpro_0111",
+		tpro_336_280:"c_x05_pad_tpro_0112",
+		tpro_640_390:"c_x05_pad_tpro_0113",
+		tpro_950_390:"c_x05_pad_tpro_0114",
+		tpro_970_250:"c_x05_pad_tpro_0115"
+};
+
+$(document).ready(function(){
+	
 	$(".akb_iframe").attr("src","");
 	$("#groupSelect").children()[0].selected = 'selected';
 	if($.browser.msie){
@@ -66,7 +87,17 @@
 	
 		$("#checkAdurl").css("display","");
 		
-		
+	
+		$("#adSize").change(function() {
+			var tpro = $("#adSize option:selected").val();
+			var tproArray = tproObject.data[tpro].split(",");
+			previewTpro = tproArray[0];
+			previewTproIndex = 0;
+			if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
+				return false;
+			}
+			getProdGroup(null);
+		});
 		
 		$(function () {
 		    $('#fileupload').fileupload({
@@ -151,8 +182,8 @@ function initFancyBoxHtml(){
 	var salesIframewp = new Object();
 	salesIframewp["data"] = {
 			index_1:"120_120",
-			index_2:"140_80",
-			index_3:"160_40",
+			index_2:"140_70",
+			index_3:"160_50",
 			index_4:"160_100",
 			index_5:"180_50",
 			index_6:"80_80",
@@ -166,6 +197,7 @@ function initFancyBoxHtml(){
 			index_14:"950_100",
 			index_15:"250_250"
 	};
+	
 	
 	var fancyboxSaleEndHtml = [];
 	fancyboxSaleEndHtml.push('<div class="iframewp">');
@@ -844,6 +876,9 @@ function adSubmit(){
 	}
 }
 
+//預設300_250尺寸 單圖
+var previewTpro = "c_x05_pad_tpro_0100";
+var previewTproIndex = 0;
 function getProdGroup(obj){
 	var catalogGroupId = $("#groupSelect").val();
 	if(catalogGroupId == ""){
@@ -855,6 +890,36 @@ function getProdGroup(obj){
 	var catalogGroupId = $("#groupSelect").val().split("_")[1];
 	var imgProportiona = $("#groupSelect").val().split("_")[2];
 	var imgShowType = "noposter";
+	
+
+	
+//	if(previewTpro == null){
+//		previewTproIndex = 0;
+//	}
+	
+	console.log(previewTpro);
+	console.log(previewTproIndex);
+//	previewTpro = "";
+//	var tpro = $("#adSize option:selected").val();
+//	var tproArray = tproObject.data[tpro].split(",");
+//	
+//	
+//	
+//	previewTpro = tproArray[0];
+//	
+//	console.log(previewTpro);
+	
+//	console.log(tproArray);
+//	console.log(tproArray[previewTproIndex]);
+	
+//	for (var key in salesIframewp.data) {
+////		console.log(salesEndIframewp.data[key]);
+//		var size = salesIframewp.data[key];
+//	}
+	
+	
+//	console.log($("#adSize option:selected").val());
+	
 //	console.log(catalogGroupId);
 	
 	Object.keys(uploadLog).forEach(function(key) {
@@ -913,6 +978,7 @@ function getProdGroup(obj){
 		+"&imgProportiona="+encodeURIComponent(imgProportiona)
 		+"&userLogoPath="+logoPath
 		+"&realUrl="+encodeURIComponent(realUrl)
+		+"&previewTpro="+encodeURIComponent(previewTpro)
 		$(".akb_iframe").attr('src' ,src);
 		console.log(src);
 }
@@ -1095,6 +1161,17 @@ function closenots(id) {
 }
 
 function changeTpro(){
-	console.log("FF");
+	if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
+		return false;
+	}
+	var tproSize = $("#adSize option:selected").val();
+	var tproArray = tproObject.data[tproSize].split(",");
+	var index = tproArray.length;
+	previewTproIndex = previewTproIndex + 1;
+	if(previewTproIndex == index){
+		previewTproIndex = 0;
+	}
+	previewTpro = tproArray[previewTproIndex];
+	getProdGroup(null);
 }
 
