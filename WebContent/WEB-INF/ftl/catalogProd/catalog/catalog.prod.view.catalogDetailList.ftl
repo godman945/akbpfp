@@ -23,11 +23,14 @@
 		<#list dataList as vo>
 			<div class="txt-row">
 				<div class="txt-cell col-cataname" catalogSeq="${vo.catalogSeq!}">
-                    <a href="prodListCardStyleView.html?catalogSeq=${vo.catalogSeq!}&currentPage=1&pageSizeSelected=10&prodStatus=&prodName=">${vo.catalogName!}</a>
-                    <small>目錄編號：${vo.catalogSeq!}</small>
-                    <#if vo.uploadStatus == "1">
-                    	<u class="uploading-txt process" uploadingCatalogSeq="${vo.catalogSeq!}">商品資料處理中</u>
-                    </#if>
+                    <#if vo.uploadStatus == "1"><#-- 上傳中 -->
+						<a href="javascript:void(0);">${vo.catalogName!}</a>
+	                    <small>目錄編號：${vo.catalogSeq!}</small>
+	                    <u class="uploading-txt process" uploadingCatalogSeq="${vo.catalogSeq!}">商品資料處理中</u>
+					<#else>
+						<a href="prodListCardStyleView.html?catalogSeq=${vo.catalogSeq!}&currentPage=1&pageSizeSelected=10&prodStatus=&prodName=">${vo.catalogName!}</a>
+                    	<small>目錄編號：${vo.catalogSeq!}</small>
+					</#if>
                 </div>
                 
                 <div class="txt-cell col-catagory">

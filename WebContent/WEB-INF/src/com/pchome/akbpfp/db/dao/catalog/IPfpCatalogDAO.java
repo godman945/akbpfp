@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.IBaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 
 public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 	
@@ -30,4 +30,6 @@ public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 	public List<Map<String, Object>> getCatalogUploadingStatus(List<String> catalogSeqList);
 
 	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog);
+
+	public List<Map<String, Object>> getCatalogAndCatalogLogoData(String customer_info_id);
 }

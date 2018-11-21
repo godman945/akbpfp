@@ -8,10 +8,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.service.IBaseService;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogProdEcErrorVO;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadListVO;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogUploadLogVO;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogProdEcErrorVO;
+import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogUploadListVO;
+import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogUploadLogVO;
 
 public interface IPfpCatalogUploadListService extends IBaseService<String, String> {
 

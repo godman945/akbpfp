@@ -8,8 +8,8 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
 import com.pchome.akbpfp.db.pojo.PfpCatalogProdEcError;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogProdEcErrorVO;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogProdEcErrorVO;
 
 public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 

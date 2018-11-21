@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.IBaseService;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 
 public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	
@@ -54,5 +54,12 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	public List<Map<String, String>> getCatalogUploadingStatus(String uploadingCatalogSeqList);
 
 	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog);
+
+	/**
+	 * 檢查"商品目錄"及"商品目錄logo"資料是否顯示提示訊息
+	 * @param customer_info_id
+	 * @return
+	 */
+	public boolean checkCatalogAndCatalogLogoIsShowMessage(String customer_info_id);
 
 }

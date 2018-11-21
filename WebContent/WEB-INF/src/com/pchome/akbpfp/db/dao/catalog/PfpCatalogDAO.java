@@ -11,7 +11,7 @@ import org.hibernate.transform.Transformers;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 import com.pchome.utils.CommonUtils;
 
 public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCatalogDAO{
@@ -51,6 +51,8 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		StringBuffer hql = new StringBuffer();
 		hql.append(" from PfpCatalog ");
 		hql.append(" where pfpCustomerInfoId =:customerInfoId ");
+		hql.append(" and catalogDeleteStatus = '0' ");
+		hql.append(" and catalogProdNum > 0 ");
 		Session session = super.getSession();
         Query query = session.createQuery(hql.toString());
         query.setParameter("customerInfoId", customerInfoId);
@@ -223,9 +225,30 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 	}
 
 	@Override
+	public List<Map<String, Object>> getCatalogAndCatalogLogoData(String customer_info_id) {
+		StringBuffer hql = new StringBuffer();
+		hql.append(" SELECT                                                      ");
+		hql.append("    (SELECT count(pcpe.catalog_prod_seq)                ");
+		hql.append("    FROM pfp_catalog_prod_ec pcpe                            ");
+		hql.append("    WHERE pc.catalog_seq = pcpe.catalog_seq)AS prod_count, ");
+		hql.append("    (SELECT count(pcl.pfp_customer_info_id)             ");
+		hql.append("    FROM pfp_catalog_logo pcl                                ");
+		hql.append("    WHERE pc.pfp_customer_info_id = pcl.pfp_customer_info_id ");
+		hql.append("    and pcl.status = '1')AS logo_pass_count          ");
+		hql.append(" FROM pfp_catalog pc                                         ");
+		hql.append(" WHERE pc.pfp_customer_info_id = :catalog_seq                ");
+		hql.append(" AND pc.catalog_delete_status = '0'                          ");
+		
+        Query query = super.getSession().createSQLQuery(hql.toString());
+        query.setString("catalog_seq", customer_info_id);
+		
+        return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+	
+	@Override
 	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog) {
 		super.getSession().saveOrUpdate(pfpCatalog);
 		super.getSession().beginTransaction().commit();
 	}
-	
+
 }

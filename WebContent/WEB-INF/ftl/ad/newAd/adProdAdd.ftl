@@ -51,7 +51,9 @@
 														<#if pfpCatalog.pfpCatalogSetups?exists>
 															<#list pfpCatalog.pfpCatalogSetups as pfpCatalogSetup>
 																<#if pfpCatalogSetup.catalogSetupKey == 'img_proportiona'>
-																	<option value="${pfpCatalog.catalogSeq!}_${pfpCatalogGroup.catalogGroupSeq!}_${pfpCatalogSetup.catalogSetupValue!}">${pfpCatalogGroup.catalogGroupName!}</option>
+																	<#if pfpCatalogGroup.catalogGroupDeleteStatus == "0">
+																		<option value="${pfpCatalog.catalogSeq!}_${pfpCatalogGroup.catalogGroupSeq!}_${pfpCatalogSetup.catalogSetupValue!}">${pfpCatalogGroup.catalogGroupName!}</option>
+																	</#if>
 																</#if>
 															</#list>
 														</#if>	
@@ -168,35 +170,34 @@
 							<span>預覽廣告尺寸</span>
 							<div class="adsizeselect">
 								<select name="" id="adSize">
-									<option value="1">120 x 600</option>	
-									<option value="2">140 x 300</option>	
-									<option value="3">160 x 240</option>
-									<option value="4">160 x 600</option>
-									<option value="5">180 x 150</option>
-									<option value="6">250 x 80</option>	
-									<option value="7">300 x 100</option>	
-									<option value="8" selected>300 x 250</option>
-									<option value="9">300 x 600</option>
-									<option value="10">320 x 480</option>	
-									<option value="11">336 x 280</option>	
-									<option value="12">640 x 390</option>	
-									<option value="13">728 x 90</option>
-									<option value="14">950 x 390</option>
-									<option value="15">970 x 250</option>							
+									<option value="tpro_120_600">120 x 600</option>	
+									<option value="tpro_140_300">140 x 300</option>	
+									<option value="tpro_160_240">160 x 240</option>
+									<option value="tpro_160_600">160 x 600</option>
+									<option value="tpro_180_150">180 x 150</option>
+									<option value="tpro_250_80">250 x 80</option>	
+									<option value="tpro_300_100">300 x 100</option>	
+									<option value="tpro_300_250" selected>300 x 250</option>
+									<option value="tpro_300_600">300 x 600</option>
+									<option value="tpro_320_480">320 x 480</option>	
+									<option value="tpro_336_280">336 x 280</option>	
+									<option value="tpro_640_390">640 x 390</option>	
+									<option value="tpro_728_90">728 x 90</option>
+									<option value="tpro_95_390">950 x 390</option>
+									<option value="tpro_970_250">970 x 250</option>							
 								</select>
 								
 							</div>
 						</div>
-						<a href="#" class="previewarw-left"><i></i></a>
-						<a href="#" class="previewarw-right"><i></i></a>
+						
+						<a href="javascript:void(0);" class="previewarw-left" onclick="changeTpro();"><i></i></a>
+						
+						<a href="javascript:void(0);" class="previewarw-right" onclick="changeTpro();"><i></i></a>
 						<!--廣告預覽 START-->
 						<div class="adcontainr">
 							<div class="adcontent">	
-															
+									
 									<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" allowtransparency="true" allowfullscreen="true" src=""></iframe>						
-															
-															
-															
 								
 
 							</div>							
@@ -390,3 +391,4 @@
 	    </div>
 	   </div>
 </div>
+

@@ -7,10 +7,13 @@ import java.io.FileInputStream;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.vo.catalog.uploadList.ShoppingProdVO;
 import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
@@ -20,6 +23,7 @@ import com.pchome.utils.ImgUtil;
 
 public abstract class APfpCatalogUploadListData {
 
+	public static final Log log = LogFactory.getLog(ImgUtil.class);
 	private String akbPfpServer;
 	
 	public abstract Object processCatalogProdJsonData(JSONObject catalogProdJsonData) throws Exception;
@@ -86,14 +90,14 @@ public abstract class APfpCatalogUploadListData {
 	 * @param errorPrdItemArray
 	 * @param itemSeq // 項目序號
 	 * @param photoPath // 圖片路徑
-	 * @param catalogProdSeq // 商品編號
 	 * @param ecImgUrl // 圖片網址
 	 * @param ecImgBase64 // 圖片Base64編碼
 	 * @param catalogUploadType // 上傳方式
+	 * @param shoppingProdItemVO 
 	 * @return
 	 * @throws Exception 
 	 */
-	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, int itemSeq, String photoPath, String catalogProdSeq, String ecImgUrl, String ecImgBase64, String catalogUploadType) throws Exception {
+	public JSONArray checkEcImgUrl(JSONArray errorPrdItemArray, int itemSeq, String photoPath, String ecImgUrl, String ecImgBase64, String catalogUploadType, ShoppingProdVO shoppingProdItemVO) throws Exception {
 		String prodItemErrorMsg = ""; // 檢查到一個有錯誤，剩下檢查則略過
 		
 		// 將圖片下載至每個user自己的暫存圖片資料夾檢查
@@ -116,20 +120,14 @@ public abstract class APfpCatalogUploadListData {
 				}
 			}
 			
-			if (StringUtils.isBlank(prodItemErrorMsg)) {
-				String filenameExtension = ImgUtil.getImgURLFilenameExtension(ecImgUrl);
-				if (!"jpg".equalsIgnoreCase(filenameExtension) && !"gif".equalsIgnoreCase(filenameExtension)
-						&& !"png".equalsIgnoreCase(filenameExtension)) {
-					prodItemErrorMsg = "檔案格式錯誤";
-				}
-			}
-			
 			File imgFile = null;
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
-				imgPath = ImgUtil.processImgPathForCatalogProd(ecImgUrl, imgTempPath, catalogProdSeq);
-				if (StringUtils.isBlank(imgPath)) { 
+				imgPath = ImgUtil.processImgPathForCatalogProd(ecImgUrl, imgTempPath, String.valueOf(itemSeq), shoppingProdItemVO);
+				if (StringUtils.isBlank(imgPath)) {
 					// 空的表示連不到或是HTTP 403沒有權限訪問此站，伺服器收到請求但拒絕提供服務。
 					prodItemErrorMsg = "連結錯誤";
+				} else if ("檔案格式錯誤".equals(imgPath)) { // 非jpg、gif、png
+					prodItemErrorMsg = "檔案格式錯誤";
 				}
 			}
 			
@@ -144,8 +142,8 @@ public abstract class APfpCatalogUploadListData {
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
 				FileInputStream fis = new FileInputStream(imgFile);
 				BufferedImage bufferedImage = ImageIO.read(fis);
-				if (!EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(catalogUploadType) && 
-						bufferedImage.getWidth() < 300 && bufferedImage.getHeight() < 300) {
+				if (!EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(catalogUploadType)
+						&& bufferedImage.getWidth() < 300 && bufferedImage.getHeight() < 300) {
 					// 賣場網址上傳不檢查解析度
 					prodItemErrorMsg = "解析度不足";
 				}
@@ -153,18 +151,21 @@ public abstract class APfpCatalogUploadListData {
 			}
 			
 		} else {
-			//有Base64則用手動上傳
+			// 有Base64則用手動上傳
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
 				String filenameExtension = ImgUtil.getImgBase64FilenameExtension(ecImgBase64);
 				if (!"jpg".equalsIgnoreCase(filenameExtension) && !"gif".equalsIgnoreCase(filenameExtension)
 						&& !"png".equalsIgnoreCase(filenameExtension)) {
 					prodItemErrorMsg = "檔案格式錯誤";
+				} else {
+					// 紀錄檔案副檔名
+					shoppingProdItemVO.setEcImgFilenameExtension(filenameExtension);
 				}
 			}
 			
 			File imgFile = null;
 			if (StringUtils.isBlank(prodItemErrorMsg)) {
-				imgPath = ImgUtil.processImgBase64StringToImage(ecImgBase64, imgTempPath, catalogProdSeq);
+				imgPath = ImgUtil.processImgBase64StringToImage(ecImgBase64, imgTempPath, String.valueOf(itemSeq));
 				String completePath = imgTempPath.substring(0, imgTempPath.indexOf("img/user/")) + imgPath;
 				imgFile = new File(completePath);
 				if (imgFile.length() > (180 * 1024)) {

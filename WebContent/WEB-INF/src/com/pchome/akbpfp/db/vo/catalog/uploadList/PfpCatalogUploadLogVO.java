@@ -1,4 +1,4 @@
-package com.pchome.akbpfp.db.vo.ad;
+package com.pchome.akbpfp.db.vo.catalog.uploadList;
 
 public class PfpCatalogUploadLogVO {
 	

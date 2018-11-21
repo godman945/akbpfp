@@ -23,7 +23,7 @@ import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupItemServic
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupService;
 import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
@@ -48,6 +48,7 @@ public class PfpCatalogAction extends BaseCookieAction{
 
 	private String catalogSeq;
 	private String catalogName; // 商品目錄名稱
+	private boolean showPromptMessage;
 	
 	private String deleteCatalogSeq;
 	private String uploadingCatalogSeqList; // 目前畫面顯示上傳中的目錄清單
@@ -72,6 +73,7 @@ public class PfpCatalogAction extends BaseCookieAction{
 		if (totalCount == 0) {
 			return "noData";
 		} else {
+			showPromptMessage = pfpCatalogService.checkCatalogAndCatalogLogoIsShowMessage(super.getCustomer_info_id());
 			return SUCCESS;
 		}
 	}
@@ -340,6 +342,10 @@ public class PfpCatalogAction extends BaseCookieAction{
 
 	public void setUploadingCatalogSeqList(String uploadingCatalogSeqList) {
 		this.uploadingCatalogSeqList = uploadingCatalogSeqList;
+	}
+
+	public boolean isShowPromptMessage() {
+		return showPromptMessage;
 	}
 
 }

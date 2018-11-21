@@ -25,6 +25,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.pchome.akbpfp.db.vo.catalog.uploadList.ShoppingProdVO;
+import com.pchome.soft.depot.utils.HttpUtil;
+
 
 
 public class ImgUtil {
@@ -41,9 +44,21 @@ public class ImgUtil {
 	 * @param imgURL 下載的圖片網址
 	 * @param photoPath 資料夾位置
 	 * @param imgFileName 檔名
-	 * @return 正常下載圖片:取得圖片存放路徑 出錯:無圖片路徑
+	 * @return 正常下載圖片:取得圖片存放路徑 出錯:無圖片路徑，非jpg、gif、png回傳"檔案格式錯誤"
 	 */
 	public static String processImgPathForCatalogProd(String imgURL, String photoPath, String imgFileName) {
+		return processImgPathForCatalogProd(imgURL, photoPath, imgFileName, null);
+	}
+	
+	/**
+	 * 處理廣告商品下載圖片
+	 * @param imgURL 下載的圖片網址
+	 * @param photoPath 資料夾位置
+	 * @param imgFileName 檔名
+	 * @param shoppingProdItemVO 購物商品用來紀錄圖片副檔名用
+	 * @return 正常下載圖片:取得圖片存放路徑 出錯:無圖片路徑，非jpg、gif、png回傳"檔案格式錯誤"
+	 */
+	public static String processImgPathForCatalogProd(String imgURL, String photoPath, String imgFileName, ShoppingProdVO shoppingProdItemVO) {
 		log.info("開始下載圖片。");
 		String imgPath = "";
     	try {
@@ -52,27 +67,36 @@ public class ImgUtil {
 			// 將特殊符號取代為空，處理圖片時才不會因為有特殊符號而出錯
 			imgFileName = CommonUtils.getReplaceSpecialSymbolsStr(imgFileName);
 			imgFileName = CommonUtils.getReplaceSpecialSymbolsThatAreNotAllowedByFileName(imgFileName);
-	        String filenameExtension = getImgURLFilenameExtension(imgURL);
 			
 			log.info("下載圖片網址:" + imgURL);
 	        URL url = new URL(imgURL.replaceFirst("https", "http")); // 將https網址改成http
+	        // 增加User-Agent，避免被發現是機器人被阻擋掉
+			HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+			urlConnection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+			urlConnection.setRequestMethod("GET");
+			
+			// Header內容取得副檔名，避免輸入的網址沒有副檔名無法判斷的問題
+			String contentType = urlConnection.getHeaderField("Content-Type");
+			String filenameExtension = contentType.replace("jpeg", "jpg").substring(contentType.indexOf("/") + 1);
+			
+			if (shoppingProdItemVO != null) { // 購物商品用來紀錄圖片副檔名用
+				shoppingProdItemVO.setEcImgFilenameExtension(filenameExtension);
+			}
+			
+			InputStream in = urlConnection.getInputStream();
 	        String imgPathAndName = photoPath + "/" + imgFileName + "." + filenameExtension; // 存放路徑 + 檔名
 	
 	        // 處理圖片下載
 	        if ("gif".equalsIgnoreCase(filenameExtension)) { // gif圖片下載方式，此方式圖片才有動畫
-	            InputStream in = url.openStream();
-	            Files.copy(in, new File(imgPathAndName).toPath(), StandardCopyOption.REPLACE_EXISTING);
-	            in.close();
-			} else { // jpg、png圖片下載方式
-				// 增加User-Agent，避免被發現是機器人被阻擋掉
-				HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-				urlConnection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-				urlConnection.setRequestMethod("GET");
-				InputStream in = urlConnection.getInputStream();
+	        	Files.copy(in, new File(imgPathAndName).toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} else if("jpg".equalsIgnoreCase(filenameExtension) || "png".equalsIgnoreCase(filenameExtension)) { // jpg、png圖片下載方式
 				BufferedImage img = ImageIO.read(in);
 				ImageIO.write(img, filenameExtension, new File(imgPathAndName));
+			} else {
 				in.close();
+				return "檔案格式錯誤";
 			}
+	        in.close();
 	        
 			imgPath = photoPath.substring(photoPath.indexOf("img/")) + "/" + imgFileName + "." + filenameExtension;
 			log.info("下載圖片結束");
@@ -173,7 +197,7 @@ public class ImgUtil {
 	}
 	
 	/**
-	 * 從圖片網址取得附檔名
+	 * 從圖片網址取得副檔名
 	 * @param imgURL
 	 * @return
 	 */
@@ -181,11 +205,11 @@ public class ImgUtil {
 		// 處理圖片如果有被加timestamp等參數從?位置抓取副檔名，沒被加參數則直接依長度取最後3碼
 		int startLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") - 3 : imgURL.length() - 3);
 		int endLength = (imgURL.indexOf("?") > -1 ? imgURL.indexOf("?") : imgURL.length());
-		return imgURL.substring(startLength, endLength);
+		return imgURL.substring(startLength, endLength).toLowerCase();
 	}
 	
 	/**
-	 * 從圖片Base64取得附檔名
+	 * 從圖片Base64取得副檔名
 	 * @param imgBase64String
 	 * @return
 	 */
@@ -199,11 +223,11 @@ public class ImgUtil {
 	
 	/**
 	 * 從圖片網址取得附檔名或圖片Base64取得附檔名
-	 * @param ecImgUrl
 	 * @param ecImgBase64
+	 * @param ecImgUrl
 	 * @return
 	 */
-	public static String getImgFilenameExtensionFromImgBase64OrImgURL(String ecImgUrl, String ecImgBase64) {
+	public static String getImgFilenameExtensionFromImgBase64OrImgURL(String ecImgBase64, String ecImgUrl) {
 		if (StringUtils.isBlank(ecImgBase64)) {
 			return getImgURLFilenameExtension(ecImgUrl);
 		} else {

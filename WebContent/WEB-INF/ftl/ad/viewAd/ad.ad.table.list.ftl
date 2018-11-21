@@ -84,6 +84,7 @@
 									&imgProportiona=${vo.userLogoType!}
 									&userLogoPath=${vo.userLogoPath!}
 									&prodAdUrl=${vo.realUrl!}
+									&previewTpro=c_x05_pad_tpro_0100
 									">
 								</iframe>
 							<#else>

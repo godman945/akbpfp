@@ -135,16 +135,17 @@
 	<!-- 商品目錄、上傳 START -->
     <definition name="catalog.prod.layout" extends="default.layout" >
     	<put-attribute name="head" value="catalog.prod.head" />
-    	<put-attribute name="menu" value="catalog.prod.menu" />
+<!--     	<put-attribute name="menu" value="catalog.prod.menu" /> -->
     </definition>
 	
 	<definition name="catalog.prod.head" extends="default.head" >
     	<put-attribute name="css" value="/ftl/catalogProd/css.ftl" />
     </definition>
 	
-	<definition name="catalog.prod.menu" extends="default.menu" >
-    	<put-attribute name="submenu" value="/ftl/catalogProd/submenu.ftl" />
-    </definition>
+<!-- 2018/11/16 不用menu -->
+<!-- 	<definition name="catalog.prod.menu" extends="default.menu" > -->
+<!--     	<put-attribute name="submenu" value="/ftl/catalogProd/submenu.ftl" /> -->
+<!--     </definition> -->
     
     <!-- 進入商品管理，沒有商品目錄的畫面 -->
     <definition name=".catalog.prod.view.index" extends="catalog.prod.layout">

@@ -13,7 +13,7 @@
 			index_10:"320_480",
 			index_11:"336_280",
 			index_12:"640_390",
-			index_13:"782_90",
+			index_13:"728_90",
 			index_14:"950_390",
 			index_15:"970_250"
 	};
@@ -21,8 +21,8 @@
 	var salesIframewp = new Object();
 	salesIframewp["data"] = {
 			index_1:"120_120",
-			index_2:"140_80",
-			index_3:"160_40",
+			index_2:"140_70",
+			index_3:"160_50",
 			index_4:"160_100",
 			index_5:"180_50",
 			index_6:"80_80",
@@ -833,12 +833,18 @@ function adEditSubmit(){
 		var adurl = $("#adurl").val();
 		var logoBgColor = $("#logoBgColor").val();
 		var logoType = $('input[name=options]:checked').val();
-		if(Object.keys(uploadLogoLog).length > 0){
-			logoType = "type3";
-		}else{
-			logoType == "type3" ? "type2" : "type1";
+		var radioType = $('input[name=options]:checked').val();
+		if(radioType == "type1"){
+			logoType = "type1";
 		}
-			
+		if(radioType == "type2"){
+			logoType = "type1";
+		}
+		if(radioType == "type3"){
+			logoType = "type2";
+		}
+		
+		
 			
 		var logoText = $("#logoText").val();
 		var logoFontColor = $("#logoFontColor").val();
@@ -933,6 +939,10 @@ function adEditSubmit(){
 	}
 }
 
+
+//預設300_250尺寸 單圖
+var previewTpro = "c_x05_pad_tpro_0100";
+var previewTproIndex = 0;
 function getProdGroup(obj){
 	var catalogGroupId = $("#groupSelect").val();
 	if(catalogGroupId == ""){
@@ -1040,6 +1050,7 @@ function getProdGroup(obj){
 		+"&imgProportiona="+encodeURIComponent(imgProportiona)
 		+"&userLogoPath="+logoPath
 		+"&realUrl="+encodeURIComponent(realUrl)
+		+"&previewTpro="+encodeURIComponent(previewTpro)
 		$(".akb_iframe").attr('src' ,src);
 		console.log(src);
 }
@@ -1217,4 +1228,19 @@ function opennots(id){
 
 function closenots(id) {
 	$("#shownotes"+id).css("visibility", "hidden");
+}
+
+function changeTpro(){
+	if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
+		return false;
+	}
+	var tproSize = $("#adSize option:selected").val();
+	var tproArray = tproObject.data[tproSize].split(",");
+	var index = tproArray.length;
+	previewTproIndex = previewTproIndex + 1;
+	if(previewTproIndex == index){
+		previewTproIndex = 0;
+	}
+	previewTpro = tproArray[previewTproIndex];
+	getProdGroup(null);
 }

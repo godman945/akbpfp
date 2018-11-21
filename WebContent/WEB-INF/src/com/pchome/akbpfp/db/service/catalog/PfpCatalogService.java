@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.db.service.catalog;
 
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,7 +16,7 @@ import com.pchome.akbpfp.db.dao.catalog.IPfpCatalogDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
-import com.pchome.akbpfp.db.vo.ad.PfpCatalogVO;
+import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 
@@ -210,6 +211,27 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 		} else {
 			return "";
 		}
+	}
+	
+	/**
+	 * 檢查"商品目錄"及"商品目錄logo"資料是否顯示提示訊息
+	 * @param customer_info_id
+	 * @return
+	 */
+	@Override
+	public boolean checkCatalogAndCatalogLogoIsShowMessage(String customer_info_id) {
+		List<Map<String, Object>> catalogAndCatalogLogoList = ((IPfpCatalogDAO) dao).getCatalogAndCatalogLogoData(customer_info_id);
+
+		boolean isShowMessage = true;
+		for (Map<String, Object> dataMap : catalogAndCatalogLogoList) {
+			BigInteger prodCount = (BigInteger) dataMap.get("prod_count");
+			BigInteger logoPassCount = (BigInteger) dataMap.get("logo_pass_count");
+			if (prodCount.intValue() > 0 && logoPassCount.intValue() == 2) { // 目錄有商品，logo2張皆審核通過，不顯示訊息
+				isShowMessage = false;
+				break;
+			}
+		}
+		return isShowMessage;
 	}
 	
 	@Override

@@ -66,6 +66,7 @@ public class AdModelAPIAction extends BaseCookieAction{
 	
 	private String userLogoPath;
 	
+	private String previewTpro;
 	/* 商品廣告用參數 END*/
 	
 	
@@ -121,6 +122,8 @@ public class AdModelAPIAction extends BaseCookieAction{
 		pfpProdAdPreviewJson.put("imgProportiona", imgProportiona);
 		pfpProdAdPreviewJson.put("userLogoPath", userLogoPath);
 		pfpProdAdPreviewJson.put("realUrl", realUrl);
+		pfpProdAdPreviewJson.put("previewTpro", previewTpro);
+		
 		String adHtml = admAPI.getAdProdContent(pfpProdAdPreviewJson.toString());
 //		log.info("adHtml:"+adHtml);
 		
@@ -276,6 +279,16 @@ public class AdModelAPIAction extends BaseCookieAction{
 
 	public void setUserLogoPath(String userLogoPath) {
 		this.userLogoPath = userLogoPath;
+	}
+
+
+	public String getPreviewTpro() {
+		return previewTpro;
+	}
+
+
+	public void setPreviewTpro(String previewTpro) {
+		this.previewTpro = previewTpro;
 	}
 
 
