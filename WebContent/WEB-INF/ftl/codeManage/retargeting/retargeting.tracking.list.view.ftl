@@ -102,7 +102,7 @@
 				                            <div class="txt-row txt-row-data" data-type="enable">
 				                                <div class="txt-cell col-ptagcheckbox"><div class="input-check"><input type="checkbox" id="check${index1}" value=${retargetings.trackingSeq!}><label for="check${index1}"></label></div></div>
 				                                <div class="txt-cell col-ptagname    "><a href="#">${retargetings.trackingName!}</a><br><small>ID：${retargetings.trackingSeq!}</small></div>
-				                                <div class="txt-cell col-ptagcode    "><a href="javascript:void(0)" onclick="getpTag('${retargetings.codeType!}','${retargetings.paId!})','${retargetings.trackingSeq!}','${retargetings.trackingName!}')">取得代碼</a></div>
+				                                <div class="txt-cell col-ptagcode    "><a href="javascript:void(0)" onclick="getpTag('${retargetings.codeType!}','${retargetings.paId!}','${retargetings.trackingSeq!}','${retargetings.trackingName!}')">取得代碼</a></div>
 				                               	<#if retargetings.verifyStatus == "1">
 					                                <div class="txt-cell col-ptagstatus  "><span data-certificated="true">已認證</span></div>
 					                            <#else>   
