@@ -131,6 +131,8 @@
     <bean id="RetargetingTrackingAjax" class="com.pchome.akbpfp.struts2.ajax.codeManage.remarketingTracking.RetargetingTrackingAjax" >
 <!--     	<property name="mailService" value="${mail.server}" /> -->
     	<property name="mailFrom" value="${mail.from}" />
+    	<property name="pfpCodeService" ref="PfpCodeService" />
+    	<property name="pfpCodeTrackingService" ref="PfpCodeTrackingService" />
     	<property name="springEmailUtil" ref="SpringEmailUtil" />
     </bean>
     <!-- 再行銷追蹤 -->
