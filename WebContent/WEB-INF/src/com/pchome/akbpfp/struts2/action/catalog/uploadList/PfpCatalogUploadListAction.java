@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -201,44 +203,36 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	/**
 	 * 檢查輸入的自動排程網址
 	 * @return
-	 * @throws Exception
+	 * @throws IOException 
 	 */
-	public String ajaxCheckJobURL() {
+	public String ajaxCheckJobURL() throws IOException {
 		dataMap = new HashMap<String, Object>();
 
-		try {
-			log.info("1.jobURL:" + jobURL);
-			// 先檢查網址
-			Map<String, String> map = getDataFromUrl(jobURL);
-			if (StringUtils.isBlank(map.get("fileName").toString())
-					&& StringUtils.isBlank(map.get("filenameExtension").toString())) {
-				dataMap.put("status", "ERROR");
-				return SUCCESS;
-			}
-			
-			log.info("2.jobURL:" + jobURL);
-			// 網址OK再做連線機制檢查
-			HttpUtil.disableCertificateValidation();
-			URL urlData = new URL(jobURL);
-			// 增加User-Agent，避免被發現是機器人被阻擋掉
-			HttpURLConnection urlConnection = (HttpURLConnection) urlData.openConnection();
-			urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
-			urlConnection.setRequestMethod("GET");
-			log.info("3.jobURL:" + jobURL);
-			if (urlConnection.getResponseCode() != HttpStatus.SC_OK) {
-				log.error("urlConnection.getResponseCode():" + urlConnection.getResponseCode());
-				dataMap.put("status", "ERROR");
-				return SUCCESS;
-			}
-			
-			dataMap.put("fileName", map.get("fileName").toString());
-			return SUCCESS;
-		} catch (IOException e) {
-			log.info("4.jobURL:" + jobURL);
-			e.printStackTrace();
+		log.info("1.jobURL:" + jobURL);
+		// 先檢查網址
+		Map<String, String> map = getDataFromUrl(jobURL);
+		if (StringUtils.isBlank(map.get("fileName").toString())
+				&& StringUtils.isBlank(map.get("filenameExtension").toString())) {
 			dataMap.put("status", "ERROR");
 			return SUCCESS;
 		}
+		
+		log.info("2.連線機制檢查");
+		// 網址OK再做連線機制檢查
+		HttpUtil.disableCertificateValidation();
+		URL urlData = new URL(jobURL);
+		// 增加User-Agent，避免被發現是機器人被阻擋掉
+		HttpURLConnection urlConnection = (HttpURLConnection) urlData.openConnection();
+		urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+		urlConnection.setRequestMethod("GET");
+		log.info("3.urlConnection.getResponseCode():" + urlConnection.getResponseCode());
+		if (urlConnection.getResponseCode() != HttpStatus.SC_OK) {
+			dataMap.put("status", "ERROR");
+			return SUCCESS;
+		}
+		
+		dataMap.put("fileName", map.get("fileName").toString());
+		return SUCCESS;
 	}
 	
 	/**
