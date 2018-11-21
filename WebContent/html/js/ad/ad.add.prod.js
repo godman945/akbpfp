@@ -143,7 +143,7 @@ function initFancyBoxHtml(){
 			index_10:"320_480",
 			index_11:"336_280",
 			index_12:"640_390",
-			index_13:"782_90",
+			index_13:"728_90",
 			index_14:"950_390",
 			index_15:"970_250"
 	};
@@ -1092,5 +1092,9 @@ function opennots(id){
 
 function closenots(id) {
 	$("#shownotes"+id).css("visibility", "hidden");
+}
+
+function changeTpro(){
+	console.log("FF");
 }
 

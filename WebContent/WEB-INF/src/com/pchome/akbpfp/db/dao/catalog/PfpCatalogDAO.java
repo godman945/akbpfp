@@ -51,6 +51,8 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		StringBuffer hql = new StringBuffer();
 		hql.append(" from PfpCatalog ");
 		hql.append(" where pfpCustomerInfoId =:customerInfoId ");
+		hql.append(" and catalogDeleteStatus = '0' ");
+		hql.append(" and catalogProdNum > 0 ");
 		Session session = super.getSession();
         Query query = session.createQuery(hql.toString());
         query.setParameter("customerInfoId", customerInfoId);

@@ -51,7 +51,9 @@
 														<#if pfpCatalog.pfpCatalogSetups?exists>
 															<#list pfpCatalog.pfpCatalogSetups as pfpCatalogSetup>
 																<#if pfpCatalogSetup.catalogSetupKey == 'img_proportiona'>
-																	<option value="${pfpCatalog.catalogSeq!}_${pfpCatalogGroup.catalogGroupSeq!}_${pfpCatalogSetup.catalogSetupValue!}">${pfpCatalogGroup.catalogGroupName!}</option>
+																	<#if pfpCatalogGroup.catalogGroupDeleteStatus == "0">
+																		<option value="${pfpCatalog.catalogSeq!}_${pfpCatalogGroup.catalogGroupSeq!}_${pfpCatalogSetup.catalogSetupValue!}">${pfpCatalogGroup.catalogGroupName!}</option>
+																	</#if>
 																</#if>
 															</#list>
 														</#if>	
@@ -187,16 +189,15 @@
 								
 							</div>
 						</div>
-						<a href="#" class="previewarw-left"><i></i></a>
-						<a href="#" class="previewarw-right"><i></i></a>
+						
+						<a href="javascript:void(0);" class="previewarw-left" onclick="changeTpro();"><i></i></a>
+						
+						<a href="javascript:void(0);" class="previewarw-right" onclick="changeTpro();"><i></i></a>
 						<!--廣告預覽 START-->
 						<div class="adcontainr">
 							<div class="adcontent">	
-															
+									
 									<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" allowtransparency="true" allowfullscreen="true" src=""></iframe>						
-															
-															
-															
 								
 
 							</div>							
@@ -390,3 +391,4 @@
 	    </div>
 	   </div>
 </div>
+
