@@ -111,6 +111,13 @@ public class ShoppingProd extends APfpCatalogUploadListData {
 		
 		JSONArray catalogProdItemJsonArray = new JSONArray(catalogProdItem);
 		for (int i = 0; i < catalogProdItemJsonArray.length(); i++) {
+			File xxx = new File("img/user/AC2013071700004/catalogProd/testTest");
+			log.info("圖片建立資料夾路徑:img/user/AC2013071700004/catalogProd/testTest");
+			if (!xxx.exists()) {
+				log.info("建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立建立");
+				xxx.mkdirs(); // 建立資料夾
+			}
+			
 			JSONObject catalogProdItemJson = (JSONObject) catalogProdItemJsonArray.get(i);
 			ShoppingProdVO shoppingProdItemVO = new ShoppingProdVO();
 			shoppingProdItemVO.setCatalogProdSeq(catalogProdItemJson.optString("id", " ")); // id*
