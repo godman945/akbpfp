@@ -207,6 +207,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		dataMap = new HashMap<String, Object>();
 
 		try {
+			log.info("1.jobURL:" + jobURL);
 			// 先檢查網址
 			Map<String, String> map = getDataFromUrl(jobURL);
 			if (StringUtils.isBlank(map.get("fileName").toString())
@@ -215,6 +216,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 				return SUCCESS;
 			}
 			
+			log.info("2.jobURL:" + jobURL);
 			// 網址OK再做連線機制檢查
 			HttpUtil.disableCertificateValidation();
 			URL urlData = new URL(jobURL);
@@ -222,6 +224,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			HttpURLConnection urlConnection = (HttpURLConnection) urlData.openConnection();
 			urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
 			urlConnection.setRequestMethod("GET");
+			log.info("3.jobURL:" + jobURL);
 			if (urlConnection.getResponseCode() != HttpStatus.SC_OK) {
 				log.error("urlConnection.getResponseCode():" + urlConnection.getResponseCode());
 				dataMap.put("status", "ERROR");
@@ -231,6 +234,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			dataMap.put("fileName", map.get("fileName").toString());
 			return SUCCESS;
 		} catch (IOException e) {
+			log.info("4.jobURL:" + jobURL);
 			e.printStackTrace();
 			dataMap.put("status", "ERROR");
 			return SUCCESS;
