@@ -219,12 +219,24 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			}
 			
 			log.info("2.連線機制檢查");
-			AdUtilAjax adUtilAjax = new AdUtilAjax();
-			boolean checkUrlStatus = adUtilAjax.checkUrl(jobURL, akbPfpServer);
-			if (!checkUrlStatus) {
+			// 網址OK再做連線機制檢查
+			HttpUtil.disableCertificateValidation();
+			URL urlData = new URL(jobURL);
+			// 增加User-Agent，避免被發現是機器人被阻擋掉
+			HttpURLConnection urlConnection = (HttpURLConnection) urlData.openConnection();
+			urlConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
+			urlConnection.setRequestMethod("GET");
+			if (urlConnection.getResponseCode() != HttpStatus.SC_OK) {
 				dataMap.put("status", "ERROR");
 				return SUCCESS;
 			}
+						
+//			AdUtilAjax adUtilAjax = new AdUtilAjax();
+//			boolean checkUrlStatus = adUtilAjax.checkUrl(jobURL, akbPfpServer);
+//			if (!checkUrlStatus) {
+//				dataMap.put("status", "ERROR");
+//				return SUCCESS;
+//			}
 						
 			dataMap.put("fileName", map.get("fileName").toString());
 			return SUCCESS;
