@@ -13,7 +13,7 @@
 			index_10:"320_480",
 			index_11:"336_280",
 			index_12:"640_390",
-			index_13:"782_90",
+			index_13:"728_90",
 			index_14:"950_390",
 			index_15:"970_250"
 	};
@@ -833,12 +833,18 @@ function adEditSubmit(){
 		var adurl = $("#adurl").val();
 		var logoBgColor = $("#logoBgColor").val();
 		var logoType = $('input[name=options]:checked').val();
-		if(Object.keys(uploadLogoLog).length > 0){
-			logoType = "type3";
-		}else{
-			logoType == "type3" ? "type2" : "type1";
+		var radioType = $('input[name=options]:checked').val();
+		if(radioType == "type1"){
+			logoType = "type1";
 		}
-			
+		if(radioType == "type2"){
+			logoType = "type1";
+		}
+		if(radioType == "type3"){
+			logoType = "type2";
+		}
+		
+		
 			
 		var logoText = $("#logoText").val();
 		var logoFontColor = $("#logoFontColor").val();

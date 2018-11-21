@@ -383,7 +383,7 @@ a.uploadbtn{
 .adcontent > div{ margin: 0 auto; }
 
 .previewarw-left i,.previewarw-right i{ display: block; width: 29px; height: 29px; }
-.previewarw-left,.previewarw-right{ position: absolute; top: 50%; margin-top: 15px;}
+.previewarw-left,.previewarw-right{ position: absolute; top: 50%; margin-top: 15px;z-index:9; }
 .previewarw-left{ left: 0; background: url(../../img/arw-left.png) center center no-repeat; }
 .previewarw-right{ right: 0; background: url(../../img/arw-right.png) center center no-repeat; }
 
