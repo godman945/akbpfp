@@ -891,37 +891,6 @@ function getProdGroup(obj){
 	var imgProportiona = $("#groupSelect").val().split("_")[2];
 	var imgShowType = "noposter";
 	
-
-	
-//	if(previewTpro == null){
-//		previewTproIndex = 0;
-//	}
-	
-	console.log(previewTpro);
-	console.log(previewTproIndex);
-//	previewTpro = "";
-//	var tpro = $("#adSize option:selected").val();
-//	var tproArray = tproObject.data[tpro].split(",");
-//	
-//	
-//	
-//	previewTpro = tproArray[0];
-//	
-//	console.log(previewTpro);
-	
-//	console.log(tproArray);
-//	console.log(tproArray[previewTproIndex]);
-	
-//	for (var key in salesIframewp.data) {
-////		console.log(salesEndIframewp.data[key]);
-//		var size = salesIframewp.data[key];
-//	}
-	
-	
-//	console.log($("#adSize option:selected").val());
-	
-//	console.log(catalogGroupId);
-	
 	Object.keys(uploadLog).forEach(function(key) {
 		var height = String(uploadLog[key].height);
 		var width = String(uploadLog[key].width);

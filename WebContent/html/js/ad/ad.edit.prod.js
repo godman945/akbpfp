@@ -939,6 +939,10 @@ function adEditSubmit(){
 	}
 }
 
+
+//預設300_250尺寸 單圖
+var previewTpro = "c_x05_pad_tpro_0100";
+var previewTproIndex = 0;
 function getProdGroup(obj){
 	var catalogGroupId = $("#groupSelect").val();
 	if(catalogGroupId == ""){
@@ -1046,6 +1050,7 @@ function getProdGroup(obj){
 		+"&imgProportiona="+encodeURIComponent(imgProportiona)
 		+"&userLogoPath="+logoPath
 		+"&realUrl="+encodeURIComponent(realUrl)
+		+"&previewTpro="+encodeURIComponent(previewTpro)
 		$(".akb_iframe").attr('src' ,src);
 		console.log(src);
 }
@@ -1223,4 +1228,19 @@ function opennots(id){
 
 function closenots(id) {
 	$("#shownotes"+id).css("visibility", "hidden");
+}
+
+function changeTpro(){
+	if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
+		return false;
+	}
+	var tproSize = $("#adSize option:selected").val();
+	var tproArray = tproObject.data[tproSize].split(",");
+	var index = tproArray.length;
+	previewTproIndex = previewTproIndex + 1;
+	if(previewTproIndex == index){
+		previewTproIndex = 0;
+	}
+	previewTpro = tproArray[previewTproIndex];
+	getProdGroup(null);
 }
