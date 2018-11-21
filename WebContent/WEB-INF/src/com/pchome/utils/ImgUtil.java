@@ -62,6 +62,7 @@ public class ImgUtil {
 		log.info("開始下載圖片。");
 		String imgPath = "";
     	try {
+    		log.info("圖片建立資料夾路徑:" + photoPath);
 			createFolder(photoPath);
 			
 			// 將特殊符號取代為空，處理圖片時才不會因為有特殊符號而出錯
