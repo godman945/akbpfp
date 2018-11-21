@@ -145,7 +145,7 @@
 				        <div class="button-box w-900 txt-center p-tb30">
 							<div class="input-button"><input id ="sendMail" type="button" value="發送mail"></div>
 						</div>
-                        <div class="msg-error">錯誤訊息</div>
+                        <div id="emailMsgError" class="msg-error" style="display:none">錯誤訊息</div>
                     </div>
                 </div>
                 <!-- 電子郵件寄送代碼 結束 -->
@@ -163,3 +163,6 @@
     
     <input type="hidden" id="paid" value="${paId!}">
     <input type="hidden" id="trackingSeq" value="${trackingSeq!}">
+    
+    
+    
