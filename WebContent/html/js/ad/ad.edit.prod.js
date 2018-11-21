@@ -37,7 +37,25 @@
 			index_15:"250_250"
 	};
 
-	
+	﻿
+	var tproObject = new Object();
+	tproObject["data"] = {
+			tpro_300_250:"c_x05_pad_tpro_0100,c_x05_pad_tpro_0101,c_x05_pad_tpro_0099",
+			tpro_250_80:"c_x05_pad_tpro_0102",
+			tpro_728_90:"c_x05_pad_tpro_0103",
+			tpro_120_600:"c_x05_pad_tpro_0104",
+			tpro_140_300:"c_x05_pad_tpro_0105",
+			tpro_160_240:"c_x05_pad_tpro_0106",
+			tpro_160_600:"c_x05_pad_tpro_0107",
+			tpro_180_150:"c_x05_pad_tpro_0108",
+			tpro_300_100:"c_x05_pad_tpro_0109",
+			tpro_300_600:"c_x05_pad_tpro_0110",
+			tpro_320_480:"c_x05_pad_tpro_0111",
+			tpro_336_280:"c_x05_pad_tpro_0112",
+			tpro_640_390:"c_x05_pad_tpro_0113",
+			tpro_950_390:"c_x05_pad_tpro_0114",
+			tpro_970_250:"c_x05_pad_tpro_0115"
+	};
 	
 	//開啟fancybox上傳畫面初始化
 	var upload_size = null;
