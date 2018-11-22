@@ -31,10 +31,10 @@ $(document).ready(function() {
 		url = $(this).val();
 		
 		// 檢查輸入網址是否正確
-//		if (url.substr(url.length - 4,url.length).toLowerCase() != ".csv") {
-//			alert("網址請輸入規定的格式。\n\n http://******.csv、https://******.csv");
-//			return false;
-//		}
+		if (url.substr(url.length - 4,url.length).toLowerCase() != ".csv") {
+			alert("網址請輸入規定的格式。\n\n http://******.csv、https://******.csv");
+			return false;
+		}
 		
 		//顯示遮罩
 		$('#loadingWaitBlock').block(maskingConfig);
