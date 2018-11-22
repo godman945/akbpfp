@@ -232,6 +232,7 @@
             	<param name="actionName">selectUpload</param>
             	<param name="catalogSeq">${catalogSeq}</param>
             </result>
+            <result type="tiles" name="input">.catalog.prod.view.addCatalog</result>
         </action>
 
     	<!-- 目錄範例檔案下載 -->
