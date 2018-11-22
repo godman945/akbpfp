@@ -1361,6 +1361,10 @@ public class AdEditAction extends BaseCookieAction{
 		this.photoDbPath = photoDbPath;
 	}
 
+	public String getPhotoDbPath() {
+		return photoDbPath;
+	}
+
 	public String getMessage() {
 		return message;
 	}
