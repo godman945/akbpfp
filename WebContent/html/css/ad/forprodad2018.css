@@ -57,7 +57,7 @@
 .grtba{ min-width: 1164px; }
 
 /*2018 商品廣告*/
-.admenuul li.m04 a{background: url(../../img/adimgmenu2.jpg) no-repeat;width:130px; height:40px;}
+.admenuul li.m04 a{background: url(../../../img/adimgmenu2.jpg) no-repeat;width:130px; height:40px;}
 
 .tb02{background:#dcdcdc;}
 .tb02 th{ background: #f1f1f1;}
@@ -97,7 +97,10 @@
 .newtbsublist li{  padding: 5px 0; line-height: 40px; overflow: hidden; }
 span.newtbsubliststyle{ font-size: 11px; }
 
-.colorpickr input{ height: 30px; width: 115px; border-radius: 5px; border: 1px solid #e5e5e5; text-indent: 10px; font-size: 14px; vertical-align: middle;  }
+.colorpickr_box{ padding:0 0 10px 10px; }
+.colorpickr_box i{ font-style:normal; display:block; width:100px; line-height: 25px; }
+
+.colorpickr input{ height: 30px; width: 100px; border-radius: 5px; border: 1px solid #e5e5e5; text-indent: 10px; font-size: 14px; vertical-align: middle; margin: 0 5px 8px 0; }
 
 .optradio{ display: block; width: 100%; height: 48px; line-height: 48px; cursor: pointer; }
 .optradio input[type="radio"]{ margin:10px 5px 2px 0; }
@@ -127,7 +130,7 @@ span.newtbsubliststyle{ font-size: 11px; }
     cursor: pointer;
 }
 
-a.uploadbtn{
+.uploadbx .uploadbtn{
     display: inline;
     padding: 5px 15px;
     border: 1px solid #bbbbbb;
@@ -136,6 +139,7 @@ a.uploadbtn{
     text-decoration: none;
     color: #313131;
     background-color: #ececeb;
+    text-align:center;
 }
 
 
@@ -382,6 +386,10 @@ a.uploadbtn{
 .adcontent{ width: 650px; height: 650px; display: table-cell; vertical-align: middle; padding: 40px 0 0 0; box-sizing: border-box;}
 .adcontent > div{ margin: 0 auto; }
 
+.previewbx-l,.previewbx-r{ width:30px; height: 610px; background-color:rgba(220,220,220,.9); position:absolute; top: 40px; z-index: 999;}
+.previewbx-l{ left:0; }
+.previewbx-r{ right: 0; }
+
 .previewarw-left i,.previewarw-right i{ display: block; width: 29px; height: 29px; }
 .previewarw-left,.previewarw-right{ position: absolute; top: 50%; margin-top: 15px;z-index:9; }
 .previewarw-left{ left: 0; background: url(../../img/arw-left.png) center center no-repeat; }
@@ -431,7 +439,7 @@ a.uploadbtn{
 
 
 #fancybox-close, .fancybox-close{
-    background: transparent url(../../img/fancybox/fancybox_sprite.png) left top no-repeat!important;
+    background: transparent url(../../img/fancybox_sprite.png) left top no-repeat!important;
     width: 40px;
     height: 40px;
 }
@@ -442,7 +450,6 @@ a.uploadbtn{
 .previewarw-left,.previewarw-right{ position: absolute; top: 50%; margin-top: 15px;}
 .previewarw-left{ left: 0; background: url(../../img/arw-left.png) center center no-repeat; }
 .previewarw-right{ right: 0; background: url(../../img/arw-right.png) center center no-repeat; }
-
 
 
 /*iframe*/
@@ -614,7 +621,8 @@ input[type="file"] {
     opacity: 0.4;
 }
 
-
+.bannerLogo .icon-uploadfile{ margin: 20px auto 5px auto;}
+.custom-file-upload small{ display:block; line-height:25px; color:#808080;} 
 
 
 
@@ -626,10 +634,13 @@ input[type="file"] {
     box-sizing: border-box;
     border: 1px solid #bbbbbb;
     border-radius: 3px;
-    margin: 10px auto;
+    margin: 10px auto 10px;
     background: #ebebec;
     color: #808080;
 }
+
+
+.bannerLogo .btn-uploadimg{ margin: 5px auto 10px;}
 
 
 .uploadedbx{   
@@ -685,6 +696,7 @@ input[type="file"] {
     color: #808080;
     text-decoration: none;
 }
+.picinfo u.uploaderror-txt{ color:#ff0000; }
 
 .picbx .picbx-hover{
     position: absolute;
@@ -745,8 +757,9 @@ input[type="file"] {
     cursor: pointer;
 }
 
-.uploadedbx.error .picbx-hover{
-    display: none;
+.uploadedbx.error:hover .picbx-hover{
+    /*display: block;*/
+    opacity: 1;
 }
 
 .form-error{
@@ -758,15 +771,11 @@ input[type="file"] {
     background: url(../../img/icon-error.png) center 5px no-repeat; 
 }
 
-.form-error a{
+.form-error strong{
     color: #055dcb;
-    text-decoration: none;
     font-weight: bold;
 }
 
-.form-error a:hover{
-    text-decoration: underline;
-}
 
 
 .reuploadlab{

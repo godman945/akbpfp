@@ -82,39 +82,41 @@
 					<td>
 						<ul class="newtbsublist">
 							<li>
-								<span class="newtbsubliststyle">●</span>								
-								<span class="colorpickr">LOGO 推薦顏色：<br>
-									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" ">
-									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" >
-									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" >
-									<br>
-									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" >
-									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" >
-									<input onclick="clickColor(this);" readonly id="" style ="width:70px;background-color:#FFFFFF;color:white" value="" >
-								</span>
+								<span class="newtbsubliststyle">●</span><strong> LOGO區塊底色：</strong>							
+								<div class="colorpickr_box">
+									<i> 系統推薦底色：</i>
+									<span class="colorpickr">
+										<input onclick="clickColor(this);" readonly style ="background-color:#FFFFFF;color:white" value="" ">
+										<input onclick="clickColor(this);" readonly style ="background-color:#FFFFFF;color:white" value="" >
+										<input onclick="clickColor(this);" readonly style ="background-color:#FFFFFF;color:white" value="" >
+										<input onclick="clickColor(this);" readonly style ="background-color:#FFFFFF;color:white" value="" >
+										<input onclick="clickColor(this);" readonly style ="background-color:#FFFFFF;color:white" value="" >
+										<input onclick="clickColor(this);" readonly style ="background-color:#FFFFFF;color:white" value="" >
+									</span>
+								</div>
+								<div class="colorpickr_box">
+									<i> 自訂底色：</i>
+									<span class="colorpickr"> 
+										<input id="logoBgColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#FFFFFF">
+									</span>
+								</div>		
 							</li>
-							<li>
-								<span class="newtbsubliststyle">●</span>								
-								<span class="colorpickr"> LOGO區塊底色：
-									<input id="logoBgColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#FFFFFF">
-								</span>
-							</li>
-
 							<li>
 								<span class="newtbsubliststyle">●</span> 選擇LOGO樣式：	
 								<ul class="adlogostylebx">
-									<li class="transition"><label class="optradio">
-										<input type="radio" value="type1" name="options" id="option1" autocomplete="off" checked>
-										<p class="logostyle style1">正方形LOGO</p> 
-									</label></li>
-									<li class="transition"><label class="optradio">
-										<input type="radio" value="type2" name="options" id="option2" autocomplete="off">
-										<p class="logostyle style2">長方形LOGO</p> 
-									</label></li>
 									<li class="transition">
-										<label class="optradio">
-											<input type="radio" name="options" value="type3" id="option3" autocomplete="off">
-											<p class="logostyle style3">正方形LOGO + 標題文字</p> 				</label>
+										<input type="radio" value="type2" name="options" id="option1" autocomplete="off">
+										<p class="logostyle style1">長方形LOGO</p> 
+									</li>
+
+									<li  class="transition">
+										<input type="radio" value="type1" name="options" id="option2" autocomplete="off" checked>
+										<p class="logostyle style2">正方形LOGO</p> 
+									</li>
+									
+									<li class="transition">
+										<input type="radio" name="options" value="type3" id="option3" autocomplete="off">
+										<p class="logostyle style3">正方形LOGO + 標題文字</p> 				
 										<div class="setadtitle">
 											<div>
 												<span class="tit">標題文字：</span>
@@ -146,7 +148,7 @@
 									<li>									
 										<p class="lgbnrtit">行銷圖像 <a href="javascript:void(0);" onclick="opennots('1');">
 											<img src="<@s.url value="/" />html/img/question.gif"></a>：
-											<input type="button" value="瀏覽檔案" onclick="openFancyfileLoad('logo')">
+											<input type="button" value="上傳檔案" onclick="openFancyfileLoad('logo')">
 										</p> 
 											<a href="javascript:void(0);" target="" onclick="approveSize('行銷圖像支援規格查詢');" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
 										</p>
@@ -321,7 +323,7 @@
 										<p class="lgbnrtit adendpic">結尾行銷圖像
 											<a href="javascript:void(0);" onclick="opennots('2');">
 											<img src="<@s.url value="/" />html/img/question.gif"></a>：
-											<input type="button" id="saleEndImgUploadBtn" disabled name="fileButton" value="瀏覽檔案" onclick="openFancyfileLoad('endSales')" >
+											<input type="button" id="saleEndImgUploadBtn" disabled name="fileButton" value="上傳檔案" onclick="openFancyfileLoad('endSales')" >
 										</p>
 										<a href="javascript:void(0);" target="" onclick="approveSize('結尾行銷圖像支援規格查詢');" style="font-size: 12px; margin-left: 5px">支援規格查詢 </a>
 									</li>
