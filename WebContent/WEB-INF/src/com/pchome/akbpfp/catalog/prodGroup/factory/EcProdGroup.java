@@ -111,8 +111,8 @@ public class EcProdGroup extends AProdGroup {
 			}
 			
 			prodDataJson.put("ec_img", obj.get("ec_img").toString());
-			prodDataJson.put("ec_price", "NT."+obj.get("ec_price").toString());
-			prodDataJson.put("ec_discount_price", "NT."+obj.get("ec_discount_price").toString());
+			prodDataJson.put("ec_price", obj.get("ec_price").toString());
+			prodDataJson.put("ec_discount_price", obj.get("ec_discount_price").toString());
 			prodDataJson.put("ec_stock_status", obj.get("ec_stock_status").toString());
 			prodDataJson.put("ec_use_status", obj.get("ec_use_status").toString());
 			prodDataJson.put("ec_category", obj.get("ec_category").toString());

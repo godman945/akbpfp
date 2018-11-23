@@ -7,6 +7,7 @@ public class RetargetingTrackingVO {
 	String trackingName;
 	String paId;
 	String pfpCustomerInfoId;
+	String trackingStatus;
 	String codeType;
 	String trackingRangeDate;
 	String verifyStatus;
@@ -48,6 +49,12 @@ public class RetargetingTrackingVO {
 	}
 	public void setPfpCustomerInfoId(String pfpCustomerInfoId) {
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
+	}
+	public String getTrackingStatus() {
+		return trackingStatus;
+	}
+	public void setTrackingStatus(String trackingStatus) {
+		this.trackingStatus = trackingStatus;
 	}
 	public String getCodeType() {
 		return codeType;

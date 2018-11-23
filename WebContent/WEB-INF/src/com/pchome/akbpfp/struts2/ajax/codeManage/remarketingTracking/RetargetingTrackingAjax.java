@@ -170,6 +170,62 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 	}
 	
 	
+	/**
+	 * 編輯再行銷追蹤
+	 */
+	public String editRetargetingTrackingAjax() {
+		try {
+			log.info(">>> trackingSeq: " + trackingSeq);
+			log.info(">>> trackingName: " + trackingName);
+			log.info(">>> paId: " + paId);
+			log.info(">>> codeType: " + codeType);
+			log.info(">>> trackingRangeDate: " + trackingRangeDate);
+			log.info(">>> pfpCustomerInfoId: " + super.getCustomer_info_id());
+
+			resultMap = new HashMap<String, Object>();
+			
+			
+			PfpCodeTracking pfpCodeTracking =pfpCodeTrackingService.get(trackingSeq);
+			if ( pfpCodeTracking == null ){
+				resultMap.put("msg", "僅能修改所屬的再行銷資料");
+				resultMap.put("status", "ERROR");
+				return SUCCESS;
+			}
+			
+			if ( !StringUtils.equals(pfpCodeTracking.getPfpCustomerInfoId(), super.getCustomer_info_id()) ){
+				resultMap.put("msg", "僅能修改所屬的再行銷資料");
+				resultMap.put("status", "ERROR");
+				return SUCCESS;
+			}
+			
+			
+			log.info(">>> trackingSeq: " + trackingSeq);
+			log.info(">>> trackingName: " + trackingName);
+			log.info(">>> paId: " + paId);
+			log.info(">>> codeType: " + codeType);
+			log.info(">>> trackingRangeDate: " + trackingRangeDate);
+			log.info(">>> pfpCustomerInfoId: " + super.getCustomer_info_id());
+			
+			//更新pfpCodeTracking
+			pfpCodeTracking.setTrackingName(trackingName);
+			pfpCodeTracking.setCodeType(codeType);
+			pfpCodeTracking.setTrackingRangeDate(trackingRangeDate);
+			pfpCodeTracking.setUpdateDate(new Date());
+			pfpCodeTrackingService.save(pfpCodeTracking);
+			
+			resultMap.put("msg", "再行銷追蹤儲存成功");
+			resultMap.put("status", "SUCCESS");
+
+		} catch (Exception e) {
+			log.error("error:" + e);
+			resultMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			resultMap.put("status", "ERROR");
+			return SUCCESS;
+		}
+
+		return SUCCESS;
+	}
+	
 	
 	
 	/**

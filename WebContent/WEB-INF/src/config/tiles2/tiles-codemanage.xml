@@ -56,6 +56,22 @@
     </definition>
     
     
+    <!-- 編輯再行銷追蹤view  -->
+   	<definition name="edit.retargeting.tracking.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="edit.retargeting.tracking.head" />
+        <put-attribute name="body" value="/ftl/codeManage/retargeting/edit.retargeting.tracking.view.ftl" />
+    </definition>
+    
+    <definition name="edit.retargeting.tracking.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/retargeting/edit.retargeting.tracking.js.ftl" />
+    </definition>
+    
+    <definition name="error.edit.retargeting.tracking.view" extends="code.manage.layout">
+        <put-attribute name="body" value="/ftl/codeManage/retargeting/error.edit.retargeting.tracking.view.ftl" />
+    </definition>
+    
+    
     
     
     
