@@ -241,6 +241,22 @@ public class PfpCatalogAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * 檢查目錄名稱是否重複
+	 * @return
+	 */
+	public String ajaxCheckCatalogName() {
+		dataMap = new HashMap<String, Object>();
+		dataMap.put("errorMsg", "");
+		
+		int catalogNameCount = pfpCatalogService.checkCatalogName(catalogName, super.getCustomer_info_id());
+		if (catalogNameCount >= 1) {
+			dataMap.put("errorMsg", "目錄名稱已重複。");
+		}
+		
+		return SUCCESS;
+	}
+	
 	public InputStream getDownloadFileStream() {
 		return downloadFileStream;
 	}
