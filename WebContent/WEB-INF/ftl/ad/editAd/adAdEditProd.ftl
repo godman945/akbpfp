@@ -181,7 +181,7 @@
 									<option value="tpro_336_280">336 x 280</option>	
 									<option value="tpro_640_390">640 x 390</option>	
 									<option value="tpro_728_90">728 x 90</option>
-									<option value="tpro_95_390">950 x 390</option>
+									<option value="tpro_950_390">950 x 390</option>
 									<option value="tpro_970_250">970 x 250</option>								
 								</select>
 								

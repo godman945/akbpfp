@@ -234,8 +234,8 @@ function initFancyBoxHtml(){
 		fancyboxSaleEndHtml.push('<div class="uploadedbx error" style="display: none">');
 		fancyboxSaleEndHtml.push('<div class="picbx">');
 		fancyboxSaleEndHtml.push('<div class="picbx-hover transition">');
-		fancyboxSaleEndHtml.push('<div class="delbx"><i class="transition"></i>刪除</div>');
-		fancyboxSaleEndHtml.push('<div class="reuploadbx"><i class="transition"></i>重新上傳</div>');
+		fancyboxSaleEndHtml.push('<div class="delbx" onclick="deletePreview(this)"><i class="transition"></i>刪除</div>');
+		fancyboxSaleEndHtml.push('<div class="reuploadbx" onclick="fileLoad(this)"><i class="transition"></i>重新上傳</div>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('<div class="pic">');
 		fancyboxSaleEndHtml.push('<div class="form-error">檔案格式錯誤請<label for="" class="reuploadlab" onclick="fileLoad(this)"> 重新上傳 </label>');
@@ -303,11 +303,11 @@ function initFancyBoxHtml(){
 		fancyboxSaleEndHtml.push('<div class="uploadedbx error" style="display: none">');
 		fancyboxSaleEndHtml.push('<div class="picbx">');
 		fancyboxSaleEndHtml.push('<div class="picbx-hover transition">');
-		fancyboxSaleEndHtml.push('<div class="delbx"><i class="transition"></i>刪除</div>');
-		fancyboxSaleEndHtml.push('<div class="reuploadbx"><i class="transition"></i>重新上傳</div>');
+		fancyboxSaleEndHtml.push('<div class="delbx" onclick="deletePreview(this)"><i class="transition"></i>刪除</div>');
+		fancyboxSaleEndHtml.push('<div class="reuploadbx" onclick="fileLoad(this)"><i class="transition"></i>重新上傳</div>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('<div class="pic">');
-		fancyboxSaleEndHtml.push('<div class="form-error">檔案格式錯誤請<label for="" class="reuploadlab" onclick="fileLoad(this)"> 重新上傳 </label>');
+		fancyboxSaleEndHtml.push('<div class="form-error">檔案格式錯誤<br>請<strong>刪除</strong>或<strong>重新上傳</strong>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('</div>');
@@ -535,7 +535,7 @@ function checkUploadRule(file_data){
 //                	uploadLogoLog["uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
                 }
             }else{
-//            	console.log("FAIL UPLOAD");
+            	console.log("FAIL UPLOAD");
             	var noUpload = $(uploadDom).find(".upload-lab");
             	var hasUpload = $(uploadDom).find(".uploadedbx");
             	var picinfo = $(hasUpload).find(".picinfo");
@@ -553,6 +553,11 @@ function checkUploadRule(file_data){
             	$(noUpload).css("display","none");
             	$(hasUpload).css("display","none");
             	var errorUpload = $(uploadDom).find(".uploadedbx.error");
+            	
+            	//var successPositionDom = $(errorUpload).find(".picbx-hover");
+            	//console.log(successPositionDom[0].innerHTML);
+            	//$(successPositionDom).style("position","");
+            	
             	$(errorUpload).css("display","");
             	if(initFancyBoxType == 'endSales'){
 //            		delete uploadLog['uploadLiDom_'+index];

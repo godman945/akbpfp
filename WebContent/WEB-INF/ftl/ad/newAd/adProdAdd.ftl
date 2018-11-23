@@ -185,16 +185,15 @@
 									<option value="tpro_336_280">336 x 280</option>	
 									<option value="tpro_640_390">640 x 390</option>	
 									<option value="tpro_728_90">728 x 90</option>
-									<option value="tpro_95_390">950 x 390</option>
+									<option value="tpro_950_390">950 x 390</option>
 									<option value="tpro_970_250">970 x 250</option>							
 								</select>
 								
 							</div>
 						</div>
 						
-						<a href="javascript:void(0);" class="previewarw-left" onclick="changeTpro();"><i></i></a>
-						
-						<a href="javascript:void(0);" class="previewarw-right" onclick="changeTpro();"><i></i></a>
+						<div class="previewbx-l"><a href="javascript:void(0)" onclick="changeTpro();" class="previewarw-left"><i></i></a></div>
+						<div class="previewbx-r"><a href="javascript:void(0)" onclick="changeTpro();" class="previewarw-right"><i></i></a></div>
 						<!--廣告預覽 START-->
 						<div class="adcontainr">
 							<div class="adcontent">	
