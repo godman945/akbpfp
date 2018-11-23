@@ -32,6 +32,7 @@ import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.soft.depot.utils.HttpUtil;
+import com.pchome.utils.CommonUtils;
 
 public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
@@ -66,6 +67,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	// 自動排程上傳
 	private String jobURL; // 輸入的自動排程網址
 	private String uploadContent;
+	private String uploadFileName;
 	
 	// 商店網址上傳
 	private String pchomeStoreURL; // 輸入的商店網址
@@ -107,6 +109,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 				|| (catalogUploadType.isEmpty()
 						&& EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(selectUploadFlag))) {
 			uploadContent = pfpCatalog.getCatalogUploadContent().trim();
+			uploadFileName = CommonUtils.getDataFromUrl(uploadContent).get("fileName");
 			return "automaticScheduling";
 		} else if ((StringUtils.isNotBlank(catalogUploadType)
 				&& EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(catalogUploadType))
@@ -207,7 +210,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 
 		try {
 			// 先檢查網址
-			Map<String, String> map = getDataFromUrl(jobURL);
+			Map<String, String> map = CommonUtils.getDataFromUrl(jobURL);
 			if (StringUtils.isBlank(map.get("fileName").toString())
 					&& StringUtils.isBlank(map.get("filenameExtension").toString())) {
 				dataMap.put("status", "ERROR");
@@ -236,32 +239,6 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	}
 	
 	/**
-	 * 由網址判斷是否為csv檔
-	 * @param url
-	 * @return 正確回傳檔名fileName及副檔名filenameExtension  錯誤則檔名副檔名皆為空
-	 */
-	private Map<String, String> getDataFromUrl(String url) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("fileName", "");
-		map.put("filenameExtension", "");
-
-		// 由網址判斷取得檔名副檔名
-		int startLength = url.lastIndexOf("/") + 1;
-		int endLength = (url.indexOf("?") > -1 ? url.indexOf("?") : url.length());
-		String fileName = url.substring(startLength, endLength);
-		String filenameExtension = "";
-		if (fileName.length() >= 4) {
-			filenameExtension = fileName.substring(fileName.length() - 4);
-		}
-		
-		if (".csv".equalsIgnoreCase(filenameExtension)) {
-			map.put("fileName", fileName);
-			map.put("filenameExtension", "csv");
-		}
-		return map;
-	}
-
-	/**
 	 * 自動排程上傳 
 	 * 1.下載檔案
 	 * 2.匯入商品
@@ -284,7 +261,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		}
 		
 		Date updateDatetime = new Date();
-		Map<String, String> map = getDataFromUrl(jobURL);
+		Map<String, String> map = CommonUtils.getDataFromUrl(jobURL);
 		fileUploadFileName = map.get("fileName").toString();
 		downloadPath += "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName;
 		boolean downloadStatus = loadURLFile(jobURL, downloadPath);
@@ -295,7 +272,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 			catalogProdJsonData.put("catalogType", pfpCatalog.getCatalogType());
 			catalogProdJsonData.put("updateWay", updateWay);
 			catalogProdJsonData.put("catalogUploadType", "2");
-			catalogProdJsonData.put("updateContent", fileUploadFileName);
+			catalogProdJsonData.put("updateContent", jobURL);
 			catalogProdJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
 			catalogProdJsonData.put("updateDatetime", formatter.format(updateDatetime));
 			
@@ -644,6 +621,10 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 
 	public List<PfpCatalogProdEcErrorVO> getCatalogProdUploadErrDataList() {
 		return catalogProdUploadErrDataList;
+	}
+
+	public String getUploadFileName() {
+		return uploadFileName;
 	}
 	
 }

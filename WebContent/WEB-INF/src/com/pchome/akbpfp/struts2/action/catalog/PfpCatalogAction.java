@@ -37,7 +37,7 @@ public class PfpCatalogAction extends BaseCookieAction{
 	private IPfpCatalogUploadListService pfpCatalogUploadListService;
 	private IPfpCatalogGroupItemService pfpCatalogGroupItemService;
 	private IPfpAdService pfpAdService;
-	
+	private String message = "";
 	
 	private String queryString = ""; // 預設為空
 	private int pageNo = 1;          // 初始化目前頁數
@@ -111,7 +111,12 @@ public class PfpCatalogAction extends BaseCookieAction{
 	 * @throws Exception 
 	 */
 	public String savePfpCatalog() throws Exception {
-		dataMap = new HashMap<String, Object>();
+		
+		int catalogNameCount = pfpCatalogService.checkCatalogName(catalogName, super.getCustomer_info_id());
+		if (catalogNameCount >= 1) {
+			message = "目錄名稱已重複。";
+			return INPUT;
+		}
 		
 		PfpCatalogVO vo = new PfpCatalogVO();
 		vo.setCatalogName(catalogName);
@@ -236,6 +241,22 @@ public class PfpCatalogAction extends BaseCookieAction{
 		return SUCCESS;
 	}
 	
+	/**
+	 * 檢查目錄名稱是否重複
+	 * @return
+	 */
+	public String ajaxCheckCatalogName() {
+		dataMap = new HashMap<String, Object>();
+		dataMap.put("errorMsg", "");
+		
+		int catalogNameCount = pfpCatalogService.checkCatalogName(catalogName, super.getCustomer_info_id());
+		if (catalogNameCount >= 1) {
+			dataMap.put("errorMsg", "目錄名稱已重複。");
+		}
+		
+		return SUCCESS;
+	}
+	
 	public InputStream getDownloadFileStream() {
 		return downloadFileStream;
 	}
@@ -346,6 +367,10 @@ public class PfpCatalogAction extends BaseCookieAction{
 
 	public boolean isShowPromptMessage() {
 		return showPromptMessage;
+	}
+
+	public String getMessage() {
+		return message;
 	}
 
 }

@@ -251,4 +251,18 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 		super.getSession().beginTransaction().commit();
 	}
 
+	@Override
+	public int checkCatalogName(String catalogName, String customerInfoId) {
+		StringBuffer hql = new StringBuffer();
+		hql.append(" FROM PfpCatalog ");
+		hql.append(" WHERE pfpCustomerInfoId =:customerInfoId ");
+		hql.append(" AND catalogDeleteStatus = '0' ");
+		hql.append(" AND catalogName =:catalogName ");
+		Session session = super.getSession();
+        Query query = session.createQuery(hql.toString());
+        query.setParameter("customerInfoId", customerInfoId);
+        query.setParameter("catalogName", catalogName);
+		return query.list().size();
+	}
+
 }

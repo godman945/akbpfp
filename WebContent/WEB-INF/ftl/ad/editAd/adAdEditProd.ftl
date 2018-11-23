@@ -143,7 +143,7 @@
 								<ul class="adlogostylebx">
 									<li>									
 										<p class="lgbnrtit">行銷圖像 
-											<a href="javascript:void(0);" onclick="opennots('1');">
+											<a href="javascript:void(0);" onclick="approveSize('行銷圖像說明');">
 											<img src="<@s.url value="/" />html/img/question.gif"></a>：
 											<input type="button" value="瀏覽檔案" onclick="openFancyfileLoad('logo')">
 										</p> 
@@ -155,11 +155,6 @@
 								</ul>
 							</div>
 						</div>
-						<div id="shownotes1" style="visibility: hidden;margin-left:-10px;" class="adnoticepop">
-							<h4>行銷圖像設定</h4>
-							<div class="adpopcont">針對不同廣告尺寸設計行銷圖像。請注意，行銷圖像會覆蓋整個LOGO區塊。</div>
-							<a onclick="closenots(1)" style="cursor:pointer;" class="adpopclose">關閉</a>
-						</div>
 					</td>
 
 					<td class="adpreview" rowspan="3" width="650">
@@ -168,27 +163,27 @@
 							<span>預覽廣告尺寸</span>
 							<div class="adsizeselect">
 								<select name="" id="adSize">
-									<option value="1">120 x 600</option>	
-									<option value="2">140 x 300</option>	
-									<option value="3">160 x 240</option>
-									<option value="4">160 x 600</option>
-									<option value="5">180 x 150</option>
-									<option value="6">250 x 80</option>	
-									<option value="7">300 x 100</option>	
-									<option value="8" selected>300 x 250</option>
-									<option value="9">300 x 600</option>
-									<option value="10">320 x 480</option>	
-									<option value="11">336 x 280</option>	
-									<option value="12">640 x 390</option>	
-									<option value="13">728 x 90</option>
-									<option value="14">950 x 390</option>
-									<option value="15">970 x 250</option>							
+									<option value="tpro_120_600">120 x 600</option>	
+									<option value="tpro_140_300">140 x 300</option>	
+									<option value="tpro_160_240">160 x 240</option>
+									<option value="tpro_160_600">160 x 600</option>
+									<option value="tpro_180_150">180 x 150</option>
+									<option value="tpro_250_80">250 x 80</option>	
+									<option value="tpro_300_100">300 x 100</option>	
+									<option value="tpro_300_250" selected>300 x 250</option>
+									<option value="tpro_300_600">300 x 600</option>
+									<option value="tpro_320_480">320 x 480</option>	
+									<option value="tpro_336_280">336 x 280</option>	
+									<option value="tpro_640_390">640 x 390</option>	
+									<option value="tpro_728_90">728 x 90</option>
+									<option value="tpro_950_390">950 x 390</option>
+									<option value="tpro_970_250">970 x 250</option>								
 								</select>
 								
 							</div>
 						</div>
-						<a href="#" class="previewarw-left"><i></i></a>
-						<a href="#" class="previewarw-right"><i></i></a>
+						<a href="javascript:void(0);" class="previewarw-left" onclick="changeTpro();"><i></i></a>
+						<a href="javascript:void(0);" class="previewarw-right" onclick="changeTpro();"><i></i></a>
 						<!--廣告預覽 START-->
 						<div class="adcontainr">
 							<div class="adcontent">	
@@ -318,7 +313,7 @@
 								<ul class="adlogostylebx" style="padding: 0;">
 									<li>									
 										<p class="lgbnrtit adendpic">結尾行銷圖像
-											<a href="javascript:void(0);" onclick="opennots('2');">
+											<a href="javascript:void(0);" onclick="approveSize('結尾行銷圖像設定');">
 											<img src="<@s.url value="/" />html/img/question.gif"></a>：								
 											<input type="button" id="saleEndImgUploadBtn" disabled name="fileButton" value="瀏覽檔案" onclick="openFancyfileLoad('endSales')" >
 										</p>
@@ -329,11 +324,6 @@
 								<ul class="adbannerpicbx" style="display:grid;">
 								</ul>
 							</div>
-							<div id="shownotes2" style="visibility: hidden;margin-left:-10px;" class="adnoticepop">
-								<h4>結尾行銷圖像設定</h4>
-								<div class="adpopcont">商品輪播結尾的行銷圖像，圖片尺寸大小須與廣告版型大小一致。</div>
-								<a onclick="closenots(2)" style="cursor:pointer;" class="adpopclose">關閉</a>
-							</div>								
 					</td>
 				</tr>
 
@@ -381,7 +371,33 @@
 	    </div>
 	   </div>
 </div>
+<div id ="note1" style="display:none" >
+		<div class="noticepop" style="width:auto;">
+		<h4 id="title"></h4><div>
+	    <table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
+	        <tbody>
+	            <tr>
+	                <td>針對不同廣告尺寸設計行銷圖像。請注意，行銷圖像會覆蓋整個LOGO區塊。</td>
+	            </tr>
+	        </tbody>
+	    </table>
+	    </div>
+	   </div>
+</div>
 
+<div id ="note2" style="display:none" >
+		<div class="noticepop" style="width:auto;">
+		<h4 id="title"></h4><div>
+	    <table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
+	        <tbody>
+	            <tr>
+	                <td>商品輪播結尾的行銷圖像，圖片尺寸大小須與廣告版型大小一致。</td>
+	            </tr>
+	        </tbody>
+	    </table>
+	    </div>
+	   </div>
+</div>
 <textarea style="display:none;" id="saveUserLogoPath">${userLogoPath!}</textarea>
 <input type="hidden" id="saveProdLogoType" value="${prodLogoType!}">
 <input type="hidden" id="messageId" value="${message!!}">

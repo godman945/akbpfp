@@ -37,7 +37,25 @@
 			index_15:"250_250"
 	};
 
-	
+	﻿
+	var tproObject = new Object();
+	tproObject["data"] = {
+			tpro_300_250:"c_x05_pad_tpro_0100,c_x05_pad_tpro_0101,c_x05_pad_tpro_0099",
+			tpro_250_80:"c_x05_pad_tpro_0102",
+			tpro_728_90:"c_x05_pad_tpro_0103",
+			tpro_120_600:"c_x05_pad_tpro_0104",
+			tpro_140_300:"c_x05_pad_tpro_0105",
+			tpro_160_240:"c_x05_pad_tpro_0106",
+			tpro_160_600:"c_x05_pad_tpro_0107",
+			tpro_180_150:"c_x05_pad_tpro_0108",
+			tpro_300_100:"c_x05_pad_tpro_0109",
+			tpro_300_600:"c_x05_pad_tpro_0110",
+			tpro_320_480:"c_x05_pad_tpro_0111",
+			tpro_336_280:"c_x05_pad_tpro_0112",
+			tpro_640_390:"c_x05_pad_tpro_0113",
+			tpro_950_390:"c_x05_pad_tpro_0114",
+			tpro_970_250:"c_x05_pad_tpro_0115"
+	};
 	
 	//開啟fancybox上傳畫面初始化
 	var upload_size = null;
@@ -112,6 +130,18 @@ $(document).ready(function(){
 		$("#catalogSelect").change(function() {
 			initCatalogSelect();
 			$(".akb_iframe").attr("src","");
+		});
+		
+		
+		$("#adSize").change(function() {
+			var tpro = $("#adSize option:selected").val();
+			var tproArray = tproObject.data[tpro].split(",");
+			previewTpro = tproArray[0];
+			previewTproIndex = 0;
+			if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
+				return false;
+			}
+			getProdGroup(null);
 		});
 		
 		$(function () {
@@ -289,8 +319,8 @@ function initFancyBoxHtml(){
 		fancyboxSaleEndHtml.push('<div class="uploadedbx error" style="display: none">');
 		fancyboxSaleEndHtml.push('<div class="picbx">');
 		fancyboxSaleEndHtml.push('<div class="picbx-hover transition">');
-		fancyboxSaleEndHtml.push('<div class="delbx"><i class="transition"></i>刪除</div>');
-		fancyboxSaleEndHtml.push('<div class="reuploadbx"><i class="transition"></i>重新上傳</div>');
+		fancyboxSaleEndHtml.push('<div class="delbx" onclick="deletePreview(this)"><i class="transition"></i>刪除</div>');
+		fancyboxSaleEndHtml.push('<div class="reuploadbx" onclick="fileLoad(this)"><i class="transition"></i>重新上傳</div>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('<div class="pic">');
 		fancyboxSaleEndHtml.push('<div class="form-error">檔案格式錯誤請<label for="" class="reuploadlab" onclick="fileLoad(this)"> 重新上傳 </label>');
@@ -324,13 +354,19 @@ function initFancyBoxHtml(){
 	fancyboxSaleEndHtml.push('<ul class="uploadlist">');
 	for (var key in salesIframewp.data) {
 //		console.log(salesEndIframewp.data[key]);
-		var size = salesIframewp.data[key];
-		var width = size.split('_')[0];
-		var height = size.split('_')[1];
+		var size = salesIframewp.data[key].split(",");
+		var bannerSize = size[0];
+		var bannerWidth = bannerSize.split('_')[0];
+		var bannerHeight = bannerSize.split('_')[1];
+		
+		var adSize = size[1];
+		var adWidth = adSize.split('_')[0];
+		var adHeight = adSize.split('_')[1];
 		fancyboxSaleEndHtml.push('<li>');
 		fancyboxSaleEndHtml.push('	<div class=\"upload-lab\" style=\"display:block;\" onclick=\"fileLoad(this)\">');
 		fancyboxSaleEndHtml.push('		<label for="" class="custom-file-upload">');
-		fancyboxSaleEndHtml.push('			<i class="icon-uploadfile"></i>圖片尺寸：' + width + ' x '+ height);
+		fancyboxSaleEndHtml.push('			<i class="icon-uploadfile"></i>圖片尺寸：' + bannerWidth + ' x '+ bannerHeight);
+		fancyboxSaleEndHtml.push('			<small>(提供 '+adWidth+'x'+adHeight+' 使用)</small>');
 		fancyboxSaleEndHtml.push('			<b class="btn-uploadimg">選擇檔案</b>');
 		fancyboxSaleEndHtml.push('		</label>');
 		fancyboxSaleEndHtml.push('	</div>');
@@ -352,11 +388,11 @@ function initFancyBoxHtml(){
 		fancyboxSaleEndHtml.push('<div class="uploadedbx error" style="display: none">');
 		fancyboxSaleEndHtml.push('<div class="picbx">');
 		fancyboxSaleEndHtml.push('<div class="picbx-hover transition">');
-		fancyboxSaleEndHtml.push('<div class="delbx"><i class="transition"></i>刪除</div>');
-		fancyboxSaleEndHtml.push('<div class="reuploadbx"><i class="transition"></i>重新上傳</div>');
+		fancyboxSaleEndHtml.push('<div class="delbx" onclick="deletePreview(this)"><i class="transition"></i>刪除</div>');
+		fancyboxSaleEndHtml.push('<div class="reuploadbx" onclick="fileLoad(this)"><i class="transition"></i>重新上傳</div>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('<div class="pic">');
-		fancyboxSaleEndHtml.push('<div class="form-error">檔案格式錯誤請<label for="" class="reuploadlab" onclick="fileLoad(this)"> 重新上傳 </label>');
+		fancyboxSaleEndHtml.push('<div class="form-error">檔案格式錯誤<br>請<strong>刪除</strong>或<strong>重新上傳</strong>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('</div>');
@@ -365,9 +401,9 @@ function initFancyBoxHtml(){
 		fancyboxSaleEndHtml.push('<u></u>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('</div>');
-		fancyboxSaleEndHtml.push('<div style="display:none">' + size + '</div>');
+		fancyboxSaleEndHtml.push('<div style="display:none">' + bannerSize + '</div>');
 		fancyboxSaleEndHtml.push('</li> ');
-	}              
+	}             
 	fancyboxSaleEndHtml.push('</ul>');
 	fancyboxSaleEndHtml.push('<!--uploadlist end-->');
 	fancyboxSaleEndHtml.push('</div>');
@@ -1102,15 +1138,33 @@ function adPreview(){
 	
 	//商品行銷圖
 	var logoBgImgObj = $(body)[0].getElementsByClassName("logo-img-background")[0];
-	Object.keys(uploadLogoLog).forEach(function(key) {
-		var height = String(uploadLogoLog[key].height);
-		var width = String(uploadLogoLog[key].width);
-		if(width == 300 && selectSizeWidth  == 300  && height == 55 && selectSizeHeight == 250){
-			var previewSrc = String(uploadLogoLog[key].previewSrc);
-			$(logoBgImgObj).attr("src",previewSrc);
-			logoBgImgObj.parentElement.parentElement.className ="type3 logo-box pos-absolute pos-top pos-left";
+	var flag = false;
+	for (var key in uploadLogoLog) {
+		var uploadBannerWidth = uploadLogoLog[key].width;
+		var uploadBannerHeight = uploadLogoLog[key].height;
+		var uploadBannerPreviewSrc = uploadLogoLog[key].previewSrc;
+		for (var key in salesIframewp.data) {
+			var size = salesIframewp.data[key].split(",");
+			
+			var adSize = size[1];
+			var adWidth = adSize.split('_')[0];
+			var adHeight = adSize.split('_')[1];
+			if(selectSizeWidth == adWidth && selectSizeHeight == adHeight){
+				var bannerSize = size[0];
+				var bannerWidth = bannerSize.split('_')[0];
+				var bannerHeight = bannerSize.split('_')[1];
+				if(uploadBannerWidth == bannerWidth && uploadBannerHeight == bannerHeight){
+					$(logoBgImgObj).attr("src",uploadBannerPreviewSrc);
+					logoBgImgObj.parentElement.parentElement.className ="type3 logo-box pos-absolute pos-top pos-left";
+					flag = true;
+					break;
+				}
+			}
 		}
-	});
+		if(flag){
+			break;
+		}
+	}
 }
 
 function changeActive(obj){
@@ -1199,10 +1253,19 @@ function clickColor(obj){
 }
 
 function approveSize(obj){
-	$("#approveSize").find("h4")[0].innerHTML = obj;
-	//行銷圖像支援規格查詢
+	var boxObj = null;
+	if(obj=='行銷圖像支援規格查詢' || obj == '結尾行銷圖像支援規格查詢'){
+		boxObj = $("#approveSize").find("h4")[0].innerHTML = obj;
+		boxObj = $("#approveSize").html();
+	}else if(obj =='行銷圖像說明'){
+		boxObj = $("#note1").find("h4")[0].innerHTML = obj;
+		boxObj = $("#note1").html();
+	}else if(obj == '結尾行銷圖像設定'){
+		boxObj = $("#note2").find("h4")[0].innerHTML = obj;
+		boxObj = $("#note2").html();
+	}
 	$.fancybox(
-	$("#approveSize").html(),
+	boxObj.html(),
 	{
 		'autoDimensions'	: false,
 		'width'         	: "500",

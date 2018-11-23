@@ -52,6 +52,7 @@
 	<#if user_privilege == "0" || user_privilege == "1" || user_privilege == "2" >
 		<@s.if test="%{#uri.indexOf('/catalogProd') > -1 ||
 					   #uri.indexOf('/addCatalog') > -1 ||
+					   #uri.indexOf('/savePfpCatalog') > -1 ||
 					   #uri.indexOf('/catalogUpload') > -1 ||
 					   #uri.indexOf('/selectUpload') > -1 ||
 					   #uri.indexOf('/prodListCardStyleView') > -1 ||					  

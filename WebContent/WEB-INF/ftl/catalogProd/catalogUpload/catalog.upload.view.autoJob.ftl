@@ -36,7 +36,8 @@
     </div>
     <#-- 次目錄導覽列 結束 -->
 
-	<input type="text" id="uploadContent" name="uploadContent" value="${uploadContent!}">
+	<input type="hidden" id="uploadContent" name="uploadContent" value="${uploadContent!}">
+	<input type="hidden" id="uploadFileName" name="uploadFileName" value="${uploadFileName!}">
 	<div id="loadingWaitBlock">
 	    <#-- 選擇商品資料來源 開始 -->
 	    <div class="content-wrap bg-white">
@@ -98,13 +99,13 @@
 	                    <#-- 自動排程-資料來源型態  -->
 	                    <div class="urlupload-box datatype">
 	                        <div class="txt-cell p-l10">
-	                            <div class="datainfo txt-noselect">
+	                            <div class="datainfo-url txt-noselect">
 	                                <div class="svg-box medium">
 	                                    <object class="svg-img" data="<@s.url value="/" />/html/img/catalogProd/catalogUpload/dataupload-csv-nobg.svg" type="image/svg+xml"></object>
 	                                </div>
 	
 	                                <p>
-	                                    <i id="dataTypeFileName" data-fileName="2018PAZZO新品上市新品上市.csv"></i>
+	                                    <i id="dataTypeFileName" data-filename="2018PAZZO新品上市新品上市.csv"></i>
 	                                    <span class="txt-ellipsis" id="dataTypeContent">網址：
 	                                        <em data-fileUrl="https://www.mywebsite.com//www.mywebsite.com/www.mywebsite.comwww.mywebsite.com/feed/feedJune112917.csv"></em>
 	                                    </span>

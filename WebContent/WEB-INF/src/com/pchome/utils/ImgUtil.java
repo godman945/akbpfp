@@ -241,7 +241,9 @@ public class ImgUtil {
 	 */
 	private static void createFolder(String path) {
 		File file = new File(path);
+		log.info("圖片建立資料夾路徑:" + path);
 		if (!file.exists()) {
+			log.info("建立資料夾");
 			file.mkdirs(); // 建立資料夾
 		}
 	}

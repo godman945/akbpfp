@@ -18,11 +18,12 @@ var maskingConfig = {
 var url = "";
 $(document).ready(function() {
 	
-	if ($("#uploadContent").val()) { 
+	if ($("#uploadContent").val()) {
 		// 一進入先判斷此目錄是否已經有設定網址，有則調整預設畫面
 		$("div.urlupload-box").removeClass('select');
 		$("div.urlupload-box.datatype").addClass('select');
-		$("#dataTypeFileName").attr("data-fileName", url.substring(url.lastIndexOf("/") +1));
+		$("#dataTypeFileName").attr("data-fileName", $("#uploadFileName").val());
+		url = $("#uploadContent").val();
 		$("#dataTypeContent").html("網址：<em data-fileUrl=\"" + url + "\"></em>");
 	}
 	
@@ -31,10 +32,10 @@ $(document).ready(function() {
 		url = $(this).val();
 		
 		// 檢查輸入網址是否正確
-//		if (url.substr(url.length - 4,url.length).toLowerCase() != ".csv") {
-//			alert("網址請輸入規定的格式。\n\n http://******.csv、https://******.csv");
-//			return false;
-//		}
+		if (url.substr(url.length - 4,url.length).toLowerCase() != ".csv") {
+			alert("網址請輸入規定的格式。\n\n http://******.csv、https://******.csv");
+			return false;
+		}
 		
 		//顯示遮罩
 		$('#loadingWaitBlock').block(maskingConfig);
@@ -100,11 +101,14 @@ function autoJobFinish() {
 			updateWay:$('input[name=updateWay]:checked').val()
 		},
 		success : function(respone) {
-		},
-		error: function(xtl) {
-			alert("系統繁忙，請稍後再試！");
+			
 		}
-	});
+//		,error: function(xtl) {
+//			alert("系統繁忙，請稍後再試！");
+//		}
+	}).fail(function(){
+    	console.log("發生錯誤。。。。");
+    });
     
     window.location.replace("catalogProd.html");
 }

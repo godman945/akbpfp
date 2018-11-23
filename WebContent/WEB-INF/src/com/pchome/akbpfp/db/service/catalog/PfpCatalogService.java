@@ -19,6 +19,7 @@ import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
+import com.pchome.utils.CommonUtils;
 
 public class PfpCatalogService extends BaseService<PfpCatalog,String> implements IPfpCatalogService{
 	
@@ -72,23 +73,7 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 			if (EnumPfpCatalog.CATALOG_SHOPPING.getType().equals(catalog_type)) {
 				pfpCatalogVO.setCatalogTypeName(EnumPfpCatalog.CATALOG_SHOPPING.getTypeName());
 			}
-			
-			if (dataMap.get("catalog_upload_type") != null) { // 上傳方式
-				String catalog_upload_type = (String) dataMap.get("catalog_upload_type");
-				pfpCatalogVO.setCatalogUploadType(catalog_upload_type.trim());
-				if (EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType().equals(catalog_upload_type)) {
-					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getTypeName());
-				} else if (EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(catalog_upload_type)) {
-					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getTypeName());
-				} else if (EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(catalog_upload_type)) {
-					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getTypeName());
-				} else if (EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType().equals(catalog_upload_type)) {
-					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getTypeName());
-				}
-				
-				pfpCatalogVO.setNextUpdateDatetime(calculateTheNextUpdateTime(catalog_upload_type));
-			}
-			
+
 			if (dataMap.get("update_content") != null) { // 資料來源
 				pfpCatalogVO.setUploadContent((String) dataMap.get("update_content"));
 			}
@@ -114,6 +99,24 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 				pfpCatalogVO.setUploadStatus((String)dataMap.get("upload_status"));
 			}
 			
+			// 上傳方式 有些資料會依照上傳方式做調整，所以放在最後
+			if (dataMap.get("catalog_upload_type") != null) {
+				String catalog_upload_type = (String) dataMap.get("catalog_upload_type");
+				pfpCatalogVO.setCatalogUploadType(catalog_upload_type.trim());
+				if (EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getType().equals(catalog_upload_type)) {
+					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_FILE_UPLOAD.getTypeName());
+				} else if (EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(catalog_upload_type)) {
+					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getTypeName());
+					// 如果是排程上傳 update_content內存的網址取得檔名
+					pfpCatalogVO.setUploadContent(CommonUtils.getDataFromUrl((String) dataMap.get("update_content")).get("fileName"));
+				} else if (EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(catalog_upload_type)) {
+					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getTypeName());
+				} else if (EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType().equals(catalog_upload_type)) {
+					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getTypeName());
+				}
+				
+				pfpCatalogVO.setNextUpdateDatetime(calculateTheNextUpdateTime(catalog_upload_type));
+			}
 			pfpCatalogVOList.add(pfpCatalogVO);
 		}
 		return pfpCatalogVOList;
@@ -232,6 +235,17 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 			}
 		}
 		return isShowMessage;
+	}
+	
+	/**
+	 * 檢查目錄名稱是否重複
+	 * @param catalogName
+	 * @param customer_info_id
+	 * @return
+	 */
+	@Override
+	public int checkCatalogName(String catalogName, String customerInfoId) {
+		return ((IPfpCatalogDAO) dao).checkCatalogName(catalogName, customerInfoId);
 	}
 	
 	@Override

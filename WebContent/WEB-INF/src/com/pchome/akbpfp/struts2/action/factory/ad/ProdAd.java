@@ -156,7 +156,7 @@ public class ProdAd implements IAd {
 		}
 		Date date = new Date();
 		StringBuffer saveImgPathBuffer = new StringBuffer();
-		saveImgPathBuffer.append(adAddAction.getPhotoDbPathNew()).append(adAddAction.getCustomer_info_id()).append("/").append(adAddAction.getSdf().format(date)).append("/original/").append(adSeq).append("/");
+		saveImgPathBuffer.append(adAddAction.getPhotoDbPath()).append("user/").append(adAddAction.getCustomer_info_id()).append("/").append(adAddAction.getSdf().format(date)).append("/original/").append(adSeq).append("/");
 		JSONObject uploadLogJson = new JSONObject(adAddAction.getUploadLog());
 		saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adSeq,"add");
 		JSONObject uploadLogoLogJson = new JSONObject(adAddAction.getUploadLogoLog());
@@ -385,7 +385,7 @@ public class ProdAd implements IAd {
 		
 		Date date = new Date();
 		StringBuffer saveImgPathBuffer = new StringBuffer();
-		saveImgPathBuffer.append(adEditAction.getPhotoDbPathNew()).append(adEditAction.getCustomer_info_id()).append("/").append(adEditAction.getSdf().format(date)).append("/original/").append(adEditAction.getAdSeq()).append("/");
+		saveImgPathBuffer.append(adEditAction.getPhotoDbPath()).append("user/").append(adEditAction.getCustomer_info_id()).append("/").append(adEditAction.getSdf().format(date)).append("/original/").append(adEditAction.getAdSeq()).append("/");
 		JSONObject uploadLogJson = new JSONObject(adEditAction.getUploadLog());
 		saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
 		JSONObject uploadLogoLogJson = new JSONObject(adEditAction.getUploadLogoLog());

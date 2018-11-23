@@ -123,6 +123,9 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 				dataMap.put("status", "SUCCESS");
 			}
 
+			if (reader != null) {
+				reader.close();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			dataMap.put("status", "ERROR");
@@ -242,6 +245,10 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 			}
 			
 			catalogProdJsonData.put("catalogProdItem", prdItemArray);
+			
+			if (reader != null) {
+				reader.close();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return catalogProdJsonData;

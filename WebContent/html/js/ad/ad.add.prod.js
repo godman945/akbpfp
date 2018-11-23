@@ -18,6 +18,45 @@ tproObject["data"] = {
 		tpro_970_250:"c_x05_pad_tpro_0115"
 };
 
+
+var salesEndIframewp = new Object();
+salesEndIframewp["data"] = {
+		index_1:"120_600",
+		index_2:"140_300",
+		index_3:"160_240",
+		index_4:"160_600",
+		index_5:"180_150",
+		index_6:"250_80",
+		index_7:"300_100",
+		index_8:"300_250",
+		index_9:"300_600",
+		index_10:"320_480",
+		index_11:"336_280",
+		index_12:"640_390",
+		index_13:"728_90",
+		index_14:"950_390",
+		index_15:"970_250"
+};
+
+var salesIframewp = new Object();
+salesIframewp["data"] = {
+		index_1:"120_120,120_600",
+		index_2:"140_70,140_300",
+		index_3:"160_50,160_240",
+		index_4:"160_100,160_600",
+		index_5:"180_50,180_150",
+		index_6:"80_80,250_80",
+		index_7:"95_100,300_100",
+		index_8:"300_55,300_250",
+		index_9:"300_95,300_600",
+		index_10:"320_70,320_480",
+		index_11:"336_60,336_280",
+		index_12:"640_90,640_390",
+		index_13:"245_90,728_90",
+		index_14:"950_100,950_390",
+		index_15:"250_250,970_250"
+};
+
 $(document).ready(function(){
 	
 	$(".akb_iframe").attr("src","");
@@ -160,45 +199,6 @@ function initLogoColor(){
 }
 
 function initFancyBoxHtml(){
-	var salesEndIframewp = new Object();
-	salesEndIframewp["data"] = {
-			index_1:"120_600",
-			index_2:"140_300",
-			index_3:"160_240",
-			index_4:"160_600",
-			index_5:"180_150",
-			index_6:"250_80",
-			index_7:"300_100",
-			index_8:"300_250",
-			index_9:"300_600",
-			index_10:"320_480",
-			index_11:"336_280",
-			index_12:"640_390",
-			index_13:"728_90",
-			index_14:"950_390",
-			index_15:"970_250"
-	};
-	
-	var salesIframewp = new Object();
-	salesIframewp["data"] = {
-			index_1:"120_120",
-			index_2:"140_70",
-			index_3:"160_50",
-			index_4:"160_100",
-			index_5:"180_50",
-			index_6:"80_80",
-			index_7:"95_100",
-			index_8:"300_55",
-			index_9:"300_95",
-			index_10:"320_70",
-			index_11:"336_60",
-			index_12:"640_90",
-			index_13:"245_90",
-			index_14:"950_100",
-			index_15:"250_250"
-	};
-	
-	
 	var fancyboxSaleEndHtml = [];
 	fancyboxSaleEndHtml.push('<div class="iframewp">');
 	fancyboxSaleEndHtml.push('<div class="containr">');
@@ -234,8 +234,8 @@ function initFancyBoxHtml(){
 		fancyboxSaleEndHtml.push('<div class="uploadedbx error" style="display: none">');
 		fancyboxSaleEndHtml.push('<div class="picbx">');
 		fancyboxSaleEndHtml.push('<div class="picbx-hover transition">');
-		fancyboxSaleEndHtml.push('<div class="delbx"><i class="transition"></i>刪除</div>');
-		fancyboxSaleEndHtml.push('<div class="reuploadbx"><i class="transition"></i>重新上傳</div>');
+		fancyboxSaleEndHtml.push('<div class="delbx" onclick="deletePreview(this)"><i class="transition"></i>刪除</div>');
+		fancyboxSaleEndHtml.push('<div class="reuploadbx" onclick="fileLoad(this)"><i class="transition"></i>重新上傳</div>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('<div class="pic">');
 		fancyboxSaleEndHtml.push('<div class="form-error">檔案格式錯誤請<label for="" class="reuploadlab" onclick="fileLoad(this)"> 重新上傳 </label>');
@@ -266,16 +266,22 @@ function initFancyBoxHtml(){
 	fancyboxSaleEndHtml.push('<div class="iframewp">');
 	fancyboxSaleEndHtml.push('<div class="containr">');
 	fancyboxSaleEndHtml.push('<h1>LOGO行銷圖像   <span>商品輪播的LOGO圖像</span></h1>');
-	fancyboxSaleEndHtml.push('<ul class="uploadlist">');
+	fancyboxSaleEndHtml.push('<ul class="uploadlist bannerLogo">');
 	for (var key in salesIframewp.data) {
 //		console.log(salesEndIframewp.data[key]);
-		var size = salesIframewp.data[key];
-		var width = size.split('_')[0];
-		var height = size.split('_')[1];
+		var size = salesIframewp.data[key].split(",");
+		var bannerSize = size[0];
+		var bannerWidth = bannerSize.split('_')[0];
+		var bannerHeight = bannerSize.split('_')[1];
+		
+		var adSize = size[1];
+		var adWidth = adSize.split('_')[0];
+		var adHeight = adSize.split('_')[1];
 		fancyboxSaleEndHtml.push('<li>');
 		fancyboxSaleEndHtml.push('	<div class=\"upload-lab\" style=\"display:block;\" onclick=\"fileLoad(this)\">');
 		fancyboxSaleEndHtml.push('		<label for="" class="custom-file-upload">');
-		fancyboxSaleEndHtml.push('			<i class="icon-uploadfile"></i>圖片尺寸：' + width + ' x '+ height);
+		fancyboxSaleEndHtml.push('			<i class="icon-uploadfile"></i>圖片尺寸：' + bannerWidth + ' x '+ bannerHeight);
+		fancyboxSaleEndHtml.push('			<small>(提供 '+adWidth+'x'+adHeight+' 使用)</small>');
 		fancyboxSaleEndHtml.push('			<b class="btn-uploadimg">選擇檔案</b>');
 		fancyboxSaleEndHtml.push('		</label>');
 		fancyboxSaleEndHtml.push('	</div>');
@@ -297,11 +303,11 @@ function initFancyBoxHtml(){
 		fancyboxSaleEndHtml.push('<div class="uploadedbx error" style="display: none">');
 		fancyboxSaleEndHtml.push('<div class="picbx">');
 		fancyboxSaleEndHtml.push('<div class="picbx-hover transition">');
-		fancyboxSaleEndHtml.push('<div class="delbx"><i class="transition"></i>刪除</div>');
-		fancyboxSaleEndHtml.push('<div class="reuploadbx"><i class="transition"></i>重新上傳</div>');
+		fancyboxSaleEndHtml.push('<div class="delbx" onclick="deletePreview(this)"><i class="transition"></i>刪除</div>');
+		fancyboxSaleEndHtml.push('<div class="reuploadbx" onclick="fileLoad(this)"><i class="transition"></i>重新上傳</div>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('<div class="pic">');
-		fancyboxSaleEndHtml.push('<div class="form-error">檔案格式錯誤請<label for="" class="reuploadlab" onclick="fileLoad(this)"> 重新上傳 </label>');
+		fancyboxSaleEndHtml.push('<div class="form-error">檔案格式錯誤<br>請<strong>刪除</strong>或<strong>重新上傳</strong>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('</div>');
@@ -310,7 +316,7 @@ function initFancyBoxHtml(){
 		fancyboxSaleEndHtml.push('<u></u>');
 		fancyboxSaleEndHtml.push('</div>');
 		fancyboxSaleEndHtml.push('</div>');
-		fancyboxSaleEndHtml.push('<div style="display:none">' + size + '</div>');
+		fancyboxSaleEndHtml.push('<div style="display:none">' + bannerSize + '</div>');
 		fancyboxSaleEndHtml.push('</li> ');
 	}              
 	fancyboxSaleEndHtml.push('</ul>');
@@ -473,7 +479,7 @@ function drop(ev,obj) {
 
 //檢查上傳圖片合法性
 function checkUploadRule(file_data){
-	console.log(uploadDom);
+//	console.log(uploadDom);
 	var imgArea = $(uploadDom.parentElement.parentElement).find('li');
 	readFile(file_data.files[0], function(e) {
 		var index = $(uploadDom).index();
@@ -529,7 +535,7 @@ function checkUploadRule(file_data){
 //                	uploadLogoLog["uploadLiDom_"+index] = {index:index,fileName:fileName,width:width,height:height,previewSrc:previewSrc,fileExtensionName:fileExtensionName,fileSize:fileSize};
                 }
             }else{
-//            	console.log("FAIL UPLOAD");
+            	console.log("FAIL UPLOAD");
             	var noUpload = $(uploadDom).find(".upload-lab");
             	var hasUpload = $(uploadDom).find(".uploadedbx");
             	var picinfo = $(hasUpload).find(".picinfo");
@@ -547,6 +553,11 @@ function checkUploadRule(file_data){
             	$(noUpload).css("display","none");
             	$(hasUpload).css("display","none");
             	var errorUpload = $(uploadDom).find(".uploadedbx.error");
+            	
+            	//var successPositionDom = $(errorUpload).find(".picbx-hover");
+            	//console.log(successPositionDom[0].innerHTML);
+            	//$(successPositionDom).style("position","");
+            	
             	$(errorUpload).css("display","");
             	if(initFancyBoxType == 'endSales'){
 //            		delete uploadLog['uploadLiDom_'+index];
@@ -956,7 +967,7 @@ function adPreview(){
 	if($(".akb_iframe")[0].contentDocument.body.children[0] == undefined){
 		return false;
 	}
-	console.log('====adPreview start====');
+//	console.log('====adPreview start====');
 	var css = $(".akb_iframe")[0].contentDocument.head.getElementsByTagName("style")[2].innerHTML;
 	css = css.replace("<#dad_logo_font_color>","#"+$("#logoFontColor").val());
 	css = css.replace("<#dad_logo_bg_color>","#"+$("#logoBgColor").val());
@@ -999,15 +1010,33 @@ function adPreview(){
 	
 	//商品行銷圖
 	var logoBgImgObj = $(body)[0].getElementsByClassName("logo-img-background")[0];
-	Object.keys(uploadLogoLog).forEach(function(key) {
-		var height = String(uploadLogoLog[key].height);
-		var width = String(uploadLogoLog[key].width);
-		if(width == 300 && selectSizeWidth  == 300  && height == 55 && selectSizeHeight == 250){
-			var previewSrc = String(uploadLogoLog[key].previewSrc);
-			$(logoBgImgObj).attr("src",previewSrc);
-			logoBgImgObj.parentElement.parentElement.className ="type3 logo-box pos-absolute pos-top pos-left";
+	var flag = false;
+	for (var key in uploadLogoLog) {
+		var uploadBannerWidth = uploadLogoLog[key].width;
+		var uploadBannerHeight = uploadLogoLog[key].height;
+		var uploadBannerPreviewSrc = uploadLogoLog[key].previewSrc;
+		for (var key in salesIframewp.data) {
+			var size = salesIframewp.data[key].split(",");
+			
+			var adSize = size[1];
+			var adWidth = adSize.split('_')[0];
+			var adHeight = adSize.split('_')[1];
+			if(selectSizeWidth == adWidth && selectSizeHeight == adHeight){
+				var bannerSize = size[0];
+				var bannerWidth = bannerSize.split('_')[0];
+				var bannerHeight = bannerSize.split('_')[1];
+				if(uploadBannerWidth == bannerWidth && uploadBannerHeight == bannerHeight){
+					$(logoBgImgObj).attr("src",uploadBannerPreviewSrc);
+					logoBgImgObj.parentElement.parentElement.className ="type3 logo-box pos-absolute pos-top pos-left";
+					flag = true;
+					break;
+				}
+			}
 		}
-	});
+		if(flag){
+			break;
+		}
+	}
 }
 
 function changeActive(obj){
@@ -1099,9 +1128,19 @@ function clickColor(obj){
 }
 
 function approveSize(obj){
-	$("#approveSize").find("h4")[0].innerHTML = obj;
+	var boxObj = null;
+	if(obj=='行銷圖像支援規格查詢' || obj == '結尾行銷圖像支援規格查詢'){
+		boxObj = $("#approveSize").find("h4")[0].innerHTML = obj;
+		boxObj = $("#approveSize").html();
+	}else if(obj =='行銷圖像說明'){
+		boxObj = $("#note1").find("h4")[0].innerHTML = obj;
+		boxObj = $("#note1").html();
+	}else if(obj == '結尾行銷圖像設定'){
+		boxObj = $("#note2").find("h4")[0].innerHTML = obj;
+		boxObj = $("#note2").html();
+	}
 	$.fancybox(
-	$("#approveSize").html(),
+	boxObj,
 	{
 		'autoDimensions'	: false,
 		'width'         	: "500",
