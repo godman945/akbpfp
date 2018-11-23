@@ -237,6 +237,17 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 		return isShowMessage;
 	}
 	
+	/**
+	 * 檢查目錄名稱是否重複
+	 * @param catalogName
+	 * @param customer_info_id
+	 * @return
+	 */
+	@Override
+	public int checkCatalogName(String catalogName, String customerInfoId) {
+		return ((IPfpCatalogDAO) dao).checkCatalogName(catalogName, customerInfoId);
+	}
+	
 	@Override
 	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog) {
 		((IPfpCatalogDAO) dao).saveOrUpdateWithCommit(pfpCatalog);

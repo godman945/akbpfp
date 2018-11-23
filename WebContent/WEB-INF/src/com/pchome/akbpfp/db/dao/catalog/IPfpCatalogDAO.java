@@ -32,4 +32,6 @@ public interface IPfpCatalogDAO extends IBaseDAO<PfpCatalog,String>{
 	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog);
 
 	public List<Map<String, Object>> getCatalogAndCatalogLogoData(String customer_info_id);
+
+	public int checkCatalogName(String catalogName, String customer_info_id);
 }

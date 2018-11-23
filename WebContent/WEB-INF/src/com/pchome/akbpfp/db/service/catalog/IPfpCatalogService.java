@@ -62,4 +62,12 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	 */
 	public boolean checkCatalogAndCatalogLogoIsShowMessage(String customer_info_id);
 
+	/**
+	 * 檢查目錄名稱是否重複
+	 * @param catalogName
+	 * @param customerInfoId
+	 * @return
+	 */
+	public int checkCatalogName(String catalogName, String customerInfoId);
+
 }

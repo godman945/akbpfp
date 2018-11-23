@@ -44,7 +44,7 @@
 		            <p class="title-box h2">目錄名稱</p>
 		            <div class="input-text">
 		                <input type="text" id="catalogName" name="catalogName" maxlength="20" value="" required placeholder="填寫目錄名稱，最多20字">
-		                <div class="msg-error"></div>
+		                <div class="msg-error">${message}</div>
 		            </div>
 		        </div>
 		        <#-- 目錄名稱 結束 -->
