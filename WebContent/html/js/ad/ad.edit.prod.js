@@ -1253,10 +1253,19 @@ function clickColor(obj){
 }
 
 function approveSize(obj){
-	$("#approveSize").find("h4")[0].innerHTML = obj;
-	//行銷圖像支援規格查詢
+	var boxObj = null;
+	if(obj=='行銷圖像支援規格查詢' || obj == '結尾行銷圖像支援規格查詢'){
+		boxObj = $("#approveSize").find("h4")[0].innerHTML = obj;
+		boxObj = $("#approveSize").html();
+	}else if(obj =='行銷圖像說明'){
+		boxObj = $("#note1").find("h4")[0].innerHTML = obj;
+		boxObj = $("#note1").html();
+	}else if(obj == '結尾行銷圖像設定'){
+		boxObj = $("#note2").find("h4")[0].innerHTML = obj;
+		boxObj = $("#note2").html();
+	}
 	$.fancybox(
-	$("#approveSize").html(),
+	boxObj.html(),
 	{
 		'autoDimensions'	: false,
 		'width'         	: "500",

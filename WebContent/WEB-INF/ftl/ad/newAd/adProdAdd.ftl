@@ -146,7 +146,7 @@
 
 								<ul class="adlogostylebx">
 									<li>									
-										<p class="lgbnrtit">行銷圖像 <a href="javascript:void(0);" onclick="opennots('1');">
+										<p class="lgbnrtit">行銷圖像 <a href="javascript:void(0);" onclick="approveSize('行銷圖像說明');">
 											<img src="<@s.url value="/" />html/img/question.gif"></a>：
 											<input type="button" value="上傳檔案" onclick="openFancyfileLoad('logo')">
 										</p> 
@@ -158,11 +158,6 @@
 								<ul class="adbannerpicbx">
 								</ul>
 							</div>
-						</div>
-						<div id="shownotes1" style="visibility: hidden;margin-left:-10px;" class="adnoticepop">
-							<h4>行銷圖像設定</h4>
-							<div class="adpopcont">針對不同廣告尺寸設計行銷圖像。請注意，行銷圖像會覆蓋整個LOGO區塊。</div>
-							<a onclick="closenots(1)" style="cursor:pointer;" class="adpopclose">關閉</a>
 						</div>
 					</td>
 
@@ -320,7 +315,7 @@
 								<ul class="adlogostylebx">
 									<li>									
 										<p class="lgbnrtit adendpic">結尾行銷圖像
-											<a href="javascript:void(0);" onclick="opennots('2');">
+											<a href="javascript:void(0);" onclick="approveSize('結尾行銷圖像設定');">
 											<img src="<@s.url value="/" />html/img/question.gif"></a>：
 											<input type="button" id="saleEndImgUploadBtn" disabled name="fileButton" value="上傳檔案" onclick="openFancyfileLoad('endSales')" >
 										</p>
@@ -330,11 +325,6 @@
 
 								<ul class="adbannerpicbx" style="display:grid;">
 								</ul>
-							</div>
-							<div id="shownotes2" style="visibility: hidden;margin-left:-10px;" class="adnoticepop">
-								<h4>結尾行銷圖像設定</h4>
-								<div class="adpopcont">商品輪播結尾的行銷圖像，圖片尺寸大小須與廣告版型大小一致。</div>
-								<a onclick="closenots(2)" style="cursor:pointer;" class="adpopclose">關閉</a>
 							</div>
 					</td>
 				</tr>
@@ -393,3 +383,31 @@
 	   </div>
 </div>
 
+	
+<div id ="note1" style="display:none" >
+		<div class="noticepop" style="width:auto;">
+		<h4 id="title"></h4><div>
+	    <table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
+	        <tbody>
+	            <tr>
+	                <td>針對不同廣告尺寸設計行銷圖像。請注意，行銷圖像會覆蓋整個LOGO區塊。</td>
+	            </tr>
+	        </tbody>
+	    </table>
+	    </div>
+	   </div>
+</div>
+
+<div id ="note2" style="display:none" >
+		<div class="noticepop" style="width:auto;">
+		<h4 id="title"></h4><div>
+	    <table width="90%" cellspacing="1" cellpadding="0" border="0" class="tb02" style="margin:10px auto;line-height:18px;">
+	        <tbody>
+	            <tr>
+	                <td>商品輪播結尾的行銷圖像，圖片尺寸大小須與廣告版型大小一致。</td>
+	            </tr>
+	        </tbody>
+	    </table>
+	    </div>
+	   </div>
+</div>
