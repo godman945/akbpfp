@@ -18,8 +18,6 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 	private static final long serialVersionUID = 1L;
 	
 	
-	
-	
 	private int currentPage = 1;      //第幾頁(初始預設第1頁)
 	private int pageSizeSelected = 10; //每頁筆數(初始預設每頁10筆)
 	private int totalCount = 0; //資料總筆數
@@ -34,6 +32,7 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 	private String paId;
 	private String trackingSeq;
 	private String returnMsg;
+	private RetargetingTrackingVO retargetingTrackingResultBean;
 
 	public String queryRetargetingTrackingView(){		
 		try{
@@ -83,6 +82,35 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 			
 			//取流水號
 			trackingSeq = sequenceService.getSerialNumberByLength20(EnumSequenceTableName.PFP_CODE_TRACKING);
+			
+		} catch (Exception e) {
+			log.error("error:" + e);
+			returnMsg = "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。";
+			return ERROR;
+		}
+		
+		return SUCCESS;
+	}
+	
+	
+	public String editRetargetingTrackingView(){		
+		try{
+			log.info(">>> trackingSeq: " +trackingSeq);
+			log.info(">>> pfpCustomerInfoId: " + super.getCustomer_info_id());
+			
+			
+			RetargetingTrackingVO retargetingTrackingBean = new RetargetingTrackingVO();
+			retargetingTrackingBean.setTrackingSeq(trackingSeq);
+			retargetingTrackingBean.setPfpCustomerInfoId(super.getCustomer_info_id());
+			
+			retargetingTrackingResultBean = pfpCodeTrackingService.getPfpCodeTrackingByCondition(retargetingTrackingBean);
+			
+			if ( retargetingTrackingResultBean == null ){
+				returnMsg = "僅能編輯所屬的再行銷目錄";
+				return ERROR;
+			}
+			
+			
 			
 		} catch (Exception e) {
 			log.error("error:" + e);
@@ -218,8 +246,11 @@ public class RetargetingTrackingAction  extends BaseCookieAction{
 	public void setPfpCodeTrackingService(IPfpCodeTrackingService pfpCodeTrackingService) {
 		this.pfpCodeTrackingService = pfpCodeTrackingService;
 	}
-
-
-	
+	public RetargetingTrackingVO getRetargetingTrackingResultBean() {
+		return retargetingTrackingResultBean;
+	}
+	public void setRetargetingTrackingResultBean(RetargetingTrackingVO retargetingTrackingResultBean) {
+		this.retargetingTrackingResultBean = retargetingTrackingResultBean;
+	}
 	
 }

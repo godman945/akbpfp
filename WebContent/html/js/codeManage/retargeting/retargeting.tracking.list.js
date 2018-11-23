@@ -365,7 +365,7 @@ function queryRetargetingListAjax(){
 	    		
             		tempHtml += " <div class='txt-row txt-row-data' data-type='enable'> ";
             		tempHtml += " <div class='txt-cell col-ptagcheckbox'><div class='input-check'><input type='checkbox' id='check"+i+"' value='"+trackingSeq+"'><label for='check"+i+"'></label></div></div> ";
-            		tempHtml += " <div class='txt-cell col-ptagname'><a href='#'>"+trackingName+"</a><br><small>ID："+trackingSeq+"</small></div> ";
+            		tempHtml += " <div class='txt-cell col-ptagname'><a href='editRetargetingTrackingView.html?trackingSeq="+trackingSeq+"'>"+trackingName+"</a><br><small>ID："+trackingSeq+"</small></div> ";
             		tempHtml += " <div class='txt-cell col-ptagcode'><a href='javascript:void(0)' onclick='getpTag(\""+codeType+"\",\""+paId+"\",\""+trackingSeq+"\",\""+trackingName+"\");'>取得代碼</a></div> ";
             		if (verifyStatus == "1"){
             			tempHtml += " <div class='txt-cell col-ptagstatus'><span data-certificated='true'>已認證</span></div> ";
@@ -691,6 +691,7 @@ function deleteRetargetingAjax(retargetingIdArray) {
 
 //發送mail
 function sendMail(){
+	console.log('mail mail')
 	//檢查全部mail是否合法
 	if (checkMailReceivers()==true){
 		//send mail

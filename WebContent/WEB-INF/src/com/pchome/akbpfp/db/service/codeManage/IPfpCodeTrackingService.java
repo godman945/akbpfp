@@ -15,4 +15,6 @@ public interface IPfpCodeTrackingService extends IBaseService<PfpCodeTracking,St
 	
 	public void updateTrackingStatus(String pfpCustomerInfoId, List<String> retargetingIdArray,String trackingStatus) throws Exception;
 	
+	public RetargetingTrackingVO getPfpCodeTrackingByCondition(RetargetingTrackingVO retargetingTrackingVO) throws Exception;
+	
 }

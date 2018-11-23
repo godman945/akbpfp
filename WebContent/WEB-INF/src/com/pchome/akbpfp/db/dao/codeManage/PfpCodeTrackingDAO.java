@@ -86,6 +86,23 @@ public class PfpCodeTrackingDAO extends BaseDAO<PfpCodeTracking,String> implemen
 	}
 	
 	
+	@SuppressWarnings("unchecked")
+	public List<Map<String,Object>> getPfpCodeTrackingByCondition(RetargetingTrackingVO retargetingTrackingVO) throws Exception{
+
+		StringBuffer hql = new StringBuffer();
+		hql.append(" select * ");
+		hql.append(" from pfp_code_tracking ");
+		hql.append(" where 1=1 ");
+		hql.append(" and pfp_customer_info_id = '"+retargetingTrackingVO.getPfpCustomerInfoId()+"' ");
+		hql.append(" and tracking_seq = '"+retargetingTrackingVO.getTrackingSeq()+"' ");
+		
+		log.info(hql.toString());
+
+		Query query = super.getSession().createSQLQuery(hql.toString());
+		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
+		
+		return query.list();
+	}
 	
 	
 

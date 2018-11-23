@@ -72,7 +72,26 @@ public class PfpCodeTrackingService extends BaseService<PfpCodeTracking,String> 
 		((IPfpCodeTrackingDAO)dao).updateTrackingStatus(pfpCustomerInfoId,retargetingIdArray,trackingStatus);
 	}
 	
-	
+	public RetargetingTrackingVO getPfpCodeTrackingByCondition(RetargetingTrackingVO retargetingTrackingVO) throws Exception{
+		List<Map<String,Object>> retargetingTrackingLists = ((IPfpCodeTrackingDAO)dao).getPfpCodeTrackingByCondition(retargetingTrackingVO);
+		RetargetingTrackingVO retargetingTrackingBean = null;
+		
+		if( (!retargetingTrackingLists.isEmpty()) && (retargetingTrackingLists.size()>0) ){
+			for (Object object : retargetingTrackingLists) {
+				retargetingTrackingBean = new RetargetingTrackingVO();
+				Map obj = (Map) object;
+				retargetingTrackingBean.setTrackingSeq(obj.get("tracking_seq").toString());	
+				retargetingTrackingBean.setTrackingName(obj.get("tracking_name").toString());
+				retargetingTrackingBean.setPaId(obj.get("pa_id").toString());	
+				retargetingTrackingBean.setPfpCustomerInfoId(obj.get("pfp_customer_info_id").toString());
+				retargetingTrackingBean.setTrackingStatus(obj.get("tracking_status").toString());
+				retargetingTrackingBean.setCodeType(obj.get("code_type").toString());		
+				retargetingTrackingBean.setTrackingRangeDate(obj.get("tracking_range_date").toString());	
+			}
+		}
+		
+		return retargetingTrackingBean;
+	}
 	
 	
 	
