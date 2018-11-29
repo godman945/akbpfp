@@ -83,7 +83,8 @@
 									&adbgType=hasposter
 									&imgProportiona=${vo.userLogoType!}
 									&userLogoPath=${vo.userLogoPath!}
-									&prodAdUrl=${vo.realUrl!}
+									&realUrl=${vo.realUrl!}
+									&imgShowType=
 									&previewTpro=c_x05_pad_tpro_0128
 									">
 								</iframe>
