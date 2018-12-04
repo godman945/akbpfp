@@ -20,21 +20,21 @@
 
 	var salesIframewp = new Object();
 	salesIframewp["data"] = {
-			index_1:"120_120",
-			index_2:"140_70",
-			index_3:"160_50",
-			index_4:"160_100",
-			index_5:"180_50",
-			index_6:"80_80",
-			index_7:"95_100",
-			index_8:"300_55",
-			index_9:"300_95",
-			index_10:"320_70",
-			index_11:"336_60",
-			index_12:"640_90",
-			index_13:"245_90",
-			index_14:"950_100",
-			index_15:"250_250"
+			index_1:"120_120,120_600",
+			index_2:"140_70,140_300",
+			index_3:"160_50,160_240",
+			index_4:"160_100,160_600",
+			index_5:"180_50,180_150",
+			index_6:"80_80,250_80",
+			index_7:"95_100,300_100",
+			index_8:"300_55,300_250",
+			index_9:"300_95,300_600",
+			index_10:"320_70,320_480",
+			index_11:"336_60,336_280",
+			index_12:"640_90,640_390",
+			index_13:"245_90,728_90",
+			index_14:"950_100,950_390",
+			index_15:"250_250,970_250"
 	};
 
 	﻿
@@ -352,6 +352,9 @@ function initFancyBoxHtml(){
 	fancyboxSaleEndHtml.push('<div class="containr">');
 	fancyboxSaleEndHtml.push('<h1>LOGO行銷圖像   <span>商品輪播的LOGO圖像</span></h1>');
 	fancyboxSaleEndHtml.push('<ul class="uploadlist">');
+	
+	
+	console.log(salesIframewp);
 	for (var key in salesIframewp.data) {
 //		console.log(salesEndIframewp.data[key]);
 		var size = salesIframewp.data[key].split(",");
