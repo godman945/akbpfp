@@ -789,14 +789,18 @@ function adSubmit(){
 		var logoBgColor = $("#logoBgColor").val();
 		var logoType = "";
 		var radioType = $('input[name=options]:checked').val();
+		var logoPath = "";
 		if(radioType == "type1"){
 			logoType = "type1";
+			logoPath = encodeURIComponent(logoData.square.logoPath);
 		}
 		if(radioType == "type2"){
 			logoType = "type1";
+			logoPath = encodeURIComponent(logoData.rectangle.logoPath);
 		}
 		if(radioType == "type3"){
 			logoType = "type2";
+			logoPath = encodeURIComponent(logoData.square.logoPath);
 		}
 		var logoText = $("#logoText").val();
 		var logoFontColor = $("#logoFontColor").val();
@@ -806,8 +810,6 @@ function adSubmit(){
 		var disTxtType = $("#disTxtType").val();
 		var disFontColor = $("#disFontColor").val();
 		var disBgColor =  $("#disBgColor").val();
-		
-		
 		
 		console.log("adName:"+adName);
 		console.log("catalogId:"+catalogId);
@@ -867,7 +869,8 @@ function adSubmit(){
 			    			"disFontColor":"#"+$("#disFontColor").val(),
 			    			"disBgColor":"#"+$("#disBgColor").val(),
 			    			"disTxtType":$("#disTxtType").val(),
-			    			"prodLogoType":$('input[name=options]:checked').val()
+			    			"prodLogoType":$('input[name=options]:checked').val(),
+			    			"logoPath":logoPath
 						},
 						success : function(respone) {
 							console.log(respone);
@@ -956,7 +959,7 @@ function getProdGroup(obj){
 		+"&logoFontColor="+encodeURIComponent("#"+logoFontColor.value)
 		+"&prodLogoType="+encodeURIComponent(prodLogoType)
 		+"&imgProportiona="+encodeURIComponent(imgProportiona)
-		+"&userLogoPath="+logoPath
+		+"&userLogoPath="+encodeURIComponent(logoPath)
 		+"&realUrl="+encodeURIComponent(realUrl)
 		+"&previewTpro="+encodeURIComponent(previewTpro)
 		$(".akb_iframe").attr('src' ,src);

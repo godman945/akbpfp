@@ -151,6 +151,9 @@ public class ProdAd implements IAd {
 			case PROD_RADIO_LOGO_TYPE:
 				adAddAction.saveAdDetail(adAddAction.getProdLogoType(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
+			case LOGO_IMG_URL:
+				adAddAction.saveAdDetail(adAddAction.getLogoPath(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
+		 		break;
 			}
 
 		}
@@ -379,6 +382,9 @@ public class ProdAd implements IAd {
 		 		break;
 			case PROD_RADIO_LOGO_TYPE:
 				adEditAction.saveAdDetail(adEditAction.getProdLogoType(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
+		 		break;
+			case LOGO_IMG_URL:
+				adEditAction.saveAdDetail(adEditAction.getLogoPath(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			}
 		}

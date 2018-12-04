@@ -870,17 +870,19 @@ function adEditSubmit(){
 		var logoBgColor = $("#logoBgColor").val();
 		var logoType = $('input[name=options]:checked').val();
 		var radioType = $('input[name=options]:checked').val();
+		var logoPath = "";
 		if(radioType == "type1"){
 			logoType = "type1";
+			logoPath = encodeURIComponent(logoData.square.logoPath);
 		}
 		if(radioType == "type2"){
 			logoType = "type1";
+			logoPath = encodeURIComponent(logoData.rectangle.logoPath);
 		}
 		if(radioType == "type3"){
 			logoType = "type2";
+			logoPath = encodeURIComponent(logoData.square.logoPath);
 		}
-		
-		
 			
 		var logoText = $("#logoText").val();
 		var logoFontColor = $("#logoFontColor").val();
@@ -955,7 +957,8 @@ function adEditSubmit(){
 			    			"disFontColor":"#"+$("#disFontColor").val(),
 			    			"disBgColor":"#"+$("#disBgColor").val(),
 			    			"disTxtType":$("#disTxtType").val(),
-			    			"prodLogoType":$('input[name=options]:checked').val()
+			    			"prodLogoType":$('input[name=options]:checked').val(),
+			    			"logoPath":logoPath
 						},
 						success : function(respone) {
 							console.log(respone);
