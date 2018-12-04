@@ -794,15 +794,15 @@ function adSubmit(){
 		var logoData = JSON.parse($("#userLogoPath").text());
 		if(radioType == "type1"){
 			logoType = "type1";
-			logoPath = encodeURIComponent(logoData.square.logoPath);
+			logoPath = logoData.square.logoPath;
 		}
 		if(radioType == "type2"){
 			logoType = "type1";
-			logoPath = encodeURIComponent(logoData.rectangle.logoPath);
+			logoPath = logoData.rectangle.logoPath;
 		}
 		if(radioType == "type3"){
 			logoType = "type2";
-			logoPath = encodeURIComponent(logoData.square.logoPath);
+			logoPath = logoData.square.logoPath;
 		}
 		var logoText = $("#logoText").val();
 		var logoFontColor = $("#logoFontColor").val();
