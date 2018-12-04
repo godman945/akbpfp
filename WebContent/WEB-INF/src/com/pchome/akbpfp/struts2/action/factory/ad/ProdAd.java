@@ -57,7 +57,7 @@ public class ProdAd implements IAd {
 		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
 				JSONObject catalogLogoUrlJson = new JSONObject();
-				catalogLogoUrlJson.put("logoPath", adAddAction.getPhotoPath()+pfpCatalogLogo.getCatalogLogoUrl());
+				catalogLogoUrlJson.put("logoPath", adAddAction.getPhotoDbPath()+pfpCatalogLogo.getCatalogLogoUrl());
 				catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
 				List<String> colorList = new ArrayList<String>();
 				Set<PfpCatalogLogoDetail> pfpCatalogLogoDetailSet = pfpCatalogLogo.getPfpCatalogLogoDetails();
@@ -176,7 +176,7 @@ public class ProdAd implements IAd {
 		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
 				JSONObject catalogLogoUrlJson = new JSONObject();
-				catalogLogoUrlJson.put("logoPath", adEditAction.getPhotoDbPathPrefix()+pfpCatalogLogo.getCatalogLogoUrl());
+				catalogLogoUrlJson.put("logoPath", adEditAction.getPhotoDbPath()+pfpCatalogLogo.getCatalogLogoUrl());
 				catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
 				List<String> colorList = new ArrayList<String>();
 				Set<PfpCatalogLogoDetail> pfpCatalogLogoDetailSet = pfpCatalogLogo.getPfpCatalogLogoDetails();

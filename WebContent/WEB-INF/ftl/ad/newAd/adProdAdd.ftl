@@ -346,7 +346,7 @@
 <input type="hidden" id="messageId" value="">
 <input type="hidden" id="adGroupSeq" value="${adGroupSeq!}">
 <input type="hidden" id="userLogoType" value="${userLogoType!}">
-<textarea style="display:;" id="userLogoPath">${userLogoPath!}</textarea>
+<textarea style="display:none;" id="userLogoPath">${userLogoPath!}</textarea>
 
 </div>
 <input type="file" serialize id="fileupload" name="fileupload"  style="display:none;">
