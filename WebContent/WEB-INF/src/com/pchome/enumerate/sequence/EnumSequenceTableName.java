@@ -45,8 +45,13 @@ public enum EnumSequenceTableName {
 	PFP_CATALOG_UPLOAD_LOG("catalog_upload_log_seq", "PCUL"),
 	
 	// 再行銷追蹤代號
-	PFP_CODE_TRACKING("pfp_code_tracking","TAC");
+	PFP_CODE_TRACKING("pfp_code_tracking","TAC"),
 	
+	// 轉換追蹤代號
+	PFP_CODE_CONVERT("pfp_code_convert","CAC"),
+	
+	// 轉換追蹤條件
+	PFP_CODE_CONVERT_RULE("pfp_code_convert_rule","RLE");
 	
 	private String snoName;
 	private String charName;

@@ -75,5 +75,53 @@
     
     
     
+    
+    <!-- 轉換追蹤view  -->
+	<definition name="convert.tracking.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="convert.tracking.head" />
+        <put-attribute name="body" value="/ftl/codeManage/convert/convert.tracking.view.ftl" />
+    </definition>
+    
+    <definition name="convert.tracking.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/convert/convert.tracking.js.ftl" />
+    </definition>
+    
+    <!-- 轉換追蹤清單view  -->
+	<definition name="convert.tracking.list.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="convert.tracking.list.head" />
+        <put-attribute name="body" value="/ftl/codeManage/convert/convert.tracking.list.view.ftl" />
+    </definition>
+    
+    <definition name="convert.tracking.list.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/convert/convert.tracking.list.js.ftl" />
+    </definition>
+    
+    
+    <!-- 新增轉換追蹤view  -->
+   	<definition name="add.convert.tracking.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="add.convert.tracking.head" />
+        <put-attribute name="body" value="/ftl/codeManage/convert/add.convert.tracking.view.ftl" />
+    </definition>
+    
+    <definition name="add.convert.tracking.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/convert/add.convert.tracking.js.ftl" />
+    </definition>
+    
+    
+    <!-- 編輯轉換追蹤view  -->
+   	<definition name="edit.convert.tracking.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="edit.convert.tracking.head" />
+        <put-attribute name="body" value="/ftl/codeManage/convert/edit.convert.tracking.view.ftl" />
+    </definition>
+    
+    <definition name="edit.convert.tracking.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/convert/edit.convert.tracking.js.ftl" />
+    </definition>
+    
+    
 	
 </tiles-definitions>
