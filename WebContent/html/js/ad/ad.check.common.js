@@ -20,11 +20,11 @@ function checkAdInputTextLength(type1,textDom,type2,hintDom,isShow,msg){
 		hint = $("."+hintDom);
 	}
 	
-	text.bind('blur', function() {
-		if(text.val().length > 0 && text.val().length <= 4 && isShow) {
-			alert(msg);
-		}
-	});
+//	text.bind('blur', function() {
+//		if(text.val().length > 0 && text.val().length <= 4 && isShow) {
+//			alert(msg);
+//		}
+//	});
 }
 //提示剩餘字數用
 function hintAdInputTextLength(type1,textDom,type2,hintDom){

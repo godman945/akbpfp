@@ -28,7 +28,6 @@ function addPfpCatalog() {
 
 /**
  * 檢查目錄名稱長度
- * @returns {Boolean}
  */
 function checkCatalogNameLength() {
 	if ($('#catalogName').val().length == 0) {
@@ -56,8 +55,10 @@ function checkCatalogName() {
 		success: function(response, status){
 			if (response.errorMsg) {
 				$(".msg-error").html(response.errorMsg);
+				$('#catalogName').addClass("errorInput");
 				return true;
 			} else {
+				$('#catalogName').removeClass("errorInput");
 				$(".msg-error").html("");
 				return false;
 			}

@@ -223,13 +223,13 @@
 							<li>
 								<span class="newtbsubliststyle">●</span>								
 								<span class="colorpickr">文字顏色：
-									<input id="btnFontColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#055dcb">
+									<input id="btnFontColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#FFFFFF">
 								</span>
 							</li>
 							<li>
 								<span class="newtbsubliststyle">●</span>								
 								<span class="colorpickr">按鈕底色：
-									<input id="btnBgColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#FFFFFF">
+									<input id="btnBgColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#000000">
 								</span>
 							</li>
 						</ul>									
@@ -260,7 +260,7 @@
 							<li>
 								<span class="newtbsubliststyle">●</span>								
 								<span class="colorpickr">按鈕底色：
-									<input id="disBgColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#0090e7">
+									<input id="disBgColor" onchange="changeBackgroundColor(this)" class="color {pickerPosition:'right'}" value="#FF0000">
 								</span>
 							</li>
 						</ul>									
