@@ -235,6 +235,8 @@ public class AdAddAction extends BaseCookieAction{
 	private String imgProportiona;
 	
 	private String userLogoPath;
+	
+	private String logoPath;
 	/* 商品廣告用參數 END*/
 	
 	//新增廣告
@@ -2794,6 +2796,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setPhotoDbPathPrefix(String photoDbPathPrefix) {
 		this.photoDbPathPrefix = photoDbPathPrefix;
+	}
+
+	public String getLogoPath() {
+		return logoPath;
+	}
+
+	public void setLogoPath(String logoPath) {
+		this.logoPath = logoPath;
 	}
 
 	public static void main(String args[]){
