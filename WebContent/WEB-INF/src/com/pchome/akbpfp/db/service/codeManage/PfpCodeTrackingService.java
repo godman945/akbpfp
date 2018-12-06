@@ -10,6 +10,7 @@ import com.pchome.akbpfp.db.dao.codeManage.IPfpCodeTrackingDAO;
 import com.pchome.akbpfp.db.pojo.PfpCodeTracking;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.codeManage.RetargetingTrackingVO;
+import com.pchome.enumerate.codeManage.EnumVerifyStatusType;
 
 public class PfpCodeTrackingService extends BaseService<PfpCodeTracking,String> implements IPfpCodeTrackingService{
 	private RedisAPI redisAPI;
@@ -42,9 +43,9 @@ public class PfpCodeTrackingService extends BaseService<PfpCodeTracking,String> 
 				String redisKey =codeManageRediskey+retargetingTrackingBean.getTrackingSeq();
 				String redisData = redisAPI.getRedisData(redisKey); // 查詢此客戶redis是否有資料
 				if (redisData == null){
-					retargetingTrackingBean.setVerifyStatus("0");
+					retargetingTrackingBean.setVerifyStatus(EnumVerifyStatusType.Unverified.getType());
 				}else{
-					retargetingTrackingBean.setVerifyStatus("1");
+					retargetingTrackingBean.setVerifyStatus(EnumVerifyStatusType.Verified.getType());
 				}
 					
 				

@@ -372,7 +372,7 @@
 
             <!-- 電子郵件寄送代碼 開始 -->
             <div class="section-box p-b60">
-                <p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以逗號分隔</small></p>
+                <p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以分號分隔</small></p>
                 <div class="input-text inputemail">
                     <input id="mailReceivers" type="text" name="" maxlength="200" value="" required placeholder="you@email.com">
                     <div class="button-box w-900 txt-center p-tb30">

@@ -14,6 +14,7 @@ import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.codeManage.ConvertTrackingRuleVO;
 import com.pchome.akbpfp.db.vo.codeManage.ConvertTrackingVO;
+import com.pchome.akbpfp.db.vo.codeManage.RetargetingTrackingVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.codeManage.EnumConvertType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -28,7 +29,8 @@ public class ConvertTrackingAction  extends BaseCookieAction{
 	private int pageSizeSelected = 10; //每頁筆數(初始預設每頁10筆)
 	private int totalCount = 0; //資料總筆數
 	private int pageCount = 0; //總頁數
-	private List<Object> retargetingList; 
+	private List<Object> convertList; 
+	private ConvertTrackingVO  sumConvertCount;
 	
 	private IPfpCustomerInfoService pfpCustomerInfoService;
 	private IPfpCodeService pfpCodeService;
@@ -74,18 +76,25 @@ public class ConvertTrackingAction  extends BaseCookieAction{
 			convertTrackingVO.setPageSize(pageSizeSelected);
 			convertTrackingVO.setPfpCustomerInfoId(super.getCustomer_info_id());
 			
-//			retargetingList = pfpCodeTrackingService.getRetargetingTrackingList(convertTrackingVO);
-//			
-//			if(retargetingList.size() <= 0){
-//				returnMsg = "沒有商品清單資料";
-//				return ERROR;
-//			}
-//			
-//			//商品清單資料總筆數
-//			totalCount =  Integer.valueOf(pfpCodeTrackingService.getRetargetingTrackingCount(retargetingTrackingVO));
-//			
-////			//總頁數
-//			pageCount = (int)Math.ceil((float)totalCount / pageSizeSelected);
+			
+			convertList = pfpCodeConvertService.getConvertTrackingList(convertTrackingVO);
+			
+			if(convertList.size() <= 0){
+				returnMsg = "沒有商品清單資料";
+				return ERROR;
+			}
+			
+			
+			//所有轉換動作
+			sumConvertCount = pfpCodeConvertService.getSumConvertCount(convertTrackingVO);
+			
+			
+			
+			//商品清單資料總筆數
+			totalCount =  Integer.valueOf(pfpCodeConvertService.getConvertTrackingCount(convertTrackingVO));
+			
+//			//總頁數
+			pageCount = (int)Math.ceil((float)totalCount / pageSizeSelected);
 			
 		} catch (Exception e) {
 			log.error("error:" + e);
@@ -206,15 +215,13 @@ public class ConvertTrackingAction  extends BaseCookieAction{
 		this.pageCount = pageCount;
 	}
 
-	public List<Object> getRetargetingList() {
-		return retargetingList;
+	public List<Object> getConvertList() {
+		return convertList;
 	}
 
-
-	public void setRetargetingList(List<Object> retargetingList) {
-		this.retargetingList = retargetingList;
+	public void setConvertList(List<Object> convertList) {
+		this.convertList = convertList;
 	}
-
 
 	public String getReturnMsg() {
 		return returnMsg;
@@ -282,6 +289,14 @@ public class ConvertTrackingAction  extends BaseCookieAction{
 
 	public void setConvertTrackingRuleList(List<ConvertTrackingRuleVO> convertTrackingRuleList) {
 		this.convertTrackingRuleList = convertTrackingRuleList;
+	}
+
+	public ConvertTrackingVO getSumConvertCount() {
+		return sumConvertCount;
+	}
+
+	public void setSumConvertCount(ConvertTrackingVO sumConvertCount) {
+		this.sumConvertCount = sumConvertCount;
 	}
 
 	

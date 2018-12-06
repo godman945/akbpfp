@@ -1,8 +1,10 @@
 package com.pchome.akbpfp.struts2.ajax.codeManage.convertTracking;
 
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +19,13 @@ import com.pchome.akbpfp.db.service.codeManage.IPfpCodeConvertRuleService;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeConvertService;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
+import com.pchome.akbpfp.db.vo.codeManage.ConvertTrackingVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.codeManage.EnumConvertBelongType;
 import com.pchome.enumerate.codeManage.EnumConvertNumType;
 import com.pchome.enumerate.codeManage.EnumConvertStatusType;
 import com.pchome.enumerate.codeManage.EnumConvertType;
-import com.pchome.enumerate.codeManage.EnumRetargetingCodeType;
+import com.pchome.enumerate.codeManage.EnumTrackingStatusType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.service.portalcms.bean.Mail;
 import com.pchome.soft.util.SpringEmailUtil;
@@ -60,74 +63,79 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 	private int currentPage = 1; // 第幾頁(初始預設第1頁)
 	private int pageSizeSelected = 10; // 每頁筆數(初始預設每頁10筆)
 	
-	private List<Object> retargetingList;
+	private List<Object> convertList;
 	private int pageCount = 0; //總頁數
 	private int totalCount = 0; //資料總筆數
 	
-	private String retargetingIdArray;
+	private String convertIdArray;
+	private ConvertTrackingVO  sumConvertCount;
 	
-//	/**
-//	 * 取得再行銷清單Ajax
-//	 */
-//	public String queryRetargetingListAjax(){
-//		try{
-//			log.info(">>> currentPage: " + currentPage);
-//			log.info(">>> pageSizeSelected: " + pageSizeSelected);
-//			log.info(">>> trackingName: " + trackingName);
-//			
-//			resultMap = new HashMap<String, Object>();
-//	
-//			RetargetingTrackingVO retargetingTrackingVO = new RetargetingTrackingVO();
-//			retargetingTrackingVO.setPage(currentPage);
-//			retargetingTrackingVO.setPageSize(pageSizeSelected);
-//			retargetingTrackingVO.setRetargetingName(trackingName);
-//			retargetingTrackingVO.setPfpCustomerInfoId(super.getCustomer_info_id());
-//			
-//			retargetingList = pfpCodeTrackingService.getRetargetingTrackingList(retargetingTrackingVO);
-//			
-//			log.info(">>> retargetingList size: " + retargetingList.size());
-//			if(retargetingList.size() <= 0){
-//				resultMap = returnErrorMsgMap("沒有再行銷資料");
-//				return SUCCESS;
-//			}
-//			
-//			//商品清單資料總筆數
-//			totalCount =  Integer.valueOf(pfpCodeTrackingService.getRetargetingTrackingCount(retargetingTrackingVO));
-//			//總頁數
-//			pageCount = (int)Math.ceil((float)totalCount / pageSizeSelected);
-//			
-//			resultMap.put("currentPage", currentPage);
-//			resultMap.put("pageSizeSelected", pageSizeSelected);
-//			resultMap.put("trackingName", trackingName);
-//			resultMap.put("totalCount", totalCount);
-//			resultMap.put("pageCount", pageCount);
-//			resultMap.put("retargetingList", retargetingList);
-//			resultMap.put("status", "SUCCESS");
-//			
-//		} catch (Exception e) {
-//			log.error("error:" + e);
-//			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
-//			return SUCCESS;
-//		}
-//		
-//		return SUCCESS;
-//	}
-//	
-//	
-//	/**
-//	 * 回傳錯誤訊息
-//	 */
-//	public Map<String,Object> returnErrorMsgMap(String errorMsg) {
-//		
-//		Map<String,Object> errorMsgMap = new HashMap<String, Object>();
-//		errorMsgMap.put("currentPage", 1);
-//		errorMsgMap.put("pageCount", 1);
-//		errorMsgMap.put("totalCount", 0);
-//		errorMsgMap.put("status", "ERROR");
-//		errorMsgMap.put("msg", errorMsg);
-//		
-//		return errorMsgMap;
-//	}
+	/**
+	 * 取得再行銷清單Ajax
+	 */
+	public String queryConvertListAjax(){
+		try{
+			log.info(">>> currentPage: " + currentPage);
+			log.info(">>> pageSizeSelected: " + pageSizeSelected);
+			log.info(">>> convertName: " + convertName);
+			
+			resultMap = new HashMap<String, Object>();
+	
+			ConvertTrackingVO convertTrackingVO = new ConvertTrackingVO();
+			convertTrackingVO.setPage(currentPage);
+			convertTrackingVO.setPageSize(pageSizeSelected);
+			convertTrackingVO.setConvertName(convertName);
+			convertTrackingVO.setPfpCustomerInfoId(super.getCustomer_info_id());
+			
+			convertList =  pfpCodeConvertService.getConvertTrackingList(convertTrackingVO);
+			
+			log.info(">>> convertList size: " + convertList.size());
+			if(convertList.size() <= 0){
+				resultMap = returnErrorMsgMap("沒有轉換資料");
+				return SUCCESS;
+			}
+			
+			//所有轉換動作
+			sumConvertCount = pfpCodeConvertService.getSumConvertCount(convertTrackingVO);
+			
+			//商品清單資料總筆數
+			totalCount =  Integer.valueOf(pfpCodeConvertService.getConvertTrackingCount(convertTrackingVO));
+			//總頁數
+			pageCount = (int)Math.ceil((float)totalCount / pageSizeSelected);
+			
+			resultMap.put("currentPage", currentPage);
+			resultMap.put("pageSizeSelected", pageSizeSelected);
+			resultMap.put("convertName", convertName);
+			resultMap.put("totalCount", totalCount);
+			resultMap.put("pageCount", pageCount);
+			resultMap.put("convertList", convertList);
+			resultMap.put("sumConvertCount", sumConvertCount);
+			resultMap.put("status", "SUCCESS");
+			
+		} catch (Exception e) {
+			log.error("error:" + e);
+			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			return SUCCESS;
+		}
+		
+		return SUCCESS;
+	}
+	
+	
+	/**
+	 * 回傳錯誤訊息
+	 */
+	public Map<String,Object> returnErrorMsgMap(String errorMsg) {
+		
+		Map<String,Object> errorMsgMap = new HashMap<String, Object>();
+		errorMsgMap.put("currentPage", 1);
+		errorMsgMap.put("pageCount", 1);
+		errorMsgMap.put("totalCount", 0);
+		errorMsgMap.put("status", "ERROR");
+		errorMsgMap.put("msg", errorMsg);
+		
+		return errorMsgMap;
+	}
 	
 	
 	
@@ -372,73 +380,53 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 
 		return SUCCESS;
 	}
-//
-//	
-//	
-//	/**
-//	 * 刪除再行銷目錄
-//	 */
-//	public String deleteRetargetingAjax(){
-//		try{
-//			log.info(">>> currentPage: " + currentPage);
-//			log.info(">>> pageSizeSelected: " + pageSizeSelected);
-//			log.info(">>> retargetingIdArray: " + retargetingIdArray.toString());
-//			log.info(">>> trackingName: " + trackingName);
-//			
-//			
-//			resultMap = new HashMap<String, Object>();
-//	
-//			JSONObject retargetingIdJson = new JSONObject(retargetingIdArray);
-//			Iterator<String> keys = retargetingIdJson.keys();
-//			List<String> retargetingIdList = new ArrayList<String>();
-//			while(keys.hasNext()) {
-//			    String key = keys.next();
-//			    System.out.println(key);
-//			    System.out.println(retargetingIdJson.get(key));
-//			    String prodId = ((JSONObject)retargetingIdJson.get(key)).getString("retargetingId");
-//			    retargetingIdList.add(prodId);
-//			}
-//			pfpCodeTrackingService.updateTrackingStatus(super.getCustomer_info_id(),retargetingIdList,EnumTrackingStatusType.Delete.getType());
-//			
-//			resultMap.put("currentPage", 1);
-//			resultMap.put("pageSizeSelected", pageSizeSelected);
-//			resultMap.put("trackingName", trackingName);
-//			resultMap.put("msg", "再行銷目錄刪除成功");
-//			resultMap.put("status", "SUCCESS");
-//			
-//		} catch (Exception e) {
-//			log.error("error:" + e);
-//			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
-//			return SUCCESS;
-//		}
-//		
-//		return SUCCESS;
-//	}
-	
-	
-	
-//	/**
-//	 * 回傳錯誤訊息
-//	 */
-//	public Map<String, Object> returnErrorMsgMap(String errorMsg) {
-//
-//		Map<String, Object> errorMsgMap = new HashMap<String, Object>();
-//		errorMsgMap.put("currentPage", 1);
-//		errorMsgMap.put("pageCount", 1);
-//		errorMsgMap.put("totalCount", 0);
-//		errorMsgMap.put("status", "ERROR");
-//		errorMsgMap.put("msg", errorMsg);
-//
-//		return errorMsgMap;
-//	}
 
 	
 	
+	/**
+	 * 刪除轉換目錄
+	 */
+	public String deleteConvertAjax(){
+		try{
+			log.info(">>> currentPage: " + currentPage);
+			log.info(">>> pageSizeSelected: " + pageSizeSelected);
+			log.info(">>> convertIdArray: " + convertIdArray.toString());
+			log.info(">>> convertName: " + convertName);
+			
+			
+			resultMap = new HashMap<String, Object>();
+	
+			JSONObject convertIdJson = new JSONObject(convertIdArray);
+			Iterator<String> keys = convertIdJson.keys();
+			List<String> convertIdList = new ArrayList<String>();
+			while(keys.hasNext()) {
+			    String key = keys.next();
+			    System.out.println(key);
+			    System.out.println(convertIdJson.get(key));
+			    String convertId = ((JSONObject)convertIdJson.get(key)).getString("convertId");
+			    convertIdList.add(convertId);
+			}
+			pfpCodeConvertService.updateConvertStatus(super.getCustomer_info_id(),convertIdList,EnumConvertStatusType.Delete.getType());
+			
+			resultMap.put("currentPage", 1);
+			resultMap.put("pageSizeSelected", pageSizeSelected);
+			resultMap.put("convertName", convertName);
+			resultMap.put("msg", "轉換目錄刪除成功");
+			resultMap.put("status", "SUCCESS");
+			
+		} catch (Exception e) {
+			log.error("error:" + e);
+			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			return SUCCESS;
+		}
+		
+		return SUCCESS;
+	}
 	
 	
-
-
-
+	
+	
+	
 	public String getPaId() {
 		return paId;
 	}
@@ -513,13 +501,11 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 	public void setPageSizeSelected(int pageSizeSelected) {
 		this.pageSizeSelected = pageSizeSelected;
 	}
-
-
-	public List<Object> getRetargetingList() {
-		return retargetingList;
+	public List<Object> getConvertList() {
+		return convertList;
 	}
-	public void setRetargetingList(List<Object> retargetingList) {
-		this.retargetingList = retargetingList;
+	public void setConvertList(List<Object> convertList) {
+		this.convertList = convertList;
 	}
 	public int getPageCount() {
 		return pageCount;
@@ -533,11 +519,14 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
-	public String getRetargetingIdArray() {
-		return retargetingIdArray;
+
+	public String getConvertIdArray() {
+		return convertIdArray;
 	}
-	public void setRetargetingIdArray(String retargetingIdArray) {
-		this.retargetingIdArray = retargetingIdArray;
+
+
+	public void setConvertIdArray(String convertIdArray) {
+		this.convertIdArray = convertIdArray;
 	}
 
 
@@ -665,6 +654,16 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 	}
 	public void setPfpCodeConvertRuleService(IPfpCodeConvertRuleService pfpCodeConvertRuleService) {
 		this.pfpCodeConvertRuleService = pfpCodeConvertRuleService;
+	}
+
+
+	public ConvertTrackingVO getSumConvertCount() {
+		return sumConvertCount;
+	}
+
+
+	public void setSumConvertCount(ConvertTrackingVO sumConvertCount) {
+		this.sumConvertCount = sumConvertCount;
 	}
 	
 	

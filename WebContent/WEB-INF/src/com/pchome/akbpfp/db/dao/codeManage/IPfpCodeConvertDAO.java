@@ -17,4 +17,10 @@ public interface IPfpCodeConvertDAO extends IBaseDAO<PfpCodeConvert,String>{
 	public void deletePfpCodeConvert(PfpCodeConvert pfpCodeConvert) throws Exception;
 	
 	public List<Map<String,Object>> getPfpCodeConvertByCondition(ConvertTrackingVO convertTrackingVO) throws Exception;
+	
+	public List<Map<String,Object>> getConvertTrackingList(ConvertTrackingVO convertTrackingVO) throws Exception;
+	
+	public List<Map<String,Object>> getSumConvertCount(ConvertTrackingVO convertTrackingVO) throws Exception;
+	
+	public void updateConvertStatus(String pfpCustomerInfoId, List<String> convertIdArray,String convertStatus) throws Exception;
 }

@@ -1,6 +1,5 @@
 ﻿$(document).ready(function(){
 	
-//	alert('retargeting list')
 	//floating scrollbar
     $('.floatingscroll').floatingScrollbar();
 	
@@ -44,8 +43,8 @@
     // 已封存列物件選取
     checkboxSealed();
     
-    //刪除再行銷
-    deleteRetargeting();
+    //刪除轉換
+    deleteConvert();
     
     //初始copy代碼
     initClipboard();
@@ -53,26 +52,26 @@
     //每頁顯示數量選擇
 	$("#pageSizeSelect").change(function() {
 		$('.pagination-wrap').data('order', "1");
-		queryRetargetingListAjax();
+		queryConvertListAjax();
 	});
 	
 	
 	//按首頁
 	$('#firstPageBtn').click(function(){
 		$('.pagination-wrap').data('order', "1");
-		queryRetargetingListAjax();
+		queryConvertListAjax();
 	});
 	
 	//按末頁
 	$('#finalPageBtn').click(function(){
 		$('.pagination-wrap').data('order', $('#finalPageBtn').attr('data-num'));
-		queryRetargetingListAjax();
+		queryConvertListAjax();
 	});
 	
 	//1~10頁碼
 	$('.pagination-buttongroup a').click(function(){
 		$('.pagination-wrap').data('order', $(this).attr('data-num'));
-		queryRetargetingListAjax();
+		queryConvertListAjax();
 	});
 	
 	//上10頁
@@ -91,7 +90,7 @@
       	var _order =parseInt( pageHeaderNoStr.toString()+"1");
       	$('.pagination-wrap').data('order', _order.toString());
 
-      	queryRetargetingListAjax();
+      	queryConvertListAjax();
 	});
 	
 	//下10頁
@@ -110,7 +109,7 @@
       	var _order =parseInt( pageHeaderNoStr.toString()+"1");
       	$('.pagination-wrap').data('order', _order.toString());
       	
-      	queryRetargetingListAjax();
+      	queryConvertListAjax();
 	});
     
 	//處理頁數與總頁數及按鈕
@@ -132,33 +131,13 @@ function initClipboard(){
     });
 }
 
-//function getpTag(){
-//    $.fancybox(
-//        $('#getpTagDIV').html(),
-//        {
-//            'autoDimensions'	: false,
-//            'width'         	: 720,
-//            'height'        	: 590,
-//            'autoSize'			: false,
-//            'autoHeight'		: false,
-//            'autoScale'			: false,
-//            'padding'			: 0,
-//            'overlayOpacity'    : .70,
-//            'overlayColor'      : '#000',
-//            'scrolling'			: 'no' 
-//        }
-//    );
-//}
 
-//跳取code明細頁
-function getpTag(codeType,paid,trackingSeq,trackingName){
-	
-	if (codeType == '0'){
+//跳出取code明細頁
+function getpTag(paid,convertSeq,convertName){
 			$.fancybox(
-	//    		 '<div style="position:absolute;top:-1000%; left:-1000%; z-index:-1;" id="getpTagDIV">SSSSS</div>',
 	    		  '<div style="position:;top:-1000%; left:-1000%; z-index:-1;" id="getpTagDIV">'+
 	              '<div class="getpTag-wrap">'+
-	                  '<div class="getpTag-nav ali-middle"><span>再行銷追蹤代碼 - '+trackingName+'</span></div>'+
+	                  '<div class="getpTag-nav ali-middle"><span>轉換追蹤代碼 - '+convertName+'</span></div>'+
 	                  '<div class="getpTag-box">'+
 	                      '<span>請將下方代碼複製並貼在您網站上的每個網頁</span>'+
 	                      '<div class="code-wrap pos-relative">'+
@@ -168,12 +147,14 @@ function getpTag(codeType,paid,trackingSeq,trackingName){
 	'<textarea id="code1" readonly>'+
 	'<script  id="pcadscript" language="javascript" async src="https://kdpic.pchome.com.tw/js/ptag.js"></script>\n'+
 	'<script>\n'+
-	'  window.dataLayer = window.dataLayer || [];\n'+
-	'  function ptag(){dataLayer.push(arguments);}\n'+
-	'  ptag({"paid":'+paid+'});\n'+
-	'  ptag("event","tracking",{\n'+
-	'  "tracking_id":'+trackingSeq+'\n'+
-	'  "});\n'+   
+	'   window.dataLayer = window.dataLayer || [];\n'+
+	'   function ptag(){dataLayer.push(arguments);}\n'+
+	'   ptag({"paid":'+paid+'});\n'+
+	'   ptag("event","convert",{\n'+
+	'   "convert_id":'+convertSeq+',\n'+
+	'   "convert_price":"",\n'+
+	'   "op1":"",\n'+
+	'   "op2":""});\n'+
 	'</script>'+
 	'</textarea>'+
 	                              '</pre>'+
@@ -183,7 +164,7 @@ function getpTag(codeType,paid,trackingSeq,trackingName){
 	                          '<a class="btn-copyto" data-clipboard-action="copy" data-clipboard-target="#code1"><em>複製代碼</em></a>'+
 	                      '</div>               '+             
 	                      '<div class="section-box">'+
-	                          '<p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以逗號分隔</small></p>'+
+	                          '<p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以分號分隔</small></p>'+
 	                          '<div class="input-text inputemail">'+
 	                              '<input id="mailReceivers" type="text" name="" maxlength="200" value="" required placeholder="you@email.com">'+
 	                              '<div id="emailMsgError" class="msg-error" style="display:none">錯誤訊息</div>'+
@@ -197,8 +178,7 @@ function getpTag(codeType,paid,trackingSeq,trackingName){
 	          '</div>'+
 	          
 	          '<input type="hidden" id="paidSendMail" value='+paid+'>'+
-	          '<input type="hidden" id="trackingSeqSendMail" value='+trackingSeq+'>'+
-	          '<input type="hidden" id="codeTypeSendMail" value='+codeType+'>',
+	          '<input type="hidden" id="convertSeqSendMail" value='+convertSeq+'>',
 	        {
 	            'autoDimensions'	: false,
 	            'width'         	: 720,
@@ -212,102 +192,24 @@ function getpTag(codeType,paid,trackingSeq,trackingName){
 	            'scrolling'			: 'no' 
 	        }
 	    );
-	}else{
-		$.fancybox(
-				//    		 '<div style="position:absolute;top:-1000%; left:-1000%; z-index:-1;" id="getpTagDIV">SSSSS</div>',
-				    		  '<div style="position:;top:-1000%; left:-1000%; z-index:-1;" id="getpTagDIV">'+
-				              '<div class="getpTag-wrap">'+
-				              '<div class="getpTag-nav ali-middle"><span>再行銷追蹤代碼 - '+trackingName+'</span></div>'+
-				                  '<div class="getpTag-box">'+
-				                      '<span>請將下方代碼複製並貼在您網站上的每個網頁</span>'+
-				                      '<div class="code-wrap pos-relative">'+
-				                          '<a class="btn-copyto code-copy pos-absolute pos-right pos-top txt-noselect" data-clipboard-action="copy" data-clipboard-target="#code1"></a>'+
-				                          '<div class="code-box">'+
-				                              '<pre class="snippet">'+
-				'<textarea id="code1" readonly>'+
-				'<script  id="pcadscript" language="javascript" async src="https://kdpic.pchome.com.tw/js/ptag.js"></script>\n'+
-				'<script>\n'+
-				'  window.dataLayer = window.dataLayer || [];\n'+
-				'  function ptag(){dataLayer.push(arguments);}\n'+
-				'  ptag({"paid":'+paid+'});\n'+
-				'  ptag("event","tracking",{\n'+
-				'  "tracking_id":'+trackingSeq+',\n'+
-				'  "prod_id":"",\n'+
-				'  "prod_price":"",\n'+
-				'  "prod_dis":"",\n'+
-				'  "ec_stock_status":"",\n'+
-				'  "op1":"",\n'+
-				'  "op2":""\n'+
-				'  "});\n'+   
-				'</script>'+
-				'</textarea>'+
-				                              '</pre>'+
-				                          '</div>'+
-				                      '</div>'+
-				                      '<div class="link-copyto p-t5 txt-right">'+
-				                          '<a class="btn-copyto" data-clipboard-action="copy" data-clipboard-target="#code1"><em>複製代碼</em></a>'+
-				                      '</div>               '+             
-				                      '<div class="section-box">'+
-				                          '<p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以逗號分隔</small></p>'+
-				                          '<div class="input-text inputemail">'+
-				                          '<input id="mailReceivers" type="text" name="" maxlength="200" value="" required placeholder="you@email.com">'+
-				                              '<div id="emailMsgError" class="msg-error" style="display:none">錯誤訊息</div>'+
-				                          '</div>'+
-				                      '</div>        '+                    
-				                      '<div class="button-box p-t10">'+
-				                      	  '<div class="input-button"><input id ="sendMail" type="button" onclick="sendMail()" value="傳送至Email"></div>'+
-				                      '</div>'+
-				                  '</div>'+
-				              '</div>'+
-				          '</div>'+
-				          
-				          '<input type="hidden" id="paidSendMail" value='+paid+'>'+
-				          '<input type="hidden" id="trackingSeqSendMail" value='+trackingSeq+'>'+
-				          '<input type="hidden" id="codeTypeSendMail" value='+codeType+'>',
-				        {
-				            'autoDimensions'	: false,
-				            'width'         	: 720,
-				            'height'        	: 590,
-				            'autoSize'			: false,
-				            'autoHeight'		: false,
-				            'autoScale'			: false,
-				            'padding'			: 0,
-				            'overlayOpacity'    : .70,
-				            'overlayColor'      : '#000',
-				            'scrolling'			: 'no' 
-				        }
-				    );
-	}
-    
 }
 
 
-//    function stopBubble(e){ 
-//        if ( e && e.stopPropagation) {
-//            e.stopPropagation(); 
-//        }else{ 
-//            window.event.cancelBubble = true; 
-//        }
-//    }
-
-    
-
-
 /**
-* 取得再行銷追蹤清單Ajax
+* 取得轉換追蹤清單Ajax
 */
-function queryRetargetingListAjax(){
+function queryConvertListAjax(){
 	//重撈商品清單前，將畫面有勾選商品內容清空
 	$('.btn-selectnone').trigger("click")
     
 	$.ajax({
 	    type: "post",
 	    dataType: "json",
-	    url: "queryRetargetingListAjax.html",
+	    url: "queryConvertListAjax.html",
 	    data: {
    	        "currentPage": $('#pageData').data('order'),
    	        "pageSizeSelected":  $('#pageSizeSelect option:selected').val(),
-   	        "trackingName": $('#txtProdName').val()
+   	        "convertName": $('#txtProdName').val()
 	    },
 	    timeout: 30000,
 	    error: function(xhr){
@@ -317,66 +219,122 @@ function queryRetargetingListAjax(){
 	    	
 		}
 	}).done(function (response) {
-    	
     	//更新頁碼與清單資料
     	$('.pagination-wrap').data('order', response.currentPage.toString());
     	$('.pagination-wrap').data('quantity', response.pageCount.toString());
         
     	if (response.status=="ERROR"){
-    		$("#retargetingListDiv").empty();
+    		$("#convertListDiv").empty();
+    		$("#sumConvertCountDiv").empty();
     		alert(response.msg)
     	}else{
-    		$("#retargetingListDiv").empty();
+    		$("#convertListDiv").empty();
+    		$("#sumConvertCountDiv").empty();
     		var tempHtml = "";
     		var i=0;
-	    	$.each(response.retargetingList, function(index, list){
+	    	$.each(response.convertList, function(index, list){
 	    		i=i+1;
-	    		var paId ="";
-	    		var trackingSeq ="";
-	    		var trackingName ="";
-	    		var trackingStatus ="";
-	    		var codeType ="";
-	    		var trackingRangeDate ="";
-	    		var verifyStatus ="";
+	    		var paId ="";		
+	    		var convertName ="";			// 轉換追蹤名稱	
+	    		var convertSeq ="";				// 轉換追蹤seq
+	    		var verifyStatus ="";			// 狀態(已認證、未認證)
+	    		var convertType ="";			// 轉換類型(1.標準轉換追蹤2.自訂轉換追蹤條件)
+	    		var convertClass ="";			// 轉換分類(1.查看內容 2.搜尋 3.加到購物車 4.加到購物清單 5.開始結帳 6.新增付款資料 7.購買 8.完成註冊)
+	    		var clickRangeDate ="";	 		// 互動後轉換追溯天數
+	    		var impRangeDate ="";	 		// 瀏覽後轉換追溯天數
+	    		var transConvertPrice ="";		// 轉換價格(目前只要點擊ck的價值)
+	    		var transCKConvertCount ="";	// 點擊後轉換數(ckConvertCount)
+	    		var transPVConvertCount ="";	// 瀏覽後轉換數(pvConvertCount)
+	    		var transAllConvertCount="";	// 所有轉換(ckConvertCount+pvConvertCount)
+	    		var convertStatus ="";			// 轉換狀態(0:關閉;1:開啟;2:刪除)
+	    		
 	    		$.each(list, function(key, val){
-	    			
 	    			if(key == "paId"){
 	    				paId = val;
 	    			}
-	    			if(key == "trackingSeq"){
-	    				trackingSeq = val;
+	    			if(key == "convertName"){
+	    				convertName = val;
 	    			}
-	    			if(key == "trackingName"){
-	    				trackingName = val;
-	    			}
-	    			if(key == "trackingStatus"){
-	    				trackingStatus = val;
-	    			}
-	    			if(key == "codeType"){
-	    				codeType = val;
-	    			}
-	    			if(key == "trackingRangeDate"){
-	    				trackingRangeDate = val;
+	    			if(key == "convertSeq"){
+	    				convertSeq = val;
 	    			}
 	    			if(key == "verifyStatus"){
 	    				verifyStatus = val;
 	    			}
+	    			if(key == "convertType"){
+	    				convertType = val;
+	    			}
+	    			if(key == "convertTypeDesc"){
+	    				convertTypeDesc = val;
+	    			}
+	    			if(key == "convertClass"){
+	    				convertClass = val;
+	    			}
+	    			if(key == "convertClassDesc"){
+	    				convertClassDesc = val;
+	    			}
+	    			if(key == "clickRangeDate"){
+	    				clickRangeDate = val;
+	    			}
+	    			if(key == "impRangeDate"){
+	    				impRangeDate = val;
+	    			}
+	    			if(key == "transConvertPrice"){		//轉換價值
+	    				transConvertPrice = val;
+	    			}
+	    			if(key == "transCKConvertCount"){	//點擊後轉換數
+	    				transCKConvertCount = val;
+	    			}
+	    			if(key == "transPVConvertCount"){	//瀏覽後轉換數
+	    				transPVConvertCount = val;
+	    			}
+	    			if(key == "transAllConvertCount"){	//所有轉換
+	    				transAllConvertCount = val;
+	    			}
+	    			if(key == "convertStatus"){
+	    				convertStatus = val;
+	    			}
 	    		});
 	    		
             		tempHtml += " <div class='txt-row txt-row-data' data-type='enable'> ";
-            		tempHtml += " <div class='txt-cell col-ptagcheckbox'><div class='input-check'><input type='checkbox' id='check"+i+"' value='"+trackingSeq+"'><label for='check"+i+"'></label></div></div> ";
-            		tempHtml += " <div class='txt-cell col-ptagname'><a href='editRetargetingTrackingView.html?trackingSeq="+trackingSeq+"'>"+trackingName+"</a><br><small>ID："+trackingSeq+"</small></div> ";
-            		tempHtml += " <div class='txt-cell col-ptagcode'><a href='javascript:void(0)' onclick='getpTag(\""+codeType+"\",\""+paId+"\",\""+trackingSeq+"\",\""+trackingName+"\");'>取得代碼</a></div> ";
+            		tempHtml += " <div class='txt-cell col-ptagcheckbox'><div class='input-check'><input type='checkbox' id='check"+i+"' value='"+convertSeq+"'><label for='check"+i+"'></label></div></div> ";
+            		tempHtml += " <div class='txt-cell col-ptagname-trans'><a href='editConvertTrackingView.html?convertSeq="+convertSeq+"'>"+convertName+"</a><br><small>ID："+convertSeq+"</small></div> ";
+            		tempHtml += " <div class='txt-cell col-ptagcode-trans'><a href='javascript:void(0)' onclick='getpTag(\""+paId+"\",\""+convertSeq+"\",\""+convertName+"\");'>取得代碼</a></div> ";
             		if (verifyStatus == "1"){
-            			tempHtml += " <div class='txt-cell col-ptagstatus'><span data-certificated='true'>已認證</span></div> ";
+            			tempHtml += " <div class='txt-cell col-ptagstatus-trans'><span data-certificated='true'>已認證</span></div> ";
             		}else{
-            			tempHtml += " <div class='txt-cell col-ptagstatus'><span data-certificated='false'>未認證</span></div> "; 
+            			tempHtml += " <div class='txt-cell col-ptagstatus-trans'><span data-certificated='false'>未認證</span></div> "; 
             		}
-            		tempHtml += " <div class='txt-cell col-ptagtype'>"+codeType+"</div> ";
-            		tempHtml += " <div class='txt-cell col-ptagperiod'>"+trackingRangeDate+"</div> ";
+            		tempHtml += " <div class='txt-cell col-type-transfer	'>"+convertTypeDesc+"</div> ";
+            		tempHtml += " <div class='txt-cell col-type-transfer	'>"+convertClassDesc+"</div> ";
+            		tempHtml += " <div class='txt-cell col-days-interactive	'>"+clickRangeDate+"</div> ";
+            		tempHtml += " <div class='txt-cell col-days-browse		'>"+impRangeDate+"</div> ";
+            		tempHtml += " <div class='txt-cell col-value-transfer	'>"+transConvertPrice+"</div> ";
+            		tempHtml += " <div class='txt-cell col-click-transfer	'>"+transCKConvertCount+"</div> ";
+            		tempHtml += " <div class='txt-cell col-browse-transfer	'>"+transPVConvertCount+"</div> ";
+            		tempHtml += " <div class='txt-cell col-all-transfer	'>"+transAllConvertCount+"</div> ";
             		tempHtml += " </div> ";
 	    	});
-	    	$('#retargetingListDiv').html(tempHtml);
+	    	$('#convertListDiv').html(tempHtml);
+	    	
+	    	
+	    	//如果總筆數大於0，顯示 總計：所有轉換動作
+	    	if (response.totalCount >0 ){
+	    		var sumTempHtml = "";
+	    		sumTempHtml += " <div class='txt-cell col-ptagcheckbox'><p class='summary-tit pos-absolute pos-left pos-top ali-middle'>總計：所有轉換動作</p></div> ";
+	    		sumTempHtml += " <div class='txt-cell col-ptagname-trans'></div> ";
+	    		sumTempHtml += " <div class='txt-cell col-ptagcode-trans'></div> ";
+	    		sumTempHtml += " <div class='txt-cell col-ptagstatus-trans'></div> ";
+	    		sumTempHtml += " <div class='txt-cell col-type-transfer'></div> ";
+	    		sumTempHtml += " <div class='txt-cell col-type-transfer'></div> ";
+	    		sumTempHtml += " <div class='txt-cell col-days-interactive'></div> ";
+	    		sumTempHtml += " <div class='txt-cell col-days-browse'></div> ";
+	    		sumTempHtml += " <div class='txt-cell col-value-transfer'></div> ";
+	    		sumTempHtml += " <div class='txt-cell col-click-transfer'>"+response.sumConvertCount.transSumCKConvertCount+"</div> ";
+	    		sumTempHtml += " <div class='txt-cell col-browse-transfer'>"+response.sumConvertCount.transSumPVConvertCount+"</div> ";
+	    		sumTempHtml += " <div class='txt-cell col-all-transfer'>"+response.sumConvertCount.transSumAllConvertCount+"</div> ";
+	    		$('#sumConvertCountDiv').html(sumTempHtml);
+	    	}
 	    	
 	    	// table 第一列 目錄的全選核取按鈕功能 + 被選取的物件改底色為白色
 	        checkall();
@@ -527,7 +485,7 @@ function searchProdName() {
 		$("#txtProdName").keyup(function() {
 			$('.pagination-wrap').data('order', "1");
 			$(this).doTimeout("findProdName", 1000, function() {
-				queryRetargetingListAjax();
+				queryConvertListAjax();
 			});
 		});
 	});
@@ -636,31 +594,30 @@ function checkboxSealed(){
 	});
 }
 
-//刪除再行銷
-function deleteRetargeting(){
-	console.log('del del del del del ')
+//刪除轉換
+function deleteConvert(){
 	$('.btn-todelete').on('click',function() {
 		console.log('00000000 ')
-		var retargetingIdArray = new Object();
+		var convertIdArray = new Object();
 		$('.txt-row-data.selected input[type="checkbox"]').each(function(index,value){
-			retargetingIdArray[index] = {retargetingId:$(this).attr("value")};
+			convertIdArray[index] = {convertId:$(this).attr("value")};
 		});
-		deleteRetargetingAjax(retargetingIdArray);
+		deleteConvertAjax(convertIdArray);
 	});
 }
 
-//刪除再行銷ajax
-function deleteRetargetingAjax(retargetingIdArray) {
+//刪除轉換ajax
+function deleteConvertAjax(convertIdArray) {
 	console.log('deleteAJAX')
 	$.ajax({
 		type : "post",
 		dataType : "json",
-		url : "deleteRetargetingAjax.html",
+		url : "deleteConvertAjax.html",
 		data : {
 			"currentPage" : 1,
 			"pageSizeSelected" : $('#pageSizeSelect option:selected').val(),
-			"retargetingIdArray" : JSON.stringify(retargetingIdArray),
-			"trackingName": $('#txtProdName').val()
+			"convertIdArray" : JSON.stringify(convertIdArray),
+			"convertName": $('#txtProdName').val()
 		},
 		timeout : 30000,
 		error : function(xhr) {
@@ -677,14 +634,16 @@ function deleteRetargetingAjax(retargetingIdArray) {
 		$('.pagination-wrap').data('order', response.currentPage.toString());
 
 		if (response.status == "ERROR") {
-			$("#retargetingListDiv").empty();
+			$("#convertListDiv").empty();
+			$("#sumConvertCountDiv").empty();
 			alert(response.msg)
-			queryRetargetingListAjax()
+			queryConvertListAjax()
 
 		} else {
 			alert(response.msg)
-			$("#retargetingListDiv").empty();
-			queryRetargetingListAjax()
+			$("#convertListDiv").empty();
+			$("#sumConvertCountDiv").empty();
+			queryConvertListAjax()
 		}
 	});
 }
@@ -746,12 +705,11 @@ function sendMailAjax(){
 	$.ajax({
 		type : "post",
 		dataType : "json",
-		url : "sendRetargetingTrackingMailAjax.html",
+		url : "sendConvertTrackingMailAjax.html",
 		data : {
 			"mailReceivers" : $('#mailReceivers').val(),
 			"paId" : $('#paidSendMail').val(),
-			"trackingSeq" : $('#trackingSeqSendMail').val(),
-			"codeType" :  $('#codeTypeSendMail').val()
+			"convertSeq" : $('#convertSeqSendMail').val()
 		},
 		timeout : 30000,
 		error : function(xhr) {

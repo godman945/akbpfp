@@ -183,7 +183,7 @@ function getpTag(codeType,paid,trackingSeq,trackingName){
 	                          '<a class="btn-copyto" data-clipboard-action="copy" data-clipboard-target="#code1"><em>複製代碼</em></a>'+
 	                      '</div>               '+             
 	                      '<div class="section-box">'+
-	                          '<p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以逗號分隔</small></p>'+
+	                          '<p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以分號分隔</small></p>'+
 	                          '<div class="input-text inputemail">'+
 	                              '<input id="mailReceivers" type="text" name="" maxlength="200" value="" required placeholder="you@email.com">'+
 	                              '<div id="emailMsgError" class="msg-error" style="display:none">錯誤訊息</div>'+
@@ -248,7 +248,7 @@ function getpTag(codeType,paid,trackingSeq,trackingName){
 				                          '<a class="btn-copyto" data-clipboard-action="copy" data-clipboard-target="#code1"><em>複製代碼</em></a>'+
 				                      '</div>               '+             
 				                      '<div class="section-box">'+
-				                          '<p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以逗號分隔</small></p>'+
+				                          '<p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以分號分隔</small></p>'+
 				                          '<div class="input-text inputemail">'+
 				                          '<input id="mailReceivers" type="text" name="" maxlength="200" value="" required placeholder="you@email.com">'+
 				                              '<div id="emailMsgError" class="msg-error" style="display:none">錯誤訊息</div>'+
