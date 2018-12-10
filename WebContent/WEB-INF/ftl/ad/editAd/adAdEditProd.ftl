@@ -400,6 +400,7 @@
 </div>
 <textarea style="display:none;" id="saveUserLogoPath">${userLogoPath!}</textarea>
 <input type="hidden" id="saveProdLogoType" value="${prodLogoType!}">
+<textarea style="display:none;" id="templateStr">${templateStr!}</textarea>
 <input type="hidden" id="messageId" value="${message!!}">
 <input type="hidden" id="messageId" value="">
 <input type="hidden" id="adSeq" value="${adSeq!}">

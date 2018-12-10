@@ -237,6 +237,7 @@ public class AdAddAction extends BaseCookieAction{
 	private String userLogoPath;
 	
 	private String logoPath;
+	
 	/* 商品廣告用參數 END*/
 	
 	//新增廣告

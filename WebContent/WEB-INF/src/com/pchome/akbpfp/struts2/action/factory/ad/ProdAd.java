@@ -6,8 +6,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -19,6 +21,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.pojo.AdmTemplateProduct;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
@@ -27,6 +30,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
+import com.pchome.akbpfp.db.service.template.ITemplateProductService;
 import com.pchome.akbpfp.struts2.action.ad.AdAddAction;
 import com.pchome.akbpfp.struts2.action.ad.AdEditAction;
 import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
@@ -43,8 +47,9 @@ public class ProdAd implements IAd {
 	
 	private IPfpCatalogLogoService pfpCatalogLogoService;
 	private IPfpCatalogSetupService pfpCatalogSetupService;
+	private ITemplateProductService admTemplateProductService;
 	private List<PfpCatalog> alex;
-	
+	private String templateStr;
 	
 	private AdAddAction adAddAction;
 	private AdEditAction adEditAction;
@@ -53,11 +58,31 @@ public class ProdAd implements IAd {
 		log.info(">>>>>> process ProdAd");
 		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
+		List<String> xTypeList = new ArrayList<String>();
+		xTypeList.add("x04");
+		xTypeList.add("x05");
+		
+		List<AdmTemplateProduct> admTemplateProductList = admTemplateProductService.getTemplateProductByXType(xTypeList);
+		JSONObject admTemplateJson = new JSONObject();
+		for (AdmTemplateProduct admTemplateProduct : admTemplateProductList) {
+			String templateSize = admTemplateProduct.getTemplateProductWidth()+"_"+admTemplateProduct.getTemplateProductHeight();
+			String tproName = "";
+			if(admTemplateJson.has(templateSize)){
+				tproName = admTemplateJson.getString(templateSize);
+				tproName = tproName+admTemplateProduct.getTemplateProductSeq()+",";
+			}else{
+				tproName =  admTemplateProduct.getTemplateProductSeq()+",";
+			}
+			admTemplateJson.put(templateSize, tproName);
+		}
+		templateStr = admTemplateJson.toString();
+		
+		
 		JSONObject json = new JSONObject();
 		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
 				JSONObject catalogLogoUrlJson = new JSONObject();
-				catalogLogoUrlJson.put("logoPath", adAddAction.getPhotoDbPath()+pfpCatalogLogo.getCatalogLogoUrl());
+				catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getCatalogLogoUrl());
 				catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
 				List<String> colorList = new ArrayList<String>();
 				Set<PfpCatalogLogoDetail> pfpCatalogLogoDetailSet = pfpCatalogLogo.getPfpCatalogLogoDetails();
@@ -76,6 +101,7 @@ public class ProdAd implements IAd {
 		}
 		adAddAction.setUserLogoPath(json.toString());
 		adAddAction.getRequest().setAttribute("alex", alex);
+		adAddAction.getRequest().setAttribute("templateStr", templateStr);
 		return "adProdAdd";
 	}
 
@@ -171,6 +197,26 @@ public class ProdAd implements IAd {
 	
 	@Override
 	public String adAdEdit(AdEditAction adEditAction) throws Exception {
+		List<String> xTypeList = new ArrayList<String>();
+		xTypeList.add("x04");
+		xTypeList.add("x05");
+		List<AdmTemplateProduct> admTemplateProductList = admTemplateProductService.getTemplateProductByXType(xTypeList);
+		JSONObject admTemplateJson = new JSONObject();
+		for (AdmTemplateProduct admTemplateProduct : admTemplateProductList) {
+			String templateSize = admTemplateProduct.getTemplateProductWidth()+"_"+admTemplateProduct.getTemplateProductHeight();
+			String tproName = "";
+			if(admTemplateJson.has(templateSize)){
+				tproName = admTemplateJson.getString(templateSize);
+				tproName = tproName+admTemplateProduct.getTemplateProductSeq()+",";
+			}else{
+				tproName =  admTemplateProduct.getTemplateProductSeq()+",";
+			}
+			admTemplateJson.put(templateSize, tproName);
+		}
+		templateStr = admTemplateJson.toString();
+		adEditAction.getRequest().setAttribute("templateStr", templateStr);
+		
+		
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adEditAction.getCustomer_info_id());
 		JSONObject json = new JSONObject();
 		if(pfpCatalogLogoList != null){
@@ -452,9 +498,14 @@ public class ProdAd implements IAd {
 	}
 	
 	
-	
-	
-	
+	public String getTemplateStr() {
+		return templateStr;
+	}
+
+	public void setTemplateStr(String templateStr) {
+		this.templateStr = templateStr;
+	}
+
 	public IPfpCatalogService getPfpCatalogService() {
 		return pfpCatalogService;
 	}
@@ -486,4 +537,14 @@ public class ProdAd implements IAd {
 	public void setPfpCatalogSetupService(IPfpCatalogSetupService pfpCatalogSetupService) {
 		this.pfpCatalogSetupService = pfpCatalogSetupService;
 	}
+
+	public ITemplateProductService getAdmTemplateProductService() {
+		return admTemplateProductService;
+	}
+
+	public void setAdmTemplateProductService(ITemplateProductService admTemplateProductService) {
+		this.admTemplateProductService = admTemplateProductService;
+	}
+	
+	
 }

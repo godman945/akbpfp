@@ -874,7 +874,8 @@ function adEditSubmit(){
 		var logoType = $('input[name=options]:checked').val();
 		var radioType = $('input[name=options]:checked').val();
 		var logoPath = "";
-		var logoData = JSON.parse($("#userLogoPath").text());
+		
+		var logoData = JSON.parse($("#saveUserLogoPath").text());
 		if(radioType == "type1"){
 			logoType = "type1";
 			logoPath = logoData.square.logoPath;

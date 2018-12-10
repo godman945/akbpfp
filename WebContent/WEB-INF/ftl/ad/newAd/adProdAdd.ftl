@@ -167,28 +167,13 @@
 							<span>預覽廣告尺寸</span>
 							<div class="adsizeselect">
 								<select name="" id="adSize">
-									<option value="tpro_120_600">120 x 600</option>	
-									<option value="tpro_140_300">140 x 300</option>	
-									<option value="tpro_160_240">160 x 240</option>
-									<option value="tpro_160_600">160 x 600</option>
-									<option value="tpro_180_150">180 x 150</option>
-									<option value="tpro_250_80">250 x 80</option>	
-									<option value="tpro_300_100">300 x 100</option>	
-									<option value="tpro_300_250" selected>300 x 250</option>
-									<option value="tpro_300_600">300 x 600</option>
-									<option value="tpro_320_480">320 x 480</option>	
-									<option value="tpro_336_280">336 x 280</option>	
-									<option value="tpro_640_390">640 x 390</option>	
-									<option value="tpro_728_90">728 x 90</option>
-									<option value="tpro_950_390">950 x 390</option>
-									<option value="tpro_970_250">970 x 250</option>							
 								</select>
 								
 							</div>
 						</div>
 						
-						<div class="previewbx-l"><a href="javascript:void(0)" onclick="changeTpro();" class="previewarw-left"><i></i></a></div>
-						<div class="previewbx-r"><a href="javascript:void(0)" onclick="changeTpro();" class="previewarw-right"><i></i></a></div>
+						<div class="previewbx-l"><a href="javascript:void(0)" onclick="changeTpro('left');" class="previewarw-left"><i></i></a></div>
+						<div class="previewbx-r"><a href="javascript:void(0)" onclick="changeTpro('right');" class="previewarw-right"><i></i></a></div>
 						<!--廣告預覽 START-->
 						<div class="adcontainr">
 							<div class="adcontent">	
@@ -347,7 +332,7 @@
 <input type="hidden" id="adGroupSeq" value="${adGroupSeq!}">
 <input type="hidden" id="userLogoType" value="${userLogoType!}">
 <textarea style="display:none;" id="userLogoPath">${userLogoPath!}</textarea>
-
+<textarea style="display:none;" id="templateStr">${templateStr!}</textarea>
 </div>
 <input type="file" serialize id="fileupload" name="fileupload"  style="display:none;">
 <input type="hidden" id="messageId" value="${message!!}">
@@ -411,3 +396,4 @@
 	    </div>
 	   </div>
 </div>
+
