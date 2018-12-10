@@ -65,10 +65,10 @@ public class RedisUtil {
 
 	public String getKey(String key) throws Exception {
 		if (StringUtils.isBlank(key)) {
-			return "";
+			return null;
 		}
-		String value = "";
-		value = jedisCluster.get(key) == null ? "" : jedisCluster.get(key);
+		String value = null;
+		value = jedisCluster.get(key) == null ? null : jedisCluster.get(key);
 		return value;
 	}
 
@@ -85,8 +85,15 @@ public class RedisUtil {
 
 	public static void main(String args[]){
 		try {
-//			RedisUtil.getInstance().setKeyAndExpire("alex", "AAAAA", 10);
-			System.out.println(RedisUtil.getInstance().getKey("alex"));
+			System.out.println("OK11111");
+			RedisUtil.getInstance().setKeyAndExpire("stg:pa:codecheck:TAC20181121000000015", "1", 604800);
+//			String str = RedisUtil.getInstance().getKey("stg:pa:codecheck:CAC20181126000000035");
+			String str = RedisUtil.getInstance().getKey("TAC20181114000000028");
+			if (str==null){
+				System.out.println("null");
+			}
+			
+			System.out.println("OK");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

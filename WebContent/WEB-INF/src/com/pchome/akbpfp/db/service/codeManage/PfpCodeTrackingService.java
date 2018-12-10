@@ -37,15 +37,17 @@ public class PfpCodeTrackingService extends BaseService<PfpCodeTracking,String> 
 				retargetingTrackingBean.setTrackingSeq(obj.get("tracking_seq").toString());	
 				retargetingTrackingBean.setTrackingName(obj.get("tracking_name").toString());
 				retargetingTrackingBean.setPaId(obj.get("pa_id").toString());	
+				retargetingTrackingBean.setTrackingStatus(obj.get("tracking_status").toString());		
 				retargetingTrackingBean.setCodeType(obj.get("code_type").toString());		
 				retargetingTrackingBean.setTrackingRangeDate(obj.get("tracking_range_date").toString());	
+				
 				
 				
 				//stg:pa:codecheck:traceId002
 				String redisKey =codeManageRediskey+retargetingTrackingBean.getTrackingSeq();
 				String redisData = RedisUtil.getInstance().getKey(redisKey); // 查詢此客戶redis是否有資料
 				
-				if (StringUtils.isBlank(redisData)){
+				if ( redisData ==null ){
 					retargetingTrackingBean.setVerifyStatus(EnumVerifyStatusType.Unverified.getType());
 				}else{
 					retargetingTrackingBean.setVerifyStatus(EnumVerifyStatusType.Verified.getType());
