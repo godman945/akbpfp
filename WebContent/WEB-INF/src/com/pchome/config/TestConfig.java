@@ -1,20 +1,7 @@
 package com.pchome.config;
 
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.HashMap;
-
-import javax.imageio.ImageIO;
-
 import org.json.JSONObject;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-
-import magick.ImageInfo;
-import magick.MagickException;
-import magick.MagickImage;
-import net.sf.json.JSONNull;
 
 
 public class TestConfig {
