@@ -90,13 +90,14 @@ public class PfpCodeConvertService extends BaseService<PfpCodeConvert,String> im
 				
 				int convertRuleNum = Integer.parseInt(convertTrackingBean.getConvertRuleNum());
 				if ( convertRuleNum > 0){
+					//自訂轉換追蹤
 					//認證狀態(已認證、未認證)prd:pa:codecheck:CAC20181112000000001:RLE20180724000000001
 					int count =0;
 					List<ConvertTrackingRuleVO>convertTrackingRuleList = pfpCodeConvertRuleService.getPfpCodeConvertRuleByCondition(convertTrackingVO);
 					for (ConvertTrackingRuleVO convertTrackingRuleVO : convertTrackingRuleList) {
 						String redisKey =codeManageRediskey+convertTrackingBean.getConvertSeq()+":"+convertTrackingRuleVO.getConvertRuleId();
 						String redisData = RedisUtil.getInstance().getKey(redisKey); // 查詢此客戶redis是否有資料
-						if (StringUtils.isNotBlank(redisData)){
+						if (redisData!=null){
 							count = count+1;
 						}
 					}
@@ -107,10 +108,11 @@ public class PfpCodeConvertService extends BaseService<PfpCodeConvert,String> im
 						convertTrackingBean.setVerifyStatus(EnumVerifyStatusType.Unverified.getType());						
 					}
 				}else{
+					//標準轉換追蹤
 					//認證狀態(已認證、未認證)prd:pa:codecheck:CAC20181112000000001
 					String redisKey =codeManageRediskey+convertTrackingBean.getConvertSeq();
 					String redisData = RedisUtil.getInstance().getKey(redisKey); // 查詢此客戶redis是否有資料
-					if (StringUtils.isBlank(redisData)){
+					if ( redisData == null ){
 						convertTrackingBean.setVerifyStatus(EnumVerifyStatusType.Unverified.getType());
 					}else{
 						convertTrackingBean.setVerifyStatus(EnumVerifyStatusType.Verified.getType());
