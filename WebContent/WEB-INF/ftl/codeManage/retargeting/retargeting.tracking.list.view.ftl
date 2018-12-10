@@ -115,7 +115,6 @@
 				                        <#assign index1 = index1 + 1>    
 			                            </#list>	
 	                            	</#if>	
-	                            	
 	                            </#if>	
                             	</div>
                             
@@ -158,11 +157,6 @@
                 </div>
                 <!-- 頁碼 pagination 結束 -->
 
-
-
-              
-
-                
 
 
             </div>

@@ -18,6 +18,16 @@ public class ConvertTrackingVO {
 	String convertNumType;
 	String convertRuleNum;
 	String verifyStatus;
+	String convertTypeDesc;
+	String convertClassDesc;	
+	String transConvertPrice;		//pfp_code_convert_trans的 convert_price
+	String transCKConvertCount;		//pfp_code_convert_trans的 ck convert_count
+	String transPVConvertCount;		//pfp_code_convert_trans的 pv convert_count
+	String transAllConvertCount;	//pfp_code_convert_trans的 ck+pv convert_count
+	String transSumCKConvertCount;	//加總全部 pfp_code_convert_trans的 ck convert_count
+	String transSumPVConvertCount;	//加總全部 pfp_code_convert_trans的 pv convert_count
+	String transSumAllConvertCount;	//加總全部 pfp_code_convert_trans的 ck+pv convert_count
+	
 	
 	public int getPage() {
 		return page;
@@ -120,6 +130,60 @@ public class ConvertTrackingVO {
 	}
 	public void setVerifyStatus(String verifyStatus) {
 		this.verifyStatus = verifyStatus;
+	}
+	public String getConvertTypeDesc() {
+		return convertTypeDesc;
+	}
+	public void setConvertTypeDesc(String convertTypeDesc) {
+		this.convertTypeDesc = convertTypeDesc;
+	}
+	public String getConvertClassDesc() {
+		return convertClassDesc;
+	}
+	public void setConvertClassDesc(String convertClassDesc) {
+		this.convertClassDesc = convertClassDesc;
+	}
+	public String getTransConvertPrice() {
+		return transConvertPrice;
+	}
+	public void setTransConvertPrice(String transConvertPrice) {
+		this.transConvertPrice = transConvertPrice;
+	}
+	public String getTransCKConvertCount() {
+		return transCKConvertCount;
+	}
+	public void setTransCKConvertCount(String transCKConvertCount) {
+		this.transCKConvertCount = transCKConvertCount;
+	}
+	public String getTransPVConvertCount() {
+		return transPVConvertCount;
+	}
+	public void setTransPVConvertCount(String transPVConvertCount) {
+		this.transPVConvertCount = transPVConvertCount;
+	}
+	public String getTransAllConvertCount() {
+		return transAllConvertCount;
+	}
+	public void setTransAllConvertCount(String transAllConvertCount) {
+		this.transAllConvertCount = transAllConvertCount;
+	}
+	public String getTransSumCKConvertCount() {
+		return transSumCKConvertCount;
+	}
+	public void setTransSumCKConvertCount(String transSumCKConvertCount) {
+		this.transSumCKConvertCount = transSumCKConvertCount;
+	}
+	public String getTransSumPVConvertCount() {
+		return transSumPVConvertCount;
+	}
+	public void setTransSumPVConvertCount(String transSumPVConvertCount) {
+		this.transSumPVConvertCount = transSumPVConvertCount;
+	}
+	public String getTransSumAllConvertCount() {
+		return transSumAllConvertCount;
+	}
+	public void setTransSumAllConvertCount(String transSumAllConvertCount) {
+		this.transSumAllConvertCount = transSumAllConvertCount;
 	}
 	
 }

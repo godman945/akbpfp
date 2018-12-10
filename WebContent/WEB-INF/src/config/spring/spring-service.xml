@@ -292,13 +292,12 @@
     
     <bean id="PfpCodeTrackingService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeTrackingService">    	     
         <property name="dao" ref="PfpCodeTrackingDAO" />
-        <property name="redisAPI" ref="RedisAPI" />
         <property name="codeManageRediskey" value="${redis.codeManage.rediskey}" />
     </bean>
     
-     <bean id="PfpCodeConvertService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeConvertService">    	     
+     <bean id="PfpCodeConvertService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeConvertService"> 
+     	<property name="pfpCodeConvertRuleService" ref="PfpCodeConvertRuleService" />   	     
         <property name="dao" ref="PfpCodeConvertDAO" />
-        <property name="redisAPI" ref="RedisAPI" />
         <property name="codeManageRediskey" value="${redis.codeManage.rediskey}" />
     </bean>
     
