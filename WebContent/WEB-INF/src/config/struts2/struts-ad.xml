@@ -161,6 +161,9 @@
 		<result type="redirectAction" name="notOwner">
 			<param name="actionName">${backPage}</param>  
 		</result>
+		<result type="redirectAction" name="logo">
+			<param name="actionName">logo</param> 
+		</result>
     </action>
     
 	<action name="doAdAdAddTxt" class="AdAddAction" method="doAdAdAddTxt">
@@ -211,6 +214,11 @@
 				<param name="adGroupSeq">${adGroupSeq}</param>
 			</result>
 			<result type="tiles" name="success">.ad.ad.prod.edit</result>
+			
+			<result type="redirectAction" name="logo">
+				<param name="actionName">logo</param> 
+			</result>
+			
     	</action>
      	
      	

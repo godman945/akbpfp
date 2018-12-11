@@ -48,7 +48,7 @@ public class ProdAd implements IAd {
 	private IPfpCatalogLogoService pfpCatalogLogoService;
 	private IPfpCatalogSetupService pfpCatalogSetupService;
 	private ITemplateProductService admTemplateProductService;
-	private List<PfpCatalog> alex;
+	private List<PfpCatalog> catalogList;
 	private String templateStr;
 	private String photoClonePath;
 	private AdAddAction adAddAction;
@@ -56,8 +56,24 @@ public class ProdAd implements IAd {
 	
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
 		log.info(">>>>>> process ProdAd");
-		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
+		catalogList = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
+		//檢查logo是否審核通過
+		if(pfpCatalogLogoList.size() < 2){
+			return "logo";
+		}else{
+			boolean flag = false;
+			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
+				if(pfpCatalogLogo.getStatus() != 1){
+					flag = true;
+					break;
+				}
+			}
+			if(flag){
+				return "logo";
+			}
+		}
+		
 		List<String> xTypeList = new ArrayList<String>();
 		xTypeList.add("x04");
 		xTypeList.add("x05");
@@ -100,7 +116,7 @@ public class ProdAd implements IAd {
 			}
 		}
 		adAddAction.setUserLogoPath(json.toString());
-		adAddAction.getRequest().setAttribute("alex", alex);
+		adAddAction.getRequest().setAttribute("catalogList", catalogList);
 		adAddAction.getRequest().setAttribute("templateStr", templateStr);
 		return "adProdAdd";
 	}
@@ -197,6 +213,23 @@ public class ProdAd implements IAd {
 	
 	@Override
 	public String adAdEdit(AdEditAction adEditAction) throws Exception {
+		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
+		//檢查logo是否審核通過
+		if(pfpCatalogLogoList.size() < 2){
+			return "logo";
+		}else{
+			boolean flag = false;
+			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
+				if(pfpCatalogLogo.getStatus() != 1){
+					flag = true;
+					break;
+				}
+			}
+			if(flag){
+				return "logo";
+			}
+		}
+		
 		List<String> xTypeList = new ArrayList<String>();
 		xTypeList.add("x04");
 		xTypeList.add("x05");
@@ -217,7 +250,6 @@ public class ProdAd implements IAd {
 		adEditAction.getRequest().setAttribute("templateStr", templateStr);
 		
 		
-		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adEditAction.getCustomer_info_id());
 		JSONObject json = new JSONObject();
 		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
@@ -297,9 +329,6 @@ public class ProdAd implements IAd {
 				adEditAction.setProdLogoType(pfpAdDetail.getAdDetailContent());
 			}
 			
-			
-			
-			
 			String imgPath = "";
 			String[] fileExtensionNameArray = null;
 			String fileExtensionName = "";
@@ -354,9 +383,9 @@ public class ProdAd implements IAd {
 		}
 		adEditAction.setUploadLogoLog(uploadLogoLogJsonArray.toString());
 		adEditAction.setUploadLog(uploadLogJsonArray.toString());
-		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adEditAction.getCustomer_info_id());
-		adEditAction.getRequest().setAttribute("alex", alex);
-		return null;
+		catalogList = pfpCatalogService.getPfpCatalogByCustomerInfoId(adEditAction.getCustomer_info_id());
+		adEditAction.getRequest().setAttribute("catalogList", catalogList);
+		return "SUCCESS";
 	}
 	
 	public String doAdAdEdit(AdEditAction adEditAction) throws Exception {
@@ -514,12 +543,12 @@ public class ProdAd implements IAd {
 		this.pfpCatalogService = pfpCatalogService;
 	}
 
-	public List<PfpCatalog> getAlex() {
-		return alex;
+	public List<PfpCatalog> getCatalogList() {
+		return catalogList;
 	}
 
-	public void setAlex(List<PfpCatalog> alex) {
-		this.alex = alex;
+	public void setCatalogList(List<PfpCatalog> catalogList) {
+		this.catalogList = catalogList;
 	}
 
 	public IPfpCatalogLogoService getPfpCatalogLogoService() {

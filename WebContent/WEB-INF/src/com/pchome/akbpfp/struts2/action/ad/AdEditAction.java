@@ -808,8 +808,7 @@ public class AdEditAction extends BaseCookieAction{
 		adGroupName = pfpAd.getPfpAdGroup().getAdGroupName();
 		adGroupSeq =  pfpAd.getPfpAdGroup().getAdGroupSeq();
 		IAd adObject = adFactory.getaAdObject(EnumAdStyleType.AD_STYLE_PRODUCT);
-		adObject.adAdEdit(this);
-		return SUCCESS;
+		return adObject.adAdEdit(this);
 	}
 	
 	/**

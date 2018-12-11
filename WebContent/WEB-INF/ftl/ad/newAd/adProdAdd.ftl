@@ -28,8 +28,8 @@
 					<td colspan="2">
 						<div class="inputselect">
 							<select name="" id="catalogSelect">
-								<#if alex?exists>
-									<#list alex as adReportVO>
+								<#if catalogList?exists>
+									<#list catalogList as adReportVO>
 										<option value="${adReportVO.catalogSeq!}">${adReportVO.catalogName!}</option>
 									</#list>
 								</#if>			
@@ -43,8 +43,8 @@
 						<div class="inputselect">
 							<select name="" id="groupSelect" onchange="getProdGroup(this)">
 								<option value ="">請選擇</option>
-								<#if alex?exists>
-									<#list alex as pfpCatalog>
+								<#if catalogList?exists>
+									<#list catalogList as pfpCatalog>
 										<#if pfpCatalog.pfpCatalogGroups?exists>
 											<#list pfpCatalog.pfpCatalogGroups as pfpCatalogGroup>
 												<#if pfpCatalog.pfpCatalogSetups?exists>
