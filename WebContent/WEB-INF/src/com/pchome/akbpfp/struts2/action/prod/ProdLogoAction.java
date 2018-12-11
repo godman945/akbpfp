@@ -38,7 +38,6 @@ public class ProdLogoAction extends BaseCookieAction{
 	private ISequenceService sequenceService;
 	private IPfpCatalogLogoDetailService pfpCatalogLogoDetailService;
 	private IPfpCatalogLogoService pfpCatalogLogoService;
-	private String photoDbPathPrefix;
 	private String result;
 	private String logoDataObj;
 	private String photoDbPathNew;
@@ -47,7 +46,7 @@ public class ProdLogoAction extends BaseCookieAction{
 	private final int square_height = 250;
 	private final int rectangle_width = 1000;
 	private final int rectangle_height = 250;
-	
+	private String photoClonePath;
 	/**
 	 * LOGO初始化畫面
 	 * 圖片狀態 0:審核中 1:審核成功 2:上傳成功
@@ -57,7 +56,7 @@ public class ProdLogoAction extends BaseCookieAction{
 		JSONObject imgJson = new JSONObject();
 		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
-				String path = photoDbPathPrefix+pfpCatalogLogo.getCatalogLogoUrl();
+				String path = photoClonePath+pfpCatalogLogo.getCatalogLogoUrl();
 				File file = new File(path);
 				if(file.exists()){
 					String fileExtensionName = path.split("\\.")[1];
@@ -86,7 +85,7 @@ public class ProdLogoAction extends BaseCookieAction{
 		Date date = new Date();
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(super.getCustomer_info_id());
 		StringBuffer saveImgPathBuffer = new StringBuffer();
-		saveImgPathBuffer.append(photoDbPathPrefix).append("img/").append("user/").append(super.getCustomer_info_id()).append("/catalog/").append("logo/");
+		saveImgPathBuffer.append(photoClonePath).append("img/").append("user/").append(super.getCustomer_info_id()).append("/catalog/").append("logo/");
 		if(pfpCatalogLogoList == null){
 			JSONObject imgJson = new JSONObject(logoDataObj);
 			Iterator<String> keys = imgJson.keys();
@@ -171,7 +170,7 @@ public class ProdLogoAction extends BaseCookieAction{
 			    	continue;
 			    }
 			    
-				String path = photoDbPathPrefix+pfpCatalogLogo.getCatalogLogoUrl();
+				String path = photoClonePath+pfpCatalogLogo.getCatalogLogoUrl();
 			    BufferedImage image = null;
 		        byte[] imageByte = Base64.decodeBase64(base64Img.getBytes());
 	            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
@@ -327,13 +326,13 @@ public class ProdLogoAction extends BaseCookieAction{
 	}
 
 
-	public String getPhotoDbPathPrefix() {
-		return photoDbPathPrefix;
+	public String getPhotoClonePath() {
+		return photoClonePath;
 	}
 
 
-	public void setPhotoDbPathPrefix(String photoDbPathPrefix) {
-		this.photoDbPathPrefix = photoDbPathPrefix;
+	public void setPhotoClonePath(String photoClonePath) {
+		this.photoClonePath = photoClonePath;
 	}
 	
 }

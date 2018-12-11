@@ -95,9 +95,6 @@ $(document).ready(function(){
 	
 		$("#checkAdurl").css("display","");
 		
-	
-//		console.log($("#templateStr").text());
-		
 		var templateTpro = JSON.parse($("#templateStr").text());
 		var templateSizeOptionStr = '';
 		var index = 0;
@@ -905,7 +902,6 @@ function getProdGroup(obj){
 			log.info(">>>>>>fail:preview tpro size == 0")
 			return false;
 		}
-		
 	}
 	
 	var selectSizeWidth = $("#adSize option:selected").text().split(" x ")[0];
@@ -1128,8 +1124,12 @@ function changeLogoUrl(){
 	}
 	logoAhref.href = realUrl;
 	var adUrlDom = $($($(".akb_iframe")[0].contentDocument.body.children[0]).find("nav-box").context.getElementsByClassName("slid-box"))[0]; 
-	var left = $(adUrlDom).children()[1].href = realUrl;
-	var right = $(adUrlDom).children()[2].href = realUrl;
+	
+//	console.log("-------------");
+//	console.log($(adUrlDom).children()[1]);
+//	
+//	var left = $(adUrlDom).children()[1].href = realUrl;
+//	var right = $(adUrlDom).children()[2].href = realUrl;
 }
 
 function clickColor(obj){
@@ -1185,8 +1185,6 @@ function changeTpro(switchType){
 		return false;
 	}
 	
-	
-	
 	var tproSize = $("#adSize option:selected").val();
 	var tproArray = tproObject.data[tproSize].split(",");
 	if(switchType == "right"){
@@ -1212,36 +1210,5 @@ function changeTpro(switchType){
 	console.log(tproArray.length);
 	console.log(previewTproIndex);
 	console.log(previewTpro);
-	
-	
-	
-//	if(previewTpro == ""){
-//		var tproSize = $("#adSize option:selected").val();
-//		var tproArray = tproObject.data[tproSize].split(",");
-//		previewTproIndex = 0;
-//		previewTpro = tproArray[previewTproIndex];
-//	}else{
-//		
-//		
-//		
-//		
-//		
-//		
-//	}
-	
-	
-	
-//	var tproSize = $("#adSize option:selected").val();
-//	
-//	console.log(tproSize);
-	
-//	var tproArray = tproObject.data[tproSize].split(",");
-//	var index = tproArray.length;
-//	previewTproIndex = previewTproIndex + 1;
-//	if(previewTproIndex == index){
-//		previewTproIndex = 0;
-//	}
-//	previewTpro = tproArray[previewTproIndex];
-//	getProdGroup(null);
 }
 

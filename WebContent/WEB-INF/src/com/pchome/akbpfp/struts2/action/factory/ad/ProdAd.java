@@ -50,7 +50,7 @@ public class ProdAd implements IAd {
 	private ITemplateProductService admTemplateProductService;
 	private List<PfpCatalog> alex;
 	private String templateStr;
-	
+	private String photoClonePath;
 	private AdAddAction adAddAction;
 	private AdEditAction adEditAction;
 	
@@ -297,50 +297,27 @@ public class ProdAd implements IAd {
 				adEditAction.setProdLogoType(pfpAdDetail.getAdDetailContent());
 			}
 			
-			if(pfpAdDetail.getAdDetailId().indexOf("logo_sale") >= 0){
-				JSONObject uploadLogoLogJson = new JSONObject();
-				String imgPath = pfpAdDetail.getAdDetailContent();
-				String fileExtensionNameArray[] = imgPath.split("\\.");
-				String fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
-				File file = new File(imgPath);
-				String imgBase64 = "";
-				if(file.exists()){
-					imgBase64 = imgBase64(file,fileExtensionName);
-				}
-				String fileNameArray[] = imgPath.split("/");
-				fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
-				String fileName = fileNameArray[0];
-				int width = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[0]);
-				int heigth = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[1]);
-				long fileSize = file.length() / 1024;
-				
-				uploadLogoLogJson.put("width", width);
-				uploadLogoLogJson.put("heigth", heigth);
-				uploadLogoLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
-				uploadLogoLogJson.put("previewSrc", imgBase64);
-				uploadLogoLogJson.put("fileName", fileName);
-				uploadLogoLogJson.put("fileSize", fileSize);
-				uploadLogoLogJsonArray.put(uploadLogoLogJson);
-				continue;
-			}
-			if(pfpAdDetail.getAdDetailId().indexOf("sale_img") >= 0){
+			
+			
+			
+			String imgPath = "";
+			String[] fileExtensionNameArray = null;
+			String fileExtensionName = "";
+			 //結尾行銷圖
+			if(pfpAdDetail.getDefineAdSeq().contains("dad_sale_img")){
 				JSONObject uploadLogJson = new JSONObject();
-				String imgPath = pfpAdDetail.getAdDetailContent();
-				String fileExtensionNameArray[] = imgPath.split("\\.");
-				String fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
-				
-				System.out.println(adEditAction.getPhotoDbPathPrefix() + imgPath);
-				File file = new File(adEditAction.getPhotoDbPathPrefix()+imgPath);
-				String imgBase64 = "";
+				imgPath = pfpAdDetail.getAdDetailContent();
+				fileExtensionNameArray = imgPath.split("\\.");
+				fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
+				File file = new File(photoClonePath+imgPath);
 				if(file.exists()){
-					imgBase64 = imgBase64(file,fileExtensionName);
+					String imgBase64 = imgBase64(file,fileExtensionName);
 					String fileNameArray[] = imgPath.split("/");
 					fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
 					String fileName = fileNameArray[0];
 					int width = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[0]);
 					int heigth = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[1]);
 					long fileSize = file.length() / 1024;
-					
 					uploadLogJson.put("width", width);
 					uploadLogJson.put("heigth", heigth);
 					uploadLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
@@ -348,6 +325,29 @@ public class ProdAd implements IAd {
 					uploadLogJson.put("fileName", fileName);
 					uploadLogJson.put("fileSize", fileSize);
 					uploadLogJsonArray.put(uploadLogJson);
+					continue;
+				}
+			}else if(pfpAdDetail.getDefineAdSeq().contains("dad_logo_sale_img")){ //行銷圖
+				JSONObject uploadLogoLogJson = new JSONObject();
+				imgPath = pfpAdDetail.getAdDetailContent();
+				fileExtensionNameArray = imgPath.split("\\.");
+				fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
+				File file = new File(photoClonePath+imgPath);
+				if(file.exists()){
+					String imgBase64 = imgBase64(file,fileExtensionName);
+					String fileNameArray[] = imgPath.split("/");
+					fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
+					String fileName = fileNameArray[0];
+					int width = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[0]);
+					int heigth = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[1]);
+					long fileSize = file.length() / 1024;
+					uploadLogoLogJson.put("width", width);
+					uploadLogoLogJson.put("heigth", heigth);
+					uploadLogoLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
+					uploadLogoLogJson.put("previewSrc", imgBase64);
+					uploadLogoLogJson.put("fileName", fileName);
+					uploadLogoLogJson.put("fileSize", fileSize);
+					uploadLogoLogJsonArray.put(uploadLogoLogJson);
 					continue;
 				}
 			}
@@ -544,6 +544,14 @@ public class ProdAd implements IAd {
 
 	public void setAdmTemplateProductService(ITemplateProductService admTemplateProductService) {
 		this.admTemplateProductService = admTemplateProductService;
+	}
+
+	public String getPhotoClonePath() {
+		return photoClonePath;
+	}
+
+	public void setPhotoClonePath(String photoClonePath) {
+		this.photoClonePath = photoClonePath;
 	}
 	
 	

@@ -137,7 +137,6 @@ public class AdAddAction extends BaseCookieAction{
 	private String photoTmpPath;
 	private String photoPath;
 	private String photoDbPath;
-	private String photoDbPathPrefix;
 	// return data
 	private InputStream msg;
 	private String result;
@@ -2789,14 +2788,6 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setUserLogoPath(String userLogoPath) {
 		this.userLogoPath = userLogoPath;
-	}
-
-	public String getPhotoDbPathPrefix() {
-		return photoDbPathPrefix;
-	}
-
-	public void setPhotoDbPathPrefix(String photoDbPathPrefix) {
-		this.photoDbPathPrefix = photoDbPathPrefix;
 	}
 
 	public String getLogoPath() {

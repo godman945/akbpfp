@@ -84,7 +84,6 @@ public class AdEditAction extends BaseCookieAction{
 	private String photoPath;
 	private String photoDbPath;
 	private String photoDbPathNew;
-	private String photoDbPathPrefix;
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdGroupService pfpAdGroupService;
@@ -1701,14 +1700,6 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setUserLogoPath(String userLogoPath) {
 		this.userLogoPath = userLogoPath;
-	}
-
-	public String getPhotoDbPathPrefix() {
-		return photoDbPathPrefix;
-	}
-
-	public void setPhotoDbPathPrefix(String photoDbPathPrefix) {
-		this.photoDbPathPrefix = photoDbPathPrefix;
 	}
 
 	public String getLogoPath() {
