@@ -20,5 +20,5 @@ public interface IPfpCodeConvertService extends IBaseService<PfpCodeConvert,Stri
 	
 	public ConvertTrackingVO getSumConvertCount(ConvertTrackingVO convertTrackingVO) throws Exception;
 	
-	public void updateConvertStatus(String pfpCustomerInfoId, List<String> convertIdArray,String convertStatus) throws Exception;
+	public void updateConvertStatus(String pfpCustomerInfoId, String convertSeq,String convertStatus) throws Exception;
 }

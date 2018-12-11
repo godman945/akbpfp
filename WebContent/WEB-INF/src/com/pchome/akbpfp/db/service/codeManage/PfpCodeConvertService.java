@@ -78,6 +78,7 @@ public class PfpCodeConvertService extends BaseService<PfpCodeConvert,String> im
 				convertTrackingBean.setPaId(obj.get("pa_id").toString());	
 				convertTrackingBean.setConvertType(obj.get("convert_type").toString());		
 				convertTrackingBean.setConvertClass(obj.get("convert_class").toString());		
+				convertTrackingBean.setConvertStatus(obj.get("convert_status").toString());
 				convertTrackingBean.setClickRangeDate(obj.get("click_range_date").toString());
 				convertTrackingBean.setImpRangeDate(obj.get("imp_range_date").toString());
 				convertTrackingBean.setTransConvertPrice(obj.get("trans_convert_price").toString());		//轉換價值
@@ -159,8 +160,8 @@ public class PfpCodeConvertService extends BaseService<PfpCodeConvert,String> im
 	}
 	
 	
-	public void updateConvertStatus(String pfpCustomerInfoId, List<String> convertIdArray,String convertStatus) throws Exception{
-		((IPfpCodeConvertDAO)dao).updateConvertStatus(pfpCustomerInfoId,convertIdArray,convertStatus);
+	public void updateConvertStatus(String pfpCustomerInfoId, String convertSeq,String convertStatus) throws Exception{
+		((IPfpCodeConvertDAO)dao).updateConvertStatus(pfpCustomerInfoId,convertSeq,convertStatus);
 	}
 	
 	

@@ -36,6 +36,7 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 
 	private String convertSeq;
 	private String convertName;
+	private String convertStatus;
 	private String paId;
 	private String convertType;
 	private int clickRangeDate;
@@ -67,7 +68,6 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 	private int pageCount = 0; //總頁數
 	private int totalCount = 0; //資料總筆數
 	
-	private String convertIdArray;
 	private ConvertTrackingVO  sumConvertCount;
 	
 	/**
@@ -390,23 +390,12 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 		try{
 			log.info(">>> currentPage: " + currentPage);
 			log.info(">>> pageSizeSelected: " + pageSizeSelected);
-			log.info(">>> convertIdArray: " + convertIdArray.toString());
+			log.info(">>> convertSeq: " + convertSeq);
 			log.info(">>> convertName: " + convertName);
-			
 			
 			resultMap = new HashMap<String, Object>();
 	
-			JSONObject convertIdJson = new JSONObject(convertIdArray);
-			Iterator<String> keys = convertIdJson.keys();
-			List<String> convertIdList = new ArrayList<String>();
-			while(keys.hasNext()) {
-			    String key = keys.next();
-			    System.out.println(key);
-			    System.out.println(convertIdJson.get(key));
-			    String convertId = ((JSONObject)convertIdJson.get(key)).getString("convertId");
-			    convertIdList.add(convertId);
-			}
-			pfpCodeConvertService.updateConvertStatus(super.getCustomer_info_id(),convertIdList,EnumConvertStatusType.Delete.getType());
+			pfpCodeConvertService.updateConvertStatus(super.getCustomer_info_id(),convertSeq,EnumConvertStatusType.Delete.getType());
 			
 			resultMap.put("currentPage", 1);
 			resultMap.put("pageSizeSelected", pageSizeSelected);
@@ -423,6 +412,30 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 		return SUCCESS;
 	}
 	
+	
+	/**
+	 * 更新轉換目錄狀態
+	 */
+	public String updateConvertStatusAjax(){
+		try{
+			log.info(">>> convertSeq: " + convertSeq);
+			log.info(">>> convertStatus: " + convertStatus);
+
+			resultMap = new HashMap<String, Object>();
+			
+			pfpCodeConvertService.updateConvertStatus(super.getCustomer_info_id(),convertSeq,convertStatus);
+			
+			resultMap.put("msg", "轉換目錄更新成功");
+			resultMap.put("status", "SUCCESS");
+			
+		} catch (Exception e) {
+			log.error("error:" + e);
+			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			return SUCCESS;
+		}
+		
+		return SUCCESS;
+	}
 	
 	
 	
@@ -518,15 +531,6 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 	}
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
-	}
-
-	public String getConvertIdArray() {
-		return convertIdArray;
-	}
-
-
-	public void setConvertIdArray(String convertIdArray) {
-		this.convertIdArray = convertIdArray;
 	}
 
 
@@ -664,6 +668,16 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 
 	public void setSumConvertCount(ConvertTrackingVO sumConvertCount) {
 		this.sumConvertCount = sumConvertCount;
+	}
+
+
+	public String getConvertStatus() {
+		return convertStatus;
+	}
+
+
+	public void setConvertStatus(String convertStatus) {
+		this.convertStatus = convertStatus;
 	}
 	
 	

@@ -375,9 +375,7 @@
                 <p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以分號分隔</small></p>
                 <div class="input-text inputemail">
                     <input id="mailReceivers" type="text" name="" maxlength="200" value="" required placeholder="you@email.com">
-                    <div class="button-box w-900 txt-center p-tb30">
-                    	<div class="input-button"><input id ="sendMail" type="button" value="發送mail"></div>
-                    </div>
+                    <input name="" id ="sendMail" type="button" value="寄出">
                     <div id="emailMsgError" class="msg-error" style="display:none">錯誤訊息</div>
                 </div>
             </div>

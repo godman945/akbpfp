@@ -171,6 +171,17 @@
 				<param name="root">resultMap</param>
        		</result>    		
 	     </action>
+	     
+	     
+	     <!-- 更新轉換目錄狀態 --> 
+	     <action name="updateConvertStatusAjax" class="ConvertTrackingAjax" method="updateConvertStatusAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
 	
     </package>
 </struts>

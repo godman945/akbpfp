@@ -159,16 +159,16 @@ public class PfpCodeConvertDAO extends BaseDAO<PfpCodeConvert,String> implements
 	}
 	
 	
-	public void updateConvertStatus(String pfpCustomerInfoId, List<String> convertIdArray,String convertStatus) throws Exception {
+	public void updateConvertStatus(String pfpCustomerInfoId, String convertSeq,String convertStatus) throws Exception {
 		StringBuffer sql = new StringBuffer()
-				.append(" update pfp_code_convert set convert_status = :convertStatus where pfp_customer_info_id = :pfpCustomerInfoId and convert_seq in (:convertIdArray) ");
+				.append(" update pfp_code_convert set convert_status = :convertStatus where pfp_customer_info_id = :pfpCustomerInfoId and convert_seq = :convertSeq ");
 		
 		 log.info("updateConvertStatus.sql = " + sql.toString());
 
 		Session session = getSession();
 		session.createSQLQuery(sql.toString()).setString("convertStatus", convertStatus)
 				.setString("pfpCustomerInfoId", pfpCustomerInfoId)
-				.setParameterList("convertIdArray", convertIdArray).executeUpdate();
+				.setString("convertSeq", convertSeq).executeUpdate();
 		session.flush();
 	}
 	

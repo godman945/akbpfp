@@ -83,7 +83,7 @@
 	                        <!-- 表格欄位標題 -->
 	                        
 	                            <div class="txt-row header">
-	                                <div class="txt-cell col-ptagcheckbox"> <!-- <div class="input-check"><input type="checkbox" id="checkAll" value="checkAll"><label for="checkAll"></label></div> --> 狀態</div>
+	                                <div class="txt-cell col-ptagcheckbox">狀態</div>
 	                                <div class="txt-cell col-ptagname    ">名稱</div>
 	                                <div class="txt-cell col-ptagcode    ">追蹤代碼</div>
 	                                <div class="txt-cell col-ptagstatus  ">狀態</div>
@@ -101,7 +101,6 @@
 	                        			<#assign index1 = 1>
 	                        			<#list retargetingList as retargetings>
 				                            <div class="txt-row txt-row-data" data-type="enable">
-				                            <!--    <div class="txt-cell col-ptagcheckbox"><div class="input-check"><input type="checkbox" id="check${index1}" value=${retargetings.trackingSeq!}><label for="check${index1}"></label></div></div> -->
 				                            <div class="txt-cell col-ptagcheckbox">
 			                                    <label class="pos-middle switch-adstatus">
 			                                    	<#if retargetings.trackingStatus == "0">
