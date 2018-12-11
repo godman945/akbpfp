@@ -74,8 +74,8 @@ public class PfpCodeTrackingService extends BaseService<PfpCodeTracking,String> 
 	}
 	
 	
-	public void updateTrackingStatus(String pfpCustomerInfoId, List<String> retargetingIdArray,String trackingStatus) throws Exception{
-		((IPfpCodeTrackingDAO)dao).updateTrackingStatus(pfpCustomerInfoId,retargetingIdArray,trackingStatus);
+	public void updateTrackingStatus(String pfpCustomerInfoId, String trackingSeq,String trackingStatus) throws Exception{
+		((IPfpCodeTrackingDAO)dao).updateTrackingStatus(pfpCustomerInfoId,trackingSeq,trackingStatus);
 	}
 	
 	public RetargetingTrackingVO getPfpCodeTrackingByCondition(RetargetingTrackingVO retargetingTrackingVO) throws Exception{

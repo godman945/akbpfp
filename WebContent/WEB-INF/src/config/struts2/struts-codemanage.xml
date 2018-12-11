@@ -84,6 +84,16 @@
        		</result>  		
 	    </action>
 	    
+	    	
+		<!-- 更新再行銷目錄狀態 --> 
+	     <action name="updateTrackingStatusAjax" class="RetargetingTrackingAjax" method="updateTrackingStatusAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
 	    
 	    
 	    <!-- 轉換追蹤 -->

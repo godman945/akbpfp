@@ -71,16 +71,16 @@ public class PfpCodeTrackingDAO extends BaseDAO<PfpCodeTracking,String> implemen
 	}
 	
 	
-	public void updateTrackingStatus(String pfpCustomerInfoId, List<String> retargetingIdArray,String trackingStatus) throws Exception {
+	public void updateTrackingStatus(String pfpCustomerInfoId, String trackingSeq,String trackingStatus) throws Exception {
 		StringBuffer sql = new StringBuffer()
-				.append(" update pfp_code_tracking set tracking_status = :trackingStatus where pfp_customer_info_id = :pfpCustomerInfoId and tracking_seq in (:retargetingIdArray) ");
+				.append(" update pfp_code_tracking set tracking_status = :trackingStatus where pfp_customer_info_id = :pfpCustomerInfoId and tracking_seq =:trackingSeq ");
 		
 		 log.info("updateProdListProdStatus.sql = " + sql.toString());
 
 		Session session = getSession();
 		session.createSQLQuery(sql.toString()).setString("trackingStatus", trackingStatus)
 				.setString("pfpCustomerInfoId", pfpCustomerInfoId)
-				.setParameterList("retargetingIdArray", retargetingIdArray).executeUpdate();
+				.setString("trackingSeq", trackingSeq).executeUpdate();
 		session.flush();
 		
 	}

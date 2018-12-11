@@ -4,48 +4,8 @@
 	//floating scrollbar
     $('.floatingscroll').floatingScrollbar();
 	
-	
-	//全部選取按鈕
-    var $btn_select=$('.btn-selectall');
-    $btn_select.on('click',function() {
-    	console.log('11')
-        var $checkall = $('#checkAll');
-        if(!$checkall.prop('checked')) {
-            $checkall.trigger("click");
-        }
-        sumSelectedPord();
-    });
-
-    
-    //取消全選按鈕
-    var $btn_selectnone=$('.btn-selectnone');
-    $btn_selectnone.on('click',function() {
-        
-        var $menu = $('.nav-wrap.prodtable');
-        $menu.attr('data-menu','default');
-
-        var $checkbox =$('#checkAll, .txt-row input[type="checkbox"],.prodcard-box input[type="checkbox"]');
-        $checkbox.each(function(){
-        this.checked=false;
-        $(this).parent().parent().parent().removeClass('selected');
-        });
-    });
-	
-	
-	//table 第一列 目錄的全選核取按鈕功能 + 被選取的物件改底色為白色
-    checkall();
-	
-    //被選取的物件改style
-    checkboxChange();
-    
-    //已啟用物件選取
-    checkboxEnable();
-    
-    // 已封存列物件選取
-    checkboxSealed();
-    
-    //刪除再行銷
-    deleteRetargeting();
+    //狀態Checkbox開關
+    statusCheckboxChange();
     
     //初始copy代碼
     initClipboard();
@@ -131,24 +91,6 @@ function initClipboard(){
     clipboard.on('error', function (e) {
     });
 }
-
-//function getpTag(){
-//    $.fancybox(
-//        $('#getpTagDIV').html(),
-//        {
-//            'autoDimensions'	: false,
-//            'width'         	: 720,
-//            'height'        	: 590,
-//            'autoSize'			: false,
-//            'autoHeight'		: false,
-//            'autoScale'			: false,
-//            'padding'			: 0,
-//            'overlayOpacity'    : .70,
-//            'overlayColor'      : '#000',
-//            'scrolling'			: 'no' 
-//        }
-//    );
-//}
 
 //跳取code明細頁
 function getpTag(codeType,paid,trackingSeq,trackingName){
@@ -282,23 +224,11 @@ function getpTag(codeType,paid,trackingSeq,trackingName){
 }
 
 
-//    function stopBubble(e){ 
-//        if ( e && e.stopPropagation) {
-//            e.stopPropagation(); 
-//        }else{ 
-//            window.event.cancelBubble = true; 
-//        }
-//    }
-
-    
-
 
 /**
 * 取得再行銷追蹤清單Ajax
 */
 function queryRetargetingListAjax(){
-	//重撈商品清單前，將畫面有勾選商品內容清空
-	$('.btn-selectnone').trigger("click")
     
 	$.ajax({
 	    type: "post",
@@ -364,7 +294,16 @@ function queryRetargetingListAjax(){
 	    		});
 	    		
             		tempHtml += " <div class='txt-row txt-row-data' data-type='enable'> ";
-            		tempHtml += " <div class='txt-cell col-ptagcheckbox'><div class='input-check'><input type='checkbox' id='check"+i+"' value='"+trackingSeq+"'><label for='check"+i+"'></label></div></div> ";
+            		tempHtml += " <div class='txt-cell col-ptagcheckbox'> ";
+            		tempHtml += " 	<label class='pos-middle switch-adstatus'> ";
+            		if (trackingStatus == "0"){
+            			tempHtml += "	<input type='checkbox' id='"+trackingSeq+"'>";
+            		}else if(trackingStatus == "1"){
+            			tempHtml += "	<input type='checkbox' checked='checked' id='"+trackingSeq+ "'>";
+            		}
+            		tempHtml += " 		<span class='slider'></span> ";
+            		tempHtml += " 	</label> ";
+            		tempHtml += "	</div> ";
             		tempHtml += " <div class='txt-cell col-ptagname'><a href='editRetargetingTrackingView.html?trackingSeq="+trackingSeq+"'>"+trackingName+"</a><br><small>ID："+trackingSeq+"</small></div> ";
             		tempHtml += " <div class='txt-cell col-ptagcode'><a href='javascript:void(0)' onclick='getpTag(\""+codeType+"\",\""+paId+"\",\""+trackingSeq+"\",\""+trackingName+"\");'>取得代碼</a></div> ";
             		if (verifyStatus == "1"){
@@ -374,22 +313,15 @@ function queryRetargetingListAjax(){
             		}
             		tempHtml += " <div class='txt-cell col-ptagtype'>"+codeType+"</div> ";
             		tempHtml += " <div class='txt-cell col-ptagperiod'>"+trackingRangeDate+"</div> ";
+            		tempHtml += " <div class='txt-cell col-ptagcheckbox col-delete p-none'><a href='javascript:void(0)' onclick='deleteRetargetingAjax(\""+trackingSeq+"\")'></a></div> ";
             		tempHtml += " </div> ";
 	    	});
 	    	$('#retargetingListDiv').html(tempHtml);
 	    	
-	    	// table 第一列 目錄的全選核取按鈕功能 + 被選取的物件改底色為白色
-	        checkall();
 	    	
-	        //被選取的物件改style
-	        checkboxChange();
+	    	//狀態Checkbox開關
+	    	statusCheckboxChange();
 	    	
-	        // 已啟用物件選取
-	        checkboxEnable();
-	        
-	        // 已封存列物件選取
-	        checkboxSealed();
-	        
 	        //初始copy代碼
 	        initClipboard();
 	        
@@ -398,6 +330,79 @@ function queryRetargetingListAjax(){
 	    	processPageAndTotalPage();
 	    	
 	    });
+}
+
+
+//狀態Checkbox開關
+function statusCheckboxChange(){
+	$('.txt-row input[type="checkbox"]').change(function() {
+	    if (this.checked) { //狀態按開啟
+	    	this.setAttribute("checked", "checked");
+	    	updateTrackingStatusAjax($(this).attr('id'),"1")
+	    }else{	//狀態按關閉
+	    	this.removeAttribute("checked");
+	    	updateTrackingStatusAjax($(this).attr('id'),"0")
+	    }
+	});
+}
+
+
+//更新再行銷目錄狀態
+function updateTrackingStatusAjax(trackingSeq,trackingStatus) {
+	$.ajax({
+		type : "post",
+		dataType : "json",
+		url : "updateTrackingStatusAjax.html",
+		data : {
+			"trackingSeq" : trackingSeq,
+			"trackingStatus" : trackingStatus
+		},
+		timeout : 30000,
+		error : function(xhr) {
+			alert("系統繁忙，請稍後再試！");
+		},
+		success : function(response, status) {
+		}
+	}).done(function(response) {
+//		alert(response.msg);
+	});
+}
+
+
+//刪除再行銷ajax
+function deleteRetargetingAjax(trackingSeq) {
+	console.log('deleteAJAX')
+	$.ajax({
+		type : "post",
+		dataType : "json",
+		url : "deleteRetargetingAjax.html",
+		data : {
+			"currentPage" : 1,
+			"pageSizeSelected" : $('#pageSizeSelect option:selected').val(),
+			"trackingSeq" : trackingSeq,
+			"trackingName": $('#txtProdName').val()
+		},
+		timeout : 30000,
+		error : function(xhr) {
+			alert("系統繁忙，請稍後再試！");
+		},
+		success : function(response, status) {
+		}
+	}).done(function(response) {
+		// 更新頁碼與清單資料
+		$('.pagination-wrap').data('order', response.currentPage.toString());
+
+		if (response.status == "ERROR") {
+			$("#retargetingListDiv").empty();
+			alert(response.msg)
+			queryRetargetingListAjax()
+
+		} else {
+			alert(response.msg)
+			$("#retargetingListDiv").empty();
+			queryRetargetingListAjax()
+		}
+	});
 }
 
 
@@ -533,161 +538,6 @@ function searchProdName() {
 	});
 }
 
-//計算被勾選的商品數量
-function sumSelectedPord(){
-	var count = 0;
-	$('.txt-row-data.selected').each(function(){
-		count = count+1;
-	});
-	console.log('count')
-	console.log(count)
-	$('.txt-cell.group-detail .txt-quantity').empty();
-	$('.txt-cell.group-detail .txt-quantity').append(count);
-}
-
-//table 第一列 目錄的全選核取按鈕功能 + 被選取的物件改底色為白色
-function checkall(){
-	console.log('checkall')
-	$('#checkAll').change(function() {
-	    var _filter = $('.prodtable-wrap').attr('data-filter');
-	    if (this.checked) {
-	        $('.nav-wrap.prodtable').attr('data-menu','detail');
-	        if (_filter=='sealed'){
-	            $('.txt-row[data-type="sealed"] input[type="checkbox"]').each(function(){
-	                this.checked=true;
-	                $(this).parent().parent().parent().addClass('selected');
-	            });
-	        }else{
-	            $('.txt-row[data-type="enable"] input[type="checkbox"]').each(function(){
-	                this.checked=true;
-	                $(this).parent().parent().parent().addClass('selected');
-	            });
-	        }
-	    } else {
-	        $('.nav-wrap.prodtable').attr('data-menu','default');
-	        if (_filter=='sealed'){
-	            $('.txt-row[data-type="sealed"] input[type="checkbox"]').each(function(){
-	                this.checked=false;
-	                $(this).parent().parent().parent().removeClass('selected');
-	            });
-	        }else{
-	            $('.txt-row[data-type="enable"] input[type="checkbox"]').each(function(){
-	                this.checked=false;
-	                $(this).parent().parent().parent().removeClass('selected');
-	            });
-	        }
-	    }
-	});
-}
-
-
-//被選取的物件改style
-function checkboxChange(){
-	$('.txt-row input[type="checkbox"]').change(function() {
-		console.log('checkboxChange1')
-	    if (this.checked) {
-	        $(this).parent().parent().parent().addClass('selected');
-	    }else{
-	        $(this).parent().parent().parent().removeClass('selected');
-	    }
-		 sumSelectedPord();
-	});
-}
-
-
-//已啟用物件選取
-function checkboxEnable(){
-	$('.txt-row[data-type="enable"] input[type="checkbox"]').click(function () {
-		console.log('已啟用物件選取111')
-	    if ($(this).is(":checked")) {
-	        $('.nav-wrap.prodtable').attr('data-menu','detail');
-	        var isAllChecked = 0;
-	        $('.txt-row[data-type="enable"] input[type="checkbox"]').each(function() {
-	            if(!this.checked){
-	                isAllChecked = 1;
-	            }
-	        });
-	        if(isAllChecked == 0){$('#checkAll').prop("checked", true);}     
-	    }
-	    else {
-	        $('#checkAll').prop("checked", false);
-	    }
-	});
-}
-
-
-// 已封存列物件選取
-function checkboxSealed(){
-	$('.txt-row[data-type="sealed"] input[type="checkbox"]').click(function () {
-		console.log('已封存列物件選取000')
-	    if ($(this).is(":checked")) {
-	        $('.nav-wrap.prodtable').attr('data-menu','detail');
-	        var isAllChecked = 0;
-	        $('.txt-row[data-type="sealed"] input[type="checkbox"]').each(function(){
-	            if(!this.checked){
-	                isAllChecked = 1;
-	            }
-	        });
-	        if(isAllChecked == 0){$('#checkAll').prop("checked", true);}     
-	    }
-	    else {
-	        $('#checkAll').prop("checked", false);
-	    }
-	});
-}
-
-//刪除再行銷
-function deleteRetargeting(){
-	console.log('del del del del del ')
-	$('.btn-todelete').on('click',function() {
-		console.log('00000000 ')
-		var retargetingIdArray = new Object();
-		$('.txt-row-data.selected input[type="checkbox"]').each(function(index,value){
-			retargetingIdArray[index] = {retargetingId:$(this).attr("value")};
-		});
-		deleteRetargetingAjax(retargetingIdArray);
-	});
-}
-
-//刪除再行銷ajax
-function deleteRetargetingAjax(retargetingIdArray) {
-	console.log('deleteAJAX')
-	$.ajax({
-		type : "post",
-		dataType : "json",
-		url : "deleteRetargetingAjax.html",
-		data : {
-			"currentPage" : 1,
-			"pageSizeSelected" : $('#pageSizeSelect option:selected').val(),
-			"retargetingIdArray" : JSON.stringify(retargetingIdArray),
-			"trackingName": $('#txtProdName').val()
-		},
-		timeout : 30000,
-		error : function(xhr) {
-			alert("系統繁忙，請稍後再試！");
-		},
-		success : function(response, status) {
-			//觸發全部取消
-			$('.btn-selectnone').trigger("click");
-		}
-	}).done(function(response) {
-		//觸發全部取消
-		$('.btn-selectnone').trigger("click");
-		// 更新頁碼與清單資料
-		$('.pagination-wrap').data('order', response.currentPage.toString());
-
-		if (response.status == "ERROR") {
-			$("#retargetingListDiv").empty();
-			alert(response.msg)
-			queryRetargetingListAjax()
-
-		} else {
-			alert(response.msg)
-			$("#retargetingListDiv").empty();
-			queryRetargetingListAjax()
-		}
-	});
-}
 
 //發送mail
 function sendMail(){
