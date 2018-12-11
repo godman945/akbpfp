@@ -57,6 +57,10 @@
    		<property name="accesslogProvider" ref="AccesslogProviderProxy" />
    	</bean>
 
+	<bean id="AdmTemplateProductService" class="com.pchome.akbpfp.db.service.template.TemplateProductService">
+        <property name="dao" ref="AdmTemplateProductDAO" />
+    </bean>
+
 	<!-- pfp Size -->
 	<bean id="PfbSizeService" class="com.pchome.akbpfp.db.service.pfbx.PfbSizeService">
     	<property name="dao" ref="PfbxSizeDAO" />

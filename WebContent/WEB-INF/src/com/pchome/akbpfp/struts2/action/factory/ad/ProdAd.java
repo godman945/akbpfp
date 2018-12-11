@@ -6,8 +6,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -19,6 +21,7 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.pojo.AdmTemplateProduct;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
@@ -27,6 +30,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
+import com.pchome.akbpfp.db.service.template.ITemplateProductService;
 import com.pchome.akbpfp.struts2.action.ad.AdAddAction;
 import com.pchome.akbpfp.struts2.action.ad.AdEditAction;
 import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
@@ -43,21 +47,58 @@ public class ProdAd implements IAd {
 	
 	private IPfpCatalogLogoService pfpCatalogLogoService;
 	private IPfpCatalogSetupService pfpCatalogSetupService;
-	private List<PfpCatalog> alex;
-	
-	
+	private ITemplateProductService admTemplateProductService;
+	private List<PfpCatalog> catalogList;
+	private String templateStr;
+	private String photoClonePath;
 	private AdAddAction adAddAction;
 	private AdEditAction adEditAction;
 	
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
 		log.info(">>>>>> process ProdAd");
-		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
+		catalogList = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
 		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
+		//檢查logo是否審核通過
+		if(pfpCatalogLogoList.size() < 2){
+			return "logo";
+		}else{
+			boolean flag = false;
+			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
+				if(pfpCatalogLogo.getStatus() != 1){
+					flag = true;
+					break;
+				}
+			}
+			if(flag){
+				return "logo";
+			}
+		}
+		
+		List<String> xTypeList = new ArrayList<String>();
+		xTypeList.add("x04");
+		xTypeList.add("x05");
+		
+		List<AdmTemplateProduct> admTemplateProductList = admTemplateProductService.getTemplateProductByXType(xTypeList);
+		JSONObject admTemplateJson = new JSONObject();
+		for (AdmTemplateProduct admTemplateProduct : admTemplateProductList) {
+			String templateSize = admTemplateProduct.getTemplateProductWidth()+"_"+admTemplateProduct.getTemplateProductHeight();
+			String tproName = "";
+			if(admTemplateJson.has(templateSize)){
+				tproName = admTemplateJson.getString(templateSize);
+				tproName = tproName+admTemplateProduct.getTemplateProductSeq()+",";
+			}else{
+				tproName =  admTemplateProduct.getTemplateProductSeq()+",";
+			}
+			admTemplateJson.put(templateSize, tproName);
+		}
+		templateStr = admTemplateJson.toString();
+		
+		
 		JSONObject json = new JSONObject();
 		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
 				JSONObject catalogLogoUrlJson = new JSONObject();
-				catalogLogoUrlJson.put("logoPath", adAddAction.getPhotoDbPath()+pfpCatalogLogo.getCatalogLogoUrl());
+				catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getCatalogLogoUrl());
 				catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
 				List<String> colorList = new ArrayList<String>();
 				Set<PfpCatalogLogoDetail> pfpCatalogLogoDetailSet = pfpCatalogLogo.getPfpCatalogLogoDetails();
@@ -75,7 +116,8 @@ public class ProdAd implements IAd {
 			}
 		}
 		adAddAction.setUserLogoPath(json.toString());
-		adAddAction.getRequest().setAttribute("alex", alex);
+		adAddAction.getRequest().setAttribute("catalogList", catalogList);
+		adAddAction.getRequest().setAttribute("templateStr", templateStr);
 		return "adProdAdd";
 	}
 
@@ -171,7 +213,43 @@ public class ProdAd implements IAd {
 	
 	@Override
 	public String adAdEdit(AdEditAction adEditAction) throws Exception {
-		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adEditAction.getCustomer_info_id());
+		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
+		//檢查logo是否審核通過
+		if(pfpCatalogLogoList.size() < 2){
+			return "logo";
+		}else{
+			boolean flag = false;
+			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
+				if(pfpCatalogLogo.getStatus() != 1){
+					flag = true;
+					break;
+				}
+			}
+			if(flag){
+				return "logo";
+			}
+		}
+		
+		List<String> xTypeList = new ArrayList<String>();
+		xTypeList.add("x04");
+		xTypeList.add("x05");
+		List<AdmTemplateProduct> admTemplateProductList = admTemplateProductService.getTemplateProductByXType(xTypeList);
+		JSONObject admTemplateJson = new JSONObject();
+		for (AdmTemplateProduct admTemplateProduct : admTemplateProductList) {
+			String templateSize = admTemplateProduct.getTemplateProductWidth()+"_"+admTemplateProduct.getTemplateProductHeight();
+			String tproName = "";
+			if(admTemplateJson.has(templateSize)){
+				tproName = admTemplateJson.getString(templateSize);
+				tproName = tproName+admTemplateProduct.getTemplateProductSeq()+",";
+			}else{
+				tproName =  admTemplateProduct.getTemplateProductSeq()+",";
+			}
+			admTemplateJson.put(templateSize, tproName);
+		}
+		templateStr = admTemplateJson.toString();
+		adEditAction.getRequest().setAttribute("templateStr", templateStr);
+		
+		
 		JSONObject json = new JSONObject();
 		if(pfpCatalogLogoList != null){
 			for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
@@ -251,50 +329,24 @@ public class ProdAd implements IAd {
 				adEditAction.setProdLogoType(pfpAdDetail.getAdDetailContent());
 			}
 			
-			if(pfpAdDetail.getAdDetailId().indexOf("logo_sale") >= 0){
-				JSONObject uploadLogoLogJson = new JSONObject();
-				String imgPath = pfpAdDetail.getAdDetailContent();
-				String fileExtensionNameArray[] = imgPath.split("\\.");
-				String fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
-				File file = new File(imgPath);
-				String imgBase64 = "";
-				if(file.exists()){
-					imgBase64 = imgBase64(file,fileExtensionName);
-				}
-				String fileNameArray[] = imgPath.split("/");
-				fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
-				String fileName = fileNameArray[0];
-				int width = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[0]);
-				int heigth = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[1]);
-				long fileSize = file.length() / 1024;
-				
-				uploadLogoLogJson.put("width", width);
-				uploadLogoLogJson.put("heigth", heigth);
-				uploadLogoLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
-				uploadLogoLogJson.put("previewSrc", imgBase64);
-				uploadLogoLogJson.put("fileName", fileName);
-				uploadLogoLogJson.put("fileSize", fileSize);
-				uploadLogoLogJsonArray.put(uploadLogoLogJson);
-				continue;
-			}
-			if(pfpAdDetail.getAdDetailId().indexOf("sale_img") >= 0){
+			String imgPath = "";
+			String[] fileExtensionNameArray = null;
+			String fileExtensionName = "";
+			 //結尾行銷圖
+			if(pfpAdDetail.getDefineAdSeq().contains("dad_sale_img")){
 				JSONObject uploadLogJson = new JSONObject();
-				String imgPath = pfpAdDetail.getAdDetailContent();
-				String fileExtensionNameArray[] = imgPath.split("\\.");
-				String fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
-				
-				System.out.println(adEditAction.getPhotoDbPathPrefix() + imgPath);
-				File file = new File(adEditAction.getPhotoDbPathPrefix()+imgPath);
-				String imgBase64 = "";
+				imgPath = pfpAdDetail.getAdDetailContent();
+				fileExtensionNameArray = imgPath.split("\\.");
+				fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
+				File file = new File(photoClonePath+imgPath);
 				if(file.exists()){
-					imgBase64 = imgBase64(file,fileExtensionName);
+					String imgBase64 = imgBase64(file,fileExtensionName);
 					String fileNameArray[] = imgPath.split("/");
 					fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
 					String fileName = fileNameArray[0];
 					int width = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[0]);
 					int heigth = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[1]);
 					long fileSize = file.length() / 1024;
-					
 					uploadLogJson.put("width", width);
 					uploadLogJson.put("heigth", heigth);
 					uploadLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
@@ -304,13 +356,36 @@ public class ProdAd implements IAd {
 					uploadLogJsonArray.put(uploadLogJson);
 					continue;
 				}
+			}else if(pfpAdDetail.getDefineAdSeq().contains("dad_logo_sale_img")){ //行銷圖
+				JSONObject uploadLogoLogJson = new JSONObject();
+				imgPath = pfpAdDetail.getAdDetailContent();
+				fileExtensionNameArray = imgPath.split("\\.");
+				fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
+				File file = new File(photoClonePath+imgPath);
+				if(file.exists()){
+					String imgBase64 = imgBase64(file,fileExtensionName);
+					String fileNameArray[] = imgPath.split("/");
+					fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
+					String fileName = fileNameArray[0];
+					int width = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[0]);
+					int heigth = Integer.parseInt((fileNameArray[1].split("\\.")[0]).split("x")[1]);
+					long fileSize = file.length() / 1024;
+					uploadLogoLogJson.put("width", width);
+					uploadLogoLogJson.put("heigth", heigth);
+					uploadLogoLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
+					uploadLogoLogJson.put("previewSrc", imgBase64);
+					uploadLogoLogJson.put("fileName", fileName);
+					uploadLogoLogJson.put("fileSize", fileSize);
+					uploadLogoLogJsonArray.put(uploadLogoLogJson);
+					continue;
+				}
 			}
 		}
 		adEditAction.setUploadLogoLog(uploadLogoLogJsonArray.toString());
 		adEditAction.setUploadLog(uploadLogJsonArray.toString());
-		alex = pfpCatalogService.getPfpCatalogByCustomerInfoId(adEditAction.getCustomer_info_id());
-		adEditAction.getRequest().setAttribute("alex", alex);
-		return null;
+		catalogList = pfpCatalogService.getPfpCatalogByCustomerInfoId(adEditAction.getCustomer_info_id());
+		adEditAction.getRequest().setAttribute("catalogList", catalogList);
+		return "SUCCESS";
 	}
 	
 	public String doAdAdEdit(AdEditAction adEditAction) throws Exception {
@@ -452,9 +527,14 @@ public class ProdAd implements IAd {
 	}
 	
 	
-	
-	
-	
+	public String getTemplateStr() {
+		return templateStr;
+	}
+
+	public void setTemplateStr(String templateStr) {
+		this.templateStr = templateStr;
+	}
+
 	public IPfpCatalogService getPfpCatalogService() {
 		return pfpCatalogService;
 	}
@@ -463,12 +543,12 @@ public class ProdAd implements IAd {
 		this.pfpCatalogService = pfpCatalogService;
 	}
 
-	public List<PfpCatalog> getAlex() {
-		return alex;
+	public List<PfpCatalog> getCatalogList() {
+		return catalogList;
 	}
 
-	public void setAlex(List<PfpCatalog> alex) {
-		this.alex = alex;
+	public void setCatalogList(List<PfpCatalog> catalogList) {
+		this.catalogList = catalogList;
 	}
 
 	public IPfpCatalogLogoService getPfpCatalogLogoService() {
@@ -486,4 +566,22 @@ public class ProdAd implements IAd {
 	public void setPfpCatalogSetupService(IPfpCatalogSetupService pfpCatalogSetupService) {
 		this.pfpCatalogSetupService = pfpCatalogSetupService;
 	}
+
+	public ITemplateProductService getAdmTemplateProductService() {
+		return admTemplateProductService;
+	}
+
+	public void setAdmTemplateProductService(ITemplateProductService admTemplateProductService) {
+		this.admTemplateProductService = admTemplateProductService;
+	}
+
+	public String getPhotoClonePath() {
+		return photoClonePath;
+	}
+
+	public void setPhotoClonePath(String photoClonePath) {
+		this.photoClonePath = photoClonePath;
+	}
+	
+	
 }

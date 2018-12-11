@@ -173,6 +173,10 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+	 <bean id="AdmTemplateProductDAO" class="com.pchome.akbpfp.db.dao.template.AdmTemplateProductDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
     <bean id="PfpTransDetailDAO" class="com.pchome.akbpfp.db.dao.bill.PfpTransDetailDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>

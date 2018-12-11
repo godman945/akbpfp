@@ -790,7 +790,7 @@ public class PfpAdActionDAO extends BaseDAO<PfpAdAction,String> implements IPfpA
 			sqlParams.put("endDate", endDate);
 		}
 		hql.append(" group by adActionSeq");
-		log.info("hql  = "+ hql.toString());
+//		log.info("hql  = "+ hql.toString());
 
 		// 將條件資料設定給 Query，準備 query
 		Query query = session.createQuery(hql.toString());

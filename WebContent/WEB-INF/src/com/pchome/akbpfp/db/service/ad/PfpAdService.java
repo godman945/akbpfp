@@ -335,6 +335,8 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 									//標籤背景顏色
 									pfpAdAdViewVO.setProdLogoType(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
 							 		break;
+								case LOGO_IMG_URL:
+									pfpAdAdViewVO.setUserLogoPath(URLEncoder.encode(pfpAdDetail.getAdDetailContent()));
 								}
 							}
 						}
@@ -348,27 +350,6 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 								pfpAdAdViewVO.setUserLogoType("crop-width");
 							}
 						}
-						
-						List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(customerInfoId);
-						JSONArray array = new JSONArray();
-						if(pfpCatalogSetup != null){
-							for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
-								JSONObject catalogLogoUrlJson = new JSONObject();
-								catalogLogoUrlJson.put("logoPath", pfpCatalogLogo.getCatalogLogoUrl());
-								catalogLogoUrlJson.put("logoStatus", pfpCatalogLogo.getStatus());
-								if(pfpCatalogLogo.getCatalogLogoType().equals("0")){
-									JSONObject json = new JSONObject();
-									json.put("square", catalogLogoUrlJson);
-									array.put(json);
-								}
-								if(pfpCatalogLogo.getCatalogLogoType().equals("1")){
-									JSONObject json = new JSONObject();
-									json.put("rectangle", catalogLogoUrlJson);
-									array.put(json);
-								}
-							}
-						}
-						pfpAdAdViewVO.setUserLogoPath(array.toString());
 					}
 				}
 				adAdViewVOs.add(pfpAdAdViewVO);
