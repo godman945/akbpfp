@@ -1090,6 +1090,8 @@ function getProdGroup(obj){
 		+"&userLogoPath="+logoPath
 		+"&realUrl="+encodeURIComponent(realUrl)
 		+"&previewTpro="+encodeURIComponent(previewTpro)
+		+"&saleImg="
+		+"&saleEndImg="
 		$(".akb_iframe").attr('src' ,src);
 		console.log(src);
 }

@@ -79,13 +79,15 @@
 									&logoText=${vo.logoText!}
 									&logoBgColor=${vo.logoBgColor!}
 									&logoFontColor=${vo.logoFontColor!}
-									&prodLogoType=type1
+									&prodLogoType=type3
 									&adbgType=hasposter
 									&imgProportiona=${vo.userLogoType!}
 									&userLogoPath=${vo.userLogoPath!}
 									&realUrl=${vo.realUrl!}
 									&imgShowType=
-									&previewTpro=c_x05_pad_tpro_0128
+									&previewTpro=c_x04_pad_tpro_0100
+									&saleImg=${vo.saleImg!}
+									&saleEndImg=${vo.saleEndImg!}
 									">
 								</iframe>
 							<#else>

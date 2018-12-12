@@ -70,6 +70,11 @@ public class PfpAdAdViewVO {
 	
 	private String userLogoPath;
 	
+	private String saleImg = "";
+	
+	private String saleEndImg ="";
+	
+	
 	/* 商品廣告用參數 END*/
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -358,6 +363,18 @@ public class PfpAdAdViewVO {
 	}
 	public void setUserLogoPath(String userLogoPath) {
 		this.userLogoPath = userLogoPath;
+	}
+	public String getSaleImg() {
+		return saleImg;
+	}
+	public void setSaleImg(String saleImg) {
+		this.saleImg = saleImg;
+	}
+	public String getSaleEndImg() {
+		return saleEndImg;
+	}
+	public void setSaleEndImg(String saleEndImg) {
+		this.saleEndImg = saleEndImg;
 	}
     
 }

@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -98,7 +99,11 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 								BigDecimal click = (BigDecimal) objArray[1];
 								Double cost = (Double)objArray[2];
 								BigDecimal invClick = (BigDecimal) objArray[3];
+								BigDecimal convertCount = (BigDecimal) objArray[5];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[6];
 								AdWebsiteReportVO vo = new AdWebsiteReportVO();
+								vo.setConvertCount(convertCount);
+								vo.setConvertPriceCount(convertPriceCount);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
@@ -106,7 +111,6 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 								resultData.add(vo);
 							}
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_WEBSITE.getTextValue())) {
-
 							Map<String,String> adStyleTypeMap = new HashMap<String,String>();
 							Map<String,String> adPriceTypeMap = new HashMap<String,String>();
 							Map<Integer,String> adTypeMap = new HashMap<Integer,String>();
@@ -115,14 +119,11 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 							adTypeMap = getAdType();
 							
 							for (int i=0; i<dataList.size(); i++) {
-
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								String websiteCategoryCode	 ="";
 								if(objArray[0] != null){
 									websiteCategoryCode = objArray[0].toString();
 								}
-								
 								BigDecimal pv = (BigDecimal) objArray[1];
 								BigDecimal click = (BigDecimal) objArray[2];
 								Double cost = (Double)objArray[3];
@@ -133,9 +134,13 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 								String adOperatingRuleCode = objArray[9].toString();
 								String adClkPriceType = objArray[10].toString();
 								Integer adType = Integer.parseInt(objArray[11].toString());
-
+								BigDecimal convertCount = (BigDecimal) objArray[12];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[13];
+								
 								AdWebsiteReportVO vo = new AdWebsiteReportVO();
 								vo.setWebsiteCategoryCode(websiteCategoryCode);
+								vo.setConvertCount(convertCount);
+								vo.setConvertPriceCount(convertPriceCount);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
@@ -173,8 +178,11 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 								BigDecimal click = (BigDecimal) objArray[2];
 								Double cost = (Double)objArray[3];
 								BigDecimal invClick = (BigDecimal) objArray[4];
-								
+								BigDecimal convertCount = (BigDecimal) objArray[6];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[7];
 								AdWebsiteReportVO vo = new AdWebsiteReportVO();
+								vo.setConvertCount(convertCount);
+								vo.setConvertPriceCount(convertPriceCount);
 								vo.setWebsiteCategoryCode(websiteCategoryCode);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
@@ -202,7 +210,9 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");	
 		hql.append(" sum(r.ad_clk_price), ");	
 		hql.append(" sum(r.ad_invalid_clk), ");
-		hql.append(" sum(r.ad_invalid_clk_price) ");
+		hql.append(" sum(r.ad_invalid_clk_price), ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_website_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");
@@ -263,7 +273,9 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 		hql.append(" r.ad_pvclk_device, ");
 		hql.append(" r.ad_operating_rule, ");
 		hql.append(" r.ad_clk_price_type, ");
-		hql.append(" r.ad_type ");
+		hql.append(" r.ad_type, ");
+		hql.append(" SUM(r.convert_count),");
+		hql.append(" SUM(r.convert_price_count)");
 		hql.append(" from pfp_ad_website_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");
@@ -320,7 +332,9 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");	
 		hql.append(" sum(r.ad_clk_price), ");	
 		hql.append(" sum(r.ad_invalid_clk), ");
-		hql.append(" sum(r.ad_invalid_clk_price) ");
+		hql.append(" sum(r.ad_invalid_clk_price), ");
+		hql.append(" SUM(r.convert_count), ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_website_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");

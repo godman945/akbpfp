@@ -1517,7 +1517,12 @@ public class ReportExcerptAction extends BaseReportAction {
 			String adActionSeq = adActionReportVO.getAdActionSeq();
 
 			PfpAdAction pfpAdAction =  adActionService.getPfpAdActionBySeq(adActionSeq);
-
+			if(pfpAdAction == null){
+				continue;
+			}
+			
+			
+			
 			String adActionName = pfpAdAction.getAdActionName();
 		    int adActionStatus = pfpAdAction.getAdActionStatus();
 		    String adActionStartDate = dateFormat2.format(pfpAdAction.getAdActionStartDate());

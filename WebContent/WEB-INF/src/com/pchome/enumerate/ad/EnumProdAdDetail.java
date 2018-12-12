@@ -16,6 +16,8 @@ public enum EnumProdAdDetail {
 	DIS_FONT_COLOR("dis_font_color","adp_201809270001","dad_dis_font_color"),
 	DIS_BG_COLOR("dis_bg_color","adp_201809270001","dad_dis_bg_color"),
 	PROD_RADIO_LOGO_TYPE("prod_radio_logo_type","adp_201809270001",""),
+	PROD_SALE_IMG("logo_sale_img_300x55","adp_201809270001",""),
+	PROD_SALE_END_IMG("sale_img_300x250","adp_201809270001",""),
 	LOGO_IMG_URL("logo_img_url","adp_201809270001","dad_logo_img_url");
 	
 	private final String adDetailId;
