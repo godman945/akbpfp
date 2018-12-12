@@ -485,10 +485,6 @@ public class ProdAd implements IAd {
 	private void saveImg(JSONObject uploadImgJson,String uploadType,StringBuffer saveImgPathBuffer,String adSeq,String type) throws Exception{
 		log.info("START CREATE IMG:"+uploadType);
 		log.info("START CREATE IMG:"+saveImgPathBuffer.toString());
-		File path = new File(saveImgPathBuffer.toString());
-        if(!path.exists()){
-        	path.mkdirs();
-        }
 		Iterator keys = uploadImgJson.keys();
 		while(keys.hasNext()) {
 		    String key = (String)keys.next();
@@ -515,7 +511,11 @@ public class ProdAd implements IAd {
             	defineAdSeq = "dad_"+adDetailId;
             }
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
-            	ImageIO.write(image, fileExtensionName, new File(photoClonePath+saveImgPath));
+        		File path = new File(photoClonePath+saveImgPathBuffer.toString());
+                if(!path.exists()){
+                	path.mkdirs();
+                }
+            	ImageIO.write(image, fileExtensionName, path);
             	log.info("><><><><><><><"+saveImgPath);
             	if(type.equals("add")){
             		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
