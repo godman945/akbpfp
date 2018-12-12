@@ -348,6 +348,8 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 			Mail mail = new Mail();
 			String subject = "［PChome聯播網］轉換追蹤代碼";
 			mail.setMailTo(mailReceiversAry);
+			
+			
 			String mailContent=
 			"<html><body>"+
 			"請複製下方轉換追蹤代碼，並貼到欲追蹤網頁中，以利完成相關設定。<br/>"+

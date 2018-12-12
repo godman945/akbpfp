@@ -85,7 +85,7 @@
                                 <div class="txt-cell col-ptagcheckbox   ">狀態</div>
                                 <div class="txt-cell col-ptagname-trans ">名稱</div>
                                 <div class="txt-cell col-ptagcode-trans ">追蹤代碼</div>
-                                <div class="txt-cell col-ptagstatus-trans">狀態</div>
+                                <div class="txt-cell col-ptagstatus-trans">認證狀態</div>
                                 <div class="txt-cell col-ptagstatus-trans">轉換條件</div>
                                 <div class="txt-cell col-type-transfer  ">轉換類型</div>
                                 <div class="txt-cell col-days-interactive"><span>互動後</span><span>轉換追溯</span></div>

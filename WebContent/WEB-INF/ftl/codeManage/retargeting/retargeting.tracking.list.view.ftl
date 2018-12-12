@@ -86,7 +86,7 @@
 	                                <div class="txt-cell col-ptagcheckbox">狀態</div>
 	                                <div class="txt-cell col-ptagname    ">名稱</div>
 	                                <div class="txt-cell col-ptagcode    ">追蹤代碼</div>
-	                                <div class="txt-cell col-ptagstatus  ">狀態</div>
+	                                <div class="txt-cell col-ptagstatus  ">認證狀態</div>
 	                                <div class="txt-cell col-ptagtype    ">追蹤代碼類型</div>
 	                                <div class="txt-cell col-ptagperiod  ">追蹤行銷效期</div>
 	                                <!-- <div class="txt-cell col-ptagquant   ">名單數</div> -->
