@@ -42,15 +42,34 @@ $(document).ready(function() {
 		}
 	})
 	
-	//新增再行銷追蹤
+	//編輯再行銷追蹤
 	$('#editRetargetingTracking').on('click',function(){
-		editRetargetingTrackingAjax();
+		if (checkData() == true){
+			editRetargetingTrackingAjax();
+		}
 	})
 	
 });
 
+/**
+* 檢查欄位值正確性
+*/
+function checkData() {
+	var checkFlag = true;
+	
+	//檢查代碼名稱
+	if ($('#retargetingName').val().trim() == ""){
+		$('#retargetingNameMsg').css("display", "");
+		checkFlag = false;
+	}else{
+		$('#retargetingNameMsg').css("display", "none");
+	}
+	
+	return checkFlag;
+};
 
-//新增再行銷追蹤
+
+//編輯再行銷追蹤
 function editRetargetingTrackingAjax(){
 	$.ajax({
 		type : "post",
@@ -58,7 +77,7 @@ function editRetargetingTrackingAjax(){
 		url : "editRetargetingTrackingAjax.html",
 		data : {
 			"trackingSeq" : $('#trackingSeq').val(),
-			"trackingName" : $('#retargetingName').val(),
+			"trackingName" : $('#retargetingName').val().trim(),
 			"paId" : $('#paid').val(),
 			"codeType" : codeType,
 			"trackingRangeDate" : trackingRangeDate

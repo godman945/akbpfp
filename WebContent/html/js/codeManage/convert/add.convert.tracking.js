@@ -243,7 +243,7 @@ function checkData() {
 	var checkFlag = true;
 	
 	//檢查代碼名稱
-	if ($('#convertName').val() == ""){
+	if ($('#convertName').val().trim() == ""){
 		$('#convertNameMsg').css("display", "");
 		checkFlag = false;
 	}else{
@@ -397,7 +397,7 @@ function addConvertTrackingAjax(){
 		url : "addConvertTrackingAjax.html",
 		data : {
 			"convertSeq" : $('#convertSeq').val(),
-			"convertName" : $('#convertName').val(),
+			"convertName" : $('#convertName').val().trim(),
 			"paId" : $('#paid').val(),
 			"convertType" : convertType,
 			"clickRangeDate" : clickRangeDate,

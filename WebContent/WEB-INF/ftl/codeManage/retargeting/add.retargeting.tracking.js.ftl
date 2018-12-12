@@ -1,4 +1,3 @@
-<#assign s=JspTaglibs["/struts-tags"]>
 	<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" />
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery-ui-1.9.2.custom.min.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.validate.js"></script>

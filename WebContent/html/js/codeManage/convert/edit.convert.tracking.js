@@ -152,7 +152,7 @@ $(document).ready(function() {
 		}
 	})
     
-	//新增再行銷追蹤
+	//編輯轉換追蹤
 	$('#editConvertTracking').on('click',function(){
 		if (checkData() == true){
 			prepareData();
@@ -244,7 +244,7 @@ function checkData() {
 	var checkFlag = true;
 	
 	//檢查代碼名稱
-	if ($('#convertName').val() == ""){
+	if ($('#convertName').val().trim() == ""){
 		$('#convertNameMsg').css("display", "");
 		checkFlag = false;
 	}else{
@@ -430,7 +430,7 @@ function prepareData(){
 	}
 }
 
-//新增轉換追蹤
+//編輯轉換追蹤
 function editConvertTrackingAjax(){
 	$.ajax({
 		type : "post",
@@ -438,7 +438,7 @@ function editConvertTrackingAjax(){
 		url : "editConvertTrackingAjax.html",
 		data : {
 			"convertSeq" : $('#convertSeq').val(),
-			"convertName" : $('#convertName').val(),
+			"convertName" : $('#convertName').val().trim(),
 			"paId" : $('#paid').val(),
 			"convertType" : convertType,
 			"clickRangeDate" : clickRangeDate,
