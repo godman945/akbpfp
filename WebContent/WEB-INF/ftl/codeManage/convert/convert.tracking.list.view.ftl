@@ -82,10 +82,10 @@
                         <!-- 表格欄位標題 -->
                         
                             <div class="txt-row header">
-                                <div class="txt-cell col-ptagcheckbox"><div class="input-check"><input type="checkbox" id="checkAll" value="checkAll"><label for="checkAll"></label></div></div>
+                                <div class="txt-cell col-ptagcheckbox   ">狀態</div>
                                 <div class="txt-cell col-ptagname-trans ">名稱</div>
                                 <div class="txt-cell col-ptagcode-trans ">追蹤代碼</div>
-                                <div class="txt-cell col-ptagstatus-trans">狀態</div>
+                                <div class="txt-cell col-ptagstatus-trans">認證狀態</div>
                                 <div class="txt-cell col-ptagstatus-trans">轉換條件</div>
                                 <div class="txt-cell col-type-transfer  ">轉換類型</div>
                                 <div class="txt-cell col-days-interactive"><span>互動後</span><span>轉換追溯</span></div>
@@ -94,6 +94,8 @@
                                 <div class="txt-cell col-click-transfer  "><span>點擊後</span><span>轉換數</span></div>
                                 <div class="txt-cell col-browse-transfer "><span>瀏覽後</span><span>轉換數</span></div>
                                 <div class="txt-cell col-all-transfer    ">所有轉換</div>
+                                <div class="txt-cell col-ptagcheckbox txt-center">刪除</div>
+                                
                             </div>
 						
                             <!-- row1 -->
@@ -103,7 +105,16 @@
 	                        			<#assign index1 = 1>
 	                        			<#list convertList as converts>
 				                            <div class="txt-row txt-row-data" data-type="enable">
-				                                <div class="txt-cell col-ptagcheckbox       "><div class="input-check"><input type="checkbox" id="check${index1}" value=${converts.convertSeq!}><label for="check${index1}"></label></div></div>
+												<div class="txt-cell col-ptagcheckbox">
+				                                    <label class="pos-middle switch-adstatus">
+				                                    	<#if converts.convertStatus == "0">
+					                                        <input type="checkbox" id=${converts.convertSeq!}>
+					                                    <#elseif converts.convertStatus == "1">
+				                                        	<input type="checkbox" checked="checked" id=${converts.convertSeq!}>
+				                                        </#if>
+					                                        <span class="slider"></span>
+				                                    </label>
+				                                </div>
 				                                <div class="txt-cell col-ptagname-trans     "><a href="editConvertTrackingView.html?convertSeq=${converts.convertSeq!}">${converts.convertName!}</a><br><small>ID：${converts.convertSeq!}</small></div>
 				                                <div class="txt-cell col-ptagcode-trans     "><a href="javascript:void(0)" onclick="getpTag('${converts.paId!}','${converts.convertSeq!}','${converts.convertName!}')">取得代碼</a></div>
 				                                <#if converts.verifyStatus == "1">
@@ -119,6 +130,7 @@
 				                                <div class="txt-cell col-click-transfer     ">${converts.transCKConvertCount!}</div>
 				                                <div class="txt-cell col-browse-transfer    ">${converts.transPVConvertCount!}</div>
 				                                <div class="txt-cell col-all-transfer       ">${converts.transAllConvertCount!}</div>
+				                                <div class="txt-cell col-ptagcheckbox col-delete p-none"><a href="javascript:void(0)" onclick="deleteConvertAjax('${converts.convertSeq!}')"></a></div>
 				                            </div>
 				                        <#assign index1 = index1 + 1>   
 			                            </#list>

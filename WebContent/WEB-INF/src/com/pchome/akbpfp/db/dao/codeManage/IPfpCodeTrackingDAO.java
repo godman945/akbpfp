@@ -15,7 +15,7 @@ public interface IPfpCodeTrackingDAO extends IBaseDAO<PfpCodeTracking,String>{
 	
 	public String getRetargetingTrackingCount(RetargetingTrackingVO retargetingTrackingVO) throws Exception;
 	
-	public void updateTrackingStatus(String pfpCustomerInfoId, List<String> retargetingIdArray,String trackingStatus) throws Exception;
+	public void updateTrackingStatus(String pfpCustomerInfoId, String trackingSeq,String trackingStatus) throws Exception;
 	
 	public List<Map<String,Object>> getPfpCodeTrackingByCondition(RetargetingTrackingVO retargetingTrackingVO) throws Exception;
 	

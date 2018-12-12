@@ -3,48 +3,8 @@
 	//floating scrollbar
     $('.floatingscroll').floatingScrollbar();
 	
-	
-	//全部選取按鈕
-    var $btn_select=$('.btn-selectall');
-    $btn_select.on('click',function() {
-    	console.log('11')
-        var $checkall = $('#checkAll');
-        if(!$checkall.prop('checked')) {
-            $checkall.trigger("click");
-        }
-        sumSelectedPord();
-    });
-
-    
-    //取消全選按鈕
-    var $btn_selectnone=$('.btn-selectnone');
-    $btn_selectnone.on('click',function() {
-        
-        var $menu = $('.nav-wrap.prodtable');
-        $menu.attr('data-menu','default');
-
-        var $checkbox =$('#checkAll, .txt-row input[type="checkbox"],.prodcard-box input[type="checkbox"]');
-        $checkbox.each(function(){
-        this.checked=false;
-        $(this).parent().parent().parent().removeClass('selected');
-        });
-    });
-	
-	
-	//table 第一列 目錄的全選核取按鈕功能 + 被選取的物件改底色為白色
-    checkall();
-	
-    //被選取的物件改style
-    checkboxChange();
-    
-    //已啟用物件選取
-    checkboxEnable();
-    
-    // 已封存列物件選取
-    checkboxSealed();
-    
-    //刪除轉換
-    deleteConvert();
+    //狀態Checkbox開關
+    statusCheckboxChange();
     
     //初始copy代碼
     initClipboard();
@@ -199,9 +159,6 @@ function getpTag(paid,convertSeq,convertName){
 * 取得轉換追蹤清單Ajax
 */
 function queryConvertListAjax(){
-	//重撈商品清單前，將畫面有勾選商品內容清空
-	$('.btn-selectnone').trigger("click")
-    
 	$.ajax({
 	    type: "post",
 	    dataType: "json",
@@ -297,7 +254,16 @@ function queryConvertListAjax(){
 	    		});
 	    		
             		tempHtml += " <div class='txt-row txt-row-data' data-type='enable'> ";
-            		tempHtml += " <div class='txt-cell col-ptagcheckbox'><div class='input-check'><input type='checkbox' id='check"+i+"' value='"+convertSeq+"'><label for='check"+i+"'></label></div></div> ";
+            		tempHtml += " <div class='txt-cell col-ptagcheckbox'> ";
+            		tempHtml += "	<label class='pos-middle switch-adstatus'> ";
+            		if (convertStatus == "0"){
+            			tempHtml += "	<input type='checkbox' id='"+convertSeq+"'>";
+            		}else if(convertStatus == "1"){
+            			tempHtml += "	<input type='checkbox' checked='checked' id='"+convertSeq+ "'>";
+            		}
+            		tempHtml += " 		<span class='slider'></span> ";
+            		tempHtml += " 	</label> ";
+            		tempHtml += "	</div> ";
             		tempHtml += " <div class='txt-cell col-ptagname-trans'><a href='editConvertTrackingView.html?convertSeq="+convertSeq+"'>"+convertName+"</a><br><small>ID："+convertSeq+"</small></div> ";
             		tempHtml += " <div class='txt-cell col-ptagcode-trans'><a href='javascript:void(0)' onclick='getpTag(\""+paId+"\",\""+convertSeq+"\",\""+convertName+"\");'>取得代碼</a></div> ";
             		if (verifyStatus == "1"){
@@ -313,6 +279,7 @@ function queryConvertListAjax(){
             		tempHtml += " <div class='txt-cell col-click-transfer	'>"+transCKConvertCount+"</div> ";
             		tempHtml += " <div class='txt-cell col-browse-transfer	'>"+transPVConvertCount+"</div> ";
             		tempHtml += " <div class='txt-cell col-all-transfer	'>"+transAllConvertCount+"</div> ";
+            		tempHtml += " <div class='txt-cell col-ptagcheckbox col-delete p-none'><a href='javascript:void(0)' onclick='deleteConvertAjax(\""+convertSeq+"\")'></a></div> ";
             		tempHtml += " </div> ";
 	    	});
 	    	$('#convertListDiv').html(tempHtml);
@@ -336,18 +303,9 @@ function queryConvertListAjax(){
 	    		$('#sumConvertCountDiv').html(sumTempHtml);
 	    	}
 	    	
-	    	// table 第一列 目錄的全選核取按鈕功能 + 被選取的物件改底色為白色
-	        checkall();
+	    	//狀態Checkbox開關
+	    	statusCheckboxChange();
 	    	
-	        //被選取的物件改style
-	        checkboxChange();
-	    	
-	        // 已啟用物件選取
-	        checkboxEnable();
-	        
-	        // 已封存列物件選取
-	        checkboxSealed();
-	        
 	        //初始copy代碼
 	        initClipboard();
 	        
@@ -491,123 +449,43 @@ function searchProdName() {
 	});
 }
 
-//計算被勾選的商品數量
-function sumSelectedPord(){
-	var count = 0;
-	$('.txt-row-data.selected').each(function(){
-		count = count+1;
-	});
-	console.log('count')
-	console.log(count)
-	$('.txt-cell.group-detail .txt-quantity').empty();
-	$('.txt-cell.group-detail .txt-quantity').append(count);
-}
 
-//table 第一列 目錄的全選核取按鈕功能 + 被選取的物件改底色為白色
-function checkall(){
-	console.log('checkall')
-	$('#checkAll').change(function() {
-	    var _filter = $('.prodtable-wrap').attr('data-filter');
-	    if (this.checked) {
-	        $('.nav-wrap.prodtable').attr('data-menu','detail');
-	        if (_filter=='sealed'){
-	            $('.txt-row[data-type="sealed"] input[type="checkbox"]').each(function(){
-	                this.checked=true;
-	                $(this).parent().parent().parent().addClass('selected');
-	            });
-	        }else{
-	            $('.txt-row[data-type="enable"] input[type="checkbox"]').each(function(){
-	                this.checked=true;
-	                $(this).parent().parent().parent().addClass('selected');
-	            });
-	        }
-	    } else {
-	        $('.nav-wrap.prodtable').attr('data-menu','default');
-	        if (_filter=='sealed'){
-	            $('.txt-row[data-type="sealed"] input[type="checkbox"]').each(function(){
-	                this.checked=false;
-	                $(this).parent().parent().parent().removeClass('selected');
-	            });
-	        }else{
-	            $('.txt-row[data-type="enable"] input[type="checkbox"]').each(function(){
-	                this.checked=false;
-	                $(this).parent().parent().parent().removeClass('selected');
-	            });
-	        }
-	    }
-	});
-}
-
-
-//被選取的物件改style
-function checkboxChange(){
+//狀態Checkbox開關
+function statusCheckboxChange(){
 	$('.txt-row input[type="checkbox"]').change(function() {
-		console.log('checkboxChange1')
-	    if (this.checked) {
-	        $(this).parent().parent().parent().addClass('selected');
-	    }else{
-	        $(this).parent().parent().parent().removeClass('selected');
-	    }
-		 sumSelectedPord();
-	});
-}
-
-
-//已啟用物件選取
-function checkboxEnable(){
-	$('.txt-row[data-type="enable"] input[type="checkbox"]').click(function () {
-		console.log('已啟用物件選取111')
-	    if ($(this).is(":checked")) {
-	        $('.nav-wrap.prodtable').attr('data-menu','detail');
-	        var isAllChecked = 0;
-	        $('.txt-row[data-type="enable"] input[type="checkbox"]').each(function() {
-	            if(!this.checked){
-	                isAllChecked = 1;
-	            }
-	        });
-	        if(isAllChecked == 0){$('#checkAll').prop("checked", true);}     
-	    }
-	    else {
-	        $('#checkAll').prop("checked", false);
+	    if (this.checked) { //狀態按開啟
+	    	this.setAttribute("checked", "checked");
+	    	updateConvertStatusAjax($(this).attr('id'),"1")
+	    }else{	//狀態按關閉
+	    	this.removeAttribute("checked");
+	    	updateConvertStatusAjax($(this).attr('id'),"0")
 	    }
 	});
 }
 
-
-// 已封存列物件選取
-function checkboxSealed(){
-	$('.txt-row[data-type="sealed"] input[type="checkbox"]').click(function () {
-		console.log('已封存列物件選取000')
-	    if ($(this).is(":checked")) {
-	        $('.nav-wrap.prodtable').attr('data-menu','detail');
-	        var isAllChecked = 0;
-	        $('.txt-row[data-type="sealed"] input[type="checkbox"]').each(function(){
-	            if(!this.checked){
-	                isAllChecked = 1;
-	            }
-	        });
-	        if(isAllChecked == 0){$('#checkAll').prop("checked", true);}     
-	    }
-	    else {
-	        $('#checkAll').prop("checked", false);
-	    }
-	});
-}
-
-//刪除轉換
-function deleteConvert(){
-	$('.btn-todelete').on('click',function() {
-		console.log('00000000 ')
-		var convertIdArray = new Object();
-		$('.txt-row-data.selected input[type="checkbox"]').each(function(index,value){
-			convertIdArray[index] = {convertId:$(this).attr("value")};
-		});
-		deleteConvertAjax(convertIdArray);
+//更新轉換目錄狀態
+function updateConvertStatusAjax(convertSeq,convertStatus) {
+	$.ajax({
+		type : "post",
+		dataType : "json",
+		url : "updateConvertStatusAjax.html",
+		data : {
+			"convertSeq" : convertSeq,
+			"convertStatus" : convertStatus
+		},
+		timeout : 30000,
+		error : function(xhr) {
+			alert("系統繁忙，請稍後再試！");
+		},
+		success : function(response, status) {
+		}
+	}).done(function(response) {
+//		alert(response.msg);
 	});
 }
 
 //刪除轉換ajax
-function deleteConvertAjax(convertIdArray) {
+function deleteConvertAjax(convertSeq) {
 	console.log('deleteAJAX')
 	$.ajax({
 		type : "post",
@@ -616,7 +494,7 @@ function deleteConvertAjax(convertIdArray) {
 		data : {
 			"currentPage" : 1,
 			"pageSizeSelected" : $('#pageSizeSelect option:selected').val(),
-			"convertIdArray" : JSON.stringify(convertIdArray),
+			"convertSeq" : convertSeq,
 			"convertName": $('#txtProdName').val()
 		},
 		timeout : 30000,
@@ -624,12 +502,8 @@ function deleteConvertAjax(convertIdArray) {
 			alert("系統繁忙，請稍後再試！");
 		},
 		success : function(response, status) {
-			//觸發全部取消
-			$('.btn-selectnone').trigger("click");
 		}
 	}).done(function(response) {
-		//觸發全部取消
-		$('.btn-selectnone').trigger("click");
 		// 更新頁碼與清單資料
 		$('.pagination-wrap').data('order', response.currentPage.toString());
 
@@ -647,6 +521,7 @@ function deleteConvertAjax(convertIdArray) {
 		}
 	});
 }
+
 
 //發送mail
 function sendMail(){
