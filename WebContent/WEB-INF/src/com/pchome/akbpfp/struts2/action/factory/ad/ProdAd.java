@@ -520,7 +520,7 @@ public class ProdAd implements IAd {
                 log.info("path ><><><><><><><:"+path);
                 
                 log.info("path ><><><><><><><:"+path.getPath()+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName);
-            	ImageIO.write(image, fileExtensionName, new File(path.getPath()+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName));
+            	ImageIO.write(image, fileExtensionName, new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName));
             	if(type.equals("add")){
             		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
             	}else if(type.equals("edit")){
