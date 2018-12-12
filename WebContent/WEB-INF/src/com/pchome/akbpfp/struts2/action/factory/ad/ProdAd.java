@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -51,6 +52,7 @@ public class ProdAd implements IAd {
 	private String photoClonePath;
 	private AdAddAction adAddAction;
 	private AdEditAction adEditAction;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
 		log.info(">>>>>> process ProdAd");
@@ -515,8 +517,10 @@ public class ProdAd implements IAd {
                 if(!path.exists()){
                 	path.mkdirs();
                 }
-            	ImageIO.write(image, fileExtensionName, path);
-            	log.info("><><><><><><><"+saveImgPath);
+                log.info("path ><><><><><><><:"+path);
+                
+                log.info("path ><><><><><><><:"+path.getPath()+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName);
+            	ImageIO.write(image, fileExtensionName, new File(path.getPath()+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName));
             	if(type.equals("add")){
             		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
             	}else if(type.equals("edit")){
