@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/9/28 �W�� 10:58:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/12/11 �U�� 12:14:58 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -36,6 +36,8 @@ public class PfpAdAgeReport implements java.io.Serializable {
 	private int adInvalidClk;
 	private float adClkPrice;
 	private float adInvalidClkPrice;
+	private Integer convertCount;
+	private Integer convertPriceCount;
 	private Date createDate;
 	private Date updateDate;
 
@@ -68,7 +70,7 @@ public class PfpAdAgeReport implements java.io.Serializable {
 	public PfpAdAgeReport(Date adPvclkDate, String adPvclkDevice, String customerInfoId, String adActionSeq,
 			String adGroupSeq, int adType, String adOperatingRule, String adClkPriceType, String sex, String ageCode,
 			int adPv, int adVpv, int adClk, int adView, int adInvalidClk, float adClkPrice, float adInvalidClkPrice,
-			Date createDate, Date updateDate) {
+			Integer convertCount, Integer convertPriceCount, Date createDate, Date updateDate) {
 		this.adPvclkDate = adPvclkDate;
 		this.adPvclkDevice = adPvclkDevice;
 		this.customerInfoId = customerInfoId;
@@ -86,6 +88,8 @@ public class PfpAdAgeReport implements java.io.Serializable {
 		this.adInvalidClk = adInvalidClk;
 		this.adClkPrice = adClkPrice;
 		this.adInvalidClkPrice = adInvalidClkPrice;
+		this.convertCount = convertCount;
+		this.convertPriceCount = convertPriceCount;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 	}
@@ -254,6 +258,24 @@ public class PfpAdAgeReport implements java.io.Serializable {
 
 	public void setAdInvalidClkPrice(float adInvalidClkPrice) {
 		this.adInvalidClkPrice = adInvalidClkPrice;
+	}
+
+	@Column(name = "convert_count")
+	public Integer getConvertCount() {
+		return this.convertCount;
+	}
+
+	public void setConvertCount(Integer convertCount) {
+		this.convertCount = convertCount;
+	}
+
+	@Column(name = "convert_price_count")
+	public Integer getConvertPriceCount() {
+		return this.convertPriceCount;
+	}
+
+	public void setConvertPriceCount(Integer convertPriceCount) {
+		this.convertPriceCount = convertPriceCount;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

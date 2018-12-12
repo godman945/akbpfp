@@ -1,5 +1,5 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/9/28 �W�� 10:58:33 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/12/11 �U�� 12:14:58 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -36,6 +36,8 @@ public class PfpAdActionReport implements java.io.Serializable {
 	private float adInvalidClkPrice;
 	private float adActionMaxPrice;
 	private int adActionCount;
+	private Integer convertCount;
+	private Integer convertPriceCount;
 	private Date createDate;
 	private Date updateDate;
 
@@ -63,6 +65,33 @@ public class PfpAdActionReport implements java.io.Serializable {
 		this.adInvalidClkPrice = adInvalidClkPrice;
 		this.adActionMaxPrice = adActionMaxPrice;
 		this.adActionCount = adActionCount;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+	}
+
+	public PfpAdActionReport(Date adPvclkDate, String adPvclkDevice, String customerInfoId, String adActionSeq,
+			String payType, int adType, String adOperatingRule, String adClkPriceType, int adPv, int adVpv, int adClk,
+			int adView, int adInvalidClk, float adClkPrice, float adInvalidClkPrice, float adActionMaxPrice,
+			int adActionCount, Integer convertCount, Integer convertPriceCount, Date createDate, Date updateDate) {
+		this.adPvclkDate = adPvclkDate;
+		this.adPvclkDevice = adPvclkDevice;
+		this.customerInfoId = customerInfoId;
+		this.adActionSeq = adActionSeq;
+		this.payType = payType;
+		this.adType = adType;
+		this.adOperatingRule = adOperatingRule;
+		this.adClkPriceType = adClkPriceType;
+		this.adPv = adPv;
+		this.adVpv = adVpv;
+		this.adClk = adClk;
+		this.adView = adView;
+		this.adInvalidClk = adInvalidClk;
+		this.adClkPrice = adClkPrice;
+		this.adInvalidClkPrice = adInvalidClkPrice;
+		this.adActionMaxPrice = adActionMaxPrice;
+		this.adActionCount = adActionCount;
+		this.convertCount = convertCount;
+		this.convertPriceCount = convertPriceCount;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 	}
@@ -231,6 +260,24 @@ public class PfpAdActionReport implements java.io.Serializable {
 
 	public void setAdActionCount(int adActionCount) {
 		this.adActionCount = adActionCount;
+	}
+
+	@Column(name = "convert_count")
+	public Integer getConvertCount() {
+		return this.convertCount;
+	}
+
+	public void setConvertCount(Integer convertCount) {
+		this.convertCount = convertCount;
+	}
+
+	@Column(name = "convert_price_count")
+	public Integer getConvertPriceCount() {
+		return this.convertPriceCount;
+	}
+
+	public void setConvertPriceCount(Integer convertPriceCount) {
+		this.convertPriceCount = convertPriceCount;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

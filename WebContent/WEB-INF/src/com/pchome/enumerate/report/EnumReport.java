@@ -23,6 +23,15 @@ public enum EnumReport {
     DETAIL_GROUP("detail_group"),
     DETAIL_HQLTYPE_DAILY_CHART("DetailDailyChart"),
 
+    
+    
+    REPORT_CHART_CONVERT("convertCount"),
+    REPORT_CHART_CONVERT_PRICE("convertPriceCount"),
+    REPORT_CHART_CONVERT_CTR("convertCTR"),
+    REPORT_CHART_CONVERT_COST("convertCost"),
+    REPORT_CHART_CONVERT_INVESTMENT("convertInvestmentCost"),
+    
+    
     REPORT_CHART_TYPE_PV("pv"),
     REPORT_CHART_TYPE_CLICK("click"),
     REPORT_CHART_TYPE_CTR("ctr"),
@@ -43,7 +52,7 @@ public enum EnumReport {
     REPORT_CHART_TYPE_VIDEO_REPLAY("adVideoReplaySum"),
     REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS("adVideoProcess100Ratings"),
     
-
+    
     REPORT_CHART_TYPE_CW_PV("曝光數"),
     REPORT_CHART_TYPE_CW_CLICK("互動數"),
     REPORT_CHART_TYPE_CW_CTR("互動率"),

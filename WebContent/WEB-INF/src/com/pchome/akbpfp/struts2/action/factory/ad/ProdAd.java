@@ -213,7 +213,7 @@ public class ProdAd implements IAd {
 	
 	@Override
 	public String adAdEdit(AdEditAction adEditAction) throws Exception {
-		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adAddAction.getCustomer_info_id());
+		List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(adEditAction.getCustomer_info_id());
 		//檢查logo是否審核通過
 		if(pfpCatalogLogoList.size() < 2){
 			return "logo";
