@@ -6,10 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -485,7 +483,13 @@ public class ProdAd implements IAd {
 	}
 	
 	private void saveImg(JSONObject uploadImgJson,String uploadType,StringBuffer saveImgPathBuffer,String adSeq,String type) throws Exception{
+		log.info("START CREATE IMG:"+uploadType);
+		log.info(uploadImgJson);
 		File path = new File(saveImgPathBuffer.toString());
+		log.info("path:"+path);
+		
+		
+		
         if(!path.exists()){
         	path.mkdirs();
         }
