@@ -112,6 +112,7 @@
 	<table-filter match-name="pfp_code"></table-filter>
 	<table-filter match-name="pfp_code_tracking"></table-filter>
 	<table-filter match-name="pfp_code_convert"></table-filter>
+	<table-filter match-name="pfp_code_convert_rule"></table-filter>
 	<table-filter match-name="pfp_code_convert_trans"></table-filter>
 	
 	

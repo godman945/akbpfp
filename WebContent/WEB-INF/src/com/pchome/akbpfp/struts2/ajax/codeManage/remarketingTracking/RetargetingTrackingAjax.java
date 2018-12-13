@@ -29,6 +29,7 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 	private String paId;
 	private String codeType;
 	private int trackingRangeDate;
+	private String trackingStatus;
 	
 	// private String[] filterContentMap;
 	private String mailFrom;  
@@ -48,7 +49,6 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 	private int pageCount = 0; //總頁數
 	private int totalCount = 0; //資料總筆數
 	
-	private String retargetingIdArray;
 	
 	/**
 	 * 取得再行銷清單Ajax
@@ -310,23 +310,13 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 		try{
 			log.info(">>> currentPage: " + currentPage);
 			log.info(">>> pageSizeSelected: " + pageSizeSelected);
-			log.info(">>> retargetingIdArray: " + retargetingIdArray.toString());
+			log.info(">>> trackingSeq: " + trackingSeq);
 			log.info(">>> trackingName: " + trackingName);
 			
 			
 			resultMap = new HashMap<String, Object>();
-	
-			JSONObject retargetingIdJson = new JSONObject(retargetingIdArray);
-			Iterator<String> keys = retargetingIdJson.keys();
-			List<String> retargetingIdList = new ArrayList<String>();
-			while(keys.hasNext()) {
-			    String key = keys.next();
-			    System.out.println(key);
-			    System.out.println(retargetingIdJson.get(key));
-			    String prodId = ((JSONObject)retargetingIdJson.get(key)).getString("retargetingId");
-			    retargetingIdList.add(prodId);
-			}
-			pfpCodeTrackingService.updateTrackingStatus(super.getCustomer_info_id(),retargetingIdList,EnumTrackingStatusType.Delete.getType());
+			
+			pfpCodeTrackingService.updateTrackingStatus(super.getCustomer_info_id(),trackingSeq,EnumTrackingStatusType.Delete.getType());
 			
 			resultMap.put("currentPage", 1);
 			resultMap.put("pageSizeSelected", pageSizeSelected);
@@ -343,22 +333,32 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 		return SUCCESS;
 	}
 	
-//	/**
-//	 * 回傳錯誤訊息
-//	 */
-//	public Map<String, Object> returnErrorMsgMap(String errorMsg) {
-//
-//		Map<String, Object> errorMsgMap = new HashMap<String, Object>();
-//		errorMsgMap.put("currentPage", 1);
-//		errorMsgMap.put("pageCount", 1);
-//		errorMsgMap.put("totalCount", 0);
-//		errorMsgMap.put("status", "ERROR");
-//		errorMsgMap.put("msg", errorMsg);
-//
-//		return errorMsgMap;
-//	}
-
 	
+
+	/**
+	 * 更新再行銷目錄狀態
+	 */
+	public String updateTrackingStatusAjax(){
+		try{
+			log.info(">>> trackingSeq: " + trackingSeq);
+			log.info(">>> trackingStatus: " + trackingStatus);
+
+
+			resultMap = new HashMap<String, Object>();
+			
+			pfpCodeTrackingService.updateTrackingStatus(super.getCustomer_info_id(),trackingSeq,trackingStatus);
+			
+			resultMap.put("msg", "再行銷目錄更新成功");
+			resultMap.put("status", "SUCCESS");
+			
+		} catch (Exception e) {
+			log.error("error:" + e);
+			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
+			return SUCCESS;
+		}
+		
+		return SUCCESS;
+	}
 	
 	
 	
@@ -499,11 +499,11 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
 	}
-	public String getRetargetingIdArray() {
-		return retargetingIdArray;
+	public String getTrackingStatus() {
+		return trackingStatus;
 	}
-	public void setRetargetingIdArray(String retargetingIdArray) {
-		this.retargetingIdArray = retargetingIdArray;
+	public void setTrackingStatus(String trackingStatus) {
+		this.trackingStatus = trackingStatus;
 	}
 	
 	

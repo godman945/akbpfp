@@ -4,15 +4,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.pchome.akbpfp.api.RedisAPI;
 import com.pchome.akbpfp.db.dao.catalog.prod.IPfpCatalogProdEcDAO;
 import com.pchome.akbpfp.db.dao.codeManage.IPfpCodeTrackingDAO;
 import com.pchome.akbpfp.db.pojo.PfpCodeTracking;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.codeManage.RetargetingTrackingVO;
+import com.pchome.enumerate.codeManage.EnumVerifyStatusType;
+import com.pchome.soft.depot.utils.RedisUtil;
 
 public class PfpCodeTrackingService extends BaseService<PfpCodeTracking,String> implements IPfpCodeTrackingService{
-	private RedisAPI redisAPI;
 	String codeManageRediskey;
 	
 	
@@ -34,17 +37,20 @@ public class PfpCodeTrackingService extends BaseService<PfpCodeTracking,String> 
 				retargetingTrackingBean.setTrackingSeq(obj.get("tracking_seq").toString());	
 				retargetingTrackingBean.setTrackingName(obj.get("tracking_name").toString());
 				retargetingTrackingBean.setPaId(obj.get("pa_id").toString());	
+				retargetingTrackingBean.setTrackingStatus(obj.get("tracking_status").toString());		
 				retargetingTrackingBean.setCodeType(obj.get("code_type").toString());		
 				retargetingTrackingBean.setTrackingRangeDate(obj.get("tracking_range_date").toString());	
 				
 				
+				
 				//stg:pa:codecheck:traceId002
 				String redisKey =codeManageRediskey+retargetingTrackingBean.getTrackingSeq();
-				String redisData = redisAPI.getRedisData(redisKey); // 查詢此客戶redis是否有資料
-				if (redisData == null){
-					retargetingTrackingBean.setVerifyStatus("0");
+				String redisData = RedisUtil.getInstance().getKey(redisKey); // 查詢此客戶redis是否有資料
+				
+				if ( redisData ==null ){
+					retargetingTrackingBean.setVerifyStatus(EnumVerifyStatusType.Unverified.getType());
 				}else{
-					retargetingTrackingBean.setVerifyStatus("1");
+					retargetingTrackingBean.setVerifyStatus(EnumVerifyStatusType.Verified.getType());
 				}
 					
 				
@@ -68,8 +74,8 @@ public class PfpCodeTrackingService extends BaseService<PfpCodeTracking,String> 
 	}
 	
 	
-	public void updateTrackingStatus(String pfpCustomerInfoId, List<String> retargetingIdArray,String trackingStatus) throws Exception{
-		((IPfpCodeTrackingDAO)dao).updateTrackingStatus(pfpCustomerInfoId,retargetingIdArray,trackingStatus);
+	public void updateTrackingStatus(String pfpCustomerInfoId, String trackingSeq,String trackingStatus) throws Exception{
+		((IPfpCodeTrackingDAO)dao).updateTrackingStatus(pfpCustomerInfoId,trackingSeq,trackingStatus);
 	}
 	
 	public RetargetingTrackingVO getPfpCodeTrackingByCondition(RetargetingTrackingVO retargetingTrackingVO) throws Exception{
@@ -101,14 +107,6 @@ public class PfpCodeTrackingService extends BaseService<PfpCodeTracking,String> 
 	
 
 
-
-	public RedisAPI getRedisAPI() {
-		return redisAPI;
-	}
-
-	public void setRedisAPI(RedisAPI redisAPI) {
-		this.redisAPI = redisAPI;
-	}
 
 
 

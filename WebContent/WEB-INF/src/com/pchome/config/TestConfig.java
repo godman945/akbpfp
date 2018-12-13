@@ -1,12 +1,7 @@
 package com.pchome.config;
 
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-
-import com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogSetupService;
-
-
+import org.json.JSONObject;
 
 
 public class TestConfig {
@@ -51,9 +46,30 @@ public class TestConfig {
 	
 	
 	public static void main(String[] args) throws Exception{
-		  
 		
-		ApplicationContext context = new FileSystemXmlApplicationContext(TestConfig.path);
+		
+		
+		
+		
+		
+		
+		
+		
+		JSONObject a = new JSONObject();
+		a.put("alex", "");
+//		a.put("alex", new HashMap<>());
+		if(a.get("alex") instanceof JSONObject){
+			System.out.println("FFF");
+		}else{
+			System.out.println("CCC");
+		}
+		
+		
+		
+//		System.out.println("AAAA");
+//		System.out.println(a.get("alex"));
+		
+//		ApplicationContext context = new FileSystemXmlApplicationContext(TestConfig.path);
 //		PfpCatalogLogoService a = (PfpCatalogLogoService) context.getBean("PfpCatalogLogoService");
 //		PfpCatalogLogo pfpCatalogLogo = a.findCatalogLogoByCustomerInfoId("AC2013071700005");
 //		
@@ -64,10 +80,30 @@ public class TestConfig {
 //		}
 //		PfpAdService b = (PfpAdService) context.getBean("PfpAdService");
 //		PfpAd h = b.get("ad_201804230004");
-		
-		PfpCatalogSetupService a = (PfpCatalogSetupService) context.getBean("PfpCatalogSetupService");
-		System.out.println(a == null);
-		System.out.println(a.loadAllSize());
+//		System.out.println("FFFFFFFF");
+////		TemplateProductService a = (TemplateProductService) context.getBean("AdmTemplateProductService");
+////		
+////		List<String> f = new ArrayList<>();
+////		f.add("x04");
+////		f.add("x05");
+////		
+////		System.out.println(a.getTemplateProductByXType(f).size());
+//		
+//        File in = new File("d:\\142465265.gif");
+//        File out2 = new File("d:\\scale555.gif");
+////        GifImage srcImage = GifDecoder.decode(in);
+////        GifImage resizeImage = GifTransformer.resize(srcImage, 300, 300, true);
+////        GifEncoder.encode(resizeImage, out);
+//
+//		
+//		
+//		
+//        BufferedImage img = ImageIO.read(in); // load image
+        
+        
+        
+//		System.out.println(a == null);
+//		System.out.println(a.loadAllSize());
 		
 		
 //		System.out.println(a == null);

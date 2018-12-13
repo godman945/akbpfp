@@ -57,6 +57,10 @@
    		<property name="accesslogProvider" ref="AccesslogProviderProxy" />
    	</bean>
 
+	<bean id="AdmTemplateProductService" class="com.pchome.akbpfp.db.service.template.TemplateProductService">
+        <property name="dao" ref="AdmTemplateProductDAO" />
+    </bean>
+
 	<!-- pfp Size -->
 	<bean id="PfbSizeService" class="com.pchome.akbpfp.db.service.pfbx.PfbSizeService">
     	<property name="dao" ref="PfbxSizeDAO" />
@@ -289,9 +293,17 @@
     
     <bean id="PfpCodeTrackingService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeTrackingService">    	     
         <property name="dao" ref="PfpCodeTrackingDAO" />
-        <property name="redisAPI" ref="RedisAPI" />
         <property name="codeManageRediskey" value="${redis.codeManage.rediskey}" />
     </bean>
     
+     <bean id="PfpCodeConvertService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeConvertService"> 
+     	<property name="pfpCodeConvertRuleService" ref="PfpCodeConvertRuleService" />   	     
+        <property name="dao" ref="PfpCodeConvertDAO" />
+        <property name="codeManageRediskey" value="${redis.codeManage.rediskey}" />
+    </bean>
+    
+    <bean id="PfpCodeConvertRuleService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeConvertRuleService">    	     
+        <property name="dao" ref="PfpCodeConvertRuleDAO" />
+    </bean>
 
 </beans>

@@ -67,6 +67,10 @@ public class AdModelAPIAction extends BaseCookieAction{
 	private String userLogoPath;
 	
 	private String previewTpro;
+	
+	private String saleImg;
+	
+	private String saleEndImg;
 	/* 商品廣告用參數 END*/
 	
 	
@@ -123,6 +127,9 @@ public class AdModelAPIAction extends BaseCookieAction{
 		pfpProdAdPreviewJson.put("userLogoPath", userLogoPath);
 		pfpProdAdPreviewJson.put("realUrl", realUrl);
 		pfpProdAdPreviewJson.put("previewTpro", previewTpro);
+		pfpProdAdPreviewJson.put("saleImg", saleImg);
+		pfpProdAdPreviewJson.put("saleEndImg", saleEndImg);
+		
 		
 		String adHtml = admAPI.getAdProdContent(pfpProdAdPreviewJson.toString());
 //		log.info("adHtml:"+adHtml);
@@ -289,6 +296,26 @@ public class AdModelAPIAction extends BaseCookieAction{
 
 	public void setPreviewTpro(String previewTpro) {
 		this.previewTpro = previewTpro;
+	}
+
+
+	public String getSaleImg() {
+		return saleImg;
+	}
+
+
+	public void setSaleImg(String saleImg) {
+		this.saleImg = saleImg;
+	}
+
+
+	public String getSaleEndImg() {
+		return saleEndImg;
+	}
+
+
+	public void setSaleEndImg(String saleEndImg) {
+		this.saleEndImg = saleEndImg;
 	}
 
 

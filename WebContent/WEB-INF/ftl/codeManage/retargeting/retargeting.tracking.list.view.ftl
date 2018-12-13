@@ -83,13 +83,14 @@
 	                        <!-- 表格欄位標題 -->
 	                        
 	                            <div class="txt-row header">
-	                                <div class="txt-cell col-ptagcheckbox"><div class="input-check"><input type="checkbox" id="checkAll" value="checkAll"><label for="checkAll"></label></div></div>
+	                                <div class="txt-cell col-ptagcheckbox">狀態</div>
 	                                <div class="txt-cell col-ptagname    ">名稱</div>
 	                                <div class="txt-cell col-ptagcode    ">追蹤代碼</div>
-	                                <div class="txt-cell col-ptagstatus  ">狀態</div>
+	                                <div class="txt-cell col-ptagstatus  ">認證狀態</div>
 	                                <div class="txt-cell col-ptagtype    ">追蹤代碼類型</div>
 	                                <div class="txt-cell col-ptagperiod  ">追蹤行銷效期</div>
 	                                <!-- <div class="txt-cell col-ptagquant   ">名單數</div> -->
+	                                <div class="txt-cell col-ptagcheckbox txt-center">刪除</div>
 	                            </div>
 	
 								
@@ -100,7 +101,17 @@
 	                        			<#assign index1 = 1>
 	                        			<#list retargetingList as retargetings>
 				                            <div class="txt-row txt-row-data" data-type="enable">
-				                                <div class="txt-cell col-ptagcheckbox"><div class="input-check"><input type="checkbox" id="check${index1}" value=${retargetings.trackingSeq!}><label for="check${index1}"></label></div></div>
+				                            <div class="txt-cell col-ptagcheckbox">
+			                                    <label class="pos-middle switch-adstatus">
+			                                    	<#if retargetings.trackingStatus == "0">
+			                                        	<input type="checkbox" id=${retargetings.trackingSeq!}>
+			                                        <#elseif retargetings.trackingStatus == "1">
+			                                        	<input type="checkbox" checked="checked" id=${retargetings.trackingSeq!}>
+			                                        </#if>	
+			                                        	<span class="slider"></span>
+			                                    </label>
+			                                </div>
+			                                
 				                                <div class="txt-cell col-ptagname    "><a href="editRetargetingTrackingView.html?trackingSeq=${retargetings.trackingSeq!}">${retargetings.trackingName!}</a><br><small>ID：${retargetings.trackingSeq!}</small></div>
 				                                <div class="txt-cell col-ptagcode    "><a href="javascript:void(0)" onclick="getpTag('${retargetings.codeType!}','${retargetings.paId!}','${retargetings.trackingSeq!}','${retargetings.trackingName!}')">取得代碼</a></div>
 				                               	<#if retargetings.verifyStatus == "1">
@@ -111,11 +122,11 @@
 				                                <div class="txt-cell col-ptagtype    ">${retargetings.codeType!}</div>
 				                                <div class="txt-cell col-ptagperiod  ">${retargetings.trackingRangeDate!}</div>
 				                                <!-- <div class="txt-cell col-ptagquant   ">${retargetings.uuid!}</div> -->
+				                                <div class="txt-cell col-ptagcheckbox col-delete p-none"><a href="javascript:void(0)" onclick="deleteRetargetingAjax('${retargetings.trackingSeq!}')"></a></div> 
 				                            </div>
 				                        <#assign index1 = index1 + 1>    
 			                            </#list>	
 	                            	</#if>	
-	                            	
 	                            </#if>	
                             	</div>
                             
@@ -158,11 +169,6 @@
                 </div>
                 <!-- 頁碼 pagination 結束 -->
 
-
-
-              
-
-                
 
 
             </div>

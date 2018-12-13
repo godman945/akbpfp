@@ -42,8 +42,8 @@
                 <div class="section-box p-b60">
                     <p class="title-box h2">代碼名稱</p>
                     <div class="input-text">
-                        <input id="retargetingName" type="text" name="" maxlength="20" value=${retargetingTrackingResultBean.trackingName!} required placeholder="填寫代碼名稱，最多20字">
-                        <div class="msg-error">最多20字</div>
+                        <input id="retargetingName" type="text" name="" maxlength="20" value="${retargetingTrackingResultBean.trackingName!}" required placeholder="填寫代碼名稱，最多20字">
+                        <div id="retargetingNameMsg" class="msg-error" style="display:none;">請輸入名稱</div>
                     </div>
                 </div>
                 <!-- 代碼名稱 結束 -->
@@ -168,12 +168,10 @@
                 
                 <!-- 電子郵件寄送代碼 開始 -->
                 <div class="section-box p-b60">
-                    <p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以逗號分隔</small></p>
+                    <p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以分號分隔</small></p>
                     <div class="input-text inputemail">
                         <input id="mailReceivers" type="text" name="" maxlength="200" value="" required placeholder="you@email.com">
-				        <div class="button-box w-900 txt-center p-tb30">
-							<div class="input-button"><input id ="sendMail" type="button" value="發送mail"></div>
-						</div>
+				        <input name="" id ="sendMail" type="button" value="寄出">
                         <div id="emailMsgError" class="msg-error" style="display:none">錯誤訊息</div>
                     </div>
                 </div>

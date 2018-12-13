@@ -1,5 +1,6 @@
+<#assign s=JspTaglibs["/struts-tags"]>
+<#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 <div class="container-prodmanage">
-
         <!-- 次目錄導覽列 開始 -->
         <!-- hidden 隱藏所有牙齒 -->
         <!-- hidetabs 只顯示第一顆牙齒 -->
@@ -43,7 +44,7 @@
                     <p class="title-box h2">代碼名稱</p>
                     <div class="input-text">
                         <input id="retargetingName" type="text" name="" maxlength="20" value="" required placeholder="填寫代碼名稱，最多20字">
-                        <div class="msg-error">最多20字</div>
+                        <div id="retargetingNameMsg" class="msg-error" style="display:none;">請輸入名稱</div>
                     </div>
                 </div>
                 <!-- 代碼名稱 結束 -->
@@ -54,7 +55,7 @@
 
                     <div class="topic-wrap txt-center txt-noselect w-360">
                         <div class="topic-box selected" onclick="changeTopicboxStyle(this,0)">
-                            <img src="img/ptagtype1.png">
+                       		<img src="<@s.url value="/" />/html/img/catalogProd/retargeting/ptagtype1.png">
                             <p>一般網頁追蹤</p>
                             <span>一般網頁追蹤適用於所有廣告類型</span>
                         </div>
@@ -62,7 +63,7 @@
 
                     <div class="topic-wrap txt-center txt-noselect w-360">
                         <div class="topic-box" onclick="changeTopicboxStyle(this,1)">
-                            <img src="img/ptagtype2.png">
+                            <img src="<@s.url value="/" />/html/img/catalogProd/retargeting/ptagtype2.png">
                             <p>動態商品廣告追蹤</p>
                             <span>廣告中的商品將與消費者所接觸過的商品頁相關</span>
                         </div>
@@ -139,12 +140,10 @@
                 
                 <!-- 電子郵件寄送代碼 開始 -->
                 <div class="section-box p-b60">
-                    <p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以逗號分隔</small></p>
+                    <p class="title-box h2">以電子郵件寄送代碼<small>若有多個地址請以分號分隔</small></p>
                     <div class="input-text inputemail">
                         <input id="mailReceivers" type="text" name="" maxlength="200" value="" required placeholder="you@email.com">
-				        <div class="button-box w-900 txt-center p-tb30">
-							<div class="input-button"><input id ="sendMail" type="button" value="發送mail"></div>
-						</div>
+						<input name="" id ="sendMail" type="button" value="寄出">
                         <div id="emailMsgError" class="msg-error" style="display:none">錯誤訊息</div>
                     </div>
                 </div>

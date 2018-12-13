@@ -84,7 +84,6 @@ public class AdEditAction extends BaseCookieAction{
 	private String photoPath;
 	private String photoDbPath;
 	private String photoDbPathNew;
-	private String photoDbPathPrefix;
 	private PfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private PfpAdGroupService pfpAdGroupService;
@@ -147,6 +146,8 @@ public class AdEditAction extends BaseCookieAction{
 	private String imgProportiona;
 	
 	private String userLogoPath;
+	
+	private String logoPath;
 	/* 商品廣告用參數 END*/
 	
 	
@@ -807,7 +808,10 @@ public class AdEditAction extends BaseCookieAction{
 		adGroupName = pfpAd.getPfpAdGroup().getAdGroupName();
 		adGroupSeq =  pfpAd.getPfpAdGroup().getAdGroupSeq();
 		IAd adObject = adFactory.getaAdObject(EnumAdStyleType.AD_STYLE_PRODUCT);
+//		return adObject.adAdEdit(this);
+		
 		adObject.adAdEdit(this);
+		
 		return SUCCESS;
 	}
 	
@@ -1701,12 +1705,12 @@ public class AdEditAction extends BaseCookieAction{
 		this.userLogoPath = userLogoPath;
 	}
 
-	public String getPhotoDbPathPrefix() {
-		return photoDbPathPrefix;
+	public String getLogoPath() {
+		return logoPath;
 	}
 
-	public void setPhotoDbPathPrefix(String photoDbPathPrefix) {
-		this.photoDbPathPrefix = photoDbPathPrefix;
+	public void setLogoPath(String logoPath) {
+		this.logoPath = logoPath;
 	}
 
 }

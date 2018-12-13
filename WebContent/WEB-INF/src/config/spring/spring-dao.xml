@@ -173,6 +173,10 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+	 <bean id="AdmTemplateProductDAO" class="com.pchome.akbpfp.db.dao.template.AdmTemplateProductDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
     <bean id="PfpTransDetailDAO" class="com.pchome.akbpfp.db.dao.bill.PfpTransDetailDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
@@ -263,6 +267,14 @@
     </bean>
     
      <bean id="PfpCodeTrackingDAO" class="com.pchome.akbpfp.db.dao.codeManage.PfpCodeTrackingDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="PfpCodeConvertDAO" class="com.pchome.akbpfp.db.dao.codeManage.PfpCodeConvertDAO">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="PfpCodeConvertRuleDAO" class="com.pchome.akbpfp.db.dao.codeManage.PfpCodeConvertRuleDAO">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     

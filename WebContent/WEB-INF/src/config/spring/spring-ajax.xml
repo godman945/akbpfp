@@ -139,4 +139,18 @@
     
     
     
+    <!-- 轉換追蹤 -->
+    <bean id="ConvertTrackingAjax" class="com.pchome.akbpfp.struts2.ajax.codeManage.convertTracking.ConvertTrackingAjax" >
+<!--     	<property name="mailService" value="${mail.server}" /> -->
+    	<property name="mailFrom" value="${mail.from}" />
+    	<property name="pfpCodeService" ref="PfpCodeService" />
+    	<property name="pfpCodeConvertService" ref="PfpCodeConvertService" />
+    	<property name="pfpCodeConvertRuleService" ref="PfpCodeConvertRuleService" />
+    	<property name="springEmailUtil" ref="SpringEmailUtil" />
+    	<property name="sequenceService" ref="SequenceService" />
+    </bean>
+    <!-- 轉換追蹤 -->
+    
+    
+    
 </beans>

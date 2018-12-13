@@ -36,7 +36,8 @@
             	<value>com.pchome.akbpfp.db.pojo.AdmManagerDetail</value>
             	<value>com.pchome.akbpfp.db.pojo.AdmRecognizeDetail</value>
             	<value>com.pchome.akbpfp.db.pojo.AdmRecognizeRecord</value>
-
+				<value>com.pchome.akbpfp.db.pojo.AdmTemplateProduct</value>
+				
             	<!-- PFD pojo -->
                 <value>com.pchome.akbpfp.db.pojo.PfdAdActionReport</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdAdGroupReport</value>
@@ -116,6 +117,7 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpCode</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCodeTracking</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCodeConvert</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCodeConvertRule</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCodeConvertTrans</value>
 				
 				<!-- PFB pojo -->
@@ -156,7 +158,8 @@
             	<value>com.pchome.akbpfp.db.pojo.AdmManagerDetail</value>
             	<value>com.pchome.akbpfp.db.pojo.AdmRecognizeDetail</value>
             	<value>com.pchome.akbpfp.db.pojo.AdmRecognizeRecord</value>
-
+				<value>com.pchome.akbpfp.db.pojo.AdmTemplateProduct</value>
+				
 	            <!-- PFD pojo -->
                 <value>com.pchome.akbpfp.db.pojo.PfdAdActionReport</value>
                 <value>com.pchome.akbpfp.db.pojo.PfdAdGroupReport</value>
@@ -237,6 +240,7 @@
 				<value>com.pchome.akbpfp.db.pojo.PfpCode</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCodeTracking</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCodeConvert</value>
+				<value>com.pchome.akbpfp.db.pojo.PfpCodeConvertRule</value>
 				<value>com.pchome.akbpfp.db.pojo.PfpCodeConvertTrans</value>
 				
 				<!-- PFB pojo -->

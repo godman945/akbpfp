@@ -31,21 +31,41 @@ $(document).ready(function() {
 	
 	//新增再行銷追蹤
 	$('#addRetargetingTracking').on('click',function(){
-		addRetargetingTrackingAjax();
+		if (checkData() == true){
+			addRetargetingTrackingAjax();
+		}
 	})
 	
 });
 
+/**
+* 檢查欄位值正確性
+*/
+function checkData() {
+	var checkFlag = true;
+	
+	//檢查代碼名稱
+	if ($('#retargetingName').val().trim() == ""){
+		$('#retargetingNameMsg').css("display", "");
+		checkFlag = false;
+	}else{
+		$('#retargetingNameMsg').css("display", "none");
+	}
+	
+	return checkFlag;
+};
+
 
 //新增再行銷追蹤
 function addRetargetingTrackingAjax(){
+	console.log('新增')
 	$.ajax({
 		type : "post",
 		dataType : "json",
 		url : "addRetargetingTrackingAjax.html",
 		data : {
 			"trackingSeq" : $('#trackingSeq').val(),
-			"trackingName" : $('#retargetingName').val(),
+			"trackingName" : $('#retargetingName').val().trim(),
 			"paId" : $('#paid').val(),
 			"codeType" : codeType,
 			"trackingRangeDate" : trackingRangeDate

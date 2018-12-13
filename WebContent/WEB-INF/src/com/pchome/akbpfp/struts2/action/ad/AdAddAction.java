@@ -137,7 +137,6 @@ public class AdAddAction extends BaseCookieAction{
 	private String photoTmpPath;
 	private String photoPath;
 	private String photoDbPath;
-	private String photoDbPathPrefix;
 	// return data
 	private InputStream msg;
 	private String result;
@@ -235,6 +234,9 @@ public class AdAddAction extends BaseCookieAction{
 	private String imgProportiona;
 	
 	private String userLogoPath;
+	
+	private String logoPath;
+	
 	/* 商品廣告用參數 END*/
 	
 	//新增廣告
@@ -2788,12 +2790,12 @@ public class AdAddAction extends BaseCookieAction{
 		this.userLogoPath = userLogoPath;
 	}
 
-	public String getPhotoDbPathPrefix() {
-		return photoDbPathPrefix;
+	public String getLogoPath() {
+		return logoPath;
 	}
 
-	public void setPhotoDbPathPrefix(String photoDbPathPrefix) {
-		this.photoDbPathPrefix = photoDbPathPrefix;
+	public void setLogoPath(String logoPath) {
+		this.logoPath = logoPath;
 	}
 
 	public static void main(String args[]){

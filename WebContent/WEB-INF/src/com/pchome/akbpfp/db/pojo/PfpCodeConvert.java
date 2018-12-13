@@ -1,13 +1,16 @@
 package com.pchome.akbpfp.db.pojo;
-// Generated 2018/11/16 �W�� 10:31:23 by Hibernate Tools 3.4.0.CR1
+// Generated 2018/11/23 �U�� 02:51:33 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +26,7 @@ public class PfpCodeConvert implements java.io.Serializable {
 	private PfpCode pfpCode;
 	private String convertName;
 	private String pfpCustomerInfoId;
+	private String convertType;
 	private int clickRangeDate;
 	private int impRangeDate;
 	private String convertClass;
@@ -34,18 +38,20 @@ public class PfpCodeConvert implements java.io.Serializable {
 	private int convertRuleNum;
 	private Date updateDate;
 	private Date createDate;
+	private Set<PfpCodeConvertRule> pfpCodeConvertRules = new HashSet<PfpCodeConvertRule>(0);
 
 	public PfpCodeConvert() {
 	}
 
 	public PfpCodeConvert(String convertSeq, PfpCode pfpCode, String convertName, String pfpCustomerInfoId,
-			int clickRangeDate, int impRangeDate, String convertClass, String convertPriceType, float convertPrice,
-			String convertStatus, String convertBelong, String convertNumType, int convertRuleNum, Date updateDate,
-			Date createDate) {
+			String convertType, int clickRangeDate, int impRangeDate, String convertClass, String convertPriceType,
+			float convertPrice, String convertStatus, String convertBelong, String convertNumType, int convertRuleNum,
+			Date updateDate, Date createDate) {
 		this.convertSeq = convertSeq;
 		this.pfpCode = pfpCode;
 		this.convertName = convertName;
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
+		this.convertType = convertType;
 		this.clickRangeDate = clickRangeDate;
 		this.impRangeDate = impRangeDate;
 		this.convertClass = convertClass;
@@ -57,6 +63,29 @@ public class PfpCodeConvert implements java.io.Serializable {
 		this.convertRuleNum = convertRuleNum;
 		this.updateDate = updateDate;
 		this.createDate = createDate;
+	}
+
+	public PfpCodeConvert(String convertSeq, PfpCode pfpCode, String convertName, String pfpCustomerInfoId,
+			String convertType, int clickRangeDate, int impRangeDate, String convertClass, String convertPriceType,
+			float convertPrice, String convertStatus, String convertBelong, String convertNumType, int convertRuleNum,
+			Date updateDate, Date createDate, Set<PfpCodeConvertRule> pfpCodeConvertRules) {
+		this.convertSeq = convertSeq;
+		this.pfpCode = pfpCode;
+		this.convertName = convertName;
+		this.pfpCustomerInfoId = pfpCustomerInfoId;
+		this.convertType = convertType;
+		this.clickRangeDate = clickRangeDate;
+		this.impRangeDate = impRangeDate;
+		this.convertClass = convertClass;
+		this.convertPriceType = convertPriceType;
+		this.convertPrice = convertPrice;
+		this.convertStatus = convertStatus;
+		this.convertBelong = convertBelong;
+		this.convertNumType = convertNumType;
+		this.convertRuleNum = convertRuleNum;
+		this.updateDate = updateDate;
+		this.createDate = createDate;
+		this.pfpCodeConvertRules = pfpCodeConvertRules;
 	}
 
 	@Id
@@ -96,6 +125,15 @@ public class PfpCodeConvert implements java.io.Serializable {
 
 	public void setPfpCustomerInfoId(String pfpCustomerInfoId) {
 		this.pfpCustomerInfoId = pfpCustomerInfoId;
+	}
+
+	@Column(name = "convert_type", nullable = false, length = 2)
+	public String getConvertType() {
+		return this.convertType;
+	}
+
+	public void setConvertType(String convertType) {
+		this.convertType = convertType;
 	}
 
 	@Column(name = "click_range_date", nullable = false)
@@ -197,6 +235,15 @@ public class PfpCodeConvert implements java.io.Serializable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pfpCodeConvert")
+	public Set<PfpCodeConvertRule> getPfpCodeConvertRules() {
+		return this.pfpCodeConvertRules;
+	}
+
+	public void setPfpCodeConvertRules(Set<PfpCodeConvertRule> pfpCodeConvertRules) {
+		this.pfpCodeConvertRules = pfpCodeConvertRules;
 	}
 
 }
