@@ -1,10 +1,15 @@
 package com.pchome.akbpfp.struts2.action.catalog.uploadList;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
@@ -22,8 +27,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
+import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.uploadList.IPfpCatalogUploadListService;
+import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogProdEcErrorVO;
 import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogUploadListVO;
@@ -38,6 +45,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	private Map<String,Object> dataMap;
 	private String catalogProdCsvFilePath;
+	private String catalogProdCsvFileTempPath;
 	private File fileUpload;
 	private String fileUploadFileName;
 	
@@ -47,8 +55,8 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	private IPfpCatalogUploadListService pfpCatalogUploadListService;
 	private IPfpCatalogService pfpCatalogService;
+	private IPfpCustomerInfoService pfpCustomerInfoService;
 	
-	protected final int bufferReaderKB = 8; // 讀取資料使用的buffer大小(預設8KB)
 	private String akbPfpServer;
 	
 	private List<PfpCatalogVO> catalogList = new ArrayList<PfpCatalogVO>(); // 查詢結果
@@ -123,6 +131,8 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 						&& EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType().equals(selectUploadFlag))) {
 			return "manualUpload";
 		} else if (catalogUploadType.isEmpty()) {
+			// 刪除目錄，避免有人已經選擇上傳方式，結果最後伺服器重啟或其他因素，檔案已經上傳完成，但table尚未寫入資料，將目錄資料刪除
+			FileUtils.deleteQuietly(new File(catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq()));
 			return "noUploadType";
 		}
 		return SUCCESS;
@@ -148,10 +158,10 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		PfpCatalogUploadListVO vo = new PfpCatalogUploadListVO();
 		vo.setCatalogType(pfpCatalog.getCatalogType());
 		
-		// 檔案上傳部分
-		vo.setFileUploadPath(catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName);
+		// 檔案上傳，放在暫存路徑，避免在做檢查檔案時，排程剛好啟動正在匯入資料
+		vo.setFileUploadPath(catalogProdCsvFileTempPath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName);
 		File createFile = new File(vo.getFileUploadPath());
-		FileUtils.copyFile(fileUpload, createFile);
+		FileUtils.copyFile(fileUpload, createFile); // 建立檔案兼建立路徑上需要資料夾
 		
 		dataMap = pfpCatalogUploadListService.checkCSVFile(vo);
 		createFile.delete(); // 檢查完後刪除檔案
@@ -160,16 +170,16 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	}
 	
 	/**
-	 * 商品廣告-檔案上傳CSV
+	 * 商品廣告-檔案上傳CSV 1126更新版
 	 * @return
 	 * @throws Exception 
 	 */
 	public String catalogProdFileUploadCSV() throws Exception {
-		//TODO 檔案上傳
-		//dataMap中的資料將會被Struts2轉換成JSON字串，所以用Map<String,Object>
+		//TODO 檔案上傳 1126更新版
+		Date updateDatetime = new Date();
 		dataMap = new HashMap<String, Object>();
 		
-		if(!"csv".equalsIgnoreCase(FilenameUtils.getExtension(fileUploadFileName))){
+		if (!"csv".equalsIgnoreCase(FilenameUtils.getExtension(fileUploadFileName))) {
 			dataMap.put("status", "ERROR");
 			dataMap.put("msg", "上傳檔案錯誤!");
 			return SUCCESS;
@@ -178,29 +188,50 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		// 取得商品目錄 table資料
 		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
 		
-		Date updateDatetime = new Date();
-		PfpCatalogUploadListVO vo = new PfpCatalogUploadListVO();
-		vo.setCatalogType(pfpCatalog.getCatalogType());
+		CommonUtils.createFolder(catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq());
 		
-		// 檔案上傳部分
-		vo.setFileUploadPath(catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName);
-		File createFile = new File(vo.getFileUploadPath());
-		FileUtils.copyFile(fileUpload, createFile);
-		
-		JSONObject catalogProdJsonData = pfpCatalogUploadListService.getCSVFileDataToJson(vo);
-		catalogProdJsonData.put("catalogSeq", catalogSeq);
-		catalogProdJsonData.put("catalogType", pfpCatalog.getCatalogType());
-		catalogProdJsonData.put("updateWay", updateWay);
-		catalogProdJsonData.put("catalogUploadType", "1");
-		catalogProdJsonData.put("updateContent", fileUploadFileName);
-		catalogProdJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
-		catalogProdJsonData.put("updateDatetime", formatter.format(updateDatetime));
-		
-		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
+		// 檔案下載未完成先命名副檔名為tmp，已完成改為.csv
+		String fileUploadTempPath = catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + 
+				formatter2.format(updateDatetime) + "_" + FilenameUtils.getBaseName(fileUploadFileName) + ".tmp";
+		File createFile = new File(fileUploadTempPath);
 
+		/* 
+		 * 參考 https://codertw.com/%E7%A8%8B%E5%BC%8F%E8%AA%9E%E8%A8%80/320329/
+		 * FileChannels 速度最快，注意:此方式不會建立路徑上的資料夾
+		 */
+		FileChannel inputChannel = new FileInputStream(fileUpload).getChannel();
+		FileChannel outputChannel = new FileOutputStream(createFile).getChannel();
+//		inputChannel = new FileInputStream(fileUpload).getChannel();
+//		outputChannel = new FileOutputStream(createFile).getChannel();
+		outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+		inputChannel.close();
+		outputChannel.close();
+		
+		String fileUploadCsvPath = catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + 
+				formatter2.format(updateDatetime) + "_" + fileUploadFileName;
+		File tempfile = new File(fileUploadTempPath);
+		File csvfile = new File(fileUploadCsvPath);
+		tempfile.renameTo(csvfile);
+		
+		// 更新目錄
+		pfpCatalog.setCatalogUploadType("1"); // 上傳方式
+		pfpCatalog.setCatalogUploadContent(fileUploadFileName); // 上傳內容(檔名OR網址)
+		pfpCatalog.setUploadStatus("1"); // 目錄資料上傳狀態調整為上傳中
+		pfpCatalog.setUpdateDate(updateDatetime); // 更新時間
+		// 用BaseService.update，如果伺服器重啟斷線，資料將rollback
+		pfpCatalogService.update(pfpCatalog);
+		
+		// 新增 pfp_catalog_upload_log "商品目錄更新紀錄"
+		PfpCatalogUploadLogVO pfpCatalogUploadLogVO = new PfpCatalogUploadLogVO();
+		pfpCatalogUploadLogVO.setCatalogSeq(catalogSeq);
+		pfpCatalogUploadLogVO.setUpdateWay(updateWay);
+		pfpCatalogUploadLogVO.setUpdateContent(fileUploadFileName);
+		pfpCatalogUploadLogVO.setUpdateDatetime(updateDatetime);
+		pfpCatalogUploadListService.savePfpCatalogUploadLog(pfpCatalogUploadLogVO);
+		
 		return SUCCESS;
 	}
-	
+		
 	/**
 	 * 檢查輸入的自動排程網址
 	 * @return
@@ -240,59 +271,48 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
 	/**
 	 * 自動排程上傳 
-	 * 1.下載檔案
-	 * 2.匯入商品
-	 * 3.更新目錄資料
 	 * @return
 	 * @throws Exception
 	 */
 	public String catalogProdAutoJob() throws Exception {
-		//TODO 自動排程上傳
-		// 取得商品目錄 table資料
+		//TODO 自動排程上傳 1126更新版
+		dataMap = new HashMap<String, Object>();
+		Date updateDatetime = new Date();
+		
 		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
 		
-		PfpCatalogUploadListVO vo = new PfpCatalogUploadListVO();
-		vo.setCatalogType(pfpCatalog.getCatalogType());
+		String catalogPath = catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq();
+		CommonUtils.createFolder(catalogPath);
 		
-		String downloadPath = catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq();
-		File file = new File(downloadPath);
-		if (!file.exists()) {
-			file.mkdirs(); // 建立資料夾
-		}
+		// 將網址紀錄url.txt
+		String urlTxtPath = catalogPath + "/url.txt";
+		FileWriter fw = new FileWriter(urlTxtPath);
+		fw.write(jobURL);
+		fw.write("\r\n" + formatter2.format(updateDatetime));
+		fw.flush();
+		fw.close();
 		
-		Date updateDatetime = new Date();
-		Map<String, String> map = CommonUtils.getDataFromUrl(jobURL);
-		fileUploadFileName = map.get("fileName").toString();
-		downloadPath += "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName;
-		boolean downloadStatus = loadURLFile(jobURL, downloadPath);
-		if (downloadStatus) {
-			vo.setFileUploadPath(downloadPath);
-			JSONObject catalogProdJsonData = pfpCatalogUploadListService.getCSVFileDataToJson(vo);
-			catalogProdJsonData.put("catalogSeq", catalogSeq);
-			catalogProdJsonData.put("catalogType", pfpCatalog.getCatalogType());
-			catalogProdJsonData.put("updateWay", updateWay);
-			catalogProdJsonData.put("catalogUploadType", "2");
-			catalogProdJsonData.put("updateContent", jobURL);
-			catalogProdJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
-			catalogProdJsonData.put("updateDatetime", formatter.format(updateDatetime));
-			
-			dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
-		} else {
-			// 更新 pfp_catalog "商品目錄" 資料
-			PfpCatalogVO pfpCatalogVO = new PfpCatalogVO();
-			pfpCatalogVO.setCatalogSeq(catalogSeq);
-			pfpCatalogVO.setPfpCustomerInfoId(super.getCustomer_info_id());
-			pfpCatalogVO.setCatalogUploadType("2");
-			pfpCatalogVO.setUploadContent(" ");
-			pfpCatalogVO.setUploadStatus("2");
-			pfpCatalogService.updatePfpCatalogForShoppingProd(pfpCatalogVO);
-			
-			// 更新pfp_catalog_upload_log "商品目錄更新紀錄"
-			PfpCatalogUploadLogVO pfpCatalogUploadLogVO = new PfpCatalogUploadLogVO();
-			pfpCatalogUploadLogVO.setCatalogSeq(catalogSeq);
-			pfpCatalogUploadLogVO.setUpdateWay(updateWay);
-			pfpCatalogUploadLogVO.setUpdateContent("上傳失敗");
-			pfpCatalogUploadListService.savePfpCatalogUploadLog(pfpCatalogUploadLogVO);
+		// 更新目錄
+		pfpCatalog.setCatalogUploadType("2"); // 上傳方式
+		pfpCatalog.setCatalogUploadContent(jobURL); // 上傳內容(檔名OR網址)
+		pfpCatalog.setUploadStatus("1"); // 目錄資料上傳狀態調整為上傳中
+		pfpCatalog.setUpdateDate(updateDatetime); // 更新時間
+		// 用BaseService.update，如果伺服器重啟斷線，資料將rollback
+		pfpCatalogService.update(pfpCatalog);
+
+		// 新增 pfp_catalog_upload_log "商品目錄更新紀錄"
+		PfpCatalogUploadLogVO pfpCatalogUploadLogVO = new PfpCatalogUploadLogVO();
+		pfpCatalogUploadLogVO.setCatalogSeq(catalogSeq);
+		pfpCatalogUploadLogVO.setUpdateWay(updateWay);
+		pfpCatalogUploadLogVO.setUpdateContent(jobURL);
+		pfpCatalogUploadLogVO.setUpdateDatetime(updateDatetime);
+		pfpCatalogUploadListService.savePfpCatalogUploadLog(pfpCatalogUploadLogVO);
+		
+		// 檢查帳戶餘額，顯示提示訊息
+		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.get(super.getCustomer_info_id());
+		BigDecimal money = new BigDecimal(pfpCustomerInfo.getRemain());
+		if (money.compareTo(BigDecimal.ZERO) == 0) {
+			dataMap.put("msg", "目前帳戶無餘額，排程不會執行。");
 		}
 		
 		return SUCCESS;
@@ -626,5 +646,112 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	public String getUploadFileName() {
 		return uploadFileName;
 	}
+
+	public void setCatalogProdCsvFileTempPath(String catalogProdCsvFileTempPath) {
+		this.catalogProdCsvFileTempPath = catalogProdCsvFileTempPath;
+	}
+
+	public void setPfpCustomerInfoService(IPfpCustomerInfoService pfpCustomerInfoService) {
+		this.pfpCustomerInfoService = pfpCustomerInfoService;
+	}
 	
+
+//	/**
+//	 * 商品廣告-檔案上傳CSV
+//	 * @return
+//	 * @throws Exception 
+//	 */
+//	public String catalogProdFileUploadCSV() throws Exception {
+//		//TODO 舊版檔案上傳-備份用，之後刪除
+//		//dataMap中的資料將會被Struts2轉換成JSON字串，所以用Map<String,Object>
+//		dataMap = new HashMap<String, Object>();
+//		
+//		if(!"csv".equalsIgnoreCase(FilenameUtils.getExtension(fileUploadFileName))){
+//			dataMap.put("status", "ERROR");
+//			dataMap.put("msg", "上傳檔案錯誤!");
+//			return SUCCESS;
+//		}
+//		
+//		// 取得商品目錄 table資料
+//		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
+//		
+//		Date updateDatetime = new Date();
+//		PfpCatalogUploadListVO vo = new PfpCatalogUploadListVO();
+//		vo.setCatalogType(pfpCatalog.getCatalogType());
+//		
+//		// 檔案上傳部分
+//		vo.setFileUploadPath(catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName);
+//		File createFile = new File(vo.getFileUploadPath());
+//		FileUtils.copyFile(fileUpload, createFile);
+//		
+//		JSONObject catalogProdJsonData = pfpCatalogUploadListService.getCSVFileDataToJson(vo);
+//		catalogProdJsonData.put("catalogSeq", catalogSeq);
+//		catalogProdJsonData.put("catalogType", pfpCatalog.getCatalogType());
+//		catalogProdJsonData.put("updateWay", updateWay);
+//		catalogProdJsonData.put("catalogUploadType", "1");
+//		catalogProdJsonData.put("updateContent", fileUploadFileName);
+//		catalogProdJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
+//		catalogProdJsonData.put("updateDatetime", formatter.format(updateDatetime));
+//		
+//		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
+//
+//		return SUCCESS;
+//	}
+	
+//	/**
+//	 * 自動排程上傳 
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	public String catalogProdAutoJob() throws Exception {
+//		//TODO 舊版自動排程上傳-備份用，之後刪除
+//		// 取得商品目錄 table資料
+//		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
+//		
+//		PfpCatalogUploadListVO vo = new PfpCatalogUploadListVO();
+//		vo.setCatalogType(pfpCatalog.getCatalogType());
+//		
+//		String downloadPath = catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq();
+//		File file = new File(downloadPath);
+//		if (!file.exists()) {
+//			file.mkdirs(); // 建立資料夾
+//		}
+//		
+//		Date updateDatetime = new Date();
+//		Map<String, String> map = CommonUtils.getDataFromUrl(jobURL);
+//		fileUploadFileName = map.get("fileName").toString();
+//		downloadPath += "/" + formatter2.format(updateDatetime) + "_" + fileUploadFileName;
+//		boolean downloadStatus = loadURLFile(jobURL, downloadPath);
+//		if (downloadStatus) {
+//			vo.setFileUploadPath(downloadPath);
+//			JSONObject catalogProdJsonData = pfpCatalogUploadListService.getCSVFileDataToJson(vo);
+//			catalogProdJsonData.put("catalogSeq", catalogSeq);
+//			catalogProdJsonData.put("catalogType", pfpCatalog.getCatalogType());
+//			catalogProdJsonData.put("updateWay", updateWay);
+//			catalogProdJsonData.put("catalogUploadType", "2");
+//			catalogProdJsonData.put("updateContent", jobURL);
+//			catalogProdJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
+//			catalogProdJsonData.put("updateDatetime", formatter.format(updateDatetime));
+//			
+//			dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(catalogProdJsonData);
+//		} else {
+//			// 更新 pfp_catalog "商品目錄" 資料
+//			PfpCatalogVO pfpCatalogVO = new PfpCatalogVO();
+//			pfpCatalogVO.setCatalogSeq(catalogSeq);
+//			pfpCatalogVO.setPfpCustomerInfoId(super.getCustomer_info_id());
+//			pfpCatalogVO.setCatalogUploadType("2");
+//			pfpCatalogVO.setUploadContent(" ");
+//			pfpCatalogVO.setUploadStatus("2");
+//			pfpCatalogService.updatePfpCatalogForShoppingProd(pfpCatalogVO);
+//			
+//			// 更新pfp_catalog_upload_log "商品目錄更新紀錄"
+//			PfpCatalogUploadLogVO pfpCatalogUploadLogVO = new PfpCatalogUploadLogVO();
+//			pfpCatalogUploadLogVO.setCatalogSeq(catalogSeq);
+//			pfpCatalogUploadLogVO.setUpdateWay(updateWay);
+//			pfpCatalogUploadLogVO.setUpdateContent("上傳失敗");
+//			pfpCatalogUploadListService.savePfpCatalogUploadLog(pfpCatalogUploadLogVO);
+//		}
+//		
+//		return SUCCESS;
+//	}
 }

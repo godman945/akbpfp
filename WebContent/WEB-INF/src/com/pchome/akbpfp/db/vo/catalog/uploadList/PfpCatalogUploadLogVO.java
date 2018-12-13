@@ -1,5 +1,7 @@
 package com.pchome.akbpfp.db.vo.catalog.uploadList;
 
+import java.util.Date;
+
 public class PfpCatalogUploadLogVO {
 	
 	private String catalogUploadLogSeq; // 更新紀錄編號
@@ -8,6 +10,7 @@ public class PfpCatalogUploadLogVO {
 	private String updateContent; // 更新內容(檔名或網址)
 	private int errorNum = 0; // 失敗筆數
 	private int successNum = 0; // 成功筆數
+	private Date updateDatetime; // 開始執行的更新時間
 
 	private int pageNo = 1; // 初始化目前頁數
 	private int pageSize = 10; // 初始化每頁幾筆
@@ -92,6 +95,14 @@ public class PfpCatalogUploadLogVO {
 
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
+	}
+
+	public Date getUpdateDatetime() {
+		return updateDatetime;
+	}
+
+	public void setUpdateDatetime(Date updateDatetime) {
+		this.updateDatetime = updateDatetime;
 	}
 
 }

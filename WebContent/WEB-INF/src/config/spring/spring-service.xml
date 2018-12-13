@@ -276,6 +276,7 @@
 		<property name="akbPfpServer" value="${akbpfp.server}" />
 		<property name="photoDbPathNew" value="${photo.db.path.new}" />
 		<property name="catalogProdCsvFilePath" value="${catalogProd.csv.file.path}" />
+		<property name="catalogProdCsvFileBackupPath" value="${catalogProd.csv.file.backup.path}" />
 		<property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
 		<property name="pfpCatalogService" ref="PfpCatalogService" />
 		<property name="sequenceService" ref="SequenceService" />

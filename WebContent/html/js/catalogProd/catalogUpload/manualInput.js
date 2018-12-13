@@ -217,8 +217,8 @@ function checkUploadFile(file) {
 		
 		// 去除重複執行unbind 再重新綁定
 		$('#successImg').unbind('load').load(function(){ // 圖片完成後判斷"原生圖片"長寬
-			if ($(this)[0].naturalHeight < 300 && $(this)[0].naturalWidth < 300) {
-				alert("檔案解析度須達300*300以上");
+			if ($(this)[0].naturalHeight < 320 && $(this)[0].naturalWidth < 320) {
+				alert("檔案解析度需長或寬320以上");
 				deleteImg();
 				return false;
 			} else {

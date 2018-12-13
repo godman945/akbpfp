@@ -44,6 +44,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	private String akbPfpServer;
 	private String photoDbPathNew;
 	private String catalogProdCsvFilePath;
+	private String catalogProdCsvFileBackupPath;
 	
 	/**
 	 * 依照商品目錄類別，處理相對應的部分
@@ -380,10 +381,16 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		
 		PfpCatalog pfpCatalog = pfpCatalogService.get(vo.getCatalogSeq());
 		pfpCatalogUploadLog.setPfpCatalog(pfpCatalog); // 商品目錄
-		
 		pfpCatalogUploadLog.setUpdateWay(vo.getUpdateWay()); // 更新方式
 		pfpCatalogUploadLog.setUpdateContent(vo.getUpdateContent()); // 更新內容
-		pfpCatalogUploadLog.setUpdateDatetime(date); // 更新時間
+		
+		// 更新時間
+		if (vo.getUpdateDatetime() != null) {
+			pfpCatalogUploadLog.setUpdateDatetime(vo.getUpdateDatetime());
+		} else {
+			pfpCatalogUploadLog.setUpdateDatetime(date);
+		}
+		
 		pfpCatalogUploadLog.setErrorNum(vo.getErrorNum()); // 錯誤筆數
 		pfpCatalogUploadLog.setSuccessNum(vo.getSuccessNum()); // 成功筆數
 		pfpCatalogUploadLog.setUpdateDate(date); // 更新時間
@@ -417,7 +424,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	}
 	
 	/**
-	 * 刪除哪位客戶的哪個商品目錄上傳過的CSV
+	 * 刪除哪位客戶的哪個商品目錄上傳過的CSV及備份資料夾
 	 * @param vo.getPfpCustomerInfoId() pfp_id
 	 * @param vo.getCatalogSeq() 商品目錄編號
 	 */
@@ -425,6 +432,9 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	public void deleteCatalogProdCSVFolderAndData(PfpCatalogVO vo) {
 		String folderPath = catalogProdCsvFilePath + vo.getPfpCustomerInfoId() + "/" + vo.getCatalogSeq();
 		FileUtils.deleteQuietly(new File(folderPath));
+		
+		String folderBackupPath = catalogProdCsvFileBackupPath + vo.getPfpCustomerInfoId() + "/" + vo.getCatalogSeq();
+		FileUtils.deleteQuietly(new File(folderBackupPath));
 	}
 	
 	public void setShoppingProd(ShoppingProd shoppingProd) {
@@ -457,6 +467,10 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 
 	public void setAkbPfpServer(String akbPfpServer) {
 		this.akbPfpServer = akbPfpServer;
+	}
+
+	public void setCatalogProdCsvFileBackupPath(String catalogProdCsvFileBackupPath) {
+		this.catalogProdCsvFileBackupPath = catalogProdCsvFileBackupPath;
 	}
 
 }

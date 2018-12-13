@@ -108,7 +108,13 @@ public class PfpCatalogService extends BaseService<PfpCatalog,String> implements
 				} else if (EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getType().equals(catalog_upload_type)) {
 					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_AUTOMATIC_SCHEDULING.getTypeName());
 					// 如果是排程上傳 update_content內存的網址取得檔名
-					pfpCatalogVO.setUploadContent(CommonUtils.getDataFromUrl((String) dataMap.get("update_content")).get("fileName"));
+					String updateContent = (String) dataMap.get("update_content");
+					if ("下載失敗_".equals(updateContent.substring(0, 5))) {
+						updateContent = "下載失敗_" + CommonUtils.getDataFromUrl(updateContent).get("fileName");
+					} else {
+						updateContent = CommonUtils.getDataFromUrl(updateContent).get("fileName");
+					}
+					pfpCatalogVO.setUploadContent(updateContent);
 				} else if (EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getType().equals(catalog_upload_type)) {
 					pfpCatalogVO.setCatalogUploadTypeName(EnumPfpCatalog.CATALOG_UPLOAD_STORE_URL.getTypeName());
 				} else if (EnumPfpCatalog.CATALOG_UPLOAD_MANUAL_UPLOAD.getType().equals(catalog_upload_type)) {

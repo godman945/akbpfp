@@ -193,4 +193,15 @@ public class CommonUtils {
 		}
 		return map;
 	}
+	
+	/**
+	 * 如果此目錄路徑沒有資料夾，則建立資料夾
+	 * @param path
+	 */
+	public static void createFolder(String path) {
+		File file = new File(path);
+		if (!file.exists()) {
+			file.mkdirs(); // 建立資料夾
+		}
+	}
 }
