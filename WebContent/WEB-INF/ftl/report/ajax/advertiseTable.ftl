@@ -93,9 +93,9 @@ ${page}/${totalPage}
 	         <#assign index = 0>
 			 <tr height="30">
 			<#list td as tdin>
-				<#if index = 8 || index = 9 || index = 10>
+				<#if index = 8 || index = 9 || index = 10 || index = 12  || index = 14 >
 					<td align="${align_data2[index]}">NT$ ${tdin}</td>	
-				<#elseif index = 7>
+				<#elseif index = 7 || index = 13  || index = 15 >
 					<td align="${align_data2[index]}">${tdin}%</td>
 				<#else>	
 					<td align="${align_data2[index]}">${tdin}</td>
@@ -109,9 +109,9 @@ ${page}/${totalPage}
 	         <#assign index = 0>
 			 <tr height="30">
 			<#list td as tdin>
-				<#if index = 11 || index = 12 || index = 13>
+				<#if index = 11 || index = 12 || index = 13 || index = 15 || index = 17>
 					<td align="${align_data[index]}">NT$ ${tdin}</td>	
-				<#elseif index = 10>
+				<#elseif index = 10 || index = 16 || index = 18 >
 					<td align="${align_data[index]}">${tdin}%</td>
 				<#else>	
 					<td align="${align_data[index]}">${tdin}</td>
@@ -128,9 +128,9 @@ ${page}/${totalPage}
 	    <#assign index2 = 0>
 	    <#if searchAdseq != ''>
 	    	<#list tableDataTotalList as th>
-				<#if index2 = 8 || index2 = 9 || index2 = 10>
+				<#if index2 = 8 || index2 = 9 || index2 = 10 || index2 = 12 || index2 = 14>
 					<th height="30" align="${align_sum2[index2]}">NT$ ${th}</th>	
-				<#elseif index2 = 7>
+				<#elseif index2 = 7 || index2 = 13 || index2 = 15>
 					<th height="30" align="${align_sum2[index2]}">${th}%</th>
 				<#else>	
 					<th height="30" align="${align_sum2[index2]}">${th}</th>
@@ -139,9 +139,9 @@ ${page}/${totalPage}
 	    	</#list>
 	    <#else>
 	   		<#list tableDataTotalList as th>
-				<#if index2 = 11 || index2 = 12  || index2 = 13>
+				<#if index2 = 11 || index2 = 12 || index2 = 13 || index2 = 15  || index2 = 17>
 					<th height="30" align="${align_sum[index2]}">NT$ ${th}</th>	
-				<#elseif index2 = 10>
+				<#elseif index2 = 10 || index2 = 16 || index2 = 18 >
 					<th height="30" align="${align_sum[index2]}">${th}%</th>
 				<#else>	
 					<th height="30" align="${align_sum[index2]}">${th}</th>

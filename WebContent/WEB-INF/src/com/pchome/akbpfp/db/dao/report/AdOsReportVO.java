@@ -1,5 +1,7 @@
 package com.pchome.akbpfp.db.dao.report;
 
+import java.math.BigDecimal;
+
 public class AdOsReportVO {
 
 	private String adPvclkOs;			//裝置作業系統
@@ -21,7 +23,11 @@ public class AdOsReportVO {
 	private String adClkRate;			//點擊率
 	private String adClkAvgPrice;		//平均點擊費用
 	private String customerInfoId;		//使用者帳號
-
+	//轉換數
+	private BigDecimal convertCount;
+	//轉換價值
+	private BigDecimal convertPriceCount;
+	
 	public String getAdPvclkOs() {
 		return adPvclkOs;
 	}
@@ -173,4 +179,21 @@ public class AdOsReportVO {
 	public void setCustomerInfoId(String customerInfoId) {
 		this.customerInfoId = customerInfoId;
 	}
+
+	public BigDecimal getConvertCount() {
+		return convertCount;
+	}
+
+	public void setConvertCount(BigDecimal convertCount) {
+		this.convertCount = convertCount;
+	}
+
+	public BigDecimal getConvertPriceCount() {
+		return convertPriceCount;
+	}
+
+	public void setConvertPriceCount(BigDecimal convertPriceCount) {
+		this.convertPriceCount = convertPriceCount;
+	}
+	
 }

@@ -21,6 +21,10 @@ public class AdActionReportVO {
 	private String adOperatingRule;		//廣告樣式
 	private String adClkPriceType;		//廣告計費方式
 	private String adOperatingRuleDesc;	
+	//轉換數
+	private BigDecimal convertCount;
+	//轉換價值
+	private BigDecimal convertPriceCount;
 	
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -124,6 +128,22 @@ public class AdActionReportVO {
 
 	public void setAdOperatingRuleDesc(String adOperatingRuleDesc) {
 		this.adOperatingRuleDesc = adOperatingRuleDesc;
+	}
+
+	public BigDecimal getConvertCount() {
+		return convertCount;
+	}
+
+	public void setConvertCount(BigDecimal convertCount) {
+		this.convertCount = convertCount;
+	}
+
+	public BigDecimal getConvertPriceCount() {
+		return convertPriceCount;
+	}
+
+	public void setConvertPriceCount(BigDecimal convertPriceCount) {
+		this.convertPriceCount = convertPriceCount;
 	}
 	
 }
