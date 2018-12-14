@@ -115,6 +115,10 @@ public class AdAdViewAjax extends BaseCookieAction{
 	}
 	
 	public Map<String,String> getImgSize(String originalImg) throws Exception {
+		log.info(">>>>>>>>>>>>>>>>>>>>");
+		
+		
+		
 		Map<String,String> imgmap = new HashMap<String,String>();
 		File picture = null;
 		String path = (originalImg.indexOf("D:/") >= 0) ? originalImg : "/home/webuser/akb/pfp/" +  originalImg.replace("\\", "/");
