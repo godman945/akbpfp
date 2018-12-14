@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.api;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -114,10 +115,10 @@ public class AdModelAPIAction extends BaseCookieAction{
 		pfpProdAdPreviewJson.put("catalogGroupId", catalogGroupId);
 		pfpProdAdPreviewJson.put("logoBgColor",logoBgColor);
 		pfpProdAdPreviewJson.put("logoFontColor", logoFontColor);
-		pfpProdAdPreviewJson.put("logoText",logoText);
+		pfpProdAdPreviewJson.put("logoText",URLDecoder.decode(logoText,"UTF-8"));
 		pfpProdAdPreviewJson.put("btnBgColor",btnBgColor);
 		pfpProdAdPreviewJson.put("btnFontColor", btnFontColor);
-		pfpProdAdPreviewJson.put("btnTxt",btnTxt);
+		pfpProdAdPreviewJson.put("btnTxt",URLDecoder.decode(btnTxt, "UTF-8"));
 		pfpProdAdPreviewJson.put("disBgColor",disBgColor);
 		pfpProdAdPreviewJson.put("disFontColor",disFontColor);
 		pfpProdAdPreviewJson.put("disTxtType", disTxtType);

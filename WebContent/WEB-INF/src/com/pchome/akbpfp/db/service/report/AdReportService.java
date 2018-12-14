@@ -319,17 +319,17 @@ public class AdReportService implements IAdReportService {
 						}
 					}
 					
-					htmlCode = "<span><iframe height='250' width='300' class='akb_iframe' scrolling='no' frameborder='0' marginwidth='0' marginheight='0' vspace='0' hspace='0' id='pchome8044_ad_frame1' allowtransparency='true' allowfullscreen='true'" 
+					htmlCode = "<iframe height='250' width='300' class='akb_iframe' scrolling='no' frameborder='0' marginwidth='0' marginheight='0' vspace='0' hspace='0' id='pchome8044_ad_frame1' allowtransparency='true' allowfullscreen='true'"
 					+"src='adProdModel.html"
 					+"?catalogGroupId="+URLEncoder.encode(prodGroup,"UTF-8")
 					+"&disTxtType="+URLEncoder.encode(disTxtType,"UTF-8")
 					+"&disBgColor="+URLEncoder.encode(disBgColor,"UTF-8")
 					+"&disFontColor="+URLEncoder.encode(disFontColor,"UTF-8")
-					+"&btnTxt="+URLEncoder.encode(btnTxt,"UTF-8")
+					+"&btnTxt="+URLEncoder.encode(URLEncoder.encode(btnTxt,"UTF-8"),"UTF-8")
 					+"&btnFontColor="+URLEncoder.encode(btnFontColor,"UTF-8")
 					+"&btnBgColor="+URLEncoder.encode(btnBgColor,"UTF-8")
 					+"&logoType="+URLEncoder.encode(logoType,"UTF-8")
-					+"&logoText="+URLEncoder.encode(logoText,"UTF-8")
+					+"&logoText="+URLEncoder.encode(URLEncoder.encode(logoText,"UTF-8"),"UTF-8")
 					+"&logoBgColor="+URLEncoder.encode(logoBgColor,"UTF-8")
 					+"&logoFontColor="+URLEncoder.encode(logoFontColor,"UTF-8")
 					+"&prodLogoType="

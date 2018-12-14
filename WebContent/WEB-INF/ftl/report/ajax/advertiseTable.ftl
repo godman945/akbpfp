@@ -1,5 +1,7 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8"> 
+
 
 <span style="float:left"> 
 <table border="0" cellspacing="3" cellpadding="0" class="srchtb"> 
