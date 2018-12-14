@@ -293,7 +293,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 							 		break;
 								case LOGO_TXT:
 									//logo標題文字
-									pfpAdAdViewVO.setLogoText(pfpAdDetail.getAdDetailContent());
+									pfpAdAdViewVO.setLogoText(URLEncoder.encode(URLEncoder.encode(pfpAdDetail.getAdDetailContent(),"UTF-8"),"UTF-8"));
 							 		break;
 								case LOGO_FONT_COLOR:
 									//logo標題文字顏色
@@ -305,13 +305,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 							 		break;
 								case BTN_TXT:
 									//按鈕文字
-									String btnTxt = pfpAdDetail.getAdDetailContent();
-									for (EnumProdAdBtnText enumProdAdBtnText : EnumProdAdBtnText.values()) {
-										if(btnTxt.equals(enumProdAdBtnText.getBtnText())){
-											pfpAdAdViewVO.setBtnTxt(enumProdAdBtnText.getBtnType());
-											break;
-										}
-									}
+									pfpAdAdViewVO.setBtnTxt(URLEncoder.encode(URLEncoder.encode(pfpAdDetail.getAdDetailContent(),"UTF-8"),"UTF-8"));
 							 		break;
 								case BTN_FONT_COLOR:
 									//按鈕文字顏色
