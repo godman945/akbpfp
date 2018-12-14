@@ -115,7 +115,7 @@ public class AdAdViewAjax extends BaseCookieAction{
 	}
 	
 	public Map<String,String> getImgSize(String originalImg) throws Exception {
-		log.info(">>>>>>>>>>>>>>>>>>>>");
+		log.info(">>>>>>>>>>>>>>>>>>>>"+originalImg);
 		
 		
 		
