@@ -150,9 +150,6 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 					adAdViewVOs = new ArrayList<PfpAdAdViewVO>();
 				}
 				String operating = pfpAd.getPfpAdGroup().getPfpAdAction().getAdOperatingRule();
-						
-						
-						
 				PfpAdAdViewVO pfpAdAdViewVO = new PfpAdAdViewVO();
 				pfpAdAdViewVO.setAdActionSeq(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionSeq());
 				pfpAdAdViewVO.setAdActionName(pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName());
@@ -272,8 +269,6 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 					if(operating.equals(EnumAdStyleType.AD_STYLE_PRODUCT.getTypeName())){
 						for (EnumProdAdDetail enumProdAdDetail : EnumProdAdDetail.values()) {
 							if(pfpAdDetail.getAdDetailId().equals(enumProdAdDetail.getAdDetailId())){
-								
-								
 								switch(enumProdAdDetail) { 
 						        case PROD_REPORT_NAME:
 						        	pfpAdAdViewVO.setAdName(pfpAdDetail.getAdDetailContent());						        	
@@ -343,16 +338,29 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 								}
 							}
 						}
-						
-						PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(customerInfoId);
-						if(pfpCatalogSetup != null){
-							if(pfpCatalogSetup.getCatalogSetupValue().equals("0")){
-								pfpAdAdViewVO.setUserLogoType("crop-height");
-							}
-							if(pfpCatalogSetup.getCatalogSetupValue().equals("1")){
-								pfpAdAdViewVO.setUserLogoType("crop-width");
-							}
+					}
+				}
+				
+				
+				if(operating.equals(EnumAdStyleType.AD_STYLE_PRODUCT.getTypeName())){
+					PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(pfpAdAdViewVO.getCatalogId());
+					if(pfpCatalogSetup != null){
+						pfpAdAdViewVO.setImgProportiona(pfpCatalogSetup.getCatalogSetupValue());
+					}
+					List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(customerInfoId);
+					for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
+						if(pfpAdAdViewVO.getLogoType().equals("type1") && pfpCatalogLogo.getCatalogLogoType().equals("1")){
+							pfpAdAdViewVO.setUserLogoPath(pfpCatalogLogo.getCatalogLogoUrl());
 						}
+						if(pfpAdAdViewVO.getLogoType().equals("type2") && pfpCatalogLogo.getCatalogLogoType().equals("0")){
+							pfpAdAdViewVO.setUserLogoPath(pfpCatalogLogo.getCatalogLogoUrl());
+						}
+					}
+					if(StringUtils.isNotBlank(pfpAdAdViewVO.getSaleEndImg())){
+						pfpAdAdViewVO.setAdbgType("hasposter");
+						pfpAdAdViewVO.setLogoType("type3");
+					}else{
+						pfpAdAdViewVO.setAdbgType("noposter");
 					}
 				}
 				adAdViewVOs.add(pfpAdAdViewVO);

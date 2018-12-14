@@ -86,16 +86,13 @@ public class AdReportService implements IAdReportService {
 			    //以下程式自行判斷參數
 			    //預設不呈現底圖
 			    String adbgType = "noposter";
-			    //是否滿版
+			    //根據setup決定是否滿版
 			    String imgProportiona = "";
 			    //根據有無行銷圖決定
 			    String logoType = "";
 			    
 			    String userLogoPath = "";
 			   
-			    //根據setup決定
-			    String imgShowType = "";
-			    
 			    String previewTpro = "c_x04_pad_tpro_0100";
 			   
 			    		
@@ -177,9 +174,6 @@ public class AdReportService implements IAdReportService {
                     }
                     if("dis_bg_color".equals(pfpAdDetail.getAdDetailId())){
                     	disBgColor = pfpAdDetail.getAdDetailContent();
-                    }
-                    if("logo_img_url".equals(pfpAdDetail.getAdDetailId())){
-//                    	pfpAdDetail.getAdDetailContent();
                     }
                     if("sale_img_300x250".equals(pfpAdDetail.getAdDetailId())){
                     	saleEndImg = pfpAdDetail.getAdDetailContent();
@@ -303,20 +297,21 @@ public class AdReportService implements IAdReportService {
 					}
 					PfpCatalogSetup pfpCatalogSetup = getPfpCatalogSetupService().findSetupByCatalogSeq(catalogSeq);
 					if(pfpCatalogSetup != null){
-						imgShowType = pfpCatalogSetup.getCatalogSetupValue();
+						imgProportiona = pfpCatalogSetup.getCatalogSetupValue();
 					}
+					
+					List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(customerInfoId);
+					for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
+						if(logoType.equals("type1") && pfpCatalogLogo.getCatalogLogoType().equals("1")){
+							userLogoPath = pfpCatalogLogo.getCatalogLogoUrl();
+						}
+						if(logoType.equals("type2") && pfpCatalogLogo.getCatalogLogoType().equals("0")){
+							userLogoPath = pfpCatalogLogo.getCatalogLogoUrl();
+						}
+					}
+					
 					if(StringUtils.isNotBlank(saleImg)){
 						logoType = "type3";
-					}else{
-						List<PfpCatalogLogo> pfpCatalogLogoList = pfpCatalogLogoService.findCatalogLogoByCustomerInfoId(customerInfoId);
-						for (PfpCatalogLogo pfpCatalogLogo : pfpCatalogLogoList) {
-							if(logoType.equals("type1") && pfpCatalogLogo.getCatalogLogoType().equals("1")){
-								userLogoPath = pfpCatalogLogo.getCatalogLogoUrl();
-							}
-							if(logoType.equals("type2") && pfpCatalogLogo.getCatalogLogoType().equals("0")){
-								userLogoPath = pfpCatalogLogo.getCatalogLogoUrl();
-							}
-						}
 					}
 					
 					htmlCode = "<iframe height='250' width='300' class='akb_iframe' scrolling='no' frameborder='0' marginwidth='0' marginheight='0' vspace='0' hspace='0' id='pchome8044_ad_frame1' allowtransparency='true' allowfullscreen='true'"
