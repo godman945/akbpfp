@@ -453,7 +453,14 @@ public class ReportAdvertiseAction extends BaseReportAction {
 					+ "費用");
 		}
 		
-		
+		if(hasPfpCodeflag){
+			content.append(",");
+			content.append("轉換數,");
+			content.append("轉換價值,");
+			content.append("轉換率,");
+			content.append("平均轉換成本,");
+			content.append("廣告投資報酬率");
+		}
 		
 		//列表值
 		float sumPV = 0;
@@ -461,7 +468,11 @@ public class ReportAdvertiseAction extends BaseReportAction {
 		//總計total值
 		double totalCost = 0;
 		double sumSingleAdCost = 0;
-		
+		double t_convert_count = 0;
+		double t_convert_price_count = 0;
+		double t_convert_ctr = 0;
+		double t_convert_cost = 0;
+		double t_convert_investment_cost = 0;
 		//列表
 		DecimalFormat df = new DecimalFormat("#.##");
 		for (AdReportVO adReportVO : adReportVOList) {
@@ -477,6 +488,27 @@ public class ReportAdvertiseAction extends BaseReportAction {
 				singleCost =  Double.parseDouble(adReportVO.getAdPriceSum()) / Double.parseDouble(adReportVO.getAdClkSum());
 			}
 			sumSingleAdCost = (singleCost + singleCost);
+			
+			
+			double convertCount = adReportVO.getConvertCount().doubleValue();
+			double convertPriceCount = adReportVO.getConvertPriceCount().doubleValue();
+			double convertCTR = 0;
+			double convertCost = 0;
+			double convertInvestmentCost = 0;
+			//轉換率
+			if(convertCount > 0 && Integer.parseInt(adReportVO.getAdClkSum()) > 0){
+				convertCTR  = (convertCount / Double.valueOf(adReportVO.getAdClkSum())) * 100;
+			}
+			//平均轉換成本
+			if(Double.valueOf(adReportVO.getAdPriceSum()) > 0 && convertCount > 0){
+				convertCost = Double.valueOf(adReportVO.getAdPriceSum()) / convertCount;
+			}
+			//廣告投資報酬率
+			if(convertPriceCount > 0 && Double.valueOf(adReportVO.getAdPriceSum()) > 0){
+				convertInvestmentCost = convertPriceCount / Double.valueOf(adReportVO.getAdPriceSum());
+			}
+			t_convert_count = t_convert_count + convertCount;
+			t_convert_price_count = t_convert_price_count + convertPriceCount;
 			
 			content.append("\n");
 			//searchAdseq有值查看每日成效
@@ -513,7 +545,33 @@ public class ReportAdvertiseAction extends BaseReportAction {
 			content.append(singleCost+",");
 			content.append(thousandsCost+",");
 			content.append("=\""+Double.parseDouble(adReportVO.getAdPriceSum())+"\"");
+			
+			if(hasPfpCodeflag){
+				content.append(",");
+				content.append(adReportVO.getConvertCount()+",");
+				content.append(adReportVO.getConvertPriceCount()+",");
+				content.append(convertCTR+",");
+				content.append(convertCost+",");
+				content.append(convertInvestmentCost);
+			}
+			
+			
 		}
+		
+		//轉換率
+		if(t_convert_count > 0 && sumClick > 0){
+			t_convert_ctr  = (t_convert_count / sumClick) * 100;
+		}
+		//平均轉換成本
+		if(totalCost > 0 && t_convert_count > 0){
+			t_convert_cost = totalCost / t_convert_count;
+		}
+		//廣告投資報酬率
+		if(t_convert_price_count > 0 && totalCost > 0){
+			t_convert_investment_cost = t_convert_price_count / totalCost;
+		}
+		
+		
 		//總計
 		content.append("\n\n");
 		if(StringUtils.isNotBlank(searchAdseq)){
@@ -549,6 +607,17 @@ public class ReportAdvertiseAction extends BaseReportAction {
 					+ (totalCost / sumClick)+","
 					+ totalCost / (sumPV / 1000)+","
 					+ "=\""+totalCost+"\"");
+			
+			if(hasPfpCodeflag){
+				content.append(",");
+				content.append(t_convert_count+",");
+				content.append(t_convert_price_count+",");
+				content.append(df.format(t_convert_ctr)+"%,");
+				content.append(t_convert_cost+",");
+				content.append(df.format(t_convert_investment_cost)+"%");
+			}
+			
+			
 		}
 		downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));
 	}
