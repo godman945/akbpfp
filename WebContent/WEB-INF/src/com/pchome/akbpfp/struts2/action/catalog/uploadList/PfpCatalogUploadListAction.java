@@ -38,8 +38,8 @@ import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogUploadLogVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.akbpfp.struts2.ajax.ad.AdUtilAjax;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
-import com.pchome.soft.depot.utils.HttpUtil;
 import com.pchome.utils.CommonUtils;
+import com.pchome.utils.HttpUtil;
 
 public class PfpCatalogUploadListAction extends BaseCookieAction{
 	
@@ -58,6 +58,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	private IPfpCustomerInfoService pfpCustomerInfoService;
 	
 	private String akbPfpServer;
+	private String akbAdqServer;
 	
 	private List<PfpCatalogVO> catalogList = new ArrayList<PfpCatalogVO>(); // 查詢結果
 	private String catalogSeq; // 商品目錄ID
@@ -394,7 +395,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	 * @throws Exception
 	 */
 	public String catalogProdManualInput() throws Exception {
-		//TODO 手動上傳
+		//TODO 手動上傳 1126更新版
 		// 將JSONArray內的字串資料轉成JSONObject
 		JSONArray catalogProdManualInputItemJsonArray = new JSONArray(manualInputDataMap);
 		JSONArray catalogProdItemJSONArray = new JSONArray();
@@ -427,10 +428,8 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		apiJsonData.put("updateContent", " ");
 		apiJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
 		apiJsonData.put("catalogProdItem", catalogProdItemJSONArray);
-		apiJsonData.put("updateDatetime", formatter.format(new Date()));
-		
-		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData);
-		
+
+		HttpUtil.doPost(akbAdqServer + "catalogProdManualInputApi.html", apiJsonData);
 		return SUCCESS;
 	}
 	
@@ -654,6 +653,10 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 	public void setPfpCustomerInfoService(IPfpCustomerInfoService pfpCustomerInfoService) {
 		this.pfpCustomerInfoService = pfpCustomerInfoService;
 	}
+
+	public void setAkbAdqServer(String akbAdqServer) {
+		this.akbAdqServer = akbAdqServer;
+	}
 	
 
 //	/**
@@ -751,6 +754,52 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 //			pfpCatalogUploadLogVO.setUpdateContent("上傳失敗");
 //			pfpCatalogUploadListService.savePfpCatalogUploadLog(pfpCatalogUploadLogVO);
 //		}
+//		
+//		return SUCCESS;
+//	}
+	
+//	/**
+//	 * 手動上傳 新增
+//	 * @return
+//	 * @throws Exception
+//	 */
+//	public String catalogProdManualInput() throws Exception {
+//		//TODO 舊版手動上傳-備份用，之後刪除
+//		// 將JSONArray內的字串資料轉成JSONObject
+//		JSONArray catalogProdManualInputItemJsonArray = new JSONArray(manualInputDataMap);
+//		JSONArray catalogProdItemJSONArray = new JSONArray();
+//		for (int i = 0; i < catalogProdManualInputItemJsonArray.length(); i++) {
+//			// 畫面上的欄位 調整成pfpCatalogUploadListService.processCatalogProdJsonData內要用的對應key
+//			JSONObject tempViewJSONObject = new JSONObject(catalogProdManualInputItemJsonArray.get(i).toString());
+//			JSONObject tempSetDBJSONObject = new JSONObject();
+//			tempSetDBJSONObject.put("id", tempViewJSONObject.get("catalogProdSeq"));
+//			tempSetDBJSONObject.put("ec_name", tempViewJSONObject.get("ecName"));
+//			tempSetDBJSONObject.put("ec_title", " ");
+//			tempSetDBJSONObject.put("ec_price", tempViewJSONObject.get("ecPrice"));
+//			tempSetDBJSONObject.put("ec_discount_price", tempViewJSONObject.get("ecDiscountPrice"));
+//			tempSetDBJSONObject.put("ec_stock_status", tempViewJSONObject.get("ecStockStatus"));
+//			tempSetDBJSONObject.put("ec_use_status", tempViewJSONObject.get("ecUseStatus"));
+//			tempSetDBJSONObject.put("ec_img_url", " ");
+//			tempSetDBJSONObject.put("ec_Img_Base64", tempViewJSONObject.get("ecImgBase64"));
+//			tempSetDBJSONObject.put("ec_url", tempViewJSONObject.get("ecUrl"));
+//			tempSetDBJSONObject.put("ec_category", tempViewJSONObject.get("ecCategory"));
+//			catalogProdItemJSONArray.put(tempSetDBJSONObject);
+//		}
+//		
+//		// 取得商品目錄 table資料
+//		PfpCatalog pfpCatalog = pfpCatalogService.get(catalogSeq);
+//				
+//		JSONObject apiJsonData = new JSONObject();
+//		apiJsonData.put("catalogSeq", catalogSeq);
+//		apiJsonData.put("catalogType", pfpCatalog.getCatalogType());
+//		apiJsonData.put("updateWay", " "); // 手動上傳沒有更新方式
+//		apiJsonData.put("catalogUploadType", "4");
+//		apiJsonData.put("updateContent", " ");
+//		apiJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
+//		apiJsonData.put("catalogProdItem", catalogProdItemJSONArray);
+//		apiJsonData.put("updateDatetime", formatter.format(new Date()));
+//		
+//		dataMap = pfpCatalogUploadListService.processCatalogProdJsonData(apiJsonData);
 //		
 //		return SUCCESS;
 //	}

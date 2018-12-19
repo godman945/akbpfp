@@ -262,7 +262,6 @@ function processCommaStyle(number) {
 
 /**
  * 新增商品時檢查全部該輸入的資料是否正確
- * @returns {Boolean}
  */
 function checkKeyInDataIsError() {
 	var ecNameIsErr = checkEcNameIsErr();
@@ -282,7 +281,6 @@ function checkKeyInDataIsError() {
 
 /**
  * 檢查商品名稱
- * @returns {Boolean}
  */
 function checkEcNameIsErr() {
 	var ecName = $("#ecName").val();
@@ -303,7 +301,6 @@ function checkEcNameIsErr() {
 
 /**
  * 檢查商品網址
- * @returns {Boolean}
  */
 function checkEcUrlIsErr() {
 	var ecUrl = $("#ecUrl").val();
@@ -318,7 +315,6 @@ function checkEcUrlIsErr() {
 
 /**
  * 檢查原價
- * @returns {Boolean}
  */
 function checkEcPriceIsErr() {
 	var ecPrice = $("#ecPrice").val();
@@ -336,7 +332,6 @@ function checkEcPriceIsErr() {
 
 /**
  * 檢查特價
- * @returns {Boolean}
  */
 function checkEcDiscountPriceIsErr() {
 	var ecDiscountPrice = $("#ecDiscountPrice").val();
@@ -361,7 +356,6 @@ function checkEcDiscountPriceIsErr() {
 
 /**
  * 檢查商品編號
- * @returns {Boolean}
  */
 function checkCatalogProdSeqIsErr() {
 	var catalogProdSeq = $("#catalogProdSeq").val();
@@ -397,7 +391,6 @@ function checkCatalogProdSeqIsErr() {
 
 /**
  * 檢查商品類別
- * @returns {Boolean}
  */
 function checkEcCategoryIsErr() {
 	var ecCategory = $("#ecCategory").val();
@@ -412,7 +405,6 @@ function checkEcCategoryIsErr() {
 
 /**
  * 檢查是否上傳圖片
- * @returns {Boolean}
  */
 function checkImgIsErr() {
 	//拖曳上傳和選擇檔案上傳最後都會產生base64，皆無資料則請上傳圖片
@@ -426,7 +418,6 @@ function checkImgIsErr() {
 /**
  * 檢查是否為數字，是數字回true
  * @param val
- * @returns
  */
 function isNum(val) {
 	return /^[0-9]*$/.test(val);
@@ -435,7 +426,6 @@ function isNum(val) {
 /**
  * 檢查是否包含Emoji圖片
  * @param val
- * @returns
  */
 function isHaveEmojiString(val) {
 	return val.match(/[\ud800-\udbff]|[\udc00-\udfff]|[\ud800-\udfff]/);
@@ -452,7 +442,6 @@ function containsSpecialSymbolsThatAreNotAllowedByFileName(val) {
 /**
  * 包含中文
  * @param val
- * @returns
  */
 function containsChineseStr(val) {
 	return val.match(/^.*[\u4e00-\u9fa5].*$/);
@@ -461,26 +450,34 @@ function containsChineseStr(val) {
 /**
  * 手動上傳完成事件
  */
+var ajaxIsNotFinish = false;
 function manualInputFinish() {
-	if (prodList.length == 0) {
-		alert("未建立商品。");
+	if (ajaxIsNotFinish) {
 		return false;
-	}
-	
-	$.ajax({
-		type : "post",
-		dataType : "json",
-		url : "catalogProdManualInput.html",
-		data : {
-			catalogSeq : $("#catalogSeq").val(),
-			"manualInputDataMap" : JSON.stringify(prodList)
-		},
-		timeout : 30000,
-		error : function(xhr) {
-			alert('Ajax request 發生錯誤');
-		},
-		success : function(response, status) {
-			window.location.replace("catalogProd.html");
+	} else {
+		if (prodList.length == 0) {
+			alert("未建立商品。");
+			return false;
 		}
-	});
+		
+		ajaxIsNotFinish = true;
+		
+		$.ajax({
+			type : "post",
+			dataType : "json",
+			url : "catalogProdManualInput.html",
+			data : {
+				catalogSeq : $("#catalogSeq").val(),
+				"manualInputDataMap" : JSON.stringify(prodList)
+			},
+			timeout : 30000,
+			error : function(xhr) {
+				alert("系統繁忙，請稍後再試！");
+				ajaxIsNotFinish = false;
+			},
+			success : function(response, status) {
+				window.location.replace("catalogProd.html");
+			}
+		});
+	}
 }

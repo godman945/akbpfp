@@ -78,6 +78,7 @@
 		<property name="catalogProdCsvFilePath" value="${catalogProd.csv.file.path}" />
 		<property name="catalogProdCsvFileTempPath" value="${catalogProd.csv.file.temp.path}" />
 		<property name="akbPfpServer" value="${akbpfp.server}" />
+		<property name="akbAdqServer" value="${akbadq.server}" />
     </bean>
     
 </beans>
