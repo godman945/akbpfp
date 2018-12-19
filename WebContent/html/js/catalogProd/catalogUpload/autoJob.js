@@ -117,8 +117,5 @@ function autoJobFinish() {
 			}
 			
 		});
-	//	.fail(function(){
-	//    	console.log("發生錯誤。。。。");
-	//    });
 	}
 }

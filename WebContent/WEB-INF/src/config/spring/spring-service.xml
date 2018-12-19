@@ -286,7 +286,7 @@
 		<property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
 		<property name="pfpCatalogService" ref="PfpCatalogService" />
 		<property name="sequenceService" ref="SequenceService" />
-		<property name="shoppingProd" ref="ShoppingProd" />
+<!-- 		<property name="shoppingProd" ref="ShoppingProd" /> -->
     </bean>
     
     <bean id="PfpCodeService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeService">    	     

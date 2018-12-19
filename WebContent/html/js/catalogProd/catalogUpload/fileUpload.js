@@ -131,7 +131,6 @@ function fileUploadFinish() {
 	      contentType: false,
 	      dataType: 'text',   // 回傳的資料格式
 	      error: function(xhr){
-//				alert('Ajax request 發生錯誤');
 				alert("系統繁忙，請稍後再試！");
 				ajaxIsNotFinish = false;
 	      },
@@ -140,9 +139,5 @@ function fileUploadFinish() {
 	    	  window.location.replace("catalogProd.html");
 	      }
 	    });
-//	    .fail(function(){
-//	    	console.log("發生錯誤。。。。");
-//	    	ajaxIsNotFinish = false;
-//	    });
 	}
 }

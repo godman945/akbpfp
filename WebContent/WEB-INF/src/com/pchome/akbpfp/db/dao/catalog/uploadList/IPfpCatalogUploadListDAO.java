@@ -4,34 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.IBaseDAO;
-import com.pchome.akbpfp.db.pojo.PfpCatalogProdEc;
-import com.pchome.akbpfp.db.pojo.PfpCatalogProdEcError;
-import com.pchome.akbpfp.db.pojo.PfpCatalogUploadErrLog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogProdEcErrorVO;
 
 public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
-
-	/**
-	 * 更新一般購物類資料
-	 * @param pfpCatalogProdEc
-	 * @return 更新筆數
-	 */
-	int updatePfpCatalogProdEc(PfpCatalogProdEc pfpCatalogProdEc);
-
-	/**
-	 * 新增一般購物類資料
-	 * @param pfpCatalogProdEc
-	 */
-	void savePfpCatalogProdEc(PfpCatalogProdEc pfpCatalogProdEc);
-
-	/**
-	 * 刪除不在catalogProdEcSeqList列表內的資料
-	 * @param catalogSeq 商品目錄ID
-	 * @param catalogProdEcSeqList 不被刪除的名單
-	 */
-	void deleteNotInPfpCatalogProdEc(String catalogSeq, List<String> catalogProdEcSeqList);
 
 	/**
 	 * 新增商品目錄更新紀錄
@@ -40,38 +17,26 @@ public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 	void savePfpCatalogUploadLog(PfpCatalogUploadLog pfpCatalogUploadLog);
 
 	/**
-	 * 新增商品目錄更新錯誤紀錄
-	 * @param pfpCatalogUploadErrLog
-	 */
-	void savePfpCatalogUploadErrLog(PfpCatalogUploadErrLog pfpCatalogUploadErrLog);
-
-	/**
-	 * 新增一般購物類商品上傳錯誤清單
-	 * @param pfpCatalogProdEcError
-	 */
-	void savePfpCatalogProdEcError(PfpCatalogProdEcError pfpCatalogProdEcError);
-	
-	/**
 	 * 刪除 商品目錄更新錯誤紀錄
-	 * @param vo
+	 * @param PfpCatalogVO
 	 */
 	void deletePfpCatalogUploadErrLog(PfpCatalogVO vo);
 
 	/**
 	 * 刪除 一般購物類商品上傳錯誤清單
-	 * @param vo
+	 * @param PfpCatalogVO
 	 */
 	void deletePfpCatalogProdEcError(PfpCatalogVO vo);
 	
 	/**
 	 * 刪除 商品目錄更新紀錄
-	 * @param vo
+	 * @param PfpCatalogVO
 	 */
 	void deletePfpCatalogUploadLog(PfpCatalogVO vo);
 
 	/**
 	 * 刪除 商品目錄設定 
-	 * @param vo
+	 * @param PfpCatalogVO
 	 */
 	void deletePfpCatalogSetup(PfpCatalogVO vo);
 	
@@ -85,7 +50,7 @@ public interface IPfpCatalogUploadListDAO extends IBaseDAO<String, String> {
 
 	/**
 	 * 查詢目錄商品上傳錯誤記錄清單
-	 * @param vo
+	 * @param PfpCatalogProdEcErrorVO
 	 * @return
 	 */
 	List<Map<String, Object>> getCatalogProdUploadErrList(PfpCatalogProdEcErrorVO vo);

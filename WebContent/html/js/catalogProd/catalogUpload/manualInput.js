@@ -167,7 +167,6 @@ function openFileLoad(obj) {
 /**
  * 選取圖片
  * @param file
- * @returns {Boolean}
  */
 function selectImg(file) {
 	// 選擇取消，未選擇檔案不做處理
@@ -194,7 +193,6 @@ var base64Img = ""; // 圖片路徑
 /**
  * 檢查上傳的圖片是否符合規範
  * @param file
- * @returns {Boolean}
  */
 function checkUploadFile(file) {
 	var fileName = file.name;

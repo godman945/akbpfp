@@ -101,12 +101,6 @@
 				<param name="root">dataMap</param>
 			</result>
 		</action>
-		
-		<action name="catalogProdFileUploadApi" class="PfpCatalogUploadListAction" method="processCatalogProdJsonDataApi">
-			<result type="json" name="success">
-				<param name="root">dataMap</param>
-			</result>
-		</action>
 		<!-- 廣告商品-檔案上傳 end-->
      
  

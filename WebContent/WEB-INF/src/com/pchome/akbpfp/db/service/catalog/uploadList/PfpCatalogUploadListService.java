@@ -2,7 +2,6 @@ package com.pchome.akbpfp.db.service.catalog.uploadList;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,9 +13,6 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.opencsv.CSVReader;
 import com.pchome.akbpfp.db.dao.catalog.uploadList.IPfpCatalogUploadListDAO;
@@ -37,7 +33,7 @@ import com.pchome.enumerate.sequence.EnumSequenceTableName;
 
 public class PfpCatalogUploadListService extends BaseService<String, String> implements IPfpCatalogUploadListService {
 
-	private ShoppingProd shoppingProd;
+//	private ShoppingProd shoppingProd;
 	private IPfpCatalogService pfpCatalogService;
 	private ISequenceService sequenceService;
 	private IPfpCatalogUploadListDAO pfpCatalogUploadListDAO;
@@ -46,38 +42,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	private String catalogProdCsvFilePath;
 	private String catalogProdCsvFileBackupPath;
 	
-	/**
-	 * 依照商品目錄類別，處理相對應的部分
-	 */
-	@Override
-	public Map<String, Object> processCatalogProdJsonData(JSONObject catalogProdJsonData) throws Exception {
-		Map<String, Object> dataMap = new HashMap<String, Object>();
-		
-		String catalogType = catalogProdJsonData.optString("catalogType");
-		
-		if (catalogType.isEmpty() || 
-				(!EnumPfpCatalog.CATALOG_SHOPPING.getType().equals(catalogType)
-				&& !EnumPfpCatalog.CATALOG_BOOKING.getType().equals(catalogType)
-				&& !EnumPfpCatalog.CATALOG_TRAFFIC.getType().equals(catalogType)
-				&& !EnumPfpCatalog.CATALOG_RENT.getType().equals(catalogType))) {
-			dataMap.put("status", "ERROR");
-			dataMap.put("msg", "商品目錄類型資料錯誤!");
-			return dataMap;
-		}
-		
-		if (EnumPfpCatalog.CATALOG_SHOPPING.getType().equals(catalogType)) { // 1:一般購物類
-			dataMap = shoppingProd.processCatalogProdJsonData(catalogProdJsonData);
-		} else if (EnumPfpCatalog.CATALOG_BOOKING.getType().equals(catalogType)) { // 2:訂房住宿類
-			// 功能待開發
-		} else if (EnumPfpCatalog.CATALOG_TRAFFIC.getType().equals(catalogType)) { // 3:交通航班類
-			// 功能待開發
-		} else if (EnumPfpCatalog.CATALOG_RENT.getType().equals(catalogType)) { // 4:房產租售類
-			// 功能待開發
-		}
-		
-		return dataMap;
-	}
-
 	/**
 	 * 檢查檔案格式是否為我們提供的CSV檔格式
 	 * @param vo
@@ -136,128 +100,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		}
 	}
 	
-	/**
-	 * 將csv檔案內容轉成json格式
-	 * @throws IOException 
-	 * @throws JSONException 
-	 */
-	@Override
-	public JSONObject getCSVFileDataToJson(PfpCatalogUploadListVO vo) {
-		JSONObject catalogProdJsonData = new JSONObject();
-		JSONArray prdItemArray = new JSONArray();
-		try{
-			File file = new File(vo.getFileUploadPath());
-			InputStreamReader isr = new InputStreamReader(new FileInputStream(file),"big5");
-			CSVReader reader = new CSVReader(isr);
-			String [] csvTitleArray;
-			
-			if (vo.getCatalogType().equals(EnumPfpCatalog.CATALOG_SHOPPING.getType())) {
-				int row = 0;
-				Integer idArrayIndex = null;
-				Integer ecNameArrayIndex = null;
-				Integer ecPriceArrayIndex = null;
-				Integer ecDiscountPriceArrayIndex = null;
-				Integer ecStockStatusArrayIndex = null;
-				Integer ecUseStatusArrayIndex = null;
-				Integer ecImgUrlArrayIndex = null;
-				Integer ecUrlArrayIndex = null;
-				Integer ecCategoryArrayIndex = null;
-				
-				while ((csvTitleArray = reader.readNext()) != null) {
-					if (row == 0) {
-						for (int i = 0; i < csvTitleArray.length; i++) {
-							switch (csvTitleArray[i]) {
-							case "id*":
-								idArrayIndex = i;
-								break;
-							case "商品名稱*":
-								ecNameArrayIndex = i;
-								break;
-							case "促銷價*":
-								ecDiscountPriceArrayIndex = i;
-								break;
-							case "商品供應情況*":
-								ecStockStatusArrayIndex = i;
-								break;
-							case "商品使用狀況*":
-								ecUseStatusArrayIndex = i;
-								break;
-							case "廣告圖像網址*":
-								ecImgUrlArrayIndex = i;
-								break;
-							case "連結網址*":
-								ecUrlArrayIndex = i;
-								break;
-							case "原價":
-								ecPriceArrayIndex = i;
-								break;
-							case "商品類別":
-								ecCategoryArrayIndex = i;
-								break;
-							}
-						}
-						row = row + 1;
-						continue;
-					}
-					
-					JSONObject prdItemObject = new JSONObject();
-					if (idArrayIndex != null) {
-						prdItemObject.put("id", csvTitleArray[idArrayIndex]);
-					}
-					
-					if (ecNameArrayIndex != null) {
-						prdItemObject.put("ec_name", csvTitleArray[ecNameArrayIndex]);
-					}
-					
-					if (ecPriceArrayIndex != null) {
-						prdItemObject.put("ec_price", csvTitleArray[ecPriceArrayIndex].replaceAll(",", ""));
-					} else {
-						prdItemObject.put("ec_price", " ");
-					}
-					
-					if (ecDiscountPriceArrayIndex != null) {
-						prdItemObject.put("ec_discount_price", csvTitleArray[ecDiscountPriceArrayIndex].replaceAll(",", ""));
-					}
-					
-					if (ecStockStatusArrayIndex != null) {
-						prdItemObject.put("ec_stock_status", csvTitleArray[ecStockStatusArrayIndex]);
-					}
-					
-					if (ecUseStatusArrayIndex != null) {
-						prdItemObject.put("ec_use_status", csvTitleArray[ecUseStatusArrayIndex]);
-					}
-					
-					if (ecImgUrlArrayIndex != null) {
-						prdItemObject.put("ec_img_url", csvTitleArray[ecImgUrlArrayIndex]);
-					}
-					
-					if (ecUrlArrayIndex != null) {
-						prdItemObject.put("ec_url", csvTitleArray[ecUrlArrayIndex]);
-					}
-					
-					if (ecCategoryArrayIndex != null && ecCategoryArrayIndex < csvTitleArray.length) {
-						prdItemObject.put("ec_category", csvTitleArray[ecCategoryArrayIndex]);
-					} else {
-						prdItemObject.put("ec_category", " ");
-					}
-					
-					prdItemArray.put(prdItemObject);
-				}
-			}
-			
-			catalogProdJsonData.put("catalogProdItem", prdItemArray);
-			
-			if (reader != null) {
-				reader.close();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			return catalogProdJsonData;
-		}
-		
-		return catalogProdJsonData;
-	}
-
 	/**
 	 * 查詢目錄商品上傳錯誤記錄清單
 	 * @param vo
@@ -437,13 +279,13 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		FileUtils.deleteQuietly(new File(folderBackupPath));
 	}
 	
-	public void setShoppingProd(ShoppingProd shoppingProd) {
-		this.shoppingProd = shoppingProd;
-	}
-
-	public ShoppingProd getShoppingProd() {
-		return shoppingProd;
-	}
+//	public void setShoppingProd(ShoppingProd shoppingProd) {
+//		this.shoppingProd = shoppingProd;
+//	}
+//
+//	public ShoppingProd getShoppingProd() {
+//		return shoppingProd;
+//	}
 
 	public void setPfpCatalogUploadListDAO(IPfpCatalogUploadListDAO pfpCatalogUploadListDAO) {
 		this.pfpCatalogUploadListDAO = pfpCatalogUploadListDAO;
