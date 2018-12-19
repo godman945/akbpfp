@@ -429,6 +429,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		apiJsonData.put("pfpCustomerInfoId", super.getCustomer_info_id());
 		apiJsonData.put("catalogProdItem", catalogProdItemJSONArray);
 
+		log.info("akbAdqServer:" + akbAdqServer);
 		HttpUtil.doPost(akbAdqServer + "catalogProdManualInputApi.html", apiJsonData);
 		return SUCCESS;
 	}
