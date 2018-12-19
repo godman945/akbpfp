@@ -460,6 +460,7 @@ function manualInputFinish() {
 			return false;
 		}
 		
+		$('#loadingWaitBlock').block(maskingConfig);
 		ajaxIsNotFinish = true;
 		
 		$.ajax({
@@ -472,6 +473,7 @@ function manualInputFinish() {
 			},
 			timeout : 30000,
 			error : function(xhr) {
+				$('#loadingWaitBlock').unblock();
 				alert("系統繁忙，請稍後再試！");
 				ajaxIsNotFinish = false;
 			},
