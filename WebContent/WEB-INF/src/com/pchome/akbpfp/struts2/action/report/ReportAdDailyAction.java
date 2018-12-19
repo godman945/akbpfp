@@ -21,7 +21,9 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.akbpfp.db.dao.report.AdActionReportVO;
+import com.pchome.akbpfp.db.pojo.PfpCode;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
+import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdActionReportService;
 import com.pchome.soft.util.DateValueUtil;
@@ -39,8 +41,8 @@ public class ReportAdDailyAction extends BaseReportAction {
 	//private String[] align_data = {"center", "center", "right", "right", "right", "right", "right", "right"};
 	//private String[] align_sum = {"center", "center", "right", "right", "right", "right", "right", "right"};
 	// 20140318： 隱藏 "無效點選次數" 欄位
-	private String[] align_data = {"center", "center", "center", "right", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "center", "right", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "center", "center", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "center", "center", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right"};
 
 	private IAdActionReportService adActionReportService = null;
 	private IPfpCustomerInfoService customerInfoService = null;
@@ -85,6 +87,9 @@ public class ReportAdDailyAction extends BaseReportAction {
 	NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 	NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
 	NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
+	
+	private IPfpCodeService pfpCodeService;
+	private boolean hasPfpCodeflag = false;
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -178,6 +183,14 @@ public class ReportAdDailyAction extends BaseReportAction {
 		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
 		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
 		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
+		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
+		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
+		tableHeadNameMap.put("轉換數", EnumReport.REPORT_CHART_CONVERT.getTextValue());
+		tableHeadNameMap.put("轉換價值", EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue());
+		tableHeadNameMap.put("轉換率", EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue());
+		tableHeadNameMap.put("平均轉換成本", EnumReport.REPORT_CHART_CONVERT_COST.getTextValue());
+		tableHeadNameMap.put("廣告投資報酬率", EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue());
 		optionSelect="";
 		optionNotSelect="";
 
@@ -194,7 +207,15 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 		String customerInfoId=super.getCustomer_info_id();
 		log.info(">>> customerInfoId = " + customerInfoId);
-
+		PfpCode pfpCode = pfpCodeService.getPfpCode(super.getCustomer_info_id());
+		if(pfpCode != null){
+			hasPfpCodeflag = true;
+		}
+		if(hasPfpCodeflag){
+			optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,轉換數,轉換價值,轉換率,平均轉換成本,廣告投資報酬率";	
+		}else{
+			optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
+		}
 		tableHeadList=new LinkedList<String>();//table head
 		tableDataList=new LinkedList<LinkedList<String>>();//table data
 
@@ -362,9 +383,9 @@ public class ReportAdDailyAction extends BaseReportAction {
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
-				if(dataNumber == 7 || dataNumber == 8 || dataNumber == 9){
+				if(dataNumber == 7 || dataNumber == 8 || dataNumber == 9 || dataNumber == 11 || dataNumber == 13){
 					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
-				} else if(dataNumber == 6){
+				} else if(dataNumber == 6 || dataNumber == 12 || dataNumber == 14){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -379,9 +400,9 @@ public class ReportAdDailyAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 7 || dataTotalNumber == 8 || dataTotalNumber == 9){
+				if(dataTotalNumber == 7 || dataTotalNumber == 8 || dataTotalNumber == 9 || dataTotalNumber == 11 || dataTotalNumber == 13){
 					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
-				} else if(dataTotalNumber == 6){
+				} else if(dataTotalNumber == 6 || dataTotalNumber == 12 || dataTotalNumber == 14){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -421,7 +442,13 @@ public class ReportAdDailyAction extends BaseReportAction {
 		double t_costAvg = 0; //單次互動費用
 		double t_kiloCost = 0;	//千次曝光費用
 		double t_cost = 0; //總費用
-
+		//轉換數
+		double t_convert_count = 0;
+		//轉換價值
+		double t_convert_price_count = 0;
+		double t_convert_ctr = 0;
+		double t_convert_cost = 0;
+		double t_convert_investment_cost = 0;
 		//加總
 		for (int i=0; i<resultSumData.size(); i++) {
 			AdActionReportVO vo = resultSumData.get(i);
@@ -429,6 +456,8 @@ public class ReportAdDailyAction extends BaseReportAction {
 			t_click += vo.getAdClkSum().doubleValue();
 			t_cost += vo.getAdPriceSum().doubleValue();
 			t_invalid += vo.getAdInvClkSum().doubleValue();
+			t_convert_count += vo.getConvertCount().doubleValue();
+			t_convert_price_count += vo.getConvertPriceCount().doubleValue();
 		}
 		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 		
@@ -441,7 +470,18 @@ public class ReportAdDailyAction extends BaseReportAction {
 		}else{
 			t_costAvg = t_cost / t_click;
 		}
-		
+		//轉換率
+		if(t_convert_count > 0 && t_click > 0){
+			t_convert_ctr  = (t_convert_count / t_click) * 100;
+		}
+		//平均轉換成本
+		if(t_cost > 0 && t_convert_count > 0){
+			t_convert_cost = t_cost / t_convert_count;
+		}
+		//廣告投資報酬率
+		if(t_convert_price_count > 0 && t_cost > 0){
+			t_convert_investment_cost = t_convert_price_count / t_cost;
+		}	
 		//千次曝光費用 = 總費用*1000 / 曝光數
 		t_kiloCost = (t_cost /t_pv ) * 1000;
 		
@@ -449,7 +489,17 @@ public class ReportAdDailyAction extends BaseReportAction {
 			String mapKey;
 			for (String s: tableHeadShowList) {
 				mapKey = tableHeadNameMap.get(s);
-				if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+				if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
+					tableDataTotalList.addLast(doubleFormat.format(t_convert_ctr));
+				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
+					tableDataTotalList.addLast(doubleFormat.format(t_convert_cost));
+				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
+					tableDataTotalList.addLast(doubleFormat.format(t_convert_investment_cost));
+				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
+					tableDataTotalList.addLast(intFormat.format(t_convert_count));
+				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
+					tableDataTotalList.addLast(intFormat.format(t_convert_price_count));
+				}else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
 					tableDataTotalList.addLast(intFormat.format(t_pv));
 				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 					tableDataTotalList.addLast(intFormat.format(t_click));
@@ -486,6 +536,11 @@ public class ReportAdDailyAction extends BaseReportAction {
 			double ctr = 0;
 			double costAvg = 0;
 			double kiloCost = 0;
+			double convertCount = vo.getConvertCount().doubleValue();
+			double convertPriceCount = vo.getConvertPriceCount().doubleValue();
+			double convertCTR = 0;
+			double convertCost = 0;
+			double convertInvestmentCost = 0;
 			String adDevice = vo.getAdDevice();
 			String adType = vo.getAdType();
 
@@ -501,7 +556,18 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 			//千次曝光費用 = 總費用*1000 / 曝光數
 			kiloCost = (cost  / pv ) * 1000;
-
+			//轉換率
+			if(convertCount > 0 && click > 0){
+				convertCTR  = (convertCount / click) * 100;
+			}
+			//平均轉換成本
+			if(cost > 0 && convertCount > 0){
+				convertCost = cost / convertCount;
+			}
+			//廣告投資報酬率
+			if(convertPriceCount > 0 && cost > 0){
+				convertInvestmentCost = convertPriceCount / cost;
+			}
 			tableInDataList.addLast(reportDate);
 			tableInDataList.addLast(adType);
 			tableInDataList.addLast(adDevice);
@@ -510,7 +576,17 @@ public class ReportAdDailyAction extends BaseReportAction {
 				String mapKey;
 				for(String s:tableHeadShowList){
 					mapKey=tableHeadNameMap.get(s);
-					if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+					if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
+						tableInDataList.addLast(doubleFormat.format(convertCTR));
+					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
+						tableInDataList.addLast(doubleFormat.format(convertCost));
+					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
+						tableInDataList.addLast(doubleFormat.format(convertInvestmentCost));
+					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
+						tableInDataList.addLast(intFormat.format(convertCount));
+					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
+						tableInDataList.addLast(intFormat.format(convertPriceCount));
+					}else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
 						tableInDataList.addLast(intFormat.format(pv));
 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 						tableInDataList.addLast(intFormat.format(click));
@@ -718,6 +794,14 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 	public void setCharType(String charType) {
 		this.charType = charType;
+	}
+
+	public IPfpCodeService getPfpCodeService() {
+		return pfpCodeService;
+	}
+
+	public void setPfpCodeService(IPfpCodeService pfpCodeService) {
+		this.pfpCodeService = pfpCodeService;
 	}
 	
 }

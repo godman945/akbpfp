@@ -42,8 +42,8 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 	private LinkedList<String> tableHeadList =null; //頁面table head
 
 	// 欄位
-	private String[] align_data = {"center", "center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right"};
 
 	private LinkedList<LinkedList<String>> tableDataList =null; // 頁面 table data
 	private LinkedList<String> tableDataTotalList =null; //頁面全部加總table total foot
@@ -53,6 +53,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 	private IPfpCustomerInfoService customerInfoService = null;
 	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
 	private IPfpCodeService pfpCodeService;
+
 	private SpringOpenFlashUtil openFlashUtil=null;
 
 	private Map<String,String> tableHeadNameMap;//自訂欄位
@@ -99,6 +100,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 	private String searchWebsiteCode = "";
 	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.###");
 	private boolean hasPfpCodeflag = false;
+	
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -200,7 +202,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		return SUCCESS;
 	}
 
-	public ReportAdWebsiteAction() {
+	public ReportAdWebsiteAction() throws Exception {
 
 		reportTitle="網站類型成效";
 		
@@ -210,39 +212,43 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		tableHeadNameMap.put("曝光數", EnumReport.REPORT_CHART_TYPE_PV.getTextValue());
 		tableHeadNameMap.put("互動數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
 		tableHeadNameMap.put("互動率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
-		tableHeadNameMap.put("轉換數", EnumReport.REPORT_CHART_CONVERT.getTextValue());
-		tableHeadNameMap.put("轉換價值", EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue());
-		tableHeadNameMap.put("轉換率", EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue());
-		tableHeadNameMap.put("平均轉換成本", EnumReport.REPORT_CHART_CONVERT_COST.getTextValue());
-		tableHeadNameMap.put("廣告投資報酬率", EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue());
-		
 		// 20140318： 隱藏 "無效點選次數" 欄位
 		//tableHeadNameMap.put("無效點選次數", EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue());
 		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
 		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
 		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
-		
+		tableHeadNameMap.put("轉換數", EnumReport.REPORT_CHART_CONVERT.getTextValue());
+		tableHeadNameMap.put("轉換價值", EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue());
+		tableHeadNameMap.put("轉換率", EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue());
+		tableHeadNameMap.put("平均轉換成本", EnumReport.REPORT_CHART_CONVERT_COST.getTextValue());
+		tableHeadNameMap.put("廣告投資報酬率", EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue());
 		optionSelect="";
 		optionNotSelect="";
 
 		//optionSelect="曝光數,點選率(%),點選次數,無效點選次數,平均點選費用,費用";
 		// 20140318： 隱藏 "無效點選次數" 欄位
-		optionSelect="轉換數,轉換價值,轉換率,平均轉換成本,廣告投資報酬率,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
+		optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";	
+		
 
 		tableHeadShowList=new LinkedList<String>();
 
 		tableHeadNotShowList=new LinkedList<String>();
-		
+
 	}
 
 	public String execute() throws Exception {
 
 		String customerInfoId = super.getCustomer_info_id();
-		
-		PfpCode pfpCode = pfpCodeService.getPfpCode(customerInfoId);
+		PfpCode pfpCode = pfpCodeService.getPfpCode(super.getCustomer_info_id());
 		if(pfpCode != null){
 			hasPfpCodeflag = true;
 		}
+		if(hasPfpCodeflag){
+			optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,轉換數,轉換價值,轉換率,平均轉換成本,廣告投資報酬率";	
+		}else{
+			optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
+		}
+		
 		
 		log.info(">>> customerInfoId = " + customerInfoId);
 
@@ -376,12 +382,6 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 
 	private void makeDownloadReportData() throws Exception {
 
-		PfpCode pfpCode = pfpCodeService.getPfpCode(super.getCustomer_info_id());
-		if(pfpCode != null){
-			hasPfpCodeflag = true;
-		}
-		
-		
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddhhmmss");
 
 		String filename="網站類型成效報表_" + dformat.format(new Date()) + FILE_TYPE;
@@ -415,45 +415,23 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		content.append("\n\n");
 
 		for(String s:tableHeadList){
-			int dataNumber = 1;
-			if(!hasPfpCodeflag && (dataNumber == 9 || dataNumber == 10 || dataNumber == 11 || dataNumber == 12 || dataNumber == 13 )){
-				continue;
-			}
 			content.append("\"" + s + "\"");
 			content.append(",");
-			dataNumber++;
 		}
 		content.append("\n");
 
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
-				
-				if(!hasPfpCodeflag){
-					
+				if(dataNumber == 12 || dataNumber == 13|| dataNumber == 14 || dataNumber == 16 || dataNumber == 18 || dataNumber == 19){
+					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
+				} else if(dataNumber == 11 || dataNumber == 17){
+					content.append("\"" + s + "%\"");
+				} else {
+					content.append("\"" + s + "\"");	
 				}
-				
-				
-//				if(!hasPfpCodeflag && (dataNumber == 9 || dataNumber == 10 || dataNumber == 11 || dataNumber == 12 || dataNumber == 13 )){
-//					continue;
-//				}else{
-//					if(hasPfpCodeflag){
-//						
-//					}else{
-//						if(dataNumber == 12 || dataNumber == 13|| dataNumber == 14){
-//							content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
-//						} else if(dataNumber == 11){
-//							content.append("\"" + s + "%\"");
-//						} else {
-//							content.append("\"" + s + "\"");	
-//						}
-//						content.append(",");
-//					}
-//					
-//					
-//					
-//				}
-//				dataNumber++;
+				content.append(",");
+				dataNumber++;
 			}
 			content.append("\n");
 		}
@@ -462,9 +440,9 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 12 || dataTotalNumber == 13|| dataTotalNumber == 14){
+				if(dataTotalNumber == 12 || dataTotalNumber == 13|| dataTotalNumber == 14 || dataTotalNumber == 16 || dataTotalNumber == 18 || dataTotalNumber == 19){
 					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
-				} else if(dataTotalNumber == 11){
+				} else if(dataTotalNumber == 11 || dataTotalNumber == 17){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -512,11 +490,9 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		double t_convert_count = 0;
 		//轉換價值
 		double t_convert_price_count = 0;
-		
 		double t_convert_ctr = 0;
 		double t_convert_cost = 0;
 		double t_convert_investment_cost = 0;
-		
 		//加總
 		for (int i=0; i<resultSumData.size(); i++) {
 			AdWebsiteReportVO vo = resultSumData.get(i);
@@ -526,7 +502,6 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			t_invalid += vo.getAdInvClkSum().doubleValue();
 			t_convert_count += vo.getConvertCount().doubleValue();
 			t_convert_price_count += vo.getConvertPriceCount().doubleValue();
-			
 		}
 		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
 		
@@ -544,7 +519,6 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		if(t_cost>0 && t_pv>0){
 			t_kiloCost = (t_cost * 1000) / t_pv;
 		}
-		
 		//轉換率
 		if(t_convert_count > 0 && t_click > 0){
 			t_convert_ctr  = (t_convert_count / t_click) * 100;
@@ -557,8 +531,6 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		if(t_convert_price_count > 0 && t_cost > 0){
 			t_convert_investment_cost = t_convert_price_count / t_cost;
 		}
-		
-		
 		if (!tableHeadShowList.isEmpty()) {
 			String mapKey;
 			for (String s: tableHeadShowList) {
@@ -614,12 +586,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			String adGroupSeq = vo.getAdGroupSeq();
 
 			PfpAdGroup pfpAdGroup = adGroupService.getPfpAdGroupBySeq(adGroupSeq);
-			if(pfpAdGroup == null){
-				log.info(">>>>>> adGroupSeq:"+adGroupSeq+" is null");
-				continue;
-			}
-			
-			
+
 			String adGroupName = pfpAdGroup.getAdGroupName();
 			int adGroupStatus = pfpAdGroup.getAdGroupStatus();
 
@@ -628,14 +595,6 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			Date adActionStartDate = pfpAdGroup.getPfpAdAction().getAdActionStartDate();
 			Date adActionEndDate = pfpAdGroup.getPfpAdAction().getAdActionEndDate();
 
-			double convertCount = vo.getConvertCount().doubleValue();
-			double convertPriceCount = vo.getConvertPriceCount().doubleValue();
-			double convertCTR = 0;
-			double convertCost = 0;
-			double convertInvestmentCost = 0;
-			
-			
-			
 			double pv = vo.getAdPvSum().doubleValue();
 			double click = vo.getAdClkSum().doubleValue();
 			double cost = vo.getAdPriceSum().doubleValue();
@@ -643,6 +602,13 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			double ctr = 0;
 			double costAvg = 0;
 			double kiloCost = 0;
+			double convertCount = vo.getConvertCount().doubleValue();
+			double convertPriceCount = vo.getConvertPriceCount().doubleValue();
+			double convertCTR = 0;
+			double convertCost = 0;
+			double convertInvestmentCost = 0;
+			
+			
 			String adDevice = vo.getAdDevice();
 			String adTypeName = vo.getAdType();
 			String adOperatingRuleName = vo.getAdOperatingRule();
@@ -658,6 +624,19 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 				costAvg = cost / click;
 			}
 
+			//千次曝光費用 = 總費用*1000 / 曝光數
+			if(cost>0 && pv>0){
+				kiloCost = (cost * 1000) / pv;
+			}
+			//互動率 = 互動次數 / 曝光數
+			if (pv>0 && click>0) {
+				ctr = (click / pv) * 100;
+			}
+
+			//單次互動費用 = 總費用 / 總互動次數
+			if (cost>0 && click>0) {
+				costAvg = cost / click;
+			}
 			//千次曝光費用 = 總費用*1000 / 曝光數
 			if(cost>0 && pv>0){
 				kiloCost = (cost * 1000) / pv;
@@ -733,10 +712,6 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			tableInDataList.addLast(adClkPriceTypeName);
 			tableInDataList.addLast(adDevice);
 
-//		    REPORT_CHART_CONVERT_CTR("convertCTR"),
-//		    REPORT_CHART_CONVERT_COST("convertCost"),
-//		    REPORT_CHART_CONVERT_INVESTMENT("convertInvestmentCost"),
-			
 			if(!tableHeadShowList.isEmpty()){
 				String mapKey;
 				for(String s:tableHeadShowList){

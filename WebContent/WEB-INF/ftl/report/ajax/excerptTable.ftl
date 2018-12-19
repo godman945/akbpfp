@@ -97,11 +97,11 @@ ${page}/${totalPage}
         <#assign index = 0>
 		<tr height="30">
 		<#list td as tdin>
-			<#if index = 10 || index = 11 || index = 12>
+			<#if index = 10 || index = 11 || index = 12 || index = 14 || index = 16>
 				<td width='100' align="${align_data[index]}">NT$ ${tdin}</td>
 			<#elseif index = 12>
 				<td width='50' align="${align_data[index]}">NT$ ${tdin}</td>
-			<#elseif index = 8>
+			<#elseif index = 8 || index = 15 || index = 17>
 				<td align="${align_data[index]}">${tdin}%</td>	
 			<#elseif index = 9>
 				<td width='30' align="${align_data[index]}">${tdin}</td>
@@ -118,9 +118,9 @@ ${page}/${totalPage}
  	<tr height="35">
 	    <#assign index2 = 0>
    		<#list tableDataTotalList as th>
-			<#if index2 = 10 || index2 = 11 || index2 = 12>
+			<#if index2 = 10 || index2 = 11 || index2 = 12 || index2 = 14 || index2 = 16>
 				<th height="30" align="${align_sum[index2]}">NT$ ${th}</th>	
-			<#elseif index2 = 8>
+			<#elseif index2 = 8 || index2 = 15 || index2 = 17>
 				<th height="30" align="${align_sum[index2]}">${th}%</th>
 			<#else>	
 				<th height="30" align="${align_sum[index2]}">${th}</th>

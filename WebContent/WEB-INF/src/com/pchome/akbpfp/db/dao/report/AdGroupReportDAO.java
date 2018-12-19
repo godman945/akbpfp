@@ -127,40 +127,28 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 							query.setFirstResult((page-1)*pageSize);
 							query.setMaxResults(pageSize);
 						}
-
 						dataList = query.list();
-						//log.info(">> resultData_size  = "+resultData.size());
-
-
-//
-//						Query q = session.createSQLQuery(hqlStr);
-//
-//						//page=-1 取得全部不分頁用於download
-//						if (page!=-1) {
-//							q.setFirstResult((page-1)*pageSize).setMaxResults(pageSize);
-//						}
-//
-//						List<Object> dataList = q.list();
-//						log.info(">>> dataList.size() = " + dataList.size());
-
 						List<AdGroupReportVO> resultData = new ArrayList<AdGroupReportVO>();
 
 						if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue())) {
-
 							for (int i=0; i<dataList.size(); i++) {
 								Object[] objArray = (Object[]) dataList.get(i);
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
 								Double cost = (Double) objArray[2];
 								BigDecimal invClick = (BigDecimal) objArray[3];
+								BigDecimal convertCount = (BigDecimal) objArray[5];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[6];
+								
 								AdGroupReportVO vo = new AdGroupReportVO();
+								vo.setConvertCount(convertCount);
+								vo.setConvertPriceCount(convertPriceCount);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
 								resultData.add(vo);
 							}
-
 						} else if (sqlType.equals(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue())) {
 
 							Map<String,String> adStyleTypeMap = new HashMap<String,String>();
@@ -182,9 +170,12 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 								String adOperatingRuleCode = objArray[8].toString();
 								String adClkPriceType = objArray[9].toString();
 								Integer adType = Integer.parseInt(objArray[10].toString());
-
+								BigDecimal convertCount = (BigDecimal) objArray[11];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[12];
+								
 								AdGroupReportVO vo = new AdGroupReportVO();
-
+								vo.setConvertCount(convertCount);
+								vo.setConvertPriceCount(convertPriceCount);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
@@ -215,14 +206,17 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 							for (int i=0; i<dataList.size(); i++) {
 
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								Date reportDate = (Date) objArray[0];
 								BigDecimal pv = (BigDecimal) objArray[1];
 								BigDecimal click = (BigDecimal) objArray[2];
 								Double cost = Double.valueOf(objArray[3].toString());
 								BigDecimal invClick = (BigDecimal) objArray[4];
+								BigDecimal convertCount = (BigDecimal) objArray[7];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[8];
+								
 								AdGroupReportVO vo = new AdGroupReportVO();
-
+								vo.setConvertCount(convertCount);
+								vo.setConvertPriceCount(convertPriceCount);
 								vo.setReportDate(reportDate);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
@@ -236,7 +230,6 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 							for (int i=0; i<dataList.size(); i++) {
 
 								Object[] objArray = (Object[]) dataList.get(i);
-
 								BigDecimal pv = (BigDecimal) objArray[0];
 								BigDecimal click = (BigDecimal) objArray[1];
 								Double cost = (Double) objArray[2];
@@ -321,7 +314,9 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then (r.ad_clk - r.ad_invalid_clk) else r.ad_view end)), ");
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_group_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
-		hql.append(" sum(r.ad_invalid_clk_price) ");
+		hql.append(" sum(r.ad_invalid_clk_price), ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_group_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id = :customerInfoId ");
@@ -386,7 +381,9 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 		hql.append(" r.ad_pvclk_device, ");
 		hql.append(" r.ad_operating_rule, ");
 		hql.append(" r.ad_clk_price_type, ");
-		hql.append(" r.ad_type ");
+		hql.append(" r.ad_type, ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_group_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");
@@ -453,7 +450,9 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_group_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
-		hql.append(" count(r.ad_group_report_seq) ");
+		hql.append(" count(r.ad_group_report_seq), ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_group_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");

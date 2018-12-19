@@ -91,6 +91,8 @@
 	 <bean id="AdReportService" class="com.pchome.akbpfp.db.service.report.AdReportService"> 
         <property name="adReportDAO" ref="AdReportDAO" />
         <property name="pfpAdDetailDAO" ref="PfpAdDetailDAO" />
+        <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
+        <property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
     </bean>
 
 	 <bean id="AdOsReportService" class="com.pchome.akbpfp.db.service.report.AdOsReportService"> 
