@@ -181,7 +181,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		
 		// 檔案下載未完成先命名副檔名為tmp，已完成改為.csv
 		String fileUploadTempPath = catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + 
-				formatter2.format(updateDatetime) + "_" + FilenameUtils.getBaseName(fileUploadFileName) + ".tmp";
+				formatter2.format(updateDatetime) + "_" + pfpCatalog.getCatalogSeq() + ".tmp";
 		File createFile = new File(fileUploadTempPath);
 
 		/* 
@@ -197,7 +197,7 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		outputChannel.close();
 		
 		String fileUploadCsvPath = catalogProdCsvFilePath + super.getCustomer_info_id() + "/" + pfpCatalog.getCatalogSeq() + "/" + 
-				formatter2.format(updateDatetime) + "_" + fileUploadFileName;
+				formatter2.format(updateDatetime) + "_" + pfpCatalog.getCatalogSeq() + ".csv";
 		File tempfile = new File(fileUploadTempPath);
 		File csvfile = new File(fileUploadCsvPath);
 		tempfile.renameTo(csvfile);
