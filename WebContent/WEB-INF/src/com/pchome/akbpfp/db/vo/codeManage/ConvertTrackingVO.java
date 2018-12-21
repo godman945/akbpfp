@@ -27,7 +27,11 @@ public class ConvertTrackingVO {
 	String transSumCKConvertCount;	//加總全部 pfp_code_convert_trans的 ck convert_count
 	String transSumPVConvertCount;	//加總全部 pfp_code_convert_trans的 pv convert_count
 	String transSumAllConvertCount;	//加總全部 pfp_code_convert_trans的 ck+pv convert_count
-	
+	String ckStartDate;
+	String ckEndDate;
+	String pvStartDate;
+	String pvEndDate;
+
 	
 	public int getPage() {
 		return page;
@@ -184,6 +188,30 @@ public class ConvertTrackingVO {
 	}
 	public void setTransSumAllConvertCount(String transSumAllConvertCount) {
 		this.transSumAllConvertCount = transSumAllConvertCount;
+	}
+	public String getCkStartDate() {
+		return ckStartDate;
+	}
+	public void setCkStartDate(String ckStartDate) {
+		this.ckStartDate = ckStartDate;
+	}
+	public String getCkEndDate() {
+		return ckEndDate;
+	}
+	public void setCkEndDate(String ckEndDate) {
+		this.ckEndDate = ckEndDate;
+	}
+	public String getPvStartDate() {
+		return pvStartDate;
+	}
+	public void setPvStartDate(String pvStartDate) {
+		this.pvStartDate = pvStartDate;
+	}
+	public String getPvEndDate() {
+		return pvEndDate;
+	}
+	public void setPvEndDate(String pvEndDate) {
+		this.pvEndDate = pvEndDate;
 	}
 	
 }

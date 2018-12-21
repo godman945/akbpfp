@@ -96,34 +96,60 @@ public class PfpCodeConvertDAO extends BaseDAO<PfpCodeConvert,String> implements
 		if (StringUtils.isNotBlank(convertTrackingVO.getConvertName())){
 			hql.append(" and convert_name like '%"+convertTrackingVO.getConvertName()+"%' ");
 		}
+		hql.append(" 	and convert_seq = '"+convertTrackingVO.getConvertSeq()+"' ");
 		hql.append(" 	and convert_status != '"+EnumConvertStatusType.Delete.getType()+"' ) as a");
 		hql.append(" left join ");
-		hql.append(" (	select customer_info_id, convert_seq, sum(convert_price) as trans_convert_price from pfp_code_convert_trans where 1=1 ");
-		hql.append(" 	and customer_info_id = '"+convertTrackingVO.getPfpCustomerInfoId()+"' ");
+		hql.append(" (	select convert_seq, sum(convert_price) as trans_convert_price from pfp_code_convert_trans where 1=1 ");
 		hql.append(" 	and convert_trigger_type ='CK' ");
-		hql.append("	group by customer_info_id,convert_seq ) as b");
+		hql.append(" 	and convert_seq = '"+convertTrackingVO.getConvertSeq()+"' ");
+		hql.append(" 	and convert_belong_date >= '"+convertTrackingVO.getCkStartDate()+"' ");
+		hql.append(" 	and convert_belong_date <= '"+convertTrackingVO.getCkEndDate()+"' ");
+		hql.append("	) as b");
 		hql.append(" on a.convert_seq = b.convert_seq ");
 		hql.append(" left join ");
-		hql.append(" (	select customer_info_id,convert_seq,sum(convert_count)as ck_convert_price from pfp_code_convert_trans where 1=1 ");
-		hql.append(" 	and customer_info_id = '"+convertTrackingVO.getPfpCustomerInfoId()+"' ");
+		hql.append(" (	select convert_seq,sum(convert_count)as ck_convert_price from pfp_code_convert_trans where 1=1 ");
 		hql.append(" 	and convert_trigger_type ='CK' ");
-		hql.append(" 	group by customer_info_id,convert_seq ) as c ");
+		hql.append(" 	and convert_seq = '"+convertTrackingVO.getConvertSeq()+"' ");
+		hql.append(" 	and convert_belong_date >= '"+convertTrackingVO.getCkStartDate()+"' ");
+		hql.append(" 	and convert_belong_date <= '"+convertTrackingVO.getCkEndDate()+"' ");
+		hql.append(" 	) as c ");
 		hql.append(" on a.convert_seq = c.convert_seq ");
 		hql.append(" left join ");
-		hql.append(" (	select customer_info_id,convert_seq,sum(convert_count)as pv_convert_price from pfp_code_convert_trans where 1=1 ");
-		hql.append(" 	and customer_info_id = '"+convertTrackingVO.getPfpCustomerInfoId()+"' ");
+		hql.append(" (	select convert_seq,sum(convert_count)as pv_convert_price from pfp_code_convert_trans where 1=1 ");
 		hql.append(" 	and convert_trigger_type ='PV' ");
-		hql.append(" 	group by customer_info_id,convert_seq ) as d ");
+		hql.append(" 	and convert_seq = '"+convertTrackingVO.getConvertSeq()+"' ");
+		hql.append(" 	and convert_belong_date >= '"+convertTrackingVO.getPvStartDate()+"' ");
+		hql.append(" 	and convert_belong_date <= '"+convertTrackingVO.getPvEndDate()+"' ");
+		hql.append(" 	) as d ");
 		hql.append(" on a.convert_seq = d.convert_seq ");
 		
 		log.info(hql.toString());
 		
 		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setFirstResult((convertTrackingVO.getPage()-1)*convertTrackingVO.getPageSize());
-		query.setMaxResults(convertTrackingVO.getPageSize());
+//		query.setFirstResult((convertTrackingVO.getPage()-1)*convertTrackingVO.getPageSize());
+//		query.setMaxResults(convertTrackingVO.getPageSize());
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
 		
 		return query.list();
+	}
+	
+	public List<PfpCodeConvert> findPfpCodeConvertList(ConvertTrackingVO convertTrackingVO) throws Exception{
+		StringBuffer hql = new StringBuffer();
+		hql.append(" from PfpCodeConvert where 1=1");
+		hql.append(" and pfpCustomerInfoId = :pfpCustomerInfoId");
+		
+		String strHQL = hql.toString();
+		log.info(">>> strHQL = " + strHQL);
+
+		Session session = getSession();
+		Query q = session.createQuery(strHQL);
+		
+		q.setFirstResult((convertTrackingVO.getPage()-1)*convertTrackingVO.getPageSize());
+		q.setMaxResults(convertTrackingVO.getPageSize());
+		
+		q.setString("pfpCustomerInfoId", convertTrackingVO.getPfpCustomerInfoId());
+		
+		return q.list();
 	}
 	
 	

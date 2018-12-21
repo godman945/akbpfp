@@ -1,20 +1,22 @@
 package com.pchome.akbpfp.struts2.action.codeManage.convertTracking;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.pojo.PfpCode;
+import com.pchome.akbpfp.db.pojo.PfpCodeConvert;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeConvertRuleService;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeConvertService;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
-import com.pchome.akbpfp.db.service.codeManage.IPfpCodeTrackingService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.codeManage.ConvertTrackingRuleVO;
 import com.pchome.akbpfp.db.vo.codeManage.ConvertTrackingVO;
-import com.pchome.akbpfp.db.vo.codeManage.RetargetingTrackingVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.codeManage.EnumConvertType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
@@ -77,7 +79,27 @@ public class ConvertTrackingAction  extends BaseCookieAction{
 			convertTrackingVO.setPfpCustomerInfoId(super.getCustomer_info_id());
 			
 			
-			convertList = pfpCodeConvertService.getConvertTrackingList(convertTrackingVO);
+			//
+			List<PfpCodeConvert> pfpCodeConvertList =pfpCodeConvertService.findPfpCodeConvertList(convertTrackingVO);
+			convertList = new ArrayList<>();
+			
+			for (PfpCodeConvert pfpCodeConvert : pfpCodeConvertList) {
+				convertTrackingVO.setConvertSeq(pfpCodeConvert.getConvertSeq());
+				//ck
+				int clickRangeDate = pfpCodeConvert.getClickRangeDate();
+				convertTrackingVO.setCkStartDate(convertStartDay(clickRangeDate));
+				convertTrackingVO.setCkEndDate(convertStartDay(1));
+				//pv
+				int impRangeDate = pfpCodeConvert.getImpRangeDate();
+				convertTrackingVO.setPvStartDate(convertStartDay(impRangeDate));
+				convertTrackingVO.setPvEndDate(convertStartDay(1));
+				
+				ConvertTrackingVO convertTransVO = pfpCodeConvertService.getConvertTrackingList(convertTrackingVO);
+				convertList.add(convertTransVO);
+			}
+			
+			
+//			convertList = pfpCodeConvertService.getConvertTrackingList(convertTrackingVO);
 			
 			if(convertList.size() <= 0){
 				returnMsg = "沒有商品清單資料";
@@ -86,9 +108,24 @@ public class ConvertTrackingAction  extends BaseCookieAction{
 			
 			
 			//所有轉換動作
-			sumConvertCount = pfpCodeConvertService.getSumConvertCount(convertTrackingVO);
+//			sumConvertCount = pfpCodeConvertService.getSumConvertCount(convertTrackingVO);
+			int SumCKConvertCount = 0;
+			int SumPVConvertCount = 0;
+			int SumAllConvertCount = 0;
 			
+			for (int i = 0; i < convertList.size(); i++) {
+				ConvertTrackingVO convertListVO = (ConvertTrackingVO) convertList.get(i);
+
+				SumCKConvertCount = SumCKConvertCount + Integer.parseInt(convertListVO.getTransCKConvertCount());
+				SumPVConvertCount = SumPVConvertCount + Integer.parseInt(convertListVO.getTransPVConvertCount());
+				SumAllConvertCount = SumAllConvertCount + SumCKConvertCount + SumPVConvertCount;
+			}
 			
+			sumConvertCount = new ConvertTrackingVO();
+			sumConvertCount.setTransSumCKConvertCount(Integer.toString(SumCKConvertCount));	//加總ck點擊後轉換數
+			sumConvertCount.setTransSumPVConvertCount(Integer.toString(SumPVConvertCount));	//加總pv瀏覽後轉換數
+			sumConvertCount.setTransSumAllConvertCount(Integer.toString(SumAllConvertCount));//加總所有轉換(ck+pv)
+		      
 			
 			//商品清單資料總筆數
 			totalCount =  Integer.valueOf(pfpCodeConvertService.getConvertTrackingCount(convertTrackingVO));
@@ -103,6 +140,31 @@ public class ConvertTrackingAction  extends BaseCookieAction{
 		}
 		
 		return SUCCESS;
+	}
+	
+	
+	public String convertStartDay(int day) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DATE, -day);
+		Date date = cal.getTime();
+		String dateStr = sdf.format(date);
+		System.out.println(dateStr);
+		
+		return dateStr;
+	}
+	
+	public String convertEndDay(int day) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DATE, -day);
+		Date date = cal.getTime();
+		String dateStr = sdf.format(date);
+		System.out.println(dateStr);
+		
+		return dateStr;
 	}
 
 	

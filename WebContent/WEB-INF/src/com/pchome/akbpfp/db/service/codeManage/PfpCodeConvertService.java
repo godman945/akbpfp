@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.dao.codeManage.IPfpCodeConvertDAO;
+import com.pchome.akbpfp.db.dao.codeManage.PfpCodeConvertDAO;
 import com.pchome.akbpfp.db.pojo.PfpCodeConvert;
 import com.pchome.akbpfp.db.service.BaseService;
 import com.pchome.akbpfp.db.vo.codeManage.ConvertTrackingRuleVO;
@@ -65,13 +66,12 @@ public class PfpCodeConvertService extends BaseService<PfpCodeConvert,String> im
 	
 	
 	
-	public List<Object> getConvertTrackingList(ConvertTrackingVO convertTrackingVO) throws Exception{
+	public ConvertTrackingVO getConvertTrackingList(ConvertTrackingVO convertTrackingVO) throws Exception{
 		List<Map<String,Object>> convertTrackingLists = ((IPfpCodeConvertDAO)dao).getConvertTrackingList(convertTrackingVO);
-		List<Object> convertTrackingBeanLists = new ArrayList<Object>();
+		ConvertTrackingVO convertTrackingBean = new ConvertTrackingVO();
 		
 		if( (!convertTrackingLists.isEmpty()) && (convertTrackingLists.size()>0) ){
 			for (Object object : convertTrackingLists) {
-				ConvertTrackingVO convertTrackingBean = new ConvertTrackingVO();
 				Map obj = (Map) object;
 				convertTrackingBean.setConvertSeq(obj.get("convert_seq").toString());	
 				convertTrackingBean.setConvertName(obj.get("convert_name").toString());
@@ -135,13 +135,14 @@ public class PfpCodeConvertService extends BaseService<PfpCodeConvert,String> im
 						break;
 					}
 				}
-				
-				
-					
-				convertTrackingBeanLists.add(convertTrackingBean);
 			}
 		}
-		return convertTrackingBeanLists;
+		return convertTrackingBean;
+	}
+	
+	
+	public List<PfpCodeConvert> findPfpCodeConvertList(ConvertTrackingVO convertTrackingVO) throws Exception{
+		return ((PfpCodeConvertDAO)dao).findPfpCodeConvertList(convertTrackingVO);
 	}
 	
 	

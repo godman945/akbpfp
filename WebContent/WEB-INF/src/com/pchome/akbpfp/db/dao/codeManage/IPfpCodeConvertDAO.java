@@ -20,6 +20,8 @@ public interface IPfpCodeConvertDAO extends IBaseDAO<PfpCodeConvert,String>{
 	
 	public List<Map<String,Object>> getConvertTrackingList(ConvertTrackingVO convertTrackingVO) throws Exception;
 	
+	public List<PfpCodeConvert> findPfpCodeConvertList(ConvertTrackingVO convertTrackingVO) throws Exception;
+	
 	public List<Map<String,Object>> getSumConvertCount(ConvertTrackingVO convertTrackingVO) throws Exception;
 	
 	public void updateConvertStatus(String pfpCustomerInfoId, String convertSeq,String convertStatus) throws Exception;
