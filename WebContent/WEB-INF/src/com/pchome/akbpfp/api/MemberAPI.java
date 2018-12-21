@@ -32,10 +32,6 @@ public class MemberAPI {
 		if(map.size() > 0){
 			vo = new MemberVO();
 			vo.setMemberId(map.get("id"));
-			
-			log.info(">>>>>>IP:"+map.get("id"));
-			
-			
 			vo.setMemberName(map.get("user_name"));
 			vo.setMemberSex(map.get("sexuality"));
 			vo.setMemberCheckMail(map.get("email"));
