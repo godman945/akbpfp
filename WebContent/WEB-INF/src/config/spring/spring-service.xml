@@ -91,6 +91,8 @@
 	 <bean id="AdReportService" class="com.pchome.akbpfp.db.service.report.AdReportService"> 
         <property name="adReportDAO" ref="AdReportDAO" />
         <property name="pfpAdDetailDAO" ref="PfpAdDetailDAO" />
+        <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
+        <property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
     </bean>
 
 	 <bean id="AdOsReportService" class="com.pchome.akbpfp.db.service.report.AdOsReportService"> 
@@ -280,10 +282,11 @@
 		<property name="akbPfpServer" value="${akbpfp.server}" />
 		<property name="photoDbPathNew" value="${photo.db.path.new}" />
 		<property name="catalogProdCsvFilePath" value="${catalogProd.csv.file.path}" />
+		<property name="catalogProdCsvFileBackupPath" value="${catalogProd.csv.file.backup.path}" />
 		<property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
 		<property name="pfpCatalogService" ref="PfpCatalogService" />
 		<property name="sequenceService" ref="SequenceService" />
-		<property name="shoppingProd" ref="ShoppingProd" />
+<!-- 		<property name="shoppingProd" ref="ShoppingProd" /> -->
     </bean>
     
     <bean id="PfpCodeService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeService">    	     

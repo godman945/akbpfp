@@ -110,7 +110,6 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 								objArray = (Object[]) dataList.get(i);
 
 								adOsReportVO = new AdOsReportVO();
-
 								adOsReportVO.setAdPvSum(((BigDecimal)objArray[0]).toString());
 								adOsReportVO.setAdClkSum(((BigDecimal)objArray[1]).toString());
 								adOsReportVO.setAdClkPriceSum(((Double)objArray[2]).toString());
@@ -119,7 +118,8 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 								adOsReportVO.setAdPvclkDevice(ObjectTransUtil.getInstance().getObjectToString(objArray[5]));
 								adOsReportVO.setAdPvclkOs(ObjectTransUtil.getInstance().getObjectToString(objArray[6]));
 								adOsReportVO.setCustomerInfoId(ObjectTransUtil.getInstance().getObjectToString(objArray[7]));
-								
+								adOsReportVO.setConvertCount((BigDecimal) objArray[8]);
+								adOsReportVO.setConvertPriceCount((BigDecimal) objArray[9]);
 								resultData.add(adOsReportVO);
 							}
 						} else if (sqlType.trim().equals(EnumReport.REPORT_HQLTYPE_ADMOBILE_COUNT.getTextValue())){
@@ -135,7 +135,8 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 								adOsReportVO.setAdClkPriceSum(((Double)objArray[2]).toString());
 								adOsReportVO.setAdInvalidClkSum(((BigDecimal)objArray[3]).toString());
 								adOsReportVO.setAdInvalidClkPriceSum(((Double)objArray[4]).toString());
-								
+								adOsReportVO.setConvertCount((BigDecimal) objArray[5]);
+								adOsReportVO.setConvertPriceCount((BigDecimal) objArray[6]);
 								resultData.add(adOsReportVO);
 							}
 
@@ -153,7 +154,8 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 								adOsReportVO.setAdInvalidClkSum(((BigDecimal)objArray[3]).toString());
 								adOsReportVO.setAdInvalidClkPriceSum(((Double)objArray[4]).toString());
 								adOsReportVO.setAdPvclkDate(ObjectTransUtil.getInstance().getObjectToString(objArray[5]));
-								
+								adOsReportVO.setConvertCount((BigDecimal) objArray[6]);
+								adOsReportVO.setConvertPriceCount((BigDecimal) objArray[7]);
 								resultData.add(adOsReportVO);
 							}
 						}
@@ -173,10 +175,12 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 
 		hql.append("select ");
 		hql.append("  sum(r.ad_pv), ");
-		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");			// 產生pfp_ad_os_report 的時候，已經減過無效點擊數了，所以不用再減
+		hql.append("  sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");			// 產生pfp_ad_os_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append("  sum(r.ad_clk_price), ");		// 產生pfp_ad_os_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append("  sum(r.ad_invalid_clk), ");
-		hql.append("  sum(r.ad_invalid_clk_price) ");
+		hql.append("  sum(r.ad_invalid_clk_price), ");
+		hql.append("  SUM(r.convert_count),  ");
+		hql.append("  SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_os_report as r");
 		hql.append(" where 1 = 1 ");
 		hql.append("   and r.customer_info_id = :customerInfoId");
@@ -214,7 +218,9 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 		hql.append(" r.ad_pvclk_date, ");
 		hql.append(" r.ad_pvclk_device, ");
 		hql.append(" r.ad_pvclk_os, ");
-		hql.append(" r.customer_info_id ");
+		hql.append(" r.customer_info_id, ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_os_report as r ");
 		hql.append(" where 1 = 1");
 		hql.append("   and r.customer_info_id = :customerInfoId");
@@ -250,7 +256,9 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_os_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
-		hql.append(" r.ad_pvclk_date");
+		hql.append(" r.ad_pvclk_date, ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_os_report as r");
 		hql.append(" where 1 = 1");
 		hql.append("   and r.customer_info_id = :customerInfoId");

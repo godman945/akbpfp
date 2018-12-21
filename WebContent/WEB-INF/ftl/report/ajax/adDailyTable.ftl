@@ -83,9 +83,9 @@ ${page}/${totalPage}
          <#assign index = 0>
 		 <tr height="30">
 		<#list td as tdin>
-			<#if index = 6 || index = 7 || index = 8>
+			<#if index = 6 || index = 7 || index = 8  || index = 10 || index = 12>
 				<td align="${align_data[index]}">NT$ ${tdin}</td>	
-			<#elseif index = 5>
+			<#elseif index = 5 || index = 11 || index = 13>
 				<td align="${align_data[index]}">${tdin}%</td>
 			<#else>	
 				<td align="${align_data[index]}">${tdin}</td>
@@ -99,9 +99,9 @@ ${page}/${totalPage}
  	<tfoot>
  	<tr height="35">
    		<#list tableDataTotalList as th>
-			<#if th_index = 6 || th_index = 7 || th_index = 8>
+			<#if th_index = 6 || th_index = 7 || th_index = 8 || th_index = 10 || th_index = 12>
 				<th height="30" align="right">NT$ ${th}</th>
-			<#elseif th_index = 5>
+			<#elseif th_index = 5 || th_index = 11 || th_index = 13>
 				<th height="30" align="right">${th}%</th>
 			<#elseif th_index = 0>
 				<th height="30" align="center">${th}</th>

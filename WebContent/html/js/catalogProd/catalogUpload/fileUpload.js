@@ -105,32 +105,39 @@ function checkFile(file) {
 
 /**
  * 完成按鈕事件
- * @returns {Boolean}
  */
+var ajaxIsNotFinish = false;
 function fileUploadFinish() {
-	if (fileCount == 0) {
-		alert("未選擇檔案!");
+	if (ajaxIsNotFinish) {
 		return false;
-	} else if(fileFormatIsErr){
-		alert("檔案格式錯誤!");
-		return false;
+	} else {
+		if (fileCount == 0) {
+			alert("未選擇檔案!");
+			return false;
+		} else if(fileFormatIsErr){
+			alert("檔案格式錯誤!");
+			return false;
+		}
+		
+		ajaxIsNotFinish = true;
+		
+		var formData = new FormData($("#fileUploadForm")[0]);
+	    $.ajax({
+	      type: "POST",
+	      url: "catalogProdFileUploadCSV.html",
+	      data:formData,
+	      cache:false,
+	      processData: false,
+	      contentType: false,
+	      dataType: 'text',   // 回傳的資料格式
+	      error: function(xhr){
+				alert("系統繁忙，請稍後再試！");
+				ajaxIsNotFinish = false;
+	      },
+	      success: function (data){
+	    	  // 等後端檔案抓完，狀態更新再導頁
+	    	  window.location.replace("catalogProd.html");
+	      }
+	    });
 	}
-	
-	var formData = new FormData($("#fileUploadForm")[0]);
-    $.ajax({
-      type: "POST",
-      url: "catalogProdFileUploadCSV.html",
-      data:formData,
-      cache:false,
-      processData: false,
-      contentType: false,
-      dataType: 'text',   // 回傳的資料格式
-      success: function (data){
-    	  
-      }
-    }).fail(function(){
-    	console.log("發生錯誤。。。。");
-    });
-    
-    window.location.replace("catalogProd.html");
 }

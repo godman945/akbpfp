@@ -74,6 +74,9 @@ public class PfpAdAdViewVO {
 	
 	private String saleEndImg ="";
 	
+	private String adbgType ="";
+	
+	private String imgProportiona = "";
 	
 	/* 商品廣告用參數 END*/
 	public String getAdActionSeq() {
@@ -375,6 +378,18 @@ public class PfpAdAdViewVO {
 	}
 	public void setSaleEndImg(String saleEndImg) {
 		this.saleEndImg = saleEndImg;
+	}
+	public String getAdbgType() {
+		return adbgType;
+	}
+	public void setAdbgType(String adbgType) {
+		this.adbgType = adbgType;
+	}
+	public String getImgProportiona() {
+		return imgProportiona;
+	}
+	public void setImgProportiona(String imgProportiona) {
+		this.imgProportiona = imgProportiona;
 	}
     
 }

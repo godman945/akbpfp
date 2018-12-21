@@ -7,32 +7,27 @@
 <div class="container-prodmanage">
 	
 	<#-- 次目錄導覽列 開始 -->
-	<div class="nav-wrap pos-relative hidetabs tab1">
-	    <div class="nav-box pos-relative">
-	        <ul class="txt-table">
-	            <li class="txt-cell pos-relative p-r10">
-	                <span class="icon-box list arrow-right">
-	                    <a href="catalogProd.html">所有商品目錄</a>
-	                </span>
-	            </li>
-	            
-	            <li class="txt-cell pos-relative"><a href="#">商品清單</a></li>
-                <li class="txt-cell pos-relative"><a href="#">商品組合</a></li>
-                <li class="txt-cell pos-relative"><a href="#">商品資料</a></li>
-                <li class="txt-cell pos-relative"><a href="#">設定</a></li>
-	            
-	            <li class="txt-cell pos-relative p-r10">
+	<#-- tagA tagB 二牙齒由左至右底線 - 商品目錄StartupPage頁  -->
+	<div class="nav-wrap pos-relative tagA">
+        <div class="nav-box pos-relative">
+            <ul class="txt-table">
+                <li class="txt-cell pos-relative p-r10">
+                    <span class="icon-box list p-r10">
+                        <a href="catalogProd.html">所有商品目錄</a>
+                        <em class="icon-arrow-r"></em>
+                    </span>                                          
+                </li>  
+                <li class="txt-cell pos-relative p-r10">
                     <span class="icon-box tab-logomanage p-r10">
                         <a href="logo.html">LOGO管理<em class="icon-error"></em></a>                                                        
                     </span>
-                </li>
+                </li> 
                 <#if showPromptMessage == true><div class="p-b10 note-text">提醒您，必須完整建立商品目錄與LOGO才能投放商品廣告</div></#if>
-	        </ul>
-	        <div class="altername-box pos-absolute pos-right pos-top">
-	        	<span>帳戶：</span>${customer_info_title}
-			</div>
-	    </div>
-	</div>
+            </ul>
+            
+            <div class="altername-box pos-absolute pos-right pos-top"><span>帳戶：</span>${customer_info_title}</div>
+        </div>   
+    </div>
 	<#-- 次目錄導覽列 結束 -->
 	
 	<div class="content-wrap p-lr60 transition-all">

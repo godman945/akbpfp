@@ -24,7 +24,10 @@ public class AdTimeReportVO {
 	
 	private String adOperatingRule;		//廣告樣式
 	private String adClkPriceType;		//廣告計費方式
-
+	//轉換數
+	private BigDecimal convertCount;
+	//轉換價值
+	private BigDecimal convertPriceCount;
 	public Date getReportDate() {
 		return reportDate;
 	}
@@ -136,5 +139,19 @@ public class AdTimeReportVO {
 	public void setAdClkPriceType(String adClkPriceType) {
 		this.adClkPriceType = adClkPriceType;
 	}
-	
+	public BigDecimal getConvertCount() {
+		return convertCount;
+	}
+
+	public void setConvertCount(BigDecimal convertCount) {
+		this.convertCount = convertCount;
+	}
+
+	public BigDecimal getConvertPriceCount() {
+		return convertPriceCount;
+	}
+
+	public void setConvertPriceCount(BigDecimal convertPriceCount) {
+		this.convertPriceCount = convertPriceCount;
+	}
 }

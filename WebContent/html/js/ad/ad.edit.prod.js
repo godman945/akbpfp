@@ -1071,18 +1071,16 @@ function getProdGroup(obj){
 		}
 		first = false;
 	}
-	console.log(imgProportiona);
-	
 		var src = 'adProdModel.html'
 		+'?catalogGroupId='+encodeURIComponent(catalogGroupId)
-		+'&btnTxt='+encodeURIComponent($("#btnTxt").val())
+		+'&btnTxt='+encodeURIComponent(encodeURIComponent($("#btnTxt option:selected").text()))
 		+'&btnFontColor='+encodeURIComponent(btnFontColor)
 		+'&btnBgColor='+encodeURIComponent(btnBgColor)
 		+'&disTxtType='+encodeURIComponent($("#disTxtType").val())
 		+'&disBgColor='+encodeURIComponent(disBgColor)
 		+'&disFontColor='+encodeURIComponent(disFontColor)
 		+"&imgShowType="+imgShowType
-		+"&logoText="+encodeURIComponent($("#logoText").val())
+		+"&logoText="+encodeURIComponent(encodeURIComponent($("#logoText").val()))
 		+"&logoBgColor="+encodeURIComponent(logoBgColor)
 		+"&logoFontColor="+encodeURIComponent(logoFontColor)
 		+"&prodLogoType="+encodeURIComponent(prodLogoType)

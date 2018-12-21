@@ -101,8 +101,12 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 								BigDecimal click = (BigDecimal) objArray[1];
 								Double cost = (Double) objArray[2];
 								BigDecimal invClick = (BigDecimal) objArray[3];
-								AdAgesexReportVO vo = new AdAgesexReportVO();
+								BigDecimal convertCount = (BigDecimal) objArray[5];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[6];
 								
+								AdAgesexReportVO vo = new AdAgesexReportVO();
+								vo.setConvertCount(convertCount);
+								vo.setConvertPriceCount(convertPriceCount);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
@@ -142,9 +146,12 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 								String adOperatingRuleCode = objArray[10].toString();
 								String adClkPriceType = objArray[11].toString();
 								Integer adType = Integer.parseInt(objArray[12].toString());
-
+								BigDecimal convertCount = (BigDecimal) objArray[13];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[14];
+								
 								AdAgesexReportVO vo = new AdAgesexReportVO();
-
+								vo.setConvertCount(convertCount);
+								vo.setConvertPriceCount(convertPriceCount);
 								String ageName = "未知";
 								if(StringUtils.isNotEmpty(ageCode)){
 									for(EnumAdAgeCode enumAdAgeCode:EnumAdAgeCode.values()){
@@ -207,18 +214,19 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 								BigDecimal click = (BigDecimal) objArray[3];
 								Double cost = (Double) objArray[4];
 								BigDecimal invClick = (BigDecimal) objArray[5];
-
+								BigDecimal convertCount = (BigDecimal) objArray[7];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[8];
+								
 								AdAgesexReportVO vo = new AdAgesexReportVO();
-
+								vo.setConvertCount(convertCount);
+								vo.setConvertPriceCount(convertPriceCount);
 								vo.setAge(ageCode);
 								vo.setSex(sex);
 								vo.setAdPvSum(pv);
 								vo.setAdClkSum(click);
 								vo.setAdPriceSum(cost);
 								vo.setAdInvClkSum(invClick);
-								
 								resultData.add(vo);
-
 							}
 						}
 
@@ -240,7 +248,9 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");					// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_time_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
-		hql.append(" sum(r.ad_invalid_clk_price) ");
+		hql.append(" sum(r.ad_invalid_clk_price), ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_age_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");
@@ -302,7 +312,9 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		hql.append(" r.ad_pvclk_device, ");
 		hql.append(" r.ad_operating_rule, ");
 		hql.append(" r.ad_clk_price_type, ");
-		hql.append(" r.ad_type ");
+		hql.append(" r.ad_type, ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_age_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");
@@ -360,7 +372,9 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");					// 產生pfp_ad_time_report 的時候，已經減過無效點擊數了，所以不用再減
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_time_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
-		hql.append(" sum(r.ad_invalid_clk_price) ");
+		hql.append(" sum(r.ad_invalid_clk_price), ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_age_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id =:customerInfoId ");

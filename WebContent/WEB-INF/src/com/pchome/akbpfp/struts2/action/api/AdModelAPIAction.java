@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.action.api;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -58,7 +59,7 @@ public class AdModelAPIAction extends BaseCookieAction{
 	
 	private String adProdgroupId="";
 	
-	private String imgShowType="";
+	private String logoType="";
 	//logo類型
 	private String prodLogoType;
 	
@@ -114,14 +115,14 @@ public class AdModelAPIAction extends BaseCookieAction{
 		pfpProdAdPreviewJson.put("catalogGroupId", catalogGroupId);
 		pfpProdAdPreviewJson.put("logoBgColor",logoBgColor);
 		pfpProdAdPreviewJson.put("logoFontColor", logoFontColor);
-		pfpProdAdPreviewJson.put("logoText",logoText);
+		pfpProdAdPreviewJson.put("logoText",URLDecoder.decode(logoText,"UTF-8"));
 		pfpProdAdPreviewJson.put("btnBgColor",btnBgColor);
 		pfpProdAdPreviewJson.put("btnFontColor", btnFontColor);
-		pfpProdAdPreviewJson.put("btnTxt",btnTxt);
+		pfpProdAdPreviewJson.put("btnTxt",URLDecoder.decode(btnTxt, "UTF-8"));
 		pfpProdAdPreviewJson.put("disBgColor",disBgColor);
 		pfpProdAdPreviewJson.put("disFontColor",disFontColor);
 		pfpProdAdPreviewJson.put("disTxtType", disTxtType);
-		pfpProdAdPreviewJson.put("imgShowType", imgShowType);
+		pfpProdAdPreviewJson.put("logoType", logoType);
 		pfpProdAdPreviewJson.put("prodLogoType", prodLogoType);
 		pfpProdAdPreviewJson.put("imgProportiona", imgProportiona);
 		pfpProdAdPreviewJson.put("userLogoPath", userLogoPath);
@@ -252,72 +253,57 @@ public class AdModelAPIAction extends BaseCookieAction{
 		this.adProdgroupId = adProdgroupId;
 	}
 	
-
-
-	public String getImgShowType() {
-		return imgShowType;
+	public String getLogoType() {
+		return logoType;
 	}
 
-
-	public void setImgShowType(String imgShowType) {
-		this.imgShowType = imgShowType;
+	public void setLogoType(String logoType) {
+		this.logoType = logoType;
 	}
-
 
 	public void setProdLogoType(String prodLogoType) {
 		this.prodLogoType = prodLogoType;
 	}
 
-
 	public String getImgProportiona() {
 		return imgProportiona;
 	}
-
 
 	public void setImgProportiona(String imgProportiona) {
 		this.imgProportiona = imgProportiona;
 	}
 
-
 	public String getUserLogoPath() {
 		return userLogoPath;
 	}
-
 
 	public void setUserLogoPath(String userLogoPath) {
 		this.userLogoPath = userLogoPath;
 	}
 
-
 	public String getPreviewTpro() {
 		return previewTpro;
 	}
-
 
 	public void setPreviewTpro(String previewTpro) {
 		this.previewTpro = previewTpro;
 	}
 
-
 	public String getSaleImg() {
 		return saleImg;
 	}
-
 
 	public void setSaleImg(String saleImg) {
 		this.saleImg = saleImg;
 	}
 
-
 	public String getSaleEndImg() {
 		return saleEndImg;
 	}
 
-
 	public void setSaleEndImg(String saleEndImg) {
 		this.saleEndImg = saleEndImg;
 	}
-
 
 	public static void main(String[] args) throws Exception{
 		ApplicationContext context = new FileSystemXmlApplicationContext(TestConfig.path);

@@ -20,7 +20,9 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.akbpfp.db.dao.report.AdOsReportVO;
+import com.pchome.akbpfp.db.pojo.PfpCode;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
+import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdOsReportService;
 import com.pchome.soft.util.DateValueUtil;
@@ -35,8 +37,8 @@ public class ReportAdOsAction extends BaseReportAction {
 	//private String[] align_data = {"center", "right", "right", "right", "right", "right", "right", "right", "right"};
 	//private String[] align_sum = {"center", "right", "right", "right", "right", "right", "right", "right", "right"};
 	// 20140318： 隱藏 "無效點選次數" 欄位
-	private String[] align_data = {"center", "right", "right", "right", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "right", "right", "right", "right", "right", "right", "right", "right"};
+	private String[] align_data = {"center", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right"};
+	private String[] align_sum = {"center", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right"};
 
 	private LinkedList<LinkedList<String>> tableDataList =null; // 頁面 table data
 	private LinkedList<String> tableDataTotalList =null; //頁面全部加總table total foot
@@ -87,6 +89,10 @@ public class ReportAdOsAction extends BaseReportAction {
 
 	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
 	private NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
+	
+	private IPfpCodeService pfpCodeService;
+	
+	private boolean hasPfpCodeflag = false;
 	
 	public String flashDataDownLoad() throws Exception {
 
@@ -194,7 +200,14 @@ public class ReportAdOsAction extends BaseReportAction {
 		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
 		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
 		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
-		
+		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
+		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
+		tableHeadNameMap.put("轉換數", EnumReport.REPORT_CHART_CONVERT.getTextValue());
+		tableHeadNameMap.put("轉換價值", EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue());
+		tableHeadNameMap.put("轉換率", EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue());
+		tableHeadNameMap.put("平均轉換成本", EnumReport.REPORT_CHART_CONVERT_COST.getTextValue());
+		tableHeadNameMap.put("廣告投資報酬率", EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue());
 		optionSelect="";
 		optionNotSelect="";
 
@@ -212,7 +225,15 @@ public class ReportAdOsAction extends BaseReportAction {
 
 		String customerInfoId=super.getCustomer_info_id();
 		log.info(">>> customerInfoId = " + customerInfoId);
-
+		PfpCode pfpCode = pfpCodeService.getPfpCode(super.getCustomer_info_id());
+		if(pfpCode != null){
+			hasPfpCodeflag = true;
+		}
+		if(hasPfpCodeflag){
+			optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,轉換數,轉換價值,轉換率,平均轉換成本,廣告投資報酬率";	
+		}else{
+			optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
+		}
 		tableHeadList=new LinkedList<String>();//table head
 		tableDataList=new LinkedList<LinkedList<String>>();//table data
 
@@ -351,9 +372,9 @@ public class ReportAdOsAction extends BaseReportAction {
 		for(LinkedList<String> sl:tableDataList){
 			int dataNumber = 1;
 			for(String s:sl){
-				if(dataNumber == 5 || dataNumber == 6 || dataNumber == 7){
+				if(dataNumber == 5 || dataNumber == 6 || dataNumber == 7 || dataNumber == 9 || dataNumber == 11){
 					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
-				} else if(dataNumber == 4){
+				} else if(dataNumber == 4 || dataNumber == 10 || dataNumber == 12){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");	
@@ -368,9 +389,9 @@ public class ReportAdOsAction extends BaseReportAction {
 		if (tableDataTotalList!=null) {
 			int dataTotalNumber = 1;
 			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 5 || dataTotalNumber == 6 || dataTotalNumber == 7){
+				if(dataTotalNumber == 5 || dataTotalNumber == 6 || dataTotalNumber == 7 || dataTotalNumber == 9 || dataTotalNumber == 11){
 					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
-				} else if(dataTotalNumber == 4){
+				} else if(dataTotalNumber == 4 || dataTotalNumber == 10 || dataTotalNumber == 12){
 					content.append("\"" + s + "%\"");
 				} else {
 					content.append("\"" + s + "\"");
@@ -408,13 +429,21 @@ public class ReportAdOsAction extends BaseReportAction {
 		double t_costAvg = 0; //單次互動費用
 		double t_kiloCost = 0;	//千次曝光費用
 		double t_cost = 0; //總費用
-
+		//轉換數
+		double t_convert_count = 0;
+		//轉換價值
+		double t_convert_price_count = 0;
+		double t_convert_ctr = 0;
+		double t_convert_cost = 0;
+		double t_convert_investment_cost = 0;
 		//加總
 		for (AdOsReportVO adosreportvo: resultSumData) {
 			t_pv += Double.parseDouble(adosreportvo.getAdPvSum());
 			t_click += Double.parseDouble(adosreportvo.getAdClkSum());
 			t_cost += Double.parseDouble(adosreportvo.getAdClkPriceSum());
 			t_invalid += Double.parseDouble(adosreportvo.getAdInvalidClkSum());
+			t_convert_count += adosreportvo.getConvertCount().doubleValue();
+			t_convert_price_count += adosreportvo.getConvertPriceCount().doubleValue();
 		}
 		//暫時處理 20180116
 		if(t_cost < 0){
@@ -425,10 +454,7 @@ public class ReportAdOsAction extends BaseReportAction {
 			t_click = 0;
 		}
 		
-		
-		
 		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
-		
 		//互動率 = 總互動次數 / 總曝光數
 		if (t_pv>0 && t_click>0) {
 			t_ctr = (t_click / t_pv) * 100;
@@ -443,12 +469,33 @@ public class ReportAdOsAction extends BaseReportAction {
 		if(t_cost>0 && t_pv>0){
 			t_kiloCost = (t_cost * 1000) / t_pv;
 		}
-		
+		//轉換率
+		if(t_convert_count > 0 && t_click > 0){
+			t_convert_ctr  = (t_convert_count / t_click) * 100;
+		}
+		//平均轉換成本
+		if(t_cost > 0 && t_convert_count > 0){
+			t_convert_cost = t_cost / t_convert_count;
+		}
+		//廣告投資報酬率
+		if(t_convert_price_count > 0 && t_cost > 0){
+			t_convert_investment_cost = t_convert_price_count / t_cost;
+		}	
 		if (!tableHeadShowList.isEmpty()) {
 			String mapKey;
 			for (String s: tableHeadShowList) {
 				mapKey = tableHeadNameMap.get(s);
-				if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+				if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
+					tableDataTotalList.addLast(doubleFormat.format(t_convert_ctr));
+				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
+					tableDataTotalList.addLast(doubleFormat.format(t_convert_cost));
+				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
+					tableDataTotalList.addLast(doubleFormat.format(t_convert_investment_cost));
+				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
+					tableDataTotalList.addLast(intFormat.format(t_convert_count));
+				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
+					tableDataTotalList.addLast(intFormat.format(t_convert_price_count));
+				}else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
 					tableDataTotalList.addLast(intFormat.format(t_pv));
 				} else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 					tableDataTotalList.addLast(intFormat.format(t_click));
@@ -483,7 +530,11 @@ public class ReportAdOsAction extends BaseReportAction {
 			double ctr = 0;
 			double costAvg = 0;
 			double kiloCost = 0;
-
+			double convertCount = adosreportvo.getConvertCount().doubleValue();
+			double convertPriceCount = adosreportvo.getConvertPriceCount().doubleValue();
+			double convertCTR = 0;
+			double convertCost = 0;
+			double convertInvestmentCost = 0;
 			tableInDataList = new LinkedList<String>();
 
 			os = StringUtils.isBlank(adosreportvo.getAdPvclkOs())?"其他":adosreportvo.getAdPvclkOs();
@@ -517,13 +568,34 @@ public class ReportAdOsAction extends BaseReportAction {
 			if(cost>0 && pv>0){
 				kiloCost = (cost * 1000) / pv;
 			}
-
+			//轉換率
+			if(convertCount > 0 && click > 0){
+				convertCTR  = (convertCount / click) * 100;
+			}
+			//平均轉換成本
+			if(cost > 0 && convertCount > 0){
+				convertCost = cost / convertCount;
+			}
+			//廣告投資報酬率
+			if(convertPriceCount > 0 && cost > 0){
+				convertInvestmentCost = convertPriceCount / cost;
+			}
 			if(!tableHeadShowList.isEmpty()){
 				tableInDataList.addFirst(os);
 				String mapKey;
 				for(String s:tableHeadShowList){
 					mapKey=tableHeadNameMap.get(s);
-					if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+					if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
+						tableInDataList.addLast(doubleFormat.format(convertCTR));
+					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
+						tableInDataList.addLast(doubleFormat.format(convertCost));
+					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
+						tableInDataList.addLast(doubleFormat.format(convertInvestmentCost));
+					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
+						tableInDataList.addLast(intFormat.format(convertCount));
+					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
+						tableInDataList.addLast(intFormat.format(convertPriceCount));
+					}else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
 						tableInDataList.addLast(intFormat.format(pv));
 					} else if (mapKey.trim().equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 						tableInDataList.addLast(intFormat.format(click));
@@ -728,4 +800,14 @@ public class ReportAdOsAction extends BaseReportAction {
 	public void setCharType(String charType) {
 		this.charType = charType;
 	}
+
+	public IPfpCodeService getPfpCodeService() {
+		return pfpCodeService;
+	}
+
+	public void setPfpCodeService(IPfpCodeService pfpCodeService) {
+		this.pfpCodeService = pfpCodeService;
+	}
+	
+	
 }

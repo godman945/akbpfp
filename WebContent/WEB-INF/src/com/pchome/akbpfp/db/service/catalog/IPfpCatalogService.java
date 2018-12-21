@@ -41,19 +41,11 @@ public interface IPfpCatalogService extends IBaseService<PfpCatalog,String>{
 	void updatePfpCatalog(PfpCatalogVO vo);
 
 	/**
-	 * 更新目錄資料，一般購物類使用
-	 * @param pfpCatalogVO
-	 */
-	void updatePfpCatalogForShoppingProd(PfpCatalogVO pfpCatalogVO);
-
-	/**
 	 * 查詢目前目錄資料上傳狀態
 	 * @param uploadingCatalogSeqList
 	 * @return
 	 */
 	public List<Map<String, String>> getCatalogUploadingStatus(String uploadingCatalogSeqList);
-
-	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog);
 
 	/**
 	 * 檢查"商品目錄"及"商品目錄logo"資料是否顯示提示訊息

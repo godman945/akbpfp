@@ -147,8 +147,12 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adStatus = ((BigInteger)objArray[15]).intValue();
 								adActionName = ObjectTransUtil.getInstance().getObjectToString(objArray[16]);
 								adGroupStatus = ((BigInteger)objArray[17]).intValue();
+								BigDecimal convertCount = (BigDecimal) objArray[18];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[19];
 								
 								adReportVO = new AdReportVO();
+								adReportVO.setConvertCount(convertCount);
+								adReportVO.setConvertPriceCount(convertPriceCount);
 								adReportVO.setAdPvSum(adPvSum.toString());
 								adReportVO.setAdClkSum(adClkSum.toString());
 								adReportVO.setAdPriceSum(adPriceSum.toString());
@@ -202,7 +206,6 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 										break;
 									}
 								}
-								
 								adReportVO.setAdType(adTypeMap.get(adType));
 								resultData.add(adReportVO);
 							}
@@ -214,9 +217,12 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								BigDecimal adClkSum = (BigDecimal)objArray[1];
 								Double adPriceSum = (Double)objArray[2];
 								BigDecimal adInvClkSum = (BigDecimal)objArray[3];
-
+								BigDecimal convertCount = (BigDecimal) objArray[5];
+								BigDecimal convertPriceCount = (BigDecimal) objArray[6];
+								
 								AdReportVO adReportVO = new AdReportVO();
-
+								adReportVO.setConvertCount(convertCount);
+								adReportVO.setConvertPriceCount(convertPriceCount);
 								adReportVO.setAdPvSum(adPvSum.toString());
 								adReportVO.setAdClkSum(adClkSum.toString());
 								adReportVO.setAdPriceSum(adPriceSum.toString());
@@ -233,11 +239,12 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 								adReportVO.setAdClkSum(((BigDecimal)objArray[2]).toString());
 								adReportVO.setAdPriceSum(((Double)objArray[3]).toString());
 								adReportVO.setAdInvClkSum(((BigDecimal)objArray[4]).toString());
+								adReportVO.setConvertCount((BigDecimal) objArray[7]);
+								adReportVO.setConvertPriceCount((BigDecimal) objArray[8]);
 								resultData.add(adReportVO);
 							}
 						}
 						return resultData;
-
 					}
 				}
 		);
@@ -257,7 +264,9 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then (r.ad_clk - r.ad_invalid_clk) else r.ad_view end)), ");
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
-		hql.append(" sum(r.ad_invalid_clk_price) ");
+		hql.append(" sum(r.ad_invalid_clk_price), ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_report as r ");
 		hql.append("	left outer join (select distinct ad_seq from pfp_ad_detail) as pad on (r.ad_seq = pad.ad_seq)");
 		hql.append(" where 1 = 1 ");
@@ -338,7 +347,9 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" ( select g.ad_group_name from pfp_ad_group g where g.ad_group_seq  = r.ad_group_seq)ad_group_name, ");
 		hql.append(" ( select a.ad_status from pfp_ad a where a.ad_seq=r.ad_seq)ad_status, ");
 		hql.append(" ( select aa.ad_action_name from pfp_ad_group g,pfp_ad_action aa where g.ad_group_seq  = r.ad_group_seq and g.ad_action_seq = aa.ad_action_seq)ad_action_name ,");
-		hql.append(" ( select g.ad_group_status from pfp_ad_group g where g.ad_group_seq  = r.ad_group_seq)ad_group_status ");
+		hql.append(" ( select g.ad_group_status from pfp_ad_group g where g.ad_group_seq  = r.ad_group_seq)ad_group_status, ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_report as r ");
 		hql.append(" where 1 = 1 ");
 		hql.append(" and r.customer_info_id = :customerInfoId");
@@ -427,7 +438,9 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_report 的時候，已經減過無效點擊金額了，所以不用再減
 		hql.append(" sum(r.ad_invalid_clk), ");
 		hql.append(" sum(r.ad_invalid_clk_price), ");
-		hql.append(" count(r.ad_report_seq) ");
+		hql.append(" count(r.ad_report_seq), ");
+		hql.append(" SUM(r.convert_count),  ");
+		hql.append(" SUM(r.convert_price_count) ");
 		hql.append(" from pfp_ad_report as r ");
 		hql.append("	left outer join (select distinct ad_seq from pfp_ad_detail) as pad on (r.ad_seq = pad.ad_seq)");
 		hql.append(" where 1 = 1 ");

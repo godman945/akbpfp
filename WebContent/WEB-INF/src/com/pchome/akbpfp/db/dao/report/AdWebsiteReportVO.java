@@ -23,8 +23,6 @@ private Date reportDate; //報表日期
 	private String adType;	 //廣告類型
 	private String adOperatingRule;		//廣告樣式
 	private String adClkPriceType;		//廣告計費方式
-
-	
 	//轉換數
 	private BigDecimal convertCount;
 	//轉換價值

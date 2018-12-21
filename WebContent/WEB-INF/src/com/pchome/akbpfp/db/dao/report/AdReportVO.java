@@ -1,5 +1,7 @@
 package com.pchome.akbpfp.db.dao.report;
 
+import java.math.BigDecimal;
+
 public class AdReportVO {
 
 	private String reportDate; //報表日期
@@ -41,13 +43,15 @@ public class AdReportVO {
 	private String img;
 	private String adWidth;
 	private String adHeight;
-	
 	private String adRejectReason;
-	
 	//影片長度
 	private String adVideoSec;
 	//影片網址
 	private String adVideoUrl;
+	//轉換數
+	private BigDecimal convertCount;
+	//轉換價值
+	private BigDecimal convertPriceCount;
 	
 	public String getAdSeq() {
 		return adSeq;
@@ -354,5 +358,19 @@ public class AdReportVO {
 		this.adRejectReason = adRejectReason;
 	}
 
+	public BigDecimal getConvertCount() {
+		return convertCount;
+	}
 
+	public void setConvertCount(BigDecimal convertCount) {
+		this.convertCount = convertCount;
+	}
+
+	public BigDecimal getConvertPriceCount() {
+		return convertPriceCount;
+	}
+
+	public void setConvertPriceCount(BigDecimal convertPriceCount) {
+		this.convertPriceCount = convertPriceCount;
+	}
 }

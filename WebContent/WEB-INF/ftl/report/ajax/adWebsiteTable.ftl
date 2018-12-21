@@ -3,7 +3,7 @@
 
 <span style="float:left"> 
 <table border="0" cellspacing="3" cellpadding="0" class="srchtb"> 
-  <tr> 
+  <tr>
 	  
 	   <td>
 		    <select id="adShowWay"> 
@@ -88,26 +88,13 @@ ${page}/${totalPage}
 
 <#if (tableDataList?size > 0) > 
 
-<#if (hasPfpCodeflag == true) > 
-C
-<#else>
-A
-</#if>
-
 <table id="excerptTable" width="100%" border="0" cellpadding="0" cellspacing="1" class="tablesorter" > 
 
   	<thead>
     	<tr height="35"> 
-    		<#assign thIndex = 0>
-    			<#list tableHeadList as th>
-    				<#if hasPfpCodeflag == false && (thIndex == 8 || thIndex == 9 || thIndex == 10 || thIndex == 11 || thIndex == 12)>
-					<#elseif hasPfpCodeflag == true>
-    				<th>${th}</th>
-    				<#else>
-    				<th>${th}</th>
-					</#if>
-					<#assign thIndex = thIndex + 1>
-    			</#list>
+    		<#list tableHeadList as th>
+				<th>${th}</th>
+    		</#list>
     	</tr> 
 	</thead>
      
@@ -116,25 +103,12 @@ A
          <#assign index = 0>
 		 <tr height="30">
 		<#list td as tdin>
-			
-			<#if hasPfpCodeflag == false && (index == 8 || index == 9 || index == 10 || index == 11 || index == 12)>
-					<#elseif hasPfpCodeflag == true>
-    				<#if index = 9 || index = 11 || index = 16 || index = 17 || index = 18>
-					<td align="${align_data[index]}">NT$ ${tdin}</td>	
-					<#elseif index = 10 || index = 12 || index = 15>
-					<td align="${align_data[index]}">${tdin}%</td>
-					<#else>	
-					<td align="${align_data[index]}">${tdin}</td>
-					</#if>
-
-					<#else>
-    				<#if index = 11 || index = 12 || index = 13>
-					<td align="${align_data[index]}">NT$ ${tdin}</td>	
-					<#elseif index = 10>
-					<td align="${align_data[index]}">${tdin}%</td>
-					<#else>	
-					<td align="${align_data[index]}">${tdin}</td>
-					</#if>
+			<#if index = 11 || index = 12 || index = 13 || index = 15 || index = 17 || index = 18>
+				<td align="${align_data[index]}">NT$ ${tdin}</td>	
+			<#elseif index = 10 || index = 16>
+				<td align="${align_data[index]}">${tdin}%</td>
+			<#else>	
+				<td align="${align_data[index]}">${tdin}</td>
 			</#if>
 			<#assign index = index + 1>
  		</#list>
@@ -144,30 +118,17 @@ A
 
  	<tfoot>
  	<tr height="35">
- 		<#assign index2 = 0>
+	    <#assign index2 = 0>
    		<#list tableDataTotalList as th>
-	   		<#if hasPfpCodeflag == false && (index2 == 8 || index2 == 9 || index2 == 10 || index2 == 11 || index2 == 12)>
-		   		<#elseif hasPfpCodeflag == true>
-				<#if index2 = 9 || index2 = 11 || index2 = 16 || index2 = 17 || index2 = 18>
+			<#if index2 = 11 || index2 = 12 || index2 = 13 || index2 = 15 || index2 = 17 || index2 = 18>
 				<th height="30" align="${align_sum[index2]}">NT$ ${th}</th>	
-				<#elseif index2 = 10 || index2 = 12 || index2 = 15>
+			<#elseif index2 = 10 || index2 = 16>
 				<th height="30" align="${align_sum[index2]}">${th}%</th>
-				<#else>	
+			<#else>	
 				<th height="30" align="${align_sum[index2]}">${th}</th>
-				</#if>
-				
-				<#else>
-				<#if index2 = 16 || index2 = 17 || index2 = 18>
-				<th height="30" align="${align_sum[index2]}">NT$ ${th}</th>	
-				<#elseif index2 = 15>
-				<th height="30" align="${align_sum[index2]}">${th}%</th>
-				<#else>	
-				<th height="30" align="${align_sum[index2]}">${th}</th>
-				</#if>
 			</#if>
 			<#assign index2 = index2 + 1>
     	</#list>
-		
    	</tr> 
    	</tfoot>
 

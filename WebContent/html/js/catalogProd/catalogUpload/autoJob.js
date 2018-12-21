@@ -81,34 +81,41 @@ $(document).ready(function() {
 
 /**
  * 完成按鈕事件
- * @returns {Boolean}
  */
+var ajaxIsNotFinish = false;
 function autoJobFinish() {
-	// 檢查目前狀態是否為成功，或已有資料進來未修改網址
-	if (!($("div.urlupload-box.success").hasClass("select")
-		|| $("div.urlupload-box.datatype").hasClass("select"))) {
-		alert("自動排程網址尚未輸入完成。");
+	if (ajaxIsNotFinish) {
 		return false;
-	}
-	
-    $.ajax({
-		url : "catalogProdAutoJob.html",
-		type : "POST",
-		dataType:'json',
-		data : {
-			catalogSeq:$('#catalogSeq').val(),
-			jobURL:url,
-			updateWay:$('input[name=updateWay]:checked').val()
-		},
-		success : function(respone) {
-			
+	} else {
+		// 檢查目前狀態是否為成功，或已有資料進來未修改網址
+		if (!($("div.urlupload-box.success").hasClass("select")
+			|| $("div.urlupload-box.datatype").hasClass("select"))) {
+			alert("自動排程網址尚未輸入完成。");
+			return false;
 		}
-//		,error: function(xtl) {
-//			alert("系統繁忙，請稍後再試！");
-//		}
-	}).fail(function(){
-    	console.log("發生錯誤。。。。");
-    });
-    
-    window.location.replace("catalogProd.html");
+		
+		ajaxIsNotFinish = true;
+		
+	    $.ajax({
+			url : "catalogProdAutoJob.html",
+			type : "POST",
+			dataType:'json',
+			data : {
+				catalogSeq:$('#catalogSeq').val(),
+				jobURL:url,
+				updateWay:$('input[name=updateWay]:checked').val()
+			},
+			error: function(xtl) {
+				alert("系統繁忙，請稍後再試！");
+				ajaxIsNotFinish = false;
+			},
+			success : function(respone) {
+				if (respone.msg != null) {
+					alert(respone.msg);
+				}
+				window.location.replace("catalogProd.html");
+			}
+			
+		});
+	}
 }

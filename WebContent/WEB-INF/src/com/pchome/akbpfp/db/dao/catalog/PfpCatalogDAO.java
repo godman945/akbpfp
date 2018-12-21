@@ -72,10 +72,6 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
         return query.list();
 	}
 	
-	
-	
-	
-
 	@Override
 	public List<Map<String, Object>> getPfpCatalogList(PfpCatalogVO vo) {
 		StringBuffer hql = new StringBuffer();
@@ -179,32 +175,6 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
 	}
 
 	/**
-	 * 更新目錄資料，一般購物類使用
-	 */
-	@Override
-	public void updatePfpCatalogForShoppingProd(PfpCatalogVO vo) {
-		StringBuffer hql = new StringBuffer();
-		hql.append(" UPDATE pfp_catalog ");
-		hql.append(" SET catalog_upload_type = :catalog_upload_type, ");
-		hql.append(" catalog_upload_content = :catalog_upload_content, ");
-		hql.append(" upload_status = :upload_status, ");
-		hql.append(" catalog_prod_num = (SELECT COUNT(catalog_prod_seq) FROM pfp_catalog_prod_ec WHERE catalog_seq = :catalog_seq), ");
-		hql.append(" update_date = CURRENT_TIMESTAMP() ");
-		hql.append(" WHERE catalog_seq = :catalog_seq ");
-		hql.append(" AND pfp_customer_info_id = :pfp_customer_info_id ");
-		
-		Query query = super.getSession().createSQLQuery(hql.toString());
-		query.setString("upload_status", vo.getUploadStatus());
-		query.setString("catalog_upload_content", vo.getUploadContent());
-		query.setString("catalog_upload_type", vo.getCatalogUploadType());
-		query.setString("catalog_seq", vo.getCatalogSeq());
-		query.setString("pfp_customer_info_id", vo.getPfpCustomerInfoId());
-
-		query.executeUpdate();
-		super.getSession().flush();
-	}
-	
-	/**
 	 * 查詢目前目錄資料上傳狀態
 	 */
 	@Override
@@ -245,12 +215,6 @@ public class PfpCatalogDAO extends BaseDAO<PfpCatalog,String> implements IPfpCat
         return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 	}
 	
-	@Override
-	public void saveOrUpdateWithCommit(PfpCatalog pfpCatalog) {
-		super.getSession().saveOrUpdate(pfpCatalog);
-		super.getSession().beginTransaction().commit();
-	}
-
 	@Override
 	public int checkCatalogName(String catalogName, String customerInfoId) {
 		StringBuffer hql = new StringBuffer();
