@@ -1,0 +1,124 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="struts-base" extends="json-default">
+        <result-types>
+            <result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult" />
+        </result-types>
+        
+        <interceptors>
+            <interceptor name="cookieInterceptor" class="org.apache.struts2.interceptor.CookieInterceptor" />
+            <interceptor name="loginCheckInterceptor" class="LoginCheckInterceptor" />
+            <interceptor name="cookieProveInterceptor" class="CookieProveInterceptor" />            
+            <interceptor name="rootPrivilegeInterceptor" class="RootPrivilegeInterceptor" />
+            <interceptor name="admPrivilegeInterceptor" class="AdmPrivilegeInterceptor" />
+            <interceptor name="adPrivilegeInterceptor" class="AdPrivilegeInterceptor" />
+            <interceptor name="reportPrivilegeInterceptor" class="ReportPrivilegeInterceptor" />
+            <interceptor name="billPrivilegeInterceptor" class="BillPrivilegeInterceptor" />
+            <interceptor name="redirectNotifyInterceptor" class="RedirectNotifyInterceptor" />
+            <interceptor name="replaceValuesInterceptor" class="ReplaceValuesInterceptor" />
+            
+            <!-- cookie stack -->
+            <interceptor-stack name="cookieStack">
+                <interceptor-ref name="cookieInterceptor">
+                    <param name="cookiesName">id_pchome,akb_pfp_user</param>
+                    <param name="cookiesValue">*,*</param>
+                </interceptor-ref>
+                <!-- <interceptor-ref name="redirectNotifyInterceptor" /> 導公告頁, 不需要就註解掉, index.html -->
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+            
+            <!-- cookie prove stack -->
+            <interceptor-stack name="cookieProveStack">
+                <interceptor-ref name="cookieInterceptor">
+                    <param name="cookiesName">id_pchome,akb_pfp_user</param>
+                    <param name="cookiesValue">*,*</param>
+                </interceptor-ref>
+                <!-- <interceptor-ref name="redirectNotifyInterceptor" /> 導公告頁, 不需要就註解掉, 其他 html -->
+                <interceptor-ref name="defaultStack" />                
+                <interceptor-ref name="cookieProveInterceptor" />                
+            </interceptor-stack>
+            
+            <!-- lgoin check stack -->
+            <interceptor-stack name="loginCheckStack">
+                <interceptor-ref name="cookieInterceptor">
+                    <param name="cookiesName">id_pchome,akb_pfp_user,choose_date</param>
+                    <param name="cookiesValue">*,*,*</param>
+                </interceptor-ref>
+                <interceptor-ref name="replaceValuesInterceptor" />               
+                <interceptor-ref name="defaultStack" />
+                <interceptor-ref name="cookieProveStack" />                
+                <interceptor-ref name="loginCheckInterceptor" />
+            </interceptor-stack>
+            
+            <interceptor-stack name="valuesCheckStack">
+            	<interceptor-ref name="replaceValuesInterceptor" />               
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+            
+        </interceptors>
+        
+        <!-- default interceptor -->
+        <default-interceptor-ref name="cookieStack" />
+        <!-- 请求Action不存在或找不到時,調用默認Action  -->
+        <default-action-ref name="pageNotFound" />
+        
+        <!-- 全域result配置 -->
+        <global-results>
+            <result type="redirectAction" name="pageNotFound">pageNotFound</result>
+            <result type="redirectAction" name="apply">apply</result>
+            <result type="redirectAction" name="summary">summary</result>
+            <result type="redirectAction" name="index">index</result>
+            <result type="redirectAction" name="customerInfoClose">customerInfoClose</result>
+            <result type="redirectAction" name="customerInfoStop">customerInfoStop</result>
+            <result type="redirectAction" name="customerInfoAddMoney">customerInfoAddMoney</result>
+            <result type="redirectAction" name="userClose">userClose</result>
+            <result type="redirectAction" name="userInvite">userInvite</result>
+            <result type="redirectAction" name="userStop">userStop</result>
+            <!-- <result type="redirectAction" name="logoutPFP">logoutPFP</result>  -->
+            <result type="redirectAction" name="authorization">authorization</result>
+            <result type="redirectAction" name="notRootUser">notRootUser</result>
+            <result type="redirect" name="redirectHTTPS">${redirectUrl}</result>            
+            <result type="redirect" name="sysNotify">http://help.pchome.com.tw/notice/nid.html?nidx=382&amp;btype=1</result><!-- 導址公告頁網址 -->
+            
+            <result type="redirect" name="buApply">${buApplyUrl}</result>
+            
+        </global-results>
+        
+        <action name="customerInfoClose" class="CustomerInfoStatusAction" method="customerInfoCloseAction">
+        	<interceptor-ref name="loginCheckStack" />
+            <result type="tiles" name="success">.customerInfo.status.close</result>
+        </action>
+        
+        <action name="customerInfoStop" class="CustomerInfoStatusAction" method="customerInfoStopAction">
+            <result type="tiles" name="success">.customerInfo.status.stop</result>
+        </action>
+        
+        <action name="customerInfoAddMoney" class="CustomerInfoStatusAction" method="customerInfoAddMoneyAction">
+        	<interceptor-ref name="loginCheckStack" />
+            <result type="tiles" name="success">.customerInfo.status.addMoney</result>
+        </action>
+        
+        <action name="userClose" class="UserStatusAction" method="userCloseAction">
+            <result type="tiles" name="success">.user.status.close</result>
+        </action>
+        
+        <action name="userInvite" class="UserStatusAction" method="userInviteAction">
+            <result type="tiles" name="success">.user.status.invite</result>
+        </action>
+        
+        <action name="userStop" class="UserStatusAction" method="userStopAction">
+            <result type="tiles" name="success">.user.status.stop</result>
+        </action>
+        
+        <action name="pageNotFound" class="PageNotFoundAction" method="execute">
+            <result type="tiles" name="success">.error.pageNotFound</result>
+        </action>
+        
+        <action name="notRootUser" class="NotRootUserAction" method="execute">
+            <result type="tiles" name="success">.not.root.user.error</result>
+        </action>
+        
+	</package>
+</struts>

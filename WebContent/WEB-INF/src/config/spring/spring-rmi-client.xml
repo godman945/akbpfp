@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE beans PUBLIC "-//SPRING/DTD BEAN/EN" "http://www.springframework.org/dtd/spring-beans.dtd"> 
+
+<beans> 
+	<!-- API -->
+  	<bean id="APIProviderProxy" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  	
+	    <property name="serviceUrl">
+	        <value>rmi://${rmi.server}/APIProvider</value>
+	    </property>
+	    
+	    <property name="serviceInterface"> 
+	        <value>com.pchome.rmi.api.IAPIProvider</value>
+	     </property>
+	     
+		<property name="refreshStubOnConnectFailure"> 
+	    	<value>true</value> 
+	  	</property> 
+	  	
+		<property name="lookupStubOnStartup"> 
+	     	<value>false</value> 
+	  	</property>
+  	
+   	</bean>
+   	
+	<!-- Accesslog -->
+  	<bean id="AccesslogProviderProxy" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  	
+	    <property name="serviceUrl">
+	        <value>rmi://${rmi.server}/AccesslogProvider</value>
+	    </property>
+	    
+	    <property name="serviceInterface"> 
+	        <value>com.pchome.rmi.accesslog.IAccesslogProvider</value>
+	     </property>
+	     
+		<property name="refreshStubOnConnectFailure"> 
+	    	<value>true</value> 
+	  	</property> 
+	  	
+		<property name="lookupStubOnStartup"> 
+	     	<value>false</value> 
+	  	</property>
+  	
+   	</bean>
+
+	<!-- Board -->
+  	<bean id="BoardProviderProxy" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  	
+	    <property name="serviceUrl">
+	        <value>rmi://${rmi.server}/BoardProvider</value>
+	    </property>
+	    
+	    <property name="serviceInterface"> 
+	        <value>com.pchome.rmi.board.IBoardProvider</value>
+	     </property>
+	     
+		<property name="refreshStubOnConnectFailure"> 
+	    	<value>true</value> 
+	  	</property> 
+	  	
+		<property name="lookupStubOnStartup"> 
+	     	<value>false</value> 
+	  	</property>
+  	
+   	</bean>
+   	
+   	<!-- pfp account list -->
+  	<bean id="PfpProviderProxy" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+  	
+	    <property name="serviceUrl">
+	        <value>rmi://${rmi.server}/PfpProvider</value>
+	    </property>
+	    
+	    <property name="serviceInterface"> 
+	        <value>com.pchome.rmi.manager.IPfpProvider</value>
+	     </property>
+	     
+		<property name="refreshStubOnConnectFailure"> 
+	    	<value>true</value> 
+	  	</property> 
+	  	
+		<property name="lookupStubOnStartup"> 
+	     	<value>false</value> 
+	  	</property>
+  	
+   	</bean>
+</beans>

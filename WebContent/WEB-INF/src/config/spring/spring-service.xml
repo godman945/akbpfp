@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+        
+    <bean id="PfpCustomerInfoService" class="com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService">
+        <property name="dao" ref="PfpCustomerInfoDAO" />
+        <property name="accesslogProvider" ref="AccesslogProviderProxy" />    
+        <property name="pfpUserMemberRefDAO" ref="PfpUserMemberRefDAO" />   
+    </bean>
+    
+    <bean id="PfpOrderService" class="com.pchome.akbpfp.db.service.order.PfpOrderService">
+        <property name="dao" ref="PfpOrderDAO" />
+        <property name="memberAPI" ref="MemberAPI" />
+        <property name="pfpUserDAO" ref="PfpUserDAO" />
+        <property name="pfpBuDAO" ref="PfpBuDAO" />
+        <property name="pfpTransDetailDAO" ref="PfpTransDetailDAO" />
+        <property name="akbPfpServerUrl" value="${akbpfp.server}" />        
+    </bean>
+
+    <bean id="PfpOrderDetailService" class="com.pchome.akbpfp.db.service.order.PfpOrderDetailService">
+        <property name="dao" ref="PfpOrderDetailDAO" />      
+    </bean>
+    
+    <bean id="PfpRefundOrderService" class="com.pchome.akbpfp.db.service.order.PfpRefundOrderService">
+        <property name="dao" ref="PfpRefundOrderDAO" />      
+    </bean>
+       
+    <bean id="SequenceService" class="com.pchome.akbpfp.db.service.sequence.SequenceService">
+        <property name="dao" ref="SequenceDAO" />
+		<property name="orderDayNum"><value>${order.num.day.length}</value></property>
+    </bean>
+    
+    <bean id="PfpUserService" class="com.pchome.akbpfp.db.service.user.PfpUserService">
+        <property name="dao" ref="PfpUserDAO" />
+        <property name="pfpUserMemberRefDAO" ref="PfpUserMemberRefDAO" />
+        <property name="accesslogProvider" ref="AccesslogProviderProxy" />  
+    </bean> 
+    
+    <bean id="PfpUserMemberRefService" class="com.pchome.akbpfp.db.service.user.PfpUserMemberRefService">  
+        <property name="dao" ref="PfpUserMemberRefDAO" />  
+    </bean>
+    
+    <bean id="PfdUserMemberRefService" class="com.pchome.akbpfd.db.service.user.PfdUserMemberRefService">  
+        <property name="dao" ref="PfdUserMemberRefDAO" />  
+    </bean>
+
+    <bean id="PfpMenuService" class="com.pchome.akbpfp.db.service.menu.PfpMenuService" />
+     
+   	<bean id="AdmAccesslogService" class="com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService" >
+   		<property name="dao" ref="AdmAccesslogDAO" />
+   		<property name="accesslogProvider" ref="AccesslogProviderProxy" />
+   	</bean>
+
+	<bean id="AdmTemplateProductService" class="com.pchome.akbpfp.db.service.template.TemplateProductService">
+        <property name="dao" ref="AdmTemplateProductDAO" />
+    </bean>
+
+	<!-- pfp Size -->
+	<bean id="PfbSizeService" class="com.pchome.akbpfp.db.service.pfbx.PfbSizeService">
+    	<property name="dao" ref="PfbxSizeDAO" />
+    </bean>
+
+   	<!-- board -->
+   	<bean id="PfpBoardService" class="com.pchome.akbpfp.db.service.board.PfpBoardService">
+        <property name="dao" ref="PfpBoardDAO" /> 
+    </bean>
+    
+    <bean id="PfdBoardService" class="com.pchome.akbpfp.db.service.board.PfdBoardService">
+        <property name="dao" ref="PfdBoardDAO" /> 
+    </bean>
+   
+	<!-- report -->
+    <bean id="AdActionReportService" class="com.pchome.akbpfp.db.service.report.AdActionReportService"> 
+        <property name="adActionReportDAO" ref="AdActionReportDAO" />
+    </bean>
+    
+    <bean id="AdGroupReportService" class="com.pchome.akbpfp.db.service.report.AdGroupReportService"> 
+        <property name="adGroupReportDAO" ref="AdGroupReportDAO" />
+    </bean>
+    
+    <bean id="AdKeywordReportService" class="com.pchome.akbpfp.db.service.report.AdKeywordReportService"> 
+        <property name="adKeywordReportDAO" ref="AdKeywordReportDAO" />
+    </bean>
+
+	 <bean id="AdReportService" class="com.pchome.akbpfp.db.service.report.AdReportService"> 
+        <property name="adReportDAO" ref="AdReportDAO" />
+        <property name="pfpAdDetailDAO" ref="PfpAdDetailDAO" />
+        <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
+        <property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+    </bean>
+
+	 <bean id="AdOsReportService" class="com.pchome.akbpfp.db.service.report.AdOsReportService"> 
+        <property name="adOsReportDAO" ref="AdOsReportDAO" />
+    </bean>
+
+	<bean id="AdTimeReportService" class="com.pchome.akbpfp.db.service.report.AdTimeReportService"> 
+        <property name="adTimeReportDAO" ref="AdTimeReportDAO" />
+    </bean>
+    
+    <bean id="AdAgesexReportService" class="com.pchome.akbpfp.db.service.report.AdAgesexReportService"> 
+        <property name="adAgesexReportDAO" ref="AdAgesexReportDAO" />
+    </bean>
+    
+    <bean id="AdWebsiteReportService" class="com.pchome.akbpfp.db.service.report.AdWebsiteReportService"> 
+        <property name="adWebsiteReportDAO" ref="AdWebsiteReportDAO" />
+    </bean>
+
+  	<bean id="AdVideoPerformanceReportService" class="com.pchome.akbpfp.db.service.report.AdVideoPerformanceReportService"> 
+        <property name="adVideoPerformanceReportDAO" ref="AdVideoPerformanceReportDAO" />
+    </bean>
+    
+	<!-- Adm -->
+	<bean id="AdmFreeActionService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeActionService">
+        <property name="dao" ref="AdmFreeActionDAO" />
+    </bean>
+    
+    <bean id="AdmRecognizeRecordService" class="com.pchome.akbpfp.db.service.recognize.AdmRecognizeRecordService">
+        <property name="dao" ref="AdmRecognizeRecordDAO" /> 
+        <property name="sequenceService" ref="SequenceService" /> 
+        <property name="customerInfoService" ref="PfpCustomerInfoService" />   
+    </bean>    
+
+	    <bean id="AdmFreeGiftService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeGiftService">
+        <property name="dao" ref="AdmFreeGiftDAO" />     
+    </bean>
+    
+    <bean id="AdmFreeRecordService" class="com.pchome.akbpfp.db.service.freeAction.AdmFreeRecordService">
+        <property name="dao" ref="AdmFreeRecordDAO" />     
+    </bean>
+    
+    <bean id="AdmManagerDetailService" class="com.pchome.akbpfp.db.service.manager.AdmManagerDetailService">
+        <property name="dao" ref="AdmManagerDetailDAO" />     
+    </bean>
+    
+    <bean id="AdmChannelAccountService" class="com.pchome.akbpfp.db.service.adm.channel.AdmChannelAccountService">
+             <property name="dao" ref="AdmChannelAccountDAO" />
+    </bean>
+
+	<!-- Ad -->
+    <bean id="PfpAdService" class="com.pchome.akbpfp.db.service.ad.PfpAdService">    	     
+        <property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+        <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
+        <property name="dao" ref="PfpAdDAO" />   
+    </bean>
+
+    <bean id="PfpAdActionService" class="com.pchome.akbpfp.db.service.ad.PfpAdActionService">
+        <property name="dao" ref="PfpAdActionDAO" />   
+    </bean>
+
+    <bean id="PfpAdExcludeKeywordService" class="com.pchome.akbpfp.db.service.ad.PfpAdExcludeKeywordService">
+        <property name="dao" ref="PfpAdExcludeKeywordDAO" />   
+    </bean>
+
+    <bean id="PfpAdGroupService" class="com.pchome.akbpfp.db.service.ad.PfpAdGroupService">
+        <property name="dao" ref="PfpAdGroupDAO" />  
+        <property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" /> 
+    </bean>
+
+    <bean id="PfpAdDetailService" class="com.pchome.akbpfp.db.service.ad.PfpAdDetailService">
+        <property name="pfpAdDetailDAO" ref="PfpAdDetailDAO" />   
+    </bean>
+
+    <bean id="PfpAdKeywordService" class="com.pchome.akbpfp.db.service.ad.PfpAdKeywordService">
+        <property name="dao" ref="PfpAdKeywordDAO" />
+        <property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />    
+    </bean>
+     
+    <bean id="DefineAdService" class="com.pchome.akbpfp.db.service.ad.DefineAdService">
+        <property name="admDefineAdDAO" ref="AdmDefineAdDAO" />
+    </bean>
+
+    <bean id="PfpAdPvclkService" class="com.pchome.akbpfp.db.service.ad.PfpAdPvclkService">
+        <property name="dao" ref="PfpAdPvclkDAO" />
+        <property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
+        <property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
+        <property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" />
+        <property name="pfpAdDAO" ref="PfpAdDAO" />
+    </bean>    
+
+    <bean id="PfpAdGiftService" class="com.pchome.akbpfp.db.service.ad.PfpAdGiftService">
+        <property name="dao" ref="PfpAdGiftDAO" />  
+    </bean>
+    
+    <bean id="PfpAdSpecificWebsiteService" class="com.pchome.akbpfp.db.service.ad.PfpAdSpecificWebsiteService">
+        <property name="dao" ref="PfpAdSpecificWebsiteDAO" />  
+    </bean>
+    
+    <bean id="PfbxWebsiteCategoryService" class="com.pchome.akbpfp.db.service.ad.PfbxWebsiteCategoryService">
+        <property name="dao" ref="PfbxWebsiteCategoryDAO" />  
+    </bean>
+
+    <bean id="PfpTransDetailService" class="com.pchome.akbpfp.db.service.bill.PfpTransDetailService">
+        <property name="dao" ref="PfpTransDetailDAO" />
+    </bean>
+
+    <bean id="PfpAdSyspriceService" class="com.pchome.akbpfp.db.service.sysprice.PfpAdSyspriceService">
+        <property name="dao" ref="PfpAdSyspriceDAO" />
+        <property name="definePrice" value="${ad.sysprice}" />
+    </bean>
+
+    <bean id="PfpKeywordSyspriceService" class="com.pchome.akbpfp.db.service.sysprice.PfpKeywordSyspriceService">
+        <property name="dao" ref="PfpKeywordSyspriceDAO" />
+        <property name="definePrice" value="${keyword.sysprice}" />        
+    </bean> 
+
+    <bean id="PfpSyspriceRateService" class="com.pchome.akbpfp.db.service.sysprice.PfpSyspriceRateService">
+        <property name="dao" ref="PfpSyspriceRateDAO" />        
+    </bean>  
+	
+	<bean id="PfpAdRateService" class="com.pchome.akbpfp.db.service.ad.PfpAdRateService">
+        <property name="dao" ref="PfpAdRateDAO" />     
+    </bean>
+    
+    <bean id="PfpAdInvalidService" class="com.pchome.akbpfp.db.service.ad.PfpAdInvalidService">
+        <property name="dao" ref="PfpAdInvalidDAO" />     
+    </bean>
+    
+    <bean id="PfpChannelAdminService" class="com.pchome.akbpfp.db.service.admin.PfpChannelAdminService">
+        <property name="dao" ref="PfpChannelAdminDAO" />     
+    </bean>
+    
+    <bean id="PfdUserAdAccountRefService" class="com.pchome.akbpfp.db.service.pfd.user.PfdUserAdAccountRefService">
+        <property name="dao" ref="PfdUserAdAccountRefDAO" />     
+    </bean>
+    
+ 	<bean id="PfpAdVideoSourceService" class="com.pchome.akbpfp.db.service.advideo.PfpAdVideoSourceService">
+        <property name="dao" ref="PfpAdVideoSourceDAO" />     
+    </bean>
+    
+    <!-- pfpbu -->
+    <bean id="PfpBuService" class="com.pchome.akbpfp.db.service.bu.PfpBuService">
+             <property name="dao" ref="PfpBuDAO" />
+    </bean>
+    
+	<!-- 多網址上搞 -->
+    <bean id="PfpAdManyURLSearchService" class="com.pchome.akbpfp.db.service.admanyurlsearch.PfpAdManyURLSearchService">
+		<property name="redisAPI" ref="RedisAPI" />
+		<property name="manyURLRediskey" value="${redis.manyURL.rediskey}" />
+		<property name="springEmailUtil" ref="SpringEmailUtil" />
+    </bean>
+    
+    <!-- 商品群組、清單-->
+    <bean id="PfpCatalogGroupService" class="com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupService">
+    	<property name="dao" ref="PfpCatalogGroupDAO" />
+    </bean>
+    
+    <bean id="PfpCatalogGroupItemService" class="com.pchome.akbpfp.db.service.catalog.prodGroup.PfpCatalogGroupItemService">
+    	<property name="dao" ref="PfpCatalogGroupItemDAO" />
+    </bean>
+    
+ 	<bean id="PfpCatalogProdEcService" class="com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogProdEcService">
+    	<property name="dao" ref="PfpCatalogProdEcDAO" />
+    </bean>
+    <!-- 商品群組、清單END-->
+    
+    <!-- 商品 START-->
+    <bean id="PfpCatalogLogoService" class="com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogLogoService">
+    	<property name="dao" ref="PfpCatalogLogoDAO" />
+    </bean>
+    <bean id="PfpCatalogLogoDetailService" class="com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogLogoDetailService">
+    	<property name="dao" ref="PfpCatalogLogoDetailDAO" />
+    </bean>
+    <bean id="PfpCatalogSetupService" class="com.pchome.akbpfp.db.service.catalog.prod.PfpCatalogSetupService">
+    	<property name="dao" ref="PfpCatalogSetupDAO" />
+    </bean>
+    <!-- 商品 END-->
+    
+    <!-- 商品廣告-目錄 -->
+    <bean id="PfpCatalogService" class="com.pchome.akbpfp.db.service.catalog.PfpCatalogService">    	     
+        <property name="dao" ref="PfpCatalogDAO" />
+        <property name="sequenceService" ref="SequenceService" />
+    </bean>
+    
+    <!-- 商品廣告-檔案上傳 -->
+    <bean id="PfpCatalogUploadListService" class="com.pchome.akbpfp.db.service.catalog.uploadList.PfpCatalogUploadListService">
+		<property name="akbPfpServer" value="${akbpfp.server}" />
+		<property name="photoDbPathNew" value="${photo.db.path.new}" />
+		<property name="catalogProdCsvFilePath" value="${catalogProd.csv.file.path}" />
+		<property name="catalogProdCsvFileBackupPath" value="${catalogProd.csv.file.backup.path}" />
+		<property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
+		<property name="pfpCatalogService" ref="PfpCatalogService" />
+		<property name="sequenceService" ref="SequenceService" />
+<!-- 		<property name="shoppingProd" ref="ShoppingProd" /> -->
+    </bean>
+    
+    <bean id="PfpCodeService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeService">    	     
+        <property name="dao" ref="PfpCodeDAO" />
+    </bean>
+    
+    <bean id="PfpCodeTrackingService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeTrackingService">    	     
+        <property name="dao" ref="PfpCodeTrackingDAO" />
+        <property name="codeManageRediskey" value="${redis.codeManage.rediskey}" />
+    </bean>
+    
+     <bean id="PfpCodeConvertService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeConvertService"> 
+     	<property name="pfpCodeConvertRuleService" ref="PfpCodeConvertRuleService" />   	     
+        <property name="dao" ref="PfpCodeConvertDAO" />
+        <property name="codeManageRediskey" value="${redis.codeManage.rediskey}" />
+    </bean>
+    
+    <bean id="PfpCodeConvertRuleService" class="com.pchome.akbpfp.db.service.codeManage.PfpCodeConvertRuleService">    	     
+        <property name="dao" ref="PfpCodeConvertRuleDAO" />
+    </bean>
+
+</beans>

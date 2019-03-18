@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">   
+
+    <!-- 會員中心 API -->
+	<bean id="MemberAPI" class="com.pchome.akbpfp.api.MemberAPI" >  
+    	<property name="memberServer" value="${member.server.http}" />
+    </bean>	
+	
+	<!-- 使用者狀態 API -->
+	<bean id="AccountStatusAPI" class="com.pchome.akbpfp.api.AccountStatusAPI"  >      	
+		<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+		<property name="pfpOrderService" ref="PfpOrderService" />
+    </bean>	
+    
+    <!-- 系統價格 API -->
+    <bean id="SyspriceOperaterAPI" class="com.pchome.akbpfp.api.SyspriceOperaterAPI">
+        <property name="adSyspriceService" ref="PfpAdSyspriceService" />
+        <property name="keywordSyspriceService" ref="PfpKeywordSyspriceService" />
+        <property name="asidRateUtile" ref="AsidRateUtile" />
+        <property name="limiAmount" value="${sysprice.limit.amount}" />
+		<property name="sysPriceAdPoolSeq" value="${ad.sysprice.adPoolSeq}" />
+		<property name="definePrice" value="${ad.sysprice}" />
+    </bean> 
+    
+    <!-- 寄送邀請信 API -->
+    <bean id="InviteMailAPI" class="com.pchome.akbpfp.api.InviteMailAPI" >
+    	<property name="mailService" value="${mail.server}" />
+    	<property name="mailFrom" value="${mail.from}" />
+    	<property name="mailDir" value="${mail.dir}" />
+    </bean>
+    
+    <!-- 金流介接 API -->
+    <bean id="RedirectBillingAPI" class="com.pchome.akbpfp.api.RedirectBillingAPI" >
+    	<property name="springECcoderUtil" ref="SpringECcoderUtil" /> 
+    	<property name="billingOrderAction" value="${billing.order.api}" />  
+    	<property name="channelId" value="${billing.channel.id}" /> 
+		<property name="password" value="${billing.password}" />
+		<property name="pfpServer" value="${akbpfp.server}" />
+    </bean>
+    
+    <!-- 調控金額 API -->
+    <bean id="ControlPriceAPI" class="com.pchome.akbpfp.api.ControlPriceAPI" >
+    	<property name="adActionService" ref="PfpAdActionService" />
+        <property name="definePrice" value="${ad.sysprice}" />
+    </bean>
+    
+    
+    <!-- Cookie API 有關 cookie 請整合在這支裡 -->
+    <bean id="CookieProccessAPI" class="com.pchome.akbpfp.api.CookieProccessAPI" >
+    	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" />
+    </bean>
+    
+    <!-- cookie content 解析 API -->
+	<bean id="CookieContentAPI" class="com.pchome.akbpfp.api.CookieContentAPI" >
+    </bean>
+    
+    <!-- Redis API -->
+    <bean id="RedisAPI" class="com.pchome.akbpfp.api.RedisAPI" >
+    	<property name="environment" value="${redis.environment}" />
+    	<property name="redisServer" value="${redis.server}" />
+    	<property name="redisTestServer" value="${redis.test.server}" />
+    	<property name="redisPort" value="${redis.port}" />
+		<!-- 連線逾時 -->
+    	<property name="redisTimeout" value="${redis.timeout}" />
+		<!-- 重試次數 -->
+    	<property name="redisMaxRedirects" value="${redis.maxRedirects}" />
+    	<property name="maxWait" value="${redis.pool.maxWait}" />
+    	<property name="maxTotal" value="${redis.pool.maxTotal}" />
+    	<property name="maxIdle" value="${redis.pool.maxIdle}" />
+    	<property name="testOnBorrow" value="${redis.pool.testOnBorrow}" />
+    </bean>
+
+</beans>

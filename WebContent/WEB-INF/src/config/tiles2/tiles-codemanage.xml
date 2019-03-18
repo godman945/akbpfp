@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<!-- 代碼管理 Start -->
+ 	<definition name="code.manage.layout" extends="default.layout" >
+    	<put-attribute name="head" value="code.manage.head" />
+    	<put-attribute name="menu" value="code.manage.menu" />
+    </definition>
+	
+	<definition name="code.manage.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    </definition>
+	
+	<definition name="code.manage.menu" extends="default.menu" >
+    	<put-attribute name="submenu" value="/ftl/codeManage/submenu.ftl" />
+    </definition>
+    
+    
+	<!-- 再行銷追蹤view  -->
+	<definition name="retargeting.tracking.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="retargeting.tracking.head" />
+        <put-attribute name="body" value="/ftl/codeManage/retargeting/retargeting.tracking.view.ftl" />
+    </definition>
+    
+    <definition name="retargeting.tracking.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/retargeting/retargeting.tracking.js.ftl" />
+    </definition>
+    
+   	<!-- 新增再行銷追蹤view  -->
+   	<definition name="add.retargeting.tracking.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="add.retargeting.tracking.head" />
+        <put-attribute name="body" value="/ftl/codeManage/retargeting/add.retargeting.tracking.view.ftl" />
+    </definition>
+    
+    <definition name="add.retargeting.tracking.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/retargeting/add.retargeting.tracking.js.ftl" />
+    </definition>
+    
+    
+    
+    <!-- 再行銷追蹤清單view  -->
+	<definition name="retargeting.tracking.list.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="retargeting.tracking.list.head" />
+        <put-attribute name="body" value="/ftl/codeManage/retargeting/retargeting.tracking.list.view.ftl" />
+    </definition>
+    
+    <definition name="retargeting.tracking.list.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/retargeting/retargeting.tracking.list.js.ftl" />
+    </definition>
+    
+    
+    <!-- 編輯再行銷追蹤view  -->
+   	<definition name="edit.retargeting.tracking.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="edit.retargeting.tracking.head" />
+        <put-attribute name="body" value="/ftl/codeManage/retargeting/edit.retargeting.tracking.view.ftl" />
+    </definition>
+    
+    <definition name="edit.retargeting.tracking.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/retargeting/edit.retargeting.tracking.js.ftl" />
+    </definition>
+    
+    <definition name="error.edit.retargeting.tracking.view" extends="code.manage.layout">
+        <put-attribute name="body" value="/ftl/codeManage/retargeting/error.edit.retargeting.tracking.view.ftl" />
+    </definition>
+    
+    
+    
+    
+    
+    
+    <!-- 轉換追蹤view  -->
+	<definition name="convert.tracking.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="convert.tracking.head" />
+        <put-attribute name="body" value="/ftl/codeManage/convert/convert.tracking.view.ftl" />
+    </definition>
+    
+    <definition name="convert.tracking.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/convert/convert.tracking.js.ftl" />
+    </definition>
+    
+    <!-- 轉換追蹤清單view  -->
+	<definition name="convert.tracking.list.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="convert.tracking.list.head" />
+        <put-attribute name="body" value="/ftl/codeManage/convert/convert.tracking.list.view.ftl" />
+    </definition>
+    
+    <definition name="convert.tracking.list.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/convert/convert.tracking.list.js.ftl" />
+    </definition>
+    
+    
+    <!-- 新增轉換追蹤view  -->
+   	<definition name="add.convert.tracking.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="add.convert.tracking.head" />
+        <put-attribute name="body" value="/ftl/codeManage/convert/add.convert.tracking.view.ftl" />
+    </definition>
+    
+    <definition name="add.convert.tracking.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/convert/add.convert.tracking.js.ftl" />
+    </definition>
+    
+    
+    <!-- 編輯轉換追蹤view  -->
+   	<definition name="edit.convert.tracking.view" extends="code.manage.layout">
+	 	<put-attribute name="head" value="edit.convert.tracking.head" />
+        <put-attribute name="body" value="/ftl/codeManage/convert/edit.convert.tracking.view.ftl" />
+    </definition>
+    
+    <definition name="edit.convert.tracking.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/codeManage/css.ftl" />
+    	<put-attribute name="js" value="/ftl/codeManage/convert/edit.convert.tracking.js.ftl" />
+    </definition>
+    
+    
+	
+</tiles-definitions>

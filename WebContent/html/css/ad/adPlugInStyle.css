@@ -1,0 +1,62 @@
+@charset "utf-8";
+/* CSS Document */
+.adnoticepop {
+position: absolute;
+width: 450px;
+background: #F4F2EE;
+margin: 0;
+border: 1px solid #ED0000;
+border-radius: 5px 5px 5px 5px;
+padding-bottom: 10px;
+}
+.adnoticepop h4 {
+background: url(../../img/nvbbg.gif) repeat-x scroll 0 0 transparent;
+border-radius: 5px 5px 0 0;
+color: #FFFFFF;
+font-size: 15px;
+line-height: 30px;
+margin: 0;
+padding: 0;
+text-indent: 15px;
+width: 100%;
+border-left: 0;}
+.adnoticepop  a.adpopclose{
+display:block;
+text-indent:-9999px;
+width:20px;
+height:20px;
+background:url(../../img/popclose.gif);
+position:absolute;
+right:5px;
+top:4px;}
+.adnoticepop .adpopcont{
+background:#FFFFFF;
+    font-size: 15px;
+    line-height: 24px;
+    margin: 10px auto;
+    padding: 20px 15px;
+    width: 90%;}
+
+.adpopbtn{width:64px;height:34px;
+background:url(../../img/popbtn.gif);border:0;
+color:#ff0000;
+cursor:pointer;
+display:inline-block;
+line-height:34px;
+text-align:center;
+text-decoration:none;
+}
+
+.msg{
+	color:red;
+	font-size:12;
+	display:initial;
+	font-weight:900;
+	font-family:Verdana;
+}
+.errMsg{
+	color:red;
+	font-size:12;
+	display:initial;
+	font-family:Verdana;
+}

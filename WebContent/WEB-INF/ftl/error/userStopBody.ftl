@@ -1,0 +1,1 @@
+<center style="font-size:16px">帳號已被停權!!<br />請聯絡『<a href="http://faq.pchome.com.tw/service/user_reply.html?c_nickname=show">客服中心</a>』</center>

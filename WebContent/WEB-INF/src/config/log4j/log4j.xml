@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration PUBLIC "-//log4j/log4j Configuration//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+ 
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender name="stdout" class="org.apache.log4j.ConsoleAppender">
+       <layout class="org.apache.log4j.PatternLayout">
+          <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss} [%-5.5p] [%c@%t]%M(%L) %m%n"/> 
+       </layout> 
+    </appender>
+    
+    <appender name="akbPfpAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/home/webuser/akb/log/pfp/pfp.log" />
+        <param name="Append" value="true" />
+        <param name="Encoding" value="UTF-8" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss} [%-5p] [%c@%t]%M(%L) %m%n" />
+        </layout>
+    </appender>
+    
+    <!-- 
+    <appender name="hitrustAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File" value="/home/webuser/pfp/hitrust/hitrust.log" />
+        <param name="Append" value="true" />
+        <param name="Encoding" value="UTF-8" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss} [%-5p] [%c@%t]%M(%L) %m%n" />
+        </layout>
+    </appender>
+     -->
+     
+    <category name="com.opensymphony.xwork2">
+        <priority value="error" />
+    </category>
+    
+    <category name="org.apache.struts2.util.TextProviderHelper">
+        <priority value="error"/>
+    </category>
+    
+    <!--
+    <category name="com.hitrust" additivity="false">
+        <priority value="info" />
+        <appender-ref ref="hitrustAppender"/>
+        <appender-ref ref="stdout" />
+    </category>
+     -->
+     
+    <root>
+        <level value="info" />
+        <appender-ref ref="akbPfpAppender" />
+        <appender-ref ref="stdout" />
+    </root>
+</log4j:configuration> 

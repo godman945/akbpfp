@@ -1,0 +1,16 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <package name="struts-billing" extends="struts-base"> 
+
+        <action name="BillingRedirect" class="BillingRedirectAction" method="redirectAction">
+        	<interceptor-ref name="cookieProveStack" />
+        	<result type="redirectAction" name="index">index</result>
+            <result type="redirectAction" name="apply">apply</result>
+            <result type="redirectAction" name="summary">summary</result>
+            <result type="redirectAction" name="accountRemain">accountRemain</result>
+        </action>      	      
+     
+    </package>
+</struts>

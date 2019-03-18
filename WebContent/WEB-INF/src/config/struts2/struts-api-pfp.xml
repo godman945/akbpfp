@@ -1,0 +1,30 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+    <package name="pfp-api" namespace="/api" extends="struts-base">  
+    
+		<action name="buKeyEncode" class="pchomeBuApi" method="buKeyEncode">
+	     		<result type="stream" name="success">
+	        		<param name="contentType">text/html</param>
+					<param name="inputName">returnLifeCheck</param>
+				</result>
+				<result type="redirectAction" name="input">index</result>
+		</action>
+		
+		<action name="buLogin" class="pchomeBuApi" method="callBulogin">
+			<result type="redirect" name="input">${buErrorUrl}</result>
+			<result type="redirect" name="success">${buSuccessUrl}</result>
+		</action>
+    </package>
+    
+    <package name="bu-login" extends="struts-base">  
+		<action name="busuccess" class="pchomeBuApi" method="bulogin">
+				<result type="redirectAction" name="success">
+					<param name="actionName">summary</param> 
+					<param name="BbUser">true</param>
+				</result>
+		</action>
+    </package>
+    
+</struts>
