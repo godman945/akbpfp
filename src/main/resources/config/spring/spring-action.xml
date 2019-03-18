@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+    <!-- index -->
+    <bean id="IndexAction" class="com.pchome.akbpfp.struts2.action.index.IndexAction" scope="prototype" > 
+    	<property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
+    	<property name="pfdUserMemberRefService" ref="PfdUserMemberRefService" />
+    	<property name="faqServerMain" value="${faq.server.main}" />
+    	<property name="faqServerGroup" value="${faq.server.group}" />
+    	<property name="faqServerSolution" value="${faq.server.solution}" />
+    	<property name="akbpfdServer" value="${akbpfd.server}" />
+    </bean>
+    <!-- redirect -->
+    <bean id="RedirectAction" class="com.pchome.akbpfp.struts2.action.index.RedirectAction" scope="prototype" >
+    	<property name="pfpUserService" ref="PfpUserService" />
+    	<property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
+    	<property name="admAccesslogService" ref="AdmAccesslogService" />
+    	<property name="pfpProviderProxy" ref="PfpProviderProxy" />
+    	<property name="cookieProccessAPI" ref="CookieProccessAPI" />
+    	<property name="memberServer" value="${member.server}" />
+    	<property name="akbPfpServer" value="${akbpfp.server}" />
+    	<property name="memberAPI" ref="MemberAPI" />
+    </bean>
+    
+    <!-- apply -->
+    <bean id="ApplyAction" class="com.pchome.akbpfp.struts2.action.apply.ApplyAction" scope="prototype" >
+    	<property name="memberAPI" ref="MemberAPI" />    
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />     	
+    	<property name="sequenceService" ref="SequenceService" />    	 
+    	<property name="pfpUserService" ref="PfpUserService" />
+    	<property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
+    	<property name="pfpOrderService" ref="PfpOrderService" />
+    	<property name="pfpOrderDetailService" ref="PfpOrderDetailService" />	 
+    	<property name="admFreeGiftService" ref="AdmFreeGiftService" />
+    	<property name="redirectBillingAPI" ref="RedirectBillingAPI" />	 
+    	<property name="admAccesslogService" ref="AdmAccesslogService" /> 
+    	<property name="admFreeRecordService" ref="AdmFreeRecordService" />
+    	<property name="transDetailService" ref="PfpTransDetailService" /> 
+    	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" />
+    	<property name="admChannelAccountService" ref="AdmChannelAccountService" /> 
+		<property name="billingProductId" value="${billing.product.save.id}" />
+		<property name="billingProductName" value="${billing.product.save.name}" />
+		<property name="billingService" value="${billing.service}" />	
+		<property name="channelId" value="${billing.channel.id}" />	  
+		<property name="pfpBuService" ref="PfpBuService" />
+		<property name="buPortalPfdu" value="${bu.portal.pfdu}" />
+		<property name="buPortalPfdc" value="${bu.portal.pfdc}" />
+    </bean>
+    
+    <bean id="AuthorizationAction" class="com.pchome.akbpfp.struts2.action.apply.AuthorizationAction" scope="prototype" >
+    	<property name="memberAPI" ref="MemberAPI" />
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    </bean>
+	 
+    <!-- billing redirect -->
+    <bean id="BillingRedirectAction" class="com.pchome.akbpfp.struts2.action.billing.BillingRedirectAction" scope="prototype" >
+    	<property name="accountStatusAPI" ref="AccountStatusAPI" />
+    </bean> 
+     
+    <!-- account info -->
+    <bean id="AccountInfoAction" class="com.pchome.akbpfp.struts2.action.account.AccountInfoAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+    	<property name="boardProvider" ref="BoardProviderProxy" />
+    	<property name="pfdBoardService" ref="PfdBoardService" />
+    	<property name="pfpRefundOrderService" ref="PfpRefundOrderService" />
+    	<property name="pfpBuService" ref="PfpBuService" /> 
+    </bean>
+
+    <!-- account add money -->
+    <bean id="AccountRemainAction" class="com.pchome.akbpfp.struts2.action.account.AccountRemainAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="pfpUserService" ref="PfpUserService" />
+    	<property name="sequenceService" ref="SequenceService" />    	  
+    	<property name="pfpOrderService" ref="PfpOrderService" />
+    	<property name="pfpOrderDetailService" ref="PfpOrderDetailService" />
+    	<property name="redirectBillingAPI" ref="RedirectBillingAPI" />
+    	<property name="admAccesslogService" ref="AdmAccesslogService" />  	
+    	<property name="admFreeGiftService" ref="AdmFreeGiftService" />
+		<property name="admFreeRecordService" ref="AdmFreeRecordService" />
+		<property name="transDetailService" ref="PfpTransDetailService" />
+		<property name="billingProductId" value="${billing.product.save.id}" />
+		<property name="billingProductName" value="${billing.product.save.name}" />
+		<property name="boardProvider" ref="BoardProviderProxy" />
+		<property name="pfdBoardService" ref="PfdBoardService" />
+		<property name="pfpBuService" ref="PfpBuService" />	
+    </bean>   
+    
+    <!-- account invite user -->
+    <bean id="AccountUserAction" class="com.pchome.akbpfp.struts2.action.account.AccountUserAction" scope="prototype" >
+    	<property name="sequenceService" ref="SequenceService" />
+    	<property name="memberAPI" ref="MemberAPI" />
+    	<property name="inviteMailAPI" ref="InviteMailAPI" />
+    	<property name="pfpUserService" ref="PfpUserService" />
+    	<property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />  
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />    	   
+    	<property name="akbPfpServer" value="${akbpfp.server}" />  	
+    </bean> 
+    
+    <!-- account content -->
+    <bean id="AccountContentAction" class="com.pchome.akbpfp.struts2.action.account.AccountContentAction" scope="prototype" >
+    	<property name="memberAPI" ref="MemberAPI" />
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    </bean>
+       	
+    <!-- Summary -->
+    <bean id="SummaryAction" class="com.pchome.akbpfp.struts2.action.summary.SummaryAction" scope="prototype" >    
+    	<property name="pfpAdActionService" ref="PfpAdActionService" />
+    	<property name="pfpAdPvclkService" ref="PfpAdPvclkService" />
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+    </bean>
+
+    <!-- Thanks -->
+    <bean id="ThanksAction" class="com.pchome.akbpfp.struts2.action.summary.ThanksAction" scope="prototype" >    
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />    	 	
+    </bean>
+    
+    <!-- error -->
+    <bean id="PageNotFoundAction" class="com.pchome.akbpfp.struts2.action.error.PageNotFoundAction" scope="prototype" />
+
+	<bean id="NotRootUserAction" class="com.pchome.akbpfp.struts2.action.error.NotRootUserAction" scope="prototype" />
+	
+    <!-- report -->
+    <bean id="ReportExcerptAction" class="com.pchome.akbpfp.struts2.action.report.ReportExcerptAction" scope="prototype">
+    	<property name="adActionReportService" ref="AdActionReportService" />
+    	<property name="adGroupReportService" ref="AdGroupReportService" />
+    	<property name="adKeywordReportService" ref="AdKeywordReportService" />
+    	<property name="adReportService" ref="AdReportService" />
+    	<property name="adActionService" ref="PfpAdActionService" />
+    	<property name="adGroupService" ref="PfpAdGroupService" />
+    	<property name="pfpAdDAO" ref="PfpAdDAO" />
+	 	<property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+		<property name="admServer" value="${akbadm.server}" />  
+    </bean>
+    
+	<bean id="ReportAdvertiseAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdvertiseAction" scope="prototype">
+		<property name="adReportService" ref="AdReportService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+	 	<property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
+	 	<property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
+	 	<property name="pfpAdDAO" ref="PfpAdDAO" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+    </bean>
+	
+    <bean id="ReportAdDailyAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdDailyAction" scope="prototype">
+    	<property name="adActionReportService" ref="AdActionReportService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+    </bean>
+	
+	 <bean id="ReportKeywordAction" class="com.pchome.akbpfp.struts2.action.report.ReportKeywordAction" scope="prototype">
+	 	<property name="adKeywordReportService" ref="AdKeywordReportService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+	 	<property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
+	 	<property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
+	 	<property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+    </bean>
+	
+	 <bean id="ReportCampaginAction" class="com.pchome.akbpfp.struts2.action.report.ReportCampaginAction" scope="prototype">
+	 	<property name="adActionReportService" ref="AdActionReportService" />
+	 	<property name="adActionService" ref="PfpAdActionService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+    </bean>
+
+	<bean id="ReportAdgroupAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdGroupAction" scope="prototype">
+	 	<property name="adGroupReportService" ref="AdGroupReportService" />
+	 	<property name="adGroupService" ref="PfpAdGroupService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+    </bean>
+
+	<bean id="ReportAdOsAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdOsAction" scope="prototype">
+	 	<property name="adOsReportService" ref="AdOsReportService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+    </bean>
+
+	<bean id="ReportAdTimeAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdTimeAction" scope="prototype">
+	 	<property name="adTimeReportService" ref="AdTimeReportService" />
+	 	<property name="adGroupService" ref="PfpAdGroupService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+    </bean>
+    
+    <bean id="ReportAdAgesexAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdAgesexAction" scope="prototype">
+	 	<property name="adAgesexReportService" ref="AdAgesexReportService" />
+	 	<property name="adGroupService" ref="PfpAdGroupService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+    </bean>
+
+	<bean id="ReportAdWebsiteAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdWebsiteAction" scope="prototype">
+	 	<property name="adWebsiteReportService" ref="AdWebsiteReportService" />
+	 	<property name="adGroupService" ref="PfpAdGroupService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+    </bean>
+    
+   	<bean id="ReportVideoPerformanceAction" class="com.pchome.akbpfp.struts2.action.report.ReportVideoPerformanceAction" scope="prototype">
+    	<property name="adVideoPerformanceReportService" ref="AdVideoPerformanceReportService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+    </bean>
+    <!-- Ad New -->
+    <bean id="AdActionAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdActionAddAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdActionService" ref="PfpAdActionService" />
+    	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" /> 
+    	<property name="pfpAdSpecificWebsiteService" ref="PfpAdSpecificWebsiteService" />
+    	<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" />
+    	<property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+    	<property name="pfpCatalogService" ref="PfpCatalogService" />
+    	<property name="pfpCodeTrackingService" ref="PfpCodeTrackingService" />
+    	<property name="pfpCodeConvertService" ref="PfpCodeConvertService" />
+    	<property name="pfpCodeAdActionMergeService" ref="PfpCodeAdActionMergeService" />
+    	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+    	<property name="sysPriceAdPoolSeq" value="${ad.sysprice.adPoolSeq}" />
+    </bean>
+
+    <bean id="AdGroupAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdGroupAddAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdActionService" ref="PfpAdActionService" /> 
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+    	<property name="pfpAdSyspriceService" ref="PfpAdSyspriceService" />
+		<property name="sysPriceAdPoolSeq" value="${ad.sysprice.adPoolSeq}" />
+    </bean>
+
+    <bean id="AdAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdAddAction" scope="prototype" >
+    	<property name="pfpAdVideoSourceService" ref="PfpAdVideoSourceService" /> 
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="pfpAdService" ref="PfpAdService" />
+    	<property name="pfpAdDetailService" ref="PfpAdDetailService" />
+    	<property name="pfpAdKeywordService" ref="PfpAdKeywordService" />
+    	<property name="pfpAdExcludeKeywordService" ref="PfpAdExcludeKeywordService" />
+    	<property name="defineAdService" ref="DefineAdService" />
+    	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+        <property name="photoTmpPath" value="${photo.tmp.path}" />
+        <property name="photoPath" value="${photo.path}" />
+        <property name="photoDbPathNew" value="${photo.db.path.new}" />
+		<property name="controlPriceAPI" ref="ControlPriceAPI" />
+		<property name="pfbSizeService" ref="PfbSizeService" />
+		<property name="photoDbPath" value="${photo.db.path}" />
+		<property name="redisAPI" ref="RedisAPI" />
+		<property name="pfpAdActionService" ref="PfpAdActionService" />
+		<property name="pfpAdManyURLSearchService" ref="PfpAdManyURLSearchService" />
+		<property name="manyURLRediskey" value="${redis.manyURL.rediskey}" />
+		<property name="adFactory" ref="AdFactory" />
+		<property name="cookieUtil" ref="CookieUtil" />
+		
+    </bean>
+	
+
+
+    <bean id="AdKeywordAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdKeywordAddAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="pfpAdKeywordService" ref="PfpAdKeywordService" />
+    	<property name="pfpAdExcludeKeywordService" ref="PfpAdExcludeKeywordService" />
+    	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+    	<property name="pfpAdService" ref="PfpAdService" />
+    </bean>
+
+    <bean id="AdFinishAction" class="com.pchome.akbpfp.struts2.action.ad.AdFinishAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="pfpAdService" ref="PfpAdService" /> 
+    	<property name="pfpAdKeywordService" ref="PfpAdKeywordService" />
+    </bean>
+
+	<!-- Ad Edit -->
+    <bean id="AdActionEditAction" class="com.pchome.akbpfp.struts2.action.ad.AdActionEditAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+    	<property name="pfpAdActionService" ref="PfpAdActionService" /> 
+    	<property name="admAccesslogService" ref="AdmAccesslogService" /> 
+    	<property name="controlPriceAPI" ref="ControlPriceAPI" />
+    	<property name="pfpAdSpecificWebsiteService" ref="PfpAdSpecificWebsiteService" />
+    	<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" /> 
+    	<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpCodeTrackingService" ref="PfpCodeTrackingService" />
+    	<property name="pfpCodeConvertService" ref="PfpCodeConvertService" />
+    	<property name="pfpCodeAdActionMergeService" ref="PfpCodeAdActionMergeService" />
+    </bean>
+
+    <bean id="AdGroupEditAction" class="com.pchome.akbpfp.struts2.action.ad.AdGroupEditAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+    	<property name="admAccesslogService" ref="AdmAccesslogService" /> 
+		<property name="sysPriceAdPoolSeq" value="${ad.sysprice.adPoolSeq}" />
+    </bean>
+
+    <bean id="AdEditAction" class="com.pchome.akbpfp.struts2.action.ad.AdEditAction" scope="prototype" >
+    	<property name="adFactory" ref="AdFactory" />
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="pfpAdService" ref="PfpAdService" />
+    	<property name="pfpAdDetailService" ref="PfpAdDetailService" />
+    	<property name="pfpAdKeywordService" ref="PfpAdKeywordService" />
+    	<property name="pfpAdExcludeKeywordService" ref="PfpAdExcludeKeywordService" />
+    	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+    	<property name="admAccesslogService" ref="AdmAccesslogService" /> 
+        <property name="photoTmpPath" value="${photo.tmp.path}" />
+        <property name="photoPath" value="${photo.path}" />
+        <property name="photoDbPath" value="${photo.db.path}" />
+        <property name="photoDbPathNew" value="${photo.db.path.new}" />
+    </bean>
+
+	<!-- Ad View -->
+    <bean id="AdActionViewAction" class="com.pchome.akbpfp.struts2.action.ad.AdActionViewAction" scope="prototype" >    	
+    	<property name="pfpAdActionService" ref="PfpAdActionService" />
+    	<property name="pfpBoardService" ref="PfpBoardService" />
+    	<property name="admAccesslogService" ref="AdmAccesslogService" /> 
+    	<property name="controlPriceAPI" ref="ControlPriceAPI" /> 
+    	<property name="minprice" value="${everyday.spent.minprice}" /> 
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    </bean>
+
+	<bean id="AdGroupViewAction" class="com.pchome.akbpfp.struts2.action.ad.AdGroupViewAction" scope="prototype" >
+    	<property name="pfpAdActionService" ref="PfpAdActionService" /> 
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" />
+		<property name="pfpBoardService" ref="PfpBoardService" />
+		<property name="admAccesslogService" ref="AdmAccesslogService" />
+		<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+		<property name="pfpAdKeywordService" ref="PfpAdKeywordService" />
+		<property name="controlPriceAPI" ref="ControlPriceAPI" />
+		<property name="sysPriceAdPoolSeq" value="${ad.sysprice.adPoolSeq}" />
+    </bean>
+    
+    <bean id="AdAdViewAction" class="com.pchome.akbpfp.struts2.action.ad.AdAdViewAction" scope="prototype" >
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" />
+    	<property name="pfpAdService" ref="PfpAdService" />
+    	<property name="pfpBoardService" ref="PfpBoardService" />
+    	<property name="admAccesslogService" ref="AdmAccesslogService" />
+    	<property name="pfpAdVideoSourceService" ref="PfpAdVideoSourceService" /> 
+    </bean>
+
+    <bean id="AdKeywordViewAction" class="com.pchome.akbpfp.struts2.action.ad.AdKeywordViewAction" scope="prototype" >
+	    <property name="pfpAdGroupService" ref="PfpAdGroupService" />
+	    <property name="pfpAdKeywordService" ref="PfpAdKeywordService" />
+	    <property name="pfpBoardService" ref="PfpBoardService" />	    
+	    <property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+	    <property name="admAccesslogService" ref="AdmAccesslogService" />
+	    <property name="definePrice" value="${keyword.sysprice}" /> 
+    </bean>
+
+    <!-- AdFree New -->
+    <bean id="AdFreeAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdFreeAddAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdActionService" ref="PfpAdActionService" /> 
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+		<property name="sysPriceAdPoolSeq" value="${ad.sysprice.adPoolSeq}" />
+    	<property name="pfpAdService" ref="PfpAdService" />
+    	<property name="pfpAdDetailService" ref="PfpAdDetailService" />
+    	<property name="pfpAdKeywordService" ref="PfpAdKeywordService" />
+    	<property name="pfpAdExcludeKeywordService" ref="PfpAdExcludeKeywordService" />
+    	<property name="defineAdService" ref="DefineAdService" />
+    </bean>
+
+    <bean id="AdFreeActionAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdFreeActionAddAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdActionService" ref="PfpAdActionService" /> 
+    	<property name="classifiedsServer" value="${classifieds.server}" />
+    </bean>
+    
+    <bean id="AdFreeCheckAction" class="com.pchome.akbpfp.struts2.action.ad.AdFreeCheckAction" scope="prototype" >
+    	<property name="classifiedsUrl" value="${classifieds.url}" />
+    	<property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
+    	<property name="cookieProccessAPI" ref="CookieProccessAPI" />
+    </bean>
+
+    <bean id="AdFreeGroupAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdFreeGroupAddAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdActionService" ref="PfpAdActionService" /> 
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+		<property name="sysPriceAdPoolSeq" value="${ad.sysprice.adPoolSeq}" />
+    </bean>
+
+    <bean id="AdFreeAdAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdFreeAdAddAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
+		<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpAdGroupService" ref="PfpAdGroupService" /> 
+    	<property name="pfpAdService" ref="PfpAdService" />
+    	<property name="pfpAdDetailService" ref="PfpAdDetailService" />
+    	<property name="pfpAdKeywordService" ref="PfpAdKeywordService" />
+    	<property name="pfpAdExcludeKeywordService" ref="PfpAdExcludeKeywordService" />
+    	<property name="defineAdService" ref="DefineAdService" />
+    	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
+        <property name="photoTmpPath" value="${photo.tmp.path}" />
+        <property name="photoPath" value="${photo.path}" />
+        <property name="photoDbPath" value="${photo.db.path}" />
+    	<property name="classifiedsServer" value="${classifieds.server}" />
+		<property name="controlPriceAPI" ref="ControlPriceAPI" />
+    </bean>
+
+	<!-- AdUtil -->
+    <bean id="AdUtilAction" class="com.pchome.akbpfp.struts2.action.ad.AdUtilAction" scope="prototype" >
+        <property name="photoPath" value="${photo.path}" />
+        <property name="photoTmpPath" value="${photo.tmp.path}" />
+    </bean>
+    
+    <!-- board -->
+    <bean id="BoardAction" class="com.pchome.akbpfp.struts2.action.board.BoardAction" scope="prototype" />
+
+    <!-- bill -->
+	<bean id="BillAction" class="com.pchome.akbpfp.struts2.action.bill.BillAction" scope="prototype" >
+		<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+		<property name="cookieContentAPI" ref="CookieContentAPI" />
+		<property name="channelId" value="${billing.channel.id}" />
+		<property name="billingService" value="${billing.service}" />
+	</bean>
+	
+	<!-- customerInfo status -->
+    <bean id="CustomerInfoStatusAction" class="com.pchome.akbpfp.struts2.action.account.CustomerInfoStatusAction" scope="prototype" />
+    
+    <!-- user status -->
+    <bean id="UserStatusAction" class="com.pchome.akbpfp.struts2.action.user.UserStatusAction" scope="prototype" />   
+
+	<!-- Account List -->
+    <bean id="ManagerAccountAction" class="com.pchome.akbpfp.struts2.action.manager.ManagerAccountAction" scope="prototype" >
+    	<property name="pfpProviderProxy" ref="PfpProviderProxy" />
+    	<property name="pfpUserService" ref="PfpUserService" />
+    	<property name="cookieProccessAPI" ref="CookieProccessAPI" />
+    </bean>
+    
+    <!-- 商品清單 -->
+     <bean id="CatalogProdListAction" class="com.pchome.akbpfp.struts2.action.catalog.prodList.CatalogProdListAction" scope="prototype" >
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="pfpCatalogService" ref="PfpCatalogService" />
+    	<property name="prodListFactory" ref="ProdListFactory" />
+    	<property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
+    </bean>
+    <!-- 商品清單 END -->
+    
+    <!-- 商品群組 -->
+    <bean id="CatalogProdGroupAction" class="com.pchome.akbpfp.struts2.action.catalog.prodGroup.CatalogProdGroupAction" scope="prototype" >
+    	<property name="pfpCatalogService" ref="PfpCatalogService" />
+    	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="pfpCatalogGroupItemService" ref="PfpCatalogGroupItemService" />
+    	<property name="prodGroupFactory" ref="ProdGroupFactory" />
+    </bean>
+    <!-- 商品群組 END -->
+    
+    <!-- 商品LOGO -->
+    <bean id="ProdLogoAction" class="com.pchome.akbpfp.struts2.action.prod.ProdLogoAction" scope="prototype" >
+		<property name="photoDbPathNew" value="${photo.db.path.new}" />
+		<property name="sequenceService" ref="SequenceService" />
+		<property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+		<property name="pfpCatalogLogoDetailService" ref="PfpCatalogLogoDetailService" />
+		<property name="photoClonePath" value="${photo.clone.path}" />
+    </bean>
+    <!-- 商品LOGO END -->
+    
+    <!-- 商品目錄 -->
+    <bean id="PfpCatalogAction" class="com.pchome.akbpfp.struts2.action.catalog.PfpCatalogAction" scope="prototype" >
+    	<property name="pfpCatalogService" ref="PfpCatalogService" />
+    	<property name="sequenceService" ref="SequenceService" />
+    	<property name="pfpCatalogUploadListService" ref="PfpCatalogUploadListService" />
+        <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
+        <property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
+        <property name="pfpCatalogGroupItemService" ref="PfpCatalogGroupItemService" />
+        <property name="pfpAdService" ref="PfpAdService" />
+    </bean>
+    
+    <!-- 再行銷追蹤 Start-->
+     <bean id="RetargetingTrackingAction" class="com.pchome.akbpfp.struts2.action.codeManage.retargetingTracking.RetargetingTrackingAction" scope="prototype" >
+	     <property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+	     <property name="pfpCodeService" ref="PfpCodeService" />
+	     <property name="pfpCodeTrackingService" ref="PfpCodeTrackingService" />
+	     <property name="sequenceService" ref="SequenceService" />
+	     <property name="paadmServer" value="${paadm.server}" />
+    </bean>
+    <!-- 再行銷追蹤 End-->
+    
+    <!-- 轉換追蹤 Start-->
+    <bean id="ConvertTrackingAction" class="com.pchome.akbpfp.struts2.action.codeManage.convertTracking.ConvertTrackingAction" scope="prototype" >
+	     <property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+	     <property name="pfpCodeService" ref="PfpCodeService" />
+	     <property name="pfpCodeConvertService" ref="PfpCodeConvertService" />
+	     <property name="pfpCodeConvertRuleService" ref="PfpCodeConvertRuleService" />	     
+	     <property name="sequenceService" ref="SequenceService" />
+	     <property name="paadmServer" value="${paadm.server}" />
+    </bean>
+    <!-- 轉換追蹤 End-->
+
+</beans>

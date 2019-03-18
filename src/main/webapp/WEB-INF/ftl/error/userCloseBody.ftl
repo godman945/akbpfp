@@ -1,0 +1,1 @@
+<center style="font-size:16px">帳號已被關閉!!<br />請聯絡『<a href="http://faq.pchome.com.tw/service/user_reply.html?ch=show">客服中心</a>』</center>

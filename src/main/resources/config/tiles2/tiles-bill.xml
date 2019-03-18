@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<!-- bill -->
+    <definition name="bill.transDetail.view" extends="default.layout">
+    	<put-attribute name="head" value="bill.head" />
+    	<put-attribute name="menu" value="bill.menu" />
+    	<put-attribute name="body" value="bill.body" />
+    </definition> 
+  
+	<definition name="bill.menu" extends="default.menu" >
+    	<put-attribute name="submenu" value="/ftl/bill/submenu.ftl" />
+    </definition> 
+
+    <definition name="bill.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/bill/css.ftl" />
+    	<put-attribute name="js" value="/ftl/bill/transDetail/js.ftl" />
+    </definition>
+    
+   	<definition name="bill.body" template="/ftl/bill/transDetail/viewBody.ftl" >
+    	<put-attribute name="dateRangeSelect" value="/ftl/summary/date/dateRangeSelect.ftl" />    		
+    </definition> 
+    
+    <definition name="bill.transDetail.table" template="/ftl/bill/ajax/transDetailTable.ftl" />
+    	
+   	<definition name="bill.paySearch.view" extends="default.layout">
+   		<put-attribute name="menu" value="bill.menu" />
+    	<put-attribute name="body" value="/ftl/bill/paySearch/viewBody.ftl" />
+    </definition> 
+    
+    <definition name="bill.freeSearch.view" extends="default.layout">
+    	<put-attribute name="head" value="freeSearch.head" />
+    	<put-attribute name="menu" value="freeSearch.menu" />
+    	<put-attribute name="body" value="freeSearch.body" />
+    </definition> 
+  
+	<definition name="freeSearch.menu" extends="default.menu" >
+    	<put-attribute name="submenu" value="/ftl/bill/submenu.ftl" />
+    </definition> 
+
+    <definition name="freeSearch.head" extends="default.head" >
+    	<put-attribute name="css" value="/ftl/bill/css.ftl" />
+    	<put-attribute name="js" value="/ftl/bill/freeSearch/js.ftl" />
+    </definition>
+    
+   	<definition name="freeSearch.body" template="/ftl/bill/freeSearch/viewBody.ftl" >
+    	<put-attribute name="dateRangeSelect" value="/ftl/summary/date/dateRangeSelect.ftl" />    		
+    </definition>
+    
+    <definition name="bill.admFree.table" template="/ftl/bill/ajax/admFreeTable.ftl" />
+    
+</tiles-definitions>

@@ -1,0 +1,181 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package name="struts-codemanage" extends="struts-base">  
+    
+     <!-- 代碼管理 Start -->
+        <!-- 再行銷追蹤 -->
+	    <action name="retargetingTracking" class="RetargetingTrackingAction" method="queryRetargetingTrackingView">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+            <result type="tiles" name="input">retargeting.tracking.view</result>
+  			<result type="redirectAction" name="success">retargetingTrackingListView</result>
+		</action>
+		
+		<action name="addRetargetingTrackingView" class="RetargetingTrackingAction" method="addRetargetingTrackingView">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+            <result type="tiles" name="success">add.retargeting.tracking.view</result>
+		</action>
+		
+		<!--新增再行銷追蹤-->
+	    <action name="addRetargetingTrackingAjax" class="RetargetingTrackingAjax" method="addRetargetingTrackingAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+		
+		<!--發送再行銷追蹤mail-->
+	    <action name="sendRetargetingTrackingMailAjax" class="RetargetingTrackingAjax" method="sendRetargetingTrackingMailAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
+	    <!-- 再行銷追蹤清單 -->
+	    <action name="retargetingTrackingListView" class="RetargetingTrackingAction" method="queryRetargetingTrackingListView">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+            <result type="tiles" name="success">retargeting.tracking.list.view</result>
+		</action>
+		
+		<!-- 再行銷追蹤清單Ajax -->
+	    <action name="queryRetargetingListAjax" class="RetargetingTrackingAjax" method="queryRetargetingListAjax">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+		</action>
+				
+		<!-- 刪除再行銷目錄 -->
+	    <action name="deleteRetargetingAjax" class="RetargetingTrackingAjax" method="deleteRetargetingAjax">
+	       	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>    		
+	     </action>
+	     
+	     
+	    <!-- 編輯再行銷內容 --> 
+	    <action name="editRetargetingTrackingView" class="RetargetingTrackingAction" method="editRetargetingTrackingView">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+            <result type="tiles" name="success">edit.retargeting.tracking.view</result>
+		</action>
+		
+		
+		<!-- 儲存編輯再行銷內容 --> 
+	     <action name="editRetargetingTrackingAjax" class="RetargetingTrackingAjax" method="editRetargetingTrackingAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
+	    	
+		<!-- 更新再行銷目錄狀態 --> 
+	     <action name="updateTrackingStatusAjax" class="RetargetingTrackingAjax" method="updateTrackingStatusAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
+	    
+	    
+	    <!-- 轉換追蹤 -->
+	    <action name="convertTracking" class="ConvertTrackingAction" method="queryConvertTrackingView">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+            <result type="tiles" name="input">convert.tracking.view</result>
+  			<result type="redirectAction" name="success">convertTrackingListView</result>
+		</action>
+		
+		<!-- 轉換追蹤清單 -->
+	    <action name="convertTrackingListView" class="ConvertTrackingAction" method="queryConvertTrackingListView">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+            <result type="tiles" name="success">convert.tracking.list.view</result>
+		</action>
+
+		<!-- 新增轉換追蹤View -->
+		<action name="addConvertTrackingView" class="ConvertTrackingAction" method="addConvertTrackingView">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+            <result type="tiles" name="success">add.convert.tracking.view</result>
+		</action>
+
+		<!--新增轉換追蹤-->
+	    <action name="addConvertTrackingAjax" class="ConvertTrackingAjax" method="addConvertTrackingAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
+	    <!-- 編輯轉換追蹤View -->
+		<action name="editConvertTrackingView" class="ConvertTrackingAction" method="editConvertTrackingView">
+	     	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+            <result type="tiles" name="success">edit.convert.tracking.view</result>
+		</action>
+		
+		<!--編輯儲存轉換追蹤-->
+	    <action name="editConvertTrackingAjax" class="ConvertTrackingAjax" method="editConvertTrackingAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
+	   	<!--發送轉換追蹤mail-->
+	    <action name="sendConvertTrackingMailAjax" class="ConvertTrackingAjax" method="sendConvertTrackingMailAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	
+	  	<!-- 轉換追蹤清單Ajax -->
+	    <action name="queryConvertListAjax" class="ConvertTrackingAjax" method="queryConvertListAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
+	   	<!-- 刪除轉換目錄 -->
+	    <action name="deleteConvertAjax" class="ConvertTrackingAjax" method="deleteConvertAjax">
+	       	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>    		
+	     </action>
+	     
+	     
+	     <!-- 更新轉換目錄狀態 --> 
+	     <action name="updateConvertStatusAjax" class="ConvertTrackingAjax" method="updateConvertStatusAjax">
+	    	<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="adPrivilegeInterceptor" />
+	    	<result type="json" name="success">
+				<param name="root">resultMap</param>
+       		</result>  		
+	    </action>
+	    
+	
+    </package>
+</struts>

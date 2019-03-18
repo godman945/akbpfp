@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+#content {
+	width: 700px;
+	font-family:"ＭＳ Ｐ明朝", "MS PMincho", "ヒラギノ明朝 Pro W3", "Hiragino Mincho Pro", serif;
+}
+
+.member-page {
+	width: 750px;
+	margin-right: -50px;
+	letter-spacing: -.4em;
+}
+.member-page h1 {
+	font-size: 114%;
+	letter-spacing: 0.1em;
+	margin-bottom: 30px;
+}
+.box{
+	width: 200px;
+	display: -moz-inline-box; /*for Firefox 2*/
+    display: inline-block; /*for modern*/
+    /display: inline; /*for ie5～7*/
+    /zoom: 1; /*for ie5～7*/
+    vertical-align: top;
+	text-align: justify;
+	margin: 0 50px 50px 0;
+}
+
+.box h2 {
+	font-size: 122%;
+	line-height: 1.6;
+	letter-spacing: 0.1em;
+	margin-bottom: 10px;
+}
+.box span.role {
+	display: block;
+	font-size: 77%;
+	line-height: 1.6;
+	letter-spacing: normal;
+	margin: 20px 0 5px 0;
+}
+
+.box p{
+	font-size: 85%;
+	letter-spacing: 0.1em;
+	line-height: 2.4em;
+}

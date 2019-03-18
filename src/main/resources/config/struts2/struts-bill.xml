@@ -1,0 +1,51 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package name="struts-bill" extends="struts-base">  
+          
+    <action name="transDetail" class="BillAction" method="execute">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="billPrivilegeInterceptor" />
+            <result type="tiles" name="success">bill.transDetail.view</result>
+    </action>    
+    
+    <action name="searchTransDetail" class="BillAjax" method="searchTransDetailAjax">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="billPrivilegeInterceptor" />
+            <result type="tiles" name="success">bill.transDetail.table</result>
+    </action> 
+          
+    <action name="paySearch" class="BillAction" method="paySearchAction">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="billPrivilegeInterceptor" />
+            <result type="tiles" name="success">bill.paySearch.view</result>
+    </action>   
+    
+    <action name="freeSearch" class="BillAction" method="freeSearchAction">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="billPrivilegeInterceptor" />
+            <result type="tiles" name="success">bill.freeSearch.view</result>
+    </action>
+    
+    <action name="searchAdmFree" class="BillAjax" method="searchFreeAjax">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="billPrivilegeInterceptor" />
+            <result type="tiles" name="success">bill.admFree.table</result>
+    </action>
+    
+   	<action name="transReportDownload" class="BillAjax" method="downloadTransDetailReportAjax">
+   			<interceptor-ref name="loginCheckStack" />
+   			<interceptor-ref name="billPrivilegeInterceptor" />
+      		<result name="success" type="stream">   
+             	<param name="contentType">application/octet-stream</param>   
+             	<param name="contentDisposition">   
+                    attachment;filename="${downloadFileName}"  
+                </param>   
+                <param name="inputName">downloadFileStream</param> 
+            </result>  
+     </action>     
+      	      
+     
+    </package>
+</struts>
