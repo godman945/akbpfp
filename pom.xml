@@ -97,8 +97,6 @@
 			<version>1.6.2</version>
 		</dependency>
 
-
-
 		<!-- struts -->
 		<dependency>
 			<groupId>org.ow2.asm</groupId>
