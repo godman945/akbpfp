@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>src.main</groupId>
-	<artifactId>akbpfp</artifactId>
+	<artifactId>akbadm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name> akbpfpweb </name>
+	<name> akbadm web </name>
 	<url>http://maven.apache.org</url>
 	<build>
 		<finalName>akbpfp</finalName>
@@ -88,9 +88,9 @@
 
 	<dependencies>
 		<dependency>
-		  <groupId>softdepot</groupId>
-		  <artifactId>softdepot</artifactId>
-		  <version>1.0.18</version>
+			<groupId>softdepot</groupId>
+			<artifactId>softdepot</artifactId>
+			<version>1.0.18</version>
 		</dependency>
 
 		<dependency>
@@ -603,42 +603,36 @@
 			<artifactId>json</artifactId>
 			<version>20180813</version>
 		</dependency>
-		
-		
+
+
 		<dependency>
-		  <groupId>IKAnalyzer</groupId>
-		  <artifactId>IKAnalyzer</artifactId>
-		  <version>3.2.3</version>
-		  <classifier>IKAnalyzer</classifier>
+			<groupId>IKAnalyzer</groupId>
+			<artifactId>IKAnalyzer</artifactId>
+			<version>3.2.3</version>
+			<classifier>IKAnalyzer</classifier>
 		</dependency>
-		
- 		<dependency>
-		  <groupId>IKAnalyzer</groupId>
-		  <artifactId>IKAnalyzer</artifactId>
-		  <version>3.2.3</version>
-		  <classifier>IKAnalyzer</classifier>
-		</dependency>
-		
- 		<dependency>
-		  <groupId>jofc2</groupId>
-		  <artifactId>jofc2</artifactId>
-		  <version>1.0</version>
-		  <classifier>0v2</classifier>
-		</dependency>
-		
+
 		<dependency>
-			 <groupId>oscache</groupId>
-			 <artifactId>oscache</artifactId>
-			 <version>2.4.1</version>
+			<groupId>IKAnalyzer</groupId>
+			<artifactId>IKAnalyzer</artifactId>
+			<version>3.2.3</version>
+			<classifier>IKAnalyzer</classifier>
 		</dependency>
-		
-		
-		
-		
-		
-		
-		
-		
+
+		<dependency>
+			<groupId>jofc2</groupId>
+			<artifactId>jofc2</artifactId>
+			<version>1.0</version>
+			<classifier>0v2</classifier>
+		</dependency>
+
+		<dependency>
+			<groupId>oscache</groupId>
+			<artifactId>oscache</artifactId>
+			<version>2.4.1</version>
+		</dependency>
+
+
 		<!-- <dependency> <groupId>jofc2</groupId> <artifactId>jofc2</artifactId> 
 			<version>1.0</version> </dependency> <dependency> <groupId>oscache</groupId> 
 			<artifactId>oscache</artifactId> <version>2.4.1</version> </dependency> <dependency> 
