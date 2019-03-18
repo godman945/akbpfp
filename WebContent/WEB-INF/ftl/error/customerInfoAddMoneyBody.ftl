@@ -1,1 +1,0 @@
-<center style="font-size:16px">帳戶餘額不足<br />請先加值金額，方可以使用廣告管理</center>

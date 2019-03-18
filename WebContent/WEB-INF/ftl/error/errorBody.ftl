@@ -1,1 +1,0 @@
-<center style="font-size:16px">系統發生錯誤<br />請聯絡『<a href="http://faq.pchome.com.tw/faq_solution.html?f_id=1&q_id=2&c_nickname=billing">客服中心</a>』</center>

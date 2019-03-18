@@ -1,1 +1,0 @@
-<center style="font-size:16px">帳戶已被關閉!!<br />請先開啟帳戶，廣告管理方可使用。</center>
