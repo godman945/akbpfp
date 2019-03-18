@@ -6,12 +6,12 @@
 	<artifactId>akbpfp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name> akbadm web </name>
+	<name> akbpfp web </name>
 	<url>http://maven.apache.org</url>
 	<build>
 		<finalName>akbpfp</finalName>
 		<defaultGoal>install</defaultGoal>
-		<sourceDirectory>src/main/java</sourceDirectory>
+		<sourceDirectory>src*</sourceDirectory>
 		<outputDirectory>target/classes</outputDirectory>
 
 		<plugins>
