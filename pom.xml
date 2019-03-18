@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<build>
-		<finalName>akbpfp</finalName>
+		<finalName>pfp</finalName>
 		<defaultGoal>install</defaultGoal>
 		<sourceDirectory>src*</sourceDirectory>
 		<outputDirectory>target/classes</outputDirectory>
