@@ -1,13 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>src.main</groupId>
 	<artifactId>akbpfp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name> akbpfp web </name>
-	<url>http://maven.apache.org</url>
 	<build>
 		<finalName>akbpfp</finalName>
 		<defaultGoal>install</defaultGoal>
@@ -20,17 +18,7 @@
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.6.0.1398</version>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
-			<!-- <plugin> <artifactId>maven-compiler-plugin</artifactId> <version>3.6.2</version> 
-				<configuration> <source>1.8</source> <target>1.8</target> <encoding>UTF-8</encoding> 
-				<compilerArguments> <extdirs>${basedir}\src\main\webapp\WEB-INF\lib</extdirs> 
-				</compilerArguments> </configuration> </plugin> -->
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
@@ -41,6 +29,32 @@
 						<extdirs>${basedir}\src\main\webapp\WEB-INF\lib</extdirs>
 					</compilerArguments>
 				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -72,7 +86,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>softdepot</groupId>
+			<groupId>com.pchome</groupId>
 			<artifactId>softdepot</artifactId>
 			<version>1.0.18</version>
 		</dependency>
@@ -82,6 +96,8 @@
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.6.2</version>
 		</dependency>
+
+
 
 		<!-- struts -->
 		<dependency>
@@ -587,36 +603,41 @@
 			<artifactId>json</artifactId>
 			<version>20180813</version>
 		</dependency>
-
-
+		
+		
 		<dependency>
-			<groupId>IKAnalyzer</groupId>
-			<artifactId>IKAnalyzer</artifactId>
-			<version>3.2.3</version>
-			<classifier>IKAnalyzer</classifier>
+		  <groupId>IKAnalyzer</groupId>
+		  <artifactId>IKAnalyzer</artifactId>
+		  <version>3.2.3</version>
+		  <classifier>IKAnalyzer</classifier>
 		</dependency>
-
+		
+ 		<dependency>
+		  <groupId>jofc2</groupId>
+		  <artifactId>jofc2</artifactId>
+		  <version>1.0</version>
+		  <classifier>0v2</classifier>
+		</dependency>
+		
 		<dependency>
-			<groupId>IKAnalyzer</groupId>
-			<artifactId>IKAnalyzer</artifactId>
-			<version>3.2.3</version>
-			<classifier>IKAnalyzer</classifier>
+			 <groupId>oscache</groupId>
+			 <artifactId>oscache</artifactId>
+			 <version>2.4.1</version>
 		</dependency>
-
-		<dependency>
-			<groupId>jofc2</groupId>
-			<artifactId>jofc2</artifactId>
-			<version>1.0</version>
-			<classifier>0v2</classifier>
-		</dependency>
-
-		<dependency>
-			<groupId>oscache</groupId>
-			<artifactId>oscache</artifactId>
-			<version>2.4.1</version>
-		</dependency>
-
-
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- <dependency> <groupId>jofc2</groupId> <artifactId>jofc2</artifactId> 
+			<version>1.0</version> </dependency> <dependency> <groupId>oscache</groupId> 
+			<artifactId>oscache</artifactId> <version>2.4.1</version> </dependency> <dependency> 
+			<groupId>IKAnalyzer</groupId> <artifactId>IKAnalyzer</artifactId> <version>3.2.3</version> 
+			</dependency> -->
+		<!-- -->
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
