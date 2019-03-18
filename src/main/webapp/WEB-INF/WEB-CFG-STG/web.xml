@@ -14,7 +14,7 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
         <error-code>404</error-code>
         <location>/pageNotFound.html</location>
     </error-page>
-
+ 
     <error-page>
         <error-code>500</error-code>
         <location>/</location>
