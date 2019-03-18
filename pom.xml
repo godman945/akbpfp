@@ -86,9 +86,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.pchome</groupId>
-			<artifactId>softdepot</artifactId>
-			<version>1.0.18</version>
+		  <groupId>softdepot</groupId>
+		  <artifactId>softdepot</artifactId>
+		  <version>1.0.18</version>
 		</dependency>
 
 		<dependency>
@@ -606,6 +606,13 @@
 		
 		
 		<dependency>
+		  <groupId>IKAnalyzer</groupId>
+		  <artifactId>IKAnalyzer</artifactId>
+		  <version>3.2.3</version>
+		  <classifier>IKAnalyzer</classifier>
+		</dependency>
+		
+ 		<dependency>
 		  <groupId>IKAnalyzer</groupId>
 		  <artifactId>IKAnalyzer</artifactId>
 		  <version>3.2.3</version>
