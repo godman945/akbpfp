@@ -128,7 +128,7 @@
     <!-- 商品群組 -->
     
     <!-- 再行銷追蹤 -->
-    <bean id="RetargetingTrackingAjax" class="com.pchome.akbpfp.struts2.ajax.codeManage.remarketingTracking.RetargetingTrackingAjax" >
+    <bean id="RetargetingTrackingAjax" class="com.pchome.akbpfp.struts2.ajax.codeManage.remarketingTracking.RetargetingTrackingAjax" scope="prototype">
     	<property name="mailFrom" value="${mail.from}" />
     	<property name="pfpCodeService" ref="PfpCodeService" />
     	<property name="pfpCodeTrackingService" ref="PfpCodeTrackingService" />
@@ -139,7 +139,7 @@
     
     
     <!-- 轉換追蹤 -->
-    <bean id="ConvertTrackingAjax" class="com.pchome.akbpfp.struts2.ajax.codeManage.convertTracking.ConvertTrackingAjax" >
+    <bean id="ConvertTrackingAjax" class="com.pchome.akbpfp.struts2.ajax.codeManage.convertTracking.ConvertTrackingAjax" scope="prototype">
     	<property name="mailFrom" value="${mail.from}" />
     	<property name="pfpCodeService" ref="PfpCodeService" />
     	<property name="pfpCodeConvertService" ref="PfpCodeConvertService" />
