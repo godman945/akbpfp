@@ -9,7 +9,7 @@
 	<build>
 		<finalName>akbpfp</finalName>
 		<defaultGoal>install</defaultGoal>
-		<sourceDirectory>src/main/*</sourceDirectory>
+		<sourceDirectory>src/main/java</sourceDirectory>
 		<outputDirectory>target/classes</outputDirectory>
 
 		<plugins>
