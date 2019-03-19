@@ -637,17 +637,24 @@
 			<version>1.2</version>
 		</dependency>
 	
-		<dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.55</version>
+        </dependency>
+ 
+        <dependency>
             <groupId>juniversalchardet</groupId>
             <artifactId>juniversalchardet</artifactId>
             <version>2.3.0</version>
         </dependency>
-	
-		<dependency>
+ 
+        <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>2.2.1</version>
         </dependency>
+ 
 
 
 
