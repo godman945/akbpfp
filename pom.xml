@@ -2,13 +2,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.pchome</groupId>
+	<groupId>src.main</groupId>
 	<artifactId>akbpfp</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>akb pfp Webapp</name>
-	<url>http://maven.apache.org</url>
-
 	<build>
 		<finalName>akbpfp</finalName>
 		<defaultGoal>install</defaultGoal>
@@ -23,46 +20,14 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
 				<configuration>
-					<release>11</release>
+					<source>11</source>
+					<target>11</target>
 					<encoding>UTF-8</encoding>
 					<compilerArguments>
 						<extdirs>${basedir}\src\main\webapp\WEB-INF\lib</extdirs>
 					</compilerArguments>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>versions-maven-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<generateBackupPoms>false</generateBackupPoms>
-				</configuration>
-			</plugin>
-
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.0</version>
-				<configuration>
-					<argLine>
-						--illegal-access=permit
-					</argLine>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.22.0</version>
-				<configuration>
-					<argLine>
-						--illegal-access=permit
-					</argLine>
 				</configuration>
 			</plugin>
 
@@ -94,37 +59,13 @@
 		</plugins>
 	</build>
 
-
 	<repositories>
 		<repository>
 			<id>nexus</id>
-			<name>nexus</name>
-			<url>http://gitrun.mypchome.com.tw:8081/repository/java-group/</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
+			            <url>http://gitrun.mypchome.com.tw:8081/repository/maven-releases/</url>
 		</repository>
 
-
-
 	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>nexus</id>
-			<name>nexus</name>
-			<url>http://gitrun.mypchome.com.tw:8081/repository/java-group/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
 
 
 	<distributionManagement>
@@ -145,11 +86,17 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>softdepot</groupId>
+			<artifactId>softdepot</artifactId>
+			<version>1.0.18</version>
+		</dependency>
+
+		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.6.2</version>
 		</dependency>
-
+		
 		<!-- struts -->
 		<dependency>
 			<groupId>org.ow2.asm</groupId>
@@ -176,6 +123,11 @@
 			<version>1.3.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -451,7 +403,12 @@
 			<version>5.0.8.RELEASE</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-indexer</artifactId>
+			<version>5.0.8.RELEASE</version>
+			<scope>optional</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -619,18 +576,33 @@
 			<artifactId>json</artifactId>
 			<version>20180813</version>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>org.wltea.ik-analyzer</groupId>
-			<artifactId>ik-analyzer</artifactId>
-			<version>3.2.3</version>
+		  <groupId>IKAnalyzer</groupId>
+		  <artifactId>IKAnalyzer</artifactId>
+		  <version>3.2.3</version>
+		  <classifier>IKAnalyzer</classifier>
 		</dependency>
-
+		
+ 		<dependency>
+		  <groupId>jofc2</groupId>
+		  <artifactId>jofc2</artifactId>
+		  <version>1.0</version>
+		  <classifier>0v2</classifier>
+		</dependency>
+		
+		<dependency>
+			 <groupId>oscache</groupId>
+			 <artifactId>oscache</artifactId>
+			 <version>2.4.1</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
@@ -638,46 +610,25 @@
 		</dependency>
 
 		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-			<classifier>jstl</classifier>
+			 <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+            <classifier>jstl</classifier>
 		</dependency>
 
-		<dependency>
-			<groupId>commons-configuration</groupId>
-			<artifactId>commons-configuration</artifactId>
-			<version>1.6</version>
-		</dependency>
+ 		<dependency>
+            <groupId>commons-configuration</groupId>
+            <artifactId>commons-configuration</artifactId>
+            <version>1.6</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>org.apache.hadoop</groupId>
+            <artifactId>hadoop-core</artifactId>
+            <version>0.20.203.0</version>
+        </dependency>
+ 
+ 
 
-		<dependency>
-			<groupId>org.apache.hadoop</groupId>
-			<artifactId>hadoop-core</artifactId>
-			<version>0.20.203.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.pchome</groupId>
-			<artifactId>softdepot</artifactId>
-			<version>1.0.18</version>
-		</dependency>
-
-		<dependency>
-			<groupId>opensymphony</groupId>
-			<artifactId>oscache</artifactId>
-			<version>2.4.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.jms</groupId>
-					<artifactId>jms</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		
-		<dependency>
-			<groupId>jofc2</groupId>
-			<artifactId>jofc2</artifactId>
-			<version>1.0</version>
-		</dependency>
 	</dependencies>
 </project>
