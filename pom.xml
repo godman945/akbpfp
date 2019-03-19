@@ -27,10 +27,7 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
-			<!-- <plugin> <artifactId>maven-compiler-plugin</artifactId> <version>3.6.2</version> 
-				<configuration> <source>1.8</source> <target>1.8</target> <encoding>UTF-8</encoding> 
-				<compilerArguments> <extdirs>${basedir}\src\main\webapp\WEB-INF\lib</extdirs> 
-				</compilerArguments> </configuration> </plugin> -->
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
@@ -44,22 +41,13 @@
 			</plugin>
 
 
-
-			<!-- <plugin> <artifactId>maven-assembly-plugin</artifactId> <configuration> 
-				<descriptorRefs> <descriptorRef>jar-with-dependencies</descriptorRef> </descriptorRefs> 
-				</configuration> <executions> <execution> <id>make-assembly</id> <phase>package</phase> 
-				<goals> <goal>single</goal> </goals> </execution> </executions> </plugin> -->
 		</plugins>
 	</build>
 
 
 
 	<repositories>
-		<!-- <repository> <snapshots> <enabled>false</enabled> </snapshots> <id>central</id> 
-			<name>Central Repository</name> <url>http://maven.twttr.com/</url> </repository> -->
-		<!-- <repository> <snapshots> <enabled>false</enabled> </snapshots> <id>central</id> 
-			<name>Central Repository</name> <url>http://repo.maven.apache.org/maven2</url> 
-			<url>http://gitrun.mypchome.com.tw:8081</url> </repository> -->
+
 		<repository>
 			<id>nexus</id>
 			<url>http://gitrun.mypchome.com.tw:8081/repository/maven-releases/</url>
@@ -67,10 +55,6 @@
 
 	</repositories>
 
-	<!-- <pluginRepositories> <pluginRepository> <releases> <updatePolicy>never</updatePolicy> 
-		</releases> <snapshots> <enabled>false</enabled> </snapshots> <id>central</id> 
-		<name>Central Repository</name> <url>http://repo.maven.apache.org/maven2</url> 
-		</pluginRepository> </pluginRepositories> -->
 
 
 	<distributionManagement>
@@ -659,23 +643,6 @@
 			<classifier>jstl</classifier>
 		</dependency>
 
-		<dependency>
-			<groupId>com.jcraft</groupId>
-			<artifactId>jsch</artifactId>
-			<version>0.1.55</version>
-		</dependency>
-
-		<dependency>
-			<groupId>juniversalchardet</groupId>
-			<artifactId>juniversalchardet</artifactId>
-			<version>2.3.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.quartz-scheduler</groupId>
-			<artifactId>quartz</artifactId>
-			<version>2.2.1</version>
-		</dependency>
 	</dependencies>
 
 
