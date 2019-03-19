@@ -9,13 +9,10 @@
 	<name>akb pfp Webapp</name>
 	<url>http://maven.apache.org</url>
 
-
-
-
 	<build>
 		<finalName>akbpfp</finalName>
 		<defaultGoal>install</defaultGoal>
-		<sourceDirectory>src/main/java</sourceDirectory>
+		<sourceDirectory>src/main/*</sourceDirectory>
 		<outputDirectory>target/classes</outputDirectory>
 
 		<plugins>
@@ -24,9 +21,6 @@
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.6.0.1398</version>
 			</plugin>
-
-
-
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -39,7 +33,6 @@
 						<extdirs>${basedir}\src\main\webapp\WEB-INF\lib</extdirs>
 					</compilerArguments>
 				</configuration>
-
 			</plugin>
 
 			<plugin>
@@ -73,9 +66,6 @@
 				</configuration>
 			</plugin>
 
-
-
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -108,11 +98,8 @@
 	<repositories>
 		<repository>
 			<id>nexus</id>
-
 			<name>nexus</name>
 			<url>http://gitrun.mypchome.com.tw:8081/repository/java-group/</url>
-
-
 			<layout>default</layout>
 			<snapshots>
 				<enabled>false</enabled>
@@ -120,7 +107,6 @@
 			<releases>
 				<enabled>true</enabled>
 			</releases>
-
 		</repository>
 
 
@@ -158,12 +144,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>softdepot</groupId>
-			<artifactId>softdepot</artifactId>
-			<version>1.0.18</version>
-		</dependency>
-
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
@@ -288,9 +268,7 @@
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-web</artifactId>
 			<version>2.11.2</version>
-
 			<exclusions>
-
 				<exclusion>
 					<groupId>org.apache.logging.log4j</groupId>
 					<artifactId>log4j</artifactId>
@@ -416,22 +394,11 @@
 			<version>5.0.8.RELEASE</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
 			<version>5.0.8.RELEASE</version>
 		</dependency>
-
-
-		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
-			<version>1.2.17</version> </dependency> <dependency> <groupId>org.apache.logging.log4j</groupId> 
-			<artifactId>log4j-api</artifactId> <version>2.1</version> </dependency> <dependency> 
-			<groupId>org.apache.logging.log4j</groupId> <artifactId>log4j-core</artifactId> 
-			<version>2.1</version> </dependency> <dependency> <groupId>commons-logging</groupId> 
-			<artifactId>commons-logging</artifactId> <version>1.2</version> </dependency> -->
-		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-orm</artifactId> 
-			<version>5.0.8.RELEASE</version> </dependency> -->
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -660,31 +627,10 @@
 		</dependency>
 
 		<dependency>
-			<groupId>jofc2v2</groupId>
-			<artifactId>jofc2v2</artifactId>
-			<version>1.0</version>
-			<classifier>0v2</classifier>
-		</dependency>
-
-
-		<!-- https://mvnrepository.com/artifact/opensymphony/oscache -->
-		<dependency>
-			<groupId>opensymphony</groupId>
-			<artifactId>oscache</artifactId>
-			<version>2.4.1</version>
-		</dependency>
-
-
-
-
-
-
-		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
@@ -710,7 +656,30 @@
 			<version>0.20.203.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.pchome</groupId>
+			<artifactId>softdepot</artifactId>
+			<version>1.0.18</version>
+		</dependency>
 
 
+		<dependency>
+			<groupId>opensymphony</groupId>
+			<artifactId>oscache</artifactId>
+			<version>2.4.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	<!-- 
+		<dependency>
+			<groupId>jofc2</groupId>
+			<artifactId>jofc2</artifactId>
+			<version>1.0</version>
+		</dependency>
+		 -->
 	</dependencies>
 </project>
