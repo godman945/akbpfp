@@ -62,7 +62,7 @@
 	<repositories>
 		<repository>
 			<id>nexus</id>
-			<url>http://gitrun.mypchome.com.tw:8081/repository/java-group/</url>
+			            <url>http://gitrun.mypchome.com.tw:8081/repository/maven-releases/</url>
 		</repository>
 
 	</repositories>
