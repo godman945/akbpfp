@@ -9,7 +9,7 @@
 	<build>
 		<finalName>akbpfp</finalName>
 		<defaultGoal>install</defaultGoal>
-		<sourceDirectory>src/main/*</sourceDirectory>
+		<sourceDirectory>src.*</sourceDirectory>
 		<outputDirectory>target/classes</outputDirectory>
 
 		<plugins>
@@ -601,7 +601,7 @@
 			<version>20180813</version>
 		</dependency>
 		
-		<!-- 
+		<!-- -->
 		<dependency>
 		  <groupId>IKAnalyzer</groupId>
 		  <artifactId>IKAnalyzer</artifactId>
@@ -621,7 +621,7 @@
 			 <artifactId>oscache</artifactId>
 			 <version>2.4.1</version>
 		</dependency>
-		 -->
+		 
 		
 		
 		
