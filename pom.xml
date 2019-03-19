@@ -107,6 +107,15 @@
 
 	<repositories>
 		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>central</id>
+			<name>Central Repository</name>
+			<url>http://repo.maven.apache.org/maven2</url>
+		</repository>
+
+		<repository>
 			<id>nexus</id>
 
 			<name>nexus</name>
@@ -126,6 +135,7 @@
 
 
 	</repositories>
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>nexus</id>
@@ -159,7 +169,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>softdepot</groupId>
+			<groupId>com.pchome</groupId>
 			<artifactId>softdepot</artifactId>
 			<version>1.0.18</version>
 		</dependency>
@@ -660,12 +670,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>jofc2v2</groupId>
-			<artifactId>jofc2v2</artifactId>
+			<groupId>jofc2</groupId>
+			<artifactId>jofc2</artifactId>
 			<version>1.0</version>
 			<classifier>0v2</classifier>
 		</dependency>
-
 
 		<!-- https://mvnrepository.com/artifact/opensymphony/oscache -->
 		<dependency>
@@ -691,12 +700,13 @@
 			<version>5.1.0.Final</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl-api -->
 		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
+			<groupId>javax.servlet.jsp.jstl</groupId>
+			<artifactId>jstl-api</artifactId>
 			<version>1.2</version>
-			<classifier>jstl</classifier>
 		</dependency>
+
 
 		<dependency>
 			<groupId>commons-configuration</groupId>
