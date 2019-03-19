@@ -9,10 +9,10 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-	<!-- apply ajax -->
+	<!-- apply ajax 
     <bean id="MyOpenSessionInViewFilter" class="com.pchome.spring.hibernate.filter.MyOpenSessionInViewFilter" >
     </bean>
-    
+    -->
     
     
     
