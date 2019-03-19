@@ -662,7 +662,6 @@
 			<version>1.0.18</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>opensymphony</groupId>
 			<artifactId>oscache</artifactId>
@@ -674,12 +673,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-	<!-- 
+		
 		<dependency>
 			<groupId>jofc2</groupId>
 			<artifactId>jofc2</artifactId>
 			<version>1.0</version>
 		</dependency>
-		 -->
 	</dependencies>
 </project>
