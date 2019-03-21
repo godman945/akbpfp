@@ -7,8 +7,8 @@
 //import javax.imageio.ImageIO;
 //
 //import org.apache.commons.lang3.StringUtils;
-//import org.apache.logging.log4j.Logger;
-//import org.apache.logging.log4j.LogManager;
+//import org.apache.commons.logging.Log;
+//import org.apache.commons.logging.LogFactory;
 //import org.json.JSONArray;
 //import org.json.JSONException;
 //import org.json.JSONObject;
@@ -23,7 +23,7 @@
 //
 //public abstract class APfpCatalogUploadListData {
 //
-//	public static final Logger log = LogFactory.getLog(ImgUtil.class);
+//	public static final Log log = LogFactory.getLog(ImgUtil.class);
 //	private String akbPfpServer;
 //	
 //	public abstract Object processCatalogProdJsonData(JSONObject catalogProdJsonData) throws Exception;
