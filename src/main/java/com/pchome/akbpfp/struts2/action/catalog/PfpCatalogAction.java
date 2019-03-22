@@ -230,7 +230,7 @@ public class PfpCatalogAction extends BaseCookieAction{
 		// 範例檔案放的位置
 		String serverName = super.request.getServerName();
 		String filePath = "";
-		if (serverName.indexOf("showstg.pchome.com.tw") > -1 || serverName.indexOf("show.pchome.com.tw") > -1) {
+		if (serverName.indexOf("showstg.pchome.com.tw") > -1 || serverName.indexOf("show.pchome.com.tw") > -1 || serverName.indexOf("showstg2.pchome.com.tw") > -1) {
 			filePath = "/home/webuser/akb/git.project/akbpfp.master/WebContent/html/file/" + fileName;
 		} else {
 			// 本機路徑

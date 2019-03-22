@@ -210,7 +210,6 @@ function closeAdAdStatus(adAdSeq, status){
 //點擊預覽影片
 function previewVideo(width,height,img,url) {
 	$("#videoSize").text(width+" x " +height);
-//	url = "http://showstg.pchome.com.tw/pfp/img/video/2017_10_20/adv_201710200001.mp4";
 	var preview = 
 	'<div id="previewVideoDiv" >'+
 	'<div class="aduplodul_v">'+
