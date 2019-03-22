@@ -151,7 +151,7 @@ public class RedirectAction extends BaseCookieAction{
 		MemberVO memberVO = memberAPI.getMemberVOData(super.getId_pchome());
 		String status = memberVO.getAuth();
 		
-		//log.info(" status: " + status);
+		log.info(" status: " + status);
 		
 		if (StringUtils.isBlank(status) || !status.equals("y")) {
 			isAuth = false;

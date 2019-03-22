@@ -23,7 +23,7 @@ public class MemberAPI {
 		
 		MemberVO vo = null;
 		Map<String,String> map = this.getMemberMapData(memberId);
-		
+		log.info(">>>>>>>>>>"+map);
 		if(map.size() > 0){
 			vo = new MemberVO();
 			vo.setMemberId(map.get("id"));
