@@ -85,7 +85,7 @@ public class PfpAdDetailDAO extends BaseDAO<PfpAdDetail,String> implements IPfpA
 	
 	public void saveOrUpdatePfpAdDetail(PfpAdDetailVO pfpAdDetailVO) throws Exception{
 		final StringBuffer sql = new StringBuffer()
-		.append("INSERT INTO pfp_ad_detail(ad_detail_seq, ad_seq, ad_detail_id, ad_detail_content, ad_pool_seq, define_ad_seq, ad_detail_create_time, ad_detail_update_time) ")
+		.append("INSERT INTO pfp_ad_detail(ad_detail_seq, ad_seq, ad_detail_id, ad_detail_content, ad_pool_seq, define_ad_seq, ad_detail_create_time, ad_detail_update_time,verify_flag) ")
 		.append("VALUES ( :adDetailSeq")
 		.append(", :adSeq")
 		.append(", :adDetailId")
@@ -93,7 +93,8 @@ public class PfpAdDetailDAO extends BaseDAO<PfpAdDetail,String> implements IPfpA
 		.append(", :adPoolSeq")
 		.append(", :defineAdSeq")
 		.append(", :adDetailCreateTime")
-		.append(", :adDetailUpdateTime)");
+		.append(", :adDetailUpdateTime")
+		.append(", :verifyFlag)");
 		//log.info(sql);
 
         Session session = super.getHibernateTemplate().getSessionFactory().getCurrentSession();
@@ -106,6 +107,7 @@ public class PfpAdDetailDAO extends BaseDAO<PfpAdDetail,String> implements IPfpA
         		.setString("defineAdSeq", pfpAdDetailVO.getDefineAdSeq())
         		.setDate("adDetailCreateTime", pfpAdDetailVO.getAdDetailCreateTime())
         		.setDate("adDetailUpdateTime", pfpAdDetailVO.getAdDetailUpdateTime())
+        		.setString("verifyFlag", pfpAdDetailVO.getVerifyFlag())
         		.executeUpdate();
         session.flush();
 	}
