@@ -169,17 +169,23 @@ public class AccountUserAction extends BaseSSLAction{
 		
 		// 發送邀請信件
 		String mailContent = inviteMailAPI.inviteMailContent();
-		
-		if(StringUtils.isNotBlank(mailContent)){
-			
-			String endDate = DateValueUtil.getInstance().getDateValue(7, DateValueUtil.DBPATH);
-			
-			mailContent = mailContent.replace("{:accountId:}", super.getCustomer_info_id());
-			mailContent = mailContent.replace("{:inviteUrl:}", inviteUrl);
-			mailContent = mailContent.replace("{:endDate:}", endDate);
-			
-			inviteMailAPI.sendInviteMail(new String[]{user.getUserEmail()}, mailContent);
+		log.info("mailContent>>>"+mailContent);
+		try {
+			if(StringUtils.isNotBlank(mailContent)){
+				
+				String endDate = DateValueUtil.getInstance().getDateValue(7, DateValueUtil.DBPATH);
+				
+				mailContent = mailContent.replace("{:accountId:}", super.getCustomer_info_id());
+				mailContent = mailContent.replace("{:inviteUrl:}", inviteUrl);
+				mailContent = mailContent.replace("{:endDate:}", endDate);
+				
+				inviteMailAPI.sendInviteMail(new String[]{user.getUserEmail()}, mailContent);
+			}
+		}catch(Exception e) {
+			log.error(e);
+			e.printStackTrace();
 		}
+		
 
 		return SUCCESS;
 	}
