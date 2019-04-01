@@ -45,22 +45,20 @@ public class EmailUtils {
         	log.info(">>>>>>>>>寄信開始");
         	JavaMailSenderImpl sender = new JavaMailSenderImpl();
              sender.setHost("spool.pchome.com.tw");
-
              Properties pro = System.getProperties(); // 下面各项缺一不可
              pro.put("mail.smtp.auth", "true");
              pro.put("mail.smtp.ssl.enable", "true");
              pro.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-
              sender.setJavaMailProperties(pro);
-
+             log.info(">>>>>>>>>寄信1");
              MimeMessage message = sender.createMimeMessage();
-            
                  MimeMessageHelper helper = new MimeMessageHelper(message, true);
                  helper.setFrom("showadm@msx.pchome.com.tw"); // 发送人 
                  helper.setTo("godman945@yahoo.com.tw"); // 收件人  
                  helper.setSubject("Title"); // 标题
                  helper.setText("Content"); // 内容
                  sender.send(message);
+                 log.info(">>>>>>>>>寄信2");
                  log.info(">>>>>>>>>寄信結束");
              } catch (MessagingException e) {
             	 log.info(e.getMessage());
