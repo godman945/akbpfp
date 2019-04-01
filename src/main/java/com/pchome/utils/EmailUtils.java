@@ -55,16 +55,17 @@ public class EmailUtils {
              
              
              MimeMessage message = sender.createMimeMessage();
+             log.info(">>>>>>>>>寄信2");
                  MimeMessageHelper helper = new MimeMessageHelper(message, true);
                  
-                 log.info(">>>>>>>>>寄信2");
+                 log.info(">>>>>>>>>寄信3");
                  helper.setFrom("showadm@msx.pchome.com.tw"); // 发送人 
                  helper.setTo("godman945@yahoo.com.tw"); // 收件人  
                  helper.setSubject("Title"); // 标题
                  helper.setText("Content"); // 内容
-                 log.info(">>>>>>>>>寄信3");
-                 sender.send(message);
                  log.info(">>>>>>>>>寄信4");
+                 sender.send(message);
+                 log.info(">>>>>>>>>寄信5");
                  log.info(">>>>>>>>>寄信結束");
              } catch (MessagingException e) {
             	 log.info(e.getMessage());
