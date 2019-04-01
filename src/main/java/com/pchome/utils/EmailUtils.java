@@ -74,7 +74,11 @@ public class EmailUtils {
             	 log.info(e.getMessage());
                  e.printStackTrace();
              } catch (MailAuthenticationException ex) {
-                 System.err.println(ex.getMessage());
+            	 ex.printStackTrace();
+            	 log.info(ex.getMessage());
+             }catch (Exception e) {
+            	 log.info(e.getMessage());
+                 e.printStackTrace();
              }
     	 
     	 
