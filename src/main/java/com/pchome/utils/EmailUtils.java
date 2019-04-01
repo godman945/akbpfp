@@ -53,7 +53,7 @@ public class EmailUtils {
              log.info(">>>>>>>>>寄信1");
             
              
-             
+             log.info(">>>>>>>>>寄信1----");
              MimeMessage message = sender.createMimeMessage();
              log.info(">>>>>>>>>寄信2");
                  MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -74,6 +74,8 @@ public class EmailUtils {
             	 log.info(e.getMessage());
             	 e.printStackTrace();
              }
+    	 
+    	 
          }
    
         	
