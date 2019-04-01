@@ -30,6 +30,7 @@ public class InviteMailAPI {
     	log.info(">>>>>>>>>>>>>>>>"+mailService);
     	try {
     		EmailUtils.getInstance().sendHtmlEmail(Subject, mailFrom, MailUserName, emails, null, mailContent);
+    		log.info(">>>>>>>>>>>>>>>>EmailUtils finish>>>>>>>>>>>>>>>>");
     	} catch (Exception e) {
             log.error(" send mail error : "+e);
         }

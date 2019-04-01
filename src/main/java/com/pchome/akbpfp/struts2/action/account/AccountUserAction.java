@@ -186,7 +186,7 @@ public class AccountUserAction extends BaseSSLAction{
 			e.printStackTrace();
 		}
 		
-
+		log.info(">>>>>>>>>>>>>>>>> email action");
 		return SUCCESS;
 	}
 
