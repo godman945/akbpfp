@@ -2,7 +2,6 @@ package com.pchome.akbpfp.api;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
@@ -26,16 +25,10 @@ public class InviteMailAPI {
     private String mailDir;
     
     public void sendInviteMail(String[] emails, String mailContent){
-    	try {
     	EmailUtils.getInstance().setHost(mailService);
-    	log.info(">>>>>>>>>>>>>>>>"+Subject);
-    	log.info(">>>>>>>>>>>>>>>>"+mailFrom);
-    	log.info(">>>>>>>>>>>>>>>>"+MailUserName);
-    	log.info(">>>>>>>>>>>>>>>>"+Arrays.asList(emails));
+    	try {
     		EmailUtils.getInstance().sendHtmlEmail(Subject, mailFrom, MailUserName, emails, null, mailContent);
-    		log.info(">>>>>>>>>>>>>>>>EmailUtils finish>>>>>>>>>>>>>>>>");
     	} catch (Exception e) {
-    		log.info("FAIL>>>>>>>>>>>>>>>>>>>>>>");
             log.error(" send mail error : "+e);
         }
     }

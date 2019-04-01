@@ -39,25 +39,27 @@ public class EmailUtils {
 
     public void sendHtmlEmail(String subject, String from , String fromAlias, String[] to, String[] bcc, String html) throws MessagingException {
         try {
-        	log.info(">>>>>>>>>>>>>>>>start");
+        	log.info(">>>>>>>>>>1:");
             MimeMessage e = this.mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(e, "utf-8");
             messageHelper.setSubject(subject);
+            log.info(">>>>>>>>>>2: fromAlias"+fromAlias);
             if(StringUtils.isBlank(fromAlias)) {
                 messageHelper.setFrom(from);
             }else{
 //                String aliasName = javax.mail.internet.MimeUtility.encodeText(fromAlias);
                 messageHelper.setFrom(new InternetAddress(from,fromAlias,"utf-8"));
             }
+            log.info(">>>>>>>>>>3:to"+to);
+            log.info(">>>>>>>>>>3:bcc"+bcc);
             messageHelper.setTo(to);
             if(bcc != null) {
                 messageHelper.setBcc(bcc);
             }
-
+            log.info(">>>>>>>>>>4: html"+html);
             messageHelper.setText(html, true);
             this.mailSender.send(e);
-            
-            log.info(">>>>>>>>>>>>>>>>end");
+            log.info(">>>>>>>>>>5:");
         } catch (Exception var8) {
             log.error("SendHtmlEmail error", var8);
         }
