@@ -25,6 +25,8 @@ public class AdmPrivilegeInterceptor extends AbstractInterceptor{
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception{
 		
+		log.info("DDDDDDDDDDDDDDD");
+		
 		String result = "summary";
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
