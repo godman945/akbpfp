@@ -169,7 +169,6 @@ public class AccountUserAction extends BaseSSLAction{
 		
 		// 發送邀請信件
 		String mailContent = inviteMailAPI.inviteMailContent();
-		log.info("mailContent>>>"+mailContent);
 		try {
 			if(StringUtils.isNotBlank(mailContent)){
 				
@@ -186,7 +185,6 @@ public class AccountUserAction extends BaseSSLAction{
 			e.printStackTrace();
 		}
 		
-		log.info(">>>>>>>>>>>>>>>>> email action");
 		return SUCCESS;
 	}
 

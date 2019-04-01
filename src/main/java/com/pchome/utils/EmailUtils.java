@@ -39,7 +39,6 @@ public class EmailUtils {
 
     public void sendHtmlEmail(String subject, String from , String fromAlias, String[] to, String[] bcc, String html) throws MessagingException {
         try {
-        	log.info(">>>>>>>>寄信");
             MimeMessage e = this.mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(e, "utf-8");
             messageHelper.setSubject(subject);
@@ -56,7 +55,6 @@ public class EmailUtils {
 
             messageHelper.setText(html, true);
             this.mailSender.send(e);
-            log.info(">>>>>>>>寄信結束");
         } catch (Exception var8) {
             log.error("SendHtmlEmail error", var8);
         }
