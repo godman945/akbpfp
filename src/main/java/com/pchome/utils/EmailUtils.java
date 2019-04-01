@@ -40,6 +40,15 @@ public class EmailUtils {
     public void sendHtmlEmail(String subject, String from , String fromAlias, String[] to, String[] bcc, String html) throws MessagingException {
         try {
         	log.info(">>>>>>>>>>1:");
+        	try {
+        		log.info(">>>>>>>>>>1:"+this.mailSender);
+        		log.info(">>>>>>>>>>1:"+this.mailSender.createMimeMessage());
+        	}catch(Exception e) {
+        		log.error(e);
+        	}
+        	
+        	
+        	
             MimeMessage e = this.mailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(e, "utf-8");
             messageHelper.setSubject(subject);
