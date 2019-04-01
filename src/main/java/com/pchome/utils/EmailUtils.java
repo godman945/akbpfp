@@ -43,12 +43,8 @@ public class EmailUtils {
 //        try {
     	 try {
         	log.info(">>>>>>>>>寄信開始");
-        	 JavaMailSenderImpl sender = new JavaMailSenderImpl();
-
+        	JavaMailSenderImpl sender = new JavaMailSenderImpl();
              sender.setHost("spool.pchome.com.tw");
-             sender.setPort(465);
-//             sender.setUsername("*********@qq.com");
-//             sender.setPassword("xqbhcaptnzurzbhef"); // 这里要用邀请码，不是你登录邮箱的密码
 
              Properties pro = System.getProperties(); // 下面各项缺一不可
              pro.put("mail.smtp.auth", "true");
@@ -65,7 +61,7 @@ public class EmailUtils {
                  helper.setSubject("Title"); // 标题
                  helper.setText("Content"); // 内容
                  sender.send(message);
-                 System.out.println("发送完毕！");
+                 log.info(">>>>>>>>>寄信結束");
              } catch (MessagingException e) {
             	 log.info(e.getMessage());
                  e.printStackTrace();
@@ -74,7 +70,7 @@ public class EmailUtils {
             	 e.printStackTrace();
              }
          }
-        	
+   
         	
         	
         	
