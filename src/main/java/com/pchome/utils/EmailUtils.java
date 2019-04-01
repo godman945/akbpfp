@@ -41,7 +41,7 @@ public class EmailUtils {
 
     public void sendHtmlEmail(String subject, String from , String fromAlias, String[] to, String[] bcc, String html)  {
 //        try {
-        	
+    	 try {
         	log.info(">>>>>>>>>寄信開始");
         	 JavaMailSenderImpl sender = new JavaMailSenderImpl();
 
@@ -58,7 +58,7 @@ public class EmailUtils {
              sender.setJavaMailProperties(pro);
 
              MimeMessage message = sender.createMimeMessage();
-             try {
+            
                  MimeMessageHelper helper = new MimeMessageHelper(message, true);
                  helper.setFrom("showadm@msx.pchome.com.tw"); // 发送人 
                  helper.setTo("godman945@yahoo.com.tw"); // 收件人  
@@ -67,9 +67,11 @@ public class EmailUtils {
                  sender.send(message);
                  System.out.println("发送完毕！");
              } catch (MessagingException e) {
+            	 log.info(e.getMessage());
                  e.printStackTrace();
              } catch (Exception e) {
-                 e.printStackTrace();
+            	 log.info(e.getMessage());
+            	 e.printStackTrace();
              }
          }
         	
