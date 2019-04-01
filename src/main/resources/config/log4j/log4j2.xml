@@ -25,11 +25,7 @@
         	<appender-ref ref="stdout" />
         </root>
         <logger name="org.hibernate.hql.*" level="error"/>
-        <logger name="org.hibernate.annotations.common.reflection.java.JavaReflectionManager" level="warn"/>
-        <logger name="org.hibernate.engine.jdbc.internal.LobCreatorBuilder" level="warn"/>
-        <logger name="com.opensymphony.xwork2.spring.SpringObjectFactory" level="warn" ref="stdout" />  
-        <logger name="org.apache.struts2.spring.StrutsSpringObjectFactory" level="warn" ref="stdout" />
-        <logger name="org.springframework.remoting.rmi.RmiServiceExporte" level="warn" ref="stdout" />
+        
         
         
         <!-- 
