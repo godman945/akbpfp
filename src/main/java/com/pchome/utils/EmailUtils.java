@@ -39,6 +39,10 @@ public class EmailUtils {
 
     public void sendHtmlEmail(String subject, String from , String fromAlias, String[] to, String[] bcc, String html) throws MessagingException {
         try {
+
+        	JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+            mailSender.setHost("spool.pchome.com.tw");
+            this.mailSender = mailSender;
         	log.info(">>>>>>>>>>1:");
         	try {
         		log.info(">>>>>>>>>>1:"+this.mailSender);
