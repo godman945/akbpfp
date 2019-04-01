@@ -27,11 +27,15 @@ public class InviteMailAPI {
     public void sendInviteMail(String[] emails, String mailContent){
     	
     	EmailUtils.getInstance().setHost(mailService);
-    	log.info(">>>>>>>>>>>>>>>>"+mailService);
+    	log.info(">>>>>>>>>>>>>>>>"+Subject);
+    	log.info(">>>>>>>>>>>>>>>>"+mailFrom);
+    	log.info(">>>>>>>>>>>>>>>>"+MailUserName);
+    	log.info(">>>>>>>>>>>>>>>>"+emails);
     	try {
     		EmailUtils.getInstance().sendHtmlEmail(Subject, mailFrom, MailUserName, emails, null, mailContent);
     		log.info(">>>>>>>>>>>>>>>>EmailUtils finish>>>>>>>>>>>>>>>>");
     	} catch (Exception e) {
+    		log.info("FAIL>>>>>>>>>>>>>>>>>>>>>>");
             log.error(" send mail error : "+e);
         }
     }
