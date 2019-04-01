@@ -27,7 +27,7 @@ public class InviteMailAPI {
     public void sendInviteMail(String[] emails, String mailContent){
     	
     	EmailUtils.getInstance().setHost(mailService);
-    	
+    	log.info(">>>>>>>>>>>>>>>>"+mailService);
     	try {
     		EmailUtils.getInstance().sendHtmlEmail(Subject, mailFrom, MailUserName, emails, null, mailContent);
     	} catch (Exception e) {
