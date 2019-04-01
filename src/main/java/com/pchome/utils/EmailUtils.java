@@ -1,5 +1,6 @@
 package com.pchome.utils;
 
+import java.io.IOException;
 import java.util.Properties;
 
 import javax.mail.MessagingException;
@@ -9,6 +10,8 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.springframework.mail.MailAuthenticationException;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -70,9 +73,8 @@ public class EmailUtils {
              } catch (MessagingException e) {
             	 log.info(e.getMessage());
                  e.printStackTrace();
-             } catch (Exception e) {
-            	 log.info(e.getMessage());
-            	 e.printStackTrace();
+             } catch (MailAuthenticationException ex) {
+                 System.err.println(ex.getMessage());
              }
     	 
     	 
