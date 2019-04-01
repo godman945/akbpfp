@@ -39,34 +39,71 @@ public class EmailUtils {
         this.mailSender.send(this.templateMessage);
     }
 
-    public void sendHtmlEmail(String subject, String from , String fromAlias, String[] to, String[] bcc, String html) throws MessagingException {
-        try {
+    public void sendHtmlEmail(String subject, String from , String fromAlias, String[] to, String[] bcc, String html)  {
+//        try {
         	
         	log.info(">>>>>>>>>寄信開始");
+        	 JavaMailSenderImpl sender = new JavaMailSenderImpl();
+
+             sender.setHost("spool.pchome.com.tw");
+             sender.setPort(465);
+//             sender.setUsername("*********@qq.com");
+//             sender.setPassword("xqbhcaptnzurzbhef"); // 这里要用邀请码，不是你登录邮箱的密码
+
+             Properties pro = System.getProperties(); // 下面各项缺一不可
+             pro.put("mail.smtp.auth", "true");
+             pro.put("mail.smtp.ssl.enable", "true");
+             pro.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+
+             sender.setJavaMailProperties(pro);
+
+             MimeMessage message = sender.createMimeMessage();
+             try {
+                 MimeMessageHelper helper = new MimeMessageHelper(message, true);
+                 helper.setFrom("showadm@msx.pchome.com.tw"); // 发送人 
+                 helper.setTo("godman945@yahoo.com.tw"); // 收件人  
+                 helper.setSubject("Title"); // 标题
+                 helper.setText("Content"); // 内容
+                 sender.send(message);
+                 System.out.println("发送完毕！");
+             } catch (MessagingException e) {
+                 e.printStackTrace();
+             } catch (Exception e) {
+                 e.printStackTrace();
+             }
+         }
         	
-        	 JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-             Properties props = new Properties();
-             props.put("mail.smtp.auth", "true");//Outgoing server requires authentication
-             props.put("mail.smtp.starttls.enable", "true");//TLS must be activated
-             mailSender.setJavaMailProperties(props);
-             mailSender.setHost("spool.pchome.com.tw"); 
-             
-             SimpleMailMessage smm = new SimpleMailMessage();
-             smm.setTo("godman945@yahoo.com.tw");
-             smm.setFrom("showadm@msx.pchome.com.tw");
-             smm.setSubject("Default subject");
-             smm.setText("Default text");
-             
-             SimpleMailMessage msg = new SimpleMailMessage(smm);
-             msg.setTo("godman945@yahoo.com.tw");
-             msg.setSubject("test subject");
-             msg.setText("spring email integration test");
-             mailSender.send(msg);
-             
-        	log.info(">>>>>>>>>寄信完成");
-        } catch (Exception e) {
-        	e.printStackTrace();
-      }
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+        	
+//        	
+//        	 JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+//             Properties props = new Properties();
+//             mailSender.setJavaMailProperties(props);
+//             mailSender.setHost("spool.pchome.com.tw"); 
+//             
+//             SimpleMailMessage smm = new SimpleMailMessage();
+//             smm.setTo("godman945@yahoo.com.tw");
+//             smm.setFrom("showadm@msx.pchome.com.tw");
+//             smm.setSubject("Default subject");
+//             smm.setText("Default text");
+//             
+//             SimpleMailMessage msg = new SimpleMailMessage(smm);
+//             msg.setTo("godman945@yahoo.com.tw");
+//             msg.setSubject("test subject");
+//             msg.setText("spring email integration test");
+//             mailSender.send(msg);
+//             
+//        	log.info(">>>>>>>>>寄信完成");
+//        } catch (MessagingException e) {
+//        	e.printStackTrace();
+//        } 
         	
         	
         	
@@ -120,7 +157,7 @@ public class EmailUtils {
 ////            log.error("SendHtmlEmail error", var8);
 //        }
 
-    }
+//    }
 
     public void setMailSender(JavaMailSender mailSender) {
         this.mailSender = mailSender;
