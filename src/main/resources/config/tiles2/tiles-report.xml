@@ -5,15 +5,15 @@
 
 <tiles-definitions>
 
-     <definition name="report.header" template="/ftl/report/head/header.ftl" />
+	<definition name="report.header" template="/ftl/report/head/header.ftl" />
     
     <!-- .report.layout-->
-     <definition name="default.report.layout" extends="default.layout" >
-        <put-attribute name="menu" value="default.report.layout.submenu" />
+	<definition name="default.report.layout" extends="default.layout" >
+		<put-attribute name="menu" value="default.report.layout.submenu" />
     </definition>
     
 	<definition name="default.report.layout.submenu" extends="default.menu" >
-    	<put-attribute name="submenu" value="/ftl/report/submenu/submenu.ftl" />
+		<put-attribute name="submenu" value="/ftl/report/submenu/submenu.ftl" />
     </definition> 	
 	
 	<definition name="report.optiontransferselect" template="/ftl/report/blockui/optiontransferselect.ftl" />
@@ -21,8 +21,8 @@
 	<definition name="report.flashData" template="/ftl/report/ajax/openFlashData.ftl" />
 	
     
-	 <definition name="report.body" template="/ftl/report/body/globeBody.ftl" >
-    	<put-attribute name="optiontransferselect" value="report.optiontransferselect" />
+	<definition name="report.body" template="/ftl/report/body/globeBody.ftl" >
+		<put-attribute name="optiontransferselect" value="report.optiontransferselect" />
     	<put-attribute name="seDateSelect" value="report.seDateSelect" />
     </definition>
  
@@ -33,13 +33,12 @@
 	<definition name="report.chartTable.excerpt" template="/ftl/report/chart/excerptChartTable.ftl" />
     
 	<definition name=".report.excerpt" extends="default.report.layout">
-         <put-attribute name="header" value="report.header.excerpt" />
-         <put-attribute name="body" value="report.body.excerpt" />
-		
+		<put-attribute name="header" value="report.header.excerpt" />
+		<put-attribute name="body" value="report.body.excerpt" />
     </definition>
     
     <definition name="report.header.excerpt" extends="report.header" >
-       <put-attribute name="jsName" value="reportExcerpt.js" />
+		<put-attribute name="jsName" value="reportExcerpt.js" />
     </definition>
    
     <definition name="report.body.excerpt" extends="report.body" >
@@ -47,19 +46,18 @@
 		<put-attribute name="chartTable" value="report.chartTable.excerpt" />
     </definition>
 	
-	   
-    
-     <!--.report.advertise -->
+	
+	<!--.report.advertise -->
 	<definition name="report.ajaxTable.advertise" template="/ftl/report/ajax/advertiseTable.ftl" /> 
 	<definition name="report.chartTable.advertise" template="/ftl/report/chart/advertiseChartTable.ftl" />
 	 
     <definition name=".report.advertise" extends="default.report.layout" >
     	<put-attribute name="header" value="report.header.advertise" />
-        <put-attribute name="body" value="report.body.advertise" />
+    	<put-attribute name="body" value="report.body.advertise" />
     </definition>
 	
 	<definition name="report.header.advertise" extends="report.header" >
-       <put-attribute name="jsName" value="reportAdvertise.js" />
+    	<put-attribute name="jsName" value="reportAdvertise.js" />
     </definition>
 	   
     <definition name="report.body.advertise" extends="report.body" >
@@ -68,22 +66,17 @@
 	</definition>
 	
 	
-    
-    
-	
 	<!-- .report.adDaily  -->
-    
-	
 	<definition name="report.ajaxTable.adDaily" template="/ftl/report/ajax/adDailyTable.ftl" /> 
 	<definition name="report.chartTable.adDaily" template="/ftl/report/chart/excerptChartTable.ftl" />
-	 
+
     <definition name=".report.adDaily" extends="default.report.layout" >
     	<put-attribute name="header" value="report.header.adDaily" />
         <put-attribute name="body" value="report.body.adDaily" />
     </definition>
 	
 	<definition name="report.header.adDaily" extends="report.header" >
-       <put-attribute name="jsName" value="reportAdDaily.js" />
+		<put-attribute name="jsName" value="reportAdDaily.js" />
     </definition>
 	   
     <definition name="report.body.adDaily" extends="report.body" >
@@ -91,9 +84,8 @@
 		<put-attribute name="chartTable" value="report.chartTable.adDaily" />
 	</definition>
     
-     <!-- .report.keyword  -->
-   
-	
+    
+	<!-- .report.keyword  -->
 	<definition name="report.ajaxTable.keyword" template="/ftl/report/ajax/keywordTable.ftl" /> 
 	<definition name="report.chartTable.keyword" template="/ftl/report/chart/keywordChartTable.ftl" />
 	 
@@ -111,8 +103,9 @@
 		<put-attribute name="chartTable" value="report.chartTable.keyword" />
 	</definition>
     
-     <!-- .report.cost  -->
-   <definition name="report.ajaxTable.cost" template="/ftl/report/ajax/costTable.ftl" /> 
+    
+	<!-- .report.cost  -->
+	<definition name="report.ajaxTable.cost" template="/ftl/report/ajax/costTable.ftl" /> 
 	<definition name="report.chartTable.cost" template="/ftl/report/chart/costChartTable.ftl" />
 	 
     <definition name=".report.cost" extends="default.report.layout" >
@@ -121,7 +114,7 @@
     </definition>
 	
 	<definition name="report.header.cost" extends="report.header" >
-       <put-attribute name="jsName" value="reportCost.js" />
+    	<put-attribute name="jsName" value="reportCost.js" />
     </definition>
 	   
     <definition name="report.body.cost" extends="report.body" >
@@ -129,8 +122,9 @@
 		<put-attribute name="chartTable" value="report.chartTable.cost" />
 	</definition>
     
-     <!-- .report.url  -->
-  <definition name="report.ajaxTable.url" template="/ftl/report/ajax/urlTable.ftl" /> 
+    
+	<!-- .report.url  -->
+	<definition name="report.ajaxTable.url" template="/ftl/report/ajax/urlTable.ftl" /> 
 	<definition name="report.chartTable.url" template="/ftl/report/chart/advertiseChartTable.ftl" />
 	 
     <definition name=".report.url" extends="default.report.layout" >
@@ -139,7 +133,7 @@
     </definition>
 	
 	<definition name="report.header.url" extends="report.header" >
-       <put-attribute name="jsName" value="reportUrl.js" />
+    	<put-attribute name="jsName" value="reportUrl.js" />
     </definition>
 	   
     <definition name="report.body.url" extends="report.body" >
@@ -147,8 +141,9 @@
 		<put-attribute name="chartTable" value="report.chartTable.url" />
 	</definition>
     
-     <!-- .report.check  -->
-   <definition name="report.ajaxTable.check" template="/ftl/report/ajax/checkTable.ftl" /> 
+    
+	<!-- .report.check  -->
+	<definition name="report.ajaxTable.check" template="/ftl/report/ajax/checkTable.ftl" /> 
 	<definition name="report.chartTable.check" template="/ftl/report/chart/checkChartTable.ftl" />
 	 
     <definition name=".report.check" extends="default.report.layout" >
@@ -157,7 +152,7 @@
     </definition>
 	
 	<definition name="report.header.check" extends="report.header" >
-       <put-attribute name="jsName" value="reportCheck.js" />
+    	<put-attribute name="jsName" value="reportCheck.js" />
     </definition>
 	   
     <definition name="report.body.check" extends="report.body" >
@@ -176,13 +171,14 @@
     </definition>
 	
 	<definition name="report.header.campagin" extends="report.header" >
-       <put-attribute name="jsName" value="reportCampagin.js" />
+    	<put-attribute name="jsName" value="reportCampagin.js" />
     </definition>
 	   
     <definition name="report.body.campagin" extends="report.body" >
     	<put-attribute name="reportTable" value="report.ajaxTable.campagin" />
 		<put-attribute name="chartTable" value="report.chartTable.campagin" />
 	</definition>
+	
 	
 	<!-- .report.adgroup  -->
     <definition name="report.ajaxTable.adgroup" template="/ftl/report/ajax/adgroupTable.ftl" /> 
@@ -194,7 +190,7 @@
     </definition>
 	
 	<definition name="report.header.adgroup" extends="report.header" >
-       <put-attribute name="jsName" value="reportAdgroup.js" />
+    	<put-attribute name="jsName" value="reportAdgroup.js" />
     </definition>
 	   
     <definition name="report.body.adgroup" extends="report.body" >
@@ -205,12 +201,12 @@
     
     <!--.report.adOs  -->
 	<definition name=".report.ados" extends="default.report.layout">
-         <put-attribute name="header" value="report.header.ados" />
-         <put-attribute name="body" value="report.body.ados" />
+    	<put-attribute name="header" value="report.header.ados" />
+    	<put-attribute name="body" value="report.body.ados" />
     </definition>
     
     <definition name="report.header.ados" extends="report.header" >
-       <put-attribute name="jsName" value="reportAdOs.js" />
+    	<put-attribute name="jsName" value="reportAdOs.js" />
     </definition>
    
     <definition name="report.body.ados" extends="report.body" >
@@ -220,6 +216,7 @@
     
 	<definition name="report.ajaxTable.ados" template="/ftl/report/ajax/adOsTable.ftl" />
 	<definition name="report.chartTable.ados" template="/ftl/report/chart/adOsChartTable.ftl" />
+    
     
     <!-- .report.adTime  -->
     <definition name="report.ajaxTable.adTime" template="/ftl/report/ajax/adTimeTable.ftl" /> 
@@ -231,13 +228,14 @@
     </definition>
 	
 	<definition name="report.header.adTime" extends="report.header" >
-       <put-attribute name="jsName" value="reportAdTime.js" />
+    	<put-attribute name="jsName" value="reportAdTime.js" />
     </definition>
 	   
     <definition name="report.body.adTime" extends="report.body" >
     	<put-attribute name="reportTable" value="report.ajaxTable.adTime" />
 		<put-attribute name="chartTable" value="report.chartTable.adTime" />
 	</definition>
+    
     
     <!-- .report.adAgesex  -->
     <definition name="report.ajaxTable.adAgesex" template="/ftl/report/ajax/adAgesexTable.ftl" /> 
@@ -249,13 +247,14 @@
     </definition>
 	
 	<definition name="report.header.adAgesex" extends="report.header" >
-       <put-attribute name="jsName" value="reportAdAgesex.js" />
+    	<put-attribute name="jsName" value="reportAdAgesex.js" />
     </definition>
 	   
     <definition name="report.body.adAgesex" extends="report.body" >
     	<put-attribute name="reportTable" value="report.ajaxTable.adAgesex" />
 		<put-attribute name="chartTable" value="report.chartTable.adAgesex" />
 	</definition>
+    
     
     <!-- .report.adWebsite  -->
     <definition name="report.ajaxTable.adWebsite" template="/ftl/report/ajax/adWebsiteTable.ftl" /> 
@@ -267,7 +266,7 @@
     </definition>
 	
 	<definition name="report.header.adWebsite" extends="report.header" >
-       <put-attribute name="jsName" value="reportAdWebsite.js" />
+    	<put-attribute name="jsName" value="reportAdWebsite.js" />
     </definition>
 	   
     <definition name="report.body.adWebsite" extends="report.body" >
