@@ -926,6 +926,9 @@ function saveData() {
 		}
 	});
 	
+	
+	console.log(videoDetailMap);
+	
 	if(videoDetailMap.length == 0){
 		return false;
 	}
