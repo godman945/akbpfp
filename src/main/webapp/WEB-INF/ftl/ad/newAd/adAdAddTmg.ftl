@@ -8,8 +8,8 @@
   			<div style="clear:both;height:0px"></div>
 			<h4>製作廣告</h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
-				<tbody>
-					<tr>
+				<tbody> 
+					<tr>  
 						<th height="35" style="width:12%"><a name="errAdImg"></a>廣告圖片</th>
 						<td style="background:#f9f9f9;">
 							<span class="imgar" style="width:100%;">
@@ -95,7 +95,10 @@
 						</td>
 					</tr>
 					<tr>
-						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>廣告連結網址</th>
+						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>廣告連結網址
+							<br>
+                              <b class="thirdpty-togglebtn"><span class="swap">＋</span>第三方曝光追蹤代碼</b>
+						</th>
 						<td style="min-width:250px;">
 							<input type="hidden" id="adDetailID" name="adDetailID" value="real_url">
 							<input type="hidden" id="adDetailName" name="adDetailName" value="廣告連結網址">
@@ -104,6 +107,21 @@
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">已輸入0字，剩1024字</span>
 						</td>
 					</tr>
+					<tr class="thirdptybx" style="display: none;">
+                        <th style="width:12%">
+                           		 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(3)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
+                            <div id="shownotes3" style="visibility:hidden;" class="adnoticepop">
+                                <h4>第三方曝光追蹤代碼</h4>
+                                <div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
+                                <a onclick="closenots(3)" style="cursor:pointer;" class="adpopclose">關閉</a>
+                            </div>
+                        </th>
+                        <td>
+                          <div class="code-box">
+                              <textarea rows="1" placeholder="請輸入第三方曝光追蹤代碼" id="thirdCode" name="thirdCode"></textarea>
+                          </div>
+                        </td>
+                    </tr>
 					<tr>
 						<th height="35" style="width:12%;"><a name="errAdShowURL"></a><span class="t_s02">* </span>廣告顯示網址</th>
 						<td style="min-width:250px;">
@@ -119,3 +137,11 @@
 				</tbody>
 			</table>
 			<span class="t_s01">提醒您，於網路中張貼或散佈色情圖片是觸法行為，違者可處二年以下有期徒刑、拘役或併科三萬元以下罰金</span>
+			
+			
+			
+			<div id="shownotes3" style="visibility: hidden;" class="adnoticepop">
+					        <h4>第三方曝光追蹤代碼</h4>
+					        <div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
+					        <a onclick="closenots(3)" style="cursor:pointer;" class="adpopclose">關閉</a>
+			</div>

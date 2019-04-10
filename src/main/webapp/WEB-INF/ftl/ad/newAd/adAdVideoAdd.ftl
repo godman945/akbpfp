@@ -21,7 +21,13 @@
 						</td>
 					</tr>
 					<tr>
-                        <th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>影片到達網址</th>
+                        <th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>
+                        	影片到達網址
+                        	<br>
+                              <b class="thirdpty-togglebtn"><span class="swap">＋</span>第三方曝光追蹤代碼</b>
+						</td>
+                        
+                        </th>
                         <td style="min-width:200px;">
                             <input type="hidden" id="adDetailID" name="adDetailID" value="real_url">
                             <input type="hidden" id="adDetailName" name="adDetailName" value="影片到達網址">
@@ -30,6 +36,22 @@
                             <span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right;clear: both;;margin-right: 3%" id="spanAdLinkURL">已輸入0字，剩1024字</span>
                         </td>
                     </tr>
+                    <tr class="thirdptybx">
+                        <th style="width:12%">
+                           	 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(4)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
+                            <div id="shownotes4" style="visibility:hidden;" class="adnoticepop">
+                                <h4>第三方曝光追蹤代碼</h4>
+                                <div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
+                                <a onclick="closenots(4)" style="cursor:pointer;" class="adpopclose">關閉</a>
+                            </div>
+                        </th>
+                        <td>
+                          	     <div class="code-box">
+                                    <textarea rows='1' placeholder='請輸入第三方曝光追蹤代碼' id="thirdCode" name="thirdCode"></textarea>
+                                 </div>
+                        </td>
+                    </tr>
+
                     <tr id="notVerticalAdTr">
                         <th height="35" style="width:12%"><a name="errAdImg"></a><span class="t_s02">* </span>Banner廣告圖<br><a href="#" target="" onclick="approveSize('bannerDiv');">支援規格查詢 </a></th><td style="min-width:200px;">
                              <table border="0" cellspacing="0" cellpadding="0">
@@ -355,3 +377,9 @@
 	</table>
 </div>
 <!-- 970x250 Banner廣告圖 說明   END-->
+
+<div id="shownotes3" style="visibility: hidden;" class="adnoticepop">
+       <h4>第三方曝光追蹤代碼</h4>
+       <div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
+       <a onclick="closenots(3)" style="cursor:pointer;" class="adpopclose">關閉</a>
+</div>

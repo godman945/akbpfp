@@ -534,7 +534,7 @@
 				        fadeIn: 1000, 
 				        timeout:   200, 
 				        onBlock: function() {
-							setData();
+							$("#thirdCode").val();
 							// form submit
 							$("#modifyForm").attr("target", "doAdd");
 							$("#modifyForm").attr("action", "doAdAdAddTmg.html");
@@ -560,6 +560,29 @@
 	//處理頁籤部分
 	dealWithBookmark();
 });
+
+//第三方偵測
+$('.thirdpty-togglebtn').live('click', function(event) {  
+
+	if($('.thirdptybx').is(":hidden")){
+		$('.swap').text("－");
+		$('.thirdptybx').fadeToggle('fast');
+	}
+	else{
+		$('.swap').text("＋");
+		$('.thirdptybx').fadeToggle('fast');
+	}
+});
+
+
+function opennots(id) {
+	$("#shownotes"+id).css("visibility", "visible");
+}
+
+function closenots(id) {
+	$("#shownotes"+id).css("visibility", "hidden");
+}
+
 
 function ValidURL(url) {
 	var re = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-\u4e00-\u9fa5]+\.[a-zA-Z]{2,5}[\.]{0,1}/;

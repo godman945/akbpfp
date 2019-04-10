@@ -982,6 +982,7 @@ function saveData() {
 					"videoTime":adPreviewVideoData.videoTime,
 					"adTitle":adPreviewVideoData.adTitle,
 					"verticalAd":verticalAd,
+					"thirdCode":$("#thirdCode").val(),
 				},
 				success : function(respone) {
 //					console.log(respone);
@@ -1000,3 +1001,23 @@ function saveData() {
 	}
 }
 
+//第三方偵測
+$('.thirdpty-togglebtn').live('click', function(event) {  
+
+	if($('.thirdptybx').is(":hidden")){
+		$('.swap').text("－");
+		$('.thirdptybx').fadeToggle('fast');
+	}
+	else{
+		$('.swap').text("＋");
+		$('.thirdptybx').fadeToggle('fast');
+	}
+});
+
+function opennots(id) {
+	$("#shownotes"+id).css("visibility", "visible");
+}
+
+function closenots(id) {
+	$("#shownotes"+id).css("visibility", "hidden");
+}

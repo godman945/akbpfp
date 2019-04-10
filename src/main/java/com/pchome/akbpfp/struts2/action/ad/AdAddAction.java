@@ -180,7 +180,8 @@ public class AdAddAction extends BaseCookieAction{
 	Map<String,Object> dataMap;
 	private String adFastPublishUrlInfo; //多網址上稿，勾選的資料flag=Y
 	private IPfpAdManyURLSearchService pfpAdManyURLSearchService;
-	
+	//第三方偵測
+	private String thirdCode="";
 	private AdFactory adFactory;
 	private CookieUtil cookieUtil;
 	private PfpAdGroup pfpAdGroup;
@@ -272,21 +273,15 @@ public class AdAddAction extends BaseCookieAction{
 	@Transactional
 	public String doAdAdAddTmg() throws Exception {
 		log.info("doAdAdAddTmg => adGroupSeq = " + adGroupSeq + "; saveAndNew = '" + saveAndNew + "'");
-//		 result = "noAdd";
-		String[] parameterValues = request.getParameterValues("adDetailID");
-		
 		// 檢查 adStyle 是否正確，正確的話，設定 adPoolSeq、templateProductSeq
 		chkAdStyle();
-
 		// 檢查 Form 資料是否正確
 		chkAdData1();
 		if(message != null && !message.equals("")) {
 		    msg = new ByteArrayInputStream(message.getBytes());
 		    return INPUT;
 		}
-
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-
 		// 新增廣告
 		addAd(pfpAdGroup, null);
 		
@@ -341,7 +336,6 @@ public class AdAddAction extends BaseCookieAction{
 			    }else{
 			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
 			    }
-//			    adDetailContent[i] = (HttpUtil.getInstance().getRealUrl(adDetailContent[i]).replace("http://", ""));
 			    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
 			    adDetailContent[i] = adDetailContent[i].trim();
 			}
@@ -374,7 +368,7 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
 		pfpAdDetailVO.setAdSeq(adSeq);
 		pfpAdDetailVO.setAdPoolSeq("adp_201303070003");
-		pfpAdDetailVO.setAdDetailContent("");
+		pfpAdDetailVO.setAdDetailContent(thirdCode);
 		pfpAdDetailVO.setDefineAdSeq("dad_tracking_code");
 		pfpAdDetailVO.setAdDetailId("tracking_code");
 		pfpAdDetailVO.setVerifyFlag("n");
@@ -521,7 +515,7 @@ public class AdAddAction extends BaseCookieAction{
         		addExcludeKeywords(pfpAdGroup);
         		
         		//新增第三方偵測
-        		newSaveAdDetail("", "tracking_code", adPoolSeq, "dad_tracking_code");
+        		newSaveAdDetail(thirdCode, "tracking_code", adPoolSeq, "dad_tracking_code");
         		
         		log.info("新增ad_seq:" + adSeq + "完成。");
         	}
@@ -881,7 +875,7 @@ public class AdAddAction extends BaseCookieAction{
 				}
 				
 				//新增第三方偵測
-				saveAdDetail("" ,"tracking_code",pool,"dad_tracking_code");
+				saveAdDetail(thirdCode ,"tracking_code",pool,"dad_tracking_code");
 
 				adSeq = null;
 			}
@@ -1696,7 +1690,7 @@ public class AdAddAction extends BaseCookieAction{
         		}
         		
         		//新增第三方偵測
-    			saveAdDetail("" ,"tracking_code",adPoolSeq,"dad_tracking_code");
+    			saveAdDetail(thirdCode ,"tracking_code",adPoolSeq,"dad_tracking_code");
     	    }
     	}
 
@@ -2827,6 +2821,14 @@ public class AdAddAction extends BaseCookieAction{
 
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
+	}
+
+	public String getThirdCode() {
+		return thirdCode;
+	}
+
+	public void setThirdCode(String thirdCode) {
+		this.thirdCode = thirdCode;
 	}
 
 }
