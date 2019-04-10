@@ -761,9 +761,14 @@ public class AdAddAction extends BaseCookieAction{
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
 				adVideoSize = picInfoJson.getString("size");
 				log.info("adVideoSize:"+adVideoSize);
-				String adSize = adVideoSize.substring(0, 3)+"_"+adVideoSize.substring(3, adVideoSize.length());
-				log.info("adSize:"+adSize);
-				
+				String adSize = "";
+				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
+					if(enumAdVideoSize.getType().equals("BANNER")){
+						if(adVideoSize.equals(enumAdVideoSize.getRealWidth()+enumAdVideoSize.getRealHeight())) {
+							adSize = enumAdVideoSize.getWidh()+"_"+enumAdVideoSize.getHeight();
+						}
+					}
+				}
 				
 				String pool = "";
 				String templateAdSeq = "";
