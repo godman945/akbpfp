@@ -325,11 +325,20 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	});
 	
 	//檢核檔案大小
-	if(fileSize < 180){
-		imgFileSize = "yes";
+	if(width==1400){
+		if(fileSize < 600){
+			imgFileSize = "yes";
+		}else{
+			errorTitle = '檔案過大!';
+			errorMsg = '檔案大小上限600KB';
+		}
 	}else{
-		errorTitle = '檔案過大!';
-		errorMsg = '檔案大小上限180KB';
+		if(fileSize < 180){
+			imgFileSize = "yes";
+		}else{
+			errorTitle = '檔案過大!';
+			errorMsg = '檔案大小上限180KB';
+		}
 	}
 	
 	//檢核檔案尺寸
@@ -352,9 +361,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		errorMsg = '檔案空白';
 	}
 	//檢核重複上傳
-//	console.log(fileArray);
-//	console.log(width);
-//	console.log(height);
 	fileArray.forEach(function(fileData,index) {
 		if(file.name == fileData.name){
 			imgRepeatFlag = true;
@@ -363,12 +369,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			return false;
 		}
 	})
-	
-//	var $img = $('<img>');
-//	$img.on('load', function(){
-//	  console.log($(file).width());
-//	});
-	
 	
 	var fileName = file.name;
 	var showFileName = "";
@@ -417,25 +417,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			 '</li>';
 		$(".aduplodul_p").append(a);
 		
-//		$("#AG").children().each(function(index,value){
-//			var checkFlag = false;
-//			$(value.getElementsByTagName("ul")).children().each(function(index,obj){
-//				var existPicName = $(value).children()[3].value+"."+$(value).children()[5].value;
-//				console.log(existPicName);
-//				
-//				if(index == 0 && readoName == $(obj).children()[0].name && $($(obj).children()[2]).text() != showFileName){
-//					checkFlag = true;
-//				}
-//				
-//				if(checkFlag && index == 1){
-//					$(this).attr('class','no');
-//					var data = $($(this).children()[1]).html("<br>");
-//					$(this).children()[1].append('尺寸重複，僅能選擇一款。');
-//					$(data).prepend(width+" x "+height);
-//				}
-//				
-//			})
-//		})
 	}else if(imgSize == "no" || imgFileSize == "no" || imgType == "no" || imgRepeatFlag){
 		result = false;
 		var a =
@@ -834,7 +815,6 @@ function appendVideoPreview(){
 			});
 			
 			if(!createPreViewVideoExist){
-				console.log("TEST >>>>>>>>>>>");
 				var width = radioObj.name.substring(0,3);
 				var height = radioObj.name.substring(3,radioObj.name.length);
 				var a = 

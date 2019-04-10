@@ -1393,7 +1393,7 @@ public class AdAddAction extends BaseCookieAction{
 					log.info(">>>>>>>>>>>>>>>>>>>>     bodyTag = " + !bodyTag.isEmpty());
 					log.info(">>>>>>>>>>>>>>>>>>>>     metaTag = " + !metaTag.isEmpty());
 					
-					if(docHtml.indexOf("<!doctype html>") != -1 && !htmlTag.isEmpty() && !headTag.isEmpty() && !bodyTag.isEmpty() && !metaTag.isEmpty()){
+					if((docHtml.indexOf("<!doctype html>") != -1 || docHtml.indexOf("<!DOCTYPE html>") != -1)   && !htmlTag.isEmpty() && !headTag.isEmpty() && !bodyTag.isEmpty() && !metaTag.isEmpty()){
 						html5Repeat = "yes";
 						
 						//將index.html改為index.htm

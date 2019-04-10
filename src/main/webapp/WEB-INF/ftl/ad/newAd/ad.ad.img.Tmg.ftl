@@ -156,7 +156,9 @@
              		<div style="width:110px;float:left;" >
              			<#if searchPCSizeList?size != 0>
 	                 	<#list searchPCSizeList as searchPCSize>
-				 			<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
+				 			<#if (searchPCSize.width == 1400 && searchPCSize.height == 160) || (searchPCSize.width == 1400 && searchPCSize.height == 60)>
+				 				<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
+				 			</#if>
 						</#list>
 						</#if>
 					</div>
@@ -179,10 +181,11 @@
              		<div style="width:110px;float:left;">
              			<#if channelPCSizeList?size != 0>
 	                 	<#list channelPCSizeList as channelPCSize>
-				 			<p><#if channelPCSize.width?length == 2 >${channelPCSize.width!
-				 			}<#else>${channelPCSize.width!
-				 			}</#if> x <#if channelPCSize.height?length == 2 >${channelPCSize.height!
-				 			} &nbsp;<#else>${channelPCSize.height!}</#if>(電腦)</p>
+				 			<#if (channelPCSize.width == 1400 && channelPCSize.height == 160) || (channelPCSize.width == 1400 && channelPCSize.height == 60)>
+					 				<p style="display:none;">${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+					 			<#else>
+					 				<p>${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+					 		</#if>
 						</#list>
 						</#if>
 					</div>
@@ -191,7 +194,11 @@
 					<div style="width:120px;float:left;">
 						<#if channelMobileSizeList?size != 0>
 	                 	<#list channelMobileSizeList as channelMobileSize>
-				 			<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+				 			<#if (channelMobileSize.width == 1400 && channelMobileSize.height == 160) || (channelMobileSize.width == 1400 && channelMobileSize.height == 60)>
+					 				<p style="display:none;">${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+					 			<#else>
+					 				<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+					 		</#if>
 						</#list>
 						</#if>
 					</div>
@@ -231,10 +238,11 @@
 		             		<div style="width:110px;float:left;">
 		             			<#if channelPCSizeList?size != 0>
 			                 	<#list channelPCSizeList as channelPCSize>
-						 			<p><#if channelPCSize.width?length == 2 >${channelPCSize.width!
-						 			}<#else>${channelPCSize.width!
-						 			}</#if> x <#if channelPCSize.height?length == 2 >${channelPCSize.height!
-						 			} &nbsp;<#else>${channelPCSize.height!}</#if>(電腦)</p>
+				                 	<#if (channelPCSize.width == 1400 && channelPCSize.height == 160) || (channelPCSize.width == 1400 && channelPCSize.height == 60)>
+					 					<p style="display:none;">${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+					 				<#else>
+					 					<p>${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+					 				</#if>
 								</#list>
 								</#if>
 							</div>
@@ -243,7 +251,11 @@
 							<div style="width:120px;float:left;">
 								<#if channelMobileSizeList?size != 0>
 			                 	<#list channelMobileSizeList as channelMobileSize>
-						 			<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+						 			<#if (channelMobileSize.width == 1400 && channelMobileSize.height == 160) || (channelMobileSize.width == 1400 && channelMobileSize.height == 60)>
+					 					<p style="display:none;">${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+					 				<#else>
+					 					<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+					 				</#if>
 								</#list>
 								</#if>
 							</div>

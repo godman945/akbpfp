@@ -127,7 +127,6 @@ function callBlockUpload(){
 var imgIndex = 0;
 var flag = false;
 function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat, html5Repeat, imgSrc, zipErrorMsg) {
-	
 	if(flag == false){
 		$("#fileUploadSize").text(parseInt($("#fileUploadSize").text()) + uploadFileSize);
 		flag = true;
@@ -156,11 +155,20 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	var errorMsg ='';
 	var errorTitle ='';
 	
-	if(Math.round(file.size/1024) < 180){
-		imgFileSize = "yes";
+	if(width == 1400){
+		if(Math.round(file.size/1024) < 600){
+			imgFileSize = "yes";
+		}else{
+			errorTitle = '檔案過大!';
+			errorMsg = '檔案大小上限180KB';
+		}
 	}else{
-		errorTitle = '檔案過大!';
-		errorMsg = '檔案大小上限180KB';
+		if(Math.round(file.size/1024) < 180){
+			imgFileSize = "yes";
+		}else{
+			errorTitle = '檔案過大!';
+			errorMsg = '檔案大小上限180KB';
+		}
 	}
 	
 	var sizeDiv = "adSizeDiv";
