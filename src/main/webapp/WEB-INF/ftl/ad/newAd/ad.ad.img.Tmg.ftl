@@ -1,5 +1,6 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
+<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/ad/adPlugInStyle.css" />
 <div>
     <form id="formImg" action=""  method="post"  target="hidden_frame" enctype="multipart/form-data">
         <div>
@@ -36,7 +37,11 @@
 			<table width="100%" id="alex" cellspacing="1" cellpadding="0" border="0" class="tb02">
 				<tbody>
 					<tr>
-						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>廣告連結網址</th>
+						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>
+						廣告連結網址
+						<br>
+                              <b class="thirdpty-togglebtn"><span class="swap">＋</span>第三方曝光追蹤代碼</b>
+						</th>
 						<td style="min-width:250px;">
 							<input type="hidden" id="adDetailID" name="adDetailID" value="real_url">
 							<input type="hidden" id="adDetailName" name="adDetailName" value="廣告連結網址">
@@ -45,6 +50,21 @@
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">已輸入0字，剩1024字</span>
 						</td>
 					</tr>
+					<tr class="thirdptybx" style="display: none;">
+                        <th style="">
+                           		 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(3)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
+                            <div id="shownotes3" style="z-index:500;visibility:hidden;" class="adnoticepop">
+                                <h4>第三方曝光追蹤代碼</h4>
+                                <div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
+                                <a onclick="closenots(3)" style="cursor:pointer;" class="adpopclose">關閉</a>
+                            </div>
+                        </th>
+                        <td>
+                          <div class="code-box">
+                              <textarea rows="1" placeholder="請輸入第三方曝光追蹤代碼" id="thirdCode" name="thirdCode"></textarea>
+                          </div>
+                        </td>
+                    </tr>
                     <tr>
 						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br>
 							<a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize('approveSizeDiv');">支援規格查詢</a>
@@ -307,5 +327,6 @@
     <a href="#" onclick="closeBtn();" class="popclose">關閉</a>
    </div>
 </div>
+   
 
 <div id="preview"></div>
