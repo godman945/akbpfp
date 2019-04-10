@@ -1302,8 +1302,9 @@ public class AdAddAction extends BaseCookieAction{
 		if(StringUtils.isNotBlank(defineAdSeq) && defineAdSeq.equals("dad_tracking_code")) {
 			pfpAdDetail.setVerifyFlag("n");
 		}else {
-			pfpAdDetail.setVerifyStatus("y");	
+			pfpAdDetail.setVerifyFlag("y");
 		}
+		pfpAdDetail.setVerifyStatus("n");	
 		pfpAdDetail.setAdDetailCreateTime(new Date());
 		pfpAdDetail.setAdDetailUpdateTime(new Date());
 		pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
