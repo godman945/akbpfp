@@ -397,7 +397,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		
 		var anyWindow = window.URL || window.webkitURL;
 		var objectUrl = anyWindow.createObjectURL(file);
-		var readoName = width+height;
+		var readoName = width+"_"+height;
 		
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;width: 18.5%; "  id="'+adSeq+'">'+
@@ -486,8 +486,8 @@ function clickSizePic(showFileName,width,height){
 		}
 		
 		$(ulObj).children().each(function(index,obj){
-			var width = radioName.substring(0,3);
-			var height = radioName.substring(3,radioName.length);
+			var width = radioName.split("_")[0];
+			var height = radioName.split("_")[1];
 			
 			if(flag){
 				if(index == 1){

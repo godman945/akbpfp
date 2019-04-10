@@ -1629,7 +1629,13 @@ public class AdAddAction extends BaseCookieAction{
         		
         		if(imgMD5Map.get(adSeq + "_imgMD5") != null && StringUtils.equals(imgMD5Map.get(adSeq + "_imgMD5").toString(), "X")){
         			imageVO = commonUtilModel.createAdHtml5(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
-        			adAssignTadSeq = "c_x05_po_tad_0059";
+        			if(EnumAdSize.adp_201904090001.getWidh().equals(imageVO.getImgWidth()) && EnumAdSize.adp_201904090001.getHeight().equals(imageVO.getImgHeight())) {
+        				adAssignTadSeq = "c_x03_po_tad_0167";
+        			}else if(EnumAdSize.adp_201904090002.getWidh().equals(imageVO.getImgWidth()) && EnumAdSize.adp_201904090002.getHeight().equals(imageVO.getImgHeight())) {
+        				adAssignTadSeq = "c_x03_po_tad_0168";
+        			}else {
+        				adAssignTadSeq = "c_x05_po_tad_0059";
+        			}
         		} else {
         			imageVO = commonUtilModel.createAdImg(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
         		}

@@ -127,6 +127,7 @@ function callBlockUpload(){
 var imgIndex = 0;
 var flag = false;
 function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat, html5Repeat, imgSrc, zipErrorMsg) {
+	
 	if(flag == false){
 		$("#fileUploadSize").text(parseInt($("#fileUploadSize").text()) + uploadFileSize);
 		flag = true;
@@ -177,10 +178,21 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	}
 	
 	$.each($("#" + sizeDiv + " p"), function( index, obj ) {
-		if($(obj).text().indexOf(width+" x "+height) >= 0){
-			imgSize = "yes";
-			imgSizeFlag = true;
-			return false;
+		if(html5Repeat=="yes" && $(obj).attr('style') == 'display:none;'){
+			console.log(obj);
+			if($(obj).text().indexOf(width+" x "+height) >= 0){
+				imgSize = "yes";
+				imgSizeFlag = true;
+				return false;
+			}
+		}
+		if(html5Repeat=="no" && $(obj).attr('style') == undefined ){
+			console.log(obj);
+			if($(obj).text().indexOf(width+" x "+height) >= 0){
+				imgSize = "yes";
+				imgSizeFlag = true;
+				return false;
+			}
 		}
 	});
 	
@@ -555,7 +567,6 @@ function multipartImgUuploadSubmit(){
 		"imgNameMap" : imgNameMap,
 		"imgMD5Map" : imgMD5Map
 	}
-	
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
 		var map = JSON.stringify(map);
