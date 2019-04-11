@@ -481,7 +481,7 @@ function clickSizePic(showFileName,width,height){
 				return true;
 			}
 			var existPicName = $(value).children()[3].value+"."+$(value).children()[5].value;
-			if(showFileName == existPicName && radioName == (width+height)){
+			if(showFileName == existPicName && radioName == (width+"_"+height)){
 				flag = true;
 			}else if(radioName == (width+"_"+height)){
 				flag = false;
