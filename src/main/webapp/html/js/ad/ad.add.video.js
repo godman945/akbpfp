@@ -462,14 +462,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 }
 
 function clickSizePic(showFileName,width,height){
-	
-	
-	console.log(showFileName);
-	console.log(width);
-	console.log(height);
-	
-	
-	
 	$("#AG").children().each(function(index,value){
 		var flag = null;
 		var ulObj = null;
@@ -934,10 +926,6 @@ function saveData() {
 			}
 		}
 	});
-	
-	
-	console.log(videoDetailMap);
-	
 	if(videoDetailMap.length == 0){
 		return false;
 	}
