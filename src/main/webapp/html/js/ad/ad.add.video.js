@@ -808,7 +808,8 @@ function appendVideoPreview(){
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
-				if(size == radioObj.name){
+				var radioSizeName = radioObj.name.split("_")[0]+radioObj.name.split("_")[1];
+				if(size == radioSizeName){
 					createPreViewCheckboxObj = checkboxObj;
 					createPreViewVideoExist = true;
 				}
