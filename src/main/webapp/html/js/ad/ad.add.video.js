@@ -815,8 +815,8 @@ function appendVideoPreview(){
 			});
 			
 			if(!createPreViewVideoExist){
-				var width = radioObj.name.substring(0,3);
-				var height = radioObj.name.substring(3,radioObj.name.length);
+				var width = radioObj.name.split("_")[0];
+				var height = radioObj.name.split("_")[1];
 				var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
