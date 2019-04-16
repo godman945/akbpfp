@@ -98,7 +98,8 @@ public class AdEditAction extends BaseCookieAction{
 	private String adDetailTitleSeq;
 	private String imgTitle;
 	private String adType;
-	
+	//第三方偵測
+	private String thirdCode="";
 	private int adGroupStatus;
 	private int adActionStatus;
 	
@@ -179,8 +180,8 @@ public class AdEditAction extends BaseCookieAction{
 		}
 
 		pfpAdDetails = pfpAdDetailService.getPfpAdDetails(null, adSeq, null, null);
-		adDetailSeq = new String[7];
-		adDetailContent = new String[7];
+		adDetailSeq = new String[8];
+		adDetailContent = new String[8];
 
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
@@ -232,6 +233,9 @@ public class AdEditAction extends BaseCookieAction{
 					deCodeUrl = HttpUtil.getInstance().convertRealUrl(show_url);
 				}
 				adDetailContent[6] = deCodeUrl;
+			}else if (adDetailId != null && adDetailId.equals("tracking_code")) {
+				adDetailSeq[7] = pfpAdDetails.get(i).getAdDetailSeq();
+				thirdCode = pfpAdDetails.get(i).getAdDetailContent();
 			}
 		}
 
@@ -478,8 +482,6 @@ public class AdEditAction extends BaseCookieAction{
 	 * */
 	public String doAdAdEditVideo() {
 		try{
-			System.out.println(adSeq);
-			System.out.println(adLinkURL);
 			List<PfpAdDetail> pfpAdDetailList = pfpAdDetailService.getPfpAdDetailByAdSeq(adSeq);
 			Date date = new Date();
 			for (PfpAdDetail pfpAdDetail : pfpAdDetailList) {
@@ -492,7 +494,15 @@ public class AdEditAction extends BaseCookieAction{
 					pfpAd.setAdSendVerifyTime(date);
 					pfpAd.setAdUpdateTime(date);
 					pfpAdService.updatePfpAd(pfpAd);
-					break;
+				}
+				if(pfpAdDetail.getAdDetailId().equals("tracking_code")){
+					pfpAdDetail.setAdDetailContent(thirdCode);
+					pfpAdDetail.setAdDetailUpdateTime(date);
+					PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
+					pfpAd.setAdStatus(EnumStatus.NoVerify.getStatusId());
+					pfpAd.setAdSendVerifyTime(date);
+					pfpAd.setAdUpdateTime(date);
+					pfpAdService.updatePfpAd(pfpAd);
 				}
 			}
 			result = "success";
@@ -1050,7 +1060,6 @@ public class AdEditAction extends BaseCookieAction{
 		adActionStatus = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
 		adType = pfpAd.getPfpAdGroup().getPfpAdAction().getAdType().toString();
 		adVerifyRejectReason = "";
-
 		// ad Status
 		for(EnumStatus status:EnumStatus.values()){
 			if(status.getStatusId() == adStatus){
@@ -1062,8 +1071,8 @@ public class AdEditAction extends BaseCookieAction{
 		}
 
 		pfpAdDetails = pfpAdDetailService.getPfpAdDetails(null, adSeq, null, null);
-		adDetailSeq = new String[5];
-		adDetailContent = new String[5];
+		adDetailSeq = new String[6];
+		adDetailContent = new String[6];
 
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
@@ -1099,7 +1108,7 @@ public class AdEditAction extends BaseCookieAction{
 				    deCodeUrl = HttpUtil.getInstance().convertRealUrl(deCodeUrl);
 				}
 				catch (Exception e) {
-				    log.error(deCodeUrl, e);
+//				    log.error(deCodeUrl, e);
 				}
 				adDetailContent[3] = deCodeUrl.replaceAll("http://", "");
 				adLinkURL = deCodeUrl;
@@ -1113,6 +1122,9 @@ public class AdEditAction extends BaseCookieAction{
 				    deCodeUrl =HttpUtil.getInstance().convertRealUrl(show_url);
 				}
 				adDetailContent[4] = deCodeUrl;
+			}else if(adDetailId != null && adDetailId.equals("tracking_code")) {
+				adDetailSeq[5] = pfpAdDetails.get(i).getAdDetailSeq();
+				thirdCode = pfpAdDetails.get(i).getAdDetailContent();
 			}
 		}
 
@@ -1711,6 +1723,14 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
+	}
+
+	public String getThirdCode() {
+		return thirdCode;
+	}
+
+	public void setThirdCode(String thirdCode) {
+		this.thirdCode = thirdCode;
 	}
 
 }

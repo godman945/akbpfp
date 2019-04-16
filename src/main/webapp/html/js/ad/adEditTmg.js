@@ -758,3 +758,11 @@ function processCheckMatch(flag, string) {
 	}
 	return false;
 }
+//第三方偵測
+function opennots(id) {
+	$("#shownotes"+id).css("visibility", "visible");
+}
+
+function closenots(id) {
+	$("#shownotes"+id).css("visibility", "hidden");
+}

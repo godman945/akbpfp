@@ -224,7 +224,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 				}
 
 				String html5Tag = "N";
-				if(StringUtils.equals("c_x05_po_tad_0059", pfpAd.getAdAssignTadSeq())){
+				if((StringUtils.equals("c_x05_po_tad_0059", pfpAd.getAdAssignTadSeq())) || (StringUtils.equals("c_x03_po_tad_0167", pfpAd.getAdAssignTadSeq())) || (StringUtils.equals("c_x03_po_tad_0168", pfpAd.getAdAssignTadSeq()))){
 					html5Tag = "Y";
 				}
 				pfpAdAdViewVO.setHtml5Tag(html5Tag);

@@ -178,8 +178,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	}
 	
 	$.each($("#" + sizeDiv + " p"), function( index, obj ) {
-		if(html5Repeat=="yes" && $(obj).attr('style') == 'display:none;'){
-			console.log(obj);
+		if(html5Repeat=="yes"){
 			if($(obj).text().indexOf(width+" x "+height) >= 0){
 				imgSize = "yes";
 				imgSizeFlag = true;
@@ -240,7 +239,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 //	console.log('imgRepeat:'+imgRepeat);
 //	console.log('thisImgRepeat:'+thisImgRepeat);
 //	console.log('html5Repeat:'+html5Repeat);
-	
 	if (adSeq == "") {
 		errorTitle = '上傳失敗!';
 		errorMsg = '檔案空白';
