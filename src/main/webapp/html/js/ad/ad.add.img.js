@@ -264,6 +264,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			 '</li>';
 		$(".aduplodul").append(a);
 	} else if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"  && imgRepeat == "no" && thisImgRepeat == "yes" && html5Repeat == "yes"){
+		imgSrc = imgSrc.substring(imgSrc.indexOf('img'),imgSrc.length);
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
 			 '<div class="adboxdv" >'+

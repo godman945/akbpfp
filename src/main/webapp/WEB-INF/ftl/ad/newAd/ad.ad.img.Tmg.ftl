@@ -156,9 +156,7 @@
              		<div style="width:110px;float:left;" >
              			<#if searchPCSizeList?size != 0>
 	                 	<#list searchPCSizeList as searchPCSize>
-				 			<#if (searchPCSize.width == 1400 && searchPCSize.height == 160) || (searchPCSize.width == 1400 && searchPCSize.height == 60)>
-				 				<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
-				 			</#if>
+	                 		<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
 						</#list>
 						</#if>
 					</div>
