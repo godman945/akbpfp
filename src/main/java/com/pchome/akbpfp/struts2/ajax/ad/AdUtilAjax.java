@@ -169,7 +169,9 @@ public class AdUtilAjax extends BaseCookieAction{
 	 * 2.影片格式目前開放30秒以下才可通過
 	 * */
 	public String chkVideoUrl() throws Exception{
-		adVideoUrl = adVideoUrl.substring(0, adVideoUrl.indexOf("&"));
+		if(adVideoUrl.indexOf("&") >= 0) {
+			adVideoUrl = adVideoUrl.substring(0, adVideoUrl.indexOf("&"));
+		}
 		String videoResult = "";
 		// 檢查youtube網址是否有效
 		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --list-formats " + adVideoUrl });
@@ -202,11 +204,9 @@ public class AdUtilAjax extends BaseCookieAction{
 		}
 		
 		//判斷是否直立影片
-		log.info("videoResult =========== "+videoResult);
 		boolean verticalAdFlag = false;
 		if(videoResult.indexOf("small") >=0){
 			String videoSize = (videoResult.substring(videoResult.indexOf("18           mp4    "),videoResult.indexOf("    small"))).replace("18           mp4    ", "").replace(" ", "").trim();
-			log.info("videoSize =========== "+videoSize);
 			String [] videoSizeArray = videoSize.toString().split("x");
 			if(Integer.parseInt(videoSizeArray[1]) > Integer.parseInt(videoSizeArray[0])){
 				verticalAdFlag = true;
