@@ -190,6 +190,23 @@ public class AdUtilAjax extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
+		
+		if((!videoResult.contains("22           mp4") && !videoResult.contains("18           mp4") ) && (!videoResult.contains("247           webm") && !videoResult.contains("43           webm"))) {
+			log.info(">>>>>> youtube format fail:" + adVideoUrl);
+			json.put("result", false);
+			json.put("msg", "影片提供格式不符合");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			log.error(">>>>>>"+videoResult);
+			return SUCCESS;
+		}
+		
+		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adVideoUrl });
+		log.info(">>>>>>video format result:" + videoResult);
+		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
+		log.info(IOUtils.toString(process.getInputStream(),"UTF-8"));
+		log.info(new String(new ByteArrayOutputStream().toByteArray()));
+		
 		int seconds = 0;
 		String[] videoInfoArray = videoResult.split("&");
 		List<String> info = Arrays.asList(videoInfoArray);
@@ -209,7 +226,6 @@ public class AdUtilAjax extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
-		
 		//判斷是否直立影片
 		boolean verticalAdFlag = false;
 		if(videoResult.indexOf(" (small)") >=0){
@@ -223,15 +239,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			}
 		}
 		
-		if((!videoResult.contains("22           mp4") && !videoResult.contains("18           mp4") ) && (!videoResult.contains("247           webm") && !videoResult.contains("43           webm"))) {
-			log.info(">>>>>> youtube format fail:" + adVideoUrl);
-			json.put("result", false);
-			json.put("msg", "影片提供格式不符合");
-			this.result = json.toString();
-			this.msg = new ByteArrayInputStream(json.toString().getBytes());
-			log.error(">>>>>>"+videoResult);
-			return SUCCESS;
-		}
+
 		
 
 		String adTitle = "";
