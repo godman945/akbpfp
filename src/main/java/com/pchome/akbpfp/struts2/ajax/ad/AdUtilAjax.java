@@ -169,10 +169,11 @@ public class AdUtilAjax extends BaseCookieAction{
 	 * 2.影片格式目前開放30秒以下才可通過
 	 * */
 	public String chkVideoUrl() throws Exception{
+		adVideoUrl = adVideoUrl.substring(0, adVideoUrl.indexOf("&"));
 		String videoResult = "";
 		// 檢查youtube網址是否有效
 		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --list-formats " + adVideoUrl });
-//		process.waitFor();
+		process.waitFor();
 		videoResult = IOUtils.toString(process.getInputStream(), "UTF-8");
 		log.info(">>>>>>video format result:" + videoResult);
 		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
