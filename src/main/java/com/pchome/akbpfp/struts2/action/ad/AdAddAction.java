@@ -782,6 +782,10 @@ public class AdAddAction extends BaseCookieAction{
 						isBannerSize = true;
 						pool = enumAdVideoSize.getPoolType();
 						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+						
+						
+						log.info("templateAdSeq:"+templateAdSeq);
+						
 						break;
 					}else if(enumAdVideoSize.getType().equals("VERTICAL") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight()) && verticalAd){
 						isBannerSize = false;
