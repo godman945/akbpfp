@@ -755,7 +755,11 @@ public class AdAddAction extends BaseCookieAction{
 			
 			
 			//根據尺寸建立明細
+			String pool = "";
+			String templateAdSeq = "";
 			for (int i = 0; i<adDetailInfoArray.length(); i++) {
+				pool = "";
+				templateAdSeq = "";
 				String adVideoSize = "";
 				boolean isBannerSize = true;
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
@@ -763,40 +767,34 @@ public class AdAddAction extends BaseCookieAction{
 				log.info("adVideoSize:"+adVideoSize);
 				String adSize = "";
 				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
-					if(enumAdVideoSize.getType().equals("BANNER")){
-						if(adVideoSize.equals(enumAdVideoSize.getRealWidth()+enumAdVideoSize.getRealHeight())) {
+					if(verticalAd) {
+						if(enumAdVideoSize.getType().equals("VERTICAL") && adVideoSize.contentEquals(enumAdVideoSize.getRealWidth()+enumAdVideoSize.getRealHeight())){
 							adSize = enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight();
+							isBannerSize = false;
+							pool = enumAdVideoSize.getPoolType();
+							templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+							break;
+						}
+					}else {
+						if(enumAdVideoSize.getType().equals("BANNER") && adVideoSize.contentEquals(enumAdVideoSize.getRealWidth()+enumAdVideoSize.getRealHeight())){
+							adSize = enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight();
+							isBannerSize = true;
+							pool = enumAdVideoSize.getPoolType();
+							templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+							break;
+						}
+						if(enumAdVideoSize.getType().equals("DEFAULT") && adVideoSize.contentEquals(enumAdVideoSize.getRealWidth()+enumAdVideoSize.getRealHeight())){
+							adSize = enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight();
+							isBannerSize = false;
+							pool = enumAdVideoSize.getPoolType();
+							templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+							break;
 						}
 					}
 				}
 				
-				String pool = "";
-				String templateAdSeq = "";
-				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
-					if(enumAdVideoSize.getType().equals("DEFAULT") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight()) && !verticalAd){
-						isBannerSize = false;
-						pool = enumAdVideoSize.getPoolType();
-						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
-						break;
-					}else if(enumAdVideoSize.getType().equals("BANNER") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight()) && !verticalAd){
-						isBannerSize = true;
-						pool = enumAdVideoSize.getPoolType();
-						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
-						
-						
-						log.info("templateAdSeq:"+templateAdSeq);
-						
-						break;
-					}else if(enumAdVideoSize.getType().equals("VERTICAL") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight()) && verticalAd){
-						isBannerSize = false;
-						pool = enumAdVideoSize.getPoolType();
-						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
-						break;
-					}
-				}
 				addAd(pfpAdGroup,templateAdSeq);
 				PfpAd pfpAd = pfpAdService.get(adSeq);
-				
 				//變更暫存圖片檔名為此次上傳名細序號
 				if(isBannerSize){
 					customerImgFile = new File(originalPath + "/" + picInfoJson.getString("adSeq")+"."+picInfoJson.getString("format"));
@@ -887,6 +885,163 @@ public class AdAddAction extends BaseCookieAction{
 				saveAdDetail(thirdCode ,"tracking_code",pool,"dad_tracking_code");
 
 				adSeq = null;
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+//				String adVideoSize = "";
+//				boolean isBannerSize = true;
+//				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
+//				adVideoSize = picInfoJson.getString("size");
+//				log.info("adVideoSize:"+adVideoSize);
+//				String adSize = "";
+//				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
+//					if(enumAdVideoSize.getType().equals("BANNER")){
+//						if(adVideoSize.equals(enumAdVideoSize.getRealWidth()+enumAdVideoSize.getRealHeight())) {
+//							adSize = enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight();
+//						}
+//						
+//					}else
+//					if(enumAdVideoSize.getType().equals("DEFAULT")){
+//						if(adVideoSize.equals(enumAdVideoSize.getRealWidth()+enumAdVideoSize.getRealHeight())) {
+//							adSize = enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight();
+//						}
+//					}
+//				}
+//				
+//				String pool = "";
+//				String templateAdSeq = "";
+//				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
+//					if(enumAdVideoSize.getType().equals("DEFAULT") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight()) && !verticalAd){
+//						isBannerSize = false;
+//						pool = enumAdVideoSize.getPoolType();
+//						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+//						break;
+//					}else if(enumAdVideoSize.getType().equals("BANNER") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight()) && !verticalAd){
+//						isBannerSize = true;
+//						pool = enumAdVideoSize.getPoolType();
+//						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+//						
+//						
+//						log.info("templateAdSeq:"+templateAdSeq);
+//						
+//						break;
+//					}else if(enumAdVideoSize.getType().equals("VERTICAL") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight()) && verticalAd){
+//						isBannerSize = false;
+//						pool = enumAdVideoSize.getPoolType();
+//						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+//						break;
+//					}
+//				}
+//				addAd(pfpAdGroup,templateAdSeq);
+//				PfpAd pfpAd = pfpAdService.get(adSeq);
+//				
+//				//變更暫存圖片檔名為此次上傳名細序號
+//				if(isBannerSize){
+//					customerImgFile = new File(originalPath + "/" + picInfoJson.getString("adSeq")+"."+picInfoJson.getString("format"));
+//					File originalRenameFile  = new File(originalPath+"/"+adSeq+"."+picInfoJson.getString("format"));
+//					if(originalRenameFile.exists()){
+//						originalRenameFile.delete();
+//					}
+//					customerImgFile.renameTo(originalRenameFile);
+//					customerImgFile = new File(temporalPath + "/" + picInfoJson.getString("adSeq")+"."+picInfoJson.getString("format"));
+//					File temporalRenameFile = new File(temporalPath+"/"+adSeq+"."+picInfoJson.getString("format"));
+//					if(temporalRenameFile.exists()){
+//						temporalRenameFile.delete();
+//					}
+//					customerImgFile.renameTo(temporalRenameFile);
+//				}
+//				
+//				//1.開始新增明細
+//				adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+//				PfpAdDetail pfpAdDetail = new PfpAdDetail();
+//				pfpAdDetail.setAdDetailSeq(adDetailSeq);
+//				pfpAdDetail.setAdDetailId("img");
+//				pfpAdDetail.setPfpAd(pfpAd);
+//				if(isBannerSize){
+//					pfpAdDetail.setAdDetailContent("img/user/"+super.getCustomer_info_id()+"/"+sdf.format(date)+"/"+"original"+"/"+adSeq+"."+picInfoJson.getString("format"));	
+//				}else{
+//					pfpAdDetail.setAdDetailContent("img/public/na.gif\" style=\"display:none");
+//				}
+//				pfpAdDetail.setAdPoolSeq(pool);
+//				pfpAdDetail.setDefineAdSeq(EnumAdDetail.define_ad_seq_img.getAdDetailName());
+//				pfpAdDetail.setVerifyFlag("y");
+//				pfpAdDetail.setVerifyStatus("n");
+//				pfpAdDetail.setAdDetailUpdateTime(date);
+//				pfpAdDetail.setAdDetailCreateTime(date);
+//				pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
+//				
+//				//2.儲存影片網址、影片連結網址、影片尺寸明細
+//				if(adLinkURL.indexOf("http") < 0){
+//					adLinkURL = "http://"+adLinkURL;
+//				}
+//				saveAdDetail(adLinkURL ,EnumAdDetail.real_url.getAdDetailName(),pool,EnumAdDetail.define_ad_seq_real_url.getAdDetailName());
+//				saveAdDetail(adVideoURL ,EnumAdDetail.video_url.getAdDetailName(),pool,"");
+//				saveAdDetail(adSize ,"video_size",pool,"dad_201303070012");
+//				saveAdDetail(adTitle.trim() ,"content",pool,"");
+//				if(verticalAd){
+//					saveAdDetail("Y" ,"video_vertical",pool,"dad_201303070013");
+//				}else{
+//					saveAdDetail("N" ,"video_vertical",pool,"dad_201303070013");
+//				}
+//
+//				//3.儲存影片下載狀態與位置明細
+//				if(pfpAdVideoSource == null){
+//					saveAdDetail("尚未下載" ,"mp4_path",pool,EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
+//					saveAdDetail("尚未下載" ,"webm_path",pool,EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
+//					saveAdDetail(adVideoURL ,"mp4_url",pool,EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
+//					saveAdDetail(adVideoURL ,"webm_url",pool,EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
+//					saveAdDetail("尚未下載" ,"video_status",pool,"");
+//					saveAdDetail(videoTime ,"video_seconds",pool,"");
+//					String videpSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_VIDEO_SOURCE, "_");
+//					pfpAdVideoSource = new PfpAdVideoSource();
+//					pfpAdVideoSource.setAdVideoSeq(videpSeq);
+//					pfpAdVideoSource.setAdVideoStatus(0);
+//					pfpAdVideoSource.setAdVideoUrl(adVideoURL);
+//					pfpAdVideoSource.setAdVideoWebmPath("尚未下載");
+//					pfpAdVideoSource.setAdVideoMp4Path("尚未下載");
+//					if(verticalAd){
+//						pfpAdVideoSource.setVideoVertical("Y");						
+//					}else{
+//						pfpAdVideoSource.setVideoVertical("N");
+//					}
+//					pfpAdVideoSource.setCreateDate(date);
+//					pfpAdVideoSource.setUpdateDate(date);
+//					pfpAdVideoSourceService.saveOrUpdate(pfpAdVideoSource);
+//				}else{
+//					for (EnumAdVideoDownloadStatus enumAdVideoDownloadStatus : EnumAdVideoDownloadStatus.values()) {
+//						if(pfpAdVideoSource.getAdVideoStatus() == enumAdVideoDownloadStatus.getStatus()){
+//							saveAdDetail(pfpAdVideoSource.getAdVideoMp4Path() ,"mp4_path",pool,EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
+//							saveAdDetail(pfpAdVideoSource.getAdVideoWebmPath() ,"webm_path",pool,EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
+//							saveAdDetail(enumAdVideoDownloadStatus.getDownloadValue() ,"video_status",pool,"");
+//							saveAdDetail(videoTime ,"video_seconds",pool,"");
+//							saveAdDetail(adVideoURL ,"mp4_url",pool,EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
+//							saveAdDetail(adVideoURL ,"webm_url",pool,EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
+//							break;
+//						}
+//					}
+//				}
+//				
+//				//新增第三方偵測
+//				saveAdDetail(thirdCode ,"tracking_code",pool,"dad_tracking_code");
+//
+//				adSeq = null;
 			}
 			
 			// 開啟廣告分類
@@ -1043,7 +1198,6 @@ public class AdAddAction extends BaseCookieAction{
 	//新增廣告
 	public void addAd(PfpAdGroup pfpAdGroup, String adAssignTadSeq) {
 		try {
-			log.info(">>>>> time: " + new Date());
 			if(adSeq == null || StringUtils.isBlank(adSeq)){
 				adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
 			}
