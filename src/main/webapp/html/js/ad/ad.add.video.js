@@ -584,7 +584,12 @@ function deleteImgDom(fileName,file){
 		}
 	});
 	
+	
+	console.log("deleteSize:"+deleteSize);
+	
 	$.each($(fileArray), function( index, file ) {
+		console.log(fileName+":"+file.name);
+		
 		if(fileName == file.name){
 			fileArray.splice(index, 1);
 			return false;
@@ -602,6 +607,9 @@ function deleteImgDom(fileName,file){
 	var previewobj = null;
 	$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 		var size = checkboxObj.id.replace('checkbox_','');
+		console.log(size+":"+size);
+		console.log(deleteSize+":"+deleteSize);
+		
 		if(size == deleteSize){
 			previewobj = $($($(checkboxObj).parent()).parent().parent()[0]);
 		}
@@ -610,6 +618,7 @@ function deleteImgDom(fileName,file){
 	var picIndexTotal = 0;
 	$("#AG").children().each(function(index,value){
 		var obj = value;
+		console.log(obj);
 		$($(value).children("ul")).children().each(function(index,value){
 			
 			console.log("deleteSize:"+deleteSize);
