@@ -567,6 +567,7 @@ function changeRedioPanel(obj){
 //刪除欲上傳檔案
 function deleteImgDom(fileName,file){
 	var deleteSize = null;
+	console.log(fileArray);
 	$.each($(".aduplodul_p li"), function(index,obj) {
 		if(fileName == obj.id){
 			if($(this).attr('class') == 'okbox'){
@@ -586,7 +587,7 @@ function deleteImgDom(fileName,file){
 	
 	
 	console.log("deleteSize:"+deleteSize);
-	
+	console.log(fileArray);
 	$.each($(fileArray), function( index, file ) {
 		console.log(fileName+":"+file.name);
 		
@@ -610,7 +611,7 @@ function deleteImgDom(fileName,file){
 		console.log(size+":"+size);
 		console.log(deleteSize+":"+deleteSize);
 		
-		if(size == deleteSize){
+		if(size == deleteSize.replace("_")){
 			previewobj = $($($(checkboxObj).parent()).parent().parent()[0]);
 		}
 	});
