@@ -722,7 +722,6 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
-			console.log('>>>>>>>>>>>>>>>>直立影音');
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -764,16 +763,6 @@ function autoPreview(objData){
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
-//			var a = '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>';
-			
-//			var utl = 'adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true';
-//			var msg = document.getElementById("msg");
-//			var iframe = document.createElement('iframe');
-//			iframe.onload = function(){
-//				iframe.onload = null;
-//			};
-//			document.body.appendChild(iframe);
-//			iframe.src = utl;
 				
 		});
 		$(".adVideoCheckArea").css('display','');
@@ -930,6 +919,9 @@ function saveData() {
 	if(videoDetailMap.length == 0){
 		return false;
 	}
+	
+	console.log(JSON.stringify(videoDetailMap));
+	
 	
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
