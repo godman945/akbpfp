@@ -608,7 +608,7 @@ function deleteImgDom(fileName,file){
 	var previewobj = null;
 	$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 		var size = checkboxObj.id.replace('checkbox_','');
-		console.log("size:+":"+size);
+		console.log("size:+":+size);
 		console.log("deleteSize"+":"+deleteSize);
 		console.log("deleteSize"+":"+deleteSize.replace("_"));
 		
