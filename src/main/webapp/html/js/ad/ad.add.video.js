@@ -611,6 +611,10 @@ function deleteImgDom(fileName,file){
 	$("#AG").children().each(function(index,value){
 		var obj = value;
 		$($(value).children("ul")).children().each(function(index,value){
+			
+			console.log("deleteSize:"+deleteSize);
+			console.log("name:"+$(value).children()[0].name);
+			
 			if($(obj).attr('class') == 'okbox' && index == 0 && $(value).children()[0].name == deleteSize){
 				var text = $(value).children()[0].name;
 				picIndexTotal = picIndexTotal + 1;
