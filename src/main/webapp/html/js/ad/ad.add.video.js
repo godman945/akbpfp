@@ -107,7 +107,8 @@ $(document).ready(function(){
 //					console.log(result);
 				},
 				error: function(xtl) {
-					//alert("系統繁忙，請稍後再試！");
+					$('body').unblock();
+					alert("系統繁忙，請稍後再試！");
 				}
 			}).done(function (result) {
 				if(result.result == true){

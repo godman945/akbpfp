@@ -424,6 +424,7 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 			adReportVO.setContent(objArray[24].toString());
 			adReportVO.setAdStatus(objArray[17].toString());
 			adReportVO.setAdRejectReason(objArray[18].toString());
+			adReportVO.setAdGroupSeq(pfpAdAdViewConditionVO.getAdGroupSeq());
 			String[] sizeArray = ((String)objArray[23]).split("_");
 			if(sizeArray.length == 2){
 				adReportVO.setAdWidth(sizeArray[0]);
@@ -449,11 +450,6 @@ public class PfpAdService extends BaseService<PfpAd,String> implements IPfpAdSer
 					adReportVO.setAdActionStatus(String.valueOf(enumStatus.getStatusId()));
 				}
 			}
-			
-			
-			
-			
-			
 			String adPriceType = objArray[15].toString();
 			for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
 				if(adPriceType.equals(enumAdPriceType.getDbTypeName())){

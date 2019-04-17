@@ -552,6 +552,8 @@
 			return false;
 		}
 		
+		$("#thirdCodeEdit").val($("#thirdCode").val());
+		
 		if(LinkUrl && ShowUrl && $("#adTitle").val()!="" && $("#adContent").val()!=""){
 			var adStatus = $("#adStatus").val();
 			var alertMsg = "";

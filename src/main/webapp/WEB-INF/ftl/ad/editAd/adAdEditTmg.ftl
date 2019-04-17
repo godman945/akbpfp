@@ -125,7 +125,7 @@
                         </th>
                         <td>
                           <div class="code-box">
-                              <textarea rows="1" placeholder="請輸入第三方曝光追蹤代碼" id="thirdCode" name="thirdCode" style="margin: 0px 310px 0px 0px; height: 137px;">${thirdCode!}</textarea>
+                              <textarea rows="1" placeholder="請輸入第三方曝光追蹤代碼"  id="thirdCode" name="thirdCode" style="margin: 0px 310px 0px 0px; height: 137px;">${thirdCode!}</textarea>
                           </div>
                         </td>
                     </tr>
@@ -137,6 +137,11 @@
 							<input type="hidden" id="adDetailID" name="adDetailID" value="show_url" >
 							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[6]!}">
 							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[6]!}">
+							
+							<input type="hidden" id="adDetailID" name="adDetailID" value="tracking_code" >
+							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[7]!}">
+							<input type="hidden" id="thirdCodeEdit" name="adDetailContent" value="">
+							
 							<input type="checkbox" id="sameRealUrl" name="sameRealUrl">廣告對外顯示網址同廣告連結網址網域<br>
 							<input type="text" class="inputPlaceholderTmg" data-value="spanAdShowURL" id="adShowURL" name="adShowURL" style="width:96%;"  value="${adDetailContent[6]!}" placeholder="show.pchome.com.tw" maxlength="30"><br>
 							

@@ -281,7 +281,6 @@ public class AdEditAction extends BaseCookieAction{
 
 		// 修改廣告
 		editAd();
-
 		String imgDetail = "";
 		String detailLAccesslogTitle = "廣告：" + pfpAdGroup.getPfpAdAction().getAdActionName() + "；" + pfpAdGroup.getAdGroupName() + "；" + adSeq + "==>";
 		addAccesslog(EnumAccesslogAction.AD_STATUS_MODIFY, detailLAccesslogTitle + "送出審核");
@@ -432,6 +431,10 @@ public class AdEditAction extends BaseCookieAction{
 				} else if ("promotional_price".equals(pfpAdDetail.getAdDetailId())) {
 					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
 						detailAccesslogMessage += "商品促銷價；";
+					}
+				}else if ("tracking_code".equals(pfpAdDetail.getAdDetailId())) {
+					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
+						detailAccesslogMessage += "第三方偵測；";
 					}
 				}
 
@@ -877,8 +880,7 @@ public class AdEditAction extends BaseCookieAction{
 				message = "請選擇廣告分類！";
 			}
 
-			if(keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
-					&& StringUtils.isBlank(adKeywordPrecisionOpen)){
+			if(keywords != null &&  keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen) && StringUtils.isBlank(adKeywordPrecisionOpen)){
 				message = "請選擇關鍵字比對方式！";
 			}
 			

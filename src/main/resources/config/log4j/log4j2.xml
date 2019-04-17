@@ -29,5 +29,7 @@
         <logger name="com.opensymphony.xwork2.spring.SpringObjectFactory" level="warn" ref="stdout" />  
         <logger name="org.apache.struts2.spring.StrutsSpringObjectFactory" level="warn" ref="stdout" />
         <logger name="org.springframework.remoting.rmi.RmiServiceExporte" level="warn" ref="stdout" />
+        <logger name="org.hibernate.hql.internal.ast.HqlSqlWalker" level="error" ref="stdout" />
+        
     </loggers>
 </configuration>

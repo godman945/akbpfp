@@ -2,6 +2,7 @@ package com.pchome.akbpfp.struts2.ajax.ad;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -168,44 +169,38 @@ public class AdUtilAjax extends BaseCookieAction{
 	 * 2.影片格式目前開放30秒以下才可通過
 	 * */
 	public String chkVideoUrl() throws Exception{
-		
-		
-		Process process2 = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adVideoUrl });
-		String resultStr2 = IOUtils.toString(process2.getInputStream(),"UTF-8").trim();
-		log.info(">>>>> resultStr2:"+resultStr2);
-		
-		
-		
-		//取得影片播放網址
-		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g --get-title --get-format " + adVideoUrl });
-		String resultStr = IOUtils.toString(process.getInputStream(),"UTF-8").trim();
-		log.info(">>>>> resultStr:"+resultStr);
-		
-		
-		
+		String videoResult = "";
+		// 檢查youtube網址是否有效
+		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --list-formats " + adVideoUrl });
+		process.waitFor();
+		videoResult = IOUtils.toString(process.getInputStream(), "UTF-8");
+		log.info(">>>>>>video format result:" + videoResult);
+		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
+		log.info(IOUtils.toString(process.getInputStream(),"UTF-8"));
+		log.info(new String(new ByteArrayOutputStream().toByteArray()));
 		
 		JSONObject json = new JSONObject();
-		if(resultStr.indexOf("ERROR") >= 0 || process.waitFor() == 1){
+		if (StringUtils.isBlank(videoResult)) {
+			log.info(">>>>>> youtube url fail:" + adVideoUrl);
 			json.put("result", false);
 			json.put("msg", "錯誤的影片連結");
 			this.result = json.toString();
 			this.msg = new ByteArrayInputStream(json.toString().getBytes());
-			log.error(">>>>>>"+result.toString());
+			log.error(">>>>>>"+videoResult);
 			return SUCCESS;
 		}
 		
 		int seconds = 0;
-		String[] videoInfoArray = resultStr.split("&");
+		String[] videoInfoArray = videoResult.split("&");
 		List<String> info = Arrays.asList(videoInfoArray);
 		for (String string : info) {
 			if(string.indexOf("dur=") >= 0){
 				videoInfoArray = string.split("=");
-				System.out.println(string);
 				seconds = (int)Math.floor(Double.parseDouble(videoInfoArray[1]));
 				break;
 			}
-		}	
-
+		}
+		
 		if(seconds > EnumAdVideoCondition.AD_VIDEO_TOTAL_TIME.getValue()){
 			json.put("result", false);
 			json.put("msg", "影片長度不得超過30秒，請重新上傳30秒以內的影片。");
@@ -215,37 +210,49 @@ public class AdUtilAjax extends BaseCookieAction{
 		}
 		
 		
-		log.info("resultStr =========== "+resultStr);
-		
-		String adTitle = resultStr.substring(0,resultStr.indexOf("http"));
-		String previewUrl = resultStr.substring(resultStr.indexOf("http"),resultStr.length());
-		
-		log.info("previewUrl =========== "+previewUrl);
-		
 		//判斷是否直立影片
 		boolean verticalAdFlag = false;
-		if(resultStr.indexOf(" (small)") >=0){
-			String videoSize = resultStr.substring(resultStr.indexOf("18 - "),resultStr.indexOf(" (small)"));
-			
+		if(videoResult.indexOf(" (small)") >=0){
+			String videoSize = videoResult.substring(videoResult.indexOf("18 - "),videoResult.indexOf(" (small)"));
 			log.info("videoSize =========== "+videoSize);
-			
 			videoSize = videoSize.replace("18 - ", "");
-			
-			
 			log.info("videoSize replace=========== "+videoSize);
-			
-			
 			String [] videoSizeArray = videoSize.toString().split("x");
 			if(Integer.parseInt(videoSizeArray[1]) > Integer.parseInt(videoSizeArray[0])){
 				verticalAdFlag = true;
 			}
 		}
 		
+		if((!videoResult.contains("22           mp4") && !videoResult.contains("18           mp4") ) && (!videoResult.contains("247           webm") && !videoResult.contains("43           webm"))) {
+			log.info(">>>>>> youtube format fail:" + adVideoUrl);
+			json.put("result", false);
+			json.put("msg", "影片提供格式不符合");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			log.error(">>>>>>"+videoResult);
+			return SUCCESS;
+		}
+		
+
+		String adTitle = "";
+		String previewUrl ="";
+		if(videoResult.contains("https")) {
+			adTitle = videoResult.substring(0,videoResult.indexOf("https"));
+			previewUrl = videoResult.substring(videoResult.indexOf("https"),videoResult.length());
+		}else {
+			log.info(">>>>>> youtube url fail:" + adVideoUrl);
+			json.put("result", false);
+			json.put("msg", "影片取得錯誤");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			log.error(">>>>>>"+videoResult);
+			return SUCCESS;
+		}
 		
 		if(previewUrl.indexOf("18 -") >=0) {
 			previewUrl = previewUrl.substring(0, previewUrl.indexOf("18 -")).replace("\n", "");
 		}
-		
+		process.destroy();
 		json.put("result", true);
 		json.put("videoTime", seconds);
 		json.put("previewUrl", previewUrl); 
@@ -253,9 +260,6 @@ public class AdUtilAjax extends BaseCookieAction{
 		json.put("verticalAdFlag", verticalAdFlag);
 		process.destroy();
 		this.result = json.toString();
-		
-		log.info("json replace=========== "+json.toString());
-		
 		this.msg = new ByteArrayInputStream(json.toString().getBytes());
 		return SUCCESS;
 	}
