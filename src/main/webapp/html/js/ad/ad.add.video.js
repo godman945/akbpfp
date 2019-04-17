@@ -567,7 +567,6 @@ function changeRedioPanel(obj){
 //刪除欲上傳檔案
 function deleteImgDom(fileName,file){
 	var deleteSize = null;
-	console.log(fileArray);
 	$.each($(".aduplodul_p li"), function(index,obj) {
 		if(fileName == obj.id){
 			if($(this).attr('class') == 'okbox'){
@@ -586,11 +585,7 @@ function deleteImgDom(fileName,file){
 	});
 	
 	
-	console.log("deleteSize:"+deleteSize);
-	console.log(fileArray);
 	$.each($(fileArray), function( index, file ) {
-		console.log(fileName+":"+file.name);
-		
 		if(fileName == file.name){
 			fileArray.splice(index, 1);
 			return false;
@@ -608,30 +603,15 @@ function deleteImgDom(fileName,file){
 	var previewobj = null;
 	$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 		var size = checkboxObj.id.replace('checkbox_','');
-		
-		console.log("size:"+size);
-		
-		console.log("deleteSize:"+deleteSize);
-		
-		console.log("deleteSize:"+deleteSize.replace("_",""));
-		
 		if(size == deleteSize.replace("_","")){
 			previewobj = $($($(checkboxObj).parent()).parent().parent()[0]);
-			
-			console.log(previewobj);
-			
 		}
 	});
 	
 	var picIndexTotal = 0;
 	$("#AG").children().each(function(index,value){
 		var obj = value;
-		console.log(obj);
 		$($(value).children("ul")).children().each(function(index,value){
-			
-			console.log("deleteSize:"+deleteSize);
-			console.log("name:"+$(value).children()[0].name);
-			
 			if($(obj).attr('class') == 'okbox' && index == 0 && $(value).children()[0].name == deleteSize){
 				var text = $(value).children()[0].name;
 				picIndexTotal = picIndexTotal + 1;
@@ -772,8 +752,6 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
-			console.log('>>>>>>>>>>>>>>>>非直立影音');
-			console.log('<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>');
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -940,9 +918,6 @@ function saveData() {
 	if(videoDetailMap.length == 0){
 		return false;
 	}
-	
-	console.log(JSON.stringify(videoDetailMap));
-	
 	
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
