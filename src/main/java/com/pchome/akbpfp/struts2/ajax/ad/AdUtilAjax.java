@@ -201,6 +201,19 @@ public class AdUtilAjax extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
+		//判斷是否直立影片
+		log.info("videoResult =========== "+videoResult);
+		boolean verticalAdFlag = false;
+		if(videoResult.indexOf("small") >=0){
+			String videoSize = (videoResult.substring(videoResult.indexOf("18           mp4    "),videoResult.indexOf("    small"))).replace("18           mp4    ", "").replace(" ", "").trim();
+			log.info("videoSize =========== "+videoSize);
+			String [] videoSizeArray = videoSize.toString().split("x");
+			if(Integer.parseInt(videoSizeArray[1]) > Integer.parseInt(videoSizeArray[0])){
+				verticalAdFlag = true;
+			}
+		}
+		
+		
 		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adVideoUrl });
 		log.info(">>>>>>video format result:" + videoResult);
 		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
@@ -226,17 +239,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
-		//判斷是否直立影片
-		log.info("videoResult =========== "+videoResult);
-		boolean verticalAdFlag = false;
-		if(videoResult.indexOf("small") >=0){
-			String videoSize = (videoResult.substring(videoResult.indexOf("18           mp4    "),videoResult.indexOf("    small"))).replace("18           mp4    ", "").replace(" ", "").trim();
-			log.info("videoSize =========== "+videoSize);
-			String [] videoSizeArray = videoSize.toString().split("x");
-			if(Integer.parseInt(videoSizeArray[1]) > Integer.parseInt(videoSizeArray[0])){
-				verticalAdFlag = true;
-			}
-		}
+		
 
 		String adTitle = "";
 		String previewUrl ="";
