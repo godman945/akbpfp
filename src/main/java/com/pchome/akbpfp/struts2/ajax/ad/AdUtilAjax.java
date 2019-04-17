@@ -206,6 +206,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
 		log.info(IOUtils.toString(process.getInputStream(),"UTF-8"));
 		log.info(new String(new ByteArrayOutputStream().toByteArray()));
+		videoResult = IOUtils.toString(process.getInputStream(), "UTF-8");
 		
 		int seconds = 0;
 		String[] videoInfoArray = videoResult.split("&");
