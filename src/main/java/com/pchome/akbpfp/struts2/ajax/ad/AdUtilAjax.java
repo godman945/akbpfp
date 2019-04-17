@@ -227,8 +227,9 @@ public class AdUtilAjax extends BaseCookieAction{
 		}
 		
 		//判斷是否直立影片
+		log.info("videoResult =========== "+videoResult);
 		boolean verticalAdFlag = false;
-		if(videoResult.indexOf(" (small)") >=0){
+		if(videoResult.indexOf("small") >=0){
 			String videoSize = (videoResult.substring(videoResult.indexOf("18           mp4    "),videoResult.indexOf("    small"))).replace("18           mp4    ", "").replace(" ", "").trim();
 			log.info("videoSize =========== "+videoSize);
 			String [] videoSizeArray = videoSize.toString().split("x");
