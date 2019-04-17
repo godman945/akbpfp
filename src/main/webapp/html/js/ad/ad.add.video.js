@@ -608,11 +608,14 @@ function deleteImgDom(fileName,file){
 	var previewobj = null;
 	$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 		var size = checkboxObj.id.replace('checkbox_','');
-		console.log("size:"+size);
-		console.log("deleteSize:"+deleteSize);
-		console.log("deleteSize:"+deleteSize.replace("_"));
 		
-		if(size == deleteSize.replace("_")){
+		console.log("size:"+size);
+		
+		console.log("deleteSize:"+deleteSize);
+		
+		console.log("deleteSize:"+deleteSize.replace("_",""));
+		
+		if(size == deleteSize.replace("_","")){
 			previewobj = $($($(checkboxObj).parent()).parent().parent()[0]);
 			
 			console.log(previewobj);
