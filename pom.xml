@@ -6,7 +6,7 @@
 	<artifactId>akbpfp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	
+
 	<build>
 		<finalName>akbpfp</finalName>
 		<defaultGoal>install</defaultGoal>
