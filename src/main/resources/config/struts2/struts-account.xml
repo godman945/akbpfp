@@ -1,0 +1,138 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package name="struts-account" extends="struts-base">  
+
+		<!-- 帳戶總覽 -->
+		<action name="accountInfo" class="AccountInfoAction" method="execute">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="admPrivilegeInterceptor" />
+	    	<result type="tiles" name="success">account.info.view</result>
+		</action>
+	   
+		<action name="accountInfoModify" class="AccountInfoAction" method="execute">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="admPrivilegeInterceptor" />
+	       	<result type="tiles" name="success">account.info.modify</result>
+		</action> 
+	
+		<action name="accountInfoUpdate" class="AccountInfoAction" method="AccountInfoUpdateAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="admPrivilegeInterceptor" />
+	       	<result type="redirectAction" name="success">accountInfo</result>
+		</action>  
+     	
+     	<!-- 帳戶加值 -->
+     	<action name="accountRemain" class="AccountRemainAction" method="execute">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="tiles" name="success">account.remain.view</result>
+     	</action>
+     	
+     	<action name="accountAddMoney" class="AccountRemainAction" method="accountAddMoneyAction">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="redirect" name="success">${billingUrl}</result>
+            <result type="redirectAction" name="summary">summary</result>
+     	</action>
+     	
+     	<action name="accountCheckGiftSno" class="AccountAjax" method="checkGiftSnoAjax">
+	       	<result type="json" name="success">
+	           	<param name="noCache">true</param>
+	           	<param name="contentType">text/html</param>
+	       	</result>     		
+	     </action>
+     	
+     	<!-- 帳戶使用者 -->
+     	<action name="accountUsers" class="AccountUserAction" method="execute">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="tiles" name="success">account.user.view</result>
+     	</action>
+     
+	     <action name="accountUserInvite" class="AccountUserAction" method="execute">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="tiles" name="success">account.user.invite</result>
+	     </action> 
+	     
+	     <action name="checkUserEmail" class="AccountUserAjax" method="checkUserEmailAjax">
+	     	<interceptor-ref name="loginCheckStack" />
+	     	<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="json" name="success">
+                <param name="noCache">true</param>
+                <param name="contentType">text/html</param>
+            </result>     		
+	     </action>
+	     
+	     <action name="inviteUser" class="AccountUserAction" method="inviteUserAction">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="redirectAction" name="success">accountUsers</result>
+            <result type="tiles" name="input">account.user.invite</result>
+	     </action>
+	     
+	     <action name="accountAdmModify" class="AccountUserAction" method="accountAdmModifyAction">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="tiles" name="success">account.adm.modify</result>
+	     </action>
+	     
+	     <action name="accountAdmUpdate" class="AccountUserAction" method="accountAdmUpdateAction">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="redirectAction" name="success">accountUsers</result>
+	     </action>
+	     
+	     <action name="accountUserModify" class="AccountUserAction" method="accountUserModifyAction">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="tiles" name="success">account.user.modify</result>
+	     </action>
+	     
+	     <action name="accountUserUpdate" class="AccountUserAction" method="accountUserUpdateAction">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="redirectAction" name="success">accountUsers</result>
+	     </action>
+	     
+	     <action name="reInviteUser" class="AccountUserAjax" method="sendInviteMailAjax">
+	     	<interceptor-ref name="loginCheckStack" />
+	     	<interceptor-ref name="admPrivilegeInterceptor" />
+	        <result type="json" name="success">
+                <param name="noCache">true</param>
+                <param name="contentType">text/html</param>
+            </result>
+	     </action>
+	     
+	     <action name="accountUserDelete" class="AccountUserAjax" method="deleteAccountUserAjax">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+	        <result type="json" name="success">
+                <param name="noCache">true</param>
+                <param name="contentType">text/html</param>
+            </result>
+	     </action>
+	     
+	     <action name="accountUserSerach" class="AccountUserAction" method="accountUserSerachAction">
+     		<interceptor-ref name="loginCheckStack" />
+     		<interceptor-ref name="admPrivilegeInterceptor" />
+            <result type="tiles" name="success">account.user.view</result>
+	     </action>
+	     
+	     <!-- 帳戶聯絡人 -->
+	     <action name="accountContent" class="AccountContentAction" method="execute">
+	     		<interceptor-ref name="loginCheckStack" />
+	     		<interceptor-ref name="admPrivilegeInterceptor" />
+	            <result type="tiles" name="success">account.content.view</result>
+	     </action>
+	     
+	     <action name="accountContentUpdate" class="AccountContentAction" method="accountContentUpdateAction">
+	     		<interceptor-ref name="loginCheckStack" />
+	     		<interceptor-ref name="admPrivilegeInterceptor" />
+	            <result type="redirectAction" name="success">accountInfo</result>
+	     </action>	     
+	     
+    </package>
+</struts>

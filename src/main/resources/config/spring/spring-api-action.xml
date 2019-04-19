@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">   
+    
+    <!-- order api action -->
+    <bean id="OrderAPIAction" class="com.pchome.akbpfp.struts2.action.api.OrderAPIAction" scope="prototype" >  
+    	<property name="springECcoderUtil" ref="SpringECcoderUtil" />  
+		<property name="pfpOrderService" ref="PfpOrderService" />
+		<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+		<property name="pfpUserService" ref="PfpUserService" />
+		<property name="admAccesslogService" ref="AdmAccesslogService" />
+		<property name="admFreeGiftService" ref="AdmFreeGiftService" />
+		<property name="admFreeRecordService" ref="AdmFreeRecordService" />
+		<property name="transDetailService" ref="PfpTransDetailService" />
+		<property name="boardProvider" ref="BoardProviderProxy" />
+		<property name="controlPriceAPI" ref="ControlPriceAPI" />
+		<property name="channelId" value="${billing.channel.id}" /> 
+		<property name="password" value="${billing.password}" />
+		<property name="pfdBoardService" ref="PfdBoardService" /> 
+		
+    </bean>
+
+    <!-- invite api action -->
+    <bean id="InviteAPIAction" class="com.pchome.akbpfp.struts2.action.api.InviteAPIAction" scope="prototype" >  
+    	<property name="memberServer" value="${member.server.http}" />
+    	<property name="akbPfpServer" value="${akbpfp.server}" />
+    	<property name="pfpUserService" ref="PfpUserService" />
+    	<property name="pfpUserMemberRefService" ref="PfpUserMemberRefService" />
+    	<property name="memberAPI" ref="MemberAPI" />
+    </bean>
+    
+    <bean id="AdModelAPIAction" class="com.pchome.akbpfp.struts2.action.api.AdModelAPIAction" scope="prototype" >
+    	<property name="admAPI" ref="APIProviderProxy" />
+    </bean>
+    
+	<bean id="LifeCheckAPIAction" class="com.pchome.akbpfp.struts2.action.api.LifeCheckAPIAction" scope="prototype" >
+    	<property name="admAPI" ref="APIProviderProxy" />
+    </bean>
+    
+    <bean id="pchomeBuApi" class="com.pchome.akbpfp.api.PchomeBuAPI" scope="prototype" >
+    	<property name="buIp" value="${bu.ip}" />
+    	<property name="buSuccessUrl" value="${bu.success.url}" />
+    	<property name="buErrorUrl" value="${bu.error.url}" />
+    	<property name="memberServer" value="${member.server}" />
+        <property name="buPortalPfdc" value="${bu.portal.pfdc}" />
+        <property name="pcstoreName" value="${bu.pcstore.name}" />
+        <property name="buPcstoreReferer" value="${bu.pcstore.referer}" />
+    	<property name="cookieUtils" ref="CookieFunctionUtils" />
+    	<property name="cookieProccessAPI" ref="CookieProccessAPI" />
+    	<property name="pfpBuService" ref="PfpBuService" /> 
+    	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+    	<property name="pfdUserAdAccountRefService" ref="PfdUserAdAccountRefService" />
+    	<property name="sequenceService" ref="SequenceService" />
+	</bean>
+	
+	
+	
+	<bean id="ProdGroupListAPIAction" class="com.pchome.akbpfp.struts2.action.api.ProdGroupListAPIAction" scope="prototype" >
+    	<property name="prodGroupFactory" ref="ProdGroupFactory" />
+    	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
+	</bean>
+    
+    
+    
+    
+    <!-- 廣告商品資料上傳 -->
+    <bean id="PfpCatalogUploadListAction" class="com.pchome.akbpfp.struts2.action.catalog.uploadList.PfpCatalogUploadListAction" scope="prototype" >
+		<property name="pfpCatalogUploadListService" ref="PfpCatalogUploadListService" />
+		<property name="pfpCatalogService" ref="PfpCatalogService" />
+		<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" />
+		<property name="catalogProdCsvFilePath" value="${catalogProd.csv.file.path}" />
+		<property name="catalogProdCsvFileTempPath" value="${catalogProd.csv.file.temp.path}" />
+		<property name="catalogProdStoreURLlistPath" value="${catalogProd.storeURLlist.path}" />
+		<property name="akbPfpServer" value="${akbpfp.server}" />
+		<property name="akbAdqServer" value="${akbadq.server}" />
+    </bean>
+    
+</beans>

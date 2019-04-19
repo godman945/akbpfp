@@ -1,0 +1,53 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package name="struts-summary" extends="struts-base">  
+
+   	 <action name="summary" class="SummaryAction" method="execute">
+   	 		<interceptor-ref name="loginCheckStack" />
+        	<result type="tiles" name="success">summary.view</result>
+     </action>
+      
+    <action name="chartDate" class="SummaryAction" method="openFlishAction">
+        	<interceptor-ref name="loginCheckStack" />
+            <result type="tiles" name="success">summary.chartDate</result>
+    </action>    
+        
+    <action name="adActionLayer" class="SummaryAjax" method="searchAdLayerAjax">
+        	<interceptor-ref name="loginCheckStack" />
+            <result type="tiles" name="success">summary.search.adActionTable</result>
+    </action>    
+       
+    <action name="adGroupLayer" class="SummaryAjax" method="searchAdLayerAjax">
+        	<interceptor-ref name="loginCheckStack" />
+            <result type="tiles" name="success">summary.search.adGroupTable</result>
+    </action>
+    
+    <action name="adKeywordLayer" class="SummaryAjax" method="searchAdLayerAjax">
+        	<interceptor-ref name="loginCheckStack" />
+            <result type="tiles" name="success">summary.search.adKeywordTable</result>
+    </action>
+    
+    <action name="adAdLayer" class="SummaryAjax" method="searchAdLayerAjax">
+        	<interceptor-ref name="loginCheckStack" />
+            <result type="tiles" name="success">summary.search.adAdTable</result>
+    </action>     
+          
+    <action name="latestBoard" class="BoardAjax" method="latestBoardAjax">
+     		<interceptor-ref name="loginCheckStack" />
+            <result type="tiles" name="success">summary.latest.board.list</result>
+    </action>
+
+	<action name="thanks" class="ThanksAction" method="thanksAction">
+		<result type="tiles" name="success">thanks.view</result>
+	</action>
+
+	<!-- 
+	<action name="backSummary" class="ThanksAction" method="backSummaryAction">
+		<result type="redirectAction" name="success">redirect</result>
+		<result type="redirectAction" name="index">index</result>
+	</action>
+	 -->
+	</package>
+</struts>
