@@ -214,7 +214,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		}
 		
 		
-		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g " + adVideoUrl });
+		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g --get-title " + adVideoUrl });
 		log.info(">>>>>>video format result:" + videoResult);
 		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
 		videoResult = IOUtils.toString(process.getInputStream(), "UTF-8");
