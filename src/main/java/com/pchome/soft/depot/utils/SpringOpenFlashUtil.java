@@ -31,10 +31,8 @@ public class SpringOpenFlashUtil {
 
 	public String getChartData(String context){
 
-		Chart cht=null;
-
+		Chart cht = null;
 		cht = new Chart(context);
-
 
 		// 產生 BarChart 並將資料新增到 BarChart
 		BarChart bc = new BarChart(BarChart.Style.NORMAL);
@@ -48,9 +46,8 @@ public class SpringOpenFlashUtil {
 
 	public String getChartDataForMap(String charPic,String charType,String startDate,String endDate,Map<Date,Float> flashDataMap){
 
-		String chartTypeText="";
-		String chartYlegendText="";
-
+		String chartTypeText = "";
+		String chartYlegendText = "";
 		NumberFormat numFormat = null;
 
 		if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
@@ -222,7 +219,6 @@ public class SpringOpenFlashUtil {
 		}
 		
 		return cht.toString();
-
 	}
 
 	public String getChartDataForArray(String charType,String startDate,String endDate,Map<Date,Float> flashDataMap){
@@ -255,6 +251,16 @@ public class SpringOpenFlashUtil {
 		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())) {
 			scale = 2;
 		}else if(charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())){
+			scale = 2;
+		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
+			scale = 0;
+		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
+			scale = 2;
+		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
+			scale = 0;
+		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
+			scale = 2;
+		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
 			scale = 2;
 		}
 		//x 軸兩日期間所相差的天數

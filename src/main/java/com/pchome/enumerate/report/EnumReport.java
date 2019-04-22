@@ -24,19 +24,50 @@ public enum EnumReport {
     DETAIL_HQLTYPE_DAILY_CHART("DetailDailyChart"),
 
     
-    
+    /**
+     *  轉換數
+     */
     REPORT_CHART_CONVERT("convertCount"),
+    /**
+     * 總轉換價值
+     */
     REPORT_CHART_CONVERT_PRICE("convertPriceCount"),
+    /**
+     * 轉換率
+     */
     REPORT_CHART_CONVERT_CTR("convertCTR"),
+    /**
+     * 平均轉換成本
+     */
     REPORT_CHART_CONVERT_COST("convertCost"),
+    /**
+     * 廣告投資報酬率
+     */
     REPORT_CHART_CONVERT_INVESTMENT("convertInvestmentCost"),
     
-    
+    /**
+     * 曝光數
+     */
     REPORT_CHART_TYPE_PV("pv"),
+    /**
+     * 互動數
+     */
     REPORT_CHART_TYPE_CLICK("click"),
+    /**
+     * 互動率
+     */
     REPORT_CHART_TYPE_CTR("ctr"),
+    /**
+     * 單次互動費用
+     */
     REPORT_CHART_TYPE_AVGCOST("avgCost"),
+    /**
+     * 千次曝光費用
+     */
     REPORT_CHART_TYPE_KILOCOST("kiloCost"),
+    /**
+     * 費用
+     */
     REPORT_CHART_TYPE_COST("cost"),
     REPORT_CHART_TYPE_ADSORT("avgAdSort"),
     REPORT_CHART_TYPE_INVALID("invalid"),

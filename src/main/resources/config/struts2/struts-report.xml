@@ -85,18 +85,18 @@
             <result type="tiles" name="success">report.flashData</result>
         </action>
 		
-		<!--addaily-->
+		<!-- adDaily 每日花費成效 -->
         <action name="reportAdDailyDownload" class="ReportAdDailyAction">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-      		<result name="success" type="stream">   
-             	<param name="contentType">application/octet-stream</param>   
-             	<param name="contentDisposition">   
-                    attachment;filename="${downloadFileName}"  
-                </param>   
-                <param name="inputName">downloadFileStream</param> 
-            </result>  
-      	</action>
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+				<param name="inputName">downloadFileStream</param>
+			</result>
+		</action>
 		
 		<action name="reportAdDaily" class="ReportAdDailyAction">
             <interceptor-ref name="loginCheckStack" />
@@ -108,14 +108,26 @@
         <action name="reportAdDailyAjaxTable" class="ReportAdDailyAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.adDaily</result>
+            <result type="tiles" name="success">report.body.adDaily.DetailList</result>
         </action>
-		
+        
 		<action name="reportAdDailyAjaxChart" class="ReportAdDailyAction" method="flashDataDownLoad">
 			<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="reportPrivilegeInterceptor" />
-             <result type="tiles" name="success">report.flashData</result>
+			<result type="tiles" name="success">report.flashData</result>
         </action>
+        
+<!--         <action name="reportAdDailyAjaxTable" class="ReportAdDailyAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.ajaxTable.adDaily</result> -->
+<!--         </action> -->
+		
+<!-- 		<action name="reportAdDailyAjaxChart" class="ReportAdDailyAction" method="flashDataDownLoad"> -->
+<!-- 			<interceptor-ref name="loginCheckStack" /> -->
+<!-- 			<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--              <result type="tiles" name="success">report.flashData</result> -->
+<!--         </action> -->
 		
 		<!--keyword-->
         <action name="reportKeywordDownload" class="ReportKeywordAction">

@@ -66,23 +66,36 @@
 	</definition>
 	
 	
-	<!-- .report.adDaily  -->
-	<definition name="report.ajaxTable.adDaily" template="/ftl/report/ajax/adDailyTable.ftl" /> 
-	<definition name="report.chartTable.adDaily" template="/ftl/report/chart/excerptChartTable.ftl" />
-
-    <definition name=".report.adDaily" extends="default.report.layout" >
+	<!-- .report.adDaily 每日花費成效 -->
+    <definition name=".report.adDaily" extends="default.report.layout" > <!-- 上面各項目頁籤 -->
     	<put-attribute name="header" value="report.header.adDaily" />
         <put-attribute name="body" value="report.body.adDaily" />
     </definition>
-	
-	<definition name="report.header.adDaily" extends="report.header" >
+
+	<definition name="report.header.adDaily" extends="report.header" > <!-- 登出 登入條 -->
 		<put-attribute name="jsName" value="reportAdDaily.js" />
     </definition>
-	   
-    <definition name="report.body.adDaily" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.adDaily" />
+	
+	<!-- 新的 -->
+	<definition name="report.body.adDaily" template="/ftl/report/adDaily/adDailyBody.ftl" >
+		<put-attribute name="adDailyDetailList" value="report.body.adDaily.DetailList" />
 		<put-attribute name="chartTable" value="report.chartTable.adDaily" />
 	</definition>
+	
+	<definition name="report.body.adDaily.DetailList" template="/ftl/report/adDaily/adDailyDataList.ftl" >
+    </definition>
+    <definition name="report.chartTable.adDaily" template="/ftl/report/chart/excerptChartTable.ftl" >
+	</definition>
+	
+<!-- 舊的 -->
+<!--     <definition name="report.body.adDaily" extends="report.body" > -->
+<!--     	<put-attribute name="reportTable" value="report.ajaxTable.adDaily" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.adDaily" /> -->
+<!-- 	</definition> -->
+    
+<!--     <definition name="report.ajaxTable.adDaily" template="/ftl/report/ajax/adDailyTable.ftl" />  -->
+<!-- 	<definition name="report.chartTable.adDaily" template="/ftl/report/chart/excerptChartTable.ftl" /> -->
+    <!-- .report.adDaily 每日花費成效end -->
     
     
 	<!-- .report.keyword  -->
