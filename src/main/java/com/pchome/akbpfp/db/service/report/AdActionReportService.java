@@ -124,7 +124,8 @@ public class AdActionReportService implements IAdActionReportService {
 		BigDecimal convertPriceCount = new BigDecimal(0);
 		
 		List<AdActionReportVO> adDailyVOListSum = new ArrayList<>();
-		for (Map<String, Object> dataMap : adDailyListSum) { // 加總
+		// 加總
+		for (Map<String, Object> dataMap : adDailyListSum) {
 			adPvSum = adPvSum.add((BigDecimal) dataMap.get("ad_pv_sum"));
 			adClkSum = adClkSum.add((BigDecimal) dataMap.get("ad_clk_sum"));
 			adPriceSum = adPriceSum.add(BigDecimal.valueOf((Double) dataMap.get("ad_price_sum")));

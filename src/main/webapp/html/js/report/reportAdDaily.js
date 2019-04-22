@@ -33,6 +33,7 @@ $(document).ready(function() {
 
 	// 選擇每頁幾筆
 	$("#pageSize").change(function() {
+		isRereadChart = false; // 不重新讀取圖表
 		processQueryAjax(defaultPage); // 選擇後重新查詢
 	});
 
@@ -97,6 +98,16 @@ function processKeyupQuery() {
 }
 
 /**
+ * 處理切換頁的時候
+ * @param changePageNo
+ * @returns
+ */
+function processChangePage(changePageNo) {
+	isRereadChart = false; // 不重新讀取圖表
+	processQueryAjax(changePageNo);
+}
+
+/**
  * @param changePageNo 切換到哪頁
  */
 function processQueryAjax(changePageNo) {
@@ -134,14 +145,18 @@ function processQueryAjax(changePageNo) {
 				showHideDataListInfo($(obj).attr("data-column-name"), $(obj).attr("data-select"));
 			});
 			
-			showHighChart(); // 重新產生圖表
+			if (isRereadChart) {
+				showHighChart(); // 重新產生圖表
+			} else {
+				isRereadChart = true; // 此次不重讀圖表，還原預設值
+			}
 	    }
 	});
 }
 
 var whereObject = new Object(); // 紀錄需篩選欄位
 var sortBy = ""; // 紀錄需排序欄位
-
+var isRereadChart = true; // 是否需要重新讀取圖表
 /**
  * 綁定事件或重新綁定相關事件
  * @returns
@@ -180,6 +195,8 @@ function initEvent() {
 			$(this).attr("data-select", sortTF);
 			sortBy = $(this).attr("data-sort");
 		}
+		
+		isRereadChart = false; // 不重新讀取圖表
 		processQueryAjax($("#page").val()); // 選擇後重新查詢，目前頁數重查排序
 	});
 	
@@ -225,18 +242,18 @@ function processPageNumber() {
 			if (i == pageNo) { // 目前頁數不帶換頁事件
 				tempHtml += "<a data-num=\"" + i + "\" class=\"pagination-button active\" href=\"javascript:void(0);\"></a>";
 			} else {
-				tempHtml += "<a data-num=\"" + i + "\" class=\"pagination-button\" href=\"javascript:processQueryAjax('" + i + "');\"></a>";
+				tempHtml += "<a data-num=\"" + i + "\" class=\"pagination-button\" href=\"javascript:processChangePage('" + i + "');\"></a>";
 			}
 		}
 		tempHtml += "</span>";
 	} else {
 		tempHtml += "<li class=\"txt-cell txt-left\">";
-		tempHtml += "  <a data-num=\"1\" class=\"pagination-button left\" href=\"javascript:processQueryAjax('1');\"></a>";
+		tempHtml += "  <a data-num=\"1\" class=\"pagination-button left\" href=\"javascript:processChangePage('1');\"></a>";
 		tempHtml += "</li>";
 		tempHtml += "<li class=\"txt-cell\">";
 		
 		if (pageNo > 10) { // 當前頁超過第10頁才顯示上10頁按鈕
-		tempHtml += "  <a class=\"pagination-button prev\" href=\"javascript:processQueryAjax('" + top10Pages + "');\" title=\"上10頁\"></a>";
+		tempHtml += "  <a class=\"pagination-button prev\" href=\"javascript:processChangePage('" + top10Pages + "');\" title=\"上10頁\"></a>";
 		}
 		
 		tempHtml += "  <span class=\"pagination-buttongroup\">";
@@ -247,18 +264,18 @@ function processPageNumber() {
 			} else if (i == pageNo) { // 目前頁數不帶換頁事件
 				tempHtml += "  <a data-num=\" " + i + " \" class=\"pagination-button active\" href=\"javascript:void(0);\"></a>";
 			}else{
-				tempHtml += "  <a data-num=\" " + i + " \" class=\"pagination-button\" href=\"javascript:processQueryAjax('" + i + "');\"></a>";
+				tempHtml += "  <a data-num=\" " + i + " \" class=\"pagination-button\" href=\"javascript:processChangePage('" + i + "');\"></a>";
 			}
 		}
 		tempHtml += "  </span>";
  
 		if (pageNo <= Math.ceil(pageCount / 10) * 10 - 10) { // 總頁數/10  後無條件進位 *10 再-10為當前頁小於此數字才能出現下10頁按鈕
-			tempHtml += "  <a class=\"pagination-button next\" href=\"javascript:processQueryAjax('" + parseInt(Math.ceil(pageNo / 10) * 10 + 1) + "');\" title=\"下10頁\"></a>";
+			tempHtml += "  <a class=\"pagination-button next\" href=\"javascript:processChangePage('" + parseInt(Math.ceil(pageNo / 10) * 10 + 1) + "');\" title=\"下10頁\"></a>";
 		}
 		
 		tempHtml += "</li>";
 		tempHtml += "<li class=\"txt-cell txt-right\">";
-		tempHtml += "  <a data-num=\"" + pageCount + "\" class=\"pagination-button right\" href=\"javascript:processQueryAjax('" + pageCount + "');\"></a>";
+		tempHtml += "  <a data-num=\"" + pageCount + "\" class=\"pagination-button right\" href=\"javascript:processChangePage('" + pageCount + "');\"></a>";
 		tempHtml += "</li>";
 	}
 	$(".pagination-box").html(tempHtml);
