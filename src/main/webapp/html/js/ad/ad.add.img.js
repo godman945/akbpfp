@@ -177,7 +177,12 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		sizeDiv = "adHtml5SizeDiv";
 	}
 	
+	console.log(sizeDiv);
+	
 	$.each($("#" + sizeDiv + " p"), function( index, obj ) {
+		
+		console.log(obj);
+		
 		if(html5Repeat=="yes"){
 			if($(obj).text().indexOf(width+" x "+height) >= 0){
 				imgSize = "yes";
