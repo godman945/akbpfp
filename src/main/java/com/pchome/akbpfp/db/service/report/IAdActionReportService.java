@@ -38,6 +38,6 @@ public interface IAdActionReportService {
 	 * @param whereMap JSONObject格式字串
 	 * @return
 	 */
-	public String getAdDeviceName(String JSONObject);
+	public String getAdDeviceName(String whereMap);
 
 }

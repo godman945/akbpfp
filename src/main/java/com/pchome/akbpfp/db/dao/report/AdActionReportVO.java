@@ -15,8 +15,6 @@ public class AdActionReportVO {
 	private String whereMap = ""; // sql篩選條件
 	private String sortBy = ""; // 排序欄位
 	private boolean isDownload = false;
-//	private String charPic = ""; // 圖表格式
-//	private String charType = ""; // 圖表度量
 	
 	private Date reportDate; //報表日期
 
@@ -291,21 +289,5 @@ public class AdActionReportVO {
 	public void setDownload(boolean isDownload) {
 		this.isDownload = isDownload;
 	}
-
-//	public String getCharPic() {
-//		return charPic;
-//	}
-//
-//	public void setCharPic(String charPic) {
-//		this.charPic = charPic;
-//	}
-//
-//	public String getCharType() {
-//		return charType;
-//	}
-//
-//	public void setCharType(String charType) {
-//		this.charType = charType;
-//	}
 	
 }

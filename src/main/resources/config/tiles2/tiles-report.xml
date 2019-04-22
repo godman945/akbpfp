@@ -76,7 +76,6 @@
 		<put-attribute name="jsName" value="reportAdDaily.js" />
     </definition>
 	
-	<!-- 新的 -->
 	<definition name="report.body.adDaily" template="/ftl/report/adDaily/adDailyBody.ftl" >
 		<put-attribute name="adDailyDetailList" value="report.body.adDaily.DetailList" />
 		<put-attribute name="chartTable" value="report.chartTable.adDaily" />
@@ -86,15 +85,6 @@
     </definition>
     <definition name="report.chartTable.adDaily" template="/ftl/report/chart/excerptChartTable.ftl" >
 	</definition>
-	
-<!-- 舊的 -->
-<!--     <definition name="report.body.adDaily" extends="report.body" > -->
-<!--     	<put-attribute name="reportTable" value="report.ajaxTable.adDaily" /> -->
-<!-- 		<put-attribute name="chartTable" value="report.chartTable.adDaily" /> -->
-<!-- 	</definition> -->
-    
-<!--     <definition name="report.ajaxTable.adDaily" template="/ftl/report/ajax/adDailyTable.ftl" />  -->
-<!-- 	<definition name="report.chartTable.adDaily" template="/ftl/report/chart/excerptChartTable.ftl" /> -->
     <!-- .report.adDaily 每日花費成效end -->
     
     

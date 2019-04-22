@@ -23,11 +23,4 @@ public interface IAdActionReportDAO extends IBaseDAO<PfpAdActionReport, Integer>
 	 * @return
 	 */
 	public List<Map<String, Object>> getAdDailyListSum(AdActionReportVO vo);
-
-//	/**
-//	 * 每日花費成效(圖表)
-//	 * @param vo
-//	 * @return
-//	 */
-//	public List<AdActionReportVO> getAdDailyChartDataList(AdActionReportVO vo);
 }

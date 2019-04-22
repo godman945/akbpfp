@@ -116,18 +116,7 @@
 			<interceptor-ref name="reportPrivilegeInterceptor" />
 			<result type="tiles" name="success">report.flashData</result>
         </action>
-        
-<!--         <action name="reportAdDailyAjaxTable" class="ReportAdDailyAction"> -->
-<!--         	<interceptor-ref name="loginCheckStack" /> -->
-<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
-<!--             <result type="tiles" name="success">report.ajaxTable.adDaily</result> -->
-<!--         </action> -->
-		
-<!-- 		<action name="reportAdDailyAjaxChart" class="ReportAdDailyAction" method="flashDataDownLoad"> -->
-<!-- 			<interceptor-ref name="loginCheckStack" /> -->
-<!-- 			<interceptor-ref name="reportPrivilegeInterceptor" /> -->
-<!--              <result type="tiles" name="success">report.flashData</result> -->
-<!--         </action> -->
+        <!-- adDaily 每日花費成效 end -->
 		
 		<!--keyword-->
         <action name="reportKeywordDownload" class="ReportKeywordAction">
