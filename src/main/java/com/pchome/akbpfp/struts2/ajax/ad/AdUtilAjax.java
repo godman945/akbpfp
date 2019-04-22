@@ -244,6 +244,9 @@ public class AdUtilAjax extends BaseCookieAction{
 		String adTitle = "";
 		String previewUrl ="";
 		if(videoResult.contains("https")) {
+			log.info("videoResult:"+videoResult);
+			
+			
 			adTitle = videoResult.substring(0,videoResult.indexOf("https"));
 			previewUrl = videoResult.substring(videoResult.indexOf("https"),videoResult.length());
 		}else {
