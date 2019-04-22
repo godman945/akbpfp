@@ -149,19 +149,19 @@ public class ReportAdDailyAction extends BaseReportAction {
 		Map<String, Boolean> showHideColumnMap = new HashMap<>(); // 紀錄顯示其他欄位值
 		String[] showHideColumnArr = showHideColumn.split(",");
 		for (int i = 0; i < showHideColumnArr.length; i++) {
-			String key = showHideColumnArr[i].split("-")[0];
-			boolean val = Boolean.parseBoolean(showHideColumnArr[i].split("-")[1]);
-			showHideColumnMap.put(key, val);
-			if(val) { // 勾選顯示，則加入title
-				if ("convertCount".equalsIgnoreCase(key)) {
+			String mapKey = showHideColumnArr[i].split("-")[0];
+			boolean mapVal = Boolean.parseBoolean(showHideColumnArr[i].split("-")[1]);
+			showHideColumnMap.put(mapKey, mapVal);
+			if(mapVal) { // 勾選顯示，則加入title
+				if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
 					content.append(",轉換次數");
-				} else if ("convertCTR".equalsIgnoreCase(key)) {
+				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
 					content.append(",轉換率");
-				} else if ("convertPriceCount".equalsIgnoreCase(key)) {
+				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
 					content.append(",總轉換價值");
-				} else if ("convertCost".equalsIgnoreCase(key)) {
+				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
 					content.append(",平均轉換成本");
-				} else if ("convertInvestmentCost".equalsIgnoreCase(key)) {
+				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
 					content.append(",廣告投資報酬率");
 				}
 			}
