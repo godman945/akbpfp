@@ -1,8 +1,7 @@
 /bin/
-/.settings
 /.m2
 /.settings
 /target
 /.classpath
 /.project
-WebContent/*
+/WebContent/*

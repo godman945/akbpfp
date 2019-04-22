@@ -213,10 +213,10 @@ function multipartImgUuploadSubmit(){
 		excludeKeywordULArray.push($(obj).text());
 	});
 	
-	if (!chkUrl($("#adLinkURL"), $("#chkLinkURL"))) {
-		$("#adLinkURL").focus();
-		return false;
-	}
+//	if (!chkUrl($("#adLinkURL"), $("#chkLinkURL"))) {
+//		$("#adLinkURL").focus();
+//		return false;
+//	}
 	
 	var adStatus = $("#adStatus").val();
 	var alertMsg = "";
@@ -225,6 +225,17 @@ function multipartImgUuploadSubmit(){
 	} else {
 		alertMsg = "PChome將會審核您編輯過的廣告。\n\n提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	}
+	
+	
+	var addetailSeqArray = "";
+	$.each(document.getElementsByName("adDetailSeq"), function( index, obj ) {
+		if(document.getElementsByName("adDetailSeq").length - 1  == index){
+			addetailSeqArray = addetailSeqArray + obj.value;
+		}else{
+			addetailSeqArray = addetailSeqArray + obj.value +","
+		}
+	});
+	
 	if(confirm(alertMsg)) {
 		callBlock();
 		$.ajax({
@@ -234,14 +245,16 @@ function multipartImgUuploadSubmit(){
 			data : {
 				"adSeq" : $("#adSeq").val(),
 				"adStyle" : "IMG",
-				"adDetailSeq" : $("#adDetailSeq").val(),
+				"adDetailSeq" : addetailSeqArray,
 				"adGroupSeq": $("#adGroupSeq").val(),
 				"adLinkURL" : $("#adLinkURL").val(),
 				"keywords" : JSON.stringify(keyWordArray),
 				"excludeKeywords" : JSON.stringify(excludeKeywordULArray),
 				"adKeywordOpen" : $("#adKeywordOpen").attr("checked"),
 				"adKeywordPhraseOpen" : $("#adKeywordPhraseOpen").attr("checked"),
-				"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked")
+				"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked"),
+				"thirdCode" : $("#thirdCode").val()
+				
 			},
 			success : function(respone) {
 				$('body').unblock();
@@ -271,4 +284,24 @@ function callBlock(){
 			cursor: 'wait'
 		}
 	});
+}
+
+//第三方偵測
+$('.thirdpty-togglebtn').live('click', function(event) {  
+
+	if($('.thirdptybx').is(":hidden")){
+		$('.swap').text("－");
+		$('.thirdptybx').fadeToggle('fast');
+	}
+	else{
+		$('.swap').text("＋");
+		$('.thirdptybx').fadeToggle('fast');
+	}
+});
+function opennots(id) {
+	$("#shownotes"+id).css("visibility", "visible");
+}
+
+function closenots(id) {
+	$("#shownotes"+id).css("visibility", "hidden");
 }

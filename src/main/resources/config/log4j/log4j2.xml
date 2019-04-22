@@ -30,6 +30,6 @@
         <logger name="org.apache.struts2.spring.StrutsSpringObjectFactory" level="warn" ref="stdout" />
         <logger name="org.springframework.remoting.rmi.RmiServiceExporte" level="warn" ref="stdout" />
         <logger name="org.hibernate.hql.internal.ast.HqlSqlWalker" level="error" ref="stdout" />
-        
+        <logger name="org.apache.commons.httpclient.HttpMethodBase" level="error" ref="stdout" />
     </loggers>
 </configuration>

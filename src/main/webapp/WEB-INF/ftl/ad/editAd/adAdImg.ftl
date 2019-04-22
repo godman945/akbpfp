@@ -46,23 +46,24 @@
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">已輸入0字，剩1024字</span>
 						</td>
 					</tr>
-                    <!-- <tr>
-						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br><a href="#" id="errAdImg" name="errAdImg" onclick="approveSize();">支援規格查詢</a></th>
-						<td style="background:#f9f9f9;">
-							<span class="imgar" style="width:100%;">
-                            	上傳圖片start
-                            <div style="float:left;text-align:left;line-height:30px;color:#000"> 
-                                <input type="hidden" id="adDetailID" name="adDetailID" value="img">
-                                <input type="hidden" id="adDetailName" name="adDetailName" value="廣告圖片">
-                                <input type="hidden" id="adDetailContent" name="adDetailContent" value="">
-   	  							<input type="hidden" id="adGroupSeq" name="adGroupSeq" value="${adGroupSeq}">
-                                <input id="fileupload" type="file"  name="fileupload" multiple >
-                                <span id="chkFile" name="chkFile" style="color:red;size:5"></span><br /> <div>已上傳 <div id="fileUploadIndex" style="display:inline;">0</div>/<div id="fileUploadSize" style="display:inline;">0</div> <div id="finalCount"  style="display:inline;color:blue;"></div></div>									
+					
+					<tr class="" style="display: ;">
+                        <th style="">
+                           		 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(3)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
+                            <div id="shownotes3" style="z-index:500;visibility:hidden;" class="adnoticepop">
+                                <h4>第三方曝光追蹤代碼</h4>
+                                <div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
+                                <a onclick="closenots(3)" style="cursor:pointer;" class="adpopclose">關閉</a>
                             </div>
-                            	上傳圖片end
-						  </span>
-					  </td>
-					</tr> -->					
+                        </th>
+                        <td>
+                          <div class="code-box">
+                              <textarea rows="1" placeholder="請輸入第三方曝光追蹤代碼" id="thirdCode" name="thirdCode" style="resize:none;margin: 0px 310px 0px 0px; height: 137px; width: 632px;">${thirdCode!}</textarea>
+                          		<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[2]!}">
+                          		<input type="hidden" id="adDetailSeq" name="adDetailContent" value="${adDetailContent[2]!}">
+                          </div>
+                        </td>
+                    </tr>
 				</tbody>
 			</table>
 			 
