@@ -72,7 +72,9 @@ public class AdActionReportService implements IAdActionReportService {
 			adActionReportVO.setAvgCost(getCalculateDivisionValue(adPriceSum, adClkSum));
 			
 			// 千次曝光費用 = 總費用 / 曝光數 * 1000
-			adActionReportVO.setKiloCost(getCalculateDivisionValue(adPriceSum, adPvSum, 1000));
+			Double kiloCost = getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
+			BigDecimal bg = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
+			adActionReportVO.setKiloCost(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
 			
 			// 轉換次數
 			BigDecimal convertCount = (BigDecimal) dataMap.get("convert_count");
@@ -147,7 +149,9 @@ public class AdActionReportService implements IAdActionReportService {
 		adActionReportVO.setAvgCost(getCalculateDivisionValue(adPriceSum, adClkSum));
 		
 		// 千次曝光費用 = 總費用 / 曝光數 * 1000
-		adActionReportVO.setKiloCost(getCalculateDivisionValue(adPriceSum, adPvSum, 1000));
+		Double kiloCost = getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
+		BigDecimal bg = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
+		adActionReportVO.setKiloCost(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
 		
 		// 轉換次數
 		adActionReportVO.setConvertCount(convertCount);
