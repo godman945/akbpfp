@@ -46,7 +46,7 @@
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">已輸入0字，剩1024字</span>
 						</td>
 					</tr>
-					
+					<!-- 第三方偵測暫不上線
 					<tr class="" style="display: ;">
                         <th style="">
                            		 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(3)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
@@ -64,6 +64,7 @@
                           </div>
                         </td>
                     </tr>
+                    -->
 				</tbody>
 			</table>
 			 
