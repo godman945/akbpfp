@@ -3,6 +3,7 @@ package com.pchome.akbpfp.struts2.action.report;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -34,7 +35,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	NumberFormat intFormat = new DecimalFormat("###,###,###,###");
 	NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
-
+	
 	private IPfpCodeService pfpCodeService;
 	private IAdActionReportService adActionReportService;
 	
@@ -56,13 +57,13 @@ public class ReportAdDailyAction extends BaseReportAction {
 	
 	// 下載報表
 	private String isDownload = "false";
-	private IPfpCustomerInfoService customerInfoService = null;
+	private IPfpCustomerInfoService customerInfoService;
 	private InputStream downloadFileStream; // 下載報表的 input stream
 	private String downloadFileName; // 下載顯示名
 	private String showHideColumn = ""; // 哪些欄位顯示或隱藏
 	
 	// 圖表
-	private SpringOpenFlashUtil openFlashUtil = null;
+	private SpringOpenFlashUtil openFlashUtil;
 	private String flashData;
 	private String charType = ""; // 度量
 	private String charPic = ""; // 圖表格式
@@ -176,9 +177,9 @@ public class ReportAdDailyAction extends BaseReportAction {
 				content.append("\"" + intFormat.format(resultData.get(i).getAdPvSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultData.get(i).getAdClkSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultData.get(i).getCtr()) + "%\",");
-				content.append("=\"NT$ " + doubleFormat.format(resultData.get(i).getAvgCost()) + "\",");
-				content.append("=\"NT$ " + doubleFormat.format(resultData.get(i).getKiloCost()) + "\",");
-				content.append("=\"NT$ " + doubleFormat.format(resultData.get(i).getAdPriceSum()) + "\",");
+				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getAvgCost()) + "\",");
+				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getKiloCost()) + "\",");
+				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getAdPriceSum()) + "\",");
 				
 				if (showHideColumnMap.get("convertCount")) {
 					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertCount()) + "\",");
@@ -187,10 +188,10 @@ public class ReportAdDailyAction extends BaseReportAction {
 					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertCTR()) + "%\",");
 				}
 				if (showHideColumnMap.get("convertPriceCount")) {
-					content.append("=\"NT$ " + doubleFormat.format(resultData.get(i).getConvertPriceCount()) + "\",");
+					content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getConvertPriceCount()) + "\",");
 				}
 				if (showHideColumnMap.get("convertCost")) {
-					content.append("=\"NT$ " + doubleFormat.format(resultData.get(i).getConvertCost()) + "\",");
+					content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getConvertCost()) + "\",");
 				}
 				if (showHideColumnMap.get("convertInvestmentCost")) {
 					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertInvestmentCost()) + "%\",");
@@ -207,21 +208,21 @@ public class ReportAdDailyAction extends BaseReportAction {
 				content.append("\"" + doubleFormat.format(resultSumData.get(i).getAdPvSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultSumData.get(i).getAdClkSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultSumData.get(i).getCtr()) + "%\",");
-				content.append("=\"NT$ " + doubleFormat.format(resultSumData.get(i).getAvgCost()) + "\",");
-				content.append("=\"NT$ " + doubleFormat.format(resultSumData.get(i).getKiloCost()) + "\",");
-				content.append("=\"NT$ " + doubleFormat.format(resultSumData.get(i).getAdPriceSum()) + "\",");
+				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getAvgCost()) + "\",");
+				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getKiloCost()) + "\",");
+				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getAdPriceSum()) + "\",");
 				
 				if (showHideColumnMap.get("convertCount")) {
-					content.append("\"" + intFormat.format(resultSumData.get(i).getConvertCount()) + "\",");
+					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertCount()) + "\",");
 				}
 				if (showHideColumnMap.get("convertCTR")) {
 					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertCTR()) + "%\",");
 				}
 				if (showHideColumnMap.get("convertPriceCount")) {
-					content.append("=\"NT$ " + intFormat.format(resultSumData.get(i).getConvertPriceCount()) + "\",");
+					content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getConvertPriceCount()) + "\",");
 				}
 				if (showHideColumnMap.get("convertCost")) {
-					content.append("=\"NT$ " + doubleFormat.format(resultSumData.get(i).getConvertCost()) + "\",");
+					content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getConvertCost()) + "\",");
 				}
 				if (showHideColumnMap.get("convertInvestmentCost")) {
 					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertInvestmentCost()) + "%\",");
@@ -229,16 +230,13 @@ public class ReportAdDailyAction extends BaseReportAction {
 			}
 		}
 		
-		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > 0) {
-			downloadFileName = new String(filename.getBytes("UTF-8"), "ISO8859-1");
+		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") >= 1) {
+			downloadFileName = new String(filename.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
 		} else {
 			downloadFileName = URLEncoder.encode(filename, "UTF-8");
 		}
 
 		downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));
-
-		//處理 BOM 開頭要加上 "\uFEFF"
-		//downloadFileStream = new ByteArrayInputStream(("\uFEFF" + content.toString()).getBytes("utf-8"));
 	}
 	
 	/**
