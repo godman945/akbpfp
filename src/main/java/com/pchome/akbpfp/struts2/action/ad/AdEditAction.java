@@ -761,7 +761,7 @@ public class AdEditAction extends BaseCookieAction{
 			}
 		}
 		
-		if(adDetailSeq[1] != null && adDetailSeq[1] != ""){
+		if(adDetailSeq.length == 2 && adDetailSeq[1] != null && adDetailSeq[1] != ""){
 			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailSeq[1]);
 			String thirdCode = pfpAdDetail.getAdDetailContent();
 			pfpAdDetail.setAdDetailContent(this.thirdCode);
