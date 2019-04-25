@@ -138,7 +138,7 @@
 						<#if (resultData?size > 0) >
 							<#-- 每列資料 -->
 							<#list resultData as row>
-								<tr class="txt-row">
+								<tr class="txt-row detailRow">
 									<td data-info-name="">
 										<div class="w-full h-full">
 											<div class="txt-left pos-middle">

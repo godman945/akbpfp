@@ -112,7 +112,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 		vo.setSortBy(sortBy);
 		vo.setPage(page);
 		vo.setPageSize(pageSize);
-		vo.setDownload(Boolean.parseBoolean(isDownload));
+		vo.setDownloadOrIsNotCuttingPagination(Boolean.parseBoolean(isDownload));
 		resultData = adActionReportService.queryReportAdDailyData(vo);
 		resultSumData = adActionReportService.queryReportAdDailySumData(vo);
 		
@@ -244,11 +244,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String flashDataDownLoad() throws Exception {
-		log.info("charPic="+charPic);//flash 樣式
-		log.info("charType="+charType);//資料
-		log.info("chstartDate="+startDate);
-		log.info("chendDate="+endDate);
+	public String flashDataDownLoad() {
 
 		AdActionReportVO reportVo = new AdActionReportVO();
 		reportVo.setCustomerInfoId(super.getCustomer_info_id());
@@ -256,7 +252,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 		reportVo.setEndDate(endDate);
 		reportVo.setSearchText(searchText);
 		reportVo.setWhereMap(whereMap);
-		reportVo.setDownload(true); // 用下載flag來做不切分頁
+		reportVo.setDownloadOrIsNotCuttingPagination(true); // 用下載flag來做不切分頁
 		
 		List<AdActionReportVO> resultChartData = adActionReportService.queryReportAdDailyChartData(reportVo);
 		

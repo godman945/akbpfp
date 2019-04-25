@@ -4,19 +4,15 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanComparator;
-import org.apache.commons.collections.ComparatorUtils;
-import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.report.AdActionReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdActionReportDAO;
+import com.pchome.utils.CommonUtils;
 
 public class AdActionReportService implements IAdActionReportService {
 
@@ -37,7 +33,7 @@ public class AdActionReportService implements IAdActionReportService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public List<AdActionReportVO> queryReportAdDailyData(AdActionReportVO vo) throws Exception {
+	public List<AdActionReportVO> queryReportAdDailyData(AdActionReportVO vo) {
 		List<Map<String, Object>> adDailyList = adActionReportDAO.getAdDailyList(vo);
 		List<AdActionReportVO> adDailyVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : adDailyList) {
@@ -62,17 +58,17 @@ public class AdActionReportService implements IAdActionReportService {
 			adActionReportVO.setAdClkSum(adClkSum);
 			
 			// 互動率 = 總互動數 / 總曝光數 * 100
-			adActionReportVO.setCtr(getCalculateDivisionValue(adClkSum, adPvSum, 100));
+			adActionReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
 			
 			// 費用
 			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
 			adActionReportVO.setAdPriceSum(adPriceSum.doubleValue());
 						
 			// 單次互動費用 = 總費用 / 總互動次數
-			adActionReportVO.setAvgCost(getCalculateDivisionValue(adPriceSum, adClkSum));
+			adActionReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
 			
 			// 千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double kiloCost = getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
+			Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
 			BigDecimal bg = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
 			adActionReportVO.setKiloCost(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
 			
@@ -81,24 +77,24 @@ public class AdActionReportService implements IAdActionReportService {
 			adActionReportVO.setConvertCount(convertCount);
 			
 			// 轉換率 = 轉換次數 / 互動數 * 100
-			adActionReportVO.setConvertCTR(getCalculateDivisionValue(convertCount, adClkSum, 100));
+			adActionReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
 			
 			// 總轉換價值
 			BigDecimal convertPriceCount = (BigDecimal) dataMap.get("convert_price_count");
 			adActionReportVO.setConvertPriceCount(convertPriceCount);
 			
 			// 平均轉換成本 = 費用 / 轉換次數
-			adActionReportVO.setConvertCost(getCalculateDivisionValue(adPriceSum, convertCount));
+			adActionReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
 			
 			// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-			adActionReportVO.setConvertInvestmentCost(getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+			adActionReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
 			
 			adDailyVOList.add(adActionReportVO);
 		}
 		
 		// 處理排序
 		if (StringUtils.isNotBlank(vo.getSortBy())) {
-			sort(adDailyVOList, vo.getSortBy().split("-")[0], vo.getSortBy().split("-")[1]);
+			CommonUtils.getInstance().sort(adDailyVOList, vo.getSortBy().split("-")[0], vo.getSortBy().split("-")[1]);
 		}
 		
 		return adDailyVOList;
@@ -141,16 +137,16 @@ public class AdActionReportService implements IAdActionReportService {
 		adActionReportVO.setAdClkSum(adClkSum);
 		
 		// 互動率 = 總互動數 / 總曝光數 * 100
-		adActionReportVO.setCtr(getCalculateDivisionValue(adClkSum, adPvSum, 100));
+		adActionReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
 		
 		// 費用
 		adActionReportVO.setAdPriceSum(adPriceSum.doubleValue());
 		
 		// 單次互動費用 = 總費用 / 總互動次數
-		adActionReportVO.setAvgCost(getCalculateDivisionValue(adPriceSum, adClkSum));
+		adActionReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
 		
 		// 千次曝光費用 = 總費用 / 曝光數 * 1000
-		Double kiloCost = getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
+		Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
 		BigDecimal bg = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
 		adActionReportVO.setKiloCost(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
 		
@@ -158,16 +154,16 @@ public class AdActionReportService implements IAdActionReportService {
 		adActionReportVO.setConvertCount(convertCount);
 		
 		// 轉換率 = 轉換次數 / 互動數 * 100
-		adActionReportVO.setConvertCTR(getCalculateDivisionValue(convertCount, adClkSum, 100));
+		adActionReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
 		
 		// 總轉換價值
 		adActionReportVO.setConvertPriceCount(convertPriceCount);
 		
 		// 平均轉換成本 = 費用 / 轉換次數
-		adActionReportVO.setConvertCost(getCalculateDivisionValue(adPriceSum, convertCount));
+		adActionReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
 		
 		// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-		adActionReportVO.setConvertInvestmentCost(getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+		adActionReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
 		
 		// 總計幾筆
 		adActionReportVO.setRowCount(adDailyListSum.size());
@@ -184,7 +180,7 @@ public class AdActionReportService implements IAdActionReportService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public List<AdActionReportVO> queryReportAdDailyChartData(AdActionReportVO vo) throws Exception {
+	public List<AdActionReportVO> queryReportAdDailyChartData(AdActionReportVO vo) {
 		return queryReportAdDailyData(vo);
 	}
 	
@@ -205,50 +201,4 @@ public class AdActionReportService implements IAdActionReportService {
 		return adDevice;
 	}
 	
-	/**
-	 * 將查詢結果排序
-	 * 參考 https://www.cnblogs.com/china-li/archive/2013/04/28/3048739.html
-	 * @param list
-	 * @param fieldName vo內有的參數
-	 * @param sortBy
-	 */
-	public static void sort(List<?> list, String fieldName, String sortBy) {
-        Comparator<?> mycmp = ComparableComparator.getInstance();
-		if ("asc".equalsIgnoreCase(sortBy)) {
-			mycmp = ComparatorUtils.nullLowComparator(mycmp);
-		} else {
-			mycmp = ComparatorUtils.reversedComparator(mycmp);
-		}
-        Collections.sort(list, new BeanComparator(fieldName, mycmp));
-    }
-
-	/**
-	 * 取得除法計算值 <br/>
-	 * 公式:dividend / divisor
-	 * @param dividend 被除數
-	 * @param divisor  除數
-	 * @return true:unbmer false:0
-	 */
-	private Double getCalculateDivisionValue(BigDecimal dividend, BigDecimal divisor) {
-		if (dividend.compareTo(BigDecimal.ZERO) >= 1 && divisor.compareTo(BigDecimal.ZERO) >= 1) {
-			return dividend.divide(divisor, 6, RoundingMode.DOWN).doubleValue();
-		}
-		return (BigDecimal.ZERO).doubleValue();
-	}
-	
-	/**
-	 * 取得除法計算值 <br/>
-	 * 公式:(dividend / divisor) * number
-	 * @param dividend 被除數
-	 * @param divisor  除數
-	 * @param number   乘多少自行放入
-	 * @return true:unbmer false:0
-	 */
-	private Double getCalculateDivisionValue(BigDecimal dividend, BigDecimal divisor, int number) {
-		if (dividend.compareTo(BigDecimal.ZERO) >= 1 && divisor.compareTo(BigDecimal.ZERO) >= 1) {
-			return dividend.divide(divisor, 6, RoundingMode.DOWN).multiply(new BigDecimal(number)).doubleValue();
-		}
-		return (BigDecimal.ZERO).doubleValue();
-	}
-
 }

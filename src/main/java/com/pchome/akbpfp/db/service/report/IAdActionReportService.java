@@ -16,7 +16,7 @@ public interface IAdActionReportService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public List<AdActionReportVO> queryReportAdDailyData(AdActionReportVO vo) throws Exception;
+	public List<AdActionReportVO> queryReportAdDailyData(AdActionReportVO vo);
 
 	/**
 	 * 每日花費成效(加總)
@@ -31,7 +31,7 @@ public interface IAdActionReportService {
 	 * @return
 	 * @throws Exception 
 	 */
-	public List<AdActionReportVO> queryReportAdDailyChartData(AdActionReportVO vo) throws Exception;
+	public List<AdActionReportVO> queryReportAdDailyChartData(AdActionReportVO vo);
 	
 	/**
 	 * 取得裝置中文

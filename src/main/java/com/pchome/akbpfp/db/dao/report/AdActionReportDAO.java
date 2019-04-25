@@ -897,7 +897,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 			query.setString("adPvclkDevice", adDevice);
 		}
 		
-		if (!vo.isDownload()) { // 不是下載則做分頁處理
+		if (!vo.isDownloadOrIsNotCuttingPagination()) { // 不是下載則做分頁處理
 			// 取得分頁
 			query.setFirstResult((vo.getPage() - 1) * vo.getPageSize());
 			query.setMaxResults(vo.getPageSize());

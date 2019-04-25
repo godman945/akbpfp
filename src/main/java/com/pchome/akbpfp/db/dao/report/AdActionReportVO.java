@@ -14,7 +14,7 @@ public class AdActionReportVO {
 	private int pageSize = 10; // 每頁筆數
 	private String whereMap = ""; // sql篩選條件
 	private String sortBy = ""; // 排序欄位
-	private boolean isDownload = false;
+	private boolean isDownloadOrIsNotCuttingPagination = false; // 是否為下載，或用來當SQL是否切分頁FLAG
 	
 	private Date reportDate; //報表日期
 
@@ -282,12 +282,12 @@ public class AdActionReportVO {
 		this.rowCount = rowCount;
 	}
 
-	public boolean isDownload() {
-		return isDownload;
+	public boolean isDownloadOrIsNotCuttingPagination() {
+		return isDownloadOrIsNotCuttingPagination;
 	}
 
-	public void setDownload(boolean isDownload) {
-		this.isDownload = isDownload;
+	public void setDownloadOrIsNotCuttingPagination(boolean isDownloadOrIsNotCuttingPagination) {
+		this.isDownloadOrIsNotCuttingPagination = isDownloadOrIsNotCuttingPagination;
 	}
-	
+
 }

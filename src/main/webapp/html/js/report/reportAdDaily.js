@@ -367,6 +367,7 @@ function processDownloadReport() {
 	$("#whereMap").val(JSON.stringify(whereObject));
 	$("#sortBy").val(sortBy);
 	$("#showHideColumn").val(showHideColumn);
+	$("#excerptFrom").attr("action", "reportAdDailyDownload.html");
 	$("#excerptFrom").submit();
 }
 

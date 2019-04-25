@@ -1,8 +1,13 @@
 package com.pchome.utils;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -10,6 +15,9 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.ComparatorUtils;
+import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -203,4 +211,51 @@ public class CommonUtils {
 			file.mkdirs(); // 建立資料夾
 		}
 	}
+	
+	/**
+	 * 將查詢結果排序
+	 * 參考 https://www.cnblogs.com/china-li/archive/2013/04/28/3048739.html
+	 * @param list
+	 * @param fieldName vo內有的參數名
+	 * @param sortBy
+	 */
+	public void sort(List<?> list, String fieldName, String sortBy) {
+        Comparator<?> mycmp = ComparableComparator.getInstance();
+		if ("asc".equalsIgnoreCase(sortBy)) {
+			mycmp = ComparatorUtils.nullLowComparator(mycmp);
+		} else {
+			mycmp = ComparatorUtils.reversedComparator(mycmp);
+		}
+        Collections.sort(list, new BeanComparator(fieldName, mycmp));
+    }
+	
+	/**
+	 * 取得除法計算值 <br/>
+	 * 公式:dividend / divisor
+	 * @param dividend 被除數
+	 * @param divisor  除數
+	 * @return true:unbmer false:0
+	 */
+	public Double getCalculateDivisionValue(BigDecimal dividend, BigDecimal divisor) {
+		if (dividend.compareTo(BigDecimal.ZERO) >= 1 && divisor.compareTo(BigDecimal.ZERO) >= 1) {
+			return dividend.divide(divisor, 6, RoundingMode.DOWN).doubleValue();
+		}
+		return (BigDecimal.ZERO).doubleValue();
+	}
+	
+	/**
+	 * 取得除法計算值 <br/>
+	 * 公式:(dividend / divisor) * number
+	 * @param dividend 被除數
+	 * @param divisor  除數
+	 * @param number   乘多少自行放入
+	 * @return true:unbmer false:0
+	 */
+	public Double getCalculateDivisionValue(BigDecimal dividend, BigDecimal divisor, int number) {
+		if (dividend.compareTo(BigDecimal.ZERO) >= 1 && divisor.compareTo(BigDecimal.ZERO) >= 1) {
+			return dividend.divide(divisor, 6, RoundingMode.DOWN).multiply(new BigDecimal(number)).doubleValue();
+		}
+		return (BigDecimal.ZERO).doubleValue();
+	}
+
 }
