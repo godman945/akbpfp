@@ -359,32 +359,6 @@ public class SpringOpenFlashUtil {
 		return maxResult;
 	}
 
-//	/**
-//	 * 橫條圖
-//	 * 目前 行動廣告成效 使用
-//	 * @param charType
-//	 * @param flashDataMap
-//	 * @return
-//	 */
-//	public String getBarChartDataForArray(String charType, Map<String, Float> flashDataMap) {
-//		// 設置位數
-//		int scale = getScale(charType);
-//		List<Double> dataList = new ArrayList<>();
-//		
-//		for (Entry<String, Float> entry : flashDataMap.entrySet()) {
-//			if (flashDataMap.containsKey(entry.getKey())) {
-//				BigDecimal bd = BigDecimal.valueOf((double) flashDataMap.get(entry.getKey()));
-//				bd = bd.setScale(scale, 4);
-//				dataList.add(bd.doubleValue());
-//			} else {
-//				dataList.add((double) 0);
-//			}
-//		}
-//		
-//		JSONArray array = new JSONArray(dataList);
-//		return array.toString();
-//	}
-
 	/**
 	 * 橫條圖
 	 * 目前 行動廣告成效 使用

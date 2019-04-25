@@ -219,14 +219,6 @@
    
    	<definition name="report.body.adOs.detailList" template="/ftl/report/adOs/adOsDataList.ftl" />
 	<definition name="report.chartTable.ados" template="/ftl/report/chart/adOsChartTable.ftl" />
-   
-<!--     <definition name="report.body.ados" extends="report.body" > -->
-<!--     	<put-attribute name="reportTable" value="report.ajaxTable.ados" /> -->
-<!-- 		<put-attribute name="chartTable" value="report.chartTable.ados" /> -->
-<!--     </definition> -->
-    
-<!-- 	<definition name="report.ajaxTable.ados" template="/ftl/report/ajax/adOsTable.ftl" /> -->
-<!-- 	<definition name="report.chartTable.ados" template="/ftl/report/chart/adOsChartTable.ftl" /> -->
     <!-- .report.adOs 行動廣告成效 end -->
     
     <!-- .report.adTime  -->

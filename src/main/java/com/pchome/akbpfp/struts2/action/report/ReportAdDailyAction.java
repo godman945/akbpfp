@@ -68,6 +68,9 @@ public class ReportAdDailyAction extends BaseReportAction {
 	private String charType = ""; // 度量
 	private String charPic = ""; // 圖表格式
 	
+	/**
+	 * 查詢
+	 */
 	@Override
 	public String execute() throws Exception {
 		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
@@ -127,6 +130,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 	/**
 	 * 下載報表
+	 * 先執行execute()，是下載報表才再執行此方法
 	 * @throws Exception
 	 */
 	private void makeDownloadReportData() throws Exception {
