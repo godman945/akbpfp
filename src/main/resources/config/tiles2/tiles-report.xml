@@ -77,11 +77,11 @@
     </definition>
 	
 	<definition name="report.body.adDaily" template="/ftl/report/adDaily/adDailyBody.ftl" >
-		<put-attribute name="adDailyDetailList" value="report.body.adDaily.DetailList" />
+		<put-attribute name="adDailyDetailList" value="report.body.adDaily.detailList" />
 		<put-attribute name="chartTable" value="report.chartTable.adDaily" />
 	</definition>
 	
-	<definition name="report.body.adDaily.DetailList" template="/ftl/report/adDaily/adDailyDataList.ftl" >
+	<definition name="report.body.adDaily.detailList" template="/ftl/report/adDaily/adDailyDataList.ftl" >
     </definition>
     <definition name="report.chartTable.adDaily" template="/ftl/report/chart/excerptChartTable.ftl" >
 	</definition>
@@ -202,7 +202,7 @@
 	</definition>
     
     
-    <!--.report.adOs  -->
+    <!-- .report.adOs 行動廣告成效 -->
 	<definition name=".report.ados" extends="default.report.layout">
     	<put-attribute name="header" value="report.header.ados" />
     	<put-attribute name="body" value="report.body.ados" />
@@ -212,14 +212,22 @@
     	<put-attribute name="jsName" value="reportAdOs.js" />
     </definition>
    
-    <definition name="report.body.ados" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.ados" />
+	<definition name="report.body.ados" template="/ftl/report/adOs/adOsBody.ftl" >
+	   	<put-attribute name="adOsDetailList" value="report.body.adOs.detailList" />
 		<put-attribute name="chartTable" value="report.chartTable.ados" />
     </definition>
-    
-	<definition name="report.ajaxTable.ados" template="/ftl/report/ajax/adOsTable.ftl" />
+   
+   	<definition name="report.body.adOs.detailList" template="/ftl/report/adOs/adOsDataList.ftl" />
 	<definition name="report.chartTable.ados" template="/ftl/report/chart/adOsChartTable.ftl" />
+   
+<!--     <definition name="report.body.ados" extends="report.body" > -->
+<!--     	<put-attribute name="reportTable" value="report.ajaxTable.ados" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.ados" /> -->
+<!--     </definition> -->
     
+<!-- 	<definition name="report.ajaxTable.ados" template="/ftl/report/ajax/adOsTable.ftl" /> -->
+<!-- 	<definition name="report.chartTable.ados" template="/ftl/report/chart/adOsChartTable.ftl" /> -->
+    <!-- .report.adOs 行動廣告成效 end -->
     
     <!-- .report.adTime  -->
     <definition name="report.ajaxTable.adTime" template="/ftl/report/ajax/adTimeTable.ftl" /> 
