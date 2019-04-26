@@ -1,6 +1,7 @@
 package com.pchome.soft.depot.utils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -224,59 +225,21 @@ public class SpringOpenFlashUtil {
 	}
 
 	public String getChartDataForArray(String charType,String startDate,String endDate,Map<Date,Float> flashDataMap){
-		int scale = 0;		//设置位数
+		// 設置位數
+		int scale = getScale(charType);
 
-		if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-			scale = 2;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-			scale = 2;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-			scale = 3;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_ADSORT.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTRINVALID.getTextValue())) {
-			scale = 0;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())) {
-			scale = 2;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())) {
-			scale = 2;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
-			scale = 2;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())) {
-			scale = 2;
-		}else if(charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())){
-			scale = 2;
-		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
-			scale = 0;
-		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
-			scale = 2;
-		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
-			scale = 0;
-		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
-			scale = 2;
-		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
-			scale = 2;
-		}
-		//x 軸兩日期間所相差的天數
+		// x 軸兩日期間所相差的天數
 		long maxValueX = DateValueUtil.getInstance().getDateDiffDay(startDate, endDate);
-		Date pDate=null;
-		List<Double> dataList = new ArrayList<Double>();
+		Date pDate = null;
+		List<Double> dataList = new ArrayList<>();
 		
-		for(int d=0;d<maxValueX;d++){
-			pDate=DateValueUtil.getInstance().getDateForStartDateAddDay(startDate, d);
-			if(flashDataMap.containsKey(pDate)){
-				BigDecimal bd = new BigDecimal((double)flashDataMap.get(pDate));
-				bd = bd.setScale(scale,4);
+		for (int d = 0; d < maxValueX; d++) {
+			pDate = DateValueUtil.getInstance().getDateForStartDateAddDay(startDate, d);
+			if (flashDataMap.containsKey(pDate)) {
+				BigDecimal bd = new BigDecimal((double) flashDataMap.get(pDate));
+				bd = bd.setScale(scale, 4);
 				dataList.add(bd.doubleValue());
-			}else{
+			} else {
 				dataList.add((double) 0);
 			}
 		}
@@ -375,7 +338,9 @@ public class SpringOpenFlashUtil {
 		for (Entry<String, Float> entry : flashDataMap.entrySet()) {
 			if (flashDataMap.containsKey(entry.getKey())) {
 				BigDecimal bd = BigDecimal.valueOf((double) flashDataMap.get(entry.getKey()));
-				bd = bd.setScale(scale, 4);
+//				bd = bd.setScale(scale, 4);
+//				dataList.add(bd.doubleValue());
+				bd = bd.setScale(scale, RoundingMode.HALF_UP); // 小數點第幾位，退一位再四捨五入
 				dataList.add(bd.doubleValue());
 			} else {
 				dataList.add((double) 0);
