@@ -365,45 +365,21 @@ public class SpringOpenFlashUtil {
 	 */
 	private int getScale(String charType) {
 		int scale = 0;
-		if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-			scale = 2;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
+		if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
 			scale = 2;
 		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 			scale = 3;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_ADSORT.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTRINVALID.getTextValue())) {
-			scale = 0;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())) {
-			scale = 2;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())) {
-			scale = 2;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
-			scale = 2;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())) {
-			scale = 2;
-		}else if(charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())){
-			scale = 2;
-		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
-			scale = 0;
-		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
-			scale = 2;
-		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
-			scale = 0;
-		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
-			scale = 2;
-		}else if(charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
-			scale = 2;
 		}
+
 		return scale;
 	}
 }
