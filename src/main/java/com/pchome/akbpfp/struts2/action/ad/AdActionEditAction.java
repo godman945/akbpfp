@@ -834,7 +834,7 @@ public class AdActionEditAction extends BaseCookieAction{
 			String[] codeArray = time2.split("");
 			String hourNote = "";
 			for(int j=0;j<12;j++){
-				String code = codeArray[j+1];
+				String code = codeArray[j];
 				if(StringUtils.equals(code, "1")){
 					if(StringUtils.isNotEmpty(hourNote)){
 						hourNote += "、";
