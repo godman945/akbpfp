@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
+import org.mortbay.log.Log;
 import org.apache.logging.log4j.LogManager;
 
 import com.pchome.enumerate.cookie.EnumCookieConstants;
@@ -33,10 +34,14 @@ public class CookieUtil {
 		String cookieValue = null;
 
         Cookie[] cookieArray = request.getCookies();
-
+        logger.info(">>>>>>>>>>>>>>>>>>cookieArray:"+cookieArray.length);
         if (cookieArray!=null && cookieArray.length>0) {
             for (int i=0; i<cookieArray.length; i++) {
                 Cookie tmpCookie = cookieArray[i];
+                
+                logger.info(">>>>>>>>>>>>>>>>>>tmpCookie.getName():"+tmpCookie.getName());
+                logger.info(">>>>>>>>>>>>>>>>>>decodeCode:"+decodeCode);
+                
                 if (tmpCookie.getName().equals(cookieName)) {
                 	cookieValue = tmpCookie.getValue();
                 	break;
