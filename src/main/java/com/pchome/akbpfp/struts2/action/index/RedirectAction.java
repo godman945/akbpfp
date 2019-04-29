@@ -96,9 +96,7 @@ public class RedirectAction extends BaseCookieAction{
 		}
 		
 		// 管理者權限跳過以下判斷
-		if(super.getRoot_user() == null || 
-				(!super.getRoot_user().equals(EnumPfpRootUser.PCHOME_MANAGER.getPrivilege()) && 
-				!super.getRoot_user().equals(EnumPfpRootUser.PFD.getPrivilege()))){
+		if(super.getRoot_user() == null || 	(!super.getRoot_user().equals(EnumPfpRootUser.PCHOME_MANAGER.getPrivilege()) &&	!super.getRoot_user().equals(EnumPfpRootUser.PFD.getPrivilege()))){
 			
 			// 帳戶是否存在
 			if(!this.checkPfpAccountExist()){
@@ -165,6 +163,9 @@ public class RedirectAction extends BaseCookieAction{
 		boolean exist = true;
 		
 		this.userMemberRefs = PfpUserMemberRefService.activateUserMemberRef(super.getId_pchome());
+		
+		log.info(">>>>>>>>>super.getId_pchome():"+super.getId_pchome());
+		log.info(">>>>>>>>>this.userMemberRefs:"+this.userMemberRefs.size());
 		
 		if(userMemberRefs.isEmpty()){
 			// 從 PFD 登入一定會 PFP customerInfoId
