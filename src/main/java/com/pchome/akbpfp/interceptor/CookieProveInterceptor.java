@@ -71,7 +71,7 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		log.info(">>>>>>>>>>>>>dna_pchome:"+dna_pchome);
 		if(StringUtils.isNotEmpty(id_pchome) && StringUtils.isNotEmpty(dna_pchome)){
 			String decode_dna_pchome = cookieUtils.Simple_Decode(dna_pchome);
-			log.info(" dna_pchome: "+decode_dna_pchome);
+			log.info("dna_pchome: "+decode_dna_pchome);
 			if(decode_dna_pchome.equals(id_pchome)){
 				result = invocation.invoke();
 			}

@@ -40,7 +40,6 @@ public class CookieUtil {
                 Cookie tmpCookie = cookieArray[i];
                 
                 logger.info(">>>>>>>>>>>>>>>>>>tmpCookie.getName():"+tmpCookie.getName());
-                logger.info(">>>>>>>>>>>>>>>>>>decodeCode:"+decodeCode);
                 
                 if (tmpCookie.getName().equals(cookieName)) {
                 	cookieValue = tmpCookie.getValue();

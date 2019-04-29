@@ -75,7 +75,7 @@ public class RedirectAction extends BaseCookieAction{
 	}
 
 	public String redirectAction() throws Exception{
-
+		log.info(">>>>>>>>>>> start>>>>>>>>>");
 		// 登入判斷
 		if(!this.checkMemberIdExist()){
 			return "login"; 

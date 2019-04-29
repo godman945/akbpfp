@@ -69,8 +69,7 @@ public class CookieProccessAPI {
 		
 		String encodeCookie = EncodeUtil.getInstance().encryptAES(content.toString(), EnumCookieConstants.COOKIE_PFP_SECRET_KEY.getValue());
 		
-		CookieUtil.writeCookie(response, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(), encodeCookie,	
-				EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(), EnumCookieConstants.COOKIE_MAX_AGE, null);
+		CookieUtil.writeCookie(response, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(), encodeCookie,EnumCookieConstants.COOKIE_PCHOME_DOMAIN.getValue(), EnumCookieConstants.COOKIE_MAX_AGE, null);
 			
 		
 		if(enumPfpRootUser.equals(EnumPfpRootUser.PCHOME_MANAGER) && StringUtils.isNotBlank(idPchome)){
