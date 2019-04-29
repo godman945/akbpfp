@@ -97,8 +97,6 @@ public class RedirectAction extends BaseCookieAction{
 		
 		// 管理者權限跳過以下判斷
 		if(super.getRoot_user() == null || 	(!super.getRoot_user().equals(EnumPfpRootUser.PCHOME_MANAGER.getPrivilege()) &&	!super.getRoot_user().equals(EnumPfpRootUser.PFD.getPrivilege()))){
-			log.info("><><><><><><><><:"+this.checkPfpAccountExist());
-			
 			// 帳戶是否存在
 			if(!this.checkPfpAccountExist()){
 				return "apply";
@@ -111,10 +109,8 @@ public class RedirectAction extends BaseCookieAction{
 			// 記錄最後登入時間和IP
 			this.updateLoginDateTime();
 			cookieProccessAPI.writerPfpLoginCookie(super.response, this.pfpUser, EnumPfpRootUser.NO, null);
-			return "notRootUser";
 		}
 		
-		log.info("><><><><><><><><2");
 		return SUCCESS;
 	}
 	
