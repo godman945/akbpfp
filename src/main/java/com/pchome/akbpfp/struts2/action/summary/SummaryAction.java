@@ -44,7 +44,7 @@ public class SummaryAction extends BaseSSLAction{
 	private String chartType="";//度量
 	
 	public String execute() throws Exception{
-		
+		log.info(">>>>>>>>>>>>>>resultType:"+resultType);
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;
