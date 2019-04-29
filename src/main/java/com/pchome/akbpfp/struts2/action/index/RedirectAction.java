@@ -141,7 +141,7 @@ public class RedirectAction extends BaseCookieAction{
 		return isAuth;
 	}
 	
-	private boolean checkPfpAccountExist() {
+	private boolean checkPfpAccountExist() throws Exception{
 		
 		boolean exist = true;
 		
