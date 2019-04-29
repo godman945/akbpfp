@@ -63,8 +63,8 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		
 		
-		log.debug(">>>>>>>>>>>>>pcId:"+pcId);
-		log.debug(">>>>>>>>>>>>>userData:"+userData);
+		log.info(">>>>>>>>>>>>>pcId:"+pcId);
+		log.info(">>>>>>>>>>>>>userData:"+userData);
 		
 		if(StringUtils.isNotBlank(pcId) && StringUtils.isNotBlank(userData)){
 			// 解析 cookie 
