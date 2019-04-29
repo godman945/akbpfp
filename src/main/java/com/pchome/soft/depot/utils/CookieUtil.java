@@ -34,13 +34,9 @@ public class CookieUtil {
 		String cookieValue = null;
 
         Cookie[] cookieArray = request.getCookies();
-        logger.info(">>>>>>>>>>>>>>>>>>cookieArray:"+cookieArray.length);
         if (cookieArray!=null && cookieArray.length>0) {
             for (int i=0; i<cookieArray.length; i++) {
                 Cookie tmpCookie = cookieArray[i];
-                
-                logger.info(">>>>>>>>>>>>>>>>>>tmpCookie.getName():"+tmpCookie.getName());
-                
                 if (tmpCookie.getName().equals(cookieName)) {
                 	cookieValue = tmpCookie.getValue();
                 	break;
@@ -50,10 +46,8 @@ public class CookieUtil {
 
             if (StringUtils.isNotEmpty(cookieValue) && StringUtils.isNotEmpty(decodeCode)) {
                 try {
-
                 	cookieValue = URLDecoder.decode(cookieValue, EnumCookieConstants.COOKIE_USING_CODE.getValue());
                 	//logger.info(">>> decode cookieValue = " + cookieValue);
-
                 } catch (UnsupportedEncodingException uee) {
                 	logger.error(uee.getMessage(), uee);
                 } catch (Exception e) {
@@ -81,10 +75,8 @@ public class CookieUtil {
 		//logger.info(">>> encode cookieValue = " + cookieValue);
 		if (StringUtils.isNotEmpty(encodeCode)) {
 	        try {
-
 	        	cookieValue = URLEncoder.encode(cookieValue, encodeCode);
 	        	//logger.info(">>> encode cookieValue = " + cookieValue);
-
 	        } catch (UnsupportedEncodingException uee) {
 	        	logger.error(uee.getMessage(), uee);
 	        } catch (Exception e) {
