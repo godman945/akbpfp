@@ -69,6 +69,9 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		String dna_pchome = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_DNA_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		
 		
+		log.info(">>>>>>>>>>>>>id_pchome:"+id_pchome);
+		log.info(">>>>>>>>>>>>>dna_pchome:"+dna_pchome);
+		
 		//判斷是否BU帳號
 //		if(StringUtils.isNotBlank(id_pchome)){
 //			List<PfpBuAccount> pfpBuAccountList = pfpBuService.findPfpBuAccountByMemberId(id_pchome);
