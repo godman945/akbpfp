@@ -108,7 +108,9 @@ public class RedirectAction extends BaseCookieAction{
 			if(!this.checkPfpUserExist()){
 				return "userClose";
 			}
-			
+			this.updateLoginDateTime();
+			cookieProccessAPI.writerPfpLoginCookie(super.response, this.pfpUser, EnumPfpRootUser.NO, null);
+			return "notRootUser";
 //			// PFD 建立 PFP 帳戶需補填資料
 //			if(this.checkPfpAuthorizedPage()){
 //				
@@ -123,8 +125,6 @@ public class RedirectAction extends BaseCookieAction{
 //			}
 			
 			// 記錄最後登入時間和IP
-			this.updateLoginDateTime();
-			cookieProccessAPI.writerPfpLoginCookie(super.response, this.pfpUser, EnumPfpRootUser.NO, null);
 		}
 		
 		log.info("><><><><><><><><2");
