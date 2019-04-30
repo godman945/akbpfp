@@ -54,7 +54,13 @@
                         	<select id="adStyle" name="adStyle">
                         		<#if adStyleTypeMap?exists>
                         			<#list adStyleTypeMap?keys as skey>
-                        					<option value="${adStyleTypeMap[skey]}" >${skey}</option>
+                        					<#if adStyleTypeMap[skey] == 2>
+                        						<#if (pfd_customer_info_id == "PFDC20150422001" || pfd_customer_info_id == "PFDC20161012001")>
+                        							<option value="${adStyleTypeMap[skey]}" >${skey}</option>
+                        						</#if>
+                        					<#else>
+                        						<option value="${adStyleTypeMap[skey]}" >${skey}</option>
+                        					</#if>
                         			</#list>
 								</#if>
 		                    </select>
