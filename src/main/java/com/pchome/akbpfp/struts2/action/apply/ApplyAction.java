@@ -117,9 +117,9 @@ public class ApplyAction extends BaseSSLAction{
 		log.info("***START***");
 		this.checkRedirectSSLUrl();
 		log.info(this.resultType);
-//		if(StringUtils.isNotBlank(this.resultType)){
-//			return this.resultType;
-//		}
+		if(StringUtils.isNotBlank(this.resultType)){
+			return this.resultType;
+		}
 		
 		String result = "success";		
 		
