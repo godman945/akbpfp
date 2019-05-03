@@ -1,7 +1,5 @@
 package com.pchome.akbpfp.struts2;
 
-import java.util.Enumeration;
-
 import com.pchome.enumerate.ssl.EnumSSLAction;
 
 public class BaseSSLAction extends BaseCookieAction{
@@ -22,32 +20,17 @@ public class BaseSSLAction extends BaseCookieAction{
 		//log.info(" local: "+request.getScheme());
 		//log.info(" local: "+LOCAL_DONAME);
 		//log.info(" local: "+request.getServerName());
-		log.info("request.getScheme():"+request.getScheme());
-		log.info("request.getScheme():"+request.getRequestURL());
-		log.info("request.getScheme():"+request.getHeader("referer"));
-		log.info("request.getScheme():"+request.getHeader("X-Forwarded-Scheme"));
-		log.info("request.getScheme():"+request.getHeader("x-forwarded-proto"));
-		log.info("request.getProtocol():"+request.getProtocol());
 		
 		if(this.isSSLUrl()){
 			// 需要轉成 https
-			if(!request.getHeader("referer").contains("pchome")){
+			if(!request.getScheme().equals("https")){
 				if(request.getServerName().indexOf(LOCAL_DONAME) > -1){
 					redirectUrl = LOCAL_SCHEME+request.getServerName()+":"+LOCAL_PORT+request.getRequestURI();
-				}else {
+				}else{
 					redirectUrl = "https://"+request.getServerName()+request.getRequestURI();
 					resultType = "redirectHTTPS";
 				}
 			}
-//			if(!request.getScheme().equals("https")){
-//				if(request.getServerName().indexOf(LOCAL_DONAME) > -1){
-//					redirectUrl = LOCAL_SCHEME+request.getServerName()+":"+LOCAL_PORT+request.getRequestURI();
-//				}else{
-//					log.info("TEST???????????:"+"https://"+request.getServerName()+request.getRequestURI());
-//					redirectUrl = "https://"+request.getServerName()+request.getRequestURI();
-//					resultType = "redirectHTTPS";
-//				}
-//			}
 		}else{
 			// 不需要轉成 https
 			if(!request.getScheme().equals("http")){
@@ -60,7 +43,7 @@ public class BaseSSLAction extends BaseCookieAction{
 			}
 		}
 
-		log.info(" redirectUrl = "+redirectUrl);
+		//log.info(" redirectUrl = "+redirectUrl);
 	}
 	
 	private boolean isSSLUrl() {
