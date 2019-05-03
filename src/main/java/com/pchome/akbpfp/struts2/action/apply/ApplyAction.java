@@ -228,13 +228,17 @@ public class ApplyAction extends BaseSSLAction{
 				}else{
 					buFreeGiftTimeFlag = "N";
 				}
+				log.info(">>>>>>>>>>>1");
 				return "success";
 			}
+			log.info(">>>>>>>>>>>2");
 			result = "wait";
 		}else{
+			log.info(">>>>>>>>>>>3");
 			// 帳戶已啟用、停權、關閉
 			result = "summary";
 		}		
+		log.info(">>>>>>>>>>>4");
 		log.info(" result = "+result);
 		return result;
 	}
