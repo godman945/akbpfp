@@ -23,6 +23,7 @@ public class BaseSSLAction extends BaseCookieAction{
 		
 		if(this.isSSLUrl()){
 			// 需要轉成 https
+			log.info("request.getScheme():"+request.getScheme());
 			if(!request.getScheme().equals("https")){
 				if(request.getServerName().indexOf(LOCAL_DONAME) > -1){
 					redirectUrl = LOCAL_SCHEME+request.getServerName()+":"+LOCAL_PORT+request.getRequestURI();
