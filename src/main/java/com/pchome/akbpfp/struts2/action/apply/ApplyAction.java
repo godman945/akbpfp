@@ -228,6 +228,10 @@ public class ApplyAction extends BaseSSLAction{
 				}else{
 					buFreeGiftTimeFlag = "N";
 				}
+				
+				
+				log.info(">>>>>>>>>>>>>>>>>> SUCCESS");
+				
 				return "success";
 			}
 			result = "wait";
