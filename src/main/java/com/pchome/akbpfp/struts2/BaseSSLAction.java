@@ -24,20 +24,8 @@ public class BaseSSLAction extends BaseCookieAction{
 		//log.info(" local: "+request.getServerName());
 		
 		if(this.isSSLUrl()){
-			
-			
-			
-			Enumeration headerNames = request.getHeaderNames();
-			while (headerNames.hasMoreElements()) {
-			        log.info(request.getHeader((String)headerNames.nextElement()));
-			}
-			
-			
-			
 			// 需要轉成 https
-			log.info("request.getRequestURI():"+request.getRequestURI());
-			
-			
+			log.info("request.getScheme():"+request.getScheme(););
 			if(!request.getScheme().equals("https")){
 				if(request.getServerName().indexOf(LOCAL_DONAME) > -1){
 					redirectUrl = LOCAL_SCHEME+request.getServerName()+":"+LOCAL_PORT+request.getRequestURI();
