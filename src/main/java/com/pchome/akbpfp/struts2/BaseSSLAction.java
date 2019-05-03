@@ -25,6 +25,9 @@ public class BaseSSLAction extends BaseCookieAction{
 		log.info("request.getScheme():"+request.getScheme());
 		log.info("request.getScheme():"+request.getRequestURL());
 		log.info("request.getScheme():"+request.getHeader("referer"));
+		log.info("request.getScheme():"+request.getHeader("X-Forwarded-Scheme"));
+		
+		
 		if(this.isSSLUrl()){
 			// 需要轉成 https
 			if(!request.getHeader("referer").contains("pchome")){
