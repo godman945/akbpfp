@@ -79,7 +79,7 @@ public class AccountRemainAction extends BaseSSLAction{
 	private float giftMoney;			// 填序號送廣告金
 	
 	public String execute() throws Exception{
-		
+		log.info("***START***");
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;

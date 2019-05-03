@@ -134,7 +134,7 @@ public class ReportExcerptAction extends BaseReportAction {
 	 * Chart 
 	 */
 	public String flashDataDownLoad() throws Exception {
-
+		log.info("***START***");
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;

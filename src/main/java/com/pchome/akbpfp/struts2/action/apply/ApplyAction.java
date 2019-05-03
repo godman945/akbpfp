@@ -114,7 +114,7 @@ public class ApplyAction extends BaseSSLAction{
 	
 	
 	public String execute() throws Exception{
-		
+		log.info("***START***");
 		this.checkRedirectSSLUrl();
 		
 		if(StringUtils.isNotBlank(this.resultType)){
@@ -228,10 +228,6 @@ public class ApplyAction extends BaseSSLAction{
 				}else{
 					buFreeGiftTimeFlag = "N";
 				}
-				
-				
-				log.info(">>>>>>>>>>>>>>>>>> SUCCESS");
-				
 				return "success";
 			}
 			result = "wait";
@@ -513,7 +509,7 @@ public class ApplyAction extends BaseSSLAction{
 	 * 訂單查詢
 	 */
 	public String orderSearchAction() throws Exception{
-		
+		log.info("***START***");
 		super.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(super.resultType)){
 			return super.resultType;
