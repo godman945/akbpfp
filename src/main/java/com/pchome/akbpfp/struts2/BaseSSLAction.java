@@ -22,35 +22,24 @@ public class BaseSSLAction extends BaseCookieAction{
 		//log.info(" local: "+request.getScheme());
 		//log.info(" local: "+LOCAL_DONAME);
 		//log.info(" local: "+request.getServerName());
-		
+		log.info("request.getScheme():"+request.getScheme());
+		log.info("request.getScheme():"+request.getRequestURL());
+		log.info("request.getScheme():"+request.getHeader("referer"));
 		if(this.isSSLUrl()){
 			// 需要轉成 https
 			if(!request.getHeader("referer").contains("pchome")){
 				if(request.getServerName().indexOf(LOCAL_DONAME) > -1){
 					redirectUrl = LOCAL_SCHEME+request.getServerName()+":"+LOCAL_PORT+request.getRequestURI();
 				}else {
-					log.info("request.getScheme():"+request.getScheme());
-					log.info("request.getScheme():"+request.getRequestURL());
-					log.info("request.getScheme():"+request.getHeader("referer"));
-					
 					redirectUrl = "https://"+request.getServerName()+request.getRequestURI();
 					resultType = "redirectHTTPS";
 				}
 			}
-			
-			
-			
-			
-//			log.info("request.getScheme():"+request.getScheme());
-//			log.info("request.getScheme():"+request.getRequestURL());
-//			log.info("request.getScheme():"+request.getHeader("referer"));
-			
-			
 //			if(!request.getScheme().equals("https")){
 //				if(request.getServerName().indexOf(LOCAL_DONAME) > -1){
 //					redirectUrl = LOCAL_SCHEME+request.getServerName()+":"+LOCAL_PORT+request.getRequestURI();
 //				}else{
-////					log.info("TEST???????????:"+"https://"+request.getServerName()+request.getRequestURI());
+//					log.info("TEST???????????:"+"https://"+request.getServerName()+request.getRequestURI());
 //					redirectUrl = "https://"+request.getServerName()+request.getRequestURI();
 //					resultType = "redirectHTTPS";
 //				}
