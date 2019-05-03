@@ -27,6 +27,7 @@ public class BaseSSLAction extends BaseCookieAction{
 				if(request.getServerName().indexOf(LOCAL_DONAME) > -1){
 					redirectUrl = LOCAL_SCHEME+request.getServerName()+":"+LOCAL_PORT+request.getRequestURI();
 				}else{
+					log.info("TEST???????????:"+"https://"+request.getServerName()+request.getRequestURI());
 					redirectUrl = "https://"+request.getServerName()+request.getRequestURI();
 					resultType = "redirectHTTPS";
 				}
