@@ -27,6 +27,7 @@ public class BaseSSLAction extends BaseCookieAction{
 			// 需要轉成 https
 			log.info("request.getScheme():"+request.getScheme());
 			log.info("request.getScheme():"+request.getRequestURL());
+			log.info("request.getScheme():"+request.getHeader("referer"));
 			
 			
 			if(!request.getScheme().equals("https")){
