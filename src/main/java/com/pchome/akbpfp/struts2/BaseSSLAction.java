@@ -43,7 +43,7 @@ public class BaseSSLAction extends BaseCookieAction{
 			}
 		}
 
-		//log.info(" redirectUrl = "+redirectUrl);
+		log.info(" redirectUrl = "+redirectUrl);
 	}
 	
 	private boolean isSSLUrl() {
