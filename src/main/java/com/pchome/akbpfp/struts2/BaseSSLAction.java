@@ -1,5 +1,7 @@
 package com.pchome.akbpfp.struts2;
 
+import java.util.Enumeration;
+
 import com.pchome.enumerate.ssl.EnumSSLAction;
 
 public class BaseSSLAction extends BaseCookieAction{
@@ -22,6 +24,16 @@ public class BaseSSLAction extends BaseCookieAction{
 		//log.info(" local: "+request.getServerName());
 		
 		if(this.isSSLUrl()){
+			
+			
+			
+			Enumeration headerNames = request.getHeaderNames();
+			while (headerNames.hasMoreElements()) {
+			        log.info(request.getHeader((String)headerNames.nextElement()));
+			}
+			
+			
+			
 			// 需要轉成 https
 			log.info("request.getRequestURI():"+request.getRequestURI());
 			
