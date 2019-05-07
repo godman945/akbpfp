@@ -16,14 +16,6 @@
                     <option value="convertInvestmentCost">廣告投資報酬率</option>           
                 </select>
             </div>
-            <#--
-            <div class="select-box">
-                <select id="selectChartPic" name="selectChartPic" aria-controls="">
-                    <option value="lineChart" selected>趨勢圖</option>
-                    <option value="barChart">直條圖</option>           
-                </select>
-            </div>
-            -->
         </div>
         <p class="chartsToggle pos-absolute pos-right" onclick="$('.highchart-box').fadeToggle('fast')">開關圖表</p>
     </div><!--chartnav 結束-->
