@@ -33,11 +33,4 @@ public interface IAdActionReportService {
 	 */
 	public List<AdActionReportVO> queryReportAdDailyChartData(AdActionReportVO vo);
 	
-	/**
-	 * 取得裝置中文
-	 * @param whereMap JSONObject格式字串
-	 * @return
-	 */
-	public String getAdDeviceName(String whereMap);
-
 }

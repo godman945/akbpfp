@@ -856,7 +856,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		hql.append(" SELECT ");
 		hql.append("  r.ad_pvclk_date, ");
 		hql.append("  SUM(r.ad_pv) AS ad_pv_sum, ");
-		hql.append("  SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view end)) AS ad_clk_sum, ");		
+		hql.append("  SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");		
 		hql.append("  SUM(r.ad_clk_price) AS ad_price_sum, ");
 		hql.append("  r.ad_pvclk_device AS ad_device, ");
 		hql.append("  SUM(r.convert_count) AS convert_count, ");

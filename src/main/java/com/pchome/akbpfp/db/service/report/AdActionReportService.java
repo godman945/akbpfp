@@ -44,7 +44,7 @@ public class AdActionReportService implements IAdActionReportService {
 			
 			String adDevice = "全部";
 			if (vo.getWhereMap() != null) {
-				adDevice = getAdDeviceName(vo.getWhereMap());
+				adDevice = CommonUtils.getInstance().getAdDeviceName(vo.getWhereMap());
 			}
 			// 裝置
 			adActionReportVO.setAdDevice(adDevice);
@@ -182,23 +182,6 @@ public class AdActionReportService implements IAdActionReportService {
 	 */
 	public List<AdActionReportVO> queryReportAdDailyChartData(AdActionReportVO vo) {
 		return queryReportAdDailyData(vo);
-	}
-	
-	/**
-	 * 取得裝置中文
-	 * @param whereMap JSONObject格式字串
-	 * @return
-	 */
-	public String getAdDeviceName(String whereMap) {
-		String adDevice = "全部";
-		JSONObject tempJSONObject = new JSONObject(whereMap);
-		String tempStr = tempJSONObject.optString("adDevice");
-		if ("PC".equalsIgnoreCase(tempStr)) {
-			adDevice = "電腦";
-		} else if ("mobile".equalsIgnoreCase(tempStr)) {
-			adDevice = "行動裝置";
-		}
-		return adDevice;
 	}
 	
 }

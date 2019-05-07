@@ -24,8 +24,8 @@ import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdOsReportService;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.soft.depot.utils.DateValueUtil;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
-import com.pchome.soft.util.DateValueUtil;
 import com.pchome.utils.CommonUtils;
 
 public class ReportAdOsAction extends BaseReportAction {
@@ -38,8 +38,6 @@ public class ReportAdOsAction extends BaseReportAction {
 	
 	private IAdOsReportService adOsReportService;
 	private IPfpCodeService pfpCodeService;
-	
-	private LinkedHashMap<String, String> dateSelectMap; // 查詢日期的 rang map,查詢日期頁面顯示
 	
 	private boolean hasPfpCodeflag = false; // 是否有使用轉換追蹤的PFP帳號
 	
@@ -71,8 +69,7 @@ public class ReportAdOsAction extends BaseReportAction {
 	 */
 	@Override
 	public String execute() throws Exception {
-		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
-
+		
 		String startDateCookie = super.getChoose_start_date();
 		String endDateCookie = super.getChoose_end_date();
 		log.info(">>> startDateCookie = " + startDateCookie);
@@ -144,7 +141,7 @@ public class ReportAdOsAction extends BaseReportAction {
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
 		
-		content.append("裝置作業系統,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用");
+		content.append("裝置作業系統,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,");
 		
 		Map<String, Boolean> showHideColumnMap = new HashMap<>(); // 紀錄顯示其他欄位值
 		String[] showHideColumnArr = showHideColumn.split(",");
@@ -153,16 +150,16 @@ public class ReportAdOsAction extends BaseReportAction {
 			boolean mapVal = Boolean.parseBoolean(showHideColumnArr[i].split("-")[1]);
 			showHideColumnMap.put(mapKey, mapVal);
 			if(mapVal) { // 勾選顯示，則加入title
-				if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
-					content.append(",轉換次數");
-				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
-					content.append(",轉換率");
-				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
-					content.append(",總轉換價值");
-				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
-					content.append(",平均轉換成本");
-				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
-					content.append(",廣告投資報酬率");
+				if (mapKey.equalsIgnoreCase(EnumReport.CONVERT_COUNT.getTextValue())) {
+					content.append("轉換次數,");
+				} else if (mapKey.equalsIgnoreCase(EnumReport.CONVERT_CTR.getTextValue())) {
+					content.append("轉換率,");
+				} else if (mapKey.equalsIgnoreCase(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
+					content.append("總轉換價值,");
+				} else if (mapKey.equalsIgnoreCase(EnumReport.CONVERT_COST.getTextValue())) {
+					content.append("平均轉換成本,");
+				} else if (mapKey.equalsIgnoreCase(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
+					content.append("廣告投資報酬率,");
 				}
 			}
 		}
@@ -179,19 +176,19 @@ public class ReportAdOsAction extends BaseReportAction {
 				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getKiloCost()) + "\",");
 				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getAdPriceSum()) + "\",");
 				
-				if (showHideColumnMap.get("convertCount")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertCount()) + "\",");
 				}
-				if (showHideColumnMap.get("convertCTR")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_CTR.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertCTR()) + "%\",");
 				}
-				if (showHideColumnMap.get("convertPriceCount")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
 					content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getConvertPriceCount()) + "\",");
 				}
-				if (showHideColumnMap.get("convertCost")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_COST.getTextValue())) {
 					content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getConvertCost()) + "\",");
 				}
-				if (showHideColumnMap.get("convertInvestmentCost")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertInvestmentCost()) + "%\",");
 				}
 				content.append("\n");
@@ -209,19 +206,19 @@ public class ReportAdOsAction extends BaseReportAction {
 				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getKiloCost()) + "\",");
 				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getAdPriceSum()) + "\",");
 				
-				if (showHideColumnMap.get("convertCount")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertCount()) + "\",");
 				}
-				if (showHideColumnMap.get("convertCTR")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_CTR.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertCTR()) + "%\",");
 				}
-				if (showHideColumnMap.get("convertPriceCount")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
 					content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getConvertPriceCount()) + "\",");
 				}
-				if (showHideColumnMap.get("convertCost")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_COST.getTextValue())) {
 					content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getConvertCost()) + "\",");
 				}
-				if (showHideColumnMap.get("convertInvestmentCost")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertInvestmentCost()) + "%\",");
 				}
 			}
@@ -243,15 +240,15 @@ public class ReportAdOsAction extends BaseReportAction {
 	 */
 	public String flashDataDownLoad() {
 
-		AdOsReportVO reportVo = new AdOsReportVO();
-		reportVo.setCustomerInfoId(super.getCustomer_info_id());
-		reportVo.setStartDate(startDate);
-		reportVo.setEndDate(endDate);
-		reportVo.setSearchText(searchText);
-		reportVo.setSortBy(sortBy);
-		reportVo.setDownloadOrIsNotCuttingPagination(true); // 用下載flag來做不切分頁
+		AdOsReportVO chartVo = new AdOsReportVO();
+		chartVo.setCustomerInfoId(super.getCustomer_info_id());
+		chartVo.setStartDate(startDate);
+		chartVo.setEndDate(endDate);
+		chartVo.setSearchText(searchText);
+		chartVo.setSortBy(sortBy);
+		chartVo.setDownloadOrIsNotCuttingPagination(true); // 不切分頁flag
 		
-		List<AdOsReportVO> resultChartData = adOsReportService.queryReportAdOsChartData(reportVo);
+		List<AdOsReportVO> resultChartData = adOsReportService.queryReportAdOsChartData(chartVo);
 		
 		Map<String, Float> flashDataMap = new LinkedHashMap<>(); // 因圖表排序，所以使用LinkedHashMap
 		for (int i = 0; i < resultChartData.size(); i++) {
@@ -295,10 +292,6 @@ public class ReportAdOsAction extends BaseReportAction {
 
 	public void setPfpCodeService(IPfpCodeService pfpCodeService) {
 		this.pfpCodeService = pfpCodeService;
-	}
-
-	public LinkedHashMap<String, String> getDateSelectMap() {
-		return dateSelectMap;
 	}
 
 	public boolean isHasPfpCodeflag() {

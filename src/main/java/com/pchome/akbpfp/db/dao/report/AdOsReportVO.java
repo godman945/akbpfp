@@ -34,10 +34,9 @@ public class AdOsReportVO {
 	private String adClkAvgPrice;		//平均點擊費用
 	
 	private Double adPriceSum; // 廣告費用總和
-	//轉換數
-	private BigDecimal convertCount;
-	//轉換價值
-	private BigDecimal convertPriceCount;
+	
+	private BigDecimal convertCount; // 轉換數
+	private BigDecimal convertPriceCount; // 轉換價值
 	private Double ctr; // 互動率
 	private Double avgCost; // 單次互動費用
 	private Double kiloCost; // 千次曝光費用

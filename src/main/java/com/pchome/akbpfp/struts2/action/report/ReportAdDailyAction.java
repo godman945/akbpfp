@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,8 +37,6 @@ public class ReportAdDailyAction extends BaseReportAction {
 	
 	private IPfpCodeService pfpCodeService;
 	private IAdActionReportService adActionReportService;
-	
-	private LinkedHashMap<String, String> dateSelectMap; // 查詢日期的 rang map,查詢日期頁面顯示
 	
 	private boolean hasPfpCodeflag = false; // 是否有使用轉換追蹤的PFP帳號
 	
@@ -73,8 +70,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 	 */
 	@Override
 	public String execute() throws Exception {
-		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
-
+		
 		String startDateCookie = super.getChoose_start_date();
 		String endDateCookie = super.getChoose_end_date();
 		log.info(">>> startDateCookie = " + startDateCookie);
@@ -131,7 +127,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 	/**
 	 * 下載報表
 	 * 先執行execute()，是下載報表才再執行此方法
-	 * @throws Exception
+	 * @throws Exception 
 	 */
 	private void makeDownloadReportData() throws Exception {
 
@@ -144,12 +140,12 @@ public class ReportAdDailyAction extends BaseReportAction {
 		content.append("\n\n");
 		content.append("報表名稱,PChome 每日花費成效");
 		content.append("\n\n");
-		content.append("裝置," + adActionReportService.getAdDeviceName(whereMap));
+		content.append("裝置," + CommonUtils.getInstance().getAdDeviceName(whereMap));
 		content.append("\n");
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
 
-		content.append("日期,裝置,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用");
+		content.append("日期,裝置,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,");
 		
 		Map<String, Boolean> showHideColumnMap = new HashMap<>(); // 紀錄顯示其他欄位值
 		String[] showHideColumnArr = showHideColumn.split(",");
@@ -158,16 +154,16 @@ public class ReportAdDailyAction extends BaseReportAction {
 			boolean mapVal = Boolean.parseBoolean(showHideColumnArr[i].split("-")[1]);
 			showHideColumnMap.put(mapKey, mapVal);
 			if(mapVal) { // 勾選顯示，則加入title
-				if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
-					content.append(",轉換次數");
-				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
-					content.append(",轉換率");
-				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
-					content.append(",總轉換價值");
-				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
-					content.append(",平均轉換成本");
-				} else if (mapKey.equalsIgnoreCase(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
-					content.append(",廣告投資報酬率");
+				if (mapKey.equalsIgnoreCase(EnumReport.CONVERT_COUNT.getTextValue())) {
+					content.append("轉換次數,");
+				} else if (mapKey.equalsIgnoreCase(EnumReport.CONVERT_CTR.getTextValue())) {
+					content.append("轉換率,");
+				} else if (mapKey.equalsIgnoreCase(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
+					content.append("總轉換價值,");
+				} else if (mapKey.equalsIgnoreCase(EnumReport.CONVERT_COST.getTextValue())) {
+					content.append("平均轉換成本,");
+				} else if (mapKey.equalsIgnoreCase(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
+					content.append("廣告投資報酬率,");
 				}
 			}
 		}
@@ -185,19 +181,19 @@ public class ReportAdDailyAction extends BaseReportAction {
 				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getKiloCost()) + "\",");
 				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getAdPriceSum()) + "\",");
 				
-				if (showHideColumnMap.get("convertCount")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertCount()) + "\",");
 				}
-				if (showHideColumnMap.get("convertCTR")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_CTR.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertCTR()) + "%\",");
 				}
-				if (showHideColumnMap.get("convertPriceCount")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
 					content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getConvertPriceCount()) + "\",");
 				}
-				if (showHideColumnMap.get("convertCost")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_COST.getTextValue())) {
 					content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getConvertCost()) + "\",");
 				}
-				if (showHideColumnMap.get("convertInvestmentCost")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertInvestmentCost()) + "%\",");
 				}
 				content.append("\n");
@@ -216,19 +212,19 @@ public class ReportAdDailyAction extends BaseReportAction {
 				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getKiloCost()) + "\",");
 				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getAdPriceSum()) + "\",");
 				
-				if (showHideColumnMap.get("convertCount")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertCount()) + "\",");
 				}
-				if (showHideColumnMap.get("convertCTR")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_CTR.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertCTR()) + "%\",");
 				}
-				if (showHideColumnMap.get("convertPriceCount")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
 					content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getConvertPriceCount()) + "\",");
 				}
-				if (showHideColumnMap.get("convertCost")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_COST.getTextValue())) {
 					content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getConvertCost()) + "\",");
 				}
-				if (showHideColumnMap.get("convertInvestmentCost")) {
+				if (showHideColumnMap.get(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertInvestmentCost()) + "%\",");
 				}
 			}
@@ -250,15 +246,15 @@ public class ReportAdDailyAction extends BaseReportAction {
 	 */
 	public String flashDataDownLoad() {
 
-		AdActionReportVO reportVo = new AdActionReportVO();
-		reportVo.setCustomerInfoId(super.getCustomer_info_id());
-		reportVo.setStartDate(startDate);
-		reportVo.setEndDate(endDate);
-		reportVo.setSearchText(searchText);
-		reportVo.setWhereMap(whereMap);
-		reportVo.setDownloadOrIsNotCuttingPagination(true); // 用下載flag來做不切分頁
+		AdActionReportVO chartVo = new AdActionReportVO();
+		chartVo.setCustomerInfoId(super.getCustomer_info_id());
+		chartVo.setStartDate(startDate);
+		chartVo.setEndDate(endDate);
+		chartVo.setSearchText(searchText);
+		chartVo.setWhereMap(whereMap);
+		chartVo.setDownloadOrIsNotCuttingPagination(true); // 不切分頁flag
 		
-		List<AdActionReportVO> resultChartData = adActionReportService.queryReportAdDailyChartData(reportVo);
+		List<AdActionReportVO> resultChartData = adActionReportService.queryReportAdDailyChartData(chartVo);
 		
 		Map<Date, Float> flashDataMap = new HashMap<>();
 
@@ -310,10 +306,6 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 	public void setAdActionReportService(IAdActionReportService adActionReportService) {
 		this.adActionReportService = adActionReportService;
-	}
-
-	public LinkedHashMap<String, String> getDateSelectMap() {
-		return dateSelectMap;
 	}
 
 	public boolean isHasPfpCodeflag() {
