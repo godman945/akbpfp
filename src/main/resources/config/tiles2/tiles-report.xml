@@ -221,10 +221,7 @@
 	<definition name="report.chartTable.ados" template="/ftl/report/chart/adOsChartTable.ftl" />
     <!-- .report.adOs 行動廣告成效 end -->
     
-    <!-- .report.adTime  -->
-    <definition name="report.ajaxTable.adTime" template="/ftl/report/ajax/adTimeTable.ftl" /> 
-	<definition name="report.chartTable.adTime" template="/ftl/report/chart/adTimeChartTable.ftl" />
-	 
+    <!-- .report.adTime 廣告播放時段成效 -->
     <definition name=".report.adTime" extends="default.report.layout" >
     	<put-attribute name="header" value="report.header.adTime" />
         <put-attribute name="body" value="report.body.adTime" />
@@ -233,12 +230,22 @@
 	<definition name="report.header.adTime" extends="report.header" >
     	<put-attribute name="jsName" value="reportAdTime.js" />
     </definition>
-	   
-    <definition name="report.body.adTime" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.adTime" />
-		<put-attribute name="chartTable" value="report.chartTable.adTime" />
-	</definition>
     
+    <definition name="report.body.adTime" template="/ftl/report/adTime/adTimeBody.ftl" >
+	   	<put-attribute name="adTimeDetailList" value="report.body.adTime.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.adTime" />
+    </definition>
+   
+   	<definition name="report.body.adTime.detailList" template="/ftl/report/adTime/adTimeDataList.ftl" />
+	   
+<!--     <definition name="report.body.adTime" extends="report.body" > -->
+<!--     	<put-attribute name="reportTable" value="report.ajaxTable.adTime" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.adTime" /> -->
+<!-- 	</definition> -->
+	
+<!-- 	<definition name="report.ajaxTable.adTime" template="/ftl/report/ajax/adTimeTable.ftl" />  -->
+	<definition name="report.chartTable.adTime" template="/ftl/report/chart/adTimeChartTable.ftl" />
+    <!-- .report.adTime 廣告播放時段成效 end -->
     
     <!-- .report.adAgesex  -->
     <definition name="report.ajaxTable.adAgesex" template="/ftl/report/ajax/adAgesexTable.ftl" /> 

@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,12 @@ import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
+
+import com.pchome.enumerate.ad.EnumAdPriceType;
+import com.pchome.enumerate.ad.EnumAdStyleType;
+import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.utils.EnumStatus;
 
 public class CommonUtils {
 	protected static final Logger log = LogManager.getRootLogger();
@@ -258,4 +265,68 @@ public class CommonUtils {
 		return (BigDecimal.ZERO).doubleValue();
 	}
 
+	/**
+	 * 取得裝置中文
+	 * @param whereMap JSONObject格式字串
+	 * @return
+	 */
+	public String getAdDeviceName(String whereMap) {
+		String adDevice = "全部";
+		JSONObject tempJSONObject = new JSONObject(whereMap);
+		String tempStr = tempJSONObject.optString("adDevice");
+		if ("PC".equalsIgnoreCase(tempStr)) {
+			adDevice = "電腦";
+		} else if ("mobile".equalsIgnoreCase(tempStr)) {
+			adDevice = "行動裝置";
+		}
+		return adDevice;
+	}
+	
+	/**
+	 * 取得廣告狀態Map
+	 * @return
+	 */
+	public Map<String, String> getAdStatusMap() {
+		Map<String, String> map = new LinkedHashMap<>();
+		for (EnumStatus status : EnumStatus.values()) {
+			map.put(Integer.toString(status.getStatusId()), status.getStatusRemark());
+		}
+		return map;
+	}
+	
+	/**
+	 * 取得播放類型map
+	 * @return
+	 */
+	public Map<Integer, String> getAdType() {
+		Map<Integer, String> adTypeMap = new HashMap<>();
+		for (EnumAdType enumAdType : EnumAdType.values()) {
+			adTypeMap.put(enumAdType.getType(), enumAdType.getTypeName());
+		}
+		return adTypeMap;
+	}
+	
+	/**
+	 * 取得計價方式map
+	 * @return
+	 */
+	public Map<String, String> getAdPriceTypeMap() {
+		Map<String, String> adPriceTypeMap = new HashMap<>();
+		for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+			adPriceTypeMap.put(enumAdPriceType.getDbTypeName(), enumAdPriceType.getTypeName());
+		}
+		return adPriceTypeMap;
+	}
+	
+	/**
+	 * 取得廣告樣式map
+	 * @return
+	 */
+	public Map<String, String> getAdStyleTypeMap() {
+		Map<String, String> adStyleTypeMap = new HashMap<>();
+		for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+			adStyleTypeMap.put(enumAdStyleType.getTypeName(), enumAdStyleType.getType());
+		}
+		return adStyleTypeMap;
+	}
 }

@@ -343,17 +343,17 @@
         </action>
         <!-- adOs 行動廣告成效 end -->
         
-        <!--report adTime-->
+        <!-- adTime 廣告播放時段成效 -->
         <action name="reportAdTimeDownload" class="ReportAdTimeAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
-      		<result name="success" type="stream">   
-             	<param name="contentType">application/octet-stream</param>   
-             	<param name="contentDisposition">   
-                    attachment;filename="${downloadFileName}"  
-                </param>   
-                <param name="inputName">downloadFileStream</param> 
-            </result>  
+      		<result name="success" type="stream">
+             	<param name="contentType">application/octet-stream</param>
+             	<param name="contentDisposition">
+                    attachment;filename="${downloadFileName}"
+                </param>
+                <param name="inputName">downloadFileStream</param>
+            </result>
       	</action>
 		
 		<action name="reportAdTime" class="ReportAdTimeAction">
@@ -366,7 +366,7 @@
         <action name="reportAdTimeAjaxTable" class="ReportAdTimeAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.adTime</result>
+            <result type="tiles" name="success">report.body.adTime.detailList</result>
         </action>
 		
 		<action name="reportAdTimeAjaxChart" class="ReportAdTimeAction" method="flashDataDownLoad">
@@ -374,6 +374,7 @@
 			<interceptor-ref name="reportPrivilegeInterceptor" />
             <result type="tiles" name="success">report.flashData</result>
         </action>
+        <!-- adTime 廣告播放時段成效 end -->
         
         <!--report adAgesex-->
         <action name="reportAdAgesexDownload" class="ReportAdAgesexAction">

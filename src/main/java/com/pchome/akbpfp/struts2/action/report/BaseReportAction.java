@@ -8,6 +8,7 @@ import java.util.Map;
 import com.pchome.akbpfp.struts2.BaseSSLAction;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.soft.depot.utils.DateValueUtil;
 
 public class BaseReportAction extends BaseSSLAction {
 
@@ -15,6 +16,15 @@ public class BaseReportAction extends BaseSSLAction {
 
 	public static final String FILE_TYPE = ".csv";
 
+	/**
+	 * 查詢日期的 rang map,查詢日期頁面顯示
+	 * @return
+	 */
+	public LinkedHashMap<String, String> getDateSelectMap() {
+		return DateValueUtil.getInstance().getDateRangeMap();
+	}
+	
+	
 	//就是 ad_type 前人用這名字
 	public Map<String, String> getAdShowWayMap() {
 		Map<String, String> map = new LinkedHashMap<String, String>();

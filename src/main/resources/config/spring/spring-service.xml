@@ -99,7 +99,8 @@
         <property name="adOsReportDAO" ref="AdOsReportDAO" />
     </bean>
 
-	<bean id="AdTimeReportService" class="com.pchome.akbpfp.db.service.report.AdTimeReportService"> 
+	<bean id="AdTimeReportService" class="com.pchome.akbpfp.db.service.report.AdTimeReportService">
+		<property name="adGroupService" ref="PfpAdGroupService" />
         <property name="adTimeReportDAO" ref="AdTimeReportDAO" />
     </bean>
     

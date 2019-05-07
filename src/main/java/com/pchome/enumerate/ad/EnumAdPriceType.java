@@ -35,6 +35,18 @@ public enum EnumAdPriceType {
 		return price;
 	}
 
-
+	/**
+	 * 取得相對應的enum資料
+	 * @param dbTypeName CPV/CPM/CPC
+	 * @return
+	 */
+	public static EnumAdPriceType getEnumAdPriceTypeData(final String dbTypeName) {
+		for (EnumAdPriceType e : EnumAdPriceType.values()) {
+			if (e.getDbTypeName().equalsIgnoreCase(dbTypeName)) {
+				return e;
+			}
+		}
+		return null;
+	}
 
 }

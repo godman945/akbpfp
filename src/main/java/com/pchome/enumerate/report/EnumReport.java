@@ -8,6 +8,38 @@ public enum EnumReport {
 	ADPVCLKOS_ANDROID("Android"),
 	ADPVCLKOS_WINDOWS("Windows"),
 	ADPVCLKOS_OTHER("其他"),
+	/**
+	 * 廣告樣式
+	 */
+	AD_OPERATING_RULE("adOperatingRule"),
+	/**
+	 * 計價方式
+	 */
+	AD_CLK_PRICE_TYPE("adClkPriceType"),
+	/**
+	 * 播放類型
+	 */
+	ADTYPE("adType"),
+	/**
+     *  轉換數
+     */
+	CONVERT_COUNT("convertCount"),
+    /**
+     * 總轉換價值
+     */
+    CONVERT_PRICE_COUNT("convertPriceCount"),
+    /**
+     * 轉換率
+     */
+    CONVERT_CTR("convertCTR"),
+    /**
+     * 平均轉換成本
+     */
+    CONVERT_COST("convertCost"),
+    /**
+     * 廣告投資報酬率
+     */
+    CONVERT_INVESTMENT_COST("convertInvestmentCost"),
 	ADTYPE_CUSTINFO("adtype_custinfo"),
     ADTYPE_ACTIVITY("adtype_activity"),
     ADTYPE_GROUP("adtype_group"),
