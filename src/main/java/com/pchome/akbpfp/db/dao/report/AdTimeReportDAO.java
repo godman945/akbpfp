@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

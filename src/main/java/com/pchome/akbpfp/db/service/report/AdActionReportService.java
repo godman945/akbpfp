@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.report.AdActionReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdActionReportDAO;

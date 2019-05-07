@@ -237,13 +237,6 @@
     </definition>
    
    	<definition name="report.body.adTime.detailList" template="/ftl/report/adTime/adTimeDataList.ftl" />
-	   
-<!--     <definition name="report.body.adTime" extends="report.body" > -->
-<!--     	<put-attribute name="reportTable" value="report.ajaxTable.adTime" /> -->
-<!-- 		<put-attribute name="chartTable" value="report.chartTable.adTime" /> -->
-<!-- 	</definition> -->
-	
-<!-- 	<definition name="report.ajaxTable.adTime" template="/ftl/report/ajax/adTimeTable.ftl" />  -->
 	<definition name="report.chartTable.adTime" template="/ftl/report/chart/adTimeChartTable.ftl" />
     <!-- .report.adTime 廣告播放時段成效 end -->
     

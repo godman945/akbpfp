@@ -11,17 +11,12 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.mortbay.log.Log;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.pchome.akbpfp.db.dao.report.AdActionReportVO;
 import com.pchome.akbpfp.db.dao.report.AdTimeReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdTimeReportDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
-import com.pchome.enumerate.ad.EnumAdPriceType;
-import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdTimeCode;
-import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
@@ -96,18 +91,13 @@ public class AdTimeReportService implements IAdTimeReportService {
 				adTimeReportVO.setAdStatusOnOff(true); // on亮綠燈
 			} else if (adActionStatus != EnumStatus.Broadcast.getStatusId()
 					&& adGroupStatus == EnumStatus.Open.getStatusId()) {
-//				alter = "廣告" + CommonUtils.getInstance().getAdStatusMap().get(Integer.toString(adActionStatus));
 				alter = "廣告" + adStatusMap.get(Integer.toString(adActionStatus));
 			} else if (adActionStatus == EnumStatus.Broadcast.getStatusId()
 					&& adGroupStatus != EnumStatus.Open.getStatusId()) {
-//				alter = "分類" + CommonUtils.getInstance().getAdStatusMap().get(Integer.toString(adGroupStatus));
 				alter = "分類" + adStatusMap.get(Integer.toString(adGroupStatus));
 			} else {
-//				alter = "廣告" + CommonUtils.getInstance().getAdStatusMap().get(Integer.toString(adActionStatus)) + "，" + "分類"
-//						+ CommonUtils.getInstance().getAdStatusMap().get(Integer.toString(adGroupStatus));
 				alter = "廣告" + adStatusMap.get(Integer.toString(adActionStatus)) + "，" + "分類" + adStatusMap.get(Integer.toString(adGroupStatus));
 			}
-			Log.info("alter:" + alter);
 			adTimeReportVO.setAdStatusName(alter); // 產excel報表使用
 			
 			adTimeReportVO.setAdActionName(adActionName); // 廣告活動
@@ -130,15 +120,6 @@ public class AdTimeReportService implements IAdTimeReportService {
 			adTimeReportVO.setAdType(adTypeMap.get(dataMap.get("ad_type"))); // 播放類型
 			adTimeReportVO.setAdOperatingRule(adStyleTypeMap.get(dataMap.get("ad_operating_rule"))); // 廣告樣式
 			adTimeReportVO.setAdClkPriceType(adPriceTypeMap.get(dataMap.get("ad_clk_price_type"))); // 廣告計費方式
-			
-//			// 星期
-////			adTimeReportVO.setTime(EnumAdTimeCode.getEnumAdTimeCodeData((String) dataMap.get("time_code")).getName());
-//			
-////			adTimeReportVO.setAdType(CommonUtils.getInstance().getAdType().get(dataMap.get("ad_type"))); // 播放類型
-//			adTimeReportVO.setAdType(EnumAdType.getEnumAdTypeData((int) dataMap.get("ad_type")).getTypeName()); // 播放類型
-//			adTimeReportVO.setAdOperatingRule(EnumAdStyleType.getEnumAdStyleTypeData((String) dataMap.get("ad_operating_rule")).getType()); // 廣告樣式
-////			adTimeReportVO.setAdClkPriceType(CommonUtils.getInstance().getAdPriceTypeMap().get(dataMap.get("ad_clk_price_type"))); // 廣告計費方式
-//			adTimeReportVO.setAdClkPriceType(EnumAdPriceType.getEnumAdPriceTypeData((String) dataMap.get("ad_clk_price_type")).getTypeName()); // 廣告計費方式
 			
 			String adDevice = "全部";
 			if (vo.getWhereMap() != null) {
