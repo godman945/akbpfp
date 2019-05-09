@@ -62,11 +62,12 @@ $(document).ready(function() {
 		
 		if(type == "age"){
 			$(".nav-title p").html("廣告族群成效-年齡");
+		}else{
+			$(".nav-title p").html("廣告族群成效-性別");
+			// 切換性別時將年齡排序清除，避免無資料
 			if(sortBy == "ageCode-DESC" || sortBy == "ageCode-ASC"){ 
 				sortBy = "";
 			}
-		}else{
-			$(".nav-title p").html("廣告族群成效-性別");
 		}
 		
 		$("#viewType").val(type);
