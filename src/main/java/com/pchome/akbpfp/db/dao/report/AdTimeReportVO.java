@@ -39,8 +39,8 @@ public class AdTimeReportVO {
 	private String adOperatingRule; // 廣告樣式
 	private String adClkPriceType; // 廣告計費方式
 	private String adDevice; // 裝置
-	private BigDecimal adPvSum; // 廣告PV總和
-	private BigDecimal adClkSum; // 廣告Click總和
+	private BigDecimal adPvSum; // 廣告PV總和(曝光數)
+	private BigDecimal adClkSum; // 廣告Click總和(互動數)
 	private Double ctr; // 互動率
 	private Double avgCost; // 單次互動費用
 	private Double kiloCost; // 千次曝光費用

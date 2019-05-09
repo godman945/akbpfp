@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,13 +17,13 @@ import org.json.JSONObject;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pchome.akbpfp.db.dao.BaseDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdAgeReport;
 import com.pchome.enumerate.ad.EnumAdAgeCode;
 import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
-import com.pchome.akbpfp.db.dao.BaseDAO;
-import com.pchome.akbpfp.db.pojo.PfpAdAgeReport;
 
 @Transactional
 public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implements IAdAgesexReportDAO {

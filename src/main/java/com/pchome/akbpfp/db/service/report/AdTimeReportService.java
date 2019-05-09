@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.mortbay.log.Log;
 
 import com.pchome.akbpfp.db.dao.report.AdTimeReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdTimeReportDAO;
@@ -208,47 +207,47 @@ public class AdTimeReportService implements IAdTimeReportService {
 			convertPriceCount = convertPriceCount.add((BigDecimal) dataMap.get("convert_price_count"));
 		}
 		
-		AdTimeReportVO adActionReportVO = new AdTimeReportVO();
+		AdTimeReportVO adTimeReportVO = new AdTimeReportVO();
 		// 曝光數
-		adActionReportVO.setAdPvSum(adPvSum);
+		adTimeReportVO.setAdPvSum(adPvSum);
 		
 		// 互動數
-		adActionReportVO.setAdClkSum(adClkSum);
+		adTimeReportVO.setAdClkSum(adClkSum);
 		
 		// 互動率 = 總互動數 / 總曝光數 * 100
-		adActionReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+		adTimeReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
 		
 		// 費用
-		adActionReportVO.setAdPriceSum(adPriceSum.doubleValue());
+		adTimeReportVO.setAdPriceSum(adPriceSum.doubleValue());
 		
 		// 單次互動費用 = 總費用 / 總互動次數
-		adActionReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+		adTimeReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
 		
 		// 千次曝光費用 = 總費用 / 曝光數 * 1000
 		Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
 		BigDecimal bg = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-		adActionReportVO.setKiloCost(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
+		adTimeReportVO.setKiloCost(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
 		
 		// 轉換次數
-		adActionReportVO.setConvertCount(convertCount);
+		adTimeReportVO.setConvertCount(convertCount);
 		
 		// 轉換率 = 轉換次數 / 互動數 * 100
-		adActionReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+		adTimeReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
 		
 		// 總轉換價值
-		adActionReportVO.setConvertPriceCount(convertPriceCount);
+		adTimeReportVO.setConvertPriceCount(convertPriceCount);
 		
 		// 平均轉換成本 = 費用 / 轉換次數
-		adActionReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+		adTimeReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
 		
 		// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-		adActionReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+		adTimeReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
 		
 		// 總計幾筆
-		adActionReportVO.setRowCount(adTimeListSum.size());
+		adTimeReportVO.setRowCount(adTimeListSum.size());
 		vo.setRowCount(adTimeListSum.size()); // 計算底下頁碼用
 		
-		adTimeVOListSum.add(adActionReportVO);
+		adTimeVOListSum.add(adTimeReportVO);
 		
 		return adTimeVOListSum;
 	}
@@ -270,7 +269,7 @@ public class AdTimeReportService implements IAdTimeReportService {
 			if ("week".equalsIgnoreCase(vo.getViewType())) { // 星期
 				adTimeReportVO.setWeekCode((int) dataMap.get("week_code"));
 			} else { // 時段
-				adTimeReportVO.setTimeCode((String) dataMap.get("time_code")); // 排序用
+				adTimeReportVO.setTimeCode((String) dataMap.get("time_code"));
 			}
 			
 			// 曝光數

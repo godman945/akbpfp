@@ -254,13 +254,7 @@
 		<put-attribute name="adAgesexDetailList" value="report.body.adAgesex.detailList" />
 		<put-attribute name="chartTable" value="report.chartTable.adAgesex" />
 	</definition>
-	
-<!--     <definition name="report.body.adAgesex" extends="report.body" > -->
-<!--     	<put-attribute name="reportTable" value="report.ajaxTable.adAgesex" /> -->
-<!-- 		<put-attribute name="chartTable" value="report.chartTable.adAgesex" /> -->
-<!-- 	</definition> -->
-	
-<!-- 	<definition name="report.ajaxTable.adAgesex" template="/ftl/report/ajax/adAgesexTable.ftl" />  -->
+
 	<definition name="report.body.adAgesex.detailList" template="/ftl/report/adAgesex/adAgesexDataList.ftl" />
 	<definition name="report.chartTable.adAgesex" template="/ftl/report/chart/adAgesexChartTable.ftl" />
     <!-- .report.adAgesex 廣告族群成效 end -->
