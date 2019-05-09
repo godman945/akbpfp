@@ -296,6 +296,8 @@ $(document).ready(function(){
 			$("#adActionStartAge").removeAttr("disabled");
 			$("#adActionEndAge").removeAttr("disabled");
 			$("#timeCode").val(timeString);
+			
+			$("#adCountry").val($('input[name=countryRadio]:checked').val());
 			$("#modifyForm").submit();
 		}
 		
