@@ -240,24 +240,30 @@
 	<definition name="report.chartTable.adTime" template="/ftl/report/chart/adTimeChartTable.ftl" />
     <!-- .report.adTime 廣告播放時段成效 end -->
     
-    <!-- .report.adAgesex  -->
-    <definition name="report.ajaxTable.adAgesex" template="/ftl/report/ajax/adAgesexTable.ftl" /> 
-	<definition name="report.chartTable.adAgesex" template="/ftl/report/chart/adAgesexChartTable.ftl" />
-	 
-    <definition name=".report.adAgesex" extends="default.report.layout" >
+    <!-- .report.adAgesex 廣告族群成效 -->
+    <definition name=".report.adAgesex" extends="default.report.layout" > <!-- 上面各項目頁籤 -->
     	<put-attribute name="header" value="report.header.adAgesex" />
         <put-attribute name="body" value="report.body.adAgesex" />
     </definition>
-	
-	<definition name="report.header.adAgesex" extends="report.header" >
+
+	<definition name="report.header.adAgesex" extends="report.header" > <!-- 登出 登入條 -->
     	<put-attribute name="jsName" value="reportAdAgesex.js" />
     </definition>
-	   
-    <definition name="report.body.adAgesex" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.adAgesex" />
+
+	<definition name="report.body.adAgesex" template="/ftl/report/adAgesex/adAgesexBody.ftl">
+		<put-attribute name="adAgesexDetailList" value="report.body.adAgesex.detailList" />
 		<put-attribute name="chartTable" value="report.chartTable.adAgesex" />
 	</definition>
-    
+	
+<!--     <definition name="report.body.adAgesex" extends="report.body" > -->
+<!--     	<put-attribute name="reportTable" value="report.ajaxTable.adAgesex" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.adAgesex" /> -->
+<!-- 	</definition> -->
+	
+<!-- 	<definition name="report.ajaxTable.adAgesex" template="/ftl/report/ajax/adAgesexTable.ftl" />  -->
+	<definition name="report.body.adAgesex.detailList" template="/ftl/report/adAgesex/adAgesexDataList.ftl" />
+	<definition name="report.chartTable.adAgesex" template="/ftl/report/chart/adAgesexChartTable.ftl" />
+    <!-- .report.adAgesex 廣告族群成效 end -->
     
     <!-- .report.adWebsite  -->
     <definition name="report.ajaxTable.adWebsite" template="/ftl/report/ajax/adWebsiteTable.ftl" /> 

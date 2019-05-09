@@ -105,6 +105,7 @@
     </bean>
     
     <bean id="AdAgesexReportService" class="com.pchome.akbpfp.db.service.report.AdAgesexReportService"> 
+        <property name="adGroupService" ref="PfpAdGroupService" />
         <property name="adAgesexReportDAO" ref="AdAgesexReportDAO" />
     </bean>
     

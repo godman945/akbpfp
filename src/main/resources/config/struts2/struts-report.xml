@@ -376,18 +376,18 @@
         </action>
         <!-- adTime 廣告播放時段成效 end -->
         
-        <!--report adAgesex-->
+        <!-- adAgesex 廣告族群成效 -->
         <action name="reportAdAgesexDownload" class="ReportAdAgesexAction">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-      		<result name="success" type="stream">   
-             	<param name="contentType">application/octet-stream</param>   
-             	<param name="contentDisposition">   
-                    attachment;filename="${downloadFileName}"  
-                </param>   
-                <param name="inputName">downloadFileStream</param> 
-            </result>  
-      	</action>
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+				<param name="inputName">downloadFileStream</param>
+			</result>
+		</action>
 		
 		<action name="reportAdAgesex" class="ReportAdAgesexAction">
             <interceptor-ref name="loginCheckStack" />
@@ -399,7 +399,7 @@
         <action name="reportAdAgesexAjaxTable" class="ReportAdAgesexAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.adAgesex</result>
+            <result type="tiles" name="success">report.body.adAgesex.detailList</result>
         </action>
 		
 		<action name="reportAdAgesexAjaxChart" class="ReportAdAgesexAction" method="flashDataDownLoad">
@@ -407,6 +407,7 @@
 			<interceptor-ref name="reportPrivilegeInterceptor" />
             <result type="tiles" name="success">report.flashData</result>
         </action>
+        <!-- adAgesex 廣告族群成效 end -->
         
         <!--report adWebsite-->
         <action name="reportAdWebsiteDownload" class="ReportAdWebsiteAction">
