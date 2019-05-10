@@ -39,10 +39,8 @@
 					<tr>
 						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>
 						廣告連結網址
-						<!-- 第三方偵測暫不上線
 						<br>
                               <b class="thirdpty-togglebtn"><span class="swap">＋</span>第三方曝光追蹤代碼</b>
-                        -->      
 						</th>
 						<td style="min-width:250px;">
 							<input type="hidden" id="adDetailID" name="adDetailID" value="real_url">

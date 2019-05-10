@@ -894,7 +894,23 @@ ul.idxBx li{height:31px;line-height:32px}
     max-width: 2000px;
 }
 
+/* 2019-04-16 新增__選取臺灣展開列表 */
 
+#tw_list {
+    list-style: none;
+    display: none;
+}
+
+#tw_list li {
+    margin: 0 0 0 -19px;
+}
+
+input#sel_def:checked ~ #tw_list{
+    display: none;
+}
+input#sel_tw:checked ~ #tw_list{
+    display: block;
+}
 
 
 
