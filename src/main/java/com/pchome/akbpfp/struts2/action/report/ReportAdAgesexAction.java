@@ -313,7 +313,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String flashDataDownLoad() throws Exception {
+	public String flashDataDownLoad() {
 		
 		AdAgesexReportVO chartVo = new AdAgesexReportVO();
 		chartVo.setCustomerInfoId(super.getCustomer_info_id());
@@ -329,9 +329,9 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		
 		// 性別
 		String sexCode = "";
-		double sexN = 0; // 未知
 		double sexM = 0; // 男性
 		double sexF = 0; // 女性
+		double sexN = 0; // 未知
 		
 		// 年齡
 		String ageCode = "";
@@ -352,135 +352,137 @@ public class ReportAdAgesexAction extends BaseReportAction {
 			sexCode = vo.getSexCode();
 			ageCode = vo.getAgeCode();
 			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				total += vo.getAdPvSum().doubleValue();
+				double adPvSum = vo.getAdPvSum().doubleValue();
 				if (StringUtils.equals(viewType, "sex")) {
 					switch (sexCode) {
 					case "M":
-						sexM = vo.getAdPvSum().doubleValue();
+						sexM = adPvSum;
 						break;
 					case "F":
-						sexF = vo.getAdPvSum().doubleValue();
+						sexF = adPvSum;
 						break;
 					default:
-						sexN = vo.getAdPvSum().doubleValue();
+						sexN = adPvSum;
 						break;
 					}
 				} else {
 					switch (ageCode) {
 					case "A":
-						ageA = vo.getAdPvSum().doubleValue();
+						ageA = adPvSum;
 						break;
 					case "B":
-						ageB = vo.getAdPvSum().doubleValue();
+						ageB = adPvSum;
 						break;
 					case "C":
-						ageC = vo.getAdPvSum().doubleValue();
+						ageC = adPvSum;
 						break;
 					case "D":
-						ageD = vo.getAdPvSum().doubleValue();
+						ageD = adPvSum;
 						break;
 					case "E":
-						ageE = vo.getAdPvSum().doubleValue();
+						ageE = adPvSum;
 						break;
 					case "F":
-						ageF = vo.getAdPvSum().doubleValue();
+						ageF = adPvSum;
 						break;
 					case "G":
-						ageG = vo.getAdPvSum().doubleValue();
+						ageG = adPvSum;
 						break;
 					case "H":
-						ageH = vo.getAdPvSum().doubleValue();
+						ageH = adPvSum;
 						break;
 					default:
-						ageI = vo.getAdPvSum().doubleValue();
+						ageI = adPvSum;
 						break;
 					}
 				}
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+				double adClkSum = vo.getAdClkSum().doubleValue();
 				if (StringUtils.equals(viewType, "sex")) {
 					switch (sexCode) {
 					case "M":
-						sexM = vo.getAdClkSum().doubleValue();
+						sexM = adClkSum;
 						break;
 					case "F":
-						sexF = vo.getAdClkSum().doubleValue();
+						sexF = adClkSum;
 						break;
 					default:
-						sexN = vo.getAdClkSum().doubleValue();
+						sexN = adClkSum;
 						break;
 					}
 				} else {
 					switch (ageCode) {
 					case "A":
-						ageA = vo.getAdClkSum().doubleValue();
+						ageA = adClkSum;
 						break;
 					case "B":
-						ageB = vo.getAdClkSum().doubleValue();
+						ageB = adClkSum;
 						break;
 					case "C":
-						ageC = vo.getAdClkSum().doubleValue();
+						ageC = adClkSum;
 						break;
 					case "D":
-						ageD = vo.getAdClkSum().doubleValue();
+						ageD = adClkSum;
 						break;
 					case "E":
-						ageE = vo.getAdClkSum().doubleValue();
+						ageE = adClkSum;
 						break;
 					case "F":
-						ageF = vo.getAdClkSum().doubleValue();
+						ageF = adClkSum;
 						break;
 					case "G":
-						ageG = vo.getAdClkSum().doubleValue();
+						ageG = adClkSum;
 						break;
 					case "H":
-						ageH = vo.getAdClkSum().doubleValue();
+						ageH = adClkSum;
 						break;
 					default:
-						ageI = vo.getAdClkSum().doubleValue();
+						ageI = adClkSum;
 						break;
 					}
 				}
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
+				double convertCount = vo.getConvertCount().doubleValue();
 				if (StringUtils.equals(viewType, "sex")) {
 					switch (sexCode) {
 					case "M":
-						sexM = vo.getConvertCount().doubleValue();
+						sexM = convertCount;
 						break;
 					case "F":
-						sexF = vo.getConvertCount().doubleValue();
+						sexF = convertCount;
 						break;
 					default:
-						sexN = vo.getConvertCount().doubleValue();
+						sexN = convertCount;
 						break;
 					}
 				} else {
 					switch (ageCode) {
 					case "A":
-						ageA = vo.getConvertCount().doubleValue();
+						ageA = convertCount;
 						break;
 					case "B":
-						ageB = vo.getConvertCount().doubleValue();
+						ageB = convertCount;
 						break;
 					case "C":
-						ageC = vo.getConvertCount().doubleValue();
+						ageC = convertCount;
 						break;
 					case "D":
-						ageD = vo.getConvertCount().doubleValue();
+						ageD = convertCount;
 						break;
 					case "E":
-						ageE = vo.getConvertCount().doubleValue();
+						ageE = convertCount;
 						break;
 					case "F":
-						ageF = vo.getConvertCount().doubleValue();
+						ageF = convertCount;
 						break;
 					case "G":
-						ageG = vo.getConvertCount().doubleValue();
+						ageG = convertCount;
 						break;
 					case "H":
-						ageH = vo.getConvertCount().doubleValue();
+						ageH = convertCount;
 						break;
 					default:
-						ageI = vo.getConvertCount().doubleValue();
+						ageI = convertCount;
 						break;
 					}
 				}

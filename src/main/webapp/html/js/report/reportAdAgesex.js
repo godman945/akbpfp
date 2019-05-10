@@ -62,6 +62,8 @@ $(document).ready(function() {
 		
 		if(type == "age"){
 			$(".nav-title p").html("廣告族群成效-年齡");
+			// 切換年齡時將性別篩選為全部
+			whereObject["sexCode"] = "all";
 		}else{
 			$(".nav-title p").html("廣告族群成效-性別");
 			// 切換性別時將年齡排序清除，避免無資料

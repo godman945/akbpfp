@@ -12,7 +12,7 @@
 	<div class="content-wrap p-lr60">
 		<div class="content-box p-none">
             
-            <form id="excerptFrom" name="excerptFrom" action="reportAdDailyDownload.html" method="post">
+            <form id="excerptFrom" name="excerptFrom" action="" method="post">
             	<#-- 隱藏欄位 -->
 	            <input type="hidden" id="hasPfpCodeflag" name="hasPfpCodeflag" value="${hasPfpCodeflag?string}"> 
 	            <input type="hidden" id="isDownload" name="isDownload" value="true"> <#-- 下載報表用 -->
