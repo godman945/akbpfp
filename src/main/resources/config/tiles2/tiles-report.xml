@@ -275,13 +275,6 @@
 	</definition>
 
 	<definition name="report.body.adWebsite.detailList" template="/ftl/report/adWebsite/adWebsiteDataList.ftl" />
-	
-<!--     <definition name="report.body.adWebsite" extends="report.body" > -->
-<!--     	<put-attribute name="reportTable" value="report.ajaxTable.adWebsite" /> -->
-<!-- 		<put-attribute name="chartTable" value="report.chartTable.adWebsite" /> -->
-<!-- 	</definition> -->
-	
-<!-- 	<definition name="report.ajaxTable.adWebsite" template="/ftl/report/ajax/adWebsiteTable.ftl" />  -->
 	<definition name="report.chartTable.adWebsite" template="/ftl/report/chart/adWebsiteChartTable.ftl" />
 	<!-- .report.adWebsite 網站類型成效 end -->
 	

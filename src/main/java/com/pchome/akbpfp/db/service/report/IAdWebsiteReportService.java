@@ -3,7 +3,6 @@ package com.pchome.akbpfp.db.service.report;
 import java.util.List;
 import java.util.Map;
 
-import com.pchome.akbpfp.db.dao.report.AdAgesexReportVO;
 import com.pchome.akbpfp.db.dao.report.AdWebsiteReportVO;
 
 public interface IAdWebsiteReportService {

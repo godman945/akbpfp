@@ -1,8 +1,6 @@
 package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -633,15 +631,12 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 	 */
 	@Override
 	public List<Map<String, Object>> getAdWebsiteListChart(AdWebsiteReportVO vo) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT");
-		hql.append(" r.website_category_code,");
+		hql.append(" r.website_category_code, ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
-		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");	
-		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");	
-//		hql.append(" sum(r.ad_invalid_clk), ");
-//		hql.append(" sum(r.ad_invalid_clk_price), ");
+		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
+		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
 		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
 		hql.append(" FROM pfp_ad_website_report AS r ");
@@ -725,54 +720,3 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 	}
 	
 }
-
-//StringBuffer hql = new StringBuffer();
-//
-//hql.append("select");
-//hql.append(" r.website_category_code,");
-//hql.append(" sum(r.ad_pv), ");
-//hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then r.ad_clk else r.ad_view end)), ");	
-//hql.append(" sum(r.ad_clk_price), ");	
-//hql.append(" sum(r.ad_invalid_clk), ");
-//hql.append(" sum(r.ad_invalid_clk_price), ");
-//hql.append(" SUM(r.convert_count), ");
-//hql.append(" SUM(r.convert_price_count) ");
-//hql.append(" from pfp_ad_website_report as r ");
-//hql.append(" where 1 = 1 ");
-//hql.append(" and r.customer_info_id =:customerInfoId ");
-//hql.append(" and r.ad_pvclk_date >=:startDate ");
-//hql.append(" and r.ad_pvclk_date <=:endDate ");
-//sqlParams.put("customerInfoId", customerInfoId);
-//sqlParams.put("startDate", sdf.parse(startDate));
-//sqlParams.put("endDate", sdf.parse(endDate));
-//
-//if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
-//	hql.append(" and r.ad_type = :adShowWay");
-//	sqlParams.put("adShowWay", adShowWay);
-//}
-//
-//if (StringUtils.isNotBlank(adPvclkDevice)) {
-//	hql.append(" and r.ad_pvclk_device = :adPvclkDevice ");
-//	sqlParams.put("adPvclkDevice", adPvclkDevice);
-//}
-//
-//if (StringUtils.isNotEmpty(searchText)) {
-//	String searchStr = getSearchText(searchText, adSearchWay);
-//	hql.append(" and r.ad_action_seq in (select ad_action_seq from pfp_ad_action where 1=1");
-//	hql.append(" and customer_info_id = :customerInfoId ");
-//	hql.append(" and ad_action_name like :searchStr )");
-//	sqlParams.put("searchStr", searchStr);
-//}
-//
-//if(StringUtils.isNotEmpty(searchWebsiteCode)){
-//	hql.append(" and r.website_category_code = :websiteCategoryCode ");
-//	sqlParams.put("websiteCategoryCode", searchWebsiteCode);
-//}
-//
-//if (StringUtils.isNotBlank(adOperatingRule)) {
-//	hql.append(" and r.ad_operating_rule = :adOperatingRule ");
-//	sqlParams.put("adOperatingRule", adOperatingRule);
-//}
-//
-//hql.append(" group by r.website_category_code");
-//hql.append(" order by r.website_category_code");

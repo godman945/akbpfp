@@ -3,7 +3,6 @@ package com.pchome.akbpfp.db.service.report;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +12,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.pchome.akbpfp.db.dao.report.AdAgesexReportVO;
 import com.pchome.akbpfp.db.dao.report.AdWebsiteReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdWebsiteReportDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;

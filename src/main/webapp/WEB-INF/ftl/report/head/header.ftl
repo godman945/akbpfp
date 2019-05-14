@@ -24,6 +24,7 @@
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/report/prodmanage.min.css" />
     <link type="text/css" rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
     <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.ba-dotimeout.js"></script>
+    <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.floatingscroll.min.js"></script>
 
 </head>
 

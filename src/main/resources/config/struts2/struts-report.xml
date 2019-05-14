@@ -433,7 +433,6 @@
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
         	<result type="tiles" name="success">report.body.adWebsite.detailList</result>
-<!--             <result type="tiles" name="success">report.ajaxTable.adWebsite</result> -->
         </action>
 		
 		<action name="reportAdWebsiteAjaxChart" class="ReportAdWebsiteAction" method="flashDataDownLoad">
