@@ -669,9 +669,6 @@ function setAdStyle(adStyle) {
 	location.href = "adAdAdd.html?adActionSeq="+ $("#adActionSeq").val() + "&adGroupSeq=" + $("#adGroupSeq").val() + "&adStyle=" + adStyle;
 }
 
-function closenots(id) {
-	$("#shownotes"+id).hide();
-}
 
 function chkLeave(){
 	var keywords = "";
