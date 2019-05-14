@@ -28,7 +28,6 @@ public class AdAgesexReportVO {
 	private String adGroupSeq; //廣告群組序號
 	private String adActionSeq; //廣告活動序號
 
-	private Double adPriceSum; //廣告價格總和
 	private BigDecimal adInvClkSum; //廣告無效點擊總和
 	private BigInteger count; //資料筆數(用於計算平均每日花費上限)
 	
@@ -45,6 +44,7 @@ public class AdAgesexReportVO {
 	private Double ctr; // 互動率
 	private Double avgCost; // 單次互動費用
 	private Double kiloCost; // 千次曝光費用
+	private Double adPriceSum; // 廣告價格總和(費用)
 	private BigDecimal convertCount; //轉換數
 	private BigDecimal convertPriceCount; //轉換價值
 	private Double convertCTR; // 轉換率

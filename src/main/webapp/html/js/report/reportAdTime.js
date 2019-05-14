@@ -235,6 +235,10 @@ function initEvent() {
 	
 	// 篩選事件
 	$("[data-where]").unbind("click").click(function() {
+		if ($(this).attr("data-select")) { // 點選目前選擇的，則不再重複查詢
+			return false;
+		}
+		
 		$(this).siblings().attr("data-select", ""); // 將同一層的data-select取消選取
 		$(this).attr("data-select", "true");
 		
@@ -422,7 +426,7 @@ function showHighChart(){
 	    tooltip: {
 	    	headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-            '<td style="padding:0"><b>{point.y:#,###.' + decimals + 'f} ' + selectSuffix +'</b></td></tr>', //單位
+            '<td style="padding:0"><b>{point.y:#,###.' + decimals + 'f}' + selectSuffix + '</b></td></tr>', //單位
             footerFormat: '</table>',
             shared: true,
             useHTML: true
