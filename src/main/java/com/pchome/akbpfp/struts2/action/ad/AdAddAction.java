@@ -371,7 +371,7 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdDetailVO.setAdDetailContent(thirdCode);
 		pfpAdDetailVO.setDefineAdSeq("dad_tracking_code");
 		pfpAdDetailVO.setAdDetailId("tracking_code");
-		pfpAdDetailVO.setVerifyFlag("n");
+		pfpAdDetailVO.setVerifyFlag("y");
 		pfpAdDetailVO.setAdDetailCreateTime(new Date());
 		pfpAdDetailVO.setAdDetailUpdateTime(new Date());
 		pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
@@ -1434,11 +1434,7 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdDetail.setAdDetailContent(content);
 		pfpAdDetail.setAdPoolSeq(adPoolSeq);
 		pfpAdDetail.setDefineAdSeq(defineAdSeq);
-		if(StringUtils.isNotBlank(defineAdSeq) && defineAdSeq.equals("dad_tracking_code")) {
-			pfpAdDetail.setVerifyFlag("n");
-		}else {
-			pfpAdDetail.setVerifyFlag("y");	
-		}
+		pfpAdDetail.setVerifyFlag("y");	
 		pfpAdDetail.setVerifyStatus("n");
 		pfpAdDetail.setAdDetailCreateTime(new Date());
 		pfpAdDetail.setAdDetailUpdateTime(new Date());
@@ -1462,11 +1458,7 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdDetail.setAdDetailContent(content);
 		pfpAdDetail.setAdPoolSeq(adPoolSeq);
 		pfpAdDetail.setDefineAdSeq(defineAdSeq);
-		if(StringUtils.isNotBlank(defineAdSeq) && defineAdSeq.equals("dad_tracking_code")) {
-			pfpAdDetail.setVerifyFlag("n");
-		}else {
-			pfpAdDetail.setVerifyFlag("y");
-		}
+		pfpAdDetail.setVerifyFlag("Y");
 		pfpAdDetail.setVerifyStatus("n");	
 		pfpAdDetail.setAdDetailCreateTime(new Date());
 		pfpAdDetail.setAdDetailUpdateTime(new Date());
