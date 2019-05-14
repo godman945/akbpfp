@@ -110,6 +110,8 @@
     </bean>
     
     <bean id="AdWebsiteReportService" class="com.pchome.akbpfp.db.service.report.AdWebsiteReportService"> 
+        <property name="adGroupService" ref="PfpAdGroupService" />
+        <property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" />
         <property name="adWebsiteReportDAO" ref="AdWebsiteReportDAO" />
     </bean>
 

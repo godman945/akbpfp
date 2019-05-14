@@ -409,7 +409,7 @@
         </action>
         <!-- adAgesex 廣告族群成效 end -->
         
-        <!--report adWebsite-->
+        <!-- adWebsite 網站類型成效 -->
         <action name="reportAdWebsiteDownload" class="ReportAdWebsiteAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
@@ -432,7 +432,8 @@
         <action name="reportAdWebsiteAjaxTable" class="ReportAdWebsiteAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.adWebsite</result>
+        	<result type="tiles" name="success">report.body.adWebsite.detailList</result>
+<!--             <result type="tiles" name="success">report.ajaxTable.adWebsite</result> -->
         </action>
 		
 		<action name="reportAdWebsiteAjaxChart" class="ReportAdWebsiteAction" method="flashDataDownLoad">
@@ -440,6 +441,7 @@
 			<interceptor-ref name="reportPrivilegeInterceptor" />
             <result type="tiles" name="success">report.flashData</result>
         </action>
+        <!-- adWebsite 網站類型成效 end -->
         
         <!-- 影音成效報表 -->
         <action name="reportVideoPerformance" class="ReportVideoPerformanceAction">

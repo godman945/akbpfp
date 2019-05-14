@@ -21,6 +21,7 @@ public class BaseReportAction extends BaseSSLAction {
 	 * @return
 	 */
 	public LinkedHashMap<String, String> getDateSelectMap() {
+		System.out.println("BBB");
 		return DateValueUtil.getInstance().getDateRangeMap();
 	}
 	

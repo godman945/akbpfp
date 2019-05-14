@@ -209,7 +209,7 @@
 
 	<bean id="ReportAdWebsiteAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdWebsiteAction" scope="prototype">
 	 	<property name="adWebsiteReportService" ref="AdWebsiteReportService" />
-	 	<property name="adGroupService" ref="PfpAdGroupService" />
+<!-- 	 	<property name="adGroupService" ref="PfpAdGroupService" /> -->
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />

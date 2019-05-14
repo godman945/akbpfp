@@ -259,24 +259,31 @@
 	<definition name="report.chartTable.adAgesex" template="/ftl/report/chart/adAgesexChartTable.ftl" />
     <!-- .report.adAgesex 廣告族群成效 end -->
     
-    <!-- .report.adWebsite  -->
-    <definition name="report.ajaxTable.adWebsite" template="/ftl/report/ajax/adWebsiteTable.ftl" /> 
-	<definition name="report.chartTable.adWebsite" template="/ftl/report/chart/adWebsiteChartTable.ftl" />
-	 
-    <definition name=".report.adWebsite" extends="default.report.layout" >
+    <!-- .report.adWebsite 網站類型成效 -->
+    <definition name=".report.adWebsite" extends="default.report.layout" > <!-- 上面各項目頁籤 -->
     	<put-attribute name="header" value="report.header.adWebsite" />
         <put-attribute name="body" value="report.body.adWebsite" />
     </definition>
 	
-	<definition name="report.header.adWebsite" extends="report.header" >
+	<definition name="report.header.adWebsite" extends="report.header" > <!-- 登出 登入條 -->
     	<put-attribute name="jsName" value="reportAdWebsite.js" />
     </definition>
 	   
-    <definition name="report.body.adWebsite" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.adWebsite" />
+	<definition name="report.body.adWebsite" template="/ftl/report/adWebsite/adWebsiteBody.ftl">
+		<put-attribute name="adWebsiteDetailList" value="report.body.adWebsite.detailList" />
 		<put-attribute name="chartTable" value="report.chartTable.adWebsite" />
 	</definition>
+
+	<definition name="report.body.adWebsite.detailList" template="/ftl/report/adWebsite/adWebsiteDataList.ftl" />
 	
+<!--     <definition name="report.body.adWebsite" extends="report.body" > -->
+<!--     	<put-attribute name="reportTable" value="report.ajaxTable.adWebsite" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.adWebsite" /> -->
+<!-- 	</definition> -->
+	
+<!-- 	<definition name="report.ajaxTable.adWebsite" template="/ftl/report/ajax/adWebsiteTable.ftl" />  -->
+	<definition name="report.chartTable.adWebsite" template="/ftl/report/chart/adWebsiteChartTable.ftl" />
+	<!-- .report.adWebsite 網站類型成效 end -->
 	
 	<!--.report.video.performance -->
     <definition name=".report.videoPerformance" extends="default.report.layout" >
