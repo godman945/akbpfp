@@ -21,18 +21,18 @@ public class BaseSSLAction extends BaseCookieAction{
 		//log.info(" local: "+LOCAL_DONAME);
 		//log.info(" local: "+request.getServerName());
 		
-		if(this.isSSLUrl()){
-			// 需要轉成 https
-			if(!request.getScheme().equals("https")){
-				if(request.getServerName().indexOf(LOCAL_DONAME) > -1){
-					redirectUrl = LOCAL_SCHEME+request.getServerName()+":"+LOCAL_PORT+request.getRequestURI();
-				}else{
-					redirectUrl = "https://"+request.getServerName()+request.getRequestURI();
-					resultType = "redirectHTTPS";
-				}
-			}
-		}else{
-			// 不需要轉成 https
+//		if(this.isSSLUrl()){
+//			// 需要轉成 https
+//			if(!request.getScheme().equals("https")){
+//				if(request.getServerName().indexOf(LOCAL_DONAME) > -1){
+//					redirectUrl = LOCAL_SCHEME+request.getServerName()+":"+LOCAL_PORT+request.getRequestURI();
+//				}else{
+//					redirectUrl = "https://"+request.getServerName()+request.getRequestURI();
+//					resultType = "redirectHTTPS";
+//				}
+//			}
+//		}else{
+//			// 不需要轉成 https
 			if(!request.getScheme().equals("http")){
 				if(request.getServerName().indexOf(LOCAL_DONAME) > -1){
 					redirectUrl = LOCAL_SCHEME+request.getServerName()+":"+LOCAL_PORT+request.getRequestURI();
@@ -41,23 +41,23 @@ public class BaseSSLAction extends BaseCookieAction{
 					resultType = "redirectHTTPS";
 				}				
 			}
-		}
+//		}
 
 		//log.info(" redirectUrl = "+redirectUrl);
 	}
 	
-	private boolean isSSLUrl() {
-		
-		boolean result = false;
-		for(EnumSSLAction ssl:EnumSSLAction.values()){
-			if(request.getRequestURI().indexOf(ssl.getAction()) > -1){
-				result = true;
-				break;
-			}
-		}
-		
-		return result;
-	}
+//	private boolean isSSLUrl() {
+//		
+//		boolean result = false;
+//		for(EnumSSLAction ssl:EnumSSLAction.values()){
+//			if(request.getRequestURI().indexOf(ssl.getAction()) > -1){
+//				result = true;
+//				break;
+//			}
+//		}
+//		
+//		return result;
+//	}
 
 	public String getRedirectUrl() {
 		return redirectUrl;
