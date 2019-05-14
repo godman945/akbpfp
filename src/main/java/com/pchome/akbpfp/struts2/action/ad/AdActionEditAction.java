@@ -460,7 +460,7 @@ public class AdActionEditAction extends BaseCookieAction{
 		}
 		
 		String saveAdCity = null;
-		if(adCountry.equals("Taiwan")) {
+		if(adCountry != null && adCountry.equals("Taiwan")) {
 			if(adEditCity != null) {
 				if(adEditCity.length == 5) {
 					saveAdCity = null;
@@ -476,6 +476,24 @@ public class AdActionEditAction extends BaseCookieAction{
 				}
 			}
 		}
+
+		
+		
+		
+		//修改廣告投放地區 access log
+//		admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_Date, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+		
+		
+		
+		
+//		admAccesslogService
+//		if(!pfpAdAction.getAdActionEndDate().equals(ActionEndDate)) {
+//			String accesslogAction_Date = EnumAccesslogAction.PLAY_MODIFY.getMessage();
+//			String accesslogMessage_Date = accesslogAction_Date + ":" + adActionSeq + ", 活動名稱:" + adActionName + ", 廣告開始日期:" + sdf.format(pfpAdAction.getAdActionStartDate()) + " => " + sdf.format(ActionStartDate);
+//			admAccesslogService.recordAdLog(EnumAccesslogAction.AD_DATE_MODIFY, accesslogMessage_Date, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+////			pfpAdAction.setAdActionStartDate(ActionStartDate);
+//		}
+		
 		pfpAdAction.setAdActionCountry(adCountry);
 		pfpAdAction.setAdActionCity(saveAdCity);
 		// 確認每日預算不一樣才更新

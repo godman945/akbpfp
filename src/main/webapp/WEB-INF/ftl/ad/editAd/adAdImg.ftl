@@ -59,7 +59,7 @@
                           <div class="code-box">
                               <textarea rows="1" placeholder="請輸入第三方曝光追蹤代碼" id="thirdCode" name="thirdCode" style="resize:none;margin: 0px 310px 0px 0px; height: 137px; width: 632px;">${thirdCode!}</textarea>
                           		<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[2]!}">
-                          		<input type="hidden" id="adDetailSeq" name="adDetailContent" value="${adDetailContent[2]!}">
+                          		<input type="hidden" id="adDetailSeq" name="adDetailContent" value='${adDetailContent[2]!}'>
                           </div>
                         </td>
                     </tr>

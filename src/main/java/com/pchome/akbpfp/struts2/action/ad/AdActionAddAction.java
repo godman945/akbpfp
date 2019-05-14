@@ -433,7 +433,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		}
 		
 		String saveAdCity = null;
-		if(adCountry.equals("Taiwan")) {
+		if(adCountry != null && adCountry.equals("Taiwan")) {
 			if(adCity != null) {
 				if(adCity.length == 5) {
 					saveAdCity = null;
