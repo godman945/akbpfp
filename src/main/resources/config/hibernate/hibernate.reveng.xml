@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
-<!-- -->
+<!-- 
 	<table-filter match-name="adm_accesslog"/>
 	<table-filter match-name="adm_channel_account"/>
 	<table-filter match-name="adm_define_ad"/>
@@ -103,4 +103,10 @@
 	<table-filter match-name="pfp_code_convert_rule"></table-filter>
 	<table-filter match-name="pfp_code_convert_trans"></table-filter>
 	<table-filter match-name="pfp_code_adaction_merge"></table-filter>
+	-->
+	<table-filter match-name="pfp_ad_audience"></table-filter>
+	<table-filter match-name="pfp_code_audience_mapping"></table-filter>
+	<table-filter match-name="pfp_ad_audience_website_mapping"></table-filter>
+	
+	
 </hibernate-reverse-engineering>

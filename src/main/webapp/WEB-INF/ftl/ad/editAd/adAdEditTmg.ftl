@@ -114,7 +114,6 @@
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">　</span>
 						</td>
 					</tr>
-					<!--
 					<tr class="" >
                         <th style="">
                            		 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(3)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
@@ -130,7 +129,6 @@
                           </div>
                         </td>
                     </tr>
-					-->
 					
 					<tr>
 						<th height="35" style="width:12%;"><a name="errAdShowURL"></a><span class="t_s02">* </span>廣告顯示網址</th>

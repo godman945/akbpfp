@@ -284,8 +284,27 @@
 			                    <td>
 			                   		<#if adCountryMap?exists>
 				                    	<#list adCountryMap?keys as skey>
-			                       			<input type="radio" value="${skey!}" name="countryRadio" <#if skey == 'NULL' >checked</#if> />${adCountryMap[skey!]} <br>
+			                       			<input type="radio" value="${skey!}" name="countryRadio" <#if skey == 'NULL' >checked  id="sel_def" <#else>id="sel_tw" </#if> />${adCountryMap[skey!]} <br>
 			                       		</#list>
+			                       		<ul id="tw_list">
+                                        <li>
+                                            <input type="checkbox" id="AR01" name="adCity" value="AR01"> 北臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR02" name="adCity" value="AR02"> 中臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR03" name="adCity" value="AR03"> 南臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR04" name="adCity" value="AR04"> 東臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR05" name="adCity" value="AR05"> 金馬地區
+                                        </li>
+                                    </ul>
+			                       		
+			                       		
 		                       		</#if>
 			                    </td>
 			             </tr>
