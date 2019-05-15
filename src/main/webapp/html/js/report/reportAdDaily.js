@@ -216,6 +216,7 @@ function initEvent() {
 	
 	processPageNumber(); // 在commonReport.js
 	horisontal_scroll_listing($("#table-listing")); // 在commonReport.js
+	$('.floatingscroll').floatingScroll(); // floating scrollbar
 }
 
 var showHideColumn = ""; // 紀錄產報表欄位是否顯示
