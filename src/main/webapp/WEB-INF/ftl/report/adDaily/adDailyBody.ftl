@@ -95,7 +95,9 @@
 	            <!-- 功能列 結束 -->
 	            
 	            <!-- 表格內容 開始 -->
-	            <@t.insertAttribute name="adDailyDetailList" />
+	            <div class="prodtable-wrap m-b30" data-filter="all">
+	            	<@t.insertAttribute name="adDailyDetailList" />
+	            </div>
 	            <!-- 表格內容 結束 -->
 	        
 	            <#-- 頁碼 pagination 開始 -->
