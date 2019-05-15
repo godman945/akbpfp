@@ -129,7 +129,7 @@ public class AdReportService implements IAdReportService {
                     if (StringUtils.isBlank(adStyle)) {
                         adStyle = pfpAdDetail.getPfpAd().getAdStyle();
                     }
-                    if(StringUtils.equals("c_x05_po_tad_0059", pfpAdDetail.getPfpAd().getAdAssignTadSeq())){
+                    if(StringUtils.equals("c_x05_po_tad_0059", pfpAdDetail.getPfpAd().getAdAssignTadSeq()) || StringUtils.equals("c_x03_po_tad_0167", pfpAdDetail.getPfpAd().getAdAssignTadSeq()) || StringUtils.equals("c_x03_po_tad_0168", pfpAdDetail.getPfpAd().getAdAssignTadSeq()) ){
                     	html5Flag = "Y";
                     }
                     if("show_url".equals(pfpAdDetail.getAdDetailId())){
