@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +25,8 @@ import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdWebsiteReportService;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.soft.depot.utils.DateValueUtil;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
-import com.pchome.soft.util.DateValueUtil;
 import com.pchome.utils.CommonUtils;
 
 public class ReportAdWebsiteAction extends BaseReportAction {
@@ -39,8 +40,9 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 	private IAdWebsiteReportService adWebsiteReportService;
 	private IPfpCodeService pfpCodeService;
 	
+	private LinkedHashMap<String, String> dateSelectMap; // 查詢日期的 rang map,查詢日期頁面顯示
 	private boolean hasPfpCodeflag = false; // 是否有使用轉換追蹤的PFP帳號
-	private Map<String,String> reportWebsiteCategoryMap; // 取得網站類型下拉選單資料
+	private Map<String, String> reportWebsiteCategoryMap; // 取得網站類型下拉選單資料
 	
 	private String startDate = ""; // 查詢開始日期
 	private String endDate = ""; // 查詢結束日期
@@ -73,6 +75,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 	@Override
 	public String execute() throws Exception {
 		
+		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
 		// 取得網站類型下拉選單資料
 		reportWebsiteCategoryMap = adWebsiteReportService.getWebsiteCategoryMap();
 		
@@ -350,6 +353,10 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 		return SUCCESS;
 	}
 	
+	public LinkedHashMap<String, String> getDateSelectMap() {
+		return dateSelectMap;
+	}
+
 	public Map<String, String> getReportWebsiteCategoryMap() {
 		return reportWebsiteCategoryMap;
 	}

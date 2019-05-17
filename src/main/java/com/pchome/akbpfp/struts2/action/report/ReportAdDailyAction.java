@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 	private IPfpCodeService pfpCodeService;
 	private IAdActionReportService adActionReportService;
 	
+	private LinkedHashMap<String, String> dateSelectMap; // 查詢日期的 rang map,查詢日期頁面顯示
 	private boolean hasPfpCodeflag = false; // 是否有使用轉換追蹤的PFP帳號
 	
 	private String startDate = ""; // 查詢開始日期
@@ -70,6 +72,8 @@ public class ReportAdDailyAction extends BaseReportAction {
 	 */
 	@Override
 	public String execute() throws Exception {
+		
+		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
 		
 		String startDateCookie = super.getChoose_start_date();
 		String endDateCookie = super.getChoose_end_date();
@@ -290,6 +294,10 @@ public class ReportAdDailyAction extends BaseReportAction {
 		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
 
 		return SUCCESS;
+	}
+	
+	public LinkedHashMap<String, String> getDateSelectMap() {
+		return dateSelectMap;
 	}
 	
 	public IPfpCodeService getPfpCodeService() {

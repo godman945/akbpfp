@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +25,8 @@ import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdAgesexReportService;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.soft.depot.utils.DateValueUtil;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
-import com.pchome.soft.util.DateValueUtil;
 import com.pchome.utils.CommonUtils;
 
 public class ReportAdAgesexAction extends BaseReportAction {
@@ -39,6 +40,7 @@ public class ReportAdAgesexAction extends BaseReportAction {
 	private IAdAgesexReportService adAgesexReportService;
 	private IPfpCodeService pfpCodeService;
 	
+	private LinkedHashMap<String, String> dateSelectMap; // 查詢日期的 rang map,查詢日期頁面顯示
 	private boolean hasPfpCodeflag = false; // 是否有使用轉換追蹤的PFP帳號
 	
 	private String viewType = "age"; // 預設年齡 (年齡、性別)
@@ -72,6 +74,8 @@ public class ReportAdAgesexAction extends BaseReportAction {
 	 */
 	@Override
 	public String execute() throws Exception {
+		
+		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
 		
 		String startDateCookie = super.getChoose_start_date();
 		String endDateCookie = super.getChoose_end_date();
@@ -529,6 +533,10 @@ public class ReportAdAgesexAction extends BaseReportAction {
 		return SUCCESS;
 	}
 	
+	public LinkedHashMap<String, String> getDateSelectMap() {
+		return dateSelectMap;
+	}
+
 	public String getViewType() {
 		return viewType;
 	}

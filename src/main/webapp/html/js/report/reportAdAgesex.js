@@ -111,6 +111,7 @@ function showHideDataListInfo(dataColumnName, select) {
 	} else {
 		dateListColumn.css("display", "none");
 	}
+	$('.floatingscroll').floatingScroll("update"); // 欄位顯示隱藏後重新調整scrollbar
 }
 
 /**
