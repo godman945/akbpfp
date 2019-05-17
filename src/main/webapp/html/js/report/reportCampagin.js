@@ -263,7 +263,7 @@ function showHighChart(){
 			"whereMap" : JSON.stringify(whereObject)
 		},
 		success : function(respone) {
-			console.log(respone);
+//			console.log(respone);
 			dataArray = respone;
 		}
 	});
