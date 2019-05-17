@@ -77,6 +77,7 @@
    
 	<!-- report -->
     <bean id="AdActionReportService" class="com.pchome.akbpfp.db.service.report.AdActionReportService"> 
+        <property name="adActionService" ref="PfpAdActionService" />
         <property name="adActionReportDAO" ref="AdActionReportDAO" />
     </bean>
     

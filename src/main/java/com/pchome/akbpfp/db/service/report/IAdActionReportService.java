@@ -3,6 +3,7 @@ package com.pchome.akbpfp.db.service.report;
 import java.util.List;
 
 import com.pchome.akbpfp.db.dao.report.AdActionReportVO;
+import com.pchome.akbpfp.db.dao.report.AdCampaginReportVO;
 
 public interface IAdActionReportService {
 
@@ -32,5 +33,26 @@ public interface IAdActionReportService {
 	 * @throws Exception 
 	 */
 	public List<AdActionReportVO> queryReportAdDailyChartData(AdActionReportVO vo);
+
+	/**
+	 * 廣告成效(明細)
+	 * @param vo
+	 * @return
+	 * @throws Exception 
+	 */
+	public List<AdCampaginReportVO> queryReportAdCampaginData(AdCampaginReportVO vo) throws Exception;
 	
+	/**
+	 * 廣告成效(加總)
+	 * @param vo
+	 * @return
+	 */
+	public List<AdCampaginReportVO> queryReportAdCampaginSumData(AdCampaginReportVO vo);
+
+	/**
+	 * 廣告成效(圖表)
+	 * @param chartVo
+	 * @return
+	 */
+	public List<AdCampaginReportVO> queryReportAdCampaginChartData(AdCampaginReportVO vo);
 }

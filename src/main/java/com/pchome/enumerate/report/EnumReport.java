@@ -9,6 +9,14 @@ public enum EnumReport {
 	ADPVCLKOS_WINDOWS("Windows"),
 	ADPVCLKOS_OTHER("其他"),
 	/**
+	 * 走期
+	 */
+	AD_DATE("adDate"),
+	/**
+	 * 每日預算(每日花費)
+	 */
+	AD_ACTION_MAX_PRICE_AVG("adActionMaxPriceAvg"),
+	/**
 	 * 廣告樣式
 	 */
 	AD_OPERATING_RULE("adOperatingRule"),

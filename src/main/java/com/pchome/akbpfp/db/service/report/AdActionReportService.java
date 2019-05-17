@@ -2,7 +2,10 @@ package com.pchome.akbpfp.db.service.report;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.Date;
+//import java.sql.Date;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -10,12 +13,22 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 import com.pchome.akbpfp.db.dao.report.AdActionReportVO;
+import com.pchome.akbpfp.db.dao.report.AdCampaginReportVO;
+import com.pchome.akbpfp.db.dao.report.AdWebsiteReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdActionReportDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdAction;
+import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
+import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
 public class AdActionReportService implements IAdActionReportService {
 
+	private IPfpAdActionService adActionService;
 	private IAdActionReportDAO adActionReportDAO;
+
+	public void setAdActionService(IPfpAdActionService adActionService) {
+		this.adActionService = adActionService;
+	}
 
 	public void setAdActionReportDAO(IAdActionReportDAO adActionReportDAO) {
 		this.adActionReportDAO = adActionReportDAO;
@@ -181,6 +194,277 @@ public class AdActionReportService implements IAdActionReportService {
 	 */
 	public List<AdActionReportVO> queryReportAdDailyChartData(AdActionReportVO vo) {
 		return queryReportAdDailyData(vo);
+	}
+
+	/**
+	 * 廣告成效(明細)
+	 * @throws Exception 
+	 */
+	@Override
+	public List<AdCampaginReportVO> queryReportAdCampaginData(AdCampaginReportVO vo) throws Exception {
+		List<Map<String, Object>> adCampaginList = adActionReportDAO.getAdCampaginList(vo);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+		long nowTime = new Date().getTime();
+		
+		Map<Integer, String> adTypeMap = CommonUtils.getInstance().getAdType();
+		Map<String, String> adStyleTypeMap = CommonUtils.getInstance().getAdStyleTypeMap();
+		Map<String, String> adStatusMap = CommonUtils.getInstance().getAdStatusMap();
+		
+		List<AdCampaginReportVO> adCampaginVOList = new ArrayList<>();
+		for (Map<String, Object> dataMap : adCampaginList) {
+			AdCampaginReportVO adCampaginReportVO = new AdCampaginReportVO();
+			
+			String adActionSeq = (String) dataMap.get("ad_action_seq");
+			PfpAdAction pfpAdAction =  adActionService.getPfpAdActionBySeq(adActionSeq);
+			String adActionName = pfpAdAction.getAdActionName();
+		    int adActionStatus = pfpAdAction.getAdActionStatus();
+		    String adActionStartDate = dateFormat2.format(pfpAdAction.getAdActionStartDate()); // 走期開始日
+		    String adActionEndDate = dateFormat2.format(pfpAdAction.getAdActionEndDate()); // 走期結束日
+			
+			//狀態為開啟的話必須判斷走期( 待播放 or 走期中 or 已結束 )
+			if (adActionStatus == EnumStatus.Open.getStatusId()) {
+				long startDate = (dateFormat.parse(adActionStartDate + " 00:00:00")).getTime();
+				long endDate = (dateFormat.parse(adActionEndDate + " 23:59:59")).getTime();
+				if (nowTime < startDate) {
+					adActionStatus = EnumStatus.Waitbroadcast.getStatusId();
+				} else if (nowTime > endDate) {
+					adActionStatus = EnumStatus.End.getStatusId();
+				} else {
+					adActionStatus = EnumStatus.Broadcast.getStatusId();
+				}
+			}
+
+			// 播放狀態
+			String alter = "";
+			if (adActionStatus == EnumStatus.Broadcast.getStatusId()) { // 走期中
+				alter = "走期中";
+				adCampaginReportVO.setAdStatusOnOff(true); // on亮綠燈
+			} else {
+				alter = "廣告" + adStatusMap.get(Integer.toString(adActionStatus));
+			}
+			adCampaginReportVO.setAdStatusName(alter); // 產excel報表使用
+			
+			adCampaginReportVO.setAdActionName(adActionName); // 廣告活動
+			adCampaginReportVO.setAdType(adTypeMap.get(dataMap.get("ad_type"))); // 播放類型
+			adCampaginReportVO.setAdOperatingRule(adStyleTypeMap.get(dataMap.get("ad_operating_rule"))); // 廣告樣式
+			
+			// 走期
+			if ("3000-12-31".equals(adActionEndDate)) {
+				adActionEndDate = "永久";
+			}
+//			String adDate = adActionStartDate + " ~ " + adActionEndDate;
+			adCampaginReportVO.setAdActionStartDate(adActionStartDate);
+			adCampaginReportVO.setAdActionEndDate(adActionEndDate);
+			
+			// 裝置
+			String adDevice = "全部";
+			if (vo.getWhereMap() != null) {
+				adDevice = CommonUtils.getInstance().getAdDeviceName(vo.getWhereMap());
+			}
+			adCampaginReportVO.setAdDevice(adDevice);
+			
+			// 每日預算
+			BigDecimal adActionMaxPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_action_max_price_sum"));
+			BigDecimal adActionCountSum = (BigDecimal) dataMap.get("ad_action_count_sum");
+			adCampaginReportVO.setAdActionMaxPriceAvg(CommonUtils.getInstance().getCalculateDivisionValue(adActionMaxPriceSum, adActionCountSum));
+			
+			// 曝光數
+			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");
+			adCampaginReportVO.setAdPvSum(adPvSum);
+			
+			// 互動數
+			BigDecimal adClkSum = (BigDecimal) dataMap.get("ad_clk_sum");
+			adCampaginReportVO.setAdClkSum(adClkSum);
+			
+			// 互動率 = 總互動數 / 總曝光數 * 100
+			adCampaginReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+			
+			// 費用
+			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
+			adCampaginReportVO.setAdPriceSum(adPriceSum.doubleValue());
+						
+			// 單次互動費用 = 總費用 / 總互動次數
+			adCampaginReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+			
+			// 千次曝光費用 = 總費用 / 曝光數 * 1000
+			Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
+			BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
+			adCampaginReportVO.setKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			
+			// 轉換次數
+			BigDecimal convertCount = (BigDecimal) dataMap.get("convert_count");
+			adCampaginReportVO.setConvertCount(convertCount);
+			
+			// 轉換率 = 轉換次數 / 互動數 * 100
+			adCampaginReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+			
+			// 總轉換價值
+			BigDecimal convertPriceCount = (BigDecimal) dataMap.get("convert_price_count");
+			adCampaginReportVO.setConvertPriceCount(convertPriceCount);
+			
+			// 平均轉換成本 = 費用 / 轉換次數
+			adCampaginReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+			
+			// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
+			adCampaginReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+			
+			adCampaginVOList.add(adCampaginReportVO);
+		}
+		
+		// 處理排序
+		if (StringUtils.isNotBlank(vo.getSortBy())) {
+			CommonUtils.getInstance().sort(adCampaginVOList, vo.getSortBy().split("-")[0], vo.getSortBy().split("-")[1]);
+		}
+		
+		return adCampaginVOList;
+	}
+
+	/**
+	 * 廣告成效(加總)
+	 */
+	@Override
+	public List<AdCampaginReportVO> queryReportAdCampaginSumData(AdCampaginReportVO vo) {
+		// TODO Auto-generated method stub
+		List<Map<String, Object>> adCampaginListSum = adActionReportDAO.getAdCampaginListSum(vo);
+		
+		// 每日預算
+		BigDecimal adActionMaxPriceAvg = new BigDecimal(0);
+		// 曝光數
+		BigDecimal adPvSum = new BigDecimal(0);
+		// 互動數
+		BigDecimal adClkSum = new BigDecimal(0);
+		// 費用
+		BigDecimal adPriceSum = new BigDecimal(0);
+		// 轉換次數
+		BigDecimal convertCount = new BigDecimal(0);
+		// 總轉換價值
+		BigDecimal convertPriceCount = new BigDecimal(0);
+		
+		List<AdCampaginReportVO> adCampaginVOListSum = new ArrayList<>();
+		// 加總
+		for (Map<String, Object> dataMap : adCampaginListSum) {
+			BigDecimal adActionMaxPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_action_max_price_sum"));
+			BigDecimal adActionCountSum = (BigDecimal) dataMap.get("ad_action_count_sum");
+			 // 算完每日預算後，再處理小數至第二位，然後四捨五入
+			BigDecimal bigDecimal = BigDecimal.valueOf(CommonUtils.getInstance().getCalculateDivisionValue(adActionMaxPriceSum, adActionCountSum)).setScale(2, RoundingMode.HALF_UP);
+			adActionMaxPriceAvg = adActionMaxPriceAvg.add(bigDecimal);
+			
+			adPvSum = adPvSum.add((BigDecimal) dataMap.get("ad_pv_sum"));
+			adClkSum = adClkSum.add((BigDecimal) dataMap.get("ad_clk_sum"));
+			adPriceSum = adPriceSum.add(BigDecimal.valueOf((Double) dataMap.get("ad_price_sum")));
+			convertCount = convertCount.add((BigDecimal) dataMap.get("convert_count"));
+			convertPriceCount = convertPriceCount.add((BigDecimal) dataMap.get("convert_price_count"));
+		}
+		
+		AdCampaginReportVO adCampaginReportVO = new AdCampaginReportVO();
+		// 每日預算
+		adCampaginReportVO.setAdActionMaxPriceAvg(adActionMaxPriceAvg.doubleValue());
+		
+		// 曝光數
+		adCampaginReportVO.setAdPvSum(adPvSum);
+		
+		// 互動數
+		adCampaginReportVO.setAdClkSum(adClkSum);
+		
+		// 互動率 = 總互動數 / 總曝光數 * 100
+		adCampaginReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+		
+		// 費用
+		adCampaginReportVO.setAdPriceSum(adPriceSum.doubleValue());
+		
+		// 單次互動費用 = 總費用 / 總互動次數
+		adCampaginReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+		
+		// 千次曝光費用 = 總費用 / 曝光數 * 1000
+		Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
+		BigDecimal bg = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
+		adCampaginReportVO.setKiloCost(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
+		
+		// 轉換次數
+		adCampaginReportVO.setConvertCount(convertCount);
+		
+		// 轉換率 = 轉換次數 / 互動數 * 100
+		adCampaginReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+		
+		// 總轉換價值
+		adCampaginReportVO.setConvertPriceCount(convertPriceCount);
+		
+		// 平均轉換成本 = 費用 / 轉換次數
+		adCampaginReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+		
+		// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
+		adCampaginReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+		
+		// 總計幾筆
+		adCampaginReportVO.setRowCount(adCampaginListSum.size());
+		vo.setRowCount(adCampaginListSum.size()); // 計算底下頁碼用
+		
+		adCampaginVOListSum.add(adCampaginReportVO);
+		
+		return adCampaginVOListSum;
+	}
+
+	/**
+	 * 廣告成效(圖表)
+	 */
+	@Override
+	public List<AdCampaginReportVO> queryReportAdCampaginChartData(AdCampaginReportVO vo) {
+
+		List<Map<String, Object>> adCampaginList = adActionReportDAO.getAdCampaginListChart(vo);
+		
+		List<AdCampaginReportVO> adCampaginVOList = new ArrayList<>();
+		for (Map<String, Object> dataMap : adCampaginList) {
+			AdCampaginReportVO adCampaginReportVO = new AdCampaginReportVO();
+			
+			// 日期
+			adCampaginReportVO.setReportDate((Date) dataMap.get("ad_pvclk_date"));
+
+			// 曝光數
+			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");
+			adCampaginReportVO.setAdPvSum(adPvSum);
+			
+			// 互動數
+			BigDecimal adClkSum = (BigDecimal) dataMap.get("ad_clk_sum");
+			adCampaginReportVO.setAdClkSum(adClkSum);
+			
+			// 互動率 = 總互動數 / 總曝光數 * 100
+			adCampaginReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+			
+			// 費用
+			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
+			adCampaginReportVO.setAdPriceSum(adPriceSum.doubleValue());
+						
+			// 單次互動費用 = 總費用 / 總互動次數
+			adCampaginReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+			
+			// 千次曝光費用 = 總費用 / 曝光數 * 1000
+			Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
+			BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
+			adCampaginReportVO.setKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			
+			// 轉換次數
+			BigDecimal convertCount = (BigDecimal) dataMap.get("convert_count");
+			adCampaginReportVO.setConvertCount(convertCount);
+			
+			// 轉換率 = 轉換次數 / 互動數 * 100
+			adCampaginReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+			
+			// 總轉換價值
+			BigDecimal convertPriceCount = (BigDecimal) dataMap.get("convert_price_count");
+			adCampaginReportVO.setConvertPriceCount(convertPriceCount);
+			
+			// 平均轉換成本 = 費用 / 轉換次數
+			adCampaginReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+			
+			// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
+			adCampaginReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+			
+			adCampaginVOList.add(adCampaginReportVO);
+		}
+		
+		return adCampaginVOList;
 	}
 	
 }

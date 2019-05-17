@@ -172,7 +172,7 @@
 	
 	 <bean id="ReportCampaginAction" class="com.pchome.akbpfp.struts2.action.report.ReportCampaginAction" scope="prototype">
 	 	<property name="adActionReportService" ref="AdActionReportService" />
-	 	<property name="adActionService" ref="PfpAdActionService" />
+<!-- 	 	<property name="adActionService" ref="PfpAdActionService" /> -->
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />

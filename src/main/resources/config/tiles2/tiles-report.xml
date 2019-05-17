@@ -87,6 +87,31 @@
 	</definition>
     <!-- .report.adDaily 每日花費成效end -->
     
+    <!-- .report.campagin 廣告成效 -->
+    <definition name=".report.campagin" extends="default.report.layout" > <!-- 上面各項目頁籤 -->
+    	<put-attribute name="header" value="report.header.campagin" />
+        <put-attribute name="body" value="report.body.campagin" />
+    </definition>
+	
+	<definition name="report.header.campagin" extends="report.header" > <!-- 登出 登入條 -->
+    	<put-attribute name="jsName" value="reportCampagin.js" />
+    </definition>
+	   
+	<definition name="report.body.campagin" template="/ftl/report/campagin/campaginBody.ftl">
+		<put-attribute name="campaginDetailList" value="report.body.campagin.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.campagin" />
+	</definition>
+
+	<definition name="report.body.campagin.detailList" template="/ftl/report/campagin/campaginDataList.ftl" />
+	   
+<!--     <definition name="report.body.campagin" extends="report.body" > -->
+<!--     	<put-attribute name="reportTable" value="report.ajaxTable.campagin" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.campagin" /> -->
+<!-- 	</definition> -->
+	
+<!-- 	<definition name="report.ajaxTable.campagin" template="/ftl/report/ajax/campaginTable.ftl" />  -->
+	<definition name="report.chartTable.campagin" template="/ftl/report/chart/campaginChartTable.ftl" />
+	<!-- .report.campagin 廣告成效 end -->
     
 	<!-- .report.keyword  -->
 	<definition name="report.ajaxTable.keyword" template="/ftl/report/ajax/keywordTable.ftl" /> 
@@ -162,26 +187,6 @@
     	<put-attribute name="reportTable" value="report.ajaxTable.check" />
 		<put-attribute name="chartTable" value="report.chartTable.check" />
 	</definition>
-	
-	
-	<!-- .report.campagin  -->
-    <definition name="report.ajaxTable.campagin" template="/ftl/report/ajax/campaginTable.ftl" /> 
-	<definition name="report.chartTable.campagin" template="/ftl/report/chart/campaginChartTable.ftl" />
-	 
-    <definition name=".report.campagin" extends="default.report.layout" >
-    	<put-attribute name="header" value="report.header.campagin" />
-        <put-attribute name="body" value="report.body.campagin" />
-    </definition>
-	
-	<definition name="report.header.campagin" extends="report.header" >
-    	<put-attribute name="jsName" value="reportCampagin.js" />
-    </definition>
-	   
-    <definition name="report.body.campagin" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.campagin" />
-		<put-attribute name="chartTable" value="report.chartTable.campagin" />
-	</definition>
-	
 	
 	<!-- .report.adgroup  -->
     <definition name="report.ajaxTable.adgroup" template="/ftl/report/ajax/adgroupTable.ftl" /> 
