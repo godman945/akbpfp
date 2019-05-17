@@ -966,14 +966,11 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 */
 	@Override
 	public List<Map<String, Object>> getAdCampaginList(AdCampaginReportVO vo) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");		
-		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");	
-//		hql.append(" SUM(r.ad_invalid_clk), ");
-//		hql.append(" SUM(r.ad_invalid_clk_price), ");
+		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
 		hql.append(" SUM(r.ad_action_max_price * r.ad_action_count) AS ad_action_max_price_sum, ");
 		hql.append(" SUM(r.ad_action_count) AS ad_action_count_sum, ");
 		hql.append(" r.ad_action_seq, ");
@@ -1057,14 +1054,11 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 */
 	@Override
 	public List<Map<String, Object>> getAdCampaginListSum(AdCampaginReportVO vo) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
-		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");	
-//		hql.append(" SUM(r.ad_invalid_clk), ");
-//		hql.append(" SUM(r.ad_invalid_clk_price), ");
+		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
 		hql.append(" SUM(r.ad_action_max_price * r.ad_action_count) AS ad_action_max_price_sum, ");
 		hql.append(" SUM(r.ad_action_count) AS ad_action_count_sum, ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
@@ -1103,7 +1097,6 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 			}
 		}
 		
-//		hql.append(" GROUP BY r.ad_action_seq");
 		hql.append(" GROUP BY r.ad_action_seq, r.ad_type, r.ad_operating_rule");
 		
 		
@@ -1137,20 +1130,14 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 */
 	@Override
 	public List<Map<String, Object>> getAdCampaginListChart(AdCampaginReportVO vo) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT");
 		hql.append(" r.ad_pvclk_date,");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
-//		hql.append(" SUM(r.ad_invalid_clk), ");
-//		hql.append(" SUM(r.ad_invalid_clk_price), ");
-//		hql.append(" SUM(r.ad_action_max_price * r.ad_action_count), ");
-//		hql.append(" SUM(r.ad_action_count), ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
 		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
-//		hql.append(" count(r.ad_action_report_seq) ");
 		hql.append(" FROM pfp_ad_action_report AS r ");
 		hql.append(" WHERE 1 = 1 ");
 		hql.append(" AND r.customer_info_id = :customerInfoId");

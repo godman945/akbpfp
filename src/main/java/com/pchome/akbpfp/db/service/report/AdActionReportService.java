@@ -2,11 +2,10 @@ package com.pchome.akbpfp.db.service.report;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-//import java.sql.Date;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.pchome.akbpfp.db.dao.report.AdActionReportVO;
 import com.pchome.akbpfp.db.dao.report.AdCampaginReportVO;
-import com.pchome.akbpfp.db.dao.report.AdWebsiteReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdActionReportDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
@@ -254,7 +252,6 @@ public class AdActionReportService implements IAdActionReportService {
 			if ("3000-12-31".equals(adActionEndDate)) {
 				adActionEndDate = "永久";
 			}
-//			String adDate = adActionStartDate + " ~ " + adActionEndDate;
 			adCampaginReportVO.setAdActionStartDate(adActionStartDate);
 			adCampaginReportVO.setAdActionEndDate(adActionEndDate);
 			
@@ -326,7 +323,6 @@ public class AdActionReportService implements IAdActionReportService {
 	 */
 	@Override
 	public List<AdCampaginReportVO> queryReportAdCampaginSumData(AdCampaginReportVO vo) {
-		// TODO Auto-generated method stub
 		List<Map<String, Object>> adCampaginListSum = adActionReportDAO.getAdCampaginListSum(vo);
 		
 		// 每日預算
@@ -411,7 +407,6 @@ public class AdActionReportService implements IAdActionReportService {
 	 */
 	@Override
 	public List<AdCampaginReportVO> queryReportAdCampaginChartData(AdCampaginReportVO vo) {
-
 		List<Map<String, Object>> adCampaginList = adActionReportDAO.getAdCampaginListChart(vo);
 		
 		List<AdCampaginReportVO> adCampaginVOList = new ArrayList<>();

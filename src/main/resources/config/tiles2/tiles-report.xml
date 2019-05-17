@@ -103,13 +103,6 @@
 	</definition>
 
 	<definition name="report.body.campagin.detailList" template="/ftl/report/campagin/campaginDataList.ftl" />
-	   
-<!--     <definition name="report.body.campagin" extends="report.body" > -->
-<!--     	<put-attribute name="reportTable" value="report.ajaxTable.campagin" /> -->
-<!-- 		<put-attribute name="chartTable" value="report.chartTable.campagin" /> -->
-<!-- 	</definition> -->
-	
-<!-- 	<definition name="report.ajaxTable.campagin" template="/ftl/report/ajax/campaginTable.ftl" />  -->
 	<definition name="report.chartTable.campagin" template="/ftl/report/chart/campaginChartTable.ftl" />
 	<!-- .report.campagin 廣告成效 end -->
     

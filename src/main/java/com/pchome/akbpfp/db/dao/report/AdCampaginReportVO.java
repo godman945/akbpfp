@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 
 public class AdCampaginReportVO {
@@ -23,7 +22,6 @@ public class AdCampaginReportVO {
 	private String adActionName; // 廣告活動
 	private String adType; // 廣告播放類型
 	private String adOperatingRule; // 廣告樣式
-//	private String adDate; // 走期
 	private String adActionStartDate; // 走期開始日
 	private String adActionEndDate; // 走期結束日
 	private String adDevice; // 裝置
@@ -39,31 +37,6 @@ public class AdCampaginReportVO {
 	private BigDecimal convertPriceCount; // 轉換價值
 	private Double convertCost; // 平均轉換成本
 	private Double convertInvestmentCost; // 廣告投資報酬率
-	
-//	private Date reportDate; //報表日期
-//
-//	private String adActionSeq; //廣告活動序號
-//
-//	private BigDecimal adPvSum; // 廣告PV總和
-//	private BigDecimal adClkSum; // 廣告Click總和
-//	private Double adPriceSum; // 廣告價格總和
-//	private BigDecimal adInvClkSum; // 廣告無效點擊總和
-//	private Double adActionMaxPriceSum; // 每日花費上限總和
-//	private BigInteger count; // 資料筆數(用於計算平均每日花費上限)
-//	private String adDevice; // 裝置
-//	private String adType;
-//	private String adOperatingRule; // 廣告樣式
-//	private String adClkPriceType; // 廣告計費方式
-//	private String adOperatingRuleDesc;
-//	private BigDecimal convertCount; // 轉換數
-//	private BigDecimal convertPriceCount; // 轉換價值
-//	
-//	private Double ctr; // 互動率
-//	private Double avgCost; // 單次互動費用
-//	private Double kiloCost; // 千次曝光費用
-//	private Double convertCTR; // 轉換率
-//	private Double convertCost; // 平均轉換成本
-//	private Double convertInvestmentCost; // 廣告投資報酬率
 	private int rowCount = 0; // 總計幾筆
 
 	public String getCustomerInfoId() {
