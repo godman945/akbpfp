@@ -271,128 +271,133 @@ public class AdAddAction extends BaseCookieAction{
 
 	// 新增圖文式廣告
 	@Transactional
-	public String doAdAdAddTmg() throws Exception {
-		log.info("doAdAdAddTmg => adGroupSeq = " + adGroupSeq + "; saveAndNew = '" + saveAndNew + "'");
-		// 檢查 adStyle 是否正確，正確的話，設定 adPoolSeq、templateProductSeq
-		chkAdStyle();
-		// 檢查 Form 資料是否正確
-		chkAdData1();
-		if(message != null && !message.equals("")) {
-		    msg = new ByteArrayInputStream(message.getBytes());
-		    return INPUT;
-		}
-		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-		// 新增廣告
-		addAd(pfpAdGroup, null);
+	public String doAdAdAddTmg()  {
+		try {
+			log.info("doAdAdAddTmg => adGroupSeq = " + adGroupSeq + "; saveAndNew = '" + saveAndNew + "'");
+			// 檢查 adStyle 是否正確，正確的話，設定 adPoolSeq、templateProductSeq
+			chkAdStyle();
+			// 檢查 Form 資料是否正確
+			chkAdData1();
+			if(message != null && !message.equals("")) {
+			    msg = new ByteArrayInputStream(message.getBytes());
+			    return INPUT;
+			}
+			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+			// 新增廣告
+			addAd(pfpAdGroup, null);
+			
+			String imgDetail = "";
+			PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
+			for(int i = 0; i < adDetailID.length; i++) {
+			    if(i == 0 && adStyle.equals("TMG")) {
+					try {
+					    if(StringUtils.isNotBlank(imgFile)) {
+							File iPath = new File(photoPath);		// 圖片的存放路徑
+							File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
+							if(!iPath.exists())			iPath.mkdirs();
+							if(!iTmpPath.exists())		iTmpPath.mkdirs();
+							String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
+							File adFile = null;	// 上傳圖片的檔名
+							if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
+								adFile = new File(photoPath, adSeq + "." + fileType);
+							}else {
+								adFile = new File(photoPath, adSeq + ".jpg");
+							}
+							File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
+							tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
 		
-		String imgDetail = "";
-		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
-		for(int i = 0; i < adDetailID.length; i++) {
-		    if(i == 0 && adStyle.equals("TMG")) {
-				try {
-				    if(StringUtils.isNotBlank(imgFile)) {
-						File iPath = new File(photoPath);		// 圖片的存放路徑
-						File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
-						if(!iPath.exists())			iPath.mkdirs();
-						if(!iTmpPath.exists())		iTmpPath.mkdirs();
-						String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
-						File adFile = null;	// 上傳圖片的檔名
-						if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
-							adFile = new File(photoPath, adSeq + "." + fileType);
-						}else {
-							adFile = new File(photoPath, adSeq + ".jpg");
+							imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
+						} else {
+							if(StringUtils.isBlank(adDetailContent[0])) {
+								imgDetail = "img/public/na.gif\" style=\"display:none";
+							}
 						}
-						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
-						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
-	
-						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
-					} else {
-						if(StringUtils.isBlank(adDetailContent[0])) {
-							imgDetail = "img/public/na.gif\" style=\"display:none";
-						}
+					} catch (Exception ex) {
+						log.error("ex : " + ex);
+						return INPUT;
 					}
-				} catch (Exception ex) {
-					log.info("ex : " + ex);
+				}
+				adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+				List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, adDetailID[i], null, adPoolSeq);
+				String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+				if(adDetailID[i].equals("real_url")) {
+					if(adDetailContent[i].indexOf("http") < 0 ) {
+						adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
+					}else{
+				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+					}
+			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+			    	adDetailContent[i] = adDetailContent[i].trim();
+				}
+				
+				if(adDetailID[i].equals("show_url")) {
+				    if(adDetailContent[i].indexOf("http://") < 0 ) {
+				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
+				    }else{
+				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+				    }
+				    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
+				    adDetailContent[i] = adDetailContent[i].trim();
 				}
 
+				if(adDetailID[i].equals("title") || adDetailID[i].equals("content") ) {
+					adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
+					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
+				}
+				
+				String detailContent = i == 0?imgDetail:adDetailContent[i];
+				pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
+				pfpAdDetailVO.setAdSeq(adSeq);
+				pfpAdDetailVO.setAdPoolSeq(adPoolSeq);
+				pfpAdDetailVO.setAdDetailId(adDetailID[i]);
+				pfpAdDetailVO.setAdDetailContent(detailContent);
+				if(adDetailID[i].equals("img") || adDetailID[i].equals("title") || adDetailID[i].equals("content")) {
+				    pfpAdDetailVO.setVerifyFlag("y");
+				} else {
+				    pfpAdDetailVO.setVerifyFlag("n");
+				}
+				pfpAdDetailVO.setDefineAdSeq(defineAdSeq);
+				pfpAdDetailVO.setAdDetailCreateTime(new Date());
+				pfpAdDetailVO.setAdDetailUpdateTime(new Date());
+				pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
 			}
-
+			
+			//新增第三方偵測
 			adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
-			List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, adDetailID[i], null, adPoolSeq);
-			String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-			if(adDetailID[i].equals("real_url")) {
-				if(adDetailContent[i].indexOf("http") < 0 ) {
-					adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
-				}else{
-			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-				}
-		    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-		    	adDetailContent[i] = adDetailContent[i].trim();
-			}
-			
-			if(adDetailID[i].equals("show_url")) {
-			    if(adDetailContent[i].indexOf("http://") < 0 ) {
-			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
-			    }else{
-			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-			    }
-			    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
-			    adDetailContent[i] = adDetailContent[i].trim();
-			}
-
-			if(adDetailID[i].equals("title") || adDetailID[i].equals("content") ) {
-				adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
-				adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
-			}
-			
-			String detailContent = i == 0?imgDetail:adDetailContent[i];
+			pfpAdDetailVO = new PfpAdDetailVO();
 			pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
 			pfpAdDetailVO.setAdSeq(adSeq);
-			pfpAdDetailVO.setAdPoolSeq(adPoolSeq);
-			pfpAdDetailVO.setAdDetailId(adDetailID[i]);
-			pfpAdDetailVO.setAdDetailContent(detailContent);
-			if(adDetailID[i].equals("img") || adDetailID[i].equals("title") || adDetailID[i].equals("content")) {
-			    pfpAdDetailVO.setVerifyFlag("y");
-			} else {
-			    pfpAdDetailVO.setVerifyFlag("n");
-			}
-			pfpAdDetailVO.setDefineAdSeq(defineAdSeq);
+			pfpAdDetailVO.setAdPoolSeq("adp_201303070003");
+			pfpAdDetailVO.setAdDetailContent(thirdCode);
+			pfpAdDetailVO.setDefineAdSeq("dad_tracking_code");
+			pfpAdDetailVO.setAdDetailId("tracking_code");
+			pfpAdDetailVO.setVerifyFlag("y");
 			pfpAdDetailVO.setAdDetailCreateTime(new Date());
 			pfpAdDetailVO.setAdDetailUpdateTime(new Date());
 			pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
+
+			// 新增關鍵字
+			addKeywords(pfpAdGroup);
+			//新增排除關鍵字
+			addExcludeKeywords(pfpAdGroup);
+
+			// 開啟廣告分類
+			pfpAdGroup.setAdGroupStatus(4);
+			pfpAdGroupService.save(pfpAdGroup);
+
+			// 是否為 "儲存後再新增廣告"
+			if(saveAndNew != null && saveAndNew.equals("save+new")) {
+			    result = "saveNew";
+			} else {
+			    result = "saveOK";
+			}
+			msg = new ByteArrayInputStream(result.getBytes());
+			return SUCCESS;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return INPUT;
 		}
 		
-		//新增第三方偵測
-		adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
-		pfpAdDetailVO = new PfpAdDetailVO();
-		pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
-		pfpAdDetailVO.setAdSeq(adSeq);
-		pfpAdDetailVO.setAdPoolSeq("adp_201303070003");
-		pfpAdDetailVO.setAdDetailContent(thirdCode);
-		pfpAdDetailVO.setDefineAdSeq("dad_tracking_code");
-		pfpAdDetailVO.setAdDetailId("tracking_code");
-		pfpAdDetailVO.setVerifyFlag("y");
-		pfpAdDetailVO.setAdDetailCreateTime(new Date());
-		pfpAdDetailVO.setAdDetailUpdateTime(new Date());
-		pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
-
-		// 新增關鍵字
-		addKeywords(pfpAdGroup);
-		//新增排除關鍵字
-		addExcludeKeywords(pfpAdGroup);
-
-		// 開啟廣告分類
-		pfpAdGroup.setAdGroupStatus(4);
-		pfpAdGroupService.save(pfpAdGroup);
-
-		// 是否為 "儲存後再新增廣告"
-		if(saveAndNew != null && saveAndNew.equals("save+new")) {
-		    result = "saveNew";
-		} else {
-		    result = "saveOK";
-		}
-		msg = new ByteArrayInputStream(result.getBytes());
-		return SUCCESS;
 	}
 
 	/**
@@ -1130,13 +1135,12 @@ public class AdAddAction extends BaseCookieAction{
 		}
 	}
 
-	private void chkAdData1() {
-		try {
+	private void chkAdData1() throws Exception{
 			if (StringUtils.isEmpty(adClass)) {
 				message = "請選擇廣告分類！";
 			}
-
-			if(keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
+			
+			if(keywords != null && keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
 					&& StringUtils.isBlank(adKeywordPrecisionOpen)){
 				message = "請選擇關鍵字比對方式！";
 			}
@@ -1190,9 +1194,6 @@ public class AdAddAction extends BaseCookieAction{
 					}
 				}
 			}
-		} catch(Exception ex) {
-			log.info("Exception ex :" + ex);
-		}
 	}
 
 	//新增廣告
