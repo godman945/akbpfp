@@ -251,9 +251,9 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		
 		
 		//accesslog
+		log.info("success:"+vo.getSuccessNum() + " fail:"+vo.getErrorNum());
 		for (EnumPfpCatalogUploadType enumPfpCatalogUploadType : EnumPfpCatalogUploadType.values()) {
 			if (enumPfpCatalogUploadType.getType().equals(pfpCatalogUploadLog.getUpdateWay())) {
-				log.info("success:"+vo.getSuccessNum() + " fail:"+vo.getErrorNum());
 				String message = pfpCatalog.getCatalogName() + "=>檔案更新：成功 "+vo.getSuccessNum()+",失敗 "+vo.getErrorNum();
 				accesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, vo.getIdPchome(),vo.getCustomerInfoId(), vo.getUserId(), vo.getRemoteAddr());
 				break;
