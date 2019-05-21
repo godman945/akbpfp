@@ -17,6 +17,12 @@ public class PfpCatalogUploadLogVO {
 	private int pageCount = 0; // 初始化共幾頁
 	private int totalCount = 0; // 初始化共幾筆
 	
+	//accesslog用
+	private String idPchome;
+	private String customerInfoId;
+	private String userId;
+	private String remoteAddr;
+	
 	public String getCatalogUploadLogSeq() {
 		return catalogUploadLogSeq;
 	}
@@ -103,6 +109,38 @@ public class PfpCatalogUploadLogVO {
 
 	public void setUpdateDatetime(Date updateDatetime) {
 		this.updateDatetime = updateDatetime;
+	}
+
+	public String getIdPchome() {
+		return idPchome;
+	}
+
+	public void setIdPchome(String idPchome) {
+		this.idPchome = idPchome;
+	}
+
+	public String getCustomerInfoId() {
+		return customerInfoId;
+	}
+
+	public void setCustomerInfoId(String customerInfoId) {
+		this.customerInfoId = customerInfoId;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getRemoteAddr() {
+		return remoteAddr;
+	}
+
+	public void setRemoteAddr(String remoteAddr) {
+		this.remoteAddr = remoteAddr;
 	}
 
 }

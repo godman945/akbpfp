@@ -19,6 +19,7 @@ import com.pchome.akbpfp.db.dao.catalog.uploadList.IPfpCatalogUploadListDAO;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogUploadLog;
 import com.pchome.akbpfp.db.service.BaseService;
+import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
@@ -26,10 +27,12 @@ import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogProdEcErrorVO;
 import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogUploadListVO;
 import com.pchome.akbpfp.db.vo.catalog.uploadList.PfpCatalogUploadLogVO;
 import com.pchome.enumerate.ad.EnumPfpCatalog;
+import com.pchome.enumerate.ad.EnumPfpCatalogUploadType;
 import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
 import com.pchome.enumerate.catalogprod.EnumEcUseStatusType;
 import com.pchome.enumerate.prod.EnumEcCsvCheck;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
+import com.pchome.rmi.accesslog.EnumAccesslogAction;
 import com.pchome.utils.CommonUtils;
 
 public class PfpCatalogUploadListService extends BaseService<String, String> implements IPfpCatalogUploadListService {
@@ -42,7 +45,7 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	private String photoDbPathNew;
 	private String catalogProdCsvFilePath;
 	private String catalogProdCsvFileBackupPath;
-	
+	private AdmAccesslogService accesslogService;
 	/**
 	 * 檢查檔案格式是否為我們提供的CSV檔格式
 	 * @param vo
@@ -245,6 +248,18 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		pfpCatalogUploadLog.setCreateDate(date); // 建立時間
 		
 		pfpCatalogUploadListDAO.savePfpCatalogUploadLog(pfpCatalogUploadLog);
+		
+		
+		//accesslog
+		for (EnumPfpCatalogUploadType enumPfpCatalogUploadType : EnumPfpCatalogUploadType.values()) {
+			if (enumPfpCatalogUploadType.getType().equals(pfpCatalogUploadLog.getUpdateWay())) {
+				String message = pfpCatalog.getCatalogName() + "=>檔案更新：成功 "+vo.getSuccessNum()+",失敗 "+vo.getErrorNum();
+				accesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, vo.getIdPchome(),vo.getCustomerInfoId(), vo.getUserId(), vo.getRemoteAddr());
+				break;
+			}
+		}
+		
+		
 	}
 
 	/**
@@ -320,5 +335,14 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	public void setCatalogProdCsvFileBackupPath(String catalogProdCsvFileBackupPath) {
 		this.catalogProdCsvFileBackupPath = catalogProdCsvFileBackupPath;
 	}
+
+	public AdmAccesslogService getAccesslogService() {
+		return accesslogService;
+	}
+
+	public void setAccesslogService(AdmAccesslogService accesslogService) {
+		this.accesslogService = accesslogService;
+	}
+
 
 }

@@ -51,7 +51,7 @@ public class AdEditAction extends BaseCookieAction{
 	private String adActionName;
 	private String adGroupSeq;
 	private String adGroupName;
-
+	
 	private String adSeq;
 	private String adClass;
 	private String adStyle;
@@ -155,7 +155,6 @@ public class AdEditAction extends BaseCookieAction{
 	
 	public String AdAdEdit() throws Exception {
 		log.info("AdAdEdit => adSeq = " + adSeq);
-
 		PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
 		adActionName = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName();
 		adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();

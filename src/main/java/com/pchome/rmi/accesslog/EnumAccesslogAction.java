@@ -13,7 +13,8 @@ public enum EnumAccesslogAction {
 	AD_MONEY_MODIFY("8","廣告價格異動"),					// 廣告價格異動
 	AD_DATE_MODIFY("9","廣告走期異動"),					// 廣告走期異動
 	WARNING("10","警告訊息"),							// 警告訊息
-	PLAY_MODIFY("11","播放管理異動");					// 播放管理異動
+	PLAY_MODIFY("11","播放管理異動"),					// 播放管理異動
+	PFP_CODE_MODIFY("12","代碼管理異動");
 
 	
 	private final String action;

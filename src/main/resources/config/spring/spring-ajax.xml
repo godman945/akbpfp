@@ -132,6 +132,7 @@
     	<property name="mailFrom" value="${mail.from}" />
     	<property name="pfpCodeService" ref="PfpCodeService" />
     	<property name="pfpCodeTrackingService" ref="PfpCodeTrackingService" />
+    	<property name="admAccesslogService" ref="AdmAccesslogService" />
     	<property name="springEmailUtil" ref="SpringEmailUtil" />
     </bean>
     <!-- 再行銷追蹤 -->
@@ -146,6 +147,7 @@
     	<property name="pfpCodeConvertRuleService" ref="PfpCodeConvertRuleService" />
     	<property name="springEmailUtil" ref="SpringEmailUtil" />
     	<property name="sequenceService" ref="SequenceService" />
+    	<property name="admAccesslogService" ref="AdmAccesslogService" />
     </bean>
     <!-- 轉換追蹤 -->
     
