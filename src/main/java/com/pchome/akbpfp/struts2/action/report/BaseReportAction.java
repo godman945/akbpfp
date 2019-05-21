@@ -1,5 +1,9 @@
 package com.pchome.akbpfp.struts2.action.report;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,6 +19,11 @@ public class BaseReportAction extends BaseSSLAction {
 
 	public static final String FILE_TYPE = ".csv";
 
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	NumberFormat intFormat = new DecimalFormat("###,###,###,###");
+	NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+	NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
+	
 	//就是 ad_type 前人用這名字
 	public Map<String, String> getAdShowWayMap() {
 		Map<String, String> map = new LinkedHashMap<>();

@@ -4,9 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,10 +28,6 @@ import com.pchome.utils.CommonUtils;
 public class ReportAdDailyAction extends BaseReportAction {
 
 	private static final long serialVersionUID = 1L;
-
-	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-	NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
 	
 	private IPfpCodeService pfpCodeService;
 	private IAdActionReportService adActionReportService;
@@ -141,10 +134,8 @@ public class ReportAdDailyAction extends BaseReportAction {
 
 		StringBuffer content = new StringBuffer();
 		content.append("帳戶," + customerInfo.getCustomerInfoTitle());
-		content.append("\n\n");
-		content.append("報表名稱,PChome 每日花費成效");
-		content.append("\n\n");
-		content.append("裝置," + CommonUtils.getInstance().getAdDeviceName(whereMap));
+		content.append("\n");
+		content.append("搜尋內容," + searchText);
 		content.append("\n");
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
@@ -183,7 +174,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 				content.append("\"" + doubleFormat.format(resultData.get(i).getCtr()) + "%\",");
 				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getAvgCost()) + "\",");
 				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getKiloCost()) + "\",");
-				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getAdPriceSum()) + "\",");
+				content.append("\"NT$ " + doubleFormat2.format(resultData.get(i).getAdPriceSum()) + "\",");
 				
 				if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertCount()) + "\",");
@@ -214,7 +205,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 				content.append("\"" + doubleFormat.format(resultSumData.get(i).getCtr()) + "%\",");
 				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getAvgCost()) + "\",");
 				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getKiloCost()) + "\",");
-				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getAdPriceSum()) + "\",");
+				content.append("\"NT$ " + doubleFormat2.format(resultSumData.get(i).getAdPriceSum()) + "\",");
 				
 				if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
 					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertCount()) + "\",");
