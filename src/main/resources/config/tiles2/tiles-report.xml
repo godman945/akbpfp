@@ -122,13 +122,6 @@
 	</definition>
 
 	<definition name="report.body.adGroup.detailList" template="/ftl/report/adGroup/adGroupDataList.ftl" />
-
-<!--     <definition name="report.body.adgroup" extends="report.body" > -->
-<!--     	<put-attribute name="reportTable" value="report.ajaxTable.adgroup" /> -->
-<!-- 		<put-attribute name="chartTable" value="report.chartTable.adgroup" /> -->
-<!-- 	</definition> -->
-	
-<!-- 	<definition name="report.ajaxTable.adgroup" template="/ftl/report/ajax/adgroupTable.ftl" />  -->
 	<definition name="report.chartTable.adGroup" template="/ftl/report/chart/adGroupChartTable.ftl" />
     <!-- .report.adGroup 分類成效 end -->
     

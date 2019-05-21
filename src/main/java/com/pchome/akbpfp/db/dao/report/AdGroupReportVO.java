@@ -22,17 +22,8 @@ public class AdGroupReportVO {
 	private String adGroupSeq; //廣告群組序號
 	private String adActionSeq; //廣告活動序號
 
-//	private BigDecimal adPvSum; // 廣告PV總和
-//	private BigDecimal adClkSum; // 廣告Click總和
-//	private Double adPriceSum; // 廣告價格總和
 	private BigDecimal adInvClkSum; // 廣告無效點擊總和
 	private BigInteger count; // 資料筆數(用於計算平均每日花費上限)
-//	private String adDevice; // 裝置
-//	private String adType; // 廣告類型
-//	private String adOperatingRule; // 廣告樣式
-//	private String adClkPriceType; // 廣告計費方式
-//	private BigDecimal convertCount; // 轉換數
-//	private BigDecimal convertPriceCount; // 轉換價值
 	
 	private boolean adStatusOnOff = false; // 狀態on或off，預設off
 	private String adStatusName; // 狀態中文，產excel用

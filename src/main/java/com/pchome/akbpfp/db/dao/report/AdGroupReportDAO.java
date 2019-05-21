@@ -2,7 +2,6 @@ package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -692,16 +691,12 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 	 */
 	@Override
 	public List<Map<String, Object>> getAdGroupList(AdGroupReportVO vo) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		//   20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分，減無效點擊數(- r.ad_invalid_clk)
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN (r.ad_clk - r.ad_invalid_clk) ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, "); // 產生pfp_ad_group_report 的時候，已經減過無效點擊金額了，所以不用再減
-//		hql.append(" sum(r.ad_invalid_clk), ");
-//		hql.append(" sum(r.ad_invalid_clk_price), ");
-//		hql.append(" COUNT(r.ad_group_report_seq), ");
 		hql.append(" r.ad_group_seq, ");
 		hql.append(" r.ad_pvclk_device AS ad_device, ");
 		hql.append(" r.ad_operating_rule, ");
@@ -792,15 +787,12 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 	 */
 	@Override
 	public List<Map<String, Object>> getAdGroupListSum(AdGroupReportVO vo) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		// 20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分，減無效點擊數(- r.ad_invalid_clk)
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN (r.ad_clk - r.ad_invalid_clk) ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, "); // 產生pfp_ad_group_report 的時候，已經減過無效點擊金額了，所以不用再減
-//		hql.append(" sum(r.ad_invalid_clk), ");
-//		hql.append(" sum(r.ad_invalid_clk_price), ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
 		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
 		hql.append(" FROM pfp_ad_group_report AS r ");
@@ -878,7 +870,6 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 	 */
 	@Override
 	public List<Map<String, Object>> getAdGroupListChart(AdGroupReportVO vo) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT");
 		hql.append(" r.ad_pvclk_date,");
@@ -886,9 +877,6 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 		// 20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分，減無效點擊數(- r.ad_invalid_clk)
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN (r.ad_clk - r.ad_invalid_clk) ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, "); // 產生pfp_ad_group_report 的時候，已經減過無效點擊金額了，所以不用再減
-//		hql.append(" sum(r.ad_invalid_clk), ");
-//		hql.append(" sum(r.ad_invalid_clk_price), ");
-//		hql.append(" count(r.ad_group_report_seq), ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
 		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
 		hql.append(" FROM pfp_ad_group_report AS r ");

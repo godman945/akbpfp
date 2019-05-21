@@ -3,7 +3,6 @@ package com.pchome.akbpfp.db.service.report;
 import java.util.List;
 
 import com.pchome.akbpfp.db.dao.report.AdGroupReportVO;
-import com.pchome.akbpfp.db.dao.report.AdWebsiteReportVO;
 
 public interface IAdGroupReportService {
 

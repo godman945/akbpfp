@@ -11,9 +11,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.pchome.akbpfp.db.dao.report.AdCampaginReportVO;
 import com.pchome.akbpfp.db.dao.report.AdGroupReportVO;
-import com.pchome.akbpfp.db.dao.report.AdWebsiteReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdGroupReportDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
