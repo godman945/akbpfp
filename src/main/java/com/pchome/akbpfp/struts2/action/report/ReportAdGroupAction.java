@@ -4,10 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -21,7 +23,9 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import com.pchome.enumerate.ad.EnumAdType;
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.akbpfp.db.dao.report.AdCampaginReportVO;
 import com.pchome.akbpfp.db.dao.report.AdGroupReportVO;
+import com.pchome.akbpfp.db.dao.report.AdWebsiteReportVO;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCode;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
@@ -29,681 +33,334 @@ import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.report.IAdGroupReportService;
-import com.pchome.soft.util.DateValueUtil;
+import com.pchome.akbpfp.db.service.report.IAdWebsiteReportService;
+import com.pchome.soft.depot.utils.DateValueUtil;
+import com.pchome.utils.CommonUtils;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
 
 public class ReportAdGroupAction extends BaseReportAction {
 
 	private static final long serialVersionUID = 1L;
-
-	private LinkedList<String> tableHeadList =null; //頁面table head
-
-	//private String[] align_data = {"center", "left", "left", "center", "right", "right", "right", "right", "right", "right"};
-	//private String[] align_sum = {"center", "center", "left", "center", "right", "right", "right", "right", "right", "right"};
-	// 20140318： 隱藏 "無效點選次數" 欄位
-	private String[] align_data = {"center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right"};
-	private String[] align_sum = {"center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right"};
-
-	private LinkedList<LinkedList<String>> tableDataList =null; // 頁面 table data
-	private LinkedList<String> tableDataTotalList =null; //頁面全部加總table total foot
-
-	private IAdGroupReportService adGroupReportService = null;
-	private IPfpAdGroupService adGroupService = null;
-	private IPfpCustomerInfoService customerInfoService = null;
-
-	private SpringOpenFlashUtil openFlashUtil=null;
-
-	private Map<String,String> tableHeadNameMap;//自訂欄位
-
-	private LinkedList<String> tableHeadShowList =null;//自訂欄位選擇list,頁面顯示
-	private LinkedList<String> tableHeadNotShowList =null;//自訂欄位不選擇list,頁面顯示
-
-	private String optionSelect="";//自訂欄位選擇,頁面回傳
-	private String optionNotSelect="";//自訂欄位不選擇,頁面回傳
-
-	private String startDate="";//查詢開始日期
-	private String endDate="";//查詢結束日期
-
-	private LinkedHashMap<String,String> dateSelectMap=null;//查詢日期的 rang map,查詢日期頁面顯示
-
-	private int page=0;//第幾頁
-	private int pageSize=0;//每頁筆數
-	private int totalPage=0;//總頁數
-
-	private String adPvclkDevice=""; //裝置:pc、mobile
-	private String adType="";// 廣告類型,活動,群組,關鍵字
-	private String adSearchWay="";//文字搜尋方式,包含,開頭,全部
-	private String searchText="";//搜尋文字
-	private String adShowWay="";//廣告顯示位址,一般,內容
-	private String searchId="";//廣告id ,某活動,某群組id
-	private String adOperatingRule;//廣告樣式
 	
-	private String charPic="";//圖表格式
-	private String charType="";//度量
-
-	//download report 
-	private String downloadFlag="";//download report 旗標
-
-	private InputStream downloadFileStream;//下載報表的 input stream
-
-	private String downloadFileName;//下載顯示名
-
-	private String flashData;//flash chart json data
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	NumberFormat intFormat = new DecimalFormat("###,###,###,###");
+	NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
 	
-	private String reportTitle;
-
-	private NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
-	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	private DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
-	private NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
-	
+	private IAdGroupReportService adGroupReportService;
 	private IPfpCodeService pfpCodeService;
-	private boolean hasPfpCodeflag = false;
 	
-	public String flashDataDownLoad() throws Exception {
-
-		//查詢日期寫進 cookie
-		this.setChooseDate(startDate, endDate);
-
-		log.info("charPic="+charPic);//flash 樣式
-		log.info("charType="+charType);//資料
-		log.info("searchId="+searchId);//資料
-		log.info("chstartDate="+startDate);
-		log.info("chendDate="+endDate);
-
-		if(searchText.equals("Null")) {
-			searchText = "";
-		}
-
-		String customerInfoId = super.getCustomer_info_id();
-		log.info(">>> customerInfoId = " + customerInfoId);
-
-		List<AdGroupReportVO> resultData = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),searchId,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
-
-		Map<Date,Float> flashDataMap = new HashMap<Date,Float>();
-
-
-		for (int i=0; i<resultData.size(); i++) {
-			double pv = 0;
-			double click = 0;
-			double cost = 0;
-			double invClick = 0;
-			double ctr = 0;
-			double costAvg = 0;
-			double kiloCost = 0;
-
-			AdGroupReportVO vo = resultData.get(i);
-
-			Date reportDate = vo.getReportDate();
-			pv = vo.getAdPvSum().doubleValue();
-			click = vo.getAdClkSum().doubleValue();
-			cost = vo.getAdPriceSum().doubleValue();
-			
-			cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
-			invClick = vo.getAdInvClkSum().doubleValue();
-
-			//互動率 = 互動次數 / 曝光數
-			if (pv>0 && click>0) {
-				ctr = (click / pv) * 100;
-			}
-
-			//單次互動費用 = 總費用 / 總互動次數
-			if (cost>0 && click>0) {
-				costAvg = cost / click;
-			}
-
-			//千次曝光費用 = 總費用*1000 / 曝光數
-			if(cost>0 && pv>0){
-				 kiloCost = (cost * 1000) / pv;
-			}
-
-			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) pv));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) click));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) ctr));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) invClick));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) costAvg));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float((float) kiloCost));
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, new Float(cost));
-			}
-		}
-
-		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
-
-		return SUCCESS;
-	}
-
-	public ReportAdGroupAction() {
-
-		reportTitle="分類成效";
-		
-		downloadFlag="no";
-
-		tableHeadNameMap=new HashMap<String,String>();
-		tableHeadNameMap.put("曝光數", EnumReport.REPORT_CHART_TYPE_PV.getTextValue());
-		tableHeadNameMap.put("互動數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
-		tableHeadNameMap.put("互動率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
-		// 20140318： 隱藏 "無效點選次數" 欄位
-		//tableHeadNameMap.put("無效點選次數", EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue());
-		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
-		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
-		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
-		tableHeadNameMap.put("轉換次數", EnumReport.REPORT_CHART_CONVERT.getTextValue());
-		tableHeadNameMap.put("總轉換價值", EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue());
-		tableHeadNameMap.put("轉換率", EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue());
-		tableHeadNameMap.put("平均轉換成本", EnumReport.REPORT_CHART_CONVERT_COST.getTextValue());
-		tableHeadNameMap.put("廣告投資報酬率", EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue());
-		optionSelect="";
-		optionNotSelect="";
-
-		//optionSelect="曝光數,點選率(%),點選次數,無效點選次數,平均點選費用,費用";
-		// 20140318： 隱藏 "無效點選次數" 欄位
-		optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
-
-		tableHeadShowList=new LinkedList<String>();
-
-		tableHeadNotShowList=new LinkedList<String>();
-
-	}
-
+	private LinkedHashMap<String, String> dateSelectMap; // 查詢日期的 rang map,查詢日期頁面顯示
+	private boolean hasPfpCodeflag = false; // 是否有使用轉換追蹤的PFP帳號
+	
+	private String startDate = ""; // 查詢開始日期
+	private String endDate = ""; // 查詢結束日期
+	private String searchText = ""; // 搜尋文字
+	private String whereMap; // 篩選
+	private String sortBy = ""; // 排序
+	private int page = 1; // 第幾頁
+	private int pageSize = 10; // 每頁筆數
+	private int totalPage = 0; //總頁數
+	
+	private List<AdGroupReportVO> resultData = new ArrayList<>(); // 查詢結果
+	private List<AdGroupReportVO> resultSumData = new ArrayList<>(); // 查詢結果加總
+	
+	// 下載報表
+	private String isDownload = "false";
+	private IPfpCustomerInfoService customerInfoService;
+	private InputStream downloadFileStream; // 下載報表的 input stream
+	private String downloadFileName; // 下載顯示名
+	private String showHideColumn = ""; // 哪些欄位顯示或隱藏
+	private Map<String, Boolean> showHideColumnMap = new HashMap<>(); // 紀錄顯示其他欄位值
+	
+	// 圖表
+	private SpringOpenFlashUtil openFlashUtil;
+	private String flashData;
+	private String charType = ""; // 度量
+	
+	/**
+	 * 查詢
+	 */
+	@Override
 	public String execute() throws Exception {
-
-		String customerInfoId = super.getCustomer_info_id();
-		log.info(">>> customerInfoId = " + customerInfoId);
-		PfpCode pfpCode = pfpCodeService.getPfpCode(super.getCustomer_info_id());
-		if(pfpCode != null){
-			hasPfpCodeflag = true;
-		}
-		if(hasPfpCodeflag){
-			optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,轉換次數,總轉換價值,轉換率,平均轉換成本,廣告投資報酬率";	
-		}else{
-			optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
-		}
 		
+		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
 		
-		
-		tableHeadList = new LinkedList<String>();//table head
-		tableDataList = new LinkedList<LinkedList<String>>();//table data
-
-		//自訂欄位選擇
-		if (StringUtils.isNotEmpty(optionSelect)) {
-
-			String data[] = optionSelect.split(",");
-			for (String s:data) {
-				tableHeadShowList.addLast(s);
-			}
-		}
-
-		//自訂欄位移除
-		if (StringUtils.isNotEmpty(optionNotSelect)) {
-			String data[] = optionNotSelect.split(",");
-			for (String s:data) {
-				tableHeadNotShowList.addLast(s);
-			}
-		}
-
-		log.info(">>> startDate = " + startDate);
-		log.info(">>> endDate = " + endDate);
-
-		String startDate_cookie = this.getChoose_start_date();
-		String endDate_cookie = this.getChoose_end_date();
-
-		log.info(">>> startDate_cookie = " + startDate_cookie);
-		log.info(">>> endDate_cookie = " + endDate_cookie);
+		String startDateCookie = super.getChoose_start_date();
+		String endDateCookie = super.getChoose_end_date();
+		log.info(">>> startDateCookie = " + startDateCookie);
+		log.info(">>> endDateCookie = " + endDateCookie);
 
 		if (StringUtils.isEmpty(startDate)) {
-			if (StringUtils.isNotEmpty(startDate_cookie)) {
-				startDate = startDate_cookie;
+			if (StringUtils.isNotEmpty(startDateCookie)) {
+				startDate = startDateCookie;
 			} else {
-				startDate=DateValueUtil.getInstance().dateToString(DateValueUtil.getInstance().getDateForStartDateAddDay(DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH), -30));
+				startDate = DateValueUtil.getInstance().dateToString(DateValueUtil.getInstance().getDateForStartDateAddDay(DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH), -30));
 			}
 		}
 
 		if (StringUtils.isEmpty(endDate)) {
-			if (StringUtils.isNotEmpty(endDate_cookie)) {
-				endDate = endDate_cookie;
+			if (StringUtils.isNotEmpty(endDateCookie)) {
+				endDate = endDateCookie;
 			} else {
-				endDate=DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH);
+				endDate = DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH);
 			}
 		}
-
-		log.info(">>>>>> startDate = " + startDate);
-		log.info(">>>>>> endDate = " + endDate);
-
-		if (StringUtils.isEmpty(adType)) {
-			adType = EnumReport.ADTYPE_ACTIVITY.getTextValue();
+		
+		// 查詢日期寫進 cookie
+		super.setChooseDate(startDate, endDate);
+		
+		// 檢查是否有使用轉換追蹤的PFP帳號
+		PfpCode pfpCode = pfpCodeService.getPfpCode(super.getCustomer_info_id());
+		if (pfpCode != null) {
+			hasPfpCodeflag = true;
 		}
-
-		if (StringUtils.isEmpty(adSearchWay)) {
-			adSearchWay = EnumReport.ADSEARCH_INCLUDE.getTextValue();
-		}
-
-		if (StringUtils.isEmpty(adShowWay)) {
-			adShowWay = Integer.toString(EnumAdType.AD_ALL.getType());
-		}
-
-		log.info("startDate="+startDate);
-		log.info("endDate="+endDate);
-		log.info("adType="+adType);
-		log.info("adSearchWay="+adSearchWay);
-		log.info("adShowWay="+adShowWay);
-
-		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
-
-		//輸入欄位順序
-		if (!tableHeadShowList.isEmpty()) {
-			for (String s:tableHeadShowList) {
-				tableHeadList.addLast(s);
-			}
-		}
-
-		if(page==0){
-			page=1;
-		}
-		log.info("page="+page);
-
-		if(pageSize==0){
-			pageSize=20;
-		}
-		log.info("pageSize="+pageSize);
-
-		log.info("downloadFlag="+downloadFlag);
-
-		if(downloadFlag.trim().equals("yes")){
-			page=-1;
-		}
-
-		tableHeadList.addFirst("裝置");
-		tableHeadList.addFirst("計價方式");
-		tableHeadList.addFirst("廣告樣式");
-		tableHeadList.addFirst("播放類型");
-		tableHeadList.addFirst("廣告");
-		tableHeadList.addFirst("分類");
-		tableHeadList.addFirst("狀態");
-
-		List<AdGroupReportVO> resultSumData = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue(), null, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
-
-		int totalPageSize = resultSumData.size();
-
-		List<AdGroupReportVO> resultData = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue(),null, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
-
-		totalPage = totalPageSize/pageSize;
-
-		if((totalPageSize%pageSize)>0){
-			totalPage+=1;
-		}
-
-		if(resultSumData.size()>0){
-			resultDataTrans(resultData);
-			resultSumDataTrans(resultSumData);
-		}
-
-		if(downloadFlag.trim().equals("yes")){
+		
+		AdGroupReportVO vo = new AdGroupReportVO();
+		vo.setCustomerInfoId(super.getCustomer_info_id());
+		vo.setStartDate(startDate);
+		vo.setEndDate(endDate);
+		vo.setSearchText(searchText);
+		vo.setWhereMap(whereMap);
+		vo.setSortBy(sortBy);
+		vo.setPage(page);
+		vo.setPageSize(pageSize);
+		vo.setDownloadOrIsNotCuttingPagination(Boolean.parseBoolean(isDownload));
+		resultData = adGroupReportService.queryReportAdGroupData(vo);
+		resultSumData = adGroupReportService.queryReportAdGroupSumData(vo);
+		
+		totalPage = CommonUtils.getTotalPage(vo.getRowCount(), pageSize);
+		
+		if (Boolean.parseBoolean(isDownload)) {
 			makeDownloadReportData();
 		}
-
+		
 		return SUCCESS;
 	}
-
+	
+	/**
+	 * 下載報表
+	 * 先執行execute()，是下載報表才再執行此方法
+	 * @throws Exception
+	 */
 	private void makeDownloadReportData() throws Exception {
-
+		
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddhhmmss");
-
-		String filename="分類成效報表_" + dformat.format(new Date()) + FILE_TYPE;
-
-		StringBuffer content=new StringBuffer();
-
-		log.info(">>> customerInfoId = " + super.getCustomer_info_id());
+		String filename = "分類成效報表_" + dformat.format(new Date()) + FILE_TYPE;
 		PfpCustomerInfo customerInfo = customerInfoService.findCustomerInfo(super.getCustomer_info_id());
 
+		// 紀錄顯示其他欄位，哪些顯示哪些不顯示
+		String[] showHideColumnArr = showHideColumn.split(",");
+		for (int i = 0; i < showHideColumnArr.length; i++) {
+			String mapKey = showHideColumnArr[i].split("-")[0];
+			boolean mapVal = Boolean.parseBoolean(showHideColumnArr[i].split("-")[1]);
+			showHideColumnMap.put(mapKey, mapVal);
+		}
+		
+		StringBuffer content = new StringBuffer();
 		content.append("帳戶," + customerInfo.getCustomerInfoTitle());
-		content.append("\n\n");
-		content.append("報表名稱,PChome 分類成效");
-		content.append("\n\n");
-		content.append("播放類型," + getAdShowWayMap().get(adShowWay));
-		content.append("\n");
-		content.append("廣告樣式," + getAdStyleTypeMap().get(adOperatingRule));
-		content.append("\n");
-		content.append("裝置," + getAdPvclkDeviceMap().get(adPvclkDevice));
-		content.append("\n");
-		content.append("搜尋條件," + getAdSearchWayMap().get(adSearchWay));
 		content.append("\n");
 		content.append("搜尋內容," + searchText);
 		content.append("\n");
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
+		
+		content.append("狀態,廣告活動,廣告分類,");
 
-		for(String s:tableHeadList){
-			content.append("\"" + s + "\"");
-			content.append(",");
+		if (showHideColumnMap.get(EnumReport.ADTYPE.getTextValue())) {
+			content.append("播放類型,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.AD_OPERATING_RULE.getTextValue())) {
+			content.append("廣告樣式,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.AD_CLK_PRICE_TYPE.getTextValue())) {
+			content.append("計價方式,");
+		}
+
+		content.append("裝置,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,");
+
+		if (showHideColumnMap.get(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
+			content.append("轉換次數,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
+			content.append("轉換率,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
+			content.append("總轉換價值,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
+			content.append("平均轉換成本,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
+			content.append("廣告投資報酬率,");
 		}
 		content.append("\n");
-
-		for(LinkedList<String> sl:tableDataList){
-			int dataNumber = 1;
-			for(String s:sl){
-				if(dataNumber == 11 || dataNumber == 12 || dataNumber == 13 || dataNumber == 15 || dataNumber == 17){
-					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
-				} else if(dataNumber == 10 || dataNumber == 16 || dataNumber == 18){
-					content.append("\"" + s + "%\"");
-				} else {
-					content.append("\"" + s + "\"");	
+		
+		if (!resultData.isEmpty()) {
+			// 明細資料
+			for (int i = 0; i < resultData.size(); i++) {
+				content.append("\"" + resultData.get(i).getAdStatusName() + "\",");
+				content.append("\"" + resultData.get(i).getAdActionName() + "\",");
+				content.append("\"" + resultData.get(i).getAdGroupName() + "\",");
+				
+				if (showHideColumnMap.get(EnumReport.ADTYPE.getTextValue())) {
+					content.append("\"" + resultData.get(i).getAdType() + "\",");
 				}
-				content.append(",");
-				dataNumber++;
-			}
-			content.append("\n");
-		}
-		content.append("\n");
-
-		if (tableDataTotalList!=null) {
-			int dataTotalNumber = 1;
-			for(String s:tableDataTotalList){
-				if(dataTotalNumber == 11 || dataTotalNumber == 12 || dataTotalNumber == 13 || dataTotalNumber == 15 || dataTotalNumber == 17){
-					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
-				} else if(dataTotalNumber == 10 || dataTotalNumber == 16 || dataTotalNumber == 18){
-					content.append("\"" + s + "%\"");
-				} else {
-					content.append("\"" + s + "\"");
+				if (showHideColumnMap.get(EnumReport.AD_OPERATING_RULE.getTextValue())) {
+					content.append("\"" + resultData.get(i).getAdOperatingRule() + "\",");
 				}
-				content.append(",");
-				dataTotalNumber++;
+				if (showHideColumnMap.get(EnumReport.AD_CLK_PRICE_TYPE.getTextValue())) {
+					content.append("\"" + resultData.get(i).getAdClkPriceType() + "\",");
+				}
+				
+				content.append("\"" + resultData.get(i).getAdDevice() + "\",");
+				content.append("\"" + intFormat.format(resultData.get(i).getAdPvSum()) + "\",");
+				content.append("\"" + doubleFormat.format(resultData.get(i).getAdClkSum()) + "\",");
+				content.append("\"" + doubleFormat.format(resultData.get(i).getCtr()) + "%\",");
+				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getAvgCost()) + "\",");
+				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getKiloCost()) + "\",");
+				content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getAdPriceSum()) + "\",");
+				
+				if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
+					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertCount()) + "\",");
+				}
+				if (showHideColumnMap.get(EnumReport.CONVERT_CTR.getTextValue())) {
+					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertCTR()) + "%\",");
+				}
+				if (showHideColumnMap.get(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
+					content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getConvertPriceCount()) + "\",");
+				}
+				if (showHideColumnMap.get(EnumReport.CONVERT_COST.getTextValue())) {
+					content.append("\"NT$ " + doubleFormat.format(resultData.get(i).getConvertCost()) + "\",");
+				}
+				if (showHideColumnMap.get(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
+					content.append("\"" + doubleFormat.format(resultData.get(i).getConvertInvestmentCost()) + "%\",");
+				}
+				content.append("\n");
 			}
+			
 			content.append("\n");
+			
+			// 總計資料
+			for (int i = 0; i < resultSumData.size(); i++) {
+				content.append("\"\",");
+				content.append("\"總計：" + intFormat.format(resultSumData.get(i).getRowCount()) + "\",");
+				content.append("\"\",");
+				
+				if (showHideColumnMap.get(EnumReport.ADTYPE.getTextValue())) {
+					content.append("\"\",");
+				}
+				if (showHideColumnMap.get(EnumReport.AD_OPERATING_RULE.getTextValue())) {
+					content.append("\"\",");
+				}
+				if (showHideColumnMap.get(EnumReport.AD_CLK_PRICE_TYPE.getTextValue())) {
+					content.append("\"\",");
+				}
+				content.append("\"\",");
+				content.append("\"" + doubleFormat.format(resultSumData.get(i).getAdPvSum()) + "\",");
+				content.append("\"" + doubleFormat.format(resultSumData.get(i).getAdClkSum()) + "\",");
+				content.append("\"" + doubleFormat.format(resultSumData.get(i).getCtr()) + "%\",");
+				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getAvgCost()) + "\",");
+				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getKiloCost()) + "\",");
+				content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getAdPriceSum()) + "\",");
+				
+				if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
+					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertCount()) + "\",");
+				}
+				if (showHideColumnMap.get(EnumReport.CONVERT_CTR.getTextValue())) {
+					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertCTR()) + "%\",");
+				}
+				if (showHideColumnMap.get(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
+					content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getConvertPriceCount()) + "\",");
+				}
+				if (showHideColumnMap.get(EnumReport.CONVERT_COST.getTextValue())) {
+					content.append("\"NT$ " + doubleFormat.format(resultSumData.get(i).getConvertCost()) + "\",");
+				}
+				if (showHideColumnMap.get(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
+					content.append("\"" + doubleFormat.format(resultSumData.get(i).getConvertInvestmentCost()) + "%\",");
+				}
+			}
 		}
-
-		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > 0) {
-			downloadFileName = new String(filename.getBytes("UTF-8"), "ISO8859-1");
+		
+		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") >= 1) {
+			downloadFileName = new String(filename.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
 		} else {
-			downloadFileName = URLEncoder.encode(filename, "UTF-8");			
+			downloadFileName = URLEncoder.encode(filename, "UTF-8");
 		}
 
 		downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));
-
-		//處理 BOM 開頭要加上 "\uFEFF"
-		//downloadFileStream = new ByteArrayInputStream(("\uFEFF" + content.toString()).getBytes("utf-8"));
 	}
-
-	private void resultSumDataTrans(List<AdGroupReportVO> resultSumData) throws Exception {
-
-		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
-		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
-
-		tableDataTotalList = new LinkedList<String>();
-		tableDataTotalList.add("");
-		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
-		tableDataTotalList.add("");
-		tableDataTotalList.add("");
-		tableDataTotalList.add("");
-		tableDataTotalList.add("");
-		tableDataTotalList.add("");
-
-		double t_pv = 0; //總曝光數
-		double t_click = 0; //總互動數
-		double t_ctr = 0; //互動率
-		double t_invalid = 0; //無效點選次數
-		double t_costAvg = 0; //單次互動費用
-		double t_kiloCost = 0;	//千次曝光費用
-		double t_cost = 0; //總費用
-		//轉換次數
-		double t_convert_count = 0;
-		//總轉換次數
-		double t_convert_price_count = 0;
-		double t_convert_ctr = 0;
-		double t_convert_cost = 0;
-		double t_convert_investment_cost = 0;
-		//加總
-		for (int i=0; i<resultSumData.size(); i++) {
-			AdGroupReportVO vo = resultSumData.get(i);
-			t_pv += vo.getAdPvSum().doubleValue();
-			t_click += vo.getAdClkSum().doubleValue();
-			t_cost += vo.getAdPriceSum().doubleValue();
-			t_invalid += vo.getAdInvClkSum().doubleValue();
-			t_convert_count += vo.getConvertCount().doubleValue();
-			t_convert_price_count += vo.getConvertPriceCount().doubleValue();
-		}
-		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
+	
+	/**
+	 * 圖表
+	 * @return
+	 * @throws Exception
+	 */
+	public String flashDataDownLoad() {
+		AdGroupReportVO chartVo = new AdGroupReportVO();
+		chartVo.setCustomerInfoId(super.getCustomer_info_id());
+		chartVo.setStartDate(startDate);
+		chartVo.setEndDate(endDate);
+		chartVo.setSearchText(searchText);
+		chartVo.setWhereMap(whereMap);
+		chartVo.setDownloadOrIsNotCuttingPagination(true);
+		List<AdGroupReportVO> resultChartData = adGroupReportService.queryReportAdGroupChartData(chartVo);
 		
-		//互動率 = 總互動次數 / 總曝光數
-		if (t_pv>0 && t_click>0) {
-			t_ctr = (t_click / t_pv) * 100;
-		}
-
-		//單次互動費用 = 總費用 / 總互動次數
-		if (t_cost>0 && t_click>0) {
-			t_costAvg = t_cost / t_click;
+		Map<Date, Float> flashDataMap = new HashMap<>();
+		
+		for (int i = 0; i < resultChartData.size(); i++) {
+			AdGroupReportVO vo = resultChartData.get(i);
+			Date reportDate = vo.getReportDate();
+			
+			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getAdPvSum().floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getAdClkSum().floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getCtr().floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getAvgCost().floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getKiloCost().floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getAdPriceSum().floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getConvertCount().floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getConvertCTR().floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getConvertPriceCount().floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getConvertCost().floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
+				flashDataMap.put(reportDate, vo.getConvertInvestmentCost().floatValue());
+			}
 		}
 		
-		//千次曝光費用 = 總費用*1000 / 曝光數
-		if(t_cost>0 && t_pv>0){
-			t_kiloCost = (t_cost * 1000) / t_pv;
-		}
-		//轉換率
-		if(t_convert_count > 0 && t_click > 0){
-			t_convert_ctr  = (t_convert_count / t_click) * 100;
-		}
-		//平均轉換成本
-		if(t_cost > 0 && t_convert_count > 0){
-			t_convert_cost = t_cost / t_convert_count;
-		}
-		//廣告投資報酬率
-		if(t_convert_price_count > 0 && t_cost > 0){
-			t_convert_investment_cost = (t_convert_price_count / t_cost) * 100;
-		}
-		if (!tableHeadShowList.isEmpty()) {
-			String mapKey;
-			for (String s: tableHeadShowList) {
-				mapKey = tableHeadNameMap.get(s);
-				if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
-					tableDataTotalList.addLast(doubleFormat.format(t_convert_ctr));
-				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
-					tableDataTotalList.addLast(doubleFormat.format(t_convert_cost));
-				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
-					tableDataTotalList.addLast(doubleFormat.format(t_convert_investment_cost));
-				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
-					tableDataTotalList.addLast(intFormat.format(t_convert_count));
-				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
-					tableDataTotalList.addLast(intFormat.format(t_convert_price_count));
-				}else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_pv));
-				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_click));
-				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-					tableDataTotalList.addLast(doubleFormat.format(t_ctr));
-				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-					tableDataTotalList.addLast(intFormat.format(t_invalid));
-				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-					tableDataTotalList.addLast(doubleFormat.format(t_costAvg));
-				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
-				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-					tableDataTotalList.addLast(doubleFormat2.format(t_cost));
-				}
-			}
-		}
+		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
+
+		return SUCCESS;
+	}
+	
+	public void setAdGroupReportService(IAdGroupReportService adGroupReportService) {
+		this.adGroupReportService = adGroupReportService;
 	}
 
-	private void resultDataTrans(List<AdGroupReportVO> resultData) throws Exception {
-
-		LinkedList<String> tableInDataList;
-
-		long nowTime = new Date().getTime();
-
-		for (int i=0; i<resultData.size(); i++) {
-
-			tableInDataList = new LinkedList<String>();
-
-			AdGroupReportVO vo = resultData.get(i);
-
-			String adGroupSeq = vo.getAdGroupSeq();
-
-			PfpAdGroup pfpAdGroup = adGroupService.getPfpAdGroupBySeq(adGroupSeq);
-
-			String adGroupName = pfpAdGroup.getAdGroupName();
-			int adGroupStatus = pfpAdGroup.getAdGroupStatus();
-
-			String adActionName = pfpAdGroup.getPfpAdAction().getAdActionName();
-			int adActionStatus = pfpAdGroup.getPfpAdAction().getAdActionStatus();
-			Date adActionStartDate = pfpAdGroup.getPfpAdAction().getAdActionStartDate();
-			Date adActionEndDate = pfpAdGroup.getPfpAdAction().getAdActionEndDate();
-
-			double pv = vo.getAdPvSum().doubleValue();
-			double click = vo.getAdClkSum().doubleValue();
-			double cost = vo.getAdPriceSum().doubleValue();
-			double invClick = vo.getAdInvClkSum().doubleValue();
-			double ctr = 0;
-			double costAvg = 0;
-			double kiloCost = 0;
-			double convertCount = vo.getConvertCount().doubleValue();
-			double convertPriceCount = vo.getConvertPriceCount().doubleValue();
-			double convertCTR = 0;
-			double convertCost = 0;
-			double convertInvestmentCost = 0;
-			String adDevice = vo.getAdDevice();
-			String adType = vo.getAdType();
-			String adOperatingRuleName = vo.getAdOperatingRule();
-			String adClkPriceTypeName = vo.getAdClkPriceType();
-
-			//互動率 = 互動次數 / 曝光數
-			if (pv>0 && click>0) {
-				ctr = (click / pv) * 100;
-			}
-
-			//單次互動費用 = 總費用 / 總互動次數
-			if (cost>0 && click>0) {
-				costAvg = cost / click;
-			}
-
-			//千次曝光費用 = 總費用*1000 / 曝光數
-			if(cost>0 && pv>0){
-				kiloCost = (cost * 1000) / pv;
-			}
-			//互動率 = 互動次數 / 曝光數
-			if (pv>0 && click>0) {
-				ctr = (click / pv) * 100;
-			}
-
-			//單次互動費用 = 總費用 / 總互動次數
-			if (cost>0 && click>0) {
-				costAvg = cost / click;
-			}
-			//千次曝光費用 = 總費用*1000 / 曝光數
-			if(cost>0 && pv>0){
-				kiloCost = (cost * 1000) / pv;
-			}
-			//轉換率
-			if(convertCount > 0 && click > 0){
-				convertCTR  = (convertCount / click) * 100;
-			}
-			//平均轉換成本
-			if(cost > 0 && convertCount > 0){
-				convertCost = cost / convertCount;
-			}
-			//廣告投資報酬率
-			if(convertPriceCount > 0 && cost > 0){
-				convertInvestmentCost = (convertPriceCount / cost) * 100;
-			}
-
-			//廣告狀態為開啟的話必須判斷走期( 待播放 or 走期中 or 已結束 )
-			if (adActionStatus == EnumStatus.Open.getStatusId()) {
-				long _startDate = (dateFormat.parse(dateFormat2.format(adActionStartDate) + " 00:00:00")).getTime();
-				long _endDate = (dateFormat.parse(dateFormat2.format(adActionEndDate) + " 23:59:59")).getTime();
-				if (nowTime < _startDate) {
-					adActionStatus = EnumStatus.Waitbroadcast.getStatusId();
-				} else if (nowTime > _endDate) {
-					adActionStatus = EnumStatus.End.getStatusId();
-				} else {
-					adActionStatus = EnumStatus.Broadcast.getStatusId();
-				}
-			}
-
-			//播放狀態
-			String alter = "";
-			String icon = "icon_adclose.gif";
-			if (adActionStatus == EnumStatus.Broadcast.getStatusId() &&
-					adGroupStatus == EnumStatus.Open.getStatusId()) {
-
-				alter = "走期中";
-				icon = "icon_adopen.gif";
-
-			} else if (adActionStatus != EnumStatus.Broadcast.getStatusId() &&
-					adGroupStatus == EnumStatus.Open.getStatusId()) {
-
-				alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus));
-
-			} else if (adActionStatus == EnumStatus.Broadcast.getStatusId() &&
-					adGroupStatus != EnumStatus.Open.getStatusId()) {
-
-				alter = "分類" + getAdStatusMap().get(Integer.toString(adGroupStatus));
-
-			} else {
-
-				alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus)) + "，" + "分類" + getAdStatusMap().get(Integer.toString(adGroupStatus));
-				
-			}
-			
-			if(downloadFlag.equals("yes")){
-				tableInDataList.addLast(alter);
-			} else {
-				tableInDataList.addLast("<img src=\"./html/img/" + icon + "\" alt=\"" + alter + "\" title=\"" + alter + "\">");
-			}
-			
-			tableInDataList.addLast(adGroupName);
-			tableInDataList.addLast(adActionName);
-			tableInDataList.addLast(adType);
-			tableInDataList.addLast(adOperatingRuleName);
-			tableInDataList.addLast(adClkPriceTypeName);
-			tableInDataList.addLast(adDevice);
-
-			if(!tableHeadShowList.isEmpty()){
-				String mapKey;
-				for(String s:tableHeadShowList){
-					mapKey=tableHeadNameMap.get(s);
-					if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
-						tableInDataList.addLast(doubleFormat.format(convertCTR));
-					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
-						tableInDataList.addLast(doubleFormat.format(convertCost));
-					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
-						tableInDataList.addLast(doubleFormat.format(convertInvestmentCost));
-					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
-						tableInDataList.addLast(intFormat.format(convertCount));
-					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
-						tableInDataList.addLast(intFormat.format(convertPriceCount));
-					}else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-						tableInDataList.addLast(intFormat.format(pv));
-					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-						tableInDataList.addLast(intFormat.format(click));
- 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-						tableInDataList.addLast(doubleFormat.format(ctr));
-					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
- 						tableInDataList.addLast(intFormat.format(invClick));
- 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-						tableInDataList.addLast(doubleFormat.format(costAvg));
-					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-						tableInDataList.addLast(doubleFormat.format(kiloCost));
-					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-						tableInDataList.addLast(doubleFormat2.format(cost));
-					}
-				}
-			}
-
-			tableDataList.addLast(tableInDataList);
-		}
+	public LinkedHashMap<String, String> getDateSelectMap() {
+		return dateSelectMap;
 	}
 
-	public LinkedList<String> getTableHeadList() {
-		return tableHeadList;
+	public void setPfpCodeService(IPfpCodeService pfpCodeService) {
+		this.pfpCodeService = pfpCodeService;
 	}
 
-	public LinkedList<LinkedList<String>> getTableDataList() {
-		return tableDataList;
+	public boolean isHasPfpCodeflag() {
+		return hasPfpCodeflag;
 	}
 
 	public String getStartDate() {
@@ -722,16 +379,24 @@ public class ReportAdGroupAction extends BaseReportAction {
 		this.endDate = endDate;
 	}
 
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
+
+	public void setWhereMap(String whereMap) {
+		this.whereMap = whereMap;
+	}
+
+	public void setSortBy(String sortBy) {
+		this.sortBy = sortBy;
+	}
+
 	public int getPage() {
 		return page;
 	}
 
 	public void setPage(int page) {
 		this.page = page;
-	}
-
-	public int getPageSize() {
-		return pageSize;
 	}
 
 	public void setPageSize(int pageSize) {
@@ -742,76 +407,20 @@ public class ReportAdGroupAction extends BaseReportAction {
 		return totalPage;
 	}
 
-	public String getOptionSelect() {
-		return optionSelect;
+	public List<AdGroupReportVO> getResultData() {
+		return resultData;
 	}
 
-	public void setOptionSelect(String optionSelect) {
-		this.optionSelect = optionSelect;
+	public List<AdGroupReportVO> getResultSumData() {
+		return resultSumData;
 	}
 
-	public String getOptionNotSelect() {
-		return optionNotSelect;
+	public void setIsDownload(String isDownload) {
+		this.isDownload = isDownload;
 	}
 
-	public void setOptionNotSelect(String optionNotSelect) {
-		this.optionNotSelect = optionNotSelect;
-	}
-
-	public LinkedList<String> getTableHeadShowList() {
-		return tableHeadShowList;
-	}
-
-	public LinkedList<String> getTableHeadNotShowList() {
-		return tableHeadNotShowList;
-	}
-
-	public String getAdPvclkDevice() {
-		return adPvclkDevice;
-	}
-
-	public void setAdPvclkDevice(String adPvclkDevice) {
-		this.adPvclkDevice = adPvclkDevice;
-	}
-
-	public String getAdType() {
-		return adType;
-	}
-
-	public void setAdType(String adType) {
-		this.adType = adType;
-	}
-
-	public String getSearchText() {
-		return searchText;
-	}
-
-	public void setSearchText(String searchText) {
-		this.searchText = searchText;
-	}
-
-	public String getAdShowWay() {
-		return adShowWay;
-	}
-
-	public void setAdShowWay(String adShowWay) {
-		this.adShowWay = adShowWay;
-	}
-
-	public String getAdSearchWay() {
-		return adSearchWay;
-	}
-
-	public void setAdSearchWay(String adSearchWay) {
-		this.adSearchWay = adSearchWay;
-	}
-
-	public String getSearchId() {
-		return searchId;
-	}
-
-	public void setSearchId(String searchId) {
-		this.searchId = searchId;
+	public void setCustomerInfoService(IPfpCustomerInfoService customerInfoService) {
+		this.customerInfoService = customerInfoService;
 	}
 
 	public InputStream getDownloadFileStream() {
@@ -822,17 +431,8 @@ public class ReportAdGroupAction extends BaseReportAction {
 		return downloadFileName;
 	}
 
-	public String getDownloadFlag() {
-		return downloadFlag;
-	}
-
-	public void setDownloadFlag(String downloadFlag) {
-		log.info("value set="+downloadFlag);
-		this.downloadFlag = downloadFlag;
-	}
-
-	public void setCustomerInfoService(IPfpCustomerInfoService customerInfoService) {
-		this.customerInfoService = customerInfoService;
+	public void setShowHideColumn(String showHideColumn) {
+		this.showHideColumn = showHideColumn;
 	}
 
 	public void setOpenFlashUtil(SpringOpenFlashUtil openFlashUtil) {
@@ -843,64 +443,878 @@ public class ReportAdGroupAction extends BaseReportAction {
 		return flashData;
 	}
 
-	public LinkedHashMap<String, String> getDateSelectMap() {
-		return dateSelectMap;
-	}
-
-	public LinkedList<String> getTableDataTotalList() {
-		return tableDataTotalList;
-	}
-
-	public String getReportTitle() {
-		return reportTitle;
-	}
-
-	public void setAdGroupReportService(IAdGroupReportService adGroupReportService) {
-		this.adGroupReportService = adGroupReportService;
-	}
-
-	public String[] getAlign_data() {
-		return align_data;
-	}
-
-	public String[] getAlign_sum() {
-		return align_sum;
-	}
-
-	public void setAdGroupService(IPfpAdGroupService adGroupService) {
-		this.adGroupService = adGroupService;
-	}
-
-	public String getCharPic() {
-		return charPic;
-	}
-
-	public void setCharPic(String charPic) {
-		this.charPic = charPic;
-	}
-
-	public String getCharType() {
-		return charType;
-	}
-
 	public void setCharType(String charType) {
 		this.charType = charType;
 	}
-
-	public String getAdOperatingRule() {
-		return adOperatingRule;
-	}
-
-	public void setAdOperatingRule(String adOperatingRule) {
-		this.adOperatingRule = adOperatingRule;
-	}
-
-	public IPfpCodeService getPfpCodeService() {
-		return pfpCodeService;
-	}
-
-	public void setPfpCodeService(IPfpCodeService pfpCodeService) {
-		this.pfpCodeService = pfpCodeService;
-	}
+	
+	
+	
+//
+//	private LinkedList<String> tableHeadList =null; //頁面table head
+//
+//	//private String[] align_data = {"center", "left", "left", "center", "right", "right", "right", "right", "right", "right"};
+//	//private String[] align_sum = {"center", "center", "left", "center", "right", "right", "right", "right", "right", "right"};
+//	// 20140318： 隱藏 "無效點選次數" 欄位
+//	private String[] align_data = {"center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right"};
+//	private String[] align_sum = {"center", "center", "center", "center", "center", "center", "center", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right", "right"};
+//
+//	private LinkedList<LinkedList<String>> tableDataList =null; // 頁面 table data
+//	private LinkedList<String> tableDataTotalList =null; //頁面全部加總table total foot
+//
+//	private IAdGroupReportService adGroupReportService = null;
+//	private IPfpAdGroupService adGroupService = null;
+//	private IPfpCustomerInfoService customerInfoService = null;
+//
+//	private SpringOpenFlashUtil openFlashUtil=null;
+//
+//	private Map<String,String> tableHeadNameMap;//自訂欄位
+//
+//	private LinkedList<String> tableHeadShowList =null;//自訂欄位選擇list,頁面顯示
+//	private LinkedList<String> tableHeadNotShowList =null;//自訂欄位不選擇list,頁面顯示
+//
+//	private String optionSelect="";//自訂欄位選擇,頁面回傳
+//	private String optionNotSelect="";//自訂欄位不選擇,頁面回傳
+//
+//	private String startDate="";//查詢開始日期
+//	private String endDate="";//查詢結束日期
+//
+//	private LinkedHashMap<String,String> dateSelectMap=null;//查詢日期的 rang map,查詢日期頁面顯示
+//
+//	private int page=0;//第幾頁
+//	private int pageSize=0;//每頁筆數
+//	private int totalPage=0;//總頁數
+//
+//	private String adPvclkDevice=""; //裝置:pc、mobile
+//	private String adType="";// 廣告類型,活動,群組,關鍵字
+//	private String adSearchWay="";//文字搜尋方式,包含,開頭,全部
+//	private String searchText="";//搜尋文字
+//	private String adShowWay="";//廣告顯示位址,一般,內容
+//	private String searchId="";//廣告id ,某活動,某群組id
+//	private String adOperatingRule;//廣告樣式
+//	
+//	private String charPic="";//圖表格式
+//	private String charType="";//度量
+//
+//	//download report 
+//	private String downloadFlag="";//download report 旗標
+//
+//	private InputStream downloadFileStream;//下載報表的 input stream
+//
+//	private String downloadFileName;//下載顯示名
+//
+//	private String flashData;//flash chart json data
+//	
+//	private String reportTitle;
+//
+//	private NumberFormat intFormat = new DecimalFormat("###,###,###,###");
+//	private NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+//	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//	private DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+//	private NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
+//	
+//	private IPfpCodeService pfpCodeService;
+//	private boolean hasPfpCodeflag = false;
+//	
+//	public String flashDataDownLoad() throws Exception {
+//
+//		//查詢日期寫進 cookie
+//		this.setChooseDate(startDate, endDate);
+//
+//		log.info("charPic="+charPic);//flash 樣式
+//		log.info("charType="+charType);//資料
+//		log.info("searchId="+searchId);//資料
+//		log.info("chstartDate="+startDate);
+//		log.info("chendDate="+endDate);
+//
+//		if(searchText.equals("Null")) {
+//			searchText = "";
+//		}
+//
+//		String customerInfoId = super.getCustomer_info_id();
+//		log.info(">>> customerInfoId = " + customerInfoId);
+//
+//		List<AdGroupReportVO> resultData = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_CHART.getTextValue(),searchId,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
+//
+//		Map<Date,Float> flashDataMap = new HashMap<Date,Float>();
+//
+//
+//		for (int i=0; i<resultData.size(); i++) {
+//			double pv = 0;
+//			double click = 0;
+//			double cost = 0;
+//			double invClick = 0;
+//			double ctr = 0;
+//			double costAvg = 0;
+//			double kiloCost = 0;
+//
+//			AdGroupReportVO vo = resultData.get(i);
+//
+//			Date reportDate = vo.getReportDate();
+//			pv = vo.getAdPvSum().doubleValue();
+//			click = vo.getAdClkSum().doubleValue();
+//			cost = vo.getAdPriceSum().doubleValue();
+//			
+//			cost = new BigDecimal(String.valueOf(cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
+//			invClick = vo.getAdInvClkSum().doubleValue();
+//
+//			//互動率 = 互動次數 / 曝光數
+//			if (pv>0 && click>0) {
+//				ctr = (click / pv) * 100;
+//			}
+//
+//			//單次互動費用 = 總費用 / 總互動次數
+//			if (cost>0 && click>0) {
+//				costAvg = cost / click;
+//			}
+//
+//			//千次曝光費用 = 總費用*1000 / 曝光數
+//			if(cost>0 && pv>0){
+//				 kiloCost = (cost * 1000) / pv;
+//			}
+//
+//			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+//				flashDataMap.put(reportDate, new Float((float) pv));
+//			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+//				flashDataMap.put(reportDate, new Float((float) click));
+//			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
+//				flashDataMap.put(reportDate, new Float((float) ctr));
+//			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
+//				flashDataMap.put(reportDate, new Float((float) invClick));
+//			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
+//				flashDataMap.put(reportDate, new Float((float) costAvg));
+//			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+//				flashDataMap.put(reportDate, new Float((float) kiloCost));
+//			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+//				flashDataMap.put(reportDate, new Float(cost));
+//			}
+//		}
+//
+//		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
+//
+//		return SUCCESS;
+//	}
+//
+//	public ReportAdGroupAction() {
+//
+//		reportTitle="分類成效";
+//		
+//		downloadFlag="no";
+//
+//		tableHeadNameMap=new HashMap<String,String>();
+//		tableHeadNameMap.put("曝光數", EnumReport.REPORT_CHART_TYPE_PV.getTextValue());
+//		tableHeadNameMap.put("互動數", EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue());
+//		tableHeadNameMap.put("互動率", EnumReport.REPORT_CHART_TYPE_CTR.getTextValue());
+//		// 20140318： 隱藏 "無效點選次數" 欄位
+//		//tableHeadNameMap.put("無效點選次數", EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue());
+//		tableHeadNameMap.put("單次互動費用", EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue());
+//		tableHeadNameMap.put("千次曝光費用", EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue());
+//		tableHeadNameMap.put("費用", EnumReport.REPORT_CHART_TYPE_COST.getTextValue());
+//		tableHeadNameMap.put("轉換次數", EnumReport.REPORT_CHART_CONVERT.getTextValue());
+//		tableHeadNameMap.put("總轉換價值", EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue());
+//		tableHeadNameMap.put("轉換率", EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue());
+//		tableHeadNameMap.put("平均轉換成本", EnumReport.REPORT_CHART_CONVERT_COST.getTextValue());
+//		tableHeadNameMap.put("廣告投資報酬率", EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue());
+//		optionSelect="";
+//		optionNotSelect="";
+//
+//		//optionSelect="曝光數,點選率(%),點選次數,無效點選次數,平均點選費用,費用";
+//		// 20140318： 隱藏 "無效點選次數" 欄位
+//		optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
+//
+//		tableHeadShowList=new LinkedList<String>();
+//
+//		tableHeadNotShowList=new LinkedList<String>();
+//
+//	}
+//
+//	public String execute() throws Exception {
+//
+//		String customerInfoId = super.getCustomer_info_id();
+//		log.info(">>> customerInfoId = " + customerInfoId);
+//		PfpCode pfpCode = pfpCodeService.getPfpCode(super.getCustomer_info_id());
+//		if(pfpCode != null){
+//			hasPfpCodeflag = true;
+//		}
+//		if(hasPfpCodeflag){
+//			optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,轉換次數,總轉換價值,轉換率,平均轉換成本,廣告投資報酬率";	
+//		}else{
+//			optionSelect="曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用";
+//		}
+//		
+//		
+//		
+//		tableHeadList = new LinkedList<String>();//table head
+//		tableDataList = new LinkedList<LinkedList<String>>();//table data
+//
+//		//自訂欄位選擇
+//		if (StringUtils.isNotEmpty(optionSelect)) {
+//
+//			String data[] = optionSelect.split(",");
+//			for (String s:data) {
+//				tableHeadShowList.addLast(s);
+//			}
+//		}
+//
+//		//自訂欄位移除
+//		if (StringUtils.isNotEmpty(optionNotSelect)) {
+//			String data[] = optionNotSelect.split(",");
+//			for (String s:data) {
+//				tableHeadNotShowList.addLast(s);
+//			}
+//		}
+//
+//		log.info(">>> startDate = " + startDate);
+//		log.info(">>> endDate = " + endDate);
+//
+//		String startDate_cookie = this.getChoose_start_date();
+//		String endDate_cookie = this.getChoose_end_date();
+//
+//		log.info(">>> startDate_cookie = " + startDate_cookie);
+//		log.info(">>> endDate_cookie = " + endDate_cookie);
+//
+//		if (StringUtils.isEmpty(startDate)) {
+//			if (StringUtils.isNotEmpty(startDate_cookie)) {
+//				startDate = startDate_cookie;
+//			} else {
+//				startDate=DateValueUtil.getInstance().dateToString(DateValueUtil.getInstance().getDateForStartDateAddDay(DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH), -30));
+//			}
+//		}
+//
+//		if (StringUtils.isEmpty(endDate)) {
+//			if (StringUtils.isNotEmpty(endDate_cookie)) {
+//				endDate = endDate_cookie;
+//			} else {
+//				endDate=DateValueUtil.getInstance().getDateValue(DateValueUtil.TODAY, DateValueUtil.DBPATH);
+//			}
+//		}
+//
+//		log.info(">>>>>> startDate = " + startDate);
+//		log.info(">>>>>> endDate = " + endDate);
+//
+//		if (StringUtils.isEmpty(adType)) {
+//			adType = EnumReport.ADTYPE_ACTIVITY.getTextValue();
+//		}
+//
+//		if (StringUtils.isEmpty(adSearchWay)) {
+//			adSearchWay = EnumReport.ADSEARCH_INCLUDE.getTextValue();
+//		}
+//
+//		if (StringUtils.isEmpty(adShowWay)) {
+//			adShowWay = Integer.toString(EnumAdType.AD_ALL.getType());
+//		}
+//
+//		log.info("startDate="+startDate);
+//		log.info("endDate="+endDate);
+//		log.info("adType="+adType);
+//		log.info("adSearchWay="+adSearchWay);
+//		log.info("adShowWay="+adShowWay);
+//
+//		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
+//
+//		//輸入欄位順序
+//		if (!tableHeadShowList.isEmpty()) {
+//			for (String s:tableHeadShowList) {
+//				tableHeadList.addLast(s);
+//			}
+//		}
+//
+//		if(page==0){
+//			page=1;
+//		}
+//		log.info("page="+page);
+//
+//		if(pageSize==0){
+//			pageSize=20;
+//		}
+//		log.info("pageSize="+pageSize);
+//
+//		log.info("downloadFlag="+downloadFlag);
+//
+//		if(downloadFlag.trim().equals("yes")){
+//			page=-1;
+//		}
+//
+//		tableHeadList.addFirst("裝置");
+//		tableHeadList.addFirst("計價方式");
+//		tableHeadList.addFirst("廣告樣式");
+//		tableHeadList.addFirst("播放類型");
+//		tableHeadList.addFirst("廣告");
+//		tableHeadList.addFirst("分類");
+//		tableHeadList.addFirst("狀態");
+//
+//		List<AdGroupReportVO> resultSumData = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT_COUNT.getTextValue(), null, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, -1, -1);
+//
+//		int totalPageSize = resultSumData.size();
+//
+//		List<AdGroupReportVO> resultData = adGroupReportService.loadReportDate(EnumReport.REPORT_HQLTYPE_EXCERPT.getTextValue(),null, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
+//
+//		totalPage = totalPageSize/pageSize;
+//
+//		if((totalPageSize%pageSize)>0){
+//			totalPage+=1;
+//		}
+//
+//		if(resultSumData.size()>0){
+//			resultDataTrans(resultData);
+//			resultSumDataTrans(resultSumData);
+//		}
+//
+//		if(downloadFlag.trim().equals("yes")){
+//			makeDownloadReportData();
+//		}
+//
+//		return SUCCESS;
+//	}
+//
+//	private void makeDownloadReportData() throws Exception {
+//
+//		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddhhmmss");
+//
+//		String filename="分類成效報表_" + dformat.format(new Date()) + FILE_TYPE;
+//
+//		StringBuffer content=new StringBuffer();
+//
+//		log.info(">>> customerInfoId = " + super.getCustomer_info_id());
+//		PfpCustomerInfo customerInfo = customerInfoService.findCustomerInfo(super.getCustomer_info_id());
+//
+//		content.append("帳戶," + customerInfo.getCustomerInfoTitle());
+//		content.append("\n\n");
+//		content.append("報表名稱,PChome 分類成效");
+//		content.append("\n\n");
+//		content.append("播放類型," + getAdShowWayMap().get(adShowWay));
+//		content.append("\n");
+//		content.append("廣告樣式," + getAdStyleTypeMap().get(adOperatingRule));
+//		content.append("\n");
+//		content.append("裝置," + getAdPvclkDeviceMap().get(adPvclkDevice));
+//		content.append("\n");
+//		content.append("搜尋條件," + getAdSearchWayMap().get(adSearchWay));
+//		content.append("\n");
+//		content.append("搜尋內容," + searchText);
+//		content.append("\n");
+//		content.append("日期範圍," + startDate + " 到 " + endDate);
+//		content.append("\n\n");
+//
+//		for(String s:tableHeadList){
+//			content.append("\"" + s + "\"");
+//			content.append(",");
+//		}
+//		content.append("\n");
+//
+//		for(LinkedList<String> sl:tableDataList){
+//			int dataNumber = 1;
+//			for(String s:sl){
+//				if(dataNumber == 11 || dataNumber == 12 || dataNumber == 13 || dataNumber == 15 || dataNumber == 17){
+//					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
+//				} else if(dataNumber == 10 || dataNumber == 16 || dataNumber == 18){
+//					content.append("\"" + s + "%\"");
+//				} else {
+//					content.append("\"" + s + "\"");	
+//				}
+//				content.append(",");
+//				dataNumber++;
+//			}
+//			content.append("\n");
+//		}
+//		content.append("\n");
+//
+//		if (tableDataTotalList!=null) {
+//			int dataTotalNumber = 1;
+//			for(String s:tableDataTotalList){
+//				if(dataTotalNumber == 11 || dataTotalNumber == 12 || dataTotalNumber == 13 || dataTotalNumber == 15 || dataTotalNumber == 17){
+//					content.append(StringEscapeUtils.escapeCsv("=\"NT$ " + s + "\""));
+//				} else if(dataTotalNumber == 10 || dataTotalNumber == 16 || dataTotalNumber == 18){
+//					content.append("\"" + s + "%\"");
+//				} else {
+//					content.append("\"" + s + "\"");
+//				}
+//				content.append(",");
+//				dataTotalNumber++;
+//			}
+//			content.append("\n");
+//		}
+//
+//		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > 0) {
+//			downloadFileName = new String(filename.getBytes("UTF-8"), "ISO8859-1");
+//		} else {
+//			downloadFileName = URLEncoder.encode(filename, "UTF-8");			
+//		}
+//
+//		downloadFileStream = new ByteArrayInputStream(content.toString().getBytes("big5"));
+//
+//		//處理 BOM 開頭要加上 "\uFEFF"
+//		//downloadFileStream = new ByteArrayInputStream(("\uFEFF" + content.toString()).getBytes("utf-8"));
+//	}
+//
+//	private void resultSumDataTrans(List<AdGroupReportVO> resultSumData) throws Exception {
+//
+//		NumberFormat intFormat = new DecimalFormat("###,###,###,###");
+//		NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+//
+//		tableDataTotalList = new LinkedList<String>();
+//		tableDataTotalList.add("");
+//		tableDataTotalList.add("總計：" + intFormat.format(resultSumData.size()));
+//		tableDataTotalList.add("");
+//		tableDataTotalList.add("");
+//		tableDataTotalList.add("");
+//		tableDataTotalList.add("");
+//		tableDataTotalList.add("");
+//
+//		double t_pv = 0; //總曝光數
+//		double t_click = 0; //總互動數
+//		double t_ctr = 0; //互動率
+//		double t_invalid = 0; //無效點選次數
+//		double t_costAvg = 0; //單次互動費用
+//		double t_kiloCost = 0;	//千次曝光費用
+//		double t_cost = 0; //總費用
+//		//轉換次數
+//		double t_convert_count = 0;
+//		//總轉換次數
+//		double t_convert_price_count = 0;
+//		double t_convert_ctr = 0;
+//		double t_convert_cost = 0;
+//		double t_convert_investment_cost = 0;
+//		//加總
+//		for (int i=0; i<resultSumData.size(); i++) {
+//			AdGroupReportVO vo = resultSumData.get(i);
+//			t_pv += vo.getAdPvSum().doubleValue();
+//			t_click += vo.getAdClkSum().doubleValue();
+//			t_cost += vo.getAdPriceSum().doubleValue();
+//			t_invalid += vo.getAdInvClkSum().doubleValue();
+//			t_convert_count += vo.getConvertCount().doubleValue();
+//			t_convert_price_count += vo.getConvertPriceCount().doubleValue();
+//		}
+//		t_cost = new BigDecimal(String.valueOf(t_cost)).setScale(3, BigDecimal.ROUND_FLOOR).doubleValue();
+//		
+//		//互動率 = 總互動次數 / 總曝光數
+//		if (t_pv>0 && t_click>0) {
+//			t_ctr = (t_click / t_pv) * 100;
+//		}
+//
+//		//單次互動費用 = 總費用 / 總互動次數
+//		if (t_cost>0 && t_click>0) {
+//			t_costAvg = t_cost / t_click;
+//		}
+//		
+//		//千次曝光費用 = 總費用*1000 / 曝光數
+//		if(t_cost>0 && t_pv>0){
+//			t_kiloCost = (t_cost * 1000) / t_pv;
+//		}
+//		//轉換率
+//		if(t_convert_count > 0 && t_click > 0){
+//			t_convert_ctr  = (t_convert_count / t_click) * 100;
+//		}
+//		//平均轉換成本
+//		if(t_cost > 0 && t_convert_count > 0){
+//			t_convert_cost = t_cost / t_convert_count;
+//		}
+//		//廣告投資報酬率
+//		if(t_convert_price_count > 0 && t_cost > 0){
+//			t_convert_investment_cost = (t_convert_price_count / t_cost) * 100;
+//		}
+//		if (!tableHeadShowList.isEmpty()) {
+//			String mapKey;
+//			for (String s: tableHeadShowList) {
+//				mapKey = tableHeadNameMap.get(s);
+//				if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
+//					tableDataTotalList.addLast(doubleFormat.format(t_convert_ctr));
+//				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
+//					tableDataTotalList.addLast(doubleFormat.format(t_convert_cost));
+//				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
+//					tableDataTotalList.addLast(doubleFormat.format(t_convert_investment_cost));
+//				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
+//					tableDataTotalList.addLast(intFormat.format(t_convert_count));
+//				}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
+//					tableDataTotalList.addLast(intFormat.format(t_convert_price_count));
+//				}else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+//					tableDataTotalList.addLast(intFormat.format(t_pv));
+//				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+//					tableDataTotalList.addLast(intFormat.format(t_click));
+//				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
+//					tableDataTotalList.addLast(doubleFormat.format(t_ctr));
+//				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
+//					tableDataTotalList.addLast(intFormat.format(t_invalid));
+//				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
+//					tableDataTotalList.addLast(doubleFormat.format(t_costAvg));
+//				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+//					tableDataTotalList.addLast(doubleFormat.format(t_kiloCost));
+//				} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+//					tableDataTotalList.addLast(doubleFormat2.format(t_cost));
+//				}
+//			}
+//		}
+//	}
+//
+//	private void resultDataTrans(List<AdGroupReportVO> resultData) throws Exception {
+//
+//		LinkedList<String> tableInDataList;
+//
+//		long nowTime = new Date().getTime();
+//
+//		for (int i=0; i<resultData.size(); i++) {
+//
+//			tableInDataList = new LinkedList<String>();
+//
+//			AdGroupReportVO vo = resultData.get(i);
+//
+//			String adGroupSeq = vo.getAdGroupSeq();
+//
+//			PfpAdGroup pfpAdGroup = adGroupService.getPfpAdGroupBySeq(adGroupSeq);
+//
+//			String adGroupName = pfpAdGroup.getAdGroupName();
+//			int adGroupStatus = pfpAdGroup.getAdGroupStatus();
+//
+//			String adActionName = pfpAdGroup.getPfpAdAction().getAdActionName();
+//			int adActionStatus = pfpAdGroup.getPfpAdAction().getAdActionStatus();
+//			Date adActionStartDate = pfpAdGroup.getPfpAdAction().getAdActionStartDate();
+//			Date adActionEndDate = pfpAdGroup.getPfpAdAction().getAdActionEndDate();
+//
+//			double pv = vo.getAdPvSum().doubleValue();
+//			double click = vo.getAdClkSum().doubleValue();
+//			double cost = vo.getAdPriceSum().doubleValue();
+//			double invClick = vo.getAdInvClkSum().doubleValue();
+//			double ctr = 0;
+//			double costAvg = 0;
+//			double kiloCost = 0;
+//			double convertCount = vo.getConvertCount().doubleValue();
+//			double convertPriceCount = vo.getConvertPriceCount().doubleValue();
+//			double convertCTR = 0;
+//			double convertCost = 0;
+//			double convertInvestmentCost = 0;
+//			String adDevice = vo.getAdDevice();
+//			String adType = vo.getAdType();
+//			String adOperatingRuleName = vo.getAdOperatingRule();
+//			String adClkPriceTypeName = vo.getAdClkPriceType();
+//
+//			//互動率 = 互動次數 / 曝光數
+//			if (pv>0 && click>0) {
+//				ctr = (click / pv) * 100;
+//			}
+//
+//			//單次互動費用 = 總費用 / 總互動次數
+//			if (cost>0 && click>0) {
+//				costAvg = cost / click;
+//			}
+//
+//			//千次曝光費用 = 總費用*1000 / 曝光數
+//			if(cost>0 && pv>0){
+//				kiloCost = (cost * 1000) / pv;
+//			}
+//			//互動率 = 互動次數 / 曝光數
+//			if (pv>0 && click>0) {
+//				ctr = (click / pv) * 100;
+//			}
+//
+//			//單次互動費用 = 總費用 / 總互動次數
+//			if (cost>0 && click>0) {
+//				costAvg = cost / click;
+//			}
+//			//千次曝光費用 = 總費用*1000 / 曝光數
+//			if(cost>0 && pv>0){
+//				kiloCost = (cost * 1000) / pv;
+//			}
+//			//轉換率
+//			if(convertCount > 0 && click > 0){
+//				convertCTR  = (convertCount / click) * 100;
+//			}
+//			//平均轉換成本
+//			if(cost > 0 && convertCount > 0){
+//				convertCost = cost / convertCount;
+//			}
+//			//廣告投資報酬率
+//			if(convertPriceCount > 0 && cost > 0){
+//				convertInvestmentCost = (convertPriceCount / cost) * 100;
+//			}
+//
+//			//廣告狀態為開啟的話必須判斷走期( 待播放 or 走期中 or 已結束 )
+//			if (adActionStatus == EnumStatus.Open.getStatusId()) {
+//				long _startDate = (dateFormat.parse(dateFormat2.format(adActionStartDate) + " 00:00:00")).getTime();
+//				long _endDate = (dateFormat.parse(dateFormat2.format(adActionEndDate) + " 23:59:59")).getTime();
+//				if (nowTime < _startDate) {
+//					adActionStatus = EnumStatus.Waitbroadcast.getStatusId();
+//				} else if (nowTime > _endDate) {
+//					adActionStatus = EnumStatus.End.getStatusId();
+//				} else {
+//					adActionStatus = EnumStatus.Broadcast.getStatusId();
+//				}
+//			}
+//
+//			//播放狀態
+//			String alter = "";
+//			String icon = "icon_adclose.gif";
+//			if (adActionStatus == EnumStatus.Broadcast.getStatusId() &&
+//					adGroupStatus == EnumStatus.Open.getStatusId()) {
+//
+//				alter = "走期中";
+//				icon = "icon_adopen.gif";
+//
+//			} else if (adActionStatus != EnumStatus.Broadcast.getStatusId() &&
+//					adGroupStatus == EnumStatus.Open.getStatusId()) {
+//
+//				alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus));
+//
+//			} else if (adActionStatus == EnumStatus.Broadcast.getStatusId() &&
+//					adGroupStatus != EnumStatus.Open.getStatusId()) {
+//
+//				alter = "分類" + getAdStatusMap().get(Integer.toString(adGroupStatus));
+//
+//			} else {
+//
+//				alter = "廣告" + getAdStatusMap().get(Integer.toString(adActionStatus)) + "，" + "分類" + getAdStatusMap().get(Integer.toString(adGroupStatus));
+//				
+//			}
+//			
+//			if(downloadFlag.equals("yes")){
+//				tableInDataList.addLast(alter);
+//			} else {
+//				tableInDataList.addLast("<img src=\"./html/img/" + icon + "\" alt=\"" + alter + "\" title=\"" + alter + "\">");
+//			}
+//			
+//			tableInDataList.addLast(adGroupName);
+//			tableInDataList.addLast(adActionName);
+//			tableInDataList.addLast(adType);
+//			tableInDataList.addLast(adOperatingRuleName);
+//			tableInDataList.addLast(adClkPriceTypeName);
+//			tableInDataList.addLast(adDevice);
+//
+//			if(!tableHeadShowList.isEmpty()){
+//				String mapKey;
+//				for(String s:tableHeadShowList){
+//					mapKey=tableHeadNameMap.get(s);
+//					if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())){
+//						tableInDataList.addLast(doubleFormat.format(convertCTR));
+//					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())){
+//						tableInDataList.addLast(doubleFormat.format(convertCost));
+//					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())){
+//						tableInDataList.addLast(doubleFormat.format(convertInvestmentCost));
+//					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())){
+//						tableInDataList.addLast(intFormat.format(convertCount));
+//					}else if(mapKey.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())){
+//						tableInDataList.addLast(intFormat.format(convertPriceCount));
+//					}else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+//						tableInDataList.addLast(intFormat.format(pv));
+//					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+//						tableInDataList.addLast(intFormat.format(click));
+// 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
+//						tableInDataList.addLast(doubleFormat.format(ctr));
+//					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
+// 						tableInDataList.addLast(intFormat.format(invClick));
+// 					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
+//						tableInDataList.addLast(doubleFormat.format(costAvg));
+//					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+//						tableInDataList.addLast(doubleFormat.format(kiloCost));
+//					} else if (mapKey.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+//						tableInDataList.addLast(doubleFormat2.format(cost));
+//					}
+//				}
+//			}
+//
+//			tableDataList.addLast(tableInDataList);
+//		}
+//	}
+//
+//	public LinkedList<String> getTableHeadList() {
+//		return tableHeadList;
+//	}
+//
+//	public LinkedList<LinkedList<String>> getTableDataList() {
+//		return tableDataList;
+//	}
+//
+//	public String getStartDate() {
+//		return startDate;
+//	}
+//
+//	public void setStartDate(String startDate) {
+//		this.startDate = startDate;
+//	}
+//
+//	public String getEndDate() {
+//		return endDate;
+//	}
+//
+//	public void setEndDate(String endDate) {
+//		this.endDate = endDate;
+//	}
+//
+//	public int getPage() {
+//		return page;
+//	}
+//
+//	public void setPage(int page) {
+//		this.page = page;
+//	}
+//
+//	public int getPageSize() {
+//		return pageSize;
+//	}
+//
+//	public void setPageSize(int pageSize) {
+//		this.pageSize = pageSize;
+//	}
+//
+//	public int getTotalPage() {
+//		return totalPage;
+//	}
+//
+//	public String getOptionSelect() {
+//		return optionSelect;
+//	}
+//
+//	public void setOptionSelect(String optionSelect) {
+//		this.optionSelect = optionSelect;
+//	}
+//
+//	public String getOptionNotSelect() {
+//		return optionNotSelect;
+//	}
+//
+//	public void setOptionNotSelect(String optionNotSelect) {
+//		this.optionNotSelect = optionNotSelect;
+//	}
+//
+//	public LinkedList<String> getTableHeadShowList() {
+//		return tableHeadShowList;
+//	}
+//
+//	public LinkedList<String> getTableHeadNotShowList() {
+//		return tableHeadNotShowList;
+//	}
+//
+//	public String getAdPvclkDevice() {
+//		return adPvclkDevice;
+//	}
+//
+//	public void setAdPvclkDevice(String adPvclkDevice) {
+//		this.adPvclkDevice = adPvclkDevice;
+//	}
+//
+//	public String getAdType() {
+//		return adType;
+//	}
+//
+//	public void setAdType(String adType) {
+//		this.adType = adType;
+//	}
+//
+//	public String getSearchText() {
+//		return searchText;
+//	}
+//
+//	public void setSearchText(String searchText) {
+//		this.searchText = searchText;
+//	}
+//
+//	public String getAdShowWay() {
+//		return adShowWay;
+//	}
+//
+//	public void setAdShowWay(String adShowWay) {
+//		this.adShowWay = adShowWay;
+//	}
+//
+//	public String getAdSearchWay() {
+//		return adSearchWay;
+//	}
+//
+//	public void setAdSearchWay(String adSearchWay) {
+//		this.adSearchWay = adSearchWay;
+//	}
+//
+//	public String getSearchId() {
+//		return searchId;
+//	}
+//
+//	public void setSearchId(String searchId) {
+//		this.searchId = searchId;
+//	}
+//
+//	public InputStream getDownloadFileStream() {
+//		return downloadFileStream;
+//	}
+//
+//	public String getDownloadFileName() {
+//		return downloadFileName;
+//	}
+//
+//	public String getDownloadFlag() {
+//		return downloadFlag;
+//	}
+//
+//	public void setDownloadFlag(String downloadFlag) {
+//		log.info("value set="+downloadFlag);
+//		this.downloadFlag = downloadFlag;
+//	}
+//
+//	public void setCustomerInfoService(IPfpCustomerInfoService customerInfoService) {
+//		this.customerInfoService = customerInfoService;
+//	}
+//
+//	public void setOpenFlashUtil(SpringOpenFlashUtil openFlashUtil) {
+//		this.openFlashUtil = openFlashUtil;
+//	}
+//
+//	public String getFlashData() {
+//		return flashData;
+//	}
+//
+//	public LinkedHashMap<String, String> getDateSelectMap() {
+//		return dateSelectMap;
+//	}
+//
+//	public LinkedList<String> getTableDataTotalList() {
+//		return tableDataTotalList;
+//	}
+//
+//	public String getReportTitle() {
+//		return reportTitle;
+//	}
+//
+//	public void setAdGroupReportService(IAdGroupReportService adGroupReportService) {
+//		this.adGroupReportService = adGroupReportService;
+//	}
+//
+//	public String[] getAlign_data() {
+//		return align_data;
+//	}
+//
+//	public String[] getAlign_sum() {
+//		return align_sum;
+//	}
+//
+//	public void setAdGroupService(IPfpAdGroupService adGroupService) {
+//		this.adGroupService = adGroupService;
+//	}
+//
+//	public String getCharPic() {
+//		return charPic;
+//	}
+//
+//	public void setCharPic(String charPic) {
+//		this.charPic = charPic;
+//	}
+//
+//	public String getCharType() {
+//		return charType;
+//	}
+//
+//	public void setCharType(String charType) {
+//		this.charType = charType;
+//	}
+//
+//	public String getAdOperatingRule() {
+//		return adOperatingRule;
+//	}
+//
+//	public void setAdOperatingRule(String adOperatingRule) {
+//		this.adOperatingRule = adOperatingRule;
+//	}
+//
+//	public IPfpCodeService getPfpCodeService() {
+//		return pfpCodeService;
+//	}
+//
+//	public void setPfpCodeService(IPfpCodeService pfpCodeService) {
+//		this.pfpCodeService = pfpCodeService;
+//	}
 	
 }

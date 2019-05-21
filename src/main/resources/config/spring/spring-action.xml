@@ -177,9 +177,8 @@
 		<property name="pfpCodeService" ref="PfpCodeService" />
     </bean>
 
-	<bean id="ReportAdgroupAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdGroupAction" scope="prototype">
+	<bean id="ReportAdGroupAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdGroupAction" scope="prototype">
 	 	<property name="adGroupReportService" ref="AdGroupReportService" />
-	 	<property name="adGroupService" ref="PfpAdGroupService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />

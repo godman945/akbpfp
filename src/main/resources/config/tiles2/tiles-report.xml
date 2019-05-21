@@ -106,6 +106,32 @@
 	<definition name="report.chartTable.campagin" template="/ftl/report/chart/campaginChartTable.ftl" />
 	<!-- .report.campagin 廣告成效 end -->
     
+    <!-- .report.adGroup 分類成效 -->
+    <definition name=".report.adGroup" extends="default.report.layout" >
+    	<put-attribute name="header" value="report.header.adGroup" />
+        <put-attribute name="body" value="report.body.adGroup" />
+    </definition>
+	
+	<definition name="report.header.adGroup" extends="report.header" >
+    	<put-attribute name="jsName" value="reportAdGroup.js" />
+    </definition>
+	
+	<definition name="report.body.adGroup" template="/ftl/report/adGroup/adGroupBody.ftl">
+		<put-attribute name="adGroupDetailList" value="report.body.adGroup.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.adGroup" />
+	</definition>
+
+	<definition name="report.body.adGroup.detailList" template="/ftl/report/adGroup/adGroupDataList.ftl" />
+
+<!--     <definition name="report.body.adgroup" extends="report.body" > -->
+<!--     	<put-attribute name="reportTable" value="report.ajaxTable.adgroup" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.adgroup" /> -->
+<!-- 	</definition> -->
+	
+<!-- 	<definition name="report.ajaxTable.adgroup" template="/ftl/report/ajax/adgroupTable.ftl" />  -->
+	<definition name="report.chartTable.adGroup" template="/ftl/report/chart/adGroupChartTable.ftl" />
+    <!-- .report.adGroup 分類成效 end -->
+    
 	<!-- .report.keyword  -->
 	<definition name="report.ajaxTable.keyword" template="/ftl/report/ajax/keywordTable.ftl" /> 
 	<definition name="report.chartTable.keyword" template="/ftl/report/chart/keywordChartTable.ftl" />
@@ -181,25 +207,6 @@
 		<put-attribute name="chartTable" value="report.chartTable.check" />
 	</definition>
 	
-	<!-- .report.adgroup  -->
-    <definition name="report.ajaxTable.adgroup" template="/ftl/report/ajax/adgroupTable.ftl" /> 
-	<definition name="report.chartTable.adgroup" template="/ftl/report/chart/adgroupChartTable.ftl" />
-	 
-    <definition name=".report.adgroup" extends="default.report.layout" >
-    	<put-attribute name="header" value="report.header.adgroup" />
-        <put-attribute name="body" value="report.body.adgroup" />
-    </definition>
-	
-	<definition name="report.header.adgroup" extends="report.header" >
-    	<put-attribute name="jsName" value="reportAdgroup.js" />
-    </definition>
-	   
-    <definition name="report.body.adgroup" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.adgroup" />
-		<put-attribute name="chartTable" value="report.chartTable.adgroup" />
-	</definition>
-    
-    
     <!-- .report.adOs 行動廣告成效 -->
 	<definition name=".report.ados" extends="default.report.layout">
     	<put-attribute name="header" value="report.header.ados" />

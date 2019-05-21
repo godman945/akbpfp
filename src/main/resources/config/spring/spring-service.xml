@@ -82,6 +82,7 @@
     </bean>
     
     <bean id="AdGroupReportService" class="com.pchome.akbpfp.db.service.report.AdGroupReportService"> 
+        <property name="adGroupService" ref="PfpAdGroupService" />
         <property name="adGroupReportDAO" ref="AdGroupReportDAO" />
     </bean>
     
