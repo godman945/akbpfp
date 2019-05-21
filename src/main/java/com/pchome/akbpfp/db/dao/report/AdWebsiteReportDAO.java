@@ -424,7 +424,7 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 
 	/**
 	 * 網站類型成效(明細)
-	  * 統計 pfp_ad_website_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
+	 * 統計 pfp_ad_website_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
 	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_website_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
 	 */
 	@Override
