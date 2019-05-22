@@ -743,19 +743,19 @@ public class AdActionEditAction extends BaseCookieAction{
 				//轉換access log
 				if(converCodeList.size() == 0 && StringUtils.isNotBlank(convertSeq)) {
 					var message = "";
-					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，轉換追蹤：不使用轉換追蹤 =>使用轉換追蹤："+convertSeq;
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，轉換追蹤：不使用轉換追蹤 =>使用轉換追蹤："+pfpCodeConvertService.get(convertSeq).getConvertName();
 					admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 				}
 				
 				if(converCodeList.size() > 0 && StringUtils.isNotBlank(convertSeq) && !converCodeList.get(0).equals(convertSeq)) {
 					var message = "";
-					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，轉換追蹤：使用轉換追蹤("+converCodeList.get(0)+") =>使用轉換追蹤："+convertSeq;
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，轉換追蹤：使用轉換追蹤("+pfpCodeConvertService.get(converCodeList.get(0)).getConvertName()+") =>使用轉換追蹤："+pfpCodeConvertService.get(convertSeq).getConvertName();
 					admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 				}
 				
 				if(converCodeList.size() > 0 && StringUtils.isBlank(convertSeq)) {
 					var message = "";
-					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，轉換追蹤：使用轉換追蹤("+converCodeList.get(0)+") =>不使用轉換追蹤";
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，轉換追蹤：使用轉換追蹤("+pfpCodeConvertService.get(converCodeList.get(0)).getConvertName()+") =>不使用轉換追蹤";
 					admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 				}
 				
@@ -766,10 +766,11 @@ public class AdActionEditAction extends BaseCookieAction{
 				while (trackingCodeJsonkeys.hasNext()) {
 					String trackingJsonKey = trackingCodeJsonkeys.next();
 					String trackingSeq = (String) ((JSONObject) jsonbValue).get(trackingJsonKey);
+					
 					if(StringUtils.isBlank(trackingCodeStr)) {
-						trackingCodeStr = trackingCodeStr + trackingSeq;
+						trackingCodeStr = trackingCodeStr + pfpCodeTrackingService.get(trackingSeq).getTrackingName();
 					}else {
-						trackingCodeStr = trackingCodeStr + "，"+trackingSeq;
+						trackingCodeStr = trackingCodeStr + "，"+pfpCodeTrackingService.get(trackingSeq).getTrackingName();
 					}
 					PfpCodeAdactionMerge pfpCodeAdActionMerge = new PfpCodeAdactionMerge();
 					pfpCodeAdActionMerge.setAdActionSeq(adActionSeq);
@@ -803,9 +804,9 @@ public class AdActionEditAction extends BaseCookieAction{
 						String beforeTrackingCodeStr = "";
 						for (String trackingCode : trackingCodeList) {
 							if(StringUtils.isBlank(beforeTrackingCodeStr)) {
-								beforeTrackingCodeStr = beforeTrackingCodeStr + trackingCode;
+								beforeTrackingCodeStr = beforeTrackingCodeStr + pfpCodeTrackingService.get(trackingCode).getTrackingName();
 							}else {
-								beforeTrackingCodeStr = beforeTrackingCodeStr + "，"+trackingCode;
+								beforeTrackingCodeStr = beforeTrackingCodeStr + "，"+pfpCodeTrackingService.get(trackingCode).getTrackingName();
 							}
 						}
 						var message = "";
@@ -818,9 +819,9 @@ public class AdActionEditAction extends BaseCookieAction{
 					String beforeTrackingCodeStr = "";
 					for (String trackingCode : trackingCodeList) {
 						if(StringUtils.isBlank(beforeTrackingCodeStr)) {
-							beforeTrackingCodeStr = beforeTrackingCodeStr + trackingCode;
+							beforeTrackingCodeStr = beforeTrackingCodeStr + pfpCodeTrackingService.get(trackingCode).getTrackingName();
 						}else {
-							beforeTrackingCodeStr = beforeTrackingCodeStr + "，"+trackingCode;
+							beforeTrackingCodeStr = beforeTrackingCodeStr + "，"+pfpCodeTrackingService.get(trackingCode).getTrackingName();
 						}
 					}
 					var message = "";
