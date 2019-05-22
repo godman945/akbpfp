@@ -45,7 +45,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 	private String photoDbPathNew;
 	private String catalogProdCsvFilePath;
 	private String catalogProdCsvFileBackupPath;
-	private AdmAccesslogService accesslogService;
 	/**
 	 * 檢查檔案格式是否為我們提供的CSV檔格式
 	 * @param vo
@@ -248,19 +247,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 		pfpCatalogUploadLog.setCreateDate(date); // 建立時間
 		
 		pfpCatalogUploadListDAO.savePfpCatalogUploadLog(pfpCatalogUploadLog);
-		
-		
-		//accesslog 
-		log.info("success:"+vo.getSuccessNum() + " fail:"+vo.getErrorNum());
-		for (EnumPfpCatalogUploadType enumPfpCatalogUploadType : EnumPfpCatalogUploadType.values()) {
-			if (enumPfpCatalogUploadType.getType().equals(pfpCatalogUploadLog.getUpdateWay())) {
-				String message = pfpCatalog.getCatalogName() + "=>檔案更新：成功 "+vo.getSuccessNum()+",失敗 "+vo.getErrorNum();
-				accesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, vo.getIdPchome(),vo.getCustomerInfoId(), vo.getUserId(), vo.getRemoteAddr());
-				break;
-			}
-		}
-		
-		
 	}
 
 	/**
@@ -335,14 +321,6 @@ public class PfpCatalogUploadListService extends BaseService<String, String> imp
 
 	public void setCatalogProdCsvFileBackupPath(String catalogProdCsvFileBackupPath) {
 		this.catalogProdCsvFileBackupPath = catalogProdCsvFileBackupPath;
-	}
-
-	public AdmAccesslogService getAccesslogService() {
-		return accesslogService;
-	}
-
-	public void setAccesslogService(AdmAccesslogService accesslogService) {
-		this.accesslogService = accesslogService;
 	}
 
 

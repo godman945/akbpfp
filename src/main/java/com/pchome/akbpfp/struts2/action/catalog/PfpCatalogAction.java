@@ -16,6 +16,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
 import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
+import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
@@ -27,6 +28,7 @@ import com.pchome.akbpfp.db.vo.catalog.PfpCatalogVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.rmi.accesslog.EnumAccesslogAction;
 
 public class PfpCatalogAction extends BaseCookieAction{
 	
@@ -57,7 +59,7 @@ public class PfpCatalogAction extends BaseCookieAction{
 	// 下載相關
 	private InputStream downloadFileStream; // input stream
 	private String downloadFileName; // 下載檔名
-	
+	private AdmAccesslogService accesslogService;
 	/**
 	 * 一進入檢查是否有目錄，有目錄無目錄各自導不同畫面
 	 * @return
@@ -195,6 +197,10 @@ public class PfpCatalogAction extends BaseCookieAction{
 		pfpCatalogUploadListService.deletePfpCatalogSetup(vo);
 		pfpCatalogUploadListService.deleteCatalogProdImgFolderAndData(vo);
 		pfpCatalogUploadListService.deleteCatalogProdCSVFolderAndData(vo);
+		
+		//accesslog
+		String message = "目錄："+pfpCatalog.getCatalogName()+"=>刪除";
+		accesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(),super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 		return SUCCESS;
 	}
 	
@@ -371,6 +377,14 @@ public class PfpCatalogAction extends BaseCookieAction{
 
 	public String getMessage() {
 		return message;
+	}
+
+	public AdmAccesslogService getAccesslogService() {
+		return accesslogService;
+	}
+
+	public void setAccesslogService(AdmAccesslogService accesslogService) {
+		this.accesslogService = accesslogService;
 	}
 
 }

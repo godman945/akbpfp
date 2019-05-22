@@ -286,7 +286,6 @@
 		<property name="pfpCatalogUploadListDAO" ref="PfpCatalogUploadListDAO" />
 		<property name="pfpCatalogService" ref="PfpCatalogService" />
 		<property name="sequenceService" ref="SequenceService" />
-		<property name="accesslogService" ref="AdmAccesslogService" />
 <!-- 		<property name="shoppingProd" ref="ShoppingProd" /> -->
     </bean>
     
