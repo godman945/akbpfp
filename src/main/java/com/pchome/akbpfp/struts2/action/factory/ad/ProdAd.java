@@ -554,69 +554,56 @@ public class ProdAd implements IAd {
 		JSONObject uploadLogJson = new JSONObject(adEditAction.getUploadLog());
 		
 		Iterator iter = uploadLogJson.keys();
-		String afterDadSaleImg2 = "";
 		while(iter.hasNext()){
 			String key = (String)iter.next();
 			JSONObject data = (JSONObject) uploadLogJson.get(key);
 			if(data.getString("fileName").contains("salesEngImg")) {
 				String size  = data.getString("fileName").split("_")[1]+"_"+data.getString("fileName").split("_")[2];
-				if(StringUtils.isBlank(afterDadSaleImg2)) {
-					afterDadSaleImg2 = afterDadSaleImg2 + size;
+				if(StringUtils.isBlank(afterDadSaleImg)) {
+					afterDadSaleImg = afterDadSaleImg + size;
 				}else {
-					afterDadSaleImg2 = afterDadSaleImg2 + ","+size;
+					afterDadSaleImg = afterDadSaleImg + ","+size;
 				}
 			}else {
 				String size  = data.getString("width")+"_"+data.getString("height");
-				if(StringUtils.isBlank(afterDadSaleImg2)) {
-					afterDadSaleImg2 = afterDadSaleImg2 + "update_"+size;
+				if(StringUtils.isBlank(afterDadSaleImg)) {
+					afterDadSaleImg = afterDadSaleImg + "update_"+size;
 				}else {
-					afterDadSaleImg2 = afterDadSaleImg2 + ",update_"+size;
+					afterDadSaleImg = afterDadSaleImg + ",update_"+size;
 				}
 			}
-		 }
+		}
 		log.info(">>>>>>>>>>>>>>>>beforeDadSaleImg:"+beforeDadSaleImg);
-		log.info(">>>>>>>>>>>>>>>>afterDadSaleImg2:"+afterDadSaleImg2);
+		log.info(">>>>>>>>>>>>>>>>afterDadSaleImg:"+afterDadSaleImg);
 		
 		
-		
-		
-		afterDadSaleImg = saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
+		saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
 		JSONObject uploadLogoLogJson = new JSONObject(adEditAction.getUploadLogoLog());
 		
 		iter = uploadLogoLogJson.keys();
-		String afterDadLogoSaleImg2 = "";
 		while(iter.hasNext()){
 			String key = (String)iter.next();
 			JSONObject data = (JSONObject) uploadLogoLogJson.get(key);
 			if(data.getString("fileName").contains("logoImg")) {
 				String size  = data.getString("fileName").split("_")[1]+"_"+data.getString("fileName").split("_")[2];
-				if(StringUtils.isBlank(afterDadLogoSaleImg2)) {
-					afterDadLogoSaleImg2 = afterDadLogoSaleImg2 + size;
+				if(StringUtils.isBlank(afterDadLogoSaleImg)) {
+					afterDadLogoSaleImg = afterDadLogoSaleImg + size;
 				}else {
-					afterDadLogoSaleImg2 = afterDadLogoSaleImg2 + ","+size;
+					afterDadLogoSaleImg = afterDadLogoSaleImg + ","+size;
 				}
 			}else {
 				String size  = data.getString("width")+"_"+data.getString("height");
-				if(StringUtils.isBlank(afterDadLogoSaleImg2)) {
-					afterDadLogoSaleImg2 = afterDadLogoSaleImg2 + "update_"+size;
+				if(StringUtils.isBlank(afterDadLogoSaleImg)) {
+					afterDadLogoSaleImg = afterDadLogoSaleImg + "update_"+size;
 				}else {
-					afterDadLogoSaleImg2 = afterDadLogoSaleImg2 + ",update_"+size;
+					afterDadLogoSaleImg = afterDadLogoSaleImg + ",update_"+size;
 				}
 			}
 		 }
 		log.info(">>>>>>>>>>>>>>>>beforeDadLogoSaleImg:"+beforeDadLogoSaleImg);
-		log.info(">>>>>>>>>>>>>>>>afterDadLogoSaleImg2:"+afterDadLogoSaleImg2);
+		log.info(">>>>>>>>>>>>>>>>afterDadLogoSaleImg:"+afterDadLogoSaleImg);
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		afterDadLogoSaleImg = saveImg(uploadLogoLogJson,"logoImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
-		
+		saveImg(uploadLogoLogJson,"logoImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
 		//accesslog
 		String actionName = adEditAction.getPfpAd().getPfpAdGroup().getPfpAdAction().getAdActionName();
 		String groupName = adEditAction.getPfpAd().getPfpAdGroup().getAdGroupName();
@@ -646,12 +633,10 @@ public class ProdAd implements IAd {
 			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改結尾行銷圖像："+"["+beforeDadSaleImg+"]=>["+afterDadSaleImg+"]";
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		}
-		if(beforeDadLogoSaleImg.split(",").length != afterDadLogoSaleImg.split(",").length || !beforeDadLogoSaleImg.equals(afterDadLogoSaleImg)) {
-			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改行銷圖像："+"["+beforeDadLogoSaleImg+"]=>["+afterDadLogoSaleImg+"]";
-			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
-		}
+		String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改行銷圖像："+"["+beforeDadLogoSaleImg+"]=>["+afterDadLogoSaleImg+"]";
+		admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		
-		String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"=>送出審核";
+		message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"=>送出審核";
 		admAccesslogService.recordAdLog(EnumAccesslogAction.AD_STATUS_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		
 		return null;
@@ -667,9 +652,8 @@ public class ProdAd implements IAd {
 		return imgBase64;
 	}
 	
-	private String saveImg(JSONObject uploadImgJson,String uploadType,StringBuffer saveImgPathBuffer,String adSeq,String type) throws Exception{
+	private void saveImg(JSONObject uploadImgJson,String uploadType,StringBuffer saveImgPathBuffer,String adSeq,String type) throws Exception{
 		Iterator keys = uploadImgJson.keys();
-		String writeImg = "";
 		while(keys.hasNext()) {
 		    String key = (String)keys.next();
 		    JSONObject data = (JSONObject) uploadImgJson.get(key);
@@ -703,16 +687,10 @@ public class ProdAd implements IAd {
             		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
             	}else if(type.equals("edit")){
             		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);
-            		if(StringUtils.isBlank(writeImg)) {
-            			writeImg = writeImg + (fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName);
-            		}else {
-            			writeImg = writeImg + ","+(fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName);
-            		}
             	}
             }
             bis.close();
 		}
-		return writeImg;
 	}
 	
 	
