@@ -825,7 +825,7 @@ public class AdActionEditAction extends BaseCookieAction{
 						}
 					}
 					var message = "";
-					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，再行銷追蹤：使用再行銷追蹤"+beforeTrackingCodeStr+" =>不使用使用再行銷追蹤";
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，再行銷追蹤：使用再行銷追蹤"+beforeTrackingCodeStr+" =>不使用再行銷追蹤";
 					admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 				}
 			}
