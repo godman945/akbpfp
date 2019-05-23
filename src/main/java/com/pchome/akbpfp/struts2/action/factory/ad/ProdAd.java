@@ -629,11 +629,10 @@ public class ProdAd implements IAd {
 			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改LOGO標題文字："+beforeLogoTxt+"=>"+afterLogoTxt;
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		}
-		if(beforeDadSaleImg.split(",").length != afterDadSaleImg.split(",").length || !beforeDadSaleImg.equals(afterDadSaleImg)) {
-			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改結尾行銷圖像："+"["+beforeDadSaleImg+"]=>["+afterDadSaleImg+"]";
-			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
-		}
-		String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改行銷圖像："+"["+beforeDadLogoSaleImg+"]=>["+afterDadLogoSaleImg+"]";
+		String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改結尾行銷圖像："+"["+beforeDadSaleImg+"]=>["+afterDadSaleImg+"]";
+		admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
+		
+		message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改行銷圖像："+"["+beforeDadLogoSaleImg+"]=>["+afterDadLogoSaleImg+"]";
 		admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		
 		message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"=>送出審核";
