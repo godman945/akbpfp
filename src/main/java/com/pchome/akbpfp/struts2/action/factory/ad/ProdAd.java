@@ -554,10 +554,12 @@ public class ProdAd implements IAd {
 		Iterator iter = uploadLogJson.keys();
 		String afterDadSaleImg2 = "";
 		while(iter.hasNext()){
-			if(uploadLogJson.getString("fileName").contains("salesEngImg")) {
+			String key = (String)iter.next();
+			JSONObject data = (JSONObject) uploadLogJson.get(key);
+			if(data.getString("fileName").contains("salesEngImg")) {
 				continue;
 			}else {
-				String size  = uploadLogJson.getString("width")+"_"+uploadLogJson.getString("height");
+				String size  = data.getString("width")+"_"+data.getString("height");
 				if(StringUtils.isBlank(afterDadSaleImg2)) {
 					afterDadSaleImg2 = afterDadSaleImg2 + size;
 				}else {
@@ -576,10 +578,12 @@ public class ProdAd implements IAd {
 		iter = uploadLogoLogJson.keys();
 		String afterDadLogoSaleImg2 = "";
 		while(iter.hasNext()){
-			if(uploadLogoLogJson.getString("fileName").contains("logoImg")) {
+			String key = (String)iter.next();
+			JSONObject data = (JSONObject) uploadLogJson.get(key);
+			if(data.getString("fileName").contains("logoImg")) {
 				continue;
 			}else {
-				String size  = uploadLogoLogJson.getString("width")+"_"+uploadLogoLogJson.getString("height");
+				String size  = data.getString("width")+"_"+data.getString("height");
 				if(StringUtils.isBlank(afterDadLogoSaleImg2)) {
 					afterDadLogoSaleImg2 = afterDadLogoSaleImg2 + size;
 				}else {
