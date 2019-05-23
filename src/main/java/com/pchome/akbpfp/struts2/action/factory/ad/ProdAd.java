@@ -461,16 +461,18 @@ public class ProdAd implements IAd {
 				afterLogoTxt = adEditAction.getLogoText();
 			}
 			if(pfpAdDetail.getDefineAdSeq().contains("dad_sale_img_")) {
+				String size = pfpAdDetail.getAdDetailContent().split("_")[2]+"_"+pfpAdDetail.getAdDetailContent().split("_")[3];
 				if(StringUtils.isBlank(beforeDadSaleImg)) {
-					beforeDadSaleImg = beforeDadSaleImg + pfpAdDetail.getAdDetailContent().split("/")[6];
+					beforeDadSaleImg = beforeDadSaleImg + size;
 				}else {
-					beforeDadSaleImg = beforeDadSaleImg + ","+pfpAdDetail.getAdDetailContent().split("/")[6];
+					beforeDadSaleImg = beforeDadSaleImg + ","+size;
 				}
 			}else if(pfpAdDetail.getDefineAdSeq().contains("dad_logo_sale_img_")) {
+				String size = pfpAdDetail.getAdDetailContent().split("_")[2]+"_"+pfpAdDetail.getAdDetailContent().split("_")[3];
 				if(StringUtils.isBlank(beforeDadLogoSaleImg)) {
-					beforeDadLogoSaleImg = beforeDadLogoSaleImg + pfpAdDetail.getAdDetailContent().split("/")[6];
+					beforeDadLogoSaleImg = beforeDadLogoSaleImg + size;
 				}else {
-					beforeDadLogoSaleImg = beforeDadLogoSaleImg + ","+pfpAdDetail.getAdDetailContent().split("/")[6];
+					beforeDadLogoSaleImg = beforeDadLogoSaleImg + ","+size;
 				}
 			}
 			
@@ -557,16 +559,22 @@ public class ProdAd implements IAd {
 			String key = (String)iter.next();
 			JSONObject data = (JSONObject) uploadLogJson.get(key);
 			if(data.getString("fileName").contains("salesEngImg")) {
-				continue;
-			}else {
-				String size  = data.getString("width")+"_"+data.getString("height");
+				String size  = data.getString("fileName").split("_")[1]+"_"+data.getString("fileName").split("_")[2];
 				if(StringUtils.isBlank(afterDadSaleImg2)) {
 					afterDadSaleImg2 = afterDadSaleImg2 + size;
 				}else {
 					afterDadSaleImg2 = afterDadSaleImg2 + ","+size;
 				}
+			}else {
+				String size  = data.getString("width")+"_"+data.getString("height");
+				if(StringUtils.isBlank(afterDadSaleImg2)) {
+					afterDadSaleImg2 = afterDadSaleImg2 + "update_"+size;
+				}else {
+					afterDadSaleImg2 = afterDadSaleImg2 + ",update_"+size;
+				}
 			}
 		 }
+		log.info(">>>>>>>>>>>>>>>>beforeDadSaleImg:"+beforeDadSaleImg);
 		log.info(">>>>>>>>>>>>>>>>afterDadSaleImg2:"+afterDadSaleImg2);
 		
 		
@@ -581,16 +589,22 @@ public class ProdAd implements IAd {
 			String key = (String)iter.next();
 			JSONObject data = (JSONObject) uploadLogoLogJson.get(key);
 			if(data.getString("fileName").contains("logoImg")) {
-				continue;
-			}else {
-				String size  = data.getString("width")+"_"+data.getString("height");
+				String size  = data.getString("fileName").split("_")[1]+"_"+data.getString("fileName").split("_")[2];
 				if(StringUtils.isBlank(afterDadLogoSaleImg2)) {
 					afterDadLogoSaleImg2 = afterDadLogoSaleImg2 + size;
 				}else {
 					afterDadLogoSaleImg2 = afterDadLogoSaleImg2 + ","+size;
 				}
+			}else {
+				String size  = data.getString("width")+"_"+data.getString("height");
+				if(StringUtils.isBlank(afterDadLogoSaleImg2)) {
+					afterDadLogoSaleImg2 = afterDadLogoSaleImg2 + "update_"+size;
+				}else {
+					afterDadLogoSaleImg2 = afterDadLogoSaleImg2 + ",update_"+size;
+				}
 			}
 		 }
+		log.info(">>>>>>>>>>>>>>>>beforeDadLogoSaleImg:"+beforeDadLogoSaleImg);
 		log.info(">>>>>>>>>>>>>>>>afterDadLogoSaleImg2:"+afterDadLogoSaleImg2);
 		
 		
