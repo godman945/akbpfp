@@ -461,6 +461,7 @@ public class ProdAd implements IAd {
 				afterLogoTxt = adEditAction.getLogoText();
 			}
 			if(pfpAdDetail.getDefineAdSeq().contains("dad_sale_img_")) {
+				log.info(">>>>>>>>>>>>>>>>>>>>>>>beforeDadSaleImg:"+beforeDadSaleImg);
 				if(StringUtils.isBlank(beforeDadSaleImg)) {
 					beforeDadSaleImg = beforeDadSaleImg + pfpAdDetail.getAdDetailContent().split("/")[7];
 				}else {
