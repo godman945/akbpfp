@@ -550,6 +550,9 @@ public class ProdAd implements IAd {
 		StringBuffer saveImgPathBuffer = new StringBuffer();
 		saveImgPathBuffer.append(adEditAction.getPhotoDbPath()).append("user/").append(adEditAction.getCustomer_info_id()).append("/").append(adEditAction.getSdf().format(date)).append("/original/").append(adEditAction.getAdSeq()).append("/");
 		JSONObject uploadLogJson = new JSONObject(adEditAction.getUploadLog());
+		
+		log.info(">>>>>>>>>>>>>>>"+uploadLogJson);
+		
 		afterDadSaleImg = saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
 		JSONObject uploadLogoLogJson = new JSONObject(adEditAction.getUploadLogoLog());
 		afterDadLogoSaleImg = saveImg(uploadLogoLogJson,"logoImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
