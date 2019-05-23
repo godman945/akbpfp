@@ -224,12 +224,6 @@ public class ProdAd implements IAd {
 		saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adSeq,"add");
 		JSONObject uploadLogoLogJson = new JSONObject(adAddAction.getUploadLogoLog());
 		saveImg(uploadLogoLogJson,"logoImg",saveImgPathBuffer,adSeq,"add");
-		
-		
-		
-		
-		
-		
 		return null;
 	}
 
@@ -361,8 +355,7 @@ public class ProdAd implements IAd {
 				imgPath = pfpAdDetail.getAdDetailContent();
 				fileExtensionNameArray = imgPath.split("\\.");
 				fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
-				System.out.println(photoClonePath + imgPath);
-				File file = new File(imgPath);
+				File file = new File(photoClonePath+imgPath);
 				if(file.exists()){
 					String imgBase64 = imgBase64(file,fileExtensionName);
 					String fileNameArray[] = imgPath.split("/");
@@ -385,7 +378,7 @@ public class ProdAd implements IAd {
 				imgPath = pfpAdDetail.getAdDetailContent();
 				fileExtensionNameArray = imgPath.split("\\.");
 				fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
-				File file = new File(imgPath);
+				File file = new File(photoClonePath+imgPath);
 				if(file.exists()){
 					String imgBase64 = imgBase64(file,fileExtensionName);
 					String fileNameArray[] = imgPath.split("/");
@@ -638,7 +631,7 @@ public class ProdAd implements IAd {
             	defineAdSeq = "dad_"+adDetailId;
             }
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
-        		File path = new File(saveImgPathBuffer.toString());
+        		File path = new File(photoClonePath+saveImgPathBuffer.toString());
                 if(!path.exists()){
                 	path.mkdirs();
                 }
