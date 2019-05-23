@@ -461,17 +461,16 @@ public class ProdAd implements IAd {
 				afterLogoTxt = adEditAction.getLogoText();
 			}
 			if(pfpAdDetail.getDefineAdSeq().contains("dad_sale_img_")) {
-				log.info(">>>>>>>>>>>>>>>>>>>>>>>pfpAdDetail.getAdDetailContent():"+pfpAdDetail.getAdDetailContent());
 				if(StringUtils.isBlank(beforeDadSaleImg)) {
-					beforeDadSaleImg = beforeDadSaleImg + pfpAdDetail.getAdDetailContent().split("/")[7];
+					beforeDadSaleImg = beforeDadSaleImg + pfpAdDetail.getAdDetailContent().split("/")[6];
 				}else {
-					beforeDadSaleImg = beforeDadSaleImg + ","+pfpAdDetail.getAdDetailContent().split("/")[7];
+					beforeDadSaleImg = beforeDadSaleImg + ","+pfpAdDetail.getAdDetailContent().split("/")[6];
 				}
 			}else if(pfpAdDetail.getDefineAdSeq().contains("dad_logo_sale_img_")) {
 				if(StringUtils.isBlank(beforeDadLogoSaleImg)) {
-					beforeDadLogoSaleImg = beforeDadLogoSaleImg + pfpAdDetail.getAdDetailContent().split("/")[7];
+					beforeDadLogoSaleImg = beforeDadLogoSaleImg + pfpAdDetail.getAdDetailContent().split("/")[6];
 				}else {
-					beforeDadLogoSaleImg = beforeDadLogoSaleImg + ","+pfpAdDetail.getAdDetailContent().split("/")[7];
+					beforeDadLogoSaleImg = beforeDadLogoSaleImg + ","+pfpAdDetail.getAdDetailContent().split("/")[6];
 				}
 			}
 			
