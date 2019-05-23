@@ -579,7 +579,7 @@ public class ProdAd implements IAd {
 		String afterDadLogoSaleImg2 = "";
 		while(iter.hasNext()){
 			String key = (String)iter.next();
-			JSONObject data = (JSONObject) uploadLogJson.get(key);
+			JSONObject data = (JSONObject) uploadLogoLogJson.get(key);
 			if(data.getString("fileName").contains("logoImg")) {
 				continue;
 			}else {
