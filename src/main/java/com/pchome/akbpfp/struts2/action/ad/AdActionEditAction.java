@@ -36,6 +36,7 @@ import com.pchome.akbpfp.db.service.codeManage.IPfpCodeTrackingService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdArea;
 import com.pchome.enumerate.ad.EnumAdCountry;
 import com.pchome.enumerate.ad.EnumAdDevice;
 import com.pchome.enumerate.ad.EnumAdPvLimitPeriod;
@@ -461,7 +462,24 @@ public class AdActionEditAction extends BaseCookieAction{
 			adCountry = null;
 		}
 		
+		
+		List beforeAccesslogCity = new ArrayList<String>();
+		if(pfpAdAction.getAdActionCountry() != null && pfpAdAction.getAdActionCountry().equals("Taiwan")) {
+			if(pfpAdAction.getAdActionCity() != null) {
+				String [] beforeAccesslogCityArray = pfpAdAction.getAdActionCity().split(",");
+				for (int i = 0; i < beforeAccesslogCityArray.length; i++) {
+					for (EnumAdArea enumAdArea : EnumAdArea.values()) {
+						if(beforeAccesslogCityArray[i].equals(enumAdArea.getAreaCode())) {
+							beforeAccesslogCity.add(enumAdArea.getName());
+						}
+					}
+				}
+			}
+		}
+		
+		
 		String saveAdCity = null;
+		List afterAccesslogCity = new ArrayList<String>();
 		if(adCountry != null && adCountry.equals("Taiwan")) {
 			if(adEditCity != null) {
 				if(adEditCity.length == 5) {
@@ -474,14 +492,20 @@ public class AdActionEditAction extends BaseCookieAction{
 						}else {
 							saveAdCity = saveAdCity + adEditCity[i] + ",";
 						}
+						
+						for (EnumAdArea enumAdArea : EnumAdArea.values()) {
+							if(adEditCity[i].equals(enumAdArea.getAreaCode())) {
+								afterAccesslogCity.add(enumAdArea.getName());
+							}
+						}
 					}
 				}
 			}
 		}
-
+		
 		
 		//修改廣告投放地區 access log
-		if((adCountry == null &&  pfpAdAction.getAdActionCountry() != null) || (adCountry != null && !adCountry.equals(pfpAdAction.getAdActionCountry()))) {
+		if((adCountry == null &&  pfpAdAction.getAdActionCountry() != null) || (adCountry != null && !adCountry.equals(pfpAdAction.getAdActionCountry())) || ((adCountry!=null && adCountry.equals("Taiwan")) && (pfpAdAction.getAdActionCountry()!= null && pfpAdAction.getAdActionCountry().equals("Taiwan")))){
 			String message = "";
 			String beforeCountry = "";
 			if(pfpAdAction.getAdActionCountry() == null) {
@@ -495,10 +519,38 @@ public class AdActionEditAction extends BaseCookieAction{
 			}else if(adCountry.equals(EnumAdCountry.TAIWAN.getCountryType())) {
 				afterCountry = EnumAdCountry.TAIWAN.getCountryName();
 			}
-			message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"指定廣告投放地區："+beforeCountry+"=>"+afterCountry;
+			
+			
+			//1.全球改台灣
+			if(pfpAdAction.getAdActionCountry() == null && adCountry != null && adCountry.equals("Taiwan")) {
+				if(afterAccesslogCity.size() == 0) {
+					afterAccesslogCity.add("全區");
+				}
+				message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"指定廣告投放地區："+beforeCountry+"=>"+afterCountry+afterAccesslogCity;
+				
+			}
+			//2.台灣改台灣
+			if((pfpAdAction.getAdActionCountry() != null && pfpAdAction.getAdActionCountry().equals("Taiwan")) && (adCountry != null && adCountry.equals("Taiwan"))) {
+				if(StringUtils.isBlank(pfpAdAction.getAdActionCity())) {
+					if(afterAccesslogCity.size() > 0) {
+						message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"指定廣告投放地區："+beforeCountry+"[全區]=>"+afterCountry+afterAccesslogCity;
+					}
+				}else {
+					if(afterAccesslogCity.size() == 0) {
+						afterAccesslogCity.add("全區");
+					}
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"指定廣告投放地區："+beforeCountry+beforeAccesslogCity+"=>"+afterCountry+afterAccesslogCity;
+				}
+			}
+			//3.台灣改全球
+			if((pfpAdAction.getAdActionCountry() != null && pfpAdAction.getAdActionCountry().equals("Taiwan")) && (adCountry == null)) {
+				if(beforeAccesslogCity.size() == 0) {
+					beforeAccesslogCity.add("全區");
+				}
+				message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"指定廣告投放地區："+beforeCountry+beforeAccesslogCity+"=>"+afterCountry;
+			}
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 		}
-		
 		
 		pfpAdAction.setAdActionCountry(adCountry);
 		pfpAdAction.setAdActionCity(saveAdCity);
