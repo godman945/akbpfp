@@ -53,6 +53,8 @@
     	<property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
     	<property name="admTemplateProductService" ref="AdmTemplateProductService" />
     	<property name="photoClonePath" value="${photo.clone.path}" />
+    	<property name="admAccesslogService" ref="AdmAccesslogService" />
+    	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
     </bean>
     
     <bean id="VideoAd" class="com.pchome.akbpfp.struts2.action.factory.ad.VideoAd" scope="prototype"  />

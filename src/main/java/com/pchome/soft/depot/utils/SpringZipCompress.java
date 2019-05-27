@@ -1,29 +1,25 @@
 package com.pchome.soft.depot.utils;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-
-import com.pchome.akbpfp.db.service.sequence.SequenceService;
+import org.apache.logging.log4j.Logger;
 
 public class SpringZipCompress {
 	Logger log = LogManager.getRootLogger();
@@ -173,8 +169,9 @@ public class SpringZipCompress {
 		return new ByteArrayInputStream(fos.toByteArray());
 	}
 
-	public void openZip(String zipName, File zipFile,String path) throws IOException {
-		
+	@SuppressWarnings("finally")
+	public String openZip(String zipName, File zipFile,String path) throws IOException {
+		String result = "success";
 		//判斷路徑是否存在,不存在則創建文件路徑
 		File pathFile = new File(path);
 		if(!pathFile.exists()){
@@ -204,43 +201,70 @@ public class SpringZipCompress {
 			out = null;
 			
 			zip = new ZipFile(zipFile);
+			
+			//判斷上傳檔案是否不在合法檔名中
+			boolean doWriteFileFlag = true;
+			List<String> html5Filter = Arrays.asList(".JPG",".JPEG",".PNG",".GIF",".CSS",".JS",".HTML",".HTM");
 			for(Enumeration entries = zip.entries();entries.hasMoreElements();){
+				boolean filterFlag = false;
 				ZipEntry entry = (ZipEntry)entries.nextElement();
 				String zipEntryName = entry.getName();
 				in = zip.getInputStream(entry);
 				String outPath = (path + "/" + zipEntryName).replaceAll("\\*", "/");
-				
-				//判斷文件全路徑是否为文件夾,如果是上面已經上傳,不需要解壓
-				if(new File(outPath).isDirectory()){
+				if(new File(outPath).toString().indexOf(".") < 0){
 					continue;
 				}
-				//輸出文件路徑信息
-				log.info(outPath);
-				
-				if(zipEntryName.endsWith("/")){
-					//判斷路徑是否存在,不存在則創建文件路徑
-					File zipPathFile = new File(outPath);
-					if(!zipPathFile.exists()){
-						zipPathFile.mkdirs();
+				String filePath = outPath.substring(outPath.indexOf("."), outPath.length());
+				for (String filter : html5Filter) {
+					if(filePath.toUpperCase().equals(filter)) {
+						filterFlag = true;
+						break;
 					}
-				} else {
-					File zipPathFile = new File(outPath.substring(0, outPath.lastIndexOf("/")));
-					if(!zipPathFile.exists()){
-						zipPathFile.mkdirs();
-					}
-					out = new FileOutputStream(outPath);
-					byte[] buf1 = new byte[1024];
-					int len;
-					while((len=in.read(buf1))>0){
-						out.write(buf1,0,len);
-					}
-					
-					out.flush();
-					out.close();
+				}
+				if(!filterFlag) {
+					doWriteFileFlag = false;
+					result = "不合法檔名";
+					log.info("html5 fail file:"+outPath);
+					break;
 				}
 				
 			}
 			
+			if(doWriteFileFlag) {
+				for(Enumeration entries = zip.entries();entries.hasMoreElements();){
+					ZipEntry entry = (ZipEntry)entries.nextElement();
+					String zipEntryName = entry.getName();
+					in = zip.getInputStream(entry);
+					String outPath = (path + "/" + zipEntryName).replaceAll("\\*", "/");
+					
+					//判斷文件全路徑是否为文件夾,如果是上面已經上傳,不需要解壓
+					if(new File(outPath).isDirectory()){
+						continue;
+					}
+					//輸出文件路徑信息
+					log.info(outPath);
+					if(zipEntryName.endsWith("/")){
+						//判斷路徑是否存在,不存在則創建文件路徑
+						File zipPathFile = new File(outPath);
+						if(!zipPathFile.exists()){
+							zipPathFile.mkdirs();
+						}
+					} else {
+						File zipPathFile = new File(outPath.substring(0, outPath.lastIndexOf("/")));
+						if(!zipPathFile.exists()){
+							zipPathFile.mkdirs();
+						}
+						out = new FileOutputStream(outPath);
+						byte[] buf1 = new byte[1024];
+						int len;
+						while((len=in.read(buf1))>0){
+							out.write(buf1,0,len);
+						}
+						out.flush();
+						out.close();
+					}
+				}
+			}
 			
 		} catch (Exception e) {
 			if(out != null){
@@ -259,8 +283,9 @@ public class SpringZipCompress {
 			if(zip != null){
 				zip.close();
 			}
+			log.info("******************解壓完畢********************");
+			return result;
 		}
-		log.info("******************解壓完畢********************");
 	}
 	
 	public static byte[] getBytesFromFile(File f){

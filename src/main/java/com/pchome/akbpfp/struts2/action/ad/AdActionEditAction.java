@@ -3,6 +3,8 @@ package com.pchome.akbpfp.struts2.action.ad;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -34,6 +36,7 @@ import com.pchome.akbpfp.db.service.codeManage.IPfpCodeTrackingService;
 import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
+import com.pchome.enumerate.ad.EnumAdArea;
 import com.pchome.enumerate.ad.EnumAdCountry;
 import com.pchome.enumerate.ad.EnumAdDevice;
 import com.pchome.enumerate.ad.EnumAdPvLimitPeriod;
@@ -459,7 +462,24 @@ public class AdActionEditAction extends BaseCookieAction{
 			adCountry = null;
 		}
 		
+		
+		List beforeAccesslogCity = new ArrayList<String>();
+		if(pfpAdAction.getAdActionCountry() != null && pfpAdAction.getAdActionCountry().equals("Taiwan")) {
+			if(pfpAdAction.getAdActionCity() != null) {
+				String [] beforeAccesslogCityArray = pfpAdAction.getAdActionCity().split(",");
+				for (int i = 0; i < beforeAccesslogCityArray.length; i++) {
+					for (EnumAdArea enumAdArea : EnumAdArea.values()) {
+						if(beforeAccesslogCityArray[i].equals(enumAdArea.getAreaCode())) {
+							beforeAccesslogCity.add(enumAdArea.getName());
+						}
+					}
+				}
+			}
+		}
+		
+		
 		String saveAdCity = null;
+		List afterAccesslogCity = new ArrayList<String>();
 		if(adCountry != null && adCountry.equals("Taiwan")) {
 			if(adEditCity != null) {
 				if(adEditCity.length == 5) {
@@ -472,27 +492,65 @@ public class AdActionEditAction extends BaseCookieAction{
 						}else {
 							saveAdCity = saveAdCity + adEditCity[i] + ",";
 						}
+						
+						for (EnumAdArea enumAdArea : EnumAdArea.values()) {
+							if(adEditCity[i].equals(enumAdArea.getAreaCode())) {
+								afterAccesslogCity.add(enumAdArea.getName());
+							}
+						}
 					}
 				}
 			}
 		}
-
-		
 		
 		
 		//修改廣告投放地區 access log
-//		admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, accesslogMessage_Date, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-		
-		
-		
-		
-//		admAccesslogService
-//		if(!pfpAdAction.getAdActionEndDate().equals(ActionEndDate)) {
-//			String accesslogAction_Date = EnumAccesslogAction.PLAY_MODIFY.getMessage();
-//			String accesslogMessage_Date = accesslogAction_Date + ":" + adActionSeq + ", 活動名稱:" + adActionName + ", 廣告開始日期:" + sdf.format(pfpAdAction.getAdActionStartDate()) + " => " + sdf.format(ActionStartDate);
-//			admAccesslogService.recordAdLog(EnumAccesslogAction.AD_DATE_MODIFY, accesslogMessage_Date, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-////			pfpAdAction.setAdActionStartDate(ActionStartDate);
-//		}
+		if((adCountry == null &&  pfpAdAction.getAdActionCountry() != null) || (adCountry != null && !adCountry.equals(pfpAdAction.getAdActionCountry())) || ((adCountry!=null && adCountry.equals("Taiwan")) && (pfpAdAction.getAdActionCountry()!= null && pfpAdAction.getAdActionCountry().equals("Taiwan")))){
+			String message = "";
+			String beforeCountry = "";
+			if(pfpAdAction.getAdActionCountry() == null) {
+				beforeCountry = EnumAdCountry.ALL.getCountryName();
+			}else if(pfpAdAction.getAdActionCountry().equals(EnumAdCountry.TAIWAN.getCountryType())) {
+				beforeCountry = EnumAdCountry.TAIWAN.getCountryName();
+			}
+			String afterCountry = "";
+			if(adCountry == null) {
+				afterCountry = EnumAdCountry.ALL.getCountryName();
+			}else if(adCountry.equals(EnumAdCountry.TAIWAN.getCountryType())) {
+				afterCountry = EnumAdCountry.TAIWAN.getCountryName();
+			}
+			
+			
+			//1.全球改台灣
+			if(pfpAdAction.getAdActionCountry() == null && adCountry != null && adCountry.equals("Taiwan")) {
+				if(afterAccesslogCity.size() == 0) {
+					afterAccesslogCity.add("全區");
+				}
+				message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"指定廣告投放地區："+beforeCountry+"=>"+afterCountry+afterAccesslogCity;
+				
+			}
+			//2.台灣改台灣
+			if((pfpAdAction.getAdActionCountry() != null && pfpAdAction.getAdActionCountry().equals("Taiwan")) && (adCountry != null && adCountry.equals("Taiwan"))) {
+				if(StringUtils.isBlank(pfpAdAction.getAdActionCity())) {
+					if(afterAccesslogCity.size() > 0) {
+						message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"指定廣告投放地區："+beforeCountry+"[全區]=>"+afterCountry+afterAccesslogCity;
+					}
+				}else {
+					if(afterAccesslogCity.size() == 0) {
+						afterAccesslogCity.add("全區");
+					}
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"指定廣告投放地區："+beforeCountry+beforeAccesslogCity+"=>"+afterCountry+afterAccesslogCity;
+				}
+			}
+			//3.台灣改全球
+			if((pfpAdAction.getAdActionCountry() != null && pfpAdAction.getAdActionCountry().equals("Taiwan")) && (adCountry == null)) {
+				if(beforeAccesslogCity.size() == 0) {
+					beforeAccesslogCity.add("全區");
+				}
+				message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"指定廣告投放地區："+beforeCountry+beforeAccesslogCity+"=>"+afterCountry;
+			}
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+		}
 		
 		pfpAdAction.setAdActionCountry(adCountry);
 		pfpAdAction.setAdActionCity(saveAdCity);
@@ -697,7 +755,18 @@ public class AdActionEditAction extends BaseCookieAction{
 			pfpAdSpecificWebsiteService.saveOrUpdate(websiteData);
 		}
 		
-		
+		//寫access 在行銷/轉換 log用
+		List<String> trackingCodeList = new ArrayList<String>();
+		List<String> converCodeList = new ArrayList<String>();
+		List<PfpCodeAdactionMerge> pfpCodeAdactionMergeList = pfpCodeAdActionMergeService.findProdCodeByAdactionSeq(adActionSeq);
+		for (PfpCodeAdactionMerge pfpCodeAdactionMerge : pfpCodeAdactionMergeList) {
+			if(pfpCodeAdactionMerge.getCodeType().equals("C")) {
+				converCodeList.add(pfpCodeAdactionMerge.getCodeId());
+			}
+			if(pfpCodeAdactionMerge.getCodeType().equals("T")) {
+				trackingCodeList.add(pfpCodeAdactionMerge.getCodeId());
+			}
+		}
 		
 		//儲存商品廣告代碼對應
 		pfpCodeAdActionMergeService.deleteProdCodeByCodeType("T", adActionSeq);
@@ -708,11 +777,12 @@ public class AdActionEditAction extends BaseCookieAction{
 		while (prodCodeInfoJsonkeys.hasNext()) {
 			String key = prodCodeInfoJsonkeys.next();
 			Object jsonbValue = prodCodeInfoJson.get(key);
+			String convertSeq = "";
 			if (key.equals("convert_code") && jsonbValue != null) {
 				Iterator<String> trackingCodeJsonkeys = ((JSONObject) jsonbValue).keys();
 				while (trackingCodeJsonkeys.hasNext()) {
 					String convertJsonKey = trackingCodeJsonkeys.next();
-					String convertSeq = (String) ((JSONObject) jsonbValue).get(convertJsonKey);
+					convertSeq = (String) ((JSONObject) jsonbValue).get(convertJsonKey);
 					PfpCodeAdactionMerge pfpCodeAdActionMerge = new PfpCodeAdactionMerge();
 					pfpCodeAdActionMerge.setAdActionSeq(adActionSeq);
 					pfpCodeAdActionMerge.setCodeType("C");
@@ -721,11 +791,39 @@ public class AdActionEditAction extends BaseCookieAction{
 					pfpCodeAdActionMerge.setCreateDate(date);
 					pfpCodeAdActionMergeService.saveOrUpdate(pfpCodeAdActionMerge);
 				}
-			} else if (key.equals("tracking_code") && jsonbValue != null) {
+				
+				//轉換access log
+				if(converCodeList.size() == 0 && StringUtils.isNotBlank(convertSeq)) {
+					var message = "";
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，轉換追蹤：不使用轉換追蹤 =>使用轉換追蹤："+pfpCodeConvertService.get(convertSeq).getConvertName();
+					admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+				}
+				
+				if(converCodeList.size() > 0 && StringUtils.isNotBlank(convertSeq) && !converCodeList.get(0).equals(convertSeq)) {
+					var message = "";
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，轉換追蹤：使用轉換追蹤("+pfpCodeConvertService.get(converCodeList.get(0)).getConvertName()+") =>使用轉換追蹤："+pfpCodeConvertService.get(convertSeq).getConvertName();
+					admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+				}
+				
+				if(converCodeList.size() > 0 && StringUtils.isBlank(convertSeq)) {
+					var message = "";
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，轉換追蹤：使用轉換追蹤("+pfpCodeConvertService.get(converCodeList.get(0)).getConvertName()+") =>不使用轉換追蹤";
+					admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+				}
+				
+				
+			}else if (key.equals("tracking_code") && jsonbValue != null) {
 				Iterator<String> trackingCodeJsonkeys = ((JSONObject) jsonbValue).keys();
+				String trackingCodeStr = "";
 				while (trackingCodeJsonkeys.hasNext()) {
 					String trackingJsonKey = trackingCodeJsonkeys.next();
 					String trackingSeq = (String) ((JSONObject) jsonbValue).get(trackingJsonKey);
+					
+					if(StringUtils.isBlank(trackingCodeStr)) {
+						trackingCodeStr = trackingCodeStr + pfpCodeTrackingService.get(trackingSeq).getTrackingName();
+					}else {
+						trackingCodeStr = trackingCodeStr + "，"+pfpCodeTrackingService.get(trackingSeq).getTrackingName();
+					}
 					PfpCodeAdactionMerge pfpCodeAdActionMerge = new PfpCodeAdactionMerge();
 					pfpCodeAdActionMerge.setAdActionSeq(adActionSeq);
 					pfpCodeAdActionMerge.setCodeType("T");
@@ -733,10 +831,63 @@ public class AdActionEditAction extends BaseCookieAction{
 					pfpCodeAdActionMerge.setUpdateDate(date);
 					pfpCodeAdActionMerge.setCreateDate(date);
 					pfpCodeAdActionMergeService.saveOrUpdate(pfpCodeAdActionMerge);
-
+				}
+				
+				//追蹤access log
+				if(trackingCodeList.size() == 0 && StringUtils.isNotBlank(trackingCodeStr)) {
+					var message = "";
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，再行銷追蹤：不使用再行銷追蹤 =>使用再行銷追蹤："+trackingCodeStr;
+					admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+				}
+//				
+				if(trackingCodeList.size() > 0 && StringUtils.isNotBlank(trackingCodeStr)) {
+					List<String> trackingCodeSaveList= Arrays.asList(trackingCodeStr.split("，"));
+					Collections.sort(trackingCodeList);
+					Collections.sort(trackingCodeSaveList);
+					boolean flag = true;
+					for (int i = 0; i < trackingCodeSaveList.size(); i++) {
+						if(!trackingCodeList.get(i).equals(trackingCodeSaveList.get(i))) {
+							flag = false;
+							break;
+						}
+					}
+					
+					if(!flag) {
+						String beforeTrackingCodeStr = "";
+						for (String trackingCode : trackingCodeList) {
+							if(StringUtils.isBlank(beforeTrackingCodeStr)) {
+								beforeTrackingCodeStr = beforeTrackingCodeStr + pfpCodeTrackingService.get(trackingCode).getTrackingName();
+							}else {
+								beforeTrackingCodeStr = beforeTrackingCodeStr + "，"+pfpCodeTrackingService.get(trackingCode).getTrackingName();
+							}
+						}
+						var message = "";
+						message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，再行銷追蹤：使用再行銷追蹤："+beforeTrackingCodeStr+" =>"+trackingCodeStr;
+						admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+					}
+				}
+				
+				if(trackingCodeList.size() > 0 && StringUtils.isBlank(trackingCodeStr)) {
+					String beforeTrackingCodeStr = "";
+					for (String trackingCode : trackingCodeList) {
+						if(StringUtils.isBlank(beforeTrackingCodeStr)) {
+							beforeTrackingCodeStr = beforeTrackingCodeStr + pfpCodeTrackingService.get(trackingCode).getTrackingName();
+						}else {
+							beforeTrackingCodeStr = beforeTrackingCodeStr + "，"+pfpCodeTrackingService.get(trackingCode).getTrackingName();
+						}
+					}
+					var message = "";
+					message = "廣告：PFP廣告-" + pfpAdAction.getAdActionName()+" "+pfpAdAction.getAdActionSeq()+"，再行銷追蹤：使用再行銷追蹤"+beforeTrackingCodeStr+" =>不使用再行銷追蹤";
+					admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 				}
 			}
 		}
+		
+		
+		
+		
+		
+		
 		return SUCCESS;
 	}
 
