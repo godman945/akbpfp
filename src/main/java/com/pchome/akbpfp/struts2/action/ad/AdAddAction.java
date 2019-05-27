@@ -1520,7 +1520,7 @@ public class AdAddAction extends BaseCookieAction{
 				if(!originalPathFile.exists()){
 					originalPathFile.mkdirs();
 				}
-				SpringZipCompress.getInstance().openZip(fileuploadFileName,file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
+				String zipResult = SpringZipCompress.getInstance().openZip(fileuploadFileName,file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
 				
 				int FileAmount = checkFileAmount(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
 				log.info(">>>>>>>>>>>>>>>>>>>>>   FileAmount  = " + FileAmount);
@@ -1536,6 +1536,11 @@ public class AdAddAction extends BaseCookieAction{
 				if(FileAmount > 40){
 					errorMsg = "夾帶檔案超過40 個";
 				}
+				if(!zipResult.equals("success")){
+					errorMsg = zipResult;
+				}
+				
+				
 				
 				if(indexHtmlFile.exists() && FileAmount <= 40){
 					Document doc = Jsoup.parse(indexHtmlFile, "UTF-8");
