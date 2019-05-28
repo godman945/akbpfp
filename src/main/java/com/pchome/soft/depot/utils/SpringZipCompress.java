@@ -177,31 +177,11 @@ public class SpringZipCompress {
 		if(!pathFile.exists()){
 			pathFile.mkdirs();
 		}
-		
 		ZipFile zip = null;
 		InputStream in = null;
 		OutputStream out = null;
-		
 		try {
-			
-			in = new FileInputStream(zipFile);
-			out = new FileOutputStream(new File(path + "/" + zipName));
-			
-			byte[] buf = new byte[1024];        
-            int bytesRead;        
-            while ((bytesRead = in.read(buf)) > 0) {
-            	out.write(buf, 0, bytesRead);
-            }
-            
-            in.close();
-            out.flush();
-			out.close();
-			
-			in = null;
-			out = null;
-			
 			zip = new ZipFile(zipFile);
-			
 			//判斷上傳檔案是否不在合法檔名中
 			boolean doWriteFileFlag = true;
 			List<String> html5Filter = Arrays.asList(".JPG",".JPEG",".PNG",".GIF",".CSS",".JS",".HTML",".HTM");
@@ -229,14 +209,13 @@ public class SpringZipCompress {
 				}
 				
 			}
-			
+			//檢查完zip中檔案皆合法才會寫入檔案
 			if(doWriteFileFlag) {
 				for(Enumeration entries = zip.entries();entries.hasMoreElements();){
 					ZipEntry entry = (ZipEntry)entries.nextElement();
 					String zipEntryName = entry.getName();
 					in = zip.getInputStream(entry);
 					String outPath = (path + "/" + zipEntryName).replaceAll("\\*", "/");
-					
 					//判斷文件全路徑是否为文件夾,如果是上面已經上傳,不需要解壓
 					if(new File(outPath).isDirectory()){
 						continue;
@@ -265,7 +244,6 @@ public class SpringZipCompress {
 					}
 				}
 			}
-			
 		} catch (Exception e) {
 			if(out != null){
 				out.flush();

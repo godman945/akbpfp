@@ -573,9 +573,6 @@ public class ProdAd implements IAd {
 				}
 			}
 		}
-		log.info(">>>>>>>>>>>>>>>>beforeDadSaleImg:"+beforeDadSaleImg);
-		log.info(">>>>>>>>>>>>>>>>afterDadSaleImg:"+afterDadSaleImg);
-		
 		
 		saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
 		JSONObject uploadLogoLogJson = new JSONObject(adEditAction.getUploadLogoLog());
@@ -600,8 +597,6 @@ public class ProdAd implements IAd {
 				}
 			}
 		 }
-		log.info(">>>>>>>>>>>>>>>>beforeDadLogoSaleImg:"+beforeDadLogoSaleImg);
-		log.info(">>>>>>>>>>>>>>>>afterDadLogoSaleImg:"+afterDadLogoSaleImg);
 		
 		saveImg(uploadLogoLogJson,"logoImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
 		//accesslog
@@ -614,11 +609,11 @@ public class ProdAd implements IAd {
 		}
 		
 		if(!beforeProdGroupName.equals(afterProdGroupName)) {
-			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改商品目錄："+beforeProdGroupName+"=>"+afterProdGroupName;
+			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改商品組合："+beforeProdGroupName+"=>"+afterProdGroupName;
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		}
 		if(!beforeProdListName.equals(afterProdListName)) {
-			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改商品組合："+beforeProdListName+"=>"+afterProdListName;
+			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改商品目錄："+beforeProdListName+"=>"+afterProdListName;
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		}
 		if(!beforeAdLinkURL.equals(afterAdLinkURL)) {
@@ -629,15 +624,17 @@ public class ProdAd implements IAd {
 			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改LOGO標題文字："+beforeLogoTxt+"=>"+afterLogoTxt;
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		}
-		String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改結尾行銷圖像："+"["+beforeDadSaleImg+"]=>["+afterDadSaleImg+"]";
-		admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
-		
-		message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改行銷圖像："+"["+beforeDadLogoSaleImg+"]=>["+afterDadLogoSaleImg+"]";
-		admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
-		
+		String message = "";
+		if(StringUtils.isNotBlank(beforeDadSaleImg) || StringUtils.isNotBlank(afterDadSaleImg)) {
+			message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改結尾行銷圖像："+"["+beforeDadSaleImg+"]=>["+afterDadSaleImg+"]";
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
+		}
+		if(StringUtils.isNotBlank(beforeDadLogoSaleImg) || StringUtils.isNotBlank(afterDadLogoSaleImg)) {
+			message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改行銷圖像："+"["+beforeDadLogoSaleImg+"]=>["+afterDadLogoSaleImg+"]";
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
+		}
 		message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"=>送出審核";
 		admAccesslogService.recordAdLog(EnumAccesslogAction.AD_STATUS_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
-		
 		return null;
 	}
 	
