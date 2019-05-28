@@ -573,9 +573,6 @@ public class ProdAd implements IAd {
 				}
 			}
 		}
-		log.info(">>>>>>>>>>>>>>>>beforeDadSaleImg:"+beforeDadSaleImg);
-		log.info(">>>>>>>>>>>>>>>>afterDadSaleImg:"+afterDadSaleImg);
-		
 		
 		saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
 		JSONObject uploadLogoLogJson = new JSONObject(adEditAction.getUploadLogoLog());
@@ -600,8 +597,6 @@ public class ProdAd implements IAd {
 				}
 			}
 		 }
-		log.info(">>>>>>>>>>>>>>>>beforeDadLogoSaleImg:"+beforeDadLogoSaleImg);
-		log.info(">>>>>>>>>>>>>>>>afterDadLogoSaleImg:"+afterDadLogoSaleImg);
 		
 		saveImg(uploadLogoLogJson,"logoImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
 		//accesslog
