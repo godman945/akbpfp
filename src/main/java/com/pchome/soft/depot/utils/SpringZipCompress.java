@@ -184,7 +184,7 @@ public class SpringZipCompress {
 			zip = new ZipFile(zipFile);
 			//判斷上傳檔案是否不在合法檔名中
 			boolean doWriteFileFlag = true;
-			List<String> html5Filter = Arrays.asList(".JPG",".JPEG",".PNG",".GIF",".CSS",".JS",".HTML",".HTM");
+			List<String> html5Filter = Arrays.asList(".JPG",".JPEG",".PNG",".GIF",".CSS",".JS",".HTML",".HTM",".DB");
 			for(Enumeration entries = zip.entries();entries.hasMoreElements();){
 				boolean filterFlag = false;
 				ZipEntry entry = (ZipEntry)entries.nextElement();
