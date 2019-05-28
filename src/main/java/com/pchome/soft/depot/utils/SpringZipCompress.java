@@ -183,23 +183,6 @@ public class SpringZipCompress {
 		OutputStream out = null;
 		
 		try {
-			
-			in = new FileInputStream(zipFile);
-			out = new FileOutputStream(new File(path + "/" + zipName));
-			
-			byte[] buf = new byte[1024];        
-            int bytesRead;        
-            while ((bytesRead = in.read(buf)) > 0) {
-            	out.write(buf, 0, bytesRead);
-            }
-            
-            in.close();
-            out.flush();
-			out.close();
-			
-			in = null;
-			out = null;
-			
 			zip = new ZipFile(zipFile);
 			
 			//判斷上傳檔案是否不在合法檔名中
