@@ -614,11 +614,11 @@ public class ProdAd implements IAd {
 		}
 		
 		if(!beforeProdGroupName.equals(afterProdGroupName)) {
-			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改商品目錄："+beforeProdGroupName+"=>"+afterProdGroupName;
+			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改商品組合："+beforeProdGroupName+"=>"+afterProdGroupName;
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		}
 		if(!beforeProdListName.equals(afterProdListName)) {
-			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改商品組合："+beforeProdListName+"=>"+afterProdListName;
+			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改商品目錄："+beforeProdListName+"=>"+afterProdListName;
 			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		}
 		if(!beforeAdLinkURL.equals(afterAdLinkURL)) {
