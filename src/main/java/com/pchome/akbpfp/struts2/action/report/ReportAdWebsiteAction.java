@@ -167,23 +167,23 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 
 		content.append("裝置,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,");
 
-		if (showHideColumnMap.get(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
+		if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
 			content.append("轉換次數,");
 		}
 
-		if (showHideColumnMap.get(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
+		if (showHideColumnMap.get(EnumReport.CONVERT_CTR.getTextValue())) {
 			content.append("轉換率,");
 		}
 
-		if (showHideColumnMap.get(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
+		if (showHideColumnMap.get(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
 			content.append("總轉換價值,");
 		}
 
-		if (showHideColumnMap.get(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
+		if (showHideColumnMap.get(EnumReport.CONVERT_COST.getTextValue())) {
 			content.append("平均轉換成本,");
 		}
 
-		if (showHideColumnMap.get(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
+		if (showHideColumnMap.get(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
 			content.append("廣告投資報酬率,");
 		}
 		content.append("\n");
