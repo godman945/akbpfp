@@ -60,7 +60,10 @@ function horisontal_scroll_listing(listing_obj) {
 			current_row_height = $(this).outerHeight();
 			$('th,td', $(this)).each(function(index) {
 				// set row height for all cells
-				$(this).css('height', current_row_height);
+				var url = location.pathname;
+				if (url.indexOf('reportKeyword.html') == -1) { // 非關鍵字成效報表，才做高度css處理
+					$(this).css('height', current_row_height);
+				}
 				// set position
 				if (index < count_fixed_collumns) {
 					$(this).css({

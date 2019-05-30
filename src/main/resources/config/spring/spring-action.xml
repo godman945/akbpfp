@@ -164,9 +164,9 @@
 	 <bean id="ReportKeywordAction" class="com.pchome.akbpfp.struts2.action.report.ReportKeywordAction" scope="prototype">
 	 	<property name="adKeywordReportService" ref="AdKeywordReportService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
-	 	<property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
-	 	<property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
-	 	<property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" />
+<!-- 	 	<property name="pfpAdActionDAO" ref="PfpAdActionDAO" /> -->
+<!-- 	 	<property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" /> -->
+<!-- 	 	<property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" /> -->
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
     </bean>
 	

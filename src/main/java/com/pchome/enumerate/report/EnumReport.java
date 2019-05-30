@@ -48,6 +48,10 @@ public enum EnumReport {
      * 廣告投資報酬率
      */
     CONVERT_INVESTMENT_COST("convertInvestmentCost"),
+    /**
+     * 平均廣告排名
+     */
+    RANK_AVG("rankAvg"),
 	ADTYPE_CUSTINFO("adtype_custinfo"),
     ADTYPE_ACTIVITY("adtype_activity"),
     ADTYPE_GROUP("adtype_group"),

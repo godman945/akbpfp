@@ -88,6 +88,9 @@
     
     <bean id="AdKeywordReportService" class="com.pchome.akbpfp.db.service.report.AdKeywordReportService"> 
         <property name="adKeywordReportDAO" ref="AdKeywordReportDAO" />
+        <property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" />
+        <property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
+        <property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
     </bean>
 
 	 <bean id="AdReportService" class="com.pchome.akbpfp.db.service.report.AdReportService"> 

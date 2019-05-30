@@ -184,17 +184,17 @@
         </action>
         <!-- adGroup 分類成效 end -->
         
-		<!--keyword-->
+		<!-- keyword 關鍵字成效 -->
         <action name="reportKeywordDownload" class="ReportKeywordAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
-      		<result name="success" type="stream">   
-             	<param name="contentType">application/octet-stream</param>   
-             	<param name="contentDisposition">   
-                    attachment;filename="${downloadFileName}"  
-                </param>   
-                <param name="inputName">downloadFileStream</param> 
-            </result>  
+      		<result name="success" type="stream">
+             	<param name="contentType">application/octet-stream</param>
+             	<param name="contentDisposition">
+                    attachment;filename="${downloadFileName}"
+                </param>
+                <param name="inputName">downloadFileStream</param>
+            </result>
       	</action>
 		
 		<action name="reportKeyword" class="ReportKeywordAction">
@@ -207,7 +207,7 @@
         <action name="reportKeywordAjaxTable" class="ReportKeywordAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.keyword</result>
+            <result type="tiles" name="success">report.body.keyword.detailList</result>
         </action>
 		
 		<action name="reportKeywordAjaxChart" class="ReportKeywordAction" method="flashDataDownLoad">
@@ -215,6 +215,7 @@
 			<interceptor-ref name="reportPrivilegeInterceptor" />
             <result type="tiles" name="success">report.flashData</result>
         </action>
+        <!-- keyword 關鍵字成效 end -->
 		
 		<!--report cost-->
         <action name="reportCostDownload" class="ReportCostAction" >
