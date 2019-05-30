@@ -88,9 +88,7 @@
 								</ul>
 							</div>
 						</th>
-						
 						<th data-info-name="rankAvg" class="col-w120">平均廣告排名</th>
-                        
 					</tr>
 				</thead>
 
@@ -343,10 +341,8 @@
 						<#-- 總計列資料 -->
 						<#list resultSumData as rowSum>
 							<tr class="txt-row summaryRow">
-								<!--狀態-->
-								<td data-info-name="" style="height:70px"></td>
-								<!--開關-->
-                                <td data-info-name="" style="height:70px"></td>
+								<td data-info-name="" style="height:70px"></td><!--狀態-->
+                                <td data-info-name="" style="height:70px"></td><!--開關-->
                                 <!--關鍵字-->
 								<td data-info-name="">
 									<div class="w-full h-full">
@@ -355,13 +351,10 @@
 										</div>
 									</div>
 								</td>
-								<!--活動-->
-								<td data-info-name=""></td>
-								<!--分類-->
-                                <td data-info-name=""></td>
-                                <!--裝置-->
-                                <td data-info-name=""></td>
-                                
+								
+								<td data-info-name=""></td><!--活動-->
+                                <td data-info-name=""></td><!--分類-->
+                                <td data-info-name=""></td><!--裝置-->
 								<td data-info-name="" class="txt-right"><span class="">${rowSum.pvTotal?string("#,###,###.##")!}</span></td><!--曝光數-->
 								<td data-info-name="" class="txt-right"><span class="">${rowSum.clkTotal?string("#,###,###.##")!}</span></td><!--互動數-->
 								<td data-info-name="" class="txt-right"><span class="data-percentage">${rowSum.ctrTotal?string("#,###,###.##")!}</span></td><!--互動率-->

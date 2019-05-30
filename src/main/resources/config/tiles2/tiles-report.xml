@@ -141,13 +141,6 @@
 	</definition>
 
 	<definition name="report.body.keyword.detailList" template="/ftl/report/keyword/keywordDataList.ftl" />
-
-<!--     <definition name="report.body.keyword" extends="report.body" > -->
-<!--     	<put-attribute name="reportTable" value="report.ajaxTable.keyword" /> -->
-<!-- 		<put-attribute name="chartTable" value="report.chartTable.keyword" /> -->
-<!-- 	</definition> -->
-	
-<!-- 	<definition name="report.ajaxTable.keyword" template="/ftl/report/ajax/keywordTable.ftl" /> -->
 	<definition name="report.chartTable.keyword" template="/ftl/report/chart/keywordChartTable.ftl" />
     <!-- .report.keyword 關鍵字成效 end -->
     

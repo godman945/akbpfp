@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +14,6 @@ import org.apache.commons.lang3.StringUtils;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdActionDAO;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdGroupDAO;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdKeywordDAO;
-import com.pchome.akbpfp.db.dao.report.AdGroupReportVO;
 import com.pchome.akbpfp.db.dao.report.AdKeywordReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdKeywordReportDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
@@ -67,8 +65,6 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 		Map<String, String> adStatusMap = CommonUtils.getInstance().getAdStatusMap();
 
 		List<AdKeywordReportVO> adKeywordVOList = new ArrayList<>();
-//		List<AdKeywordReportVO> subtotalList = new ArrayList<>(); // 小計列
-//		List<AdKeywordReportVO> detailList = new ArrayList<>(); // 明細列
 		
 		for (Map<String, Object> dataMap : adKeywordList) {
 			AdKeywordReportVO adKeywordReportVO = new AdKeywordReportVO();
@@ -330,22 +326,13 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			BigDecimal subtotalBigDecimal = BigDecimal.valueOf(kwKiloCostSubtotal); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
 			adKeywordReportVO.setKwKiloCostSubtotal(subtotalBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
 			
-//			detailList.add(adKeywordReportVO);
-//			subtotalList.add(adKeywordReportVO);
 			adKeywordVOList.add(adKeywordReportVO);
 		}
 		
 		// 處理排序
 		if (StringUtils.isNotBlank(vo.getSortBy())) {
-//			CommonUtils.getInstance().sort(subtotalList, vo.getSortBy().split("-")[0], vo.getSortBy().split("-")[1]);
 			CommonUtils.getInstance().sort(adKeywordVOList, vo.getSortBy().split("-")[0], vo.getSortBy().split("-")[1]);
 		}
-		
-//		Map<String, List<AdKeywordReportVO>> resultData = new LinkedHashMap<>();
-//		resultData.put("subtotalList", subtotalList); // 小計列
-//		resultData.put("detailList", detailList); // 明細列
-		
-//		return resultData;
 		
 		return adKeywordVOList;
 	}
@@ -497,7 +484,6 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwRankAvg((Double) kwRankAvg.get(0).get("ad_rank_avg"));
 			
 
-			
 			// 詞組比對-曝光數
 			BigDecimal adKeywordPhrasePvSum = (BigDecimal) dataMap.get("ad_keyword_phrase_pv_sum");
 			adKeywordReportVO.setKwPhrPvSum(adKeywordPhrasePvSum);
@@ -527,8 +513,6 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwPhrRankAvg((Double) kwPhrRankAvg.get(0).get("ad_rank_avg"));
 			
 			
-			
-			
 			// 精準比對-曝光數
 			BigDecimal adKeywordPrecisionPvSum = (BigDecimal) dataMap.get("ad_keyword_precision_pv_sum");
 			adKeywordReportVO.setKwPrePvSum(adKeywordPrecisionPvSum);
@@ -556,7 +540,6 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKeywordStyle(EnumAdKeywordType.PRECISION.getStyle()); // 取得平均廣告排名sql用
 			List<Map<String, Object>> kwPreRankAvg = adKeywordReportDAO.getAdKeywordRank(adKeywordReportVO);
 			adKeywordReportVO.setKwPreRankAvg((Double) kwPreRankAvg.get(0).get("ad_rank_avg"));
-			
 			
 			
 			// 小計-曝光數

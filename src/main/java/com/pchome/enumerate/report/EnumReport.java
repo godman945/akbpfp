@@ -206,4 +206,5 @@ public enum EnumReport {
     public String getTextValue() {
         return textValue;
     }
+    
 }
