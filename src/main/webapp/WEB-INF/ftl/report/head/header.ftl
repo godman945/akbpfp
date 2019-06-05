@@ -18,7 +18,6 @@
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.blockUI.js"></script>
 	<!-- <script language="JavaScript" src="https://code.highcharts.com/highcharts.js"></script> -->
 	<script language="JavaScript" src="https://code.highcharts.com/modules/exporting.js"></script>
-	<script language="JavaScript" src="https://code.highcharts.com/modules/series-label.js"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/report/<@t.getAsString name="jsName" />" ></script>
     

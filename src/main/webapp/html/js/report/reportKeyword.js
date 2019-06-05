@@ -126,6 +126,10 @@ function processQueryAjax(changePageNo) {
 			$.each(whereObject, function(key, val) {
 				$("[data-where=" + key + "-" + val + "]").siblings().attr("data-select", ""); // 將同一層的data-select取消選取
 				$("[data-where=" + key + "-" + val + "]").attr("data-select", "true");
+				
+				if ($("#totalPage").val() == 0) { // 查無資料則總頁數為0,將where下拉選單值塞入td欄位
+					$(".whereNoData-" + key).html($("[data-where=" + key + "-" + val + "]").html());
+				}
 			});
 			
 			// 重新調整顯示隱藏欄位

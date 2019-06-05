@@ -1,6 +1,9 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
 
+<#-- 讓趨勢圖線旁邊有文字的套件 -->
+<script language="JavaScript" src="https://code.highcharts.com/modules/series-label.js"></script>
+
 <div class="container-prodmanage">
 
 	<!-- 次目錄導覽列 開始 -->

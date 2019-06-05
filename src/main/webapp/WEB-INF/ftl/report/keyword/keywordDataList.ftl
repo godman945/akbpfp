@@ -366,9 +366,74 @@
 						</#list>
 					<#else>
 						<tr class="txt-row">
-							<td data-info-name="" colspan="20" align="center">
-								無此廣告成效
-							</td>
+							<!--狀態-->
+                            <td data-info-name="" class="txt-center">
+                                <div class="w-full"><u class="pos-middle adstatus-icon"></u></div>
+                            </td>
+
+                            <!--開關-->
+                            <td data-info-name="" class="txt-center">
+                                <div class="w-full"></div>
+                            </td>
+
+                            <!--關鍵字-->
+                            <td data-info-name="" class="txt-left">
+                                <div class="w-full">
+                                    <div class="pos-middle">無資料</div>
+                                </div>
+                            </td>
+
+                            <!--活動-->
+                            <td data-info-name="" class="txt-left">
+                                <div class="w-full"></div>
+                            </td>
+
+                            <!--分類-->
+                            <td data-info-name="" class="txt-left">
+                                <div class="w-full"></div>
+                            </td>
+
+                            <!--裝置-->
+                            <td data-info-name="" class="txt-left">
+                                <div class="w-full">
+                                    <div class="pos-middle whereNoData-adDevice">全部</div>
+                                </div>
+                            </td>
+
+                            <!--曝光數-->
+                            <td data-info-name="" class="txt-right">
+                                <div class="w-full"></div>
+                            </td>
+
+                            <!--互動數-->
+                            <td data-info-name="" class="txt-right">
+                                <div class="w-full"></div>
+                            </td>
+
+                            <!--互動率-->
+                            <td data-info-name="" class="txt-right">
+                                <div class="w-full"></div>
+                            </td>
+
+                            <!--單次互動費用-->
+                            <td data-info-name="" class="txt-right">
+                                <div class="w-full"></div>
+                            </td>
+
+                            <!--千次曝光費用-->
+                            <td data-info-name="" class="txt-right">
+                                <div class="w-full"></div>
+                            </td>
+
+                            <!--費用-->
+                            <td data-info-name="" class="txt-right">
+                                <div class="w-full"></div>
+                            </td>
+
+                            <!--平均廣告排名-->
+                            <td data-info-name="rankAvg" class="txt-right">
+                                <div class="w-full"></div>
+                            </td>
 						</tr>
 					</#if>
 				</tbody>

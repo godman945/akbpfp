@@ -232,11 +232,11 @@
 								<td data-info-name="" class="txt-right"><span class="cost-dollarmark">${row.avgCost?string("#,###,###.##")!}</span></td><!--單次互動費用-->
 								<td data-info-name="" class="txt-right"><span class="cost-dollarmark">${row.kiloCost?string("#,###,###.##")!}</span></td><!--千次曝光費用-->
 								<td data-info-name="" class="txt-right"><span class="cost-dollarmark">${row.adPriceSum?string("#,###,###.###")!}</span></td><!--費用-->
-								<td data-info-name="convertCount" class="txt-right"><span class="">${row.convertCount?string("#,###,###.##")!}</span></td><!--轉換次數-->                                        
+								<td data-info-name="convertCount" class="txt-right"><span class="">${row.convertCount?string("#,###,###.##")!}</span></td><!--轉換次數-->
 								<td data-info-name="convertCTR" class="txt-right"><span class="data-percentage">${row.convertCTR?string("#,###,###.##")!}</span></td><!--轉換率-->
 								<td data-info-name="convertPriceCount" class="txt-right"><span class="cost-dollarmark">${row.convertPriceCount?string("#,###,###.##")!}</span></td><!--總轉換價值-->
 								<td data-info-name="convertCost" class="txt-right"><span class="cost-dollarmark">${row.convertCost?string("#,###,###.##")!}</span></td><!--平均轉換成本-->
-								<td data-info-name="convertInvestmentCost" class="txt-right"><span class="data-percentage">${row.convertInvestmentCost?string("#,###,###.##")!}</span></td><!--廣告投資報酬率-->                   
+								<td data-info-name="convertInvestmentCost" class="txt-right"><span class="data-percentage">${row.convertInvestmentCost?string("#,###,###.##")!}</span></td><!--廣告投資報酬率-->
 							</tr>
 						</#list>
 						
@@ -263,18 +263,50 @@
 								<td data-info-name="" class="txt-right"><span class="cost-dollarmark">${rowSum.avgCost?string("#,###,###.##")!}</span></td><!--單次互動費用-->
 								<td data-info-name="" class="txt-right"><span class="cost-dollarmark">${rowSum.kiloCost?string("#,###,###.##")!}</span></td><!--千次曝光費用-->
 								<td data-info-name="" class="txt-right"><span class="cost-dollarmark">${rowSum.adPriceSum?string("#,###,###.###")!}</span></td><!--費用-->
-								<td data-info-name="convertCount" class="txt-right"><span class="">${rowSum.convertCount?string("#,###,###.##")!}</span></td><!--轉換次數-->                                        
+								<td data-info-name="convertCount" class="txt-right"><span class="">${rowSum.convertCount?string("#,###,###.##")!}</span></td><!--轉換次數-->
 								<td data-info-name="convertCTR" class="txt-right"><span class="data-percentage">${rowSum.convertCTR?string("#,###,###.##")!}</span></td><!--轉換率-->
 								<td data-info-name="convertPriceCount" class="txt-right"><span class="cost-dollarmark">${rowSum.convertPriceCount?string("#,###,###.##")!}</span></td><!--總轉換價值-->
 								<td data-info-name="convertCost" class="txt-right"><span class="cost-dollarmark">${rowSum.convertCost?string("#,###,###.##")!}</span></td><!--平均轉換成本-->
-								<td data-info-name="convertInvestmentCost" class="txt-right"><span class="data-percentage">${rowSum.convertInvestmentCost?string("#,###,###.##")!}</span></td><!--廣告投資報酬率-->   
+								<td data-info-name="convertInvestmentCost" class="txt-right"><span class="data-percentage">${rowSum.convertInvestmentCost?string("#,###,###.##")!}</span></td><!--廣告投資報酬率-->
 							</tr>
 						</#list>
 					<#else>
 						<tr class="txt-row">
-							<td data-info-name="" colspan="20" align="center">
-								無此廣告成效
-							</td>
+							<td data-info-name="" class="txt-center">
+                                <div class="w-full">
+                                    <u class="pos-middle adstatus-icon"></u>
+                                </div>
+                            </td>
+                            <td data-info-name="">
+                                <div class="w-full">
+                                    <div class="txt-left pos-middle">
+										無資料
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-info-name="">
+                                <div class="w-full">
+                                    <div class="txt-left pos-middle txt-bold">
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            <td data-info-name=""></td>
+                            <td data-info-name="adType" class="whereNoData-adType">全部</td>
+                            <td data-info-name="adOperatingRule" class="whereNoData-adOperatingRule">全部</td>
+                            <td data-info-name="adClkPriceType" class="whereNoData-adClkPriceType">全部</td>
+							<td data-info-name="" class="whereNoData-adDevice">全部</td>
+							<td data-info-name=""><span></span></td><!--曝光數-->
+							<td data-info-name=""><span></span></td><!--互動數-->
+							<td data-info-name=""><span></span></td><!--互動率-->
+							<td data-info-name=""><span></span></td><!--單次互動費用-->
+							<td data-info-name=""><span></span></td><!--千次曝光費用-->
+							<td data-info-name=""><span></span></td><!--費用-->
+							<td data-info-name="convertCount"><span></span></td><!--轉換次數-->
+							<td data-info-name="convertCTR"><span></span></td><!--轉換率-->
+							<td data-info-name="convertPriceCount"><span></span></td><!--總轉換價值-->
+							<td data-info-name="convertCost"><span></span></td><!--平均轉換成本-->
+							<td data-info-name="convertInvestmentCost"><span></span></td><!--廣告投資報酬率-->
 						</tr>
 					</#if>
 				</tbody>

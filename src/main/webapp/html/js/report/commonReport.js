@@ -12,7 +12,7 @@ $(document).ready(function () {
  */
 function horisontal_scroll_listing(listing_obj) {
 	if ($("#totalPage").val() == 0) { // 查無資料則總頁數為0，查無資料不調整畫面
-		return false;
+		$("div.prodtable-box.txt-noselect").addClass("noData");
 	}
 	
 	// get table object
@@ -61,7 +61,8 @@ function horisontal_scroll_listing(listing_obj) {
 			$('th,td', $(this)).each(function(index) {
 				// set row height for all cells
 				var url = location.pathname;
-				if (url.indexOf('reportKeyword.html') == -1) { // 非關鍵字成效報表，才做高度css處理
+				if (url.indexOf('reportKeyword.html') == -1 
+						&& $("#totalPage").val() > 0) { // 非關鍵字成效報表且有資料，才做高度css處理
 					$(this).css('height', current_row_height);
 				}
 				// set position

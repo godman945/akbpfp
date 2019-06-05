@@ -235,9 +235,35 @@
 						</#list>
 					<#else>
 						<tr class="txt-row">
-							<td data-info-name="" colspan="20" align="center">
-								無此廣告成效
-							</td>
+							<td data-info-name="" class="txt-center">
+                                <div class="w-full">
+                                    <u class="pos-middle adstatus-icon"></u>
+                                </div>
+                            </td>
+                            <td data-info-name="">
+                                <div class="w-full">
+                                    <div class="txt-left pos-middle txt-bold">
+										無資料
+                                    </div>
+                                </div>
+                            </td>
+                            
+                            <td data-info-name="adType" class="whereNoData-adType">全部</td>
+                            <td data-info-name="adOperatingRule" class="whereNoData-adOperatingRule">全部</td>
+                            <td data-info-name="adDate"></td>
+							<td data-info-name="" class="whereNoData-adDevice">全部</td>
+							<td data-info-name="adActionMaxPriceAvg"><span></span></td><!--每日預算-->
+							<td data-info-name=""><span></span></td><!--曝光數-->
+							<td data-info-name=""><span></span></td><!--互動數-->
+							<td data-info-name=""><span></span></td><!--互動率-->
+							<td data-info-name=""><span></span></td><!--單次互動費用-->
+							<td data-info-name=""><span></span></td><!--千次曝光費用-->
+							<td data-info-name=""><span></span></td><!--費用-->
+							<td data-info-name="convertCount"><span></span></td><!--轉換次數-->
+							<td data-info-name="convertCTR"><span></span></td><!--轉換率-->
+							<td data-info-name="convertPriceCount"><span></span></td><!--總轉換價值-->
+							<td data-info-name="convertCost"><span></span></td><!--平均轉換成本-->
+							<td data-info-name="convertInvestmentCost"><span></span></td><!--廣告投資報酬率-->
 						</tr>
 					</#if>
 				</tbody>
