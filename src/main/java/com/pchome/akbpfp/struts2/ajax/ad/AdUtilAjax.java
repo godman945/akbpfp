@@ -83,6 +83,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		URL thisUrl = new URL("http://pseapi.mypchome.com.tw/api/security/safeBrowsingLookup.html?url=" + url);
 		URI uri = new URI(thisUrl.getProtocol(), thisUrl.getHost(), thisUrl.getPath(), thisUrl.getQuery(), null);
 		request.setURI(uri);
+		request.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:6.0.2) Gecko/20100101 Firefox/6.0.2");
 		HttpClient client = new DefaultHttpClient();
 		HttpResponse response = client.execute(request);
 		InputStream urlContent = response.getEntity().getContent();
