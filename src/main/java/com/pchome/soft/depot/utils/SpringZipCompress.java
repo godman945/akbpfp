@@ -194,7 +194,7 @@ public class SpringZipCompress {
 				if(new File(outPath).toString().indexOf(".") < 0){
 					continue;
 				}
-				String filePath = outPath.substring(outPath.indexOf("."), outPath.length());
+				String filePath = outPath.substring(outPath.lastIndexOf("."), outPath.length());
 				for (String filter : html5Filter) {
 					if(filePath.toUpperCase().equals(filter)) {
 						filterFlag = true;
