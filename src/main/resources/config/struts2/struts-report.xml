@@ -53,38 +53,6 @@
 				</result> 		
 	     </action>
 		
-		<!--advertise-->
-        <action name="reportAdvertiseDownload" class="ReportAdvertiseAction">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-      		<result name="success" type="stream">   
-             	<param name="contentType">application/octet-stream</param>   
-             	<param name="contentDisposition">   
-                    attachment;filename="${downloadFileName}"  
-                </param>   
-                <param name="inputName">downloadFileStream</param> 
-            </result>  
-      	</action>
-		
-        <action name="reportAdvertise" class="ReportAdvertiseAction">
-            <interceptor-ref name="loginCheckStack" />
-            <interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="redirectAction" name="none">summary</result>
-            <result type="tiles" name="success">.report.advertise</result>
-        </action>
-		
-		<action name="reportAdvertiseAjaxTable" class="ReportAdvertiseAction">
-		  	<interceptor-ref name="loginCheckStack" />
-		  	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.advertise</result>
-        </action>
-		
-		<action name="reportAdvertiseAjaxChart" class="ReportAdvertiseAction" method="flashDataDownLoad">
-			<interceptor-ref name="loginCheckStack" />
-			<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.flashData</result>
-        </action>
-		
 		<!-- adDaily 每日花費成效 -->
         <action name="reportAdDailyDownload" class="ReportAdDailyAction">
 			<interceptor-ref name="loginCheckStack" />
@@ -184,6 +152,40 @@
         </action>
         <!-- adGroup 分類成效 end -->
         
+        <!-- advertise 廣告明細成效 -->
+        <action name="reportAdvertiseDownload" class="ReportAdvertiseAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+				<param name="inputName">downloadFileStream</param>
+			</result>
+		</action>
+		
+        <action name="reportAdvertise" class="ReportAdvertiseAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="redirectAction" name="none">summary</result>
+			<result type="tiles" name="success">.report.advertise</result>
+		</action>
+		
+		<action name="reportAdvertiseAjaxTable" class="ReportAdvertiseAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+<!-- 			<result type="tiles" name="success">report.ajaxTable.advertise</result> -->
+			<result type="tiles" name="success">report.body.advertise.detailList</result>
+		</action>
+		
+		<action name="reportAdvertiseAjaxChart" class="ReportAdvertiseAction" method="flashDataDownLoad">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="tiles" name="success">report.flashData</result>
+		</action>
+        <!-- advertise 廣告明細成效 end -->
+        
 		<!-- keyword 關鍵字成效 -->
         <action name="reportKeywordDownload" class="ReportKeywordAction">
         	<interceptor-ref name="loginCheckStack" />
@@ -216,102 +218,6 @@
             <result type="tiles" name="success">report.flashData</result>
         </action>
         <!-- keyword 關鍵字成效 end -->
-		
-		<!--report cost-->
-        <action name="reportCostDownload" class="ReportCostAction" >
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-      		<result name="success" type="stream">   
-             	<param name="contentType">application/octet-stream</param>   
-             	<param name="contentDisposition">   
-                    attachment;filename="${downloadFileName}"  
-                </param>   
-                <param name="inputName">downloadFileStream</param> 
-            </result>  
-      	</action>
-		
-		<action name="reportCost" class="ReportCostAction">
-            <interceptor-ref name="loginCheckStack" />
-            <interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="redirectAction" name="none">summary</result>
-            <result type="tiles" name="success">.report.cost</result>
-        </action>
-        
-        <action name="reportCostAjaxTable" class="ReportCostAction">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.cost</result>
-        </action>
-		
-		<action name="reportCostAjaxChart" class="ReportCostAction" method="flashDataDownLoad">
-			<interceptor-ref name="loginCheckStack" />
-			<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.flashData</result>
-        </action>
-
-		<!--report check-->
-        <action name="reportCheckDownload" class="ReportCheckAction">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-      		<result name="success" type="stream">   
-             	<param name="contentType">application/octet-stream</param>   
-             	<param name="contentDisposition">   
-                    attachment;filename="${downloadFileName}"  
-                </param>   
-                <param name="inputName">downloadFileStream</param> 
-            </result>  
-      	</action>
-		
-		<action name="reportCheck" class="ReportCheckAction">
-            <interceptor-ref name="loginCheckStack" />
-            <interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="redirectAction" name="none">summary</result>
-            <result type="tiles" name="success">.report.check</result>
-        </action>
-        
-        <action name="reportCheckAjaxTable" class="ReportCheckAction">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.check</result>
-        </action>
-		
-		<action name="reportCheckAjaxChart" class="ReportCheckAction" method="flashDataDownLoad">
-			<interceptor-ref name="loginCheckStack" />
-			<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.flashData</result>
-        </action>
-		
-		<!--report url-->
-        <action name="reportUrlDownload" class="ReportUrlAction">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-      		<result name="success" type="stream">   
-             	<param name="contentType">application/octet-stream</param>   
-             	<param name="contentDisposition">   
-                    attachment;filename="${downloadFileName}"  
-                </param>   
-                <param name="inputName">downloadFileStream</param> 
-            </result>  
-      	</action>
-		
-		<action name="reportUrl" class="ReportUrlAction">
-            <interceptor-ref name="loginCheckStack" />
-            <interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="redirectAction" name="none">summary</result>
-            <result type="tiles" name="success">.report.url</result>
-        </action>
-        
-        <action name="reportUrlAjaxTable" class="ReportUrlAction">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.url</result>
-        </action>
-		
-		<action name="reportUrlAjaxChart" class="ReportUrlAction" method="flashDataDownLoad">
-			<interceptor-ref name="loginCheckStack" />
-			<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.flashData</result>
-        </action>
 		
 		<!-- adOs 行動廣告成效 -->
         <action name="reportAdOsDownload" class="ReportAdOsAction">
@@ -477,6 +383,102 @@
             </result>  
       	</action>
         
+        
+        <!--report cost-->
+<!--         <action name="reportCostDownload" class="ReportCostAction" > -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--       		<result name="success" type="stream">    -->
+<!--              	<param name="contentType">application/octet-stream</param>    -->
+<!--              	<param name="contentDisposition">    -->
+<!--                     attachment;filename="${downloadFileName}"   -->
+<!--                 </param>    -->
+<!--                 <param name="inputName">downloadFileStream</param>  -->
+<!--             </result>   -->
+<!--       	</action> -->
+		
+<!-- 		<action name="reportCost" class="ReportCostAction"> -->
+<!--             <interceptor-ref name="loginCheckStack" /> -->
+<!--             <interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="redirectAction" name="none">summary</result> -->
+<!--             <result type="tiles" name="success">.report.cost</result> -->
+<!--         </action> -->
+        
+<!--         <action name="reportCostAjaxTable" class="ReportCostAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.ajaxTable.cost</result> -->
+<!--         </action> -->
+		
+<!-- 		<action name="reportCostAjaxChart" class="ReportCostAction" method="flashDataDownLoad"> -->
+<!-- 			<interceptor-ref name="loginCheckStack" /> -->
+<!-- 			<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.flashData</result> -->
+<!--         </action> -->
+
+		<!--report check-->
+<!--         <action name="reportCheckDownload" class="ReportCheckAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--       		<result name="success" type="stream">    -->
+<!--              	<param name="contentType">application/octet-stream</param>    -->
+<!--              	<param name="contentDisposition">    -->
+<!--                     attachment;filename="${downloadFileName}"   -->
+<!--                 </param>    -->
+<!--                 <param name="inputName">downloadFileStream</param>  -->
+<!--             </result>   -->
+<!--       	</action> -->
+		
+<!-- 		<action name="reportCheck" class="ReportCheckAction"> -->
+<!--             <interceptor-ref name="loginCheckStack" /> -->
+<!--             <interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="redirectAction" name="none">summary</result> -->
+<!--             <result type="tiles" name="success">.report.check</result> -->
+<!--         </action> -->
+        
+<!--         <action name="reportCheckAjaxTable" class="ReportCheckAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.ajaxTable.check</result> -->
+<!--         </action> -->
+		
+<!-- 		<action name="reportCheckAjaxChart" class="ReportCheckAction" method="flashDataDownLoad"> -->
+<!-- 			<interceptor-ref name="loginCheckStack" /> -->
+<!-- 			<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.flashData</result> -->
+<!--         </action> -->
+		
+		<!--report url-->
+<!--         <action name="reportUrlDownload" class="ReportUrlAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--       		<result name="success" type="stream">    -->
+<!--              	<param name="contentType">application/octet-stream</param>    -->
+<!--              	<param name="contentDisposition">    -->
+<!--                     attachment;filename="${downloadFileName}"   -->
+<!--                 </param>    -->
+<!--                 <param name="inputName">downloadFileStream</param>  -->
+<!--             </result>   -->
+<!--       	</action> -->
+		
+<!-- 		<action name="reportUrl" class="ReportUrlAction"> -->
+<!--             <interceptor-ref name="loginCheckStack" /> -->
+<!--             <interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="redirectAction" name="none">summary</result> -->
+<!--             <result type="tiles" name="success">.report.url</result> -->
+<!--         </action> -->
+        
+<!--         <action name="reportUrlAjaxTable" class="ReportUrlAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.ajaxTable.url</result> -->
+<!--         </action> -->
+		
+<!-- 		<action name="reportUrlAjaxChart" class="ReportUrlAction" method="flashDataDownLoad"> -->
+<!-- 			<interceptor-ref name="loginCheckStack" /> -->
+<!-- 			<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.flashData</result> -->
+<!--         </action> -->
         
     </package>
 </struts>

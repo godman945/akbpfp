@@ -93,11 +93,15 @@
         <property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
     </bean>
 
-	 <bean id="AdReportService" class="com.pchome.akbpfp.db.service.report.AdReportService"> 
-        <property name="adReportDAO" ref="AdReportDAO" />
-        <property name="pfpAdDetailDAO" ref="PfpAdDetailDAO" />
-        <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
-        <property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+	<bean id="AdReportService" class="com.pchome.akbpfp.db.service.report.AdReportService">
+		<property name="adReportDAO" ref="AdReportDAO" />
+		<property name="pfpAdDetailDAO" ref="PfpAdDetailDAO" />
+		<property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
+		<property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+		<property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
+		<property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
+		<property name="pfpAdDAO" ref="PfpAdDAO" />
+		<property name="admTemplateProductDAO" ref="AdmTemplateProductDAO" />
     </bean>
 
 	 <bean id="AdOsReportService" class="com.pchome.akbpfp.db.service.report.AdOsReportService"> 

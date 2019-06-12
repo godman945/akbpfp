@@ -147,9 +147,6 @@
 	<bean id="ReportAdvertiseAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdvertiseAction" scope="prototype">
 		<property name="adReportService" ref="AdReportService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
-	 	<property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
-	 	<property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
-	 	<property name="pfpAdDAO" ref="PfpAdDAO" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />
     </bean>

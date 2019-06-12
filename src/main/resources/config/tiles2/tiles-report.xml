@@ -46,26 +46,6 @@
 		<put-attribute name="chartTable" value="report.chartTable.excerpt" />
     </definition>
 	
-	
-	<!--.report.advertise -->
-	<definition name="report.ajaxTable.advertise" template="/ftl/report/ajax/advertiseTable.ftl" /> 
-	<definition name="report.chartTable.advertise" template="/ftl/report/chart/advertiseChartTable.ftl" />
-	 
-    <definition name=".report.advertise" extends="default.report.layout" >
-    	<put-attribute name="header" value="report.header.advertise" />
-    	<put-attribute name="body" value="report.body.advertise" />
-    </definition>
-	
-	<definition name="report.header.advertise" extends="report.header" >
-    	<put-attribute name="jsName" value="reportAdvertise.js" />
-    </definition>
-	   
-    <definition name="report.body.advertise" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.advertise" />
-		<put-attribute name="chartTable" value="report.chartTable.advertise" />
-	</definition>
-	
-	
 	<!-- .report.adDaily 每日花費成效 -->
     <definition name=".report.adDaily" extends="default.report.layout" > <!-- 上面各項目頁籤 -->
     	<put-attribute name="header" value="report.header.adDaily" />
@@ -124,6 +104,33 @@
 	<definition name="report.body.adGroup.detailList" template="/ftl/report/adGroup/adGroupDataList.ftl" />
 	<definition name="report.chartTable.adGroup" template="/ftl/report/chart/adGroupChartTable.ftl" />
     <!-- .report.adGroup 分類成效 end -->
+    
+    <!-- .report.advertise 廣告明細成效 -->
+    <definition name=".report.advertise" extends="default.report.layout">
+		<put-attribute name="header" value="report.header.advertise" />
+		<put-attribute name="body" value="report.body.advertise" />
+	</definition>
+	
+	<definition name="report.header.advertise" extends="report.header">
+		<put-attribute name="jsName" value="reportAdvertise.js" />
+	</definition>
+	   
+<!--     <definition name="report.body.advertise" extends="report.body" > -->
+<!--     	<put-attribute name="reportTable" value="report.ajaxTable.advertise" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.advertise" /> -->
+<!-- 	</definition> -->
+	
+<!-- 	<definition name="report.ajaxTable.advertise" template="/ftl/report/ajax/advertiseTable.ftl" />  -->
+
+	<definition name="report.body.advertise" template="/ftl/report/advertise/advertiseBody.ftl">
+		<put-attribute name="advertiseDetailList" value="report.body.advertise.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.advertise" />
+	</definition>
+
+	<definition name="report.body.advertise.detailList" template="/ftl/report/advertise/advertiseDataList.ftl" />
+
+	<definition name="report.chartTable.advertise" template="/ftl/report/chart/advertiseChartTable.ftl" />
+	<!-- .report.advertise 廣告明細成效 end -->
     
 	<!-- .report.keyword 關鍵字成效 -->
 	<definition name=".report.keyword" extends="default.report.layout" >
