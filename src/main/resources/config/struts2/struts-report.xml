@@ -175,7 +175,6 @@
 		<action name="reportAdvertiseAjaxTable" class="ReportAdvertiseAction">
 			<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="reportPrivilegeInterceptor" />
-<!-- 			<result type="tiles" name="success">report.ajaxTable.advertise</result> -->
 			<result type="tiles" name="success">report.body.advertise.detailList</result>
 		</action>
 		

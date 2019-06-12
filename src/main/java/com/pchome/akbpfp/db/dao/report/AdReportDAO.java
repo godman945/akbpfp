@@ -2,7 +2,6 @@ package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -526,13 +525,11 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 	 */
 	@Override
 	public List<Map<String, Object>> getAdvertiseList(AdvertiseReportVO vo) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN (r.ad_clk - r.ad_invalid_clk) ELSE r.ad_view END)) AS ad_clk_sum, ");
-		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");		
-//		hql.append(" SUM(r.ad_invalid_clk), ");
+		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
 		hql.append(" r.ad_pvclk_date, ");
 		hql.append(" r.ad_action_seq, ");
 		hql.append(" r.ad_group_seq, ");
@@ -631,15 +628,12 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 	 */
 	@Override
 	public List<Map<String, Object>> getAdvertiseListSum(AdvertiseReportVO vo) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		// 20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN (r.ad_clk - r.ad_invalid_clk) ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, "); // 產生pfp_ad_report 的時候，已經減過無效點擊金額了，所以不用再減
-//		hql.append(" SUM(r.ad_invalid_clk), ");
-//		hql.append(" SUM(r.ad_invalid_clk_price), ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
 		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
 		hql.append(" FROM pfp_ad_report AS r ");
@@ -723,17 +717,13 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 	 */
 	@Override
 	public List<Map<String, Object>> getAdvertiseListChart(AdvertiseReportVO vo) {
-		// TODO Auto-generated method stub
 		StringBuffer hql = new StringBuffer();
 		hql.append("SELECT");
-		hql.append(" r.ad_pvclk_date,");
+		hql.append(" r.ad_pvclk_date, ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		// 20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN (r.ad_clk - r.ad_invalid_clk) ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, "); // 產生pfp_ad_report 的時候，已經減過無效點擊金額了，所以不用再減
-//		hql.append(" SUM(r.ad_invalid_clk), ");
-//		hql.append(" SUM(r.ad_invalid_clk_price), ");
-//		hql.append(" COUNT(r.ad_report_seq), ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
 		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
 		hql.append(" FROM pfp_ad_report AS r ");
@@ -811,62 +801,3 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 	}
 }
-
-
-//StringBuffer hql = new StringBuffer();
-//hql.append("select");
-//hql.append(" r.ad_pvclk_date,");
-//hql.append(" sum(r.ad_pv), ");
-///* 產生pfp_ad_group_report 的時候，已經減過無效點擊數了，所以不用再減
-//   20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分 */
-//hql.append(" sum((case when r.ad_clk_price_type = 'CPC' then (r.ad_clk - r.ad_invalid_clk) else r.ad_view end)), ");
-//hql.append(" sum(r.ad_clk_price), ");		// 產生pfp_ad_report 的時候，已經減過無效點擊金額了，所以不用再減
-//hql.append(" sum(r.ad_invalid_clk), ");
-//hql.append(" sum(r.ad_invalid_clk_price), ");
-//hql.append(" count(r.ad_report_seq), ");
-//hql.append(" SUM(r.convert_count),  ");
-//hql.append(" SUM(r.convert_price_count) ");
-//hql.append(" from pfp_ad_report as r ");
-//hql.append("	left outer join (select distinct ad_seq from pfp_ad_detail) as pad on (r.ad_seq = pad.ad_seq)");
-//hql.append(" where 1 = 1 ");
-//hql.append(" and r.customer_info_id = :customerInfoId");
-//hql.append(" and r.ad_pvclk_date >= :startDate");
-//hql.append(" and r.ad_pvclk_date <= :endDate");
-//sqlParams.put("customerInfoId", customerInfoId);
-//sqlParams.put("startDate", sdf.parse(startDate));
-//sqlParams.put("endDate", sdf.parse(endDate));
-//
-//if (StringUtils.isNotBlank(adGroupSeq)) {
-//	hql.append(" and r.ad_group_seq = :adGroupSeq");
-//	sqlParams.put("adGroupSeq", adGroupSeq);
-//}
-//
-//if (StringUtils.isNotBlank(adSeq)) {
-//	hql.append(" and r.ad_seq = :adSeq");
-//	sqlParams.put("adSeq", adSeq);
-//}
-//
-//if (StringUtils.isNotEmpty(adShowWay) && (Integer.parseInt(adShowWay) != EnumAdType.AD_ALL.getType())) {
-//	hql.append(" and r.ad_type = :adShowWay");
-//	sqlParams.put("adShowWay", Integer.parseInt(adShowWay));
-//}
-//
-//if (StringUtils.isNotBlank(adPvclkDevice)) {
-//	hql.append(" and r.ad_pvclk_device = :adPvclkDevice");
-//	sqlParams.put("adPvclkDevice", adPvclkDevice);
-//}
-//
-//if (StringUtils.isNotEmpty(searchText)) {
-//	String searchStr = getSearchText(searchText, adSearchWay);
-//	hql.append(" and r.ad_seq in (select ad_seq from pfp_ad_detail where 1=1");
-//	hql.append(" and ad_detail_content like :searchStr)");
-//	sqlParams.put("searchStr", searchStr);
-//}
-//
-//if (StringUtils.isNotBlank(adOperatingRule)) {
-//	hql.append(" and r.ad_operating_rule = :adOperatingRule ");
-//	sqlParams.put("adOperatingRule", adOperatingRule);
-//}
-//
-//hql.append(" group by r.ad_pvclk_date");
-//hql.append(" order by r.ad_pvclk_date");

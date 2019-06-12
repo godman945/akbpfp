@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 
 public class AdvertiseReportVO {
@@ -710,58 +709,5 @@ public class AdvertiseReportVO {
 	public void setProdAdSizeHeight(String prodAdSizeHeight) {
 		this.prodAdSizeHeight = prodAdSizeHeight;
 	}
-	
-	
-	
-	
-//	private String reportDate; //報表日期
-//
-//	private String adSeq; //廣告序號
-//	private String templateProductSeq; //版型序號
-//	private String adPreview; //廣告預覽
-//	private String title;
-//	private String content = "";
-//	private String realUrl = "";
-//	private String showUrl = "";
-//	private String adStatus; //廣告明細狀態
-//	private String adStatusDesc;
-//	private String adGroupSeq; //廣告分類序號
-//	private String adGroupName; //廣告分類名稱
-//	private int adGroupStatus; //廣告分類狀態
-//
-//	private String adActionSeq; //廣告活動序號
-//	private String adActionName; //廣告活動名稱
-//	private String adActionStatus; //廣告活動狀態
-//	private String adActionStartDate; //廣告活動走期起
-//	private String adActionEndDate; //廣告活動走期迄
-//
-//	private String adPvclkDate; //廣告曝光點擊日期
-//	private String adPvSum; //廣告PV總和
-//	private String adClkSum; //廣告Click總和
-//	private String adPriceSum; //廣告價格總和
-//	private String adInvClkSum; //廣告無效點擊總和
-//	private String customerInfoId; //帳號
-//	private String adDevice;
-//	private String adType;
-//	private String adOperatingRuleDesc;		//廣告樣式
-//	private String adClkPriceType;		//廣告計費方式
-//	private String adOperatingRule;
-//	
-//	private String adClickRatings;
-//	private String thousandsCost;
-//	private String singleCost;
-//	private String img;
-//	private String adWidth;
-//	private String adHeight;
-//	private String adRejectReason;
-//	//影片長度
-//	private String adVideoSec;
-//	//影片網址
-//	private String adVideoUrl = "";
-//	//轉換數
-//	private BigDecimal convertCount;
-//	//轉換價值
-//	private BigDecimal convertPriceCount;
-	
 	
 }

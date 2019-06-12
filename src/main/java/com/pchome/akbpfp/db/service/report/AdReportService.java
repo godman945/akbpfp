@@ -29,7 +29,6 @@ import com.pchome.akbpfp.db.dao.ad.IPfpAdActionDAO;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdDAO;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdGroupDAO;
 import com.pchome.akbpfp.db.dao.ad.PfpAdDetailDAO;
-import com.pchome.akbpfp.db.dao.report.AdGroupReportVO;
 import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.dao.report.AdvertiseReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdReportDAO;
@@ -631,17 +630,14 @@ public class AdReportService implements IAdReportService {
 		return admTemplateJson.toString();
 	}
 
-
 	/**
 	 * 處理廣告明細
 	 * @param advertiseReportVO
 	 * @throws Exception 
 	 */
 	private void processAdDetail(AdvertiseReportVO advertiseReportVO) throws Exception {
-		// TODO Auto-generated method stub
 		List<PfpAdDetail> pfpAdDetailList = pfpAdDetailDAO.getPfpAdDetailByAdSeq(advertiseReportVO.getAdSeq());
-		System.out.println(pfpAdDetailList);
-		
+
 		String realUrl = null;
 		String img = null;
 		String title = null;
@@ -655,10 +651,8 @@ public class AdReportService implements IAdReportService {
 		String content = null;
 		String salesPrice = "";
 		String promotionalPrice = "";
-//		String pfpCustomerInfoId = null;
-//		String dbAdseq = null;
-//
-//		// 商品廣告參數內容
+
+		// 商品廣告參數內容
 		String prodGroup = "";
 		String logoText = "";
 		String logoFontColor = "";
@@ -674,15 +668,9 @@ public class AdReportService implements IAdReportService {
 		String catalogSeq = "";
 		String adName = "";
 		String prodRadioLogoType = "";
-//		// 以下程式自行判斷參數
-//		// 預設不呈現底圖
-//		String adbgType = "noposter";
-//		// 根據setup決定是否滿版
-//		String imgProportiona = "";
+		// 以下程式自行判斷參數
 		// 根據有無行銷圖決定
 		String logoType = "";
-//		String userLogoPath = "";
-//		String previewTpro = "c_x05_pad_tpro_0145";
 		
 		for (PfpAdDetail pfpAdDetail : pfpAdDetailList) {
 			if ("video_seconds".equals(pfpAdDetail.getAdDetailId())) {
@@ -789,10 +777,10 @@ public class AdReportService implements IAdReportService {
 			showUrl = realUrl;
 			showUrl = showUrl.replaceAll("http://", "");
 			showUrl = showUrl.replaceAll("https://", "");
-			if(showUrl.lastIndexOf(".com/") != -1){
+			if (showUrl.lastIndexOf(".com/") != -1) {
 				showUrl = showUrl.substring(0, showUrl.lastIndexOf(".com/") + 4);
 			}
-			if(showUrl.lastIndexOf(".tw/") != -1){
+			if (showUrl.lastIndexOf(".tw/") != -1) {
 				showUrl = showUrl.substring(0, showUrl.lastIndexOf(".tw/") + 3);
 			}
 			
@@ -999,10 +987,6 @@ public class AdReportService implements IAdReportService {
 	 */
 	@Override
 	public List<AdvertiseReportVO> queryReportAdvertiseChartData(AdvertiseReportVO vo) {
-//		// TODO Auto-generated method stub
-//		return null;
-
-
 		List<Map<String, Object>> advertiseList = adReportDAO.getAdvertiseListChart(vo);
 		
 		List<AdvertiseReportVO> advertiseVOList = new ArrayList<>();
