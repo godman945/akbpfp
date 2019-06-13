@@ -124,6 +124,25 @@
 	<definition name="report.chartTable.advertise" template="/ftl/report/chart/advertiseChartTable.ftl" />
 	<!-- .report.advertise 廣告明細成效 end -->
     
+    <!-- .report.dailyPerformance 每日成效 -->
+    <definition name=".report.dailyPerformance" extends="default.report.layout">
+		<put-attribute name="header" value="report.header.dailyPerformance" />
+		<put-attribute name="body" value="report.body.dailyPerformance" />
+	</definition>
+
+	<definition name="report.header.dailyPerformance" extends="report.header">
+		<put-attribute name="jsName" value="reportDailyPerformance.js" />
+	</definition>
+
+	<definition name="report.body.dailyPerformance" template="/ftl/report/dailyPerformance/dailyPerformanceBody.ftl">
+		<put-attribute name="dailyPerformanceDetailList" value="report.body.dailyPerformance.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.dailyPerformance" />
+	</definition>
+
+	<definition name="report.body.dailyPerformance.detailList" template="/ftl/report/dailyPerformance/dailyPerformanceDataList.ftl" />
+	<definition name="report.chartTable.dailyPerformance" template="/ftl/report/chart/dailyPerformanceChartTable.ftl" />
+	<!-- .report.dailyPerformance 每日成效 end -->
+    
 	<!-- .report.keyword 關鍵字成效 -->
 	<definition name=".report.keyword" extends="default.report.layout" >
     	<put-attribute name="header" value="report.header.keyword" />
@@ -161,44 +180,6 @@
 		<put-attribute name="chartTable" value="report.chartTable.cost" />
 	</definition>
     
-    
-	<!-- .report.url  -->
-	<definition name="report.ajaxTable.url" template="/ftl/report/ajax/urlTable.ftl" /> 
-	<definition name="report.chartTable.url" template="/ftl/report/chart/advertiseChartTable.ftl" />
-	 
-    <definition name=".report.url" extends="default.report.layout" >
-    	<put-attribute name="header" value="report.header.url" />
-        <put-attribute name="body" value="report.body.url" />
-    </definition>
-	
-	<definition name="report.header.url" extends="report.header" >
-    	<put-attribute name="jsName" value="reportUrl.js" />
-    </definition>
-	   
-    <definition name="report.body.url" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.url" />
-		<put-attribute name="chartTable" value="report.chartTable.url" />
-	</definition>
-    
-    
-	<!-- .report.check  -->
-	<definition name="report.ajaxTable.check" template="/ftl/report/ajax/checkTable.ftl" /> 
-	<definition name="report.chartTable.check" template="/ftl/report/chart/checkChartTable.ftl" />
-	 
-    <definition name=".report.check" extends="default.report.layout" >
-    	<put-attribute name="header" value="report.header.check" />
-        <put-attribute name="body" value="report.body.check" />
-    </definition>
-	
-	<definition name="report.header.check" extends="report.header" >
-    	<put-attribute name="jsName" value="reportCheck.js" />
-    </definition>
-	   
-    <definition name="report.body.check" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.check" />
-		<put-attribute name="chartTable" value="report.chartTable.check" />
-	</definition>
-	
     <!-- .report.adOs 行動廣告成效 -->
 	<definition name=".report.ados" extends="default.report.layout">
     	<put-attribute name="header" value="report.header.ados" />
@@ -293,4 +274,39 @@
     <definition name="report.ajaxTable.video.performance" template="/ftl/report/ajax/adVideoPerformanceTable.ftl" />
     <definition name="report.chartTable.video.performance" template="/ftl/report/chart/adVideoPerformanceChartTable.ftl" />
     
+    <!-- .report.check  -->
+	<definition name="report.ajaxTable.check" template="/ftl/report/ajax/checkTable.ftl" /> 
+	<definition name="report.chartTable.check" template="/ftl/report/chart/checkChartTable.ftl" />
+	 
+    <definition name=".report.check" extends="default.report.layout" >
+    	<put-attribute name="header" value="report.header.check" />
+        <put-attribute name="body" value="report.body.check" />
+    </definition>
+	
+	<definition name="report.header.check" extends="report.header" >
+    	<put-attribute name="jsName" value="reportCheck.js" />
+    </definition>
+	   
+    <definition name="report.body.check" extends="report.body" >
+    	<put-attribute name="reportTable" value="report.ajaxTable.check" />
+		<put-attribute name="chartTable" value="report.chartTable.check" />
+	</definition>
+	
+	<!-- .report.url  -->
+	<definition name="report.ajaxTable.url" template="/ftl/report/ajax/urlTable.ftl" /> 
+	<definition name="report.chartTable.url" template="/ftl/report/chart/advertiseChartTable.ftl" />
+	 
+    <definition name=".report.url" extends="default.report.layout" >
+    	<put-attribute name="header" value="report.header.url" />
+        <put-attribute name="body" value="report.body.url" />
+    </definition>
+	
+	<definition name="report.header.url" extends="report.header" >
+    	<put-attribute name="jsName" value="reportUrl.js" />
+    </definition>
+	   
+    <definition name="report.body.url" extends="report.body" >
+    	<put-attribute name="reportTable" value="report.ajaxTable.url" />
+		<put-attribute name="chartTable" value="report.chartTable.url" />
+	</definition>
 </tiles-definitions>

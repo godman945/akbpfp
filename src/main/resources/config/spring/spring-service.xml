@@ -103,6 +103,10 @@
 		<property name="pfpAdDAO" ref="PfpAdDAO" />
 		<property name="admTemplateProductDAO" ref="AdmTemplateProductDAO" />
     </bean>
+    
+    <bean id="AdDailyPerformanceReportService" class="com.pchome.akbpfp.db.service.report.AdDailyPerformanceReportService">
+		<property name="adDailyPerformanceReportDAO" ref="AdDailyPerformanceReportDAO" />
+    </bean>
 
 	 <bean id="AdOsReportService" class="com.pchome.akbpfp.db.service.report.AdOsReportService"> 
         <property name="adOsReportDAO" ref="AdOsReportDAO" />

@@ -150,6 +150,13 @@
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />
     </bean>
+    
+    <bean id="ReportDailyPerformanceAction" class="com.pchome.akbpfp.struts2.action.report.ReportDailyPerformanceAction" scope="prototype">
+		<property name="adDailyPerformanceReportService" ref="AdDailyPerformanceReportService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+    </bean>
 	
     <bean id="ReportAdDailyAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdDailyAction" scope="prototype">
     	<property name="adActionReportService" ref="AdActionReportService" />

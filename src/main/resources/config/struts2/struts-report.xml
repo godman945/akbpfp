@@ -185,6 +185,39 @@
 		</action>
         <!-- advertise 廣告明細成效 end -->
         
+        <!-- dailyPerformance 每日成效 -->
+        <action name="reportDailyPerformanceDownload" class="ReportDailyPerformanceAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+				<param name="inputName">downloadFileStream</param>
+			</result>
+		</action>
+		
+        <action name="reportDailyPerformance" class="ReportDailyPerformanceAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="redirectAction" name="none">summary</result>
+			<result type="tiles" name="success">.report.dailyPerformance</result>
+		</action>
+		
+		<action name="reportDailyPerformanceAjaxTable" class="ReportDailyPerformanceAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="tiles" name="success">report.body.dailyPerformance.detailList</result>
+		</action>
+		
+		<action name="reportDailyPerformanceAjaxChart" class="ReportDailyPerformanceAction" method="flashDataDownLoad">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="tiles" name="success">report.flashData</result>
+		</action>
+        <!-- dailyPerformance 每日成效 end -->
+        
 		<!-- keyword 關鍵字成效 -->
         <action name="reportKeywordDownload" class="ReportKeywordAction">
         	<interceptor-ref name="loginCheckStack" />
