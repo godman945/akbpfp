@@ -14,8 +14,7 @@
             
             <form id="excerptFrom" name="excerptFrom" action="" method="post">
             	<#-- 隱藏欄位 -->
-	            <input type="hidden" id="hasPfpCodeflag" name="hasPfpCodeflag" value="${hasPfpCodeflag?string}">
-	            <input type="hidden" id="viewType" name="viewType" value="${viewType}"> <#-- 切換廣告明細、每日成效用 -->
+	            <input type="hidden" id="hasPfpCodeflag" name="hasPfpCodeflag" value="${hasPfpCodeflag?string}"
 	            <input type="hidden" id="isDownload" name="isDownload" value="true"> <#-- 下載報表用 -->
 	            <input type="hidden" id="whereMap" name="whereMap" value=""> <#-- 下載報表用 -->
 	            <input type="hidden" id="sortBy" name="sortBy" value=""> <#-- 下載報表用 -->

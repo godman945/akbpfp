@@ -35,7 +35,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 	private LinkedHashMap<String, String> dateSelectMap; // 查詢日期的 rang map,查詢日期頁面顯示
 	private boolean hasPfpCodeflag = false; // 是否有使用轉換追蹤的PFP帳號
 	
-	private String viewType = "Advertise"; // 預設廣告明細 (廣告明細、每日成效)
 	private String startDate = ""; // 查詢開始日期
 	private String endDate = ""; // 查詢結束日期
 	private String searchText = ""; // 搜尋文字
@@ -355,14 +354,6 @@ public class ReportAdvertiseAction extends BaseReportAction {
 
 	public boolean isHasPfpCodeflag() {
 		return hasPfpCodeflag;
-	}
-
-	public String getViewType() {
-		return viewType;
-	}
-
-	public void setViewType(String viewType) {
-		this.viewType = viewType;
 	}
 
 	public String getStartDate() {

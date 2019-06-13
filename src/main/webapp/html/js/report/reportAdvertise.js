@@ -605,5 +605,5 @@ function preView(adStyle, Obj){
  * @returns
  */
 function dailyPerformance(adSeq) {
-console.log(adSeq);
+	window.location = "reportDailyPerformance.html?adSeq=" + adSeq;
 }

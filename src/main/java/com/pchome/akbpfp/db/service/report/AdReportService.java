@@ -329,7 +329,7 @@ public class AdReportService implements IAdReportService {
 					if(StringUtils.isNotBlank(saleEndImg)){
 						adbgType = "hasposter";
 					}
-					PfpCatalogSetup pfpCatalogSetup = getPfpCatalogSetupService().findSetupByCatalogSeq(catalogSeq);
+					PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(catalogSeq);
 					if(pfpCatalogSetup != null){
 						imgProportiona = pfpCatalogSetup.getCatalogSetupValue();
 					}
