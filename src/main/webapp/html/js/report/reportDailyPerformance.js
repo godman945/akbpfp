@@ -1,6 +1,7 @@
 var defaultPage = "1"; // 預設查詢後回到第一頁
 $(document).ready(function() {
-
+	$("div.submn a[href$='reportAdvertise.html']").css('color', '#222');
+	
 	// 日期區間datepicker
 	$("#startDate").datepicker({
 		buttonImage : "./html/img/icon-cal.png",

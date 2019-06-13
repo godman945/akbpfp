@@ -17,16 +17,9 @@ public class AdDailyPerformanceReportVO {
 	private boolean isDownloadOrIsNotCuttingPagination = false; // 是否為下載，或是否切分頁FLAG
 	private int rowCount = 0; // 總計幾筆
 	
-	private String adActionName = "";
+	private String adActionName = ""; // 麵包屑顯示名稱
+	
 	private Date reportDate; //報表日期
-//	private String adSeq; //廣告序號
-//	private String adGroupSeq; //廣告群組序號
-//	private String adActionSeq; //廣告活動序號
-//
-//	private boolean adStatusOnOff = false; // 狀態on或off，預設off
-//	private String adStatusName; // 狀態中文，產excel用
-//	private String adActionName; // 廣告活動
-//	private String adGroupName; // 廣告分類
 	private String adType; // 廣告播放類型
 	private String adOperatingRule; // 廣告樣式
 	private String adClkPriceType; // 廣告計費方式
@@ -42,59 +35,6 @@ public class AdDailyPerformanceReportVO {
 	private Double convertCTR; // 轉換率
 	private Double convertCost; // 平均轉換成本
 	private Double convertInvestmentCost; // 廣告投資報酬率
-
-//	// 廣告明細用到參數
-//	String videoSeconds;
-//	String videoUrl;
-//	String adSize;
-//	String realUrl;
-//	String realUrlEncode;
-//	String img;
-//	String title;
-//	String content = "";
-//	String html5Title;
-//	String adStyle; // 廣告類型
-//	String html5Flag = "N";
-//	String showUrl = "";
-//	String imgWidth; // 圖片寬
-//	String imgHeight; // 圖片高
-//	String salesPrice = ""; // 原價
-//	String promotionalPrice = ""; // 促銷價
-//	
-//	// 影音廣告
-//	String videoName;
-//	String videoSec = "";
-//	String videoWidth; // 影片寬
-//	String videoHeight; // 影片高
-//
-//	// 商品廣告參數內容
-//	String adName = "";
-//	String prodAdSizeWidth = "";
-//	String prodAdSizeHeight = "";
-//	String prodGroup = "";
-//	String logoText = "";
-//	String logoFontColor = "";
-//	String logoBgColor = "";
-//	String btnTxt = "";
-//	String btnFontColor = "";
-//	String btnBgColor = "";
-//	String disTxtType = "";
-//	String disFontColor = "";
-//	String disBgColor = "";
-//	String saleEndImg = "";
-//	String saleImg = "";
-//	String catalogSeq = "";
-//	String prodRadioLogoType = "";
-//	// 預設不呈現底圖
-//	String adbgType = "noposter";
-//	String posterType = "noposter";
-//	// 根據setup決定是否滿版
-//	String imgProportiona = "";
-//	// 根據有無行銷圖決定
-//	String logoType = "";
-//	String userLogoPath = "";
-//	String productTemplateStr = "";
-//	String previewTpro = "";
 	
 	public String getAdSeq() {
 		return adSeq;
