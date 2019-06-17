@@ -157,6 +157,7 @@ public class AdUtilAjax extends BaseCookieAction{
 	}
 
 	public String getSuggestKW() throws Exception{
+		log.info(">>>call api keyword:"+q);
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		BasicHttpParams params=new BasicHttpParams();
 		HttpClientParams.setRedirecting(params,false);
@@ -164,6 +165,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		HttpGet httpget = new HttpGet("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLDecoder.decode(q, "UTF-8"));
 		HttpResponse response = httpClient.execute(httpget);
 		String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+		log.info(">>>call api keyword theString:"+theString);
 		this.result = theString;
 	    return SUCCESS;
 	}
