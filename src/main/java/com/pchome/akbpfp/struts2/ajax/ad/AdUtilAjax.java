@@ -15,7 +15,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -155,12 +157,14 @@ public class AdUtilAjax extends BaseCookieAction{
 	}
 
 	public String getSuggestKW() throws Exception{
-		HttpGet request = new HttpGet(new URI("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLDecoder.decode(q, "UTF-8")));
-		//request.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; rv:28.0) Gecko/20100101 Firefox/28.0");
-		HttpClient client = new DefaultHttpClient();
-	    HttpResponse response = client.execute(request);
-	    String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
-	    this.result = theString;
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		BasicHttpParams params=new BasicHttpParams();
+		HttpClientParams.setRedirecting(params,false);
+		httpClient.setParams(params);
+		HttpGet httpget = new HttpGet("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLDecoder.decode(q, "UTF-8"));
+		HttpResponse response = httpClient.execute(httpget);
+		String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+		this.result = theString;
 	    return SUCCESS;
 	}
 	
