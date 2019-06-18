@@ -530,6 +530,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN (r.ad_clk - r.ad_invalid_clk) ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append(" SUM(r.ad_invalid_clk) AS ad_invalid_clk_sum, ");
 		hql.append(" r.ad_pvclk_date, ");
 		hql.append(" r.ad_action_seq, ");
 		hql.append(" r.ad_group_seq, ");
@@ -552,6 +553,10 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" AND r.ad_pvclk_date >= :startDate");
 		hql.append(" AND r.ad_pvclk_date <= :endDate");
 
+		if (StringUtils.isNotBlank(vo.getAdGroupSeq())) { // 總廣告成效使用到
+			hql.append(" AND r.ad_group_seq = :adGroupSeq ");
+		}
+		
 		if (StringUtils.isNotBlank(vo.getSearchText())) {
 			hql.append(" AND r.ad_seq IN (SELECT DISTINCT ad_seq FROM pfp_ad_detail WHERE 1=1 AND (ad_detail_id = 'title' OR  ad_detail_id = 'content') ");
 			hql.append(" AND customer_info_id = :customerInfoId");
@@ -594,6 +599,10 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		query.setString("startDate", vo.getStartDate());
 		query.setString("endDate", vo.getEndDate());
 		
+		if (StringUtils.isNotBlank(vo.getAdGroupSeq())) { // 總廣告成效使用到
+			query.setString("adGroupSeq", vo.getAdGroupSeq());
+		}
+		
 		if (StringUtils.isNotBlank(vo.getSearchText())) {
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
@@ -634,6 +643,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		// 20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN (r.ad_clk - r.ad_invalid_clk) ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, "); // 產生pfp_ad_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" SUM(r.ad_invalid_clk) AS ad_invalid_clk_sum, ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
 		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
 		hql.append(" FROM pfp_ad_report AS r ");
@@ -642,6 +652,10 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" AND r.customer_info_id = :customerInfoId");
 		hql.append(" AND r.ad_pvclk_date >= :startDate");
 		hql.append(" AND r.ad_pvclk_date <= :endDate");
+		
+		if (StringUtils.isNotBlank(vo.getAdGroupSeq())) { // 總廣告成效使用到
+			hql.append(" AND r.ad_group_seq = :adGroupSeq ");
+		}
 		
 		if (StringUtils.isNotBlank(vo.getSearchText())) {
 			hql.append(" AND r.ad_seq IN (SELECT DISTINCT ad_seq FROM pfp_ad_detail WHERE 1=1 AND (ad_detail_id = 'title' OR  ad_detail_id = 'content') ");
@@ -689,6 +703,10 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		query.setString("startDate", vo.getStartDate());
 		query.setString("endDate", vo.getEndDate());
 		
+		if (StringUtils.isNotBlank(vo.getAdGroupSeq())) { // 總廣告成效使用到
+			query.setString("adGroupSeq", vo.getAdGroupSeq());
+		}
+		
 		if (StringUtils.isNotBlank(vo.getSearchText())) {
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
@@ -724,6 +742,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		// 20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN (r.ad_clk - r.ad_invalid_clk) ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, "); // 產生pfp_ad_report 的時候，已經減過無效點擊金額了，所以不用再減
+		hql.append(" SUM(r.ad_invalid_clk) AS ad_invalid_clk_sum, ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
 		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
 		hql.append(" FROM pfp_ad_report AS r ");
@@ -732,6 +751,10 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		hql.append(" AND r.customer_info_id = :customerInfoId");
 		hql.append(" AND r.ad_pvclk_date >= :startDate");
 		hql.append(" AND r.ad_pvclk_date <= :endDate");
+		
+		if (StringUtils.isNotBlank(vo.getAdGroupSeq())) { // 總廣告成效使用到
+			hql.append(" AND r.ad_group_seq = :adGroupSeq ");
+		}
 		
 		if (StringUtils.isNotBlank(vo.getSearchText())) {
 			hql.append(" AND r.ad_seq IN (SELECT DISTINCT ad_seq FROM pfp_ad_detail WHERE 1=1 AND (ad_detail_id = 'title' OR  ad_detail_id = 'content') ");
@@ -777,6 +800,10 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		query.setString("customerInfoId", vo.getCustomerInfoId());
 		query.setString("startDate", vo.getStartDate());
 		query.setString("endDate", vo.getEndDate());
+		
+		if (StringUtils.isNotBlank(vo.getAdGroupSeq())) { // 總廣告成效使用到
+			query.setString("adGroupSeq", vo.getAdGroupSeq());
+		}
 		
 		if (StringUtils.isNotBlank(vo.getSearchText())) {
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");

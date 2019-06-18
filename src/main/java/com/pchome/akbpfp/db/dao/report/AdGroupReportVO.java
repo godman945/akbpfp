@@ -16,13 +16,13 @@ public class AdGroupReportVO {
 	private String sortBy = ""; // 排序欄位
 	private boolean isDownloadOrIsNotCuttingPagination = false; // 是否為下載，或是否切分頁FLAG
 	private int rowCount = 0; // 總計幾筆
+	private String charType = ""; // 圖表度量
 	
 	private Date reportDate; //報表日期
 
 	private String adGroupSeq; //廣告群組序號
 	private String adActionSeq; //廣告活動序號
 
-	private BigDecimal adInvClkSum; // 廣告無效點擊總和
 	private BigInteger count; // 資料筆數(用於計算平均每日花費上限)
 	
 	private boolean adStatusOnOff = false; // 狀態on或off，預設off
@@ -36,6 +36,7 @@ public class AdGroupReportVO {
 	private BigDecimal adPvSum; // 廣告PV總和(曝光數)
 	private BigDecimal adClkSum; // 廣告Click總和(互動數)
 	private Double ctr; // 互動率
+	private BigDecimal adInvClkSum; // 廣告無效點擊總和 (總廣告成效用)
 	private Double avgCost; // 單次互動費用
 	private Double kiloCost; // 千次曝光費用
 	private Double adPriceSum; // 廣告價格總和(費用)
@@ -315,6 +316,14 @@ public class AdGroupReportVO {
 	
 	public void setConvertInvestmentCost(Double convertInvestmentCost) {
 		this.convertInvestmentCost = convertInvestmentCost;
+	}
+
+	public String getCharType() {
+		return charType;
+	}
+
+	public void setCharType(String charType) {
+		this.charType = charType;
 	}
 	
 }

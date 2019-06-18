@@ -102,6 +102,10 @@ public enum EnumReport {
      */
     REPORT_CHART_TYPE_CTR("ctr"),
     /**
+     * 無效點選次數
+     */
+    REPORT_CHART_TYPE_INV_CLK("invClk"),
+    /**
      * 單次互動費用
      */
     REPORT_CHART_TYPE_AVGCOST("avgCost"),

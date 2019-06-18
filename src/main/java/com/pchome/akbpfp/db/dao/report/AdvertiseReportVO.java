@@ -15,6 +15,7 @@ public class AdvertiseReportVO {
 	private String sortBy = ""; // 排序欄位
 	private boolean isDownloadOrIsNotCuttingPagination = false; // 是否為下載，或是否切分頁FLAG
 	private int rowCount = 0; // 總計幾筆
+	private String charType = ""; // 圖表度量
 	
 	private Date reportDate; //報表日期
 	private String adSeq; //廣告序號
@@ -32,6 +33,7 @@ public class AdvertiseReportVO {
 	private BigDecimal adPvSum; // 廣告PV總和(曝光數)
 	private BigDecimal adClkSum; // 廣告Click總和(互動數)
 	private Double ctr; // 互動率
+	private BigDecimal adInvClkSum; // 廣告無效點擊總和 (總廣告成效用)
 	private Double avgCost; // 單次互動費用
 	private Double kiloCost; // 千次曝光費用
 	private Double adPriceSum; // 廣告價格總和(費用)
@@ -174,6 +176,14 @@ public class AdvertiseReportVO {
 		this.rowCount = rowCount;
 	}
 
+	public String getCharType() {
+		return charType;
+	}
+
+	public void setCharType(String charType) {
+		this.charType = charType;
+	}
+
 	public Date getReportDate() {
 		return reportDate;
 	}
@@ -292,6 +302,14 @@ public class AdvertiseReportVO {
 
 	public void setCtr(Double ctr) {
 		this.ctr = ctr;
+	}
+
+	public BigDecimal getAdInvClkSum() {
+		return adInvClkSum;
+	}
+
+	public void setAdInvClkSum(BigDecimal adInvClkSum) {
+		this.adInvClkSum = adInvClkSum;
 	}
 
 	public Double getAvgCost() {

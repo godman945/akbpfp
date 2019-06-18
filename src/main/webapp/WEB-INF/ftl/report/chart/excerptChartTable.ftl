@@ -6,6 +6,7 @@
                     <option value="pv">曝光數</option>
                     <option value="click">互動數</option>
                     <option value="ctr">互動率</option>
+                    <option value="invClk">無效點選次數</option>
                     <option value="avgCost">單次互動費用</option>
                     <option value="kiloCost">千次曝光費用</option>
                     <option value="cost">費用</option>

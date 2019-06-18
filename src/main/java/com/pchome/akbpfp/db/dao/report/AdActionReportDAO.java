@@ -971,6 +971,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");		
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append(" SUM(r.ad_invalid_clk) AS ad_invalid_clk_sum, ");
 		hql.append(" SUM(r.ad_action_max_price * r.ad_action_count) AS ad_action_max_price_sum, ");
 		hql.append(" SUM(r.ad_action_count) AS ad_action_count_sum, ");
 		hql.append(" r.ad_action_seq, ");
@@ -1059,6 +1060,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append(" SUM(r.ad_invalid_clk) AS ad_invalid_clk_sum, ");
 		hql.append(" SUM(r.ad_action_max_price * r.ad_action_count) AS ad_action_max_price_sum, ");
 		hql.append(" SUM(r.ad_action_count) AS ad_action_count_sum, ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
@@ -1136,6 +1138,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
 		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append(" SUM(r.ad_invalid_clk) AS ad_invalid_clk_sum, ");
 		hql.append(" SUM(r.convert_count) AS convert_count, ");
 		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
 		hql.append(" FROM pfp_ad_action_report AS r ");

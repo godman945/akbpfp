@@ -1,6 +1,8 @@
 package com.pchome.akbpfp.db.service.report;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.report.AdReportVO;
 import com.pchome.akbpfp.db.dao.report.AdvertiseReportVO;
@@ -27,8 +29,15 @@ public interface IAdReportService {
 	/**
 	 * 廣告明細成效(圖表)
 	 * @param chartVo
-	 * @return
+	 * @return list
 	 */
 	public List<AdvertiseReportVO> queryReportAdvertiseChartData(AdvertiseReportVO vo);
+
+	/**
+	 * 廣告明細成效(圖表)
+	 * @param chartVo
+	 * @return map
+	 */
+	public Map<Date, Float> queryReportAdvertiseChartDataMap(AdvertiseReportVO vo);
 
 }

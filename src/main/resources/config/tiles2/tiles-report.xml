@@ -26,12 +26,7 @@
     	<put-attribute name="seDateSelect" value="report.seDateSelect" />
     </definition>
  
-    
-    <!--.report.excerpt  -->
-	<definition name="report.ajaxTable.excerpt" template="/ftl/report/ajax/excerptTable.ftl" />
-	<definition name="report.ajaxTable.excerpt.keyword" template="/ftl/report/ajax/excerptKeywordTable.ftl" />
-	<definition name="report.chartTable.excerpt" template="/ftl/report/chart/excerptChartTable.ftl" />
-    
+    <!--.report.excerpt 總廣告成效 -->
 	<definition name=".report.excerpt" extends="default.report.layout">
 		<put-attribute name="header" value="report.header.excerpt" />
 		<put-attribute name="body" value="report.body.excerpt" />
@@ -41,10 +36,23 @@
 		<put-attribute name="jsName" value="reportExcerpt.js" />
     </definition>
    
-    <definition name="report.body.excerpt" extends="report.body" >
-    	<put-attribute name="reportTable" value="report.ajaxTable.excerpt" />
+   <definition name="report.body.excerpt" template="/ftl/report/excerpt/excerptBody.ftl">
+		<put-attribute name="excerptDetailList" value="report.body.excerpt.detailList" />
 		<put-attribute name="chartTable" value="report.chartTable.excerpt" />
-    </definition>
+	</definition>
+
+	<definition name="report.body.excerpt.detailList" template="/ftl/report/excerpt/excerptDataList.ftl" />
+	<definition name="report.body.excerptAdGroup.detailList" template="/ftl/report/excerpt/excerptAdGroupDataList.ftl" />
+	<definition name="report.body.excerptAdvertise.detailList" template="/ftl/report/excerpt/excerptAdvertiseDataList.ftl" />
+	
+<!--     <definition name="report.body.excerpt" extends="report.body" > -->
+<!--     	<put-attribute name="reportTable" value="report.ajaxTable.excerpt" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.excerpt" /> -->
+<!--     </definition> -->
+    
+<!--     <definition name="report.ajaxTable.excerpt" template="/ftl/report/ajax/excerptTable.ftl" /> -->
+	<definition name="report.chartTable.excerpt" template="/ftl/report/chart/excerptChartTable.ftl" />
+	<!--.report.excerpt 總廣告成效 end -->
 	
 	<!-- .report.adDaily 每日花費成效 -->
     <definition name=".report.adDaily" extends="default.report.layout" > <!-- 上面各項目頁籤 -->

@@ -4,18 +4,11 @@
 <struts>
     <package name="struts-report" extends="struts-base">
 
-        <!--excerpt-->
-        <action name="reportExcerptDownload" class="ReportExcerptAction">
+        <!-- excerpt 總廣告成效 -->
+       	<action name="reportExcerptDownload" class="ReportExcerptAction">
             <interceptor-ref name="loginCheckStack" />
             <interceptor-ref name="reportPrivilegeInterceptor" />
       		<result name="success" type="stream">
-             	<param name="contentType">application/octet-stream</param>
-             	<param name="contentDisposition">
-                    attachment;filename="${downloadFileName}"
-                </param>
-                <param name="inputName">downloadFileStream</param>
-            </result>
-            <result name="adKeywordReport" type="stream">
              	<param name="contentType">application/octet-stream</param>
              	<param name="contentDisposition">
                     attachment;filename="${downloadFileName}"
@@ -28,14 +21,19 @@
             <interceptor-ref name="loginCheckStack" />
             <interceptor-ref name="reportPrivilegeInterceptor" />
             <result type="redirectAction" name="none">summary</result>
-            <result type="tiles" name="success">.report.excerpt</result>
+            <result type="tiles" name="campagin">.report.excerpt</result>
+<!--             <result type="tiles" name="success">.report.excerpt</result> -->
         </action>
         
         <action name="reportExcerptAjaxTable" class="ReportExcerptAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.excerpt</result>
-            <result type="tiles" name="adKeywordReport">report.ajaxTable.excerpt.keyword</result>
+        	<result type="tiles" name="campagin">report.body.excerpt.detailList</result>
+        	<result type="tiles" name="adGroup">report.body.excerptAdGroup.detailList</result>
+        	<result type="tiles" name="advertise">report.body.excerptAdvertise.detailList</result>
+<!--             <result type="tiles" name="success">report.body.excerpt.detailList</result> -->
+<!--             <result type="tiles" name="success">report.ajaxTable.excerpt</result> -->
+<!--             <result type="tiles" name="adKeywordReport">report.ajaxTable.excerpt.keyword</result> -->
         </action>
 		
 		<action name="reportExcerptAjaxChart" class="ReportExcerptAction" method="flashDataDownLoad">
@@ -43,6 +41,47 @@
 			<interceptor-ref name="reportPrivilegeInterceptor" />
             <result type="tiles" name="success">report.flashData</result>
         </action>
+        
+<!--         舊的 -->
+<!--         <action name="reportExcerptDownload" class="ReportExcerptAction"> -->
+<!--             <interceptor-ref name="loginCheckStack" /> -->
+<!--             <interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--       		<result name="success" type="stream"> -->
+<!--              	<param name="contentType">application/octet-stream</param> -->
+<!--              	<param name="contentDisposition"> -->
+<!--                     attachment;filename="${downloadFileName}" -->
+<!--                 </param> -->
+<!--                 <param name="inputName">downloadFileStream</param> -->
+<!--             </result> -->
+<!--             <result name="adKeywordReport" type="stream"> -->
+<!--              	<param name="contentType">application/octet-stream</param> -->
+<!--              	<param name="contentDisposition"> -->
+<!--                     attachment;filename="${downloadFileName}" -->
+<!--                 </param> -->
+<!--                 <param name="inputName">downloadFileStream</param> -->
+<!--             </result> -->
+<!--       	</action> -->
+
+<!-- 		<action name="reportExcerpt" class="ReportExcerptAction"> -->
+<!--             <interceptor-ref name="loginCheckStack" /> -->
+<!--             <interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="redirectAction" name="none">summary</result> -->
+<!--             <result type="tiles" name="success">.report.excerpt</result> -->
+<!--         </action> -->
+        
+<!--         <action name="reportExcerptAjaxTable" class="ReportExcerptAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.ajaxTable.excerpt</result> -->
+<!--             <result type="tiles" name="adKeywordReport">report.ajaxTable.excerpt.keyword</result> -->
+<!--         </action> -->
+		
+<!-- 		<action name="reportExcerptAjaxChart" class="ReportExcerptAction" method="flashDataDownLoad"> -->
+<!-- 			<interceptor-ref name="loginCheckStack" /> -->
+<!-- 			<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.flashData</result> -->
+<!--         </action> -->
+		<!-- excerpt 總廣告成效 end -->
 		
 		<!-- 商品成效 RMI -->
 	  	<action name="adProdDetailReport" class="ReportExcerptAction" method="adProdDetailReport">
