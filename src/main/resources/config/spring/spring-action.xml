@@ -133,15 +133,9 @@
     	<property name="adActionReportService" ref="AdActionReportService" />
     	<property name="adGroupReportService" ref="AdGroupReportService" />
     	<property name="adReportService" ref="AdReportService" />
-<!--     	<property name="adKeywordReportService" ref="AdKeywordReportService" /> -->
-<!--     	<property name="adActionService" ref="PfpAdActionService" /> -->
-<!--     	<property name="adGroupService" ref="PfpAdGroupService" /> -->
-<!--     	<property name="pfpAdDAO" ref="PfpAdDAO" /> -->
-<!-- 	 	<property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" /> -->
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />
-<!-- 		<property name="admServer" value="${akbadm.server}" />   -->
     </bean>
     
 	<bean id="ReportAdvertiseAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdvertiseAction" scope="prototype">

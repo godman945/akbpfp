@@ -44,13 +44,6 @@
 	<definition name="report.body.excerpt.detailList" template="/ftl/report/excerpt/excerptDataList.ftl" />
 	<definition name="report.body.excerptAdGroup.detailList" template="/ftl/report/excerpt/excerptAdGroupDataList.ftl" />
 	<definition name="report.body.excerptAdvertise.detailList" template="/ftl/report/excerpt/excerptAdvertiseDataList.ftl" />
-	
-<!--     <definition name="report.body.excerpt" extends="report.body" > -->
-<!--     	<put-attribute name="reportTable" value="report.ajaxTable.excerpt" /> -->
-<!-- 		<put-attribute name="chartTable" value="report.chartTable.excerpt" /> -->
-<!--     </definition> -->
-    
-<!--     <definition name="report.ajaxTable.excerpt" template="/ftl/report/ajax/excerptTable.ftl" /> -->
 	<definition name="report.chartTable.excerpt" template="/ftl/report/chart/excerptChartTable.ftl" />
 	<!--.report.excerpt 總廣告成效 end -->
 	
