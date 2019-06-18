@@ -30,7 +30,7 @@
 				</tbody>
 			</table>
 
-<!-- adTmg start -->
+			<!-- 圖像廣告編輯 adTmg start -->
   			
 			<h4>製作廣告</h4>
 			<table width="100%" id="alex" cellspacing="1" cellpadding="0" border="0" class="tb02">
@@ -46,6 +46,7 @@
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">已輸入0字，剩1024字</span>
 						</td>
 					</tr>
+					<#if openThirdUser?string("true","flase") == "true">
 					<tr class="" style="display: ;">
                         <th style="">
                            		 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(3)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
@@ -58,11 +59,12 @@
                         <td>
                           <div class="code-box">
                               <textarea rows="1" placeholder="請輸入第三方曝光追蹤代碼" id="thirdCode" name="thirdCode" style="resize:none;margin: 0px 310px 0px 0px; height: 137px; width: 632px;">${thirdCode!}</textarea>
-                          		<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[2]!}">
-                          		<input type="hidden" id="adDetailSeq" name="adDetailContent" value='${adDetailContent[2]!}'>
                           </div>
                         </td>
                     </tr>
+                    </#if>
+                    <input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[2]!}">
+                    <input type="hidden" id="adDetailSeq" name="adDetailContent" value='${adDetailContent[2]!}'>
 				</tbody>
 			</table>
 			 
@@ -95,7 +97,7 @@
                 </ul>
             </div>
             <!--上傳訊息end-->
-<!-- adTmg end -->
+		<!-- 圖像廣告編輯 adTmg end -->
 		</div>
 		<input type="hidden" id="saveAndNew" name="saveAndNew" value="">
 		<input type="hidden" id="ulTmpName" name="ulTmpName" value="mpjxRl0rewSuBhH3madQgOsPImwqLs">

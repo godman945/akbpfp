@@ -83,6 +83,7 @@ import com.pchome.enumerate.ad.EnumAdVideoSizePoolType;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
+import com.pchome.enumerate.user.EnumOpenThirdUser;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.depot.utils.CookieUtil;
 import com.pchome.soft.depot.utils.HttpUtil;
@@ -230,6 +231,9 @@ public class AdAddAction extends BaseCookieAction{
 	
 	/* 商品廣告用參數 END*/
 	
+	//開放第三方曝光code
+	private boolean openThirdUser;
+	
 	//新增廣告
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
@@ -264,6 +268,14 @@ public class AdAddAction extends BaseCookieAction{
 			}
 		}else{
 			backPage = "adActionView.html";
+		}
+		
+		//檢查是否允許開放第三方曝光代碼功能
+		for (EnumOpenThirdUser enumOpenThirdUser : EnumOpenThirdUser.values()) {
+			if(enumOpenThirdUser.getPfdCustomerInfoId().equals(super.getPfd_customer_info_id())) {
+				openThirdUser = true;
+				break;
+			}
 		}
 		//根據廣告類型個別處理顯示新增廣告畫面需要行為
 		return adObject.AdAdAddInit(this);
@@ -1255,6 +1267,13 @@ public class AdAddAction extends BaseCookieAction{
 			adHiddenType = "YES";
 		}
 	    
+	    //檢查是否允許開放第三方曝光代碼功能
+	    for (EnumOpenThirdUser enumOpenThirdUser : EnumOpenThirdUser.values()) {
+	    	if(enumOpenThirdUser.getPfdCustomerInfoId().equals(super.getPfd_customer_info_id())) {
+	    		openThirdUser = true;
+	    		break;
+	    	}
+	    }
 	    return SUCCESS;
 	}
 
@@ -2839,6 +2858,17 @@ public class AdAddAction extends BaseCookieAction{
 	public void setThirdCode(String thirdCode) {
 		this.thirdCode = thirdCode;
 	}
+
+
+	public boolean isOpenThirdUser() {
+		return openThirdUser;
+	}
+
+	public void setOpenThirdUser(boolean openThirdUser) {
+		this.openThirdUser = openThirdUser;
+	}
+
+
 
 }
 
