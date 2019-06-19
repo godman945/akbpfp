@@ -303,7 +303,7 @@
                                             <input type="checkbox" id="AR05" name="adCity" value="AR05"> 金馬地區
                                         </li>
                                     </ul>
-			                       		
+			                       		<div style="color:graytext;">各家業者所採用的地理位置資訊源有所不同，結果可能無法完全一致。</div>
 			                       		
 		                       		</#if>
 			                    </td>
