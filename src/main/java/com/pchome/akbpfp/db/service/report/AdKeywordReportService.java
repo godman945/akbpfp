@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
 import com.pchome.enumerate.ad.EnumAdKeywordType;
+import com.pchome.enumerate.report.EnumReport;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
@@ -572,5 +574,124 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 		}
 		
 		return adKeywordVOList;
+	}
+
+	/**
+	 * 關鍵字成效(圖表)
+	 * @param chartVo
+	 * @return List<Map<Date, Float>>
+	 */
+	@Override
+	public List<Map<Date, Float>> queryReportAdKeywordChartDataMapList(AdKeywordReportVO vo) {
+		List<Map<String, Object>> adKeywordList = adKeywordReportDAO.getAdKeywordListChart(vo);
+
+		String charType = vo.getCharType();
+		List<Map<Date, Float>> mapList = new ArrayList<>();
+		Map<Date, Float> flashDataMap = new HashMap<>();
+		Map<Date, Float> flashPhrDataMap = new HashMap<>();
+		Map<Date, Float> flashPreDataMap = new HashMap<>();
+		Map<Date, Float> flashTotalDataMap = new HashMap<>();
+		
+		for (Map<String, Object> dataMap : adKeywordList) {
+			
+			// 日期
+			Date reportDate = (Date) dataMap.get("ad_keyword_pvclk_date");
+			
+			// 廣泛比對-曝光數
+			BigDecimal adKeywordPvSum = (BigDecimal) dataMap.get("ad_keyword_pv_sum");
+			// 廣泛比對-互動數
+			BigDecimal adKeywordClkSum = (BigDecimal) dataMap.get("ad_keyword_clk_sum");
+			// 廣泛比對-費用
+			BigDecimal adKeywordClkPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_keyword_clk_price_sum"));
+			
+			// 詞組比對-曝光數
+			BigDecimal adKeywordPhrasePvSum = (BigDecimal) dataMap.get("ad_keyword_phrase_pv_sum");
+			// 詞組比對-互動數
+			BigDecimal adKeywordPhraseClkSum = (BigDecimal) dataMap.get("ad_keyword_phrase_clk_sum");
+			// 詞組比對-費用
+			BigDecimal adKeywordPhraseClkPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_keyword_phrase_clk_price_sum"));
+			
+			// 精準比對-曝光數
+			BigDecimal adKeywordPrecisionPvSum = (BigDecimal) dataMap.get("ad_keyword_precision_pv_sum");
+			// 精準比對-互動數
+			BigDecimal adKeywordPrecisionClkSum = (BigDecimal) dataMap.get("ad_keyword_precision_clk_sum");
+			// 精準比對-費用
+			BigDecimal adKeywordPrecisionClkPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_keyword_precision_clk_price_sum"));
+			
+			// 小計-曝光數
+			BigDecimal kwPvSubtotal = new BigDecimal(0);
+			kwPvSubtotal = kwPvSubtotal.add(adKeywordPvSum).add(adKeywordPhrasePvSum).add(adKeywordPrecisionPvSum);
+			// 小計-互動數
+			BigDecimal kwClkSubtotal = new BigDecimal(0);
+			kwClkSubtotal = kwClkSubtotal.add(adKeywordClkSum).add(adKeywordPhraseClkSum).add(adKeywordPrecisionClkSum);
+			// 小計-費用
+			BigDecimal kwPriceSubtotal = new BigDecimal(0);
+			kwPriceSubtotal = kwPriceSubtotal.add(adKeywordClkPriceSum).add(adKeywordPhraseClkPriceSum).add(adKeywordPrecisionClkPriceSum);
+			
+			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+				flashDataMap.put(reportDate, adKeywordPvSum.floatValue());
+				flashPhrDataMap.put(reportDate, adKeywordPhrasePvSum.floatValue());
+				flashPreDataMap.put(reportDate, adKeywordPrecisionPvSum.floatValue());
+				flashTotalDataMap.put(reportDate, kwPvSubtotal.floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+				flashDataMap.put(reportDate, adKeywordClkSum.floatValue());
+				flashPhrDataMap.put(reportDate, adKeywordPhraseClkSum.floatValue());
+				flashPreDataMap.put(reportDate, adKeywordPrecisionClkSum.floatValue());
+				flashTotalDataMap.put(reportDate, kwClkSubtotal.floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
+				// 廣泛比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkSum, adKeywordPvSum, 100).floatValue());
+				// 詞組比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
+				flashPhrDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkSum, adKeywordPhrasePvSum, 100).floatValue());
+				// 精準比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
+				flashPreDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkSum, adKeywordPrecisionPvSum, 100).floatValue());
+				// 小計-互動率,互動率 = 總互動數 / 總曝光數 * 100
+				flashTotalDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(kwClkSubtotal, kwPvSubtotal, 100).floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
+				// 廣泛比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkPriceSum, adKeywordClkSum).floatValue());
+				// 詞組比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
+				flashPhrDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkPriceSum, adKeywordPhraseClkSum).floatValue());
+				// 精準比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
+				flashPreDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkPriceSum, adKeywordPrecisionClkSum).floatValue());
+				// 小計-單次互動費用,單次互動費用 = 總費用 / 總互動次數
+				flashTotalDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(kwPriceSubtotal, kwClkSubtotal).floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+				// 廣泛比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
+				Double adKeywordKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkPriceSum, adKeywordPvSum, 1000);
+				BigDecimal bigDecimal = BigDecimal.valueOf(adKeywordKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
+				// adKeywordReportVO.setKwKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+				flashDataMap.put(reportDate, bigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+				
+				// 詞組比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
+				Double adKeywordPhraseKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkPriceSum, adKeywordPhrasePvSum, 1000);
+				BigDecimal phraseBigDecimal = BigDecimal.valueOf(adKeywordPhraseKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
+				// adKeywordReportVO.setKwPhrKiloCost(phraseBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+				flashPhrDataMap.put(reportDate, phraseBigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+				
+				// 精準比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
+				Double adKeywordPrecisionKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkPriceSum, adKeywordPrecisionPvSum, 1000);
+				BigDecimal precisionBigDecimal = BigDecimal.valueOf(adKeywordPrecisionKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
+				// adKeywordReportVO.setKwPreKiloCost(precisionBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+				flashPreDataMap.put(reportDate, precisionBigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+				
+				// 小計-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
+				Double kwKiloCostSubtotal = CommonUtils.getInstance().getCalculateDivisionValue(kwPriceSubtotal, kwPvSubtotal, 1000);
+				BigDecimal subtotalBigDecimal = BigDecimal.valueOf(kwKiloCostSubtotal); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
+				// adKeywordReportVO.setKwKiloCostSubtotal(subtotalBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+				flashTotalDataMap.put(reportDate, subtotalBigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+				flashDataMap.put(reportDate, adKeywordClkPriceSum.floatValue());
+				flashPhrDataMap.put(reportDate, adKeywordPhraseClkPriceSum.floatValue());
+				flashPreDataMap.put(reportDate, adKeywordPrecisionClkPriceSum.floatValue());
+				flashTotalDataMap.put(reportDate, kwPriceSubtotal.floatValue());
+			}
+		}
+		
+		mapList.add(flashDataMap);
+		mapList.add(flashPhrDataMap);
+		mapList.add(flashPreDataMap);
+		mapList.add(flashTotalDataMap);
+		return mapList;
 	}
 }

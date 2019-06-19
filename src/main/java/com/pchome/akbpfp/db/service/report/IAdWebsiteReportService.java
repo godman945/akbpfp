@@ -36,4 +36,11 @@ public interface IAdWebsiteReportService {
 	 */
 	public Map<String, String> getWebsiteCategoryMap();
 
+	/**
+	 *  網站類型成效(圖表)
+	 * @param chartVo
+	 * @return List Object
+	 */
+	public List<Object> queryReportAdWebsiteChartDataListObj(AdWebsiteReportVO vo);
+
 }

@@ -16,6 +16,7 @@ public class AdDailyPerformanceReportVO {
 	private String sortBy = ""; // 排序欄位
 	private boolean isDownloadOrIsNotCuttingPagination = false; // 是否為下載，或是否切分頁FLAG
 	private int rowCount = 0; // 總計幾筆
+	private String charType = ""; // 圖表度量
 	
 	private String adActionName = ""; // 麵包屑顯示名稱
 	
@@ -258,6 +259,14 @@ public class AdDailyPerformanceReportVO {
 
 	public void setAdActionName(String adActionName) {
 		this.adActionName = adActionName;
+	}
+
+	public String getCharType() {
+		return charType;
+	}
+
+	public void setCharType(String charType) {
+		this.charType = charType;
 	}
 	
 }

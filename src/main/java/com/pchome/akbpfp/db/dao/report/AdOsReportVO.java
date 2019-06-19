@@ -13,6 +13,7 @@ public class AdOsReportVO {
 	private String sortBy = ""; // 排序欄位
 	private boolean isDownloadOrIsNotCuttingPagination = false; // 是否為下載，或是否切分頁FLAG
 	private int rowCount = 0; // 總計幾筆
+	private String charType = ""; // 圖表度量
 	
 	private String adPvclkOs;			//裝置作業系統
 	private String adPvclkDevice;		//裝置設備
@@ -330,6 +331,14 @@ public class AdOsReportVO {
 
 	public void setDownloadOrIsNotCuttingPagination(boolean isDownloadOrIsNotCuttingPagination) {
 		this.isDownloadOrIsNotCuttingPagination = isDownloadOrIsNotCuttingPagination;
+	}
+
+	public String getCharType() {
+		return charType;
+	}
+
+	public void setCharType(String charType) {
+		this.charType = charType;
 	}
 	
 }

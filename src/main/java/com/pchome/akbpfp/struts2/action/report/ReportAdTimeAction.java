@@ -310,132 +310,16 @@ public class ReportAdTimeAction extends BaseReportAction {
 	 * @return
 	 * @throws Exception
 	 */
-	public String flashDataDownLoad() throws Exception {
-		
+	public String flashDataDownLoad() {
 		AdTimeReportVO chartVo = new AdTimeReportVO();
+		chartVo.setCharType(charType);
 		chartVo.setCustomerInfoId(super.getCustomer_info_id());
 		chartVo.setViewType(viewType);
 		chartVo.setStartDate(startDate);
 		chartVo.setEndDate(endDate);
 		chartVo.setSearchText(searchText);
 		chartVo.setWhereMap(whereMap);
-		List<AdTimeReportVO> resultChartData = adTimeReportService.queryReportAdTimeChartData(chartVo);
-
-		List<Double> dataList = new ArrayList<>();
-		
-		//星期
-		String weekCode = "";
-		double sun = 0; // 星期日
-		double mon = 0; // 星期一
-		double tue = 0; // 星期二
-		double wed = 0; // 星期三
-		double thu = 0; // 星期四
-		double fri = 0; // 星期五
-		double sat = 0; // 星期六
-		
-		//時段
-		String timeCode = "";
-		double timeA = 0; // 0-3
-		double timeB = 0; // 4-7
-		double timeC = 0; // 8-11
-		double timeD = 0; // 12-15
-		double timeE = 0; // 16-19
-		double timeF = 0; // 20-23
-
-		for (int i = 0; i < resultChartData.size(); i++) {
-			AdTimeReportVO vo = resultChartData.get(i);
-			
-			double data = 0;
-			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				data = vo.getAdPvSum().doubleValue();
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-				data = vo.getAdClkSum().doubleValue();
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				data = vo.getCtr();
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				data = vo.getAvgCost();
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-				data = vo.getKiloCost();
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				data = vo.getAdPriceSum();
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
-				data = vo.getConvertCount().doubleValue();
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
-				data = vo.getConvertCTR();
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
-				data = vo.getConvertPriceCount().doubleValue();
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
-				data = vo.getConvertCost();
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
-				data = vo.getConvertInvestmentCost();
-			}
-
-			if ("week".equalsIgnoreCase(viewType)) {
-				weekCode = Integer.toString(vo.getWeekCode());
-				switch (weekCode) {
-				case "1":
-					sun = data;
-					break;
-				case "2":
-					mon = data;
-					break;
-				case "3":
-					tue = data;
-					break;
-				case "4":
-					wed = data;
-					break;
-				case "5":
-					thu = data;
-					break;
-				case "6":
-					fri = data;
-					break;
-				default:
-					sat = data;
-					break;
-				}
-			} else {
-				timeCode = vo.getTimeCode();
-				switch (timeCode) {
-				case "B":
-					timeB = data;
-					break;
-				case "C":
-					timeC = data;
-					break;
-				case "D":
-					timeD = data;
-					break;
-				case "E":
-					timeE = data;
-					break;
-				case "F":
-					timeF = data;
-					break;
-				default:
-					timeA = data;
-					break;
-				}
-			}
-		}
-
-		if ("week".equalsIgnoreCase(viewType)) {
-			dataList.add(sun);
-			dataList.add(mon);
-			dataList.add(tue);
-			dataList.add(wed);
-			dataList.add(thu);
-			dataList.add(fri);
-			dataList.add(sat);
-		} else {
-			dataList.add(timeA);
-			dataList.add(timeB);
-			dataList.add(timeC);
-			dataList.add(timeD);
-			dataList.add(timeE);
-			dataList.add(timeF);
-		}
+		List<Double> dataList = adTimeReportService.queryReportAdTimeChartDataList(chartVo);
 		
 		JSONArray array = new JSONArray(dataList);
 		flashData = array.toString();

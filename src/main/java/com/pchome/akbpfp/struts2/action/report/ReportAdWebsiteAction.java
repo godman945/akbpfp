@@ -292,57 +292,17 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 	 */
 	public String flashDataDownLoad() {
 		AdWebsiteReportVO chartVo = new AdWebsiteReportVO();
+		chartVo.setCharType(charType);
 		chartVo.setCustomerInfoId(super.getCustomer_info_id());
 		chartVo.setStartDate(startDate);
 		chartVo.setEndDate(endDate);
 		chartVo.setSearchText(searchText);
 		chartVo.setWhereMap(whereMap);
 		chartVo.setDownloadOrIsNotCuttingPagination(true);
-		List<AdWebsiteReportVO> resultChartData = adWebsiteReportService.queryReportAdWebsiteChartData(chartVo);
+		List<Object> objectList = adWebsiteReportService.queryReportAdWebsiteChartDataListObj(chartVo);
 
-		List<String> titleDataList = new ArrayList<>();
-		List<Double> dataList = new ArrayList<>();
-		
-		for (int i = 0; i < resultChartData.size(); i++) {
-			AdWebsiteReportVO vo = resultChartData.get(i);
-			
-			double data = 0;
-			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				data = vo.getAdPvSum().doubleValue();
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-				data = vo.getAdClkSum().doubleValue();
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				data = vo.getCtr();
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				data = vo.getAvgCost();
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-				data = vo.getKiloCost();
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				data = vo.getAdPriceSum();
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
-				data = vo.getConvertCount().doubleValue();
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
-				data = vo.getConvertCTR();
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
-				data = vo.getConvertPriceCount().doubleValue();
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
-				data = vo.getConvertCost();
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
-				data = vo.getConvertInvestmentCost();
-			}
-			
-			titleDataList.add(vo.getWebsiteCategoryName());
-			dataList.add(data);
-		}
-		
-		List<Object> objectList = new ArrayList<>();
-		objectList.add(titleDataList);
-		objectList.add(dataList);
-		
 		JSONArray array = new JSONArray(objectList);
-		
 		flashData = array.toString();
-
 		return SUCCESS;
 	}
 	

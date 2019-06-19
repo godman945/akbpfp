@@ -17,6 +17,7 @@ public class AdTimeReportVO {
 	private String sortBy = ""; // 排序欄位
 	private boolean isDownloadOrIsNotCuttingPagination = false; // 是否為下載，或是否切分頁FLAG
 	private int rowCount = 0; // 總計幾筆
+	private String charType = ""; // 圖表度量
 	
 	private Date reportDate; //報表日期
 	
@@ -359,6 +360,14 @@ public class AdTimeReportVO {
 
 	public void setWeekCode(int weekCode) {
 		this.weekCode = weekCode;
+	}
+
+	public String getCharType() {
+		return charType;
+	}
+
+	public void setCharType(String charType) {
+		this.charType = charType;
 	}
 
 }

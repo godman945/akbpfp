@@ -64,7 +64,7 @@
 	
 	<definition name="report.body.adDaily.detailList" template="/ftl/report/adDaily/adDailyDataList.ftl" >
     </definition>
-    <definition name="report.chartTable.adDaily" template="/ftl/report/chart/excerptChartTable.ftl" >
+    <definition name="report.chartTable.adDaily" template="/ftl/report/chart/adDailyChartTable.ftl" >
 	</definition>
     <!-- .report.adDaily 每日花費成效end -->
     

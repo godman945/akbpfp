@@ -25,9 +25,16 @@ public interface IAdAgesexReportService {
 
 	/**
 	 * 廣告族群成效(圖表)
-	 * @param chartVo
+	 * @param vo
 	 * @return
 	 */
 	public List<AdAgesexReportVO> queryReportAdAgesexChartData(AdAgesexReportVO vo);
+
+	/**
+	 * 廣告族群成效(圖表)
+	 * @param vo
+	 * @return list
+	 */
+	public List<Double> queryReportAdAgesexChartDataList(AdAgesexReportVO vo);
 
 }

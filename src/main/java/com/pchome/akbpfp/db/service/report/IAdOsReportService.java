@@ -1,6 +1,7 @@
 package com.pchome.akbpfp.db.service.report;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pchome.akbpfp.db.dao.report.AdOsReportVO;
 
@@ -24,9 +25,16 @@ public interface IAdOsReportService {
 
 	/**
 	 * 行動廣告成效(圖表)
-	 * @param reportVo
-	 * @return
+	 * @param vo
+	 * @return List
 	 */
 	public List<AdOsReportVO> queryReportAdOsChartData(AdOsReportVO vo);
+
+	/**
+	 * 行動廣告成效(圖表)
+	 * @param vo
+	 * @return Map
+	 */
+	public Map<String, Float> queryReportAdOsChartDataMap(AdOsReportVO vo);
 
 }

@@ -327,7 +327,7 @@ public class AdGroupReportService implements IAdGroupReportService {
 			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");
 			// 互動數
 			BigDecimal adClkSum = (BigDecimal) dataMap.get("ad_clk_sum");
-			// 無效點選次數
+			// 無效點選次數(總廣告成效用)
 			BigDecimal adInvClkSum = (BigDecimal) dataMap.get("ad_invalid_clk_sum");
 			// 費用
 			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
@@ -352,7 +352,6 @@ public class AdGroupReportService implements IAdGroupReportService {
 				// 千次曝光費用 = 總費用 / 曝光數 * 1000
 				Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
 				BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-//				adCampaginReportVO.setKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
 				flashDataMap.put(reportDate, bigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 				flashDataMap.put(reportDate, adPriceSum.floatValue());

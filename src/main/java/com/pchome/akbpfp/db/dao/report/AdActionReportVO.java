@@ -15,6 +15,7 @@ public class AdActionReportVO {
 	private String whereMap = ""; // sql篩選條件
 	private String sortBy = ""; // 排序欄位
 	private boolean isDownloadOrIsNotCuttingPagination = false; // 是否為下載，或用來當SQL是否切分頁FLAG
+	private String charType = ""; // 圖表度量
 	
 	private Date reportDate; //報表日期
 
@@ -288,6 +289,14 @@ public class AdActionReportVO {
 
 	public void setDownloadOrIsNotCuttingPagination(boolean isDownloadOrIsNotCuttingPagination) {
 		this.isDownloadOrIsNotCuttingPagination = isDownloadOrIsNotCuttingPagination;
+	}
+
+	public String getCharType() {
+		return charType;
+	}
+
+	public void setCharType(String charType) {
+		this.charType = charType;
 	}
 
 }

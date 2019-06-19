@@ -31,11 +31,17 @@ public interface IAdActionReportService {
 	/**
 	 * 每日花費成效(圖表)
 	 * @param vo
-	 * @return
-	 * @throws Exception 
+	 * @return list
 	 */
 	public List<AdActionReportVO> queryReportAdDailyChartData(AdActionReportVO vo);
 
+	/**
+	 * 每日花費成效(圖表)
+	 * @param vo
+	 * @return map
+	 */
+	public Map<Date, Float> queryReportAdDailyChartDataMap(AdActionReportVO vo);
+	
 	/**
 	 * 廣告成效(明細)
 	 * @param vo
@@ -64,4 +70,5 @@ public interface IAdActionReportService {
 	 * @return map
 	 */
 	public Map<Date, Float> queryReportAdCampaginChartDataMap(AdCampaginReportVO vo);
+
 }

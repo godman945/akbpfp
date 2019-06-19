@@ -31,4 +31,11 @@ public interface IAdTimeReportService {
 	 */
 	public List<AdTimeReportVO> queryReportAdTimeChartData(AdTimeReportVO vo) throws Exception;
 
+	/**
+	 * 廣告播放時段成效(圖表)
+	 * @param vo
+	 * @return
+	 */
+	public List<Double> queryReportAdTimeChartDataList(AdTimeReportVO vo);
+
 }

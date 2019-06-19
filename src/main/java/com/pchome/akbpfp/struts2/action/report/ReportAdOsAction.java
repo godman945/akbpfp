@@ -235,50 +235,17 @@ public class ReportAdOsAction extends BaseReportAction {
 	 * @throws Exception
 	 */
 	public String flashDataDownLoad() {
-
 		AdOsReportVO chartVo = new AdOsReportVO();
+		chartVo.setCharType(charType);
 		chartVo.setCustomerInfoId(super.getCustomer_info_id());
 		chartVo.setStartDate(startDate);
 		chartVo.setEndDate(endDate);
 		chartVo.setSearchText(searchText);
 		chartVo.setSortBy(sortBy);
 		chartVo.setDownloadOrIsNotCuttingPagination(true); // 不切分頁flag
-		
-		List<AdOsReportVO> resultChartData = adOsReportService.queryReportAdOsChartData(chartVo);
-		
-		Map<String, Float> flashDataMap = new LinkedHashMap<>(); // 因圖表排序，所以使用LinkedHashMap
-		for (int i = 0; i < resultChartData.size(); i++) {
-			AdOsReportVO vo = resultChartData.get(i);
-			String adPvclkOs = vo.getAdPvclkOs();
-			
-			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getAdPvSum().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getAdClkSum().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getCtr().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getAvgCost().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getKiloCost().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getAdPriceSum().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getConvertCount().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getConvertCTR().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getConvertPriceCount().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getConvertCost().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
-				flashDataMap.put(adPvclkOs, vo.getConvertInvestmentCost().floatValue());
-			}
-			
-		}
-		
-		flashData = openFlashUtil.getBarChartDataForArray(charType, flashDataMap);
+		Map<String, Float> flashDataMap = adOsReportService.queryReportAdOsChartDataMap(chartVo);
 
+		flashData = openFlashUtil.getBarChartDataForArray(charType, flashDataMap);
 		return SUCCESS;
 	}
 	

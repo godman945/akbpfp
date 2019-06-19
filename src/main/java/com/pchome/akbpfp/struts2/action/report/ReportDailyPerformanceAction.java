@@ -285,47 +285,16 @@ public class ReportDailyPerformanceAction extends BaseReportAction {
 	 */
 	public String flashDataDownLoad() {
 		AdDailyPerformanceReportVO chartVo = new AdDailyPerformanceReportVO();
+		chartVo.setCharType(charType);
 		chartVo.setAdSeq(adSeq);
 		chartVo.setCustomerInfoId(super.getCustomer_info_id());
 		chartVo.setStartDate(startDate);
 		chartVo.setEndDate(endDate);
 		chartVo.setSearchText(searchText);
 		chartVo.setWhereMap(whereMap);
-		List<AdDailyPerformanceReportVO> resultChartData = adDailyPerformanceReportService.queryReportAdDailyPerformanceChartData(chartVo);
-		
-		Map<Date, Float> flashDataMap = new HashMap<>();
-		
-		for (int i = 0; i < resultChartData.size(); i++) {
-			AdDailyPerformanceReportVO vo = resultChartData.get(i);
-			Date reportDate = vo.getReportDate();
-			
-			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getAdPvSum().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getAdClkSum().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getCtr().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getAvgCost().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getKiloCost().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getAdPriceSum().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getConvertCount().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getConvertCTR().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getConvertPriceCount().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getConvertCost().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getConvertInvestmentCost().floatValue());
-			}
-		}
-		
-		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
+		Map<Date, Float> flashDataMap = adDailyPerformanceReportService.queryReportAdDailyPerformanceChartDataMap(chartVo);
 
+		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
 		return SUCCESS;
 	}
 	

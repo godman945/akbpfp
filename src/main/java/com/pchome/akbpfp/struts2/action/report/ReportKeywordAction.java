@@ -238,67 +238,18 @@ public class ReportKeywordAction extends BaseReportAction {
 	/**
 	 * 圖表
 	 * @return
-	 * @throws Exception
 	 */
 	public String flashDataDownLoad() {
 		AdKeywordReportVO chartVo = new AdKeywordReportVO();
+		chartVo.setCharType(charType);
 		chartVo.setCustomerInfoId(super.getCustomer_info_id());
 		chartVo.setStartDate(startDate);
 		chartVo.setEndDate(endDate);
 		chartVo.setSearchText(searchText);
 		chartVo.setWhereMap(whereMap);
-		List<AdKeywordReportVO> resultChartData = adKeywordReportService.queryReportAdKeywordChartData(chartVo);
+		List<Map<Date, Float>> mapList = adKeywordReportService.queryReportAdKeywordChartDataMapList(chartVo);
 		
-		List<Map<Date, Float>> mapList = new ArrayList<>();
-		Map<Date, Float> flashDataMap = new HashMap<>();
-		Map<Date, Float> flashPhrDataMap = new HashMap<>();
-		Map<Date, Float> flashPreDataMap = new HashMap<>();
-		Map<Date, Float> flashTotalDataMap = new HashMap<>();
-		
-		for (int i = 0; i < resultChartData.size(); i++) {
-			AdKeywordReportVO vo = resultChartData.get(i);
-			Date reportDate = vo.getReportDate();
-			
-			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getKwPvSum().floatValue());
-				flashPhrDataMap.put(reportDate, vo.getKwPhrPvSum().floatValue());
-				flashPreDataMap.put(reportDate, vo.getKwPrePvSum().floatValue());
-				flashTotalDataMap.put(reportDate, vo.getKwPvSubtotal().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getKwClkSum().floatValue());
-				flashPhrDataMap.put(reportDate, vo.getKwPhrClkSum().floatValue());
-				flashPreDataMap.put(reportDate, vo.getKwPreClkSum().floatValue());
-				flashTotalDataMap.put(reportDate, vo.getKwClkSubtotal().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getKwCtrSum().floatValue());
-				flashPhrDataMap.put(reportDate, vo.getKwPhrCtrSum().floatValue());
-				flashPreDataMap.put(reportDate, vo.getKwPreCtrSum().floatValue());
-				flashTotalDataMap.put(reportDate, vo.getKwCtrSubtotal().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getKwPriceAvgSum().floatValue());
-				flashPhrDataMap.put(reportDate, vo.getKwPhrPriceAvgSum().floatValue());
-				flashPreDataMap.put(reportDate, vo.getKwPrePriceAvgSum().floatValue());
-				flashTotalDataMap.put(reportDate, vo.getKwPriceAvgSubtotal().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getKwKiloCost().floatValue());
-				flashPhrDataMap.put(reportDate, vo.getKwPhrKiloCost().floatValue());
-				flashPreDataMap.put(reportDate, vo.getKwPreKiloCost().floatValue());
-				flashTotalDataMap.put(reportDate, vo.getKwKiloCostSubtotal().floatValue());
-			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-				flashDataMap.put(reportDate, vo.getKwPriceSum().floatValue());
-				flashPhrDataMap.put(reportDate, vo.getKwPhrPriceSum().floatValue());
-				flashPreDataMap.put(reportDate, vo.getKwPrePriceSum().floatValue());
-				flashTotalDataMap.put(reportDate, vo.getKwPriceSubtotal().floatValue());
-			}
-		}
-		
-		mapList.add(flashDataMap);
-		mapList.add(flashPhrDataMap);
-		mapList.add(flashPreDataMap);
-		mapList.add(flashTotalDataMap);
-
 		flashData = openFlashUtil.getKeywordChartDataForArray(charType, startDate, endDate, mapList);
-		
 		return SUCCESS;
 	}
 	
