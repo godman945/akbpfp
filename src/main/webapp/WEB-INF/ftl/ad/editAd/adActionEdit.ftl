@@ -300,8 +300,9 @@
                                         <li>
                                             <input type="checkbox" id="AR05" name="adEditCity" value="AR05"> 金馬地區
                                         </li>
+                                        <div style="color:graytext;">各家業者所採用的地理位置資訊源有所不同，結果可能無法完全一致。</div>
                                     </ul>
-                                    <div style="color:graytext;">各家業者所採用的地理位置資訊源有所不同，結果可能無法完全一致。</div>
+                                    
 		                    </td>
 		                   
 		             </tr>
