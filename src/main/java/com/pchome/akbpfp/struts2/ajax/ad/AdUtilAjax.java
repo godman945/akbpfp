@@ -176,6 +176,7 @@ public class AdUtilAjax extends BaseCookieAction{
 	 * 2.影片格式目前開放30秒以下才可通過
 	 * */
 	public String chkVideoUrl() throws Exception{
+		log.info("video url:"+adVideoUrl);
 		JSONObject json = new JSONObject();
 		if(adVideoUrl.indexOf("&") >= 0) {
 			adVideoUrl = adVideoUrl.substring(0, adVideoUrl.indexOf("&"));
