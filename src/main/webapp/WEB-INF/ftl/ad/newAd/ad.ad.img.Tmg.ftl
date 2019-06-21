@@ -39,8 +39,10 @@
 					<tr>
 						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>
 						廣告連結網址
-						<br>
+						<#if openThirdUser?string("true","flase") == "true">
+						<br>  
                               <b class="thirdpty-togglebtn"><span class="swap">＋</span>第三方曝光追蹤代碼</b>
+                        </#if>     
 						</th>
 						<td style="min-width:250px;">
 							<input type="hidden" id="adDetailID" name="adDetailID" value="real_url">
@@ -50,6 +52,7 @@
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">已輸入0字，剩1024字</span>
 						</td>
 					</tr>
+					<#if openThirdUser?string("true","flase") == "true">
 					<tr class="thirdptybx" style="display: none;">
                         <th style="">
                            		 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(3)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
@@ -65,6 +68,7 @@
                           </div>
                         </td>
                     </tr>
+                    </#if>  
                     <tr>
 						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br>
 							<a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize('approveSizeDiv');">支援規格查詢</a>

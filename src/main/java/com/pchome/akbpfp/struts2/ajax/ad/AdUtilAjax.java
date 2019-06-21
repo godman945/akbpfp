@@ -15,7 +15,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
 import org.json.JSONObject;
 
 import com.pchome.akbpfp.struts2.BaseCookieAction;
@@ -155,12 +157,16 @@ public class AdUtilAjax extends BaseCookieAction{
 	}
 
 	public String getSuggestKW() throws Exception{
-		HttpGet request = new HttpGet(new URI("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLDecoder.decode(q, "UTF-8")));
-		//request.setHeader("User-Agent","Mozilla/5.0 (Windows NT 6.1; rv:28.0) Gecko/20100101 Firefox/28.0");
-		HttpClient client = new DefaultHttpClient();
-	    HttpResponse response = client.execute(request);
-	    String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
-	    this.result = theString;
+		log.info(">>>call api keyword:"+q);
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		BasicHttpParams params=new BasicHttpParams();
+		HttpClientParams.setRedirecting(params,false);
+		httpClient.setParams(params);
+		HttpGet httpget = new HttpGet("http://search.pchome.com.tw/suggest/keyword/search.html?q="+java.net.URLDecoder.decode(q, "UTF-8"));
+		HttpResponse response = httpClient.execute(httpget);
+		String theString = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+		log.info(">>>call api keyword theString:"+theString);
+		this.result = theString;
 	    return SUCCESS;
 	}
 	
@@ -170,9 +176,19 @@ public class AdUtilAjax extends BaseCookieAction{
 	 * 2.影片格式目前開放30秒以下才可通過
 	 * */
 	public String chkVideoUrl() throws Exception{
+		log.info("video url:"+adVideoUrl);
+		JSONObject json = new JSONObject();
 		if(adVideoUrl.indexOf("&") >= 0) {
 			adVideoUrl = adVideoUrl.substring(0, adVideoUrl.indexOf("&"));
 		}
+		if(adVideoUrl.indexOf(";") >= 0) {
+			json.put("result", false);
+			json.put("msg", "影片網址帶有不合法字元。");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			return SUCCESS;
+		}
+		
 		String videoResult = "";
 		// 檢查youtube網址是否有效
 		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --list-formats " + adVideoUrl });
@@ -182,7 +198,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
 		log.info(new String(new ByteArrayOutputStream().toByteArray()));
 		
-		JSONObject json = new JSONObject();
+		
 		if (StringUtils.isBlank(videoResult)) {
 			log.info(">>>>>> youtube url fail:" + adVideoUrl);
 			json.put("result", false);
