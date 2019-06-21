@@ -176,14 +176,17 @@ public class AdUtilAjax extends BaseCookieAction{
 	 * 2.影片格式目前開放30秒以下才可通過
 	 * */
 	public String chkVideoUrl() throws Exception{
+		JSONObject json = new JSONObject();
 		if(adVideoUrl.indexOf("&") >= 0) {
 			adVideoUrl = adVideoUrl.substring(0, adVideoUrl.indexOf("&"));
 		}
-		
-		this.url = adVideoUrl;
-		String checkUrlResult = checkAdUrl();
-		log.info(">>>>>>>>>>>>>>>>"+checkUrlResult);
-		
+		if(adVideoUrl.indexOf(";") >= 0) {
+			json.put("result", false);
+			json.put("msg", "影片網址帶有不合法字元。");
+			this.result = json.toString();
+			this.msg = new ByteArrayInputStream(json.toString().getBytes());
+			return SUCCESS;
+		}
 		
 		String videoResult = "";
 		// 檢查youtube網址是否有效
@@ -194,7 +197,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
 		log.info(new String(new ByteArrayOutputStream().toByteArray()));
 		
-		JSONObject json = new JSONObject();
+		
 		if (StringUtils.isBlank(videoResult)) {
 			log.info(">>>>>> youtube url fail:" + adVideoUrl);
 			json.put("result", false);
