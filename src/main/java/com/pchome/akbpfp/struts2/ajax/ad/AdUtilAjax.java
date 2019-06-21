@@ -182,7 +182,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		
 		this.url = adVideoUrl;
 		String checkUrlResult = checkAdUrl();
-		log.info(">>>>>>>>>>>>>>>>");
+		log.info(">>>>>>>>>>>>>>>>"+checkUrlResult);
 		
 		
 		String videoResult = "";
