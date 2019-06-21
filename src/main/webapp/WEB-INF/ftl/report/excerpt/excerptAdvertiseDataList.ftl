@@ -235,7 +235,6 @@
                                     	<#elseIf row.adStyle == 'PROD'> <#-- PROD 商品廣告 -->
                                     	
                                     		<div class="hiddenVal" style="display: none;">
-                                    			<#-- <input type="hidden" id="productTemplateStr" name="productTemplateStr" value="${row.productTemplateStr!}"> -->
                                     			<textarea style="display:none;" id="productTemplateStr" name="productTemplateStr">${row.productTemplateStr!}</textarea><#-- 所有尺寸與同尺寸不同樣板 -->
                                     			<input type="hidden" id="width" name="width" value="${row.prodAdSizeWidth!}">
                                     			<input type="hidden" id="height" name="height" value="${row.prodAdSizeHeight!}">
@@ -273,8 +272,14 @@
                                             
                                     	<#elseIf row.adStyle == 'TMG'> <#-- TMG 圖文廣告 -->
                                     	
-                                    		<#-- <iframe src="adModel.html?adNo=${row.adSeq!}&tproNo=tpro_201406300001" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe> -->
-                                    		<a class="preview pos-absolute" onclick="preView('${row.adStyle!}')">預覽</a>
+                                    		<div class="hiddenVal" style="display: none;">
+      											<#-- 以下為iframe 會用到的參數 -->
+                                    			<input type="hidden" id="adSeq" name="adSeq" value="${row.adSeq!}">
+                                    			<input type="hidden" id="width" name="width" value="300">
+                                    			<input type="hidden" id="height" name="height" value="250">
+                                    			<input type="hidden" id="tproNo" name="tproNo" value="c_x05_tp_tpro_0001">
+                                    		</div>
+                                    		<a class="preview pos-absolute" onclick="preView('${row.adStyle!}', this)">預覽</a>
                                             <div class="txt-cell prod-pic">
                                                 <img src="${row.img!}">
                                             </div>

@@ -454,7 +454,7 @@ public class AdReportService implements IAdReportService {
 		Map<Integer, String> adTypeMap = CommonUtils.getInstance().getAdType();
 		Map<String, String> adStyleTypeMap = CommonUtils.getInstance().getAdStyleTypeMap();
 		Map<String, String> adPriceTypeMap = CommonUtils.getInstance().getAdPriceTypeMap();
-		String productTemplateStr = processProdAdSize();
+		String productTemplateStr = processProdSelectAdSize();
 		
 		List<AdvertiseReportVO> advertiseVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : advertiseList) {
@@ -608,11 +608,11 @@ public class AdReportService implements IAdReportService {
 	}
 
 	/**
-	 * 取得商品廣告所有尺寸與同尺寸不同樣板，全部廣告相同，故不在迴圈內重複執行
+	 * 取得商品廣告預覽畫面下拉選單所有尺寸與同尺寸不同樣板，全部廣告相同，故不在迴圈內重複執行
 	 * @return
 	 * @throws Exception
 	 */
-	private String processProdAdSize() throws Exception {
+	private String processProdSelectAdSize() throws Exception {
 		List<String> xTypeList = new ArrayList<>();
 		xTypeList.add("x04");
 		xTypeList.add("x05");
@@ -916,7 +916,6 @@ public class AdReportService implements IAdReportService {
 	/**
 	 * 廣告明細成效(加總)
 	 */
-	@Override
 	public List<AdvertiseReportVO> queryReportAdvertiseSumData(AdvertiseReportVO vo) {
 		List<Map<String, Object>> advertiseListSum = adReportDAO.getAdvertiseListSum(vo);
 		
@@ -997,7 +996,6 @@ public class AdReportService implements IAdReportService {
 	 * 廣告明細成效(圖表)
 	 * return List
 	 */
-	@Override
 	public List<AdvertiseReportVO> queryReportAdvertiseChartData(AdvertiseReportVO vo) {
 		List<Map<String, Object>> advertiseList = adReportDAO.getAdvertiseListChart(vo);
 		
@@ -1060,7 +1058,6 @@ public class AdReportService implements IAdReportService {
 	 * @param vo
 	 * @return map
 	 */
-	@Override
 	public Map<Date, Float> queryReportAdvertiseChartDataMap(AdvertiseReportVO vo) {
 		List<Map<String, Object>> advertiseList = adReportDAO.getAdvertiseListChart(vo);
 		
