@@ -179,6 +179,12 @@ public class AdUtilAjax extends BaseCookieAction{
 		if(adVideoUrl.indexOf("&") >= 0) {
 			adVideoUrl = adVideoUrl.substring(0, adVideoUrl.indexOf("&"));
 		}
+		
+		this.url = adVideoUrl;
+		String checkUrlResult = checkAdUrl();
+		log.info(">>>>>>>>>>>>>>>>");
+		
+		
 		String videoResult = "";
 		// 檢查youtube網址是否有效
 		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --list-formats " + adVideoUrl });
