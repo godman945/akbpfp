@@ -276,7 +276,7 @@ public class ReportAdWebsiteAction extends BaseReportAction {
 			}
 		}
 		
-		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") >= 1) {
+		if (request.getHeader("User-Agent").toLowerCase().indexOf("firefox") > -1) {
 			downloadFileName = new String(filename.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
 		} else {
 			downloadFileName = URLEncoder.encode(filename, "UTF-8");
