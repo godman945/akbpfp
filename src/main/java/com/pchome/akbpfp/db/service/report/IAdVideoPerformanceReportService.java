@@ -5,9 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.pchome.akbpfp.db.dao.report.AdGroupReportVO;
 import com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportVO;
-import com.pchome.akbpfp.db.vo.report.ReportQueryConditionVO;
 
 public interface IAdVideoPerformanceReportService {
 	

@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.pchome.akbpfp.db.dao.BaseDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdVideoReport;
@@ -449,7 +448,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" AND vr.customer_info_id = :customerInfoId ");
 		sql.append(" AND vr.ad_seq = a.ad_seq ");
 		sql.append(" AND g.ad_group_seq = a.ad_group_seq ");
-		sql.append(" AND vr.ad_video_date >= :startDate And vr.ad_video_date <= :endDate "); 
+		sql.append(" AND vr.ad_video_date >= :startDate AND vr.ad_video_date <= :endDate "); 
 		sql.append(" GROUP BY a.ad_seq ");
 		
 		if (StringUtils.isNotBlank(adDevice)) {
@@ -556,7 +555,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" AND vr.customer_info_id = :customerInfoId ");
 		sql.append(" AND vr.ad_seq = a.ad_seq ");
 		sql.append(" AND g.ad_group_seq = a.ad_group_seq ");
-		sql.append(" AND vr.ad_video_date >= :startDate And vr.ad_video_date <= :endDate "); 
+		sql.append(" AND vr.ad_video_date >= :startDate AND vr.ad_video_date <= :endDate "); 
 		sql.append(" GROUP BY a.ad_seq ");
 		
 		if (StringUtils.isNotBlank(adDevice)) {

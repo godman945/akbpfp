@@ -380,10 +380,10 @@
         
         <!-- reportVideoPerformance 影音廣告成效報表 -->
         <action name="reportVideoPerformance" class="ReportVideoPerformanceAction">
-           <interceptor-ref name="loginCheckStack" />
-            <interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="redirectAction" name="none">summary</result>
-            <result type="tiles" name="success">.report.videoPerformance</result>
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="redirectAction" name="none">summary</result>
+			<result type="tiles" name="success">.report.videoPerformance</result>
         </action>
         
         <action name="reportVideoPerformanceAjaxChart" class="ReportVideoPerformanceAction" method="flashDataDownLoad">
@@ -395,7 +395,6 @@
         <action name="reportVideoPerformanceAjaxTable" class="ReportVideoPerformanceAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
-<!--             <result type="tiles" name="success">report.ajaxTable.video.performance</result> -->
             <result type="tiles" name="success">report.body.video.performance.detailList</result>
         </action>
         

@@ -255,13 +255,6 @@
 	</definition>
 
 	<definition name="report.body.video.performance.detailList" template="/ftl/report/videoPerformance/videoPerformanceDataList.ftl" />
-	
-<!--  	<definition name="report.body.video.performance" extends="report.body" > -->
-<!--     	<put-attribute name="reportTable" value="report.ajaxTable.video.performance" /> -->
-<!-- 		<put-attribute name="chartTable" value="report.chartTable.video.performance" /> -->
-<!-- 	</definition> -->
-    
-<!--     <definition name="report.ajaxTable.video.performance" template="/ftl/report/ajax/adVideoPerformanceTable.ftl" /> -->
     <definition name="report.chartTable.video.performance" template="/ftl/report/chart/adVideoPerformanceChartTable.ftl" />
     <!-- .report.video.performance 影音廣告成效 end -->
     

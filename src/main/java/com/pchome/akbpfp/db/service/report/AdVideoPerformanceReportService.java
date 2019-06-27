@@ -2,8 +2,6 @@ package com.pchome.akbpfp.db.service.report;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,13 +11,9 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.pchome.akbpfp.db.dao.report.AdGroupReportVO;
 import com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdVideoPerformanceReportDAO;
-import com.pchome.akbpfp.db.pojo.PfpAdGroup;
-import com.pchome.akbpfp.db.vo.report.ReportQueryConditionVO;
 import com.pchome.enumerate.report.EnumReport;
-import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
 public class AdVideoPerformanceReportService implements IAdVideoPerformanceReportService {
