@@ -378,7 +378,7 @@
         </action>
         <!-- adWebsite 網站類型成效 end -->
         
-        <!-- 影音成效報表 -->
+        <!-- reportVideoPerformance 影音廣告成效報表 -->
         <action name="reportVideoPerformance" class="ReportVideoPerformanceAction">
            <interceptor-ref name="loginCheckStack" />
             <interceptor-ref name="reportPrivilegeInterceptor" />
@@ -395,7 +395,8 @@
         <action name="reportVideoPerformanceAjaxTable" class="ReportVideoPerformanceAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.ajaxTable.video.performance</result>
+<!--             <result type="tiles" name="success">report.ajaxTable.video.performance</result> -->
+            <result type="tiles" name="success">report.body.video.performance.detailList</result>
         </action>
         
          <action name="reportVideoPerformanceDownload" class="ReportVideoPerformanceAction">
@@ -409,6 +410,7 @@
                 <param name="inputName">downloadFileStream</param> 
             </result>  
       	</action>
+        <!-- reportVideoPerformance 影音廣告成效報表 end -->
         
         
         <!--report cost-->

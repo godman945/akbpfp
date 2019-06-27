@@ -213,7 +213,7 @@
                                     			<input type="hidden" id="width" name="width" value="${row.videoWidth!}">
                                     			<input type="hidden" id="height" name="height" value="${row.videoHeight!}">
                                     			<input type="hidden" id="adPreviewVideoURL" name="adPreviewVideoURL" value="${row.videoUrl!}">
-                                    			<input type="hidden" id="adPreviewVideoBgImg" name="adPreviewVideoBgImg" value="${row.img!}">
+                                    			<input type="hidden" id="adPreviewVideoBgImg" name="adPreviewVideoBgImg" value="<#if row.img != 'img/public/na.gif" style="display:none'>${row.img!}</#if>">
                                     			<input type="hidden" id="realUrl" name="realUrl" value="${row.realUrl!}">
                                     		</div>
                                             <a class="preview pos-absolute" onclick="preView('${row.adStyle!}', this)">預覽</a>

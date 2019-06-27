@@ -412,6 +412,10 @@ public class DateValueUtil  {
 		return end;
 	}
 
+	/**
+	 * 日期下拉選單項目
+	 * @return
+	 */
 	public LinkedHashMap<String, String> getDateRangeMap() {
 
 		LinkedHashMap<String, String> rangeMap = new LinkedHashMap<String, String>();

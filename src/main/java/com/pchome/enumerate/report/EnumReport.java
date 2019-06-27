@@ -52,6 +52,30 @@ public enum EnumReport {
      * 平均廣告排名
      */
     RANK_AVG("rankAvg"),
+    /**
+     * 影片播放進度
+     */
+    AD_VIDEO_PROCESS("adVideoProcess"),
+    /**
+     * 影片完整播放率
+     */
+    AD_VIDEO_PROCESS_100_RATINGS("adVideoProcess100Ratings"),
+    /**
+     * 點選次數
+     */
+    AD_CLK_SUM("adClkSum"),
+    /**
+     * 收視人數-不重複
+     */
+    AD_VIDEO_UNIQ_SUM("adVideoUniqSum"),
+    /**
+     * 聲音開啟次數
+     */
+    AD_VIDEO_MUSIC_SUM("adVideoMusicSum"),
+    /**
+     * 重播次數
+     */
+    AD_VIDEO_REPLAY_SUM("adVideoReplaySum"),
 	ADTYPE_CUSTINFO("adtype_custinfo"),
     ADTYPE_ACTIVITY("adtype_activity"),
     ADTYPE_GROUP("adtype_group"),
@@ -94,7 +118,7 @@ public enum EnumReport {
      */
     REPORT_CHART_TYPE_PV("pv"),
     /**
-     * 互動數
+     * 互動數   點選次數
      */
     REPORT_CHART_TYPE_CLICK("click"),
     /**
@@ -122,13 +146,34 @@ public enum EnumReport {
     REPORT_CHART_TYPE_INVALID_COST("invalidCost"),
     REPORT_CHART_TYPE_CTRINVALID("ctrInvalid"),
     REPORT_CHART_TYPE_LIMITDAY("limitDay"),
+    /**
+     * 收視數
+     */
     REPORT_CHART_TYPE_VIEW("adView"),
+    /**
+     * 收視率
+     */
     REPORT_CHART_TYPE_VIEWRATINGS("adViewRatings"),
+    /**
+     * 單次收視費用
+     */
     REPORT_CHART_TYPE_SINGLE_ADVIEWCOST("singleAdViewCost"),
     REPORT_CHART_TYPE_THOUSANDS_COST("thousandsCost"),
+    /**
+     * 收視人數(不重複)
+     */
     REPORT_CHART_TYPE_VIDEO_UNIQ("adVideoUniqSum"),
+    /**
+     * 聲音開啟次數
+     */
     REPORT_CHART_TYPE_VIDEO_MUSIC("adVideoMusicSum"),
+    /**
+     * 重播次數
+     */
     REPORT_CHART_TYPE_VIDEO_REPLAY("adVideoReplaySum"),
+    /**
+     * 影片完整播放率
+     */
     REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS("adVideoProcess100Ratings"),
     
     

@@ -209,6 +209,7 @@
     
    	<bean id="ReportVideoPerformanceAction" class="com.pchome.akbpfp.struts2.action.report.ReportVideoPerformanceAction" scope="prototype">
     	<property name="adVideoPerformanceReportService" ref="AdVideoPerformanceReportService" />
+    	<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
     </bean>
     <!-- Ad New -->
