@@ -267,7 +267,7 @@
                                             <div class="txt-cell txt-left prod-detail">
                                                 <h5 class="h2 txt-ellipsis" data-pdName="${row.adName!}"></h5>
                                                 <small class="prodLink txt-ellipsis" data-prodlink="${row.realUrl!}"></small>
-                                                <small class="p-t5"><a href="#">查看成效</a></small>
+                                                <small class="p-t5"><a href="javascript:previewProdAdDetail('${row.customerInfoId!}', '${row.adSeq!}')">查看成效</a></small>
                                             </div>
                                             
                                     	<#elseIf row.adStyle == 'TMG'> <#-- TMG 圖文廣告 -->

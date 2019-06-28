@@ -386,3 +386,10 @@ function processPRODSelectSize(obj) {
 	$(tempPRODObj).siblings(".hiddenVal").find('#height').val(tempHeight);
 	preView('PROD', tempPRODObj);
 }
+
+// 呼叫商品成效
+function previewProdAdDetail(customerInfoId, adSeq) {
+	var startDate = $("#startDate").val();
+	var endDate = $("#endDate").val();
+	window.open('adProdDetailReport.html?pfpCustomerInfoId=' + customerInfoId + '&adSeq=' + adSeq + '&startDate=' + startDate + '&endDate=' + endDate, '_blank');
+}

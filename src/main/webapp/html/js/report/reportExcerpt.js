@@ -530,11 +530,3 @@ function processAdvertiseView() {
 	isAdGroupViewFlag = false;
 	isAdvertiseViewFlag = true;
 }
-
-////呼叫商品成效
-//function previewProdAdDetail(customerInfoId,adSeq){
-//	var startDate = $("#IT_dateRange").val().split('~')[0];
-//	var endDate = $("#IT_dateRange").val().split('~')[1];
-//	window.open ('adProdDetailReport.html?pfpCustomerInfoId='+customerInfoId+'&adSeq='+adSeq+'&startDate='+startDate+'&endDate='+endDate ,'_blank');
-//	
-//}
