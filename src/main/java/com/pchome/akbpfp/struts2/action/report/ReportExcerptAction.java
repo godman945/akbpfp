@@ -69,6 +69,12 @@ public class ReportExcerptAction extends BaseReportAction {
 	private String flashData;
 	private String charType = ""; // 度量
 	
+	// 商品成效報表
+	private InputStream returnData;
+	private String adSeq;
+	private String pfpCustomerInfoId;
+	private String admServer;
+		
 	/**
 	 * 查詢
 	 */
@@ -726,6 +732,36 @@ public class ReportExcerptAction extends BaseReportAction {
 		return SUCCESS;
 	}
 	
+	/**
+	 * 商品成效報表
+	 * @return
+	 */
+	public String adProdDetailReport() {
+		String prodData = com.pchome.soft.depot.utils.HttpUtil.getInstance().getResult(admServer + "adDataRMIAction.html?pfpCustomerInfoId=" + pfpCustomerInfoId + "&adSeq=" + adSeq + "&startDate=" + startDate + "&endDate=" + endDate, "UTF-8");
+		returnData = new ByteArrayInputStream(prodData.getBytes(StandardCharsets.UTF_8));
+		return SUCCESS;
+	}
+	
+	public InputStream getReturnData() {
+		return returnData;
+	}
+
+	public String getAdmServer() {
+		return admServer;
+	}
+
+	public void setAdmServer(String admServer) {
+		this.admServer = admServer;
+	}
+
+	public void setAdSeq(String adSeq) {
+		this.adSeq = adSeq;
+	}
+
+	public void setPfpCustomerInfoId(String pfpCustomerInfoId) {
+		this.pfpCustomerInfoId = pfpCustomerInfoId;
+	}
+
 	public String getViewType() {
 		return viewType;
 	}
