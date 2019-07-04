@@ -852,7 +852,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 * @return
 	 */
 	public List<Map<String, Object>> getAdDailyList(AdActionReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append(" SELECT ");
 		hql.append("  r.ad_pvclk_date, ");
 		hql.append("  SUM(r.ad_pv) AS ad_pv_sum, ");
@@ -914,7 +914,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 * @return
 	 */
 	public List<Map<String, Object>> getAdDailyListSum(AdActionReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append(" SELECT ");
 		hql.append("  SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append("  SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view end)) AS ad_clk_sum, ");		
@@ -966,7 +966,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 */
 	@Override
 	public List<Map<String, Object>> getAdCampaginList(AdCampaginReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");		
@@ -1055,7 +1055,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 */
 	@Override
 	public List<Map<String, Object>> getAdCampaginListSum(AdCampaginReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
@@ -1132,7 +1132,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 	 */
 	@Override
 	public List<Map<String, Object>> getAdCampaginListChart(AdCampaginReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" r.ad_pvclk_date,");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");

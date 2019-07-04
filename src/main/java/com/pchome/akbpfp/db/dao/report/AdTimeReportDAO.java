@@ -479,7 +479,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 	 */
 	@Override
 	public List<Map<String, Object>> getAdTimeList(AdTimeReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" DAYOFWEEK(r.ad_pvclk_date) AS week_code, ");
 		hql.append(" r.time_code, ");
@@ -583,7 +583,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 	 */
 	@Override
 	public List<Map<String, Object>> getAdTimeListSum(AdTimeReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
@@ -672,7 +672,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 	 */
 	@Override
 	public List<Map<String, Object>> getAdTimeListChart(AdTimeReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" DAYOFWEEK(r.ad_pvclk_date) AS week_code, ");
 		hql.append(" r.time_code, ");

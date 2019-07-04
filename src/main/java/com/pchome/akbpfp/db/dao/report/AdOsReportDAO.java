@@ -292,7 +292,7 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 	 */
 	@Override
 	public List<Map<String, Object>> getAdOsList(AdOsReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
@@ -340,7 +340,7 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 	 */
 	@Override
 	public List<Map<String, Object>> getAdOsListSum(AdOsReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		hql.append("  SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append("  SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
