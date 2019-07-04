@@ -309,9 +309,9 @@
                             
                             <td data-info-name=""></td>
                             <td data-info-name=""></td>
-                            <td data-info-name="adClkPriceType">全部</td>
-							<td data-info-name="">全部</td>
-							<td data-info-name="">全部</td><!--廣告尺寸-->
+                            <td data-info-name="adClkPriceType" class="whereNoData-adClkPriceType">全部</td>
+							<td data-info-name="" class="whereNoData-adDevice">全部</td>
+							<td data-info-name="" class="whereNoData-adSize">全部</td><!--廣告尺寸-->
 							<td data-info-name=""><span></span></td><!--曝光數-->
 							<td data-info-name=""><span></span></td><!--收視數-->
 							<td data-info-name=""><span></span></td><!--收視率-->
