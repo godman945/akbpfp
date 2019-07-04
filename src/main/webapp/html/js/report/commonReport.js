@@ -391,7 +391,5 @@ function processPRODSelectSize(obj) {
 function previewProdAdDetail(customerInfoId, adSeq, from) {
 	var startDate = $("#startDate").val();
 	var endDate = $("#endDate").val();
-	
-//	window.open('adProdDetailReport.html?pfpCustomerInfoId=' + customerInfoId + '&adSeq=' + adSeq + '&startDate=' + startDate + '&endDate=' + endDate, '_blank');
 	window.location = "reportProdPerformance.html?pfpCustomerInfoId=" + customerInfoId + "&adSeq=" + adSeq + "&startDate=" + startDate + "&endDate=" + endDate + "&breadcrumbsType=" + from;
 }
