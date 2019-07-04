@@ -108,7 +108,12 @@
 		<property name="adDailyPerformanceReportDAO" ref="AdDailyPerformanceReportDAO" />
     </bean>
 
-	 <bean id="AdOsReportService" class="com.pchome.akbpfp.db.service.report.AdOsReportService"> 
+	<bean id="AdProdPerformanceReportService" class="com.pchome.akbpfp.db.service.report.AdProdPerformanceReportService">
+		<property name="adProdPerformanceReportDAO" ref="AdProdPerformanceReportDAO" />
+<!-- 		<property name="admServer" value="${akbadm.server}" /> -->
+    </bean>
+    
+	<bean id="AdOsReportService" class="com.pchome.akbpfp.db.service.report.AdOsReportService"> 
         <property name="adOsReportDAO" ref="AdOsReportDAO" />
     </bean>
 

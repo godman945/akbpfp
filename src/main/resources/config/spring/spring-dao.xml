@@ -91,6 +91,10 @@
     <bean id="AdDailyPerformanceReportDAO" class="com.pchome.akbpfp.db.dao.report.AdDailyPerformanceReportDAO">
         <property name="sessionFactory" ref="sessionFactory_report" />
     </bean>
+    
+    <bean id="AdProdPerformanceReportDAO" class="com.pchome.akbpfp.db.dao.report.AdProdPerformanceReportDAO">
+        <property name="sessionFactory" ref="sessionFactory_report" />
+    </bean>
 
 	<bean id="AdOsReportDAO" class="com.pchome.akbpfp.db.dao.report.AdOsReportDAO">
         <property name="sessionFactory" ref="sessionFactory_report" />

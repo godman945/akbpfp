@@ -139,6 +139,12 @@
 		<property name="admServer" value="${akbadm.server}" />
     </bean>
     
+    <bean id="ReportProdPerformanceAction" class="com.pchome.akbpfp.struts2.action.report.ReportProdPerformanceAction" scope="prototype">
+		<property name="adProdPerformanceReportService" ref="AdProdPerformanceReportService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+    </bean>
+    
 	<bean id="ReportAdvertiseAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdvertiseAction" scope="prototype">
 		<property name="adReportService" ref="AdReportService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />

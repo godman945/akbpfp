@@ -47,6 +47,25 @@
 	<definition name="report.chartTable.excerpt" template="/ftl/report/chart/excerptChartTable.ftl" />
 	<!--.report.excerpt 總廣告成效 end -->
 	
+	<!-- .report.prodPerformance 商品成效 -->
+    <definition name=".report.prodPerformance" extends="default.report.layout">
+		<put-attribute name="header" value="report.header.prodPerformance" />
+		<put-attribute name="body" value="report.body.prodPerformance" />
+	</definition>
+
+	<definition name="report.header.prodPerformance" extends="report.header">
+		<put-attribute name="jsName" value="reportProdPerformance.js" />
+	</definition>
+
+	<definition name="report.body.prodPerformance" template="/ftl/report/prodPerformance/prodPerformanceBody.ftl">
+		<put-attribute name="prodPerformanceDetailList" value="report.body.prodPerformance.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.prodPerformance" />
+	</definition>
+
+	<definition name="report.body.prodPerformance.detailList" template="/ftl/report/prodPerformance/prodPerformanceDataList.ftl" />
+	<definition name="report.chartTable.prodPerformance" template="/ftl/report/chart/prodPerformanceChartTable.ftl" />
+	<!-- .report.prodPerformance 商品成效 end -->
+	
 	<!-- .report.adDaily 每日花費成效 -->
     <definition name=".report.adDaily" extends="default.report.layout" > <!-- 上面各項目頁籤 -->
     	<put-attribute name="header" value="report.header.adDaily" />

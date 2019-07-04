@@ -41,12 +41,45 @@
 		
 		<!-- 商品成效 RMI -->
 	  	<action name="adProdDetailReport" class="ReportExcerptAction" method="adProdDetailReport">
-	     		<result type="stream" name="success">
-	        		<param name="contentType">text/html</param>
-					<param name="inputName">returnData</param> 
-					<param name="noCache">true</param>
-				</result> 		
-	     </action>
+			<result type="stream" name="success">
+				<param name="contentType">text/html</param>
+				<param name="inputName">returnData</param>
+				<param name="noCache">true</param>
+			</result>
+	    </action>
+	     
+	    <!-- prodPerformance 商品成效 -->
+        <action name="reportProdPerformanceDownload" class="ReportProdPerformanceAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+				<param name="inputName">downloadFileStream</param>
+			</result>
+		</action>
+		
+        <action name="reportProdPerformance" class="ReportProdPerformanceAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="redirectAction" name="none">summary</result>
+			<result type="tiles" name="success">.report.prodPerformance</result>
+		</action>
+		
+		<action name="reportProdPerformanceAjaxTable" class="ReportProdPerformanceAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="tiles" name="success">report.body.prodPerformance.detailList</result>
+		</action>
+		
+		<action name="reportProdPerformanceAjaxChart" class="ReportProdPerformanceAction" method="flashDataDownLoad">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="tiles" name="success">report.flashData</result>
+		</action>
+        <!-- prodPerformance 商品成效 end -->
 		
 		<!-- adDaily 每日花費成效 -->
         <action name="reportAdDailyDownload" class="ReportAdDailyAction">
