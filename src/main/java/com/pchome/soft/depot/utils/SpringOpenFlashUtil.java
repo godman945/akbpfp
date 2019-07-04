@@ -1,6 +1,7 @@
 package com.pchome.soft.depot.utils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -8,10 +9,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.soft.util.DateValueUtil;
@@ -31,10 +34,8 @@ public class SpringOpenFlashUtil {
 
 	public String getChartData(String context){
 
-		Chart cht=null;
-
+		Chart cht = null;
 		cht = new Chart(context);
-
 
 		// 產生 BarChart 並將資料新增到 BarChart
 		BarChart bc = new BarChart(BarChart.Style.NORMAL);
@@ -48,9 +49,8 @@ public class SpringOpenFlashUtil {
 
 	public String getChartDataForMap(String charPic,String charType,String startDate,String endDate,Map<Date,Float> flashDataMap){
 
-		String chartTypeText="";
-		String chartYlegendText="";
-
+		String chartTypeText = "";
+		String chartYlegendText = "";
 		NumberFormat numFormat = null;
 
 		if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
@@ -222,53 +222,24 @@ public class SpringOpenFlashUtil {
 		}
 		
 		return cht.toString();
-
 	}
 
 	public String getChartDataForArray(String charType,String startDate,String endDate,Map<Date,Float> flashDataMap){
-		int scale = 0;		//设置位数
+		// 設置位數
+		int scale = getScale(charType);
 
-		if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
-			scale = 2;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
-			scale = 2;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
-			scale = 3;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_ADSORT.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_LIMITDAY.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INVALID.getTextValue())) {
-			scale = 0;
-		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTRINVALID.getTextValue())) {
-			scale = 0;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())) {
-			scale = 2;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())) {
-			scale = 2;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
-			scale = 2;
-		}else if (charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())) {
-			scale = 2;
-		}else if(charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())){
-			scale = 2;
-		}
-		//x 軸兩日期間所相差的天數
+		// x 軸兩日期間所相差的天數
 		long maxValueX = DateValueUtil.getInstance().getDateDiffDay(startDate, endDate);
-		Date pDate=null;
-		List<Double> dataList = new ArrayList<Double>();
+		Date pDate = null;
+		List<Double> dataList = new ArrayList<>();
 		
-		for(int d=0;d<maxValueX;d++){
-			pDate=DateValueUtil.getInstance().getDateForStartDateAddDay(startDate, d);
-			if(flashDataMap.containsKey(pDate)){
-				BigDecimal bd = new BigDecimal((double)flashDataMap.get(pDate));
-				bd = bd.setScale(scale,4);
+		for (int d = 0; d < maxValueX; d++) {
+			pDate = DateValueUtil.getInstance().getDateForStartDateAddDay(startDate, d);
+			if (flashDataMap.containsKey(pDate)) {
+				BigDecimal bd = new BigDecimal((double) flashDataMap.get(pDate));
+				bd = bd.setScale(scale, 4);
 				dataList.add(bd.doubleValue());
-			}else{
+			} else {
 				dataList.add((double) 0);
 			}
 		}
@@ -326,30 +297,89 @@ public class SpringOpenFlashUtil {
 		return array.toString();
 	}
 	
-	private int getFloatNum(float num,int scale,int roundingMode){
+	private int getFloatNum(float num, int scale, int roundingMode) {
 		BigDecimal bd;
-		bd = new BigDecimal((float)num); 
-		bd = bd.setScale(scale,roundingMode); 
-		return bd.intValue(); 
+		bd = new BigDecimal((float) num);
+		bd = bd.setScale(scale, roundingMode);
+		return bd.intValue();
 	}
 
-	private Float getMapMaxValue(Map<Date,Float> flashDataMap){
+	private Float getMapMaxValue(Map<Date, Float> flashDataMap) {
 
-		float maxResult=0.0f;
+		float maxResult = 0.0f;
+		float max = 0.0f;
+		float temp = 0.0f;
 
-		float max=0.0f;
-		float temp=0.0f;
-
-		for(Date key:flashDataMap.keySet()){
-
-			temp=flashDataMap.get(key);
-			if(temp > max){
-				max=temp;
+		for (Date key : flashDataMap.keySet()) {
+			temp = flashDataMap.get(key);
+			if (temp > max) {
+				max = temp;
 			}
 		}
 
-		maxResult=max;
+		maxResult = max;
 
 		return maxResult;
+	}
+
+	/**
+	 * 橫條圖
+	 * 目前 行動廣告成效 使用
+	 * @param charType 度量
+	 * @param flashDataMap
+	 * @return
+	 */
+	public String getBarChartDataForArray(String charType, Map<String, Float> flashDataMap) {
+		// 設置位數
+		int scale = getScale(charType);
+		List<Double> dataList = new ArrayList<>(); // 資料
+		List<Object> xAxisCategoriesList = new ArrayList<>(); // x軸的分類
+		
+		for (Entry<String, Float> entry : flashDataMap.entrySet()) {
+			if (flashDataMap.containsKey(entry.getKey())) {
+				BigDecimal bd = BigDecimal.valueOf((double) flashDataMap.get(entry.getKey()));
+//				bd = bd.setScale(scale, 4);
+//				dataList.add(bd.doubleValue());
+				bd = bd.setScale(scale, RoundingMode.HALF_UP); // 小數點第幾位，退一位再四捨五入
+				dataList.add(bd.doubleValue());
+			} else {
+				dataList.add((double) 0);
+			}
+			
+			xAxisCategoriesList.add(entry.getKey());
+		}
+		
+		JSONArray dataListArray = new JSONArray(dataList);
+		JSONArray xAxisCategoriesListArray = new JSONArray(xAxisCategoriesList);
+		
+		JSONObject object = new JSONObject();
+		object.put("dataListArray", dataListArray);
+		object.put("xAxisCategoriesListArray", xAxisCategoriesListArray);
+		return object.toString();
+	}
+	
+	/**
+	 * 設置小數點幾位數
+	 * @param charType
+	 * @return
+	 */
+	private int getScale(String charType) {
+		int scale = 0;
+		if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_THOUSANDS_COST.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())
+				|| charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
+			scale = 2;
+		} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+			scale = 3;
+		}
+
+		return scale;
 	}
 }

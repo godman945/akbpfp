@@ -132,24 +132,29 @@
     <bean id="ReportExcerptAction" class="com.pchome.akbpfp.struts2.action.report.ReportExcerptAction" scope="prototype">
     	<property name="adActionReportService" ref="AdActionReportService" />
     	<property name="adGroupReportService" ref="AdGroupReportService" />
-    	<property name="adKeywordReportService" ref="AdKeywordReportService" />
     	<property name="adReportService" ref="AdReportService" />
-    	<property name="adActionService" ref="PfpAdActionService" />
-    	<property name="adGroupService" ref="PfpAdGroupService" />
-    	<property name="pfpAdDAO" ref="PfpAdDAO" />
-	 	<property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />
-		<property name="admServer" value="${akbadm.server}" />  
+		<property name="admServer" value="${akbadm.server}" />
+    </bean>
+    
+    <bean id="ReportProdPerformanceAction" class="com.pchome.akbpfp.struts2.action.report.ReportProdPerformanceAction" scope="prototype">
+		<property name="adProdPerformanceReportService" ref="AdProdPerformanceReportService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
     </bean>
     
 	<bean id="ReportAdvertiseAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdvertiseAction" scope="prototype">
 		<property name="adReportService" ref="AdReportService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
-	 	<property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
-	 	<property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
-	 	<property name="pfpAdDAO" ref="PfpAdDAO" />
+		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
+		<property name="pfpCodeService" ref="PfpCodeService" />
+    </bean>
+    
+    <bean id="ReportDailyPerformanceAction" class="com.pchome.akbpfp.struts2.action.report.ReportDailyPerformanceAction" scope="prototype">
+		<property name="adDailyPerformanceReportService" ref="AdDailyPerformanceReportService" />
+		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />
     </bean>
@@ -164,23 +169,18 @@
 	 <bean id="ReportKeywordAction" class="com.pchome.akbpfp.struts2.action.report.ReportKeywordAction" scope="prototype">
 	 	<property name="adKeywordReportService" ref="AdKeywordReportService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
-	 	<property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
-	 	<property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
-	 	<property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
     </bean>
 	
 	 <bean id="ReportCampaginAction" class="com.pchome.akbpfp.struts2.action.report.ReportCampaginAction" scope="prototype">
 	 	<property name="adActionReportService" ref="AdActionReportService" />
-	 	<property name="adActionService" ref="PfpAdActionService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />
     </bean>
 
-	<bean id="ReportAdgroupAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdGroupAction" scope="prototype">
+	<bean id="ReportAdGroupAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdGroupAction" scope="prototype">
 	 	<property name="adGroupReportService" ref="AdGroupReportService" />
-	 	<property name="adGroupService" ref="PfpAdGroupService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />
@@ -195,7 +195,6 @@
 
 	<bean id="ReportAdTimeAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdTimeAction" scope="prototype">
 	 	<property name="adTimeReportService" ref="AdTimeReportService" />
-	 	<property name="adGroupService" ref="PfpAdGroupService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />
@@ -203,7 +202,6 @@
     
     <bean id="ReportAdAgesexAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdAgesexAction" scope="prototype">
 	 	<property name="adAgesexReportService" ref="AdAgesexReportService" />
-	 	<property name="adGroupService" ref="PfpAdGroupService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />
@@ -211,17 +209,17 @@
 
 	<bean id="ReportAdWebsiteAction" class="com.pchome.akbpfp.struts2.action.report.ReportAdWebsiteAction" scope="prototype">
 	 	<property name="adWebsiteReportService" ref="AdWebsiteReportService" />
-	 	<property name="adGroupService" ref="PfpAdGroupService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
-		<property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
 		<property name="pfpCodeService" ref="PfpCodeService" />
     </bean>
     
    	<bean id="ReportVideoPerformanceAction" class="com.pchome.akbpfp.struts2.action.report.ReportVideoPerformanceAction" scope="prototype">
     	<property name="adVideoPerformanceReportService" ref="AdVideoPerformanceReportService" />
+    	<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
     </bean>
+    
     <!-- Ad New -->
     <bean id="AdActionAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdActionAddAction" scope="prototype" >
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 

@@ -1,8 +1,6 @@
 package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,6 +12,8 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
+import org.json.JSONObject;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -421,4 +421,302 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 		
 		return adTypeMap;
 	}
+
+	/**
+	 * 網站類型成效(明細)
+	 * 統計 pfp_ad_website_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
+	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_website_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
+	 */
+	@Override
+	public List<Map<String, Object>> getAdWebsiteList(AdWebsiteReportVO vo) {
+		StringBuffer hql = new StringBuffer();
+		hql.append("SELECT");
+		hql.append(" r.website_category_code,");
+		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
+		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
+		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append(" r.ad_group_seq, ");
+		hql.append(" r.ad_pvclk_device AS ad_device, ");
+		hql.append(" r.ad_operating_rule, ");
+		hql.append(" r.ad_clk_price_type, ");
+		hql.append(" r.ad_type, ");
+		hql.append(" SUM(r.convert_count) AS convert_count, ");
+		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
+		hql.append(" FROM pfp_ad_website_report AS r ");
+		hql.append(" WHERE 1 = 1 ");
+		hql.append(" AND r.customer_info_id =:customerInfoId ");
+		hql.append(" AND r.ad_pvclk_date >=:startDate ");
+		hql.append(" AND r.ad_pvclk_date <=:endDate ");
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			hql.append(" AND r.ad_action_seq IN (SELECT ad_action_seq FROM pfp_ad_action WHERE 1=1");
+			hql.append(" AND customer_info_id = :customerInfoId ");
+			hql.append(" AND ad_action_name LIKE :searchStr )");
+		}
+		
+		String websiteCategoryCode = ""; // 網站類型
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adClkPriceType = ""; // 計價方式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			
+			websiteCategoryCode = tempJSONObject.optString("websiteCategoryCode");
+			if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
+				hql.append(" AND r.website_category_code = :websiteCategoryCode");
+			}
+			
+			adType = tempJSONObject.optString("adType");
+			if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+				hql.append(" AND r.ad_type = :adType");
+			}
+			
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+				hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+			}
+			
+			adClkPriceType = tempJSONObject.optString("adClkPriceType");
+			if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+				hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
+			}
+			
+			adDevice = tempJSONObject.optString("adDevice");
+			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
+			}
+		}
+		
+		hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, r.website_category_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+		hql.append(" ORDER BY r.ad_action_seq, r.ad_group_seq, r.website_category_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+		
+		
+		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
+		query.setString("customerInfoId", vo.getCustomerInfoId());
+		query.setString("startDate", vo.getStartDate());
+		query.setString("endDate", vo.getEndDate());
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			query.setString("searchStr", "%" + vo.getSearchText() + "%");
+		}
+		
+		if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
+			query.setString("websiteCategoryCode", websiteCategoryCode);
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+			query.setString("adType", adType);
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			query.setString("adOperatingRule", adOperatingRule);
+		}
+		
+		if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+			query.setString("adClkPriceType", adClkPriceType);
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+			query.setString("adPvclkDevice", adDevice);
+		}
+		
+		if (!vo.isDownloadOrIsNotCuttingPagination()) { // 不是下載則做分頁處理
+			// 取得分頁
+			query.setFirstResult((vo.getPage() - 1) * vo.getPageSize());
+			query.setMaxResults(vo.getPageSize());
+		}
+		
+		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+
+	/**
+	 * 網站類型成效(加總)
+	 * 統計 pfp_ad_website_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
+	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_website_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
+	 */
+	@Override
+	public List<Map<String, Object>> getAdWebsiteListSum(AdWebsiteReportVO vo) {
+		StringBuffer hql = new StringBuffer();
+		hql.append("SELECT");
+		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
+		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
+		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append(" SUM(r.convert_count) AS convert_count, ");
+		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
+		hql.append(" FROM pfp_ad_website_report AS r ");
+		hql.append(" WHERE 1 = 1 ");
+		hql.append(" AND r.customer_info_id =:customerInfoId ");
+		hql.append(" AND r.ad_pvclk_date >=:startDate ");
+		hql.append(" AND r.ad_pvclk_date <=:endDate ");
+
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			hql.append(" AND r.ad_action_seq IN (SELECT ad_action_seq FROM pfp_ad_action WHERE 1=1");
+			hql.append(" AND customer_info_id = :customerInfoId ");
+			hql.append(" AND ad_action_name LIKE :searchStr )");
+		}
+		
+		String websiteCategoryCode = ""; // 網站類型
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adClkPriceType = ""; // 計價方式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			
+			websiteCategoryCode = tempJSONObject.optString("websiteCategoryCode");
+			if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
+				hql.append(" AND r.website_category_code = :websiteCategoryCode");
+			}
+			
+			adType = tempJSONObject.optString("adType");
+			if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+				hql.append(" AND r.ad_type = :adType");
+			}
+			
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+				hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+			}
+			
+			adClkPriceType = tempJSONObject.optString("adClkPriceType");
+			if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+				hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
+			}
+			
+			adDevice = tempJSONObject.optString("adDevice");
+			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
+			}
+		}
+		
+		hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, r.website_category_code");
+		
+		
+		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
+		query.setString("customerInfoId", vo.getCustomerInfoId());
+		query.setString("startDate", vo.getStartDate());
+		query.setString("endDate", vo.getEndDate());
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			query.setString("searchStr", "%" + vo.getSearchText() + "%");
+		}
+		
+		if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
+			query.setString("websiteCategoryCode", websiteCategoryCode);
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+			query.setString("adType", adType);
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			query.setString("adOperatingRule", adOperatingRule);
+		}
+		
+		if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+			query.setString("adClkPriceType", adClkPriceType);
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+			query.setString("adPvclkDevice", adDevice);
+		}
+		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+
+	/**
+	 * 網站類型成效(圖表)
+	 * 統計 pfp_ad_website_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
+	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_website_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
+	 */
+	@Override
+	public List<Map<String, Object>> getAdWebsiteListChart(AdWebsiteReportVO vo) {
+		StringBuffer hql = new StringBuffer();
+		hql.append("SELECT");
+		hql.append(" r.website_category_code, ");
+		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
+		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
+		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append(" SUM(r.convert_count) AS convert_count, ");
+		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
+		hql.append(" FROM pfp_ad_website_report AS r ");
+		hql.append(" WHERE 1 = 1 ");
+		hql.append(" AND r.customer_info_id =:customerInfoId ");
+		hql.append(" AND r.ad_pvclk_date >=:startDate ");
+		hql.append(" AND r.ad_pvclk_date <=:endDate ");
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			hql.append(" AND r.ad_action_seq IN (SELECT ad_action_seq FROM pfp_ad_action WHERE 1=1");
+			hql.append(" AND customer_info_id = :customerInfoId ");
+			hql.append(" AND ad_action_name LIKE :searchStr )");
+		}
+		
+		String websiteCategoryCode = ""; // 網站類型
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adClkPriceType = ""; // 計價方式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			
+			websiteCategoryCode = tempJSONObject.optString("websiteCategoryCode");
+			if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
+				hql.append(" AND r.website_category_code = :websiteCategoryCode");
+			}
+			
+			adType = tempJSONObject.optString("adType");
+			if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+				hql.append(" AND r.ad_type = :adType");
+			}
+			
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+				hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+			}
+			
+			adClkPriceType = tempJSONObject.optString("adClkPriceType");
+			if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+				hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
+			}
+			
+			adDevice = tempJSONObject.optString("adDevice");
+			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
+			}
+		}
+		
+		hql.append(" GROUP BY r.website_category_code");
+		
+		
+		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
+		query.setString("customerInfoId", vo.getCustomerInfoId());
+		query.setString("startDate", vo.getStartDate());
+		query.setString("endDate", vo.getEndDate());
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			query.setString("searchStr", "%" + vo.getSearchText() + "%");
+		}
+		
+		if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
+			query.setString("websiteCategoryCode", websiteCategoryCode);
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+			query.setString("adType", adType);
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			query.setString("adOperatingRule", adOperatingRule);
+		}
+		
+		if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+			query.setString("adClkPriceType", adClkPriceType);
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+			query.setString("adPvclkDevice", adDevice);
+		}
+		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+	
 }

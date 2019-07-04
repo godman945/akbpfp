@@ -77,37 +77,58 @@
    
 	<!-- report -->
     <bean id="AdActionReportService" class="com.pchome.akbpfp.db.service.report.AdActionReportService"> 
+        <property name="adActionService" ref="PfpAdActionService" />
         <property name="adActionReportDAO" ref="AdActionReportDAO" />
     </bean>
     
     <bean id="AdGroupReportService" class="com.pchome.akbpfp.db.service.report.AdGroupReportService"> 
+        <property name="adGroupService" ref="PfpAdGroupService" />
         <property name="adGroupReportDAO" ref="AdGroupReportDAO" />
     </bean>
     
     <bean id="AdKeywordReportService" class="com.pchome.akbpfp.db.service.report.AdKeywordReportService"> 
         <property name="adKeywordReportDAO" ref="AdKeywordReportDAO" />
+        <property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" />
+        <property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
+        <property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
     </bean>
 
-	 <bean id="AdReportService" class="com.pchome.akbpfp.db.service.report.AdReportService"> 
-        <property name="adReportDAO" ref="AdReportDAO" />
-        <property name="pfpAdDetailDAO" ref="PfpAdDetailDAO" />
-        <property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
-        <property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+	<bean id="AdReportService" class="com.pchome.akbpfp.db.service.report.AdReportService">
+		<property name="adReportDAO" ref="AdReportDAO" />
+		<property name="pfpAdDetailDAO" ref="PfpAdDetailDAO" />
+		<property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
+		<property name="pfpCatalogLogoService" ref="PfpCatalogLogoService" />
+		<property name="pfpAdActionDAO" ref="PfpAdActionDAO" />
+		<property name="pfpAdGroupDAO" ref="PfpAdGroupDAO" />
+		<property name="pfpAdDAO" ref="PfpAdDAO" />
+		<property name="admTemplateProductDAO" ref="AdmTemplateProductDAO" />
+    </bean>
+    
+    <bean id="AdDailyPerformanceReportService" class="com.pchome.akbpfp.db.service.report.AdDailyPerformanceReportService">
+		<property name="adDailyPerformanceReportDAO" ref="AdDailyPerformanceReportDAO" />
     </bean>
 
-	 <bean id="AdOsReportService" class="com.pchome.akbpfp.db.service.report.AdOsReportService"> 
+	<bean id="AdProdPerformanceReportService" class="com.pchome.akbpfp.db.service.report.AdProdPerformanceReportService">
+		<property name="adProdPerformanceReportDAO" ref="AdProdPerformanceReportDAO" />
+    </bean>
+    
+	<bean id="AdOsReportService" class="com.pchome.akbpfp.db.service.report.AdOsReportService"> 
         <property name="adOsReportDAO" ref="AdOsReportDAO" />
     </bean>
 
-	<bean id="AdTimeReportService" class="com.pchome.akbpfp.db.service.report.AdTimeReportService"> 
+	<bean id="AdTimeReportService" class="com.pchome.akbpfp.db.service.report.AdTimeReportService">
+		<property name="adGroupService" ref="PfpAdGroupService" />
         <property name="adTimeReportDAO" ref="AdTimeReportDAO" />
     </bean>
     
     <bean id="AdAgesexReportService" class="com.pchome.akbpfp.db.service.report.AdAgesexReportService"> 
+        <property name="adGroupService" ref="PfpAdGroupService" />
         <property name="adAgesexReportDAO" ref="AdAgesexReportDAO" />
     </bean>
     
     <bean id="AdWebsiteReportService" class="com.pchome.akbpfp.db.service.report.AdWebsiteReportService"> 
+        <property name="adGroupService" ref="PfpAdGroupService" />
+        <property name="pfbxWebsiteCategoryService" ref="PfbxWebsiteCategoryService" />
         <property name="adWebsiteReportDAO" ref="AdWebsiteReportDAO" />
     </bean>
 
