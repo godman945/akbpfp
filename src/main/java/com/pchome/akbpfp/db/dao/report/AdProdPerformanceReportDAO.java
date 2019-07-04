@@ -19,7 +19,7 @@ public class AdProdPerformanceReportDAO extends BaseDAO<PfpAdReport, Integer> im
 	 */
 	@Override
 	public List<Map<String, Object>> getAdProdPerformanceList(AdProdPerformanceReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append(" SELECT ");
 		hql.append(" a.pfp_customer_info_id, ");
 		hql.append(" a.ad_seq, ");
@@ -71,7 +71,7 @@ public class AdProdPerformanceReportDAO extends BaseDAO<PfpAdReport, Integer> im
 	 */
 	@Override
 	public List<Map<String, Object>> getAdProdPerformanceListSum(AdProdPerformanceReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append(" SELECT ");
 		hql.append(" SUM(a.catalog_prod_clk) AS ad_clk_sum, ");
 		hql.append(" SUM(a.catalog_prod_pv) AS ad_pv_sum ");
@@ -109,7 +109,7 @@ public class AdProdPerformanceReportDAO extends BaseDAO<PfpAdReport, Integer> im
 	 */
 	@Override
 	public List<Map<String, Object>> getAdProdPerformanceListChart(AdProdPerformanceReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append(" SELECT ");
 		hql.append("  record_date, ");
 		hql.append("  SUM(a.catalog_prod_pv) AS ad_pv_sum, ");

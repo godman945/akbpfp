@@ -429,7 +429,7 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 	 */
 	@Override
 	public List<Map<String, Object>> getAdWebsiteList(AdWebsiteReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" r.website_category_code,");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
@@ -537,7 +537,7 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 	 */
 	@Override
 	public List<Map<String, Object>> getAdWebsiteListSum(AdWebsiteReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
@@ -631,7 +631,7 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 	 */
 	@Override
 	public List<Map<String, Object>> getAdWebsiteListChart(AdWebsiteReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" r.website_category_code, ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");

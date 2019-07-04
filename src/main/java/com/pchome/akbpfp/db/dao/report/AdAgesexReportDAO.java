@@ -469,7 +469,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 	 */
 	@Override
 	public List<Map<String, Object>> getAdAgesexList(AdAgesexReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" r.age_code, ");
 		hql.append(" r.sex AS sex_code, ");
@@ -583,7 +583,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 	 */
 	@Override
 	public List<Map<String, Object>> getAdAgesexListSum(AdAgesexReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
@@ -682,7 +682,7 @@ public class AdAgesexReportDAO extends BaseDAO<PfpAdAgeReport, Integer> implemen
 	 */
 	@Override
 	public List<Map<String, Object>> getAdAgesexListChart(AdAgesexReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" r.age_code,");
 		hql.append(" r.sex AS sex_code, ");

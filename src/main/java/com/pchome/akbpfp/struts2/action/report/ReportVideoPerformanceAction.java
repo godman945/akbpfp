@@ -132,7 +132,7 @@ public class ReportVideoPerformanceAction extends BaseReportAction {
 			showHideColumnMap.put(mapKey, mapVal);
 		}
 		
-		StringBuffer content = new StringBuffer();
+		StringBuilder content = new StringBuilder();
 		content.append("帳戶," + customerInfo.getCustomerInfoTitle());
 		content.append("\n");
 		content.append("搜尋內容," + searchText);

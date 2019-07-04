@@ -19,7 +19,7 @@ public class AdDailyPerformanceReportDAO extends BaseDAO<PfpAdReport, Integer> i
 	 */
 	@Override
 	public List<Map<String, Object>> getAdDailyPerformanceList(AdDailyPerformanceReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN (r.ad_clk - r.ad_invalid_clk) ELSE r.ad_view END)) AS ad_clk_sum, ");
@@ -122,7 +122,7 @@ public class AdDailyPerformanceReportDAO extends BaseDAO<PfpAdReport, Integer> i
 	 */
 	@Override
 	public List<Map<String, Object>> getAdDailyPerformanceListSum(AdDailyPerformanceReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		// 20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分
@@ -207,7 +207,7 @@ public class AdDailyPerformanceReportDAO extends BaseDAO<PfpAdReport, Integer> i
 	 */
 	@Override
 	public List<Map<String, Object>> getAdDailyPerformanceListChart(AdDailyPerformanceReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" r.ad_pvclk_date, ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");

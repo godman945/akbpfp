@@ -143,7 +143,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 			showHideColumnMap.put(mapKey, mapVal);
 		}
 		
-		StringBuffer content = new StringBuffer();
+		StringBuilder content = new StringBuilder();
 		content.append("帳戶," + customerInfo.getCustomerInfoTitle());
 		content.append("\n");
 		content.append("搜尋內容," + searchText);
@@ -261,7 +261,7 @@ public class ReportAdTimeAction extends BaseReportAction {
 	 * @param content
 	 * @return
 	 */
-	private StringBuffer processDownloadReportTitle(StringBuffer content) {
+	private StringBuilder processDownloadReportTitle(StringBuilder content) {
 		content.append("狀態,廣告活動,廣告分類,");
 		if ("week".equalsIgnoreCase(viewType)) { // 畫面目前選擇為星期
 			content.append("星期,");
