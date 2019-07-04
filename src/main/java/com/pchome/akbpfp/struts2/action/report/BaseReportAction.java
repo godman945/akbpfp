@@ -1,5 +1,9 @@
 package com.pchome.akbpfp.struts2.action.report;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,18 +19,22 @@ public class BaseReportAction extends BaseSSLAction {
 
 	public static final String FILE_TYPE = ".csv";
 
+	DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	NumberFormat intFormat = new DecimalFormat("###,###,###,###");
+	NumberFormat doubleFormat = new DecimalFormat("###,###,###,###.##");
+	NumberFormat doubleFormat2 = new DecimalFormat("###,###,###,###.###");
+	
 	//就是 ad_type 前人用這名字
 	public Map<String, String> getAdShowWayMap() {
-		Map<String, String> map = new LinkedHashMap<String, String>();
+		Map<String, String> map = new LinkedHashMap<>();
 		map.put("0", "全部播放類型");
 		map.put("1", "搜尋廣告");
 		map.put("2", "聯播網廣告");
-
 		return map;
 	}
 
 	public Map<String, String> getReportTypeMap() {
-		Map<String, String> map = new LinkedHashMap<String, String>();
+		Map<String, String> map = new LinkedHashMap<>();
 		map.put("adtype_activity", "廣告");
 		map.put("adtype_group", "分類");
 		map.put("adtype_keyword", "關鍵字");
@@ -35,7 +43,7 @@ public class BaseReportAction extends BaseSSLAction {
 	}
 
 	public Map<String, String> getAdSearchWayMap() {
-		Map<String, String> map = new LinkedHashMap<String, String>();
+		Map<String, String> map = new LinkedHashMap<>();
 		map.put("adsearch_include", "字詞包含");
 		map.put("adsearch_begin", "開頭文字是");
 		map.put("adsearch_same", "完全符合");
@@ -43,7 +51,7 @@ public class BaseReportAction extends BaseSSLAction {
 	}
 
 	public List<String> getPageSizeList() {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		list.add("20");
 		list.add("50");
 		list.add("100");
@@ -51,7 +59,7 @@ public class BaseReportAction extends BaseSSLAction {
 	}
 
 	public Map<String, String> getAdStatusMap() {
-		Map<String, String> map = new LinkedHashMap<String, String>();
+		Map<String, String> map = new LinkedHashMap<>();
 
 		for (EnumStatus status : EnumStatus.values()) {
 			map.put(Integer.toString(status.getStatusId()), status.getStatusRemark());
@@ -61,7 +69,7 @@ public class BaseReportAction extends BaseSSLAction {
 	}
 
 	public Map<String, String> getAdPvclkDeviceMap() {
-		Map<String, String> map = new LinkedHashMap<String, String>();
+		Map<String, String> map = new LinkedHashMap<>();
 		map.put("", "全部裝置");
 		map.put("PC", "電腦");
 		map.put("mobile", "行動裝置");
@@ -69,7 +77,7 @@ public class BaseReportAction extends BaseSSLAction {
 	}
 
 	public Map<String, String> getAdPvclkOsMap() {
-		Map<String, String> map = new LinkedHashMap<String, String>();
+		Map<String, String> map = new LinkedHashMap<>();
 		map.put("all", "全部");
 		map.put("IOS", "IOS");
 		map.put("Android", "Android");
@@ -79,7 +87,7 @@ public class BaseReportAction extends BaseSSLAction {
 	}
 	
 	public Map<String,String> getAdStyleTypeMap(){
-		Map<String, String> map = new LinkedHashMap<String, String>();
+		Map<String, String> map = new LinkedHashMap<>();
 		map.put("", "全部廣告樣式");
 		for(EnumAdStyleType enumAdStyleType:EnumAdStyleType.values()){
 			map.put(enumAdStyleType.getTypeName(), enumAdStyleType.getType());

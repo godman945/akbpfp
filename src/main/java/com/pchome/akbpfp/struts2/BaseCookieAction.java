@@ -1,25 +1,21 @@
 package com.pchome.akbpfp.struts2;
 
 import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
-import com.pchome.akbpfp.db.pojo.PfpBuAccount;
+import org.apache.logging.log4j.Logger;
+
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.cookie.EnumCookiePfpKey;
 import com.pchome.soft.depot.utils.CookieStringToMap;
 import com.pchome.soft.depot.utils.CookieUtil;
 import com.pchome.soft.depot.utils.EncodeUtil;
 import com.pchome.soft.util.DateValueUtil;
-import org.apache.logging.log4j.Logger;
 
 
 public class BaseCookieAction extends BaseAction {
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 3713211934251786551L;
 
 	protected Logger log = LogManager.getRootLogger();
@@ -52,116 +48,98 @@ public class BaseCookieAction extends BaseAction {
 	}
 
 	public String getUser_id() {
-		
-		if(cookieMap != null){
+		if (cookieMap != null) {
 			user_id = cookieMap.get(EnumCookiePfpKey.PFP_USER_ID);
 		}
 		return user_id;
 	}
-	
-	public String getUser_status() {
 
-		if(cookieMap != null){
+	public String getUser_status() {
+		if (cookieMap != null) {
 			user_status = cookieMap.get(EnumCookiePfpKey.PFP_USER_STATUS);
 		}
 		return user_status;
 	}
 
 	public String getUser_privilege() {
-
-		if(cookieMap != null){
+		if (cookieMap != null) {
 			user_privilege = cookieMap.get(EnumCookiePfpKey.PFP_USER_PRIVILEGE_ID);
 		}
 		return user_privilege;
 	}
 
 	public String getCustomer_info_id() {
-
-		if(cookieMap != null){
+		if (cookieMap != null) {
 			customer_info_id = cookieMap.get(EnumCookiePfpKey.PFP_CUSTOMER_INFO_ID);
 		}
 		return customer_info_id;
 	}
 	
-	
 	public String getCustomer_info_title() {
-
-		if(cookieMap != null){
+		if (cookieMap != null) {
 			customer_info_title = cookieMap.get(EnumCookiePfpKey.PFP_CUSTOMER_TITLE);
 		}
 		return customer_info_title;
 	}
 	
 	public String getPfd_customer_info_id() {
-		
-		if(cookieMap != null){
+		if (cookieMap != null) {
 			pfd_customer_info_id = cookieMap.get(EnumCookiePfpKey.PFD_CUSTOMER_INFO_ID);
 		}
 		return pfd_customer_info_id;
 	}
 
 	public String getPfd_user_id() {
-		
-		if(cookieMap != null){
+		if (cookieMap != null) {
 			pfd_user_id = cookieMap.get(EnumCookiePfpKey.PFD_USER_ID);
 		}
 		return pfd_user_id;
 	}
 
 	public String getPay_type() {
-		
-		if(cookieMap != null){
+		if (cookieMap != null) {
 			pay_type = cookieMap.get(EnumCookiePfpKey.PFP_PAY_TYPE);
 		}
 		return pay_type;
 	}
 
 	public String getRoot_user() {
-		
-		if(cookieMap != null){
+		if (cookieMap != null) {
 			root_user = cookieMap.get(EnumCookiePfpKey.MANAGER);
 		}
 		return root_user;
 	}
 
-	
 	public void setAkb_pfp_user(String akb_pfp_user) {
 		cookieMap = CookieStringToMap.getInstance().transformEnumMap(akb_pfp_user);
 	}
 	
 	// 共用查詢時間
 	public String getChoose_start_date() {
-		
-		if(StringUtils.isBlank(this.choose_date)){
+		if (StringUtils.isBlank(this.choose_date)) {
 			this.defalutDate();
-			
-		}
-		else{
-			
-			if(this.choose_date.length()<4){
-				 this.defalutDate();
-			}else{
+		} else {
+			if (this.choose_date.length() < 4) {
+				this.defalutDate();
+			} else {
 				choose_start_date = this.choose_date.split(",")[0];
 			}
 		}
-		
+
 		return choose_start_date;
 	}
 	
 	public String getChoose_end_date() {
-		
-		if(StringUtils.isBlank(this.choose_date)){
+		if (StringUtils.isBlank(this.choose_date)) {
 			this.defalutDate();
-			
-		}
-		else{
-			if(this.choose_date.length()<4){
-				 this.defalutDate();
-			}else{
-			choose_end_date = this.choose_date.split(",")[1];
+		} else {
+			if (this.choose_date.length() < 4) {
+				this.defalutDate();
+			} else {
+				choose_end_date = this.choose_date.split(",")[1];
 			}
 		}
-		
+
 		return choose_end_date;
 	}
 	
