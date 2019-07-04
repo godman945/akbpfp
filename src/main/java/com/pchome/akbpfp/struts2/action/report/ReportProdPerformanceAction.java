@@ -121,7 +121,7 @@ public class ReportProdPerformanceAction extends BaseReportAction {
 		String filename = "商品成效報表_" + dformat.format(new Date()) + FILE_TYPE;
 		PfpCustomerInfo customerInfo = customerInfoService.findCustomerInfo(super.getCustomer_info_id());
 
-		StringBuffer content = new StringBuffer();
+		StringBuilder content = new StringBuilder();
 		content.append("帳戶," + customerInfo.getCustomerInfoTitle());
 		content.append("\n");
 		content.append("搜尋內容," + searchText);

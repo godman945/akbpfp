@@ -691,7 +691,7 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 	 */
 	@Override
 	public List<Map<String, Object>> getAdGroupList(AdGroupReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		//   20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分，減無效點擊數(- r.ad_invalid_clk)
@@ -796,7 +796,7 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 	 */
 	@Override
 	public List<Map<String, Object>> getAdGroupListSum(AdGroupReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
 		// 20180510 檢查排程未減無效點擊數，因pfp很多程式都有引用報表數據，因此不能重跑排程，所以直接調整SQL部分，減無效點擊數(- r.ad_invalid_clk)
@@ -888,7 +888,7 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 	 */
 	@Override
 	public List<Map<String, Object>> getAdGroupListChart(AdGroupReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" r.ad_pvclk_date,");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");

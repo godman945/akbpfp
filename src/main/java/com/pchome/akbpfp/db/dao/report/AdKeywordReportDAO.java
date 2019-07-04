@@ -619,7 +619,7 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 	 */
 	@Override
 	public List<Map<String, Object>> getAdKeywordList(AdKeywordReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		// 廣泛比對
 		hql.append(" SUM(r.ad_keyword_pv) AS ad_keyword_pv_sum, ");
@@ -695,7 +695,7 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 	 */
 	@Override
 	public List<Map<String, Object>> getAdKeywordRank(AdKeywordReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append(" SELECT ");
 		hql.append("   COALESCE(SUM(pakar.adRankAvg)/COUNT(pakar.adRankAvg),0) AS ad_rank_avg ");
 		hql.append(" FROM PfpAdRank pakar ");
@@ -721,7 +721,7 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 	 */
 	@Override
 	public List<Map<String, Object>> getAdKeywordListSum(AdKeywordReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		// 廣泛比對
 		hql.append(" SUM(r.ad_keyword_pv) AS ad_keyword_pv_sum, ");
@@ -782,7 +782,7 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 	 */
 	@Override
 	public List<Map<String, Object>> getAdKeywordListChart(AdKeywordReportVO vo) {
-		StringBuffer hql = new StringBuffer();
+		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		hql.append(" r.ad_keyword_pvclk_date, ");
 
