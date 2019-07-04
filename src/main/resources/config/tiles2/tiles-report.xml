@@ -33,7 +33,7 @@
     </definition>
     
     <definition name="report.header.excerpt" extends="report.header" >
-		<put-attribute name="jsName" value="reportExcerpt.js" />
+		<put-attribute name="jsName" value="reportExcerpt.js?t=20190704001" />
     </definition>
    
    <definition name="report.body.excerpt" template="/ftl/report/excerpt/excerptBody.ftl">
@@ -54,7 +54,7 @@
 	</definition>
 
 	<definition name="report.header.prodPerformance" extends="report.header">
-		<put-attribute name="jsName" value="reportProdPerformance.js" />
+		<put-attribute name="jsName" value="reportProdPerformance.js?t=20190704001" />
 	</definition>
 
 	<definition name="report.body.prodPerformance" template="/ftl/report/prodPerformance/prodPerformanceBody.ftl">
@@ -73,7 +73,7 @@
     </definition>
 
 	<definition name="report.header.adDaily" extends="report.header" > <!-- 登出 登入條 -->
-		<put-attribute name="jsName" value="reportAdDaily.js" />
+		<put-attribute name="jsName" value="reportAdDaily.js?t=20190704001" />
     </definition>
 	
 	<definition name="report.body.adDaily" template="/ftl/report/adDaily/adDailyBody.ftl" >
@@ -94,7 +94,7 @@
     </definition>
 	
 	<definition name="report.header.campagin" extends="report.header" > <!-- 登出 登入條 -->
-    	<put-attribute name="jsName" value="reportCampagin.js" />
+    	<put-attribute name="jsName" value="reportCampagin.js?t=20190704001" />
     </definition>
 	   
 	<definition name="report.body.campagin" template="/ftl/report/campagin/campaginBody.ftl">
@@ -113,7 +113,7 @@
     </definition>
 	
 	<definition name="report.header.adGroup" extends="report.header" >
-    	<put-attribute name="jsName" value="reportAdGroup.js" />
+    	<put-attribute name="jsName" value="reportAdGroup.js?t=20190704001" />
     </definition>
 	
 	<definition name="report.body.adGroup" template="/ftl/report/adGroup/adGroupBody.ftl">
@@ -132,7 +132,7 @@
 	</definition>
 
 	<definition name="report.header.advertise" extends="report.header">
-		<put-attribute name="jsName" value="reportAdvertise.js" />
+		<put-attribute name="jsName" value="reportAdvertise.js?t=20190704001" />
 	</definition>
 
 	<definition name="report.body.advertise" template="/ftl/report/advertise/advertiseBody.ftl">
@@ -151,7 +151,7 @@
 	</definition>
 
 	<definition name="report.header.dailyPerformance" extends="report.header">
-		<put-attribute name="jsName" value="reportDailyPerformance.js" />
+		<put-attribute name="jsName" value="reportDailyPerformance.js?t=20190704001" />
 	</definition>
 
 	<definition name="report.body.dailyPerformance" template="/ftl/report/dailyPerformance/dailyPerformanceBody.ftl">
@@ -170,7 +170,7 @@
     </definition>
 	
 	<definition name="report.header.keyword" extends="report.header" >
-       <put-attribute name="jsName" value="reportKeyword.js" />
+       <put-attribute name="jsName" value="reportKeyword.js?t=20190704001" />
     </definition>
 	
 	<definition name="report.body.keyword" template="/ftl/report/keyword/keywordBody.ftl">
@@ -189,7 +189,7 @@
     </definition>
     
     <definition name="report.header.ados" extends="report.header" >
-    	<put-attribute name="jsName" value="reportAdOs.js" />
+    	<put-attribute name="jsName" value="reportAdOs.js?t=20190704001" />
     </definition>
    
 	<definition name="report.body.ados" template="/ftl/report/adOs/adOsBody.ftl" >
@@ -208,7 +208,7 @@
     </definition>
 	
 	<definition name="report.header.adTime" extends="report.header" >
-    	<put-attribute name="jsName" value="reportAdTime.js" />
+    	<put-attribute name="jsName" value="reportAdTime.js?t=20190704001" />
     </definition>
     
     <definition name="report.body.adTime" template="/ftl/report/adTime/adTimeBody.ftl" >
@@ -227,7 +227,7 @@
     </definition>
 
 	<definition name="report.header.adAgesex" extends="report.header" > <!-- 登出 登入條 -->
-    	<put-attribute name="jsName" value="reportAdAgesex.js" />
+    	<put-attribute name="jsName" value="reportAdAgesex.js?t=20190704001" />
     </definition>
 
 	<definition name="report.body.adAgesex" template="/ftl/report/adAgesex/adAgesexBody.ftl">
@@ -246,7 +246,7 @@
     </definition>
 	
 	<definition name="report.header.adWebsite" extends="report.header" > <!-- 登出 登入條 -->
-    	<put-attribute name="jsName" value="reportAdWebsite.js" />
+    	<put-attribute name="jsName" value="reportAdWebsite.js?t=20190704001" />
     </definition>
 	   
 	<definition name="report.body.adWebsite" template="/ftl/report/adWebsite/adWebsiteBody.ftl">
@@ -265,7 +265,7 @@
     </definition>
  	
  	<definition name="report.header.video.performance" extends="report.header" >
-       <put-attribute name="jsName" value="reportAdVideoPerformance.js" />
+       <put-attribute name="jsName" value="reportAdVideoPerformance.js?t=20190704001" />
     </definition>
  	
  	<definition name="report.body.video.performance" template="/ftl/report/videoPerformance/videoPerformanceBody.ftl">
