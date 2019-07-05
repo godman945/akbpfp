@@ -695,7 +695,8 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 			}
 		}
 		
-		hql.append(" GROUP BY r.ad_seq");
+		hql.append(" GROUP BY r.ad_seq, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+//		hql.append(" GROUP BY r.ad_seq");
 		
 		
 		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
