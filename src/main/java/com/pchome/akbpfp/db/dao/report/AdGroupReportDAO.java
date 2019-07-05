@@ -849,7 +849,8 @@ public class AdGroupReportDAO extends BaseDAO<PfpAdGroupReport, Integer> impleme
 			}
 		}
 		
-		hql.append(" GROUP BY r.ad_group_seq");
+		hql.append(" GROUP BY r.ad_group_seq, r.ad_action_seq, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+//		hql.append(" GROUP BY r.ad_group_seq");
 		
 		
 		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
