@@ -164,11 +164,11 @@ function preView(adStyle, Obj) {
 	
 	if (adStyle == 'IMG') { // 圖像廣告
 		// 組中間圖片畫面
-		tempHtmlViewArr.push('<div class="predivbox"><iframe src="http://showstg.pchome.com.tw/pfp/' + $(tempObj).find('#img').val() + '" width="' + tempWidth + '" height="' + tempHeight + '" allowtransparency="true" frameborder="0" scrolling="no"></iframe></div>');
+		tempHtmlViewArr.push('<div class="predivbox"><iframe src="' + $(tempObj).find('#img').val() + '" width="' + tempWidth + '" height="' + tempHeight + '" allowtransparency="true" frameborder="0" scrolling="no"></iframe></div>');
 	} else if (adStyle == 'VIDEO') { // 影音廣告
 		// 組中間圖片畫面
 		tempHtmlViewArr.push('<div class="predivbox"><iframe scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="' + tempWidth + '" height="' + tempHeight
-				+ '" allowtransparency="true" allowfullscreen="true" src="http://showstg.pchome.com.tw/pfp/adVideoModel.html?adPreviewVideoURL=' + $(tempObj).find('#adPreviewVideoURL').val()
+				+ '" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=' + $(tempObj).find('#adPreviewVideoURL').val()
 				+ '&adPreviewVideoBgImg=' + $(tempObj).find('#adPreviewVideoBgImg').val()
 				+ '&realUrl=' + $(tempObj).find('#realUrl').val() + '&resize=true\"></iframe></div>');
 	} else if (adStyle == 'PROD') { // 商品廣告
@@ -188,7 +188,7 @@ function preView(adStyle, Obj) {
 		templateSizeOptionStr = processTMGSizeOptionHtml($(tempObj).find('#adSeq').val()); // 選擇廣告尺寸
 		
 		// 組中間圖片畫面
-		tempHtmlViewArr.push('<div class="predivbox"><span style="display:inline-block; background-color:white;"><iframe width="' + tempWidth + '" height="' + tempHeight + '" src="http://showstg.pchome.com.tw/pfp/adModel.html?adNo=' + $(tempObj).find('#adSeq').val() + '&tproNo=' + $(tempObj).find('#tproNo').val() + '" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span></div>');
+		tempHtmlViewArr.push('<div class="predivbox"><span style="display:inline-block; background-color:white;"><iframe width="' + tempWidth + '" height="' + tempHeight + '" src="adModel.html?adNo=' + $(tempObj).find('#adSeq').val() + '&tproNo=' + $(tempObj).find('#tproNo').val() + '" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span></div>');
 	}
 	
 	commonFancyBox(tempHtmlViewArr, showLeftRightBtn, tempWidth, tempHeight, templateSizeOptionStr);
@@ -280,7 +280,7 @@ function processTMGSizeOptionHtml(adSeq) {
  */
 function processPRODIframeHtml(tempObj, tpro) {
 	var tempHtml = '<div class="predivbox"><iframe width="' + $(tempObj).find('#width').val() + '" height="' + $(tempObj).find('#height').val() + '" class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" allowtransparency="true" allowfullscreen="true"'
-			+ 'src="http://showstg.pchome.com.tw/pfp/adProdModel.html' + '?catalogGroupId=' + $(tempObj).find('#catalogGroupId').val()
+			+ 'src="adProdModel.html' + '?catalogGroupId=' + $(tempObj).find('#catalogGroupId').val()
 			+ '&disTxtType=' + $(tempObj).find('#disTxtType').val()
 			+ '&disBgColor=' + $(tempObj).find('#disBgColor').val()
 			+ '&disFontColor=' + $(tempObj).find('#disFontColor').val()
@@ -369,7 +369,7 @@ function processTMGSelectSize(adSeq, obj) {
 	var selectNameArr = selectName.split(" x ");
 	var tempWidth = selectNameArr[0];
 	var tempHeight = selectNameArr[1];
-	$('.akb_iframe').attr("src", "http://showstg.pchome.com.tw/pfp/adModel.html?adNo=" + adSeq + "&tproNo=" + obj.value + "").attr("height", tempHeight).attr("width", tempWidth);
+	$('.akb_iframe').attr("src", "adModel.html?adNo=" + adSeq + "&tproNo=" + obj.value + "").attr("height", tempHeight).attr("width", tempWidth);
 	$('.predivtitle').html('廣告尺寸：' + selectName);
 }
 
