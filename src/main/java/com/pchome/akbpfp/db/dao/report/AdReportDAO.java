@@ -558,7 +558,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		}
 		
 		if (StringUtils.isNotBlank(vo.getSearchText())) {
-			hql.append(" AND r.ad_seq IN (SELECT DISTINCT ad_seq FROM pfp_ad_detail WHERE 1=1 AND (ad_detail_id = 'title' OR  ad_detail_id = 'content') ");
+			hql.append(" AND r.ad_seq IN (SELECT DISTINCT ad_seq FROM pfp_ad_detail WHERE 1=1 AND (ad_detail_id = 'title' OR  ad_detail_id = 'content' OR ad_detail_id = 'prod_report_name') ");
 			hql.append(" AND customer_info_id = :customerInfoId");
 			hql.append(" AND ad_detail_content LIKE :searchStr)");
 		}
@@ -658,7 +658,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		}
 		
 		if (StringUtils.isNotBlank(vo.getSearchText())) {
-			hql.append(" AND r.ad_seq IN (SELECT DISTINCT ad_seq FROM pfp_ad_detail WHERE 1=1 AND (ad_detail_id = 'title' OR  ad_detail_id = 'content') ");
+			hql.append(" AND r.ad_seq IN (SELECT DISTINCT ad_seq FROM pfp_ad_detail WHERE 1=1 AND (ad_detail_id = 'title' OR  ad_detail_id = 'content' OR ad_detail_id = 'prod_report_name') ");
 			hql.append(" AND customer_info_id = :customerInfoId");
 			hql.append(" AND ad_detail_content LIKE :searchStr)");
 			
@@ -757,7 +757,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		}
 		
 		if (StringUtils.isNotBlank(vo.getSearchText())) {
-			hql.append(" AND r.ad_seq IN (SELECT DISTINCT ad_seq FROM pfp_ad_detail WHERE 1=1 AND (ad_detail_id = 'title' OR  ad_detail_id = 'content') ");
+			hql.append(" AND r.ad_seq IN (SELECT DISTINCT ad_seq FROM pfp_ad_detail WHERE 1=1 AND (ad_detail_id = 'title' OR  ad_detail_id = 'content' OR ad_detail_id = 'prod_report_name') ");
 			hql.append(" AND customer_info_id = :customerInfoId");
 			hql.append(" AND ad_detail_content LIKE :searchStr)");
 			
