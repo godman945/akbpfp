@@ -140,7 +140,7 @@ public class ReportAdDailyAction extends BaseReportAction {
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
 
-		content.append("日期,裝置,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,");
+		content.append("日期,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,");
 		
 		Map<String, Boolean> showHideColumnMap = new HashMap<>(); // 紀錄顯示其他欄位值
 		String[] showHideColumnArr = showHideColumn.split(",");
@@ -168,7 +168,6 @@ public class ReportAdDailyAction extends BaseReportAction {
 			// 明細資料
 			for (int i = 0; i < resultData.size(); i++) {
 				content.append("\"" + dateFormat.format(resultData.get(i).getReportDate()) + "\",");
-				content.append("\"" + resultData.get(i).getAdDevice() + "\",");
 				content.append("\"" + intFormat.format(resultData.get(i).getAdPvSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultData.get(i).getAdClkSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultData.get(i).getCtr()) + "%\",");
@@ -199,7 +198,6 @@ public class ReportAdDailyAction extends BaseReportAction {
 			// 總計資料
 			for (int i = 0; i < resultSumData.size(); i++) {
 				content.append("\"總計：" + intFormat.format(resultSumData.get(i).getRowCount()) + "筆廣告活動\",");
-				content.append("\"\",");
 				content.append("\"" + doubleFormat.format(resultSumData.get(i).getAdPvSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultSumData.get(i).getAdClkSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultSumData.get(i).getCtr()) + "%\",");
