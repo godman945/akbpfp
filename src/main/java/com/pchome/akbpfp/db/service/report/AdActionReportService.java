@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.report.AdActionReportVO;
 import com.pchome.akbpfp.db.dao.report.AdCampaginReportVO;
@@ -54,12 +55,12 @@ public class AdActionReportService implements IAdActionReportService {
 			// 日期
 			adActionReportVO.setReportDate((Date) dataMap.get("ad_pvclk_date"));
 			
-			String adDevice = "全部";
-			if (vo.getWhereMap() != null) {
-				adDevice = CommonUtils.getInstance().getAdDeviceName(vo.getWhereMap());
-			}
-			// 裝置
-			adActionReportVO.setAdDevice(adDevice);
+//			// 裝置
+//			String adDevice = "全部";
+//			if (vo.getWhereMap() != null) {
+//				adDevice = CommonUtils.getInstance().getAdDeviceName(vo.getWhereMap());
+//			}
+//			adActionReportVO.setAdDevice(adDevice);
 			
 			// 曝光數
 			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");
@@ -257,7 +258,7 @@ public class AdActionReportService implements IAdActionReportService {
 	}
 
 	/**
-	 * 廣告成效(明細)
+	 * 總廣告成效、廣告成效共用(明細)
 	 * @throws Exception 
 	 */
 	@Override
@@ -271,6 +272,13 @@ public class AdActionReportService implements IAdActionReportService {
 		Map<Integer, String> adTypeMap = CommonUtils.getInstance().getAdType();
 		Map<String, String> adStyleTypeMap = CommonUtils.getInstance().getAdStyleTypeMap();
 		Map<String, String> adStatusMap = CommonUtils.getInstance().getAdStatusMap();
+		
+		// 檢查前端畫面選擇的篩選條件
+		JSONObject tempJSONObject = new JSONObject();
+		if(vo.getWhereMap() != null) {
+			tempJSONObject = new JSONObject(vo.getWhereMap());
+		}
+		String selectAdDevice = tempJSONObject.optString("adDevice");
 		
 		List<AdCampaginReportVO> adCampaginVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : adCampaginList) {
@@ -319,11 +327,17 @@ public class AdActionReportService implements IAdActionReportService {
 			adCampaginReportVO.setAdActionEndDate(adActionEndDate);
 			
 			// 裝置
-			String adDevice = "全部";
-			if (vo.getWhereMap() != null) {
-				adDevice = CommonUtils.getInstance().getAdDeviceName(vo.getWhereMap());
+			if ("PCandMobile".equalsIgnoreCase(selectAdDevice)) {
+				adCampaginReportVO.setAdDevice("電腦 + 行動");
+			} else {
+				String adDevice = (String) dataMap.get("ad_device");
+				if ("PC".equalsIgnoreCase(adDevice)) {
+					adDevice = "電腦";
+				} else if ("mobile".equalsIgnoreCase(adDevice)) {
+					adDevice = "行動裝置";
+				}
+				adCampaginReportVO.setAdDevice(adDevice);
 			}
-			adCampaginReportVO.setAdDevice(adDevice);
 			
 			// 每日預算
 			BigDecimal adActionMaxPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_action_max_price_sum"));
@@ -385,7 +399,7 @@ public class AdActionReportService implements IAdActionReportService {
 	}
 
 	/**
-	 * 廣告成效(加總)
+	 * 總廣告成效、廣告成效共用(加總)
 	 */
 	@Override
 	public List<AdCampaginReportVO> queryReportAdCampaginSumData(AdCampaginReportVO vo) {
@@ -538,7 +552,7 @@ public class AdActionReportService implements IAdActionReportService {
 
 	/**
 	 * 回傳map新寫法
-	 * 廣告成效(圖表)
+	 * 總廣告成效、廣告成效共用(圖表)
 	 * return map
 	 */
 	@Override

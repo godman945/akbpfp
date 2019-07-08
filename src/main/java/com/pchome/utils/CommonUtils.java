@@ -278,6 +278,8 @@ public class CommonUtils {
 			adDevice = "電腦";
 		} else if ("mobile".equalsIgnoreCase(tempStr)) {
 			adDevice = "行動裝置";
+		} else if ("PCandMobile".equalsIgnoreCase(tempStr)) {
+			adDevice = "電腦 + 行動";
 		}
 		return adDevice;
 	}

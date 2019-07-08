@@ -43,7 +43,7 @@ public interface IAdActionReportService {
 	public Map<Date, Float> queryReportAdDailyChartDataMap(AdActionReportVO vo);
 	
 	/**
-	 * 廣告成效(明細)
+	 * 總廣告成效、廣告成效共用(明細)
 	 * @param vo
 	 * @return
 	 * @throws Exception 
@@ -51,7 +51,7 @@ public interface IAdActionReportService {
 	public List<AdCampaginReportVO> queryReportAdCampaginData(AdCampaginReportVO vo) throws Exception;
 	
 	/**
-	 * 廣告成效(加總)
+	 * 總廣告成效、廣告成效共用(加總)
 	 * @param vo
 	 * @return
 	 */
@@ -65,7 +65,7 @@ public interface IAdActionReportService {
 	public List<AdCampaginReportVO> queryReportAdCampaginChartData(AdCampaginReportVO vo);
 
 	/**
-	 * 廣告成效(圖表)
+	 * 總廣告成效、廣告成效共用(圖表)
 	 * @param vo
 	 * @return map
 	 */

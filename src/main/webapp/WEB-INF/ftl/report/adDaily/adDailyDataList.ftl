@@ -17,16 +17,6 @@
 
 						<#-- th下拉選單 選取狀態: data-select="true" -->
 						<th data-info-name="" class="col-w150">日期</th>
-						<th data-info-name="" class="col-w70">
-                            <div class="sortbx-selectTH pos-relative txt-left">
-                                <span class="sort-tit pos-relative">裝置</span>
-                                <ul class="sort-item pos-absolute pos-left">
-                                    <li data-select="true" data-where="adDevice-all">全部</li>
-                                    <li data-select="" data-where="adDevice-mobile">行動</li>
-                                    <li data-select="" data-where="adDevice-PC">電腦</li>
-                                </ul>
-                            </div>
-                        </th>
 						<th data-info-name="" class="col-w120">
 							<div class="sortbx-selectTH pos-relative txt-right">
 								<span class="sort-tit pos-relative">曝光數</span>
@@ -146,7 +136,6 @@
 										</div>
 									</div>                                                                       
 								</td>
-								<td data-info-name="">${row.adDevice!}</td>
 								<td data-info-name="" class="txt-right"><span class="">${row.adPvSum?string("#,###,###.##")!}</span></td><!--曝光數-->
 								<td data-info-name="" class="txt-right"><span class="">${row.adClkSum?string("#,###,###.##")!}</span></td><!--互動數-->
 								<td data-info-name="" class="txt-right"><span class="data-percentage">${row.ctr?string("#,###,###.##")!}</span></td><!--互動率-->
@@ -171,7 +160,6 @@
 										</div>
 									</div>
 								</td>
-								<td data-info-name=""></td>
 								<td data-info-name="" class="txt-right"><span class="">${rowSum.adPvSum?string("#,###,###.##")!}</span></td><!--曝光數-->
 								<td data-info-name="" class="txt-right"><span class="">${rowSum.adClkSum?string("#,###,###.##")!}</span></td><!--互動數-->
 								<td data-info-name="" class="txt-right"><span class="data-percentage">${rowSum.ctr?string("#,###,###.##")!}</span></td><!--互動率-->
@@ -194,7 +182,6 @@
 									</div>
 								</div>                                                                       
 							</td>
-							<td data-info-name="" class="whereNoData-adDevice">全部</td>
 							<td data-info-name=""><span></span></td><!--曝光數-->
 							<td data-info-name=""><span></span></td><!--互動數-->
 							<td data-info-name=""><span></span></td><!--互動率-->
