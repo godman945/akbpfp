@@ -619,6 +619,12 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 	 */
 	@Override
 	public List<Map<String, Object>> getAdKeywordList(AdKeywordReportVO vo) {
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
 		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		// 廣泛比對
@@ -654,17 +660,15 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 			hql.append(" AND r.ad_keyword LIKE :searchStr ");
 		}
 		
-		String adDevice = ""; // 裝置
-		if (StringUtils.isNotBlank(vo.getWhereMap())) {
-			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
-			
-			adDevice = tempJSONObject.optString("adDevice");
-			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
-				hql.append(" AND r.ad_keyword_pvclk_device = :adPvclkDevice");
-			}
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_keyword_pvclk_device = :adPvclkDevice");
 		}
 		
 		hql.append(" GROUP BY r.ad_keyword_seq");
+		// 裝置空值或選擇全部時則將資料區分PC和mobile
+		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
+			hql.append(" ,r.ad_keyword_pvclk_device");
+		}
 		hql.append(" ORDER BY r.ad_keyword_seq DESC");
 		
 		
@@ -677,7 +681,7 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		
@@ -721,6 +725,12 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 	 */
 	@Override
 	public List<Map<String, Object>> getAdKeywordListSum(AdKeywordReportVO vo) {
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
 		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		// 廣泛比對
@@ -748,18 +758,15 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 			hql.append(" AND r.ad_keyword LIKE :searchStr ");
 		}
 		
-		String adDevice = ""; // 裝置
-		if (StringUtils.isNotBlank(vo.getWhereMap())) {
-			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
-			
-			adDevice = tempJSONObject.optString("adDevice");
-			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
-				hql.append(" AND r.ad_keyword_pvclk_device = :adPvclkDevice");
-			}
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_keyword_pvclk_device = :adPvclkDevice");
 		}
 		
 		hql.append(" GROUP BY r.ad_keyword_seq");
-		
+		// 裝置空值或選擇全部時則將資料區分PC和mobile
+		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
+			hql.append(" ,r.ad_keyword_pvclk_device");
+		}
 		
 		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
 		query.setString("customerInfoId", vo.getCustomerInfoId());
@@ -770,7 +777,7 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		
@@ -782,6 +789,12 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 	 */
 	@Override
 	public List<Map<String, Object>> getAdKeywordListChart(AdKeywordReportVO vo) {
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
 		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT ");
 		hql.append(" r.ad_keyword_pvclk_date, ");
@@ -811,14 +824,8 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 			hql.append(" AND r.ad_keyword LIKE :searchStr ");
 		}
 		
-		String adDevice = ""; // 裝置
-		if (StringUtils.isNotBlank(vo.getWhereMap())) {
-			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
-			
-			adDevice = tempJSONObject.optString("adDevice");
-			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
-				hql.append(" AND r.ad_keyword_pvclk_device = :adPvclkDevice");
-			}
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_keyword_pvclk_device = :adPvclkDevice");
 		}
 		
 		hql.append(" GROUP BY r.ad_keyword_pvclk_date");
@@ -833,7 +840,7 @@ public class AdKeywordReportDAO extends BaseDAO<PfpAdKeywordPvclk, Integer> impl
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		

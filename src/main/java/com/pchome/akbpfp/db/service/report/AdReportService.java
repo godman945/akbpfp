@@ -44,6 +44,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportDevice;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
@@ -439,7 +440,7 @@ public class AdReportService implements IAdReportService {
 	}
 
 	/**
-	 * 廣告明細成效(明細)
+	 * 總廣告成效-明細、廣告明細成效共用(明細)
 	 * @throws Exception 
 	 */
 	@Override
@@ -455,6 +456,13 @@ public class AdReportService implements IAdReportService {
 		Map<String, String> adStyleTypeMap = CommonUtils.getInstance().getAdStyleTypeMap();
 		Map<String, String> adPriceTypeMap = CommonUtils.getInstance().getAdPriceTypeMap();
 		String productTemplateStr = processProdSelectAdSize();
+		
+		// 檢查前端畫面選擇的篩選條件
+		JSONObject tempJSONObject = new JSONObject();
+		if(vo.getWhereMap() != null) {
+			tempJSONObject = new JSONObject(vo.getWhereMap());
+		}
+		String selectAdDevice = tempJSONObject.optString("adDevice");
 		
 		List<AdvertiseReportVO> advertiseVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : advertiseList) {
@@ -547,13 +555,19 @@ public class AdReportService implements IAdReportService {
 			advertiseReportVO.setAdOperatingRule(adStyleTypeMap.get(dataMap.get("ad_operating_rule"))); // 廣告樣式
 			advertiseReportVO.setAdClkPriceType(adPriceTypeMap.get(dataMap.get("ad_clk_price_type"))); // 廣告計費方式
 			
-			String adDevice = "全部";
-			if (vo.getWhereMap() != null) {
-				adDevice = CommonUtils.getInstance().getAdDeviceName(vo.getWhereMap());
-			}
 			// 裝置
-			advertiseReportVO.setAdDevice(adDevice);
-			
+			if (EnumReportDevice.PCANDMOBILE.getDevType().equalsIgnoreCase(selectAdDevice)) {
+				advertiseReportVO.setAdDevice(EnumReportDevice.PCANDMOBILE.getDevTypeName());
+			} else {
+				String adDevice = (String) dataMap.get("ad_device");
+				if (EnumReportDevice.PC.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.PC.getDevTypeName();
+				} else if (EnumReportDevice.MOBILE.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.MOBILE.getDevTypeName();
+				}
+				advertiseReportVO.setAdDevice(adDevice);
+			}
+
 			// 曝光數
 			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");
 			advertiseReportVO.setAdPvSum(adPvSum);
@@ -914,7 +928,7 @@ public class AdReportService implements IAdReportService {
 	}
 
 	/**
-	 * 廣告明細成效(加總)
+	 * 總廣告成效-明細、廣告明細成效共用(加總)
 	 */
 	public List<AdvertiseReportVO> queryReportAdvertiseSumData(AdvertiseReportVO vo) {
 		List<Map<String, Object>> advertiseListSum = adReportDAO.getAdvertiseListSum(vo);
@@ -1054,7 +1068,7 @@ public class AdReportService implements IAdReportService {
 
 	/**
 	 * 回傳map新寫法
-	 * 廣告明細成效(圖表)
+	 * 總廣告成效-明細、廣告明細成效共用(圖表)
 	 * @param vo
 	 * @return map
 	 */
