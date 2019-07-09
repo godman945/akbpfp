@@ -77,6 +77,7 @@
                                 <span class="sort-tit pos-relative">裝置</span>
                                 <ul class="sort-item pos-absolute pos-left">
                                     <li data-select="true" data-where="adDevice-all">全部</li>
+                                    <li data-select="" data-where="adDevice-PCandMobile">電腦 + 行動</li>
                                     <li data-select="" data-where="adDevice-mobile">行動</li>
                                     <li data-select="" data-where="adDevice-PC">電腦</li>
                                 </ul>

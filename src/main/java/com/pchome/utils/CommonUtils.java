@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import com.pchome.enumerate.ad.EnumAdPriceType;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.report.EnumReportDevice;
 import com.pchome.enumerate.utils.EnumStatus;
 
 public class CommonUtils {
@@ -271,15 +272,15 @@ public class CommonUtils {
 	 * @return
 	 */
 	public String getAdDeviceName(String whereMap) {
-		String adDevice = "全部";
+		String adDevice = EnumReportDevice.ALL.getDevTypeName();
 		JSONObject tempJSONObject = new JSONObject(whereMap);
 		String tempStr = tempJSONObject.optString("adDevice");
-		if ("PC".equalsIgnoreCase(tempStr)) {
-			adDevice = "電腦";
-		} else if ("mobile".equalsIgnoreCase(tempStr)) {
-			adDevice = "行動裝置";
-		} else if ("PCandMobile".equalsIgnoreCase(tempStr)) {
-			adDevice = "電腦 + 行動";
+		if (EnumReportDevice.PC.getDevType().equalsIgnoreCase(tempStr)) {
+			adDevice = EnumReportDevice.PC.getDevTypeName();
+		} else if (EnumReportDevice.MOBILE.getDevType().equalsIgnoreCase(tempStr)) {
+			adDevice = EnumReportDevice.MOBILE.getDevTypeName();
+		} else if (EnumReportDevice.PCANDMOBILE.getDevType().equalsIgnoreCase(tempStr)) {
+			adDevice = EnumReportDevice.PCANDMOBILE.getDevTypeName();
 		}
 		return adDevice;
 	}

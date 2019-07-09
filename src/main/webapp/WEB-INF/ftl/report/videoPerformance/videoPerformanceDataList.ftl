@@ -37,6 +37,7 @@
                                 <span class="sort-tit pos-relative">裝置</span>
                                 <ul class="sort-item pos-absolute pos-left">
                                     <li data-select="true" data-where="adDevice-all">全部</li>
+                                    <li data-select="" data-where="adDevice-PCandMobile">電腦 + 行動</li>
                                     <li data-select="" data-where="adDevice-mobile">行動</li>
                                     <li data-select="" data-where="adDevice-PC">電腦</li>
                                 </ul>
@@ -223,6 +224,7 @@
 	                                			<input type="hidden" id="adPreviewVideoURL" name="adPreviewVideoURL" value="${row.videoUrl!}">
 	                                			<input type="hidden" id="adPreviewVideoBgImg" name="adPreviewVideoBgImg" value="<#if row.adImg != 'img/public/na.gif" style="display:none'>${row.adImg!}</#if>">
 	                                			<input type="hidden" id="realUrl" name="realUrl" value="${row.adLinkUrl!}">
+	                                			<input type="hidden" id="resize" name="resize" value="false">
 	                                		</div>
                                             <a class="preview pos-absolute" onclick="preView('VIDEO', this)">預覽</a>
                                             <h5 class="h2 txt-ellipsis" data-pdName="${row.title!}"></h5>

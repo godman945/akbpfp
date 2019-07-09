@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdVideoPerformanceReportDAO;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportDevice;
 import com.pchome.utils.CommonUtils;
 
 public class AdVideoPerformanceReportService implements IAdVideoPerformanceReportService {
@@ -164,7 +166,14 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 		List<Map<String, Object>> adVideoPerformanceList = adVideoPerformanceReportDAO.getAdVideoPerformanceList(vo);
 		
 		Map<String, String> adPriceTypeMap = CommonUtils.getInstance().getAdPriceTypeMap();
-				
+
+		// 檢查前端畫面選擇的篩選條件
+		JSONObject tempJSONObject = new JSONObject();
+		if(vo.getWhereMap() != null) {
+			tempJSONObject = new JSONObject(vo.getWhereMap());
+		}
+		String selectAdDevice = tempJSONObject.optString("adDevice");
+		
 		List<AdVideoPerformanceReportVO> adVideoPerformanceVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : adVideoPerformanceList) {
 			AdVideoPerformanceReportVO adVideoPerformanceReportVO = new AdVideoPerformanceReportVO();
@@ -197,11 +206,17 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdClkPriceType(adPriceTypeMap.get(dataMap.get("ad_price_type")));
 			
 			// 裝置
-			String adDevice = "全部";
-			if (vo.getWhereMap() != null) {
-				adDevice = CommonUtils.getInstance().getAdDeviceName(vo.getWhereMap());
+			if (EnumReportDevice.PCANDMOBILE.getDevType().equalsIgnoreCase(selectAdDevice)) {
+				adVideoPerformanceReportVO.setAdDevice(EnumReportDevice.PCANDMOBILE.getDevTypeName());
+			} else {
+				String adDevice = (String) dataMap.get("ad_pvclk_device");
+				if (EnumReportDevice.PC.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.PC.getDevTypeName();
+				} else if (EnumReportDevice.MOBILE.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.MOBILE.getDevTypeName();
+				}
+				adVideoPerformanceReportVO.setAdDevice(adDevice);
 			}
-			adVideoPerformanceReportVO.setAdDevice(adDevice);
 			
 			// 曝光數
 			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");

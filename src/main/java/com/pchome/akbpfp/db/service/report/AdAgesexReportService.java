@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.report.AdAgesexReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdAgesexReportDAO;
@@ -18,6 +19,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
 import com.pchome.enumerate.ad.EnumAdAgeCode;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportDevice;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
@@ -55,9 +57,15 @@ public class AdAgesexReportService implements IAdAgesexReportService {
 		Map<Integer, String> adTypeMap = CommonUtils.getInstance().getAdType();
 		Map<String, String> adStyleTypeMap = CommonUtils.getInstance().getAdStyleTypeMap();
 		Map<String, String> adPriceTypeMap = CommonUtils.getInstance().getAdPriceTypeMap();
-				
-		List<AdAgesexReportVO> adAgesexVOList = new ArrayList<>();
 		
+		// 檢查前端畫面選擇的篩選條件
+		JSONObject tempJSONObject = new JSONObject();
+		if(vo.getWhereMap() != null) {
+			tempJSONObject = new JSONObject(vo.getWhereMap());
+		}
+		String selectAdDevice = tempJSONObject.optString("adDevice");
+		
+		List<AdAgesexReportVO> adAgesexVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : adAgesexList) {
 			AdAgesexReportVO adAgesexReportVO = new AdAgesexReportVO();
 			
@@ -123,12 +131,18 @@ public class AdAgesexReportService implements IAdAgesexReportService {
 			adAgesexReportVO.setAdOperatingRule(adStyleTypeMap.get(dataMap.get("ad_operating_rule"))); // 廣告樣式
 			adAgesexReportVO.setAdClkPriceType(adPriceTypeMap.get(dataMap.get("ad_clk_price_type"))); // 廣告計費方式
 			
-			String adDevice = "全部";
-			if (vo.getWhereMap() != null) {
-				adDevice = CommonUtils.getInstance().getAdDeviceName(vo.getWhereMap());
-			}
 			// 裝置
-			adAgesexReportVO.setAdDevice(adDevice);
+			if (EnumReportDevice.PCANDMOBILE.getDevType().equalsIgnoreCase(selectAdDevice)) {
+				adAgesexReportVO.setAdDevice(EnumReportDevice.PCANDMOBILE.getDevTypeName());
+			} else {
+				String adDevice = (String) dataMap.get("ad_device");
+				if (EnumReportDevice.PC.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.PC.getDevTypeName();
+				} else if (EnumReportDevice.MOBILE.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.MOBILE.getDevTypeName();
+				}
+				adAgesexReportVO.setAdDevice(adDevice);
+			}
 			
 			// 曝光數
 			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");

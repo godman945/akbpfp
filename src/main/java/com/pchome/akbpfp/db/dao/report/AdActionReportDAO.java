@@ -1015,6 +1015,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		}
 		
 		hql.append(" GROUP BY r.ad_action_seq, r.ad_type, r.ad_operating_rule");
+		// 裝置空值或選擇全部時則將資料區分PC和mobile
 		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
 			hql.append(" ,r.ad_pvclk_device");
 		}
@@ -1104,6 +1105,7 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		}
 		
 		hql.append(" GROUP BY r.ad_action_seq, r.ad_type, r.ad_operating_rule");
+		// 裝置空值或選擇全部時則將資料區分PC和mobile
 		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
 			hql.append(" ,r.ad_pvclk_device");
 		}

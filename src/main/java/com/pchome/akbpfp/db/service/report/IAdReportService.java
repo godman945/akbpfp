@@ -12,7 +12,7 @@ public interface IAdReportService {
 	public List<AdReportVO> loadReportDate(String sqlType, String adGroupSeq, String adSeq, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String adOperatingRule, String startDate, String endDate, int page, int pageSize) throws Exception;
 
 	/**
-	 * 廣告明細成效(明細)
+	 * 總廣告成效-明細、廣告明細成效共用(明細)
 	 * @param vo
 	 * @return
 	 * @throws Exception 
@@ -20,7 +20,7 @@ public interface IAdReportService {
 	public List<AdvertiseReportVO> queryReportAdvertiseData(AdvertiseReportVO vo) throws Exception;
 
 	/**
-	 * 廣告明細成效(加總)
+	 * 總廣告成效-明細、廣告明細成效共用(加總)
 	 * @param vo
 	 * @return
 	 */
@@ -34,7 +34,7 @@ public interface IAdReportService {
 	public List<AdvertiseReportVO> queryReportAdvertiseChartData(AdvertiseReportVO vo);
 
 	/**
-	 * 廣告明細成效(圖表)
+	 * 總廣告成效-明細、廣告明細成效共用(圖表)
 	 * @param chartVo
 	 * @return map
 	 */

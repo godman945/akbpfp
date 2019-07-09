@@ -451,7 +451,8 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" AND vr.ad_video_date >= :startDate AND vr.ad_video_date <= :endDate "); 
 		sql.append(" GROUP BY a.ad_seq ");
 		
-		if (StringUtils.isNotBlank(adDevice)) {
+		// 裝置非電腦+行動時則將資料區分PC和mobile
+		if (!"PCandMobile".equalsIgnoreCase(adDevice)) {
 			sql.append(" ,vr.ad_pvclk_device  ");
 		}
 		
@@ -465,7 +466,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 			sql.append(" AND a.ad_price_type = :adClkPriceType");
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			sql.append(" AND a.ad_pvclk_device = :adPvclkDevice");
 		}
 		
@@ -489,7 +490,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 			query.setString("adClkPriceType", adClkPriceType);
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		
@@ -558,7 +559,8 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" AND vr.ad_video_date >= :startDate AND vr.ad_video_date <= :endDate "); 
 		sql.append(" GROUP BY a.ad_seq ");
 		
-		if (StringUtils.isNotBlank(adDevice)) {
+		// 裝置非電腦+行動時則將資料區分PC和mobile
+		if (!"PCandMobile".equalsIgnoreCase(adDevice)) {
 			sql.append(" ,vr.ad_pvclk_device  ");
 		}
 		
@@ -572,7 +574,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 			sql.append(" AND a.ad_price_type = :adClkPriceType");
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			sql.append(" AND a.ad_pvclk_device = :adPvclkDevice");
 		}
 		
@@ -594,7 +596,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 			query.setString("adClkPriceType", adClkPriceType);
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		
@@ -662,15 +664,16 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 		sql.append(" AND g.ad_group_seq = a.ad_group_seq ");
 		sql.append(" AND vr.ad_video_date >= :startDate ");
 		sql.append(" AND vr.ad_video_date <= :endDate ");
-		sql.append(" GROUP BY vr.ad_seq, ");
+		sql.append(" GROUP BY vr.ad_seq ");
 		
-		if(StringUtils.isNotBlank(adDevice)){
-			sql.append(" vr.ad_pvclk_device,  ");
+		// 裝置非電腦+行動時則將資料區分PC和mobile
+		if (!"PCandMobile".equalsIgnoreCase(adDevice)) {
+			sql.append(" ,vr.ad_pvclk_device ");
 		}
 		
-		sql.append(" vr.ad_video_date, ");
-		sql.append(" video_size, ");
-		sql.append(" vr.ad_price_type ");
+		sql.append(" ,vr.ad_video_date ");
+		sql.append(" ,video_size ");
+		sql.append(" ,vr.ad_price_type ");
 		sql.append(" ORDER BY vr.ad_video_date ASC )a LEFT JOIN adm_uniq_data ud ON ud.record_date = a.ad_video_date AND ud.uniq_name = a.ad_seq ");
 		sql.append(" WHERE 1 = 1 ");
 
@@ -682,7 +685,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 			sql.append(" AND a.ad_price_type = :adClkPriceType");
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			sql.append(" AND a.ad_pvclk_device = :adPvclkDevice");
 		}
 		
@@ -706,7 +709,7 @@ public class AdVideoPerformanceReportDAO extends BaseDAO<PfpAdVideoReport, Integ
 			query.setString("adClkPriceType", adClkPriceType);
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		
