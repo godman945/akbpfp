@@ -479,6 +479,18 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 	 */
 	@Override
 	public List<Map<String, Object>> getAdTimeList(AdTimeReportVO vo) {
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adClkPriceType = ""; // 計價方式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			adType = tempJSONObject.optString("adType");
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			adClkPriceType = tempJSONObject.optString("adClkPriceType");
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
 		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" DAYOFWEEK(r.ad_pvclk_date) AS week_code, ");
@@ -505,39 +517,35 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			hql.append(" AND ad_action_name LIKE :searchStr )");
 		}
 		
-		String adType = ""; // 播放類型
-		String adOperatingRule = ""; // 廣告樣式
-		String adClkPriceType = ""; // 計價方式
-		String adDevice = ""; // 裝置
-		if (StringUtils.isNotBlank(vo.getWhereMap())) {
-			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
-			
-			adType = tempJSONObject.optString("adType");
-			if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
-				hql.append(" AND r.ad_type = :adType");
-			}
-			
-			adOperatingRule = tempJSONObject.optString("adOperatingRule");
-			if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
-				hql.append(" AND r.ad_operating_rule = :adOperatingRule");
-			}
-			
-			adClkPriceType = tempJSONObject.optString("adClkPriceType");
-			if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
-				hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
-			}
-			
-			adDevice = tempJSONObject.optString("adDevice");
-			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
-				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
-			}
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+			hql.append(" AND r.ad_type = :adType");
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+		}
+		
+		if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+			hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
 		}
 		
 		if ("week".equalsIgnoreCase(vo.getViewType())) {
 			hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, DAYOFWEEK(r.ad_pvclk_date), r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+			// 裝置空值或選擇全部時則將資料區分PC和mobile
+			if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
+				hql.append(" ,r.ad_pvclk_device");
+			}
 			hql.append(" ORDER BY r.ad_action_seq, r.ad_group_seq, DAYOFWEEK(r.ad_pvclk_date), r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
 		} else {
 			hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, r.time_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+			// 裝置空值或選擇全部時則將資料區分PC和mobile
+			if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
+				hql.append(" ,r.ad_pvclk_device");
+			}
 			hql.append(" ORDER BY r.ad_action_seq, r.ad_group_seq, r.time_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
 		}
 		
@@ -563,7 +571,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			query.setString("adClkPriceType", adClkPriceType);
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		
@@ -583,6 +591,18 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 	 */
 	@Override
 	public List<Map<String, Object>> getAdTimeListSum(AdTimeReportVO vo) {
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adClkPriceType = ""; // 計價方式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			adType = tempJSONObject.optString("adType");
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			adClkPriceType = tempJSONObject.optString("adClkPriceType");
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
 		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
@@ -602,32 +622,20 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			hql.append(" AND ad_action_name LIKE :searchStr )");
 		}
 		
-		String adType = ""; // 播放類型
-		String adOperatingRule = ""; // 廣告樣式
-		String adClkPriceType = ""; // 計價方式
-		String adDevice = ""; // 裝置
-		if (StringUtils.isNotBlank(vo.getWhereMap())) {
-			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
-			
-			adType = tempJSONObject.optString("adType");
-			if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
-				hql.append(" AND r.ad_type = :adType");
-			}
-			
-			adOperatingRule = tempJSONObject.optString("adOperatingRule");
-			if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
-				hql.append(" AND r.ad_operating_rule = :adOperatingRule");
-			}
-			
-			adClkPriceType = tempJSONObject.optString("adClkPriceType");
-			if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
-				hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
-			}
-			
-			adDevice = tempJSONObject.optString("adDevice");
-			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
-				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
-			}
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+			hql.append(" AND r.ad_type = :adType");
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+		}
+		
+		if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+			hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
 		}
 		
 		if ("week".equalsIgnoreCase(vo.getViewType())) {
@@ -635,7 +643,10 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 		} else {
 			hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, r.time_code");
 		}
-		
+		// 裝置空值或選擇全部時則將資料區分PC和mobile
+		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
+			hql.append(" ,r.ad_pvclk_device");
+		}
 		
 		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
 		query.setString("customerInfoId", vo.getCustomerInfoId());
@@ -658,7 +669,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			query.setString("adClkPriceType", adClkPriceType);
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		
@@ -672,6 +683,18 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 	 */
 	@Override
 	public List<Map<String, Object>> getAdTimeListChart(AdTimeReportVO vo) {
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adClkPriceType = ""; // 計價方式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			adType = tempJSONObject.optString("adType");
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			adClkPriceType = tempJSONObject.optString("adClkPriceType");
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
 		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" DAYOFWEEK(r.ad_pvclk_date) AS week_code, ");
@@ -693,32 +716,20 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			hql.append(" AND ad_action_name LIKE :searchStr )");
 		}
 		
-		String adType = ""; // 播放類型
-		String adOperatingRule = ""; // 廣告樣式
-		String adClkPriceType = ""; // 計價方式
-		String adDevice = ""; // 裝置
-		if (StringUtils.isNotBlank(vo.getWhereMap())) {
-			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
-			
-			adType = tempJSONObject.optString("adType");
-			if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
-				hql.append(" AND r.ad_type = :adType");
-			}
-			
-			adOperatingRule = tempJSONObject.optString("adOperatingRule");
-			if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
-				hql.append(" AND r.ad_operating_rule = :adOperatingRule");
-			}
-			
-			adClkPriceType = tempJSONObject.optString("adClkPriceType");
-			if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
-				hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
-			}
-			
-			adDevice = tempJSONObject.optString("adDevice");
-			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
-				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
-			}
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+			hql.append(" AND r.ad_type = :adType");
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+		}
+		
+		if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+			hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
 		}
 		
 		if ("week".equalsIgnoreCase(vo.getViewType())) {
@@ -749,7 +760,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			query.setString("adClkPriceType", adClkPriceType);
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		

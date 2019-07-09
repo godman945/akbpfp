@@ -429,6 +429,20 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 	 */
 	@Override
 	public List<Map<String, Object>> getAdWebsiteList(AdWebsiteReportVO vo) {
+		String websiteCategoryCode = ""; // 網站類型
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adClkPriceType = ""; // 計價方式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			websiteCategoryCode = tempJSONObject.optString("websiteCategoryCode");
+			adType = tempJSONObject.optString("adType");
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			adClkPriceType = tempJSONObject.optString("adClkPriceType");
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
 		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" r.website_category_code,");
@@ -454,41 +468,31 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 			hql.append(" AND ad_action_name LIKE :searchStr )");
 		}
 		
-		String websiteCategoryCode = ""; // 網站類型
-		String adType = ""; // 播放類型
-		String adOperatingRule = ""; // 廣告樣式
-		String adClkPriceType = ""; // 計價方式
-		String adDevice = ""; // 裝置
-		if (StringUtils.isNotBlank(vo.getWhereMap())) {
-			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
-			
-			websiteCategoryCode = tempJSONObject.optString("websiteCategoryCode");
-			if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
-				hql.append(" AND r.website_category_code = :websiteCategoryCode");
-			}
-			
-			adType = tempJSONObject.optString("adType");
-			if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
-				hql.append(" AND r.ad_type = :adType");
-			}
-			
-			adOperatingRule = tempJSONObject.optString("adOperatingRule");
-			if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
-				hql.append(" AND r.ad_operating_rule = :adOperatingRule");
-			}
-			
-			adClkPriceType = tempJSONObject.optString("adClkPriceType");
-			if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
-				hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
-			}
-			
-			adDevice = tempJSONObject.optString("adDevice");
-			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
-				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
-			}
+		if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
+			hql.append(" AND r.website_category_code = :websiteCategoryCode");
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+			hql.append(" AND r.ad_type = :adType");
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+		}
+		
+		if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+			hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
 		}
 		
 		hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, r.website_category_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+		// 裝置空值或選擇全部時則將資料區分PC和mobile
+		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
+			hql.append(" ,r.ad_pvclk_device");
+		}
 		hql.append(" ORDER BY r.ad_action_seq, r.ad_group_seq, r.website_category_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
 		
 		
@@ -517,7 +521,7 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 			query.setString("adClkPriceType", adClkPriceType);
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		
@@ -537,6 +541,20 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 	 */
 	@Override
 	public List<Map<String, Object>> getAdWebsiteListSum(AdWebsiteReportVO vo) {
+		String websiteCategoryCode = ""; // 網站類型
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adClkPriceType = ""; // 計價方式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			websiteCategoryCode = tempJSONObject.optString("websiteCategoryCode");
+			adType = tempJSONObject.optString("adType");
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			adClkPriceType = tempJSONObject.optString("adClkPriceType");
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
 		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
@@ -556,42 +574,31 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 			hql.append(" AND ad_action_name LIKE :searchStr )");
 		}
 		
-		String websiteCategoryCode = ""; // 網站類型
-		String adType = ""; // 播放類型
-		String adOperatingRule = ""; // 廣告樣式
-		String adClkPriceType = ""; // 計價方式
-		String adDevice = ""; // 裝置
-		if (StringUtils.isNotBlank(vo.getWhereMap())) {
-			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
-			
-			websiteCategoryCode = tempJSONObject.optString("websiteCategoryCode");
-			if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
-				hql.append(" AND r.website_category_code = :websiteCategoryCode");
-			}
-			
-			adType = tempJSONObject.optString("adType");
-			if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
-				hql.append(" AND r.ad_type = :adType");
-			}
-			
-			adOperatingRule = tempJSONObject.optString("adOperatingRule");
-			if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
-				hql.append(" AND r.ad_operating_rule = :adOperatingRule");
-			}
-			
-			adClkPriceType = tempJSONObject.optString("adClkPriceType");
-			if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
-				hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
-			}
-			
-			adDevice = tempJSONObject.optString("adDevice");
-			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
-				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
-			}
+		if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
+			hql.append(" AND r.website_category_code = :websiteCategoryCode");
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+			hql.append(" AND r.ad_type = :adType");
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+		}
+		
+		if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+			hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
 		}
 		
 		hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, r.website_category_code");
-		
+		// 裝置空值或選擇全部時則將資料區分PC和mobile
+		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
+			hql.append(" ,r.ad_pvclk_device");
+		}
 		
 		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
 		query.setString("customerInfoId", vo.getCustomerInfoId());
@@ -618,7 +625,7 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 			query.setString("adClkPriceType", adClkPriceType);
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
@@ -631,6 +638,20 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 	 */
 	@Override
 	public List<Map<String, Object>> getAdWebsiteListChart(AdWebsiteReportVO vo) {
+		String websiteCategoryCode = ""; // 網站類型
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adClkPriceType = ""; // 計價方式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			websiteCategoryCode = tempJSONObject.optString("websiteCategoryCode");
+			adType = tempJSONObject.optString("adType");
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			adClkPriceType = tempJSONObject.optString("adClkPriceType");
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
 		StringBuilder hql = new StringBuilder();
 		hql.append("SELECT");
 		hql.append(" r.website_category_code, ");
@@ -651,38 +672,24 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 			hql.append(" AND ad_action_name LIKE :searchStr )");
 		}
 		
-		String websiteCategoryCode = ""; // 網站類型
-		String adType = ""; // 播放類型
-		String adOperatingRule = ""; // 廣告樣式
-		String adClkPriceType = ""; // 計價方式
-		String adDevice = ""; // 裝置
-		if (StringUtils.isNotBlank(vo.getWhereMap())) {
-			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
-			
-			websiteCategoryCode = tempJSONObject.optString("websiteCategoryCode");
-			if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
-				hql.append(" AND r.website_category_code = :websiteCategoryCode");
-			}
-			
-			adType = tempJSONObject.optString("adType");
-			if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
-				hql.append(" AND r.ad_type = :adType");
-			}
-			
-			adOperatingRule = tempJSONObject.optString("adOperatingRule");
-			if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
-				hql.append(" AND r.ad_operating_rule = :adOperatingRule");
-			}
-			
-			adClkPriceType = tempJSONObject.optString("adClkPriceType");
-			if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
-				hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
-			}
-			
-			adDevice = tempJSONObject.optString("adDevice");
-			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
-				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
-			}
+		if (StringUtils.isNotBlank(websiteCategoryCode) && !"all".equalsIgnoreCase(websiteCategoryCode)) {
+			hql.append(" AND r.website_category_code = :websiteCategoryCode");
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+			hql.append(" AND r.ad_type = :adType");
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+		}
+		
+		if (StringUtils.isNotBlank(adClkPriceType) && !"all".equalsIgnoreCase(adClkPriceType)) {
+			hql.append(" AND r.ad_clk_price_type = :adClkPriceType");
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
 		}
 		
 		hql.append(" GROUP BY r.website_category_code");
@@ -713,7 +720,7 @@ public class AdWebsiteReportDAO extends BaseDAO<PfpAdWebsiteReport, Integer> imp
 			query.setString("adClkPriceType", adClkPriceType);
 		}
 		
-		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
 			query.setString("adPvclkDevice", adDevice);
 		}
 		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();

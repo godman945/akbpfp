@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.ad.IPfpAdActionDAO;
 import com.pchome.akbpfp.db.dao.ad.IPfpAdGroupDAO;
@@ -22,6 +23,7 @@ import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
 import com.pchome.enumerate.ad.EnumAdKeywordType;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportDevice;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
@@ -66,8 +68,14 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 		
 		Map<String, String> adStatusMap = CommonUtils.getInstance().getAdStatusMap();
 
-		List<AdKeywordReportVO> adKeywordVOList = new ArrayList<>();
+		// 檢查前端畫面選擇的篩選條件
+		JSONObject tempJSONObject = new JSONObject();
+		if(vo.getWhereMap() != null) {
+			tempJSONObject = new JSONObject(vo.getWhereMap());
+		}
+		String selectAdDevice = tempJSONObject.optString("adDevice");
 		
+		List<AdKeywordReportVO> adKeywordVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : adKeywordList) {
 			AdKeywordReportVO adKeywordReportVO = new AdKeywordReportVO();
 			
@@ -156,11 +164,17 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setAdGroupName(pfpAdGroup.getAdGroupName());
 			
 			// 裝置
-			String adDevice = "全部";
-			if (vo.getWhereMap() != null) {
-				adDevice = CommonUtils.getInstance().getAdDeviceName(vo.getWhereMap());
+			if (EnumReportDevice.PCANDMOBILE.getDevType().equalsIgnoreCase(selectAdDevice)) {
+				adKeywordReportVO.setAdDevice(EnumReportDevice.PCANDMOBILE.getDevTypeName());
+			} else {
+				String adDevice = (String) dataMap.get("ad_keyword_pvclk_device");
+				if (EnumReportDevice.PC.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.PC.getDevTypeName();
+				} else if (EnumReportDevice.MOBILE.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.MOBILE.getDevTypeName();
+				}
+				adKeywordReportVO.setAdDevice(adDevice);
 			}
-			adKeywordReportVO.setAdDevice(adDevice);
 			
 			// 廣泛比對-開啟狀態
 			if(pfpAdKeyword.getAdKeywordOpen() == 1) {

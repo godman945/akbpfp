@@ -166,11 +166,12 @@ function preView(adStyle, Obj) {
 		// 組中間圖片畫面
 		tempHtmlViewArr.push('<div class="predivbox"><iframe src="' + $(tempObj).find('#img').val() + '" width="' + tempWidth + '" height="' + tempHeight + '" allowtransparency="true" frameborder="0" scrolling="no"></iframe></div>');
 	} else if (adStyle == 'VIDEO') { // 影音廣告
+		var resizeFlag = $(tempObj).find('#resize').val() == "false" ? $(tempObj).find('#resize').val() : "true"; // 預設為true
 		// 組中間圖片畫面
 		tempHtmlViewArr.push('<div class="predivbox"><iframe scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="' + tempWidth + '" height="' + tempHeight
 				+ '" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL=' + $(tempObj).find('#adPreviewVideoURL').val()
 				+ '&adPreviewVideoBgImg=' + $(tempObj).find('#adPreviewVideoBgImg').val()
-				+ '&realUrl=' + $(tempObj).find('#realUrl').val() + '&resize=true\"></iframe></div>');
+				+ '&realUrl=' + $(tempObj).find('#realUrl').val() + '&resize=' + resizeFlag + '\"></iframe></div>');
 	} else if (adStyle == 'PROD') { // 商品廣告
 		showLeftRightBtn = true;
 		var templateTpro = JSON.parse($(tempObj).find('#productTemplateStr').html());

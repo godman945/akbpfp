@@ -18,7 +18,7 @@
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.blockUI.js"></script>
 	<!-- <script language="JavaScript" src="https://code.highcharts.com/highcharts.js"></script> -->
 	<script language="JavaScript" src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js?t=20190705001"></script>
+    <script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js?t=20190708001"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/report/<@t.getAsString name="jsName" />" ></script>
     
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/floatingscroll/jquery.floatingscroll-3.0.5.css" />

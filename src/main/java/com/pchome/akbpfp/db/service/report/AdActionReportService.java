@@ -19,6 +19,7 @@ import com.pchome.akbpfp.db.dao.report.IAdActionReportDAO;
 import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportDevice;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
 
@@ -327,14 +328,14 @@ public class AdActionReportService implements IAdActionReportService {
 			adCampaginReportVO.setAdActionEndDate(adActionEndDate);
 			
 			// 裝置
-			if ("PCandMobile".equalsIgnoreCase(selectAdDevice)) {
-				adCampaginReportVO.setAdDevice("電腦 + 行動");
+			if (EnumReportDevice.PCANDMOBILE.getDevType().equalsIgnoreCase(selectAdDevice)) {
+				adCampaginReportVO.setAdDevice(EnumReportDevice.PCANDMOBILE.getDevTypeName());
 			} else {
 				String adDevice = (String) dataMap.get("ad_device");
-				if ("PC".equalsIgnoreCase(adDevice)) {
-					adDevice = "電腦";
-				} else if ("mobile".equalsIgnoreCase(adDevice)) {
-					adDevice = "行動裝置";
+				if (EnumReportDevice.PC.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.PC.getDevTypeName();
+				} else if (EnumReportDevice.MOBILE.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.MOBILE.getDevTypeName();
 				}
 				adCampaginReportVO.setAdDevice(adDevice);
 			}
