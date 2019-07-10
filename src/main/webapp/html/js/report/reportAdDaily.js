@@ -155,6 +155,8 @@ function processQueryAjax(changePageNo) {
 			} else {
 				isRereadChart = true; // 此次不重讀圖表，還原預設值
 			}
+			
+			processViewPosition(); // 在commonReport.js
 	    }
 	});
 }
@@ -327,8 +329,8 @@ function showHighChart() {
 			decimals = 3;
 			break;
 		case "convertCount":
-			titleName = "轉換數(次)";
-			selectTypeName = "轉換數";
+			titleName = "轉換次數(次)";
+			selectTypeName = "轉換次數";
 			selectSuffix = "次";
 			break;
 		case "convertCTR":

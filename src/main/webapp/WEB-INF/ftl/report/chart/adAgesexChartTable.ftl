@@ -5,7 +5,7 @@
                 <select id="selectChartType" name="selectChartType" aria-controls="">
                     <option value="pv">曝光數</option>
                     <option value="click">互動數</option>
-                    <option value="convertCount">轉換數</option>
+                    <option value="convertCount">轉換次數</option>
                 </select>
             </div>
         </div>
