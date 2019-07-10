@@ -168,6 +168,8 @@ function processQueryAjax(changePageNo) {
 			} else if (viewTypeFlag == "advertise" && isAdvertiseViewFlag == false) {
 				processAdvertiseView(); // 第一次進入才處理第三層相關畫面
 			}
+			
+			processViewPosition(); // 在commonReport.js
 	    }
 	});
 }
@@ -500,6 +502,8 @@ function processAdGroupView() {
 	$('#adActionSeq').val(adActionSeqFlag);
 	isAdGroupViewFlag = true;
 	isAdvertiseViewFlag = false;
+	
+	processViewPosition(); // 在commonReport.js
 }
 
 var adGroupSeqFlag; // 廣告活動序號
@@ -529,4 +533,6 @@ function processAdvertiseView() {
 	$('#adGroupSeq').val(adGroupSeqFlag);
 	isAdGroupViewFlag = false;
 	isAdvertiseViewFlag = true;
+	
+	processViewPosition(); // 在commonReport.js
 }

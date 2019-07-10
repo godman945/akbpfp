@@ -188,6 +188,8 @@ function processQueryAjax(changePageNo) {
 			} else {
 				isRereadChart = true; // 此次不重讀圖表，還原預設值
 			}
+			
+			processViewPosition(); // 在commonReport.js
 	    }
 	});
 }

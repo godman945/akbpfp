@@ -394,3 +394,8 @@ function previewProdAdDetail(customerInfoId, adSeq, from) {
 	var endDate = $("#endDate").val();
 	window.location = "reportProdPerformance.html?pfpCustomerInfoId=" + customerInfoId + "&adSeq=" + adSeq + "&startDate=" + startDate + "&endDate=" + endDate + "&breadcrumbsType=" + from;
 }
+
+// 處理畫面移動至標題列
+function processViewPosition() {
+    $(window).scrollTop($(".nav-title").offset().top);
+}
