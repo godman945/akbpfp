@@ -10,7 +10,7 @@
                     <option value="avgCost">單次互動費用</option>
                     <option value="kiloCost">千次曝光費用</option>
                     <option value="cost">費用</option>
-                    <option value="convertCount">轉換數</option>
+                    <option value="convertCount">轉換次數</option>
                     <option value="convertCTR">轉換率</option>
                     <option value="convertPriceCount">總轉換價值</option>
                     <option value="convertCost">平均轉換成本</option>

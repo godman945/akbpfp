@@ -312,8 +312,8 @@ function showHighChart() {
 			decimals = 3;
 			break;
 		case "convertCount":
-			titleName = "轉換數(次)";
-			selectTypeName = "轉換數";
+			titleName = "轉換次數(次)";
+			selectTypeName = "轉換次數";
 			selectSuffix = "次";
 			break;
 		case "convertCTR":
