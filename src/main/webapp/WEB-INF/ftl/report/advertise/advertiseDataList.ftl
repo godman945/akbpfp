@@ -26,6 +26,7 @@
                                 <span class="sort-tit pos-relative">播放類型</span>
                                 <ul class="sort-item pos-absolute pos-left">
                                     <li data-select="true" data-where="adType-all">全部</li>
+                                    <li data-select="" data-where="adType-0">搜尋 + 聯播網廣告</li>
                                     <li data-select="" data-where="adType-2">聯播網廣告</li>
                                     <li data-select="" data-where="adType-1">搜尋廣告</li>
                                 </ul>

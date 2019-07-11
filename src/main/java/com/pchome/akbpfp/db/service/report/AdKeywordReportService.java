@@ -73,7 +73,7 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 		if(vo.getWhereMap() != null) {
 			tempJSONObject = new JSONObject(vo.getWhereMap());
 		}
-		String selectAdDevice = tempJSONObject.optString("adDevice");
+		String selectAdDevice = tempJSONObject.optString("adDevice"); // 裝置
 		
 		List<AdKeywordReportVO> adKeywordVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : adKeywordList) {
