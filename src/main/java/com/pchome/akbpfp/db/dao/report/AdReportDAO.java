@@ -575,7 +575,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 			hql.append(" AND ad_detail_content LIKE :searchStr)");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			hql.append(" AND r.ad_type = :adType");
 		}
 		
@@ -592,11 +592,17 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 		}
 
 		
-		hql.append(" GROUP BY r.ad_seq, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+		hql.append(" GROUP BY r.ad_seq, r.ad_operating_rule, r.ad_clk_price_type");
+		// 非搜尋 + 聯播網廣告選項，則將資料區分聯播網廣告和搜尋廣告
+		if (StringUtils.isBlank(adType) || "all".equalsIgnoreCase(adType)) {
+			hql.append(" ,r.ad_type");
+		}
+		
 		// 裝置空值或選擇全部時則將資料區分PC和mobile
 		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
 			hql.append(" ,r.ad_pvclk_device");
 		}
+		
 		hql.append(" ORDER BY r.ad_seq DESC, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type ");
 		
 		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
@@ -612,7 +618,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			query.setString("adType", adType);
 		}
 		
@@ -684,7 +690,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 //			hql.append(" and ad_detail_content like :searchStr)");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			hql.append(" AND r.ad_type = :adType");
 		}
 		
@@ -700,12 +706,16 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 			hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
 		}
 
-		hql.append(" GROUP BY r.ad_seq, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+		hql.append(" GROUP BY r.ad_seq, r.ad_operating_rule, r.ad_clk_price_type");
+		// 非搜尋 + 聯播網廣告選項，則將資料區分聯播網廣告和搜尋廣告
+		if (StringUtils.isBlank(adType) || "all".equalsIgnoreCase(adType)) {
+			hql.append(" ,r.ad_type");
+		}
+		
 		// 裝置空值或選擇全部時則將資料區分PC和mobile
 		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
 			hql.append(" ,r.ad_pvclk_device");
 		}
-//		hql.append(" GROUP BY r.ad_seq");
 		
 		
 		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
@@ -721,7 +731,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			query.setString("adType", adType);
 		}
 		
@@ -787,7 +797,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 //			hql.append(" and ad_detail_content like :searchStr)");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			hql.append(" AND r.ad_type = :adType");
 		}
 		
@@ -819,7 +829,7 @@ public class AdReportDAO extends BaseDAO<PfpAdReport, Integer> implements IAdRep
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			query.setString("adType", adType);
 		}
 		

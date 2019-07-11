@@ -517,7 +517,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			hql.append(" AND ad_action_name LIKE :searchStr )");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			hql.append(" AND r.ad_type = :adType");
 		}
 		
@@ -534,14 +534,22 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 		}
 		
 		if ("week".equalsIgnoreCase(vo.getViewType())) {
-			hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, DAYOFWEEK(r.ad_pvclk_date), r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+			hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, DAYOFWEEK(r.ad_pvclk_date), r.ad_operating_rule, r.ad_clk_price_type");
+			// 非搜尋 + 聯播網廣告選項，則將資料區分聯播網廣告和搜尋廣告
+			if (StringUtils.isBlank(adType) || "all".equalsIgnoreCase(adType)) {
+				hql.append(" ,r.ad_type");
+			}
 			// 裝置空值或選擇全部時則將資料區分PC和mobile
 			if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
 				hql.append(" ,r.ad_pvclk_device");
 			}
 			hql.append(" ORDER BY r.ad_action_seq, r.ad_group_seq, DAYOFWEEK(r.ad_pvclk_date), r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
 		} else {
-			hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, r.time_code, r.ad_type, r.ad_operating_rule, r.ad_clk_price_type");
+			hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, r.time_code, r.ad_operating_rule, r.ad_clk_price_type");
+			// 非搜尋 + 聯播網廣告選項，則將資料區分聯播網廣告和搜尋廣告
+			if (StringUtils.isBlank(adType) || "all".equalsIgnoreCase(adType)) {
+				hql.append(" ,r.ad_type");
+			}
 			// 裝置空值或選擇全部時則將資料區分PC和mobile
 			if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
 				hql.append(" ,r.ad_pvclk_device");
@@ -559,7 +567,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			query.setString("adType", adType);
 		}
 		
@@ -622,7 +630,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			hql.append(" AND ad_action_name LIKE :searchStr )");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			hql.append(" AND r.ad_type = :adType");
 		}
 		
@@ -643,6 +651,10 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 		} else {
 			hql.append(" GROUP BY r.ad_action_seq, r.ad_group_seq, r.time_code");
 		}
+		// 非搜尋 + 聯播網廣告選項，則將資料區分聯播網廣告和搜尋廣告
+		if (StringUtils.isBlank(adType) || "all".equalsIgnoreCase(adType)) {
+			hql.append(" ,r.ad_type");
+		}
 		// 裝置空值或選擇全部時則將資料區分PC和mobile
 		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
 			hql.append(" ,r.ad_pvclk_device");
@@ -657,7 +669,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			query.setString("adType", adType);
 		}
 		
@@ -716,7 +728,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			hql.append(" AND ad_action_name LIKE :searchStr )");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			hql.append(" AND r.ad_type = :adType");
 		}
 		
@@ -748,7 +760,7 @@ public class AdTimeReportDAO extends BaseDAO<PfpAdTimeReport, Integer> implement
 			query.setString("searchStr", "%" + vo.getSearchText() + "%");
 		}
 		
-		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType)) {
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
 			query.setString("adType", adType);
 		}
 		

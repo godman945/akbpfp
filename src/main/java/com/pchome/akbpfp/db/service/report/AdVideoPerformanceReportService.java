@@ -172,7 +172,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 		if(vo.getWhereMap() != null) {
 			tempJSONObject = new JSONObject(vo.getWhereMap());
 		}
-		String selectAdDevice = tempJSONObject.optString("adDevice");
+		String selectAdDevice = tempJSONObject.optString("adDevice"); // 裝置
 		
 		List<AdVideoPerformanceReportVO> adVideoPerformanceVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : adVideoPerformanceList) {
