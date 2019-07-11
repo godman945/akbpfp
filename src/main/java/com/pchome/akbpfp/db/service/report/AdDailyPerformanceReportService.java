@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import com.pchome.akbpfp.db.dao.report.AdDailyPerformanceReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdDailyPerformanceReportDAO;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportAdType;
 import com.pchome.enumerate.report.EnumReportDevice;
 import com.pchome.utils.CommonUtils;
 
@@ -29,7 +30,6 @@ public class AdDailyPerformanceReportService implements IAdDailyPerformanceRepor
 	public List<AdDailyPerformanceReportVO> queryReportAdDailyPerformanceData(AdDailyPerformanceReportVO vo) throws Exception {
 		List<Map<String, Object>> adDailyPerformanceList = adDailyPerformanceReportDAO.getAdDailyPerformanceList(vo);
 		
-		Map<Integer, String> adTypeMap = CommonUtils.getInstance().getAdType();
 		Map<String, String> adStyleTypeMap = CommonUtils.getInstance().getAdStyleTypeMap();
 		Map<String, String> adPriceTypeMap = CommonUtils.getInstance().getAdPriceTypeMap();
 		
@@ -38,7 +38,8 @@ public class AdDailyPerformanceReportService implements IAdDailyPerformanceRepor
 		if(vo.getWhereMap() != null) {
 			tempJSONObject = new JSONObject(vo.getWhereMap());
 		}
-		String selectAdDevice = tempJSONObject.optString("adDevice");
+		String selectAdType = tempJSONObject.optString("adType"); // 播放類型
+		String selectAdDevice = tempJSONObject.optString("adDevice"); // 裝置
 		
 		List<AdDailyPerformanceReportVO> adDailyPerformanceVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : adDailyPerformanceList) {
@@ -46,7 +47,21 @@ public class AdDailyPerformanceReportService implements IAdDailyPerformanceRepor
 			
 			AdDailyPerformanceReportVO adDailyPerformanceReportVO = new AdDailyPerformanceReportVO();
 			adDailyPerformanceReportVO.setReportDate((Date) dataMap.get("ad_pvclk_date")); // 日期
-			adDailyPerformanceReportVO.setAdType(adTypeMap.get(dataMap.get("ad_type"))); // 播放類型
+
+			// 播放類型
+			if (EnumReportAdType.SEARCHANDCHANNEL.getAdType().equalsIgnoreCase(selectAdType)) {
+				adDailyPerformanceReportVO.setAdType(EnumReportAdType.SEARCHANDCHANNEL.getAdTypeName());
+			} else {
+				int adType = (int) dataMap.get("ad_type");
+				String adTypeName = "";
+				if (EnumReportAdType.SEARCH.getAdType().equalsIgnoreCase(String.valueOf(adType))) {
+					adTypeName = EnumReportAdType.SEARCH.getAdTypeName();
+				} else if (EnumReportAdType.CHANNEL.getAdType().equalsIgnoreCase(String.valueOf(adType))) {
+					adTypeName = EnumReportAdType.CHANNEL.getAdTypeName();
+				}
+				adDailyPerformanceReportVO.setAdType(adTypeName);
+			}
+			
 			adDailyPerformanceReportVO.setAdOperatingRule(adStyleTypeMap.get(dataMap.get("ad_operating_rule"))); // 廣告樣式
 			adDailyPerformanceReportVO.setAdClkPriceType(adPriceTypeMap.get(dataMap.get("ad_clk_price_type"))); // 廣告計費方式
 			

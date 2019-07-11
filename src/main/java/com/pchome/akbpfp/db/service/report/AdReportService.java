@@ -44,6 +44,7 @@ import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportAdType;
 import com.pchome.enumerate.report.EnumReportDevice;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.utils.CommonUtils;
@@ -452,7 +453,6 @@ public class AdReportService implements IAdReportService {
 		long nowTime = new Date().getTime();
 		
 		Map<String, String> adStatusMap = CommonUtils.getInstance().getAdStatusMap();
-		Map<Integer, String> adTypeMap = CommonUtils.getInstance().getAdType();
 		Map<String, String> adStyleTypeMap = CommonUtils.getInstance().getAdStyleTypeMap();
 		Map<String, String> adPriceTypeMap = CommonUtils.getInstance().getAdPriceTypeMap();
 		String productTemplateStr = processProdSelectAdSize();
@@ -462,7 +462,8 @@ public class AdReportService implements IAdReportService {
 		if(vo.getWhereMap() != null) {
 			tempJSONObject = new JSONObject(vo.getWhereMap());
 		}
-		String selectAdDevice = tempJSONObject.optString("adDevice");
+		String selectAdType = tempJSONObject.optString("adType"); // 播放類型
+		String selectAdDevice = tempJSONObject.optString("adDevice"); // 裝置
 		
 		List<AdvertiseReportVO> advertiseVOList = new ArrayList<>();
 		for (Map<String, Object> dataMap : advertiseList) {
@@ -551,7 +552,20 @@ public class AdReportService implements IAdReportService {
 			advertiseReportVO.setAdActionName(adActionName); // 廣告活動
 			advertiseReportVO.setAdGroupName(adGroupName); // 廣告分類
 			
-			advertiseReportVO.setAdType(adTypeMap.get(dataMap.get("ad_type"))); // 播放類型
+			// 播放類型
+			if (EnumReportAdType.SEARCHANDCHANNEL.getAdType().equalsIgnoreCase(selectAdType)) {
+				advertiseReportVO.setAdType(EnumReportAdType.SEARCHANDCHANNEL.getAdTypeName());
+			} else {
+				int adType = (int) dataMap.get("ad_type");
+				String adTypeName = "";
+				if (EnumReportAdType.SEARCH.getAdType().equalsIgnoreCase(String.valueOf(adType))) {
+					adTypeName = EnumReportAdType.SEARCH.getAdTypeName();
+				} else if (EnumReportAdType.CHANNEL.getAdType().equalsIgnoreCase(String.valueOf(adType))) {
+					adTypeName = EnumReportAdType.CHANNEL.getAdTypeName();
+				}
+				advertiseReportVO.setAdType(adTypeName);
+			}
+			
 			advertiseReportVO.setAdOperatingRule(adStyleTypeMap.get(dataMap.get("ad_operating_rule"))); // 廣告樣式
 			advertiseReportVO.setAdClkPriceType(adPriceTypeMap.get(dataMap.get("ad_clk_price_type"))); // 廣告計費方式
 			
