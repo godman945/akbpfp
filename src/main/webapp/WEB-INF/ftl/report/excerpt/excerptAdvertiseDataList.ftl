@@ -19,12 +19,12 @@
 						<th data-info-name="" class="col-w40">狀態</th>
 						<th data-info-name="" class="col-w360">廣告明細</th>
 
-                        <th data-info-name="adType" class="col-w100">
+                        <th data-info-name="adType" class="col-w150">
                             <div class="sortbx-selectTH pos-relative txt-left">
                                 <span class="sort-tit pos-relative">播放類型</span>
                                 <ul class="sort-item pos-absolute pos-left">
                                     <li data-select="true" data-where="adType-all">全部</li>
-                                    <li data-select="" data-where="adType-0">搜尋 + 聯播網廣告</li>
+                                    <li data-select="" data-where="adType-0">搜尋 + 聯播網</li>
                                     <li data-select="" data-where="adType-2">聯播網廣告</li>
                                     <li data-select="" data-where="adType-1">搜尋廣告</li>
                                 </ul>
