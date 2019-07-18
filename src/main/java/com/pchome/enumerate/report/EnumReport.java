@@ -8,74 +8,6 @@ public enum EnumReport {
 	ADPVCLKOS_ANDROID("Android"),
 	ADPVCLKOS_WINDOWS("Windows"),
 	ADPVCLKOS_OTHER("其他"),
-	/**
-	 * 走期
-	 */
-	AD_DATE("adDate"),
-	/**
-	 * 每日預算(每日花費)
-	 */
-	AD_ACTION_MAX_PRICE_AVG("adActionMaxPriceAvg"),
-	/**
-	 * 廣告樣式
-	 */
-	AD_OPERATING_RULE("adOperatingRule"),
-	/**
-	 * 計價方式
-	 */
-	AD_CLK_PRICE_TYPE("adClkPriceType"),
-	/**
-	 * 播放類型
-	 */
-	ADTYPE("adType"),
-	/**
-     *  轉換數
-     */
-	CONVERT_COUNT("convertCount"),
-    /**
-     * 總轉換價值
-     */
-    CONVERT_PRICE_COUNT("convertPriceCount"),
-    /**
-     * 轉換率
-     */
-    CONVERT_CTR("convertCTR"),
-    /**
-     * 平均轉換成本
-     */
-    CONVERT_COST("convertCost"),
-    /**
-     * 廣告投資報酬率
-     */
-    CONVERT_INVESTMENT_COST("convertInvestmentCost"),
-    /**
-     * 平均廣告排名
-     */
-    RANK_AVG("rankAvg"),
-    /**
-     * 影片播放進度
-     */
-    AD_VIDEO_PROCESS("adVideoProcess"),
-    /**
-     * 影片完整播放率
-     */
-    AD_VIDEO_PROCESS_100_RATINGS("adVideoProcess100Ratings"),
-    /**
-     * 點選次數
-     */
-    AD_CLK_SUM("adClkSum"),
-    /**
-     * 收視人數-不重複
-     */
-    AD_VIDEO_UNIQ_SUM("adVideoUniqSum"),
-    /**
-     * 聲音開啟次數
-     */
-    AD_VIDEO_MUSIC_SUM("adVideoMusicSum"),
-    /**
-     * 重播次數
-     */
-    AD_VIDEO_REPLAY_SUM("adVideoReplaySum"),
 	ADTYPE_CUSTINFO("adtype_custinfo"),
     ADTYPE_ACTIVITY("adtype_activity"),
     ADTYPE_GROUP("adtype_group"),
@@ -92,88 +24,32 @@ public enum EnumReport {
     DETAIL_HQLTYPE_DAILY_CHART("DetailDailyChart"),
 
     
-    /**
-     *  轉換數
-     */
+    
     REPORT_CHART_CONVERT("convertCount"),
-    /**
-     * 總轉換價值
-     */
     REPORT_CHART_CONVERT_PRICE("convertPriceCount"),
-    /**
-     * 轉換率
-     */
     REPORT_CHART_CONVERT_CTR("convertCTR"),
-    /**
-     * 平均轉換成本
-     */
     REPORT_CHART_CONVERT_COST("convertCost"),
-    /**
-     * 廣告投資報酬率
-     */
     REPORT_CHART_CONVERT_INVESTMENT("convertInvestmentCost"),
     
-    /**
-     * 曝光數
-     */
+    
     REPORT_CHART_TYPE_PV("pv"),
-    /**
-     * 互動數   點選次數
-     */
     REPORT_CHART_TYPE_CLICK("click"),
-    /**
-     * 互動率
-     */
     REPORT_CHART_TYPE_CTR("ctr"),
-    /**
-     * 無效點選次數
-     */
-    REPORT_CHART_TYPE_INV_CLK("invClk"),
-    /**
-     * 單次互動費用
-     */
     REPORT_CHART_TYPE_AVGCOST("avgCost"),
-    /**
-     * 千次曝光費用
-     */
     REPORT_CHART_TYPE_KILOCOST("kiloCost"),
-    /**
-     * 費用
-     */
     REPORT_CHART_TYPE_COST("cost"),
     REPORT_CHART_TYPE_ADSORT("avgAdSort"),
     REPORT_CHART_TYPE_INVALID("invalid"),
     REPORT_CHART_TYPE_INVALID_COST("invalidCost"),
     REPORT_CHART_TYPE_CTRINVALID("ctrInvalid"),
     REPORT_CHART_TYPE_LIMITDAY("limitDay"),
-    /**
-     * 收視數
-     */
     REPORT_CHART_TYPE_VIEW("adView"),
-    /**
-     * 收視率
-     */
     REPORT_CHART_TYPE_VIEWRATINGS("adViewRatings"),
-    /**
-     * 單次收視費用
-     */
     REPORT_CHART_TYPE_SINGLE_ADVIEWCOST("singleAdViewCost"),
     REPORT_CHART_TYPE_THOUSANDS_COST("thousandsCost"),
-    /**
-     * 收視人數(不重複)
-     */
     REPORT_CHART_TYPE_VIDEO_UNIQ("adVideoUniqSum"),
-    /**
-     * 聲音開啟次數
-     */
     REPORT_CHART_TYPE_VIDEO_MUSIC("adVideoMusicSum"),
-    /**
-     * 重播次數
-     */
     REPORT_CHART_TYPE_VIDEO_REPLAY("adVideoReplaySum"),
-    /**
-     * 影片完整播放率
-     */
     REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS("adVideoProcess100Ratings"),
     
     
@@ -255,5 +131,4 @@ public enum EnumReport {
     public String getTextValue() {
         return textValue;
     }
-    
 }

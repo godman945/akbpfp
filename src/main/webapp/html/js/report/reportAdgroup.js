@@ -1,7 +1,6 @@
 
-var highChartActionPath="reportAdOsAjaxChart.html";
-var reportAjaxActionPath="reportAdOsAjaxTable.html";
-
+var highChartActionPath="reportAdGroupAjaxChart.html";
+var reportAjaxActionPath="reportAdGroupAjaxTable.html";
 //一開始執行
 $(function(){
 
@@ -20,6 +19,7 @@ $(function(){
 			},
 			focusInput: false
 		});
+		
 	});
 
 	//日期區間選擇 OK
@@ -38,7 +38,6 @@ $(function(){
 
 		var startDate = Date.parse(startValue.replace(/\-/g,'/'));
 		var endDate = Date.parse(endValue.replace(/\-/g,'/'));
-
 		if (startDate > endDate) {
 			alert("結束日期必須晚於開始日期！");
 			return false;
@@ -75,8 +74,9 @@ $(function(){
 		maxDate: 0
 	});
 
-	 //自訂欄位OK
+	//自訂欄位OK
 	$('#optionOk').click(function(){
+		//$.blockUI({ message: '<h1>Just a moment...</h1>' }); 
 		$('#rightselect option').attr("selected", "true");
 		var rvalue = $('#rightselect').val();
 		if (rvalue == null) {
@@ -94,10 +94,10 @@ $(function(){
 		$.unblockUI();
 
 		ajaxFormSubmit();
-
+ 
 		return false;
 	});
-	
+
 	//自訂欄位cancel
 	$('#optionCancel').click(function(){
 		$.unblockUI();
@@ -106,7 +106,9 @@ $(function(){
 
 	//Chart開關
 	$('#aReportChart').click(function(){
+
 		var charText = $('#aReportChart').html();
+
 		if (charText == "關閉") {
 			$('#reportChart').hide();
 			$('#aReportChart').html("顯示");
@@ -115,14 +117,14 @@ $(function(){
 			$('#aReportChart').html("關閉");
 		}
 	});
-	
+
 	//下載報表
 	var downlaod = $('#download');
 	downlaod.bind('click', function(e){
 		$('#excerptFrom').val("yes");
 		$('#excerptFrom').submit();
 	});
-	
+
 	//flash chart reload
 	$('#reloadFlash').click(function(){
 	   showHighChart();
@@ -139,26 +141,34 @@ function ready(){
 		img.src='./html/img/question.gif';
 		img.title="互動數欄位:計算不同廣告樣式所產生的主要動作次數";
 		node.appendChild(img);
-		$($($("#excerptTable").children()[0]).children()[0]).children()[3].appendChild(node)
+		$($($("#excerptTable").children()[0]).children()[0]).children()[8].appendChild(node)
+		
+		var node2 = document.createElement("b");
+		node2.style.float = 'left';
+		node2.style.marginTop = '3px';
+		var img2 = document.createElement("img");
+		img2.src='./html/img/question.gif';
+		img2.title="廣告費用因小數點進位影響總計費用，實際扣款依帳單管理為主";
+		node2.appendChild(img2);
+		$($($("#excerptTable").children()[0]).children()[0]).children()[12].appendChild(node2);
 	}
 	
 	//sort table plugin
 	$.tablesorter.defaults.widgets = ['zebra'];
-	//$.tablesorter.defaults.sortList = [[0,0]];
-	//$("#excerptTable").tablesorter();
 
 	$("#excerptTable").tablesorter({
 		headers: {
 			0 : { sorter: false },
-			2 : { sorter: 'fancyNumber' },
-			3 : { sorter: 'fancyNumber' },
-			4 : { sorter: 'rangesort' },
-			5 : { sorter: 'rangesort' },
-			6 : { sorter: 'rangesort' }
+			7 : { sorter: 'fancyNumber' },
+			8 : { sorter: 'fancyNumber' },
+			9 : { sorter: 'fancyNumber' },
+			10 : { sorter: 'rangesort' },
+			11 : { sorter: 'rangesort' },
+			12 : { sorter: 'rangesort' }
 		}
 	});
-	
-	//日期區間內容
+
+	 //日期區間內容
 	$('#IT_dateRange').attr("value", $('#fstartDate').val() + "~" + $('#fendDate').val());
 
 	//自訂欄位點擊
@@ -246,7 +256,7 @@ function ready(){
 		$("#epage").attr("src", $('#contentPath').val() + "page_end_disable.gif").css("cursor", "pointer");
 		$("#npage").attr("src", $('#contentPath').val() + "page_next_disable.gif").css("cursor", "pointer");
 	}
-	
+
 	//totalPage =0 頁數功能取消	
 	if($('#ftotalPage').val()=="0"){
 	   $("#fpage").attr("src", $('#contentPath').val() + "page_first_disable.gif").css("cursor", "pointer");
@@ -257,14 +267,24 @@ function ready(){
 
 	//Search 搜尋 
 	//init select 指定
-	var adPvclkOs = document.excerptFrom.adPvclkOs.value;
+	var adPvclkDevice = document.excerptFrom.adPvclkDevice.value;
+	var adType = document.excerptFrom.adType.value;
 	var adSearchWay = document.excerptFrom.adSearchWay.value;
 	var searchText = document.excerptFrom.searchText.value;
+	var adShowWay = document.excerptFrom.adShowWay.value;
+	var adOperatingRule = document.excerptFrom.adOperatingRule.value;
 
 	$("#searchText").attr("value", searchText);
-	
-	$("#adPvclkOs").children().each(function(){
-		if ($(this).val() == adPvclkOs) {
+
+	$("#adType").children().each(function(){
+		if ($(this).val() == adType) {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+
+	$("#adPvclkDevice").children().each(function(){
+		if ($(this).val() == adPvclkDevice) {
 			//jQuery給法
 			$(this).attr("selected", "true"); //或是給selected也可
 		}
@@ -277,13 +297,28 @@ function ready(){
 		}
 	});
 
+	$("#adShowWay").children().each(function(){
+		if ($(this).val() == adShowWay) {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == adOperatingRule) {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
 	//搜尋動作 Do
 	$('#btnSearchDo').click(function(){
 		searchDo();
-		ajaxFormSubmit();
+		//document.excerptFrom.submit();
+		ajaxFormSubmit();		
 	});
 	
-	$("#adPvclkOs").change(function(){
+	$("#adShowWay, #adPvclkDevice, #adSearchWay, #adOperatingRule").change(function(){
     	searchDo();
     	ajaxFormSubmit();
    });
@@ -293,6 +328,25 @@ function ready(){
 		serachReset();
 		searchDo();
     	ajaxFormSubmit();
+	});
+
+	//活動標籤
+	$('#stepActivityId').click(function(){
+		serachReset();
+		searchDo();
+		//document.excerptFrom.submit();
+		ajaxFormSubmit();
+	});
+
+	//群組標籤
+	$('#stepGroupId').click(function(){
+		//alert("aa");
+		serachReset();
+		document.excerptFrom.adType.value = "adtype_group";
+		document.excerptFrom.searchId.value = "";
+		//searchDo();
+		//document.excerptFrom.submit();
+		ajaxFormSubmit();
 	});
 }
 
@@ -315,11 +369,15 @@ function showHighChart(){
 		data : {
 			"startDate" : $('#fstartDate').val(),
 			"endDate": $('#fendDate').val(),
-			"adPvclkOs" : $('#adPvclkOs').val(),
+			"adPvclkDevice" : $('#fadPvclkDevice').val(),
+			"adType" : $('#fadType').val(),
+			"adSearchWay" : $('#fadSearchWay').val(),
 			"adShowWay" : $('#fadShowWay').val(),
 			"charPic" : $('#selectChartPic').val(),
 			"charType" : $('#selectChartType').val(),
-			"searchId" : $('#fsearchId').val()
+			"searchId" : $('#fsearchId').val(),
+			"searchText" : $('#searchText').val(),
+			"adOperatingRule" : $('#fadOperatingRule').val()
 		},
 		success : function(respone) {
 			console.log(respone);
@@ -359,7 +417,7 @@ function showHighChart(){
 			break;
 		case "ctr":
 			titleName = "互動率(%)";
-			selectTypeName = "點選率";
+			selectTypeName = "互動率";
 			selectSuffix = "%";
 			decimals = 2;
 			break;
@@ -379,17 +437,17 @@ function showHighChart(){
 			selectSuffix = "元";
 			decimals = 2;
 			break;
-		case "cost":
-			titleName = "費用(NT$)";
-			selectTypeName = "費用";
-			selectSuffix = "元";
-			decimals = 3;
-			break;
 		case "kiloCost":
 			titleName = "千次曝光費用(NT$)";
 			selectTypeName = "千次曝光費用";
 			selectSuffix = "元";
 			decimals = 2;
+			break;
+		case "cost":
+			titleName = "費用(NT$)";
+			selectTypeName = "費用";
+			selectSuffix = "元";
+			decimals = 3;
 			break;
 	}
 	
@@ -502,11 +560,14 @@ function initJsonData(){
 		"optionNotSelect": $('#foptionNotSelect').val(),
 		"startDate": $('#fstartDate').val(),
 		"endDate": $('#fendDate').val(),
-		"adPvclkOs": $('#fadPvclkOs').val(),
+		"adPvclkDevice": $('#fadPvclkDevice').val(),
+		"adType": $('#fadType').val(),
 		"adSearchWay": $('#fadSearchWay').val(),
+		"adShowWay": $('#fadShowWay').val(),
 		"searchText": $('#fsearchText').val(),
 		"searchId": $('#fsearchId').val(),
-		"downloadFlag": $('#downloadFlag').val()
+		"downloadFlag": $('#downloadFlag').val(),
+		"adOperatingRule": $('#fadOperatingRule').val()
 	};
 }
 
@@ -532,7 +593,7 @@ function ajaxFormSubmit(){
 
 	$.ajax({
 		type: "post",
-		url: 'reportAdOsAjaxTable.html',
+		url: reportAjaxActionPath,
 		data: json_data,
 		timeout: 30000,
 		error: function(xhr){
@@ -552,19 +613,28 @@ function ajaxFormSubmit(){
 
 //搜尋執行
 function searchDo(){
-	document.excerptFrom.adPvclkOs.value = $('#adPvclkOs').val();
+	document.excerptFrom.adPvclkDevice.value = $('#adPvclkDevice').val();
+	document.excerptFrom.adType.value = $('#adType').val();
 	document.excerptFrom.adSearchWay.value = $('#adSearchWay').val();
 	document.excerptFrom.searchText.value = $('#searchText').val();
-	//document.excerptFrom.searchId.value = "";
+	document.excerptFrom.adShowWay.value = $('#adShowWay').val();
+	document.excerptFrom.adOperatingRule.value = $('#adOperatingRule').val();
+	document.excerptFrom.searchId.value = "";
 	document.excerptFrom.formPage.value = "1";
 }
 
 //搜尋 search 
 function serachReset(){
 	$("#searchText").attr("value", "");
+	$("#adPvclkDevice").children().each(function(){
+		if ($(this).val() == "") {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
 
-	$("#adPvclkOs").children().each(function(){
-		if ($(this).val() == "all") {
+	$("#adType").children().each(function(){
+		if ($(this).val() == "adtype_activity") {
 			//jQuery給法
 			$(this).attr("selected", "true"); //或是給selected也可
 		}
@@ -577,5 +647,19 @@ function serachReset(){
 		}
 	});
 
+	$("#adShowWay").children().each(function(){
+		if ($(this).val() == "0") {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+
+	$("#adOperatingRule").children().each(function(){
+		if ($(this).val() == "") {
+			//jQuery給法
+			$(this).attr("selected", "true"); //或是給selected也可
+		}
+	});
+	
 	document.excerptFrom.searchId.value = "";
 }
