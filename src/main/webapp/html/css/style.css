@@ -474,7 +474,10 @@ background-color: #e0e0e0;
     font-family:arial;
     background-color: #CDCDCD;
     margin:10px 0pt 15px;
+    /*
     font-size: 10pt;
+    */
+    font-size: 15px;
     text-align: center;
 }
 table.tablesorter thead tr th{
@@ -497,7 +500,10 @@ table.tablesorter tfoot tr th {
 
 
 .tablesorter tbody td {
+    /*
     color: #3D3D3D;
+    */
+    color: #000;
     padding: 4px;
     background-color: #FFF;
 }
