@@ -34,5 +34,17 @@ public enum EnumAdType {
 		return explanation;
 	}
 
-	
+	/**
+	 * 取得相對應的enum資料
+	 * @param type 0/1/2
+	 * @return
+	 */
+	public static EnumAdType getEnumAdTypeData(final int type) {
+		for (EnumAdType e : EnumAdType.values()) {
+			if (e.getType() == type) {
+				return e;
+			}
+		}
+		return null;
+	}
 }

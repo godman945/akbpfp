@@ -1,8 +1,14 @@
 package com.pchome.utils;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -10,8 +16,18 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.ComparatorUtils;
+import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
+
+import com.pchome.enumerate.ad.EnumAdPriceType;
+import com.pchome.enumerate.ad.EnumAdStyleType;
+import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.report.EnumReportDevice;
+import com.pchome.enumerate.utils.EnumStatus;
 
 public class CommonUtils {
 	protected static final Logger log = LogManager.getRootLogger();
@@ -202,5 +218,118 @@ public class CommonUtils {
 		if (!file.exists()) {
 			file.mkdirs(); // 建立資料夾
 		}
+	}
+	
+	/**
+	 * 將查詢結果排序
+	 * 參考 https://www.cnblogs.com/china-li/archive/2013/04/28/3048739.html
+	 * @param list
+	 * @param fieldName vo內有的參數名
+	 * @param sortBy
+	 */
+	public void sort(List<?> list, String fieldName, String sortBy) {
+        Comparator<?> mycmp = ComparableComparator.getInstance();
+		if ("asc".equalsIgnoreCase(sortBy)) {
+			mycmp = ComparatorUtils.nullLowComparator(mycmp);
+		} else {
+			mycmp = ComparatorUtils.reversedComparator(mycmp);
+		}
+        Collections.sort(list, new BeanComparator(fieldName, mycmp));
+    }
+	
+	/**
+	 * 取得除法計算值 <br/>
+	 * 公式:dividend / divisor
+	 * @param dividend 被除數
+	 * @param divisor  除數
+	 * @return true:unbmer false:0
+	 */
+	public Double getCalculateDivisionValue(BigDecimal dividend, BigDecimal divisor) {
+		if (dividend.compareTo(BigDecimal.ZERO) >= 1 && divisor.compareTo(BigDecimal.ZERO) >= 1) {
+			return dividend.divide(divisor, 6, RoundingMode.DOWN).doubleValue();
+		}
+		return (BigDecimal.ZERO).doubleValue();
+	}
+	
+	/**
+	 * 取得除法計算值 <br/>
+	 * 公式:(dividend / divisor) * number
+	 * @param dividend 被除數
+	 * @param divisor  除數
+	 * @param number   乘多少自行放入
+	 * @return true:unbmer false:0
+	 */
+	public Double getCalculateDivisionValue(BigDecimal dividend, BigDecimal divisor, int number) {
+		if (dividend.compareTo(BigDecimal.ZERO) >= 1 && divisor.compareTo(BigDecimal.ZERO) >= 1) {
+			return dividend.divide(divisor, 6, RoundingMode.DOWN).multiply(new BigDecimal(number)).doubleValue();
+		}
+		return (BigDecimal.ZERO).doubleValue();
+	}
+
+	/**
+	 * 取得裝置中文
+	 * @param whereMap JSONObject格式字串
+	 * @return
+	 */
+	public String getAdDeviceName(String whereMap) {
+		String adDevice = EnumReportDevice.ALL.getDevTypeName();
+		JSONObject tempJSONObject = new JSONObject(whereMap);
+		String tempStr = tempJSONObject.optString("adDevice");
+		if (EnumReportDevice.PC.getDevType().equalsIgnoreCase(tempStr)) {
+			adDevice = EnumReportDevice.PC.getDevTypeName();
+		} else if (EnumReportDevice.MOBILE.getDevType().equalsIgnoreCase(tempStr)) {
+			adDevice = EnumReportDevice.MOBILE.getDevTypeName();
+		} else if (EnumReportDevice.PCANDMOBILE.getDevType().equalsIgnoreCase(tempStr)) {
+			adDevice = EnumReportDevice.PCANDMOBILE.getDevTypeName();
+		}
+		return adDevice;
+	}
+	
+	/**
+	 * 取得廣告狀態Map
+	 * @return
+	 */
+	public Map<String, String> getAdStatusMap() {
+		Map<String, String> map = new LinkedHashMap<>();
+		for (EnumStatus status : EnumStatus.values()) {
+			map.put(Integer.toString(status.getStatusId()), status.getStatusRemark());
+		}
+		return map;
+	}
+	
+	/**
+	 * 取得播放類型map
+	 * @return
+	 */
+	public Map<Integer, String> getAdType() {
+		Map<Integer, String> adTypeMap = new HashMap<>();
+		for (EnumAdType enumAdType : EnumAdType.values()) {
+			adTypeMap.put(enumAdType.getType(), enumAdType.getTypeName());
+		}
+		return adTypeMap;
+	}
+	
+	/**
+	 * 取得計價方式map
+	 * @return
+	 */
+	public Map<String, String> getAdPriceTypeMap() {
+		Map<String, String> adPriceTypeMap = new HashMap<>();
+		for (EnumAdPriceType enumAdPriceType : EnumAdPriceType.values()) {
+			adPriceTypeMap.put(enumAdPriceType.getDbTypeName(), enumAdPriceType.getTypeName());
+		}
+		return adPriceTypeMap;
+	}
+	
+	/**
+	 * 取得廣告樣式map
+	 * @return
+	 */
+	public Map<String, String> getAdStyleTypeMap() {
+		Map<String, String> adStyleTypeMap = new HashMap<>();
+		for (EnumAdStyleType enumAdStyleType : EnumAdStyleType.values()) {
+			adStyleTypeMap.put(enumAdStyleType.getTypeName(), enumAdStyleType.getType());
+		}
+		return adStyleTypeMap;
 	}
 }
