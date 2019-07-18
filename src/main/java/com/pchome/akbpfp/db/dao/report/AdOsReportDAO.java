@@ -1,18 +1,17 @@
 package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.transform.Transformers;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -111,8 +110,8 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 								objArray = (Object[]) dataList.get(i);
 
 								adOsReportVO = new AdOsReportVO();
-								adOsReportVO.setAdPvSum(((BigDecimal)objArray[0]));
-								adOsReportVO.setAdClkSum(((BigDecimal)objArray[1]));
+								adOsReportVO.setAdPvSum(((BigDecimal)objArray[0]).toString());
+								adOsReportVO.setAdClkSum(((BigDecimal)objArray[1]).toString());
 								adOsReportVO.setAdClkPriceSum(((Double)objArray[2]).toString());
 								adOsReportVO.setAdInvalidClkSum(((BigDecimal)objArray[3]).toString());
 								adOsReportVO.setAdPvclkDate(ObjectTransUtil.getInstance().getObjectToString(objArray[4]));
@@ -131,8 +130,8 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 
 								AdOsReportVO adOsReportVO = new AdOsReportVO();
 
-								adOsReportVO.setAdPvSum(((BigDecimal)objArray[0]));
-								adOsReportVO.setAdClkSum(((BigDecimal)objArray[1]));
+								adOsReportVO.setAdPvSum(((BigDecimal)objArray[0]).toString());
+								adOsReportVO.setAdClkSum(((BigDecimal)objArray[1]).toString());
 								adOsReportVO.setAdClkPriceSum(((Double)objArray[2]).toString());
 								adOsReportVO.setAdInvalidClkSum(((BigDecimal)objArray[3]).toString());
 								adOsReportVO.setAdInvalidClkPriceSum(((Double)objArray[4]).toString());
@@ -149,8 +148,8 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 
 								AdOsReportVO adOsReportVO = new AdOsReportVO();
 
-								adOsReportVO.setAdPvSum(((BigDecimal)objArray[0]));
-								adOsReportVO.setAdClkSum(((BigDecimal)objArray[1]));
+								adOsReportVO.setAdPvSum(((BigDecimal)objArray[0]).toString());
+								adOsReportVO.setAdClkSum(((BigDecimal)objArray[1]).toString());
 								adOsReportVO.setAdClkPriceSum(((Double)objArray[2]).toString());
 								adOsReportVO.setAdInvalidClkSum(((BigDecimal)objArray[3]).toString());
 								adOsReportVO.setAdInvalidClkPriceSum(((Double)objArray[4]).toString());
@@ -283,91 +282,6 @@ public class AdOsReportDAO extends BaseDAO<PfpAdOsReport, Integer> implements IA
 		sqlParams.put("sql", hql);
 
 		return sqlParams;
-	}
-
-	/**
-	 *  行動廣告成效(明細)
-	 * 統計 pfp_ad_os_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
-	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_os_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
-	 */
-	@Override
-	public List<Map<String, Object>> getAdOsList(AdOsReportVO vo) {
-		StringBuilder hql = new StringBuilder();
-		hql.append("SELECT ");
-		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
-		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
-		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
-		hql.append(" r.ad_pvclk_date, ");
-		hql.append(" r.ad_pvclk_device, ");
-		hql.append(" r.ad_pvclk_os, ");
-		hql.append(" r.customer_info_id, ");
-		hql.append(" SUM(r.convert_count) AS convert_count, ");
-		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
-		hql.append(" FROM pfp_ad_os_report AS r ");
-		hql.append(" WHERE 1 = 1");
-		hql.append("   AND r.customer_info_id = :customerInfoId");
-		hql.append("   AND r.ad_pvclk_date BETWEEN :startDate AND :endDate ");
-		
-		if (StringUtils.isNotBlank(vo.getSearchText())) {
-			hql.append(" AND r.ad_pvclk_os LIKE :searchStr ");
-		}
-		
-		hql.append(" GROUP BY r.ad_pvclk_os");
-		hql.append(" ORDER BY r.ad_pvclk_os DESC");
-		
-		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
-		query.setString("customerInfoId", vo.getCustomerInfoId());
-		query.setString("startDate", vo.getStartDate());
-		query.setString("endDate", vo.getEndDate());
-		
-		if (StringUtils.isNotBlank(vo.getSearchText())) {
-			query.setString("searchStr", "%" + vo.getSearchText() + "%");
-		}
-		
-		if (!vo.isDownloadOrIsNotCuttingPagination()) { // 不是下載則做分頁處理
-			// 取得分頁
-			query.setFirstResult((vo.getPage() - 1) * vo.getPageSize());
-			query.setMaxResults(vo.getPageSize());
-		}
-		
-		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
-	}
-
-	/**
-	 * 行動廣告成效(加總)
-	 * 統計 pfp_ad_os_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
-	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_os_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
-	 */
-	@Override
-	public List<Map<String, Object>> getAdOsListSum(AdOsReportVO vo) {
-		StringBuilder hql = new StringBuilder();
-		hql.append("SELECT ");
-		hql.append("  SUM(r.ad_pv) AS ad_pv_sum, ");
-		hql.append("  SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
-		hql.append("  SUM(r.ad_clk_price) AS ad_price_sum, ");
-		hql.append("  SUM(r.convert_count) AS convert_count,  ");
-		hql.append("  SUM(r.convert_price_count) AS convert_price_count ");
-		hql.append(" FROM pfp_ad_os_report AS r");
-		hql.append(" WHERE 1 = 1 ");
-		hql.append("   AND r.customer_info_id = :customerInfoId");
-		hql.append("   AND r.ad_pvclk_date BETWEEN :startDate AND :endDate");
-		
-		if (StringUtils.isNotBlank(vo.getSearchText())) {
-			hql.append(" AND r.ad_pvclk_os LIKE :searchStr ");
-		}
-		
-		hql.append(" GROUP BY r.ad_pvclk_os");
-		
-		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
-		query.setString("customerInfoId", vo.getCustomerInfoId());
-		query.setString("startDate", vo.getStartDate());
-		query.setString("endDate", vo.getEndDate());
-		
-		if (StringUtils.isNotBlank(vo.getSearchText())) {
-			query.setString("searchStr", "%" + vo.getSearchText() + "%");
-		}
-		
-		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
 	}
 
 }

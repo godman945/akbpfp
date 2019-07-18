@@ -7,7 +7,7 @@
     <title>PChome 聯播網廣告</title>
 
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/style.css" />
-    <!-- <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/datePicker/jquery-ui-1.9.2.custom.min.css" /> -->
+    <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/datePicker/jquery-ui-1.9.2.custom.min.css" />
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" />
         
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.swfobject.1-1-1.min.js"></script>
@@ -16,16 +16,10 @@
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.fancybox-1.3.4.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.tablesorter.js"></script>
 	<script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.blockUI.js"></script>
-	<!-- <script language="JavaScript" src="https://code.highcharts.com/highcharts.js"></script> -->
-	<script language="JavaScript" src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js?t=20190708001"></script>
+	<script language="JavaScript" src="https://code.highcharts.com/highcharts.js"></script>
+	<script language="JavaScript" src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/report/<@t.getAsString name="jsName" />" ></script>
-    
-    <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/floatingscroll/jquery.floatingscroll-3.0.5.css" />
-    <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/report/prodmanage.min.css?t=20190717001" />
-    <link type="text/css" rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
-    <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.ba-dotimeout.js"></script>
-    <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.floatingscroll-3.0.5.js"></script>
 
 </head>
 

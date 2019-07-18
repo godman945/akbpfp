@@ -25,17 +25,4 @@ public enum EnumAdTimeCode {
 		return name;
 	}
 	
-	/**
-	 * 取得相對應的enum資料
-	 * @param code A/B/C/D/E/F
-	 * @return
-	 */
-	public static EnumAdTimeCode getEnumAdTimeCodeData(final String code) {
-		for (EnumAdTimeCode e : EnumAdTimeCode.values()) {
-			if (e.getCode().equalsIgnoreCase(code)) {
-				return e;
-			}
-		}
-		return null;
-	}
 }

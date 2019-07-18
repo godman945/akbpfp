@@ -28,17 +28,5 @@ public enum EnumAdStyleType {
 		return typeName;
 	}
 
-	/**
-	 * 取得相對應的enum資料
-	 * @param typeName MEDIA/VIDEO/PROD
-	 * @return
-	 */
-	public static EnumAdStyleType getEnumAdStyleTypeData(final String typeName) {
-		for (EnumAdStyleType e : EnumAdStyleType.values()) {
-			if (e.getTypeName().equalsIgnoreCase(typeName)) {
-				return e;
-			}
-		}
-		return null;
-	}
+
 }
