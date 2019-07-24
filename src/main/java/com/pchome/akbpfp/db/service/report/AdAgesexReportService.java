@@ -403,145 +403,62 @@ public class AdAgesexReportService implements IAdAgesexReportService {
 				}
 			}
 
+			double charValue = 0;
 			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
 				// 曝光數
-				double adPvSum = ((BigDecimal) dataMap.get("ad_pv_sum")).doubleValue();
-				if (StringUtils.equals(viewType, "sex")) {
-					switch (sexCode) {
-					case "M":
-						sexM = adPvSum;
-						break;
-					case "F":
-						sexF = adPvSum;
-						break;
-					default:
-						sexN = adPvSum;
-						break;
-					}
-				} else {
-					switch (ageCode) {
-					case "A":
-						ageA = adPvSum;
-						break;
-					case "B":
-						ageB = adPvSum;
-						break;
-					case "C":
-						ageC = adPvSum;
-						break;
-					case "D":
-						ageD = adPvSum;
-						break;
-					case "E":
-						ageE = adPvSum;
-						break;
-					case "F":
-						ageF = adPvSum;
-						break;
-					case "G":
-						ageG = adPvSum;
-						break;
-					case "H":
-						ageH = adPvSum;
-						break;
-					default:
-						ageI = adPvSum;
-						break;
-					}
-				}
+				charValue = ((BigDecimal) dataMap.get("ad_pv_sum")).doubleValue();
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 				// 互動數
-				double adClkSum = ((BigDecimal) dataMap.get("ad_clk_sum")).doubleValue();
-				if (StringUtils.equals(viewType, "sex")) {
-					switch (sexCode) {
-					case "M":
-						sexM = adClkSum;
-						break;
-					case "F":
-						sexF = adClkSum;
-						break;
-					default:
-						sexN = adClkSum;
-						break;
-					}
-				} else {
-					switch (ageCode) {
-					case "A":
-						ageA = adClkSum;
-						break;
-					case "B":
-						ageB = adClkSum;
-						break;
-					case "C":
-						ageC = adClkSum;
-						break;
-					case "D":
-						ageD = adClkSum;
-						break;
-					case "E":
-						ageE = adClkSum;
-						break;
-					case "F":
-						ageF = adClkSum;
-						break;
-					case "G":
-						ageG = adClkSum;
-						break;
-					case "H":
-						ageH = adClkSum;
-						break;
-					default:
-						ageI = adClkSum;
-						break;
-					}
-				}
+				charValue = ((BigDecimal) dataMap.get("ad_clk_sum")).doubleValue();
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
 				// 轉換次數
-				double convertCount = ((BigDecimal) dataMap.get("convert_count")).doubleValue();
-				if (StringUtils.equals(viewType, "sex")) {
-					switch (sexCode) {
-					case "M":
-						sexM = convertCount;
-						break;
-					case "F":
-						sexF = convertCount;
-						break;
-					default:
-						sexN = convertCount;
-						break;
-					}
-				} else {
-					switch (ageCode) {
-					case "A":
-						ageA = convertCount;
-						break;
-					case "B":
-						ageB = convertCount;
-						break;
-					case "C":
-						ageC = convertCount;
-						break;
-					case "D":
-						ageD = convertCount;
-						break;
-					case "E":
-						ageE = convertCount;
-						break;
-					case "F":
-						ageF = convertCount;
-						break;
-					case "G":
-						ageG = convertCount;
-						break;
-					case "H":
-						ageH = convertCount;
-						break;
-					default:
-						ageI = convertCount;
-						break;
-					}
+				charValue = ((BigDecimal) dataMap.get("convert_count")).doubleValue();
+			}
+			
+			if (StringUtils.equals(viewType, "sex")) {
+				switch (sexCode) {
+				case "M":
+					sexM = charValue;
+					break;
+				case "F":
+					sexF = charValue;
+					break;
+				default:
+					sexN = charValue;
+					break;
+				}
+			} else {
+				switch (ageCode) {
+				case "A":
+					ageA = charValue;
+					break;
+				case "B":
+					ageB = charValue;
+					break;
+				case "C":
+					ageC = charValue;
+					break;
+				case "D":
+					ageD = charValue;
+					break;
+				case "E":
+					ageE = charValue;
+					break;
+				case "F":
+					ageF = charValue;
+					break;
+				case "G":
+					ageG = charValue;
+					break;
+				case "H":
+					ageH = charValue;
+					break;
+				default:
+					ageI = charValue;
+					break;
 				}
 			}
+			
 		}
 		
 		List<Double> dataList = new ArrayList<>();
