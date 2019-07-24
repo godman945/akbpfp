@@ -293,7 +293,13 @@
                                 </div>
                             </td>
                             
-                            <td data-info-name=""></td>
+                            <#if viewType == "age">
+                            	<td data-info-name=""></td>
+                            <#else>
+                            	<!--目前畫面為性別查無資料時，預設文案全部，選擇其他選項，則依照選取文案取代過去-->
+                            	<td data-info-name="" class="whereNoData-sexCode">全部</td>
+                            </#if>
+                            
                             <td data-info-name="adType" class="whereNoData-adType">全部</td>
                             <td data-info-name="adOperatingRule" class="whereNoData-adOperatingRule">全部</td>
                             <td data-info-name="adClkPriceType" class="whereNoData-adClkPriceType">全部</td>
