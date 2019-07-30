@@ -332,7 +332,7 @@ public class AdReportService implements IAdReportService {
 					if(StringUtils.isNotBlank(saleEndImg)){
 						adbgType = "hasposter";
 					}
-					PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(catalogSeq);
+					PfpCatalogSetup pfpCatalogSetup = getPfpCatalogSetupService().findSetupByCatalogSeq(catalogSeq);
 					if(pfpCatalogSetup != null){
 						imgProportiona = pfpCatalogSetup.getCatalogSetupValue();
 					}
@@ -895,7 +895,7 @@ public class AdReportService implements IAdReportService {
 			
 			// 根據setup決定是否滿版
 			String imgProportiona = "";
-			PfpCatalogSetup pfpCatalogSetup = getPfpCatalogSetupService().findSetupByCatalogSeq(catalogSeq);
+			PfpCatalogSetup pfpCatalogSetup = pfpCatalogSetupService.findSetupByCatalogSeq(catalogSeq);
 			if (pfpCatalogSetup != null) {
 				imgProportiona = pfpCatalogSetup.getCatalogSetupValue();
 			}
