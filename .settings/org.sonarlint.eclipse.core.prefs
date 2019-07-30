@@ -2,3 +2,7 @@ autoEnabled=true
 eclipse.preferences.version=1
 extraProperties=
 fileExclusions=FILE\:src/main/java/com/pchome/config/TestConfig.java
+idePrefixKey=
+projectKey=src.main\:akbpfp
+serverId=twkuoSonarQube
+sqPrefixKey=
