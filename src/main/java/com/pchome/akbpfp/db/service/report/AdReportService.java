@@ -805,6 +805,7 @@ public class AdReportService implements IAdReportService {
 			advertiseReportVO.setImgHeight(imgHeight);
 			advertiseReportVO.setRealUrl(realUrl);
 			// 報表用
+			advertiseReportVO.setAdName(title);
 			advertiseReportVO.setContent("尺寸：" + imgWidth + " x " + imgHeight);
 			advertiseReportVO.setShowUrl(showUrl);
 		} else if ("VIDEO".equals(adStyle)) { // 影音廣告
