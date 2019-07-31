@@ -115,6 +115,9 @@ public class AdProdPerformanceReportDAO extends BaseDAO<PfpAdReport, Integer> im
 		hql.append("  SUM(a.catalog_prod_pv) AS ad_pv_sum, ");
 		hql.append("  SUM(a.catalog_prod_clk) AS ad_clk_sum ");
 		hql.append(" FROM pfp_ad_pvclk_prod a ");
+		hql.append(" LEFT JOIN pfp_catalog_prod_ec b ");
+		hql.append(" ON a.catalog_seq = b.catalog_seq ");
+		hql.append(" AND a.catalog_prod_seq = b.catalog_prod_seq ");
 		hql.append(" WHERE 1=1 ");
 		hql.append(" AND a.pfp_customer_info_id = :pfpCustomerInfoId ");
 		hql.append(" AND a.ad_seq = :adSeq ");
