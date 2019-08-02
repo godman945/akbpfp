@@ -86,7 +86,8 @@
                 <li><a href="#advantage">廣告優勢</a></li>
                 <li><a href="http://show.pchome.com.tw/faq.html" target="_blank">新手上路</a></li>
                 <li><a href="http://4c.pchome.com.tw/campaign/2016/emba/" target="_blank">EMBA行銷講座</a></li>
-				<li><a href="http://faq.pchome.com.tw/service/show_contact.html" target="_blank">專人諮詢</a></li>
+				<!-- <li><a href="http://faq.pchome.com.tw/service/show_contact.html" target="_blank">專人諮詢</a></li> -->
+				<li><a href="#telService" target="_blank">專人諮詢</a></li>
 		        <div class="login">
 		            <#if id_pchome?exists>
 						<!-- <img src="<@s.url value="/" />html/main/img/icon_bb.gif" hspace="3" align="absmiddle"> -->
@@ -305,6 +306,18 @@
 		</div>
 		<a class="buybtn" href="<@s.url value="/" />redirect.html">立即購買<span class="glyphicon glyphicon-menu-right"></span>聯播網廣告</a>
 	</div>
+	
+	<!--專人諮詢-->
+    <div id="telService" class="container-fluid text-center telservice">
+        <div class="text-center">
+            <h3><strong>我要刊登</strong> 請專員盡速與我聯絡</h3>
+        </div>
+        <div class="serviceframe">
+            <iframe src="http://faq.mypchome.com.tw/service/show_contact.html" allowtransparency="true" frameborder="0"></iframe>
+        </div>
+    </div>
+
+	
 
 	<footer class="container-fluid text-center">
 		<a href="#myPage" title="To Top" class="gotop">
