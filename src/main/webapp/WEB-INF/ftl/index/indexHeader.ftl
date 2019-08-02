@@ -313,7 +313,7 @@
             <h3><strong>我要刊登</strong> 請專員盡速與我聯絡</h3>
         </div>
         <div class="serviceframe">
-            <iframe src="http://faq.mypchome.com.tw/service/show_contact.html" allowtransparency="true" frameborder="0"></iframe>
+            <iframe src="http://faq.pchome.com.tw/service/show_contact.html" allowtransparency="true" frameborder="0"></iframe>
         </div>
     </div>
 
