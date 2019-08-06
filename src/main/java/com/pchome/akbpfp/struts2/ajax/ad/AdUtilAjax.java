@@ -35,6 +35,7 @@ public class AdUtilAjax extends BaseCookieAction{
 	private String result;
 	private String akbPfpServer;
 	private String adVideoUrl;
+	private static String[] filterUrl = {";","|","!","$"};
 	
 	/**
 	 * 檢查輸入的顯示廣告網址，確認是否為危險網址
@@ -181,7 +182,17 @@ public class AdUtilAjax extends BaseCookieAction{
 		if(adVideoUrl.indexOf("&") >= 0) {
 			adVideoUrl = adVideoUrl.substring(0, adVideoUrl.indexOf("&"));
 		}
-		if(adVideoUrl.indexOf(";") >= 0) {
+		
+		
+		boolean filterBoolean = false;
+		for (String filterStr : filterUrl) {
+			if(adVideoUrl.indexOf(filterStr) >= 0) {
+				filterBoolean = true;
+				break;
+			}
+		}
+		
+		if(filterBoolean) {
 			json.put("result", false);
 			json.put("msg", "影片網址帶有不合法字元。");
 			this.result = json.toString();
