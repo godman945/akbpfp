@@ -163,23 +163,23 @@
 	<definition name="report.chartTable.dailyPerformance" template="/ftl/report/chart/dailyPerformanceChartTable.ftl" />
 	<!-- .report.dailyPerformance 每日成效 end -->
     
-	<!-- .report.keyword 關鍵字成效 -->
-	<definition name=".report.keyword" extends="default.report.layout" >
-    	<put-attribute name="header" value="report.header.keyword" />
-        <put-attribute name="body" value="report.body.keyword" />
-    </definition>
+	<!-- .report.keyword 關鍵字成效 (20190813移除此報表) -->
+<!-- 	<definition name=".report.keyword" extends="default.report.layout" > -->
+<!--     	<put-attribute name="header" value="report.header.keyword" /> -->
+<!--         <put-attribute name="body" value="report.body.keyword" /> -->
+<!--     </definition> -->
 	
-	<definition name="report.header.keyword" extends="report.header" >
-       <put-attribute name="jsName" value="reportKeyword.js?t=20190710001" />
-    </definition>
+<!-- 	<definition name="report.header.keyword" extends="report.header" > -->
+<!--        <put-attribute name="jsName" value="reportKeyword.js?t=20190710001" /> -->
+<!--     </definition> -->
 	
-	<definition name="report.body.keyword" template="/ftl/report/keyword/keywordBody.ftl">
-		<put-attribute name="keywordDetailList" value="report.body.keyword.detailList" />
-		<put-attribute name="chartTable" value="report.chartTable.keyword" />
-	</definition>
+<!-- 	<definition name="report.body.keyword" template="/ftl/report/keyword/keywordBody.ftl"> -->
+<!-- 		<put-attribute name="keywordDetailList" value="report.body.keyword.detailList" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.keyword" /> -->
+<!-- 	</definition> -->
 
-	<definition name="report.body.keyword.detailList" template="/ftl/report/keyword/keywordDataList.ftl" />
-	<definition name="report.chartTable.keyword" template="/ftl/report/chart/keywordChartTable.ftl" />
+<!-- 	<definition name="report.body.keyword.detailList" template="/ftl/report/keyword/keywordDataList.ftl" /> -->
+<!-- 	<definition name="report.chartTable.keyword" template="/ftl/report/chart/keywordChartTable.ftl" /> -->
     <!-- .report.keyword 關鍵字成效 end -->
     
     <!-- .report.adOs 行動廣告成效 -->
