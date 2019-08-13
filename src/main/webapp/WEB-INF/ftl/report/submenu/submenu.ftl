@@ -38,12 +38,14 @@
         <div class="submn"><a href="<@s.url value="/reportAdvertise.html" />">廣告明細成效</a></div>
   </@s.else>
 
+  <!-- (20190813移除此報表)
   <@s.if test="%{#rUri.indexOf('/reportKeyword.') != -1}">
         <div class="submn"><a href="<@s.url value="/reportKeyword.html" />" style="text-decoration:none"><b>關鍵字成效</b></a></div>
   </@s.if>
   <@s.else>
         <div class="submn"><a href="<@s.url value="/reportKeyword.html" />">關鍵字成效</a></div>
   </@s.else>
+  -->
   
   <@s.if test="%{#rUri.indexOf('/reportAdOs.') != -1}">
         <div class="submn"><a href="<@s.url value="/reportAdOs.html" />" style="text-decoration:none"><b>行動廣告成效</b></a></div>

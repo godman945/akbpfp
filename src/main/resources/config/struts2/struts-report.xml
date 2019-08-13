@@ -246,37 +246,37 @@
 		</action>
         <!-- dailyPerformance 每日成效 end -->
         
-		<!-- keyword 關鍵字成效 -->
-        <action name="reportKeywordDownload" class="ReportKeywordAction">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-      		<result name="success" type="stream">
-             	<param name="contentType">application/octet-stream</param>
-             	<param name="contentDisposition">
-                    attachment;filename="${downloadFileName}"
-                </param>
-                <param name="inputName">downloadFileStream</param>
-            </result>
-      	</action>
+		<!-- keyword 關鍵字成效 (20190813移除此報表) -->
+<!--         <action name="reportKeywordDownload" class="ReportKeywordAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--       		<result name="success" type="stream"> -->
+<!--              	<param name="contentType">application/octet-stream</param> -->
+<!--              	<param name="contentDisposition"> -->
+<!--                     attachment;filename="${downloadFileName}" -->
+<!--                 </param> -->
+<!--                 <param name="inputName">downloadFileStream</param> -->
+<!--             </result> -->
+<!--       	</action> -->
 		
-		<action name="reportKeyword" class="ReportKeywordAction">
-            <interceptor-ref name="loginCheckStack" />
-            <interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="redirectAction" name="none">summary</result>
-            <result type="tiles" name="success">.report.keyword</result>
-        </action>
+<!-- 		<action name="reportKeyword" class="ReportKeywordAction"> -->
+<!--             <interceptor-ref name="loginCheckStack" /> -->
+<!--             <interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="redirectAction" name="none">summary</result> -->
+<!--             <result type="tiles" name="success">.report.keyword</result> -->
+<!--         </action> -->
         
-        <action name="reportKeywordAjaxTable" class="ReportKeywordAction">
-        	<interceptor-ref name="loginCheckStack" />
-        	<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.body.keyword.detailList</result>
-        </action>
+<!--         <action name="reportKeywordAjaxTable" class="ReportKeywordAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.body.keyword.detailList</result> -->
+<!--         </action> -->
 		
-		<action name="reportKeywordAjaxChart" class="ReportKeywordAction" method="flashDataDownLoad">
-			<interceptor-ref name="loginCheckStack" />
-			<interceptor-ref name="reportPrivilegeInterceptor" />
-            <result type="tiles" name="success">report.flashData</result>
-        </action>
+<!-- 		<action name="reportKeywordAjaxChart" class="ReportKeywordAction" method="flashDataDownLoad"> -->
+<!-- 			<interceptor-ref name="loginCheckStack" /> -->
+<!-- 			<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.flashData</result> -->
+<!--         </action> -->
         <!-- keyword 關鍵字成效 end -->
 		
 		<!-- adOs 行動廣告成效 -->
