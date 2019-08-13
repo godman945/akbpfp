@@ -166,11 +166,12 @@
 		<property name="pfpCodeService" ref="PfpCodeService" />
     </bean>
 	
-	 <bean id="ReportKeywordAction" class="com.pchome.akbpfp.struts2.action.report.ReportKeywordAction" scope="prototype">
-	 	<property name="adKeywordReportService" ref="AdKeywordReportService" />
-		<property name="customerInfoService" ref="PfpCustomerInfoService" />
-		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
-    </bean>
+<!-- 關鍵字成效  (20190813移除此報表) -->
+<!-- 	 <bean id="ReportKeywordAction" class="com.pchome.akbpfp.struts2.action.report.ReportKeywordAction" scope="prototype"> -->
+<!-- 	 	<property name="adKeywordReportService" ref="AdKeywordReportService" /> -->
+<!-- 		<property name="customerInfoService" ref="PfpCustomerInfoService" /> -->
+<!-- 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" /> -->
+<!--     </bean> -->
 	
 	 <bean id="ReportCampaginAction" class="com.pchome.akbpfp.struts2.action.report.ReportCampaginAction" scope="prototype">
 	 	<property name="adActionReportService" ref="AdActionReportService" />
