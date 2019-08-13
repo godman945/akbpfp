@@ -117,6 +117,7 @@
              <result type="tiles" name="success">report.flashData</result>
         </action>
 		
+<<<<<<< Upstream, based on pfp_hot_fix
 		<!--keyword-->
         <action name="reportKeywordDownload" class="ReportKeywordAction">
         	<interceptor-ref name="loginCheckStack" />
@@ -129,25 +130,162 @@
                 <param name="inputName">downloadFileStream</param> 
             </result>  
       	</action>
+=======
+		<action name="reportCampaginAjaxChart" class="ReportCampaginAction" method="flashDataDownLoad">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="tiles" name="success">report.flashData</result>
+        </action>
+        <!-- campagin 廣告成效 end -->
+        
+        <!-- adGroup 分類成效 -->
+        <action name="reportAdGroupDownload" class="ReportAdGroupAction">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="reportPrivilegeInterceptor" />
+      		<result name="success" type="stream">
+             	<param name="contentType">application/octet-stream</param>
+             	<param name="contentDisposition">
+                    attachment;filename="${downloadFileName}"
+                </param>
+                <param name="inputName">downloadFileStream</param>
+            </result>
+      	</action>
 		
-		<action name="reportKeyword" class="ReportKeywordAction">
+		<action name="reportAdGroup" class="ReportAdGroupAction">
             <interceptor-ref name="loginCheckStack" />
             <interceptor-ref name="reportPrivilegeInterceptor" />
             <result type="redirectAction" name="none">summary</result>
-            <result type="tiles" name="success">.report.keyword</result>
+            <result type="tiles" name="success">.report.adGroup</result>
         </action>
         
+        <action name="reportAdGroupAjaxTable" class="ReportAdGroupAction">
+        	<interceptor-ref name="loginCheckStack" />
+        	<interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="tiles" name="success">report.body.adGroup.detailList</result>
+        </action>
+		
+		<action name="reportAdGroupAjaxChart" class="ReportAdGroupAction" method="flashDataDownLoad">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+            <result type="tiles" name="success">report.flashData</result>
+        </action>
+        <!-- adGroup 分類成效 end -->
+        
+        <!-- advertise 廣告明細成效 -->
+        <action name="reportAdvertiseDownload" class="ReportAdvertiseAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+				<param name="inputName">downloadFileStream</param>
+			</result>
+		</action>
+		
+        <action name="reportAdvertise" class="ReportAdvertiseAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="redirectAction" name="none">summary</result>
+			<result type="tiles" name="success">.report.advertise</result>
+		</action>
+		
+		<action name="reportAdvertiseAjaxTable" class="ReportAdvertiseAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="tiles" name="success">report.body.advertise.detailList</result>
+		</action>
+		
+		<action name="reportAdvertiseAjaxChart" class="ReportAdvertiseAction" method="flashDataDownLoad">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="tiles" name="success">report.flashData</result>
+		</action>
+        <!-- advertise 廣告明細成效 end -->
+        
+        <!-- dailyPerformance 每日成效 -->
+        <action name="reportDailyPerformanceDownload" class="ReportDailyPerformanceAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result name="success" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="contentDisposition">
+					attachment;filename="${downloadFileName}"
+				</param>
+				<param name="inputName">downloadFileStream</param>
+			</result>
+		</action>
+		
+        <action name="reportDailyPerformance" class="ReportDailyPerformanceAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="redirectAction" name="none">summary</result>
+			<result type="tiles" name="success">.report.dailyPerformance</result>
+		</action>
+		
+		<action name="reportDailyPerformanceAjaxTable" class="ReportDailyPerformanceAction">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="tiles" name="success">report.body.dailyPerformance.detailList</result>
+		</action>
+		
+		<action name="reportDailyPerformanceAjaxChart" class="ReportDailyPerformanceAction" method="flashDataDownLoad">
+			<interceptor-ref name="loginCheckStack" />
+			<interceptor-ref name="reportPrivilegeInterceptor" />
+			<result type="tiles" name="success">report.flashData</result>
+		</action>
+        <!-- dailyPerformance 每日成效 end -->
+        
+		<!-- keyword 關鍵字成效 (20190813移除此報表) -->
+<!--         <action name="reportKeywordDownload" class="ReportKeywordAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--       		<result name="success" type="stream"> -->
+<!--              	<param name="contentType">application/octet-stream</param> -->
+<!--              	<param name="contentDisposition"> -->
+<!--                     attachment;filename="${downloadFileName}" -->
+<!--                 </param> -->
+<!--                 <param name="inputName">downloadFileStream</param> -->
+<!--             </result> -->
+<!--       	</action> -->
+>>>>>>> e4a80e0 Merge branch 'master' into stg
+		
+<!-- 		<action name="reportKeyword" class="ReportKeywordAction"> -->
+<!--             <interceptor-ref name="loginCheckStack" /> -->
+<!--             <interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="redirectAction" name="none">summary</result> -->
+<!--             <result type="tiles" name="success">.report.keyword</result> -->
+<!--         </action> -->
+        
+<<<<<<< Upstream, based on pfp_hot_fix
         <action name="reportKeywordAjaxTable" class="ReportKeywordAction">
         	<interceptor-ref name="loginCheckStack" />
         	<interceptor-ref name="reportPrivilegeInterceptor" />
             <result type="tiles" name="success">report.ajaxTable.keyword</result>
         </action>
+=======
+<!--         <action name="reportKeywordAjaxTable" class="ReportKeywordAction"> -->
+<!--         	<interceptor-ref name="loginCheckStack" /> -->
+<!--         	<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.body.keyword.detailList</result> -->
+<!--         </action> -->
+>>>>>>> e4a80e0 Merge branch 'master' into stg
 		
+<<<<<<< Upstream, based on pfp_hot_fix
 		<action name="reportKeywordAjaxChart" class="ReportKeywordAction" method="flashDataDownLoad">
 			<interceptor-ref name="loginCheckStack" />
 			<interceptor-ref name="reportPrivilegeInterceptor" />
             <result type="tiles" name="success">report.flashData</result>
         </action>
+=======
+<!-- 		<action name="reportKeywordAjaxChart" class="ReportKeywordAction" method="flashDataDownLoad"> -->
+<!-- 			<interceptor-ref name="loginCheckStack" /> -->
+<!-- 			<interceptor-ref name="reportPrivilegeInterceptor" /> -->
+<!--             <result type="tiles" name="success">report.flashData</result> -->
+<!--         </action> -->
+        <!-- keyword 關鍵字成效 end -->
+>>>>>>> e4a80e0 Merge branch 'master' into stg
 		
 		<!--report cost-->
         <action name="reportCostDownload" class="ReportCostAction" >

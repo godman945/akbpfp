@@ -161,6 +161,7 @@
 		<property name="pfpCodeService" ref="PfpCodeService" />
     </bean>
 	
+<<<<<<< Upstream, based on pfp_hot_fix
 	 <bean id="ReportKeywordAction" class="com.pchome.akbpfp.struts2.action.report.ReportKeywordAction" scope="prototype">
 	 	<property name="adKeywordReportService" ref="AdKeywordReportService" />
 		<property name="customerInfoService" ref="PfpCustomerInfoService" />
@@ -169,6 +170,14 @@
 	 	<property name="pfpAdKeywordDAO" ref="PfpAdKeywordDAO" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
     </bean>
+=======
+<!-- 關鍵字成效  (20190813移除此報表) -->
+<!-- 	 <bean id="ReportKeywordAction" class="com.pchome.akbpfp.struts2.action.report.ReportKeywordAction" scope="prototype"> -->
+<!-- 	 	<property name="adKeywordReportService" ref="AdKeywordReportService" /> -->
+<!-- 		<property name="customerInfoService" ref="PfpCustomerInfoService" /> -->
+<!-- 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" /> -->
+<!--     </bean> -->
+>>>>>>> e4a80e0 Merge branch 'master' into stg
 	
 	 <bean id="ReportCampaginAction" class="com.pchome.akbpfp.struts2.action.report.ReportCampaginAction" scope="prototype">
 	 	<property name="adActionReportService" ref="AdActionReportService" />

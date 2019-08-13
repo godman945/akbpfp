@@ -94,6 +94,7 @@
      <!-- .report.keyword  -->
    
 	
+<<<<<<< Upstream, based on pfp_hot_fix
 	<definition name="report.ajaxTable.keyword" template="/ftl/report/ajax/keywordTable.ftl" /> 
 	<definition name="report.chartTable.keyword" template="/ftl/report/chart/keywordChartTable.ftl" />
 	 
@@ -101,9 +102,148 @@
     	<put-attribute name="header" value="report.header.keyword" />
         <put-attribute name="body" value="report.body.keyword" />
     </definition>
+=======
+	<definition name="report.header.adGroup" extends="report.header" >
+    	<put-attribute name="jsName" value="reportAdGroup.js?t=20190710001" />
+    </definition>
 	
+	<definition name="report.body.adGroup" template="/ftl/report/adGroup/adGroupBody.ftl">
+		<put-attribute name="adGroupDetailList" value="report.body.adGroup.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.adGroup" />
+	</definition>
+
+	<definition name="report.body.adGroup.detailList" template="/ftl/report/adGroup/adGroupDataList.ftl" />
+	<definition name="report.chartTable.adGroup" template="/ftl/report/chart/adGroupChartTable.ftl" />
+    <!-- .report.adGroup 分類成效 end -->
+    
+    <!-- .report.advertise 廣告明細成效 -->
+    <definition name=".report.advertise" extends="default.report.layout">
+		<put-attribute name="header" value="report.header.advertise" />
+		<put-attribute name="body" value="report.body.advertise" />
+	</definition>
+
+	<definition name="report.header.advertise" extends="report.header">
+		<put-attribute name="jsName" value="reportAdvertise.js?t=20190710001" />
+	</definition>
+
+	<definition name="report.body.advertise" template="/ftl/report/advertise/advertiseBody.ftl">
+		<put-attribute name="advertiseDetailList" value="report.body.advertise.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.advertise" />
+	</definition>
+
+	<definition name="report.body.advertise.detailList" template="/ftl/report/advertise/advertiseDataList.ftl" />
+	<definition name="report.chartTable.advertise" template="/ftl/report/chart/advertiseChartTable.ftl" />
+	<!-- .report.advertise 廣告明細成效 end -->
+    
+    <!-- .report.dailyPerformance 每日成效 -->
+    <definition name=".report.dailyPerformance" extends="default.report.layout">
+		<put-attribute name="header" value="report.header.dailyPerformance" />
+		<put-attribute name="body" value="report.body.dailyPerformance" />
+	</definition>
+
+	<definition name="report.header.dailyPerformance" extends="report.header">
+		<put-attribute name="jsName" value="reportDailyPerformance.js?t=20190710001" />
+	</definition>
+
+	<definition name="report.body.dailyPerformance" template="/ftl/report/dailyPerformance/dailyPerformanceBody.ftl">
+		<put-attribute name="dailyPerformanceDetailList" value="report.body.dailyPerformance.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.dailyPerformance" />
+	</definition>
+
+	<definition name="report.body.dailyPerformance.detailList" template="/ftl/report/dailyPerformance/dailyPerformanceDataList.ftl" />
+	<definition name="report.chartTable.dailyPerformance" template="/ftl/report/chart/dailyPerformanceChartTable.ftl" />
+	<!-- .report.dailyPerformance 每日成效 end -->
+    
+	<!-- .report.keyword 關鍵字成效 (20190813移除此報表) -->
+<!-- 	<definition name=".report.keyword" extends="default.report.layout" > -->
+<!--     	<put-attribute name="header" value="report.header.keyword" /> -->
+<!--         <put-attribute name="body" value="report.body.keyword" /> -->
+<!--     </definition> -->
+>>>>>>> e4a80e0 Merge branch 'master' into stg
+	
+<<<<<<< Upstream, based on pfp_hot_fix
 	<definition name="report.header.keyword" extends="report.header" >
        <put-attribute name="jsName" value="reportKeyword.js" />
+=======
+<!-- 	<definition name="report.header.keyword" extends="report.header" > -->
+<!--        <put-attribute name="jsName" value="reportKeyword.js?t=20190710001" /> -->
+<!--     </definition> -->
+	
+<!-- 	<definition name="report.body.keyword" template="/ftl/report/keyword/keywordBody.ftl"> -->
+<!-- 		<put-attribute name="keywordDetailList" value="report.body.keyword.detailList" /> -->
+<!-- 		<put-attribute name="chartTable" value="report.chartTable.keyword" /> -->
+<!-- 	</definition> -->
+
+<!-- 	<definition name="report.body.keyword.detailList" template="/ftl/report/keyword/keywordDataList.ftl" /> -->
+<!-- 	<definition name="report.chartTable.keyword" template="/ftl/report/chart/keywordChartTable.ftl" /> -->
+    <!-- .report.keyword 關鍵字成效 end -->
+    
+    <!-- .report.adOs 行動廣告成效 -->
+	<definition name=".report.ados" extends="default.report.layout">
+    	<put-attribute name="header" value="report.header.ados" />
+    	<put-attribute name="body" value="report.body.ados" />
+    </definition>
+    
+    <definition name="report.header.ados" extends="report.header" >
+    	<put-attribute name="jsName" value="reportAdOs.js?t=20190710001" />
+    </definition>
+   
+	<definition name="report.body.ados" template="/ftl/report/adOs/adOsBody.ftl" >
+	   	<put-attribute name="adOsDetailList" value="report.body.adOs.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.ados" />
+    </definition>
+   
+   	<definition name="report.body.adOs.detailList" template="/ftl/report/adOs/adOsDataList.ftl" />
+	<definition name="report.chartTable.ados" template="/ftl/report/chart/adOsChartTable.ftl" />
+    <!-- .report.adOs 行動廣告成效 end -->
+    
+    <!-- .report.adTime 廣告播放時段成效 -->
+    <definition name=".report.adTime" extends="default.report.layout" >
+    	<put-attribute name="header" value="report.header.adTime" />
+        <put-attribute name="body" value="report.body.adTime" />
+    </definition>
+	
+	<definition name="report.header.adTime" extends="report.header" >
+    	<put-attribute name="jsName" value="reportAdTime.js?t=20190710001" />
+    </definition>
+    
+    <definition name="report.body.adTime" template="/ftl/report/adTime/adTimeBody.ftl" >
+	   	<put-attribute name="adTimeDetailList" value="report.body.adTime.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.adTime" />
+    </definition>
+   
+   	<definition name="report.body.adTime.detailList" template="/ftl/report/adTime/adTimeDataList.ftl" />
+	<definition name="report.chartTable.adTime" template="/ftl/report/chart/adTimeChartTable.ftl" />
+    <!-- .report.adTime 廣告播放時段成效 end -->
+    
+    <!-- .report.adAgesex 廣告族群成效 -->
+    <definition name=".report.adAgesex" extends="default.report.layout" > <!-- 上面各項目頁籤 -->
+    	<put-attribute name="header" value="report.header.adAgesex" />
+        <put-attribute name="body" value="report.body.adAgesex" />
+    </definition>
+
+	<definition name="report.header.adAgesex" extends="report.header" > <!-- 登出 登入條 -->
+    	<put-attribute name="jsName" value="reportAdAgesex.js?t=20190710001" />
+    </definition>
+
+	<definition name="report.body.adAgesex" template="/ftl/report/adAgesex/adAgesexBody.ftl">
+		<put-attribute name="adAgesexDetailList" value="report.body.adAgesex.detailList" />
+		<put-attribute name="chartTable" value="report.chartTable.adAgesex" />
+	</definition>
+
+	<definition name="report.body.adAgesex.detailList" template="/ftl/report/adAgesex/adAgesexDataList.ftl" />
+	<definition name="report.chartTable.adAgesex" template="/ftl/report/chart/adAgesexChartTable.ftl" />
+    <!-- .report.adAgesex 廣告族群成效 end -->
+    
+    <!-- .report.adWebsite 網站類型成效 -->
+    <definition name=".report.adWebsite" extends="default.report.layout" > <!-- 上面各項目頁籤 -->
+    	<put-attribute name="header" value="report.header.adWebsite" />
+        <put-attribute name="body" value="report.body.adWebsite" />
+    </definition>
+	
+	<definition name="report.header.adWebsite" extends="report.header" > <!-- 登出 登入條 -->
+    	<put-attribute name="jsName" value="reportAdWebsite.js?t=20190710001" />
+>>>>>>> e4a80e0 Merge branch 'master' into stg
     </definition>
 	   
     <definition name="report.body.keyword" extends="report.body" >
