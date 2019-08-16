@@ -20,6 +20,15 @@
 	<script language="JavaScript" src="http://code.highcharts.com/modules/exporting.js"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/report/<@t.getAsString name="jsName" />" ></script>
+<<<<<<< Upstream, based on pfp_hot_fix
+=======
+    
+    <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/floatingscroll/jquery.floatingscroll-3.0.5.css" />
+    <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/report/prodmanage.min.css?t=20190816001" />
+    <link type="text/css" rel="stylesheet" href="https://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">
+    <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.ba-dotimeout.js"></script>
+    <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.floatingscroll-3.0.5.js"></script>
+>>>>>>> a6bea4c Merge branch 'master' into stg
 
 </head>
 
