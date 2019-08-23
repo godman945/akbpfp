@@ -16,7 +16,7 @@
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/fancybox/jquery.fancybox-1.3.4.css" />
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/floatingscroll/jquery.floatingscroll-3.0.5.css" />
     <!-- 需放最後面，可能有調整前面套件的css -->
-    <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/prodmanage.min.css?t=20190823001" />
+    <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/style2019.min.css?t=20190823001" />
     
     <!-- js -->
 	<script language="JavaScript" src="https://code.highcharts.com/modules/exporting.js"></script>
