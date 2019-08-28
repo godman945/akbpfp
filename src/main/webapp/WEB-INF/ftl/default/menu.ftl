@@ -66,7 +66,7 @@
 			<div class="tab_on"><a href="<@s.url value="/" />catalogProd.html">商品管理</a></div> 
 		</@s.if>
 		<@s.else>
-			<#if pfd_customer_info_id == "PFDC20150422001" || pfd_customer_info_id == "PFDC20161012001" >
+			<#if pfd_customer_info_id == "PFDC20150422001" || pfd_customer_info_id == "PFDC20161012001" ||  pfd_customer_info_id == "PFDC20190329001">
 				<div class="tab"><a href="<@s.url value="/" />catalogProd.html">商品管理</a></div> 
 			</#if>
 		</@s.else>
