@@ -185,7 +185,7 @@ function preView(adStyle, Obj) {
 		templateSizeOptionStr = processTMGSizeOptionHtml($(tempObj).find('#adSeq').val()); // 選擇廣告尺寸
 		
 		// 組中間圖片畫面
-		tempHtmlViewArr.push('<div class="predivbox"><span style="display:inline-block; background-color:white;"><iframe width="' + tempWidth + '" height="' + tempHeight + '" src="adModel.html?adNo=' + $(tempObj).find('#adSeq').val() + '&tproNo=' + $(tempObj).find('#tproNo').val() + '" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe"></iframe></span></div>');
+		tempHtmlViewArr.push('<div class="predivbox"><span style="display:inline-block; background-color:white;"><iframe width="' + tempWidth + '" height="' + tempHeight + '" src="adModel.html?adNo=' + $(tempObj).find('#adSeq').val() + '&tproNo=' + $(tempObj).find('#tproNo').val() + '" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" align="ceneter" class="akb_iframe" style="background: #FFF;"></iframe></span></div>');
 	}
 	
 	commonFancyBox(tempHtmlViewArr, showLeftRightBtn, tempWidth, tempHeight, templateSizeOptionStr);

@@ -23,7 +23,7 @@
     <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.ba-dotimeout.js"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/jquery/jquery.floatingscroll-3.0.5.js"></script>
     
-    <script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js?t=20190708001"></script>
+    <script language="JavaScript" src="<@s.url value="/" />html/js/report/commonReport.js?t=20190830001"></script>
     <script language="JavaScript" src="<@s.url value="/" />html/js/report/<@t.getAsString name="jsName" />" ></script>
 
 </head>
