@@ -177,7 +177,7 @@ public class ApplyAction extends BaseSSLAction{
 				Date now = sdf.parse(sdf.format(calendar.getTime()));
 				if(now.compareTo(giftEndDate) > 0){
 					buAccountVO.setGiftSno("");
-					accountVO.setGiftSno("");
+					accountVO.setGiftSno(null);
 					buFreeGiftTimeFlag = "Y";
 				}else{
 					buFreeGiftTimeFlag = "N";
@@ -223,7 +223,7 @@ public class ApplyAction extends BaseSSLAction{
 				Date now = sdf.parse(sdf.format(calendar.getTime()));
 				if(now.compareTo(giftEndDate) > 0){
 					buAccountVO.setGiftSno("");
-					accountVO.setGiftSno("");
+					accountVO.setGiftSno(null);
 					buFreeGiftTimeFlag = "Y";
 				}else{
 					buFreeGiftTimeFlag = "N";
