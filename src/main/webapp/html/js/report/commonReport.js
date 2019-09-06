@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+<<<<<<< Upstream, based on pfp_hot_fix
     //自定義隱藏欄位
     $.tablesorter.addParser({
         // set a unique id
@@ -15,6 +16,27 @@ $(document).ready(function () {
         // set type, either numeric or text
         type: 'numeric'
     });
+=======
+	//自定義隱藏欄位
+    $.tablesorter.addParser({
+        // set a unique id
+        id: 'rangesort',
+        is: function(s) {
+        	s = s.replace("NT$ ", "");
+            return /^[0-9]?[0-9,\.]*$/.test(s);
+        },
+        format: function(s) {
+        	s = s.replace("NT$ ", "");
+            return $.tablesorter.formatFloat(s.replace(/,/g, ''));
+        },
+        // set type, either numeric or text
+        type: 'numeric'
+    });
+	
+	horisontal_scroll_listing($("#table-listing"));
+	
+});
+>>>>>>> 5f3dc47 Merge branch 'master' into stg
 
 <<<<<<< Upstream, based on pfp_hot_fix
 });
@@ -361,7 +383,6 @@ function commonFancyBox(tempHtmlViewArr, showLeftRightBtn, tempWidth, tempHeight
 					}
 				},
 				onCleanup: function () { // 將在關閉前調用
-					$('#fancybox-outer').css('backgroundColor', '#fff');
 					$('#previewselector').remove();
 				},
 				onClosed: function () { // FancyBox關閉後會被調用
