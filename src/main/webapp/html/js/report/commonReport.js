@@ -180,6 +180,7 @@ var salesEndIframewp = new Object();
 salesEndIframewp["data"] = {};
 
 var tempPRODObj; // 暫存目前選擇的商品廣告資料obj
+var isOpenRPODFancyBox = false;
 /**
  * 目前廣告明細成效、總廣告成效 > 總廣告成效-明細用到
  * @param adStyle
@@ -206,6 +207,14 @@ function preView(adStyle, Obj) {
 				+ '&adPreviewVideoBgImg=' + $(tempObj).find('#adPreviewVideoBgImg').val()
 				+ '&realUrl=' + $(tempObj).find('#realUrl').val() + '&resize=' + resizeFlag + '\"></iframe></div>');
 	} else if (adStyle == 'PROD') { // 商品廣告
+		if (!isOpenRPODFancyBox) { // 第一次開啟商品廣告預覽，寬高設定預設值
+			tempWidth = 300;
+			$(tempObj).find('#width').val(tempWidth);
+			tempHeight = 250;
+			$(tempObj).find('#height').val(tempHeight);
+			isOpenRPODFancyBox = true;
+		}
+		
 		showLeftRightBtn = true;
 		var templateTpro = JSON.parse($(tempObj).find('#productTemplateStr').html());
 		templateSizeOptionStr = processPRODSizeOptionHtml(templateTpro); // 選擇廣告尺寸
@@ -387,6 +396,7 @@ function commonFancyBox(tempHtmlViewArr, showLeftRightBtn, tempWidth, tempHeight
 				},
 				onClosed: function () { // FancyBox關閉後會被調用
 					$("#preDiv>div").empty();
+					isOpenRPODFancyBox = false;
 				}
 			}
 		);
