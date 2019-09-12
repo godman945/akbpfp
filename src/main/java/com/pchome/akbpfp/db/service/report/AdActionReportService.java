@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.db.service.report;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,36 +72,34 @@ public class AdActionReportService implements IAdActionReportService {
 			adActionReportVO.setAdClkSum(adClkSum);
 			
 			// 互動率 = 總互動數 / 總曝光數 * 100
-			adActionReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+			adActionReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2));
 			
 			// 費用
 			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
 			adActionReportVO.setAdPriceSum(adPriceSum.doubleValue());
 						
 			// 單次互動費用 = 總費用 / 總互動次數
-			adActionReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+			adActionReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adClkSum, 2));
 			
 			// 千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-			BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adActionReportVO.setKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adActionReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
 			
 			// 轉換次數
 			BigDecimal convertCount = (BigDecimal) dataMap.get("convert_count");
 			adActionReportVO.setConvertCount(convertCount);
 			
 			// 轉換率 = 轉換次數 / 互動數 * 100
-			adActionReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+			adActionReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertCount, adClkSum, 100, 2));
 			
 			// 總轉換價值
 			BigDecimal convertPriceCount = (BigDecimal) dataMap.get("convert_price_count");
 			adActionReportVO.setConvertPriceCount(convertPriceCount);
 			
 			// 平均轉換成本 = 費用 / 轉換次數
-			adActionReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+			adActionReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, convertCount, 2));
 			
 			// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-			adActionReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+			adActionReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertPriceCount, adPriceSum, 100, 2));
 			
 			adDailyVOList.add(adActionReportVO);
 		}
@@ -152,33 +149,31 @@ public class AdActionReportService implements IAdActionReportService {
 		adActionReportVO.setAdClkSum(adClkSum);
 		
 		// 互動率 = 總互動數 / 總曝光數 * 100
-		adActionReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+		adActionReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2));
 		
 		// 費用
 		adActionReportVO.setAdPriceSum(adPriceSum.doubleValue());
 		
 		// 單次互動費用 = 總費用 / 總互動次數
-		adActionReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+		adActionReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adClkSum, 2));
 		
 		// 千次曝光費用 = 總費用 / 曝光數 * 1000
-		Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-		BigDecimal bg = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-		adActionReportVO.setKiloCost(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
+		adActionReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
 		
 		// 轉換次數
 		adActionReportVO.setConvertCount(convertCount);
 		
 		// 轉換率 = 轉換次數 / 互動數 * 100
-		adActionReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+		adActionReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertCount, adClkSum, 100, 2));
 		
 		// 總轉換價值
 		adActionReportVO.setConvertPriceCount(convertPriceCount);
 		
 		// 平均轉換成本 = 費用 / 轉換次數
-		adActionReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+		adActionReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, convertCount, 2));
 		
 		// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-		adActionReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+		adActionReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertPriceCount, adPriceSum, 100, 2));
 		
 		// 總計幾筆
 		adActionReportVO.setRowCount(adDailyListSum.size());
@@ -229,30 +224,28 @@ public class AdActionReportService implements IAdActionReportService {
 				flashDataMap.put(reportDate, adClkSum.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
 				// 互動率 = 總互動數 / 總曝光數 * 100
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 				// 單次互動費用 = 總費用 / 總互動次數
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adClkSum, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				// 千次曝光費用 = 總費用 / 曝光數 * 1000
-				Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-				BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-				flashDataMap.put(reportDate, bigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 				flashDataMap.put(reportDate, adPriceSum.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
 				flashDataMap.put(reportDate, convertCount.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
 				// 轉換率 = 轉換次數 / 互動數 * 100
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(convertCount, adClkSum, 100, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
 				flashDataMap.put(reportDate, convertPriceCount.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
 				// 平均轉換成本 = 費用 / 轉換次數
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, convertCount, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
 				// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(convertPriceCount, adPriceSum, 100, 2).floatValue());
 			}
 		}
 		
@@ -358,7 +351,7 @@ public class AdActionReportService implements IAdActionReportService {
 			// 每日預算
 			BigDecimal adActionMaxPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_action_max_price_sum"));
 			BigDecimal adActionCountSum = (BigDecimal) dataMap.get("ad_action_count_sum");
-			adCampaginReportVO.setAdActionMaxPriceAvg(CommonUtils.getInstance().getCalculateDivisionValue(adActionMaxPriceSum, adActionCountSum));
+			adCampaginReportVO.setAdActionMaxPriceAvg(CommonUtils.getInstance().getCalculateDivisionValueRounding(adActionMaxPriceSum, adActionCountSum, 2));
 			
 			// 曝光數
 			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");
@@ -369,7 +362,7 @@ public class AdActionReportService implements IAdActionReportService {
 			adCampaginReportVO.setAdClkSum(adClkSum);
 			
 			// 互動率 = 總互動數 / 總曝光數 * 100
-			adCampaginReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+			adCampaginReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2));
 			
 			// 無效點選次數(總廣告成效用)
 			adCampaginReportVO.setAdInvClkSum((BigDecimal) dataMap.get("ad_invalid_clk_sum"));
@@ -379,29 +372,27 @@ public class AdActionReportService implements IAdActionReportService {
 			adCampaginReportVO.setAdPriceSum(adPriceSum.doubleValue());
 						
 			// 單次互動費用 = 總費用 / 總互動次數
-			adCampaginReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+			adCampaginReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adClkSum, 2));
 			
 			// 千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-			BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adCampaginReportVO.setKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adCampaginReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
 			
 			// 轉換次數
 			BigDecimal convertCount = (BigDecimal) dataMap.get("convert_count");
 			adCampaginReportVO.setConvertCount(convertCount);
 			
 			// 轉換率 = 轉換次數 / 互動數 * 100
-			adCampaginReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+			adCampaginReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertCount, adClkSum, 100, 2));
 			
 			// 總轉換價值
 			BigDecimal convertPriceCount = (BigDecimal) dataMap.get("convert_price_count");
 			adCampaginReportVO.setConvertPriceCount(convertPriceCount);
 			
 			// 平均轉換成本 = 費用 / 轉換次數
-			adCampaginReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+			adCampaginReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, convertCount, 2));
 			
 			// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-			adCampaginReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+			adCampaginReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertPriceCount, adPriceSum, 100, 2));
 			
 			adCampaginVOList.add(adCampaginReportVO);
 		}
@@ -442,7 +433,7 @@ public class AdActionReportService implements IAdActionReportService {
 			BigDecimal adActionMaxPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_action_max_price_sum"));
 			BigDecimal adActionCountSum = (BigDecimal) dataMap.get("ad_action_count_sum");
 			 // 算完每日預算後，再處理小數至第二位，然後四捨五入
-			BigDecimal bigDecimal = BigDecimal.valueOf(CommonUtils.getInstance().getCalculateDivisionValue(adActionMaxPriceSum, adActionCountSum)).setScale(2, RoundingMode.HALF_UP);
+			BigDecimal bigDecimal = BigDecimal.valueOf(CommonUtils.getInstance().getCalculateDivisionValueRounding(adActionMaxPriceSum, adActionCountSum, 2));
 			adActionMaxPriceAvg = adActionMaxPriceAvg.add(bigDecimal);
 			
 			adPvSum = adPvSum.add((BigDecimal) dataMap.get("ad_pv_sum"));
@@ -464,7 +455,7 @@ public class AdActionReportService implements IAdActionReportService {
 		adCampaginReportVO.setAdClkSum(adClkSum);
 		
 		// 互動率 = 總互動數 / 總曝光數 * 100
-		adCampaginReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+		adCampaginReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2));
 		
 		// 無效點選次數(總廣告成效用)
 		adCampaginReportVO.setAdInvClkSum(adInvClkSum);
@@ -473,27 +464,25 @@ public class AdActionReportService implements IAdActionReportService {
 		adCampaginReportVO.setAdPriceSum(adPriceSum.doubleValue());
 		
 		// 單次互動費用 = 總費用 / 總互動次數
-		adCampaginReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+		adCampaginReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adClkSum, 2));
 		
 		// 千次曝光費用 = 總費用 / 曝光數 * 1000
-		Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-		BigDecimal bg = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-		adCampaginReportVO.setKiloCost(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
+		adCampaginReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
 		
 		// 轉換次數
 		adCampaginReportVO.setConvertCount(convertCount);
 		
 		// 轉換率 = 轉換次數 / 互動數 * 100
-		adCampaginReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+		adCampaginReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertCount, adClkSum, 100, 2));
 		
 		// 總轉換價值
 		adCampaginReportVO.setConvertPriceCount(convertPriceCount);
 		
 		// 平均轉換成本 = 費用 / 轉換次數
-		adCampaginReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+		adCampaginReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, convertCount, 2));
 		
 		// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-		adCampaginReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+		adCampaginReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertPriceCount, adPriceSum, 100, 2));
 		
 		// 總計幾筆
 		adCampaginReportVO.setRowCount(adCampaginListSum.size());
@@ -529,36 +518,34 @@ public class AdActionReportService implements IAdActionReportService {
 			adCampaginReportVO.setAdClkSum(adClkSum);
 			
 			// 互動率 = 總互動數 / 總曝光數 * 100
-			adCampaginReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+			adCampaginReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2));
 			
 			// 費用
 			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
 			adCampaginReportVO.setAdPriceSum(adPriceSum.doubleValue());
 						
 			// 單次互動費用 = 總費用 / 總互動次數
-			adCampaginReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+			adCampaginReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adClkSum, 2));
 			
 			// 千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-			BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adCampaginReportVO.setKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adCampaginReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
 			
 			// 轉換次數
 			BigDecimal convertCount = (BigDecimal) dataMap.get("convert_count");
 			adCampaginReportVO.setConvertCount(convertCount);
 			
 			// 轉換率 = 轉換次數 / 互動數 * 100
-			adCampaginReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+			adCampaginReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertCount, adClkSum, 100, 2));
 			
 			// 總轉換價值
 			BigDecimal convertPriceCount = (BigDecimal) dataMap.get("convert_price_count");
 			adCampaginReportVO.setConvertPriceCount(convertPriceCount);
 			
 			// 平均轉換成本 = 費用 / 轉換次數
-			adCampaginReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+			adCampaginReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, convertCount, 2));
 			
 			// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-			adCampaginReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+			adCampaginReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertPriceCount, adPriceSum, 100, 2));
 			
 			adCampaginVOList.add(adCampaginReportVO);
 		}
@@ -600,32 +587,30 @@ public class AdActionReportService implements IAdActionReportService {
 				flashDataMap.put(reportDate, adClkSum.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
 				// 互動率 = 總互動數 / 總曝光數 * 100
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_INV_CLK.getTextValue())) {
 				flashDataMap.put(reportDate, adInvClkSum.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 				// 單次互動費用 = 總費用 / 總互動次數
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adClkSum, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				// 千次曝光費用 = 總費用 / 曝光數 * 1000
-				Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-				BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-				flashDataMap.put(reportDate, bigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 				flashDataMap.put(reportDate, adPriceSum.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT.getTextValue())) {
 				flashDataMap.put(reportDate, convertCount.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_CTR.getTextValue())) {
 				// 轉換率 = 轉換次數 / 互動數 * 100
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(convertCount, adClkSum, 100, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_PRICE.getTextValue())) {
 				flashDataMap.put(reportDate, convertPriceCount.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_COST.getTextValue())) {
 				// 平均轉換成本 = 費用 / 轉換次數
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, convertCount, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_CONVERT_INVESTMENT.getTextValue())) {
 				// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(convertPriceCount, adPriceSum, 100, 2).floatValue());
 			}
 		}
 		

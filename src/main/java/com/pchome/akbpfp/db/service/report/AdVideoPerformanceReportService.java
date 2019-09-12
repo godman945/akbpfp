@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.db.service.report;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -227,19 +226,17 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdViewSum(adViewSum);
 			
 			// 收視率 = 收視數 / 曝光數 * 100
-			adVideoPerformanceReportVO.setAdViewRatings(CommonUtils.getInstance().getCalculateDivisionValue(adViewSum, adPvSum, 100));
+			adVideoPerformanceReportVO.setAdViewRatings(CommonUtils.getInstance().getCalculateDivisionValueRounding(adViewSum, adPvSum, 100, 2));
 			
 			// 費用
 			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
 			adVideoPerformanceReportVO.setAdPriceSum(adPriceSum.doubleValue());
 			
 			// 單次收視費用 = 總費用 / 收視數
-			adVideoPerformanceReportVO.setSingleAdViewCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adViewSum));
+			adVideoPerformanceReportVO.setSingleAdViewCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adViewSum, 2));
 			
 			// 千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-			BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adVideoPerformanceReportVO.setKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adVideoPerformanceReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
 			
 			// 影片播放進度-25%
 			adVideoPerformanceReportVO.setAdVideoProcess25Sum((BigDecimal) dataMap.get("ad_video_process_25_sum"));
@@ -255,7 +252,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 			adVideoPerformanceReportVO.setAdVideoProcess100Sum(adVideoProcess100Sum);
 			
 			// 影片完整播放率 = 影片播放進度-100% / 曝光數 * 100
-			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(CommonUtils.getInstance().getCalculateDivisionValue(adVideoProcess100Sum, adPvSum, 100));
+			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(CommonUtils.getInstance().getCalculateDivisionValueRounding(adVideoProcess100Sum, adPvSum, 100, 2));
 			
 			// 點選次數
 			adVideoPerformanceReportVO.setAdClkSum((BigDecimal) dataMap.get("ad_clk_sum"));
@@ -335,18 +332,16 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 		adVideoPerformanceReportVO.setAdViewSum(adViewSum);
 		
 		// 收視率 = 收視數 / 曝光數 * 100
-		adVideoPerformanceReportVO.setAdViewRatings(CommonUtils.getInstance().getCalculateDivisionValue(adViewSum, adPvSum, 100));
+		adVideoPerformanceReportVO.setAdViewRatings(CommonUtils.getInstance().getCalculateDivisionValueRounding(adViewSum, adPvSum, 100, 2));
 		
 		// 費用
 		adVideoPerformanceReportVO.setAdPriceSum(adPriceSum.doubleValue());
 		
 		// 單次收視費用 = 總費用 / 收視數
-		adVideoPerformanceReportVO.setSingleAdViewCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adViewSum));
+		adVideoPerformanceReportVO.setSingleAdViewCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adViewSum, 2));
 		
 		// 千次曝光費用 = 總費用 / 曝光數 * 1000
-		Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-		BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-		adVideoPerformanceReportVO.setKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+		adVideoPerformanceReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
 		
 		// 影片播放進度-25%
 		adVideoPerformanceReportVO.setAdVideoProcess25Sum(adVideoProcess25Sum);
@@ -361,7 +356,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 		adVideoPerformanceReportVO.setAdVideoProcess100Sum(adVideoProcess100Sum);
 		
 		// 影片完整播放率 = 影片播放進度-100% / 曝光數 * 100
-		adVideoPerformanceReportVO.setAdVideoProcess100Ratings(CommonUtils.getInstance().getCalculateDivisionValue(adVideoProcess100Sum, adPvSum, 100));
+		adVideoPerformanceReportVO.setAdVideoProcess100Ratings(CommonUtils.getInstance().getCalculateDivisionValueRounding(adVideoProcess100Sum, adPvSum, 100, 2));
 		
 		// 點選次數
 		adVideoPerformanceReportVO.setAdClkSum(adClkSum);
@@ -412,22 +407,20 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 				flashDataMap.put(reportDate, adViewSum.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())) {
 				// 收視率 = 收視數 / 曝光數 * 100
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adViewSum, adPvSum, 100).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adViewSum, adPvSum, 100, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())) {
 				// 單次收視費用 = 總費用 / 收視數
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adViewSum).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adViewSum, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				// 千次曝光費用 = 總費用 / 曝光數 * 1000
-				Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-				BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-				flashDataMap.put(reportDate, bigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 				flashDataMap.put(reportDate, adPriceSum.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
 				// 影片播放進度-100%
 				BigDecimal adVideoProcess100Sum = (BigDecimal) dataMap.get("ad_video_process_100_sum");
 				// 影片完整播放率 = 影片播放進度-100% / 曝光數 * 100
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adVideoProcess100Sum, adPvSum, 100).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adVideoProcess100Sum, adPvSum, 100, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
 				// 點選次數
 				BigDecimal adClkSum = (BigDecimal) dataMap.get("ad_clk_sum");

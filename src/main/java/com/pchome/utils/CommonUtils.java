@@ -238,15 +238,19 @@ public class CommonUtils {
     }
 	
 	/**
-	 * 取得除法計算值 <br/>
-	 * 公式:dividend / divisor
+	 * 取得除法計算值，小數第幾位四捨五入 <br/>
+	 * 公式:dividend / divisor <br/>
+	 * 
+	 * FreeMarker問題，所以需先在java做四捨五入處理，FreeMarker預設為halfEven，非四捨五入的halfUp
+	 * 
 	 * @param dividend 被除數
 	 * @param divisor  除數
+	 * @param decimalPlace 小數第幾位，判斷後一位四捨五入  ex:輸入2 11.165 = 11.17
 	 * @return true:unbmer false:0
 	 */
-	public Double getCalculateDivisionValue(BigDecimal dividend, BigDecimal divisor) {
+	public Double getCalculateDivisionValueRounding(BigDecimal dividend, BigDecimal divisor, int decimalPlace) {
 		if (dividend.compareTo(BigDecimal.ZERO) >= 1 && divisor.compareTo(BigDecimal.ZERO) >= 1) {
-			return dividend.divide(divisor, 6, RoundingMode.DOWN).doubleValue();
+			return dividend.divide(divisor, 6, RoundingMode.DOWN).setScale(decimalPlace, RoundingMode.HALF_UP).doubleValue();
 		}
 		return (BigDecimal.ZERO).doubleValue();
 	}
@@ -259,13 +263,33 @@ public class CommonUtils {
 	 * @param number   乘多少自行放入
 	 * @return true:unbmer false:0
 	 */
-	public Double getCalculateDivisionValue(BigDecimal dividend, BigDecimal divisor, int number) {
+//	public Double getCalculateDivisionValue(BigDecimal dividend, BigDecimal divisor, int number) {
+//		if (dividend.compareTo(BigDecimal.ZERO) >= 1 && divisor.compareTo(BigDecimal.ZERO) >= 1) {
+//			return dividend.divide(divisor, 6, RoundingMode.DOWN).multiply(new BigDecimal(number)).doubleValue();
+//		}
+//		return (BigDecimal.ZERO).doubleValue();
+//	}
+
+	/**
+	 * 取得除法計算值，小數第幾位四捨五入 <br/>
+	 * 公式:(dividend / divisor) * number <br/>
+	 * 
+	 * FreeMarker問題，所以需先在java做四捨五入處理，FreeMarker預設為halfEven，非四捨五入的halfUp
+	 * 
+	 * @param dividend 被除數
+	 * @param divisor  除數
+	 * @param number   乘多少自行放入
+	 * @param decimalPlace 小數第幾位，判斷後一位四捨五入  ex:輸入2 11.165 = 11.17
+	 * @return true:unbmer false:0
+	 */
+	public Double getCalculateDivisionValueRounding(BigDecimal dividend, BigDecimal divisor, int number, int decimalPlace) {
 		if (dividend.compareTo(BigDecimal.ZERO) >= 1 && divisor.compareTo(BigDecimal.ZERO) >= 1) {
-			return dividend.divide(divisor, 6, RoundingMode.DOWN).multiply(new BigDecimal(number)).doubleValue();
+			// 相除完取到小數點後6位，再乘，乘完後依輸入的小數點第幾位做四捨五入
+			return dividend.divide(divisor, 6, RoundingMode.DOWN).multiply(new BigDecimal(number)).setScale(decimalPlace, RoundingMode.HALF_UP).doubleValue();
 		}
 		return (BigDecimal.ZERO).doubleValue();
 	}
-
+	
 	/**
 	 * 取得裝置中文
 	 * @param whereMap JSONObject格式字串
