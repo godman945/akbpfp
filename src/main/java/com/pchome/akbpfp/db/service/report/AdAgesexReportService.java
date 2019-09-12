@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.db.service.report;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -167,36 +166,34 @@ public class AdAgesexReportService implements IAdAgesexReportService {
 			adAgesexReportVO.setAdClkSum(adClkSum);
 			
 			// 互動率 = 總互動數 / 總曝光數 * 100
-			adAgesexReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+			adAgesexReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2));
 			
 			// 費用
 			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
 			adAgesexReportVO.setAdPriceSum(adPriceSum.doubleValue());
 						
 			// 單次互動費用 = 總費用 / 總互動次數
-			adAgesexReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+			adAgesexReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adClkSum, 2));
 			
 			// 千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-			BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adAgesexReportVO.setKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adAgesexReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
 			
 			// 轉換次數
 			BigDecimal convertCount = (BigDecimal) dataMap.get("convert_count");
 			adAgesexReportVO.setConvertCount(convertCount);
 			
 			// 轉換率 = 轉換次數 / 互動數 * 100
-			adAgesexReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+			adAgesexReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertCount, adClkSum, 100, 2));
 			
 			// 總轉換價值
 			BigDecimal convertPriceCount = (BigDecimal) dataMap.get("convert_price_count");
 			adAgesexReportVO.setConvertPriceCount(convertPriceCount);
 			
 			// 平均轉換成本 = 費用 / 轉換次數
-			adAgesexReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+			adAgesexReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, convertCount, 2));
 			
 			// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-			adAgesexReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+			adAgesexReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertPriceCount, adPriceSum, 100, 2));
 			
 			adAgesexVOList.add(adAgesexReportVO);
 		}
@@ -244,33 +241,31 @@ public class AdAgesexReportService implements IAdAgesexReportService {
 		adAgesexReportVO.setAdClkSum(adClkSum);
 		
 		// 互動率 = 總互動數 / 總曝光數 * 100
-		adAgesexReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+		adAgesexReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2));
 		
 		// 費用
 		adAgesexReportVO.setAdPriceSum(adPriceSum.doubleValue());
 		
 		// 單次互動費用 = 總費用 / 總互動次數
-		adAgesexReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+		adAgesexReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adClkSum, 2));
 		
 		// 千次曝光費用 = 總費用 / 曝光數 * 1000
-		Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-		BigDecimal bg = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-		adAgesexReportVO.setKiloCost(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
+		adAgesexReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
 		
 		// 轉換次數
 		adAgesexReportVO.setConvertCount(convertCount);
 		
 		// 轉換率 = 轉換次數 / 互動數 * 100
-		adAgesexReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+		adAgesexReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertCount, adClkSum, 100, 2));
 		
 		// 總轉換價值
 		adAgesexReportVO.setConvertPriceCount(convertPriceCount);
 		
 		// 平均轉換成本 = 費用 / 轉換次數
-		adAgesexReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+		adAgesexReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, convertCount, 2));
 		
 		// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-		adAgesexReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+		adAgesexReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertPriceCount, adPriceSum, 100, 2));
 		
 		// 總計幾筆
 		adAgesexReportVO.setRowCount(adAgesexListSum.size());
@@ -312,36 +307,34 @@ public class AdAgesexReportService implements IAdAgesexReportService {
 			adAgesexReportVO.setAdClkSum(adClkSum);
 			
 			// 互動率 = 總互動數 / 總曝光數 * 100
-			adAgesexReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+			adAgesexReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2));
 			
 			// 費用
 			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
 			adAgesexReportVO.setAdPriceSum(adPriceSum.doubleValue());
 						
 			// 單次互動費用 = 總費用 / 總互動次數
-			adAgesexReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adClkSum));
+			adAgesexReportVO.setAvgCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adClkSum, 2));
 			
 			// 千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double kiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, adPvSum, 1000);
-			BigDecimal bigDecimal = BigDecimal.valueOf(kiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adAgesexReportVO.setKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adAgesexReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
 			
 			// 轉換次數
 			BigDecimal convertCount = (BigDecimal) dataMap.get("convert_count");
 			adAgesexReportVO.setConvertCount(convertCount);
 			
 			// 轉換率 = 轉換次數 / 互動數 * 100
-			adAgesexReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValue(convertCount, adClkSum, 100));
+			adAgesexReportVO.setConvertCTR(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertCount, adClkSum, 100, 2));
 			
 			// 總轉換價值
 			BigDecimal convertPriceCount = (BigDecimal) dataMap.get("convert_price_count");
 			adAgesexReportVO.setConvertPriceCount(convertPriceCount);
 			
 			// 平均轉換成本 = 費用 / 轉換次數
-			adAgesexReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValue(adPriceSum, convertCount));
+			adAgesexReportVO.setConvertCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, convertCount, 2));
 			
 			// 廣告投資報酬率 = (總轉換價值 / 費用) * 100
-			adAgesexReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValue(convertPriceCount, adPriceSum, 100));
+			adAgesexReportVO.setConvertInvestmentCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(convertPriceCount, adPriceSum, 100, 2));
 			
 			adAgesexVOList.add(adAgesexReportVO);
 		}
