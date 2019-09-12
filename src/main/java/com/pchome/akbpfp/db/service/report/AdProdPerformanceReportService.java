@@ -49,7 +49,7 @@ public class AdProdPerformanceReportService implements IAdProdPerformanceReportS
 			adProdPerformanceReportVO.setAdClkSum(adClkSum);
 			
 			// 商品點選率(互動率) = 商品點選數(總互動數) / 陳列次數(總曝光數) * 100
-			adProdPerformanceReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+			adProdPerformanceReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2));
 			
 			adProdPerformanceVOList.add(adProdPerformanceReportVO);
 		}
@@ -88,7 +88,7 @@ public class AdProdPerformanceReportService implements IAdProdPerformanceReportS
 		adProdPerformanceReportVO.setAdClkSum(adClkSum);
 		
 		// 商品點選率(互動率) = 商品點選數(總互動數) / 陳列次數(總曝光數) * 100
-		adProdPerformanceReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100));
+		adProdPerformanceReportVO.setCtr(CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2));
 		
 		// 總計幾筆
 		adProdPerformanceReportVO.setRowCount(adProdPerformanceListSum.size());
@@ -122,7 +122,7 @@ public class AdProdPerformanceReportService implements IAdProdPerformanceReportS
 				flashDataMap.put(reportDate, adClkSum.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
 				// 商品點選率(互動率) = 商品點選數(總互動數) / 陳列次數(總曝光數) * 100
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adClkSum, adPvSum, 100).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adClkSum, adPvSum, 100, 2).floatValue());
 			}
 		}
 		

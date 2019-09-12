@@ -1,7 +1,6 @@
 package com.pchome.akbpfp.db.service.report;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -191,19 +190,17 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwClkSum(adKeywordClkSum);
 			
 			// 廣泛比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
-			adKeywordReportVO.setKwCtrSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkSum, adKeywordPvSum, 100));
+			adKeywordReportVO.setKwCtrSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordClkSum, adKeywordPvSum, 100, 2));
 			
 			// 廣泛比對-費用
 			BigDecimal adKeywordClkPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_keyword_clk_price_sum"));
 			adKeywordReportVO.setKwPriceSum(adKeywordClkPriceSum.doubleValue());
 			
 			// 廣泛比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-			adKeywordReportVO.setKwPriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkPriceSum, adKeywordClkSum));
+			adKeywordReportVO.setKwPriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordClkPriceSum, adKeywordClkSum, 2));
 			
 			// 廣泛比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double adKeywordKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkPriceSum, adKeywordPvSum, 1000);
-			BigDecimal bigDecimal = BigDecimal.valueOf(adKeywordKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adKeywordReportVO.setKwKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adKeywordReportVO.setKwKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordClkPriceSum, adKeywordPvSum, 1000, 2));
 			
 			adKeywordReportVO.setAdKeywordSeq(adKeywordSeq); // 關鍵字序號(取得平均廣告排名sql用)
 			
@@ -239,19 +236,17 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwPhrClkSum(adKeywordPhraseClkSum);
 			
 			// 詞組比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
-			adKeywordReportVO.setKwPhrCtrSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkSum, adKeywordPhrasePvSum, 100));
+			adKeywordReportVO.setKwPhrCtrSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPhraseClkSum, adKeywordPhrasePvSum, 100, 2));
 			
 			// 詞組比對-費用
 			BigDecimal adKeywordPhraseClkPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_keyword_phrase_clk_price_sum"));
 			adKeywordReportVO.setKwPhrPriceSum(adKeywordPhraseClkPriceSum.doubleValue());
 			
 			// 詞組比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-			adKeywordReportVO.setKwPhrPriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkPriceSum, adKeywordPhraseClkSum));
+			adKeywordReportVO.setKwPhrPriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPhraseClkPriceSum, adKeywordPhraseClkSum, 2));
 			
 			// 詞組比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double adKeywordPhraseKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkPriceSum, adKeywordPhrasePvSum, 1000);
-			BigDecimal phraseBigDecimal = BigDecimal.valueOf(adKeywordPhraseKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adKeywordReportVO.setKwPhrKiloCost(phraseBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adKeywordReportVO.setKwPhrKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPhraseClkPriceSum, adKeywordPhrasePvSum, 1000, 2));
 			
 			// 詞組比對-平均廣告排名
 			adKeywordReportVO.setKeywordStyle(EnumAdKeywordType.PHRASE.getStyle()); // 取得平均廣告排名sql用
@@ -285,19 +280,17 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwPreClkSum(adKeywordPrecisionClkSum);
 			
 			// 精準比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
-			adKeywordReportVO.setKwPreCtrSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkSum, adKeywordPrecisionPvSum, 100));
+			adKeywordReportVO.setKwPreCtrSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPrecisionClkSum, adKeywordPrecisionPvSum, 100, 2));
 			
 			// 精準比對-費用
 			BigDecimal adKeywordPrecisionClkPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_keyword_precision_clk_price_sum"));
 			adKeywordReportVO.setKwPrePriceSum(adKeywordPrecisionClkPriceSum.doubleValue());
 			
 			// 精準比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-			adKeywordReportVO.setKwPrePriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkPriceSum, adKeywordPrecisionClkSum));
+			adKeywordReportVO.setKwPrePriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPrecisionClkPriceSum, adKeywordPrecisionClkSum, 2));
 			
 			// 精準比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double adKeywordPrecisionKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkPriceSum, adKeywordPrecisionPvSum, 1000);
-			BigDecimal precisionBigDecimal = BigDecimal.valueOf(adKeywordPrecisionKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adKeywordReportVO.setKwPreKiloCost(precisionBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adKeywordReportVO.setKwPreKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPrecisionClkPriceSum, adKeywordPrecisionPvSum, 1000, 2));
 			
 			// 精準比對-平均廣告排名
 			adKeywordReportVO.setKeywordStyle(EnumAdKeywordType.PRECISION.getStyle()); // 取得平均廣告排名sql用
@@ -327,7 +320,7 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwClkSubtotal(kwClkSubtotal);
 			
 			// 小計-互動率,互動率 = 總互動數 / 總曝光數 * 100
-			adKeywordReportVO.setKwCtrSubtotal(CommonUtils.getInstance().getCalculateDivisionValue(kwClkSubtotal, kwPvSubtotal, 100));
+			adKeywordReportVO.setKwCtrSubtotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(kwClkSubtotal, kwPvSubtotal, 100, 2));
 			
 			// 小計-費用
 			BigDecimal kwPriceSubtotal = new BigDecimal(0);
@@ -335,12 +328,10 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwPriceSubtotal(kwPriceSubtotal);
 			
 			// 小計-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-			adKeywordReportVO.setKwPriceAvgSubtotal(CommonUtils.getInstance().getCalculateDivisionValue(kwPriceSubtotal, kwClkSubtotal));
+			adKeywordReportVO.setKwPriceAvgSubtotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(kwPriceSubtotal, kwClkSubtotal, 2));
 			
 			// 小計-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double kwKiloCostSubtotal = CommonUtils.getInstance().getCalculateDivisionValue(kwPriceSubtotal, kwPvSubtotal, 1000);
-			BigDecimal subtotalBigDecimal = BigDecimal.valueOf(kwKiloCostSubtotal); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adKeywordReportVO.setKwKiloCostSubtotal(subtotalBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adKeywordReportVO.setKwKiloCostSubtotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(kwPriceSubtotal, kwPvSubtotal, 1000, 2));
 			
 			adKeywordVOList.add(adKeywordReportVO);
 		}
@@ -417,14 +408,12 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 		adKeywordReportVO.setPvTotal(pvTotal); // 曝光數
 		adKeywordReportVO.setClkTotal(clkTotal); // 互動數
 		// 互動率 = 總互動數 / 總曝光數 * 100
-		adKeywordReportVO.setCtrTotal(CommonUtils.getInstance().getCalculateDivisionValue(clkTotal, pvTotal, 100));
+		adKeywordReportVO.setCtrTotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(clkTotal, pvTotal, 100, 2));
 		adKeywordReportVO.setPriceTotal(priceTotal.doubleValue()); // 費用
 		// 單次互動費用 = 總費用 / 總互動次數
-		adKeywordReportVO.setPriceAvgTotal(CommonUtils.getInstance().getCalculateDivisionValue(priceTotal, clkTotal));
+		adKeywordReportVO.setPriceAvgTotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(priceTotal, clkTotal, 2));
 		// 千次曝光費用 = 總費用 / 曝光數 * 1000
-		Double kiloCostTotal = CommonUtils.getInstance().getCalculateDivisionValue(priceTotal, pvTotal, 1000);
-		BigDecimal bg = BigDecimal.valueOf(kiloCostTotal); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-		adKeywordReportVO.setKiloCostTotal(bg.setScale(2, RoundingMode.HALF_UP).doubleValue());
+		adKeywordReportVO.setKiloCostTotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(priceTotal, pvTotal, 1000, 2));
 		
 		// 報表總計列用
 		if (vo.isDownloadOrIsNotCuttingPagination()) {
@@ -435,13 +424,13 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setReportKwPhrClkTotal(reportKwPhrClkTotal); // 詞組比對-互動數總計
 			adKeywordReportVO.setReportKwPreClkTotal(reportKwPreClkTotal); // 精準比對-互動數總計
 			// 互動率 = 總互動數 / 總曝光數 * 100
-			adKeywordReportVO.setReportKwCtrTotal(CommonUtils.getInstance().getCalculateDivisionValue(reportKwClkTotal, reportKwPvTotal, 100)); // 廣泛比對-互動率
-			adKeywordReportVO.setReportKwPhrCtrTotal(CommonUtils.getInstance().getCalculateDivisionValue(reportKwPhrClkTotal, reportKwPhrPvTotal, 100)); // 詞組比對-互動率
-			adKeywordReportVO.setReportKwPreCtrTotal(CommonUtils.getInstance().getCalculateDivisionValue(reportKwPreClkTotal, reportKwPrePvTotal, 100)); // 精準比對-互動率
+			adKeywordReportVO.setReportKwCtrTotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(reportKwClkTotal, reportKwPvTotal, 100, 2)); // 廣泛比對-互動率
+			adKeywordReportVO.setReportKwPhrCtrTotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(reportKwPhrClkTotal, reportKwPhrPvTotal, 100, 2)); // 詞組比對-互動率
+			adKeywordReportVO.setReportKwPreCtrTotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(reportKwPreClkTotal, reportKwPrePvTotal, 100, 2)); // 精準比對-互動率
 			// 單次互動費用 = 總費用 / 總互動次數
-			adKeywordReportVO.setReportKwPriceAvgTotal(CommonUtils.getInstance().getCalculateDivisionValue(reportKwPriceTotal, reportKwClkTotal)); // 廣泛比對-單次互動費用
-			adKeywordReportVO.setReportKwPhrPriceAvgTotal(CommonUtils.getInstance().getCalculateDivisionValue(reportKwPhrPriceTotal, reportKwPhrClkTotal)); // 詞組比對-單次互動費用
-			adKeywordReportVO.setReportKwPrePriceAvgTotal(CommonUtils.getInstance().getCalculateDivisionValue(reportKwPrePriceTotal, reportKwPreClkTotal)); // 精準比對-單次互動費用
+			adKeywordReportVO.setReportKwPriceAvgTotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(reportKwPriceTotal, reportKwClkTotal, 2)); // 廣泛比對-單次互動費用
+			adKeywordReportVO.setReportKwPhrPriceAvgTotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(reportKwPhrPriceTotal, reportKwPhrClkTotal, 2)); // 詞組比對-單次互動費用
+			adKeywordReportVO.setReportKwPrePriceAvgTotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(reportKwPrePriceTotal, reportKwPreClkTotal, 2)); // 精準比對-單次互動費用
 			adKeywordReportVO.setReportKwPriceTotal(reportKwPriceTotal.doubleValue()); // 廣泛比對-費用總計
 			adKeywordReportVO.setReportKwPhrPriceTotal(reportKwPhrPriceTotal.doubleValue()); // 詞組比對-費用總計
 			adKeywordReportVO.setReportKwPrePriceTotal(reportKwPrePriceTotal.doubleValue()); // 精準比對-費用總計
@@ -480,19 +469,17 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwClkSum(adKeywordClkSum);
 			
 			// 廣泛比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
-			adKeywordReportVO.setKwCtrSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkSum, adKeywordPvSum, 100));
+			adKeywordReportVO.setKwCtrSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordClkSum, adKeywordPvSum, 100, 2));
 			
 			// 廣泛比對-費用
 			BigDecimal adKeywordClkPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_keyword_clk_price_sum"));
 			adKeywordReportVO.setKwPriceSum(adKeywordClkPriceSum.doubleValue());
 			
 			// 廣泛比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-			adKeywordReportVO.setKwPriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkPriceSum, adKeywordClkSum));
+			adKeywordReportVO.setKwPriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordClkPriceSum, adKeywordClkSum, 2));
 			
 			// 廣泛比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double adKeywordKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkPriceSum, adKeywordPvSum, 1000);
-			BigDecimal bigDecimal = BigDecimal.valueOf(adKeywordKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adKeywordReportVO.setKwKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adKeywordReportVO.setKwKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordClkPriceSum, adKeywordPvSum, 1000, 2));
 			
 			// 廣泛比對-平均廣告排名
 			adKeywordReportVO.setKeywordStyle(EnumAdKeywordType.WIDELY.getStyle()); // 取得平均廣告排名sql用
@@ -509,19 +496,17 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwPhrClkSum(adKeywordPhraseClkSum);
 			
 			// 詞組比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
-			adKeywordReportVO.setKwPhrCtrSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkSum, adKeywordPhrasePvSum, 100));
+			adKeywordReportVO.setKwPhrCtrSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPhraseClkSum, adKeywordPhrasePvSum, 100, 2));
 			
 			// 詞組比對-費用
 			BigDecimal adKeywordPhraseClkPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_keyword_phrase_clk_price_sum"));
 			adKeywordReportVO.setKwPhrPriceSum(adKeywordPhraseClkPriceSum.doubleValue());
 			
 			// 詞組比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-			adKeywordReportVO.setKwPhrPriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkPriceSum, adKeywordPhraseClkSum));
+			adKeywordReportVO.setKwPhrPriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPhraseClkPriceSum, adKeywordPhraseClkSum, 2));
 			
 			// 詞組比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double adKeywordPhraseKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkPriceSum, adKeywordPhrasePvSum, 1000);
-			BigDecimal phraseBigDecimal = BigDecimal.valueOf(adKeywordPhraseKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adKeywordReportVO.setKwPhrKiloCost(phraseBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adKeywordReportVO.setKwPhrKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPhraseClkPriceSum, adKeywordPhrasePvSum, 1000, 2));
 			
 			// 詞組比對-平均廣告排名
 			adKeywordReportVO.setKeywordStyle(EnumAdKeywordType.PHRASE.getStyle()); // 取得平均廣告排名sql用
@@ -538,19 +523,17 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwPreClkSum(adKeywordPrecisionClkSum);
 			
 			// 精準比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
-			adKeywordReportVO.setKwPreCtrSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkSum, adKeywordPrecisionPvSum, 100));
+			adKeywordReportVO.setKwPreCtrSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPrecisionClkSum, adKeywordPrecisionPvSum, 100, 2));
 			
 			// 精準比對-費用
 			BigDecimal adKeywordPrecisionClkPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_keyword_precision_clk_price_sum"));
 			adKeywordReportVO.setKwPrePriceSum(adKeywordPrecisionClkPriceSum.doubleValue());
 			
 			// 精準比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-			adKeywordReportVO.setKwPrePriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkPriceSum, adKeywordPrecisionClkSum));
+			adKeywordReportVO.setKwPrePriceAvgSum(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPrecisionClkPriceSum, adKeywordPrecisionClkSum, 2));
 			
 			// 精準比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double adKeywordPrecisionKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkPriceSum, adKeywordPrecisionPvSum, 1000);
-			BigDecimal precisionBigDecimal = BigDecimal.valueOf(adKeywordPrecisionKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adKeywordReportVO.setKwPreKiloCost(precisionBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adKeywordReportVO.setKwPreKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPrecisionClkPriceSum, adKeywordPrecisionPvSum, 1000, 2));
 			
 			// 精準比對-平均廣告排名
 			adKeywordReportVO.setKeywordStyle(EnumAdKeywordType.PRECISION.getStyle()); // 取得平均廣告排名sql用
@@ -569,7 +552,7 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwClkSubtotal(kwClkSubtotal);
 			
 			// 小計-互動率,互動率 = 總互動數 / 總曝光數 * 100
-			adKeywordReportVO.setKwCtrSubtotal(CommonUtils.getInstance().getCalculateDivisionValue(kwClkSubtotal, kwPvSubtotal, 100));
+			adKeywordReportVO.setKwCtrSubtotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(kwClkSubtotal, kwPvSubtotal, 100, 2));
 			
 			// 小計-費用
 			BigDecimal kwPriceSubtotal = new BigDecimal(0);
@@ -577,12 +560,10 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 			adKeywordReportVO.setKwPriceSubtotal(kwPriceSubtotal);
 			
 			// 小計-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-			adKeywordReportVO.setKwPriceAvgSubtotal(CommonUtils.getInstance().getCalculateDivisionValue(kwPriceSubtotal, kwClkSubtotal));
+			adKeywordReportVO.setKwPriceAvgSubtotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(kwPriceSubtotal, kwClkSubtotal, 2));
 			
 			// 小計-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-			Double kwKiloCostSubtotal = CommonUtils.getInstance().getCalculateDivisionValue(kwPriceSubtotal, kwPvSubtotal, 1000);
-			BigDecimal subtotalBigDecimal = BigDecimal.valueOf(kwKiloCostSubtotal); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
-			adKeywordReportVO.setKwKiloCostSubtotal(subtotalBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
+			adKeywordReportVO.setKwKiloCostSubtotal(CommonUtils.getInstance().getCalculateDivisionValueRounding(kwPriceSubtotal, kwPvSubtotal, 1000, 2));
 			
 			adKeywordVOList.add(adKeywordReportVO);
 		}
@@ -654,46 +635,38 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 				flashTotalDataMap.put(reportDate, kwClkSubtotal.floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CTR.getTextValue())) {
 				// 廣泛比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkSum, adKeywordPvSum, 100).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordClkSum, adKeywordPvSum, 100, 2).floatValue());
 				// 詞組比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
-				flashPhrDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkSum, adKeywordPhrasePvSum, 100).floatValue());
+				flashPhrDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPhraseClkSum, adKeywordPhrasePvSum, 100, 2).floatValue());
 				// 精準比對-互動率,互動率 = 總互動數 / 總曝光數 * 100
-				flashPreDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkSum, adKeywordPrecisionPvSum, 100).floatValue());
+				flashPreDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPrecisionClkSum, adKeywordPrecisionPvSum, 100, 2).floatValue());
 				// 小計-互動率,互動率 = 總互動數 / 總曝光數 * 100
-				flashTotalDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(kwClkSubtotal, kwPvSubtotal, 100).floatValue());
+				flashTotalDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(kwClkSubtotal, kwPvSubtotal, 100, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_AVGCOST.getTextValue())) {
 				// 廣泛比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkPriceSum, adKeywordClkSum).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordClkPriceSum, adKeywordClkSum, 2).floatValue());
 				// 詞組比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-				flashPhrDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkPriceSum, adKeywordPhraseClkSum).floatValue());
+				flashPhrDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPhraseClkPriceSum, adKeywordPhraseClkSum, 2).floatValue());
 				// 精準比對-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-				flashPreDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkPriceSum, adKeywordPrecisionClkSum).floatValue());
+				flashPreDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPrecisionClkPriceSum, adKeywordPrecisionClkSum, 2).floatValue());
 				// 小計-單次互動費用,單次互動費用 = 總費用 / 總互動次數
-				flashTotalDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValue(kwPriceSubtotal, kwClkSubtotal).floatValue());
+				flashTotalDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(kwPriceSubtotal, kwClkSubtotal, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
 				// 廣泛比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-				Double adKeywordKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordClkPriceSum, adKeywordPvSum, 1000);
-				BigDecimal bigDecimal = BigDecimal.valueOf(adKeywordKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
 				// adKeywordReportVO.setKwKiloCost(bigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
-				flashDataMap.put(reportDate, bigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordClkPriceSum, adKeywordPvSum, 1000, 2).floatValue());
 				
 				// 詞組比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-				Double adKeywordPhraseKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPhraseClkPriceSum, adKeywordPhrasePvSum, 1000);
-				BigDecimal phraseBigDecimal = BigDecimal.valueOf(adKeywordPhraseKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
 				// adKeywordReportVO.setKwPhrKiloCost(phraseBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
-				flashPhrDataMap.put(reportDate, phraseBigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+				flashPhrDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPhraseClkPriceSum, adKeywordPhrasePvSum, 1000, 2).floatValue());
 				
 				// 精準比對-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-				Double adKeywordPrecisionKiloCost = CommonUtils.getInstance().getCalculateDivisionValue(adKeywordPrecisionClkPriceSum, adKeywordPrecisionPvSum, 1000);
-				BigDecimal precisionBigDecimal = BigDecimal.valueOf(adKeywordPrecisionKiloCost); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
 				// adKeywordReportVO.setKwPreKiloCost(precisionBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
-				flashPreDataMap.put(reportDate, precisionBigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+				flashPreDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adKeywordPrecisionClkPriceSum, adKeywordPrecisionPvSum, 1000, 2).floatValue());
 				
 				// 小計-千次曝光費用,千次曝光費用 = 總費用 / 曝光數 * 1000
-				Double kwKiloCostSubtotal = CommonUtils.getInstance().getCalculateDivisionValue(kwPriceSubtotal, kwPvSubtotal, 1000);
-				BigDecimal subtotalBigDecimal = BigDecimal.valueOf(kwKiloCostSubtotal); // 算完千次曝光費用後，再處理小數至第二位，然後四捨五入
 				// adKeywordReportVO.setKwKiloCostSubtotal(subtotalBigDecimal.setScale(2, RoundingMode.HALF_UP).doubleValue());
-				flashTotalDataMap.put(reportDate, subtotalBigDecimal.setScale(2, RoundingMode.HALF_UP).floatValue());
+				flashTotalDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(kwPriceSubtotal, kwPvSubtotal, 1000, 2).floatValue());
 			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
 				flashDataMap.put(reportDate, adKeywordClkPriceSum.floatValue());
 				flashPhrDataMap.put(reportDate, adKeywordPhraseClkPriceSum.floatValue());
