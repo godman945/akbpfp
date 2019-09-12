@@ -1,5 +1,9 @@
 package com.pchome.akbpfp.db.service.report;
 
+<<<<<<< Upstream, based on pfp_hot_fix
+=======
+import java.math.BigDecimal;
+>>>>>>> 6f75a30 Merge branch 'master' into stg
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,6 +64,7 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 					device = "行動裝置";
 				}
 			}
+<<<<<<< Upstream, based on pfp_hot_fix
 			adVideoPerformanceReportVO.setDevice(device);
 			if(StringUtils.isNotBlank(objArray[23].toString())){
 				String size[] = objArray[23].toString().split("_");
@@ -67,6 +72,229 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 					adVideoPerformanceReportVO.setTemplateProductWidth(size[0]);
 					adVideoPerformanceReportVO.setTemplateProductHeight(size[1]);
 				}
+=======
+			
+			// 曝光數
+			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");
+			adVideoPerformanceReportVO.setAdPvSum(adPvSum);
+			
+			// 收視數
+			BigDecimal adViewSum = (BigDecimal) dataMap.get("ad_view_sum");
+			adVideoPerformanceReportVO.setAdViewSum(adViewSum);
+			
+			// 收視率 = 收視數 / 曝光數 * 100
+			adVideoPerformanceReportVO.setAdViewRatings(CommonUtils.getInstance().getCalculateDivisionValueRounding(adViewSum, adPvSum, 100, 2));
+			
+			// 費用
+			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
+			adVideoPerformanceReportVO.setAdPriceSum(adPriceSum.doubleValue());
+			
+			// 單次收視費用 = 總費用 / 收視數
+			adVideoPerformanceReportVO.setSingleAdViewCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adViewSum, 2));
+			
+			// 千次曝光費用 = 總費用 / 曝光數 * 1000
+			adVideoPerformanceReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
+			
+			// 影片播放進度-25%
+			adVideoPerformanceReportVO.setAdVideoProcess25Sum((BigDecimal) dataMap.get("ad_video_process_25_sum"));
+			
+			// 影片播放進度-50%
+			adVideoPerformanceReportVO.setAdVideoProcess50Sum((BigDecimal) dataMap.get("ad_video_process_50_sum"));
+			
+			// 影片播放進度-75%
+			adVideoPerformanceReportVO.setAdVideoProcess75Sum((BigDecimal) dataMap.get("ad_video_process_75_sum"));
+			
+			// 影片播放進度-100%
+			BigDecimal adVideoProcess100Sum = (BigDecimal) dataMap.get("ad_video_process_100_sum");
+			adVideoPerformanceReportVO.setAdVideoProcess100Sum(adVideoProcess100Sum);
+			
+			// 影片完整播放率 = 影片播放進度-100% / 曝光數 * 100
+			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(CommonUtils.getInstance().getCalculateDivisionValueRounding(adVideoProcess100Sum, adPvSum, 100, 2));
+			
+			// 點選次數
+			adVideoPerformanceReportVO.setAdClkSum((BigDecimal) dataMap.get("ad_clk_sum"));
+			
+			// 收視人數-不重複
+			adVideoPerformanceReportVO.setAdVideoUniqSum((BigDecimal) dataMap.get("uniq_count"));
+			
+			// 聲音開啟次數
+			adVideoPerformanceReportVO.setAdVideoMusicSum((BigDecimal) dataMap.get("ad_video_music_sum"));
+			
+			// 重播次數
+			adVideoPerformanceReportVO.setAdVideoReplaySum((BigDecimal) dataMap.get("ad_video_replay_sum"));
+			
+			adVideoPerformanceVOList.add(adVideoPerformanceReportVO);
+		}
+		
+		// 處理排序
+		if (StringUtils.isNotBlank(vo.getSortBy())) {
+			CommonUtils.getInstance().sort(adVideoPerformanceVOList, vo.getSortBy().split("-")[0], vo.getSortBy().split("-")[1]);
+		}
+		return adVideoPerformanceVOList;
+	}
+
+	/**
+	 * 影音廣告成效(加總)
+	 * @param vo
+	 * @return
+	 */
+	@Override
+	public List<AdVideoPerformanceReportVO> queryReportAdVideoPerformanceSumData(AdVideoPerformanceReportVO vo) {
+		List<Map<String, Object>> adVideoPerformanceListSum = adVideoPerformanceReportDAO.getAdVideoPerformanceListSum(vo);
+		
+		// 曝光數
+		BigDecimal adPvSum = new BigDecimal(0);
+		// 收視數
+		BigDecimal adViewSum = new BigDecimal(0);
+		// 費用
+		BigDecimal adPriceSum = new BigDecimal(0);
+		// 影片播放進度-25%
+		BigDecimal adVideoProcess25Sum = new BigDecimal(0);
+		// 影片播放進度-50%
+		BigDecimal adVideoProcess50Sum = new BigDecimal(0);
+		// 影片播放進度-75%
+		BigDecimal adVideoProcess75Sum = new BigDecimal(0);
+		// 影片播放進度-100%
+		BigDecimal adVideoProcess100Sum = new BigDecimal(0);
+		// 點選次數
+		BigDecimal adClkSum = new BigDecimal(0);
+		// 收視人數-不重複
+		BigDecimal uniqCount = new BigDecimal(0);
+		// 聲音開啟次數
+		BigDecimal adVideoMusicSum = new BigDecimal(0);
+		// 重播次數
+		BigDecimal adVideoReplaySum = new BigDecimal(0);
+		
+		List<AdVideoPerformanceReportVO> adVideoPerformanceVOListSum = new ArrayList<>();
+		// 加總
+		for (Map<String, Object> dataMap : adVideoPerformanceListSum) {
+			adPvSum = adPvSum.add((BigDecimal) dataMap.get("ad_pv_sum"));
+			adViewSum = adViewSum.add((BigDecimal) dataMap.get("ad_view_sum"));
+			adPriceSum = adPriceSum.add(BigDecimal.valueOf((Double) dataMap.get("ad_price_sum")));
+			adVideoProcess25Sum = adVideoProcess25Sum.add((BigDecimal) dataMap.get("ad_video_process_25_sum"));
+			adVideoProcess50Sum = adVideoProcess50Sum.add((BigDecimal) dataMap.get("ad_video_process_50_sum"));
+			adVideoProcess75Sum = adVideoProcess75Sum.add((BigDecimal) dataMap.get("ad_video_process_75_sum"));
+			adVideoProcess100Sum = adVideoProcess100Sum.add((BigDecimal) dataMap.get("ad_video_process_100_sum"));
+			adClkSum = adClkSum.add((BigDecimal) dataMap.get("ad_clk_sum"));
+			uniqCount = uniqCount.add((BigDecimal) dataMap.get("uniq_count"));
+			adVideoMusicSum = adVideoMusicSum.add((BigDecimal) dataMap.get("ad_video_music_sum"));
+			adVideoReplaySum = adVideoReplaySum.add((BigDecimal) dataMap.get("ad_video_replay_sum"));
+		}
+		
+		AdVideoPerformanceReportVO adVideoPerformanceReportVO = new AdVideoPerformanceReportVO();
+		// 曝光數
+		adVideoPerformanceReportVO.setAdPvSum(adPvSum);
+		
+		// 收視數
+		adVideoPerformanceReportVO.setAdViewSum(adViewSum);
+		
+		// 收視率 = 收視數 / 曝光數 * 100
+		adVideoPerformanceReportVO.setAdViewRatings(CommonUtils.getInstance().getCalculateDivisionValueRounding(adViewSum, adPvSum, 100, 2));
+		
+		// 費用
+		adVideoPerformanceReportVO.setAdPriceSum(adPriceSum.doubleValue());
+		
+		// 單次收視費用 = 總費用 / 收視數
+		adVideoPerformanceReportVO.setSingleAdViewCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adViewSum, 2));
+		
+		// 千次曝光費用 = 總費用 / 曝光數 * 1000
+		adVideoPerformanceReportVO.setKiloCost(CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2));
+		
+		// 影片播放進度-25%
+		adVideoPerformanceReportVO.setAdVideoProcess25Sum(adVideoProcess25Sum);
+		
+		// 影片播放進度-50%
+		adVideoPerformanceReportVO.setAdVideoProcess50Sum(adVideoProcess50Sum);
+		
+		// 影片播放進度-75%
+		adVideoPerformanceReportVO.setAdVideoProcess75Sum(adVideoProcess75Sum);
+		
+		// 影片播放進度-100%
+		adVideoPerformanceReportVO.setAdVideoProcess100Sum(adVideoProcess100Sum);
+		
+		// 影片完整播放率 = 影片播放進度-100% / 曝光數 * 100
+		adVideoPerformanceReportVO.setAdVideoProcess100Ratings(CommonUtils.getInstance().getCalculateDivisionValueRounding(adVideoProcess100Sum, adPvSum, 100, 2));
+		
+		// 點選次數
+		adVideoPerformanceReportVO.setAdClkSum(adClkSum);
+		
+		// 收視人數-不重複
+		adVideoPerformanceReportVO.setAdVideoUniqSum(uniqCount);
+		
+		// 聲音開啟次數
+		adVideoPerformanceReportVO.setAdVideoMusicSum(adVideoMusicSum);
+		
+		// 重播次數
+		adVideoPerformanceReportVO.setAdVideoReplaySum(adVideoReplaySum);
+
+		// 總計幾筆
+		adVideoPerformanceReportVO.setRowCount(adVideoPerformanceListSum.size());
+		vo.setRowCount(adVideoPerformanceListSum.size()); // 計算底下頁碼用
+		
+		adVideoPerformanceVOListSum.add(adVideoPerformanceReportVO);
+		
+		return adVideoPerformanceVOListSum;
+	}
+
+	/**
+	 * 影音廣告成效(圖表)
+	 * @param chartVo
+	 * @return
+	 */
+	@Override
+	public Map<Date, Float> queryReportAdVideoPerformanceChartDataMap(AdVideoPerformanceReportVO vo) {
+		List<Map<String, Object>> adVideoPerformanceList = adVideoPerformanceReportDAO.getAdVideoPerformanceListChart(vo);
+		
+		String charType = vo.getCharType();
+		Map<Date, Float> flashDataMap = new HashMap<>();
+		for (Map<String, Object> dataMap : adVideoPerformanceList) {
+			
+			// 日期
+			Date reportDate = (Date) dataMap.get("ad_video_date");
+			// 曝光數
+			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");
+			// 收視數
+			BigDecimal adViewSum = (BigDecimal) dataMap.get("ad_view_sum");
+			// 費用
+			BigDecimal adPriceSum = BigDecimal.valueOf((Double) dataMap.get("ad_price_sum"));
+			
+			if (charType.equals(EnumReport.REPORT_CHART_TYPE_PV.getTextValue())) {
+				flashDataMap.put(reportDate, adPvSum.floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEW.getTextValue())) {
+				flashDataMap.put(reportDate, adViewSum.floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIEWRATINGS.getTextValue())) {
+				// 收視率 = 收視數 / 曝光數 * 100
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adViewSum, adPvSum, 100, 2).floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_SINGLE_ADVIEWCOST.getTextValue())) {
+				// 單次收視費用 = 總費用 / 收視數
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adViewSum, 2).floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_KILOCOST.getTextValue())) {
+				// 千次曝光費用 = 總費用 / 曝光數 * 1000
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adPriceSum, adPvSum, 1000, 2).floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_COST.getTextValue())) {
+				flashDataMap.put(reportDate, adPriceSum.floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_PROCESS100_RATINGS.getTextValue())) {
+				// 影片播放進度-100%
+				BigDecimal adVideoProcess100Sum = (BigDecimal) dataMap.get("ad_video_process_100_sum");
+				// 影片完整播放率 = 影片播放進度-100% / 曝光數 * 100
+				flashDataMap.put(reportDate, CommonUtils.getInstance().getCalculateDivisionValueRounding(adVideoProcess100Sum, adPvSum, 100, 2).floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_CLICK.getTextValue())) {
+				// 點選次數
+				BigDecimal adClkSum = (BigDecimal) dataMap.get("ad_clk_sum");
+				flashDataMap.put(reportDate, adClkSum.floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_UNIQ.getTextValue())) {
+				// 收視人數-不重複
+				BigDecimal uniqCount = (BigDecimal) dataMap.get("uniq_count");
+				flashDataMap.put(reportDate, uniqCount.floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_MUSIC.getTextValue())) {
+				// 聲音開啟次數
+				BigDecimal adVideoMusicSum = (BigDecimal) dataMap.get("ad_video_music_sum");
+				flashDataMap.put(reportDate, adVideoMusicSum.floatValue());
+			} else if (charType.equals(EnumReport.REPORT_CHART_TYPE_VIDEO_REPLAY.getTextValue())) {
+				// 重播次數
+				BigDecimal adVideoReplaySum = (BigDecimal) dataMap.get("ad_video_replay_sum");
+				flashDataMap.put(reportDate, adVideoReplaySum.floatValue());
+>>>>>>> 6f75a30 Merge branch 'master' into stg
 			}
 			adVideoPerformanceReportVO.setAdActionName(objArray[24].toString());
 			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[26].toString());
