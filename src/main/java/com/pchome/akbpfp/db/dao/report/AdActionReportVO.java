@@ -6,25 +6,42 @@ import java.util.Date;
 
 public class AdActionReportVO {
 
-	private Date reportDate; //å ±è¡¨æ—¥æœŸ
+	private String customerInfoId;
+	private String searchText = ""; // ·j´M¤å¦r
+	private String startDate = ""; // ¬d¸ß¶}©l¤é´Á
+	private String endDate = ""; // ¬d¸ßµ²§ô¤é´Á
+	private int page = 1; // ²Ä´X­¶
+	private int pageSize = 10; // ¨C­¶µ§¼Æ
+	private String whereMap = ""; // sql¿z¿ï±ø¥ó
+	private String sortBy = ""; // ±Æ§ÇÄæ¦ì
+	private boolean isDownloadOrIsNotCuttingPagination = false; // ¬O§_¬°¤U¸ü¡A©Î¥Î¨Ó·íSQL¬O§_¤Á¤À­¶FLAG
+	private String charType = ""; // ¹Ïªí«×¶q
+	
+	private Date reportDate; //³øªí¤é´Á
 
-	private String adActionSeq; //å»£å‘Šæ´»å‹•åºè™Ÿ
+	private String adActionSeq; //¼s§i¬¡°Ê§Ç¸¹
 
-	private BigDecimal adPvSum; //å»£å‘ŠPVç¸½å’Œ
-	private BigDecimal adClkSum; //å»£å‘ŠClickç¸½å’Œ
-	private Double adPriceSum; //å»£å‘Šåƒ¹æ ¼ç¸½å’Œ
-	private BigDecimal adInvClkSum; //å»£å‘Šç„¡æ•ˆé»æ“Šç¸½å’Œ
-	private Double adActionMaxPriceSum; //æ¯æ—¥èŠ±è²»ä¸Šé™ç¸½å’Œ
-	private BigInteger count; //è³‡æ–™ç­†æ•¸(ç”¨æ–¼è¨ˆç®—å¹³å‡æ¯æ—¥èŠ±è²»ä¸Šé™)
-	private String adDevice; //è£ç½®
+	private BigDecimal adPvSum; // ¼s§iPVÁ`©M
+	private BigDecimal adClkSum; // ¼s§iClickÁ`©M
+	private Double adPriceSum; // ¼s§i»ù®æÁ`©M
+	private BigDecimal adInvClkSum; // ¼s§iµL®ÄÂIÀ»Á`©M
+	private Double adActionMaxPriceSum; // ¨C¤éªá¶O¤W­­Á`©M
+	private BigInteger count; // ¸ê®Æµ§¼Æ(¥Î©ó­pºâ¥­§¡¨C¤éªá¶O¤W­­)
+	private String adDevice; // ¸Ë¸m
 	private String adType;
-	private String adOperatingRule;		//å»£å‘Šæ¨£å¼
-	private String adClkPriceType;		//å»£å‘Šè¨ˆè²»æ–¹å¼
-	private String adOperatingRuleDesc;	
-	//è½‰æ›æ•¸
-	private BigDecimal convertCount;
-	//è½‰æ›åƒ¹å€¼
-	private BigDecimal convertPriceCount;
+	private String adOperatingRule; // ¼s§i¼Ë¦¡
+	private String adClkPriceType; // ¼s§i­p¶O¤è¦¡
+	private String adOperatingRuleDesc;
+	private BigDecimal convertCount; // Âà´«¼Æ
+	private BigDecimal convertPriceCount; // Âà´«»ù­È
+	
+	private Double ctr; // ¤¬°Ê²v
+	private Double avgCost; // ³æ¦¸¤¬°Ê¶O¥Î
+	private Double kiloCost; // ¤d¦¸Ãn¥ú¶O¥Î
+	private Double convertCTR; // Âà´«²v
+	private Double convertCost; // ¥­§¡Âà´«¦¨¥»
+	private Double convertInvestmentCost; // ¼s§i§ë¸ê³ø¹S²v
+	private int rowCount = 0; // Á`­p´Xµ§
 	
 	public String getAdActionSeq() {
 		return adActionSeq;
@@ -145,5 +162,141 @@ public class AdActionReportVO {
 	public void setConvertPriceCount(BigDecimal convertPriceCount) {
 		this.convertPriceCount = convertPriceCount;
 	}
-	
+
+	public String getSearchText() {
+		return searchText;
+	}
+
+	public void setSearchText(String searchText) {
+		this.searchText = searchText;
+	}
+
+	public String getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+
+	public String getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+
+	public int getPage() {
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public int getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	public String getCustomerInfoId() {
+		return customerInfoId;
+	}
+
+	public void setCustomerInfoId(String customerInfoId) {
+		this.customerInfoId = customerInfoId;
+	}
+
+	public Double getCtr() {
+		return ctr;
+	}
+
+	public void setCtr(Double ctr) {
+		this.ctr = ctr;
+	}
+
+	public Double getAvgCost() {
+		return avgCost;
+	}
+
+	public void setAvgCost(Double avgCost) {
+		this.avgCost = avgCost;
+	}
+
+	public Double getKiloCost() {
+		return kiloCost;
+	}
+
+	public void setKiloCost(Double kiloCost) {
+		this.kiloCost = kiloCost;
+	}
+
+	public Double getConvertCTR() {
+		return convertCTR;
+	}
+
+	public void setConvertCTR(Double convertCTR) {
+		this.convertCTR = convertCTR;
+	}
+
+	public Double getConvertCost() {
+		return convertCost;
+	}
+
+	public void setConvertCost(Double convertCost) {
+		this.convertCost = convertCost;
+	}
+
+	public Double getConvertInvestmentCost() {
+		return convertInvestmentCost;
+	}
+
+	public void setConvertInvestmentCost(Double convertInvestmentCost) {
+		this.convertInvestmentCost = convertInvestmentCost;
+	}
+
+	public String getWhereMap() {
+		return whereMap;
+	}
+
+	public void setWhereMap(String whereMap) {
+		this.whereMap = whereMap;
+	}
+
+	public String getSortBy() {
+		return sortBy;
+	}
+
+	public void setSortBy(String sortBy) {
+		this.sortBy = sortBy;
+	}
+
+	public int getRowCount() {
+		return rowCount;
+	}
+
+	public void setRowCount(int rowCount) {
+		this.rowCount = rowCount;
+	}
+
+	public boolean isDownloadOrIsNotCuttingPagination() {
+		return isDownloadOrIsNotCuttingPagination;
+	}
+
+	public void setDownloadOrIsNotCuttingPagination(boolean isDownloadOrIsNotCuttingPagination) {
+		this.isDownloadOrIsNotCuttingPagination = isDownloadOrIsNotCuttingPagination;
+	}
+
+	public String getCharType() {
+		return charType;
+	}
+
+	public void setCharType(String charType) {
+		this.charType = charType;
+	}
+
 }
