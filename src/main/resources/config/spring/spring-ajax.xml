@@ -112,7 +112,6 @@
     <bean id="CatalogProdListAjax" class="com.pchome.akbpfp.struts2.ajax.catalog.prodList.CatalogProdListAjax" scope="prototype" >
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="prodListFactory" ref="ProdListFactory" />
-    	<property name="accesslogService" ref="AdmAccesslogService" />
     </bean>
     <!-- 商品清單 -->
     
@@ -125,7 +124,6 @@
     	<property name="prodGroupFactory" ref="ProdGroupFactory" />
     	<property name="pfpAdService" ref="PfpAdService" />
     	<property name="pfpAdDetailService" ref="PfpAdDetailService" />
-    	<property name="accesslogService" ref="AdmAccesslogService" />
     </bean>    
     <!-- 商品群組 -->
     
@@ -134,7 +132,6 @@
     	<property name="mailFrom" value="${mail.from}" />
     	<property name="pfpCodeService" ref="PfpCodeService" />
     	<property name="pfpCodeTrackingService" ref="PfpCodeTrackingService" />
-    	<property name="admAccesslogService" ref="AdmAccesslogService" />
     	<property name="springEmailUtil" ref="SpringEmailUtil" />
     </bean>
     <!-- 再行銷追蹤 -->
@@ -149,7 +146,6 @@
     	<property name="pfpCodeConvertRuleService" ref="PfpCodeConvertRuleService" />
     	<property name="springEmailUtil" ref="SpringEmailUtil" />
     	<property name="sequenceService" ref="SequenceService" />
-    	<property name="admAccesslogService" ref="AdmAccesslogService" />
     </bean>
     <!-- 轉換追蹤 -->
     
