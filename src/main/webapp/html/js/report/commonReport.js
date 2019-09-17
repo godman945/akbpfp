@@ -1,22 +1,5 @@
 $(document).ready(function () {
 
-<<<<<<< Upstream, based on pfp_hot_fix
-    //自定義隱藏欄位
-    $.tablesorter.addParser({
-        // set a unique id
-        id: 'rangesort',
-        is: function(s) {
-        	s = s.replace("NT$ ", "");
-            return /^[0-9]?[0-9,\.]*$/.test(s);
-        },
-        format: function(s) {
-        	s = s.replace("NT$ ", "");
-            return $.tablesorter.formatFloat(s.replace(/,/g, ''));
-        },
-        // set type, either numeric or text
-        type: 'numeric'
-    });
-=======
 	//自定義隱藏欄位
     $.tablesorter.addParser({
         // set a unique id
@@ -36,11 +19,7 @@ $(document).ready(function () {
 	horisontal_scroll_listing($("#table-listing"));
 	
 });
->>>>>>> 5f3dc47 Merge branch 'master' into stg
 
-<<<<<<< Upstream, based on pfp_hot_fix
-});
-=======
 // 調整查詢結果列表畫面(art提供)
 function horisontal_scroll_listing(listing_obj) {
 	if ($("#totalPage").val() == 0) { // 查無資料則總頁數為0，查無資料不調整畫面
@@ -441,4 +420,3 @@ function previewProdAdDetail(customerInfoId, adSeq, from) {
 function processViewPosition() {
     $(window).scrollTop($(".nav-title").offset().top);
 }
->>>>>>> eefd4b5 Merge branch 'master' into stg
