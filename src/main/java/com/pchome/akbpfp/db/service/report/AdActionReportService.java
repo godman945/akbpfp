@@ -280,8 +280,6 @@ public class AdActionReportService implements IAdActionReportService {
 			AdCampaginReportVO adCampaginReportVO = new AdCampaginReportVO();
 			
 			String adActionSeq = (String) dataMap.get("ad_action_seq");
-			System.out.println(adActionService == null);
-			
 			PfpAdAction pfpAdAction =  adActionService.getPfpAdActionBySeq(adActionSeq);
 			String adActionName = pfpAdAction.getAdActionName();
 		    int adActionStatus = pfpAdAction.getAdActionStatus();

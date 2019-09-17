@@ -120,9 +120,9 @@ public class AdAddAction extends BaseCookieAction{
 	private String saveAndNew;
 	private String ulTmpName;
 	private String imgFile;
-	private String backPage;				// ¨ú®øªºªğ¦^­¶­±
-	private String divBatchWord = "display:none;";		// ¬°¤F°t¦X adFreeAdAddKeyword °µªº³]©w
-	private String batchkeywords = "";					// ¬°¤F°t¦X adFreeAdAddKeyword °µªº³]©w
+	private String backPage;				// å–æ¶ˆçš„è¿”å›é é¢
+	private String divBatchWord = "display:none;";		// ç‚ºäº†é…åˆ adFreeAdAddKeyword åšçš„è¨­å®š
+	private String batchkeywords = "";					// ç‚ºäº†é…åˆ adFreeAdAddKeyword åšçš„è¨­å®š
 	private String fileContentType;
 	private String photoTmpPath;
 	private String photoPath;
@@ -145,14 +145,14 @@ public class AdAddAction extends BaseCookieAction{
 	private IPfbSizeService pfbSizeService;
 	private IPfpAdVideoSourceService pfpAdVideoSourceService;
 	
-	//¼s§i¤ä´©¤Ø¤oªí
+	//å»£å‘Šæ”¯æ´å°ºå¯¸è¡¨
 	private List<PfbxSize> searchPCSizeList = new ArrayList<PfbxSize>();
 	private List<PfbxSize> searchMobileSizeList = new ArrayList<PfbxSize>();
 	private List<PfbxSize> channelPCSizeList = null;
 	private List<PfbxSize> channelMobileSizeList = new ArrayList<PfbxSize>();
-	//¼v­µ¼s§i¤ä´©¤Ø¤o
+	//å½±éŸ³å»£å‘Šæ”¯æ´å°ºå¯¸
 	public Map<String,String> adVideoSizeMap;
-	//¹Ï¤ù¤W¶Ç¦ì¸m
+	//åœ–ç‰‡ä¸Šå‚³ä½ç½®
 	private String imgUploadPath;
 	private ControlPriceAPI controlPriceAPI;
 	private String seqArray;
@@ -160,76 +160,76 @@ public class AdAddAction extends BaseCookieAction{
 	private String fileuploadFileName;
 	private String adLinkURL;
 	private String photoDbPathNew;
-	private String adHiddenType;	//¤w«Ø¥ßªº¤ÀÃşÃöÁä¦rÄæ¦ìÁôÂÃ³]©w
-	private String adType;			//¼s§iÃş«¬
-	private String adDevice;		//¼s§i¼½©ñ¸Ë¸m
-	private String adKeywordOpen;			//¼sªx¤ñ¹ï
-	private String adKeywordPhraseOpen;		//µü²Õ¤ñ¹ï
-	private String adKeywordPrecisionOpen;	//ºë·Ç¤ñ¹ï
+	private String adHiddenType;	//å·²å»ºç«‹çš„åˆ†é¡é—œéµå­—æ¬„ä½éš±è—è¨­å®š
+	private String adType;			//å»£å‘Šé¡å‹
+	private String adDevice;		//å»£å‘Šæ’­æ”¾è£ç½®
+	private String adKeywordOpen;			//å»£æ³›æ¯”å°
+	private String adKeywordPhraseOpen;		//è©çµ„æ¯”å°
+	private String adKeywordPrecisionOpen;	//ç²¾æº–æ¯”å°
 	private String adGroupChannelPrice;
-	//¬O§_ª½¥ß¼v­µ
+	//æ˜¯å¦ç›´ç«‹å½±éŸ³
 	private boolean verticalAd;
 	
-	private String bookmark; //¹Ï¤å¼s§i¿ï¾Ü­ş­Ó­¶ÅÒ
+	private String bookmark; //åœ–æ–‡å»£å‘Šé¸æ“‡å“ªå€‹é ç±¤
 	private RedisAPI redisAPI;
 	private String manyURLRediskey;
-	//·s¼WAd¦¨¥\ªºseq
+	//æ–°å¢AdæˆåŠŸçš„seq
 	private Map<String,Object> deleteAdMap = new HashMap<>();
 	private List<String> deleteAdList = new ArrayList<>();
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	Map<String,Object> dataMap;
-	private String adFastPublishUrlInfo; //¦hºô§}¤W½Z¡A¤Ä¿ïªº¸ê®Æflag=Y
+	private String adFastPublishUrlInfo; //å¤šç¶²å€ä¸Šç¨¿ï¼Œå‹¾é¸çš„è³‡æ–™flag=Y
 	private IPfpAdManyURLSearchService pfpAdManyURLSearchService;
 	
 	private AdFactory adFactory;
 	private CookieUtil cookieUtil;
 	private PfpAdGroup pfpAdGroup;
 	
-	/* °Ó«~¼s§i¥Î°Ñ¼Æ START*/
-	//¦æ¾Pµ²§À¹Ï
+	/* å•†å“å»£å‘Šç”¨åƒæ•¸ START*/
+	//è¡ŒéŠ·çµå°¾åœ–
 	private String uploadLog;
-	//logo¹Ï
+	//logoåœ–
 	private String uploadLogoLog;
-	//¼s§i¦WºÙ
+	//å»£å‘Šåç¨±
 	private String adName;
-	//°Ó«~¥Ø¿ıID
+	//å•†å“ç›®éŒ„ID
 	private String catalogId;
-	//°Ó«~¸s²ÕID
+	//å•†å“ç¾¤çµ„ID
 	private String catalogGroupId;
-	//logoÃş«¬
+	//logoé¡å‹
 	private String logoType;
-	//logo¼ĞÃD¤å¦r
+	//logoæ¨™é¡Œæ–‡å­—
 	private String logoText;
-	//logo­I´ºÃC¦â
+	//logoèƒŒæ™¯é¡è‰²
 	private String logoBgColor;
-	//logo¤å¦rÃC¦â
+	//logoæ–‡å­—é¡è‰²
 	private String logoFontColor;
-	//«ö¶s¤å¦r
+	//æŒ‰éˆ•æ–‡å­—
 	private String btnTxt;
-	//«ö¶s¤å¦rÃC¦â
+	//æŒ‰éˆ•æ–‡å­—é¡è‰²
 	private String btnFontColor;
-	//«ö¶s­I´ºÃC¦â
+	//æŒ‰éˆ•èƒŒæ™¯é¡è‰²
 	private String btnBgColor;
-	//¼ĞÅÒ¤å¦r
+	//æ¨™ç±¤æ–‡å­—
 	private String disTxtType;
-	//¼ĞÅÒ­I´ºÃC¦â
+	//æ¨™ç±¤èƒŒæ™¯é¡è‰²
 	private String disBgColor;
-	//¼ĞÅÒ¤å¦rÃC¦â
+	//æ¨™ç±¤æ–‡å­—é¡è‰²
 	private String disFontColor;
-	//logoÃş«¬
+	//logoé¡å‹
 	private String prodLogoType;
-	//©³¹Ï
+	//åº•åœ–
 	private String saleImgShowType;
-	//¤ñ¨Ò
+	//æ¯”ä¾‹
 	private String imgProportiona;
 	
 	private String userLogoPath;
 	
 	private String logoPath;
 	
-	/* °Ó«~¼s§i¥Î°Ñ¼Æ END*/
+	/* å•†å“å»£å‘Šç”¨åƒæ•¸ END*/
 	
-	//·s¼W¼s§i
+	//æ–°å¢å»£å‘Š
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
 		IAd adObject = null;
@@ -239,7 +239,7 @@ public class AdAddAction extends BaseCookieAction{
 				break;
 			}
 		}
-		//µL¼s§iÃş«¬
+		//ç„¡å»£å‘Šé¡å‹
 		if(adObject == null){
 			return "notOwner";
 		}
@@ -253,32 +253,32 @@ public class AdAddAction extends BaseCookieAction{
 		adGroupName  = pfpAdGroup.getAdGroupName();
 		adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
 		adGroupChannelPrice = String.valueOf(pfpAdGroup.getAdGroupChannelPrice());
-		//­«·s©w¦V¤W¤@­¶¨Ó·½
+		//é‡æ–°å®šå‘ä¸Šä¸€é ä¾†æº
 		String referer = request.getHeader("Referer");
 		if(StringUtils.isNotEmpty(referer)) {
 			backPage = referer.replace(referer.substring(0, referer.indexOf("pfp/") + 4), "");
 			if(referer.indexOf("adGroupAdd.html") >= 0 ){
-				// ­«ºâ½Õ±±ª÷ÃB
+				// é‡ç®—èª¿æ§é‡‘é¡
 				controlPriceAPI.countProcess(pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()));
 			}
 		}else{
 			backPage = "adActionView.html";
 		}
-		//®Ú¾Ú¼s§iÃş«¬­Ó§O³B²zÅã¥Ü·s¼W¼s§iµe­±»İ­n¦æ¬°
+		//æ ¹æ“šå»£å‘Šé¡å‹å€‹åˆ¥è™•ç†é¡¯ç¤ºæ–°å¢å»£å‘Šç•«é¢éœ€è¦è¡Œç‚º
 		return adObject.AdAdAddInit(this);
 	}
 
-	// ·s¼W¹Ï¤å¦¡¼s§i
+	// æ–°å¢åœ–æ–‡å¼å»£å‘Š
 	@Transactional
 	public String doAdAdAddTmg() throws Exception {
 		log.info("doAdAdAddTmg => adGroupSeq = " + adGroupSeq + "; saveAndNew = '" + saveAndNew + "'");
 //		 result = "noAdd";
 		String[] parameterValues = request.getParameterValues("adDetailID");
 		
-		// ÀË¬d adStyle ¬O§_¥¿½T¡A¥¿½Tªº¸Ü¡A³]©w adPoolSeq¡BtemplateProductSeq
+		// æª¢æŸ¥ adStyle æ˜¯å¦æ­£ç¢ºï¼Œæ­£ç¢ºçš„è©±ï¼Œè¨­å®š adPoolSeqã€templateProductSeq
 		chkAdStyle();
 
-		// ÀË¬d Form ¸ê®Æ¬O§_¥¿½T
+		// æª¢æŸ¥ Form è³‡æ–™æ˜¯å¦æ­£ç¢º
 		chkAdData1();
 		if(message != null && !message.equals("")) {
 		    msg = new ByteArrayInputStream(message.getBytes());
@@ -287,7 +287,7 @@ public class AdAddAction extends BaseCookieAction{
 
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 
-		// ·s¼W¼s§i
+		// æ–°å¢å»£å‘Š
 		addAd(pfpAdGroup, null);
 		
 		String imgDetail = "";
@@ -296,21 +296,21 @@ public class AdAddAction extends BaseCookieAction{
 		    if(i == 0 && adStyle.equals("TMG")) {
 				try {
 				    if(StringUtils.isNotBlank(imgFile)) {
-						File iPath = new File(photoPath);		// ¹Ï¤ùªº¦s©ñ¸ô®|
-						File iTmpPath = new File(photoTmpPath);	// ¼È¦s¹Ï¤ùªº¸ô®|
+						File iPath = new File(photoPath);		// åœ–ç‰‡çš„å­˜æ”¾è·¯å¾‘
+						File iTmpPath = new File(photoTmpPath);	// æš«å­˜åœ–ç‰‡çš„è·¯å¾‘
 						if(!iPath.exists())			iPath.mkdirs();
 						if(!iTmpPath.exists())		iTmpPath.mkdirs();
 						String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
-						File adFile = null;	// ¤W¶Ç¹Ï¤ùªºÀÉ¦W
-						if("GIF".equals(fileType.toUpperCase())){	//¥u¦³GIF¦s­ì°ÆÀÉ¦W
+						File adFile = null;	// ä¸Šå‚³åœ–ç‰‡çš„æª”å
+						if("GIF".equals(fileType.toUpperCase())){	//åªæœ‰GIFå­˜åŸå‰¯æª”å
 							adFile = new File(photoPath, adSeq + "." + fileType);
 						}else {
 							adFile = new File(photoPath, adSeq + ".jpg");
 						}
-						File tmpFile = new File(imgFile);	// ³]©w¹Ï¤ùªº File ¤¸¥ó
-						tmpFile.renameTo(adFile);			// §â¼È¦s¹Ï¤ù·h¨ì¦s©ñ°Ï
+						File tmpFile = new File(imgFile);	// è¨­å®šåœ–ç‰‡çš„ File å…ƒä»¶
+						tmpFile.renameTo(adFile);			// æŠŠæš«å­˜åœ–ç‰‡æ¬åˆ°å­˜æ”¾å€
 	
-						imgDetail = photoDbPath + adFile.getName();	// ³]©w¹Ï¤ùÀÉ¦s©ñ¦b DB ªº¸ô®|
+						imgDetail = photoDbPath + adFile.getName();	// è¨­å®šåœ–ç‰‡æª”å­˜æ”¾åœ¨ DB çš„è·¯å¾‘
 					} else {
 						if(StringUtils.isBlank(adDetailContent[0])) {
 							imgDetail = "img/public/na.gif\" style=\"display:none";
@@ -368,7 +368,7 @@ public class AdAddAction extends BaseCookieAction{
 			pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
 		}
 		
-		//·s¼W²Ä¤T¤è°»´ú
+		//æ–°å¢ç¬¬ä¸‰æ–¹åµæ¸¬
 		adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
 		pfpAdDetailVO = new PfpAdDetailVO();
 		pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
@@ -382,16 +382,16 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdDetailVO.setAdDetailUpdateTime(new Date());
 		pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
 
-		// ·s¼WÃöÁä¦r
+		// æ–°å¢é—œéµå­—
 		addKeywords(pfpAdGroup);
-		//·s¼W±Æ°£ÃöÁä¦r
+		//æ–°å¢æ’é™¤é—œéµå­—
 		addExcludeKeywords(pfpAdGroup);
 
-		// ¶}±Ò¼s§i¤ÀÃş
+		// é–‹å•Ÿå»£å‘Šåˆ†é¡
 		pfpAdGroup.setAdGroupStatus(4);
 		pfpAdGroupService.save(pfpAdGroup);
 
-		// ¬O§_¬° "Àx¦s«á¦A·s¼W¼s§i"
+		// æ˜¯å¦ç‚º "å„²å­˜å¾Œå†æ–°å¢å»£å‘Š"
 		if(saveAndNew != null && saveAndNew.equals("save+new")) {
 		    result = "saveNew";
 		} else {
@@ -402,12 +402,12 @@ public class AdAddAction extends BaseCookieAction{
 	}
 
 	/**
-	 * ·s¼W¹Ï¤å¼s§i-¦hºô§}¤W·d(µe­±Âù­¶ÅÒ³¡¤À)
+	 * æ–°å¢åœ–æ–‡å»£å‘Š-å¤šç¶²å€ä¸Šæ(ç•«é¢é›™é ç±¤éƒ¨åˆ†)
 	 * @return
 	 * @throws Exception 
 	 */
 	public String doAdAdAddTmgManyURL() throws Exception {
-//		TODO ¦hºô§}¤W·d
+//		TODO å¤šç¶²å€ä¸Šæ
 		log.info("doAdAdAddTmgManyURL => adGroupSeq = " + adGroupSeq + ",=> adFastPublishUrlInfo =" + adFastPublishUrlInfo + ";");
 		
 		dataMap = new HashMap<String, Object>();
@@ -419,7 +419,7 @@ public class AdAddAction extends BaseCookieAction{
 		processKeyWordList();
 		processExcludeKeyWordList();
 		
-		//ÀË¬d¬ÛÃö¸ê®Æ¬O§_¥¿½T
+		//æª¢æŸ¥ç›¸é—œè³‡æ–™æ˜¯å¦æ­£ç¢º
 		doAdAdAddTmgManyURLCheckData(vo);
 		if (StringUtils.isNotEmpty(vo.getMessage())) {
 			dataMap.put("status", "ERROR");
@@ -427,14 +427,14 @@ public class AdAddAction extends BaseCookieAction{
 			return SUCCESS;
 		}
 		
-		//³]©w¤@¨Ç°Ñ¼Æ­È
+		//è¨­å®šä¸€äº›åƒæ•¸å€¼
 		adPoolSeq = EnumAdStyle.TMG.getAdPoolSeq();
 		templateProductSeq = EnumAdStyle.TMG.getTproSeq();
-		adClass = "1";   // ¼s§i¤ÀÃş
-		adStyle = "TMG"; // ¼s§i«¬ºA
+		adClass = "1";   // å»£å‘Šåˆ†é¡
+		adStyle = "TMG"; // å»£å‘Šå‹æ…‹
 		
-		// ·s¼W¸ê®Æ¨ìtable
-		// ¨ú±o¦¹«È½s¦bRedisªº¸ê®Æ
+		// æ–°å¢è³‡æ–™åˆ°table
+		// å–å¾—æ­¤å®¢ç·¨åœ¨Redisçš„è³‡æ–™
 		pfpAdManyURLSearchService.getRedisURLData(vo);
 		
 		JSONObject redisJsonObject = vo.getRedisJsonObject();
@@ -445,89 +445,89 @@ public class AdAddAction extends BaseCookieAction{
 		Iterator adFastPublishUrlInfoJsoIterator = adFastPublishUrlInfoJson.keys();
         while (adFastPublishUrlInfoJsoIterator.hasNext()) {
         	String key = adFastPublishUrlInfoJsoIterator.next().toString();
-			if ("Y".equals(adFastPublishUrlInfoJson.get(key))) { // ¬O¿ï¨úªº¸ê®Æ
+			if ("Y".equals(adFastPublishUrlInfoJson.get(key))) { // æ˜¯é¸å–çš„è³‡æ–™
         		
         		pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-        		adSeq = null; //²M°£adSeq¦A«Ø¥ß¤@µ§
-        		//¶}©l·s¼W¸ê®Æ¨ìpfp_ad table
+        		adSeq = null; //æ¸…é™¤adSeqå†å»ºç«‹ä¸€ç­†
+        		//é–‹å§‹æ–°å¢è³‡æ–™åˆ°pfp_ad table
         		addAd(pfpAdGroup, null);
         		
-        		//§ä¨ìURL¦ì¸m
+        		//æ‰¾åˆ°URLä½ç½®
         		int index = products.indexOf(key.replace("_ckeck_flag", ""));
-        		//¨ú±oURL«e«á¬q¦r¦ê
+        		//å–å¾—URLå‰å¾Œæ®µå­—ä¸²
         		String startStr = products.substring(0, index);
         		String endStr = products.substring(index, products.length());
-        		//¥Ñ«e«á¬q¦r¦ê§ä¨ì¥]url¨º¤@¬qªº¦ì¸m
+        		//ç”±å‰å¾Œæ®µå­—ä¸²æ‰¾åˆ°åŒ…urlé‚£ä¸€æ®µçš„ä½ç½®
         		int startStrIndex = startStr.lastIndexOf("{\"");
         		int endStrIndex = endStr.indexOf("\"}");
-        		//¨ú±o©Ò»İ­nÂ_¸¨¦r¦ê
+        		//å–å¾—æ‰€éœ€è¦æ–·è½å­—ä¸²
         		String data = products.substring(startStrIndex, (startStr.length() + endStrIndex + 2));
-        		//¨ú±o¸ê®Æ
+        		//å–å¾—è³‡æ–™
         		JSONObject redisJsonObjectDetail = new JSONObject(data.toString());
         		
-        		//·s¼W¸ê®Æ¨ìpfp_ad_detail table
-        		//·s¼W¹Ï¤ù¸ê®Æ
+        		//æ–°å¢è³‡æ–™åˆ°pfp_ad_detail table
+        		//æ–°å¢åœ–ç‰‡è³‡æ–™
         		List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, "img", null, adPoolSeq);
         		String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-        		log.info("¶}©l·s¼Wpfp_ad_detail¸ê®Æ¡Aad_seq:" + adSeq);
+        		log.info("é–‹å§‹æ–°å¢pfp_ad_detailè³‡æ–™ï¼Œad_seq:" + adSeq);
         		
         		String imgPath = redisJsonObjectDetail.get("pic_url").toString();
         		imgPath = processImgPath(imgPath);
         		newSaveAdDetail(imgPath, "img", adPoolSeq, defineAdSeq);
         		
-        		//·s¼W¼ĞÃD¸ê®Æ
+        		//æ–°å¢æ¨™é¡Œè³‡æ–™
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "title", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
         		newSaveAdDetail(redisJsonObjectDetail.get("title").toString(), "title", adPoolSeq, defineAdSeq);
         		
-        		//·s¼W§¹¾ã¼ĞÃD¸ê®Æ
+        		//æ–°å¢å®Œæ•´æ¨™é¡Œè³‡æ–™
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "intact_title", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
         		newSaveAdDetail(redisJsonObjectDetail.get("intact_title").toString(), "intact_title", adPoolSeq, defineAdSeq);
         		
-        		//·s¼W¤º¤å¸ê®Æ
+        		//æ–°å¢å…§æ–‡è³‡æ–™
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "content", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
         		newSaveAdDetail(redisJsonObjectDetail.get("description").toString(), "content", adPoolSeq, defineAdSeq);
         		
-        		//·s¼W§¹¾ã¤º¤å¸ê®Æ
+        		//æ–°å¢å®Œæ•´å…§æ–‡è³‡æ–™
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "intact_content", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
         		newSaveAdDetail(redisJsonObjectDetail.get("intact_description").toString(), "intact_content", adPoolSeq, defineAdSeq);
         		
-        		//·s¼W­ì»ù¸ê®Æ
+        		//æ–°å¢åŸåƒ¹è³‡æ–™
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "sales_price", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
         		newSaveAdDetail(redisJsonObjectDetail.get("sp_price").toString(), "sales_price", adPoolSeq, defineAdSeq);
         		
-        		//·s¼W«P¾P»ù¸ê®Æ
+        		//æ–°å¢ä¿ƒéŠ·åƒ¹è³‡æ–™
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "promotional_price", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
         		newSaveAdDetail(redisJsonObjectDetail.get("price").toString(), "promotional_price", adPoolSeq, defineAdSeq);
         		
-        		//·s¼W¹ê»Úºô§}¸ê®Æ
+        		//æ–°å¢å¯¦éš›ç¶²å€è³‡æ–™
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "real_url", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
         		newSaveAdDetail(redisJsonObjectDetail.get("link_url").toString(), "real_url", adPoolSeq, defineAdSeq);
         		
-        		//·s¼WÅã¥Üºô§}¸ê®Æ
+        		//æ–°å¢é¡¯ç¤ºç¶²å€è³‡æ–™
         		admDefineAd = defineAdService.getDefineAdByCondition(null, "show_url", null, adPoolSeq);
         		defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
         		newSaveAdDetail(redisJsonObjectDetail.get("show_url").toString(), "show_url", adPoolSeq, defineAdSeq);
         		
-        		// ·s¼WÃöÁä¦r
+        		// æ–°å¢é—œéµå­—
         		addKeywords(pfpAdGroup);
-        		//·s¼W±Æ°£ÃöÁä¦r
+        		//æ–°å¢æ’é™¤é—œéµå­—
         		addExcludeKeywords(pfpAdGroup);
         		
-        		//·s¼W²Ä¤T¤è°»´ú
+        		//æ–°å¢ç¬¬ä¸‰æ–¹åµæ¸¬
         		newSaveAdDetail("", "tracking_code", adPoolSeq, "dad_tracking_code");
         		
-        		log.info("·s¼Wad_seq:" + adSeq + "§¹¦¨¡C");
+        		log.info("æ–°å¢ad_seq:" + adSeq + "å®Œæˆã€‚");
         	}
         }
         
-        // ¶}±Ò¼s§i¤ÀÃş(¶È§ó·s¤@¦¸)
+        // é–‹å•Ÿå»£å‘Šåˆ†é¡(åƒ…æ›´æ–°ä¸€æ¬¡)
  		pfpAdGroup.setAdGroupStatus(4);
  		pfpAdGroupService.save(pfpAdGroup);
  		
@@ -535,7 +535,7 @@ public class AdAddAction extends BaseCookieAction{
 	}
 	
 	/**
-	 * ³B²zÃöÁä¦r
+	 * è™•ç†é—œéµå­—
 	 */
 	private void processKeyWordList() {
 		List<String> keyWordList = new ArrayList<String>();
@@ -557,13 +557,13 @@ public class AdAddAction extends BaseCookieAction{
 				}
 			}
 			keywords = keyWordList.toArray(new String[keyWordList.size()]);
-		} else { //µL¿é¤J«h²MªÅ
+		} else { //ç„¡è¼¸å…¥å‰‡æ¸…ç©º
 			keywords = new String[] {};
 		}
 	}
 
 	/**
-	 * ³B²z±Æ°£ÃöÁä¦r
+	 * è™•ç†æ’é™¤é—œéµå­—
 	 */
 	private void processExcludeKeyWordList() {
 		List<String> excludeKeyWordList = new ArrayList<String>();
@@ -585,23 +585,23 @@ public class AdAddAction extends BaseCookieAction{
         		}
     	    }
     	    excludeKeywords = excludeKeyWordList.toArray(new String[excludeKeyWordList.size()]);
-		} else { //µL¿é¤J«h²MªÅ
+		} else { //ç„¡è¼¸å…¥å‰‡æ¸…ç©º
 			excludeKeywords = new String[] {};
 		}
 	}
 	
 	/**
-	 * ³B²z¤U¸ü¹Ï¤ù¤Î¸ô®|
+	 * è™•ç†ä¸‹è¼‰åœ–ç‰‡åŠè·¯å¾‘
 	 * @param imgPath
 	 * @return
 	 * @throws IOException
 	 */
 	private String processImgPath(String imgPath) throws IOException {
-		if (imgPath.indexOf("display:none") > -1) { // ¨S¦³¹Ï¤ù¡A¤£°µ³B²z
+		if (imgPath.indexOf("display:none") > -1) { // æ²’æœ‰åœ–ç‰‡ï¼Œä¸åšè™•ç†
 			return imgPath;
 		}
 		
-		log.info("¶}©l¤U¸ü¹Ï¤ù¡C");
+		log.info("é–‹å§‹ä¸‹è¼‰åœ–ç‰‡ã€‚");
 		
 		Date date = new Date();
 		String photoPath = photoDbPathNew + super.getCustomer_info_id() + "/" + sdf.format(date) + "/original";
@@ -610,13 +610,13 @@ public class AdAddAction extends BaseCookieAction{
 			file.mkdirs();
 		}
 		
-		// ¨ú±o°ÆÀÉ¦W¡A³B²z¹Ï¤ù¦pªG¦³³Q¥[timestampµ¥°Ñ¼Æ±q?¦ì¸m§ì¨ú°ÆÀÉ¦W¡A¨S³Q¥[°Ñ¼Æ«hª½±µ¨Ìªø«×¨ú³Ì«á3½X
+		// å–å¾—å‰¯æª”åï¼Œè™•ç†åœ–ç‰‡å¦‚æœæœ‰è¢«åŠ timestampç­‰åƒæ•¸å¾?ä½ç½®æŠ“å–å‰¯æª”åï¼Œæ²’è¢«åŠ åƒæ•¸å‰‡ç›´æ¥ä¾é•·åº¦å–æœ€å¾Œ3ç¢¼
 		int startLength = (imgPath.indexOf("?") > -1 ? imgPath.indexOf("?") - 3 : imgPath.length() - 3);
 		int endLength = (imgPath.indexOf("?") > -1 ? imgPath.indexOf("?") : imgPath.length());
 		String filenameExtension = imgPath.substring(startLength, endLength);
-		String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension; // ¦s©ñ¸ô®| + ÀÉ¦W
+		String imgPathAndName = photoPath + "/" + adSeq + "." + filenameExtension; // å­˜æ”¾è·¯å¾‘ + æª”å
         
-		log.info("¤U¸ü¹Ï¤ùºô§}:" + imgPath);
+		log.info("ä¸‹è¼‰åœ–ç‰‡ç¶²å€:" + imgPath);
 		System.setProperty("https.protocols", "TLSv1.2,TLSv1.1,TLSv1,SSLv3");
 		com.pchome.utils.HttpUtil.disableCertificateValidation();
 		URL url = null;
@@ -629,65 +629,65 @@ public class AdAddAction extends BaseCookieAction{
 			url = new URL(imgPath);
 			img = ImageIO.read(url);
 		}
-        // ³B²z¹Ï¤ù¤U¸ü
-        if ("gif".equalsIgnoreCase(filenameExtension)) { // gif¹Ï¤ù¤U¸ü¤è¦¡¡A¦¹¤è¦¡¹Ï¤ù¤~¦³°Êµe
+        // è™•ç†åœ–ç‰‡ä¸‹è¼‰
+        if ("gif".equalsIgnoreCase(filenameExtension)) { // gifåœ–ç‰‡ä¸‹è¼‰æ–¹å¼ï¼Œæ­¤æ–¹å¼åœ–ç‰‡æ‰æœ‰å‹•ç•«
             InputStream in = url.openStream();
             Files.copy(in, new File(imgPathAndName).toPath());
             in.close();
-        } else { // jpg¹Ï¤ù¤U¸ü¤è¦¡
+        } else { // jpgåœ–ç‰‡ä¸‹è¼‰æ–¹å¼
             int width = img.getWidth();
             int height = img.getHeight();
-            if (width != height) { // ªø¼e¤£¬Û¦P¡A¬°ªø¤è§Î¡C
-                // url¹Ï¤ù­n§ï¦¨·sªº¼e°ª
+            if (width != height) { // é•·å¯¬ä¸ç›¸åŒï¼Œç‚ºé•·æ–¹å½¢ã€‚
+                // urlåœ–ç‰‡è¦æ”¹æˆæ–°çš„å¯¬é«˜
                 int newWidth = 250;
                 int newHeight = 188;
  
-                // ©³¹Ïªº¼e¡B°ª¡BÃC¦â
+                // åº•åœ–çš„å¯¬ã€é«˜ã€é¡è‰²
                 int baseMapWidth = 250;
                 int baseMapHeight = 250;
                 Color baseMapWhite = new Color(255, 255, 255); // Color white
                 int rgb = baseMapWhite.getRGB();
-                BufferedImage baseMap = new BufferedImage(baseMapWidth, baseMapHeight, BufferedImage.TYPE_INT_RGB); // «Ø¥ß¤@­ÓªÅªº¹Ï¤ù
-                // ±N¨C­Ó¹³¯À½Õ¾ã¬°³]©wªºÃC¦â
+                BufferedImage baseMap = new BufferedImage(baseMapWidth, baseMapHeight, BufferedImage.TYPE_INT_RGB); // å»ºç«‹ä¸€å€‹ç©ºçš„åœ–ç‰‡
+                // å°‡æ¯å€‹åƒç´ èª¿æ•´ç‚ºè¨­å®šçš„é¡è‰²
                 for (int i = 0; i < baseMapWidth; i++) {
                     for (int j = 0; j < baseMapHeight; j++) {
                         baseMap.setRGB(i, j, rgb);
                     }
                 }
-                // «Ø¥ßurl¹Ï¤ù°Ï
+                // å»ºç«‹urlåœ–ç‰‡å€
                 BufferedImage image = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_BGR);
                 Graphics imageGraphics = image.createGraphics();
-                imageGraphics.drawImage(img, 0, 0, newWidth, newHeight, null); // µe¤Jurl¹Ï¤ù¤Î³]©w·s¼e°ª
+                imageGraphics.drawImage(img, 0, 0, newWidth, newHeight, null); // ç•«å…¥urlåœ–ç‰‡åŠè¨­å®šæ–°å¯¬é«˜
  
-                // ¨ú±o©³¹ÏªºÃ¸¹Ï°Ï
+                // å–å¾—åº•åœ–çš„ç¹ªåœ–å€
                 Graphics baseMapGraphics = baseMap.getGraphics();
-                // µe¤J½Õ¾ã¦nªº·surl¹Ï¤ù(´N¬O©³¹Ï¥Õ¦â¡A¹Ï¤ù»\¦b«e­±¤@¼h)¡A³]©w°ª±q31px¶}©l¡A0~31px«hÅã¥Ü¦¨¥Õ¦â¡A§e²{¸m¤¤®ÄªG
+                // ç•«å…¥èª¿æ•´å¥½çš„æ–°urlåœ–ç‰‡(å°±æ˜¯åº•åœ–ç™½è‰²ï¼Œåœ–ç‰‡è“‹åœ¨å‰é¢ä¸€å±¤)ï¼Œè¨­å®šé«˜å¾31pxé–‹å§‹ï¼Œ0~31pxå‰‡é¡¯ç¤ºæˆç™½è‰²ï¼Œå‘ˆç¾ç½®ä¸­æ•ˆæœ
                 baseMapGraphics.drawImage(image, 0, 31, null);
-                // ¤U¸ü³Ì«á³B²z§¹¦¨ªº°ò¥»¹Ï
+                // ä¸‹è¼‰æœ€å¾Œè™•ç†å®Œæˆçš„åŸºæœ¬åœ–
                 ImageIO.write(baseMap, filenameExtension, new File(imgPathAndName));
                 
-            } else { // ¬Û¦P¬°¥¿¤è§Î¡Aª½±µ¤U¸ü
+            } else { // ç›¸åŒç‚ºæ­£æ–¹å½¢ï¼Œç›´æ¥ä¸‹è¼‰
                 ImageIO.write(img, filenameExtension, new File(imgPathAndName));
             }
         }
         
 		imgPath = "img/user/" + getCustomer_info_id() + "/" + sdf.format(date) + "/original/" + adSeq + "." + filenameExtension;
-		log.info("¤U¸ü¹Ï¤ùµ²§ô");
+		log.info("ä¸‹è¼‰åœ–ç‰‡çµæŸ");
 		return imgPath;
 	}
 
 	/**
-	 * ÀË¬d¬ÛÃö¸ê®Æ¬O§_¥¿½T
+	 * æª¢æŸ¥ç›¸é—œè³‡æ–™æ˜¯å¦æ­£ç¢º
 	 * @param vo
 	 * @throws JSONException 
 	 */
 	private void doAdAdAddTmgManyURLCheckData(PfpAdManyURLVO vo) throws JSONException {
-		//ÀË¬dÃöÁä¦r¤ñ¹ï¤è¦¡¬O§_¿ï¨ú¡C¼s§iÃş«¬0:¥ş³¡ 1:·j´M¼s§i+Áp¼½ºô¼s§i ¤~¦³¿é¤JÃöÁä¦rÄæ¦ì³¡¤À && keywords.length != 0 
+		//æª¢æŸ¥é—œéµå­—æ¯”å°æ–¹å¼æ˜¯å¦é¸å–ã€‚å»£å‘Šé¡å‹0:å…¨éƒ¨ 1:æœå°‹å»£å‘Š+è¯æ’­ç¶²å»£å‘Š æ‰æœ‰è¼¸å…¥é—œéµå­—æ¬„ä½éƒ¨åˆ† && keywords.length != 0 
 		if (keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) 
 				&& StringUtils.isBlank(adKeywordPhraseOpen) && StringUtils.isBlank(adKeywordPrecisionOpen)) {
-			vo.setMessage("½Ğ¿ï¾ÜÃöÁä¦r¤ñ¹ï¤è¦¡¡I");
-		} else if (!adFastPublishUrlInfo.contains("\"Y\"")) { // ÀË¬d¬O§_¿ï¨úª«¥ó
-			vo.setMessage("©|¥¼¿ï¾Ü°Ó«~ª«¥ó");
+			vo.setMessage("è«‹é¸æ“‡é—œéµå­—æ¯”å°æ–¹å¼ï¼");
+		} else if (!adFastPublishUrlInfo.contains("\"Y\"")) { // æª¢æŸ¥æ˜¯å¦é¸å–ç‰©ä»¶
+			vo.setMessage("å°šæœªé¸æ“‡å•†å“ç‰©ä»¶");
 		}
 	}
 	
@@ -695,7 +695,7 @@ public class AdAddAction extends BaseCookieAction{
 	
 	
 	/*
-	 * Àx¦s°Ó«~¼s§i¤W½Z¸ê®Æ
+	 * å„²å­˜å•†å“å»£å‘Šä¸Šç¨¿è³‡æ–™
 	 * 
 	 * */
 	public String doAdAdAddProd() {
@@ -703,16 +703,16 @@ public class AdAddAction extends BaseCookieAction{
 			log.info(">>>>>> doAdAdAddProd adGroupSeq:"+adGroupSeq);
 			pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 			if(pfpAdGroup == null){
-				result = "¤ÀÃş¿ù»~";
+				result = "åˆ†é¡éŒ¯èª¤";
 				return SUCCESS;
 			}
 			if(!pfpAdGroup.getPfpAdAction().getPfpCustomerInfo().getCustomerInfoId().equals(super.getCustomer_info_id())){
-				result = "¤ÀÃş±b¤á¿ù»~";
+				result = "åˆ†é¡å¸³æˆ¶éŒ¯èª¤";
 				return SUCCESS;
 			}
 			IAd adObject = adFactory.getaAdObject(EnumAdStyleType.AD_STYLE_PRODUCT);
 			adObject.doAdAdAdd(this);
-			// ¶}±Ò¼s§i¤ÀÃş
+			// é–‹å•Ÿå»£å‘Šåˆ†é¡
 			if(pfpAdGroup.getAdGroupStatus() != 4){
 				pfpAdGroup.setAdGroupStatus(4);
 				pfpAdGroupService.save(pfpAdGroup);
@@ -727,7 +727,7 @@ public class AdAddAction extends BaseCookieAction{
 	}
 	
 	/*
-	 * Àx¦s¼v­µ¤W½Z¸ê®Æ
+	 * å„²å­˜å½±éŸ³ä¸Šç¨¿è³‡æ–™
 	 * 
 	 * */
 	public String doAdAdAddVideo() {
@@ -748,7 +748,7 @@ public class AdAddAction extends BaseCookieAction{
 			Date date = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 			
-			//1.Àx¦s¤W¶Ç¹Ï¤ù
+			//1.å„²å­˜ä¸Šå‚³åœ–ç‰‡
 			String originalPath = photoDbPathNew+super.getCustomer_info_id()+"/"+sdf.format(date)+"/original";
 			String temporalPath = photoDbPathNew+super.getCustomer_info_id()+"/"+sdf.format(date)+"/temporal";
 			
@@ -756,11 +756,11 @@ public class AdAddAction extends BaseCookieAction{
 			JSONArray adDetailInfoArray = new JSONArray(videoDetailMap[0].toString());
 			JSONObject picInfoJson = null;
 			
-			//ÀË¬d¬O§_¦³¤U¸ü¹Lªº¼v¤ù
+			//æª¢æŸ¥æ˜¯å¦æœ‰ä¸‹è¼‰éçš„å½±ç‰‡
 			PfpAdVideoSource pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adVideoURL);
 			
 			
-			//®Ú¾Ú¤Ø¤o«Ø¥ß©ú²Ó
+			//æ ¹æ“šå°ºå¯¸å»ºç«‹æ˜ç´°
 			for (int i = 0; i<adDetailInfoArray.length(); i++) {
 				String adVideoSize = "";
 				boolean isBannerSize = true;
@@ -794,7 +794,7 @@ public class AdAddAction extends BaseCookieAction{
 				addAd(pfpAdGroup,templateAdSeq);
 				PfpAd pfpAd = pfpAdService.get(adSeq);
 				
-				//ÅÜ§ó¼È¦s¹Ï¤ùÀÉ¦W¬°¦¹¦¸¤W¶Ç¦W²Ó§Ç¸¹
+				//è®Šæ›´æš«å­˜åœ–ç‰‡æª”åç‚ºæ­¤æ¬¡ä¸Šå‚³åç´°åºè™Ÿ
 				if(isBannerSize){
 					customerImgFile = new File(originalPath + "/" + picInfoJson.getString("adSeq")+"."+picInfoJson.getString("format"));
 					File originalRenameFile  = new File(originalPath+"/"+adSeq+"."+picInfoJson.getString("format"));
@@ -810,7 +810,7 @@ public class AdAddAction extends BaseCookieAction{
 					customerImgFile.renameTo(temporalRenameFile);
 				}
 				
-				//1.¶}©l·s¼W©ú²Ó
+				//1.é–‹å§‹æ–°å¢æ˜ç´°
 				adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
 				PfpAdDetail pfpAdDetail = new PfpAdDetail();
 				pfpAdDetail.setAdDetailSeq(adDetailSeq);
@@ -829,7 +829,7 @@ public class AdAddAction extends BaseCookieAction{
 				pfpAdDetail.setAdDetailCreateTime(date);
 				pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
 				
-				//2.Àx¦s¼v¤ùºô§}¡B¼v¤ù³sµ²ºô§}¡B¼v¤ù¤Ø¤o©ú²Ó
+				//2.å„²å­˜å½±ç‰‡ç¶²å€ã€å½±ç‰‡é€£çµç¶²å€ã€å½±ç‰‡å°ºå¯¸æ˜ç´°
 				if(adLinkURL.indexOf("http") < 0){
 					adLinkURL = "http://"+adLinkURL;
 				}
@@ -843,21 +843,21 @@ public class AdAddAction extends BaseCookieAction{
 					saveAdDetail("N" ,"video_vertical",pool,"dad_201303070013");
 				}
 
-				//3.Àx¦s¼v¤ù¤U¸üª¬ºA»P¦ì¸m©ú²Ó
+				//3.å„²å­˜å½±ç‰‡ä¸‹è¼‰ç‹€æ…‹èˆ‡ä½ç½®æ˜ç´°
 				if(pfpAdVideoSource == null){
-					saveAdDetail("©|¥¼¤U¸ü" ,"mp4_path",pool,EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
-					saveAdDetail("©|¥¼¤U¸ü" ,"webm_path",pool,EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
+					saveAdDetail("å°šæœªä¸‹è¼‰" ,"mp4_path",pool,EnumAdDetail.define_ad_pfp_mp4.getAdDetailName());
+					saveAdDetail("å°šæœªä¸‹è¼‰" ,"webm_path",pool,EnumAdDetail.define_ad_pfp_webm.getAdDetailName());
 					saveAdDetail(adVideoURL ,"mp4_url",pool,EnumAdDetail.define_ad_seq_youtube_mp4.getAdDetailName());
 					saveAdDetail(adVideoURL ,"webm_url",pool,EnumAdDetail.define_ad_seq_youtube_webm.getAdDetailName());
-					saveAdDetail("©|¥¼¤U¸ü" ,"video_status",pool,"");
+					saveAdDetail("å°šæœªä¸‹è¼‰" ,"video_status",pool,"");
 					saveAdDetail(videoTime ,"video_seconds",pool,"");
 					String videpSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_VIDEO_SOURCE, "_");
 					pfpAdVideoSource = new PfpAdVideoSource();
 					pfpAdVideoSource.setAdVideoSeq(videpSeq);
 					pfpAdVideoSource.setAdVideoStatus(0);
 					pfpAdVideoSource.setAdVideoUrl(adVideoURL);
-					pfpAdVideoSource.setAdVideoWebmPath("©|¥¼¤U¸ü");
-					pfpAdVideoSource.setAdVideoMp4Path("©|¥¼¤U¸ü");
+					pfpAdVideoSource.setAdVideoWebmPath("å°šæœªä¸‹è¼‰");
+					pfpAdVideoSource.setAdVideoMp4Path("å°šæœªä¸‹è¼‰");
 					if(verticalAd){
 						pfpAdVideoSource.setVideoVertical("Y");						
 					}else{
@@ -880,13 +880,13 @@ public class AdAddAction extends BaseCookieAction{
 					}
 				}
 				
-				//·s¼W²Ä¤T¤è°»´ú
+				//æ–°å¢ç¬¬ä¸‰æ–¹åµæ¸¬
 				saveAdDetail("" ,"tracking_code",pool,"dad_tracking_code");
 
 				adSeq = null;
 			}
 			
-			// ¶}±Ò¼s§i¤ÀÃş
+			// é–‹å•Ÿå»£å‘Šåˆ†é¡
 			pfpAdGroup.setAdGroupStatus(4);
 			pfpAdGroupService.save(pfpAdGroup);
 			
@@ -899,19 +899,19 @@ public class AdAddAction extends BaseCookieAction{
 		}
 	}
 
-	// ·s¼W¤å¦r¦¡¼s§i
+	// æ–°å¢æ–‡å­—å¼å»£å‘Š
 	@Transactional
 	public String doAdAdAddTxt() throws Exception {
 		log.info("doAdAdAdd => adGroupSeq = " + adGroupSeq + "; saveAndNew = '" + saveAndNew + "'");
-		// ÀË¬d adStyle ¬O§_¥¿½T¡A¥¿½Tªº¸Ü¡A³]©w adPoolSeq¡BtemplateProductSeq
+		// æª¢æŸ¥ adStyle æ˜¯å¦æ­£ç¢ºï¼Œæ­£ç¢ºçš„è©±ï¼Œè¨­å®š adPoolSeqã€templateProductSeq
 		chkAdStyle();
-		// ÀË¬d Form ¸ê®Æ¬O§_¥¿½T
+		// æª¢æŸ¥ Form è³‡æ–™æ˜¯å¦æ­£ç¢º
 		chkAdData1();
 		if(message != null && !message.equals("")) {
 			return INPUT;
 		}
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-		// ·s¼W¼s§i
+		// æ–°å¢å»£å‘Š
 		addAd(pfpAdGroup,null);
 		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
 		for (int i = 0; i < adDetailID.length; i++) {
@@ -940,16 +940,16 @@ public class AdAddAction extends BaseCookieAction{
 			pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
 		}
 
-		// ·s¼WÃöÁä¦r
+		// æ–°å¢é—œéµå­—
 		addKeywords(pfpAdGroup);
-		//·s¼W±Æ°£ÃöÁä¦r
+		//æ–°å¢æ’é™¤é—œéµå­—
 		addExcludeKeywords(pfpAdGroup);
 
-		// ¶}±Ò¼s§i¤ÀÃş
+		// é–‹å•Ÿå»£å‘Šåˆ†é¡
 		pfpAdGroup.setAdGroupStatus(4);
 		pfpAdGroupService.save(pfpAdGroup);
 
-		// ¬O§_¬° "Àx¦s«á¦A·s¼W¼s§i"
+		// æ˜¯å¦ç‚º "å„²å­˜å¾Œå†æ–°å¢å»£å‘Š"
 		if (saveAndNew != null && saveAndNew.equals("save+new")) {
 			return "saveNew";
 		}
@@ -958,9 +958,9 @@ public class AdAddAction extends BaseCookieAction{
 
 	private void chkAdStyle() {
 		if (StringUtils.isEmpty(adStyle) || (!adStyle.equals("TXT") && !adStyle.equals("TMG"))) {
-			message = "½Ğ¿ï¾Ü¼s§i¼Ë¦¡¡I";
+			message = "è«‹é¸æ“‡å»£å‘Šæ¨£å¼ï¼";
 		} else if (!adStyle.equals("TXT") && !adStyle.equals("TMG")) {
-			message = "½Ğ¿ï¾Ü¼s§i¼Ë¦¡¡I";
+			message = "è«‹é¸æ“‡å»£å‘Šæ¨£å¼ï¼";
 		} else {
 			if(adStyle.equals("TXT")) {
 				adPoolSeq = EnumAdStyle.TXT.getAdPoolSeq();
@@ -975,35 +975,35 @@ public class AdAddAction extends BaseCookieAction{
 	private void chkAdData1() {
 		try {
 			if (StringUtils.isEmpty(adClass)) {
-				message = "½Ğ¿ï¾Ü¼s§i¤ÀÃş¡I";
+				message = "è«‹é¸æ“‡å»£å‘Šåˆ†é¡ï¼";
 			}
 
 			if(keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
 					&& StringUtils.isBlank(adKeywordPrecisionOpen)){
-				message = "½Ğ¿ï¾ÜÃöÁä¦r¤ñ¹ï¤è¦¡¡I";
+				message = "è«‹é¸æ“‡é—œéµå­—æ¯”å°æ–¹å¼ï¼";
 			}
 			
 			for(int i = 0; i < adDetailID.length; i++) {
 				if (StringUtils.isEmpty(adDetailContent[i])) {
 					if(i == 0 && adStyle.equals("TMG")) {
-						//message = "½Ğ¿é¤J" + adDetailName[i] + " ¡I";
+						//message = "è«‹è¼¸å…¥" + adDetailName[i] + " ï¼";
 					}
 				} else {
 					if (adDetailID[i].equals("title")) {
 						if (adDetailContent[i].length() > 17) {
-							message = "¼s§i¼ĞÃD¤£¥i¶W¹L 17  ¦r¡I";
+							message = "å»£å‘Šæ¨™é¡Œä¸å¯è¶…é 17  å­—ï¼";
 						}
 					} else if (adDetailID[i].equals("content")) {
 						if (adDetailContent[i].length() > 38) {
-							message = "¼s§i¤º®e¤£¥i¶W¹L 38  ¦r¡I";
+							message = "å»£å‘Šå…§å®¹ä¸å¯è¶…é 38  å­—ï¼";
 						}
 					} else if (adDetailID[i].equals("real_url")) {
 						if (StringUtil.isEmpty(adDetailContent[i])) {
-							message = "½Ğ¶ñ¼g¼s§i³sµ²ºô§}.";
+							message = "è«‹å¡«å¯«å»£å‘Šé€£çµç¶²å€.";
 						}
 
 						if (adDetailContent[i].length() > 1024) {
-							message = "¼s§i³sµ²ºô§}¤£¥i¶W¹L 1024¦r¡I";
+							message = "å»£å‘Šé€£çµç¶²å€ä¸å¯è¶…é 1024å­—ï¼";
 						} else {
 							String url = adDetailContent[i];
 							int urlState = 0;
@@ -1012,13 +1012,13 @@ public class AdAddAction extends BaseCookieAction{
 							}
 							urlState = HttpUtil.getInstance().getStatusCode(url);
 							if (urlState < 200 && urlState >= 300) {
-								message = "½Ğ¿é¤J¥¿½Tªº¼s§i³sµ²ºô§}¡I";
+								message = "è«‹è¼¸å…¥æ­£ç¢ºçš„å»£å‘Šé€£çµç¶²å€ï¼";
 							}
 						}
 					} else if (adDetailID[i].equals("show_url")) {
 						
 						if (StringUtil.isEmpty(adDetailContent[i])) {
-							message = "½Ğ¶ñ¼g¼s§iÅã¥Üºô§}.";
+							message = "è«‹å¡«å¯«å»£å‘Šé¡¯ç¤ºç¶²å€.";
 						}
 						String url = adDetailContent[i];
 						int urlState = 0;
@@ -1027,7 +1027,7 @@ public class AdAddAction extends BaseCookieAction{
 						}
 						urlState = HttpUtil.getInstance().getStatusCode(url);
 						if (urlState < 200 && urlState >= 300) {
-							message = "½Ğ¿é¤J¥¿½Tªº¼s§iÅã¥Üºô§}¡I";
+							message = "è«‹è¼¸å…¥æ­£ç¢ºçš„å»£å‘Šé¡¯ç¤ºç¶²å€ï¼";
 						}
 					}
 				}
@@ -1037,7 +1037,7 @@ public class AdAddAction extends BaseCookieAction{
 		}
 	}
 
-	//·s¼W¼s§i
+	//æ–°å¢å»£å‘Š
 	public void addAd(PfpAdGroup pfpAdGroup, String adAssignTadSeq) {
 		try {
 			log.info(">>>>> time: " + new Date());
@@ -1064,7 +1064,7 @@ public class AdAddAction extends BaseCookieAction{
 		}
 	}
 
-	// ·s¼WÃöÁä¦r
+	// æ–°å¢é—œéµå­—
 	private void addKeywords(PfpAdGroup pfpAdGroup) {
 	    try {
 			if(keywords.length == 0){
@@ -1078,7 +1078,7 @@ public class AdAddAction extends BaseCookieAction{
 					pfpAdKeyword.setAdKeywordSeq(adKeywordSeq);
 					pfpAdKeyword.setPfpAdGroup(pfpAdGroup);
 					pfpAdKeyword.setAdKeyword(keyword);
-					// ¼sªx¤ñ¹ï³]©w
+					// å»£æ³›æ¯”å°è¨­å®š
 					if (StringUtils.isNotBlank(adKeywordOpen)) {
 						pfpAdKeyword.setAdKeywordSearchPrice(pfpAdGroup.getAdGroupSearchPrice());
 						pfpAdKeyword.setAdKeywordOpen(1);
@@ -1086,7 +1086,7 @@ public class AdAddAction extends BaseCookieAction{
 						pfpAdKeyword.setAdKeywordSearchPrice(0);
 						pfpAdKeyword.setAdKeywordOpen(0);
 					}
-					// µü²Õ¤ñ¹ï³]©w
+					// è©çµ„æ¯”å°è¨­å®š
 					if (StringUtils.isNotBlank(adKeywordPhraseOpen)) {
 						pfpAdKeyword.setAdKeywordSearchPhrasePrice(pfpAdGroup.getAdGroupSearchPrice());
 						pfpAdKeyword.setAdKeywordPhraseOpen(1);
@@ -1094,7 +1094,7 @@ public class AdAddAction extends BaseCookieAction{
 						pfpAdKeyword.setAdKeywordSearchPhrasePrice(0);
 						pfpAdKeyword.setAdKeywordPhraseOpen(0);
 					}
-					// ºë·Ç¤ñ¹ï³]©w
+					// ç²¾æº–æ¯”å°è¨­å®š
 					if (StringUtils.isNotBlank(adKeywordPrecisionOpen)) {
 						pfpAdKeyword.setAdKeywordSearchPrecisionPrice(pfpAdGroup.getAdGroupSearchPrice());
 						pfpAdKeyword.setAdKeywordPrecisionOpen(1);
@@ -1120,21 +1120,21 @@ public class AdAddAction extends BaseCookieAction{
 	}
 
 	/**
-	 * ÀË¬d¬O§_­«ÂĞ·s¼W
-	 * 1. ¤ÀÃş¤U¤w·s¼WÃöÁä¦r
-	 * 2. ¤ÀÃş¤U¤w±Æ°£ÃöÁä¦r
+	 * æª¢æŸ¥æ˜¯å¦é‡è¦†æ–°å¢
+	 * 1. åˆ†é¡ä¸‹å·²æ–°å¢é—œéµå­—
+	 * 2. åˆ†é¡ä¸‹å·²æ’é™¤é—œéµå­—
 	 */
 	private List<String> checkKeywords(String adGroupSeq, String[] keywords) {
 		List<String> list = null;
 		if (StringUtils.isNotBlank(adGroupSeq) && keywords != null && StringUtils.isNotBlank(keywords.toString())) {
 			list = new ArrayList<String>();
 			List<String> existKeywords = new ArrayList<String>();
-			// ¤ÀÃş¤U¤w·s¼WÃöÁä¦r
+			// åˆ†é¡ä¸‹å·²æ–°å¢é—œéµå­—
 			List<PfpAdKeyword> adKeywords = pfpAdKeywordService.findAdKeywords(adGroupSeq);
 			for (PfpAdKeyword keyword : adKeywords) {
 				existKeywords.add(keyword.getAdKeyword());
 			}
-			// ¤ÀÃş¤U¤w±Æ°£ÃöÁä¦r
+			// åˆ†é¡ä¸‹å·²æ’é™¤é—œéµå­—
 			List<PfpAdExcludeKeyword> adExcludeKeywords = pfpAdExcludeKeywordService.findAdExcludeKeywords(adGroupSeq);
 			for (PfpAdExcludeKeyword keyword : adExcludeKeywords) {
 				existKeywords.add(keyword.getAdExcludeKeyword());
@@ -1163,7 +1163,7 @@ public class AdAddAction extends BaseCookieAction{
 		return list;
 	}
 
-	// ·s¼W±Æ°£ÃöÁä¦r
+	// æ–°å¢æ’é™¤é—œéµå­—
 	private void addExcludeKeywords(PfpAdGroup pfpAdGroup) {
 		try {
 			if (excludeKeywords != null && excludeKeywords.length > 0) {
@@ -1187,9 +1187,9 @@ public class AdAddAction extends BaseCookieAction{
 	}
 
 	/**
-	 * §å¦¸¤W¶Ç¹Ï¹³¼s§i
-	 * 1.¨ú±oªì©lµe­±
-	 * 2.¨ú±o¤Ø¤o¦Cªí
+	 * æ‰¹æ¬¡ä¸Šå‚³åœ–åƒå»£å‘Š
+	 * 1.å–å¾—åˆå§‹ç•«é¢
+	 * 2.å–å¾—å°ºå¯¸åˆ—è¡¨
 	 * @throws Exception
 	 * */
 	public String adAddImgView() throws Exception{
@@ -1200,7 +1200,7 @@ public class AdAddAction extends BaseCookieAction{
 	    adType = pfpAdGroup.getPfpAdAction().getAdType().toString();
 	    adDevice = pfpAdGroup.getPfpAdAction().getAdDevice().toString();
 	    List<PfbxSize> pfbSizeList = pfbSizeService.loadAll();
-	    //·j¯Á¼s§i(¹q¸£)¤Ø¤o¦Cªí
+	    //æœç´¢å»£å‘Š(é›»è…¦)å°ºå¯¸åˆ—è¡¨
 	    if(Integer.parseInt(adType) == EnumAdType.AD_ALL.getType() || Integer.parseInt(adType) == EnumAdType.AD_SEARCH.getType()){
 	    	for(EnumAdSearchPCSize enumAdSearchPCSize : EnumAdSearchPCSize.values()){
 	    		for (PfbxSize pfbxSize : pfbSizeList) {
@@ -1210,7 +1210,7 @@ public class AdAddAction extends BaseCookieAction{
 	    		}
 	    	}
 	    }
-	    //¤º®e¼s§i(¹q¸£)¤Ø¤o¦Cªí
+	    //å…§å®¹å»£å‘Š(é›»è…¦)å°ºå¯¸åˆ—è¡¨
 	    Set<PfbxSize> pfbxSizeSet = new HashSet<>();
 	    if(Integer.parseInt(adType) == EnumAdType.AD_ALL.getType() || Integer.parseInt(adType) == EnumAdType.AD_CHANNEL.getType()){
 	    	for(EnumAdChannelPCSize enumAdChannelPCSize : EnumAdChannelPCSize.values()){
@@ -1223,7 +1223,7 @@ public class AdAddAction extends BaseCookieAction{
 	    }
 	    channelPCSizeList = new ArrayList<>(pfbxSizeSet);
 	    
-	    //·j¯Á¼s§i(¦æ°Ê¸Ë¸m)¤Ø¤o¦Cªí(¥Ø«e¶È´ú¸Õ®É¥´¶})
+	    //æœç´¢å»£å‘Š(è¡Œå‹•è£ç½®)å°ºå¯¸åˆ—è¡¨(ç›®å‰åƒ…æ¸¬è©¦æ™‚æ‰“é–‹)
 	    if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
 	    		Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_MOBILE.getDevType()){
 	    	for(EnumAdSearchMobileSize enumAdSearchMobileSize : EnumAdSearchMobileSize.values()){
@@ -1234,7 +1234,7 @@ public class AdAddAction extends BaseCookieAction{
 	    		}
 	    	}
 	    }
-	    //¤º®e¼s§i(¦æ°Ê¸Ë¸m)¤Ø¤o¦Cªí
+	    //å…§å®¹å»£å‘Š(è¡Œå‹•è£ç½®)å°ºå¯¸åˆ—è¡¨
 	    if(Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_ALL.getDevType() || 
 	    		Integer.parseInt(adDevice) == EnumAdDevice.DEVICE_MOBILE.getDevType()){
 	    	for(EnumAdCannelMobileSize enumAdCannelMobileSize : EnumAdCannelMobileSize.values()){
@@ -1246,10 +1246,10 @@ public class AdAddAction extends BaseCookieAction{
 	    	}
 	    }	
 	    
-	    // ¨ú¥X¤ÀÃş©ÒÄİÃöÁä¦r
+	    // å–å‡ºåˆ†é¡æ‰€å±¬é—œéµå­—
 	    pfpAdKeywords = pfpAdKeywordService.findAdKeywords(null, adGroupSeq, null, null, null, "10");
 
-	    // ¨ú¥X¤ÀÃş©ÒÄİ±Æ°£ÃöÁä¦r
+	    // å–å‡ºåˆ†é¡æ‰€å±¬æ’é™¤é—œéµå­—
 	    pfpAdExcludeKeywords = pfpAdExcludeKeywordService.getPfpAdExcludeKeywords(adGroupSeq, super.getCustomer_info_id());
 
 	    if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
@@ -1260,11 +1260,11 @@ public class AdAddAction extends BaseCookieAction{
 	}
 
 	/**
-	 * ·s¼W¼s§i©ú²Ó
-	 * @param content     ¼s§i©ú²Ó¤º®e
-	 * @param adDetailId  ¤¸¥óid
-	 * @param adPoolSeq   ¸ê®Æ¨Ó·½§Ç¸¹
-	 * @param defineAdSeq ¼s§i©w¸q§Ç¸¹
+	 * æ–°å¢å»£å‘Šæ˜ç´°
+	 * @param content     å»£å‘Šæ˜ç´°å…§å®¹
+	 * @param adDetailId  å…ƒä»¶id
+	 * @param adPoolSeq   è³‡æ–™ä¾†æºåºè™Ÿ
+	 * @param defineAdSeq å»£å‘Šå®šç¾©åºè™Ÿ
 	 * @throws Exception
 	 */
 	public void saveAdDetail(String content, String adDetailId, String adPoolSeq, String defineAdSeq) throws Exception {
@@ -1289,11 +1289,11 @@ public class AdAddAction extends BaseCookieAction{
 	}
 	
 	/**
-	 * ·s¼W¼s§i©ú²Ó - ¨S¦³­×§ïtemplateProductSeq
-	 * @param content     ¼s§i©ú²Ó¤º®e
-	 * @param adDetailId  ¤¸¥óid
-	 * @param adPoolSeq   ¸ê®Æ¨Ó·½§Ç¸¹
-	 * @param defineAdSeq ¼s§i©w¸q§Ç¸¹
+	 * æ–°å¢å»£å‘Šæ˜ç´° - æ²’æœ‰ä¿®æ”¹templateProductSeq
+	 * @param content     å»£å‘Šæ˜ç´°å…§å®¹
+	 * @param adDetailId  å…ƒä»¶id
+	 * @param adPoolSeq   è³‡æ–™ä¾†æºåºè™Ÿ
+	 * @param defineAdSeq å»£å‘Šå®šç¾©åºè™Ÿ
 	 * @throws Exception
 	 */
 	private void newSaveAdDetail(String content, String adDetailId, String adPoolSeq, String defineAdSeq) throws Exception {
@@ -1316,8 +1316,8 @@ public class AdAddAction extends BaseCookieAction{
 	}
 	
 	/**
-	 * ¶i¦æ§å¦¸¤W¶Ç¹Ï¹³¼s§i
-	 * 1.¹Ï¤ù¦sÀÉ¦Ü¼È¦sfile
+	 * é€²è¡Œæ‰¹æ¬¡ä¸Šå‚³åœ–åƒå»£å‘Š
+	 * 1.åœ–ç‰‡å­˜æª”è‡³æš«å­˜file
 	 * */
 	public String uploadImg() throws Exception{
 	    log.info("Start multipart img upload");
@@ -1355,7 +1355,7 @@ public class AdAddAction extends BaseCookieAction{
     			
     			adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
     			
-				//«Ø¥ß¸ô®|
+				//å»ºç«‹è·¯å¾‘
 				log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
 				log.info(">>>2.path>>"+customerImgFile.getPath());
 				log.info(customerImgFile.exists());
@@ -1374,16 +1374,16 @@ public class AdAddAction extends BaseCookieAction{
 				int FileAmount = checkFileAmount(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
 				log.info(">>>>>>>>>>>>>>>>>>>>>   FileAmount  = " + FileAmount);
 				
-				//ÀË¬dindex.html¬O§_¦s¦b
+				//æª¢æŸ¥index.htmlæ˜¯å¦å­˜åœ¨
 				String errorMsg = "";
 				File indexHtmlFile = new File(getIndexHtmlPath(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq));
 				
 				if(!indexHtmlFile.exists()){
-					errorMsg = "HTMLÀÉ¦W¿ù»~";
+					errorMsg = "HTMLæª”åéŒ¯èª¤";
 				}
 				
 				if(FileAmount > 40){
-					errorMsg = "§¨±aÀÉ®×¶W¹L40 ­Ó";
+					errorMsg = "å¤¾å¸¶æª”æ¡ˆè¶…é40 å€‹";
 				}
 				
 				if(indexHtmlFile.exists() && FileAmount <= 40){
@@ -1402,7 +1402,7 @@ public class AdAddAction extends BaseCookieAction{
 					if(docHtml.indexOf("<!doctype html>") != -1 && !htmlTag.isEmpty() && !headTag.isEmpty() && !bodyTag.isEmpty() && !metaTag.isEmpty()){
 						html5Repeat = "yes";
 						
-						//±Nindex.html§ï¬°index.htm
+						//å°‡index.htmlæ”¹ç‚ºindex.htm
 						String indexHtmFilePath = indexHtmlFile.getPath().replaceAll("\\\\\\\\", "/");
 						indexHtmFilePath = indexHtmFilePath.replaceAll("\\\\", "/");
 						log.info(">>>>>>>>>>>>>>>>>>>>     indexHtmFilePath = " + indexHtmFilePath);
@@ -1431,7 +1431,7 @@ public class AdAddAction extends BaseCookieAction{
 								}
 							}
 							
-							//ÅçÃÒªø¡B¼e¬O§_¬°¼Æ¦r
+							//é©—è­‰é•·ã€å¯¬æ˜¯å¦ç‚ºæ•¸å­—
 							Integer intWidth = Integer.parseInt(imgWidth);
 							Integer intHeight = Integer.parseInt(imgHeight);
 						} catch(Exception error) {
@@ -1444,21 +1444,21 @@ public class AdAddAction extends BaseCookieAction{
 						
 					} else {
 						if(docHtml.indexOf("<!doctype html>") == -1){
-							errorMsg = "&lt;!DOCTYPE html&gt;«Å§i¿ù»~";
+							errorMsg = "&lt;!DOCTYPE html&gt;å®£å‘ŠéŒ¯èª¤";
 						}
 						if(htmlTag.isEmpty()){
-							errorMsg = "&lt;html&gt;¼ĞÅÒ¿ù»~";
+							errorMsg = "&lt;html&gt;æ¨™ç±¤éŒ¯èª¤";
 						}
 						if(headTag.isEmpty()){
-							errorMsg = "&lt;head&gt;¼ĞÅÒ¿ù»~";
+							errorMsg = "&lt;head&gt;æ¨™ç±¤éŒ¯èª¤";
 						}
 						if(bodyTag.isEmpty()){
-							errorMsg = "&lt;body&gt;¼ĞÅÒ¿ù»~";
+							errorMsg = "&lt;body&gt;æ¨™ç±¤éŒ¯èª¤";
 						}
 						if(metaTag.isEmpty()){
-							errorMsg = "&lt;meta&gt;¼ĞÅÒ¿ù»~";
+							errorMsg = "&lt;meta&gt;æ¨™ç±¤éŒ¯èª¤";
 						}
-						//errorMsg = "»P³W½d¤£²Å";
+						//errorMsg = "èˆ‡è¦ç¯„ä¸ç¬¦";
 					}
 				}
 				
@@ -1478,7 +1478,7 @@ public class AdAddAction extends BaseCookieAction{
                  }
                  stream.close();
     	    	
-    	    	//¨ú±oÀÉ®×ªºMD5
+    	    	//å–å¾—æª”æ¡ˆçš„MD5
     	    	MessageDigest md = MessageDigest.getInstance("MD5");
     	        FileInputStream fis = new FileInputStream(file);
     	     
@@ -1502,7 +1502,7 @@ public class AdAddAction extends BaseCookieAction{
     	        	imgRepeat = "yes";
     	        }
     	        
-    	      //«Ø¥ß¹Ï¤ù
+    	      //å»ºç«‹åœ–ç‰‡
         		log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
         		log.info(">>>2.path>>"+customerImgFile.getPath());
         		log.info(customerImgFile.exists());
@@ -1545,12 +1545,12 @@ public class AdAddAction extends BaseCookieAction{
 	}
 
 	/**
-	 * Àx¦s¹Ï¹³¤W½Z¸ê®Æ
+	 * å„²å­˜åœ–åƒä¸Šç¨¿è³‡æ–™
 	 * */
 	public String uploadImgSave() throws Exception{
     	PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
 
-    	//«Ø¥ßÃöÁä¦r
+    	//å»ºç«‹é—œéµå­—
     	List<String> keyWordList = new ArrayList<String>();
     	if (!keywords[0].equals("[]")) {
     	    String data = "";
@@ -1573,15 +1573,15 @@ public class AdAddAction extends BaseCookieAction{
     	    
     	    if (keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
 					&& StringUtils.isBlank(adKeywordPrecisionOpen)) {
-    		    result = "½Ğ¿ï¾ÜÃöÁä¦r¤ñ¹ï¤è¦¡¡I";
+    		    result = "è«‹é¸æ“‡é—œéµå­—æ¯”å°æ–¹å¼ï¼";
     		    return SUCCESS;
     		}
     	    
-    	    //·s¼WÃöÁä¦r
+    	    //æ–°å¢é—œéµå­—
     	    addKeywords(pfpAdGroup);
     	}
 
-    	//«Ø¥ß±Æ°£ÃöÁä¦r
+    	//å»ºç«‹æ’é™¤é—œéµå­—
     	List<String> excludeKeyWordList = new ArrayList<String>();
     	if (!excludeKeywords[0].equals("[]")) {
     	    String data = "";
@@ -1602,7 +1602,7 @@ public class AdAddAction extends BaseCookieAction{
     	    }
     	    excludeKeywords = excludeKeyWordList.toArray(new String[excludeKeyWordList.size()]);
 
-    	    //·s¼W±Æ°£ÃöÁä¦r
+    	    //æ–°å¢æ’é™¤é—œéµå­—
     	    addExcludeKeywords(pfpAdGroup);
     	}
 
@@ -1614,8 +1614,8 @@ public class AdAddAction extends BaseCookieAction{
     	JSONObject imgNameMap = new JSONObject(seqArrayJsonObject.get("imgNameMap").toString());
     	JSONObject imgMD5Map = new JSONObject(seqArrayJsonObject.get("imgMD5Map").toString());
     	
-    	// 1.¦s¼s§iÀÉ
-    	// 2.§R¼È¦s¹ÏÀÉ
+    	// 1.å­˜å»£å‘Šæª”
+    	// 2.åˆªæš«å­˜åœ–æª”
     	CommonUtilModel commonUtilModel = new CommonUtilModel();
     	String customerInfoId = super.getCustomer_info_id();
     	Date date = new Date();
@@ -1653,11 +1653,11 @@ public class AdAddAction extends BaseCookieAction{
 
         		// check adLinkURL
                 if(StringUtils.isBlank(adLinkURL)){
-                    result = "½Ğ¶ñ¼g¼s§i³sµ²ºô§}.";
+                    result = "è«‹å¡«å¯«å»£å‘Šé€£çµç¶²å€.";
                     return SUCCESS;
                 }
                 if(adLinkURL.length() > 1024) {
-                    result = "¼s§i³sµ²ºô§}¤£¥i¶W¹L 1024¦r¡I";
+                    result = "å»£å‘Šé€£çµç¶²å€ä¸å¯è¶…é 1024å­—ï¼";
                     return SUCCESS;
                 }
                 if (adLinkURL.indexOf("http") <= -1) {
@@ -1665,7 +1665,7 @@ public class AdAddAction extends BaseCookieAction{
                 }
                 int urlState = HttpUtil.getInstance().getStatusCode(adLinkURL);
                 if(urlState < 200 && urlState >= 300) {
-                    result = "½Ğ¿é¤J¥¿½Tªº¼s§i³sµ²ºô§}¡I";
+                    result = "è«‹è¼¸å…¥æ­£ç¢ºçš„å»£å‘Šé€£çµç¶²å€ï¼";
                     return SUCCESS;
                 }
 
@@ -1675,7 +1675,7 @@ public class AdAddAction extends BaseCookieAction{
         			imgName = imgNameMap.get(adSeq + "_title").toString();	
         		}
         		if(imgName.length() > 1024){
-        			result = "¿é¤Jªº¼s§i¦WºÙ¤£¥i¶W¹L 1024¦r¡I";
+        			result = "è¼¸å…¥çš„å»£å‘Šåç¨±ä¸å¯è¶…é 1024å­—ï¼";
                     return SUCCESS;
         		}
         		saveAdDetail(imgName,EnumAdDetail.title.name(), adPoolSeq,EnumAdDetail.define_ad_seq_title.getAdDetailName());
@@ -1695,15 +1695,15 @@ public class AdAddAction extends BaseCookieAction{
         			saveAdDetail(zipFile,"zipFile", adPoolSeq,null);
         		}
         		
-        		//·s¼W²Ä¤T¤è°»´ú
+        		//æ–°å¢ç¬¬ä¸‰æ–¹åµæ¸¬
     			saveAdDetail("" ,"tracking_code",adPoolSeq,"dad_tracking_code");
     	    }
     	}
 
-    	// §R°£¼È¦sÀÉ
+    	// åˆªé™¤æš«å­˜æª”
     	commonUtilModel.deleteAllTemporalImg(photoDbPathNew, customerInfoId,sdf.format(date));
 
-        // ¶}±Ò¼s§i¤ÀÃş
+        // é–‹å•Ÿå»£å‘Šåˆ†é¡
         pfpAdGroup.setAdGroupStatus(4);
         pfpAdGroupService.save(pfpAdGroup);
 
@@ -1712,7 +1712,7 @@ public class AdAddAction extends BaseCookieAction{
     }
 
 	/**
-	 * §Ö³t¤W½Zµe­±
+	 * å¿«é€Ÿä¸Šç¨¿ç•«é¢
 	 * */
 	public String adFastPublishAdd() {
 		Date d = new Date();
@@ -1723,17 +1723,17 @@ public class AdAddAction extends BaseCookieAction{
 		adType = "";
 		bookmark = "fastURLAdAdd";
 		admenuul = "fastPublishAdd";
-		adActionName = "PCHOMEÁp¼½ºô¼s§i";
-		adGroupName = "PCHOMEÁp¼½ºô¼s§i";
+		adActionName = "PCHOMEè¯æ’­ç¶²å»£å‘Š";
+		adGroupName = "PCHOMEè¯æ’­ç¶²å»£å‘Š";
 		return SUCCESS;
 	}
 	
 	/**
-	 * §Ö³t¤W½Z·s¼W¼s§i
+	 * å¿«é€Ÿä¸Šç¨¿æ–°å¢å»£å‘Š
 	 * */
 	public String doAdAdAddFastPublis() throws Exception{
 		try{
-			//¥ı©I¥s«Ø¥ß¬¡°Ê¦A©I¥s«Ø¥ß¼s§i©ú²Ó
+			//å…ˆå‘¼å«å»ºç«‹æ´»å‹•å†å‘¼å«å»ºç«‹å»£å‘Šæ˜ç´°
 			boolean doAdAdAddFastPublisDetailFlag = false;
 			if(StringUtils.isNotBlank(adActionName)){
 				doAdActionAdd();
@@ -1760,7 +1760,7 @@ public class AdAddAction extends BaseCookieAction{
 			result ="error";
 			return SUCCESS;
 		}catch(Exception e){
-			//§R°£·s¼Wªºad
+			//åˆªé™¤æ–°å¢çš„ad
 			List<String> deleteAdList = (List<String>) deleteAdMap.get("adList");
 			for (String adSeq : deleteAdList) {
 				log.info(">>>>>> delete adSeq:"+adSeq);
@@ -1786,11 +1786,11 @@ public class AdAddAction extends BaseCookieAction{
 	}
 	
 	/*
-	 * §Ö³t¤W½Z·s¼W¼s§i©ú²Ó
-	 * 1.¤£¦s¦bgroup®É·s¼W¤ÀÃş
-	 * 2.«Ø¥ßAd
-	 * 3.«Ø¥ß©ú²Ó
-	 * 4.·s¼WÃöÁä¦r  20180518 ¶}·|°Q½×¡A¥ıÃö³¬·s¼WÃöÁä¦r³¡¤À
+	 * å¿«é€Ÿä¸Šç¨¿æ–°å¢å»£å‘Šæ˜ç´°
+	 * 1.ä¸å­˜åœ¨groupæ™‚æ–°å¢åˆ†é¡
+	 * 2.å»ºç«‹Ad
+	 * 3.å»ºç«‹æ˜ç´°
+	 * 4.æ–°å¢é—œéµå­—  20180518 é–‹æœƒè¨è«–ï¼Œå…ˆé—œé–‰æ–°å¢é—œéµå­—éƒ¨åˆ†
 	 * */
 	private boolean doAdAdAddFastPublisDetail() throws Exception{
 		String referer = request.getHeader("Referer");
@@ -1802,7 +1802,7 @@ public class AdAddAction extends BaseCookieAction{
 				backPage = referer;
 			}
 			if(referer.indexOf("adGroupAdd.html") >= 0 ){
-				// ­«ºâ½Õ±±ª÷ÃB
+				// é‡ç®—èª¿æ§é‡‘é¡
 				controlPriceAPI.countProcess(pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id()));
 			}
 		}
@@ -1822,10 +1822,10 @@ public class AdAddAction extends BaseCookieAction{
 			pfpAdGroup.setAdGroupSearchPrice(Float.parseFloat(adGroupSearchPrice));
 			pfpAdGroup.setAdGroupChannelPrice(Float.parseFloat(adGroupChannelPrice));
 			pfpAdGroup.setAdGroupPriceType(EnumAdPriceType.AD_PRICE_CPC.getDbTypeName());
-			// ·s¼W¼s§i¤ÀÃş®É¡Astatus ³]©w¬°¥¼§¹¦¨
+			// æ–°å¢å»£å‘Šåˆ†é¡æ™‚ï¼Œstatus è¨­å®šç‚ºæœªå®Œæˆ
 			pfpAdGroup.setAdGroupStatus(EnumStatus.UnDone.getStatusId());
 			pfpAdGroup.setAdGroupUpdateTime(date);
-			//§ó·s¼s§i¬¡°Êª¬ºA¬°¤w§¹¦¨(¶}±Ò)
+			//æ›´æ–°å»£å‘Šæ´»å‹•ç‹€æ…‹ç‚ºå·²å®Œæˆ(é–‹å•Ÿ)
 			pfpAdGroup.getPfpAdAction().setAdActionStatus(EnumStatus.Open.getStatusId());
 			pfpAdGroupService.savePfpAdGroup(pfpAdGroup);
 			
@@ -1870,7 +1870,7 @@ public class AdAddAction extends BaseCookieAction{
 					
 					deleteAdMap.put("adList", deleteAdList);
 					
-					//·s¼W©ú²Ó
+					//æ–°å¢æ˜ç´°
 					String imgPath = addAdJson.getString("pic_url");
 					String title = addAdJson.getString("title");
 					String intact_title = addAdJson.getString("intact_title");
@@ -1893,7 +1893,7 @@ public class AdAddAction extends BaseCookieAction{
 				}
 			}
 			
-			// ·s¼WÃöÁä¦r¡C 20180518 ¶}·|°Q½×¡A¥ıÃö³¬·s¼WÃöÁä¦r³¡¤À
+			// æ–°å¢é—œéµå­—ã€‚ 20180518 é–‹æœƒè¨è«–ï¼Œå…ˆé—œé–‰æ–°å¢é—œéµå­—éƒ¨åˆ†
 //			if(!adType.equals("2")){
 //				saveKeyWord(adGroupSeq,redisAdArrayJson);
 //			}
@@ -1904,7 +1904,7 @@ public class AdAddAction extends BaseCookieAction{
 	}
 	
 	/*
-	 * §Ö³t¤W½Z·s¼WÃöÁä¦r
+	 * å¿«é€Ÿä¸Šç¨¿æ–°å¢é—œéµå­—
 	 * */
 	private void saveKeyWord(String groupSeq,JSONArray redisAdArrayJson) throws Exception{
 		PfpAdGroup pfpAdGroup = pfpAdGroupService.get(adGroupSeq);
@@ -1933,18 +1933,18 @@ public class AdAddAction extends BaseCookieAction{
 		if(keywordSize > 0){
 			this.keywords = new String[keywordSize];
 			this.keywords = keywordList.toArray(keywords);
-			//¹w³]¼sªx¤ñ¹ï
+			//é è¨­å»£æ³›æ¯”å°
 			adKeywordPrecisionOpen = "on";
 			addKeywords(pfpAdGroup);
 		}
 	}
 	
 	/*
-	 * §Ö³t¤W½Z·s¼W¼s§i¬¡°Ê
+	 * å¿«é€Ÿä¸Šç¨¿æ–°å¢å»£å‘Šæ´»å‹•
 	 * */
 	private void doAdActionAdd() throws Exception{
 		log.info("fast publist adActionAdd");
-		//¹w³]¥ş¤Ñ®É¬q
+		//é è¨­å…¨å¤©æ™‚æ®µ
 		String timeCode ="111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
 		adActionSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_ACTION, "_");
 		PfpAdAction pfpAdAction = new PfpAdAction();
@@ -1983,11 +1983,11 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdAction.setAdActionFriTime(Integer.parseInt(fri, 2));
 		pfpAdAction.setAdActionSatTime(Integer.parseInt(sat, 2));
 		pfpAdAction.setAdActionSunTime(Integer.parseInt(sun, 2));
-		//Ãn¥ú­­¨î-¬¡°Ê
+		//æ›å…‰é™åˆ¶-æ´»å‹•
 		pfpAdAction.setAdPvLimitStyle("0");
-		//Ãn¥ú­­¨î-¨C¤é
+		//æ›å…‰é™åˆ¶-æ¯æ—¥
 		pfpAdAction.setAdPvLimitPeriod("0");
-		//Ãn¥ú­­¨î-¦P¤@¨ü²³¦¸¼Æ
+		//æ›å…‰é™åˆ¶-åŒä¸€å—çœ¾æ¬¡æ•¸
 		pfpAdAction.setAdPvLimitAmount(0);
 		pfpAdAction.setAdActionStartAge(0);
 		pfpAdAction.setAdActionEndAge(99);
@@ -1998,16 +1998,16 @@ public class AdAddAction extends BaseCookieAction{
 	}
 	
 	/**
-	 * ÀË¬dÀÉ®×¼Æ
+	 * æª¢æŸ¥æª”æ¡ˆæ•¸
 	 * */
 	private int checkFileAmount(String path) {
 		int amount = 0;
 		File checkFlie = new File(path);
-		File[] files = checkFlie.listFiles(); // Àò¨ú¸ê®Æ§¨¤U­±ªº©Ò¦³ÀÉ
+		File[] files = checkFlie.listFiles(); // ç²å–è³‡æ–™å¤¾ä¸‹é¢çš„æ‰€æœ‰æª”
 		for (File f : files) {
-			// §PÂ_¬O§_¬°¸ê®Æ§¨
+			// åˆ¤æ–·æ˜¯å¦ç‚ºè³‡æ–™å¤¾
 			if (f.isDirectory()) {
-				amount += checkFileAmount(f.getPath()); // ¦pªG¬O¸ê®Æ§¨¡AÀË¬d¸Ó¸ê®Æ§¨¤ºÀÉ®×¼Æ
+				amount += checkFileAmount(f.getPath()); // å¦‚æœæ˜¯è³‡æ–™å¤¾ï¼Œæª¢æŸ¥è©²è³‡æ–™å¤¾å…§æª”æ¡ˆæ•¸
 			} else {
 				amount++;
 			}
@@ -2029,11 +2029,11 @@ public class AdAddAction extends BaseCookieAction{
 		String indexPath = "";
 
 		File checkFlie = new File(path);
-		File[] files = checkFlie.listFiles(); // Àò¨ú¸ê®Æ§¨¤U­±ªº©Ò¦³ÀÉ
+		File[] files = checkFlie.listFiles(); // ç²å–è³‡æ–™å¤¾ä¸‹é¢çš„æ‰€æœ‰æª”
 		for (File f : files) {
-			// §PÂ_¬O§_¬°¸ê®Æ§¨
+			// åˆ¤æ–·æ˜¯å¦ç‚ºè³‡æ–™å¤¾
 			if (f.isDirectory()) {
-				indexPath = getIndexHtmlPath(f.getPath()); // ¦pªG¬O¸ê®Æ§¨¡AÀË¬d¸Ó¸ê®Æ§¨¤ºÀÉ®×
+				indexPath = getIndexHtmlPath(f.getPath()); // å¦‚æœæ˜¯è³‡æ–™å¤¾ï¼Œæª¢æŸ¥è©²è³‡æ–™å¤¾å…§æª”æ¡ˆ
 			} else {
 				if (f.getPath().indexOf("index.htm") != -1) {
 					indexPath = f.getPath();

@@ -156,20 +156,11 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	var errorMsg ='';
 	var errorTitle ='';
 	
-	if(width == 1400){
-		if(Math.round(file.size/1024) < 600){
-			imgFileSize = "yes";
-		}else{
-			errorTitle = '檔案過大!';
-			errorMsg = '檔案大小上限180KB';
-		}
+	if(Math.round(file.size/1024) < 180){
+		imgFileSize = "yes";
 	}else{
-		if(Math.round(file.size/1024) < 180){
-			imgFileSize = "yes";
-		}else{
-			errorTitle = '檔案過大!';
-			errorMsg = '檔案大小上限180KB';
-		}
+		errorTitle = '檔案過大!';
+		errorMsg = '檔案大小上限180KB';
 	}
 	
 	var sizeDiv = "adSizeDiv";
@@ -177,26 +168,11 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		sizeDiv = "adHtml5SizeDiv";
 	}
 	
-	console.log(sizeDiv);
-	
 	$.each($("#" + sizeDiv + " p"), function( index, obj ) {
-		
-		console.log(obj);
-		
-		if(html5Repeat=="yes"){
-			if($(obj).text().indexOf(width+" x "+height) >= 0){
-				imgSize = "yes";
-				imgSizeFlag = true;
-				return false;
-			}
-		}
-		if(html5Repeat=="no" && $(obj).attr('style') == undefined ){
-			console.log(obj);
-			if($(obj).text().indexOf(width+" x "+height) >= 0){
-				imgSize = "yes";
-				imgSizeFlag = true;
-				return false;
-			}
+		if($(obj).text().indexOf(width+" x "+height) >= 0){
+			imgSize = "yes";
+			imgSizeFlag = true;
+			return false;
 		}
 	});
 	
@@ -244,6 +220,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 //	console.log('imgRepeat:'+imgRepeat);
 //	console.log('thisImgRepeat:'+thisImgRepeat);
 //	console.log('html5Repeat:'+html5Repeat);
+	
 	if (adSeq == "") {
 		errorTitle = '上傳失敗!';
 		errorMsg = '檔案空白';
@@ -269,7 +246,6 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			 '</li>';
 		$(".aduplodul").append(a);
 	} else if(imgFileSize == "yes" && imgSize == "yes" && imgType == "yes"  && imgRepeat == "no" && thisImgRepeat == "yes" && html5Repeat == "yes"){
-		imgSrc = imgSrc.substring(imgSrc.indexOf('img'),imgSrc.length);
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;"  id="'+adSeq+'">'+
 			 '<div class="adboxdv" >'+
@@ -571,6 +547,9 @@ function multipartImgUuploadSubmit(){
 		"imgNameMap" : imgNameMap,
 		"imgMD5Map" : imgMD5Map
 	}
+	console.log(seqOkArray);
+	console.log(imgNameMap);	
+	
 	var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 	if(confirm(alt)) {
 		var map = JSON.stringify(map);
@@ -587,8 +566,7 @@ function multipartImgUuploadSubmit(){
 				"excludeKeywords" : JSON.stringify(excludeKeywordULArray),
 				"adKeywordOpen" : $("#adKeywordOpen").attr("checked"),
 				"adKeywordPhraseOpen" : $("#adKeywordPhraseOpen").attr("checked"),
-				"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked"),
-				"thirdCode":$("#thirdCode").val(),
+				"adKeywordPrecisionOpen" : $("#adKeywordPrecisionOpen").attr("checked")
 			},
 			success : function(respone) {
 				$('body').unblock();
@@ -720,25 +698,4 @@ function chkLeave(){
 function fileLoad(){
 	$("#chkFile").html("");
 	$("#fileupload").click();
-}
-
-
-//第三方偵測
-$('.thirdpty-togglebtn').live('click', function(event) {  
-
-	if($('.thirdptybx').is(":hidden")){
-		$('.swap').text("－");
-		$('.thirdptybx').fadeToggle('fast');
-	}
-	else{
-		$('.swap').text("＋");
-		$('.thirdptybx').fadeToggle('fast');
-	}
-});
-function opennots(id) {
-	$("#shownotes"+id).css("visibility", "visible");
-}
-
-function closenots(id) {
-	$("#shownotes"+id).css("visibility", "hidden");
 }

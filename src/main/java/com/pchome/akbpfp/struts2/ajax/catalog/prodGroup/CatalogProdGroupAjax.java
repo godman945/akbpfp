@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
@@ -15,7 +16,6 @@ import com.pchome.akbpfp.catalog.prodGroup.factory.ProdGroupFactory;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalogGroupItem;
-import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdDetailService;
 import com.pchome.akbpfp.db.service.ad.IPfpAdService;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
@@ -26,11 +26,7 @@ import com.pchome.akbpfp.db.vo.catalog.prodGroup.ProdGroupConditionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.prodGroup.EnumProdGroupFactory;
 import com.pchome.enumerate.catalogprod.EnumCatalogGroupDeleteStatusType;
-import com.pchome.enumerate.catalogprod.EnumEcProdGroupFilterContentType;
-import com.pchome.enumerate.catalogprod.EnumEcStockStatusType;
-import com.pchome.enumerate.catalogprod.EnumEcUseStatusType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
-import com.pchome.rmi.accesslog.EnumAccesslogAction;
 
 public class CatalogProdGroupAjax extends BaseCookieAction {
 
@@ -46,7 +42,7 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 	private IPfpCatalogGroupItemService pfpCatalogGroupItemService;
 	private ProdGroupFactory prodGroupFactory;
 	private PfpCatalog pfpCatalog;
-	private AdmAccesslogService accesslogService;
+
 	private String[] filterContentMap;
 	private String result;
 	private Map<String, Object> resultMap;
@@ -167,7 +163,7 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			log.info(">>> catalogSeq: " + catalogSeq);
 			log.info(">>> catalogGroupName: " + catalogGroupName);
 			log.info(">>> filterContentMap: " + filterContentMap);
-			
+
 			resultMap = new HashMap<String, Object>();
 
 			if( catalogGroupName.trim().length() > 20){
@@ -253,24 +249,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			resultMap.put("msg", "建立商品組合成功");
 			resultMap.put("status", "SUCCESS");
 
-
-			String message = pfpCatalog.getCatalogName() + "=>新增商品組合："+catalogGroupName+"；條件：";
-			//accesslog
-			for (EnumEcProdGroupFilterContentType enumEcProdGroupFilterContentType : EnumEcProdGroupFilterContentType.values()) {
-				for (int i = 0; i < filterContentArray.length(); i++) {
-					JSONObject filterContentObj = new JSONObject(filterContentArray.get(i).toString());
-					String newField = filterContentObj.getString("field");
-					String newCondition = filterContentObj.getString("condition");
-					String newValue = filterContentObj.getString("value");
-					if(enumEcProdGroupFilterContentType.getFieldCondition().equals(newField+"_"+newCondition)) {
-						String condition = "["+enumEcProdGroupFilterContentType.getFieldDesc()+" "+enumEcProdGroupFilterContentType.getConditionDesc()+" "+newValue+"]";
-						message = message + condition;
-						continue;
-					}
-				}
-			}
-			accesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(),super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			
 		} catch (Exception e) {
 			log.error("error:" + e);
 			resultMap.put("status", "ERROR");
@@ -473,8 +451,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 
 			
 			
-			
-			
 			// 編輯商品組合條件，先刪除pfp_catalog_group_item
 			pfpCatalogGroupItemService.deleteCatalogGroupItem(catalogGroupSeq);
 
@@ -499,43 +475,6 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			resultMap.put("msg", "編輯商品組合成功");
 			resultMap.put("status", "SUCCESS");
 
-			
-			String message = pfpCatalogGroupDb.getPfpCatalog().getCatalogName() + "=>修改商品組合："+catalogGroupName+"；條件：";
-			//accesslog
-			for (EnumEcProdGroupFilterContentType enumEcProdGroupFilterContentType : EnumEcProdGroupFilterContentType.values()) {
-				for (int i = 0; i < filterContentArray.length(); i++) {
-					JSONObject filterContentObj = new JSONObject(filterContentArray.get(i).toString());
-					String newField = filterContentObj.getString("field");
-					String newCondition = filterContentObj.getString("condition");
-					String newValue = filterContentObj.getString("value");
-					newField = newField+"_"+newCondition;
-					if(enumEcProdGroupFilterContentType.getFieldCondition().equals(newField)) {
-						String condition = "";
-						if(newField.contains("ec_stock")) {
-							for (EnumEcStockStatusType enumEcStockStatusType : EnumEcStockStatusType.values()) {
-								if(newValue.equals(enumEcStockStatusType.getType())) {
-									newValue = enumEcStockStatusType.getChName();
-									break;
-								}
-							}
-						}else if(newField.contains("ec_use")) {
-							for (EnumEcUseStatusType enumEcUseStatusType : EnumEcUseStatusType.values()) {
-								if(newValue.equals(enumEcUseStatusType.getType())) {
-									newValue = enumEcUseStatusType.getChName();
-									break;
-								}
-							}
-						}
-						
-						condition = "["+enumEcProdGroupFilterContentType.getFieldDesc()+" "+enumEcProdGroupFilterContentType.getConditionDesc()+" "+newValue+"]";
-						message = message + condition;
-						continue;
-					}
-				}
-			}
-			accesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(),super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			
-			
 		} catch (Exception e) {
 			log.error("error:" + e);
 			resultMap.put("status", "ERROR");
@@ -666,7 +605,7 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			resultMap = new HashMap<String, Object>();
 
 			PfpCatalogGroup pfpCatalogGroup = pfpCatalogGroupService.get(catalogGroupSeq);
-			String pfpCatalogGroupName = pfpCatalogGroup.getCatalogGroupName();
+
 			String catalogCustomerInfoId = pfpCatalogGroup.getPfpCatalog().getPfpCustomerInfoId();
 
 			if (!StringUtils.equals(super.getCustomer_info_id(), catalogCustomerInfoId)) {
@@ -680,13 +619,11 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 			
 			//刪除商品組合時要更新廣告狀態為暫停
 			pfpAdService.updateAdStatusByCatalogGroupSeq(catalogGroupSeq, "9");
+
+			
 			resultMap.put("status", "SUCCESS");
 			resultMap.put("msg", "刪除商品組合成功");
-			
-			//accesslog
-			String message = "目錄：商品組合:"+pfpCatalogGroupName+"=>刪除";
-			accesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(),super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			
+
 		} catch (Exception e) {
 			log.error("error:" + e);
 			resultMap.put("status", "ERROR");
@@ -845,13 +782,4 @@ public class CatalogProdGroupAjax extends BaseCookieAction {
 	public void setPfpAdDetailService(IPfpAdDetailService pfpAdDetailService) {
 		this.pfpAdDetailService = pfpAdDetailService;
 	}
-
-	public AdmAccesslogService getAccesslogService() {
-		return accesslogService;
-	}
-
-	public void setAccesslogService(AdmAccesslogService accesslogService) {
-		this.accesslogService = accesslogService;
-	}
-	
 }

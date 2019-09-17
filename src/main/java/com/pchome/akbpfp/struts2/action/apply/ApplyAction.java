@@ -114,9 +114,9 @@ public class ApplyAction extends BaseSSLAction{
 	
 	
 	public String execute() throws Exception{
-		log.info("***START***");
+		
 		this.checkRedirectSSLUrl();
-		log.info(this.resultType);
+		
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;
 		}
@@ -177,7 +177,7 @@ public class ApplyAction extends BaseSSLAction{
 				Date now = sdf.parse(sdf.format(calendar.getTime()));
 				if(now.compareTo(giftEndDate) > 0){
 					buAccountVO.setGiftSno("");
-					accountVO.setGiftSno(null);
+					accountVO.setGiftSno("");
 					buFreeGiftTimeFlag = "Y";
 				}else{
 					buFreeGiftTimeFlag = "N";
@@ -223,7 +223,7 @@ public class ApplyAction extends BaseSSLAction{
 				Date now = sdf.parse(sdf.format(calendar.getTime()));
 				if(now.compareTo(giftEndDate) > 0){
 					buAccountVO.setGiftSno("");
-					accountVO.setGiftSno(null);
+					accountVO.setGiftSno("");
 					buFreeGiftTimeFlag = "Y";
 				}else{
 					buFreeGiftTimeFlag = "N";
@@ -509,7 +509,7 @@ public class ApplyAction extends BaseSSLAction{
 	 * 訂單查詢
 	 */
 	public String orderSearchAction() throws Exception{
-		log.info("***START***");
+		
 		super.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(super.resultType)){
 			return super.resultType;

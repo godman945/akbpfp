@@ -17,7 +17,6 @@ public abstract class BaseDAO<T, PK extends Serializable> extends HibernateDaoSu
 
     private Class<T> clazz;
 
-    
     @SuppressWarnings("unchecked")
     protected Class<T> getMyClass() {
         if (clazz == null) {
