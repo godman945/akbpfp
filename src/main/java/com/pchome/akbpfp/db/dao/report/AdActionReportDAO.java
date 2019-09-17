@@ -2,7 +2,6 @@ package com.pchome.akbpfp.db.dao.report;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +12,8 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
+import org.json.JSONObject;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -842,4 +843,382 @@ public class AdActionReportDAO extends BaseDAO<PfpAdActionReport, Integer> imple
 		}
 		return adTypeMap;
 	}
+
+	/**
+	 * 每日花費成效(明細)
+	 * 統計 pfp_ad_action_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
+	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_action_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
+	 * @param vo
+	 * @return
+	 */
+	public List<Map<String, Object>> getAdDailyList(AdActionReportVO vo) {
+		StringBuilder hql = new StringBuilder();
+		hql.append(" SELECT ");
+		hql.append("  r.ad_pvclk_date, ");
+		hql.append("  SUM(r.ad_pv) AS ad_pv_sum, ");
+		hql.append("  SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");		
+		hql.append("  SUM(r.ad_clk_price) AS ad_price_sum, ");
+//		hql.append("  r.ad_pvclk_device AS ad_device, ");
+		hql.append("  SUM(r.convert_count) AS convert_count, ");
+		hql.append("  SUM(r.convert_price_count) AS convert_price_count ");
+		hql.append(" FROM pfp_ad_action_report AS r ");
+		hql.append(" WHERE 1 = 1 ");
+		hql.append(" AND r.customer_info_id = :customerInfoId ");
+		hql.append(" AND r.ad_pvclk_date >= :startDate ");
+		hql.append(" AND r.ad_pvclk_date <= :endDate ");
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			hql.append(" AND REPLACE(r.ad_pvclk_date, '-', '') LIKE REPLACE(:searchStr, '-', '') ");
+		}
+		
+//		String adDevice = "";
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			
+//			adDevice = tempJSONObject.optString("adDevice");
+//			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+//				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
+//			}
+		}
+		
+		hql.append(" GROUP BY r.ad_pvclk_date ");
+		hql.append(" ORDER BY r.ad_pvclk_date DESC ");
+		
+		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
+		query.setString("customerInfoId", vo.getCustomerInfoId());
+		query.setString("startDate", vo.getStartDate());
+		query.setString("endDate", vo.getEndDate());
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			query.setString("searchStr", "%" + vo.getSearchText() + "%");
+		}
+		
+//		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+//			query.setString("adPvclkDevice", adDevice);
+//		}
+		
+		if (!vo.isDownloadOrIsNotCuttingPagination()) { // 不是下載則做分頁處理
+			// 取得分頁
+			query.setFirstResult((vo.getPage() - 1) * vo.getPageSize());
+			query.setMaxResults(vo.getPageSize());
+		}
+		
+		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+
+	/**
+	 * 每日花費成效(加總)
+	 * 統計 pfp_ad_action_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
+	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_action_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
+	 * @param vo
+	 * @return
+	 */
+	public List<Map<String, Object>> getAdDailyListSum(AdActionReportVO vo) {
+		StringBuilder hql = new StringBuilder();
+		hql.append(" SELECT ");
+		hql.append("  SUM(r.ad_pv) AS ad_pv_sum, ");
+		hql.append("  SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view end)) AS ad_clk_sum, ");		
+		hql.append("  SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append("  SUM(r.convert_count) AS convert_count, ");
+		hql.append("  SUM(r.convert_price_count) AS convert_price_count ");
+		hql.append(" FROM pfp_ad_action_report AS r ");
+		hql.append(" WHERE 1 = 1 ");
+		hql.append(" AND r.customer_info_id = :customerInfoId ");
+		hql.append(" AND r.ad_pvclk_date >= :startDate ");
+		hql.append(" AND r.ad_pvclk_date <= :endDate ");
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			hql.append(" AND REPLACE(r.ad_pvclk_date, '-', '') LIKE REPLACE(:searchStr, '-', '') ");
+		}
+		
+//		String adDevice = "";
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			
+//			adDevice = tempJSONObject.optString("adDevice");
+//			if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+//				hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
+//			}
+		}
+		
+		hql.append(" GROUP BY r.ad_pvclk_date ");
+		
+		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
+		query.setString("customerInfoId", vo.getCustomerInfoId());
+		query.setString("startDate", vo.getStartDate());
+		query.setString("endDate", vo.getEndDate());
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			query.setString("searchStr", "%" + vo.getSearchText() + "%");
+		}
+		
+//		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice)) {
+//			query.setString("adPvclkDevice", adDevice);
+//		}
+		
+		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+
+	/**
+	 * 總廣告成效、廣告成效共用(明細)
+	 * 統計 pfp_ad_action_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
+	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_action_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
+	 */
+	@Override
+	public List<Map<String, Object>> getAdCampaginList(AdCampaginReportVO vo) {
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			adType = tempJSONObject.optString("adType");
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
+		StringBuilder hql = new StringBuilder();
+		hql.append("SELECT ");
+		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
+		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");		
+		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append(" SUM(r.ad_invalid_clk) AS ad_invalid_clk_sum, ");
+		hql.append(" SUM(r.ad_action_max_price * r.ad_action_count) AS ad_action_max_price_sum, ");
+		hql.append(" SUM(r.ad_action_count) AS ad_action_count_sum, ");
+		hql.append(" r.ad_action_seq, ");
+		hql.append(" r.ad_pvclk_device AS ad_device, ");
+		hql.append(" r.ad_operating_rule, ");
+		hql.append(" r.ad_type, ");
+		hql.append(" SUM(r.convert_count) AS convert_count, ");
+		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
+		hql.append(" FROM pfp_ad_action_report AS r ");
+		hql.append(" WHERE 1 = 1 ");
+		hql.append(" AND r.customer_info_id = :customerInfoId");
+		hql.append(" AND r.ad_pvclk_date >= :startDate");
+		hql.append(" AND r.ad_pvclk_date <= :endDate");
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			hql.append(" AND r.ad_action_seq IN (SELECT ad_action_seq FROM pfp_ad_action WHERE 1=1");
+			hql.append(" AND customer_info_id = :customerInfoId ");
+			hql.append(" AND ad_action_name LIKE :searchStr )");
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
+			hql.append(" AND r.ad_type = :adType");
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
+		}
+		
+		hql.append(" GROUP BY r.ad_action_seq, r.ad_operating_rule");
+		// 非搜尋 + 聯播網廣告選項，則將資料區分聯播網廣告和搜尋廣告
+		if (StringUtils.isBlank(adType) || "all".equalsIgnoreCase(adType)) {
+			hql.append(" ,r.ad_type");
+		}
+		
+		// 裝置空值或選擇全部時，則將資料區分PC和mobile
+		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
+			hql.append(" ,r.ad_pvclk_device");
+		}
+		
+		hql.append(" ORDER BY r.ad_action_seq DESC, r.ad_type, r.ad_operating_rule");
+		
+		
+		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
+		query.setString("customerInfoId", vo.getCustomerInfoId());
+		query.setString("startDate", vo.getStartDate());
+		query.setString("endDate", vo.getEndDate());
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			query.setString("searchStr", "%" + vo.getSearchText() + "%");
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
+			query.setString("adType", adType);
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			query.setString("adOperatingRule", adOperatingRule);
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			query.setString("adPvclkDevice", adDevice);
+		}
+		
+		if (!vo.isDownloadOrIsNotCuttingPagination()) { // 不是下載則做分頁處理
+			// 取得分頁
+			query.setFirstResult((vo.getPage() - 1) * vo.getPageSize());
+			query.setMaxResults(vo.getPageSize());
+		}
+		
+		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+
+	/**
+	 * 總廣告成效、廣告成效共用(加總)
+	 * 統計 pfp_ad_action_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的資料
+	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_action_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
+	 */
+	@Override
+	public List<Map<String, Object>> getAdCampaginListSum(AdCampaginReportVO vo) {
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			adType = tempJSONObject.optString("adType");
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
+		StringBuilder hql = new StringBuilder();
+		hql.append("SELECT ");
+		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
+		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
+		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append(" SUM(r.ad_invalid_clk) AS ad_invalid_clk_sum, ");
+		hql.append(" SUM(r.ad_action_max_price * r.ad_action_count) AS ad_action_max_price_sum, ");
+		hql.append(" SUM(r.ad_action_count) AS ad_action_count_sum, ");
+		hql.append(" SUM(r.convert_count) AS convert_count, ");
+		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
+		hql.append(" FROM pfp_ad_action_report AS r ");
+		hql.append(" WHERE 1 = 1 ");
+		hql.append(" AND r.customer_info_id = :customerInfoId");
+		hql.append(" AND r.ad_pvclk_date >= :startDate");
+		hql.append(" AND r.ad_pvclk_date <= :endDate");
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			hql.append(" AND r.ad_action_seq IN (SELECT ad_action_seq FROM pfp_ad_action WHERE 1=1");
+			hql.append(" AND customer_info_id = :customerInfoId ");
+			hql.append(" AND ad_action_name LIKE :searchStr )");
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
+			hql.append(" AND r.ad_type = :adType");
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
+		}
+		
+		hql.append(" GROUP BY r.ad_action_seq, r.ad_operating_rule");
+		// 非搜尋 + 聯播網廣告選項，則將資料區分聯播網廣告和搜尋廣告
+		if (StringUtils.isBlank(adType) || "all".equalsIgnoreCase(adType)) {
+			hql.append(" ,r.ad_type");
+		}
+
+		// 裝置空值或選擇全部時則將資料區分PC和mobile
+		if (StringUtils.isBlank(adDevice) || "all".equalsIgnoreCase(adDevice)) {
+			hql.append(" ,r.ad_pvclk_device");
+		}
+		
+		
+		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
+		query.setString("customerInfoId", vo.getCustomerInfoId());
+		query.setString("startDate", vo.getStartDate());
+		query.setString("endDate", vo.getEndDate());
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			query.setString("searchStr", "%" + vo.getSearchText() + "%");
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
+			query.setString("adType", adType);
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			query.setString("adOperatingRule", adOperatingRule);
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			query.setString("adPvclkDevice", adDevice);
+		}
+		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+
+	/**
+	 * 總廣告成效、廣告成效共用(圖表)
+	 * 統計 pfp_ad_action_report 的曝光數、點擊數、點擊數總費用、無效點擊數、無效點擊數總費用...等的PDF資料
+	 * 注意：ad_clk、ad_clk_price 在產生 pfp_ad_action_report 的時候，已經減過無效點擊的資料了，所以不用再減一次，不然會錯誤
+	 */
+	@Override
+	public List<Map<String, Object>> getAdCampaginListChart(AdCampaginReportVO vo) {
+		String adType = ""; // 播放類型
+		String adOperatingRule = ""; // 廣告樣式
+		String adDevice = ""; // 裝置
+		if (StringUtils.isNotBlank(vo.getWhereMap())) {
+			JSONObject tempJSONObject = new JSONObject(vo.getWhereMap());
+			adType = tempJSONObject.optString("adType");
+			adOperatingRule = tempJSONObject.optString("adOperatingRule");
+			adDevice = tempJSONObject.optString("adDevice");
+		}
+		
+		StringBuilder hql = new StringBuilder();
+		hql.append("SELECT");
+		hql.append(" r.ad_pvclk_date,");
+		hql.append(" SUM(r.ad_pv) AS ad_pv_sum, ");
+		hql.append(" SUM((CASE WHEN r.ad_clk_price_type = 'CPC' THEN r.ad_clk ELSE r.ad_view END)) AS ad_clk_sum, ");
+		hql.append(" SUM(r.ad_clk_price) AS ad_price_sum, ");
+		hql.append(" SUM(r.ad_invalid_clk) AS ad_invalid_clk_sum, ");
+		hql.append(" SUM(r.convert_count) AS convert_count, ");
+		hql.append(" SUM(r.convert_price_count) AS convert_price_count ");
+		hql.append(" FROM pfp_ad_action_report AS r ");
+		hql.append(" WHERE 1 = 1 ");
+		hql.append(" AND r.customer_info_id = :customerInfoId");
+		hql.append(" AND r.ad_pvclk_date >= :startDate");
+		hql.append(" AND r.ad_pvclk_date <= :endDate");
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			hql.append(" AND r.ad_action_seq IN (SELECT ad_action_seq FROM pfp_ad_action WHERE 1=1");
+			hql.append(" AND customer_info_id = :customerInfoId ");
+			hql.append(" AND ad_action_name LIKE :searchStr )");
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
+			hql.append(" AND r.ad_type = :adType");
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			hql.append(" AND r.ad_operating_rule = :adOperatingRule");
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			hql.append(" AND r.ad_pvclk_device = :adPvclkDevice");
+		}
+		
+		hql.append(" GROUP BY r.ad_pvclk_date");
+		hql.append(" ORDER BY r.ad_pvclk_date");
+		
+		
+		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
+		query.setString("customerInfoId", vo.getCustomerInfoId());
+		query.setString("startDate", vo.getStartDate());
+		query.setString("endDate", vo.getEndDate());
+		
+		if (StringUtils.isNotBlank(vo.getSearchText())) {
+			query.setString("searchStr", "%" + vo.getSearchText() + "%");
+		}
+		
+		if (StringUtils.isNotBlank(adType) && !"all".equalsIgnoreCase(adType) && !"0".equalsIgnoreCase(adType)) {
+			query.setString("adType", adType);
+		}
+		
+		if (StringUtils.isNotBlank(adOperatingRule) && !"all".equalsIgnoreCase(adOperatingRule)) {
+			query.setString("adOperatingRule", adOperatingRule);
+		}
+		
+		if (StringUtils.isNotBlank(adDevice) && !"all".equalsIgnoreCase(adDevice) && !"PCandMobile".equalsIgnoreCase(adDevice)) {
+			query.setString("adPvclkDevice", adDevice);
+		}
+		return query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+	}
+
 }
