@@ -1,15 +1,17 @@
 package com.pchome.akbpfp.db.service.report;
 
-<<<<<<< Upstream, based on pfp_hot_fix
-=======
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
->>>>>>> 6f75a30 Merge branch 'master' into stg
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.pchome.akbpfp.db.dao.report.AdOsReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdOsReportDAO;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.utils.CommonUtils;
 
 public class AdOsReportService implements IAdOsReportService {
 
@@ -23,9 +25,6 @@ public class AdOsReportService implements IAdOsReportService {
 	public List<AdOsReportVO> loadOsReportDate(String sqlType, String adPvclkOs, String adSearchWay, String searchText, String customerInfoId, String startDate, String endDate, int page, int pageSize) throws Exception {
 		return adOsReportDAO.getAdOsReportList(sqlType, adPvclkOs, adSearchWay, searchText, customerInfoId, startDate, endDate, page, pageSize);
 	}
-<<<<<<< Upstream, based on pfp_hot_fix
-}
-=======
 
 	/**
 	 * 行動廣告成效(明細)
@@ -232,4 +231,3 @@ public class AdOsReportService implements IAdOsReportService {
 	}
 	
 }
->>>>>>> 6f75a30 Merge branch 'master' into stg

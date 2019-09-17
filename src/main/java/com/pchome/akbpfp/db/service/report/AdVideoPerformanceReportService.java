@@ -1,18 +1,21 @@
 package com.pchome.akbpfp.db.service.report;
 
-<<<<<<< Upstream, based on pfp_hot_fix
-=======
 import java.math.BigDecimal;
->>>>>>> 6f75a30 Merge branch 'master' into stg
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.report.AdVideoPerformanceReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdVideoPerformanceReportDAO;
-import com.pchome.akbpfp.db.vo.report.ReportQueryConditionVO;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportDevice;
+import com.pchome.utils.CommonUtils;
 
 public class AdVideoPerformanceReportService implements IAdVideoPerformanceReportService {
 
@@ -22,57 +25,197 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 		this.adVideoPerformanceReportDAO = adVideoPerformanceReportDAO;
 	}
 
+//	@Override
+//	public List<AdVideoPerformanceReportVO> loadReportDateList(ReportQueryConditionVO reportQueryConditionVO) throws Exception {
+//		List<Object> list = adVideoPerformanceReportDAO.getReportDataList(reportQueryConditionVO);
+//		
+//		List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOList = new ArrayList<>();
+//		for (Object object : list) {
+//			Object[] objArray = (Object[]) object;
+//			AdVideoPerformanceReportVO adVideoPerformanceReportVO = new AdVideoPerformanceReportVO();
+//			adVideoPerformanceReportVO.setAdSeq((String) objArray[0]);
+//			adVideoPerformanceReportVO.setAdStatus(objArray[1].toString());
+//			adVideoPerformanceReportVO.setTitle(objArray[2].toString());
+//			adVideoPerformanceReportVO.setAdPriceType(objArray[3].toString());
+//			adVideoPerformanceReportVO.setAdPvClkDevice(objArray[4].toString());
+//			adVideoPerformanceReportVO.setAdPvSum(objArray[5].toString());
+//			adVideoPerformanceReportVO.setAdViewSum(objArray[6].toString());
+//			adVideoPerformanceReportVO.setAdViewRatings(objArray[7].toString());
+//			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[8].toString());
+//			adVideoPerformanceReportVO.setThousandsCost(objArray[9].toString());
+//			adVideoPerformanceReportVO.setCostSum(objArray[10].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess25Sum(objArray[11].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess50Sum(objArray[12].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess75Sum(objArray[13].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess100Sum(objArray[14].toString());
+//			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[15].toString());
+//			adVideoPerformanceReportVO.setAdVideoMusicSum(objArray[16].toString());
+//			adVideoPerformanceReportVO.setAdVideoReplaySum(objArray[17].toString());
+//			adVideoPerformanceReportVO.setAdClkSum(objArray[18].toString());
+//			adVideoPerformanceReportVO.setAdImg(objArray[19].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(objArray[20].toString());
+//			adVideoPerformanceReportVO.setAdLinkUrl(objArray[21].toString());
+//			adVideoPerformanceReportVO.setVideoUrl(objArray[22].toString());
+//			String device = "";
+//			if(StringUtils.isBlank(reportQueryConditionVO.getAdPvclkDevice())){
+//				device = "全部";
+//			}else{
+//				if(reportQueryConditionVO.getAdPvclkDevice().equals("PC")){
+//					device = "電腦";
+//				}
+//				if(reportQueryConditionVO.getAdPvclkDevice().equals("mobile")){
+//					device = "行動裝置";
+//				}
+//			}
+//			adVideoPerformanceReportVO.setDevice(device);
+//			if(StringUtils.isNotBlank(objArray[23].toString())){
+//				String size[] = objArray[23].toString().split("_");
+//				if(size.length == 2){
+//					adVideoPerformanceReportVO.setTemplateProductWidth(size[0]);
+//					adVideoPerformanceReportVO.setTemplateProductHeight(size[1]);
+//				}
+//			}
+//			adVideoPerformanceReportVO.setAdActionName(objArray[24].toString());
+//			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[26].toString());
+//			String sec = objArray[27].toString();
+//			if(sec.length() == 1){
+//				sec= "0"+sec;
+//			}
+//			adVideoPerformanceReportVO.setAdVideoSec(sec);
+//			adVideoPerformanceReportVOList.add(adVideoPerformanceReportVO);
+//		}
+//		return adVideoPerformanceReportVOList;
+//	}
+//
+//	public List<AdVideoPerformanceReportVO> loadReportChart(ReportQueryConditionVO reportQueryConditionVO) throws Exception {
+//		List<Object> list = adVideoPerformanceReportDAO.getReportChart(reportQueryConditionVO);
+//		List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOList = new ArrayList<>();
+//		for (Object object : list) {
+//			Object[] objArray = (Object[]) object;
+//			AdVideoPerformanceReportVO adVideoPerformanceReportVO = new AdVideoPerformanceReportVO();
+//			adVideoPerformanceReportVO.setReportDate((Date) objArray[1]);
+//			adVideoPerformanceReportVO.setAdPvSum(objArray[4].toString());
+//			adVideoPerformanceReportVO.setAdViewSum(objArray[5].toString());
+//			adVideoPerformanceReportVO.setAdViewRatings(objArray[6].toString());
+//			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[7].toString());
+//			adVideoPerformanceReportVO.setThousandsCost(objArray[8].toString());
+//			adVideoPerformanceReportVO.setCostSum(objArray[9].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(objArray[10].toString());
+//			adVideoPerformanceReportVO.setAdClkSum(objArray[11].toString());
+//			adVideoPerformanceReportVO.setAdVideoMusicSum(objArray[12].toString());
+//			adVideoPerformanceReportVO.setAdVideoReplaySum(objArray[13].toString());
+//			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[20].toString());
+//			adVideoPerformanceReportVOList.add(adVideoPerformanceReportVO);
+//		}
+//		return adVideoPerformanceReportVOList;
+//	}
+//
+//	@Override
+//	public List<AdVideoPerformanceReportVO> loadReportDateCount(ReportQueryConditionVO reportQueryConditionVO) throws Exception {
+//		List<Object> list = adVideoPerformanceReportDAO.getReportCount(reportQueryConditionVO);
+//		List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOList = new ArrayList<>();
+//		for (Object object : list) {
+//			Object[] objArray = (Object[]) object;
+//			AdVideoPerformanceReportVO adVideoPerformanceReportVO = new AdVideoPerformanceReportVO();
+//			adVideoPerformanceReportVO.setAdSeq((String) objArray[0]);
+//			adVideoPerformanceReportVO.setAdStatus(objArray[1].toString());
+//			adVideoPerformanceReportVO.setTitle(objArray[2].toString());
+//			adVideoPerformanceReportVO.setAdPriceType(objArray[3].toString());
+//			adVideoPerformanceReportVO.setAdPvClkDevice(objArray[4].toString());
+//			adVideoPerformanceReportVO.setAdPvSum(objArray[5].toString());
+//			adVideoPerformanceReportVO.setAdViewSum(objArray[6].toString());
+//			adVideoPerformanceReportVO.setAdViewRatings(objArray[7].toString());
+//			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[8].toString());
+//			adVideoPerformanceReportVO.setThousandsCost(objArray[9].toString());
+//			adVideoPerformanceReportVO.setCostSum(objArray[10].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess25Sum(objArray[11].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess50Sum(objArray[12].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess75Sum(objArray[13].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess100Sum(objArray[14].toString());
+//			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[15].toString());
+//			adVideoPerformanceReportVO.setAdVideoMusicSum(objArray[16].toString());
+//			adVideoPerformanceReportVO.setAdVideoReplaySum(objArray[17].toString());
+//			adVideoPerformanceReportVO.setAdClkSum(objArray[18].toString());
+//			adVideoPerformanceReportVO.setAdImg(objArray[19].toString());
+//			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(objArray[20].toString());
+//			adVideoPerformanceReportVO.setAdLinkUrl(objArray[21].toString());
+//			adVideoPerformanceReportVO.setVideoUrl(objArray[22].toString());
+//			if(StringUtils.isNotBlank(objArray[23].toString())){
+//				String size[] = objArray[23].toString().split("_");
+//				if(size.length == 2){
+//					adVideoPerformanceReportVO.setTemplateProductWidth(size[0]);
+//					adVideoPerformanceReportVO.setTemplateProductHeight(size[1]);
+//				}
+//			}
+//			adVideoPerformanceReportVO.setAdActionName(objArray[24].toString());
+//			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[26].toString());
+//			adVideoPerformanceReportVO.setAdVideoSec(objArray[27].toString());
+//			adVideoPerformanceReportVOList.add(adVideoPerformanceReportVO);
+//		}
+//		return adVideoPerformanceReportVOList;
+//	}
+
+	/**
+	 * 影音廣告成效(明細)
+	 * @param vo
+	 * @return
+	 */
 	@Override
-	public List<AdVideoPerformanceReportVO> loadReportDateList(ReportQueryConditionVO reportQueryConditionVO) throws Exception {
-		List<Object> list = adVideoPerformanceReportDAO.getReportDataList(reportQueryConditionVO);
+	public List<AdVideoPerformanceReportVO> queryReportAdVideoPerformanceData(AdVideoPerformanceReportVO vo) {
+		List<Map<String, Object>> adVideoPerformanceList = adVideoPerformanceReportDAO.getAdVideoPerformanceList(vo);
 		
-		List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOList = new ArrayList<>();
-		for (Object object : list) {
-			Object[] objArray = (Object[]) object;
+		Map<String, String> adPriceTypeMap = CommonUtils.getInstance().getAdPriceTypeMap();
+
+		// 檢查前端畫面選擇的篩選條件
+		JSONObject tempJSONObject = new JSONObject();
+		if(vo.getWhereMap() != null) {
+			tempJSONObject = new JSONObject(vo.getWhereMap());
+		}
+		String selectAdDevice = tempJSONObject.optString("adDevice"); // 裝置
+		
+		List<AdVideoPerformanceReportVO> adVideoPerformanceVOList = new ArrayList<>();
+		for (Map<String, Object> dataMap : adVideoPerformanceList) {
 			AdVideoPerformanceReportVO adVideoPerformanceReportVO = new AdVideoPerformanceReportVO();
-			adVideoPerformanceReportVO.setAdSeq((String) objArray[0]);
-			adVideoPerformanceReportVO.setAdStatus(objArray[1].toString());
-			adVideoPerformanceReportVO.setTitle(objArray[2].toString());
-			adVideoPerformanceReportVO.setAdPriceType(objArray[3].toString());
-			adVideoPerformanceReportVO.setAdPvClkDevice(objArray[4].toString());
-			adVideoPerformanceReportVO.setAdPvSum(objArray[5].toString());
-			adVideoPerformanceReportVO.setAdViewSum(objArray[6].toString());
-			adVideoPerformanceReportVO.setAdViewRatings(objArray[7].toString());
-			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[8].toString());
-			adVideoPerformanceReportVO.setThousandsCost(objArray[9].toString());
-			adVideoPerformanceReportVO.setCostSum(objArray[10].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess25Sum(objArray[11].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess50Sum(objArray[12].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess75Sum(objArray[13].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess100Sum(objArray[14].toString());
-			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[15].toString());
-			adVideoPerformanceReportVO.setAdVideoMusicSum(objArray[16].toString());
-			adVideoPerformanceReportVO.setAdVideoReplaySum(objArray[17].toString());
-			adVideoPerformanceReportVO.setAdClkSum(objArray[18].toString());
-			adVideoPerformanceReportVO.setAdImg(objArray[19].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(objArray[20].toString());
-			adVideoPerformanceReportVO.setAdLinkUrl(objArray[21].toString());
-			adVideoPerformanceReportVO.setVideoUrl(objArray[22].toString());
-			String device = "";
-			if(StringUtils.isBlank(reportQueryConditionVO.getAdPvclkDevice())){
-				device = "全部";
-			}else{
-				if(reportQueryConditionVO.getAdPvclkDevice().equals("PC")){
-					device = "電腦";
-				}
-				if(reportQueryConditionVO.getAdPvclkDevice().equals("mobile")){
-					device = "行動裝置";
-				}
+			
+			// 播放狀態
+			int adStatus = (int) dataMap.get("ad_status");
+			if(4 == adStatus) {
+				adVideoPerformanceReportVO.setAdStatusOnOff(true); // on亮綠燈
 			}
-<<<<<<< Upstream, based on pfp_hot_fix
-			adVideoPerformanceReportVO.setDevice(device);
-			if(StringUtils.isNotBlank(objArray[23].toString())){
-				String size[] = objArray[23].toString().split("_");
-				if(size.length == 2){
-					adVideoPerformanceReportVO.setTemplateProductWidth(size[0]);
-					adVideoPerformanceReportVO.setTemplateProductHeight(size[1]);
+
+			// 影音廣告
+			adVideoPerformanceReportVO.setTitle((String) dataMap.get("title"));
+			String videoSize = (String) dataMap.get("video_size");
+			String[] size = videoSize.split("_");
+			adVideoPerformanceReportVO.setTemplateProductWidth(size[0]);
+			adVideoPerformanceReportVO.setTemplateProductHeight(size[1]);
+			adVideoPerformanceReportVO.setAdVideoSec((String) dataMap.get("video_seconds"));
+			adVideoPerformanceReportVO.setAdLinkUrl((String) dataMap.get("real_url"));
+			// 預覽畫面要再用參數
+			adVideoPerformanceReportVO.setAdImg((String) dataMap.get("img"));
+			adVideoPerformanceReportVO.setVideoUrl((String) dataMap.get("video_url"));
+			
+			// 廣告活動
+			adVideoPerformanceReportVO.setAdActionName((String) dataMap.get("ad_action_name"));
+			
+			// 廣告分類
+			adVideoPerformanceReportVO.setAdGroupName((String) dataMap.get("ad_group_name"));
+			
+			// 廣告計費方式
+			adVideoPerformanceReportVO.setAdClkPriceType(adPriceTypeMap.get(dataMap.get("ad_price_type")));
+			
+			// 裝置
+			if (EnumReportDevice.PCANDMOBILE.getDevType().equalsIgnoreCase(selectAdDevice)) {
+				adVideoPerformanceReportVO.setAdDevice(EnumReportDevice.PCANDMOBILE.getDevTypeName());
+			} else {
+				String adDevice = (String) dataMap.get("ad_pvclk_device");
+				if (EnumReportDevice.PC.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.PC.getDevTypeName();
+				} else if (EnumReportDevice.MOBILE.getDevType().equalsIgnoreCase(adDevice)) {
+					adDevice = EnumReportDevice.MOBILE.getDevTypeName();
 				}
-=======
+				adVideoPerformanceReportVO.setAdDevice(adDevice);
+			}
 			
 			// 曝光數
 			BigDecimal adPvSum = (BigDecimal) dataMap.get("ad_pv_sum");
@@ -294,85 +437,28 @@ public class AdVideoPerformanceReportService implements IAdVideoPerformanceRepor
 				// 重播次數
 				BigDecimal adVideoReplaySum = (BigDecimal) dataMap.get("ad_video_replay_sum");
 				flashDataMap.put(reportDate, adVideoReplaySum.floatValue());
->>>>>>> 6f75a30 Merge branch 'master' into stg
 			}
-			adVideoPerformanceReportVO.setAdActionName(objArray[24].toString());
-			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[26].toString());
-			String sec = objArray[27].toString();
-			if(sec.length() == 1){
-				sec= "0"+sec;
-			}
-			adVideoPerformanceReportVO.setAdVideoSec(sec);
-			adVideoPerformanceReportVOList.add(adVideoPerformanceReportVO);
+			
 		}
-		return adVideoPerformanceReportVOList;
+		
+		return flashDataMap;
 	}
 
-	public List<AdVideoPerformanceReportVO> loadReportChart(ReportQueryConditionVO reportQueryConditionVO) throws Exception {
-		List<Object> list = adVideoPerformanceReportDAO.getReportChart(reportQueryConditionVO);
-		List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOList = new ArrayList<>();
-		for (Object object : list) {
-			Object[] objArray = (Object[]) object;
-			AdVideoPerformanceReportVO adVideoPerformanceReportVO = new AdVideoPerformanceReportVO();
-			adVideoPerformanceReportVO.setReportDate((Date) objArray[1]);
-			adVideoPerformanceReportVO.setAdPvSum(objArray[4].toString());
-			adVideoPerformanceReportVO.setAdViewSum(objArray[5].toString());
-			adVideoPerformanceReportVO.setAdViewRatings(objArray[6].toString());
-			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[7].toString());
-			adVideoPerformanceReportVO.setThousandsCost(objArray[8].toString());
-			adVideoPerformanceReportVO.setCostSum(objArray[9].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(objArray[10].toString());
-			adVideoPerformanceReportVO.setAdClkSum(objArray[11].toString());
-			adVideoPerformanceReportVO.setAdVideoMusicSum(objArray[12].toString());
-			adVideoPerformanceReportVO.setAdVideoReplaySum(objArray[13].toString());
-			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[20].toString());
-			adVideoPerformanceReportVOList.add(adVideoPerformanceReportVO);
-		}
-		return adVideoPerformanceReportVOList;
-	}
-
+	/**
+	 * 影音廣告成效 尺寸下拉選單
+	 * @return
+	 */
 	@Override
-	public List<AdVideoPerformanceReportVO> loadReportDateCount(ReportQueryConditionVO reportQueryConditionVO) throws Exception {
-		List<Object> list = adVideoPerformanceReportDAO.getReportCount(reportQueryConditionVO);
-		List<AdVideoPerformanceReportVO> adVideoPerformanceReportVOList = new ArrayList<>();
-		for (Object object : list) {
-			Object[] objArray = (Object[]) object;
-			AdVideoPerformanceReportVO adVideoPerformanceReportVO = new AdVideoPerformanceReportVO();
-			adVideoPerformanceReportVO.setAdSeq((String) objArray[0]);
-			adVideoPerformanceReportVO.setAdStatus(objArray[1].toString());
-			adVideoPerformanceReportVO.setTitle(objArray[2].toString());
-			adVideoPerformanceReportVO.setAdPriceType(objArray[3].toString());
-			adVideoPerformanceReportVO.setAdPvClkDevice(objArray[4].toString());
-			adVideoPerformanceReportVO.setAdPvSum(objArray[5].toString());
-			adVideoPerformanceReportVO.setAdViewSum(objArray[6].toString());
-			adVideoPerformanceReportVO.setAdViewRatings(objArray[7].toString());
-			adVideoPerformanceReportVO.setSingleAdViewCost(objArray[8].toString());
-			adVideoPerformanceReportVO.setThousandsCost(objArray[9].toString());
-			adVideoPerformanceReportVO.setCostSum(objArray[10].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess25Sum(objArray[11].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess50Sum(objArray[12].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess75Sum(objArray[13].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess100Sum(objArray[14].toString());
-			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[15].toString());
-			adVideoPerformanceReportVO.setAdVideoMusicSum(objArray[16].toString());
-			adVideoPerformanceReportVO.setAdVideoReplaySum(objArray[17].toString());
-			adVideoPerformanceReportVO.setAdClkSum(objArray[18].toString());
-			adVideoPerformanceReportVO.setAdImg(objArray[19].toString());
-			adVideoPerformanceReportVO.setAdVideoProcess100Ratings(objArray[20].toString());
-			adVideoPerformanceReportVO.setAdLinkUrl(objArray[21].toString());
-			adVideoPerformanceReportVO.setVideoUrl(objArray[22].toString());
-			if(StringUtils.isNotBlank(objArray[23].toString())){
-				String size[] = objArray[23].toString().split("_");
-				if(size.length == 2){
-					adVideoPerformanceReportVO.setTemplateProductWidth(size[0]);
-					adVideoPerformanceReportVO.setTemplateProductHeight(size[1]);
-				}
-			}
-			adVideoPerformanceReportVO.setAdActionName(objArray[24].toString());
-			adVideoPerformanceReportVO.setAdVideoUniqSum(objArray[26].toString());
-			adVideoPerformanceReportVO.setAdVideoSec(objArray[27].toString());
-			adVideoPerformanceReportVOList.add(adVideoPerformanceReportVO);
+	public LinkedHashMap<String, String> queryReportAdVideoPerformanceSize(AdVideoPerformanceReportVO vo) {
+		List<Map<String, Object>> adVideoPerformanceSizeList = adVideoPerformanceReportDAO.getAdVideoPerformanceSizeList(vo);
+		
+		LinkedHashMap<String, String> sizeMap = new LinkedHashMap<>();
+		for (Map<String, Object> dataMap : adVideoPerformanceSizeList) {
+			String videoSize = (String) dataMap.get("video_size");
+			sizeMap.put(videoSize.replace("_", " x "), videoSize);
 		}
-		return adVideoPerformanceReportVOList;
+		
+		return sizeMap;
 	}
+	
 }

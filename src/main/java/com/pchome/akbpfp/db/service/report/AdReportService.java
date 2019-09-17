@@ -5,13 +5,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-<<<<<<< Upstream, based on pfp_hot_fix
-=======
 import java.math.BigDecimal;
->>>>>>> 6f75a30 Merge branch 'master' into stg
 import java.net.URLEncoder;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -19,16 +23,30 @@ import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 
+import com.pchome.akbpfp.db.dao.ad.IPfpAdActionDAO;
+import com.pchome.akbpfp.db.dao.ad.IPfpAdDAO;
+import com.pchome.akbpfp.db.dao.ad.IPfpAdGroupDAO;
 import com.pchome.akbpfp.db.dao.ad.PfpAdDetailDAO;
 import com.pchome.akbpfp.db.dao.report.AdReportVO;
+import com.pchome.akbpfp.db.dao.report.AdvertiseReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdReportDAO;
+import com.pchome.akbpfp.db.dao.template.IAdmTemplateProductDAO;
+import com.pchome.akbpfp.db.pojo.AdmTemplateProduct;
+import com.pchome.akbpfp.db.pojo.PfpAd;
+import com.pchome.akbpfp.db.pojo.PfpAdAction;
 import com.pchome.akbpfp.db.pojo.PfpAdDetail;
+import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalogLogo;
 import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
 import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportAdType;
+import com.pchome.enumerate.report.EnumReportDevice;
+import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.utils.CommonUtils;
 
 public class AdReportService implements IAdReportService {
 
@@ -36,6 +54,11 @@ public class AdReportService implements IAdReportService {
 	private PfpAdDetailDAO pfpAdDetailDAO;
 	private IPfpCatalogSetupService pfpCatalogSetupService;
 	private IPfpCatalogLogoService pfpCatalogLogoService;
+	
+	private IPfpAdDAO pfpAdDAO;
+	private IPfpAdGroupDAO pfpAdGroupDAO;
+	private IPfpAdActionDAO pfpAdActionDAO;
+	private IAdmTemplateProductDAO admTemplateProductDAO;
 	
 	@Override
     public List<AdReportVO> loadReportDate(String sqlType, String adGroupSeq, String adSeq, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String adOperatingRule, String startDate, String endDate,int page,int pageSize) throws Exception {
@@ -133,7 +156,7 @@ public class AdReportService implements IAdReportService {
                     if (StringUtils.isBlank(adStyle)) {
                         adStyle = pfpAdDetail.getPfpAd().getAdStyle();
                     }
-                    if(StringUtils.equals("c_x05_po_tad_0059", pfpAdDetail.getPfpAd().getAdAssignTadSeq()) || StringUtils.equals("c_x03_po_tad_0167", pfpAdDetail.getPfpAd().getAdAssignTadSeq()) || StringUtils.equals("c_x03_po_tad_0168", pfpAdDetail.getPfpAd().getAdAssignTadSeq()) ){
+                    if(StringUtils.equals("c_x05_po_tad_0059", pfpAdDetail.getPfpAd().getAdAssignTadSeq())){
                     	html5Flag = "Y";
                     }
                     if("show_url".equals(pfpAdDetail.getAdDetailId())){
@@ -375,6 +398,23 @@ public class AdReportService implements IAdReportService {
 		return dataList;
 	}
 
+
+	public void setPfpAdDAO(IPfpAdDAO pfpAdDAO) {
+		this.pfpAdDAO = pfpAdDAO;
+	}
+
+	public void setPfpAdGroupDAO(IPfpAdGroupDAO pfpAdGroupDAO) {
+		this.pfpAdGroupDAO = pfpAdGroupDAO;
+	}
+
+	public void setPfpAdActionDAO(IPfpAdActionDAO pfpAdActionDAO) {
+		this.pfpAdActionDAO = pfpAdActionDAO;
+	}
+
+	public void setAdmTemplateProductDAO(IAdmTemplateProductDAO admTemplateProductDAO) {
+		this.admTemplateProductDAO = admTemplateProductDAO;
+	}
+
 	public IPfpCatalogSetupService getPfpCatalogSetupService() {
 		return pfpCatalogSetupService;
 	}
@@ -398,9 +438,6 @@ public class AdReportService implements IAdReportService {
 	public void setPfpAdDetailDAO(PfpAdDetailDAO pfpAdDetailDAO) {
 		this.pfpAdDetailDAO = pfpAdDetailDAO;
 	}
-<<<<<<< Upstream, based on pfp_hot_fix
-}
-=======
 
 	/**
 	 * 總廣告成效-明細、廣告明細成效共用(明細)
@@ -1102,4 +1139,3 @@ public class AdReportService implements IAdReportService {
 	}
 	
 }
->>>>>>> a482a41 Merge branch 'master' into stg

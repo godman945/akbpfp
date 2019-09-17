@@ -1,13 +1,36 @@
 package com.pchome.akbpfp.db.service.report;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.report.AdTimeReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdTimeReportDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdGroup;
+import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
+import com.pchome.enumerate.ad.EnumAdTimeCode;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportAdType;
+import com.pchome.enumerate.report.EnumReportDevice;
+import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.utils.CommonUtils;
 
 public class AdTimeReportService implements IAdTimeReportService {
 
+	private IPfpAdGroupService adGroupService;
 	private IAdTimeReportDAO adTimeReportDAO;
+
+	public void setAdGroupService(IPfpAdGroupService adGroupService) {
+		this.adGroupService = adGroupService;
+	}
 
 	public void setAdTimeReportDAO(IAdTimeReportDAO adTimeReportDAO) {
 		this.adTimeReportDAO = adTimeReportDAO;
@@ -16,9 +39,6 @@ public class AdTimeReportService implements IAdTimeReportService {
 	public List<AdTimeReportVO> loadReportDate(String sqlType, String searchTime, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String adOperatingRule, String startDate, String endDate, int page, int pageSize) throws Exception {
 		return adTimeReportDAO.getReportList(sqlType, searchTime, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 	}
-<<<<<<< Upstream, based on pfp_hot_fix
-}
-=======
 
 	/**
 	 * 廣告播放時段成效(明細)
@@ -498,4 +518,3 @@ public class AdTimeReportService implements IAdTimeReportService {
 		return dataList;
 	}
 }
->>>>>>> 6f75a30 Merge branch 'master' into stg

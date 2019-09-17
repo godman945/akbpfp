@@ -1,22 +1,36 @@
 package com.pchome.akbpfp.db.service.report;
 
-<<<<<<< Upstream, based on pfp_hot_fix
-=======
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
->>>>>>> 6f75a30 Merge branch 'master' into stg
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.report.AdActionReportVO;
+import com.pchome.akbpfp.db.dao.report.AdCampaginReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdActionReportDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdAction;
+import com.pchome.akbpfp.db.service.ad.IPfpAdActionService;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportAdType;
+import com.pchome.enumerate.report.EnumReportDevice;
+import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.utils.CommonUtils;
 
 public class AdActionReportService implements IAdActionReportService {
 
+	private IPfpAdActionService adActionService;
 	private IAdActionReportDAO adActionReportDAO;
+
+	public void setAdActionService(IPfpAdActionService adActionService) {
+		this.adActionService = adActionService;
+	}
 
 	public void setAdActionReportDAO(IAdActionReportDAO adActionReportDAO) {
 		this.adActionReportDAO = adActionReportDAO;
@@ -26,9 +40,6 @@ public class AdActionReportService implements IAdActionReportService {
 			int page,int pageSize) {
 		return adActionReportDAO.getReportList(sqlType,searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 	}
-<<<<<<< Upstream, based on pfp_hot_fix
-}
-=======
 
 	/**
 	 * 每日花費成效(明細)
@@ -607,4 +618,3 @@ public class AdActionReportService implements IAdActionReportService {
 	}
 
 }
->>>>>>> 6f75a30 Merge branch 'master' into stg

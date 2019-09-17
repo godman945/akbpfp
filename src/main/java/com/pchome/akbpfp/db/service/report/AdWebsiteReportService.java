@@ -1,23 +1,42 @@
 package com.pchome.akbpfp.db.service.report;
 
-<<<<<<< Upstream, based on pfp_hot_fix
-=======
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
->>>>>>> 6f75a30 Merge branch 'master' into stg
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.report.AdWebsiteReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdWebsiteReportDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdGroup;
+import com.pchome.akbpfp.db.service.ad.IPfbxWebsiteCategoryService;
+import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportAdType;
+import com.pchome.enumerate.report.EnumReportDevice;
+import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.utils.CommonUtils;
 
 public class AdWebsiteReportService implements IAdWebsiteReportService {
 
+	private IPfpAdGroupService adGroupService;
+	private IPfbxWebsiteCategoryService pfbxWebsiteCategoryService;
 	private IAdWebsiteReportDAO adWebsiteReportDAO;
 
+	public void setPfbxWebsiteCategoryService(IPfbxWebsiteCategoryService pfbxWebsiteCategoryService) {
+		this.pfbxWebsiteCategoryService = pfbxWebsiteCategoryService;
+	}
+
+	public void setAdGroupService(IPfpAdGroupService adGroupService) {
+		this.adGroupService = adGroupService;
+	}
+	
 	public void setAdWebsiteReportDAO(IAdWebsiteReportDAO adWebsiteReportDAO) {
 		this.adWebsiteReportDAO = adWebsiteReportDAO;
 	}
@@ -26,8 +45,6 @@ public class AdWebsiteReportService implements IAdWebsiteReportService {
 	public List<AdWebsiteReportVO> loadReportDate(String sqlType, String searchWebsiteCode, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String adOperatingRule, String startDate, String endDate, int page, int pageSize) throws Exception {
 		return adWebsiteReportDAO.getReportList(sqlType, searchWebsiteCode, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 	}
-<<<<<<< Upstream, based on pfp_hot_fix
-=======
 
 	/**
 	 * 網站類型成效(明細)
@@ -251,11 +268,7 @@ public class AdWebsiteReportService implements IAdWebsiteReportService {
 		
 		return adWebsiteVOListSum;
 	}
->>>>>>> 6f75a30 Merge branch 'master' into stg
 	
-<<<<<<< Upstream, based on pfp_hot_fix
-}
-=======
 	/**
 	 * 網站類型成效(圖表)
 	 */
@@ -396,4 +409,3 @@ public class AdWebsiteReportService implements IAdWebsiteReportService {
 	}
 
 }
->>>>>>> 6f75a30 Merge branch 'master' into stg

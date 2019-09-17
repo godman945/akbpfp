@@ -1,33 +1,45 @@
 package com.pchome.akbpfp.db.service.report;
 
-<<<<<<< Upstream, based on pfp_hot_fix
-=======
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
->>>>>>> 6f75a30 Merge branch 'master' into stg
 import java.util.List;
+import java.util.Map;
 
-import com.pchome.akbpfp.db.dao.report.IAdKeywordReportDAO;
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
+
+import com.pchome.akbpfp.db.dao.ad.IPfpAdActionDAO;
+import com.pchome.akbpfp.db.dao.ad.IPfpAdGroupDAO;
+import com.pchome.akbpfp.db.dao.ad.IPfpAdKeywordDAO;
 import com.pchome.akbpfp.db.dao.report.AdKeywordReportVO;
+import com.pchome.akbpfp.db.dao.report.IAdKeywordReportDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdAction;
+import com.pchome.akbpfp.db.pojo.PfpAdGroup;
+import com.pchome.akbpfp.db.pojo.PfpAdKeyword;
+import com.pchome.enumerate.ad.EnumAdKeywordType;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportDevice;
+import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.utils.CommonUtils;
 
 public class AdKeywordReportService implements IAdKeywordReportService {
 
 	private IAdKeywordReportDAO adKeywordReportDAO;
+	private IPfpAdKeywordDAO pfpAdKeywordDAO;
+	private IPfpAdActionDAO pfpAdActionDAO;
+	private IPfpAdGroupDAO pfpAdGroupDAO;
 
 	public void setAdKeywordReportDAO(IAdKeywordReportDAO adKeywordReportDAO) {
 		this.adKeywordReportDAO = adKeywordReportDAO;
 	}
 
-	public List<AdKeywordReportVO> loadReportDate(String sqlType, String adGroupId, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String startDate, String endDate, int page, int pageSize) {
-		return adKeywordReportDAO.getReportList(sqlType, adGroupId, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, startDate, endDate, page, pageSize);
+	public void setPfpAdKeywordDAO(IPfpAdKeywordDAO pfpAdKeywordDAO) {
+		this.pfpAdKeywordDAO = pfpAdKeywordDAO;
 	}
-<<<<<<< Upstream, based on pfp_hot_fix
-}
-=======
 
 	public void setPfpAdActionDAO(IPfpAdActionDAO pfpAdActionDAO) {
 		this.pfpAdActionDAO = pfpAdActionDAO;
@@ -670,4 +682,3 @@ public class AdKeywordReportService implements IAdKeywordReportService {
 		return mapList;
 	}
 }
->>>>>>> 6f75a30 Merge branch 'master' into stg

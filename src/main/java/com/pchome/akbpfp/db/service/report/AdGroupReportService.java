@@ -1,23 +1,36 @@
 package com.pchome.akbpfp.db.service.report;
 
-<<<<<<< Upstream, based on pfp_hot_fix
-=======
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
->>>>>>> 6f75a30 Merge branch 'master' into stg
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.json.JSONObject;
 
 import com.pchome.akbpfp.db.dao.report.AdGroupReportVO;
 import com.pchome.akbpfp.db.dao.report.IAdGroupReportDAO;
+import com.pchome.akbpfp.db.pojo.PfpAdGroup;
+import com.pchome.akbpfp.db.service.ad.IPfpAdGroupService;
+import com.pchome.enumerate.report.EnumReport;
+import com.pchome.enumerate.report.EnumReportAdType;
+import com.pchome.enumerate.report.EnumReportDevice;
+import com.pchome.enumerate.utils.EnumStatus;
+import com.pchome.utils.CommonUtils;
 
 public class AdGroupReportService implements IAdGroupReportService {
 
+	private IPfpAdGroupService adGroupService;
 	private IAdGroupReportDAO adGroupReportDAO;
 
+	public void setAdGroupService(IPfpAdGroupService adGroupService) {
+		this.adGroupService = adGroupService;
+	}
+	
 	public void setAdGroupReportDAO(IAdGroupReportDAO adGroupReportDAO) {
 		this.adGroupReportDAO = adGroupReportDAO;
 	}
@@ -25,9 +38,6 @@ public class AdGroupReportService implements IAdGroupReportService {
 	public List<AdGroupReportVO> loadReportDate(String sqlType, String adActionSeq, String searchText, String adSearchWay, String adShowWay, String adPvclkDevice, String customerInfoId, String adOperatingRule, String startDate, String endDate, int page, int pageSize) throws Exception {
 		return adGroupReportDAO.getReportList(sqlType, adActionSeq, searchText, adSearchWay, adShowWay, adPvclkDevice, customerInfoId, adOperatingRule, startDate, endDate, page, pageSize);
 	}
-<<<<<<< Upstream, based on pfp_hot_fix
-}
-=======
 
 	/**
 	 * 總廣告成效-分類、分類成效共用(明細)
@@ -385,4 +395,3 @@ public class AdGroupReportService implements IAdGroupReportService {
 		return flashDataMap;
 	}
 }
->>>>>>> 6f75a30 Merge branch 'master' into stg
