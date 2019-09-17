@@ -14,27 +14,29 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.pchome.akbpfp.db.dao.report.AdCampaginReportVO;
+import com.pchome.akbpfp.db.dao.report.AdDailyPerformanceReportVO;
 import com.pchome.akbpfp.db.pojo.PfpCode;
 import com.pchome.akbpfp.db.pojo.PfpCustomerInfo;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
-import com.pchome.akbpfp.db.service.report.IAdActionReportService;
+import com.pchome.akbpfp.db.service.report.IAdDailyPerformanceReportService;
 import com.pchome.enumerate.report.EnumReport;
 import com.pchome.soft.depot.utils.DateValueUtil;
 import com.pchome.soft.depot.utils.SpringOpenFlashUtil;
 import com.pchome.utils.CommonUtils;
 
-public class ReportCampaginAction extends BaseReportAction {
+public class ReportDailyPerformanceAction extends BaseReportAction {
 
-	private static final long serialVersionUID = 1L;
-	
-	private IAdActionReportService adActionReportService;
+	private static final long serialVersionUID = -8461736631135913196L;
+
+	private IAdDailyPerformanceReportService adDailyPerformanceReportService;
 	private IPfpCodeService pfpCodeService;
 	
 	private LinkedHashMap<String, String> dateSelectMap; // 查詢日期的 rang map,查詢日期頁面顯示
 	private boolean hasPfpCodeflag = false; // 是否有使用轉換追蹤的PFP帳號
 	
+	private String adSeq = ""; // 廣告序號
+	private String adActionName = ""; // 麵包屑顯示名稱
 	private String startDate = ""; // 查詢開始日期
 	private String endDate = ""; // 查詢結束日期
 	private String searchText = ""; // 搜尋文字
@@ -44,8 +46,8 @@ public class ReportCampaginAction extends BaseReportAction {
 	private int pageSize = 10; // 每頁筆數
 	private int totalPage = 0; //總頁數
 	
-	private List<AdCampaginReportVO> resultData = new ArrayList<>(); // 查詢結果
-	private List<AdCampaginReportVO> resultSumData = new ArrayList<>(); // 查詢結果加總
+	private List<AdDailyPerformanceReportVO> resultData = new ArrayList<>(); // 查詢結果
+	private List<AdDailyPerformanceReportVO> resultSumData = new ArrayList<>(); // 查詢結果加總
 	
 	// 下載報表
 	private String isDownload = "false";
@@ -65,7 +67,6 @@ public class ReportCampaginAction extends BaseReportAction {
 	 */
 	@Override
 	public String execute() throws Exception {
-	
 		dateSelectMap = DateValueUtil.getInstance().getDateRangeMap();
 		
 		String startDateCookie = super.getChoose_start_date();
@@ -98,7 +99,8 @@ public class ReportCampaginAction extends BaseReportAction {
 			hasPfpCodeflag = true;
 		}
 		
-		AdCampaginReportVO vo = new AdCampaginReportVO();
+		AdDailyPerformanceReportVO vo = new AdDailyPerformanceReportVO();
+		vo.setAdSeq(adSeq);
 		vo.setCustomerInfoId(super.getCustomer_info_id());
 		vo.setStartDate(startDate);
 		vo.setEndDate(endDate);
@@ -108,10 +110,11 @@ public class ReportCampaginAction extends BaseReportAction {
 		vo.setPage(page);
 		vo.setPageSize(pageSize);
 		vo.setDownloadOrIsNotCuttingPagination(Boolean.parseBoolean(isDownload));
-		resultData = adActionReportService.queryReportAdCampaginData(vo);
-		resultSumData = adActionReportService.queryReportAdCampaginSumData(vo);
+		resultData = adDailyPerformanceReportService.queryReportAdDailyPerformanceData(vo);
+		resultSumData = adDailyPerformanceReportService.queryReportAdDailyPerformanceSumData(vo);
 		
 		totalPage = CommonUtils.getTotalPage(vo.getRowCount(), pageSize);
+		adActionName = vo.getAdActionName(); // 麵包屑顯示名稱
 		
 		if (Boolean.parseBoolean(isDownload)) {
 			makeDownloadReportData();
@@ -128,7 +131,7 @@ public class ReportCampaginAction extends BaseReportAction {
 	private void makeDownloadReportData() throws Exception {
 		
 		SimpleDateFormat dformat = new SimpleDateFormat("yyyyMMddhhmmss");
-		String filename = "廣告成效報表_" + dformat.format(new Date()) + FILE_TYPE;
+		String filename = "廣告明細成效報表_" + dformat.format(new Date()) + FILE_TYPE;
 		PfpCustomerInfo customerInfo = customerInfoService.findCustomerInfo(super.getCustomer_info_id());
 
 		// 紀錄顯示其他欄位，哪些顯示哪些不顯示
@@ -147,14 +150,47 @@ public class ReportCampaginAction extends BaseReportAction {
 		content.append("日期範圍," + startDate + " 到 " + endDate);
 		content.append("\n\n");
 		
-		content = processDownloadReportTitle(content);
+		content.append("日期,");
+
+		if (showHideColumnMap.get(EnumReport.ADTYPE.getTextValue())) {
+			content.append("播放類型,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.AD_OPERATING_RULE.getTextValue())) {
+			content.append("廣告樣式,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.AD_CLK_PRICE_TYPE.getTextValue())) {
+			content.append("計價方式,");
+		}
+
+		content.append("裝置,曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,");
+
+		if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
+			content.append("轉換次數,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.CONVERT_CTR.getTextValue())) {
+			content.append("轉換率,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
+			content.append("總轉換價值,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.CONVERT_COST.getTextValue())) {
+			content.append("平均轉換成本,");
+		}
+
+		if (showHideColumnMap.get(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
+			content.append("廣告投資報酬率,");
+		}
 		content.append("\n");
 		
 		if (!resultData.isEmpty()) {
 			// 明細資料
 			for (int i = 0; i < resultData.size(); i++) {
-				content.append("\"" + resultData.get(i).getAdStatusName() + "\",");
-				content.append("\"" + resultData.get(i).getAdActionName() + "\",");
+				content.append("\"" + resultData.get(i).getReportDate() + "\",");
 				
 				if (showHideColumnMap.get(EnumReport.ADTYPE.getTextValue())) {
 					content.append("\"" + resultData.get(i).getAdType() + "\",");
@@ -162,16 +198,11 @@ public class ReportCampaginAction extends BaseReportAction {
 				if (showHideColumnMap.get(EnumReport.AD_OPERATING_RULE.getTextValue())) {
 					content.append("\"" + resultData.get(i).getAdOperatingRule() + "\",");
 				}
-				if (showHideColumnMap.get(EnumReport.AD_DATE.getTextValue())) {
-					content.append("\"" + resultData.get(i).getAdActionStartDate() + " ~ " + resultData.get(i).getAdActionEndDate() + "\",");
+				if (showHideColumnMap.get(EnumReport.AD_CLK_PRICE_TYPE.getTextValue())) {
+					content.append("\"" + resultData.get(i).getAdClkPriceType() + "\",");
 				}
 				
 				content.append("\"" + resultData.get(i).getAdDevice() + "\",");
-				
-				if (showHideColumnMap.get(EnumReport.AD_ACTION_MAX_PRICE_AVG.getTextValue())) {
-					content.append("\"" + doubleFormat.format(resultData.get(i).getAdActionMaxPriceAvg()) + "\",");
-				}
-				
 				content.append("\"" + intFormat.format(resultData.get(i).getAdPvSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultData.get(i).getAdClkSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultData.get(i).getCtr()) + "%\",");
@@ -201,24 +232,18 @@ public class ReportCampaginAction extends BaseReportAction {
 			
 			// 總計資料
 			for (int i = 0; i < resultSumData.size(); i++) {
-				content.append("\"\",");
 				content.append("\"總計：" + intFormat.format(resultSumData.get(i).getRowCount()) + "\",");
-
+				
 				if (showHideColumnMap.get(EnumReport.ADTYPE.getTextValue())) {
 					content.append("\"\",");
 				}
 				if (showHideColumnMap.get(EnumReport.AD_OPERATING_RULE.getTextValue())) {
 					content.append("\"\",");
 				}
-				if (showHideColumnMap.get(EnumReport.AD_DATE.getTextValue())) {
+				if (showHideColumnMap.get(EnumReport.AD_CLK_PRICE_TYPE.getTextValue())) {
 					content.append("\"\",");
 				}
-
 				content.append("\"\",");
-				
-				if (showHideColumnMap.get(EnumReport.AD_ACTION_MAX_PRICE_AVG.getTextValue())) {
-					content.append("\"" + doubleFormat.format(resultSumData.get(i).getAdActionMaxPriceAvg()) + "\",");
-				}
 				content.append("\"" + doubleFormat.format(resultSumData.get(i).getAdPvSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultSumData.get(i).getAdClkSum()) + "\",");
 				content.append("\"" + doubleFormat.format(resultSumData.get(i).getCtr()) + "%\",");
@@ -254,89 +279,51 @@ public class ReportCampaginAction extends BaseReportAction {
 	}
 	
 	/**
-	 * 處理下載報表標題
-	 * @param content
-	 * @return
-	 */
-	private StringBuilder processDownloadReportTitle(StringBuilder content) {
-		content.append("狀態,廣告活動,");
-
-		if (showHideColumnMap.get(EnumReport.ADTYPE.getTextValue())) {
-			content.append("播放類型,");
-		}
-
-		if (showHideColumnMap.get(EnumReport.AD_OPERATING_RULE.getTextValue())) {
-			content.append("廣告樣式,");
-		}
-		
-		if (showHideColumnMap.get(EnumReport.AD_DATE.getTextValue())) {
-			content.append("走期,");
-		}
-		
-		content.append("裝置,");
-		
-		if (showHideColumnMap.get(EnumReport.AD_ACTION_MAX_PRICE_AVG.getTextValue())) {
-			content.append("每日預算,");
-		}
-		
-		content.append("曝光數,互動數,互動率,單次互動費用,千次曝光費用,費用,");
-
-		if (showHideColumnMap.get(EnumReport.CONVERT_COUNT.getTextValue())) {
-			content.append("轉換次數,");
-		}
-
-		if (showHideColumnMap.get(EnumReport.CONVERT_CTR.getTextValue())) {
-			content.append("轉換率,");
-		}
-
-		if (showHideColumnMap.get(EnumReport.CONVERT_PRICE_COUNT.getTextValue())) {
-			content.append("總轉換價值,");
-		}
-
-		if (showHideColumnMap.get(EnumReport.CONVERT_COST.getTextValue())) {
-			content.append("平均轉換成本,");
-		}
-
-		if (showHideColumnMap.get(EnumReport.CONVERT_INVESTMENT_COST.getTextValue())) {
-			content.append("廣告投資報酬率,");
-		}
-		return content;
-	}
-
-	/**
 	 * 圖表
 	 * @return
 	 * @throws Exception
 	 */
 	public String flashDataDownLoad() {
-		AdCampaginReportVO chartVo = new AdCampaginReportVO();
+		AdDailyPerformanceReportVO chartVo = new AdDailyPerformanceReportVO();
 		chartVo.setCharType(charType);
+		chartVo.setAdSeq(adSeq);
 		chartVo.setCustomerInfoId(super.getCustomer_info_id());
 		chartVo.setStartDate(startDate);
 		chartVo.setEndDate(endDate);
 		chartVo.setSearchText(searchText);
 		chartVo.setWhereMap(whereMap);
-		chartVo.setDownloadOrIsNotCuttingPagination(true);
-		Map<Date, Float> flashDataMap = adActionReportService.queryReportAdCampaginChartDataMap(chartVo);
-		
+		Map<Date, Float> flashDataMap = adDailyPerformanceReportService.queryReportAdDailyPerformanceChartDataMap(chartVo);
+
 		flashData = openFlashUtil.getChartDataForArray(charType, startDate, endDate, flashDataMap);
 		return SUCCESS;
 	}
 	
+	public String getAdActionName() {
+		return adActionName;
+	}
+
+	public void setAdDailyPerformanceReportService(IAdDailyPerformanceReportService adDailyPerformanceReportService) {
+		this.adDailyPerformanceReportService = adDailyPerformanceReportService;
+	}
+
 	public LinkedHashMap<String, String> getDateSelectMap() {
 		return dateSelectMap;
 	}
 
-	public void setAdActionReportService(IAdActionReportService adActionReportService) {
-		this.adActionReportService = adActionReportService;
-	}
-	
 	public void setPfpCodeService(IPfpCodeService pfpCodeService) {
 		this.pfpCodeService = pfpCodeService;
 	}
 
 	public boolean isHasPfpCodeflag() {
 		return hasPfpCodeflag;
+	}
+
+	public String getAdSeq() {
+		return adSeq;
+	}
+
+	public void setAdSeq(String adSeq) {
+		this.adSeq = adSeq;
 	}
 
 	public String getStartDate() {
@@ -383,11 +370,11 @@ public class ReportCampaginAction extends BaseReportAction {
 		return totalPage;
 	}
 
-	public List<AdCampaginReportVO> getResultData() {
+	public List<AdDailyPerformanceReportVO> getResultData() {
 		return resultData;
 	}
 
-	public List<AdCampaginReportVO> getResultSumData() {
+	public List<AdDailyPerformanceReportVO> getResultSumData() {
 		return resultSumData;
 	}
 
@@ -422,5 +409,5 @@ public class ReportCampaginAction extends BaseReportAction {
 	public void setCharType(String charType) {
 		this.charType = charType;
 	}
-
+	
 }
