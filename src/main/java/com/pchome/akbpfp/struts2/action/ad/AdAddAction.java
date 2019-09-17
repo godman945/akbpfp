@@ -1378,6 +1378,7 @@ public class AdAddAction extends BaseCookieAction{
 				if(!originalPathFile.exists()){
 					originalPathFile.mkdirs();
 				}
+				
 				String zipResult = SpringZipCompress.getInstance().openZip(fileuploadFileName,file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
 				
 				int FileAmount = checkFileAmount(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
