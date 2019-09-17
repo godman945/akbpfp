@@ -51,7 +51,7 @@ public class AdActionViewAction extends BaseSSLAction{
 	private String addFlag = "y"; //是否顯示新增廣告子選單
 	
 	public String execute() throws Exception{
-		log.info("***START***");
+		
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;

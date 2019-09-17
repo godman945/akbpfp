@@ -57,8 +57,7 @@ function multipartImgUuploadSubmit(){
 			dataType:'json',
 			data : {
 				"adLinkURL":$("#adLinkURL").val(),
-				"adSeq":$("#adSeq").val(),
-				"thirdCode":$("#thirdCode").val()
+				"adSeq":$("#adSeq").val()
 			},
 			success : function(respone) {
 				if(respone == "success"){
@@ -76,14 +75,4 @@ function multipartImgUuploadSubmit(){
 
 function cancerSubmit(){
 	 location.href = "adAdVideoView.html?adGroupSeq="+$('#adGroupSeq').val();
-}
-
-
-//第三方偵測
-function opennots(id) {
-	$("#shownotes"+id).css("visibility", "visible");
-}
-
-function closenots(id) {
-	$("#shownotes"+id).css("visibility", "hidden");
 }

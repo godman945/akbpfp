@@ -19,7 +19,7 @@ public enum EnumProdAdDetail {
 	PROD_SALE_IMG("logo_sale_img_300x55","adp_201809270001",""),
 	PROD_SALE_END_IMG("sale_img_300x250","adp_201809270001",""),
 	LOGO_IMG_URL("logo_img_url","adp_201809270001","dad_logo_img_url"),
-	THIRD_DETECTION ("tracking_code","adp_201809270001","dad_tracking_code");
+	THIRD_DETECTION ("sale_img_300x250","adp_201809270001","dad_tracking_code");
 	
 	private final String adDetailId;
 	private final String adPoolSeq;

@@ -37,7 +37,7 @@
 								</div>
 							</span>
 						</td>
-						<td style="background:#dadada;" rowspan="8" width="550">
+						<td style="background:#dadada;" rowspan="7" width="550">
 							<!--播放預覽start-->
 							<div style="display:block;" class="boxpreview">
 								<h5>廣告預覽</h5>
@@ -114,37 +114,14 @@
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">　</span>
 						</td>
 					</tr>
-					<#if openThirdUser?string("true","flase") == "true">
-					<tr class="" >
-                        <th style="">
-                           		 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(3)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
-                            <div id="shownotes3" style="visibility:hidden;" class="adnoticepop">
-                                <h4>第三方曝光追蹤代碼</h4>
-                                <div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
-                                <a onclick="closenots(3)" style="cursor:pointer;" class="adpopclose">關閉</a>
-                            </div>
-                        </th>
-                        <td>
-                          <div class="code-box">
-                              <textarea rows="1" placeholder="請輸入第三方曝光追蹤代碼"  id="thirdCode" name="thirdCode" style="margin: 0px 310px 0px 0px; height: 137px;">${thirdCode!}</textarea>
-                          </div>
-                        </td>
-                    </tr>
-					</#if>
 					<tr>
 						<th height="35" style="width:12%;"><a name="errAdShowURL"></a><span class="t_s02">* </span>廣告顯示網址</th>
 						<td style="min-width:250px;">
 							<input type="hidden" id="adDetailID" name="adDetailID" value="show_url" >
 							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[6]!}">
 							<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[6]!}">
-							
-							<input type="hidden" id="adDetailID" name="adDetailID" value="tracking_code" >
-							<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[7]!}">
-							<input type="hidden" id="thirdCodeEdit" name="adDetailContent" value="">
-							
 							<input type="checkbox" id="sameRealUrl" name="sameRealUrl">廣告對外顯示網址同廣告連結網址網域<br>
 							<input type="text" class="inputPlaceholderTmg" data-value="spanAdShowURL" id="adShowURL" name="adShowURL" style="width:96%;"  value="${adDetailContent[6]!}" placeholder="show.pchome.com.tw" maxlength="30"><br>
-							
 							<span id="chkShowURL" name="chkShowURL" style="float:righ;color:red"></span>
 							<span style="float:right" id="spanAdShowURL">　</span>
 						</td>
@@ -152,9 +129,3 @@
 				</tbody>
 			</table>
 			<span class="t_s01">提醒您，於網路中張貼或散佈色情圖片是觸法行為，違者可處二年以下有期徒刑、拘役或併科三萬元以下罰金</span>
-
-<div id="shownotes3" style="visibility: hidden;" class="adnoticepop">
-<h4>第三方曝光追蹤代碼</h4>
-<div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
-<a onclick="closenots(3)" style="cursor:pointer;" class="adpopclose">關閉</a>
-</div>

@@ -75,7 +75,6 @@ public class AdActionAddAction extends BaseCookieAction{
 	private String sysPriceAdPoolSeq;
 	private String adAsideRate;
 	private String adCountry;
-	private String adCity[];
 	private IPfpCustomerInfoService pfpCustomerInfoService;
 	private ISequenceService sequenceService;
 	private IPfpAdActionService pfpAdActionService;
@@ -432,23 +431,6 @@ public class AdActionAddAction extends BaseCookieAction{
 			adCountry = null;
 		}
 		
-		String saveAdCity = null;
-		if(adCountry != null && adCountry.equals("Taiwan")) {
-			if(adCity != null) {
-				if(adCity.length == 5) {
-					saveAdCity = null;
-				}else{
-					saveAdCity = "";
-					for (int i = 0; i < adCity.length; i++) {
-						if(i == (adCity.length - 1)) {
-							saveAdCity = saveAdCity + adCity[i];
-						}else {
-							saveAdCity = saveAdCity + adCity[i] + ",";
-						}
-					}
-				}
-			}
-		}
 		
 		if (StringUtils.isEmpty(adActionName)) {
 			message = "請輸入廣告名稱！";
@@ -562,8 +544,6 @@ public class AdActionAddAction extends BaseCookieAction{
 		pfpAdAction.setPfpCustomerInfo(pfpCustomerInfo);
 		pfpAdAction.setAdActionUpdateTime(new Date());
 		pfpAdAction.setAdActionCountry(adCountry);
-		pfpAdAction.setAdActionCity(saveAdCity);
-		
 		if(pfpAdActionService.getAdGroupCounts(adActionSeq) <= 0) {
 			pfpAdAction.setAdActionStatus(EnumStatus.UnDone.getStatusId());		// 新增廣告時，status 設定為未完成
 		}
@@ -1242,14 +1222,6 @@ public class AdActionAddAction extends BaseCookieAction{
 
 	public void setPfpCodeConvertJson(JSONObject pfpCodeConvertJson) {
 		this.pfpCodeConvertJson = pfpCodeConvertJson;
-	}
-
-	public String[] getAdCity() {
-		return adCity;
-	}
-
-	public void setAdCity(String[] adCity) {
-		this.adCity = adCity;
 	}
 
 

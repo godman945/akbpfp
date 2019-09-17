@@ -16,7 +16,6 @@ import org.json.JSONObject;
 import com.pchome.akbpfp.db.pojo.PfpCode;
 import com.pchome.akbpfp.db.pojo.PfpCodeConvert;
 import com.pchome.akbpfp.db.pojo.PfpCodeConvertRule;
-import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeConvertRuleService;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeConvertService;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
@@ -24,14 +23,11 @@ import com.pchome.akbpfp.db.service.sequence.ISequenceService;
 import com.pchome.akbpfp.db.vo.codeManage.ConvertTrackingVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.codeManage.EnumConvertBelongType;
-import com.pchome.enumerate.codeManage.EnumConvertClassType;
 import com.pchome.enumerate.codeManage.EnumConvertCodeType;
 import com.pchome.enumerate.codeManage.EnumConvertNumType;
-import com.pchome.enumerate.codeManage.EnumConvertPriceType;
 import com.pchome.enumerate.codeManage.EnumConvertStatusType;
 import com.pchome.enumerate.codeManage.EnumConvertType;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
-import com.pchome.rmi.accesslog.EnumAccesslogAction;
 import com.pchome.service.portalcms.bean.Mail;
 import com.pchome.soft.util.SpringEmailUtil;
 
@@ -61,7 +57,7 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 	private IPfpCodeService pfpCodeService;
 	private IPfpCodeConvertService pfpCodeConvertService;
 	private IPfpCodeConvertRuleService pfpCodeConvertRuleService;
-	private AdmAccesslogService admAccesslogService;
+	
 	private ISequenceService sequenceService;
 	private SpringEmailUtil springEmailUtil;
 
@@ -290,10 +286,6 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 			resultMap.put("msg", "轉換追蹤新增成功");
 			resultMap.put("status", "SUCCESS");
 
-			//accesslog
-			String message = "新增=>轉換追縱：" + convertName.trim();
-			admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			
 		} catch (Exception e) {
 			log.error("error:" + e);
 			resultMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
@@ -357,54 +349,6 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 			
 			//更新轉換追蹤資料
 			PfpCodeConvert pfpCodeConvert = pfpCodeConvertService.get(convertSeq);
-			
-			
-			
-			String beforeConvertName = pfpCodeConvert.getConvertName();
-			String beforeConvertType = pfpCodeConvert.getConvertType();
-			String beforeConvertTypeStr = "";
-			String saveConvertTypeStr = "";
-			for (EnumConvertType enumConvertType : EnumConvertType.values()) {
-				if(beforeConvertType.equals(enumConvertType.getType())) {
-					beforeConvertTypeStr = enumConvertType.getChName();
-				}
-				if(convertType.equals(enumConvertType.getType())) {
-					saveConvertTypeStr = enumConvertType.getChName();
-				}
-			}
-			
-			String beforeConvertClass = pfpCodeConvert.getConvertClass();
-			String beforeConvertClassStr = "";
-			String saveConvertClassStr = "";
-			for (EnumConvertClassType enumConvertClassType : EnumConvertClassType.values()) {
-				if(beforeConvertClass.equals(enumConvertClassType.getType())) {
-					beforeConvertClassStr = enumConvertClassType.getChName();
-				}
-				if(convertClass.equals(enumConvertClassType.getType())) {
-					saveConvertClassStr = enumConvertClassType.getChName();
-				}
-			}
-			
-			String beforeConvertPriceType = pfpCodeConvert.getConvertPriceType();
-			float beforeConvertPrice = pfpCodeConvert.getConvertPrice();
-			String beforeConvertPriceStr = "";
-			String saveConvertPriceStr = "";
-			for (EnumConvertPriceType enumConvertPriceType : EnumConvertPriceType.values()) {
-				if(beforeConvertPriceType.equals(enumConvertPriceType.getType())) {
-					beforeConvertPriceStr = enumConvertPriceType.getChName();
-				}
-				if(convertPriceType.equals(enumConvertPriceType.getType())) {
-					saveConvertPriceStr = enumConvertPriceType.getChName();
-				}
-			}
-			
-			int beforeClickRangeDate = pfpCodeConvert.getClickRangeDate();
-			int beforeImpRangeDate = pfpCodeConvert.getImpRangeDate();
-			
-			
-			
-			
-			
 			pfpCodeConvert.setConvertName(convertName);
 			pfpCodeConvert.setConvertCodeType(convertCodeType);
 			pfpCodeConvert.setConvertType(convertType);
@@ -451,36 +395,6 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 			resultMap.put("msg", "轉換追蹤儲存成功");
 			resultMap.put("status", "SUCCESS");
 
-			//accesslog
-			if(!beforeConvertName.equals(convertName)) {
-				String message = "轉換追蹤：代碼名稱=>代碼名稱修改：" + beforeConvertName+"=>"+convertName;
-				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());	
-			}
-			if(!beforeConvertTypeStr.equals(saveConvertTypeStr)) {
-				String message = "轉換追蹤："+convertName+"=>選擇轉換追蹤條件：" + beforeConvertTypeStr+"=>修改："+saveConvertTypeStr;
-				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			}
-			if(!beforeConvertClassStr.equals(saveConvertClassStr)) {
-				String message = "轉換追蹤："+convertName+"=>選擇轉換類型：" + beforeConvertClassStr+"=>修改："+saveConvertClassStr;
-				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			}
-			if((!beforeConvertPriceStr.equals(saveConvertPriceStr)) || (beforeConvertPrice != Integer.parseInt(convertPrice))) {
-				String message = "";
-				message = "轉換追蹤："+convertName+"=>轉換價值：" + beforeConvertPriceStr+"["+(int)beforeConvertPrice+"元]=>"+saveConvertPriceStr+"["+convertPrice+"元]";
-				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			}
-			
-			if(beforeClickRangeDate != clickRangeDate) {
-				String message = "";
-				message = "轉換追蹤："+convertName+"=>互動後轉換追溯修改：" +beforeClickRangeDate +"天=>"+clickRangeDate+"天";
-				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			}
-			
-			if(beforeImpRangeDate != impRangeDate) {
-				String message = "";
-				message = "轉換追蹤："+convertName+"=>瀏覽後轉換追溯修改：" +beforeImpRangeDate +"天=>"+impRangeDate+"天";
-				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			}
 		} catch (Exception e) {
 			log.error("error:" + e);
 			resultMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
@@ -571,8 +485,6 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 			log.info(">>> currentPage: " + currentPage);
 			log.info(">>> pageSizeSelected: " + pageSizeSelected);
 			log.info(">>> convertSeq: " + convertSeq);
-			PfpCodeConvert pfpCodeConvert = pfpCodeConvertService.get(convertSeq);
-			convertName = pfpCodeConvert.getConvertName();
 			log.info(">>> convertName: " + convertName);
 			
 			resultMap = new HashMap<String, Object>();
@@ -584,9 +496,6 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 			resultMap.put("convertName", convertName);
 			resultMap.put("msg", "轉換目錄刪除成功");
 			resultMap.put("status", "SUCCESS");
-			//accesslog
-			String message = "轉換追蹤："+convertName+"=>刪除";
-			admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 			
 		} catch (Exception e) {
 			log.error("error:" + e);
@@ -608,29 +517,11 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 
 			resultMap = new HashMap<String, Object>();
 			
-			
-			PfpCodeConvert pfpCodeConvert = pfpCodeConvertService.get(convertSeq);
-			String beforeConvertStatus = pfpCodeConvert.getConvertStatus();
-			
 			pfpCodeConvertService.updateConvertStatus(super.getCustomer_info_id(),convertSeq,convertStatus);
+			
 			resultMap.put("msg", "轉換目錄更新成功");
 			resultMap.put("status", "SUCCESS");
-
-			//accesslog
-			if(!beforeConvertStatus.equals(convertStatus)) {
-				String beforeConvertStatusStr = "";
-				String saveConvertStatusStr = "";
-				for (EnumConvertStatusType enumConvertStatusType : EnumConvertStatusType.values()) {
-					if(enumConvertStatusType.getType().equals(beforeConvertStatus)) {
-						beforeConvertStatusStr = enumConvertStatusType.getChName();
-					}
-					if(enumConvertStatusType.getType().equals(convertStatus)) {
-						saveConvertStatusStr = enumConvertStatusType.getChName();
-					}
-				}
-				String message = "轉換追蹤："+pfpCodeConvert.getConvertName()+"=>狀態修改：" +beforeConvertStatusStr +"=>"+saveConvertStatusStr;
-				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			}
+			
 		} catch (Exception e) {
 			log.error("error:" + e);
 			resultMap = returnErrorMsgMap("系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
@@ -889,14 +780,6 @@ public class ConvertTrackingAjax extends BaseCookieAction {
 
 	public void setConvertCodeType(String convertCodeType) {
 		this.convertCodeType = convertCodeType;
-	}
-
-	public AdmAccesslogService getAdmAccesslogService() {
-		return admAccesslogService;
-	}
-
-	public void setAdmAccesslogService(AdmAccesslogService admAccesslogService) {
-		this.admAccesslogService = admAccesslogService;
 	}
 	
 	

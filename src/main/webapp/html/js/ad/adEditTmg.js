@@ -552,8 +552,6 @@
 			return false;
 		}
 		
-		$("#thirdCodeEdit").val($("#thirdCode").val());
-		
 		if(LinkUrl && ShowUrl && $("#adTitle").val()!="" && $("#adContent").val()!=""){
 			var adStatus = $("#adStatus").val();
 			var alertMsg = "";
@@ -759,12 +757,4 @@ function processCheckMatch(flag, string) {
 		return string.match(/[\ud800-\udbff]|[\udc00-\udfff]|[\ud800-\udfff]/);
 	}
 	return false;
-}
-//第三方偵測
-function opennots(id) {
-	$("#shownotes"+id).css("visibility", "visible");
-}
-
-function closenots(id) {
-	$("#shownotes"+id).css("visibility", "hidden");
 }
