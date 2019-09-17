@@ -1,8 +1,14 @@
 package com.pchome.utils;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -10,8 +16,18 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
+import org.apache.commons.beanutils.BeanComparator;
+import org.apache.commons.collections.ComparatorUtils;
+import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
+
+import com.pchome.enumerate.ad.EnumAdPriceType;
+import com.pchome.enumerate.ad.EnumAdStyleType;
+import com.pchome.enumerate.ad.EnumAdType;
+import com.pchome.enumerate.report.EnumReportDevice;
+import com.pchome.enumerate.utils.EnumStatus;
 
 public class CommonUtils {
 	protected static final Logger log = LogManager.getRootLogger();
@@ -203,9 +219,6 @@ public class CommonUtils {
 			file.mkdirs(); // 建立資料夾
 		}
 	}
-<<<<<<< Upstream, based on pfp_hot_fix
-}
-=======
 	
 	/**
 	 * 將查詢結果排序
@@ -344,4 +357,3 @@ public class CommonUtils {
 		return adStyleTypeMap;
 	}
 }
->>>>>>> 6f75a30 Merge branch 'master' into stg
