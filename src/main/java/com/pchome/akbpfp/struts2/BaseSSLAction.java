@@ -47,14 +47,14 @@ public class BaseSSLAction extends BaseCookieAction{
 	}
 	
 	private boolean isSSLUrl() {
-		boolean result = true;
-//		boolean result = false;
-//		for(EnumSSLAction ssl:EnumSSLAction.values()){
-//			if(request.getRequestURI().indexOf(ssl.getAction()) > -1){
-//				result = true;
-//				break;
-//			}
-//		}
+		
+		boolean result = false;
+		for(EnumSSLAction ssl:EnumSSLAction.values()){
+			if(request.getRequestURI().indexOf(ssl.getAction()) > -1){
+				result = true;
+				break;
+			}
+		}
 		
 		return result;
 	}
