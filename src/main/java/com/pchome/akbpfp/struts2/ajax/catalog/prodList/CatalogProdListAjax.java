@@ -11,13 +11,10 @@ import org.json.JSONObject;
 
 import com.pchome.akbpfp.catalog.prodList.factory.AProdList;
 import com.pchome.akbpfp.catalog.prodList.factory.ProdListFactory;
-import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
-import com.pchome.enumerate.catalogprod.EnumEcStatusType;
-import com.pchome.rmi.accesslog.EnumAccesslogAction;
 
 
  public class CatalogProdListAjax extends BaseCookieAction{
@@ -39,7 +36,7 @@ import com.pchome.rmi.accesslog.EnumAccesslogAction;
 	private int totalCount = 0; //資料總筆數
 	private Map<String, Object> prodDetailMap;
 	private Map<String,Object> resultMap;
-	private AdmAccesslogService accesslogService;
+	
 	
 	
 	/**
@@ -196,17 +193,6 @@ import com.pchome.rmi.accesslog.EnumAccesslogAction;
 			resultMap.put("prodName", prodName);
 			resultMap.put("msg", "商品狀態更新成功");
 			resultMap.put("status", "SUCCESS");
-			
-			//accesslog
-			for (EnumEcStatusType enumEcStatusType : EnumEcStatusType.values()) {
-				if(enumEcStatusType.getType().equals(updateProdStatus)) {
-					String catalogName = pfpCatalogService.get(catalogSeq).getCatalogName();
-					String message = "目錄："+catalogName+"=>["+prodIdList.size()+"筆]：=>"+enumEcStatusType.getChName();
-					accesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(),super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-					break;
-				}
-			}
-			
 			
 		} catch (Exception e) {
 			log.error("error:" + e);
@@ -371,12 +357,6 @@ import com.pchome.rmi.accesslog.EnumAccesslogAction;
 
 	public void setProdIdArray(String prodIdArray) {
 		this.prodIdArray = prodIdArray;
-	}
-	public AdmAccesslogService getAccesslogService() {
-		return accesslogService;
-	}
-	public void setAccesslogService(AdmAccesslogService accesslogService) {
-		this.accesslogService = accesslogService;
 	}
 	
 }

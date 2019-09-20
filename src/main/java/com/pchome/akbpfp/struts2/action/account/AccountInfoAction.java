@@ -56,7 +56,7 @@ public class AccountInfoAction extends BaseSSLAction{
 	private String changeStatusFlag;
 	
 	public String execute() throws Exception{
-		log.info("***START***");
+		
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;
@@ -92,7 +92,7 @@ public class AccountInfoAction extends BaseSSLAction{
 	
 
 	public String AccountInfoUpdateAction() throws Exception{
-		log.info("***START***");
+		
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;

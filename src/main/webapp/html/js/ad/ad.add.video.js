@@ -107,8 +107,7 @@ $(document).ready(function(){
 //					console.log(result);
 				},
 				error: function(xtl) {
-					$('body').unblock();
-					alert("系統繁忙，請稍後再試！");
+					//alert("系統繁忙，請稍後再試！");
 				}
 			}).done(function (result) {
 				if(result.result == true){
@@ -326,20 +325,11 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	});
 	
 	//檢核檔案大小
-	if(width==1400){
-		if(fileSize < 600){
-			imgFileSize = "yes";
-		}else{
-			errorTitle = '檔案過大!';
-			errorMsg = '檔案大小上限600KB';
-		}
+	if(fileSize < 180){
+		imgFileSize = "yes";
 	}else{
-		if(fileSize < 180){
-			imgFileSize = "yes";
-		}else{
-			errorTitle = '檔案過大!';
-			errorMsg = '檔案大小上限180KB';
-		}
+		errorTitle = '檔案過大!';
+		errorMsg = '檔案大小上限180KB';
 	}
 	
 	//檢核檔案尺寸
@@ -362,6 +352,9 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		errorMsg = '檔案空白';
 	}
 	//檢核重複上傳
+//	console.log(fileArray);
+//	console.log(width);
+//	console.log(height);
 	fileArray.forEach(function(fileData,index) {
 		if(file.name == fileData.name){
 			imgRepeatFlag = true;
@@ -370,6 +363,12 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			return false;
 		}
 	})
+	
+//	var $img = $('<img>');
+//	$img.on('load', function(){
+//	  console.log($(file).width());
+//	});
+	
 	
 	var fileName = file.name;
 	var showFileName = "";
@@ -398,7 +397,7 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		
 		var anyWindow = window.URL || window.webkitURL;
 		var objectUrl = anyWindow.createObjectURL(file);
-		var readoName = width+"_"+height;
+		var readoName = width+height;
 		
 		var a =
 			 '<li class="okbox" style="padding: 0 0 20px 0;width: 18.5%; "  id="'+adSeq+'">'+
@@ -418,6 +417,25 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			 '</li>';
 		$(".aduplodul_p").append(a);
 		
+//		$("#AG").children().each(function(index,value){
+//			var checkFlag = false;
+//			$(value.getElementsByTagName("ul")).children().each(function(index,obj){
+//				var existPicName = $(value).children()[3].value+"."+$(value).children()[5].value;
+//				console.log(existPicName);
+//				
+//				if(index == 0 && readoName == $(obj).children()[0].name && $($(obj).children()[2]).text() != showFileName){
+//					checkFlag = true;
+//				}
+//				
+//				if(checkFlag && index == 1){
+//					$(this).attr('class','no');
+//					var data = $($(this).children()[1]).html("<br>");
+//					$(this).children()[1].append('尺寸重複，僅能選擇一款。');
+//					$(data).prepend(width+" x "+height);
+//				}
+//				
+//			})
+//		})
 	}else if(imgSize == "no" || imgFileSize == "no" || imgType == "no" || imgRepeatFlag){
 		result = false;
 		var a =
@@ -474,9 +492,9 @@ function clickSizePic(showFileName,width,height){
 				return true;
 			}
 			var existPicName = $(value).children()[3].value+"."+$(value).children()[5].value;
-			if(showFileName == existPicName && radioName == (width+"_"+height)){
+			if(showFileName == existPicName && radioName == (width+height)){
 				flag = true;
-			}else if(radioName == (width+"_"+height)){
+			}else if(radioName == (width+height)){
 				flag = false;
 			}
 			return false;
@@ -487,8 +505,8 @@ function clickSizePic(showFileName,width,height){
 		}
 		
 		$(ulObj).children().each(function(index,obj){
-			var width = radioName.split("_")[0];
-			var height = radioName.split("_")[1];
+			var width = radioName.substring(0,3);
+			var height = radioName.substring(3,radioName.length);
 			
 			if(flag){
 				if(index == 1){
@@ -584,7 +602,6 @@ function deleteImgDom(fileName,file){
 		}
 	});
 	
-	
 	$.each($(fileArray), function( index, file ) {
 		if(fileName == file.name){
 			fileArray.splice(index, 1);
@@ -603,7 +620,7 @@ function deleteImgDom(fileName,file){
 	var previewobj = null;
 	$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 		var size = checkboxObj.id.replace('checkbox_','');
-		if(size == deleteSize.replace("_","")){
+		if(size == deleteSize){
 			previewobj = $($($(checkboxObj).parent()).parent().parent()[0]);
 		}
 	});
@@ -723,6 +740,7 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
+			console.log('>>>>>>>>>>>>>>>>直立影音');
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -752,6 +770,8 @@ function autoPreview(objData){
 			linkUrl = "http://"+linkUrl;
 		}
 		$.each(iframeInfoMap, function(key, obj) {
+			console.log('>>>>>>>>>>>>>>>>非直立影音');
+			console.log('<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>');
 			var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -762,6 +782,16 @@ function autoPreview(objData){
 				   '</div>'+
 				'</div>';
 				$("#preViewArea").append(a);
+//			var a = '<iframe class="akb_iframe" scrolling="no" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" id="pchome8044_ad_frame1" width="'+obj.width+'" height="'+obj.height+'" allowtransparency="true" allowfullscreen="true" src="adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true"></iframe>';
+			
+//			var utl = 'adVideoModel.html?adPreviewVideoURL='+url+'&adPreviewVideoBgImg=&realUrl=&resize=true';
+//			var msg = document.getElementById("msg");
+//			var iframe = document.createElement('iframe');
+//			iframe.onload = function(){
+//				iframe.onload = null;
+//			};
+//			document.body.appendChild(iframe);
+//			iframe.src = utl;
 				
 		});
 		$(".adVideoCheckArea").css('display','');
@@ -797,16 +827,16 @@ function appendVideoPreview(){
 			var imgSrc = radioObj.parentElement.parentElement.parentElement.getElementsByTagName("img")[0].src;
 			$("#preViewArea input[type=checkbox]").each(function(index,checkboxObj){
 				var size = checkboxObj.id.replace("checkbox_","");
-				var radioSizeName = radioObj.name.split("_")[0]+radioObj.name.split("_")[1];
-				if(size == radioSizeName){
+				if(size == radioObj.name){
 					createPreViewCheckboxObj = checkboxObj;
 					createPreViewVideoExist = true;
 				}
 			});
 			
 			if(!createPreViewVideoExist){
-				var width = radioObj.name.split("_")[0];
-				var height = radioObj.name.split("_")[1];
+				console.log("TEST >>>>>>>>>>>");
+				var width = radioObj.name.substring(0,3);
+				var height = radioObj.name.substring(3,radioObj.name.length);
 				var a = 
 				'<div class="v_box">'+
 				   '<div class="">'+
@@ -915,6 +945,7 @@ function saveData() {
 			}
 		}
 	});
+	
 	if(videoDetailMap.length == 0){
 		return false;
 	}
@@ -951,7 +982,6 @@ function saveData() {
 					"videoTime":adPreviewVideoData.videoTime,
 					"adTitle":adPreviewVideoData.adTitle,
 					"verticalAd":verticalAd,
-					"thirdCode":$("#thirdCode").val(),
 				},
 				success : function(respone) {
 //					console.log(respone);
@@ -970,23 +1000,3 @@ function saveData() {
 	}
 }
 
-//第三方偵測
-$('.thirdpty-togglebtn').live('click', function(event) {  
-
-	if($('.thirdptybx').is(":hidden")){
-		$('.swap').text("－");
-		$('.thirdptybx').fadeToggle('fast');
-	}
-	else{
-		$('.swap').text("＋");
-		$('.thirdptybx').fadeToggle('fast');
-	}
-});
-
-function opennots(id) {
-	$("#shownotes"+id).css("visibility", "visible");
-}
-
-function closenots(id) {
-	$("#shownotes"+id).css("visibility", "hidden");
-}

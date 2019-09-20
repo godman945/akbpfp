@@ -52,30 +52,6 @@ $(document).ready(function() {
 	$("#selectChartType, #selectChartPic").change(function() {
 		showHighChart(); // 重新產生圖表
 	});
-	
-	// 選擇族群
-	$("#age, #sex").click(function() {
-		var type = $(this).attr("id");
-		if($("#viewType").val() == type){
-			return false;
-		}
-		
-		if(type == "age"){
-			$(".nav-title p").html("廣告族群成效-年齡");
-			// 切換年齡時將性別篩選為全部
-			whereObject["sexCode"] = "all";
-		}else{
-			$(".nav-title p").html("廣告族群成效-性別");
-			// 切換性別時將年齡排序清除，避免無資料
-			if(sortBy == "ageCode-DESC" || sortBy == "ageCode-ASC"){ 
-				sortBy = "";
-			}
-		}
-		
-		$("#viewType").val(type);
-		processQueryAjax(defaultPage); // 選擇後重新查詢
-	});
-	
 });
 
 // 初始顯示其他欄位資訊 下拉選單
@@ -142,9 +118,8 @@ function processChangePage(changePageNo) {
 function processQueryAjax(changePageNo) {
 	$.ajax({
 	    type : "post",
-		url : "reportAdAgesexAjaxTable.html",
+		url : "reportAdGroupAjaxTable.html",
 	    data: {
-	    	  "viewType" : $('#viewType').val(),
 	          "startDate" : $('#startDate').val(),
 	          "endDate" : $('#endDate').val(),
 	          "searchText" : $('#searchText').val(),
@@ -272,7 +247,7 @@ function processDownloadReport() {
 	$("#whereMap").val(JSON.stringify(whereObject));
 	$("#sortBy").val(sortBy);
 	$("#showHideColumn").val(showHideColumn);
-	$("#excerptFrom").attr("action", "reportAdAgesexDownload.html");
+	$("#excerptFrom").attr("action", "reportAdGroupDownload.html");
 	$("#excerptFrom").submit();
 }
 
@@ -280,15 +255,15 @@ function processDownloadReport() {
 function showHighChart(){
 	var dataArray;
 	$.ajax({
-		url : "reportAdAgesexAjaxChart.html",
+		url : "reportAdGroupAjaxChart.html",
 		type : "POST",
 		dataType:'json',
 		async: false,
 		data : {
-			"viewType" : $('#viewType').val(),
-			"charType" : $('#selectChartType').val(),
 			"startDate" : $('#startDate').val(),
-			"endDate" : $('#endDate').val(),
+			"endDate": $('#endDate').val(),
+			"charType" : $('#selectChartType').val(),
+			"charPic" : $('#selectChartPic').val(),
 			"searchText" : $('#searchText').val(),
 			"whereMap" : JSON.stringify(whereObject)
 		},
@@ -298,8 +273,99 @@ function showHighChart(){
 		}
 	});
 	
+	var startDate = $('#startDate').val();
+	var dateArray = startDate.split("-");
+	
+	//圖表格式
+	var selectPic = $("#selectChartPic").val();
+	var chartPic = "";
+	var fontColor = "";
+	switch(selectPic){
+		case "lineChart":
+			chartPic = "";
+			fontColor = "#fead13";
+			break;
+		case "barChart":
+			chartPic = "column";
+			fontColor = "#6eb6ff";
+			break;
+	}
+	
+	//度量
+	var selectType = $("#selectChartType").val();
+	var titleName = "";
+	var selectTypeName = "";
+	var selectSuffix = "";
+	var decimals = 0;		//顯示小數點後幾位數
+	switch(selectType){
+		case "pv":
+			titleName = "曝光數(次)";
+			selectTypeName = "曝光數";
+			selectSuffix = "次";
+			break;
+		case "click":
+			titleName = "互動數(次)";
+			selectTypeName = "互動數";
+			selectSuffix = "次";
+			break;
+		case "ctr":
+			titleName = "互動率(%)";
+			selectTypeName = "互動率";
+			selectSuffix = "%";
+			decimals = 2;
+			break;
+		case "avgCost":
+			titleName = "單次互動費用(NT$)";
+			selectTypeName = "單次互動費用";
+			selectSuffix = "元";
+			decimals = 2;
+			break;
+		case "kiloCost":
+			titleName = "千次曝光費用(NT$)";
+			selectTypeName = "千次曝光費用";
+			selectSuffix = "元";
+			decimals = 2;
+			break;
+		case "cost":
+			titleName = "費用(NT$)";
+			selectTypeName = "費用";
+			selectSuffix = "元";
+			decimals = 3;
+			break;
+		case "convertCount":
+			titleName = "轉換次數(次)";
+			selectTypeName = "轉換次數";
+			selectSuffix = "次";
+			break;
+		case "convertCTR":
+			titleName = "轉換率(%)";
+			selectTypeName = "轉換率";
+			selectSuffix = "%";
+			decimals = 2;
+			break;
+		case "convertPriceCount":
+			titleName = "總轉換價值(NT$)";
+			selectTypeName = "總轉換價值";
+			selectSuffix = "元";
+			break;
+		case "convertCost":
+			titleName = "平均轉換成本(NT$)";
+			selectTypeName = "平均轉換成本";
+			selectSuffix = "元";
+			decimals = 2;
+			break;
+		case "convertInvestmentCost":
+			titleName = "廣告投資報酬率(%)";
+			selectTypeName = "廣告投資報酬率";
+			selectSuffix = "%";
+			decimals = 2;
+			break;
+	}
+	
 	// ---預設樣式----
   Highcharts.setOptions({
+  	colors: [fontColor],
+      
   	symbols:['circle'],
      	lang: {
      		months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '11月', '12月'],
@@ -318,123 +384,71 @@ function showHighChart(){
      	}
   });
 
-  if($('#viewType').val() == 'sex'){
-  	$('#hcharts_bx').highcharts({
-  		colors: ['#6eb6ff', '#ffac12'],
-  		chart: {
-  			plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-  		},
-  		title: {
-  			text: "性別",
-  			style: {
-  				color: '#313131',
-  				fontWeight: 'bold',
-  				fontFamily: '"微軟正黑體", Microsoft JhengHei, Arial, Helvetica, sans-serif, verdana'
-  					//fontSize:'11px'
-  			}
-  		},
-  		tooltip: {
-  			pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
-  		},
-  		plotOptions: {
-  			pie: {
-  				allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.2f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
-  			}
-  		},
-  		series: [{
-  			name: '比例',
-  			colorByPoint: true,
-  			data: [
-  			       {
-  			    	   name: '男性',
-  			    	   y: dataArray[0],
-  			    	   sliced: true,
-  			    	   selected: true
-  			       }, {
-  			    	   name: '女性',
-  			    	   y: dataArray[1]
-  			       }]
-  		}],
-  		legend: { //選單
-  			enabled:false
-  		},
-  		exporting: { //右上打印
-  			//enabled:false
-  		},
-  		credits: { //右下網址
-  			enabled:false
-  		},
-  	});
-  } else {
-  	$('#hcharts_bx').highcharts({
-          chart: {
-              type: 'bar'
-          },
-          title: {
-              text: '<b>年齡層</b>',
-              style: {
-                  color: '#313131',
-                  fontWeight: 'bold',
-                  fontFamily: '"微軟正黑體", Microsoft JhengHei, Arial, Helvetica, sans-serif, verdana'
-              }
-          },
-          subtitle: {
-              text: ''
-          },
-          xAxis: {
-              categories: ['18歲(不含)以下', '18歲~24歲', '25歲~34歲', '35歲~44歲', '45歲~54歲', '55歲~64歲', '65歲~74歲', '75歲以上', '不分年齡'],
-              title: {
-                  text: null
-              }
-          },
-          yAxis: {
-              min: 0,
-              max: 100,
-              title: {
-            	  text: '',
-                  align: 'high'
-              },
-              labels: {
-              	format: '{value}%',
-                  overflow: 'justify'
-              }
-          },
-          tooltip: {
-              valueSuffix: ' %',
-              valueDecimals: 2,
-              backgroundColor: "#FFFFFF",
-              borderWidth: 1
-          },
-          plotOptions: {
-              bar: {
-                  dataLabels: {
-                      enabled: true,
-                      format: '{point.y:.2f}%'
-                  }
-              }
-          },
-          legend: {
-          	enabled:false
-          },
-          credits: {
-              enabled: false
-          },
-          series: [{
-              name: '比例',
-              data: dataArray
-          }]
-      });
-  }
-
+	$('#hcharts_bx').highcharts({  
+		chart: {
+	        type: chartPic 
+	    },	
+	    title: {
+	        text: titleName,
+	        style: {
+	        	color: '#313131',
+	        	fontWeight: 'bold',
+	        	fontFamily: '"微軟正黑體", Microsoft JhengHei, Arial, Helvetica, sans-serif, verdana'
+	        }
+	    },
+	    subtitle: {
+	        text: '',
+	        x: -20
+	    },
+	    xAxis: {
+	        crosshair: true,
+			type: 'datetime',
+			dateTimeLabelFormats:{
+	            day: '%m/%d',
+	            week:'%m/%d',
+	            month:'%m/%d'
+			}
+		},
+	    yAxis: {
+	        title: {
+	            text: '',
+	            align: 'high',
+	            rotation: 0,
+	            offset: 0,
+	            x: -15,
+	            y: -20
+	        },
+	        plotLines: [{
+	            value: 0,
+	            width: 1,
+	            color: '#808080'
+	        }]
+	    },
+	    tooltip: {
+	        valueSuffix: selectSuffix,
+	        shared: true,
+	        borderColor:'#909090',
+	        borderWidth: 1,
+	        valueDecimals: decimals,
+	        dateTimeLabelFormats:{		
+	            day:"%A, %m/%d, %Y" 
+			}
+	    },
+	    series: [{
+	        name: selectTypeName,
+	        data: dataArray,
+	        lineWidth: 2,
+	        pointStart: Date.UTC(parseInt(dateArray[0]), parseInt(dateArray[1] -1), parseInt(dateArray[2])),
+	        pointInterval: 24 * 3600 * 1000
+	    }],
+	    legend: { //選單
+			enabled:false
+		},
+		exporting: { //右上打印
+			//enabled:false
+		},
+		credits: { //右下網址
+			enabled:false
+		},
+	});
 }

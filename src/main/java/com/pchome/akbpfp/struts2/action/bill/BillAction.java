@@ -28,7 +28,6 @@ public class BillAction extends BaseSSLAction{
 	}
 	
 	public String execute() throws Exception {
-		log.info("***START***");
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;
@@ -54,7 +53,7 @@ public class BillAction extends BaseSSLAction{
 	}
 	
 	public String freeSearchAction() throws Exception {
-		log.info("***START***");
+		
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;

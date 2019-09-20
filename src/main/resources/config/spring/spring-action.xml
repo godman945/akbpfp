@@ -220,6 +220,7 @@
     	<property name="customerInfoService" ref="PfpCustomerInfoService" />
 		<property name="openFlashUtil" ref="SpringOpenFlashUtil" />
     </bean>
+    
     <!-- Ad New -->
     <bean id="AdActionAddAction" class="com.pchome.akbpfp.struts2.action.ad.AdActionAddAction" scope="prototype" >
     	<property name="pfpCustomerInfoService" ref="PfpCustomerInfoService" /> 
@@ -459,7 +460,6 @@
     	<property name="pfpCatalogService" ref="PfpCatalogService" />
     	<property name="prodListFactory" ref="ProdListFactory" />
     	<property name="pfpCatalogSetupService" ref="PfpCatalogSetupService" />
-    	<property name="accesslogService" ref="AdmAccesslogService" />
     </bean>
     <!-- 商品清單 END -->
     
@@ -492,7 +492,6 @@
         <property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
         <property name="pfpCatalogGroupItemService" ref="PfpCatalogGroupItemService" />
         <property name="pfpAdService" ref="PfpAdService" />
-        <property name="accesslogService" ref="AdmAccesslogService" />
     </bean>
     
     <!-- 再行銷追蹤 Start-->

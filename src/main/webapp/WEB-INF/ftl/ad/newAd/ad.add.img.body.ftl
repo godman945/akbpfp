@@ -50,8 +50,6 @@
 <@t.insertAttribute name="adTmg" />
 <!-- adTmg end -->
 </#if>
-
-
 		</div>
 
 		<#if adStyle == "TXT" || adStyle == "TMG">
@@ -79,5 +77,6 @@
 	<iframe id="doAdd" name="doAdd" style="display:none;height:150px;width:600px"></iframe>
 </div>
 <input type="hidden" id="messageId" value="${message!!}">
+
 
 

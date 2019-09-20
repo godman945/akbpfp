@@ -10,15 +10,12 @@ import com.pchome.akbpfp.catalog.prodList.factory.AProdList;
 import com.pchome.akbpfp.catalog.prodList.factory.ProdListFactory;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogSetup;
-import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
 import com.pchome.akbpfp.db.service.customerInfo.IPfpCustomerInfoService;
 import com.pchome.akbpfp.db.vo.catalog.prodList.ProdListConditionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.catalog.prodList.EnumProdListFactory;
-import com.pchome.enumerate.catalogprod.EnumProdCropType;
-import com.pchome.rmi.accesslog.EnumAccesslogAction;
 
 public class CatalogProdListAction extends BaseCookieAction{
 	
@@ -40,7 +37,7 @@ public class CatalogProdListAction extends BaseCookieAction{
 	private String customerInfoTitle;
 	private String returnFtlName;
 	private String returnMsg;
-	private AdmAccesslogService accesslogService;
+	
 	//設定內容值 0:crop,1:nocrop
 	private String cropType;
 	//ajax回傳內容
@@ -158,14 +155,10 @@ public class CatalogProdListAction extends BaseCookieAction{
 			return SUCCESS;
 		}
 		String crop = null;
-		String afterCropName = EnumProdCropType.CROP.getChName();
-		String beforeCropName = "";
-		for (EnumProdCropType enumProdCropType : EnumProdCropType.values()) {
-			if(cropType.equals(enumProdCropType.getType())){
-				crop = enumProdCropType.getValue();
-				afterCropName = enumProdCropType.getChName();
-				break;
-			}
+		if(cropType.equals("0")){
+			crop = "crop"; 
+		}else if(cropType.equals("1")){
+			crop = "nocrop";
 		}
 		if(StringUtils.isBlank(crop)){
 			json.put("result", "fail");
@@ -185,36 +178,14 @@ public class CatalogProdListAction extends BaseCookieAction{
 			
 			json.put("result", "success");
 			result = json.toString();
-			
-			
-			//accesslog
-			if(!beforeCropName.equals(afterCropName)) {
-				String message = "目錄："+pfpCatalog.getCatalogName()+"=>商品圖片展示設定修改："+beforeCropName+"=>"+afterCropName;
-				accesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(),super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			}
 			return SUCCESS;
 		}else{
-			
-			beforeCropName = pfpCatalogSetup.getCatalogSetupValue();
-			for (EnumProdCropType enumProdCropType : EnumProdCropType.values()) {
-				if(beforeCropName.equals(enumProdCropType.getValue())){
-					beforeCropName = enumProdCropType.getChName();
-					break;
-				}
-			}
 			pfpCatalogSetup.setCatalogSetupKey("img_proportiona");
 			pfpCatalogSetup.setCatalogSetupValue(crop);
 			pfpCatalogSetup.setPfpCatalog(pfpCatalog);
 			pfpCatalogSetup.setUpdateDate(date);
 			json.put("result", "success");
 			result = json.toString();
-			
-			
-			//accesslog
-			if(!beforeCropName.equals(afterCropName)) {
-				String message = "目錄："+pfpCatalog.getCatalogName()+"=>商品圖片展示設定修改："+beforeCropName+"=>"+afterCropName;
-				accesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, super.getId_pchome(),super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
-			}
 			return SUCCESS;
 		}
 		
@@ -333,12 +304,6 @@ public class CatalogProdListAction extends BaseCookieAction{
 	}
 	public void setCropType(String cropType) {
 		this.cropType = cropType;
-	}
-	public AdmAccesslogService getAccesslogService() {
-		return accesslogService;
-	}
-	public void setAccesslogService(AdmAccesslogService accesslogService) {
-		this.accesslogService = accesslogService;
 	}
 	
 }

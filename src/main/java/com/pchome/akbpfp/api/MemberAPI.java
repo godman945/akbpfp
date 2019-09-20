@@ -42,17 +42,25 @@ public class MemberAPI {
 	}
 	
 	public Map<String,String> getMemberMapData(String memberId) throws Exception{
+		
 		Map<String,String> map = new LinkedHashMap<String,String>();
+		
 		String url = memberServer+EnumRedirectAction.MEMBER_API_FIND_MEMBER.getAction()+"?ad_user_id="+memberId;
 		log.info("url = "+url);
+		
 		String json = HttpUtil.getInstance().getResult(url, "UTF-8");		
+		log.info(" member json = "+json);
+		
 		JSONObject jsonObject = new JSONObject(json);
+		
 		Iterator<String> keys = jsonObject.keys();
+		
 		while(keys.hasNext()){
 			String key = keys.next();
 			String value = jsonObject.get(key).toString();
 			map.put(key, value);
 		}
+		log.info("map:"+map);
 		return map;
 	}
 	
