@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -83,6 +84,7 @@ import com.pchome.enumerate.ad.EnumAdVideoSizePoolType;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
+import com.pchome.enumerate.user.EnumOpenThirdUser;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.soft.depot.utils.CookieUtil;
 import com.pchome.soft.depot.utils.HttpUtil;
@@ -144,7 +146,7 @@ public class AdAddAction extends BaseCookieAction{
 	private SyspriceOperaterAPI syspriceOperaterAPI;
 	private IPfbSizeService pfbSizeService;
 	private IPfpAdVideoSourceService pfpAdVideoSourceService;
-	
+	private List<String> imgFilterList = Arrays.asList(".JPG",".JPEG",".PNG",".GIF",".ZIP");
 	//廣告支援尺寸表
 	private List<PfbxSize> searchPCSizeList = new ArrayList<PfbxSize>();
 	private List<PfbxSize> searchMobileSizeList = new ArrayList<PfbxSize>();
@@ -180,7 +182,8 @@ public class AdAddAction extends BaseCookieAction{
 	Map<String,Object> dataMap;
 	private String adFastPublishUrlInfo; //多網址上稿，勾選的資料flag=Y
 	private IPfpAdManyURLSearchService pfpAdManyURLSearchService;
-	
+	//第三方偵測
+	private String thirdCode="";
 	private AdFactory adFactory;
 	private CookieUtil cookieUtil;
 	private PfpAdGroup pfpAdGroup;
@@ -229,6 +232,9 @@ public class AdAddAction extends BaseCookieAction{
 	
 	/* 商品廣告用參數 END*/
 	
+	//開放第三方曝光code
+	private boolean openThirdUser;
+	
 	//新增廣告
 	public String AdAdAdd() throws Exception {
 		log.info("AdAdAdd => adGroupSeq = " + adGroupSeq);
@@ -264,141 +270,147 @@ public class AdAddAction extends BaseCookieAction{
 		}else{
 			backPage = "adActionView.html";
 		}
+		
+		//檢查是否允許開放第三方曝光代碼功能
+		for (EnumOpenThirdUser enumOpenThirdUser : EnumOpenThirdUser.values()) {
+			if(enumOpenThirdUser.getPfdCustomerInfoId().equals(super.getPfd_customer_info_id())) {
+				openThirdUser = true;
+				break;
+			}
+		}
 		//根據廣告類型個別處理顯示新增廣告畫面需要行為
 		return adObject.AdAdAddInit(this);
 	}
 
 	// 新增圖文式廣告
 	@Transactional
-	public String doAdAdAddTmg() throws Exception {
-		log.info("doAdAdAddTmg => adGroupSeq = " + adGroupSeq + "; saveAndNew = '" + saveAndNew + "'");
-//		 result = "noAdd";
-		String[] parameterValues = request.getParameterValues("adDetailID");
+	public String doAdAdAddTmg()  {
+		try {
+			log.info("doAdAdAddTmg => adGroupSeq = " + adGroupSeq + "; saveAndNew = '" + saveAndNew + "'");
+			// 檢查 adStyle 是否正確，正確的話，設定 adPoolSeq、templateProductSeq
+			chkAdStyle();
+			// 檢查 Form 資料是否正確
+			chkAdData1();
+			if(message != null && !message.equals("")) {
+			    msg = new ByteArrayInputStream(message.getBytes());
+			    return INPUT;
+			}
+			PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
+			// 新增廣告
+			addAd(pfpAdGroup, null);
+			
+			String imgDetail = "";
+			PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
+			for(int i = 0; i < adDetailID.length; i++) {
+			    if(i == 0 && adStyle.equals("TMG")) {
+					try {
+					    if(StringUtils.isNotBlank(imgFile)) {
+							File iPath = new File(photoPath);		// 圖片的存放路徑
+							File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
+							if(!iPath.exists())			iPath.mkdirs();
+							if(!iTmpPath.exists())		iTmpPath.mkdirs();
+							String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
+							File adFile = null;	// 上傳圖片的檔名
+							if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
+								adFile = new File(photoPath, adSeq + "." + fileType);
+							}else {
+								adFile = new File(photoPath, adSeq + ".jpg");
+							}
+							File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
+							tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
 		
-		// 檢查 adStyle 是否正確，正確的話，設定 adPoolSeq、templateProductSeq
-		chkAdStyle();
-
-		// 檢查 Form 資料是否正確
-		chkAdData1();
-		if(message != null && !message.equals("")) {
-		    msg = new ByteArrayInputStream(message.getBytes());
-		    return INPUT;
-		}
-
-		PfpAdGroup pfpAdGroup = pfpAdGroupService.getPfpAdGroupBySeq(adGroupSeq);
-
-		// 新增廣告
-		addAd(pfpAdGroup, null);
-		
-		String imgDetail = "";
-		PfpAdDetailVO pfpAdDetailVO = new PfpAdDetailVO();
-		for(int i = 0; i < adDetailID.length; i++) {
-		    if(i == 0 && adStyle.equals("TMG")) {
-				try {
-				    if(StringUtils.isNotBlank(imgFile)) {
-						File iPath = new File(photoPath);		// 圖片的存放路徑
-						File iTmpPath = new File(photoTmpPath);	// 暫存圖片的路徑
-						if(!iPath.exists())			iPath.mkdirs();
-						if(!iTmpPath.exists())		iTmpPath.mkdirs();
-						String fileType = imgFile.substring(imgFile.lastIndexOf(".") +1);
-						File adFile = null;	// 上傳圖片的檔名
-						if("GIF".equals(fileType.toUpperCase())){	//只有GIF存原副檔名
-							adFile = new File(photoPath, adSeq + "." + fileType);
-						}else {
-							adFile = new File(photoPath, adSeq + ".jpg");
+							imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
+						} else {
+							if(StringUtils.isBlank(adDetailContent[0])) {
+								imgDetail = "img/public/na.gif\" style=\"display:none";
+							}
 						}
-						File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
-						tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
-	
-						imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
-					} else {
-						if(StringUtils.isBlank(adDetailContent[0])) {
-							imgDetail = "img/public/na.gif\" style=\"display:none";
-						}
+					} catch (Exception ex) {
+						log.error("ex : " + ex);
+						return INPUT;
 					}
-				} catch (Exception ex) {
-					log.info("ex : " + ex);
+				}
+				adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
+				List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, adDetailID[i], null, adPoolSeq);
+				String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
+				if(adDetailID[i].equals("real_url")) {
+					if(adDetailContent[i].indexOf("http") < 0 ) {
+						adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
+					}else{
+				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+					}
+			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+			    	adDetailContent[i] = adDetailContent[i].trim();
+				}
+				
+				if(adDetailID[i].equals("show_url")) {
+				    if(adDetailContent[i].indexOf("http://") < 0 ) {
+				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
+				    }else{
+				    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
+				    }
+				    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
+				    adDetailContent[i] = adDetailContent[i].trim();
 				}
 
+				if(adDetailID[i].equals("title") || adDetailID[i].equals("content") ) {
+					adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
+					adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
+				}
+				
+				String detailContent = i == 0?imgDetail:adDetailContent[i];
+				pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
+				pfpAdDetailVO.setAdSeq(adSeq);
+				pfpAdDetailVO.setAdPoolSeq(adPoolSeq);
+				pfpAdDetailVO.setAdDetailId(adDetailID[i]);
+				pfpAdDetailVO.setAdDetailContent(detailContent);
+				if(adDetailID[i].equals("img") || adDetailID[i].equals("title") || adDetailID[i].equals("content")) {
+				    pfpAdDetailVO.setVerifyFlag("y");
+				} else {
+				    pfpAdDetailVO.setVerifyFlag("n");
+				}
+				pfpAdDetailVO.setDefineAdSeq(defineAdSeq);
+				pfpAdDetailVO.setAdDetailCreateTime(new Date());
+				pfpAdDetailVO.setAdDetailUpdateTime(new Date());
+				pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
 			}
-
+			
+			//新增第三方偵測
 			adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
-			List<AdmDefineAd> admDefineAd = defineAdService.getDefineAdByCondition(null, adDetailID[i], null, adPoolSeq);
-			String defineAdSeq = admDefineAd.get(0).getDefineAdSeq();
-			if(adDetailID[i].equals("real_url")) {
-				if(adDetailContent[i].indexOf("http") < 0 ) {
-					adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
-				}else{
-			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-				}
-		    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-		    	adDetailContent[i] = adDetailContent[i].trim();
-			}
-			
-			if(adDetailID[i].equals("show_url")) {
-			    if(adDetailContent[i].indexOf("http://") < 0 ) {
-			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl("http://" +adDetailContent[i]);
-			    }else{
-			    	adDetailContent[i] = HttpUtil.getInstance().getRealUrl(adDetailContent[i]);
-			    }
-//			    adDetailContent[i] = (HttpUtil.getInstance().getRealUrl(adDetailContent[i]).replace("http://", ""));
-			    adDetailContent[i] = HttpUtil.getInstance().convertRealUrl(adDetailContent[i]);
-			    adDetailContent[i] = adDetailContent[i].trim();
-			}
-
-			if(adDetailID[i].equals("title") || adDetailID[i].equals("content") ) {
-				adDetailContent[i] = adDetailContent[i].replaceAll("\n", "");
-				adDetailContent[i] = adDetailContent[i].replaceAll("\r", "");
-			}
-			
-			String detailContent = i == 0?imgDetail:adDetailContent[i];
+			pfpAdDetailVO = new PfpAdDetailVO();
 			pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
 			pfpAdDetailVO.setAdSeq(adSeq);
-			pfpAdDetailVO.setAdPoolSeq(adPoolSeq);
-			pfpAdDetailVO.setAdDetailId(adDetailID[i]);
-			pfpAdDetailVO.setAdDetailContent(detailContent);
-			if(adDetailID[i].equals("img") || adDetailID[i].equals("title") || adDetailID[i].equals("content")) {
-			    pfpAdDetailVO.setVerifyFlag("y");
-			} else {
-			    pfpAdDetailVO.setVerifyFlag("n");
-			}
-			pfpAdDetailVO.setDefineAdSeq(defineAdSeq);
+			pfpAdDetailVO.setAdPoolSeq("adp_201303070003");
+			pfpAdDetailVO.setAdDetailContent(thirdCode);
+			pfpAdDetailVO.setDefineAdSeq("dad_tracking_code");
+			pfpAdDetailVO.setAdDetailId("tracking_code");
+			pfpAdDetailVO.setVerifyFlag("y");
 			pfpAdDetailVO.setAdDetailCreateTime(new Date());
 			pfpAdDetailVO.setAdDetailUpdateTime(new Date());
 			pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
+
+			// 新增關鍵字
+			addKeywords(pfpAdGroup);
+			//新增排除關鍵字
+			addExcludeKeywords(pfpAdGroup);
+
+			// 開啟廣告分類
+			pfpAdGroup.setAdGroupStatus(4);
+			pfpAdGroupService.save(pfpAdGroup);
+
+			// 是否為 "儲存後再新增廣告"
+			if(saveAndNew != null && saveAndNew.equals("save+new")) {
+			    result = "saveNew";
+			} else {
+			    result = "saveOK";
+			}
+			msg = new ByteArrayInputStream(result.getBytes());
+			return SUCCESS;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return INPUT;
 		}
 		
-		//新增第三方偵測
-		adDetailSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
-		pfpAdDetailVO = new PfpAdDetailVO();
-		pfpAdDetailVO.setAdDetailSeq(adDetailSeq);
-		pfpAdDetailVO.setAdSeq(adSeq);
-		pfpAdDetailVO.setAdPoolSeq("adp_201303070003");
-		pfpAdDetailVO.setAdDetailContent("");
-		pfpAdDetailVO.setDefineAdSeq("dad_tracking_code");
-		pfpAdDetailVO.setAdDetailId("tracking_code");
-		pfpAdDetailVO.setVerifyFlag("n");
-		pfpAdDetailVO.setAdDetailCreateTime(new Date());
-		pfpAdDetailVO.setAdDetailUpdateTime(new Date());
-		pfpAdDetailService.savePfpAdDetail(pfpAdDetailVO);
-
-		// 新增關鍵字
-		addKeywords(pfpAdGroup);
-		//新增排除關鍵字
-		addExcludeKeywords(pfpAdGroup);
-
-		// 開啟廣告分類
-		pfpAdGroup.setAdGroupStatus(4);
-		pfpAdGroupService.save(pfpAdGroup);
-
-		// 是否為 "儲存後再新增廣告"
-		if(saveAndNew != null && saveAndNew.equals("save+new")) {
-		    result = "saveNew";
-		} else {
-		    result = "saveOK";
-		}
-		msg = new ByteArrayInputStream(result.getBytes());
-		return SUCCESS;
 	}
 
 	/**
@@ -521,7 +533,7 @@ public class AdAddAction extends BaseCookieAction{
         		addExcludeKeywords(pfpAdGroup);
         		
         		//新增第三方偵測
-        		newSaveAdDetail("", "tracking_code", adPoolSeq, "dad_tracking_code");
+        		newSaveAdDetail(thirdCode, "tracking_code", adPoolSeq, "dad_tracking_code");
         		
         		log.info("新增ad_seq:" + adSeq + "完成。");
         	}
@@ -761,39 +773,46 @@ public class AdAddAction extends BaseCookieAction{
 			
 			
 			//根據尺寸建立明細
+			String pool = "";
+			String templateAdSeq = "";
 			for (int i = 0; i<adDetailInfoArray.length(); i++) {
+				pool = "";
+				templateAdSeq = "";
 				String adVideoSize = "";
 				boolean isBannerSize = true;
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
 				adVideoSize = picInfoJson.getString("size");
 				log.info("adVideoSize:"+adVideoSize);
-				String adSize = adVideoSize.substring(0, 3)+"_"+adVideoSize.substring(3, adVideoSize.length());
-				log.info("adSize:"+adSize);
-				
-				
-				String pool = "";
-				String templateAdSeq = "";
+				String adSize = "";
 				for(EnumAdVideoSizePoolType enumAdVideoSize: EnumAdVideoSizePoolType.values()){
-					if(enumAdVideoSize.getType().equals("DEFAULT") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight()) && !verticalAd){
-						isBannerSize = false;
-						pool = enumAdVideoSize.getPoolType();
-						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
-						break;
-					}else if(enumAdVideoSize.getType().equals("BANNER") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight()) && !verticalAd){
-						isBannerSize = true;
-						pool = enumAdVideoSize.getPoolType();
-						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
-						break;
-					}else if(enumAdVideoSize.getType().equals("VERTICAL") && adSize.equals(enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight()) && verticalAd){
-						isBannerSize = false;
-						pool = enumAdVideoSize.getPoolType();
-						templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
-						break;
+					if(verticalAd) {
+						if(enumAdVideoSize.getType().equals("VERTICAL") && adVideoSize.contentEquals(enumAdVideoSize.getRealWidth()+enumAdVideoSize.getRealHeight())){
+							adSize = enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight();
+							isBannerSize = false;
+							pool = enumAdVideoSize.getPoolType();
+							templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+							break;
+						}
+					}else {
+						if(enumAdVideoSize.getType().equals("BANNER") && adVideoSize.contentEquals(enumAdVideoSize.getRealWidth()+enumAdVideoSize.getRealHeight())){
+							adSize = enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight();
+							isBannerSize = true;
+							pool = enumAdVideoSize.getPoolType();
+							templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+							break;
+						}
+						if(enumAdVideoSize.getType().equals("DEFAULT") && adVideoSize.contentEquals(enumAdVideoSize.getRealWidth()+enumAdVideoSize.getRealHeight())){
+							adSize = enumAdVideoSize.getRealWidth()+"_"+enumAdVideoSize.getRealHeight();
+							isBannerSize = false;
+							pool = enumAdVideoSize.getPoolType();
+							templateAdSeq = enumAdVideoSize.getTemplateAdSeq();
+							break;
+						}
 					}
 				}
+				
 				addAd(pfpAdGroup,templateAdSeq);
 				PfpAd pfpAd = pfpAdService.get(adSeq);
-				
 				//變更暫存圖片檔名為此次上傳名細序號
 				if(isBannerSize){
 					customerImgFile = new File(originalPath + "/" + picInfoJson.getString("adSeq")+"."+picInfoJson.getString("format"));
@@ -881,15 +900,13 @@ public class AdAddAction extends BaseCookieAction{
 				}
 				
 				//新增第三方偵測
-				saveAdDetail("" ,"tracking_code",pool,"dad_tracking_code");
+				saveAdDetail(thirdCode ,"tracking_code",pool,"dad_tracking_code");
 
 				adSeq = null;
 			}
-			
 			// 開啟廣告分類
 			pfpAdGroup.setAdGroupStatus(4);
 			pfpAdGroupService.save(pfpAdGroup);
-			
 			result = "success";
 			return SUCCESS;
 		}catch(Exception e){
@@ -972,13 +989,12 @@ public class AdAddAction extends BaseCookieAction{
 		}
 	}
 
-	private void chkAdData1() {
-		try {
+	private void chkAdData1() throws Exception{
 			if (StringUtils.isEmpty(adClass)) {
 				message = "請選擇廣告分類！";
 			}
-
-			if(keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
+			
+			if(keywords != null && keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
 					&& StringUtils.isBlank(adKeywordPrecisionOpen)){
 				message = "請選擇關鍵字比對方式！";
 			}
@@ -1032,15 +1048,11 @@ public class AdAddAction extends BaseCookieAction{
 					}
 				}
 			}
-		} catch(Exception ex) {
-			log.info("Exception ex :" + ex);
-		}
 	}
 
 	//新增廣告
 	public void addAd(PfpAdGroup pfpAdGroup, String adAssignTadSeq) {
 		try {
-			log.info(">>>>> time: " + new Date());
 			if(adSeq == null || StringUtils.isBlank(adSeq)){
 				adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
 			}
@@ -1060,7 +1072,7 @@ public class AdAddAction extends BaseCookieAction{
 			pfpAd.setAdUpdateTime(date);
 			pfpAdService.savePfpAd(pfpAd);
 		} catch(Exception ex) {
-			log.info("Exception ex" + ex);
+			log.error("Exception ex" + ex);
 		}
 	}
 
@@ -1115,7 +1127,7 @@ public class AdAddAction extends BaseCookieAction{
 			}
 	
 		} catch(Exception ex) {
-		    log.info("Exception(addKeywords) : " + ex);
+		    log.error("Exception(addKeywords) : " + ex);
 		}
 	}
 
@@ -1182,7 +1194,7 @@ public class AdAddAction extends BaseCookieAction{
 			}
 
 		} catch (Exception ex) {
-			log.info("Exception(addExcludeKeywords):" + ex);
+			log.error("Exception(addExcludeKeywords):" + ex);
 		}
 	}
 
@@ -1217,6 +1229,10 @@ public class AdAddAction extends BaseCookieAction{
 	    		for (PfbxSize pfbxSize : pfbSizeList) {
 	    			if(String.valueOf(pfbxSize.getId()).equals(enumAdChannelPCSize.getName())){
 	    				pfbxSizeSet.add(pfbxSize);
+	    				System.out.println(pfbxSize.getWidth());
+	    				System.out.println(pfbxSize.getHeight());
+	    				System.out.println("--");
+	    				
 	    		    }
 	    		}
 	    	}
@@ -1256,6 +1272,13 @@ public class AdAddAction extends BaseCookieAction{
 			adHiddenType = "YES";
 		}
 	    
+	    //檢查是否允許開放第三方曝光代碼功能
+	    for (EnumOpenThirdUser enumOpenThirdUser : EnumOpenThirdUser.values()) {
+	    	if(enumOpenThirdUser.getPfdCustomerInfoId().equals(super.getPfd_customer_info_id())) {
+	    		openThirdUser = true;
+	    		break;
+	    	}
+	    }
 	    return SUCCESS;
 	}
 
@@ -1277,11 +1300,7 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdDetail.setAdDetailContent(content);
 		pfpAdDetail.setAdPoolSeq(adPoolSeq);
 		pfpAdDetail.setDefineAdSeq(defineAdSeq);
-		if(StringUtils.isNotBlank(defineAdSeq) && defineAdSeq.equals("dad_tracking_code")) {
-			pfpAdDetail.setVerifyFlag("n");
-		}else {
-			pfpAdDetail.setVerifyFlag("y");	
-		}
+		pfpAdDetail.setVerifyFlag("y");	
 		pfpAdDetail.setVerifyStatus("n");
 		pfpAdDetail.setAdDetailCreateTime(new Date());
 		pfpAdDetail.setAdDetailUpdateTime(new Date());
@@ -1305,11 +1324,8 @@ public class AdAddAction extends BaseCookieAction{
 		pfpAdDetail.setAdDetailContent(content);
 		pfpAdDetail.setAdPoolSeq(adPoolSeq);
 		pfpAdDetail.setDefineAdSeq(defineAdSeq);
-		if(StringUtils.isNotBlank(defineAdSeq) && defineAdSeq.equals("dad_tracking_code")) {
-			pfpAdDetail.setVerifyFlag("n");
-		}else {
-			pfpAdDetail.setVerifyStatus("y");	
-		}
+		pfpAdDetail.setVerifyFlag("Y");
+		pfpAdDetail.setVerifyStatus("n");	
 		pfpAdDetail.setAdDetailCreateTime(new Date());
 		pfpAdDetail.setAdDetailUpdateTime(new Date());
 		pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
@@ -1350,11 +1366,8 @@ public class AdAddAction extends BaseCookieAction{
 	    for (File file : fileupload) {
 	    	File originalImgFile = file;
     		String fileType = fileuploadFileName.substring(fileuploadFileName.lastIndexOf(".") + 1);
-    		
     		if(StringUtils.equals("zip", fileType)){
-    			
     			adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-    			
 				//建立路徑
 				log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
 				log.info(">>>2.path>>"+customerImgFile.getPath());
@@ -1369,10 +1382,10 @@ public class AdAddAction extends BaseCookieAction{
 				if(!originalPathFile.exists()){
 					originalPathFile.mkdirs();
 				}
-				SpringZipCompress.getInstance().openZip(fileuploadFileName,file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
+				String zipResult = SpringZipCompress.getInstance().openZip(fileuploadFileName,file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
 				
 				int FileAmount = checkFileAmount(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/" + adSeq);
-				log.info(">>>>>>>>>>>>>>>>>>>>>   FileAmount  = " + FileAmount);
+				log.info(">>>>>>>>>>>>>>>>>>>>>FileAmount:" + FileAmount);
 				
 				//檢查index.html是否存在
 				String errorMsg = "";
@@ -1385,6 +1398,11 @@ public class AdAddAction extends BaseCookieAction{
 				if(FileAmount > 40){
 					errorMsg = "夾帶檔案超過40 個";
 				}
+				if(!zipResult.equals("success")){
+					errorMsg = zipResult;
+				}
+				
+				
 				
 				if(indexHtmlFile.exists() && FileAmount <= 40){
 					Document doc = Jsoup.parse(indexHtmlFile, "UTF-8");
@@ -1399,7 +1417,7 @@ public class AdAddAction extends BaseCookieAction{
 					log.info(">>>>>>>>>>>>>>>>>>>>     bodyTag = " + !bodyTag.isEmpty());
 					log.info(">>>>>>>>>>>>>>>>>>>>     metaTag = " + !metaTag.isEmpty());
 					
-					if(docHtml.toUpperCase().indexOf("<!DOCTYPE HTML>") != -1 && !htmlTag.isEmpty() && !headTag.isEmpty() && !bodyTag.isEmpty() && !metaTag.isEmpty()){
+					if((docHtml.indexOf("<!doctype html>") != -1 || docHtml.indexOf("<!DOCTYPE html>") != -1)   && !htmlTag.isEmpty() && !headTag.isEmpty() && !bodyTag.isEmpty() && !metaTag.isEmpty()){
 						html5Repeat = "yes";
 						
 						//將index.html改為index.htm
@@ -1417,7 +1435,6 @@ public class AdAddAction extends BaseCookieAction{
 						imgSrc = indexHtmFile.getPath().replaceAll("\\\\\\\\", "/");
 						imgSrc = imgSrc.replaceAll("\\\\", "/");
 						imgSrc = imgSrc.replace("/export/home/webuser/akb/pfp/", "");
-						imgSrc = imgSrc.substring(imgSrc.indexOf("img"), imgSrc.length());
 						String content = metaTag.attr("content");
 						content = content.replaceAll(";", "");
 						
@@ -1438,6 +1455,7 @@ public class AdAddAction extends BaseCookieAction{
 						} catch(Exception error) {
 							imgWidth = "0";
 							imgHeight = "0";
+							log.error(">>>>>>"+error.getMessage());
 						}
 						
 						log.info(">>>>>>>>>>>>>>>>>>>>     imgWidth = " + imgWidth);
@@ -1465,79 +1483,86 @@ public class AdAddAction extends BaseCookieAction{
 				
 				result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"" + errorMsg + "\" " + "}";
     		} else {
-    			ImageInputStream stream = new FileImageInputStream(originalImgFile);
-                Iterator<ImageReader> readers = ImageIO.getImageReaders(stream);
-                String imgFileType = "";
-                if (readers.hasNext()) {
-                    ImageReader reader = readers.next();
-                    reader.setInput(stream, true);
-                    imgWidth = String.valueOf(reader.getWidth(0));
-                    imgHeight = String.valueOf(reader.getHeight(0));
-                    if(reader.getFormatName().equals("JPG") || reader.getFormatName().equals("GIF") || reader.getFormatName().equals("PNG")){
-                        imgFileType = reader.getFormatName();
-                    }
-                 }
-                 stream.close();
-    	    	
-    	    	//取得檔案的MD5
-    	    	MessageDigest md = MessageDigest.getInstance("MD5");
-    	        FileInputStream fis = new FileInputStream(file);
-    	     
-    	        byte[] dataBytes = new byte[1024];
-    	     
-    	        int nread = 0;
-    	        while ((nread = fis.read(dataBytes)) != -1) {
-    	            md.update(dataBytes, 0, nread);
-    	        };
-    	        byte[] mdbytes = md.digest();
-    	        StringBuffer sb = new StringBuffer();
-    	        for (int i = 0; i < mdbytes.length; i++) {
-    	            sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
-    	        }
-    	        fis.close();
-    	        imgMD5 = sb.toString();
-        		
-    	        List<PfpAdDetail> pfpadDetailList = pfpAdDetailService.getPfpAdDetailsForAdGroup(customerInfoId, adGroupSeq, "MD5", imgMD5);
-    	        
-    	        if(!pfpadDetailList.isEmpty()){
-    	        	imgRepeat = "yes";
-    	        }
-    	        
-    	      //建立圖片
-        		log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
-        		log.info(">>>2.path>>"+customerImgFile.getPath());
-        		log.info(customerImgFile.exists());
-        		if(!customerImgFile.exists()){
-        		    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
-        		    customerImgFile.mkdirs();
-        		}
-        		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date));
-        		if(!customerImgFileDateFile.exists()){
-        		    customerImgFileDateFile.mkdirs();
-        		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original");
-        		    log.info(">>>>>>>>>1:"+customerImgFileOriginalDateFile);
-        		    if(!customerImgFileOriginalDateFile.exists()){
-        		    	customerImgFileOriginalDateFile.mkdirs();
-        		    }
-        		    customerImgFileTemporalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal");
-        		    log.info(">>>>>>>>>2:"+customerImgFileTemporalDateFile);
-        		    if(!customerImgFileTemporalDateFile.exists()){
-        		        customerImgFileTemporalDateFile.mkdirs();
-        		    }
-        		}
-        		fileSize = String.valueOf(file.length() / 1024);
-
-				while (StringUtils.isBlank(adSeq)) {
-					try {
-						adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-					} catch (Exception e) {
-						log.error(e.getMessage());
-						Thread.sleep(100);
+    			boolean doUpload = false;
+    			for (String approveType : imgFilterList) {
+					if(("."+fileType.toUpperCase()).equals(approveType)) {
+						doUpload = true;
+						break;
 					}
 				}
-                commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
-
-        		result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
+    			if(doUpload) {
+    				ImageInputStream stream = new FileImageInputStream(originalImgFile);
+                    Iterator<ImageReader> readers = ImageIO.getImageReaders(stream);
+                    String imgFileType = "";
+                    if (readers.hasNext()) {
+                        ImageReader reader = readers.next();
+                        reader.setInput(stream, true);
+                        imgWidth = String.valueOf(reader.getWidth(0));
+                        imgHeight = String.valueOf(reader.getHeight(0));
+                        if(reader.getFormatName().equals("JPG") || reader.getFormatName().equals("GIF") || reader.getFormatName().equals("PNG")){
+                            imgFileType = reader.getFormatName();
+                        }
+                     }
+                     stream.close();
+        	    	
+        	    	//取得檔案的MD5
+        	    	MessageDigest md = MessageDigest.getInstance("MD5");
+        	        FileInputStream fis = new FileInputStream(file);
+        	     
+        	        byte[] dataBytes = new byte[1024];
+        	     
+        	        int nread = 0;
+        	        while ((nread = fis.read(dataBytes)) != -1) {
+        	            md.update(dataBytes, 0, nread);
+        	        };
+        	        byte[] mdbytes = md.digest();
+        	        StringBuffer sb = new StringBuffer();
+        	        for (int i = 0; i < mdbytes.length; i++) {
+        	            sb.append(Integer.toString((mdbytes[i] & 0xff) + 0x100, 16).substring(1));
+        	        }
+        	        fis.close();
+        	        imgMD5 = sb.toString();
+            		
+        	        List<PfpAdDetail> pfpadDetailList = pfpAdDetailService.getPfpAdDetailsForAdGroup(customerInfoId, adGroupSeq, "MD5", imgMD5);
+        	        
+        	        if(!pfpadDetailList.isEmpty()){
+        	        	imgRepeat = "yes";
+        	        }
+        	        
+        	        //建立圖片
+            		log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
+            		log.info(">>>2.path>>"+customerImgFile.getPath());
+            		log.info(customerImgFile.exists());
+            		if(!customerImgFile.exists()){
+            		    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
+            		    customerImgFile.mkdirs();
+            		}
+            		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date));
+            		if(!customerImgFileDateFile.exists()){
+            		    customerImgFileDateFile.mkdirs();
+            		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original");
+            		    log.info(">>>>>>>>>1:"+customerImgFileOriginalDateFile);
+            		    if(!customerImgFileOriginalDateFile.exists()){
+            		    	customerImgFileOriginalDateFile.mkdirs();
+            		    }
+            		    customerImgFileTemporalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal");
+            		    log.info(">>>>>>>>>2:"+customerImgFileTemporalDateFile);
+            		    if(!customerImgFileTemporalDateFile.exists()){
+            		        customerImgFileTemporalDateFile.mkdirs();
+            		    }
+            		}
+            		fileSize = String.valueOf(file.length() / 1024);
+    				while (StringUtils.isBlank(adSeq)) {
+    					try {
+    						adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+    					} catch (Exception e) {
+    						log.error(e.getMessage());
+    						Thread.sleep(100);
+    					}
+    				}
+                    commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
+    			}
+    			result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
     		}
     		
 	    }
@@ -1630,7 +1655,13 @@ public class AdAddAction extends BaseCookieAction{
         		
         		if(imgMD5Map.get(adSeq + "_imgMD5") != null && StringUtils.equals(imgMD5Map.get(adSeq + "_imgMD5").toString(), "X")){
         			imageVO = commonUtilModel.createAdHtml5(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
-        			adAssignTadSeq = "c_x05_po_tad_0059";
+        			if(EnumAdSize.adp_201904090001.getWidh().equals(imageVO.getImgWidth()) && EnumAdSize.adp_201904090001.getHeight().equals(imageVO.getImgHeight())) {
+        				adAssignTadSeq = "c_x03_po_tad_0167";
+        			}else if(EnumAdSize.adp_201904090002.getWidh().equals(imageVO.getImgWidth()) && EnumAdSize.adp_201904090002.getHeight().equals(imageVO.getImgHeight())) {
+        				adAssignTadSeq = "c_x03_po_tad_0168";
+        			}else {
+        				adAssignTadSeq = "c_x05_po_tad_0059";
+        			}
         		} else {
         			imageVO = commonUtilModel.createAdImg(photoDbPathNew,customerInfoId, sdf.format(date), seqArray.get(i).toString());
         		}
@@ -1648,8 +1679,7 @@ public class AdAddAction extends BaseCookieAction{
         		}
         		addAd(pfpAdGroup,adAssignTadSeq);
         		String path = imageVO.getImgPath().replace("\\", "/");
-        		
-        		path = path.replace("/export/home/webuser/akb/pfp/", "");
+        		path = path.substring(path.indexOf("img"), path.length());
         		saveAdDetail(path,EnumAdDetail.img.name(), adPoolSeq,EnumAdDetail.define_ad_seq_img.getAdDetailName());
 
         		// check adLinkURL
@@ -1697,7 +1727,7 @@ public class AdAddAction extends BaseCookieAction{
         		}
         		
         		//新增第三方偵測
-    			saveAdDetail("" ,"tracking_code",adPoolSeq,"dad_tracking_code");
+    			saveAdDetail(thirdCode ,"tracking_code",adPoolSeq,"dad_tracking_code");
     	    }
     	}
 
@@ -1764,19 +1794,19 @@ public class AdAddAction extends BaseCookieAction{
 			//刪除新增的ad
 			List<String> deleteAdList = (List<String>) deleteAdMap.get("adList");
 			for (String adSeq : deleteAdList) {
-				log.info(">>>>>> delete adSeq:"+adSeq);
+				log.error(">>>>>> delete adSeq:"+adSeq);
 				pfpAdService.delete(pfpAdService.get(adSeq));
 			}
 			
 			String deleteAdGroupSeq = (String) deleteAdMap.get("adGroupSeq");
 			if(StringUtils.isNotBlank(deleteAdGroupSeq)){
-				log.info(">>>>>> delete adGroupSeq:"+deleteAdGroupSeq);
+				log.error(">>>>>> delete adGroupSeq:"+deleteAdGroupSeq);
 				pfpAdGroupService.delete(pfpAdGroupService.get(deleteAdGroupSeq));
 			}
 			
 			String deleteAdActionSeq = (String) deleteAdMap.get("adActionSeq");
 			if(StringUtils.isNotBlank(deleteAdActionSeq)){
-				log.info(">>>>>> delete adActionSeq:"+deleteAdActionSeq);
+				log.error(">>>>>> delete adActionSeq:"+deleteAdActionSeq);
 				pfpAdActionService.delete(pfpAdActionService.get(deleteAdActionSeq));
 			}
 			e.printStackTrace();
@@ -2829,6 +2859,25 @@ public class AdAddAction extends BaseCookieAction{
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
 	}
+
+	public String getThirdCode() {
+		return thirdCode;
+	}
+
+	public void setThirdCode(String thirdCode) {
+		this.thirdCode = thirdCode;
+	}
+
+
+	public boolean isOpenThirdUser() {
+		return openThirdUser;
+	}
+
+	public void setOpenThirdUser(boolean openThirdUser) {
+		this.openThirdUser = openThirdUser;
+	}
+
+
 
 }
 

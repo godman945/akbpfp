@@ -75,7 +75,6 @@ public class RedirectAction extends BaseCookieAction{
 	}
 
 	public String redirectAction() throws Exception{
-
 		// 登入判斷
 		if(!this.checkMemberIdExist()){
 			return "login"; 
@@ -96,10 +95,7 @@ public class RedirectAction extends BaseCookieAction{
 		}
 		
 		// 管理者權限跳過以下判斷
-		if(super.getRoot_user() == null || 
-				(!super.getRoot_user().equals(EnumPfpRootUser.PCHOME_MANAGER.getPrivilege()) && 
-				!super.getRoot_user().equals(EnumPfpRootUser.PFD.getPrivilege()))){
-			
+		if(super.getRoot_user() == null || 	(!super.getRoot_user().equals(EnumPfpRootUser.PCHOME_MANAGER.getPrivilege()) &&	!super.getRoot_user().equals(EnumPfpRootUser.PFD.getPrivilege()))){
 			// 帳戶是否存在
 			if(!this.checkPfpAccountExist()){
 				return "apply";
@@ -109,27 +105,11 @@ public class RedirectAction extends BaseCookieAction{
 			if(!this.checkPfpUserExist()){
 				return "userClose";
 			}
-			
-//			// PFD 建立 PFP 帳戶需補填資料
-//			if(this.checkPfpAuthorizedPage()){
-//				
-//				// 確認是否該帳戶的總管理者
-//				if(this.pfpUser.getPfpCustomerInfo().getMemberId().equals(super.getId_pchome())){
-//					// 補填帳戶資料 : 設定在struts-index.xml
-//					return "authorization";
-//				}else{
-//					// 提示頁面 : 設定在struts-index.xml
-//					return "notRootUser";
-//				}
-//			}
-			
 			// 記錄最後登入時間和IP
 			this.updateLoginDateTime();
-			
 			cookieProccessAPI.writerPfpLoginCookie(super.response, this.pfpUser, EnumPfpRootUser.NO, null);
 		}
 		
-
 		return SUCCESS;
 	}
 	
@@ -160,11 +140,14 @@ public class RedirectAction extends BaseCookieAction{
 		return isAuth;
 	}
 	
-	private boolean checkPfpAccountExist() {
+	private boolean checkPfpAccountExist() throws Exception{
 		
 		boolean exist = true;
 		
 		this.userMemberRefs = PfpUserMemberRefService.activateUserMemberRef(super.getId_pchome());
+		
+		log.info(">>>>>>>>>super.getId_pchome():"+super.getId_pchome());
+		log.info(">>>>>>>>>this.userMemberRefs:"+this.userMemberRefs.size());
 		
 		if(userMemberRefs.isEmpty()){
 			// 從 PFD 登入一定會 PFP customerInfoId

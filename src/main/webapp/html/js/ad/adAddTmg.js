@@ -510,7 +510,8 @@
 			location.href="#uploadFile";
 			return false;
 		}
-		
+		//設定adDetailContent內容
+		setData();
 		var alt = "提醒您，您的廣告將在3工作天(周一到周五)審核完成(不含例假日)，並於廣告審核完成後開始播放";
 		if(confirm(alt)) {
 			var kwLen = document.getElementsByName("keywords").length;
@@ -534,7 +535,7 @@
 				        fadeIn: 1000, 
 				        timeout:   200, 
 				        onBlock: function() {
-							setData();
+							$("#thirdCode").val();
 							// form submit
 							$("#modifyForm").attr("target", "doAdd");
 							$("#modifyForm").attr("action", "doAdAdAddTmg.html");
@@ -560,6 +561,29 @@
 	//處理頁籤部分
 	dealWithBookmark();
 });
+
+//第三方偵測
+$('.thirdpty-togglebtn').live('click', function(event) {  
+
+	if($('.thirdptybx').is(":hidden")){
+		$('.swap').text("－");
+		$('.thirdptybx').fadeToggle('fast');
+	}
+	else{
+		$('.swap').text("＋");
+		$('.thirdptybx').fadeToggle('fast');
+	}
+});
+
+
+function opennots(id) {
+	$("#shownotes"+id).css("visibility", "visible");
+}
+
+function closenots(id) {
+	$("#shownotes"+id).css("visibility", "hidden");
+}
+
 
 function ValidURL(url) {
 	var re = /^(http[s]?:\/\/){0,1}(www\.){0,1}[a-zA-Z0-9\.\-\u4e00-\u9fa5]+\.[a-zA-Z]{2,5}[\.]{0,1}/;
@@ -646,9 +670,6 @@ function setAdStyle(adStyle) {
 	location.href = "adAdAdd.html?adActionSeq="+ $("#adActionSeq").val() + "&adGroupSeq=" + $("#adGroupSeq").val() + "&adStyle=" + adStyle;
 }
 
-function closenots(id) {
-	$("#shownotes"+id).hide();
-}
 
 function chkLeave(){
 	var keywords = "";

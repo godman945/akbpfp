@@ -24,16 +24,12 @@
             <appender-ref ref="akbPfpAppender" />
         	<appender-ref ref="stdout" />
         </root>
-        <logger name="org.hibernate.hql.*" level="error"/>
-        
-        
-        
-        <!-- 
-        
-        <logger name="org.springframework.core" level="info"/>
-		<logger name="org.springframework.beans" level="info"/>
-		<logger name="org.springframework.context" level="info"/>
-		<logger name="org.springframework.web" level="info"/>
-		 -->
+        <logger name="org.hibernate.annotations.common.reflection.java.JavaReflectionManager" level="warn"/>
+        <logger name="org.hibernate.engine.jdbc.internal.LobCreatorBuilder" level="warn"/>
+        <logger name="com.opensymphony.xwork2.spring.SpringObjectFactory" level="warn" ref="stdout" />  
+        <logger name="org.apache.struts2.spring.StrutsSpringObjectFactory" level="warn" ref="stdout" />
+        <logger name="org.springframework.remoting.rmi.RmiServiceExporte" level="warn" ref="stdout" />
+        <logger name="org.hibernate.hql.internal.ast.HqlSqlWalker" level="error" ref="stdout" />
+        <logger name="org.apache.commons.httpclient.HttpMethodBase" level="error" ref="stdout" />
     </loggers>
 </configuration>

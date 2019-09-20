@@ -54,7 +54,13 @@
                         	<select id="adStyle" name="adStyle">
                         		<#if adStyleTypeMap?exists>
                         			<#list adStyleTypeMap?keys as skey>
-                        					<option value="${adStyleTypeMap[skey]}" >${skey}</option>
+                        					<#if adStyleTypeMap[skey] == 2>
+                        						<#if (pfd_customer_info_id == "PFDC20150422001" || pfd_customer_info_id == "PFDC20161012001" ||  pfd_customer_info_id == "PFDC20190329001")>
+                        							<option value="${adStyleTypeMap[skey]}" >${skey}</option>
+                        						</#if>
+                        					<#else>
+                        						<option value="${adStyleTypeMap[skey]}" >${skey}</option>
+                        					</#if>
                         			</#list>
 								</#if>
 		                    </select>
@@ -278,8 +284,28 @@
 			                    <td>
 			                   		<#if adCountryMap?exists>
 				                    	<#list adCountryMap?keys as skey>
-			                       			<input type="radio" value="${skey!}" name="countryRadio" <#if skey == 'NULL' >checked</#if> />${adCountryMap[skey!]} <br>
+			                       			<input type="radio" value="${skey!}" name="countryRadio" <#if skey == 'NULL' >checked  id="sel_def" <#else>id="sel_tw" </#if> />${adCountryMap[skey!]} <br>
 			                       		</#list>
+			                       		<ul id="tw_list">
+                                        <li>
+                                            <input type="checkbox" id="AR01" name="adCity" value="AR01"> 北臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR02" name="adCity" value="AR02"> 中臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR03" name="adCity" value="AR03"> 南臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR04" name="adCity" value="AR04"> 東臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR05" name="adCity" value="AR05"> 金馬地區
+                                        </li>
+                                        <div style="color:graytext;">如使用其他偵測分析工具，所採用的地理位置資訊源有所不同，結果將可能不會完全一致。</div>
+                                    </ul>
+			                       		
+			                       		
 		                       		</#if>
 			                    </td>
 			             </tr>

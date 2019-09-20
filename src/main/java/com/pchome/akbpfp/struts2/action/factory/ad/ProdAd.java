@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,8 +16,8 @@ import javax.imageio.ImageIO;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -28,9 +27,11 @@ import com.pchome.akbpfp.db.pojo.PfpAdGroup;
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
 import com.pchome.akbpfp.db.pojo.PfpCatalogLogo;
 import com.pchome.akbpfp.db.pojo.PfpCatalogLogoDetail;
+import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.catalog.IPfpCatalogService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
+import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupService;
 import com.pchome.akbpfp.db.service.template.ITemplateProductService;
 import com.pchome.akbpfp.struts2.action.ad.AdAddAction;
 import com.pchome.akbpfp.struts2.action.ad.AdEditAction;
@@ -39,13 +40,14 @@ import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumProdAdBtnText;
 import com.pchome.enumerate.ad.EnumProdAdDetail;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
+import com.pchome.rmi.accesslog.EnumAccesslogAction;
 
 public class ProdAd implements IAd {
 
 	protected Logger log = LogManager.getRootLogger();
 
-	private  IPfpCatalogService pfpCatalogService;
-	
+	private IPfpCatalogService pfpCatalogService;
+	private AdmAccesslogService admAccesslogService;
 	private IPfpCatalogLogoService pfpCatalogLogoService;
 	private IPfpCatalogSetupService pfpCatalogSetupService;
 	private ITemplateProductService admTemplateProductService;
@@ -55,6 +57,8 @@ public class ProdAd implements IAd {
 	private AdAddAction adAddAction;
 	private AdEditAction adEditAction;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+	private IPfpCatalogGroupService pfpCatalogGroupService;
+	
 	
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
 		log.info(">>>>>> process ProdAd");
@@ -220,7 +224,6 @@ public class ProdAd implements IAd {
 		saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adSeq,"add");
 		JSONObject uploadLogoLogJson = new JSONObject(adAddAction.getUploadLogoLog());
 		saveImg(uploadLogoLogJson,"logoImg",saveImgPathBuffer,adSeq,"add");
-		
 		return null;
 	}
 
@@ -416,11 +419,69 @@ public class ProdAd implements IAd {
 		this.adEditAction = adEditAction;
 		//1.刪除所有detail
 		Set<PfpAdDetail> detailSet = adEditAction.getPfpAd().getPfpAdDetails();
+		
+		String beforeProdReportName = "";
+		String afterProdReportName = "";
+		String beforeProdGroupName = "";
+		String afterProdGroupName = "";
+		String beforeProdListName = "";
+		String afterProdListName = "";
+		String beforeAdLinkURL = "";
+		String afterAdLinkURL = "";
+		String beforeLogoTxt = "";
+		String afterLogoTxt = "";
+		String beforeDadSaleImg = "";
+		String afterDadSaleImg = "";
+		String beforeDadLogoSaleImg = "";
+		String afterDadLogoSaleImg = "";
+		
+		for (PfpAdDetail pfpAdDetail : detailSet) {
+			if(pfpAdDetail.getAdDetailId().equals(EnumProdAdDetail.PROD_REPORT_NAME.getAdDetailId())) {
+				beforeProdReportName = pfpAdDetail.getAdDetailContent();
+				afterProdReportName = adEditAction.getAdName();
+			}
+			if(pfpAdDetail.getAdDetailId().equals(EnumProdAdDetail.PROD_GROUP.getAdDetailId())) {
+				beforeProdGroupName = pfpCatalogGroupService.getPfpCatalogGroup(pfpAdDetail.getAdDetailContent()).getCatalogGroupName();
+				afterProdGroupName = pfpCatalogGroupService.getPfpCatalogGroup(adEditAction.getCatalogGroupId()).getCatalogGroupName();
+				
+			}
+			if(pfpAdDetail.getAdDetailId().equals(EnumProdAdDetail.PROD_LIST.getAdDetailId())) {
+				beforeProdListName = pfpCatalogService.getPfpCatalog(pfpAdDetail.getAdDetailContent()).getCatalogName();
+				afterProdListName = pfpCatalogService.getPfpCatalog(adEditAction.getCatalogId()).getCatalogName();
+			}
+			
+			if(pfpAdDetail.getAdDetailId().equals(EnumProdAdDetail.PROD_AD_URL.getAdDetailId())) {
+				beforeAdLinkURL = pfpAdDetail.getAdDetailContent();
+				afterAdLinkURL = adEditAction.getAdLinkURL();
+				
+			}
+			
+			if(pfpAdDetail.getAdDetailId().equals(EnumProdAdDetail.LOGO_TXT.getAdDetailId())) {
+				beforeLogoTxt = pfpAdDetail.getAdDetailContent();
+				afterLogoTxt = adEditAction.getLogoText();
+			}
+			if(pfpAdDetail.getDefineAdSeq().contains("dad_sale_img_")) {
+				String size = pfpAdDetail.getAdDetailContent().split("_")[2]+"_"+pfpAdDetail.getAdDetailContent().split("_")[3];
+				if(StringUtils.isBlank(beforeDadSaleImg)) {
+					beforeDadSaleImg = beforeDadSaleImg + size;
+				}else {
+					beforeDadSaleImg = beforeDadSaleImg + ","+size;
+				}
+			}else if(pfpAdDetail.getDefineAdSeq().contains("dad_logo_sale_img_")) {
+				String size = pfpAdDetail.getAdDetailContent().split("_")[2]+"_"+pfpAdDetail.getAdDetailContent().split("_")[3];
+				if(StringUtils.isBlank(beforeDadLogoSaleImg)) {
+					beforeDadLogoSaleImg = beforeDadLogoSaleImg + size;
+				}else {
+					beforeDadLogoSaleImg = beforeDadLogoSaleImg + ","+size;
+				}
+			}
+			
+		}
 		for (PfpAdDetail pfpAdDetail : detailSet) {
 			adEditAction.getPfpAdDetailService().deletePfpAdDetail(pfpAdDetail.getAdDetailSeq());
 		}
 		for (EnumProdAdDetail enumProdAdDetail : EnumProdAdDetail.values()) {
-			switch(enumProdAdDetail) { 
+			switch(enumProdAdDetail) {
 	        case PROD_REPORT_NAME:
 	        	adEditAction.saveAdDetail(adEditAction.getAdName(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 	        	break;
@@ -491,9 +552,89 @@ public class ProdAd implements IAd {
 		StringBuffer saveImgPathBuffer = new StringBuffer();
 		saveImgPathBuffer.append(adEditAction.getPhotoDbPath()).append("user/").append(adEditAction.getCustomer_info_id()).append("/").append(adEditAction.getSdf().format(date)).append("/original/").append(adEditAction.getAdSeq()).append("/");
 		JSONObject uploadLogJson = new JSONObject(adEditAction.getUploadLog());
+		
+		Iterator iter = uploadLogJson.keys();
+		while(iter.hasNext()){
+			String key = (String)iter.next();
+			JSONObject data = (JSONObject) uploadLogJson.get(key);
+			if(data.getString("fileName").contains("salesEngImg")) {
+				String size  = data.getString("fileName").split("_")[1]+"_"+data.getString("fileName").split("_")[2];
+				if(StringUtils.isBlank(afterDadSaleImg)) {
+					afterDadSaleImg = afterDadSaleImg + size;
+				}else {
+					afterDadSaleImg = afterDadSaleImg + ","+size;
+				}
+			}else {
+				String size  = data.getString("width")+"_"+data.getString("height");
+				if(StringUtils.isBlank(afterDadSaleImg)) {
+					afterDadSaleImg = afterDadSaleImg + "update_"+size;
+				}else {
+					afterDadSaleImg = afterDadSaleImg + ",update_"+size;
+				}
+			}
+		}
+		
 		saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
 		JSONObject uploadLogoLogJson = new JSONObject(adEditAction.getUploadLogoLog());
+		
+		iter = uploadLogoLogJson.keys();
+		while(iter.hasNext()){
+			String key = (String)iter.next();
+			JSONObject data = (JSONObject) uploadLogoLogJson.get(key);
+			if(data.getString("fileName").contains("logoImg")) {
+				String size  = data.getString("fileName").split("_")[1]+"_"+data.getString("fileName").split("_")[2];
+				if(StringUtils.isBlank(afterDadLogoSaleImg)) {
+					afterDadLogoSaleImg = afterDadLogoSaleImg + size;
+				}else {
+					afterDadLogoSaleImg = afterDadLogoSaleImg + ","+size;
+				}
+			}else {
+				String size  = data.getString("width")+"_"+data.getString("height");
+				if(StringUtils.isBlank(afterDadLogoSaleImg)) {
+					afterDadLogoSaleImg = afterDadLogoSaleImg + "update_"+size;
+				}else {
+					afterDadLogoSaleImg = afterDadLogoSaleImg + ",update_"+size;
+				}
+			}
+		 }
+		
 		saveImg(uploadLogoLogJson,"logoImg",saveImgPathBuffer,adEditAction.getAdSeq(),"edit");
+		//accesslog
+		String actionName = adEditAction.getPfpAd().getPfpAdGroup().getPfpAdAction().getAdActionName();
+		String groupName = adEditAction.getPfpAd().getPfpAdGroup().getAdGroupName();
+		
+		if(!beforeProdReportName.equals(afterProdReportName)) {
+			String message = "商品廣告："+actionName+"；"+ groupName+"；"+beforeProdReportName+"；廣告明細名稱修改："+beforeProdReportName+"=>"+afterProdReportName.trim();
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
+		}
+		
+		if(!beforeProdGroupName.equals(afterProdGroupName)) {
+			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改商品組合："+beforeProdGroupName+"=>"+afterProdGroupName;
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
+		}
+		if(!beforeProdListName.equals(afterProdListName)) {
+			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改商品目錄："+beforeProdListName+"=>"+afterProdListName;
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
+		}
+		if(!beforeAdLinkURL.equals(afterAdLinkURL)) {
+			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改連結網址："+beforeAdLinkURL+"=>"+afterAdLinkURL;
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
+		}
+		if(!beforeLogoTxt.equals(afterLogoTxt)) {
+			String message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改LOGO標題文字："+beforeLogoTxt+"=>"+afterLogoTxt;
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
+		}
+		String message = "";
+		if(StringUtils.isNotBlank(beforeDadSaleImg) || StringUtils.isNotBlank(afterDadSaleImg)) {
+			message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改結尾行銷圖像："+"["+beforeDadSaleImg+"]=>["+afterDadSaleImg+"]";
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
+		}
+		if(StringUtils.isNotBlank(beforeDadLogoSaleImg) || StringUtils.isNotBlank(afterDadLogoSaleImg)) {
+			message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"；修改行銷圖像："+"["+beforeDadLogoSaleImg+"]=>["+afterDadLogoSaleImg+"]";
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PLAY_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
+		}
+		message = "商品廣告："+actionName+"；"+ groupName+"；"+afterProdReportName+"=>送出審核";
+		admAccesslogService.recordAdLog(EnumAccesslogAction.AD_STATUS_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		return null;
 	}
 	
@@ -541,7 +682,7 @@ public class ProdAd implements IAd {
             	if(type.equals("add")){
             		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
             	}else if(type.equals("edit")){
-            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
+            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);
             	}
             }
             bis.close();
@@ -605,6 +746,24 @@ public class ProdAd implements IAd {
 		this.photoClonePath = photoClonePath;
 	}
 	
+	public AdmAccesslogService getAdmAccesslogService() {
+		return admAccesslogService;
+	}
+
+	public void setAdmAccesslogService(AdmAccesslogService admAccesslogService) {
+		this.admAccesslogService = admAccesslogService;
+	}
+	
+	
+
+	public IPfpCatalogGroupService getPfpCatalogGroupService() {
+		return pfpCatalogGroupService;
+	}
+
+	public void setPfpCatalogGroupService(IPfpCatalogGroupService pfpCatalogGroupService) {
+		this.pfpCatalogGroupService = pfpCatalogGroupService;
+	}
+
 	public static void main(String args[]) throws Exception{
 		File imgFile = new File("d:/180150c.gif");
 		System.out.println(imgFile.exists());		

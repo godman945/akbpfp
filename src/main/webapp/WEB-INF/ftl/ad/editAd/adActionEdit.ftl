@@ -278,7 +278,33 @@
 	        		<tr>
 		                 <th height="35"><span class="t_s02">* </span>廣告播放地區</th>
 		                    <td id="countryTd">
+		                    <input type="radio" value="NULL" name="countryRadio"  onclick="changeCountry('NULL');" id="sel_def">
+		                     	全球 (預設)
+		                    <br>
+		                    <input type="radio" value="Taiwan" name="countryRadio" onclick="changeCountry('Taiwan');" id="sel_tw">
+		                    	臺灣
+		                    <br>
+		                    <ul id="tw_list">
+                                        <li>
+                                            <input type="checkbox" id="AR01" name="adEditCity" value="AR01"> 北臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR02" name="adEditCity" value="AR02"> 中臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR03" name="adEditCity" value="AR03"> 南臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR04" name="adEditCity" value="AR04"> 東臺灣
+                                        </li>
+                                        <li>
+                                            <input type="checkbox" id="AR05" name="adEditCity" value="AR05"> 金馬地區
+                                        </li>
+                                        <div style="color:graytext;">如使用其他偵測分析工具，所採用的地理位置資訊源有所不同，結果將可能不會完全一致。</div>
+                                    </ul>
+                                    
 		                    </td>
+		                   
 		             </tr>
 	        	</tbody>
 	        </table>
@@ -502,6 +528,7 @@
 <div id="introDialog" style="display:none"></div>
 <input type="hidden" id="messageId" name="messageId" value="${message!!}">
 <input type="hidden" id="oldwebsiteCategory" value="${oldWebsiteCategory!}" />
+<input type="hidden" id="adCity" value="${adCity!}" />
 <textarea id="txtArea" rows="10" cols="70" style="display:none">
 	${pfpCodeTrackingJson!}
 </textarea>

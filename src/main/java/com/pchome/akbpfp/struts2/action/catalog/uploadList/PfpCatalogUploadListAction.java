@@ -295,6 +295,12 @@ public class PfpCatalogUploadListAction extends BaseCookieAction{
 		pfpCatalogUploadLogVO.setUpdateWay(updateWay);
 		pfpCatalogUploadLogVO.setUpdateContent(jobURL);
 		pfpCatalogUploadLogVO.setUpdateDatetime(updateDatetime);
+		pfpCatalogUploadLogVO.setIdPchome(super.getId_pchome());
+		pfpCatalogUploadLogVO.setCustomerInfoId(super.getCustomer_info_id());
+		pfpCatalogUploadLogVO.setUserId(super.getUser_id());
+		pfpCatalogUploadLogVO.setRemoteAddr(request.getRemoteAddr());
+		
+		
 		pfpCatalogUploadListService.savePfpCatalogUploadLog(pfpCatalogUploadLogVO);
 		
 		// 檢查帳戶餘額，顯示提示訊息
