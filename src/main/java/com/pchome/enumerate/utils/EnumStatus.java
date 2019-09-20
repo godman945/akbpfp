@@ -38,18 +38,4 @@ public enum EnumStatus {
 	public String getStatusRemark() {
 		return statusRemark;
 	}
-	
-	/**
-	 * 取得相對應的enum資料
-	 * @param statusId
-	 * @return
-	 */
-	public static EnumStatus getEnumStatusData(final int statusId) {
-		for (EnumStatus e : EnumStatus.values()) {
-			if (e.getStatusId() == statusId) {
-				return e;
-			}
-		}
-		return null;
-	}
 }

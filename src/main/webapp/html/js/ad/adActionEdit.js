@@ -54,16 +54,19 @@ $(document).ready(function(){
 		});
 		
 		var obj = JSON.parse($("#txtArea3").text());
-		var str = null;
-		Object.keys(obj).forEach(function(key){
-			if($("#adCountry").val() == key){
-				str = '<input type="radio" value="'+key+'" name="countryRadio" onclick=\"changeCountry(\''+key+'\');\" checked  />'+obj[key]+' <br>';
-			}else{
-				str = '<input type="radio" value="'+key+'" name="countryRadio" onclick=\"changeCountry(\''+key+'\');\"/>'+obj[key]+' <br>';
+		$("input[name='countryRadio']").each(function(){  
+			if(this.value == $("#adCountry").val()){
+				$(this).attr('checked','checked');
 			}
-			$("#countryTd").append(str);
+			
+			if("Taiwan" == $("#adCountry").val()){
+				$("input[name='adEditCity']").each(function(){
+					if($("#adCity").val().includes(this.value)){
+						$(this).attr('checked','checked');
+					}
+				});
+			}
 		});
-		
 	}
 
 	// validate field

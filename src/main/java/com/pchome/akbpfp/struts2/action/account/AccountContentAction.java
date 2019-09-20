@@ -26,7 +26,7 @@ public class AccountContentAction extends BaseSSLAction{
 	private String address;
 	
 	public String execute() throws Exception{
-		
+		log.info("***START***");
 		this.checkRedirectSSLUrl();
 		if(StringUtils.isNotBlank(this.resultType)){
 			return this.resultType;

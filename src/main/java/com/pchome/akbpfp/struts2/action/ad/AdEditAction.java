@@ -35,6 +35,7 @@ import com.pchome.enumerate.ad.EnumAdStyle;
 import com.pchome.enumerate.ad.EnumAdStyleType;
 import com.pchome.enumerate.ad.EnumExcludeKeywordStatus;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
+import com.pchome.enumerate.user.EnumOpenThirdUser;
 import com.pchome.enumerate.utils.EnumStatus;
 import com.pchome.rmi.accesslog.EnumAccesslogAction;
 import com.pchome.soft.depot.utils.HttpUtil;
@@ -51,7 +52,7 @@ public class AdEditAction extends BaseCookieAction{
 	private String adActionName;
 	private String adGroupSeq;
 	private String adGroupName;
-
+	
 	private String adSeq;
 	private String adClass;
 	private String adStyle;
@@ -80,7 +81,6 @@ public class AdEditAction extends BaseCookieAction{
 	private String imgTypeName = "";
 	private String html5Flag;
 	private String zipTitle = "";
-	private String photoTmpPath;
 	private String photoPath;
 	private String photoDbPath;
 	private String photoDbPathNew;
@@ -93,12 +93,12 @@ public class AdEditAction extends BaseCookieAction{
 	private PfpAdExcludeKeywordService pfpAdExcludeKeywordService;
 	private AdmAccesslogService admAccesslogService;
 	private SyspriceOperaterAPI syspriceOperaterAPI;
-	private HttpUtil httpUtil;
 	private String adHiddenType;	//已建立的分類關鍵字欄位隱藏設定
 	private String adDetailTitleSeq;
 	private String imgTitle;
 	private String adType;
-	
+	//第三方偵測
+	private String thirdCode="";
 	private int adGroupStatus;
 	private int adActionStatus;
 	
@@ -150,13 +150,12 @@ public class AdEditAction extends BaseCookieAction{
 	private String logoPath;
 	/* 商品廣告用參數 END*/
 	
-	
-	
+	//開放第三方曝光code
+	private boolean openThirdUser;
 	
 	
 	public String AdAdEdit() throws Exception {
 		log.info("AdAdEdit => adSeq = " + adSeq);
-
 		PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
 		adActionName = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionName();
 		adGroupSeq = pfpAd.getPfpAdGroup().getAdGroupSeq();
@@ -179,8 +178,8 @@ public class AdEditAction extends BaseCookieAction{
 		}
 
 		pfpAdDetails = pfpAdDetailService.getPfpAdDetails(null, adSeq, null, null);
-		adDetailSeq = new String[7];
-		adDetailContent = new String[7];
+		adDetailSeq = new String[8];
+		adDetailContent = new String[8];
 
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
@@ -232,6 +231,9 @@ public class AdEditAction extends BaseCookieAction{
 					deCodeUrl = HttpUtil.getInstance().convertRealUrl(show_url);
 				}
 				adDetailContent[6] = deCodeUrl;
+			}else if (adDetailId != null && adDetailId.equals("tracking_code")) {
+				adDetailSeq[7] = pfpAdDetails.get(i).getAdDetailSeq();
+				thirdCode = pfpAdDetails.get(i).getAdDetailContent();
 			}
 		}
 
@@ -251,6 +253,14 @@ public class AdEditAction extends BaseCookieAction{
 
 		if(pfpAdKeywords.isEmpty() && pfpAdExcludeKeywords.isEmpty()){
 			adHiddenType = "YES";
+		}
+		
+		//檢查是否允許開放第三方曝光代碼功能
+		for (EnumOpenThirdUser enumOpenThirdUser : EnumOpenThirdUser.values()) {
+			if(enumOpenThirdUser.getPfdCustomerInfoId().equals(super.getPfd_customer_info_id())) {
+				openThirdUser = true;
+				break;
+			}
 		}
 		
 		return SUCCESS;
@@ -277,7 +287,6 @@ public class AdEditAction extends BaseCookieAction{
 
 		// 修改廣告
 		editAd();
-
 		String imgDetail = "";
 		String detailLAccesslogTitle = "廣告：" + pfpAdGroup.getPfpAdAction().getAdActionName() + "；" + pfpAdGroup.getAdGroupName() + "；" + adSeq + "==>";
 		addAccesslog(EnumAccesslogAction.AD_STATUS_MODIFY, detailLAccesslogTitle + "送出審核");
@@ -429,6 +438,10 @@ public class AdEditAction extends BaseCookieAction{
 					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
 						detailAccesslogMessage += "商品促銷價；";
 					}
+				}else if ("tracking_code".equals(pfpAdDetail.getAdDetailId())) {
+					if (checkDetailChange(pfpAdDetail.getAdDetailContent(), adDetailContent[i])) {
+						detailAccesslogMessage += "第三方偵測；";
+					}
 				}
 
 				pfpAdDetail.setAdDetailContent(adDetailContent[i]);
@@ -478,8 +491,6 @@ public class AdEditAction extends BaseCookieAction{
 	 * */
 	public String doAdAdEditVideo() {
 		try{
-			System.out.println(adSeq);
-			System.out.println(adLinkURL);
 			List<PfpAdDetail> pfpAdDetailList = pfpAdDetailService.getPfpAdDetailByAdSeq(adSeq);
 			Date date = new Date();
 			for (PfpAdDetail pfpAdDetail : pfpAdDetailList) {
@@ -492,7 +503,15 @@ public class AdEditAction extends BaseCookieAction{
 					pfpAd.setAdSendVerifyTime(date);
 					pfpAd.setAdUpdateTime(date);
 					pfpAdService.updatePfpAd(pfpAd);
-					break;
+				}
+				if(pfpAdDetail.getAdDetailId().equals("tracking_code")){
+					pfpAdDetail.setAdDetailContent(thirdCode);
+					pfpAdDetail.setAdDetailUpdateTime(date);
+					PfpAd pfpAd = pfpAdService.getPfpAdBySeq(adSeq);
+					pfpAd.setAdStatus(EnumStatus.NoVerify.getStatusId());
+					pfpAd.setAdSendVerifyTime(date);
+					pfpAd.setAdUpdateTime(date);
+					pfpAdService.updatePfpAd(pfpAd);
 				}
 			}
 			result = "success";
@@ -520,7 +539,7 @@ public class AdEditAction extends BaseCookieAction{
 		adType = pfpAd.getPfpAdGroup().getPfpAdAction().getAdType().toString();
 		html5Flag = "N";
 		String adAssignTadSeq = pfpAd.getAdAssignTadSeq();
-		if(StringUtils.equals("c_x05_po_tad_0059", adAssignTadSeq)){
+		if(StringUtils.equals("c_x05_po_tad_0059", adAssignTadSeq) || (StringUtils.equals("c_x03_po_tad_0167", adAssignTadSeq)) || (StringUtils.equals("c_x03_po_tad_0168", adAssignTadSeq))){
 			html5Flag = "Y";
 		}
 
@@ -535,8 +554,8 @@ public class AdEditAction extends BaseCookieAction{
 		}
 
 		pfpAdDetails = pfpAdDetailService.getPfpAdDetails(null, adSeq, null, null);
-		adDetailSeq = new String[2];
-		adDetailContent = new String[2];
+		adDetailSeq = new String[3];
+		adDetailContent = new String[3];
 
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
@@ -605,6 +624,10 @@ public class AdEditAction extends BaseCookieAction{
 					zipTitle = zipTitle.substring(0, 8) + "...";
 				}
 				zipTitle = zipTitle + "(html5)";
+			}else if(adDetailId != null && adDetailId.equals("tracking_code")) {
+				adDetailSeq[2] = pfpAdDetails.get(i).getAdDetailSeq();
+				thirdCode = pfpAdDetails.get(i).getAdDetailContent();
+				adDetailContent[2] = pfpAdDetails.get(i).getAdDetailContent();
 			}
 		}
 
@@ -730,6 +753,10 @@ public class AdEditAction extends BaseCookieAction{
 		String adImgPoolSeq = "";
 		String detailLAccesslogTitle = "廣告：" + pfpAdGroup.getPfpAdAction().getAdActionName() + "；" + pfpAdGroup.getAdGroupName() + "；" + adSeq + "==>";
 		addAccesslog(EnumAccesslogAction.AD_STATUS_MODIFY, detailLAccesslogTitle + "送出審核");
+		
+		System.out.println(adDetailSeq[0]);
+		
+		adDetailSeq = adDetailSeq[0].split(",");
 		if(adDetailSeq[0] != null && adDetailSeq[0] != ""){
 			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailSeq[0]);
 			adImgPoolSeq = pfpAdDetail.getAdPoolSeq();
@@ -741,27 +768,17 @@ public class AdEditAction extends BaseCookieAction{
 				addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：廣告連結網址");
 			}
 		}
-
-		//修改名稱
-		/*if(StringUtils.isBlank(adDetailTitleSeq)){
-			String seq = sequenceService.getId(EnumSequenceTableName.PFP_AD_DETAIL, "_");
-		    PfpAdDetail pfpAdDetail = new PfpAdDetail();
-		    pfpAdDetail.setAdDetailSeq(seq);
-		    pfpAdDetail.setPfpAd(pfpAd);
-		    pfpAdDetail.setAdDetailId(EnumAdDetail.title.name());
-		    pfpAdDetail.setAdDetailContent(imgTitle);
-		    pfpAdDetail.setAdPoolSeq(adImgPoolSeq);
-		    pfpAdDetail.setDefineAdSeq(EnumAdDetail.define_ad_seq_title.getAdDetailName());
-		    pfpAdDetail.setVerifyFlag("y");
-		    pfpAdDetail.setVerifyStatus("n");
-		    pfpAdDetail.setAdDetailCreateTime(new Date());
-		    pfpAdDetail.setAdDetailUpdateTime(new Date());
-		    pfpAdDetailService.savePfpAdDetail(pfpAdDetail);
-		} else {
-			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailTitleSeq);
-			pfpAdDetail.setAdDetailContent(imgTitle);
+		
+		if(adDetailSeq.length == 2 && adDetailSeq[1] != null && adDetailSeq[1] != ""){
+			PfpAdDetail pfpAdDetail = pfpAdDetailService.getPfpAdDetailBySeq(adDetailSeq[1]);
+			String thirdCode = pfpAdDetail.getAdDetailContent();
+			pfpAdDetail.setAdDetailContent(this.thirdCode);
 			pfpAdDetailService.updatePfpAdDetail(pfpAdDetail);
-		}*/
+			if (checkDetailChange(thirdCode, adLinkURL.trim())) {
+				addAccesslog(EnumAccesslogAction.PLAY_MODIFY, detailLAccesslogTitle + "修改：第三方追蹤");
+			}
+		}
+		
 		
     	// 開啟廣告分類
 		if(pfpAdGroup.getAdGroupStatus() != 4) {
@@ -867,8 +884,7 @@ public class AdEditAction extends BaseCookieAction{
 				message = "請選擇廣告分類！";
 			}
 
-			if(keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen)
-					&& StringUtils.isBlank(adKeywordPrecisionOpen)){
+			if(keywords != null &&  keywords.length != 0 && StringUtils.isBlank(adKeywordOpen) && StringUtils.isBlank(adKeywordPhraseOpen) && StringUtils.isBlank(adKeywordPrecisionOpen)){
 				message = "請選擇關鍵字比對方式！";
 			}
 			
@@ -1050,7 +1066,6 @@ public class AdEditAction extends BaseCookieAction{
 		adActionStatus = pfpAd.getPfpAdGroup().getPfpAdAction().getAdActionStatus();
 		adType = pfpAd.getPfpAdGroup().getPfpAdAction().getAdType().toString();
 		adVerifyRejectReason = "";
-
 		// ad Status
 		for(EnumStatus status:EnumStatus.values()){
 			if(status.getStatusId() == adStatus){
@@ -1062,8 +1077,8 @@ public class AdEditAction extends BaseCookieAction{
 		}
 
 		pfpAdDetails = pfpAdDetailService.getPfpAdDetails(null, adSeq, null, null);
-		adDetailSeq = new String[5];
-		adDetailContent = new String[5];
+		adDetailSeq = new String[6];
+		adDetailContent = new String[6];
 
 		PfpCustomerInfo pfpCustomerInfo = pfpCustomerInfoService.findCustomerInfo(super.getCustomer_info_id());
 		String customerInfoId = pfpCustomerInfo.getCustomerInfoId();
@@ -1099,7 +1114,7 @@ public class AdEditAction extends BaseCookieAction{
 				    deCodeUrl = HttpUtil.getInstance().convertRealUrl(deCodeUrl);
 				}
 				catch (Exception e) {
-				    log.error(deCodeUrl, e);
+//				    log.error(deCodeUrl, e);
 				}
 				adDetailContent[3] = deCodeUrl.replaceAll("http://", "");
 				adLinkURL = deCodeUrl;
@@ -1113,6 +1128,9 @@ public class AdEditAction extends BaseCookieAction{
 				    deCodeUrl =HttpUtil.getInstance().convertRealUrl(show_url);
 				}
 				adDetailContent[4] = deCodeUrl;
+			}else if(adDetailId != null && adDetailId.equals("tracking_code")) {
+				adDetailSeq[5] = pfpAdDetails.get(i).getAdDetailSeq();
+				thirdCode = pfpAdDetails.get(i).getAdDetailContent();
 			}
 		}
 
@@ -1353,9 +1371,6 @@ public class AdEditAction extends BaseCookieAction{
 		return batchkeywords;
 	}
 
-	public void setPhotoTmpPath(String photoTmpPath) {
-		this.photoTmpPath = photoTmpPath;
-	}
 
 	public void setPhotoPath(String photoPath) {
 		this.photoPath = photoPath;
@@ -1711,6 +1726,22 @@ public class AdEditAction extends BaseCookieAction{
 
 	public void setLogoPath(String logoPath) {
 		this.logoPath = logoPath;
+	}
+
+	public String getThirdCode() {
+		return thirdCode;
+	}
+
+	public void setThirdCode(String thirdCode) {
+		this.thirdCode = thirdCode;
+	}
+
+	public boolean isOpenThirdUser() {
+		return openThirdUser;
+	}
+
+	public void setOpenThirdUser(boolean openThirdUser) {
+		this.openThirdUser = openThirdUser;
 	}
 
 }

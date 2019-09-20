@@ -339,7 +339,6 @@ public class PfpAdDAO extends BaseDAO<PfpAd,String> implements IPfpAdDAO{
 		.append(", :ad_channel_price")
 		.append(", :ad_create_time")
 		.append(", :ad_update_time)");
-		log.info(sql);
 
         Session session = super.getHibernateTemplate().getSessionFactory().getCurrentSession();
         session.createSQLQuery(sql.toString())

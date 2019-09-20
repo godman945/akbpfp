@@ -1,5 +1,6 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
+<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/ad/adPlugInStyle.css" />
 <div>
     <form id="formImg" action=""  method="post"  target="hidden_frame" enctype="multipart/form-data">
         <div>
@@ -36,7 +37,13 @@
 			<table width="100%" id="alex" cellspacing="1" cellpadding="0" border="0" class="tb02">
 				<tbody>
 					<tr>
-						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>廣告連結網址</th>
+						<th height="35" style="width:12%;"><a name="errAdLinkURL"></a><span class="t_s02">* </span>
+						廣告連結網址
+						<#if openThirdUser?string("true","flase") == "true">
+						<br>  
+                              <b class="thirdpty-togglebtn"><span class="swap">＋</span>第三方曝光追蹤代碼</b>
+                        </#if>     
+						</th>
 						<td style="min-width:250px;">
 							<input type="hidden" id="adDetailID" name="adDetailID" value="real_url">
 							<input type="hidden" id="adDetailName" name="adDetailName" value="廣告連結網址">
@@ -45,6 +52,23 @@
 							<span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right" id="spanAdLinkURL">已輸入0字，剩1024字</span>
 						</td>
 					</tr>
+					<#if openThirdUser?string("true","flase") == "true">
+					<tr class="thirdptybx" style="display: none;">
+                        <th style="">
+                           		 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(3)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
+                            <div id="shownotes3" style="z-index:500;visibility:hidden;" class="adnoticepop">
+                                <h4>第三方曝光追蹤代碼</h4>
+                                <div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
+                                <a onclick="closenots(3)" style="cursor:pointer;" class="adpopclose">關閉</a>
+                            </div>
+                        </th>
+                        <td>
+                          <div class="code-box">
+                              <textarea rows="1" placeholder="請輸入第三方曝光追蹤代碼" id="thirdCode" name="thirdCode"></textarea>
+                          </div>
+                        </td>
+                    </tr>
+                    </#if>  
                     <tr>
 						<th height="35" style="width:12%"><span class="t_s02">* </span>廣告圖片<br>
 							<a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize('approveSizeDiv');">支援規格查詢</a>
@@ -136,7 +160,7 @@
              		<div style="width:110px;float:left;" >
              			<#if searchPCSizeList?size != 0>
 	                 	<#list searchPCSizeList as searchPCSize>
-				 			<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
+	                 		<p>${searchPCSize.width!} x ${searchPCSize.height!}(電腦)</p>
 						</#list>
 						</#if>
 					</div>
@@ -159,10 +183,11 @@
              		<div style="width:110px;float:left;">
              			<#if channelPCSizeList?size != 0>
 	                 	<#list channelPCSizeList as channelPCSize>
-				 			<p><#if channelPCSize.width?length == 2 >${channelPCSize.width!
-				 			}<#else>${channelPCSize.width!
-				 			}</#if> x <#if channelPCSize.height?length == 2 >${channelPCSize.height!
-				 			} &nbsp;<#else>${channelPCSize.height!}</#if>(電腦)</p>
+				 			<#if (channelPCSize.width == 1400 && channelPCSize.height == 160) || (channelPCSize.width == 1400 && channelPCSize.height == 60)>
+					 				<p style="display:none;">${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+					 			<#else>
+					 				<p>${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+					 		</#if>
 						</#list>
 						</#if>
 					</div>
@@ -171,7 +196,11 @@
 					<div style="width:120px;float:left;">
 						<#if channelMobileSizeList?size != 0>
 	                 	<#list channelMobileSizeList as channelMobileSize>
-				 			<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+				 			<#if (channelMobileSize.width == 1400 && channelMobileSize.height == 160) || (channelMobileSize.width == 1400 && channelMobileSize.height == 60)>
+					 				<p style="display:none;">${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+					 			<#else>
+					 				<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+					 		</#if>
 						</#list>
 						</#if>
 					</div>
@@ -211,10 +240,11 @@
 		             		<div style="width:110px;float:left;">
 		             			<#if channelPCSizeList?size != 0>
 			                 	<#list channelPCSizeList as channelPCSize>
-						 			<p><#if channelPCSize.width?length == 2 >${channelPCSize.width!
-						 			}<#else>${channelPCSize.width!
-						 			}</#if> x <#if channelPCSize.height?length == 2 >${channelPCSize.height!
-						 			} &nbsp;<#else>${channelPCSize.height!}</#if>(電腦)</p>
+				                 	<#if (channelPCSize.width == 1400 && channelPCSize.height == 160) || (channelPCSize.width == 1400 && channelPCSize.height == 60)>
+					 					<p style="display:none;">${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+					 				<#else>
+					 					<p>${channelPCSize.width!} x ${channelPCSize.height!}(電腦)</p>
+					 				</#if>
 								</#list>
 								</#if>
 							</div>
@@ -223,7 +253,11 @@
 							<div style="width:120px;float:left;">
 								<#if channelMobileSizeList?size != 0>
 			                 	<#list channelMobileSizeList as channelMobileSize>
-						 			<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+						 			<#if (channelMobileSize.width == 1400 && channelMobileSize.height == 160) || (channelMobileSize.width == 1400 && channelMobileSize.height == 60)>
+					 					<p style="display:none;">${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+					 				<#else>
+					 					<p>${channelMobileSize.width!} x ${channelMobileSize.height!}(行動裝置)</p>
+					 				</#if>
 								</#list>
 								</#if>
 							</div>
@@ -253,7 +287,8 @@
                 <td>
                 	1.上傳檔案規格:請將所有素材及相關的程式碼，壓縮成一個完整的zip壓縮檔後提供。壓縮檔內，主要播放廣告的HTML檔名請設定為index.html 
 					(請減少zip檔中的檔案數量請移除html中多餘的字元及空格, 並請依據使用需求壓縮圖片大小和影片大小)<br/>
-					2.圖檔規格 jpg、gif
+					2.圖檔規格 jpg、jpeg、gif、png<br>
+					3.素材規格 .css .js
                 </td>
             </tr>	
             <tr>
@@ -307,5 +342,6 @@
     <a href="#" onclick="closeBtn();" class="popclose">關閉</a>
    </div>
 </div>
+   
 
 <div id="preview"></div>

@@ -9,12 +9,15 @@ import org.apache.commons.lang.StringUtils;
 
 import com.pchome.akbpfp.db.pojo.PfpCode;
 import com.pchome.akbpfp.db.pojo.PfpCodeTracking;
+import com.pchome.akbpfp.db.service.accesslog.AdmAccesslogService;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeService;
 import com.pchome.akbpfp.db.service.codeManage.IPfpCodeTrackingService;
 import com.pchome.akbpfp.db.vo.codeManage.RetargetingTrackingVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.codeManage.EnumRetargetingCodeType;
 import com.pchome.enumerate.codeManage.EnumTrackingStatusType;
+import com.pchome.enumerate.prod.EnumAdTrackingCodeStatus;
+import com.pchome.rmi.accesslog.EnumAccesslogAction;
 import com.pchome.service.portalcms.bean.Mail;
 import com.pchome.soft.util.SpringEmailUtil;
 
@@ -34,6 +37,7 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 	private Map<String, Object> resultMap;
 
 	private IPfpCodeService pfpCodeService;
+	private AdmAccesslogService admAccesslogService;
 	private IPfpCodeTrackingService pfpCodeTrackingService;
 	private SpringEmailUtil springEmailUtil;
 
@@ -162,7 +166,9 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 			
 			resultMap.put("msg", "再行銷追蹤新增成功");
 			resultMap.put("status", "SUCCESS");
-
+			
+			String message = "新增=>再行銷追蹤：" + trackingName.trim();
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
 		} catch (Exception e) {
 			log.error("error:" + e);
 			resultMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
@@ -201,6 +207,9 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 				resultMap.put("status", "ERROR");
 				return SUCCESS;
 			}
+			String beforeCodeType = pfpCodeTracking.getCodeType();
+			String beforeTrackingName = pfpCodeTracking.getTrackingName();
+			int beforeRangeDate = pfpCodeTracking.getTrackingRangeDate();
 			
 			
 			log.info(">>> trackingSeq: " + trackingSeq);
@@ -231,7 +240,35 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 			
 			resultMap.put("msg", "再行銷追蹤儲存成功");
 			resultMap.put("status", "SUCCESS");
-
+			
+			//accesslog
+			if(!beforeTrackingName.equals(trackingName.trim())) {
+				String message = "再行銷追蹤：" + beforeTrackingName+"=>代碼名稱修改："+trackingName.trim();
+				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			}
+			
+			if(!beforeCodeType.equals(codeType)) {
+				String saveCodeTypeStr = "";
+				String beforeCodeTypeStr = "";
+				for (EnumRetargetingCodeType enumRetargetingCodeType : EnumRetargetingCodeType.values()) {
+					if(codeType.equals(enumRetargetingCodeType.getType())) {
+						saveCodeTypeStr = enumRetargetingCodeType.getChName();
+					}
+					if(beforeCodeType.equals(enumRetargetingCodeType.getType())) {
+						beforeCodeTypeStr = enumRetargetingCodeType.getChName();
+					}
+				}
+				String message = "再行銷追蹤：" + trackingName.trim() + "=>選擇代碼類型："+beforeCodeTypeStr+"=>修改："+saveCodeTypeStr;
+				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			}
+			
+			if(beforeRangeDate != trackingRangeDate) {
+				String message = "再行銷追蹤：" + trackingName.trim() + "=>追蹤行銷效期修改："+beforeRangeDate+"天=>"+trackingRangeDate+"天";
+				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			}
+			
+			
+			
 		} catch (Exception e) {
 			log.error("error:" + e);
 			resultMap.put("msg", "系統忙碌中，請稍後再試，如仍有問題請洽相關人員。");
@@ -317,6 +354,7 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 			log.info(">>> currentPage: " + currentPage);
 			log.info(">>> pageSizeSelected: " + pageSizeSelected);
 			log.info(">>> trackingSeq: " + trackingSeq);
+			trackingName = pfpCodeTrackingService.get(trackingSeq).getTrackingName();
 			log.info(">>> trackingName: " + trackingName);
 			
 			
@@ -329,6 +367,11 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 			resultMap.put("trackingName", trackingName);
 			resultMap.put("msg", "再行銷目錄刪除成功");
 			resultMap.put("status", "SUCCESS");
+			
+			String message = "再行銷追蹤：" + trackingName.trim() + "=>刪除";
+			admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			
+			
 			
 		} catch (Exception e) {
 			log.error("error:" + e);
@@ -349,13 +392,29 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 			log.info(">>> trackingSeq: " + trackingSeq);
 			log.info(">>> trackingStatus: " + trackingStatus);
 
-
+			PfpCodeTracking pfpCodeTracking = pfpCodeTrackingService.get(trackingSeq);
+			String beforeTrackingStatus = pfpCodeTracking.getTrackingStatus();
+			String beforeTrackingStatusDesc = "";
+			String saveTrackingStatusDesc = "";
+			for (EnumAdTrackingCodeStatus enumAdTrackingCodeStatus : EnumAdTrackingCodeStatus.values()) {
+				if(enumAdTrackingCodeStatus.getStatusId().equals(beforeTrackingStatus)) {
+					beforeTrackingStatusDesc = enumAdTrackingCodeStatus.getStatusDesc();
+				}
+				if(enumAdTrackingCodeStatus.getStatusId().equals(trackingStatus)) {
+					saveTrackingStatusDesc = enumAdTrackingCodeStatus.getStatusDesc();
+				}
+			}
+			
 			resultMap = new HashMap<String, Object>();
-			
 			pfpCodeTrackingService.updateTrackingStatus(super.getCustomer_info_id(),trackingSeq,trackingStatus);
-			
 			resultMap.put("msg", "再行銷目錄更新成功");
 			resultMap.put("status", "SUCCESS");
+			
+			//access log
+			if(!beforeTrackingStatus.equals(trackingStatus)) {
+				String message = "再行銷追蹤：" + pfpCodeTracking.getTrackingName().trim() + "=>狀態修改，"+beforeTrackingStatusDesc+"=>"+saveTrackingStatusDesc;
+				admAccesslogService.recordAdLog(EnumAccesslogAction.PFP_CODE_MODIFY, message, super.getId_pchome(), super.getCustomer_info_id(), super.getUser_id(), request.getRemoteAddr());
+			}
 			
 		} catch (Exception e) {
 			log.error("error:" + e);
@@ -510,6 +569,12 @@ public class RetargetingTrackingAjax extends BaseCookieAction {
 	}
 	public void setTrackingStatus(String trackingStatus) {
 		this.trackingStatus = trackingStatus;
+	}
+	public AdmAccesslogService getAdmAccesslogService() {
+		return admAccesslogService;
+	}
+	public void setAdmAccesslogService(AdmAccesslogService admAccesslogService) {
+		this.admAccesslogService = admAccesslogService;
 	}
 	
 	

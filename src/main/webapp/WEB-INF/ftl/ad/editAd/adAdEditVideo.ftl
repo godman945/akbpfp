@@ -30,6 +30,23 @@
                             <span id="chkLinkURL" name="chkLinkURL" style="color:red"></span><span style="float:right; margin-right: 4%;" id="spanAdLinkURL">已輸入0字，剩1024字</span>
                         </td>
                     </tr>
+                    <#if openThirdUser?string("true","flase") == "true">
+                    <tr class="thirdptybx" style="display:contents;">
+                        <th style="">
+                           		 第三方曝光追蹤代碼<a style="cursor:pointer;" onclick="opennots(3)"><img src="http://show.pchome.com.tw/html/img/question.gif" align="absmiddle"></a><br>
+                            <div id="shownotes3" style="visibility:hidden;" class="adnoticepop">
+                                <h4>第三方曝光追蹤代碼</h4>
+                                <div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
+                                <a onclick="closenots(3)" style="cursor:pointer;" class="adpopclose">關閉</a>
+                            </div>
+                        </th>
+                        <td>
+                          <div class="code-box">
+                              <textarea rows="1" placeholder="請輸入第三方曝光追蹤代碼" id="thirdCode" name="thirdCode" style="resize:none;margin: 0px 310px 0px 0px; height: 137px; width: 632px;">${thirdCode!}</textarea>
+                          </div>
+                        </td>
+                    </tr>
+                    </#if>
                	</tbody>
             </table>
 
@@ -101,3 +118,9 @@
 	   </div>
 </div>
 <input id="adGroupSeq" type='hidden' value='${adGroupSeq!}'>
+
+<div id="shownotes3" style="visibility: hidden;" class="adnoticepop">
+					        <h4>第三方曝光追蹤代碼</h4>
+					        <div class="adpopcont">僅支援 1x1 像素(pixel) 格式的第三方曝光追蹤代碼</div>
+					        <a onclick="closenots(3)" style="cursor:pointer;" class="adpopclose">關閉</a>
+</div>

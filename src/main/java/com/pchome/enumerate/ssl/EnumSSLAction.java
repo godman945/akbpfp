@@ -3,9 +3,9 @@ package com.pchome.enumerate.ssl;
 public enum EnumSSLAction {
 	
 //	ACCOUNT_CONTENT("accountContent.html"),
-//	ACCOUNT_CONTENT_UPDATE("accountContentUpdate.html"),
-//	ACCOUNT_INFO_MODIFY("accountInfoModify.html"),
-//	ACCOUNT_INFO_UPDATE("accountInfoUpdate.html"),
+	ACCOUNT_CONTENT_UPDATE("accountContentUpdate.html"),
+	ACCOUNT_INFO_MODIFY("accountInfoModify.html"),
+	ACCOUNT_INFO_UPDATE("accountInfoUpdate.html"),
 	PFD_APPLY("pfdApply.html");
 //	APPLY("apply.html");
 	
