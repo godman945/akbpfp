@@ -177,25 +177,22 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		sizeDiv = "adHtml5SizeDiv";
 	}
 	
-	console.log(sizeDiv);
-	
 	$.each($("#" + sizeDiv + " p"), function( index, obj ) {
 		if(html5Repeat=="yes"){
+			
 			if($(obj).text().indexOf(width+" x "+height) >= 0){
+				imgSize = "yes";
+				imgSizeFlag = true;
+				return false;
+			}
+			if(obj.innerHTML.indexOf("1400 x 60") || obj.innerHTML.indexOf("1400 x 160")){
 				imgSize = "yes";
 				imgSizeFlag = true;
 				return false;
 			}
 		}
 		if(html5Repeat=="no" && $(obj).attr('style') == undefined ){
-			console.log(obj);
 			if($(obj).text().indexOf(width+" x "+height) >= 0){
-				imgSize = "yes";
-				imgSizeFlag = true;
-				return false;
-			}
-			
-			if(obj.innerHTML.indexOf("1400 x 60") || obj.innerHTML.indexOf("1400 x 160")){
 				imgSize = "yes";
 				imgSizeFlag = true;
 				return false;
@@ -225,6 +222,8 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			errorMsg = '您所上傳的HTML5 ' + zipErrorMsg + ' <a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize(\'html5SizeDiv\');">HTML5規格查詢</a>';
 		}
 	} 
+	
+	
 	
 	if(imgRepeat == 'yes'){
 		errorTitle = '廣告圖片已存在!';
