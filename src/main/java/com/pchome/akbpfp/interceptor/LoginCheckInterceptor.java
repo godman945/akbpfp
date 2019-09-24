@@ -151,7 +151,7 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 					user.getStatus().equals(EnumUserStatus.INVITE_PCID.getStatusId()) || 
 					user.getStatus().equals(EnumUserStatus.INVITE_NOT_PCID.getStatusId())){
 				// 帳號申請中 or 邀請中
-				return "apply";
+				return invocation.invoke();
 			}else if(user.getStatus().equals(EnumUserStatus.CLOSE.getStatusId())){
 				// 帳號關閉
 				return "userClose";
@@ -167,51 +167,11 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 					//log.info("ref.getId().getMemberId() = " + ref.getId().getMemberId());
 					refPcId = ref.getId().getMemberId();
 				}
-				
 				// 不是管理者帳戶又不同一個 id
 				if(!pcId.equals(refPcId) &&	!manager.equals(EnumPfpRootUser.PCHOME_MANAGER.getPrivilege()) &&	!manager.equals(EnumPfpRootUser.PFD.getPrivilege())){
 					return "index";
 				}
 			}
-
-			
-			
-			//log.info("pcId: "+pcId);
-			//log.info("refPcId: "+refPcId);
-			
-			//log.info(" adAccountRef = "+adAccountRef.getPfpUser());
-			// 確認是否同一組PCId或管理者登入
-//			if(pcId.equals(refPcId) || rootUser.equals(EnumPfpRootUser.PCHOME_MANAGER.getPrivilege())
-//					|| rootUser.equals(EnumPfpRootUser.PFD.getPrivilege())){
-//				// 確認 user 身份
-//				if(EnumUserStatus.CLOSE.getStatusId().equals(user.getStatus())){
-//					//log.info("帳號被關閉，請洽帳戶管理者");
-//					result = "userClose";
-//				}
-//
-//				//log.info("user.getStatus() = " + user.getStatus());
-//				if(EnumUserStatus.APPLY.getStatusId().equals(user.getStatus())){
-//					//log.info("帳號申請中，請耐心等後");
-//					result = "apply";
-//				}
-//
-//				if(EnumUserStatus.STOP.getStatusId().equals(user.getStatus())){
-//					//log.info("帳號被停權，請洽帳戶管理者");
-//					result = "userStop";
-//				}
-//
-//				if(EnumUserStatus.INVITE_PCID.getStatusId().equals(user.getStatus()) ||
-//						EnumUserStatus.INVITE_NOT_PCID.getStatusId().equals(user.getStatus())){
-//					//log.info("帳號邀請中，請先啟用你帳號，或申請新的帳戶");
-//						result = "apply";
-//				}
-//
-//				
-//				if(EnumUserStatus.START.getStatusId().equals(user.getStatus())){
-//					// 如果該攔截器後沒有其他攔截器,則直接執行 Action 的 execute 方法
-//					result = invocation.invoke();
-//				}
-//			}			
 		}
 		else{
 			return "index";

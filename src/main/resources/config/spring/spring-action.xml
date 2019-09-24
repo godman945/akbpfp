@@ -325,7 +325,6 @@
     	<property name="pfpAdExcludeKeywordService" ref="PfpAdExcludeKeywordService" />
     	<property name="syspriceOperaterAPI" ref="SyspriceOperaterAPI" />
     	<property name="admAccesslogService" ref="AdmAccesslogService" /> 
-        <property name="photoTmpPath" value="${photo.tmp.path}" />
         <property name="photoPath" value="${photo.path}" />
         <property name="photoDbPath" value="${photo.db.path}" />
         <property name="photoDbPathNew" value="${photo.db.path.new}" />
