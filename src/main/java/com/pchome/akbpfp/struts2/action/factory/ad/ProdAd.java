@@ -1,5 +1,6 @@
 package com.pchome.akbpfp.struts2.action.factory.ad;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -663,7 +664,7 @@ public class ProdAd implements IAd {
 	        byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
             ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
             image = ImageIO.read(bis);
-            String saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
+            String saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg";
             String adDetailId = "";
             String defineAdSeq ="";
             if(uploadType.equals("logoImg")){
@@ -678,7 +679,13 @@ public class ProdAd implements IAd {
                 if(!path.exists()){
                 	path.mkdirs();
                 }
-            	ImageIO.write(image, fileExtensionName, new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName));
+                if(fileExtensionName.toUpperCase().equals("PNG")) {
+                	BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+          	        newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
+          	        ImageIO.write(newBufferedImage, "jpg", new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg"));
+                }else {
+                	ImageIO.write(image, fileExtensionName, new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName));
+                }
             	if(type.equals("add")){
             		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
             	}else if(type.equals("edit")){
@@ -754,8 +761,6 @@ public class ProdAd implements IAd {
 		this.admAccesslogService = admAccesslogService;
 	}
 	
-	
-
 	public IPfpCatalogGroupService getPfpCatalogGroupService() {
 		return pfpCatalogGroupService;
 	}
@@ -764,21 +769,4 @@ public class ProdAd implements IAd {
 		this.pfpCatalogGroupService = pfpCatalogGroupService;
 	}
 
-	public static void main(String args[]) throws Exception{
-		File imgFile = new File("d:/180150c.gif");
-		System.out.println(imgFile.exists());		
-		String fileExtensionName ="jpg";
-		
-		BufferedImage bi = ImageIO.read(imgFile);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(bi, fileExtensionName, baos);
-		byte[] bytes = baos.toByteArray();
-		String imgBase64 = "data:image/"+fileExtensionName+";base64,"+ new Base64().encodeToString(bytes);
-		imgBase64 = imgBase64.replaceAll("\\s", "");
-		
-		System.out.println(imgBase64);
-		
-		
-		
-	}
 }
