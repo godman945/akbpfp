@@ -68,7 +68,6 @@ function initLogoSave(){
 		if(squareStatus != -1 && rectangleStatus != -1){
 			$("#submitBtn").css("background-color","#a8a8a8");
 		}
-		
 		if(rectangleStatus == "1"){
 			var img = $(success).find(".logomanage-imgbox")[0].getElementsByTagName("img")[0];
 			$(success).find(".rectanglelogo-box")[0].setAttribute("style", "height:auto");
@@ -76,20 +75,19 @@ function initLogoSave(){
 			$(success).css("display", "block");
 			$(select).css("display", "none");
 			$(review).css("display", "none");
-			
-			
-			
-		}else if(rectangleStatus == "2" || rectangleStatus == "0"){
+		}else if(rectangleStatus == "2" || rectangleStatus == "0" || rectangleStatus == "9"){
 			var img = $(review).find(".logomanage-imgbox")[0].getElementsByTagName("img")[0];
 			img.src = rectangleBase64;
 			$(success).css("display", "none");
 			$(select).css("display", "none");
 			$(review).css("display", "block");
 			var notebox = $(review)[0].getElementsByClassName("notebox")[0];
-			notebox.innerHTML = rectangleStatus == 0 ? "審核中" :'審核失敗 <div class="msg-btn" onclick="$(this).children(\'em\').fadeToggle(\'fast\');"><em style="display: none;">'+rectangleRejectReason+'</em></div>';
 			$(review).find(".logomanage-imgbox")[0].style.display = "inherit";
 			if(rectangleStatus == 0){
-				console.log($(review)[0].getElementsByClassName("delbtn")[0].remove()); 
+				$(review)[0].getElementsByClassName("delbtn")[0].remove(); 
+			}
+			if(rectangleStatus == 2){
+				notebox.innerHTML = rectangleStatus == 0 ? "審核中" :'審核失敗 <div class="msg-btn" onclick="$(this).children(\'em\').fadeToggle(\'fast\');"><em style="display: none;">'+rectangleRejectReason+'</em></div>'; 
 			}
 		}
 		
@@ -104,18 +102,19 @@ function initLogoSave(){
 			$(select).css("display", "none");
 			$(review).css("display", "none");
 			
-		}else if(squareStatus == "2" || squareStatus == "0"){
+		}else if(squareStatus == "2" || squareStatus == "0" || squareStatus == "9"){
 			var img = $(review).find(".logomanage-imgbox")[0].getElementsByTagName("img")[0];
 			img.src = squareBase64;
 			$(success).css("display", "none");
 			$(select).css("display", "none");
 			$(review).css("display", "block");
 			var notebox = $(review)[0].getElementsByClassName("notebox")[0];
-			notebox.innerHTML = squareStatus == 0 ? "審核中" :'審核失敗 <div class="msg-btn" onclick="$(this).children(\'em\').fadeToggle(\'fast\');"><em style="display: none;">'+squareRejectReason+'</em></div>';
 			if(squareStatus == 0){
-				console.log($(review)[0].getElementsByClassName("delbtn")[0].remove()); 
+				$(review)[0].getElementsByClassName("delbtn")[0].remove(); 
 			}
-		
+			if(squareStatus == 2){
+				notebox.innerHTML = squareStatus == 0 ? "審核中" :'審核失敗 <div class="msg-btn" onclick="$(this).children(\'em\').fadeToggle(\'fast\');"><em style="display: none;">'+squareRejectReason+'</em></div>';
+			}
 		}
 	}
 }
