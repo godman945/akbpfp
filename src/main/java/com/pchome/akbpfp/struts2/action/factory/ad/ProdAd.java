@@ -664,7 +664,7 @@ public class ProdAd implements IAd {
 	        byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
             ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
             image = ImageIO.read(bis);
-            String saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg";
+            String saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+".jpeg";
             String adDetailId = "";
             String defineAdSeq ="";
             if(uploadType.equals("logoImg")){
@@ -682,7 +682,7 @@ public class ProdAd implements IAd {
                 if(fileExtensionName.toUpperCase().equals("PNG")) {
                 	BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
           	        newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
-          	        ImageIO.write(newBufferedImage, "jpg", new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg"));
+          	        ImageIO.write(newBufferedImage, "jpeg", new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpeg"));
                 }else {
                 	ImageIO.write(image, fileExtensionName, new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName));
                 }
