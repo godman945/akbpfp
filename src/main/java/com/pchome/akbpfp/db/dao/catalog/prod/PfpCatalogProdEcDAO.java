@@ -136,6 +136,7 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" and a.ec_check_status = '"+EnumEcCheckStatusType.Reviewed_Passed.getType()+"' ");
 		hql.append(" and a.ec_status = '"+EnumEcStatusType.Open_Prod.getType()+"' ");
 		hql.append(" and b.catalog_setup_key='img_proportiona' ");
+		hql.append(" and a.ec_img like '%.jpg' ");
 		hql.append(filterSQL);
 		hql.append(" order by rand() limit "+prodNum);
 
