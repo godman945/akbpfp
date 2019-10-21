@@ -171,19 +171,6 @@
 		<br>
 		<br>
 
-		<h5>找東西搜尋結果廣告<span class="glyphicon glyphicon-menu-right"></span>網友搜尋到你設定的關鍵字，您的廣告立即曝光</h5>     
-		<div class="row row2" style="max-width:1020px;margin:auto">
-			<div class="col-sm-6 col-sx-12">
-				<p class="lft">網友在PChome找東西搜尋關鍵字!</p>
-				<img src="html/main/img/imp-img3.png">
-			</div>
-			<div class="col-sm-6 col-sx-12">
-				<p class="rht">您的關鍵字廣告將在此曝光!</p>
-				<img src="html/main/img/imp-img4.png"></div>
-		</div>
-		<br>
-		<br>
-
 		<h5>PChome聯播網合作夥伴們<span class="glyphicon glyphicon-menu-right"></span>眾網齊發，吸引最大化消費者目光。</h5>     
 		<div class="row row3" style="max-width:1100px;margin:auto">
 			<div class="col-sm-12">
