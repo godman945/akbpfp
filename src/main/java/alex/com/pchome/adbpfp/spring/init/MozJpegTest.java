@@ -18,6 +18,9 @@ public class MozJpegTest {
 		}
 		for (File f : files) {
 			if (f.isFile()) {
+				if(f.getAbsolutePath().contains("_org") || f.getAbsolutePath().contains("_new")) {
+					continue;
+				}
 				System.out.println("我是檔案>>>"+f.getAbsolutePath());
 	    		stringBuffer.setLength(0);
 	    		stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_org.jpg"));
@@ -59,6 +62,9 @@ public class MozJpegTest {
 		    }
 		    for (File f : files) {
 		    	if (f.isFile()) {
+		    		if(f.getAbsolutePath().contains("_org") || f.getAbsolutePath().contains("_new")) {
+						continue;
+					}
 		    		System.out.println("我是檔案>>>"+f.getAbsolutePath());
 		    		stringBuffer.setLength(0);
 		    		stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_org.jpg"));
