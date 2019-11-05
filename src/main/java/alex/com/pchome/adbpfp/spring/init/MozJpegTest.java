@@ -51,7 +51,7 @@ public class MozJpegTest {
 			StringBuffer stringBuffer = new StringBuffer();
 			File file = new File("/home/webuser/akb/_alex/AC2018011500005/");
 //			File file = new File("D:\\Users\\alexchen\\Desktop\\AAAAAAAAA\\ALEX\\");
-			
+//			List<File> fileList
 			
 			File[] files = file.listFiles();// 獲取目錄下的所有檔案或資料夾 
 		    if (files == null) {// 如果目錄為空，直接退出 
