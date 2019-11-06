@@ -18,24 +18,26 @@ public class MozJpegTest {
 		}
 		for (File f : files) {
 			if (f.isFile()) {
-				if(f.getAbsolutePath().contains("_org") || f.getAbsolutePath().contains("_new")) {
-					continue;
-				}
-				System.out.println("我是檔案>>>"+f.getAbsolutePath());
+				//1.複製原檔 2.產上新檔
+	    		if(!f.getAbsolutePath().contains(".jpg")) {
+	    			continue;
+	    		}
+	    		if(f.getAbsolutePath().contains("_bk.jpg")) {
+	    			continue;
+	    		}
+	    		if(new File(f.getAbsolutePath().replace(f.getName(), "")+f.getName().replace(".jpg", "_bk.jpg")).exists()) {
+	    			continue;
+	    		}
+	    		System.out.println("我是檔案>>>"+f.getAbsolutePath());
 	    		stringBuffer.setLength(0);
-	    		stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_org.jpg"));
+	    		stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_bk.jpg"));
+	    		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+	    		result = IOUtils.toString(process.getInputStream(), "UTF-8");
+	    		
+	    		stringBuffer.setLength(0);
+				stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(f.getAbsolutePath()).append(" >").append(f.getAbsolutePath());
 				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 				result = IOUtils.toString(process.getInputStream(), "UTF-8");
-//				System.out.println(">>>>>>:" + result);
-//				System.out.println(IOUtils.toString(process.getErrorStream(),"UTF-8"));
-//				System.out.println(IOUtils.toString(process.getInputStream(),"UTF-8"));
-				stringBuffer.setLength(0);
-				stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(f.getAbsolutePath()).append(" >").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_new.jpg"));
-				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
-				result = IOUtils.toString(process.getInputStream(), "UTF-8");
-//				System.out.println(">>>>>>:" + result);
-//				System.out.println(IOUtils.toString(process.getErrorStream(),"UTF-8"));
-//				System.out.println(IOUtils.toString(process.getInputStream(),"UTF-8"));
 	    	}
 		    if (f.isDirectory()) {
 	    		alex(f);
@@ -52,8 +54,8 @@ public class MozJpegTest {
 			Process process = null;
 			String result = "";
 			StringBuffer stringBuffer = new StringBuffer();
-			File file = new File("/home/webuser/akb/_alex/AC2018011500005/");
-//			File file = new File("D:\\Users\\alexchen\\Desktop\\AAAAAAAAA\\ALEX\\");
+//			File file = new File("/home/webuser/akb/_alex/AC2018011500005/");
+			File file = new File("D:\\Users\\alexchen\\Desktop\\AAAAAAAAA\\moz_test");
 //			List<File> fileList
 			
 			File[] files = file.listFiles();// 獲取目錄下的所有檔案或資料夾 
@@ -62,24 +64,26 @@ public class MozJpegTest {
 		    }
 		    for (File f : files) {
 		    	if (f.isFile()) {
-		    		if(f.getAbsolutePath().contains("_org") || f.getAbsolutePath().contains("_new")) {
-						continue;
-					}
+		    		//1.複製原檔 2.產上新檔
+		    		if(!f.getAbsolutePath().contains(".jpg")) {
+		    			continue;
+		    		}
+		    		if(f.getAbsolutePath().contains("_bk.jpg")) {
+		    			continue;
+		    		}
+		    		if(new File(f.getAbsolutePath().replace(f.getName(), "")+f.getName().replace(".jpg", "_bk.jpg")).exists()) {
+		    			continue;
+		    		}
 		    		System.out.println("我是檔案>>>"+f.getAbsolutePath());
 		    		stringBuffer.setLength(0);
-		    		stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_org.jpg"));
+		    		stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_bk.jpg"));
+		    		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+		    		result = IOUtils.toString(process.getInputStream(), "UTF-8");
+		    		
+		    		stringBuffer.setLength(0);
+					stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(f.getAbsolutePath()).append(" >").append(f.getAbsolutePath());
 					process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 					result = IOUtils.toString(process.getInputStream(), "UTF-8");
-//					System.out.println(">>>>>>:" + result);
-//					System.out.println(IOUtils.toString(process.getErrorStream(),"UTF-8"));
-//					System.out.println(IOUtils.toString(process.getInputStream(),"UTF-8"));
-					stringBuffer.setLength(0);
-					stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(f.getAbsolutePath()).append(" >").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_new.jpg"));
-					process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
-					result = IOUtils.toString(process.getInputStream(), "UTF-8");
-//					System.out.println(">>>>>>:" + result);
-//					System.out.println(IOUtils.toString(process.getErrorStream(),"UTF-8"));
-//					System.out.println(IOUtils.toString(process.getInputStream(),"UTF-8"));
 		    	}
 			    if (f.isDirectory()) {
 		    		alex(f);
