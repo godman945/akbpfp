@@ -43,7 +43,7 @@ public class MozJpegTest {
 				
 				
 				stringBuffer.setLength(0);
-				stringBuffer.append(" cp ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace("_resize.jpg", ".jpg")).append(" ").append(f.getAbsolutePath());
+				stringBuffer.append(" cp ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_resize.jpg")).append(" ").append(f.getAbsolutePath());
 				System.out.println(">>>>>>>>>>command:"+stringBuffer.toString());
 				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 				result = IOUtils.toString(process.getInputStream(), "UTF-8");
