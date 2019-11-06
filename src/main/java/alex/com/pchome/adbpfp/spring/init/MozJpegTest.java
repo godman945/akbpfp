@@ -40,10 +40,10 @@ public class MozJpegTest {
 				result = IOUtils.toString(process.getInputStream(), "UTF-8");
 				
 				
-				stringBuffer.setLength(0);
-				stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace("_resize.jpg", ".jpg"));
-				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
-				result = IOUtils.toString(process.getInputStream(), "UTF-8");
+//				stringBuffer.setLength(0);
+//				stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace("_resize.jpg", ".jpg"));
+//				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+//				result = IOUtils.toString(process.getInputStream(), "UTF-8");
 	    	}
 		    if (f.isDirectory()) {
 	    		alex(f);
