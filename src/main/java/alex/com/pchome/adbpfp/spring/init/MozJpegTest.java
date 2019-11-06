@@ -31,11 +31,13 @@ public class MozJpegTest {
 	    		System.out.println("我是檔案>>>"+f.getAbsolutePath());
 	    		stringBuffer.setLength(0);
 	    		stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_bk.jpg"));
+	    		System.out.println(">>>>>>>>>>command:"+stringBuffer.toString());
 	    		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 	    		result = IOUtils.toString(process.getInputStream(), "UTF-8");
 	    		
 	    		stringBuffer.setLength(0);
 				stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(f.getAbsolutePath()).append(" >").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_resize.jpg"));
+				System.out.println(">>>>>>>>>>command:"+stringBuffer.toString());
 				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 				result = IOUtils.toString(process.getInputStream(), "UTF-8");
 				
