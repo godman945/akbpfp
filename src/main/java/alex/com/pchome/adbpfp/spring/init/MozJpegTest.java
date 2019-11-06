@@ -54,8 +54,8 @@ public class MozJpegTest {
 			Process process = null;
 			String result = "";
 			StringBuffer stringBuffer = new StringBuffer();
-//			File file = new File("/home/webuser/akb/_alex/AC2018011500005/");
-			File file = new File("D:\\Users\\alexchen\\Desktop\\AAAAAAAAA\\moz_test");
+			File file = new File("/home/webuser/akb/_alex/AC2018011500005/");
+//			File file = new File("D:\\Users\\alexchen\\Desktop\\AAAAAAAAA\\moz_test");
 //			List<File> fileList
 			
 			File[] files = file.listFiles();// 獲取目錄下的所有檔案或資料夾 
