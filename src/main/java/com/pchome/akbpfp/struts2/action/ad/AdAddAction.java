@@ -1350,7 +1350,7 @@ public class AdAddAction extends BaseCookieAction{
 	    File customerImgFileTemporalDateFile = null;
 	    customerImgFile = new File(photoDbPathNew+customerInfoId);
 	    CommonUtilModel commonUtilModel = new CommonUtilModel();
-
+	    
 	    if(fileupload == null){
 	        return SUCCESS;
 	    }
@@ -1377,7 +1377,6 @@ public class AdAddAction extends BaseCookieAction{
 				    customerImgFile.mkdirs();
 				}
 				
-				//SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
 				File originalPathFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
 				if(!originalPathFile.exists()){
 					originalPathFile.mkdirs();
@@ -1402,8 +1401,6 @@ public class AdAddAction extends BaseCookieAction{
 					errorMsg = zipResult;
 				}
 				
-				
-				
 				if(indexHtmlFile.exists() && FileAmount <= 40){
 					Document doc = Jsoup.parse(indexHtmlFile, "UTF-8");
 					String docHtml = doc.html();
@@ -1427,11 +1424,6 @@ public class AdAddAction extends BaseCookieAction{
 						
 			            File indexHtmFile = new File(indexHtmFilePath.substring(0, indexHtmFilePath.lastIndexOf("/")) + "/index.htm");
 			            indexHtmlFile.renameTo(indexHtmFile);
-			           // File indexHtmlFile2 = new File(getIndexHtmlPath(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq));
-			           // String indexHtmFile2Path = indexHtmlFile2.getPath().replaceAll("\\\\\\\\", "/");
-			           // File indexHtmFile2 = new File(indexHtmFile2Path.substring(0, indexHtmFile2Path.lastIndexOf("/")) + "/index.htm");
-			           // indexHtmlFile2.renameTo(indexHtmFile2);
-						
 						imgSrc = indexHtmFile.getPath().replaceAll("\\\\\\\\", "/");
 						imgSrc = imgSrc.replaceAll("\\\\", "/");
 						imgSrc = imgSrc.replace("/export/home/webuser/akb/pfp/", "");
@@ -1477,10 +1469,8 @@ public class AdAddAction extends BaseCookieAction{
 						if(metaTag.isEmpty()){
 							errorMsg = "&lt;meta&gt;標籤錯誤";
 						}
-						//errorMsg = "與規範不符";
 					}
 				}
-				
 				result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"" + errorMsg + "\" " + "}";
     		} else {
     			boolean doUpload = false;
@@ -1529,44 +1519,24 @@ public class AdAddAction extends BaseCookieAction{
         	        	imgRepeat = "yes";
         	        }
         	        
-        	        //建立圖片
-            		log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
-            		log.info(">>>2.path>>"+customerImgFile.getPath());
-            		log.info(customerImgFile.exists());
+        	        
+        	        fileSize = String.valueOf(file.length() / 1024);
+        	        if(Integer.parseInt(fileSize) > 1024) {
+        	        	result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
+        	        	return SUCCESS;
+        	        }
+        	        
             		if(!customerImgFile.exists()){
-            		    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
-            		    customerImgFile.mkdirs();
-            		}
-            		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date));
-            		if(!customerImgFileDateFile.exists()){
-            		    customerImgFileDateFile.mkdirs();
-            		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original");
-            		    log.info(">>>>>>>>>1:"+customerImgFileOriginalDateFile);
-            		    if(!customerImgFileOriginalDateFile.exists()){
-            		    	customerImgFileOriginalDateFile.mkdirs();
-            		    }
-            		    customerImgFileTemporalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal");
-            		    log.info(">>>>>>>>>2:"+customerImgFileTemporalDateFile);
-            		    if(!customerImgFileTemporalDateFile.exists()){
-            		        customerImgFileTemporalDateFile.mkdirs();
-            		    }
-            		}
-            		fileSize = String.valueOf(file.length() / 1024);
-    				while (StringUtils.isBlank(adSeq)) {
-    					try {
-    						adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-    					} catch (Exception e) {
-    						log.error(e.getMessage());
-    						Thread.sleep(100);
-    					}
-    				}
-                    commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
+	        		    log.info(">>>>>>create img path:"+photoDbPathNew+customerInfoId);
+	        		    customerImgFile.mkdirs();
+	        		}
+        	        
+            		adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+            		commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
     			}
     			result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
     		}
-    		
 	    }
-
 	    return SUCCESS;
 	}
 

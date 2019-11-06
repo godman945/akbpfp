@@ -1,10 +1,12 @@
 package com.pchome.akbpfp.struts2.action.factory.ad;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,6 +36,7 @@ import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupService;
 import com.pchome.akbpfp.db.service.template.ITemplateProductService;
+import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.akbpfp.struts2.action.ad.AdAddAction;
 import com.pchome.akbpfp.struts2.action.ad.AdEditAction;
 import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
@@ -59,7 +62,9 @@ public class ProdAd implements IAd {
 	private AdEditAction adEditAction;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	private IPfpCatalogGroupService pfpCatalogGroupService;
-	
+	private CommonUtilModel commonUtilModel = new CommonUtilModel();
+	private String photoPath;
+	private String pfpCustomerInfoId = "";
 	
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
 		log.info(">>>>>> process ProdAd");
@@ -141,6 +146,7 @@ public class ProdAd implements IAd {
 		log.info(">>>>>> process do add prod ad");
 		this.adAddAction = adAddAction;
 		String adSeq = adAddAction.getSequenceService().getId(EnumSequenceTableName.PFP_AD, "_");
+		pfpCustomerInfoId = adAddAction.getCustomer_info_id();
 		PfpAdGroup pfpAdGroup = adAddAction.getPfpAdGroup();
 		adAddAction.setAdSeq(adSeq);
 		adAddAction.setTemplateProductSeq(EnumAdStyle.TMG.getTproSeq());
@@ -418,9 +424,9 @@ public class ProdAd implements IAd {
 	public String doAdAdEdit(AdEditAction adEditAction) throws Exception {
 		log.info(">>>>>> process do edit prod ad");
 		this.adEditAction = adEditAction;
+		pfpCustomerInfoId = adEditAction.getCustomer_info_id();
 		//1.刪除所有detail
 		Set<PfpAdDetail> detailSet = adEditAction.getPfpAd().getPfpAdDetails();
-		
 		String beforeProdReportName = "";
 		String afterProdReportName = "";
 		String beforeProdGroupName = "";
@@ -675,24 +681,40 @@ public class ProdAd implements IAd {
             	defineAdSeq = "dad_"+adDetailId;
             }
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
-        		File path = new File(photoClonePath+saveImgPathBuffer.toString());
-                if(!path.exists()){
-                	path.mkdirs();
-                }
-                if(fileExtensionName.toUpperCase().equals("PNG")) {
-                	saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+".jpeg";
-                	BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-          	        newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
-          	        ImageIO.write(newBufferedImage, "jpeg", new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpeg"));
-                }else {
-                	saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
-                	ImageIO.write(image, fileExtensionName, new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName));
-                }
-            	if(type.equals("add")){
-            		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
-            	}else if(type.equals("edit")){
-            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);
+            	if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
+            		commonUtilModel.writeImgByStream(image, "jpg", photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height+".jpg");
+            	}else {
+//            		InputStream input = new FileInputStream(cutFile);
+//					FileOutputStream output1 = new FileOutputStream(tmpFile);
+//					byte[] byt = new byte[input.available()];
+//					input.read(byt);
+//					output1.write(byt);
+//					output1.close();
+//					input.close();
+            		
+            		
+            		commonUtilModel.writeImgByStream(image, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName);
             	}
+            	
+            	
+//        		File path = new File(photoClonePath+saveImgPathBuffer.toString());
+//                if(!path.exists()){
+//                	path.mkdirs();
+//                }
+//                if(fileExtensionName.toUpperCase().equals("PNG")) {
+//                	saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+".jpeg";
+//                	BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+//          	        newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
+//          	        ImageIO.write(newBufferedImage, "jpeg", new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpeg"));
+//                }else {
+//                	saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
+//                	ImageIO.write(image, fileExtensionName, new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName));
+//                }
+//            	if(type.equals("add")){
+//            		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
+//            	}else if(type.equals("edit")){
+//            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);
+//            	}
             }
             bis.close();
 		}
@@ -769,6 +791,14 @@ public class ProdAd implements IAd {
 
 	public void setPfpCatalogGroupService(IPfpCatalogGroupService pfpCatalogGroupService) {
 		this.pfpCatalogGroupService = pfpCatalogGroupService;
+	}
+
+	public String getPhotoPath() {
+		return photoPath;
+	}
+
+	public void setPhotoPath(String photoPath) {
+		this.photoPath = photoPath;
 	}
 
 }

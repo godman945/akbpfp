@@ -55,6 +55,7 @@
     	<property name="photoClonePath" value="${photo.clone.path}" />
     	<property name="admAccesslogService" ref="AdmAccesslogService" />
     	<property name="pfpCatalogGroupService" ref="PfpCatalogGroupService" />
+    	<property name="photoPath" value="${photo.path}" />
     </bean>
     
     <bean id="VideoAd" class="com.pchome.akbpfp.struts2.action.factory.ad.VideoAd" scope="prototype"  />

@@ -1,20 +1,16 @@
 package com.pchome.akbpfp.godutil;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
@@ -40,40 +36,11 @@ public class CommonUtilModel extends BaseCookieAction{
     //時間格式取年月日
     SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
 
-    	/**
-	 * 輸出圖片
-	 * */
+	/**
+	 * 使用File寫入圖片
+	 */
 	public String  writeImg(File originalImgFile,String userImgPath,String custimerInfoid,String date,String adSeq,String fileType) throws Exception{
 	    log.info("開始處理圖片:"+adSeq);
-	    //Date date2 = new Date();
-	    /*BufferedImage bufferedImage = null;
-	    if("JPG".equals(fileType.toUpperCase()) || "PNG".equals(fileType.toUpperCase())){
-	    	bufferedImage = ImageIO.read(originalImgFile);
-	    	int w = bufferedImage.getWidth();
-	    	int h = bufferedImage.getHeight();
-	    	BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-	    	int[] rgb = bufferedImage.getRGB(0, 0, w, h, null, 0, w);
-	    	newImage.setRGB(0, 0, w, h, rgb, 0, w);
-	    	//SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-	    	ImageIO.write(newImage, fileType, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType));
-	    	ImageIO.write(newImage, fileType, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType));
-	    } else if("GIF".equals(fileType.toUpperCase())){
-            File file1 = new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
-            File file2 = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
-            FileOutputStream output1 = new FileOutputStream(file1);
-            FileOutputStream output2 = new FileOutputStream(file2);
-            InputStream input = new FileInputStream(originalImgFile);
-            byte[] byt = new byte[input.available()];
-            input.read(byt);
-            output1.write(byt);
-            output2.write(byt);
-            
-            input.close();
-            output1.close();
-            output2.close();
-	    }*/
-	    
-	    //2017.01.04 圖片失真，暫時先用gif處理方式
 	    
 	    File file1 = new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
         File file2 = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
@@ -101,6 +68,33 @@ public class CommonUtilModel extends BaseCookieAction{
         
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + fileType;
 	}
+	
+	/**
+	 * 使用stream寫入圖片
+	 * */
+	public void writeImgByStream(BufferedImage image,String fileExtensionName,String outPath,String filename) throws Exception{
+		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
+			File file = new File(outPath);
+			if(!file.exists()) {
+				file.mkdir();
+			}
+			BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+			newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
+			ImageIO.write(newBufferedImage, fileExtensionName , new File(outPath+"/"+filename));
+		}
+		if(fileExtensionName.toUpperCase().equals("GIF")) {
+			FileOutputStream output1 = new FileOutputStream(new File(outPath+"/"+filename));
+			output1.write(image.);
+		}
+		
+		
+		
+		
+		
+		
+		
+	}
+	
 
 	/**
 	 * 刪除暫存圖片
