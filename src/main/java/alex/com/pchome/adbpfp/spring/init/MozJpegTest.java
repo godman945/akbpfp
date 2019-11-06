@@ -35,7 +35,13 @@ public class MozJpegTest {
 	    		result = IOUtils.toString(process.getInputStream(), "UTF-8");
 	    		
 	    		stringBuffer.setLength(0);
-				stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(f.getAbsolutePath()).append(" >").append(f.getAbsolutePath());
+				stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(f.getAbsolutePath()).append(" >").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_resize.jpg"));
+				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+				result = IOUtils.toString(process.getInputStream(), "UTF-8");
+				
+				
+				stringBuffer.setLength(0);
+				stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace("_resize.jpg", ".jpg"));
 				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 				result = IOUtils.toString(process.getInputStream(), "UTF-8");
 	    	}
@@ -81,7 +87,13 @@ public class MozJpegTest {
 		    		result = IOUtils.toString(process.getInputStream(), "UTF-8");
 		    		
 		    		stringBuffer.setLength(0);
-					stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(f.getAbsolutePath()).append(" >").append(f.getAbsolutePath());
+					stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(f.getAbsolutePath()).append(" >").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace(".jpg", "_resize.jpg"));
+					process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+					result = IOUtils.toString(process.getInputStream(), "UTF-8");
+					
+					
+					stringBuffer.setLength(0);
+					stringBuffer.append(" cp ").append(f.getAbsolutePath()).append(" ").append(f.getAbsolutePath().replace(f.getName(), "")).append(f.getName().replace("_resize.jpg", ".jpg"));
 					process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 					result = IOUtils.toString(process.getInputStream(), "UTF-8");
 		    	}
