@@ -92,7 +92,10 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * 使用stream寫入圖片
 	 * */
 	public synchronized void writeImgByStream(ByteArrayInputStream imageStream,String fileExtensionName,String outPath,String filename) throws Exception{
-		log.info(">>>>>>[fileExtensionName]:"+fileExtensionName+" [outPath]:"+outPath+" [filename]:"+filename);
+		log.info(">>>>>>start write img");
+		log.info(">>>>>>fileExtensionName:"+fileExtensionName);
+		log.info(">>>>>>fileExtensionName:"+fileExtensionName);
+		log.info(">>>>>>fileExtensionName:"+fileExtensionName);
 		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
 			File file = new File(outPath);
 			if(!file.exists()) {
@@ -116,6 +119,7 @@ public class CommonUtilModel extends BaseCookieAction{
 			FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename));
 			output.write(IOUtils.toByteArray(imageStream));
 		}
+		log.info(">>>>>>end write img");
 	}
 	
 	/**
