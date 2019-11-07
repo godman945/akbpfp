@@ -69,10 +69,12 @@ public class CommonUtilModel extends BaseCookieAction{
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".gif"));
 		}else {
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
-			log.debug(">>>>>>>>>>>1:"+userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
+			log.info(">>>>>>>>>>>1:"+userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
-			log.debug(">>>>>>>>>>>2:"+userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg");
+			log.info(">>>>>>>>>>>2:"+userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg");
 			//進行壓縮
+			File file = new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
+			log.info(">>>>>>>>>>>>>3:"+file.length());
 	        mozJpegCompression(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
 		}
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + fileType;
