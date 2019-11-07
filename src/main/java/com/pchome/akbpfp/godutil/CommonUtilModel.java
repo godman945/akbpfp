@@ -43,10 +43,13 @@ public class CommonUtilModel extends BaseCookieAction{
         		Process process = null;
         		stringBuffer.setLength(0);
     			stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0  ").append(file.getAbsolutePath()).append(" > ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg"));
+    			log.info(">>>>>>>>>>>4:"+stringBuffer.toString());
+    			
     			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
     			result = IOUtils.toString(process.getInputStream(), "UTF-8");
     			stringBuffer.setLength(0);
     			stringBuffer.append(" mv ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg")).append(" ").append(file.getAbsolutePath());
+    			log.info(">>>>>>>>>>>5:"+stringBuffer.toString());
     			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
     			result = IOUtils.toString(process.getInputStream(), "UTF-8");
         	}else {
