@@ -106,11 +106,13 @@ public class CommonUtilModel extends BaseCookieAction{
 				if(!file.exists()) {
 					file.mkdirs();
 				}
-				BufferedImage image = null;
-				image = ImageIO.read(imageStream);
-				BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-				newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
-				ImageIO.write(newBufferedImage, fileExtensionName , new File(outPath+"/"+filename));
+				FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename));
+				output.write(IOUtils.toByteArray(imageStream));
+//				BufferedImage image = null;
+//				image = ImageIO.read(imageStream);
+//				BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+//				newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
+//				ImageIO.write(newBufferedImage, fileExtensionName , new File(outPath+"/"+filename));
 				//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔
 //				if(outPath.contains("original")) {
 //					mozJpegCompression(outPath+"/"+filename);
