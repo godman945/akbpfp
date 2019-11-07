@@ -92,37 +92,29 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * 使用stream寫入圖片
 	 * */
 	public synchronized void writeImgByStream(ByteArrayInputStream imageStream,String fileExtensionName,String outPath,String filename) throws Exception{
-		try {
-			log.info(">>>>>>start write img");
-			log.info(">>>>>>fileExtensionName:"+fileExtensionName);
-			log.info(">>>>>>outPath:"+outPath);
-			log.info(">>>>>>filename:"+filename);
-			log.info(">>>>>>imageStream is null:"+(imageStream == null));
-			if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
-				File file = new File(outPath);
-				if(!file.exists()) {
-					file.mkdirs();
-				}
-				FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename));
-				output.write(IOUtils.toByteArray(imageStream));
-				//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔
-				if(outPath.contains("original")) {
-					mozJpegCompression(outPath+"/"+filename);
-				}
-			}else if(fileExtensionName.toUpperCase().equals("GIF")) {
-				File file = new File(outPath);
-				if(!file.exists()) {
-					file.mkdirs();
-				}
-				FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename));
-				output.write(IOUtils.toByteArray(imageStream));
+		log.info(">>>>>>start write img: [outPath:"+outPath+"]"+"[fileExtensionName:"+fileExtensionName+"]"+"[filename:"+filename+"]");
+		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
+			File file = new File(outPath);
+			if(!file.exists()) {
+				file.mkdirs();
 			}
-			log.info(">>>>>>end write img");
-		}catch(Exception e){
-			e.printStackTrace();
-			throw e;
+			FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename));
+			output.write(IOUtils.toByteArray(imageStream));
+			output.close();
+			//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔不需壓縮
+			if(outPath.contains("original")) {
+				mozJpegCompression(outPath+"/"+filename);
+			}
+		}else if(fileExtensionName.toUpperCase().equals("GIF")) {
+			File file = new File(outPath);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename));
+			output.write(IOUtils.toByteArray(imageStream));
+			output.close();
 		}
-		
+		log.info(">>>>>>end write img");
 	}
 	
 	/**
