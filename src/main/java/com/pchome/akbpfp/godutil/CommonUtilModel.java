@@ -98,7 +98,7 @@ public class CommonUtilModel extends BaseCookieAction{
 			if(!file.exists()) {
 				file.mkdirs();
 			}
-			FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename));
+			FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename+"."+fileExtensionName));
 			output.write(IOUtils.toByteArray(imageStream));
 			output.close();
 			//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔不需壓縮
@@ -110,7 +110,7 @@ public class CommonUtilModel extends BaseCookieAction{
 			if(!file.exists()) {
 				file.mkdirs();
 			}
-			FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename));
+			FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename+"."+fileExtensionName));
 			output.write(IOUtils.toByteArray(imageStream));
 			output.close();
 		}
