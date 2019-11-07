@@ -1,5 +1,7 @@
 package com.pchome.akbpfp.godutil;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,18 +41,15 @@ public class CommonUtilModel extends BaseCookieAction{
     	try {
     		log.info(">>>>>> start mozJpeg compression:"+filePath);
         	File file = new File(filePath);
-        	log.info(">>>>>> start mozJpeg compression file:"+file.length());
         	if(file.exists()) {
         		Process process = null;
         		stringBuffer.setLength(0);
     			stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0  ").append(file.getAbsolutePath()).append(" > ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "[PCHOME_RESIZE].jpg"));
-    			log.info(">>>>>>>>>>>4:"+stringBuffer.toString());
-    			
     			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
     			result = IOUtils.toString(process.getInputStream(), "UTF-8");
+    			
     			stringBuffer.setLength(0);
     			stringBuffer.append(" mv ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "[PCHOME_RESIZE].jpg")).append(" ").append(file.getAbsolutePath());
-    			log.info(">>>>>>>>>>>5:"+stringBuffer.toString());
     			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
     			result = IOUtils.toString(process.getInputStream(), "UTF-8");
         	}else {
@@ -72,13 +71,17 @@ public class CommonUtilModel extends BaseCookieAction{
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".gif"));
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".gif"));
 		}else {
-			
-			FileOutputStream out = new FileOutputStream(new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
-			InputStream input = new FileInputStream(originalImgFile);
-			byte[] byt = new byte[input.available()];
-			input.read(byt);
-			out.write(byt);
-			FileUtils.copyFile(new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"), new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
+			if(fileType.toUpperCase().equals("PNG")) {
+				BufferedImage bufferedImage = ImageIO.read(originalImgFile);
+				BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+				newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+				ImageIO.write(newBufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
+				FileUtils.copyFile(new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"), new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
+			}
+			if(fileType.toUpperCase().equals("JPG")) {
+				FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
+				FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
+			}
 			//進行壓縮
 	        mozJpegCompression(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
 		}
