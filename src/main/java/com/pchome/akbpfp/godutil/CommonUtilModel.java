@@ -108,8 +108,7 @@ public class CommonUtilModel extends BaseCookieAction{
 				mozJpegCompression(outPath+"/"+filename);
 			}
 			
-		}
-		if(fileExtensionName.toUpperCase().equals("GIF")) {
+		}else if(fileExtensionName.toUpperCase().equals("GIF")) {
 			File file = new File(outPath);
 			if(!file.exists()) {
 				file.mkdirs();
