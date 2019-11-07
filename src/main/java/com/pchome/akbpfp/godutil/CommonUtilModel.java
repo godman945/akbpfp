@@ -99,11 +99,11 @@ public class CommonUtilModel extends BaseCookieAction{
 			if(!file.exists()) {
 				file.mkdirs();
 			}
-			FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename+"."+fileExtensionName));
+			FileOutputStream output = new FileOutputStream(new File(outPath+filename+"."+fileExtensionName));
 			output.write(IOUtils.toByteArray(imageStream));
 			output.close();
 			//複製至備份區
-			FileUtils.copyFile(file, new File(outPath.replace("original", "temporal")+"/"+filename+"."+fileExtensionName));
+			FileUtils.copyFile(file, new File(outPath.replace("original", "temporal")+filename+"."+fileExtensionName));
 			//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔不需壓縮
 			if(outPath.contains("original")) {
 				mozJpegCompression(outPath+"/"+filename);
@@ -113,11 +113,11 @@ public class CommonUtilModel extends BaseCookieAction{
 			if(!file.exists()) {
 				file.mkdirs();
 			}
-			FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename+"."+fileExtensionName));
+			FileOutputStream output = new FileOutputStream(new File(outPath+filename+"."+fileExtensionName));
 			output.write(IOUtils.toByteArray(imageStream));
 			output.close();
 			//複製至備份區
-			FileUtils.copyFile(file, new File(outPath.replace("original", "temporal")+"/"+filename+"."+fileExtensionName));
+			FileUtils.copyFile(file, new File(outPath.replace("original", "temporal")+filename+"."+fileExtensionName));
 		}
 		log.info(">>>>>>end write img");
 	}
