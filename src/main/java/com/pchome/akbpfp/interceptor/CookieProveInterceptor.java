@@ -3,9 +3,7 @@ package com.pchome.akbpfp.interceptor;
 
 
 import java.util.Date;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.json.JSONObject;
 
@@ -30,10 +28,8 @@ import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfd.user.PfdUserAdAccountRefService;
 import com.pchome.akbpfp.db.service.sequence.SequenceService;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
-import com.pchome.enumerate.cookie.EnumCookiePfpKey;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.soft.depot.utils.CookieFunction;
-import com.pchome.soft.depot.utils.CookieStringToMap;
 import com.pchome.soft.depot.utils.CookieUtil;
 import com.pchome.soft.depot.utils.EncodeUtil;
 import com.pchome.utils.HttpUtil;
