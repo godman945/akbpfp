@@ -36,7 +36,7 @@ public class CommonUtilModel extends BaseCookieAction{
     /**
      * 使用mozJpeg進行壓縮
      * */
-    public void  mozJpegCompression(String FilePath) throws Exception{
+    public synchronized void  mozJpegCompression(String FilePath) throws Exception{
     	log.info(">>>>>> start mozJpeg compression:"+FilePath);
     	File file = new File(FilePath);
     	if(file.exists()) {
@@ -91,7 +91,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	/**
 	 * 使用stream寫入圖片
 	 * */
-	public void writeImgByStream(ByteArrayInputStream imageStream,String fileExtensionName,String outPath,String filename) throws Exception{
+	public synchronized void writeImgByStream(ByteArrayInputStream imageStream,String fileExtensionName,String outPath,String filename) throws Exception{
 		log.info(">>>>>>[fileExtensionName]:"+fileExtensionName+" [outPath]:"+outPath+" [filename]:"+filename);
 		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
 			File file = new File(outPath);
