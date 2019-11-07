@@ -40,18 +40,15 @@ public class CommonUtilModel extends BaseCookieAction{
     	log.info(">>>>>> start mozJpeg compression:"+FilePath);
     	File file = new File(FilePath);
     	if(file.exists()) {
-    		log.info(">>>>>> @@@@ size:"+FilePath.length()/1024);
     		Process process = null;
     		stringBuffer.setLength(0);
 			stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0  ").append(file.getAbsolutePath()).append(" > ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg"));
 			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 			result = IOUtils.toString(process.getInputStream(), "UTF-8");
-			log.info(">>>>>>>>>>>result:"+result);
 			stringBuffer.setLength(0);
 			stringBuffer.append(" mv ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg")).append(" ").append(file.getAbsolutePath());
 			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 			result = IOUtils.toString(process.getInputStream(), "UTF-8");
-			log.info(">>>>>>>>>>>result:"+result);
     	}else {
     		log.info(">>>>>> file not exist:"+FilePath);
     	}
@@ -100,7 +97,7 @@ public class CommonUtilModel extends BaseCookieAction{
 			log.info(">>>>>>fileExtensionName:"+fileExtensionName);
 			log.info(">>>>>>outPath:"+outPath);
 			log.info(">>>>>>filename:"+filename);
-			log.info(">>>>>> @@　imageStream is null:"+(imageStream == null));
+			log.info(">>>>>>imageStream is null:"+(imageStream == null));
 			if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
 				File file = new File(outPath);
 				if(!file.exists()) {
@@ -108,16 +105,10 @@ public class CommonUtilModel extends BaseCookieAction{
 				}
 				FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename));
 				output.write(IOUtils.toByteArray(imageStream));
-//				BufferedImage image = null;
-//				image = ImageIO.read(imageStream);
-//				BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-//				newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
-//				ImageIO.write(newBufferedImage, fileExtensionName , new File(outPath+"/"+filename));
 				//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔
-//				if(outPath.contains("original")) {
-//					mozJpegCompression(outPath+"/"+filename);
-//				}
-				
+				if(outPath.contains("original")) {
+					mozJpegCompression(outPath+"/"+filename);
+				}
 			}else if(fileExtensionName.toUpperCase().equals("GIF")) {
 				File file = new File(outPath);
 				if(!file.exists()) {
