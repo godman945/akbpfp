@@ -73,7 +73,7 @@ public class CommonUtilModel extends BaseCookieAction{
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
 			log.debug(">>>>>>>>>>>2:"+userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg");
 			//進行壓縮
-//	        mozJpegCompression(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
+	        mozJpegCompression(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
 		}
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + fileType;
 	}
