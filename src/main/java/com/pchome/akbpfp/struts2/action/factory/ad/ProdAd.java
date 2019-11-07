@@ -1,8 +1,6 @@
 package com.pchome.akbpfp.struts2.action.factory.ad;
 
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,8 +9,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
-
-import javax.imageio.ImageIO;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
@@ -384,7 +380,6 @@ public class ProdAd implements IAd {
 				fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
 				File file = new File(photoClonePath+imgPath);
 				if(file.exists()){
-					String imgBase64 = imgBase64(file,fileExtensionName);
 					String fileNameArray[] = imgPath.split("/");
 					fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
 					String fileName = fileNameArray[0];
@@ -394,7 +389,7 @@ public class ProdAd implements IAd {
 					uploadLogoLogJson.put("width", width);
 					uploadLogoLogJson.put("heigth", heigth);
 					uploadLogoLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
-					uploadLogoLogJson.put("previewSrc", imgBase64);
+					uploadLogoLogJson.put("previewSrc", imgPath);
 					uploadLogoLogJson.put("fileName", fileName);
 					uploadLogoLogJson.put("fileSize", fileSize);
 					uploadLogoLogJsonArray.put(uploadLogoLogJson);
@@ -642,16 +637,6 @@ public class ProdAd implements IAd {
 		return null;
 	}
 	
-	private String imgBase64(File imgFile,String fileExtensionName) throws Exception{
-		BufferedImage bi = ImageIO.read(imgFile);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(bi, fileExtensionName, baos);
-		byte[] bytes = baos.toByteArray();
-		String imgBase64 = "data:image/"+fileExtensionName+";base64,"+ new Base64().encodeToString(bytes);
-		imgBase64 = imgBase64.replaceAll("\\s", "");
-		return imgBase64;
-	}
-	
 	private void saveImg(JSONObject uploadImgJson,String uploadType,StringBuffer saveImgPathBuffer,String adSeq,String type) throws Exception{
 		Iterator keys = uploadImgJson.keys();
 		while(keys.hasNext()) {
@@ -677,7 +662,7 @@ public class ProdAd implements IAd {
             }
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
             	if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
-            		commonUtilModel.writeImgByStream(bis, "jpg", photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
+            		commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
             		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg";
             	}else {
             		commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
