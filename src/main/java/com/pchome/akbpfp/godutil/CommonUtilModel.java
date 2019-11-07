@@ -98,7 +98,7 @@ public class CommonUtilModel extends BaseCookieAction{
 			log.info(">>>>>>fileExtensionName:"+fileExtensionName);
 			log.info(">>>>>>outPath:"+outPath);
 			log.info(">>>>>>filename:"+filename);
-			log.info(">>>>>>imageStream is null:"+imageStream == null);
+			log.info(">>>>>> @@　imageStream is null:"+(imageStream == null));
 			if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
 				File file = new File(outPath);
 				if(!file.exists()) {
