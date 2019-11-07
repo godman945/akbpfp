@@ -40,6 +40,7 @@ public class CommonUtilModel extends BaseCookieAction{
     	log.info(">>>>>> start mozJpeg compression:"+FilePath);
     	File file = new File(FilePath);
     	if(file.exists()) {
+    		log.info(">>>>>> @@@@ size:"+FilePath.length()/1024);
     		Process process = null;
     		stringBuffer.setLength(0);
 			stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0  ").append(file.getAbsolutePath()).append(" > ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg"));
