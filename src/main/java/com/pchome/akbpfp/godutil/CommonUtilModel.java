@@ -51,7 +51,7 @@ public class CommonUtilModel extends BaseCookieAction{
     			stringBuffer.setLength(0);
     			stringBuffer.append(" mv ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "[PCHOME_RESIZE].jpg")).append(" ").append(file.getAbsolutePath());
     			log.info(">>>>>>>>>>>5:"+stringBuffer.toString());
-//    			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+    			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
     			result = IOUtils.toString(process.getInputStream(), "UTF-8");
         	}else {
         		log.info(">>>>>> file not exist:"+filePath);
@@ -67,18 +67,19 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * 使用File寫入圖片
 	 */
 	public String  writeImg(File originalImgFile,String userImgPath,String custimerInfoid,String date,String adSeq,String fileType) throws Exception{
-		log.info(">>>>>>@@　start write img: [originalImgFile:"+originalImgFile+"]"+"[userImgPath:"+userImgPath+"]"+"[fileType:"+fileType+"]");
+		log.info(">>>>>> start write img: [originalImgFile:"+originalImgFile+"]"+"[userImgPath:"+userImgPath+"]"+"[fileType:"+fileType+"]");
 		if(fileType.toUpperCase().equals("GIF")) {
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".gif"));
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".gif"));
 		}else {
-			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
-			log.info(">>>>>>>>>>>1:"+userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
-			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
-			log.info(">>>>>>>>>>>2:"+userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg");
+			
+			FileOutputStream out = new FileOutputStream(new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
+			InputStream input = new FileInputStream(originalImgFile);
+			byte[] byt = new byte[input.available()];
+			input.read(byt);
+			out.write(byt);
+			FileUtils.copyFile(new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"), new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
 			//進行壓縮
-			File file = new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
-			log.info(">>>>>>>>>>>>>3:"+file.length());
 	        mozJpegCompression(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
 		}
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + fileType;
