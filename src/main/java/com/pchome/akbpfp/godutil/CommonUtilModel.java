@@ -46,11 +46,12 @@ public class CommonUtilModel extends BaseCookieAction{
 			stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0  ").append(file.getAbsolutePath()).append(" > ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg"));
 			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 			result = IOUtils.toString(process.getInputStream(), "UTF-8");
-			
+			log.info(">>>>>>>>>>>result:"+result);
 			stringBuffer.setLength(0);
 			stringBuffer.append(" mv ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg")).append(" ").append(file.getAbsolutePath());
 			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
 			result = IOUtils.toString(process.getInputStream(), "UTF-8");
+			log.info(">>>>>>>>>>>result:"+result);
     	}else {
     		log.info(">>>>>> file not exist:"+FilePath);
     	}
