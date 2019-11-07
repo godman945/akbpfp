@@ -8,7 +8,7 @@
     <constant name="struts.objectFactory" value="spring" />
     <constant name="struts.action.extension" value="html" />
     <constant name="struts.multipart.maxSize" value="20480000" />
-    
+    <constant name="struts.multipart.saveDir" value="/tmp"></constant>
     <include file="config/struts2/struts-account.xml" />
     <include file="config/struts2/struts-ad.xml"/>        
     <include file="config/struts2/struts-api-action.xml"/>

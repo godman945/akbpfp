@@ -63,7 +63,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * 使用File寫入圖片
 	 */
 	public String  writeImg(File originalImgFile,String userImgPath,String custimerInfoid,String date,String adSeq,String fileType) throws Exception{
-		log.info(">>>>>>start write img: [originalImgFile:"+originalImgFile+"]"+"[userImgPath:"+userImgPath+"]"+"[fileType:"+fileType+"]");
+		log.info(">>>>>>@@　start write img: [originalImgFile:"+originalImgFile+"]"+"[userImgPath:"+userImgPath+"]"+"[fileType:"+fileType+"]");
 		if(fileType.toUpperCase().equals("GIF")) {
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".gif"));
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".gif"));
