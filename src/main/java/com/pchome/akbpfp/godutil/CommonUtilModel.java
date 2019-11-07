@@ -39,6 +39,7 @@ public class CommonUtilModel extends BaseCookieAction{
     	try {
     		log.info(">>>>>> start mozJpeg compression:"+filePath);
         	File file = new File(filePath);
+        	log.info(">>>>>> start mozJpeg compression file:"+file.length());
         	if(file.exists()) {
         		Process process = null;
         		stringBuffer.setLength(0);
