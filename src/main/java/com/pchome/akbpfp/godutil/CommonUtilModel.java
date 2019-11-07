@@ -51,7 +51,7 @@ public class CommonUtilModel extends BaseCookieAction{
     			stringBuffer.setLength(0);
     			stringBuffer.append(" mv ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "[PCHOME_RESIZE].jpg")).append(" ").append(file.getAbsolutePath());
     			log.info(">>>>>>>>>>>5:"+stringBuffer.toString());
-    			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+//    			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
     			result = IOUtils.toString(process.getInputStream(), "UTF-8");
         	}else {
         		log.info(">>>>>> file not exist:"+filePath);
