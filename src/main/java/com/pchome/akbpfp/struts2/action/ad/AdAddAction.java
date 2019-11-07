@@ -771,7 +771,6 @@ public class AdAddAction extends BaseCookieAction{
 			//檢查是否有下載過的影片
 			PfpAdVideoSource pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adVideoURL);
 			
-			
 			//根據尺寸建立明細
 			String pool = "";
 			String templateAdSeq = "";

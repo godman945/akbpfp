@@ -4,9 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -65,6 +62,7 @@ public class ProdAd implements IAd {
 	private CommonUtilModel commonUtilModel = new CommonUtilModel();
 	private String photoPath;
 	private String pfpCustomerInfoId = "";
+	private String photoDBPath;
 	
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
 		log.info(">>>>>> process ProdAd");
@@ -658,6 +656,7 @@ public class ProdAd implements IAd {
 	private void saveImg(JSONObject uploadImgJson,String uploadType,StringBuffer saveImgPathBuffer,String adSeq,String type) throws Exception{
 		Iterator keys = uploadImgJson.keys();
 		while(keys.hasNext()) {
+			String saveImgPath = "";
 		    String key = (String)keys.next();
 		    JSONObject data = (JSONObject) uploadImgJson.get(key);
 		    String bessie64ImgArray[] = data.getString("previewSrc").split(",");
@@ -666,11 +665,8 @@ public class ProdAd implements IAd {
 		    String height = data.getString("height");
 		    String fileName = uploadType+"_"+width+"_"+height;
 		    String fileExtensionName = data.getString("fileExtensionName").toLowerCase();
-			BufferedImage image = null;
 	        byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
             ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-            image = ImageIO.read(bis);
-            String saveImgPath = "";
             String adDetailId = "";
             String defineAdSeq ="";
             if(uploadType.equals("logoImg")){
@@ -682,44 +678,23 @@ public class ProdAd implements IAd {
             }
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
             	if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
-            		commonUtilModel.writeImgByStream(image, "jpg", photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height+".jpg");
+            		commonUtilModel.writeImgByStream(bis, "jpg", photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height+".jpg");
+            		commonUtilModel.writeImgByStream(bis, "jpg", photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/temporal/",fileName+"_"+adSeq+"_"+width+"x"+height+".jpg");
+            		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg";
             	}else {
-//            		InputStream input = new FileInputStream(cutFile);
-//					FileOutputStream output1 = new FileOutputStream(tmpFile);
-//					byte[] byt = new byte[input.available()];
-//					input.read(byt);
-//					output1.write(byt);
-//					output1.close();
-//					input.close();
-            		
-            		
-            		commonUtilModel.writeImgByStream(image, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName);
+            		commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName);
+            		commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/temporal/",fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName);
+            		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/temporal/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
             	}
-            	
-            	
-//        		File path = new File(photoClonePath+saveImgPathBuffer.toString());
-//                if(!path.exists()){
-//                	path.mkdirs();
-//                }
-//                if(fileExtensionName.toUpperCase().equals("PNG")) {
-//                	saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+".jpeg";
-//                	BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-//          	        newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
-//          	        ImageIO.write(newBufferedImage, "jpeg", new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpeg"));
-//                }else {
-//                	saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
-//                	ImageIO.write(image, fileExtensionName, new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName));
-//                }
-//            	if(type.equals("add")){
-//            		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
-//            	}else if(type.equals("edit")){
-//            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);
-//            	}
+            	if(type.equals("add")){
+            		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
+            	}else if(type.equals("edit")){
+            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);
+            	}
             }
             bis.close();
 		}
 	}
-	
 	
 	public String getTemplateStr() {
 		return templateStr;
@@ -799,6 +774,14 @@ public class ProdAd implements IAd {
 
 	public void setPhotoPath(String photoPath) {
 		this.photoPath = photoPath;
+	}
+
+	public String getPhotoDBPath() {
+		return photoDBPath;
+	}
+
+	public void setPhotoDBPath(String photoDBPath) {
+		this.photoDBPath = photoDBPath;
 	}
 
 }

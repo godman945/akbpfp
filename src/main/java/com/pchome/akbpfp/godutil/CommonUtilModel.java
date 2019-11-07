@@ -2,14 +2,13 @@ package com.pchome.akbpfp.godutil;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
@@ -18,6 +17,7 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -27,15 +27,34 @@ import com.pchome.akbpfp.struts2.BaseCookieAction;
 public class CommonUtilModel extends BaseCookieAction{
 
     private static final long serialVersionUID = 1L;
-    //保留小數點格式
-    DecimalFormat decimalFormat1 = new DecimalFormat("#,##0.00");
-    //不保留小數點格式
-    DecimalFormat decimalFormat2 = new DecimalFormat("###,###");
     //正規表示
-    Pattern pattern = Pattern.compile("[0-9]+");
-    //時間格式取年月日
-    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
-
+    private Pattern pattern = Pattern.compile("[0-9]+");
+    //command line stringbuffer
+    private StringBuffer stringBuffer = new StringBuffer();
+    private String result = "";
+    
+    /**
+     * 使用mozJpeg進行壓縮
+     * */
+    public void  mozJpegCompression(String FilePath) throws Exception{
+    	log.info(">>>>>> start mozJpeg compression:"+FilePath);
+    	File file = new File(FilePath);
+    	if(file.exists()) {
+    		Process process = null;
+    		stringBuffer.setLength(0);
+			stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0  ").append(file.getAbsolutePath()).append(" > ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg"));
+			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+			result = IOUtils.toString(process.getInputStream(), "UTF-8");
+			stringBuffer.setLength(0);
+			stringBuffer.append(" mv ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg")).append(" ").append(file.getAbsolutePath());
+			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+			result = IOUtils.toString(process.getInputStream(), "UTF-8");
+    	}else {
+    		log.info(">>>>>> file not exist:"+FilePath);
+    	}
+    	log.info(">>>>>> end mozJpeg compression");
+    }
+    
 	/**
 	 * 使用File寫入圖片
 	 */
@@ -72,30 +91,33 @@ public class CommonUtilModel extends BaseCookieAction{
 	/**
 	 * 使用stream寫入圖片
 	 * */
-	public void writeImgByStream(BufferedImage image,String fileExtensionName,String outPath,String filename) throws Exception{
+	public void writeImgByStream(ByteArrayInputStream imageStream,String fileExtensionName,String outPath,String filename) throws Exception{
 		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
 			File file = new File(outPath);
 			if(!file.exists()) {
-				file.mkdir();
+				file.mkdirs();
 			}
+			BufferedImage image = null;
+			image = ImageIO.read(imageStream);
 			BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
 			newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
 			ImageIO.write(newBufferedImage, fileExtensionName , new File(outPath+"/"+filename));
+			//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔
+			if(outPath.contains("original")) {
+				mozJpegCompression(outPath+"/"+filename);
+			}
+			
 		}
 		if(fileExtensionName.toUpperCase().equals("GIF")) {
-			FileOutputStream output1 = new FileOutputStream(new File(outPath+"/"+filename));
-			output1.write(image.);
+			File file = new File(outPath);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			FileOutputStream output = new FileOutputStream(new File(outPath+"/"+filename));
+			output.write(IOUtils.toByteArray(imageStream));
 		}
-		
-		
-		
-		
-		
-		
-		
 	}
 	
-
 	/**
 	 * 刪除暫存圖片
 	 * */
