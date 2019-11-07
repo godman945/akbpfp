@@ -32,5 +32,6 @@
         <logger name="org.apache.struts2.interceptor.CookieInterceptor" level="error" ref="stdout" />
         <logger name="org.hibernate.hql.internal.ast.HqlSqlWalker" level="error" ref="stdout" />
         <logger name="org.apache.commons.httpclient.HttpMethodBase" level="error" ref="stdout" />
+        <logger name="com.opensymphony.xwork2.config.ConfigurationManager" level="error" ref="stdout" />
     </loggers>
 </configuration>
