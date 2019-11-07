@@ -112,9 +112,9 @@ public class CommonUtilModel extends BaseCookieAction{
 				newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
 				ImageIO.write(newBufferedImage, fileExtensionName , new File(outPath+"/"+filename));
 				//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔
-				if(outPath.contains("original")) {
-					mozJpegCompression(outPath+"/"+filename);
-				}
+//				if(outPath.contains("original")) {
+//					mozJpegCompression(outPath+"/"+filename);
+//				}
 				
 			}else if(fileExtensionName.toUpperCase().equals("GIF")) {
 				File file = new File(outPath);
