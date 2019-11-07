@@ -362,7 +362,6 @@ public class ProdAd implements IAd {
 				fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
 				File file = new File(photoClonePath+imgPath);
 				if(file.exists()){
-					String imgBase64 = imgBase64(file,fileExtensionName);
 					String fileNameArray[] = imgPath.split("/");
 					fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
 					String fileName = fileNameArray[0];
@@ -372,7 +371,7 @@ public class ProdAd implements IAd {
 					uploadLogJson.put("width", width);
 					uploadLogJson.put("heigth", heigth);
 					uploadLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
-					uploadLogJson.put("previewSrc", imgBase64);
+					uploadLogJson.put("previewSrc", imgPath);
 					uploadLogJson.put("fileName", fileName);
 					uploadLogJson.put("fileSize", fileSize);
 					uploadLogJsonArray.put(uploadLogJson);
