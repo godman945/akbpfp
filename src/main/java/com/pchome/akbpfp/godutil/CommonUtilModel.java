@@ -1,7 +1,5 @@
 package com.pchome.akbpfp.godutil;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,55 +35,44 @@ public class CommonUtilModel extends BaseCookieAction{
     /**
      * 使用mozJpeg進行壓縮
      * */
-    public synchronized void  mozJpegCompression(String FilePath) throws Exception{
-    	log.info(">>>>>> start mozJpeg compression:"+FilePath);
-    	File file = new File(FilePath);
-    	if(file.exists()) {
-    		Process process = null;
-    		stringBuffer.setLength(0);
-			stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0  ").append(file.getAbsolutePath()).append(" > ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg"));
-			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
-			result = IOUtils.toString(process.getInputStream(), "UTF-8");
-			stringBuffer.setLength(0);
-			stringBuffer.append(" mv ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg")).append(" ").append(file.getAbsolutePath());
-			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
-			result = IOUtils.toString(process.getInputStream(), "UTF-8");
-    	}else {
-    		log.info(">>>>>> file not exist:"+FilePath);
+    public synchronized void  mozJpegCompression(String filePath) throws Exception{
+    	try {
+    		log.info(">>>>>> start mozJpeg compression:"+filePath);
+        	File file = new File(filePath);
+        	if(file.exists()) {
+        		Process process = null;
+        		stringBuffer.setLength(0);
+    			stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0  ").append(file.getAbsolutePath()).append(" > ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg"));
+    			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+    			result = IOUtils.toString(process.getInputStream(), "UTF-8");
+    			stringBuffer.setLength(0);
+    			stringBuffer.append(" mv ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "_resize.jpg")).append(" ").append(file.getAbsolutePath());
+    			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+    			result = IOUtils.toString(process.getInputStream(), "UTF-8");
+        	}else {
+        		log.info(">>>>>> file not exist:"+filePath);
+        	}
+        	log.info(">>>>>> end mozJpeg compression");
+    	}catch(Exception e) {
+    		log.error(e.getMessage());
     	}
-    	log.info(">>>>>> end mozJpeg compression");
+    	
     }
     
 	/**
 	 * 使用File寫入圖片
 	 */
 	public String  writeImg(File originalImgFile,String userImgPath,String custimerInfoid,String date,String adSeq,String fileType) throws Exception{
-	    log.info("開始處理圖片:"+adSeq);
-	    
-	    File file1 = new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
-        File file2 = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
-        FileOutputStream output1 = new FileOutputStream(file1);
-        FileOutputStream output2 = new FileOutputStream(file2);
-        InputStream input = new FileInputStream(originalImgFile);
-        byte[] byt = new byte[input.available()];
-        input.read(byt);
-        output1.write(byt);
-        output2.write(byt);
-        
-        input.close();
-        output1.close();
-        output2.close();
-	    
-        if("JPG".equals(fileType.toUpperCase())){
-        	log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG start ");
-        	this.squeezeJPG(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
-        	this.squeezeJPG(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
-        } else if("PNG".equals(fileType.toUpperCase())){
-        	log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG start ");
-        	this.squeezePNG(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
-        	this.squeezePNG(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
-        }
-        
+		log.info(">>>>>>start write img: [originalImgFile:"+originalImgFile+"]"+"[userImgPath:"+userImgPath+"]"+"[fileType:"+fileType+"]");
+		if(fileType.toUpperCase().equals("GIF")) {
+			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".gif"));
+			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".gif"));
+		}else {
+			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
+			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
+	        //進行壓縮
+	        mozJpegCompression(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
+		}
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + fileType;
 	}
 	
@@ -134,37 +121,6 @@ public class CommonUtilModel extends BaseCookieAction{
 				File file = new File(userImgPath + custimerInfoid + "/" + date + "/temporal/" + list[i]);
 				file.delete();
 			}
-		}
-	}
-
-	/**
-	 * 壓縮JPG圖檔
-	 * */
-	private void squeezeJPG(String pathFile) {
-		try {
-			Runtime rt = Runtime.getRuntime();
-			// Process proc = rt.exec("/usr/bin/jpegoptim " + pathFile);
-			Process proc = rt.exec("convert -verbose " + pathFile + " -strip -quality 95 " + pathFile);
-		} catch (Exception e) {
-			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG error ");
-			log.info(e);
-
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * 壓縮PNG圖檔
-	 * */
-	private void squeezePNG(String pathFile) {
-		try {
-			Runtime rt = Runtime.getRuntime();
-			// Process proc = rt.exec("/usr/bin/optipng " + pathFile);
-			Process proc = rt.exec("convert -verbose " + pathFile + " -strip -quality 95 " + pathFile);
-		} catch (Exception e) {
-			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG error ");
-			log.info(e);
-			e.printStackTrace();
 		}
 	}
 
