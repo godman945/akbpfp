@@ -78,7 +78,7 @@ public class CommonUtilModel extends BaseCookieAction{
 				ImageIO.write(newBufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
 				FileUtils.copyFile(new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"), new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
 			}
-			if(fileType.toUpperCase().equals("JPG")) {
+			if(fileType.toUpperCase().equals("JPG") || fileType.toUpperCase().equals("JPEG")) {
 				FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
 				FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
 			}
@@ -93,7 +93,7 @@ public class CommonUtilModel extends BaseCookieAction{
 	 * */
 	public synchronized void writeImgByStream(ByteArrayInputStream imageStream,String fileExtensionName,String outPath,String filename) throws Exception{
 		log.info(">>>>>>start write img: [outPath:"+outPath+"]"+"[fileExtensionName:"+fileExtensionName+"]"+"[filename:"+filename+"]");
-		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
+		if(fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
 			File file = new File(outPath);
 			if(!file.exists()) {
 				file.mkdirs();
@@ -104,9 +104,18 @@ public class CommonUtilModel extends BaseCookieAction{
 			//複製至備份區
 			FileUtils.copyFile(new File(outPath+filename+"."+fileExtensionName), new File(outPath.replace("original", "temporal")+filename+"."+fileExtensionName));
 			//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔不需壓縮
-			if(outPath.contains("original")) {
-				mozJpegCompression(outPath+filename+"."+fileExtensionName);
+			mozJpegCompression(outPath+filename+"."+fileExtensionName);
+		}else if(fileExtensionName.toUpperCase().equals("PNG") ) {
+			File file = new File(outPath);
+			if(!file.exists()) {
+				file.mkdirs();
 			}
+			BufferedImage bufferedImage = ImageIO.read(imageStream);
+			BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+			newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+			ImageIO.write(newBufferedImage, "jpg", new File(outPath+filename+".jpg"));
+			FileUtils.copyFile(new File(outPath+filename+".jpg"),new File(outPath.replace("original", "temporal")+filename+".jpg"));
+			mozJpegCompression(outPath+filename+".jpg");
 		}else if(fileExtensionName.toUpperCase().equals("GIF")) {
 			File file = new File(outPath);
 			if(!file.exists()) {
