@@ -69,9 +69,11 @@ public class CommonUtilModel extends BaseCookieAction{
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".gif"));
 		}else {
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
+			log.debug(">>>>>>>>>>>1:"+userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
 			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
-	        //進行壓縮
-	        mozJpegCompression(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
+			log.debug(">>>>>>>>>>>2:"+userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg");
+			//進行壓縮
+//	        mozJpegCompression(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
 		}
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + fileType;
 	}
@@ -130,12 +132,6 @@ public class CommonUtilModel extends BaseCookieAction{
 	public void deleteAllTemporalImg(String userImgPath, String custimerInfoid, String date) throws Exception {
 		log.info("開始刪除全部暫存圖片");
 		File folder = new File(userImgPath + custimerInfoid + "/" + date + "/temporal/");
-		/*
-		 * String[] list = folder.list(); for(int i = 0; i < list.length; i++){
-		 * File file = new
-		 * File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
-		 * file.delete(); }
-		 */
 		File[] files = folder.listFiles();
 		for (int i = 0; i < files.length; i++) {
 			deleteAll(files[i]);
