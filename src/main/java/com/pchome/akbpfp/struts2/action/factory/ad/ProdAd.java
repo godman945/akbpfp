@@ -678,18 +678,16 @@ public class ProdAd implements IAd {
             }
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
             	if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
-            		commonUtilModel.writeImgByStream(bis, "jpg", photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height+".jpg");
-            		commonUtilModel.writeImgByStream(bis, "jpg", photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/temporal/",fileName+"_"+adSeq+"_"+width+"x"+height+".jpg");
+            		commonUtilModel.writeImgByStream(bis, "jpg", photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
             		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg";
             	}else {
-            		commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName);
-            		commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/temporal/",fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName);
+            		commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
             		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
             	}
             	if(type.equals("add")){
-            		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
+            		adAddAction.saveAdDetail(saveImgPath,adDetailId,EnumProdAdDetail.PROD_REPORT_NAME.getAdPoolSeq(),defineAdSeq);	
             	}else if(type.equals("edit")){
-            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);
+            		adEditAction.saveAdDetail(saveImgPath,adDetailId,EnumProdAdDetail.PROD_REPORT_NAME.getAdPoolSeq(),defineAdSeq);
             	}
             }
             bis.close();
