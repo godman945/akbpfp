@@ -147,6 +147,8 @@ public class ProdAd implements IAd {
 		adAddAction.setAdStyle("PROD");
 		adAddAction.setAdClass("1");
 		adAddAction.addAd(pfpAdGroup,null);
+		
+		  log.info("###########################################################A01");
 		for (EnumProdAdDetail enumProdAdDetail : EnumProdAdDetail.values()) {
 			switch(enumProdAdDetail) {
 	        case PROD_REPORT_NAME:
@@ -218,10 +220,13 @@ public class ProdAd implements IAd {
 			}
 
 		}
+		log.info("###########################################################A02");
 		Date date = new Date();
 		StringBuffer saveImgPathBuffer = new StringBuffer();
+		log.info("###########################################################A03");
 		saveImgPathBuffer.append(adAddAction.getPhotoDbPath()).append("user/").append(adAddAction.getCustomer_info_id()).append("/").append(adAddAction.getSdf().format(date)).append("/original/").append(adSeq).append("/");
 		JSONObject uploadLogJson = new JSONObject(adAddAction.getUploadLog());
+		log.info("###########################################################A04");
 		saveImg(uploadLogJson,"salesEngImg",saveImgPathBuffer,adSeq,"add");
 		JSONObject uploadLogoLogJson = new JSONObject(adAddAction.getUploadLogoLog());
 		saveImg(uploadLogoLogJson,"logoImg",saveImgPathBuffer,adSeq,"add");
@@ -638,6 +643,7 @@ public class ProdAd implements IAd {
 	}
 	
 	private void saveImg(JSONObject uploadImgJson,String uploadType,StringBuffer saveImgPathBuffer,String adSeq,String type) throws Exception{
+		log.info("###########################################################1");
 		Iterator keys = uploadImgJson.keys();
 		while(keys.hasNext()) {
 			String saveImgPath = "";
@@ -660,6 +666,7 @@ public class ProdAd implements IAd {
             	adDetailId = "sale_img_"+width+"x"+height;
             	defineAdSeq = "dad_"+adDetailId;
             }
+            log.info("###########################################################2");
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
             	if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
             		commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
