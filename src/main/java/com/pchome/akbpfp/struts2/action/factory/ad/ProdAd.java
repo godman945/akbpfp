@@ -152,16 +152,20 @@ public class ProdAd implements IAd {
 		for (EnumProdAdDetail enumProdAdDetail : EnumProdAdDetail.values()) {
 			switch(enumProdAdDetail) {
 	        case PROD_REPORT_NAME:
+	        	log.info("###########################################################A01-1");
 	        	adAddAction.saveAdDetail(adAddAction.getAdName(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 	        	break;
 		 	case PROD_LIST:
+		 		log.info("###########################################################A01-2");
 		 		adAddAction.saveAdDetail(adAddAction.getCatalogId(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case PROD_GROUP:
+				log.info("###########################################################A01-3");
 				adAddAction.saveAdDetail(adAddAction.getCatalogGroupId(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case PROD_AD_URL:
 				//商品連結網址
+				log.info("###########################################################A01-4");
 				adAddAction.saveAdDetail(adAddAction.getAdLinkURL(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case LOGO_TYPE:
@@ -169,10 +173,12 @@ public class ProdAd implements IAd {
 		 		break;
 			case LOGO_TXT:
 				//logo標題文字
+				log.info("###########################################################A01-5");
 				adAddAction.saveAdDetail(adAddAction.getLogoText(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case LOGO_FONT_COLOR:
 				//logo標題文字顏色
+				log.info("###########################################################A01-6");
 				adAddAction.saveAdDetail(adAddAction.getLogoFontColor(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case LOGO_BG_COLOR:
@@ -181,6 +187,7 @@ public class ProdAd implements IAd {
 		 		break;
 			case BTN_TXT:
 				//按鈕文字
+				log.info("###########################################################A01-7");
 				for (EnumProdAdBtnText enumProdAdBtnText : EnumProdAdBtnText.values()) {
 					if(adAddAction.getBtnTxt().equals(enumProdAdBtnText.getBtnType())){
 						adAddAction.saveAdDetail(enumProdAdBtnText.getBtnText(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
@@ -189,32 +196,40 @@ public class ProdAd implements IAd {
 				}
 		 		break;
 			case BTN_FONT_COLOR:
+				log.info("###########################################################A01-8");
 				//按鈕文字顏色
 				adAddAction.saveAdDetail(adAddAction.getBtnFontColor(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case BTN_BG_COLOR:
+				log.info("###########################################################A01-9");
 				//按鈕背景顏色
 				adAddAction.saveAdDetail(adAddAction.getBtnBgColor(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 				break;
 			case DIS_TXT_TYPE:
+				log.info("###########################################################A01-10");
 				//標籤文字
 				adAddAction.saveAdDetail(adAddAction.getDisTxtType(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case DIS_FONT_COLOR:
+				log.info("###########################################################A01-11");
 				//標籤文字顏色
 				adAddAction.saveAdDetail(adAddAction.getDisFontColor(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case DIS_BG_COLOR:
+				log.info("###########################################################A01-12");
 				//標籤背景顏色
 				adAddAction.saveAdDetail(adAddAction.getDisBgColor(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case PROD_RADIO_LOGO_TYPE:
+				log.info("###########################################################A01-13");
 				adAddAction.saveAdDetail(adAddAction.getProdLogoType(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case LOGO_IMG_URL:
+				log.info("###########################################################A01-14");
 				adAddAction.saveAdDetail(adAddAction.getLogoPath(),enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			case THIRD_DETECTION:
+				log.info("###########################################################A01-15");
 				adAddAction.saveAdDetail("",enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			}
