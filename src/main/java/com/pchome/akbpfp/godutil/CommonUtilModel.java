@@ -98,13 +98,13 @@ public class CommonUtilModel extends BaseCookieAction{
 			if(!file.exists()) {
 				file.mkdirs();
 			}
-			FileOutputStream output = new FileOutputStream(new File(outPath+filename+"."+fileExtensionName));
+			FileOutputStream output = new FileOutputStream(new File(outPath+filename+".jpg"));
 			output.write(IOUtils.toByteArray(imageStream));
 			output.close();
 			//複製至備份區
-			FileUtils.copyFile(new File(outPath+filename+"."+fileExtensionName), new File(outPath.replace("original", "temporal")+filename+"."+fileExtensionName));
+			FileUtils.copyFile(new File(outPath+filename+"."+fileExtensionName), new File(outPath.replace("original", "temporal")+filename+".jpg"));
 			//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔不需壓縮
-			mozJpegCompression(outPath+filename+"."+fileExtensionName);
+			mozJpegCompression(outPath+filename+".jpg");
 		}else if(fileExtensionName.toUpperCase().equals("PNG") ) {
 			File file = new File(outPath);
 			if(!file.exists()) {
