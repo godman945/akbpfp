@@ -646,6 +646,7 @@ public class ProdAd implements IAd {
 		    String key = (String)keys.next();
 		    JSONObject data = (JSONObject) uploadImgJson.get(key);
 		    ByteArrayInputStream bis = null;
+		    log.info(">>>>>>>>>>>>>>>>>>>>>>:"+data.getString("previewSrc"));
 		    if(data.getString("previewSrc").contains("/img/user/")) {
 		    	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
 		    }else {
