@@ -644,9 +644,6 @@ public class ProdAd implements IAd {
 			String saveImgPath = "";
 		    String key = (String)keys.next();
 		    JSONObject data = (JSONObject) uploadImgJson.get(key);
-		    
-		    log.info("###########################################################1"+data.getString("previewSrc"));
-		    
 		    String bessie64ImgArray[] = data.getString("previewSrc").split(",");
 		    String bessie64Img = bessie64ImgArray[1];
 		    String width = data.getString("width");
