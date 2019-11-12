@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -644,14 +645,21 @@ public class ProdAd implements IAd {
 			String saveImgPath = "";
 		    String key = (String)keys.next();
 		    JSONObject data = (JSONObject) uploadImgJson.get(key);
-		    String bessie64ImgArray[] = data.getString("previewSrc").split(",");
-		    String bessie64Img = bessie64ImgArray[1];
+		    ByteArrayInputStream bis = null;
+		    if(data.getString("previewSrc").contains("/img/user/")) {
+		    	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
+		    }else {
+		    	String bessie64ImgArray[] = data.getString("previewSrc").split(",");
+			    String bessie64Img = bessie64ImgArray[1];
+			    byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
+			    bis = new ByteArrayInputStream(imageByte);
+		    }
+		    
 		    String width = data.getString("width");
 		    String height = data.getString("height");
 		    String fileName = uploadType+"_"+width+"_"+height;
 		    String fileExtensionName = data.getString("fileExtensionName").toLowerCase();
-	        byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
-            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+           
             String adDetailId = "";
             String defineAdSeq ="";
             if(uploadType.equals("logoImg")){
