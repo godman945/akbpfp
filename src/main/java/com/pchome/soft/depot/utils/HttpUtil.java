@@ -153,20 +153,21 @@ public class HttpUtil {
     
 	public synchronized String convertRealUrl(String urlPath) throws Exception {
 		log.info("convertRealUrl start>>>" + urlPath);
-
 		if (StringUtils.isEmpty(urlPath) || urlPath.length() < 1) {
 			return null;
 		}
 		URL url = new URL(urlPath);
-		String path = "";
-		if (url.getQuery() != null) {
-			path = deCode(url.getPath() + "?" + url.getQuery());
-		} else if (url.getRef() != null) { // 2016-12-02 增加
-			path = enCode(url.getPath() + "#" + url.getRef());
-		} else {
-			path = deCode(url.getPath());
+		String query = "";
+		String ref = "";
+		String host = getUnicode(url.getHost());
+		if(url.getQuery() != null) {
+			query = query + "?" + url.getQuery();	
 		}
-		return getUnicode(url.getHost()) + path;
+		if(url.getRef() != null) {
+			ref = ref + "#" + url.getRef();	
+		}
+		String urlStr = deCode(url.getProtocol()+"://"+host+query+ref);
+		return urlStr;
 	}
     
 	public synchronized String getResult(String url, String charSet) {
