@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
@@ -40,6 +39,12 @@ public class MozJpegTest {
 	    		String fileExtensionName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf(".")+1 , f.getAbsolutePath().length());
 	    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("\\")+1);
 	    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("\\")+1, f.getAbsolutePath().lastIndexOf("."));
+	    		
+	    		
+	    		System.out.println(">>>"+fileExtensionName);
+	    		System.out.println(">>>"+filePath);
+	    		System.out.println(">>>"+fileName);
+	    		
 	    		if(StringUtils.isBlank(fileExtensionName) || StringUtils.isBlank(filePath) || StringUtils.isBlank(fileName)) {
 	    			continue;
 	    		}
@@ -115,6 +120,9 @@ public class MozJpegTest {
 		    		String fileExtensionName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf(".")+1 , f.getAbsolutePath().length());
 		    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("\\")+1);
 		    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("\\")+1, f.getAbsolutePath().lastIndexOf("."));
+		    		System.out.println(">>>"+fileExtensionName);
+		    		System.out.println(">>>"+filePath);
+		    		System.out.println(">>>"+fileName);
 		    		if(StringUtils.isBlank(fileExtensionName) || StringUtils.isBlank(filePath) || StringUtils.isBlank(fileName)) {
 		    			continue;
 		    		}
