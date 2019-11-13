@@ -651,10 +651,13 @@ public class ProdAd implements IAd {
 		    log.info(">>>>>>>>>>>>>>>>>>>>>>File:"+photoClonePath+data.getString("previewSrc"));
 		    if(data.getString("previewSrc").contains("/img/user/")) {
 		    	
-		    	log.info(">>>>>>>>>>>>>>>>>>>>>>data:"+data);	
+		    	log.info(">>>>>>>>>>>>>>>>>>>>>>data-1:"+data);	
 		    	
 		    	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
 		    }else {
+		    	
+		    	log.info(">>>>>>>>>>>>>>>>>>>>>>data-2:"+data);
+		    	
 		    	String bessie64ImgArray[] = data.getString("previewSrc").split(",");
 			    String bessie64Img = bessie64ImgArray[1];
 			    byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
