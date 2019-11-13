@@ -650,6 +650,9 @@ public class ProdAd implements IAd {
 		    log.info(">>>>>>>>>>>>>>>>>>>>>>photoClonePath:"+photoClonePath);
 		    log.info(">>>>>>>>>>>>>>>>>>>>>>File:"+photoClonePath+data.getString("previewSrc"));
 		    if(data.getString("previewSrc").contains("/img/user/")) {
+		    	
+		    	log.info(">>>>>>>>>>>>>>>>>>>>>>data:"+data);	
+		    	
 		    	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
 		    }else {
 		    	String bessie64ImgArray[] = data.getString("previewSrc").split(",");
@@ -657,7 +660,7 @@ public class ProdAd implements IAd {
 			    byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
 			    bis = new ByteArrayInputStream(imageByte);
 		    }
-		    log.info(">>>>>>>>>>>>>>>>>>>>>>data:"+data);
+		    
 		    log.info(">>>>>>>>>>>>>>>>>>>>>>bis:"+bis == null);
 		    String width = data.getString("width");
 		    String height = data.getString("height");
