@@ -108,26 +108,22 @@ public class MozJpegTest {
 			StringBuffer sql = new StringBuffer();
 			sql.append(" SELECT ad_detail_seq,ad_detail_content  FROM `pfp_ad_detail` WHERE (ad_detail_content LIKE '%.png%' or ad_detail_content LIKE '%.jpeg%' or ad_detail_content LIKE '%.jpg%') and  `ad_detail_content` not like '%catalog%'   ");
 			ResultSet resultSet = statement.executeQuery(sql.toString());
-			
 			Map<String,String> imgInfoMap = new HashMap<String,String>();
 			while(resultSet.next()){
 				String path = resultSet.getString("ad_detail_content");
 				String id = "ad_detail<TYPE>"+resultSet.getString("ad_detail_seq");
-				if(!path.contains(".jpg")){
-					imgInfoMap.put(id, path);
-				}
+				imgInfoMap.put(id, path);
 			}
 			System.out.println("ALEX:"+imgInfoMap.size());
 			
 			sql.setLength(0);
 			sql.append("SELECT id,ec_img  FROM `pfp_catalog_prod_ec` WHERE (ec_img LIKE '%.png%' or ec_img LIKE '%.jpeg%' or ec_img LIKE '%.jpg%') ");
+			statement.close();
 			statement.executeQuery(sql.toString());
 			while(resultSet.next()){
 				String path = resultSet.getString("ec_img");
 				String id = "EC<TYPE>"+resultSet.getString("id");
-				if(!path.contains(".jpg")){
-					imgInfoMap.put(id, path);
-				}
+				imgInfoMap.put(id, path);
 			}
 			System.out.println("ALEX:"+imgInfoMap.size());
 			
