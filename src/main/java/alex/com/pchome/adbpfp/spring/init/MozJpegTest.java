@@ -72,7 +72,7 @@ public class MozJpegTest {
 	    	}
 		    if (f.isDirectory()) {
 		    	String folderName = f.getPath().toString().substring(f.getPath().toString().lastIndexOf("\\")+1 , f.getPath().toString().length());
-		    	if(folderName.equals("backup") || folderName.equals("csv_file") || folderName.equals("js") || folderName.equals("prod_ad_sample_file") || folderName.equals("public") || folderName.equals("video") || folderName.equals("catalog")) {
+		    	if(folderName.equals("tmp") || folderName.equals("backup") || folderName.equals("csv_file") || folderName.equals("js") || folderName.equals("prod_ad_sample_file") || folderName.equals("public") || folderName.equals("video") || folderName.equals("catalog")) {
 		    		continue;
 		    	}
 		    	alex(f);
@@ -142,7 +142,7 @@ public class MozJpegTest {
 		    	}
 			    if (f.isDirectory()) {
 			    	String folderName = f.getPath().toString().substring(f.getPath().toString().lastIndexOf("\\")+1 , f.getPath().toString().length());
-			    	if(folderName.equals("backup") || folderName.equals("csv_file") || folderName.equals("js") || folderName.equals("prod_ad_sample_file") || folderName.equals("public") || folderName.equals("video") || folderName.equals("catalog")) {
+			    	if(folderName.equals("tmp") || folderName.equals("backup") || folderName.equals("csv_file") || folderName.equals("js") || folderName.equals("prod_ad_sample_file") || folderName.equals("public") || folderName.equals("video") || folderName.equals("catalog")) {
 			    		continue;
 			    	}
 			    	alex(f);
