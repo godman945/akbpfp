@@ -29,6 +29,9 @@ public class MozJpegTest {
 	    			String fileExtensionName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf(".")+1 , f.getAbsolutePath().length());
 		    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("/")+1);
 		    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("/")+1, f.getAbsolutePath().lastIndexOf("."));
+		    		if(f.length()/1024 == 0) {
+		    			continue;
+		    		}
 		    		if(StringUtils.isBlank(fileExtensionName) || StringUtils.isBlank(filePath) || StringUtils.isBlank(fileName)) {
 		    			continue;
 		    		}
@@ -99,6 +102,9 @@ public class MozJpegTest {
 			    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("/")+1);
 			    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("/")+1, f.getAbsolutePath().lastIndexOf("."));
 			    		if(StringUtils.isBlank(fileExtensionName) || StringUtils.isBlank(filePath) || StringUtils.isBlank(fileName)) {
+			    			continue;
+			    		}
+			    		if(f.length()/1024 == 0) {
 			    			continue;
 			    		}
 			    		System.out.println("*****START　PROCESS*****");
