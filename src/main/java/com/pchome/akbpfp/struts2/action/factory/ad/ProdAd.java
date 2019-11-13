@@ -655,16 +655,6 @@ public class ProdAd implements IAd {
 		    ByteArrayInputStream bis = null;
 		    String adDetailId = "";
             String defineAdSeq = "";
-            log.info("ALEX:["+photoClonePath+"]["+data.getString("previewSrc")+"]");
-            
-            if(uploadType.equals("logoImg")){
-            	adDetailId = "logo_sale_img_"+width+"x"+height;
-            	defineAdSeq = "dad_"+adDetailId;
-            }else if(uploadType.equals("salesEngImg")){
-            	adDetailId = "sale_img_"+width+"x"+height;
-            	defineAdSeq = "dad_"+adDetailId;
-            }
-            
             //未動原本已上傳的圖
             if(data.getString("previewSrc").contains("img/user/")) {
             	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
@@ -685,6 +675,13 @@ public class ProdAd implements IAd {
         		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
             }
             //寫入DB
+            if(uploadType.equals("logoImg")){
+            	adDetailId = "logo_sale_img_"+width+"x"+height;
+            	defineAdSeq = "dad_"+adDetailId;
+            }else if(uploadType.equals("salesEngImg")){
+            	adDetailId = "sale_img_"+width+"x"+height;
+            	defineAdSeq = "dad_"+adDetailId;
+            }
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
             	if(type.equals("add")){
 					adAddAction.saveAdDetail(saveImgPath, adDetailId, EnumProdAdDetail.PROD_REPORT_NAME.getAdPoolSeq(),
