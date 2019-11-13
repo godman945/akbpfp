@@ -659,8 +659,7 @@ public class ProdAd implements IAd {
             if(data.getString("previewSrc").contains("img/user/")) {
             	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
             	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
-            }else //上傳新圖
-            if(!data.getString("previewSrc").contains("img/user/")) {
+            }else { //上傳新圖
             	String bessie64ImgArray[] = data.getString("previewSrc").split(",");
 			    String bessie64Img = bessie64ImgArray[1];
 			    byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
