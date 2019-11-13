@@ -46,7 +46,7 @@ public class MozJpegTest {
 	    		System.out.println("[fileExtensionName]:"+fileExtensionName);
 	    		System.out.println("Before Size:"+f.length()/1024+"kb");
 	    		
-	    		if(fileExtensionName.toUpperCase().equals("PNG")) {
+	    		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPEG")) {
 	    			ByteArrayInputStream imageStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(f));
 	    			BufferedImage bufferedImage = ImageIO.read(imageStream);
 	    			BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -54,6 +54,7 @@ public class MozJpegTest {
 	    			ImageIO.write(newBufferedImage, "jpg", new File(filePath+fileName+".jpg"));
 	    			f.delete();
 	    		}
+	    		
 	    		stringBuffer.setLength(0);
 				stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(filePath+fileName+".jpg").append(" >").append(filePath+fileName+"[RESIZE].jpg");
 				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
@@ -116,7 +117,7 @@ public class MozJpegTest {
 		    		System.out.println("[fileExtensionName]:"+fileExtensionName);
 		    		System.out.println("Before Size:"+f.length()/1024+"kb");
 		    		
-		    		if(fileExtensionName.toUpperCase().equals("PNG")) {
+		    		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPEG")) {
 		    			ByteArrayInputStream imageStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(f));
 		    			BufferedImage bufferedImage = ImageIO.read(imageStream);
 		    			BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
