@@ -649,7 +649,7 @@ public class ProdAd implements IAd {
 		    log.info(">>>>>>>>>>>>>>>>>>>>>>:"+data.getString("previewSrc"));
 		    log.info(">>>>>>>>>>>>>>>>>>>>>>photoClonePath:"+photoClonePath);
 		    log.info(">>>>>>>>>>>>>>>>>>>>>>File:"+photoClonePath+data.getString("previewSrc"));
-		    if(data.getString("previewSrc").contains("/img/user/")) {
+		    if(data.getString("previewSrc").contains("img/user/")) {
 		    	
 		    	log.info(">>>>>>>>>>>>>>>>>>>>>>data-1:"+data);	
 		    	
