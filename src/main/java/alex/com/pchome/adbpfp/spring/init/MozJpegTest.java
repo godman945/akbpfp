@@ -28,6 +28,14 @@ public class MozJpegTest {
 	    		if(f.getAbsolutePath().contains(".gif")) {
 	    			continue;
 	    		}
+	    		if(f.getAbsolutePath().contains(".js")) {
+	    			continue;
+	    		}
+	    		if(f.getAbsolutePath().contains(".csv")) {
+	    			continue;
+	    		}
+	    		
+	    		
 	    		String fileExtensionName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf(".")+1 , f.getAbsolutePath().length());
 	    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("\\")+1);
 	    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("\\")+1, f.getAbsolutePath().lastIndexOf("."));
@@ -48,14 +56,14 @@ public class MozJpegTest {
 	    		}
 	    		stringBuffer.setLength(0);
 				stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(filePath+fileName+".jpg").append(" >").append(filePath+fileName+"[RESIZE].jpg");
-				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
-				result = IOUtils.toString(process.getInputStream(), "UTF-8");
+//				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+//				result = IOUtils.toString(process.getInputStream(), "UTF-8");
 				System.out.println(">>>>>>>>>>command:"+stringBuffer.toString());
 				
 				stringBuffer.setLength(0);
 				stringBuffer.append(" mv ").append(filePath+fileName+"[RESIZE].jpg").append(" ").append(filePath+fileName+".jpg");
-				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
-				result = IOUtils.toString(process.getInputStream(), "UTF-8");
+//				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+//				result = IOUtils.toString(process.getInputStream(), "UTF-8");
 				System.out.println(">>>>>>>>>>command:"+stringBuffer.toString());
 				File fileNew = new File(filePath+fileName+".jpg");
 				System.out.println("After Size:"+fileNew.length()/1024+"kb");
@@ -63,9 +71,10 @@ public class MozJpegTest {
 	    	}
 		    if (f.isDirectory()) {
 		    	String folderName = f.getPath().toString().substring(f.getPath().toString().lastIndexOf("\\")+1 , f.getPath().toString().length());
-		    	if(folderName.equals("user")) {
-		    		alex(f);
+		    	if(folderName.equals("backup") || folderName.equals("csv_file") || folderName.equals("js") || folderName.equals("prod_ad_sample_file") || folderName.equals("public") || folderName.equals("video") || folderName.equals("catalog")) {
+		    		continue;
 		    	}
+		    	alex(f);
 	    	}
 	    }
 	}
@@ -89,6 +98,12 @@ public class MozJpegTest {
 		    	if (f.isFile()) {
 		    		//1.複製原檔 2.產上新檔
 		    		if(f.getAbsolutePath().contains(".gif")) {
+		    			continue;
+		    		}
+		    		if(f.getAbsolutePath().contains(".js")) {
+		    			continue;
+		    		}
+		    		if(f.getAbsolutePath().contains(".csv")) {
 		    			continue;
 		    		}
 		    		String fileExtensionName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf(".")+1 , f.getAbsolutePath().length());
@@ -126,9 +141,10 @@ public class MozJpegTest {
 		    	}
 			    if (f.isDirectory()) {
 			    	String folderName = f.getPath().toString().substring(f.getPath().toString().lastIndexOf("\\")+1 , f.getPath().toString().length());
-			    	if(folderName.equals("user")) {
-			    		alex(f);
+			    	if(folderName.equals("backup") || folderName.equals("csv_file") || folderName.equals("js") || folderName.equals("prod_ad_sample_file") || folderName.equals("public") || folderName.equals("video") || folderName.equals("catalog")) {
+			    		continue;
 			    	}
+			    	alex(f);
 		    	}
 		    }
 //		    process.destroy();
