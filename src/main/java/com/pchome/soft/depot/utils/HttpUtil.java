@@ -124,31 +124,21 @@ public class HttpUtil {
     // Add URL RealUrl code 2014/10/15 alex
 	public synchronized String getRealUrl(String urlPath) throws Exception {
 		log.info("getRealUrl start>>>" + urlPath);
-
-		String returnUrl = "";
-
 		if (StringUtils.isEmpty(urlPath) || urlPath.length() < 1) {
-			// return null;
+			return null;
 		}
-		// urlPath ="http://收購老酒.tw/";
 		URL url = new URL(urlPath);
-		String urlDomain = getASCII(url.getHost());
-		String path = "";
-		if (url.getQuery() != null) {
-			path = enCode(url.getPath() + "?" + url.getQuery());
-		} else if (url.getRef() != null) { // 2016-12-02 增加
-			path = enCode(url.getPath() + "#" + url.getRef());
-		} else {
-			path = enCode(url.getPath());
+		String query = "";
+		String ref = "";
+		String host = getASCII(url.getHost());
+		if(url.getQuery() != null) {
+			query = query + "?" + url.getQuery();	
 		}
-
-		if (urlPath.indexOf("https://") == 0) {
-			returnUrl = "https://";
-		} else {
-			returnUrl = "http://";
+		if(url.getRef() != null) {
+			ref = ref + "#" + url.getRef();	
 		}
-
-		return returnUrl + urlDomain + path;
+		String urlStr = deCode(url.getProtocol()+"://"+host+query+ref);
+		return urlStr;
 	}
     
 	public synchronized String convertRealUrl(String urlPath) throws Exception {
