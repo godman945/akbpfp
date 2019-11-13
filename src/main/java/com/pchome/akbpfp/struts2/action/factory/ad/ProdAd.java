@@ -648,6 +648,7 @@ public class ProdAd implements IAd {
 		    ByteArrayInputStream bis = null;
 		    log.info(">>>>>>>>>>>>>>>>>>>>>>:"+data.getString("previewSrc"));
 		    log.info(">>>>>>>>>>>>>>>>>>>>>>photoClonePath:"+photoClonePath);
+		    log.info(">>>>>>>>>>>>>>>>>>>>>>File:"+photoClonePath+data.getString("previewSrc"));
 		    if(data.getString("previewSrc").contains("/img/user/")) {
 		    	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
 		    }else {
