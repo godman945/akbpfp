@@ -118,11 +118,11 @@ public class MozJpegTest {
 			
 			sql.setLength(0);
 			sql.append("SELECT id,ec_img  FROM `pfp_catalog_prod_ec` WHERE (ec_img LIKE '%.png%' or ec_img LIKE '%.jpeg%' or ec_img LIKE '%.jpg%') ");
-			statement.close();
-			statement.executeQuery(sql.toString());
-			while(resultSet.next()){
-				String path = resultSet.getString("ec_img");
-				String id = "EC<TYPE>"+resultSet.getString("id");
+			ResultSet resultSet2 = statement.executeQuery(sql.toString());
+			
+			while(resultSet2.next()){
+				String path = resultSet2.getString("ec_img");
+				String id = "EC<TYPE>"+resultSet2.getString("id");
 				imgInfoMap.put(id, path);
 			}
 			System.out.println("ALEX:"+imgInfoMap.size());
