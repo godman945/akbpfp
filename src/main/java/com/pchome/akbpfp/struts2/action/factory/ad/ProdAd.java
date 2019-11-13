@@ -642,26 +642,27 @@ public class ProdAd implements IAd {
 	 * 2.商品廣告編急沒有換圖的檔案使用file
 	 * */
 	private void saveImg(JSONObject uploadImgJson,String uploadType,StringBuffer saveImgPathBuffer,String adSeq,String type) throws Exception{
-		Iterator keys = uploadImgJson.keys();
+		Iterator<String> keys = uploadImgJson.keys();
 		while(keys.hasNext()) {
 			String saveImgPath = "";
 		    String key = (String)keys.next();
 		    JSONObject data = (JSONObject) uploadImgJson.get(key);
+		    String width = data.getString("width");
+		    String height = data.getString("height");
+		    String fileName = uploadType+"_"+width+"_"+height;
+		    String fileExtensionName = data.getString("fileExtensionName").toLowerCase();
+		    
 		    ByteArrayInputStream bis = null;
+		    String adDetailId = "";
+            String defineAdSeq = "";
 		    if(data.getString("previewSrc").contains("img/user/")) {
-		    	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
+//		    	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
 		    }else {
 		    	String bessie64ImgArray[] = data.getString("previewSrc").split(",");
 			    String bessie64Img = bessie64ImgArray[1];
 			    byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
 			    bis = new ByteArrayInputStream(imageByte);
 		    }
-		    String width = data.getString("width");
-		    String height = data.getString("height");
-		    String fileName = uploadType+"_"+width+"_"+height;
-		    String fileExtensionName = data.getString("fileExtensionName").toLowerCase();
-            String adDetailId = "";
-            String defineAdSeq ="";
             if(uploadType.equals("logoImg")){
             	adDetailId = "logo_sale_img_"+width+"x"+height;
             	defineAdSeq = "dad_"+adDetailId;
@@ -669,6 +670,7 @@ public class ProdAd implements IAd {
             	adDetailId = "sale_img_"+width+"x"+height;
             	defineAdSeq = "dad_"+adDetailId;
             }
+            
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
             	if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
             		commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);

@@ -108,7 +108,6 @@ public class CommonUtilModel extends BaseCookieAction{
 			FileUtils.copyFile(new File(outPath+filename+".jpg"), new File(outPath.replace("original", "temporal")+filename+".jpg"));
 			//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔不需壓縮
 			mozJpegCompression(outPath+filename+".jpg");
-			log.info(">>>>>>END");
 		}else if(fileExtensionName.toUpperCase().equals("PNG") ) {
 			File file = new File(outPath);
 			if(!file.exists()) {
