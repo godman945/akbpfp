@@ -27,8 +27,8 @@ public class MozJpegTest {
 	    		//1.複製原檔 2.產上新檔
 	    		if(f.getAbsolutePath().contains(".jpg") || f.getAbsolutePath().contains(".jpeg")|| f.getAbsolutePath().contains(".png")) {
 	    			String fileExtensionName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf(".")+1 , f.getAbsolutePath().length());
-		    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("\\")+1);
-		    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("\\")+1, f.getAbsolutePath().lastIndexOf("."));
+		    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("/")+1);
+		    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("/")+1, f.getAbsolutePath().lastIndexOf("."));
 		    		if(StringUtils.isBlank(fileExtensionName) || StringUtils.isBlank(filePath) || StringUtils.isBlank(fileName)) {
 		    			continue;
 		    		}
@@ -65,7 +65,7 @@ public class MozJpegTest {
 	    		}
 	    	}
 		    if (f.isDirectory()) {
-		    	String folderName = f.getPath().toString().substring(f.getPath().toString().lastIndexOf("\\")+1 , f.getPath().toString().length());
+		    	String folderName = f.getPath().toString().substring(f.getPath().toString().lastIndexOf("/")+1 , f.getPath().toString().length());
 		    	if(folderName.equals("temporal") ||  folderName.equals("images") || folderName.equals("backup") || folderName.equals("csv_file") || folderName.equals("js") || folderName.equals("prod_ad_sample_file") || folderName.equals("public") || folderName.equals("video") || folderName.equals("catalog")) {
 		    		continue;
 		    	}
@@ -96,8 +96,8 @@ public class MozJpegTest {
 		    		//1.複製原檔 2.產上新檔
 		    		if(f.getAbsolutePath().contains(".jpg") || f.getAbsolutePath().contains(".jpeg")|| f.getAbsolutePath().contains(".png")) {
 		    			String fileExtensionName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf(".")+1 , f.getAbsolutePath().length());
-			    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("\\")+1);
-			    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("\\")+1, f.getAbsolutePath().lastIndexOf("."));
+			    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("/")+1);
+			    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("/")+1, f.getAbsolutePath().lastIndexOf("."));
 			    		if(StringUtils.isBlank(fileExtensionName) || StringUtils.isBlank(filePath) || StringUtils.isBlank(fileName)) {
 			    			continue;
 			    		}
@@ -134,7 +134,7 @@ public class MozJpegTest {
 		    		}
 		    	}
 			    if (f.isDirectory()) {
-			    	String folderName = f.getPath().toString().substring(f.getPath().toString().lastIndexOf("\\")+1 , f.getPath().toString().length());
+			    	String folderName = f.getPath().toString().substring(f.getPath().toString().lastIndexOf("/")+1 , f.getPath().toString().length());
 			    	System.out.println(">>>>procsee folderName:"+folderName);
 			    	if(folderName.equals("temporal") ||  folderName.equals("images") || folderName.equals("backup") || folderName.equals("csv_file") || folderName.equals("js") || folderName.equals("prod_ad_sample_file") || folderName.equals("public") || folderName.equals("video") || folderName.equals("catalog")) {
 			    		continue;
