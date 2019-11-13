@@ -96,7 +96,7 @@ public class MozJpegTest {
 			
 			
 			
-			String url = "jdbc:mysql://kddbdev.mypchome.com.tw:3306/akb";
+			String url = "jdbc:mysql://kddbdev.mypchome.com.tw:3306/akb_video";
 			String jdbcDriver = "com.mysql.jdbc.Driver";
 			String user = "keyword";
 			String password =  "K1y0nLine";
@@ -108,10 +108,15 @@ public class MozJpegTest {
 			ResultSet resultSet = statement.executeQuery(sql.toString());
 			List<String> filePathList = new ArrayList<String>();
 			while(resultSet.next()){
-				System.out.println(resultSet.getString("ad_detail_seq"));
-				System.out.println(resultSet.getString("ad_detail_content"));
-				filePathList.add(resultSet.getString("ad_detail_content"));
-				System.out.println("-------------");
+				String path = resultSet.getString("ad_detail_content");
+				if(!path.contains(".jpg")){
+					System.out.println(path);
+					System.out.println("-------------");
+				}
+//				System.out.println(resultSet.getString("ad_detail_seq"));
+//				System.out.println(resultSet.getString("ad_detail_content"));
+//				filePathList.add(resultSet.getString("ad_detail_content"));
+//				
 			}
 			connect.close();
 			System.out.println("-------------filePathList:"+filePathList.size());
