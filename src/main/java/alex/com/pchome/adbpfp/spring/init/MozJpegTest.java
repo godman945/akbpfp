@@ -9,7 +9,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -104,23 +106,32 @@ public class MozJpegTest {
 			connect.setAutoCommit(false); // 设置手动提交 
 			Statement statement = connect.createStatement();
 			StringBuffer sql = new StringBuffer();
-			sql.append(" SELECT ad_detail_seq,ad_detail_content  FROM `pfp_ad_detail` WHERE (ad_detail_content LIKE '%.png%' or ad_detail_content LIKE '%.jpeg%' or ad_detail_content LIKE '%.jpg%') and  `ad_detail_content` not like '%catalog%' ORDER BY `pfp_ad_detail`.`ad_detail_content`  ASC  ");
+			sql.append(" SELECT ad_detail_seq,ad_detail_content  FROM `pfp_ad_detail` WHERE (ad_detail_content LIKE '%.png%' or ad_detail_content LIKE '%.jpeg%' or ad_detail_content LIKE '%.jpg%') and  `ad_detail_content` not like '%catalog%'   ");
 			ResultSet resultSet = statement.executeQuery(sql.toString());
-			List<String> filePathList = new ArrayList<String>();
+			
+			Map<String,String> imgInfoMap = new HashMap<String,String>();
 			while(resultSet.next()){
 				String path = resultSet.getString("ad_detail_content");
+				String id = "ad_detail<TYPE>"+resultSet.getString("ad_detail_seq");
 				if(!path.contains(".jpg")){
-					System.out.println(path);
-					System.out.println("-------------");
+					imgInfoMap.put(id, path);
 				}
-//				System.out.println(resultSet.getString("ad_detail_seq"));
-//				System.out.println(resultSet.getString("ad_detail_content"));
-//				filePathList.add(resultSet.getString("ad_detail_content"));
-//				
 			}
-			connect.close();
-			System.out.println("-------------filePathList:"+filePathList.size());
+			System.out.println("ALEX:"+imgInfoMap.size());
 			
+			sql.setLength(0);
+			sql.append("SELECT id,ec_img  FROM `pfp_catalog_prod_ec` WHERE (ec_img LIKE '%.png%' or ec_img LIKE '%.jpeg%' or ec_img LIKE '%.jpg%') ");
+			statement.executeQuery(sql.toString());
+			while(resultSet.next()){
+				String path = resultSet.getString("ec_img");
+				String id = "EC<TYPE>"+resultSet.getString("id");
+				if(!path.contains(".jpg")){
+					imgInfoMap.put(id, path);
+				}
+			}
+			System.out.println("ALEX:"+imgInfoMap.size());
+			
+			connect.close();
 			
 			
 			
