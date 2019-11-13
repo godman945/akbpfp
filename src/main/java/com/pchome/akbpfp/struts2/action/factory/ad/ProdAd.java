@@ -656,12 +656,17 @@ public class ProdAd implements IAd {
 			    byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
 			    bis = new ByteArrayInputStream(imageByte);
 		    }
-		    
+		    log.info(">>>>>>>>>>>>>>>>>>>>>>data:"+data);
+		    log.info(">>>>>>>>>>>>>>>>>>>>>>bis:"+bis == null);
 		    String width = data.getString("width");
 		    String height = data.getString("height");
 		    String fileName = uploadType+"_"+width+"_"+height;
 		    String fileExtensionName = data.getString("fileExtensionName").toLowerCase();
-           
+		    log.info(">>>>>>>>>>>>>>>>>>>>>>width:"+width);
+		    log.info(">>>>>>>>>>>>>>>>>>>>>>height:"+height);
+		    log.info(">>>>>>>>>>>>>>>>>>>>>>fileName:"+fileName);
+		    log.info(">>>>>>>>>>>>>>>>>>>>>>fileExtensionName:"+fileExtensionName);
+		    
             String adDetailId = "";
             String defineAdSeq ="";
             if(uploadType.equals("logoImg")){
