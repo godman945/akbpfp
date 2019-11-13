@@ -62,7 +62,7 @@ public class ProdAd implements IAd {
 	private String photoDBPath;
 	
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
-		log.info(">>>>>> process ProdAd");
+		log.info(">>>>>> init ProdAd");
 		catalogList = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
 		//全部商品未審核不顯示
 		Iterator<PfpCatalog> iterator = catalogList.iterator();
@@ -637,43 +637,29 @@ public class ProdAd implements IAd {
 		admAccesslogService.recordAdLog(EnumAccesslogAction.AD_STATUS_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		return null;
 	}
-	
+	/**
+	 * 1.商品廣告新增圖片使用base64做預覽存圖使用Byte
+	 * 2.商品廣告編急沒有換圖的檔案使用file
+	 * */
 	private void saveImg(JSONObject uploadImgJson,String uploadType,StringBuffer saveImgPathBuffer,String adSeq,String type) throws Exception{
-		log.info("###########################################################1");
 		Iterator keys = uploadImgJson.keys();
 		while(keys.hasNext()) {
 			String saveImgPath = "";
 		    String key = (String)keys.next();
 		    JSONObject data = (JSONObject) uploadImgJson.get(key);
 		    ByteArrayInputStream bis = null;
-		    log.info(">>>>>>>>>>>>>>>>>>>>>>:"+data.getString("previewSrc"));
-		    log.info(">>>>>>>>>>>>>>>>>>>>>>photoClonePath:"+photoClonePath);
-		    log.info(">>>>>>>>>>>>>>>>>>>>>>File:"+photoClonePath+data.getString("previewSrc"));
 		    if(data.getString("previewSrc").contains("img/user/")) {
-		    	
-		    	log.info(">>>>>>>>>>>>>>>>>>>>>>data-1:"+data);	
-		    	
 		    	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
 		    }else {
-		    	
-		    	log.info(">>>>>>>>>>>>>>>>>>>>>>data-2:"+data);
-		    	
 		    	String bessie64ImgArray[] = data.getString("previewSrc").split(",");
 			    String bessie64Img = bessie64ImgArray[1];
 			    byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
 			    bis = new ByteArrayInputStream(imageByte);
 		    }
-		    
-		    log.info(">>>>>>>>>>>>>>>>>>>>>>bis:"+bis == null);
 		    String width = data.getString("width");
 		    String height = data.getString("height");
 		    String fileName = uploadType+"_"+width+"_"+height;
 		    String fileExtensionName = data.getString("fileExtensionName").toLowerCase();
-		    log.info(">>>>>>>>>>>>>>>>>>>>>>width:"+width);
-		    log.info(">>>>>>>>>>>>>>>>>>>>>>height:"+height);
-		    log.info(">>>>>>>>>>>>>>>>>>>>>>fileName:"+fileName);
-		    log.info(">>>>>>>>>>>>>>>>>>>>>>fileExtensionName:"+fileExtensionName);
-		    
             String adDetailId = "";
             String defineAdSeq ="";
             if(uploadType.equals("logoImg")){
@@ -683,7 +669,6 @@ public class ProdAd implements IAd {
             	adDetailId = "sale_img_"+width+"x"+height;
             	defineAdSeq = "dad_"+adDetailId;
             }
-            log.info("###########################################################2");
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
             	if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
             		commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);

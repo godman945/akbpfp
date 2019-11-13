@@ -41,6 +41,7 @@ public class CommonUtilModel extends BaseCookieAction{
     	try {
     		log.info(">>>>>> start mozJpeg compression:"+filePath);
         	File file = new File(filePath);
+        	log.info(">>>>>> before size:"+(file.length()/1024)+"kb");
         	if(file.exists()) {
         		Process process = null;
         		stringBuffer.setLength(0);
@@ -55,6 +56,8 @@ public class CommonUtilModel extends BaseCookieAction{
         	}else {
         		log.info(">>>>>> file not exist:"+filePath);
         	}
+        	File fileNew = new File(filePath);
+        	log.info(">>>>>> before size:"+(fileNew.length()/1024)+"kb");
         	log.info(">>>>>> end mozJpeg compression");
     	}catch(Exception e) {
     		log.error(e.getMessage());
@@ -94,21 +97,14 @@ public class CommonUtilModel extends BaseCookieAction{
 	public synchronized void writeImgByStream(ByteArrayInputStream imageStream,String fileExtensionName,String outPath,String filename) throws Exception{
 		log.info(">>>>>>start write img: [outPath:"+outPath+"]"+"[fileExtensionName:"+fileExtensionName+"]"+"[filename:"+filename+"]");
 		if(fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
-			log.info(">>>>>>ALEX01");
 			File file = new File(outPath);
 			if(!file.exists()) {
 				file.mkdirs();
 			}
-			log.info(">>>>>>ALEX02");
 			FileOutputStream output = new FileOutputStream(new File(outPath+filename+".jpg"));
 			output.write(IOUtils.toByteArray(imageStream));
 			output.close();
-			log.info(">>>>>>ALEX03");
 			//複製至備份區
-			
-			log.info(">>>>>>ALEX03:"+outPath+filename+".jpg");
-			log.info(">>>>>>ALEX03:"+outPath.replace("original", "temporal")+filename+".jpg");
-			
 			FileUtils.copyFile(new File(outPath+filename+".jpg"), new File(outPath.replace("original", "temporal")+filename+".jpg"));
 			//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔不需壓縮
 			mozJpegCompression(outPath+filename+".jpg");
