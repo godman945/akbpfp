@@ -134,7 +134,7 @@ public class MozJpegTest {
 			
 			
 			
-			FileWriter fileWriter = new FileWriter("D:\\home\\webuser\\akb\\_alex\\process_mozjpeg_.txt",true);
+			FileWriter fileWriter = new FileWriter("/home/webuser/akb/_alex/process_mozjpeg_.txt",true);
 			for (Entry<String, String> map : imgInfoMap.entrySet()) {
 				String key = map.getKey();
 				String path = map.getValue();
