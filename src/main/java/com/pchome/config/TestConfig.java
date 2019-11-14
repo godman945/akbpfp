@@ -1,12 +1,15 @@
 package com.pchome.config;
 
 
+import java.io.File;
+import java.io.FileWriter;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -80,9 +83,23 @@ public class TestConfig {
 //		log.info(d.getCatalogLogoSeq());
 //		d.setLogoSendVerifyTime(new Date());
 //		b.saveOrUpdate(d);
-		String mon = " 100000000000000000000000100000000000000000000000100000000000000000000000100000000000000000000000100000000000000000000000100000000000000000000000100000000000000000000000";
-//		
-		System.out.println(mon.substring(144));
+//		String mon = " 100000000000000000000000100000000000000000000000100000000000000000000000100000000000000000000000100000000000000000000000100000000000000000000000100000000000000000000000";
+////		
+//		System.out.println(mon.substring(144));
+		
+		FileWriter fileWriter = new FileWriter("D:\\home\\webuser\\akb\\pfp\\img\\productFileUpload\\csv\\user\\AC2013071700001\\PC201911140000000003\\alex.txt",true);
+		fileWriter.write("[CCCCC] \r\n");
+		fileWriter.flush();
+		fileWriter.close();
+		
+		
+//		File file = new File("D:\\test_photo\\alex_prod\\banner\\image_1.jpg55.73028786 - 複製.gif");
+//		System.out.println(file.getAbsolutePath());
+//		System.out.println(FilenameUtils.getExtension(file.getAbsolutePath()));
+//		System.out.println(FilenameUtils.getName(file.getAbsolutePath()));
+//		System.out.println(FilenameUtils.getBaseName(file.getAbsolutePath()));
+//		System.out.println(FilenameUtils.getPath(file.getAbsolutePath()));
+//		System.out.println(FilenameUtils.getFullPathNoEndSeparator(file.getAbsolutePath()));
 		
 //		//設定播放時間初始化
 //				String mon = " 111111111111111111111111";

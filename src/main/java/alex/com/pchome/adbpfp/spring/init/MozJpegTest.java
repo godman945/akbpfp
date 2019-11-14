@@ -144,12 +144,43 @@ public class MozJpegTest {
 	    		if(!fileExtensionName.toUpperCase().equals("PNG")) {
 	    			continue;
 	    		}
-	    		System.out.println("*****START　PROCESS*****");
+	    		System.out.println("***** START　PROCESS *****");
 	    		System.out.println("[file]:"+f.getAbsolutePath());
 	    		System.out.println("[file path]:"+filePath);
 	    		System.out.println("[file name]:"+fileName);
 	    		System.out.println("[fileExtensionName]:"+fileExtensionName);
-	    		System.out.println("Before Size:"+f.length()/1024+"kb");
+	    		System.out.println("[Before Size]:"+f.length()/1024+"kb");
+	    		
+	    		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPEG")) {
+	    			ByteArrayInputStream imageStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(f));
+	    			BufferedImage bufferedImage = ImageIO.read(imageStream);
+	    			BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+	    			newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+	    			ImageIO.write(newBufferedImage, "jpg", new File(filePath+"/"+fileName+".jpg"));
+	    		}
+	    		stringBuffer.setLength(0);
+	    		stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(filePath+fileName+".jpg").append(" >").append(filePath+fileName+"[RESIZE].jpg");
+	    		
+	    		
+	    		
+	    		f.delete();
+	    		
+	    		
+	    		
+	    		System.out.println("***** END　PROCESS *****");
+	    		
+	    		
+	    		
+	    		
+	    		
+	    		
+	    		
+	    		
+	    		
+	    		
+	    		
+	    		
+	    		
 	    		
 //	    		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPEG")) {
 //	    			ByteArrayInputStream imageStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(f));
