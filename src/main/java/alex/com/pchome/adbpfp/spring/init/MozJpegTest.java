@@ -166,15 +166,15 @@ public class MozJpegTest {
 	    		}
 	    		stringBuffer.setLength(0);
 	    		stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(filePath+"/"+fileName+".jpg").append(" >").append(filePath+"/"+fileName+"[RESIZE].jpg");
-//	    		System.out.println(">>>>command:"+stringBuffer.toString());
-//	    		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
-//				result = IOUtils.toString(process.getInputStream(), "UTF-8");
+	    		System.out.println(">>>>command:"+stringBuffer.toString());
+	    		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+				result = IOUtils.toString(process.getInputStream(), "UTF-8");
 	    		
 	    		stringBuffer.setLength(0);
 	    		stringBuffer.append(" mv ").append(filePath+"/"+fileName+"[RESIZE].jpg").append(" ").append(filePath+"/"+fileName+".jpg");
-//				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
-//				result = IOUtils.toString(process.getInputStream(), "UTF-8");
-//				System.out.println(">>>>>>>>>>command:"+stringBuffer.toString());
+				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+				result = IOUtils.toString(process.getInputStream(), "UTF-8");
+				System.out.println(">>>>>>>>>>command:"+stringBuffer.toString());
 	    		i = i + 1;
 	    		fileWriter.write("index["+i+"] process["+path+"] to ["+filePath+"/"+fileName+".jpg"+"]  \r\n");
 //	    		f.delete();
@@ -192,7 +192,7 @@ public class MozJpegTest {
 	    			sql.append(" UPDATE ").append(table).append(" SET ec_img =").append("'").append(imgDBPath).append("'").append(" where 1=1 and id  =").append("'").append(id).append("'");
 	    		}
 	    		System.out.println(sql.toString());
-//	    		statement.executeUpdate(sql.toString());
+	    		statement.executeUpdate(sql.toString());
 	    		System.out.println("***** END　PROCESS *****");
 	    		break;
 			}
