@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.imageio.ImageIO;
 
@@ -105,31 +106,56 @@ public class MozJpegTest {
 			Connection connect = DriverManager.getConnection(url, user, password);
 			connect.setAutoCommit(false); // 设置手动提交 
 			Statement statement = connect.createStatement();
+			
 			StringBuffer sql = new StringBuffer();
 			sql.append(" SELECT ad_detail_seq,ad_detail_content  FROM `pfp_ad_detail` WHERE (ad_detail_content LIKE '%.png%' or ad_detail_content LIKE '%.jpeg%' or ad_detail_content LIKE '%.jpg%') and  `ad_detail_content` not like '%catalog%'   ");
 			ResultSet resultSet = statement.executeQuery(sql.toString());
 			Map<String,String> imgInfoMap = new HashMap<String,String>();
 			while(resultSet.next()){
-				String path = resultSet.getString("ad_detail_content");
+				String path = "/home/webuser/akb/pfp/"+resultSet.getString("ad_detail_content");
 				String id = "ad_detail<TYPE>"+resultSet.getString("ad_detail_seq");
 				imgInfoMap.put(id, path);
 			}
-			System.out.println("ALEX:"+imgInfoMap.size());
 			
 			sql.setLength(0);
 			sql.append("SELECT id,ec_img  FROM `pfp_catalog_prod_ec` WHERE (ec_img LIKE '%.png%' or ec_img LIKE '%.jpeg%' or ec_img LIKE '%.jpg%') ");
 			ResultSet resultSet2 = statement.executeQuery(sql.toString());
-			
 			while(resultSet2.next()){
-				String path = resultSet2.getString("ec_img");
+				String path = "/home/webuser/akb/pfp/"+resultSet2.getString("ec_img");
 				String id = "EC<TYPE>"+resultSet2.getString("id");
 				imgInfoMap.put(id, path);
 			}
-			System.out.println("ALEX:"+imgInfoMap.size());
-			
 			connect.close();
 			
-			
+			for (Entry<String, String> map : imgInfoMap.entrySet()) {
+				String key = map.getKey();
+				String path = map.getValue();
+				File f = new File(path);
+    			String fileExtensionName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf(".")+1 , f.getAbsolutePath().length());
+	    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("/")+1);
+	    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("/")+1, f.getAbsolutePath().lastIndexOf("."));
+	    		if(StringUtils.isBlank(fileExtensionName) || StringUtils.isBlank(filePath) || StringUtils.isBlank(fileName)) {
+	    			continue;
+	    		}
+	    		if(f.length()/1024 == 0) {
+	    			continue;
+	    		}
+	    		System.out.println("*****START　PROCESS*****");
+	    		System.out.println("[file]:"+f.getAbsolutePath());
+	    		System.out.println("[file path]:"+filePath);
+	    		System.out.println("[file name]:"+fileName);
+	    		System.out.println("[fileExtensionName]:"+fileExtensionName);
+	    		System.out.println("Before Size:"+f.length()/1024+"kb");
+	    		
+	    		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPEG")) {
+	    			ByteArrayInputStream imageStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(f));
+	    			BufferedImage bufferedImage = ImageIO.read(imageStream);
+	    			BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+	    			newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+	    			ImageIO.write(newBufferedImage, "jpg", new File(filePath+fileName+".jpg"));
+	    			f.delete();
+	    		}
+			}
 			
 			
 			
