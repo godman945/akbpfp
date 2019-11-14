@@ -170,7 +170,18 @@ public class MozJpegTest {
 	    			ImageIO.write(newBufferedImage, "jpg", new File(filePath+"/"+fileName+".jpg"));
 	    		}
 	    		stringBuffer.setLength(0);
-	    		stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(filePath+fileName+".jpg").append(" >").append(filePath+fileName+"[RESIZE].jpg");
+	    		stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(filePath+"/"+fileName+".jpg").append(" >").append(filePath+"/"+fileName+"[RESIZE].jpg");
+	    		System.out.println(">>>>command:"+stringBuffer.toString());
+//	    		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+//				result = IOUtils.toString(process.getInputStream(), "UTF-8");
+	    		
+	    		stringBuffer.setLength(0);
+	    		stringBuffer.append(" mv ").append(filePath+"/"+fileName+"[RESIZE].jpg").append(" ").append(filePath+"/"+fileName+".jpg");
+//				process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+//				result = IOUtils.toString(process.getInputStream(), "UTF-8");
+				System.out.println(">>>>>>>>>>command:"+stringBuffer.toString());
+	    		
+	    		
 	    		
 	    		i = i + 1;
 	    		fileWriter.write("index["+i+"] process["+path+"] to ["+filePath+"/"+fileName+".jpg"+"]  \r\n");
