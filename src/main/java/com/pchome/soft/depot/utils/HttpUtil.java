@@ -137,7 +137,7 @@ public class HttpUtil {
 		if(url.getRef() != null) {
 			ref = ref + "#" + url.getRef();	
 		}
-		String urlStr = deCode(url.getProtocol()+"://"+host+query+ref);
+		String urlStr = deCode(url.getProtocol()+"://"+host+url.getPath()+query+ref);
 		return urlStr;
 	}
     
@@ -156,7 +156,7 @@ public class HttpUtil {
 		if(url.getRef() != null) {
 			ref = ref + "#" + url.getRef();	
 		}
-		String urlStr = deCode(url.getProtocol()+"://"+host+query+ref);
+		String urlStr = deCode(url.getProtocol()+"://"+host+url.getPath()+query+ref);
 		return urlStr;
 	}
     
