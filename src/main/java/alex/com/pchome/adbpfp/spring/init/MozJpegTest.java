@@ -147,14 +147,14 @@ public class MozJpegTest {
 	    		System.out.println("[fileExtensionName]:"+fileExtensionName);
 	    		System.out.println("Before Size:"+f.length()/1024+"kb");
 	    		
-	    		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPEG")) {
-	    			ByteArrayInputStream imageStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(f));
-	    			BufferedImage bufferedImage = ImageIO.read(imageStream);
-	    			BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
-	    			newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
-	    			ImageIO.write(newBufferedImage, "jpg", new File(filePath+fileName+".jpg"));
-	    			f.delete();
-	    		}
+//	    		if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPEG")) {
+//	    			ByteArrayInputStream imageStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(f));
+//	    			BufferedImage bufferedImage = ImageIO.read(imageStream);
+//	    			BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+//	    			newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+//	    			ImageIO.write(newBufferedImage, "jpg", new File(filePath+fileName+".jpg"));
+//	    			f.delete();
+//	    		}
 			}
 			
 			
