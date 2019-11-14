@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -32,6 +33,9 @@ public class MozJpegTest {
 	    if (files == null) {// 如果目錄為空，直接退出 
 	      return; 
 	    }
+	    
+		
+	    
 	    for (File f : files) {
 	    	if (f.isFile()) {
 	    		//1.複製原檔 2.產上新檔
@@ -128,6 +132,9 @@ public class MozJpegTest {
 			}
 			connect.close();
 			
+			
+			
+			FileWriter fileWriter = new FileWriter("D:\\home\\webuser\\akb\\_alex\\process_mozjpeg_.txt",true);
 			for (Entry<String, String> map : imgInfoMap.entrySet()) {
 				String key = map.getKey();
 				String path = map.getValue();
@@ -162,11 +169,8 @@ public class MozJpegTest {
 	    		stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(filePath+fileName+".jpg").append(" >").append(filePath+fileName+"[RESIZE].jpg");
 	    		
 	    		
-	    		
-	    		f.delete();
-	    		
-	    		
-	    		
+	    		fileWriter.write("process["+path+"] to ["+filePath+"/"+fileName+".jpg"+"]  \r\n");
+//	    		f.delete();
 	    		System.out.println("***** END　PROCESS *****");
 	    		
 	    		
@@ -193,7 +197,8 @@ public class MozJpegTest {
 			}
 			
 			
-			
+			fileWriter.flush();
+			fileWriter.close();
 			
 			
 			
