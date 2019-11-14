@@ -133,8 +133,12 @@ public class MozJpegTest {
 			connect.close();
 			
 			
-			
+			File wri = new File("/home/webuser/akb/_alex/process_mozjpeg_.txt");
+			if(wri.exists()) {
+				wri.delete();
+			}
 			FileWriter fileWriter = new FileWriter("/home/webuser/akb/_alex/process_mozjpeg_.txt",true);
+			int i = 0;
 			for (Entry<String, String> map : imgInfoMap.entrySet()) {
 				String key = map.getKey();
 				String path = map.getValue();
@@ -168,8 +172,8 @@ public class MozJpegTest {
 	    		stringBuffer.setLength(0);
 	    		stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0      -progressive      ").append(filePath+fileName+".jpg").append(" >").append(filePath+fileName+"[RESIZE].jpg");
 	    		
-	    		
-	    		fileWriter.write("process["+path+"] to ["+filePath+"/"+fileName+".jpg"+"]  \r\n");
+	    		i = i + 1;
+	    		fileWriter.write("index["+i+"] process["+path+"] to ["+filePath+"/"+fileName+".jpg"+"]  \r\n");
 //	    		f.delete();
 	    		System.out.println("***** END　PROCESS *****");
 	    		
