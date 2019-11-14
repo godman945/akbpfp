@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
@@ -131,13 +132,16 @@ public class MozJpegTest {
 				String key = map.getKey();
 				String path = map.getValue();
 				File f = new File(path);
-    			String fileExtensionName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf(".")+1 , f.getAbsolutePath().length());
-	    		String filePath = f.getAbsolutePath().substring(0 , f.getAbsolutePath().lastIndexOf("/")+1);
-	    		String fileName = f.getAbsolutePath().substring(f.getAbsolutePath().lastIndexOf("/")+1, f.getAbsolutePath().lastIndexOf("."));
+    			String fileExtensionName = FilenameUtils.getExtension(path);
+	    		String filePath = FilenameUtils.getFullPathNoEndSeparator(path);
+	    		String fileName = FilenameUtils.getBaseName(path);
 	    		if(StringUtils.isBlank(fileExtensionName) || StringUtils.isBlank(filePath) || StringUtils.isBlank(fileName)) {
 	    			continue;
 	    		}
 	    		if(f.length()/1024 == 0) {
+	    			continue;
+	    		}
+	    		if(!fileExtensionName.toUpperCase().equals("PNG")) {
 	    			continue;
 	    		}
 	    		System.out.println("*****START　PROCESS*****");
