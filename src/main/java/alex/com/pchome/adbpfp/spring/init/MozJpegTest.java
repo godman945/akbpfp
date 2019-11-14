@@ -177,9 +177,8 @@ public class MozJpegTest {
 				System.out.println(">>>>>>>>>>command:"+stringBuffer.toString());
 	    		i = i + 1;
 	    		fileWriter.write("index["+i+"] process["+path+"] to ["+filePath+"/"+fileName+".jpg"+"]  \r\n");
-//	    		f.delete();
-	    		
-	    		System.out.println("index[" + i + "] process[" + path + "]["+f.length()/1024+"kb"+"] to [" + filePath + "/" + fileName + ".jpg"+ "]["+f.length()/1024+"kb"+"]  \r\n");
+	    		File newFile = new File(filePath+"/"+fileName+".jpg");
+	    		System.out.println("index[" + i + "] process[" + path + "]["+f.length()/1024+"kb"+"] to [" + filePath + "/" + fileName + ".jpg"+ "]["+newFile.length()/1024+"kb"+"]  \r\n");
 	    		//開始更新DB資料
 	    		sql.setLength(0);
 	    		String table = key.split("<TYPE>")[0].equals("ad_detail") ? "pfp_ad_detail" : "pfp_catalog_prod_ec";
@@ -193,6 +192,8 @@ public class MozJpegTest {
 	    		}
 	    		System.out.println(sql.toString());
 	    		statement.executeUpdate(sql.toString());
+	    		connect.commit();
+	    		f.delete();
 	    		System.out.println("***** END　PROCESS *****");
 	    		break;
 			}
