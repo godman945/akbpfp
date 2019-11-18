@@ -237,12 +237,14 @@ public class PfpCatalogAction extends BaseCookieAction{
 		String serverName = super.request.getServerName();
 		log.info(">>>>>>>>>>>>>>>>>0:"+serverName);
 		if (serverName.indexOf("show.pchome.com.tw") > -1) {
-			downloadFileStream = new URL("https://show.pchome.com.tw/img/prod_ad_sample_file/"+fileName).openStream();
 			log.info(">>>>>>>>>>>>>>>>>1:"+"https://show.pchome.com.tw/img/prod_ad_sample_file/"+fileName);
+			downloadFileStream = new URL("https://show.pchome.com.tw/img/prod_ad_sample_file/"+fileName).openStream();
+			
 		} else {
+			log.info(">>>>>>>>>>>>>>>>>2:"+"http://showstg.pchome.com.tw/pfp/img/prod_ad_sample_file/"+fileName);
 			// 本機路徑
 			downloadFileStream = new URL("http://showstg.pchome.com.tw/pfp/img/prod_ad_sample_file/"+fileName).openStream();
-			log.info(">>>>>>>>>>>>>>>>>2:"+"http://showstg.pchome.com.tw/pfp/img/prod_ad_sample_file/"+fileName);
+			
 		}
 		log.info("********************************downloadFileStream:"+downloadFileStream == null);
 		log.info("********************************:"+IOUtils.toString(downloadFileStream));
