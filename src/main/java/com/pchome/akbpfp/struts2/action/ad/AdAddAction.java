@@ -1509,10 +1509,18 @@ public class AdAddAction extends BaseCookieAction{
         	        	result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
         	        	return SUCCESS;
         	        }
+        	        adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
             		if(!customerImgFile.exists()){
 	        		    customerImgFile.mkdirs();
 	        		}
-            		adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+            		File original = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/"+adSeq); 
+            		File temporal = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/"+adSeq);
+            		if(!original.exists()) {
+            			original.mkdirs();
+            		}
+            		if(!temporal.exists()) {
+            			temporal.mkdirs();
+            		}
             		commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
     			}
     			result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";	
