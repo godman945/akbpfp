@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -657,8 +656,7 @@ public class ProdAd implements IAd {
             String defineAdSeq = "";
             //未動原本已上傳的圖
             if(data.getString("previewSrc").contains("img/user/")) {
-            	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
-            	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
+            	saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
             }else { //上傳新圖
             	String bessie64ImgArray[] = data.getString("previewSrc").split(",");
 			    String bessie64Img = bessie64ImgArray[1];
@@ -666,7 +664,7 @@ public class ProdAd implements IAd {
 			    bis = new ByteArrayInputStream(imageByte);
             }
             
-            if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
+            if(!data.getString("previewSrc").contains("img/user/") && (fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG"))) {
 		    	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
         		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg";
             }else if(fileExtensionName.toUpperCase().equals("GIF")) {
@@ -683,11 +681,9 @@ public class ProdAd implements IAd {
             }
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
             	if(type.equals("add")){
-					adAddAction.saveAdDetail(saveImgPath, adDetailId, EnumProdAdDetail.PROD_REPORT_NAME.getAdPoolSeq(),
-							defineAdSeq);
+					adAddAction.saveAdDetail(saveImgPath, adDetailId, EnumProdAdDetail.PROD_REPORT_NAME.getAdPoolSeq(),	defineAdSeq);
 				} else if (type.equals("edit")) {
-					adEditAction.saveAdDetail(saveImgPath, adDetailId, EnumProdAdDetail.PROD_REPORT_NAME.getAdPoolSeq(),
-							defineAdSeq);
+					adEditAction.saveAdDetail(saveImgPath, adDetailId, EnumProdAdDetail.PROD_REPORT_NAME.getAdPoolSeq(),defineAdSeq);
 				}
             } 
             bis.close();
