@@ -14,8 +14,8 @@ import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.mortennobel.imagescaling.ResampleOp;
 
@@ -205,7 +205,7 @@ public class ImageUtil {
 			ResampleOp resampleOp = new ResampleOp(imageWidth, imageHeight);// 轉換  
 			BufferedImage rescaledTomato = resampleOp.filter(inputBufImage, null);  
 			ImageIO.write(rescaledTomato, format, tmpFile);
-			//System.out.println("轉換後圖片高度和寬度：" + rescaledTomato.getHeight() + ":"+ rescaledTomato.getWidth());  
+			//System.out.println("轉換後圖片高度和寬度：" + rescaledTomato.getHeight() + ":"+ rescaledTomato.getWidth());
 			return true;  
 		} catch (IOException e) {  
 			e.printStackTrace();  
@@ -309,3 +309,4 @@ public class ImageUtil {
 		return bs;  
 	}  
 }
+
