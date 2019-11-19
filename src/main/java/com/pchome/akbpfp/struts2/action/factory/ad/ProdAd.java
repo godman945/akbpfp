@@ -685,8 +685,11 @@ public class ProdAd implements IAd {
 				} else if (type.equals("edit")) {
 					adEditAction.saveAdDetail(saveImgPath, adDetailId, EnumProdAdDetail.PROD_REPORT_NAME.getAdPoolSeq(),defineAdSeq);
 				}
-            } 
-            bis.close();
+            }
+            if(bis != null) {
+            	bis.close();
+            }
+            
 		}
 	}
 	
