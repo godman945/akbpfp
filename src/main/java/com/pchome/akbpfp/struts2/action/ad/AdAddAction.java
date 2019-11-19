@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
@@ -319,17 +318,16 @@ public class AdAddAction extends BaseCookieAction{
 							}
 							File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
 							tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
-		
 							imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
-							
-							log.info("AAAAAAAAAAAAAAAAAA:"+imgDetail);
-							
-							//mozjpeg壓縮
+							//進行mozjpeg壓縮
+//							adFile:D:\home\webuser\akb\pfp\img\ad_201911190032.jpg
+							BufferedImage bufferedImage = ImageIO.read(adFile);
+							BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+							newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+							javax.imageio.ImageIO.write(newBufferedImage, "jpg", adFile);
 							if(FilenameUtils.getExtension(adFile.getPath()).toUpperCase().contains("JPG")) {
 								new CommonUtilModel().mozJpegCompression(adFile.getPath());
 							}
-							
-							
 						} else {
 							if(StringUtils.isBlank(adDetailContent[0])) {
 								imgDetail = "img/public/na.gif\" style=\"display:none";

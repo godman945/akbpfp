@@ -14,12 +14,10 @@ import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.mortennobel.imagescaling.ResampleOp;
-import com.pchome.akbpfp.godutil.CommonUtilModel;
 
 /**
  * image 的工具, 主要提供縮放的功能
