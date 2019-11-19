@@ -15,9 +15,11 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
 import org.apache.logging.log4j.Logger;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.logging.log4j.LogManager;
 
 import com.mortennobel.imagescaling.ResampleOp;
+import com.pchome.akbpfp.godutil.CommonUtilModel;
 
 /**
  * image 的工具, 主要提供縮放的功能
@@ -205,7 +207,19 @@ public class ImageUtil {
 			ResampleOp resampleOp = new ResampleOp(imageWidth, imageHeight);// 轉換  
 			BufferedImage rescaledTomato = resampleOp.filter(inputBufImage, null);  
 			ImageIO.write(rescaledTomato, format, tmpFile);
-			//System.out.println("轉換後圖片高度和寬度：" + rescaledTomato.getHeight() + ":"+ rescaledTomato.getWidth());  
+			//System.out.println("轉換後圖片高度和寬度：" + rescaledTomato.getHeight() + ":"+ rescaledTomato.getWidth());
+			
+			
+			 
+			try {
+				if(FilenameUtils.getExtension(format).toUpperCase().contains("JPG")) {
+					new CommonUtilModel().mozJpegCompression(format);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
 			return true;  
 		} catch (IOException e) {  
 			e.printStackTrace();  
