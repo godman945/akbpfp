@@ -771,7 +771,6 @@ public class AdAddAction extends BaseCookieAction{
 			//檢查是否有下載過的影片
 			PfpAdVideoSource pfpAdVideoSource = pfpAdVideoSourceService.getVideoUrl(adVideoURL);
 			
-			
 			//根據尺寸建立明細
 			String pool = "";
 			String templateAdSeq = "";
@@ -1229,10 +1228,6 @@ public class AdAddAction extends BaseCookieAction{
 	    		for (PfbxSize pfbxSize : pfbSizeList) {
 	    			if(String.valueOf(pfbxSize.getId()).equals(enumAdChannelPCSize.getName())){
 	    				pfbxSizeSet.add(pfbxSize);
-	    				System.out.println(pfbxSize.getWidth());
-	    				System.out.println(pfbxSize.getHeight());
-	    				System.out.println("--");
-	    				
 	    		    }
 	    		}
 	    	}
@@ -1336,7 +1331,7 @@ public class AdAddAction extends BaseCookieAction{
 	 * 1.圖片存檔至暫存file
 	 * */
 	public String uploadImg() throws Exception{
-	    log.info("Start multipart img upload");
+	    log.info(">>>>>>process img ad upload");
 	    adPoolSeq = EnumAdStyle.IMG.getAdPoolSeq();
 	    templateProductSeq = EnumAdStyle.IMG.getTproSeq();
 	    adClass = "1";
@@ -1345,12 +1340,9 @@ public class AdAddAction extends BaseCookieAction{
 	    Date date = new Date();
 	    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	    File customerImgFile = null;
-	    File customerImgFileDateFile = null;
-	    File customerImgFileOriginalDateFile = null;
-	    File customerImgFileTemporalDateFile = null;
 	    customerImgFile = new File(photoDbPathNew+customerInfoId);
 	    CommonUtilModel commonUtilModel = new CommonUtilModel();
-
+	    
 	    if(fileupload == null){
 	        return SUCCESS;
 	    }
@@ -1366,18 +1358,15 @@ public class AdAddAction extends BaseCookieAction{
 	    for (File file : fileupload) {
 	    	File originalImgFile = file;
     		String fileType = fileuploadFileName.substring(fileuploadFileName.lastIndexOf(".") + 1);
+    		//HTML5廣告
     		if(StringUtils.equals("zip", fileType)){
     			adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
 				//建立路徑
-				log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
-				log.info(">>>2.path>>"+customerImgFile.getPath());
 				log.info(customerImgFile.exists());
 				if(!customerImgFile.exists()){
-				    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
 				    customerImgFile.mkdirs();
 				}
 				
-				//SpringZipCompress.getInstance().openZip(file, photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
 				File originalPathFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq);
 				if(!originalPathFile.exists()){
 					originalPathFile.mkdirs();
@@ -1402,8 +1391,6 @@ public class AdAddAction extends BaseCookieAction{
 					errorMsg = zipResult;
 				}
 				
-				
-				
 				if(indexHtmlFile.exists() && FileAmount <= 40){
 					Document doc = Jsoup.parse(indexHtmlFile, "UTF-8");
 					String docHtml = doc.html();
@@ -1427,11 +1414,6 @@ public class AdAddAction extends BaseCookieAction{
 						
 			            File indexHtmFile = new File(indexHtmFilePath.substring(0, indexHtmFilePath.lastIndexOf("/")) + "/index.htm");
 			            indexHtmlFile.renameTo(indexHtmFile);
-			           // File indexHtmlFile2 = new File(getIndexHtmlPath(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/" + adSeq));
-			           // String indexHtmFile2Path = indexHtmlFile2.getPath().replaceAll("\\\\\\\\", "/");
-			           // File indexHtmFile2 = new File(indexHtmFile2Path.substring(0, indexHtmFile2Path.lastIndexOf("/")) + "/index.htm");
-			           // indexHtmlFile2.renameTo(indexHtmFile2);
-						
 						imgSrc = indexHtmFile.getPath().replaceAll("\\\\\\\\", "/");
 						imgSrc = imgSrc.replaceAll("\\\\", "/");
 						imgSrc = imgSrc.replace("/export/home/webuser/akb/pfp/", "");
@@ -1448,7 +1430,6 @@ public class AdAddAction extends BaseCookieAction{
 									imgHeight = size.replaceAll("height=", "").trim();
 								}
 							}
-							
 							//驗證長、寬是否為數字
 							Integer intWidth = Integer.parseInt(imgWidth);
 							Integer intHeight = Integer.parseInt(imgHeight);
@@ -1457,10 +1438,6 @@ public class AdAddAction extends BaseCookieAction{
 							imgHeight = "0";
 							log.error(">>>>>>"+error.getMessage());
 						}
-						
-						log.info(">>>>>>>>>>>>>>>>>>>>     imgWidth = " + imgWidth);
-						log.info(">>>>>>>>>>>>>>>>>>>>     imgHeight = " + imgHeight);
-						
 					} else {
 						if(docHtml.indexOf("<!doctype html>") == -1){
 							errorMsg = "&lt;!DOCTYPE html&gt;宣告錯誤";
@@ -1477,12 +1454,13 @@ public class AdAddAction extends BaseCookieAction{
 						if(metaTag.isEmpty()){
 							errorMsg = "&lt;meta&gt;標籤錯誤";
 						}
-						//errorMsg = "與規範不符";
 					}
 				}
-				
 				result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"" + errorMsg + "\" " + "}";
-    		} else {
+    		} 
+    		
+    		//圖像廣告
+    		if(!StringUtils.equals("zip", fileType)){
     			boolean doUpload = false;
     			for (String approveType : imgFilterList) {
 					if(("."+fileType.toUpperCase()).equals(approveType)) {
@@ -1508,13 +1486,12 @@ public class AdAddAction extends BaseCookieAction{
         	    	//取得檔案的MD5
         	    	MessageDigest md = MessageDigest.getInstance("MD5");
         	        FileInputStream fis = new FileInputStream(file);
-        	     
         	        byte[] dataBytes = new byte[1024];
         	     
         	        int nread = 0;
         	        while ((nread = fis.read(dataBytes)) != -1) {
         	            md.update(dataBytes, 0, nread);
-        	        };
+        	        }
         	        byte[] mdbytes = md.digest();
         	        StringBuffer sb = new StringBuffer();
         	        for (int i = 0; i < mdbytes.length; i++) {
@@ -1524,49 +1501,23 @@ public class AdAddAction extends BaseCookieAction{
         	        imgMD5 = sb.toString();
             		
         	        List<PfpAdDetail> pfpadDetailList = pfpAdDetailService.getPfpAdDetailsForAdGroup(customerInfoId, adGroupSeq, "MD5", imgMD5);
-        	        
         	        if(!pfpadDetailList.isEmpty()){
         	        	imgRepeat = "yes";
         	        }
-        	        
-        	        //建立圖片
-            		log.info(">>>1.path>>"+photoDbPathNew+customerInfoId);
-            		log.info(">>>2.path>>"+customerImgFile.getPath());
-            		log.info(customerImgFile.exists());
+        	        fileSize = String.valueOf(file.length() / 1024);
+        	        if(Integer.parseInt(fileSize) > 1024) {
+        	        	result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
+        	        	return SUCCESS;
+        	        }
             		if(!customerImgFile.exists()){
-            		    log.info(">>>3.path>>"+photoDbPathNew+customerInfoId);
-            		    customerImgFile.mkdirs();
-            		}
-            		customerImgFileDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date));
-            		if(!customerImgFileDateFile.exists()){
-            		    customerImgFileDateFile.mkdirs();
-            		    customerImgFileOriginalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original");
-            		    log.info(">>>>>>>>>1:"+customerImgFileOriginalDateFile);
-            		    if(!customerImgFileOriginalDateFile.exists()){
-            		    	customerImgFileOriginalDateFile.mkdirs();
-            		    }
-            		    customerImgFileTemporalDateFile = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal");
-            		    log.info(">>>>>>>>>2:"+customerImgFileTemporalDateFile);
-            		    if(!customerImgFileTemporalDateFile.exists()){
-            		        customerImgFileTemporalDateFile.mkdirs();
-            		    }
-            		}
-            		fileSize = String.valueOf(file.length() / 1024);
-    				while (StringUtils.isBlank(adSeq)) {
-    					try {
-    						adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
-    					} catch (Exception e) {
-    						log.error(e.getMessage());
-    						Thread.sleep(100);
-    					}
-    				}
-                    commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
+	        		    customerImgFile.mkdirs();
+	        		}
+            		adSeq = sequenceService.getId(EnumSequenceTableName.PFP_AD, "_");
+            		commonUtilModel.writeImg(originalImgFile,photoDbPathNew,customerInfoId, sdf.format(date),adSeq,fileType);
     			}
-    			result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";
+    			result = "{\"adSeq\":\"" + adSeq + "\","+ "\"imgWidth\":\"" + imgWidth +"\"," +   "\"imgHeight\":\"" + imgHeight +"\",  " + "\"fileSize\":\"" + fileSize + "\"," + "\"imgMD5\":\"" + imgMD5 + "\"," + "\"imgRepeat\":\"" + imgRepeat + "\"," + "\"html5Repeat\":\"" + html5Repeat + "\"," + "\"imgSrc\":\"" + imgSrc + "\"," + "\"errorMsg\":\"\" " + "}";	
     		}
-    		
 	    }
-
 	    return SUCCESS;
 	}
 

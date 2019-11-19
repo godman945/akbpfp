@@ -28,28 +28,28 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 	
 	public String getProdGroupListData() throws Exception{
 		//先依據商品組合id，撈商品組合條件組成sql
-		log.info(">>> groupId: "+groupId);
-		log.info(">>> prodNum: "+prodNum);
+//		log.info(">>> groupId: "+groupId);
+//		log.info(">>> prodNum: "+prodNum);
 		
 		//商品組合ID 的目錄型態
 		String catalogType = pfpCatalogGroupService.getCatalogType(groupId) ;
-		log.info(">>> catalogType: "+catalogType);
+//		log.info(">>> catalogType: "+catalogType);
 		if( StringUtils.isBlank(catalogType)){
 			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E001.getStatus()).toString().getBytes());
 			return SUCCESS;
 		}
 
 		EnumProdGroupFactory enumProdGroupFactory = EnumProdGroupFactory.getCatalogName(catalogType);
-		log.info(">>> enumProdGroupFactory: "+enumProdGroupFactory);
+//		log.info(">>> enumProdGroupFactory: "+enumProdGroupFactory);
 		if ( enumProdGroupFactory == null ){
 			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E002.getStatus()).toString().getBytes());
 			return SUCCESS;
 		}
 
 		String catalogName = enumProdGroupFactory.getCatalogName();
-		log.info(">>> catalogName: "+catalogName);
+//		log.info(">>> catalogName: "+catalogName);
 		AProdGroup aProdGroup = prodGroupFactory.getAProdGroupObj(catalogName);
-		log.info(">>> aProdGroup: "+aProdGroup);
+//		log.info(">>> aProdGroup: "+aProdGroup);
 		if (aProdGroup == null){
 			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E002.getStatus()).toString().getBytes());
 			return SUCCESS;
@@ -57,17 +57,17 @@ public class ProdGroupListAPIAction extends BaseCookieAction{
 		
 		
 		List<PfpCatalogGroupItem> pfpCatalogGroupItems = aProdGroup.getPfpCatalogGroupItemList(groupId);
-		log.info(">>> pfpCatalogGroupItems size : "+pfpCatalogGroupItems.size());
+//		log.info(">>> pfpCatalogGroupItems size : "+pfpCatalogGroupItems.size());
 		
 		//將pfpCatalogGroupItems轉成sql
 		String filterSQL = aProdGroup.pfpCatalogGroupItemTofilterSQL(pfpCatalogGroupItems);
 		
 		 
 		String catalogSeq = pfpCatalogGroupService.getCatalogSeq(groupId) ;
-		log.info(">>> catalogSeq : "+catalogSeq);
+//		log.info(">>> catalogSeq : "+catalogSeq);
 		//撈出該商品組合的list
 		JSONArray returnListJson = aProdGroup.getProdGroupListByRandom(catalogSeq,filterSQL,prodNum);
-		log.info(">>> returnListJson length : "+returnListJson.length());
+//		log.info(">>> returnListJson length : "+returnListJson.length());
 		if (returnListJson.length()<=0){
 			returnJson = new ByteArrayInputStream(getReturnJsonObj("error",EnumProdGroupList.E004.getStatus()).toString().getBytes());
 			return SUCCESS;

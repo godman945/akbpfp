@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 
 import com.pchome.akbpfp.db.pojo.PfpCatalog;
@@ -238,7 +239,8 @@ public class PfpCatalogAction extends BaseCookieAction{
 			downloadFileStream = new URL("https://show.pchome.com.tw/img/prod_ad_sample_file/"+fileName).openStream();
 		} else {
 			// 本機路徑
-			downloadFileStream = new URL("http://showstg.pchome.com.tw/pfp/img/prod_ad_sample_file/"+fileName).openStream();
+			downloadFileStream = new URL("http://showstg.pchome.com.tw:8080/pfp/img/prod_ad_sample_file/"+fileName).openStream();
+			
 		}
 		return SUCCESS;
 	}

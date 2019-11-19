@@ -1,9 +1,6 @@
 package com.pchome.akbpfp.struts2.action.factory.ad;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,9 +10,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
-
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +30,7 @@ import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogLogoService;
 import com.pchome.akbpfp.db.service.catalog.prod.IPfpCatalogSetupService;
 import com.pchome.akbpfp.db.service.catalog.prodGroup.IPfpCatalogGroupService;
 import com.pchome.akbpfp.db.service.template.ITemplateProductService;
+import com.pchome.akbpfp.godutil.CommonUtilModel;
 import com.pchome.akbpfp.struts2.action.ad.AdAddAction;
 import com.pchome.akbpfp.struts2.action.ad.AdEditAction;
 import com.pchome.akbpfp.struts2.action.intfc.ad.IAd;
@@ -59,10 +56,13 @@ public class ProdAd implements IAd {
 	private AdEditAction adEditAction;
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	private IPfpCatalogGroupService pfpCatalogGroupService;
-	
+	private CommonUtilModel commonUtilModel = new CommonUtilModel();
+	private String photoPath;
+	private String pfpCustomerInfoId = "";
+	private String photoDBPath;
 	
 	public String AdAdAddInit(AdAddAction adAddAction) throws Exception {
-		log.info(">>>>>> process ProdAd");
+		log.info(">>>>>> init ProdAd");
 		catalogList = pfpCatalogService.getPfpCatalogByCustomerInfoId(adAddAction.getCustomer_info_id());
 		//全部商品未審核不顯示
 		Iterator<PfpCatalog> iterator = catalogList.iterator();
@@ -141,12 +141,14 @@ public class ProdAd implements IAd {
 		log.info(">>>>>> process do add prod ad");
 		this.adAddAction = adAddAction;
 		String adSeq = adAddAction.getSequenceService().getId(EnumSequenceTableName.PFP_AD, "_");
+		pfpCustomerInfoId = adAddAction.getCustomer_info_id();
 		PfpAdGroup pfpAdGroup = adAddAction.getPfpAdGroup();
 		adAddAction.setAdSeq(adSeq);
 		adAddAction.setTemplateProductSeq(EnumAdStyle.TMG.getTproSeq());
 		adAddAction.setAdStyle("PROD");
 		adAddAction.setAdClass("1");
 		adAddAction.addAd(pfpAdGroup,null);
+		
 		for (EnumProdAdDetail enumProdAdDetail : EnumProdAdDetail.values()) {
 			switch(enumProdAdDetail) {
 	        case PROD_REPORT_NAME:
@@ -216,7 +218,6 @@ public class ProdAd implements IAd {
 				adAddAction.saveAdDetail("",enumProdAdDetail.getAdDetailId(),enumProdAdDetail.getAdPoolSeq(),enumProdAdDetail.getDefineAdSeq());
 		 		break;
 			}
-
 		}
 		Date date = new Date();
 		StringBuffer saveImgPathBuffer = new StringBuffer();
@@ -358,7 +359,6 @@ public class ProdAd implements IAd {
 				fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
 				File file = new File(photoClonePath+imgPath);
 				if(file.exists()){
-					String imgBase64 = imgBase64(file,fileExtensionName);
 					String fileNameArray[] = imgPath.split("/");
 					fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
 					String fileName = fileNameArray[0];
@@ -368,7 +368,7 @@ public class ProdAd implements IAd {
 					uploadLogJson.put("width", width);
 					uploadLogJson.put("heigth", heigth);
 					uploadLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
-					uploadLogJson.put("previewSrc", imgBase64);
+					uploadLogJson.put("previewSrc", imgPath);
 					uploadLogJson.put("fileName", fileName);
 					uploadLogJson.put("fileSize", fileSize);
 					uploadLogJsonArray.put(uploadLogJson);
@@ -381,7 +381,6 @@ public class ProdAd implements IAd {
 				fileExtensionName = fileExtensionNameArray[fileExtensionNameArray.length-1];
 				File file = new File(photoClonePath+imgPath);
 				if(file.exists()){
-					String imgBase64 = imgBase64(file,fileExtensionName);
 					String fileNameArray[] = imgPath.split("/");
 					fileNameArray = fileNameArray[fileNameArray.length - 1].split("_"+adEditAction.getAdSeq()+"_");
 					String fileName = fileNameArray[0];
@@ -391,7 +390,7 @@ public class ProdAd implements IAd {
 					uploadLogoLogJson.put("width", width);
 					uploadLogoLogJson.put("heigth", heigth);
 					uploadLogoLogJson.put("fileExtensionName", fileExtensionName.toUpperCase());
-					uploadLogoLogJson.put("previewSrc", imgBase64);
+					uploadLogoLogJson.put("previewSrc", imgPath);
 					uploadLogoLogJson.put("fileName", fileName);
 					uploadLogoLogJson.put("fileSize", fileSize);
 					uploadLogoLogJsonArray.put(uploadLogoLogJson);
@@ -418,9 +417,9 @@ public class ProdAd implements IAd {
 	public String doAdAdEdit(AdEditAction adEditAction) throws Exception {
 		log.info(">>>>>> process do edit prod ad");
 		this.adEditAction = adEditAction;
+		pfpCustomerInfoId = adEditAction.getCustomer_info_id();
 		//1.刪除所有detail
 		Set<PfpAdDetail> detailSet = adEditAction.getPfpAd().getPfpAdDetails();
-		
 		String beforeProdReportName = "";
 		String afterProdReportName = "";
 		String beforeProdGroupName = "";
@@ -638,35 +637,43 @@ public class ProdAd implements IAd {
 		admAccesslogService.recordAdLog(EnumAccesslogAction.AD_STATUS_MODIFY, message, adEditAction.getId_pchome(), adEditAction.getCustomer_info_id(), adEditAction.getUser_id(), adEditAction.getRequest().getRemoteAddr());
 		return null;
 	}
-	
-	private String imgBase64(File imgFile,String fileExtensionName) throws Exception{
-		BufferedImage bi = ImageIO.read(imgFile);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(bi, fileExtensionName, baos);
-		byte[] bytes = baos.toByteArray();
-		String imgBase64 = "data:image/"+fileExtensionName+";base64,"+ new Base64().encodeToString(bytes);
-		imgBase64 = imgBase64.replaceAll("\\s", "");
-		return imgBase64;
-	}
-	
+	/**
+	 * 1.商品廣告新增圖片使用base64做預覽存圖使用Byte
+	 * 2.商品廣告編急沒有換圖的檔案使用file
+	 * */
 	private void saveImg(JSONObject uploadImgJson,String uploadType,StringBuffer saveImgPathBuffer,String adSeq,String type) throws Exception{
-		Iterator keys = uploadImgJson.keys();
+		Iterator<String> keys = uploadImgJson.keys();
 		while(keys.hasNext()) {
+			String saveImgPath = "";
 		    String key = (String)keys.next();
 		    JSONObject data = (JSONObject) uploadImgJson.get(key);
-		    String bessie64ImgArray[] = data.getString("previewSrc").split(",");
-		    String bessie64Img = bessie64ImgArray[1];
 		    String width = data.getString("width");
 		    String height = data.getString("height");
 		    String fileName = uploadType+"_"+width+"_"+height;
 		    String fileExtensionName = data.getString("fileExtensionName").toLowerCase();
-			BufferedImage image = null;
-	        byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
-            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
-            image = ImageIO.read(bis);
-            String saveImgPath = "";
-            String adDetailId = "";
-            String defineAdSeq ="";
+		    
+		    ByteArrayInputStream bis = null;
+		    String adDetailId = "";
+            String defineAdSeq = "";
+            //未動原本已上傳的圖
+            if(data.getString("previewSrc").contains("img/user/")) {
+            	bis = new ByteArrayInputStream(FileUtils.readFileToByteArray(new File(photoClonePath+data.getString("previewSrc"))));
+            	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
+            }else { //上傳新圖
+            	String bessie64ImgArray[] = data.getString("previewSrc").split(",");
+			    String bessie64Img = bessie64ImgArray[1];
+			    byte[] imageByte = Base64.decodeBase64(bessie64Img.getBytes());
+			    bis = new ByteArrayInputStream(imageByte);
+            }
+            
+            if(fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
+		    	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
+        		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg";
+            }else if(fileExtensionName.toUpperCase().equals("GIF")) {
+            	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
+        		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
+            }
+            //寫入DB
             if(uploadType.equals("logoImg")){
             	adDetailId = "logo_sale_img_"+width+"x"+height;
             	defineAdSeq = "dad_"+adDetailId;
@@ -675,29 +682,17 @@ public class ProdAd implements IAd {
             	defineAdSeq = "dad_"+adDetailId;
             }
             if(StringUtils.isNotBlank(adDetailId) && StringUtils.isNotBlank(defineAdSeq)){
-        		File path = new File(photoClonePath+saveImgPathBuffer.toString());
-                if(!path.exists()){
-                	path.mkdirs();
-                }
-                if(fileExtensionName.toUpperCase().equals("PNG")) {
-                	saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+".jpeg";
-                	BufferedImage newBufferedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-          	        newBufferedImage.createGraphics().drawImage(image, 0, 0, Color.WHITE, null);
-          	        ImageIO.write(newBufferedImage, "jpeg", new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpeg"));
-                }else {
-                	saveImgPath = saveImgPathBuffer.toString()+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
-                	ImageIO.write(image, fileExtensionName, new File(path.getPath()+"/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName));
-                }
             	if(type.equals("add")){
-            		adAddAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);	
-            	}else if(type.equals("edit")){
-            		adEditAction.saveAdDetail(saveImgPath,adDetailId,"adp_201809270001",defineAdSeq);
-            	}
-            }
+					adAddAction.saveAdDetail(saveImgPath, adDetailId, EnumProdAdDetail.PROD_REPORT_NAME.getAdPoolSeq(),
+							defineAdSeq);
+				} else if (type.equals("edit")) {
+					adEditAction.saveAdDetail(saveImgPath, adDetailId, EnumProdAdDetail.PROD_REPORT_NAME.getAdPoolSeq(),
+							defineAdSeq);
+				}
+            } 
             bis.close();
 		}
 	}
-	
 	
 	public String getTemplateStr() {
 		return templateStr;
@@ -769,6 +764,22 @@ public class ProdAd implements IAd {
 
 	public void setPfpCatalogGroupService(IPfpCatalogGroupService pfpCatalogGroupService) {
 		this.pfpCatalogGroupService = pfpCatalogGroupService;
+	}
+
+	public String getPhotoPath() {
+		return photoPath;
+	}
+
+	public void setPhotoPath(String photoPath) {
+		this.photoPath = photoPath;
+	}
+
+	public String getPhotoDBPath() {
+		return photoDBPath;
+	}
+
+	public void setPhotoDBPath(String photoDBPath) {
+		this.photoDBPath = photoDBPath;
 	}
 
 }

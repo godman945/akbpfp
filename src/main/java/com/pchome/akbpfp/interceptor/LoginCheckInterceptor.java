@@ -61,10 +61,6 @@ public class LoginCheckInterceptor extends AbstractInterceptor{
 		HttpServletResponse response = ServletActionContext.getResponse();
 		String pcId = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		String userData = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_AKBPFP_USER.getValue(),EnumCookieConstants.COOKIE_USING_CODE.getValue());
-		
-		log.info(">>>>>>>>>>>>>pcId:"+pcId);
-		log.info(">>>>>>>>>>>>>userData:"+userData);
-		
 		if(StringUtils.isNotBlank(pcId) && StringUtils.isNotBlank(userData)){
 			// 解析 cookie 
 			EnumMap<EnumCookiePfpKey, String> cookieMap = CookieStringToMap.getInstance().transformEnumMap(userData);

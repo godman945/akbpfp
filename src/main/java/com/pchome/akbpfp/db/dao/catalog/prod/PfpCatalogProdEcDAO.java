@@ -34,9 +34,6 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		if (StringUtils.isNotBlank(prodListConditionVO.getProdName())){
 			hql.append(" and a.ec_name like '%"+prodListConditionVO.getProdName()+"%' ");
 		}
-		
-		log.info(hql.toString());
-
 		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
 		query.setFirstResult((prodListConditionVO.getPage()-1)*prodListConditionVO.getPageSize());
 		query.setMaxResults(prodListConditionVO.getPageSize());
@@ -139,9 +136,6 @@ public class PfpCatalogProdEcDAO extends BaseDAO<PfpCatalogProdEc,Integer> imple
 		hql.append(" and a.ec_img like '%.jpg' ");
 		hql.append(filterSQL);
 		hql.append(" order by rand() limit "+prodNum);
-
-		log.info(hql.toString());
-
 		Query query = super.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(hql.toString());
 		query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP); 
 		return query.list();

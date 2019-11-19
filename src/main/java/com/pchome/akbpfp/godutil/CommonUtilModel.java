@@ -1,20 +1,15 @@
 package com.pchome.akbpfp.godutil;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
@@ -22,6 +17,8 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -31,77 +28,111 @@ import com.pchome.akbpfp.struts2.BaseCookieAction;
 public class CommonUtilModel extends BaseCookieAction{
 
     private static final long serialVersionUID = 1L;
-    //保留小數點格式
-    DecimalFormat decimalFormat1 = new DecimalFormat("#,##0.00");
-    //不保留小數點格式
-    DecimalFormat decimalFormat2 = new DecimalFormat("###,###");
     //正規表示
-    Pattern pattern = Pattern.compile("[0-9]+");
-    //時間格式取年月日
-    SimpleDateFormat sdfDate = new SimpleDateFormat("yyyyMMdd");
-
-    	/**
-	 * 輸出圖片
-	 * */
+    private Pattern pattern = Pattern.compile("[0-9]+");
+    //command line stringbuffer
+    private StringBuffer stringBuffer = new StringBuffer();
+    private String result = "";
+    
+    /**
+     * 使用mozJpeg進行壓縮
+     * */
+    public synchronized void  mozJpegCompression(String filePath) throws Exception{
+    	try {
+    		log.info(">>>>>> start mozJpeg compression:"+filePath);
+        	File file = new File(filePath);
+        	log.info(">>>>>> before size:"+(file.length()/1024)+"kb");
+        	if(file.exists()) {
+        		Process process = null;
+        		stringBuffer.setLength(0);
+    			stringBuffer.append(" /opt/mozjpeg/bin/cjpeg  -quality 75 -tune-ms-ssim   -quant-table 0  ").append(file.getAbsolutePath()).append(" > ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "[PCHOME_RESIZE].jpg"));
+    			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+    			result = IOUtils.toString(process.getInputStream(), "UTF-8");
+    			
+    			stringBuffer.setLength(0);
+    			stringBuffer.append(" mv ").append(file.getAbsolutePath().replace(file.getName(), "")).append(file.getName().replace(".jpg", "[PCHOME_RESIZE].jpg")).append(" ").append(file.getAbsolutePath());
+    			process = Runtime.getRuntime().exec(new String[] { "bash", "-c", stringBuffer.toString()  });
+    			result = IOUtils.toString(process.getInputStream(), "UTF-8");
+        	}else {
+        		log.info(">>>>>> file not exist:"+filePath);
+        	}
+        	File fileNew = new File(filePath);
+        	log.info(">>>>>> before size:"+(fileNew.length()/1024)+"kb");
+        	log.info(">>>>>> end mozJpeg compression");
+    	}catch(Exception e) {
+    		log.error(e.getMessage());
+    	}
+    	
+    }
+    
+	/**
+	 * 使用File寫入圖片
+	 */
 	public String  writeImg(File originalImgFile,String userImgPath,String custimerInfoid,String date,String adSeq,String fileType) throws Exception{
-	    log.info("開始處理圖片:"+adSeq);
-	    //Date date2 = new Date();
-	    /*BufferedImage bufferedImage = null;
-	    if("JPG".equals(fileType.toUpperCase()) || "PNG".equals(fileType.toUpperCase())){
-	    	bufferedImage = ImageIO.read(originalImgFile);
-	    	int w = bufferedImage.getWidth();
-	    	int h = bufferedImage.getHeight();
-	    	BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-	    	int[] rgb = bufferedImage.getRGB(0, 0, w, h, null, 0, w);
-	    	newImage.setRGB(0, 0, w, h, rgb, 0, w);
-	    	//SimpleDateFormat sdf = new SimpleDateFormat("HHmmssSSS");
-	    	ImageIO.write(newImage, fileType, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType));
-	    	ImageIO.write(newImage, fileType, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType));
-	    } else if("GIF".equals(fileType.toUpperCase())){
-            File file1 = new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
-            File file2 = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
-            FileOutputStream output1 = new FileOutputStream(file1);
-            FileOutputStream output2 = new FileOutputStream(file2);
-            InputStream input = new FileInputStream(originalImgFile);
-            byte[] byt = new byte[input.available()];
-            input.read(byt);
-            output1.write(byt);
-            output2.write(byt);
-            
-            input.close();
-            output1.close();
-            output2.close();
-	    }*/
-	    
-	    //2017.01.04 圖片失真，暫時先用gif處理方式
-	    
-	    File file1 = new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
-        File file2 = new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
-        FileOutputStream output1 = new FileOutputStream(file1);
-        FileOutputStream output2 = new FileOutputStream(file2);
-        InputStream input = new FileInputStream(originalImgFile);
-        byte[] byt = new byte[input.available()];
-        input.read(byt);
-        output1.write(byt);
-        output2.write(byt);
-        
-        input.close();
-        output1.close();
-        output2.close();
-	    
-        if("JPG".equals(fileType.toUpperCase())){
-        	log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG start ");
-        	this.squeezeJPG(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
-        	this.squeezeJPG(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
-        } else if("PNG".equals(fileType.toUpperCase())){
-        	log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG start ");
-        	this.squeezePNG(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+"." + fileType);
-        	this.squeezePNG(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+"." + fileType);
-        }
-        
+		log.info(">>>>>> start write img: [originalImgFile:"+originalImgFile+"]"+"[userImgPath:"+userImgPath+"]"+"[fileType:"+fileType+"]");
+		if(fileType.toUpperCase().equals("GIF")) {
+			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".gif"));
+			FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".gif"));
+		}else {
+			if(fileType.toUpperCase().equals("PNG")) {
+				BufferedImage bufferedImage = ImageIO.read(originalImgFile);
+				BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+				newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+				ImageIO.write(newBufferedImage, "jpg", new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
+				FileUtils.copyFile(new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"), new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
+			}
+			if(fileType.toUpperCase().equals("JPG") || fileType.toUpperCase().equals("JPEG")) {
+				FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg"));
+				FileUtils.copyFile(originalImgFile, new File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+adSeq+".jpg"));
+			}
+			//進行壓縮
+	        mozJpegCompression(userImgPath+custimerInfoid+"/"+date+"/original/"+adSeq+".jpg");
+		}
 	    return "img\\"+userImgPath+custimerInfoid+"\\"+date+"\\"+adSeq+"." + fileType;
 	}
-
+	
+	/**
+	 * 使用stream寫入圖片
+	 * */
+	public synchronized void writeImgByStream(ByteArrayInputStream imageStream,String fileExtensionName,String outPath,String filename) throws Exception{
+		log.info(">>>>>>start write img: [outPath:"+outPath+"]"+"[fileExtensionName:"+fileExtensionName+"]"+"[filename:"+filename+"]");
+		if(fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG")) {
+			File file = new File(outPath);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			FileOutputStream output = new FileOutputStream(new File(outPath+filename+".jpg"));
+			output.write(IOUtils.toByteArray(imageStream));
+			output.close();
+			//複製至備份區
+			FileUtils.copyFile(new File(outPath+filename+".jpg"), new File(outPath.replace("original", "temporal")+filename+".jpg"));
+			//針對original路徑圖片進行mozJpeg壓縮 temporal中保存原圖檔不需壓縮
+			mozJpegCompression(outPath+filename+".jpg");
+		}else if(fileExtensionName.toUpperCase().equals("PNG") ) {
+			File file = new File(outPath);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			BufferedImage bufferedImage = ImageIO.read(imageStream);
+			BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+			newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+			ImageIO.write(newBufferedImage, "jpg", new File(outPath+filename+".jpg"));
+			FileUtils.copyFile(new File(outPath+filename+".jpg"),new File(outPath.replace("original", "temporal")+filename+".jpg"));
+			mozJpegCompression(outPath+filename+".jpg");
+		}else if(fileExtensionName.toUpperCase().equals("GIF")) {
+			File file = new File(outPath);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			FileOutputStream output = new FileOutputStream(new File(outPath+filename+"."+fileExtensionName));
+			output.write(IOUtils.toByteArray(imageStream));
+			output.close();
+			//複製至備份區
+			FileUtils.copyFile(new File(outPath+filename+"."+fileExtensionName), new File(outPath.replace("original", "temporal")+filename+"."+fileExtensionName));
+		}
+		log.info(">>>>>>end write img");
+	}
+	
 	/**
 	 * 刪除暫存圖片
 	 * */
@@ -118,48 +149,11 @@ public class CommonUtilModel extends BaseCookieAction{
 	}
 
 	/**
-	 * 壓縮JPG圖檔
-	 * */
-	private void squeezeJPG(String pathFile) {
-		try {
-			Runtime rt = Runtime.getRuntime();
-			// Process proc = rt.exec("/usr/bin/jpegoptim " + pathFile);
-			Process proc = rt.exec("convert -verbose " + pathFile + " -strip -quality 95 " + pathFile);
-		} catch (Exception e) {
-			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezeJPG error ");
-			log.info(e);
-
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * 壓縮PNG圖檔
-	 * */
-	private void squeezePNG(String pathFile) {
-		try {
-			Runtime rt = Runtime.getRuntime();
-			// Process proc = rt.exec("/usr/bin/optipng " + pathFile);
-			Process proc = rt.exec("convert -verbose " + pathFile + " -strip -quality 95 " + pathFile);
-		} catch (Exception e) {
-			log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   squeezePNG error ");
-			log.info(e);
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * 刪除全部暫存圖片
 	 * */
 	public void deleteAllTemporalImg(String userImgPath, String custimerInfoid, String date) throws Exception {
 		log.info("開始刪除全部暫存圖片");
 		File folder = new File(userImgPath + custimerInfoid + "/" + date + "/temporal/");
-		/*
-		 * String[] list = folder.list(); for(int i = 0; i < list.length; i++){
-		 * File file = new
-		 * File(userImgPath+custimerInfoid+"/"+date+"/temporal/"+list[i]);
-		 * file.delete(); }
-		 */
 		File[] files = folder.listFiles();
 		for (int i = 0; i < files.length; i++) {
 			deleteAll(files[i]);

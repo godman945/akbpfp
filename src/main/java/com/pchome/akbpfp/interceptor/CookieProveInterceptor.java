@@ -3,9 +3,7 @@ package com.pchome.akbpfp.interceptor;
 
 
 import java.util.Date;
-import java.util.EnumMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -13,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.json.JSONObject;
 
@@ -30,10 +28,8 @@ import com.pchome.akbpfp.db.service.customerInfo.PfpCustomerInfoService;
 import com.pchome.akbpfp.db.service.pfd.user.PfdUserAdAccountRefService;
 import com.pchome.akbpfp.db.service.sequence.SequenceService;
 import com.pchome.enumerate.cookie.EnumCookieConstants;
-import com.pchome.enumerate.cookie.EnumCookiePfpKey;
 import com.pchome.enumerate.sequence.EnumSequenceTableName;
 import com.pchome.soft.depot.utils.CookieFunction;
-import com.pchome.soft.depot.utils.CookieStringToMap;
 import com.pchome.soft.depot.utils.CookieUtil;
 import com.pchome.soft.depot.utils.EncodeUtil;
 import com.pchome.utils.HttpUtil;
@@ -67,17 +63,12 @@ public class CookieProveInterceptor extends AbstractInterceptor{
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String id_pchome = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_ID_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
 		String dna_pchome = CookieUtil.getCookie(request, EnumCookieConstants.COOKIE_MEMBER_DNA_PCHOME.getValue(), EnumCookieConstants.COOKIE_USING_CODE.getValue());
-		log.info(">>>>>>>>>>>>>id_pchome:"+id_pchome);
-		log.info(">>>>>>>>>>>>>dna_pchome:"+dna_pchome);
 		if(StringUtils.isNotEmpty(id_pchome) && StringUtils.isNotEmpty(dna_pchome)){
 			String decode_dna_pchome = cookieUtils.Simple_Decode(dna_pchome);
-			log.info("dna_pchome: "+decode_dna_pchome);
-			log.info("id_pchome: "+id_pchome);
 			if(decode_dna_pchome.equals(id_pchome)){
 				result = invocation.invoke();
 			}
 		}
-		log.info(" result: "+result);		
 		return result;
 	}
 	
