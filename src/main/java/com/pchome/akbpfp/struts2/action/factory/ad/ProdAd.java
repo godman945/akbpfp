@@ -669,7 +669,7 @@ public class ProdAd implements IAd {
             	log.info(">>>>>>>>>>ALEX_01");
             	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
         		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg";
-            }else if(fileExtensionName.toUpperCase().equals("GIF")) {
+            }else if(!data.getString("previewSrc").contains("img/user/") && fileExtensionName.toUpperCase().equals("GIF")) {
             	log.info(">>>>>>>>>>ALEX_02");
             	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
         		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
