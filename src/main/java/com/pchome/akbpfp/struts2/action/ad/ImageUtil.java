@@ -210,7 +210,9 @@ public class ImageUtil {
 			//System.out.println("轉換後圖片高度和寬度：" + rescaledTomato.getHeight() + ":"+ rescaledTomato.getWidth());
 			
 			
-			 
+			 log.info("AAAAAAAAAAAAAAAAAA:"+rescaledTomato);
+			 log.info("AAAAAAAAAAAAAAAAAA:"+format);
+			 log.info("AAAAAAAAAAAAAAAAAA:"+tmpFile);
 			try {
 				if(FilenameUtils.getExtension(format).toUpperCase().contains("JPG")) {
 					new CommonUtilModel().mozJpegCompression(format);
@@ -323,3 +325,4 @@ public class ImageUtil {
 		return bs;  
 	}  
 }
+
