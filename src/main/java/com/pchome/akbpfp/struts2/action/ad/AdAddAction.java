@@ -1513,8 +1513,8 @@ public class AdAddAction extends BaseCookieAction{
             		if(!customerImgFile.exists()){
 	        		    customerImgFile.mkdirs();
 	        		}
-            		File original = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/"+adSeq); 
-            		File temporal = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/"+adSeq);
+            		File original = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/original/"); 
+            		File temporal = new File(photoDbPathNew+customerInfoId+"/"+sdf.format(date)+"/temporal/");
             		if(!original.exists()) {
             			original.mkdirs();
             		}
