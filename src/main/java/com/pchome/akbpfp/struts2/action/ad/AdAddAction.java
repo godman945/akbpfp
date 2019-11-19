@@ -26,6 +26,7 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -320,6 +321,15 @@ public class AdAddAction extends BaseCookieAction{
 							tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
 		
 							imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
+							
+							log.info("AAAAAAAAAAAAAAAAAA:"+imgDetail);
+							
+							//mozjpeg壓縮
+							if(FilenameUtils.getExtension(adFile.getPath()).toUpperCase().contains("JPG")) {
+								new CommonUtilModel().mozJpegCompression(adFile.getPath());
+							}
+							
+							
 						} else {
 							if(StringUtils.isBlank(adDetailContent[0])) {
 								imgDetail = "img/public/na.gif\" style=\"display:none";
