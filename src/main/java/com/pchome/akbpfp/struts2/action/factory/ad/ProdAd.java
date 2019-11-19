@@ -656,6 +656,7 @@ public class ProdAd implements IAd {
             String defineAdSeq = "";
             //未動原本已上傳的圖
             if(data.getString("previewSrc").contains("img/user/")) {
+            	log.info(">>>>>>>>>>ALEX_00");
             	saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
             }else { //上傳新圖
             	String bessie64ImgArray[] = data.getString("previewSrc").split(",");
@@ -665,9 +666,11 @@ public class ProdAd implements IAd {
             }
             
             if(!data.getString("previewSrc").contains("img/user/") && (fileExtensionName.toUpperCase().equals("PNG") || fileExtensionName.toUpperCase().equals("JPG") || fileExtensionName.toUpperCase().equals("JPEG"))) {
-		    	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
+            	log.info(">>>>>>>>>>ALEX_01");
+            	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
         		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+".jpg";
             }else if(fileExtensionName.toUpperCase().equals("GIF")) {
+            	log.info(">>>>>>>>>>ALEX_02");
             	commonUtilModel.writeImgByStream(bis, fileExtensionName, photoPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/",fileName+"_"+adSeq+"_"+width+"x"+height);
         		saveImgPath = photoDBPath+"user/"+pfpCustomerInfoId+"/"+sdf.format(new Date())+"/original/"+fileName+"_"+adSeq+"_"+width+"x"+height+"."+fileExtensionName;
             }
