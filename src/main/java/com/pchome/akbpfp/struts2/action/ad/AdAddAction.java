@@ -320,12 +320,11 @@ public class AdAddAction extends BaseCookieAction{
 							tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
 							imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
 							//進行mozjpeg壓縮
-//							adFile:D:\home\webuser\akb\pfp\img\ad_201911190032.jpg
-							BufferedImage bufferedImage = ImageIO.read(adFile);
-							BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
-							newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
-							javax.imageio.ImageIO.write(newBufferedImage, "jpg", adFile);
 							if(FilenameUtils.getExtension(adFile.getPath()).toUpperCase().contains("JPG")) {
+								BufferedImage bufferedImage = ImageIO.read(adFile);
+								BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+								newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+								javax.imageio.ImageIO.write(newBufferedImage, "jpg", adFile);
 								new CommonUtilModel().mozJpegCompression(adFile.getPath());
 							}
 						} else {

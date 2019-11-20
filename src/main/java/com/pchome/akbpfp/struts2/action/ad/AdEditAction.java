@@ -1,5 +1,7 @@
 package com.pchome.akbpfp.struts2.action.ad;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,6 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -373,7 +378,14 @@ public class AdEditAction extends BaseCookieAction{
 							}
 							File tmpFile = new File(imgFile); // 設定圖片的 File 元件
 							tmpFile.renameTo(adFile); // 把暫存圖片搬到存放區
-							
+							//進行mozjpeg壓縮
+							if(FilenameUtils.getExtension(adFile.getPath()).toUpperCase().contains("JPG")) {
+								BufferedImage bufferedImage = ImageIO.read(adFile);
+								BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+								newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, Color.WHITE, null);
+								javax.imageio.ImageIO.write(newBufferedImage, "jpg", adFile);
+								new CommonUtilModel().mozJpegCompression(adFile.getPath());
+							}
 							String imgPath = "img/user/" + super.getCustomer_info_id() + "/" + oldImgDate + "/original/" + imgName;
 							pfpAdDetail.setAdDetailContent(imgPath);
 						}
