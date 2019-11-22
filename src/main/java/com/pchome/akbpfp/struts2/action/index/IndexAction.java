@@ -45,7 +45,10 @@ public class IndexAction extends BaseCookieAction {
 	private InputStream msg; // 回傳問題的答案使用
 	private String accountType;
 	private String akbpfdServer;
-
+	//網址不合法重導faq頁
+	private String faqDefaultUrl;
+	
+	
 	public String execute() throws Exception {
 		// 判斷登入者使否取有小天使權限或PFD切換權限
 		boolean pfpAngelFlag = false;
@@ -227,9 +230,14 @@ public class IndexAction extends BaseCookieAction {
 					faqSolutionVO = getSolution();
 				}
 			} catch (Exception e) {
-				System.out.println(e.toString()); // print Exception message
+				log.info(">>>>>>REQUEST FAQ PAGE FAIL:"+e.toString()); // print Exception message
+				faqDefaultUrl = "faq.html";
+				return "input";
 			}
 		}
+		
+		
+		
 
 		HttpUtil.doGet("http://billing.pchome.com.tw/rmiservice/pv.html", "t=pfp:ck_pfp_faq");
 		return result;
@@ -519,6 +527,14 @@ public class IndexAction extends BaseCookieAction {
 
 	public String getAkbpfdServer() {
 		return akbpfdServer;
+	}
+
+	public String getFaqDefaultUrl() {
+		return faqDefaultUrl;
+	}
+
+	public void setFaqDefaultUrl(String faqDefaultUrl) {
+		this.faqDefaultUrl = faqDefaultUrl;
 	}
 
 }
