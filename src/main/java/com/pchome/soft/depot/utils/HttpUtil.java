@@ -84,8 +84,9 @@ public class HttpUtil {
 
     // Add URL Decode 2014/10/15 alex
 	public synchronized String deCode(String url) throws Exception {
-		log.info("deCode start");
+		log.info(">>>>>>URL DECODE :"+url);
 		return URLDecoder.decode(url, "UTF-8");
+		
 	}
 
     // Add URL Encode 2014/10/15 alex
@@ -114,7 +115,7 @@ public class HttpUtil {
 	
     // Add URL RealUrl code 2014/10/15 編譯 alex
 	public synchronized String getASCII(String domain) throws Exception {
-		log.info("getUrlASCII start");
+		log.info(">>>>>>GET URL ASCII START");
 		if (StringUtils.isEmpty(domain) || domain.length() < 1) {
 			return null;
 		}
@@ -123,7 +124,7 @@ public class HttpUtil {
     
     // Add URL RealUrl code 2014/10/15 alex
 	public synchronized String getRealUrl(String urlPath) throws Exception {
-		log.info("getRealUrl start>>>" + urlPath);
+		log.info(">>>>>> GET REAL URL START:" + urlPath);
 		if (StringUtils.isEmpty(urlPath) || urlPath.length() < 1) {
 			return null;
 		}
@@ -138,6 +139,7 @@ public class HttpUtil {
 			ref = ref + "#" + url.getRef();	
 		}
 		String urlStr = deCode(url.getProtocol()+"://"+host+url.getPath()+query+ref);
+		log.info(">>>>>> GET REAL URL END");
 		return urlStr;
 	}
     
