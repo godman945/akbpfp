@@ -3,7 +3,6 @@
 
 <link rel="stylesheet" type="text/css" href="<@s.url value="/" />html/main/css/base.css" />
 <link rel="stylesheet" type="text/css" href="<@s.url value="/" />html/main/css/layout.css" />
-<script language="JavaScript" src="<@s.url value="/" />html/main/js/faq.js"></script>
 
 <div class="topbar">
 	<div class="logo">

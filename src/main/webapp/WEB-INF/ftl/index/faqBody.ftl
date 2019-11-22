@@ -23,26 +23,36 @@
 			<ul class="qamenu">
 			<#if faqListVOs?exists>
 				<#list faqListVOs as vo>
-				<li id="list_${vo.fid!}"<#if vo.fid?number == lid> class="active"</#if>><a href="javascript:listClk('${vo.fid!}');">${vo.name!}</a></li>
+					<li id="list_${vo.fid!}"<#if vo.fid?number == lid> class="active"</#if>>
+						<a href="faq.html?fid=${vo.fid!}">${vo.name!}</a>
+					</li>
 				</#list>
 			</#if>
 		
 			</ul>
 			<div class="qacont" id="qList"<#if qid??> Style="display:none</#if>">
 				<#if faqQuestionVOs?exists>
-				<ol id="ol_${fid!}" class="qalist" Style="display:<#if fid?number == lid>inline<#else>none</#if>">
+				<ol  class="qalist" Style="display:<#if fid?number == lid>inline<#else>none</#if>">
 					<#list faqQuestionVOs as qvo>
-					<li><i class="q${qvo.no}"></i><a href="javascript:showSolution('${qvo.faqFId}', '${qvo.faqQId}', 'q${qvo.no}', '${qvo.faqContent}')">${qvo.faqContent}</a></li>
+						<li>
+							<i class="q${qvo.no}"></i>
+							<a href="faq.html?fid=${qvo.faqFId!}&qid=${qvo.faqQId}">${qvo.faqContent}</a>
+						</li>
 					</#list>
 				</ol>
 				</#if>
 			</div>
 			<div class="qacont" id="qSolution" style="display:<#if qid??>inline<#else>none</#if>">
-				<div class="backlist"><a href="javascript:backList('${fid!}');">返回</a></div>
-				<h1 id="questionContext"><i id="questionImg" class="${qimg!}"></i>${faqSolutionVO.faqQuestion!}</h1>
-				<!--內容開始-->
-				<div class="qatext" id="solution">${faqSolutionVO.faqSolutionContent!}
+				<div class="backlist">
+					<!--[backlist_功能]<a href="javascript:backList('${fid!}');">返回</a>-->
+					<a href="faq.html?fid=${fid!}">返回</a>
 				</div>
+				<h1 id="questionContext">
+					<i id="questionImg" class="${qimg!}"></i>
+					${faqSolutionVO.faqQuestion!}
+				</h1>
+				<!--內容開始-->
+				<div class="qatext" id="solution">${faqSolutionVO.faqSolutionContent!}</div>
 				<!--內容結束-->
 			</div>
 		</div>
