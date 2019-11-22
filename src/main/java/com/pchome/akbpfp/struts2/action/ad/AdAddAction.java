@@ -25,6 +25,7 @@ import javax.imageio.ImageReader;
 import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
@@ -318,6 +319,8 @@ public class AdAddAction extends BaseCookieAction{
 							}
 							File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
 							tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
+							//複製原圖至備份區
+							FileUtils.copyFile(adFile, new File(adFile.getAbsolutePath().replace("original", "temporal")));
 							imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
 							//進行mozjpeg壓縮
 							if(FilenameUtils.getExtension(adFile.getPath()).toUpperCase().contains("JPG")) {
