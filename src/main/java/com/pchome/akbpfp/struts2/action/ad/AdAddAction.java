@@ -320,6 +320,7 @@ public class AdAddAction extends BaseCookieAction{
 							File tmpFile = new File(imgFile);	// 設定圖片的 File 元件
 							tmpFile.renameTo(adFile);			// 把暫存圖片搬到存放區
 							//複製原圖至備份區
+							log.info(">>>>>> COPY FILE:"+adFile+" to "+photoDbPath+adSeq+"_backup."+FilenameUtils.getExtension(adFile.getPath()));
 							FileUtils.copyFile(adFile, new File(photoDbPath+adSeq+"_backup."+FilenameUtils.getExtension(adFile.getPath())));
 							imgDetail = photoDbPath + adFile.getName();	// 設定圖片檔存放在 DB 的路徑
 							//進行mozjpeg壓縮
