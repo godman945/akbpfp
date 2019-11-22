@@ -32,6 +32,7 @@
         	<interceptor-ref name="cookieStack" />
         	<interceptor-ref name="valuesCheckStack" />
             <result type="tiles" name="success">index.faq</result>
+            <result type="redirect" name="input">${faqDefaultUrl}</result>
         </action>
         
         <action name="faqSolution" class="IndexAction" method="faqSolution">
