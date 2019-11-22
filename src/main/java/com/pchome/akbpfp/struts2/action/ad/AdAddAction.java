@@ -1700,9 +1700,9 @@ public class AdAddAction extends BaseCookieAction{
     	    }
     	}
 
-    	// 刪除暫存檔
-    	commonUtilModel.deleteAllTemporalImg(photoDbPathNew, customerInfoId,sdf.format(date));
-
+    	/* 先不刪除暫存檔
+    		commonUtilModel.deleteAllTemporalImg(photoDbPathNew, customerInfoId,sdf.format(date));
+    	*/
         // 開啟廣告分類
         pfpAdGroup.setAdGroupStatus(4);
         pfpAdGroupService.save(pfpAdGroup);
