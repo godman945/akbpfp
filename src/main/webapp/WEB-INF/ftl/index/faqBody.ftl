@@ -1,6 +1,6 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <#assign t=JspTaglibs["http://tiles.apache.org/tags-tiles"]>
-
+ 
 	<script type="text/javascript" src="<@s.url value="/" />html/main/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<@s.url value="/" />html/main/js/base.js"></script>
 	<script type="text/javascript" src="http://rmi.pchome.com.tw/rmiservice/pv.html?t=pfp:pv_pfp_qa"></script>
