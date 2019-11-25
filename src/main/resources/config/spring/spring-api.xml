@@ -66,7 +66,6 @@
     <bean id="RedisAPI" class="com.pchome.akbpfp.api.RedisAPI" >
     	<property name="environment" value="${redis.environment}" />
     	<property name="redisServer" value="${redis.server}" />
-    	<property name="redisTestServer" value="${redis.test.server}" />
     	<property name="redisPort" value="${redis.port}" />
 		<!-- 連線逾時 -->
     	<property name="redisTimeout" value="${redis.timeout}" />
