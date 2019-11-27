@@ -1,20 +1,15 @@
 package com.pchome.akbpfp.api;
 
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisShardInfo;
-import redis.clients.jedis.ShardedJedis;
-import redis.clients.jedis.ShardedJedisPool;
 
 public class RedisAPI {
 
@@ -22,7 +17,6 @@ public class RedisAPI {
 	
 	private String environment;
 	private String redisServer;
-	private String redisTestServer;
 	private int redisPort;
 	private int redisTimeout; //連線逾時
 	private int redisMaxRedirects; // 失敗重試次數
@@ -65,13 +59,6 @@ public class RedisAPI {
 		return hostAndPortSet;
 	}
 	
-	/**
-	 * 設定測試環境IP及PORT
-	 * @return
-	 */
-	private List<JedisShardInfo> setJedisTestServerConfig() {
-		return Arrays.asList(new JedisShardInfo(redisTestServer, redisPort));
-	}
 	
 	/**
 	 * 寫值到redis,預設有效時間為1天
@@ -92,14 +79,8 @@ public class RedisAPI {
 	 */
 	public String setRedisData(String key, int time, String val) {
 		try {
-			if ("prd".equals(environment)) { // 正式環境
-				JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
-				return jedis.setex(key, time, val);
-			} else { // 測試環境
-				ShardedJedisPool pool = new ShardedJedisPool(jedisPoolConfig(), setJedisTestServerConfig());
-				ShardedJedis one = pool.getResource();
-				return one.setex(key, time, val);
-			}
+			JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
+			return jedis.setex(key, time, val);
 		} catch (Exception e) {
 			System.out.println("寫入redis資料錯誤:" + e.getMessage());
 		}
@@ -112,14 +93,8 @@ public class RedisAPI {
 	 * @return
 	 */
 	public String getRedisData(String key) {
-		if ("prd".equals(environment)) { // 正式環境
-			JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
-			return jedis.get(key);
-		} else { // 測試環境
-			ShardedJedisPool pool = new ShardedJedisPool(jedisPoolConfig(), setJedisTestServerConfig());
-			ShardedJedis jedis = pool.getResource();
-			return jedis.get(key);
-		}
+		JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
+		return jedis.get(key);
 	}
 	
 	/**
@@ -129,15 +104,8 @@ public class RedisAPI {
 	 */
 	public Long delRedisData(String key) {
 		try {
-			if ("prd".equals(environment)) { // 正式環境
-				// 正式機
-				JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
-				return jedis.del(key);
-			} else { // 測試環境
-				ShardedJedisPool pool = new ShardedJedisPool(jedisPoolConfig(), setJedisTestServerConfig());
-				ShardedJedis one = pool.getResource();
-				return one.del(key);
-			}
+			JedisCluster jedis = new JedisCluster(setJedisServerConfig(), redisTimeout, redisMaxRedirects, jedisPoolConfig());
+			return jedis.del(key);
 		} catch (Exception e) {
 			System.out.println("刪除redis資料錯誤:" + e.getMessage());
 		}
@@ -226,13 +194,4 @@ public class RedisAPI {
 	public void setRedisServer(String redisServer) {
 		this.redisServer = redisServer;
 	}
-
-	public String getRedisTestServer() {
-		return redisTestServer;
-	}
-
-	public void setRedisTestServer(String redisTestServer) {
-		this.redisTestServer = redisTestServer;
-	}
-
 }
