@@ -26,4 +26,5 @@
 	<include file="config/struts2/struts-catalog.xml"/>
 	<include file="config/struts2/struts-prod.xml"/>
 	<include file="config/struts2/struts-codemanage.xml"/>
+	<include file="config/struts2/struts-banner.xml"/>
 </struts>

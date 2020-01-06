@@ -515,4 +515,9 @@
     </bean>
     <!-- 轉換追蹤 End-->
 
+
+	<!-- 活動  banner Start-->
+	<bean id="AdBannerAction" class="com.pchome.akbpfp.struts2.action.banaer.AdBannerAction" scope="prototype" >
+    </bean>
+	<!-- 活動  banner END-->
 </beans>

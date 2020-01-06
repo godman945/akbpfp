@@ -9,7 +9,7 @@
 
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/style2016.css" />
-
+<link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/css/style_2020event.css" />
 
 <#if (today?date >= startDate?date) && (today?date <= endDate?date)>
     <link type="text/css" rel="stylesheet" href="<@s.url value="/" />html/main/css/layout_motherday.css" />
@@ -88,6 +88,7 @@
                 <li><a href="http://4c.pchome.com.tw/campaign/2016/emba/" target="_blank">EMBA行銷講座</a></li>
 				<!-- <li><a href="http://faq.pchome.com.tw/service/show_contact.html" target="_blank">專人諮詢</a></li> -->
 				<li><a href="#telService" target="_blank">專人諮詢</a></li>
+				<li><a href="http://bit.ly/2MQkbQ2" target="_blank" class="evnt">送廣告金</a></li>
 		        <div class="login">
 		            <#if id_pchome?exists>
 						<!-- <img src="<@s.url value="/" />html/main/img/icon_bb.gif" hspace="3" align="absmiddle"> -->
@@ -122,6 +123,9 @@
 		<h1>聯播網廣告</h1>
 		<p>免費曝光，點擊計費；只要<span>$500</span>即可刊登，行銷推廣商品好伙伴！</p>
 		<a class="buybtn" href="<@s.url value="/" />redirect.html">立即刊登廣告<span class="glyphicon glyphicon-menu-right"></span></a>
+		<!-- 2020迎開運鼠於你活動button -->
+		<a class="evtbtn" href="http://bit.ly/2SJeaZs">儲值送廣告金<span class="glyphicon glyphicon-menu-right"></span></a>
+		<!-- 2020迎開運鼠於你活動button end-->
 		<h4><span>免</span>開戶費<em>‧</em><span>免</span>設定費<em>‧</em><span>免</span>服務費</h4>
 		</td></tr>
 	</tbody></table>

@@ -30,7 +30,8 @@ http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
                 <value>classpath:config/tiles2/tiles-summary.xml</value>        
                 <value>classpath:config/tiles2/tiles-catalog.xml</value>
                 <value>classpath:config/tiles2/tiles-prod.xml</value>
-                <value>classpath:config/tiles2/tiles-codemanage.xml</value>           
+                <value>classpath:config/tiles2/tiles-codemanage.xml</value>
+                <value>classpath:config/tiles2/tiles-banner.xml</value>  
             </list>
         </property>
     </bean>

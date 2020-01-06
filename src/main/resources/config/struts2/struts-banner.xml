@@ -1,0 +1,15 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <package name="struts-banner" extends="struts-base">
+
+	<!-- 活動頁 -->
+   	<action name="2020newyear" class="AdBannerAction" method="bannerPage">
+			<result type="tiles" name="success">.ad.banner</result>
+	</action>
+
+
+
+    </package>
+</struts>

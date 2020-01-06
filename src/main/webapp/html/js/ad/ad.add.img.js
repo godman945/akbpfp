@@ -179,18 +179,13 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 	
 	$.each($("#" + sizeDiv + " p"), function( index, obj ) {
 		if(html5Repeat=="yes"){
-			
-			if($(obj).text().indexOf(width+" x "+height) >= 0){
-				imgSize = "yes";
-				imgSizeFlag = true;
-				return false;
-			}
-			if(obj.innerHTML.indexOf("1400 x 60") || obj.innerHTML.indexOf("1400 x 160")){
+			if($(obj).text().indexOf(width+" x " +height) >= 0){
 				imgSize = "yes";
 				imgSizeFlag = true;
 				return false;
 			}
 		}
+		
 		if(html5Repeat=="no" && $(obj).attr('style') == undefined ){
 			if($(obj).text().indexOf(width+" x "+height) >= 0){
 				imgSize = "yes";
@@ -744,3 +739,4 @@ function opennots(id) {
 function closenots(id) {
 	$("#shownotes"+id).css("visibility", "hidden");
 }
+
