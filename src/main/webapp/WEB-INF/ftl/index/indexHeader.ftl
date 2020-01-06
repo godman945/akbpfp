@@ -124,7 +124,7 @@
 		<p>免費曝光，點擊計費；只要<span>$500</span>即可刊登，行銷推廣商品好伙伴！</p>
 		<a class="buybtn" href="<@s.url value="/" />redirect.html">立即刊登廣告<span class="glyphicon glyphicon-menu-right"></span></a>
 		<!-- 2020迎開運鼠於你活動button -->
-		<a class="evtbtn" href="http://bit.ly/2SJeaZs">儲值送廣告金<span class="glyphicon glyphicon-menu-right"></span></a>
+		<a class="evtbtn" href="http://bit.ly/2SJeaZs" target="_blank" >儲值送廣告金<span class="glyphicon glyphicon-menu-right"></span></a>
 		<!-- 2020迎開運鼠於你活動button end-->
 		<h4><span>免</span>開戶費<em>‧</em><span>免</span>設定費<em>‧</em><span>免</span>服務費</h4>
 		</td></tr>
