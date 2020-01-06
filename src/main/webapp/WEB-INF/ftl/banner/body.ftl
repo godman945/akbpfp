@@ -106,7 +106,7 @@
 							<div class="cols">
 								<figure class="icon"><img src="html/banner/img/icon_time.png" width="60" alt=""></figure>
 								<p class="cap">活動時間</p>
-								<p class="taC">22020/01/06-2020/02/15</p>
+								<p class="taC">2020/01/06-2020/02/15</p>
 							</div>
 							<div class="cols">
 								<figure class="icon"><img src="html/banner/img/icon_mouse.png" width="60" alt=""></figure>
