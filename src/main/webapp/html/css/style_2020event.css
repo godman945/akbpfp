@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+/* 2020_mouseyear_button_event  */
+.title .evtbtn{display:block;margin:auto;background-color:#e51d55;color:#fff;text-align:center;}
+.title .evtbtn{border-radius:5px;box-shadow: 5px 5px 5px rgba(0, 0, 0, .15);}
+.title .evtbtn{width:16em;height:3.7625em;margin-top:1em;line-height:3.7625em;font-size:1.5625em;position:relative;z-index:2;}
+.title .evtbtn:hover{text-decoration:none;color:#fff}
+.title .evtbtn span{line-height:3.7625em;vertical-align:top}
+.title .evtbtn::before{content:"";position:absolute;top: 7px;left: 6px;z-index: 1;width: 120px;height: 80px;background-image:url(../banner/img/bg-evntBtn01.png);background-size:100%}
+.title .evtbtn::after{content:"";position:absolute;top: 32px;right: 0px;z-index: 1;width: 100px;height: 56px;background-image:url(../banner/img/bg-evntBtn02.png);background-size:100%}
+
+.title .evtbtn:hover{ border-radius: 1.5625em; }
+
+.navbar li a.evnt{color: #e51d55!important}
+.navbar-nav li a.evnt:hover{color:#fff!important;background-color:#f4511e!important}
+
+
+@media (max-width:47.9em){
+    .title >table{font-size:2vw;}
+    .title h1{font-size:7em;text-shadow: 3px 3px 3px rgba(0, 0, 0, .3);}
+    .title p{/*font-size:2.5em;*/}
+    .title p span{padding:0 2px;}
+    .title .evtbtn,.title h4{ font-size: 2.5em; }    
+    .title .evtbtn::before,.title .evtbtn::after{display:none;} 
+    h3{ line-height: 1.38em; font-size: 2.04em; }
+    .titlogo{ width: 35vw; } 
+}
+
+
+
+
+
+@media screen and (max-width: 1150px) and (min-width: 768px){
+.navbar {
+    letter-spacing: 0px;
+    font-size: 16px !important;
+}
+}
