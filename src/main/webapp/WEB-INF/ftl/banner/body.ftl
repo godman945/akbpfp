@@ -158,7 +158,7 @@
                                 <a href="http://bit.ly/2ZqsxDp " class="butn drop-shadow2" target="_blank">PChome商店街用戶<br>前往系統後台</a>
                                 <p class="taC cap"">※商店街首次開通請見下方<a href="#startup">開通步驟</a></p>
                             </div>                          
-                            <div class="btn_style01 colorpink"><a href="http://bit.ly/2Qldsig" class="butn drop-shadow2" target="_blank">立即參加</a></div>  
+                            <div class="btn_style01 colorpink"><a href="<@s.url value="/" />redirect.html" class="butn drop-shadow2">立即登入儲值</a></div>  
                            
 						</div>
 					</div>
