@@ -232,18 +232,14 @@ public class AdUtilAjax extends BaseCookieAction{
 		
 		//判斷是否直立影片
 		boolean verticalAdFlag = false;
-		if(videoResult.indexOf("small") >=0){
-			String videoSize = (videoResult.substring(videoResult.indexOf("18           mp4    "),videoResult.indexOf("    small"))).replace("18           mp4    ", "").replace(" ", "").trim();
-			String [] videoSizeArray = videoSize.toString().split("x");
-			if(Integer.parseInt(videoSizeArray[1]) > Integer.parseInt(videoSizeArray[0])){
-				verticalAdFlag = true;
-			}
+		
+		String videoSize[] = videoResult.substring(videoResult.indexOf("18           mp4    "),videoResult.length()).split("        ")[2].split("    ");
+		String [] videoSizeArray = videoSize[0].trim().split("x");
+		if(Integer.parseInt(videoSizeArray[1].trim()) > Integer.parseInt(videoSizeArray[0].trim())){
+			verticalAdFlag = true;
 		}
 		
-		
 		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g --get-title " + adVideoUrl });
-		
-		
 		
 		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
 		videoResult = IOUtils.toString(process.getInputStream(), "UTF-8");
