@@ -61,7 +61,7 @@
 	            </tbody>
 	        </table>
 	        <div style="clear:both;height:10px"></div>
-	        <h4>分類出價<span class="t_s01">(分類出價是指：您願意支付每次點擊廣告的最高金額！最低出價NT$3)</span> </h4>
+	        <h4>分類出價<span class="t_s01">(分類出價是指：您願意支付每次點擊廣告的最高金額！)</span> </h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 	        	<tbody>
 	        		<tr>
