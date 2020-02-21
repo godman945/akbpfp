@@ -229,13 +229,15 @@ public class AdActionEditAction extends BaseCookieAction{
 		}
 		
 		//設定播放時間初始化
-		String mon = "111111111111111111111111";
-		String tue = "111111111111111111111111";
-		String wed = "111111111111111111111111";
-		String thu = "111111111111111111111111";
-		String fri = "111111111111111111111111";
-		String sat = "111111111111111111111111";
-		String sun = "111111111111111111111111";
+		String mon = " 1111111111111111111111111";
+		String tue = " 1111111111111111111111111";
+		String wed = " 1111111111111111111111111";
+		String thu = " 1111111111111111111111111";
+		String fri = " 1111111111111111111111111";
+		String sat = " 1111111111111111111111111";
+		String sun = " 1111111111111111111111111";
+		
+		
 		
 		//將時間數字轉換二進位字串
 		mon = Integer.toBinaryString(pfpAdAction.getAdActionMonTime());
