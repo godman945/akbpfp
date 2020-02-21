@@ -286,7 +286,7 @@ public class AdActionEditAction extends BaseCookieAction{
 		adPvLimitStyle = pfpAdAction.getAdPvLimitStyle();
 		adPvLimitPeriod = pfpAdAction.getAdPvLimitPeriod();
 		//20180531 預設改為5次，須注意doAdActionEdit()中判斷式需要對應，全都寫死無法靈活使用
-		adPvLimitAmount = String.valueOf(pfpAdAction.getAdPvLimitAmount() == 0 ? 5 : pfpAdAction.getAdPvLimitAmount());
+		adPvLimitAmount = String.valueOf(pfpAdAction.getAdPvLimitAmount() != 0 ? pfpAdAction.getAdPvLimitAmount() : 0);
 				
 		
 		pvLimitSelect = "N";
@@ -736,7 +736,7 @@ public class AdActionEditAction extends BaseCookieAction{
 		} else {
 			pfpAdAction.setAdPvLimitStyle("0");
 			pfpAdAction.setAdPvLimitPeriod("0");
-			pfpAdAction.setAdPvLimitAmount(5);
+			pfpAdAction.setAdPvLimitAmount(0);
 			
 			if(!StringUtils.equals(oldPvLimitStyle, "0") || !StringUtils.equals(oldPvLimitPeriod, "0") || oldPvLimitAmount != 5){
 				String accesslogMessage_pvLimit = "廣告：" + adActionName + " " + adActionSeq + "，曝光頻率限制： " + getPvLimitNote(oldPvLimitStyle,oldPvLimitPeriod,oldPvLimitAmount) + " => 無限制";

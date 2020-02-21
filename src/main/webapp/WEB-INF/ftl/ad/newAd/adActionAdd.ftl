@@ -419,23 +419,35 @@
 							  		    <option value="${skey}" <#if skey == adPvLimitStyle>selected</#if> >${adPvLimitStyleMap[skey]}</option>
 							  	    </#list>
 						      	</select>
-						      	&nbsp;&nbsp;
+						      	<!--
 						      	<select id="adPvLimitPeriod" name="adPvLimitPeriod" <#if pvLimitSelect == "N">disabled</#if> > 
 							        <#list adPvLimitPeriodMap?keys as skey>
 							  		    <option value="${skey}" <#if skey == adPvLimitPeriod>selected</#if> >${adPvLimitPeriodMap[skey]}</option>
 							  	    </#list>
 						      	</select>
-						      	&nbsp;&nbsp;
-						      	曝光給同一廣告受眾
+						      	-->
+						      	每天曝光給同一廣告受眾
+						      	<input type="hidden" id="adPvLimitPeriod" name="adPvLimitPeriod" value ="D" >
+						      	<select id="adPvLimitAmountSelect" name="adPvLimitAmountSelect" disabled> 
+								       <option value="10">10次</option>
+								       <option value="20">20次</option>
+								       <option value="30">30次</option>
+								       <option value="40">40次</option>
+								       <option value="50">50次</option>
+							    </select>
+						      	<input type="hidden" id="adPvLimitAmount" name="adPvLimitAmount"  value="${adPvLimitAmount!}">
+						      	<!--
 						      	<input type="text" class="pkwdh" id="adPvLimitAmount" name="adPvLimitAmount" maxlength="11" value="${adPvLimitAmount!}" <#if pvLimitSelect == "N">disabled</#if> />
+						      	-->
 						      	次
+						      	
 	                        </td>
 	                    </tr>
 		        	</tbody>
 		        </table>
 	        </div>
 	       <div style="clear:both;height:20px"></div>
-        	<div class="grtba">
+        	<div class="grtba" style="display:none;">
             	<h4>再行銷追蹤</h4>
 	            <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 	            	<tbody>
@@ -498,7 +510,7 @@
             </div>
         
         <div style="clear:both;height:20px"></div>
-	        <div class="grtba">
+	        <div class="grtba" style="display:none;">
 	        	<h4>轉換追蹤</h4>
 		        <table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 		        	<tbody>

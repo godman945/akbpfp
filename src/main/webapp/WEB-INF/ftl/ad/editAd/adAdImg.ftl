@@ -32,7 +32,7 @@
 
 			<!-- 圖像廣告編輯 adTmg start -->
   			
-			<h4>製作廣告</h4>
+			<h4>製作廣告 <a href="//mypaper.pchome.com.tw/pc_cs/post/1379987578" target=_blank>什麼是圖像廣告</a></h4>
 			<table width="100%" id="alex" cellspacing="1" cellpadding="0" border="0" class="tb02">
 				<tbody>
 					<tr>

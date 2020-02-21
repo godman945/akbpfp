@@ -232,8 +232,8 @@ $(document).ready(function(){
 			if($("#pvLimitSelect2").prop("checked")){
 				
 				var re = /^[0-9]*$/;
-				var adPvLimitAmount = $("#adPvLimitAmount").val();
-				
+				var adPvLimitAmount = $("#adPvLimitAmountSelect").val();
+				$("#adPvLimitAmount").val(adPvLimitAmount);
 				if(!re.test(adPvLimitAmount)){
 					alert("曝光頻率限制次數只能填寫數字");
 					return false;
@@ -472,6 +472,9 @@ function selNoLimit(){
 	$("#adPvLimitPeriod").attr("disabled","disabled");
 	$("#adPvLimitAmount").attr("disabled","disabled");
 	$("#adPvLimitAmount").val("0");
+	$("#adPvLimitAmountSelect").attr("disabled","disabled");
+	$("#adPvLimitAmountSelect").val("10");
+	$("#adPvLimitAmount").val("0");
 }
 
 //曝光頻率限制 
@@ -479,6 +482,7 @@ function selAnyLimit(){
 	$("#adPvLimitStyle").removeAttr("disabled");
 	$("#adPvLimitPeriod").removeAttr("disabled");
 	$("#adPvLimitAmount").removeAttr("disabled");
+	$("#adPvLimitAmountSelect").removeAttr("disabled");
 }
 
 function selectTime(){

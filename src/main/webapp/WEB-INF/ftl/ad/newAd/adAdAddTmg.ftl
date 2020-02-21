@@ -6,7 +6,7 @@
 			<![endif]-->
 			<!-- IE 沒有 placeholder 效果，用此 code 模擬 placeholder(Jack指導版) --> 
   			<div style="clear:both;height:0px"></div>
-			<h4>製作廣告</h4>
+			<h4>製作廣告 <a href="//mypaper.pchome.com.tw/pc_cs/post/1379987578" target=_blank>什麼是圖文廣告?圖文廣告與圖像廣告有什麼差別?</a></h4>
 			<table width="100%" cellspacing="1" cellpadding="0" border="0" class="tb02">
 				<tbody> 
 					<tr>  
