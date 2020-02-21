@@ -115,6 +115,18 @@ $(document).ready(function(){
 		});
 		
 		document.getElementById("convertCodeSelect").disabled = true;
+		
+		
+		
+		
+		if($("#adPvLimitAmount").val() !='' && $("#adPvLimitAmount").val() > 0){
+			$("#adPvLimitAmountSelect").val($("#adPvLimitAmount").val());	
+			$("#adPvLimitAmountSelect").removeAttr("disabled");
+		}else{
+			$("#adPvLimitAmountSelect").attr("disabled","disabled");
+		}
+		
+		
 	}
 
 	// validate field
