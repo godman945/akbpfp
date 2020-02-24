@@ -294,6 +294,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		}
 		
 		//設定播放時間初始化
+		               
 		String mon = " 1111111111111111111111111";
 		String tue = " 1111111111111111111111111";
 		String wed = " 1111111111111111111111111";
@@ -338,25 +339,25 @@ public class AdActionAddAction extends BaseCookieAction{
 			//將時間數字轉換二進位字串
 			mon = Integer.toBinaryString(pfpAdAction.getAdActionMonTime());
 			mon = String.format("%024d",new BigInteger(mon));
-			mon = reversionString(mon);
+			mon = " "+reversionString(mon);
 			tue = Integer.toBinaryString(pfpAdAction.getAdActionTueTime());
 			tue = String.format("%024d",new BigInteger(tue));
-			tue = reversionString(tue);
+			tue = " "+reversionString(tue);
 			wed = Integer.toBinaryString(pfpAdAction.getAdActionWedTime());
 			wed = String.format("%024d",new BigInteger(wed));
-			wed = reversionString(wed);
+			wed = " "+reversionString(wed);
 			thu = Integer.toBinaryString(pfpAdAction.getAdActionThuTime());
 			thu = String.format("%024d",new BigInteger(thu));
-			thu = reversionString(thu);
+			thu = " "+reversionString(thu);
 			fri = Integer.toBinaryString(pfpAdAction.getAdActionFriTime());
 			fri = String.format("%024d",new BigInteger(fri));
-			fri = reversionString(fri);
+			fri = " "+reversionString(fri);
 			sat = Integer.toBinaryString(pfpAdAction.getAdActionSatTime());
 			sat = String.format("%024d",new BigInteger(sat));
-			sat = reversionString(sat);
+			sat = " "+reversionString(sat);
 			sun = Integer.toBinaryString(pfpAdAction.getAdActionSunTime());
 			sun = String.format("%024d",new BigInteger(sun));
-			sun = reversionString(sun);
+			sun = " "+reversionString(sun);
 			
 			adSpecificPlayType = pfpAdAction.getAdSpecificPlayType();
 			adPvLimitStyle = pfpAdAction.getAdPvLimitStyle();
@@ -387,6 +388,7 @@ public class AdActionAddAction extends BaseCookieAction{
 		
 		timeCodeMap = new LinkedHashMap<String,String>();
 		Object[][] object = {mon.split(""),tue.split(""),wed.split(""),thu.split(""),fri.split(""),sat.split(""),sun.split("")};
+		
 		
 		for(int i=0;i<7;i++){
 			for(int j=0;j<24;j++){

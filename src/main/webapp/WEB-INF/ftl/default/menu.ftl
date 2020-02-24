@@ -80,10 +80,10 @@
 					   #uri.indexOf('/convertTracking') > -1 ||
 					   #uri.indexOf('/addConvertTrackingView') > -1 ||
 					   #uri.indexOf('/editConvertTrackingView') > -1 }">
-			<div class="tab_on"><a href="<@s.url value="/" />retargetingTracking.html">代碼管理</a></div> 
+			<!-- <div class="tab_on"><a href="<@s.url value="/" />retargetingTracking.html">代碼管理</a></div> --> 
 		</@s.if>
 		<@s.else>
-	    	<div class="tab"><a href="<@s.url value="/" />retargetingTracking.html">代碼管理</a></div> 
+	    	<!-- <div class="tab"><a href="<@s.url value="/" />retargetingTracking.html">代碼管理</a></div> --> 
 		</@s.else>
 	</#if>
 

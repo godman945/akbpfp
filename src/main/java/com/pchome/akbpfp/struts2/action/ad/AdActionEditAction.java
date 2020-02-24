@@ -229,13 +229,15 @@ public class AdActionEditAction extends BaseCookieAction{
 		}
 		
 		//設定播放時間初始化
-		String mon = "111111111111111111111111";
-		String tue = "111111111111111111111111";
-		String wed = "111111111111111111111111";
-		String thu = "111111111111111111111111";
-		String fri = "111111111111111111111111";
-		String sat = "111111111111111111111111";
-		String sun = "111111111111111111111111";
+		String mon = " 1111111111111111111111111";
+		String tue = " 1111111111111111111111111";
+		String wed = " 1111111111111111111111111";
+		String thu = " 1111111111111111111111111";
+		String fri = " 1111111111111111111111111";
+		String sat = " 1111111111111111111111111";
+		String sun = " 1111111111111111111111111";
+		
+		
 		
 		//將時間數字轉換二進位字串
 		mon = Integer.toBinaryString(pfpAdAction.getAdActionMonTime());
@@ -286,7 +288,7 @@ public class AdActionEditAction extends BaseCookieAction{
 		adPvLimitStyle = pfpAdAction.getAdPvLimitStyle();
 		adPvLimitPeriod = pfpAdAction.getAdPvLimitPeriod();
 		//20180531 預設改為5次，須注意doAdActionEdit()中判斷式需要對應，全都寫死無法靈活使用
-		adPvLimitAmount = String.valueOf(pfpAdAction.getAdPvLimitAmount() == 0 ? 5 : pfpAdAction.getAdPvLimitAmount());
+		adPvLimitAmount = String.valueOf(pfpAdAction.getAdPvLimitAmount() != 0 ? pfpAdAction.getAdPvLimitAmount() : 0);
 				
 		
 		pvLimitSelect = "N";
@@ -736,7 +738,7 @@ public class AdActionEditAction extends BaseCookieAction{
 		} else {
 			pfpAdAction.setAdPvLimitStyle("0");
 			pfpAdAction.setAdPvLimitPeriod("0");
-			pfpAdAction.setAdPvLimitAmount(5);
+			pfpAdAction.setAdPvLimitAmount(0);
 			
 			if(!StringUtils.equals(oldPvLimitStyle, "0") || !StringUtils.equals(oldPvLimitPeriod, "0") || oldPvLimitAmount != 5){
 				String accesslogMessage_pvLimit = "廣告：" + adActionName + " " + adActionSeq + "，曝光頻率限制： " + getPvLimitNote(oldPvLimitStyle,oldPvLimitPeriod,oldPvLimitAmount) + " => 無限制";
