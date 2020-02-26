@@ -289,7 +289,7 @@
 			</div>
 			<div class="col-sm-6 col-xs-12">
 				<h3><em>6</em>成效控管</h3>
-				<p>提供多樣成效報表分析，控管廣告撥放效益。</p>
+				<p>提供多樣成效報表分析，控管廣告投放效益。</p>
 			</div>
 		</div>
 		<a class="buybtn" href="<@s.url value="/" />redirect.html">立即購買<span class="glyphicon glyphicon-menu-right"></span>聯播網廣告</a>
