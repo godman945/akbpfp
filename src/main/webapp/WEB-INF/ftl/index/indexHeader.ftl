@@ -85,7 +85,7 @@
                 <li><a href="#fee">計費方式</a></li>
                 <li><a href="#advantage">廣告優勢</a></li>
                 <li><a href="http://show.pchome.com.tw/faq.html" target="_blank">新手上路</a></li>
-                <li><a href="http://4c.pchome.com.tw/campaign/2016/emba/" target="_blank">EMBA行銷講座</a></li>
+                <li><a href="http://4c.pchome.com.tw/campaign/emba/" target="_blank">行銷觀點</a></li>
 				<!-- <li><a href="http://faq.pchome.com.tw/service/show_contact.html" target="_blank">專人諮詢</a></li> -->
 				<li><a href="#telService" target="_blank">專人諮詢</a></li>
 				<li><a href="http://bit.ly/2MQkbQ2" target="_blank" class="evnt">送廣告金</a></li>
@@ -123,9 +123,6 @@
 		<h1>聯播網廣告</h1>
 		<p>免費曝光，點擊計費；只要<span>$500</span>即可刊登，行銷推廣商品好伙伴！</p>
 		<a class="buybtn" href="<@s.url value="/" />redirect.html">立即刊登廣告<span class="glyphicon glyphicon-menu-right"></span></a>
-		<!-- 2020迎開運鼠於你活動button -->
-		<a class="evtbtn" href="http://bit.ly/2SJeaZs" target="_blank" >儲值送廣告金<span class="glyphicon glyphicon-menu-right"></span></a>
-		<!-- 2020迎開運鼠於你活動button end-->
 		<h4><span>免</span>開戶費<em>‧</em><span>免</span>設定費<em>‧</em><span>免</span>服務費</h4>
 		</td></tr>
 	</tbody></table>
@@ -149,7 +146,7 @@
 				<span class="glyphicon glyphicon-menu-right"></span>
 				<div class="stepicon"><img src="html/main/img/stepicon2.png"></div>
 				<h3>選擇廣告形式</h3>
-				<h5>可選擇搜尋廣告與聯播網廣告兩種廣告形式。</h5>
+				<h5>可選擇圖片、圖文、影音等廣告形式。</h5>
 				<span class="glyphicon glyphicon-menu-down"></span>
 			</div>
 			<div class="col-sm-4">
@@ -221,14 +218,14 @@
 				<div class="box">
 					<img src="html/main/img/fee1icon.png">
 					<h3>廣告曝光免費</h3>
-					<p>關鍵字廣告享有免費大量曝光，未被網友點擊時，不需支付任何廣告費用。</p>
+					<p>聯播網廣告享有免費大量曝光，未被網友點擊時，不需支付任何廣告費用。</p>
 				</div>
 			</div>
 			<div class="col-sm-4 col-sx-12 slideanim slide">
 				<div class="box">
 					<img src="html/main/img/fee2icon.png">
 					<h3>廣告點擊收費</h3>
-					<p>關鍵字廣告是以廣告點擊計費！當網友點擊您的廣告，才需支付廣告費用。</p>
+					<p>聯播網廣告是以廣告點擊計費！當網友點擊您的廣告，才需支付廣告費用。</p>
 				</div>
 			</div>
 			<div class="col-sm-4 col-sx-12 slideanim slide">
@@ -292,7 +289,7 @@
 			</div>
 			<div class="col-sm-6 col-xs-12">
 				<h3><em>6</em>成效控管</h3>
-				<p>免費大量曝光 廣告觸角延伸到更廣客層。</p>
+				<p>提供多樣成效報表分析，控管廣告投放效益。</p>
 			</div>
 		</div>
 		<a class="buybtn" href="<@s.url value="/" />redirect.html">立即購買<span class="glyphicon glyphicon-menu-right"></span>聯播網廣告</a>

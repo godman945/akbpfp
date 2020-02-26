@@ -5,6 +5,7 @@
 
 <!-- Animations When Scrolling -->
 <script>
+alert("活動已經截止，滿額儲值金已贈送完畢，謝謝你的參與！");
 		window.addEventListener('scroll', function(e) {
 		if( $(window).scrollTop() <= 50) {
 				$('.wow').removeClass('animated');
