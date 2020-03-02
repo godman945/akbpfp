@@ -298,7 +298,7 @@
 	<!--專人諮詢-->
     <div id="telService" class="container-fluid text-center telservice">
         <div class="text-center">
-            <h3><strong>我要刊登</strong> 請專員盡速與我聯絡</h3>
+            <h3><strong>我要諮詢</strong> 請專員盡速與我聯絡</h3>
             <div style="color:black;text-align:center;width:100%;">
 			對網路行銷有疑問？預約免費電話諮詢！<br>
 			填寫以下表單留下你的聯絡資料<br>
