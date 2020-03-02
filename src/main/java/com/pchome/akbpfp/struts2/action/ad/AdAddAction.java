@@ -790,6 +790,11 @@ public class AdAddAction extends BaseCookieAction{
 				String adVideoSize = "";
 				boolean isBannerSize = true;
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
+				String imgType = picInfoJson.getString("format");
+				if(imgType.equals("png")) {
+					picInfoJson.put("format", "jpg");
+				}
+				
 				adVideoSize = picInfoJson.getString("size");
 				log.info("adVideoSize:"+adVideoSize);
 				String adSize = "";
