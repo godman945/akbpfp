@@ -23,7 +23,7 @@
 								</#if>
 								</span>                    	
 								<!--上傳圖片start-->
-								<div style="float:left;text-align:left;">請上傳250x250以上，1024Kb以內jpg、png或gif格式的正方形圖片<br>
+								<div style="float:left;text-align:left;">請上傳250x250以上，10240Kb以內jpg、png或gif格式的正方形圖片<br>
 									<input type="hidden" id="adDetailID" name="adDetailID" value="img">
 									<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[0]!}">
 									<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[0]!}">

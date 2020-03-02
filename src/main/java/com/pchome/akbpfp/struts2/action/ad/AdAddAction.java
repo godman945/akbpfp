@@ -835,7 +835,15 @@ public class AdAddAction extends BaseCookieAction{
 					if(temporalRenameFile.exists()){
 						temporalRenameFile.delete();
 					}
+					
+					
+					log.info(">>>>>>>>>>>>>>>debug customerImgFile:"+customerImgFile);
+					
 					customerImgFile.renameTo(temporalRenameFile);
+					
+					
+					log.info(">>>>>>>>>>>>>>>debug customerImgFile:"+customerImgFile);
+					
 				}
 				
 				//1.開始新增明細

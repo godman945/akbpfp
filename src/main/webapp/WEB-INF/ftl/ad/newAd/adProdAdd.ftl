@@ -356,7 +356,7 @@
 	            <tr>
 	                <th height="20">圖片大小上限</th>
 	                <td>
-	                	 180 KB
+	                	 10240 KB
 	                </td>
 	            </tr>
 	        </tbody>
