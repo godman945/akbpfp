@@ -822,6 +822,9 @@ public class AdAddAction extends BaseCookieAction{
 				
 				addAd(pfpAdGroup,templateAdSeq);
 				PfpAd pfpAd = pfpAdService.get(adSeq);
+				
+				log.info(">>>>>>>>>>>>>>>debug picInfoJson:"+picInfoJson);
+				
 				//變更暫存圖片檔名為此次上傳名細序號
 				if(isBannerSize){
 					customerImgFile = new File(originalPath + "/" + picInfoJson.getString("adSeq")+"."+picInfoJson.getString("format"));
