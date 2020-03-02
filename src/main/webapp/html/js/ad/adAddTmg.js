@@ -630,7 +630,7 @@ function previewImage(file) {
 		deleteImage();
 	}
 	size = Math.round(size);
-	if(size > 1024){
+	if(size > 10240){
 		sizeFlag = false;
 		$("#sizeCheckDiv").css("display","");
 		$("#uploadCheckDiv").css("display","none");

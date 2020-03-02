@@ -32,7 +32,7 @@
 									<span id="chkFile" name="chkFile" style="color:red;size:5"></span><br />
 									<input type="button" name="delImg" id="delImg" value="刪除圖片" onclick="deleteImage();" />
 									<input type="hidden" id="imgType" name="imgType" value="">
-									<div style="color:red;display:none;" id="sizeCheckDiv">請檢查檔案大小是否大於1024KB</div>
+									<div style="color:red;display:none;" id="sizeCheckDiv">請檢查檔案大小是否大於10240KB</div>
 									<div style="color:red;display:none;" id="uploadCheckDiv">請上傳一個檔案</div>
 								</div>
 							</span>

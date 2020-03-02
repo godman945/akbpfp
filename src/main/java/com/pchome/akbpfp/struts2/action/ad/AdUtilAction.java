@@ -27,7 +27,7 @@ public class AdUtilAction extends BaseCookieAction{
 	private static final long serialVersionUID = 1L;
 
 	// setting data
-	private int allowSize = 1024000;	// 最大允許檔案大小
+	private int allowSize = (1024 * 10) * 1024;	// 最大允許檔案大小
 	private String photoPath;
 	private String photoTmpPath;
 
@@ -101,7 +101,7 @@ public class AdUtilAction extends BaseCookieAction{
 				
 				// 先將圖片存成原圖暫存檔
 				OutputStream os = new FileOutputStream(cutFile);
-				byte[] buffer = new byte[1024];
+				byte[] buffer = new byte[10240];
 				int length = 0;
 				while((length = is.read(buffer)) > 0) {
 					os.write(buffer, 0, length);
