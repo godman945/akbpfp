@@ -300,7 +300,6 @@
         <div class="text-center">
             <h3><strong>我要諮詢</strong> 請專員盡速與我聯絡</h3>
             <div style="color:black;text-align:center;width:100%;">
-			對網路行銷有疑問？預約免費電話諮詢！<br>
 			填寫以下表單留下你的聯絡資料<br>
 			或直接來信至<a target="_blank" href="mailto:claire@staff.pchome.com.tw"><font color="blue"><u>claire@staff.pchome.com.tw</font></u></a><br>
 			我們將有專人盡快與你聯繫！<br>
