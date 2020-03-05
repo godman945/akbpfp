@@ -15,7 +15,7 @@
 							<span class="imgar" style="width:100%;">
 								<span style="display:block;width:115px;float:left"><img id="imghead" style="width:90px;height:90px;" src="<@s.url value="/" />html/img/upl9090.gif" onerror="this.src='<@s.url value="/" />html/img/upl9090.gif'"></span>                    	
 								<!--上傳圖片start-->
-								<div style="text-align:left;">請上傳250x250以上，1024Kb以內jpg、png或gif格式的正方形圖片<br>
+								<div style="text-align:left;">請上傳250x250以上，10240Kb以內jpg、png或gif格式的正方形圖片<br>
 									<input type="hidden" id="adDetailID" name="adDetailID" value="img">
 									<input type="hidden" id="adDetailName" name="adDetailName" value="廣告圖片">
 									<input type="hidden" id="adDetailContent" name="adDetailContent" value="">
@@ -24,7 +24,7 @@
 									<span id="chkFile" name="chkFile" style="color:red;size:5"></span><br />
 									<input type="button" name="delImg" id="delImg" value="刪除圖片" onclick="deleteImage();" />
 									<input type="hidden" id="imgType" name="imgType" value="">
-									<div style="color:red;display:none;" id="sizeCheckDiv">請檢查檔案大小是否大於1024KB</div>
+									<div style="color:red;display:none;" id="sizeCheckDiv">請檢查檔案大小是否大於10240KB</div>
 									<div style="color:red;display:none;" id="uploadCheckDiv">請上傳一個檔案</div>
 								</div>
 							</span>

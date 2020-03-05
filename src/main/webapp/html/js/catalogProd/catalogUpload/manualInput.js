@@ -199,8 +199,8 @@ function checkUploadFile(file) {
 	var fileSizeKb = Math.round(file.size/1024);
 	var fileType = file.type;
 
-	if (fileSizeKb > 180) {
-		alert("檔案大小限制180K以下");
+	if (fileSizeKb > 10240) {
+		alert("檔案大小限制10240K以下");
 		return false;
 	}
 

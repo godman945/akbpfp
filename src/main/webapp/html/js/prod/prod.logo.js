@@ -156,9 +156,9 @@ function checkUploadFile(file,obj){
 				$(review).css("display", "none");
 				return false;
 			}
-			if(fileSizeKb > 180){
+			if(fileSizeKb > 10240){
 				flag = false;
-				$("#errMsg").text("檔案須小於180kb");
+				$("#errMsg").text("檔案須小於10240kb");
 				$(success).css("display", "none");
 				$(select).css("display", "block");
 				$(review).css("display", "none");
@@ -178,9 +178,9 @@ function checkUploadFile(file,obj){
 				$(review).css("display", "none");
 				return false;
 			}
-			if(fileSizeKb > 180){
+			if(fileSizeKb > 10240){
 				flag = false;
-				$("#errMsg2").text("檔案須小於180kb");
+				$("#errMsg2").text("檔案須小於10240kb");
 				$(success).css("display", "none");
 				$(select).css("display", "block");
 				$(review).css("display", "none");

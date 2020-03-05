@@ -23,7 +23,7 @@
 								</#if>
 								</span>                    	
 								<!--上傳圖片start-->
-								<div style="float:left;text-align:left;">請上傳250x250以上，1024Kb以內jpg、png或gif格式的正方形圖片<br>
+								<div style="float:left;text-align:left;">請上傳250x250以上，10240Kb以內jpg、png或gif格式的正方形圖片<br>
 									<input type="hidden" id="adDetailID" name="adDetailID" value="img">
 									<input type="hidden" id="adDetailSeq" name="adDetailSeq" value="${adDetailSeq[0]!}">
 									<input type="hidden" id="adDetailContent" name="adDetailContent" value="${adDetailContent[0]!}">
@@ -32,7 +32,7 @@
 									<span id="chkFile" name="chkFile" style="color:red;size:5"></span><br />
 									<input type="button" name="delImg" id="delImg" value="刪除圖片" onclick="deleteImage();" />
 									<input type="hidden" id="imgType" name="imgType" value="">
-									<div style="color:red;display:none;" id="sizeCheckDiv">請檢查檔案大小是否大於1024KB</div>
+									<div style="color:red;display:none;" id="sizeCheckDiv">請檢查檔案大小是否大於10240KB</div>
 									<div style="color:red;display:none;" id="uploadCheckDiv">請上傳一個檔案</div>
 								</div>
 							</span>

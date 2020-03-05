@@ -7,7 +7,7 @@ function viewAdAction() {
 }
 
 function newAd() {
-	location.href = "adAdAdd.html?adGroupSeq=${adGroupSeq!}";
+	location.href = "adAdAdd.html?adGroupSeq=${adGroupSeq!}&adOperatingRule=VIDEO";
 }
 </script>
 <div class="cont">

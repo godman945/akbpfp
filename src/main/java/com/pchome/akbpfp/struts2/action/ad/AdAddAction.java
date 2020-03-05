@@ -790,6 +790,11 @@ public class AdAddAction extends BaseCookieAction{
 				String adVideoSize = "";
 				boolean isBannerSize = true;
 				picInfoJson = new JSONObject(adDetailInfoArray.get(i).toString());
+				String imgType = picInfoJson.getString("format");
+				if(imgType.equals("png")) {
+					picInfoJson.put("format", "jpg");
+				}
+				
 				adVideoSize = picInfoJson.getString("size");
 				log.info("adVideoSize:"+adVideoSize);
 				String adSize = "";
@@ -822,6 +827,7 @@ public class AdAddAction extends BaseCookieAction{
 				
 				addAd(pfpAdGroup,templateAdSeq);
 				PfpAd pfpAd = pfpAdService.get(adSeq);
+				
 				//變更暫存圖片檔名為此次上傳名細序號
 				if(isBannerSize){
 					customerImgFile = new File(originalPath + "/" + picInfoJson.getString("adSeq")+"."+picInfoJson.getString("format"));
@@ -835,7 +841,9 @@ public class AdAddAction extends BaseCookieAction{
 					if(temporalRenameFile.exists()){
 						temporalRenameFile.delete();
 					}
+					
 					customerImgFile.renameTo(temporalRenameFile);
+					
 				}
 				
 				//1.開始新增明細

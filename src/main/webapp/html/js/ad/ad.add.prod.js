@@ -541,7 +541,7 @@ function checkUploadRule(file_data){
             	}else if(fileSizeFlag == false){
             		$(p).append(fileName);
             		$(u).css("color","red");
-            		$(u).append("檔案需小於180K");
+            		$(u).append("檔案需小於10240K");
             	}else if(fileExtensionNameFlag == false){
             		$(p).append(fileName);
             		$(u).css("color","red");

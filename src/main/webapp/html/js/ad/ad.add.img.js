@@ -161,14 +161,14 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			imgFileSize = "yes";
 		}else{
 			errorTitle = '檔案過大!';
-			errorMsg = '檔案大小上限180KB';
+			errorMsg = '檔案大小上限10240KB';
 		}
 	}else{
-		if(Math.round(file.size/1024) < 180){
+		if(Math.round(file.size/1024) < 10240){
 			imgFileSize = "yes";
 		}else{
 			errorTitle = '檔案過大!';
-			errorMsg = '檔案大小上限180KB';
+			errorMsg = '檔案大小上限10240KB';
 		}
 	}
 	

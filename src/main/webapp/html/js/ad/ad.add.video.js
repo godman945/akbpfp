@@ -334,11 +334,11 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			errorMsg = '檔案大小上限600KB';
 		}
 	}else{
-		if(fileSize < 180){
+		if(fileSize < 10240){
 			imgFileSize = "yes";
 		}else{
 			errorTitle = '檔案過大!';
-			errorMsg = '檔案大小上限180KB';
+			errorMsg = '檔案大小上限10240KB';
 		}
 	}
 	
