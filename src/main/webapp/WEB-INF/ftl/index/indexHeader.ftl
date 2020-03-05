@@ -301,7 +301,7 @@
             <h3><strong>我要諮詢</strong> 請專員盡速與我聯絡</h3>
             <div style="color:black;text-align:center;width:100%;">
 			填寫以下表單留下你的聯絡資料<br>
-			或直接來信至<a target="_blank" href="mailto:show@response.phcome.com.tw"><font color="blue"><u>claire@staff.pchome.com.tw</font></u></a><br>
+			或直接來信至<a target="_blank" href="mailto:show@response.phcome.com.tw"><font color="blue"><u>show@response.phcome.com.tw</font></u></a><br>
 			我們將有專人盡快與你聯繫！<br>
 			<b>免費諮詢專線 02-27000898 分機6066<b>
             </div>
