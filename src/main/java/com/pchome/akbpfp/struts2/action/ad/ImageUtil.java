@@ -12,6 +12,7 @@ import java.util.Iterator;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
+import javax.imageio.stream.FileImageInputStream;
 import javax.imageio.stream.ImageInputStream;
 
 import org.apache.logging.log4j.LogManager;
@@ -73,7 +74,7 @@ public class ImageUtil {
 			 * 這些 ImageReader 聲稱能夠解碼指定格式。
 			 * 參數：formatName - 包含非正式格式名稱 .（例如 "jpeg" 或 "tiff"）等 。
 			 */
-			Iterator<ImageReader> it = ImageIO.getImageReadersByFormatName(getExtention(originPath).toLowerCase());
+			Iterator<ImageReader> it = ImageIO.getImageReaders(new FileImageInputStream(new File(originPath)));
 			ImageReader reader = it.next();
 
 			// 獲取圖片流
