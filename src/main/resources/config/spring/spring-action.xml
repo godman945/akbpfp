@@ -18,6 +18,7 @@
     	<property name="faqServerSolution" value="${faq.server.solution}" />
     	<property name="akbpfdServer" value="${akbpfd.server}" />
     	<property name="mailService" value="${mail.server}" />
+    	<property name="mailFrom" value="${mail.from}" />
     </bean>
     <!-- redirect -->
     <bean id="RedirectAction" class="com.pchome.akbpfp.struts2.action.index.RedirectAction" scope="prototype" >

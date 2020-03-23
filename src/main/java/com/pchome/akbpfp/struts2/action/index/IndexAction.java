@@ -50,6 +50,7 @@ public class IndexAction extends BaseCookieAction {
 	//網址不合法重導faq頁
 	private String faqDefaultUrl;
 	private String mailService;
+	private String mailFrom;
 	
 	public String execute() throws Exception {
 		// 判斷登入者使否取有小天使權限或PFD切換權限
@@ -412,7 +413,7 @@ public class IndexAction extends BaseCookieAction {
 		result = "success";
 		EmailUtils.getInstance().setHost(mailService);
 		List<String> to = new ArrayList<String>();
-		to.add("godman945@yahoo.com.tw");
+		to.add("godman945@gmail.com");
     	try {
     		EmailUtils.getInstance().sendHtmlEmail("ALEX TEST", "godman945@gmail.com", "", to.stream().toArray(String[]::new), null, "55555<br>55555");
     	} catch (Exception e) {
@@ -561,6 +562,14 @@ public class IndexAction extends BaseCookieAction {
 
 	public void setMailService(String mailService) {
 		this.mailService = mailService;
+	}
+
+	public String getMailFrom() {
+		return mailFrom;
+	}
+
+	public void setMailFrom(String mailFrom) {
+		this.mailFrom = mailFrom;
 	}
 
 }
