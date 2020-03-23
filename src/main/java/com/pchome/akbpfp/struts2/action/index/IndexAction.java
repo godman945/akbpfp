@@ -51,6 +51,10 @@ public class IndexAction extends BaseCookieAction {
 	private String faqDefaultUrl;
 	private String mailService;
 	private String mailFrom;
+	private String applyEmailUserEmail = "";
+	private String applyEmailUserName = "";
+	private String applyEmailUserphone = "";
+	
 	
 	public String execute() throws Exception {
 		// 判斷登入者使否取有小天使權限或PFD切換權限
@@ -409,19 +413,19 @@ public class IndexAction extends BaseCookieAction {
 
 	
 	public String sendEmail() throws Exception{
-		log.info("mailService:"+mailFrom);
-		log.info("mailFrom:"+mailService);
-		
-		result = "success";
-		EmailUtils.getInstance().setHost(mailService);
-		List<String> to = new ArrayList<String>();
-		to.add("godman945@gmail.com");
-    	try {
-    		EmailUtils.getInstance().sendHtmlEmail("ALEX TEST", mailFrom, "", to.stream().toArray(String[]::new), null, "55555<br>55555");
+		try {
+			if(StringUtils.isNotBlank(applyEmailUserEmail) && StringUtils.isNotBlank(applyEmailUserName) && StringUtils.isNotBlank(applyEmailUserphone)) {
+				String content = "姓名："+applyEmailUserName+"<br>"+"電話："+applyEmailUserphone+"<br>"+"Email："+applyEmailUserEmail;
+				
+				EmailUtils.getInstance().setHost(mailService);
+				List<String> to = new ArrayList<String>();
+				to.add(applyEmailUserEmail);
+				EmailUtils.getInstance().sendHtmlEmail("首次刊登申請信("+applyEmailUserName+")", mailFrom, "", to.stream().toArray(String[]::new), null, content);
+			}
+			result = "success";
     	} catch (Exception e) {
             log.error(" send mail error : "+e);
         }
-		
 		return SUCCESS;
 	}
 	
@@ -572,6 +576,30 @@ public class IndexAction extends BaseCookieAction {
 
 	public void setMailFrom(String mailFrom) {
 		this.mailFrom = mailFrom;
+	}
+
+	public String getApplyEmailUserEmail() {
+		return applyEmailUserEmail;
+	}
+
+	public void setApplyEmailUserEmail(String applyEmailUserEmail) {
+		this.applyEmailUserEmail = applyEmailUserEmail;
+	}
+
+	public String getApplyEmailUserName() {
+		return applyEmailUserName;
+	}
+
+	public void setApplyEmailUserName(String applyEmailUserName) {
+		this.applyEmailUserName = applyEmailUserName;
+	}
+
+	public String getApplyEmailUserphone() {
+		return applyEmailUserphone;
+	}
+
+	public void setApplyEmailUserphone(String applyEmailUserphone) {
+		this.applyEmailUserphone = applyEmailUserphone;
 	}
 
 }
