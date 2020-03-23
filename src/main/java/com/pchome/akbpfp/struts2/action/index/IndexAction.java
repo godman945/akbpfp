@@ -12,6 +12,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.pchome.akbpfd.db.service.user.PfdUserMemberRefService;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
 import com.pchome.akbpfp.db.service.user.PfpUserMemberRefService;
@@ -21,6 +22,7 @@ import com.pchome.akbpfp.db.vo.faq.FaqSolutionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.account.EnumPfpRootUser;
 import com.pchome.enumerate.privilege.EnumPrivilegeModel;
+import com.pchome.utils.EmailUtils;
 import com.pchome.utils.HttpUtil;
 
 public class IndexAction extends BaseCookieAction {
@@ -47,7 +49,7 @@ public class IndexAction extends BaseCookieAction {
 	private String akbpfdServer;
 	//網址不合法重導faq頁
 	private String faqDefaultUrl;
-	
+	private String mailService;
 	
 	public String execute() throws Exception {
 		// 判斷登入者使否取有小天使權限或PFD切換權限
@@ -404,6 +406,22 @@ public class IndexAction extends BaseCookieAction {
 		return result;
 	}
 
+	
+	public String sendEmail() throws Exception{
+		log.info("mailService:"+mailService);
+		result = "success";
+		EmailUtils.getInstance().setHost(mailService);
+		List<String> to = new ArrayList<String>();
+		to.add("godman945@yahoo.com.tw");
+    	try {
+    		EmailUtils.getInstance().sendHtmlEmail("ALEX TEST", "godman945@gmail.com", "", to.stream().toArray(String[]::new), null, "55555<br>55555");
+    	} catch (Exception e) {
+            log.error(" send mail error : "+e);
+        }
+		
+		return SUCCESS;
+	}
+	
 
 	public List<FaqListVO> getFaqListVOs() {
 		return faqListVOs;
@@ -535,6 +553,14 @@ public class IndexAction extends BaseCookieAction {
 
 	public void setFaqDefaultUrl(String faqDefaultUrl) {
 		this.faqDefaultUrl = faqDefaultUrl;
+	}
+
+	public String getMailService() {
+		return mailService;
+	}
+
+	public void setMailService(String mailService) {
+		this.mailService = mailService;
 	}
 
 }

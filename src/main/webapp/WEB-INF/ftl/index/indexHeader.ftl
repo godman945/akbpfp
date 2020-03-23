@@ -78,6 +78,9 @@
             </button>
             <div class="logo"><a href="http://show.pchome.com.tw/" target="http://show.pchome.com.tw"><img src="<@s.url value="/" />html/img/logo_pchome.png" border="0" /></a></div>
         </div>
+        
+        
+        
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="#step">廣告刊登</a></li>
@@ -108,6 +111,7 @@
 
 
 
+
 <div class="videobg">
 	<div id="videolayer" style="opacity: 0.092;"><div class="mbYTP_wrapper" id="wrapper_mbYTP_video" style="position: absolute; z-index: 0; min-width: 100%; min-height: 100%; left: 0px; top: 0px; overflow: hidden; opacity: 0;">
 		<iframe id="mbYTP_video" class="playerBox" style="position: absolute; z-index: 0; width: 100%; height: 100%; top: 0px; left: 0px; overflow: hidden; opacity: 1;" frameborder="0" allowfullscreen="1" title="YouTube video player" width="640" height="360" src="https://www.youtube.com/embed/mdII7PQ3ItA?autoplay=1&modestbranding=1&controls=0&showinfo=0&rel=0&enablejsapi=1&version=3&playerapiid=mbYTP_video&origin=file%3A%2F%2Ffile-svr&allowfullscreen=true&wmode=transparent&iv_load_policy=3&html5=1&widgetid=1"></iframe>
@@ -117,6 +121,7 @@
 </div>
 
 <div id="title" class="title text-center" style="opacity: -2.02667;">
+	<!--
 	<table>
 		<tbody><tr><td>
 		<img src="html/main/img/pchomelogo.png" alt="" class="titlogo">
@@ -126,7 +131,57 @@
 		<h4><span>免</span>開戶費<em>‧</em><span>免</span>設定費<em>‧</em><span>免</span>服務費</h4>
 		</td></tr>
 	</tbody></table>
+	-->
+	<table>
+		<tbody><tr><td>
+
+		<!-- 快速登入 start-->
+		<div class="qklog_box">
+		<div class="row">
+			<div class="col-md-7 col-sm-12">
+					
+				<div class="tit-container">
+
+					<img src="http://show.pchome.com.tw/html/main/img/pchomelogo.png" alt="" class="titlogo">
+					<h1>聯播網廣告</h1>
+					<h4><span>免</span>開戶費<em>‧</em><span>免</span>設定費<em>‧</em><span>免</span>服務費</h4>
+					<a class="buybtn" href="/redirect.html">立即刊登廣告<span class="glyphicon glyphicon-menu-right"></span></a>
+					
+					<p>免費曝光，點擊計費；只要<span>$500</span>即可刊登，行銷推廣商品好伙伴！</p>
+				</div>
+			</div>
+			<div class="col-md-5 col-sm-12">
+				<h2 class="text">首次刊登</h2>
+				<h3 class="text">我要申請在PChome聯播網刊登廣告</h3>
+				<form name="idcheck" id="idcheck" action="/loginCheck.html" method="post">	            			
+					<div class="loginbox">
+						<div align="center"><font color="#FF0000" size="6"><strong></strong></font></div>
+						<div class="qk_login">
+							<div><input id="userNM" name="userNM" type="text" value="" placeholder="姓名"></div>
+							<div><input id="userTEL" name="userTEL" type="text" value="" placeholder="電話"></div>
+							<div><input id="userEM" name="userEM" type="text" value="" placeholder="Email"></div>
+						</div>							
+						<a class="btn" id="formSubmit" type="button" onclick="sendMailAjax();">立即申辦</a>				
+					</div>
+				</form>
+			</div>
+		</div>
+		</div>
+		<!-- 快速登入 end-->
+
+
+		</td></tr>
+	</tbody></table>
 </div>
+
+<!-- 專人諮詢固定按鈕 fixed icon -->
+<div class="float-box transition-all">               
+	<a href="#telService" target="_blank" class="consult-icon"><em data-icon="consult"></em><span>專人諮詢</span></a>
+</div>
+
+<!-- 專人諮詢固定按鈕 fixed icon end-->
+
+
 <div class="contentbox">
 
 	<!-- 刊登秘訣 -->

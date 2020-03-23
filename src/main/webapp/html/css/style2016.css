@@ -13,6 +13,8 @@ a{ -webkit-transition: 0.3s;-moz-transition: 0.3s;-ms-transition: 0.3s;-o-transi
 a:focus, a:hover{ text-decoration: none; }
 
 /*h2{font-size:24px;text-transform:uppercase;color:#303030;font-weight:600;margin-bottom:30px}*/
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;/* vertical-align:middle; */}
+:focus{outline:0;}
 
 
 .contentbox{position:absolute;z-index:2;top:100%;width:100%;}
@@ -145,7 +147,7 @@ a:focus, a:hover{ text-decoration: none; }
     height:100%;
 }
 
-.title h1{color:#fe682d;font-size:9em;font-weight:normal;text-shadow: 5px 5px 5px rgba(0, 0, 0, .3); margin: 10px 0;}
+.title h1{color:#fe682d;font-size:6em;font-weight:normal;text-shadow: 5px 5px 5px rgba(0, 0, 0, .3); margin: 10px 0;}
 .title p{font-size: 18px; line-height: 1.5em; padding: 0;}
 .title p span{padding:0 5px;letter-spacing:2px}
 
@@ -157,11 +159,11 @@ a:focus, a:hover{ text-decoration: none; }
 
 .title .buybtn{display:block;margin:auto;background-color:#fe682d;color:#fff;text-align:center;}
 .title .buybtn{border-radius:5px;box-shadow: 5px 5px 5px rgba(0, 0, 0, .15);}
-.title .buybtn{width:16em;height:2.5625em;margin-top:1em;line-height:2.5625em;font-size:1.5625em;position:relative;z-index:2;}
-.title .buybtn:hover{text-decoration:none;color:#fff;}
+.title .buybtn{width:15em;height:2.5625em;margin: 1em auto 0.5em auto;line-height:2.5625em;font-size:1.5625em;position:relative;z-index:2;}
+.title .buybtn:hover{text-decoration:none;color:#fff;-webkit-filter:brightness(.9);}
 .title .buybtn span{line-height:2.5625em;vertical-align:top}
-.title .buybtn::before{content:"";position:absolute;top:43px;left:-84px;z-index:1;width:54px;height:84px;background-image:url(../img/titleiconl.png);background-size:100%}
-.title .buybtn::after{content:"";position:absolute;top:43px;right:-97px;z-index:1;width:67px;height:84px;background-image:url(../img/titleiconr.png);background-size:100%}
+.title .buybtn::before{content:"";position:absolute;top:43px;left:-73px;z-index:1;width:54px;height:84px;background-image:url(../img/titleiconl.png);background-size:100%}
+.title .buybtn::after{content:"";position:absolute;top:43px;right:-80px;z-index:1;width:67px;height:84px;background-image:url(../img/titleiconr.png);background-size:100%}
 
 .title .buybtn:hover{ border-radius: 1.5625em; }
 
@@ -170,7 +172,7 @@ a:focus, a:hover{ text-decoration: none; }
     .title h1{font-size:7em;text-shadow: 3px 3px 3px rgba(0, 0, 0, .3);}
     .title p{/*font-size:2.5em;*/}
     .title p span{padding:0 2px;}
-    .title .buybtn,.title h4{ font-size: 2.5em; }    
+    .title .buybtn,.title h4{ font-size: 2.3em; }    
     .title .buybtn::before,.title .buybtn::after{display:none;} 
     h3{ line-height: 1.38em; font-size: 2.04em; }
     .titlogo{ width: 35vw; } 
@@ -456,3 +458,94 @@ footer .gotop:hover{color:#cecece;}
     color: #fff;
 }
 
+
+ /*---- 快速登入頁面 2020quick_login----*/
+ .qklog_box {margin: 0;width: 100%}
+ .qklog_box .row {max-width: 1100px;margin: auto}
+
+.tit-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    flex-direction: column;
+    padding: 30px 0;
+    margin: 0 auto;
+    border-right: #fff 1px solid;
+}
+.tit-container p {
+    font-size: 18px;
+    line-height: 1.5em;
+    padding: 10px;
+    width: 18em
+}
+.tit-container .buybtn {width: 13em}
+.qklog_box h2.text{
+    margin-top: 1.6em;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 42px;
+    font-weight: 500;
+    text-shadow: 5px 5px 5px rgba(0, 0, 0,.3 )
+}
+.qklog_box h3.text{
+    text-align: center;
+    font-size: 18px;
+    color: #ffffff
+}
+
+.loginbox{margin: 20px 65px 50px 65px;font-size: 15px;}
+.loginbox>.qk_login{border:1px solid #ccc;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius:4px;background-color: #fff;text-align: center;;box-shadow: 5px 5px 5px rgba(0, 0, 0, .15)}
+.loginbox>.qk_login>div:last-child{border-bottom:0px}
+.loginbox>.qk_login>div{border-bottom:1px solid #ccc;}
+.loginbox>.qk_login>div>input{display: block;padding: 12px;background-color:transparent;width: 100%;border:0;line-height: 20px;color: #717171}
+.loginbox>.btn{padding: 13px;font-size: 18px;margin: 12px auto;box-shadow: 5px 5px 5px rgba(0, 0, 0, .15); -webkit-transition: 0.3s;-moz-transition: 0.3s;-ms-transition: 0.3s;-o-transition: 0.3s;transition: 0.3s;}
+.qklog_box .btn{border:1px solid #fe682d;background: #fe682d;width: 100%;margin:10px auto;;color: #fff}
+.qklog_box .btn:hover{-webkit-filter:brightness(.9);border-radius: 1.5625em;color: #fff}
+
+/*---- placeholder for舊版設定 ----*/
+::-webkit-input-placeholder {color: #131313; }/* WebKit browsers */
+:-moz-placeholder,::-moz-placeholder {color: #131313; opacity:1;}/* Mozilla Firefox 4 to 18,Mozilla Firefox 19+ */
+:-ms-input-placeholder { color: #131313; }/* Internet Explorer 10+ */
+.placeholder {color: #131313;}
+
+
+/*---- 專人諮詢固定按鈕 fixed icon ----*/
+.float-box {position: fixed;z-index: 100;width: 100px;height: 100px;right: 10px;bottom: 60px;}
+.float-box:hover{bottom: 80px}
+.transition, .transition-all, .transition-all * {-webkit-transition: all .2s ease-in-out;transition: all .2s ease-in-out;}
+.consult-icon{
+    display: block;
+    text-align: center!important;
+    margin: 18px auto 0;
+    width: 100px;
+    height: 100px;
+    background-color: #fe682d;;
+    border-radius: 50px;
+    cursor: pointer;
+    -webkit-box-shadow: -5px 6px 8.91px 0.09px rgba(0,0,0,.26);
+    box-shadow: -5px 6px 8.91px 0.09px rgba(0,0,0,.26);
+}
+.consult-icon:hover{-webkit-filter:brightness(.9)}
+.consult-icon span {display: block;color: #fff;padding: 10px;font-size: 14px;}
+.consult-icon em {display: inline-block;width: 40px;height: 40px;background-repeat: no-repeat;background-position: 50%;margin:12px 0px 0px 0px;}
+*[data-icon="consult"],.icon-consult {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 511 510.95'%3E%3Cpath d='M491 196.93a20 20 0 0 0 20-20V20a20 20 0 0 0-20-20H255.5a20 20 0 0 0-20 20v137H78.39a20 20 0 0 0-20 20v230.78l-54.27 71.1A20 20 0 0 0 20 511h471a20 20 0 0 0 16-31.89l-54.56-73.19V196.93zm-215.55-157h195.6V157c-41.19 0-40.28-.38-44.37.86-8.39 2.56-7.64 5.43-52.74 49.42V177A20 20 0 0 0 354 157h-78.54zm58.57 157v58.54c0 17.89 21.61 26.58 34.07 14.12l44.43-44.44v167.38h-62.41a96.92 96.92 0 0 0-41.63-60.91c39.06-45.08 6.8-115.54-52.79-115.54a69.8 69.8 0 0 0-52.92 115.37 97 97 0 0 0-41.89 61.08H98.35v-195.6zm-108.27 89a29.94 29.94 0 1 1 29.74 29.84 30 30 0 0 1-29.73-29.84zm82.88 106.6H202.35c18.4-48.92 87.82-49.09 106.29 0zM60.35 471l29.47-38.59h332.65L451.24 471z' fill='%23fff'/%3E%3C/svg%3E");
+}
+
+@media (max-width:47.9em){
+    .tit-container {margin: auto;border: none;padding: 10px 0;}
+    .tit-container p{display: none}
+    .tit-container .buybtn {width: 16em}
+    .float-box {width: 74px;height: 74px;right: 10px;top: 60px;}
+    .consult-icon {
+        width: 74px;
+        height: 74px;
+        border-radius: 37px;
+        margin:0
+    }
+    .consult-icon span {display:none}
+    .qklog_box h2.text{ margin-top: 0.5em;margin-bottom: 0px;font-size: 30px;}
+    .loginbox {margin: 20px 10px 50px 10px}
+
+}
