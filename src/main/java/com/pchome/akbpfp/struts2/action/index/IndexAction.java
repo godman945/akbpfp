@@ -419,7 +419,7 @@ public class IndexAction extends BaseCookieAction {
 				
 				EmailUtils.getInstance().setHost(mailService);
 				List<String> to = new ArrayList<String>();
-				to.add(applyEmailUserEmail);
+				to.add("show@response.pchome.com.tw");
 				EmailUtils.getInstance().sendHtmlEmail("首次刊登申請信("+applyEmailUserName+")", mailFrom, "", to.stream().toArray(String[]::new), null, content);
 			}
 			result = "success";
