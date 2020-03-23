@@ -409,13 +409,15 @@ public class IndexAction extends BaseCookieAction {
 
 	
 	public String sendEmail() throws Exception{
-		log.info("mailService:"+mailService);
+		log.info("mailService:"+mailFrom);
+		log.info("mailFrom:"+mailService);
+		
 		result = "success";
 		EmailUtils.getInstance().setHost(mailService);
 		List<String> to = new ArrayList<String>();
 		to.add("godman945@gmail.com");
     	try {
-    		EmailUtils.getInstance().sendHtmlEmail("ALEX TEST", "godman945@gmail.com", "", to.stream().toArray(String[]::new), null, "55555<br>55555");
+    		EmailUtils.getInstance().sendHtmlEmail("ALEX TEST", mailFrom, "", to.stream().toArray(String[]::new), null, "55555<br>55555");
     	} catch (Exception e) {
             log.error(" send mail error : "+e);
         }
