@@ -157,9 +157,9 @@
 					<div class="loginbox">
 						<div align="center"><font color="#FF0000" size="6"><strong></strong></font></div>
 						<div class="qk_login">
-							<div><input id="userNM" name="userNM" type="text" value="" placeholder="姓名"></div>
-							<div><input id="userTEL" name="userTEL" type="text" value="" placeholder="電話"></div>
-							<div><input id="userEM" name="userEM" type="text" value="" placeholder="Email"></div>
+							<div><input id="userNM" maxlength="50" name="userNM" type="text" value="" placeholder="姓名"></div>
+							<div><input id="userTEL" maxlength="50" name="userTEL" type="text" value="" placeholder="電話"></div>
+							<div><input id="userEM" maxlength="50" name="userEM" type="text" value="" placeholder="Email"></div>
 						</div>							
 						<a class="btn" id="formSubmit" type="button" onclick="sendMailAjax();">立即申辦</a>				
 					</div>
