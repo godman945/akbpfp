@@ -12,6 +12,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.pchome.akbpfd.db.service.user.PfdUserMemberRefService;
 import com.pchome.akbpfp.db.pojo.PfpUserMemberRef;
 import com.pchome.akbpfp.db.service.user.PfpUserMemberRefService;
@@ -21,6 +22,7 @@ import com.pchome.akbpfp.db.vo.faq.FaqSolutionVO;
 import com.pchome.akbpfp.struts2.BaseCookieAction;
 import com.pchome.enumerate.account.EnumPfpRootUser;
 import com.pchome.enumerate.privilege.EnumPrivilegeModel;
+import com.pchome.utils.EmailUtils;
 import com.pchome.utils.HttpUtil;
 
 public class IndexAction extends BaseCookieAction {
@@ -47,6 +49,11 @@ public class IndexAction extends BaseCookieAction {
 	private String akbpfdServer;
 	//網址不合法重導faq頁
 	private String faqDefaultUrl;
+	private String mailService;
+	private String mailFrom;
+	private String applyEmailUserEmail = "";
+	private String applyEmailUserName = "";
+	private String applyEmailUserphone = "";
 	
 	
 	public String execute() throws Exception {
@@ -404,6 +411,24 @@ public class IndexAction extends BaseCookieAction {
 		return result;
 	}
 
+	
+	public String sendEmail() throws Exception{
+		try {
+			if(StringUtils.isNotBlank(applyEmailUserEmail) && StringUtils.isNotBlank(applyEmailUserName) && StringUtils.isNotBlank(applyEmailUserphone)) {
+				String content = "姓名："+applyEmailUserName+"<br>"+"電話："+applyEmailUserphone+"<br>"+"Email："+applyEmailUserEmail;
+				
+				EmailUtils.getInstance().setHost(mailService);
+				List<String> to = new ArrayList<String>();
+				to.add("show@response.pchome.com.tw");
+				EmailUtils.getInstance().sendHtmlEmail("首次刊登申請信("+applyEmailUserName+")", mailFrom, "", to.stream().toArray(String[]::new), null, content);
+			}
+			result = "success";
+    	} catch (Exception e) {
+            log.error(" send mail error : "+e);
+        }
+		return SUCCESS;
+	}
+	
 
 	public List<FaqListVO> getFaqListVOs() {
 		return faqListVOs;
@@ -535,6 +560,46 @@ public class IndexAction extends BaseCookieAction {
 
 	public void setFaqDefaultUrl(String faqDefaultUrl) {
 		this.faqDefaultUrl = faqDefaultUrl;
+	}
+
+	public String getMailService() {
+		return mailService;
+	}
+
+	public void setMailService(String mailService) {
+		this.mailService = mailService;
+	}
+
+	public String getMailFrom() {
+		return mailFrom;
+	}
+
+	public void setMailFrom(String mailFrom) {
+		this.mailFrom = mailFrom;
+	}
+
+	public String getApplyEmailUserEmail() {
+		return applyEmailUserEmail;
+	}
+
+	public void setApplyEmailUserEmail(String applyEmailUserEmail) {
+		this.applyEmailUserEmail = applyEmailUserEmail;
+	}
+
+	public String getApplyEmailUserName() {
+		return applyEmailUserName;
+	}
+
+	public void setApplyEmailUserName(String applyEmailUserName) {
+		this.applyEmailUserName = applyEmailUserName;
+	}
+
+	public String getApplyEmailUserphone() {
+		return applyEmailUserphone;
+	}
+
+	public void setApplyEmailUserphone(String applyEmailUserphone) {
+		this.applyEmailUserphone = applyEmailUserphone;
 	}
 
 }

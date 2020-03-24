@@ -1,0 +1,41 @@
+@charset "utf-8";
+/* CSS reset */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-weight:inherit;font-style:inherit;font-size:100%;/* vertical-align:middle; */}
+:focus{outline:0;}
+
+
+/*---- reset end ----*/
+
+
+
+/*聯播網廣告pfp--橘色*/
+
+.pfp .btn{border:1px solid #fe682d;background: #fe682d;}
+
+
+
+/*---- placeholder for舊版設定 ----*/
+::-webkit-input-placeholder {color:#a9a9a9; }/* WebKit browsers */
+:-moz-placeholder,::-moz-placeholder {color:#a9a9a9; opacity:1;}/* Mozilla Firefox 4 to 18,Mozilla Firefox 19+ */
+:-ms-input-placeholder {  color:#a9a9a9; }/* Internet Explorer 10+ */
+.placeholder {color: #a9a9a9; }
+
+/*---- all ----*/
+
+
+.hr{height:1px;background:#cfcfcf;width:100%;font-size:1px;clear:both;box-shadow:0 1px rgba(100%,100%,100%,1);margin: 20px auto;}
+.btn{}
+.btn:hover{-webkit-filter:brightness(.9);color: #fff}
+
+
+
+ 
+
+ /*---- 登入頁面 ----*/
+.loginbox{width: 100%;margin: 30px auto;font-size: 15px;}
+.loginbox>.qk_login{border:1px solid #ccc;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius:4px;background-color: #fff;text-align: center;}
+.loginbox>.qk_login>div:first-child{border-bottom:1px solid #ccc;}
+.loginbox>.qk_login>div>input{display: block;padding: 12px;background-color:transparent;width: 100%;border:0;line-height: 20px;color: #000}
+.loginbox>.btn{padding: 13px;font-size: 18px;margin: 12px auto;}
+.qklog_box .btn{border:1px solid #fe682d;background: #fe682d;}
+.qklog_box button{width: 100%;margin:10px auto;}

@@ -78,5 +78,11 @@
             <result type="tiles" name="authMember">index.certify</result>
         </action>
         
+       
+        <action name="sendEmail" class="IndexAction" method="sendEmail">
+       		<result type="json" name="success">
+        		<param name="root">result</param>
+        	</result>
+   		</action>
     </package>
 </struts>
