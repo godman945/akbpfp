@@ -161,7 +161,7 @@
 							<div><input id="userTEL" maxlength="50" name="userTEL" type="text" value="" placeholder="電話"></div>
 							<div><input id="userEM" maxlength="50" name="userEM" type="text" value="" placeholder="Email"></div>
 						</div>							
-						<a class="btn" id="formSubmit" type="button" onclick="sendMailAjax();">立即申辦</a>				
+						<a class="btn" id="formSubmit" type="button" onclick="sendMailAjax();">立即申請</a>				
 					</div>
 				</form>
 			</div>

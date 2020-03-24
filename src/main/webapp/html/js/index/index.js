@@ -39,6 +39,9 @@ function sendMailAjax(){
 					alert("系統繁忙，請稍後再試！");
 				},
 			    success : function(response) {
+			    	$("#userEM").val(""),
+			    	$("#userNM").val(""),
+			    	$("#userTEL").val(""),
 			    	alert("『PChome聯播網會有專人於2個工作天內與您聯繫！』");
 			    }
 			});
