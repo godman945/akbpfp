@@ -166,13 +166,14 @@ html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abb
 .title .buybtn::after{content:"";position:absolute;top:43px;right:-80px;z-index:1;width:67px;height:84px;background-image:url(../img/titleiconr.png);background-size:100%}
 
 .title .buybtn:hover{ border-radius: 1.5625em; }
+.title{ position: fixed; top: 0; }
 
 @media (max-width:47.9em){
     .title >table{font-size:2vw;}
     .title h1{font-size:7em;text-shadow: 3px 3px 3px rgba(0, 0, 0, .3);}
     .title p{/*font-size:2.5em;*/}
     .title p span{padding:0 2px;}
-    .title .buybtn,.title h4{ font-size: 2.3em; }    
+    .title .buybtn,.title h4{ font-size: 2.1em; }    
     .title .buybtn::before,.title .buybtn::after{display:none;} 
     h3{ line-height: 1.38em; font-size: 2.04em; }
     .titlogo{ width: 35vw; } 
@@ -545,7 +546,7 @@ footer .gotop:hover{color:#cecece;}
         margin:0
     }
     .consult-icon span {display:none}
-    .qklog_box h2.text{ margin-top: 0.5em;margin-bottom: 0px;font-size: 30px;}
+    .qklog_box h2.text{ margin-top: 0.1em;margin-bottom: 0px;font-size: 30px;}
     .loginbox {margin: 20px 10px 50px 10px}
 
 }
