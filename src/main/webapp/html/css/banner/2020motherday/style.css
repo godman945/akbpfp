@@ -3,8 +3,8 @@ a {color: #151515; -webkit-transition: .3s; transition: .3s;}
 a:hover{text-decoration:none;color: #151515;}
 
 
-/***�����***/
-#wrapper {background: url(../../img/banner/2020motherday/bodybg.png) top center no-repeat; top:12px;}
+/***嚙踝蕭�謒蕭嚙踝蕭***/
+#wrapper {background: url(../../../img/banner/2020motherday/bodybg.png) top center no-repeat; top:12px;}
 
 @media (max-width: 768px){
     #wrapper {
@@ -13,7 +13,7 @@ a:hover{text-decoration:none;color: #151515;}
 }
 
 
-/***M�����***/
+/***M嚙踝蕭��蕭��蕭�蹓蕭謘�***/
 nav ul li {background-color: rgba(0,0,0,.7);}
 
 nav ul li a{color: #FFF;border-bottom: 1px dotted #767676;}
@@ -21,7 +21,7 @@ nav ul li a{color: #FFF;border-bottom: 1px dotted #767676;}
 nav ul li a:hover{color: #bababa;}
 
 
-/***headmenu皛����***/
+/***headmenu��嚙踐�蕭��蕭嚙�***/
 .headmenu ul li img{
     -webkit-transition: .2s ease-out;
     transition: .2s ease-out;}
@@ -41,7 +41,7 @@ nav ul li a:hover{color: #bababa;}
 .topbar a:hover{ text-decoration:underline;}
 form{margin:0}
 
-a{color:#1d5ed6;text-decoration:underline;font-family: 敺株�迤暺��,arial;}
+a{color:#1d5ed6;text-decoration:underline;font-family: ��嚙踐�縣��嚙踝蕭,arial;}
 a:hover{text-decoration:none}
 
 .topbar {width:100%;height:46px;line-height:46px;background-color: #fff;z-index: 987654;position: relative;}
@@ -56,7 +56,7 @@ section { padding: 0; width: 100%; display: -webkit-box; display: -ms-flexbox; d
 
 
 
-/***sidenav摨���***/
+/***sidenav���嚙踝蕭�嚙踐�***/
 .sidenav li{
     border-bottom: 1px solid #000;
 }
@@ -102,7 +102,7 @@ section { padding: 0; width: 100%; display: -webkit-box; display: -ms-flexbox; d
 }
 
 
-/***���之��憛�***/
+/***嚙踝蕭��蕭蹓颱�蕭嚙賣�蕭***/
 .ecpd {
     padding-bottom: 28px;
      /*border-radius: 12px;
@@ -112,7 +112,7 @@ section { padding: 0; width: 100%; display: -webkit-box; display: -ms-flexbox; d
     border:none;
     /*border-right: 1px dotted #cccccc;*/}
 
-/***������***/
+/***嚙踝蕭��蕭蹓鳴蕭謘橘蕭嚙�***/
 .pd_img img {
     -webkit-transition: .2s ease-out;
     transition: .2s ease-out}
@@ -124,20 +124,20 @@ section { padding: 0; width: 100%; display: -webkit-box; display: -ms-flexbox; d
     filter: brightness(115%);
 }
 
-/***����惜憿***/
+/***嚙踝蕭��蕭蹓潘蕭謕���***/
 #ec1 .pd_tag b{ background-color: #008be3;border-color:#008be3; color: #fff;}
 #ec2 .pd_tag b{ color: #fff;border-color:#09c290; background-color: #09c290}
 #ec3 .pd_tag b{ color: #fff;border-color:#9966cc; background-color: #9966cc}
 #ec4 .pd_tag b{ color: #fff;border-color:#56ac83; background-color: #56ac83}
 
 
-/***����憿***/
+/***嚙踝蕭��蕭蹓鳴�蕭����***/
 .pd_price {
     color: #ff007c;
 }
 
 
-/***������***/
+/***嚙踝蕭��蕭蹓潘蕭�嚙踐嚙踐�***/
 .pd_btngo { border-radius: 50px; font-size:20px; font-weight: 600;
     color: #fff;
     background-color: #ff007c;

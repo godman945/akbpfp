@@ -3,7 +3,7 @@
  <!--topbar start-->
  <div class="topbar">
   <div class="logo">
-    <a href="http://show.pchome.com.tw/index.html" target="_blank"><img src="img/banner/2020motherday/logo_pchome.png" border="0"></a>
+    <a href="http://show.pchome.com.tw/index.html" target="_blank"><img src="html/img/banner/2020motherday/logo_pchome.png" border="0"></a>
   </div>
 <!-- <div class="login">
             <img src="/html/main/img/icon_bb.gif" hspace="3" align="absmiddle">
@@ -20,34 +20,34 @@
           <!--header start-->
             <section class="row" id="Headr">                
                    <h1 class="subtit animated bounceIn" data-wow-delay=".2s" title="聯播網母親節活動" >
-                    <div class="floating hmd"><img src="img/banner/2020motherday/hmd.png"></div><img src="img/banner/2020motherday/headertit.png"></h1>
-                    <h2 class="wow bounceInUp" data-wow-delay=".3s"><img src="img/banner/2020motherday/headertit_s.png"></h2>
+                    <div class="floating hmd"><img src="html/img/banner/2020motherday/hmd.png"></div><img src="html/img/banner/2020motherday/headertit.png"></h1>
+                    <h2 class="wow bounceInUp" data-wow-delay=".3s"><img src="html/img/banner/2020motherday/headertit_s.png"></h2>
             </section>
           <!--header end-->
           
           <!--01-->
           <section class="row" id="">
         <div class="ecbx col-xl-12 col-lg-12">
-          <div class="ectit wow bounceInUp animated" data-wow-delay=".5s"><img src="img/banner/2020motherday/banr01.png"></div>
+          <div class="ectit wow bounceInUp animated" data-wow-delay=".5s"><img src="html/img/banner/2020motherday/banr01.png"></div>
           <ul class="ecpd row wow slideInUp animated" data-wow-delay=".2s">
            <li class="col-lg-3 col-sm-6 col-6">
             <div class="ecpd_bx">
-              <a class="pd_img" href="https://member.pchome.com.tw/login.html?ref=http%3A%2F%2Fshow.pchome.com.tw%2Fredirect.html&utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="img/banner/2020motherday/sp01.png"></a>
+              <a class="pd_img" href="https://member.pchome.com.tw/login.html?ref=http%3A%2F%2Fshow.pchome.com.tw%2Fredirect.html&utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="html/img/banner/2020motherday/sp01.png"></a>
             </div>
             </li>
            <li class="col-lg-3 col-sm-6 col-6">
             <div class="ecpd_bx">
-              <a class="pd_img" href="https://adm.pcstore.com.tw/?utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="img/banner/2020motherday/sp02.png"></a>
+              <a class="pd_img" href="https://adm.pcstore.com.tw/?utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="html/img/banner/2020motherday/sp02.png"></a>
             </div>
             </li>
            <li class="col-lg-3 col-sm-6 col-6">
             <div class="ecpd_bx">
-              <a class="pd_img" href="https://member.pchome.com.tw/login.html?ref=http%3A%2F%2Fshow.pchome.com.tw%2Fredirect.html&utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="img/banner/2020motherday/sp03.png"></a>
+              <a class="pd_img" href="https://member.pchome.com.tw/login.html?ref=http%3A%2F%2Fshow.pchome.com.tw%2Fredirect.html&utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="html/img/banner/2020motherday/sp03.png"></a>
             </div>
             </li>
            <li class="col-lg-3 col-sm-6 col-6">
             <div class="ecpd_bx">
-              <a class="pd_img" href="https://adm.pcstore.com.tw/?utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="img/banner/2020motherday/sp04.png"></a>
+              <a class="pd_img" href="https://adm.pcstore.com.tw/?utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="html/img/banner/2020motherday/sp04.png"></a>
             </div>
             </li>
    
@@ -58,7 +58,7 @@
           <!--02-->
           <section class="row" id="">
         <div class="ecbx col-xl-12 col-lg-12">
-          <div class="ectit wow bounceInUp animated" data-wow-delay=".5s"><img src="img/banner/2020motherday/banr02.png"></div>
+          <div class="ectit wow bounceInUp animated" data-wow-delay=".5s"><img src="html/img/banner/2020motherday/banr02.png"></div>
         <div class="slideInUp animated" data-wow-delay=".2s"><div style="font-size: 18px">在活動期間內，<span style="color: #dd4447">累計儲值總金額</span>達門檻，就贈送相對應廣告金！如：儲值總金額達5,000元符合辦法$4500，贈送500元廣告金。<br>
 金額將以贈送<span style="color: #dd4447">最高金額方式</span>做計算， 如：儲值總金額達12,000元，為6,000元乘以2，共贈送2,000元廣告金。
 </div>
@@ -89,11 +89,11 @@
           <!--03-->
           <section class="row" id="">
         <div class="ecbx col-xl-12 col-lg-12">
-          <div class="ectit wow bounceInUp animated" data-wow-delay=".5s"><img src="img/banner/2020motherday/banr03.png"></div>
+          <div class="ectit wow bounceInUp animated" data-wow-delay=".5s"><img src="html/img/banner/2020motherday/banr03.png"></div>
           <div class="bounceInUp animated step3" data-wow-delay=".5s">
-            <img src="img/banner/2020motherday/step1.png">
-            <img src="img/banner/2020motherday/step2.png">
-            <img src="img/banner/2020motherday/step3.png"></div>
+            <img src="html/img/banner/2020motherday/step1.png">
+            <img src="html/img/banner/2020motherday/step2.png">
+            <img src="html/img/banner/2020motherday/step3.png"></div>
           <div id="link" class="container bounceInUp animated" data-wow-delay=".2s">
             <div class="btnbox">
               <div class="btn_style01">

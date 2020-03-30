@@ -1,6 +1,6 @@
 <#assign s=JspTaglibs["/struts-tags"]>
 <!DOCTYPE HTML>
-<html>
+<html> 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -18,7 +18,7 @@
 <meta name="keywords" content="PChome聯播網,pchome廣告,商店街,母親節,網路廣告,買廣告,刊登廣告">
 <link rel="image_src" href="">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="js/jquery.cookie.js"></script>
+
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-29429202-26"></script>
@@ -38,8 +38,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
-    <link rel="stylesheet" href="css/2020motherday/basic.css">
-    <link rel="stylesheet" href="css/2020motherday/style.css">
+    <link rel="stylesheet" href="html/css/banner/2020motherday/basic.css">
+    <link rel="stylesheet" href="html/css/banner/2020motherday/style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/notosanstc.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:700" rel="stylesheet">
     <!--[if lt IE 9]>
