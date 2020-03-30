@@ -8,8 +8,10 @@
    	<action name="2020newyear" class="AdBannerAction" method="bannerPage">
 			<result type="tiles" name="success">.ad.banner</result>
 	</action>
-
-
+	<!-- 2020母親節活動 -->
+	<action name="2020motherday" class="AdBannerAction" method="bannerPage">
+			<result type="tiles" name="success">.ad.2020.motherday.banner</result>
+	</action>
 
     </package>
 </struts>
