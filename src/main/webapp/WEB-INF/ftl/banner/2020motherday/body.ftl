@@ -37,7 +37,7 @@
             </li>
            <li class="col-lg-3 col-sm-6 col-6">
             <div class="ecpd_bx">
-              <a class="pd_img" href="https://adm.pcstore.com.tw/?utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="html/img/banner/2020motherday/sp02.png"></a>
+              <a class="pd_img" href="https://member.pchome.com.tw/login.html?ref=http%3A%2F%2Fshow.pchome.com.tw%2Fredirect.html&utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="html/img/banner/2020motherday/sp02.png"></a>
             </div>
             </li>
            <li class="col-lg-3 col-sm-6 col-6">
@@ -47,7 +47,7 @@
             </li>
            <li class="col-lg-3 col-sm-6 col-6">
             <div class="ecpd_bx">
-              <a class="pd_img" href="https://adm.pcstore.com.tw/?utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="html/img/banner/2020motherday/sp04.png"></a>
+              <a class="pd_img" href="https://member.pchome.com.tw/login.html?ref=http%3A%2F%2Fshow.pchome.com.tw%2Fredirect.html&utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" data-clickform="A1"><img alt="" src="html/img/banner/2020motherday/sp04.png"></a>
             </div>
             </li>
    
@@ -75,11 +75,9 @@
         <div id="link" class="container bounceInUp animated" data-wow-delay=".2s">
             <div class="btnbox">
               <div class="btn_style01">
-                <a href="http://show.pchome.com.tw/?utm_source=mothersday&utm_medium=button_store_1&utm_campaign=no2
-" class="butn drop-shadow2" target="_blank">商店街店主直達進入</a>
+                <a href="https://adm.pcstore.com.tw/?utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" class="butn drop-shadow2" target="_blank">商店街店主直達進入</a>
               </div>                          
-            <div class="btn_style01"><a href="http://show.pchome.com.tw/?utm_source=mothersday&utm_medium=button_direct&utm_campaign=no2
-" target="_blank" class="butn drop-shadow2">立即登入儲值</a>
+            <div class="btn_style01"><a href="https://member.pchome.com.tw/login.html?ref=http%3A%2F%2Fshow.pchome.com.tw%2Fredirect.html&utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" target="_blank" class="butn drop-shadow2">立即登入儲值</a>
             </div>  
             </div>
           </div>
@@ -97,7 +95,7 @@
           <div id="link" class="container bounceInUp animated" data-wow-delay=".2s">
             <div class="btnbox">
               <div class="btn_style01">
-                <a href="http://show.pchome.com.tw/?utm_source=mothersday&utm_medium=button_store_2&utm_campaign=no2" class="butn drop-shadow2" target="_blank">商店街店主立即參加
+                <a href="https://adm.pcstore.com.tw/?utm_source=PChome_pfp&utm_medium=CPC&utm_campaign=2020_MD" class="butn drop-shadow2" target="_blank">商店街店主立即參加
 </a>
               </div>                          
             </div>
