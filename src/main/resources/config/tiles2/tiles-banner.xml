@@ -10,8 +10,11 @@
     	<put-attribute name="body" value="/ftl/banner/body.ftl" />
     </definition>
 
-
-
+	<!-- 2020母親節 -->
+	<definition name=".ad.2020.motherday.banner" template="/ftl/banner/default.ftl" >
+    	<put-attribute name="header" value="/ftl/banner/2020motherday/header.ftl" />
+    	<put-attribute name="body" value="/ftl/banner/2020motherday/body.ftl" />
+    </definition>
 
 
 

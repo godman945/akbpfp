@@ -91,7 +91,7 @@
                 <li><a href="http://4c.pchome.com.tw/campaign/emba/" target="_blank">行銷觀點</a></li>
 				<!-- <li><a href="http://faq.pchome.com.tw/service/show_contact.html" target="_blank">專人諮詢</a></li> -->
 				<li><a href="#telService" target="_blank">專人諮詢</a></li>
-				<li><a href="http://bit.ly/2MQkbQ2" target="_blank" class="evnt">最新優惠</a></li>
+				<li><a href="2020motherday.html" target="_blank" class="evnt">最新優惠</a></li>
 		        <div class="login">
 		            <#if id_pchome?exists>
 						<!-- <img src="<@s.url value="/" />html/main/img/icon_bb.gif" hspace="3" align="absmiddle"> -->
