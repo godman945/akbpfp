@@ -183,6 +183,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			adVideoUrl = "https://www.youtube.com/watch?"+adVideoUrl;
 			if(adVideoUrl.indexOf("&")>=0) {
 				adVideoUrl = adVideoUrl.substring(0,adVideoUrl.indexOf("&"));
+				log.info("adVideoUrl url:"+adVideoUrl);
 			}
 		}
 		
