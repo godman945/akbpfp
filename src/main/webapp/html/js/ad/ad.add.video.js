@@ -144,10 +144,7 @@ $(document).ready(function(){
 						$('#bannerMsgSpan').removeAttr("style").show();
 						$('#sizeMsgSpan').removeAttr("style").show();
 					}
-					
-					console.log(result);
-					$("#adVideoURL").val(result.adVideoUrl);
-					
+					$("#adVideoURL").val(result.videoUrl);
 					$('body').unblock();
 				}else{
 					adPreviewVideoData = null;
