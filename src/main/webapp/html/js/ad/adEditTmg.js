@@ -681,7 +681,9 @@ function previewImage(file) {
 	}
 	size = Math.round(size);
 	
-	if(($("#uploadFile")[0].files[0].name.indexOf(".gif") || $("#uploadFile")[0].files[0].name.indexOf(".GIF")) && size > 900){
+	
+	$("#sizeCheckDiv")[0].innerHTML = "";
+	if(($("#uploadFile")[0].files[0].name.indexOf(".gif") >=0 || $("#uploadFile")[0].files[0].name.indexOf(".GIF") >=0 ) && size > 900){
 		sizeFlag = false;
 		$("#sizeCheckDiv")[0].innerHTML = "請檢查檔案大小是否大於1024KB";
 		$("#sizeCheckDiv").css("display","");
