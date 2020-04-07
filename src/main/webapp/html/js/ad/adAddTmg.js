@@ -630,7 +630,21 @@ function previewImage(file) {
 		deleteImage();
 	}
 	size = Math.round(size);
+	
+	if(($("#uploadFile")[0].files[0].name.indexOf(".gif") || $("#uploadFile")[0].files[0].name.indexOf(".GIF")) && size > 1024){
+		sizeFlag = false;
+		$("#sizeCheckDiv")[0].innerHTML = "請檢查檔案大小是否大於1024KB";
+		$("#sizeCheckDiv").css("display","");
+		$("#uploadCheckDiv").css("display","none");
+		$("#imghead").attr("src", "./html/img/upl9090.gif");
+		$("#previewImg").attr("src", "./html/img/upl9090.gif");
+		$("#uploadFile").replaceWith($('#uploadFile').clone());
+		location.href="#uploadFile";
+		return false;
+	}
+	
 	if(size > 10240){
+		$("#sizeCheckDiv")[0].innerHTML = "請檢查檔案大小是否大於10240KB";
 		sizeFlag = false;
 		$("#sizeCheckDiv").css("display","");
 		$("#uploadCheckDiv").css("display","none");

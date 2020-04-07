@@ -44,7 +44,7 @@ public class AdUtilAction extends BaseCookieAction{
 	
 	private String  time;
 	public String fileUpload() throws Exception{
-	    log.info("alex fileUpload");
+	    log.info(">>>>>> fileUpload");
 		result = "noFile";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date date = new Date();
@@ -53,7 +53,7 @@ public class AdUtilAction extends BaseCookieAction{
 			System.out.println("ulTmpName = " + ulTmpName);
 			if(uploadFile != null) {
 				InputStream is = new FileInputStream(uploadFile);
-				if(uploadFile.length()/1024 > 10240){
+				if(uploadFile.length()/1024 > allowSize){
 				    result = "overSize";
 				    return SUCCESS;
 				}
@@ -65,16 +65,20 @@ public class AdUtilAction extends BaseCookieAction{
 				imgHeight = Integer.parseInt(imgInfo.get("imgHeight"));
 				
 				if(imgWidth.intValue() != imgHeight.intValue()){
-					log.info("-------------test=");
 					result = "notSize";
 				    return SUCCESS;
 				}
 				
 				if(imgWidth.intValue() < 250 || imgHeight.intValue() < 250){
-					log.info("-------------test=");
 					result = "errorSize";
 				    return SUCCESS;
 				}
+				
+				if(imgFile.toUpperCase().indexOf(".GIF") >= 0 && uploadFile.length()/1024 > 1024 ) {
+					result = "overSize";
+					return SUCCESS;
+				}
+				
 				
 
 				// 存放截圖的暫存目錄
@@ -111,7 +115,11 @@ public class AdUtilAction extends BaseCookieAction{
 
 				log.info("cutFile.length() = " + cutFile.length());
 				log.info("allowSize = " + allowSize);
-				if(cutFile.length() < allowSize) {
+				
+				
+				
+				
+				if(cutFile.length() < allowSize ) {
 					
 					// 進行圖片縮放
 					if("GIF".equals(imgType.toUpperCase())){
@@ -138,7 +146,6 @@ public class AdUtilAction extends BaseCookieAction{
 					imgFile = tmpFile.getAbsolutePath();
 					imgFile = imgFile.indexOf("\\") > 0?imgFile.replaceAll("\\\\", "/"):imgFile;
 					log.info("imgFile = " + imgFile);
-
 					resizeFile.delete();
 					result = "resizeOK";
 				} else {

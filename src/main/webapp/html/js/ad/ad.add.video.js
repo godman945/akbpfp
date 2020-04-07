@@ -348,6 +348,14 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 		errorMsg = '上傳圖片的<a id="errAdImg" name="errAdImg" style="cursor: pointer;" onclick="approveSize(\'approveSizeDiv\');">支援規格查詢</a>';
 	}
 	
+	if(imgTypeName.toUpperCase() == "GIF" && fileSize > 1024){
+		imgFileSize = "no";
+		errorTitle = '檔案過大!';
+		errorMsg = '檔案大小上限1024KB';
+	}
+	
+	
+	
 	//檢核檔案附檔名
 	if(imgTypeName.toUpperCase() == "PNG" || imgTypeName.toUpperCase() == "JPG" || imgTypeName.toUpperCase() == "GIF"){
 		imgType = "yes";
