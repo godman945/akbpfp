@@ -201,7 +201,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		
 		String videoResult = "";
 		// 檢查youtube網址是否有效
-		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --list-formats " + adVideoUrl });
+		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --list-formats " + adVideoUrl +" --proxy http://192.168.3.249:3128/"});
 		process.waitFor();
 		videoResult = IOUtils.toString(process.getInputStream(), "UTF-8");
 		log.info(">>>>>>video format result:" + videoResult);
@@ -239,7 +239,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			verticalAdFlag = true;
 		}
 		
-		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g --get-title " + adVideoUrl });
+		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g --get-title " + adVideoUrl +" --proxy http://192.168.3.249:3128/"});
 		
 		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
 		videoResult = IOUtils.toString(process.getInputStream(), "UTF-8");
