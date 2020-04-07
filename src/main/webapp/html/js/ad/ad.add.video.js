@@ -112,6 +112,7 @@ $(document).ready(function(){
 				}
 			}).done(function (result) {
 				if(result.result == true){
+					$("#adVideoURL").val(result.videoUrl);
 					videoUrl = $("#adVideoURL").val();
 					$("#adVideoURLMsg").css('color','green');
 					$("#adVideoURLMsg").text('影片網址確認正確');
@@ -144,7 +145,6 @@ $(document).ready(function(){
 						$('#bannerMsgSpan').removeAttr("style").show();
 						$('#sizeMsgSpan').removeAttr("style").show();
 					}
-					$("#adVideoURL").val(result.videoUrl);
 					$('body').unblock();
 				}else{
 					adPreviewVideoData = null;
