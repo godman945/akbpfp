@@ -179,9 +179,13 @@ public class AdUtilAjax extends BaseCookieAction{
 		log.info("video url:"+adVideoUrl);
 		JSONObject json = new JSONObject();
 		if(adVideoUrl.indexOf("&") >= 0) {
-			adVideoUrl = adVideoUrl.substring(0, adVideoUrl.indexOf("&"));
+			adVideoUrl = adVideoUrl.substring(adVideoUrl.indexOf("v="),adVideoUrl.length());
+			adVideoUrl = "https://www.youtube.com/watch?"+adVideoUrl;
+			if(adVideoUrl.indexOf("&")>=0) {
+				adVideoUrl = adVideoUrl.substring(0,adVideoUrl.indexOf("&"));
+				log.info("adVideoUrl url:"+adVideoUrl);
+			}
 		}
-		
 		
 		boolean filterBoolean = false;
 		for (String filterStr : filterUrl) {
@@ -289,7 +293,8 @@ public class AdUtilAjax extends BaseCookieAction{
 		process.destroy();
 		json.put("result", true);
 		json.put("videoTime", seconds);
-		json.put("previewUrl", previewUrl); 
+		json.put("previewUrl", previewUrl);
+		json.put("videoUrl", adVideoUrl); 
 		json.put("adTitle", adTitle);
 		json.put("verticalAdFlag", verticalAdFlag);
 //		

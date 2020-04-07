@@ -112,6 +112,7 @@ $(document).ready(function(){
 				}
 			}).done(function (result) {
 				if(result.result == true){
+					$("#adVideoURL").val(result.videoUrl);
 					videoUrl = $("#adVideoURL").val();
 					$("#adVideoURLMsg").css('color','green');
 					$("#adVideoURLMsg").text('影片網址確認正確');
