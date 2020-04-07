@@ -145,6 +145,7 @@ $(document).ready(function(){
 						$('#sizeMsgSpan').removeAttr("style").show();
 					}
 					
+					console.log(result);
 					$("#adVideoURL").val(result.adVideoUrl);
 					
 					$('body').unblock();
