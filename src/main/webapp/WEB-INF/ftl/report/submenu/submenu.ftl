@@ -55,28 +55,28 @@
   </@s.else>
  
   <@s.if test="%{#rUri.indexOf('/reportAdTime.') != -1}">
-        <div class="submn"><a href="<@s.url value="/reportAdTime.html" />" style="text-decoration:none"><b>廣告播放時段成效</b></a></div>
+        <div class="submn"><a href="<@s.url value="/reportAdTime.html" />" style="text-decoration:none"><b>廣告播放時段</b></a></div>
   </@s.if>
   <@s.else>
-        <div class="submn"><a href="<@s.url value="/reportAdTime.html" />">廣告播放時段成效</a></div>
+        <div class="submn"><a href="<@s.url value="/reportAdTime.html" />">廣告播放時段</a></div>
   </@s.else>
   
   <@s.if test="%{#rUri.indexOf('/reportAdAgesex.') != -1}">
-        <div class="submn"><a href="<@s.url value="/reportAdAgesex.html" />" style="text-decoration:none"><b>廣告族群成效</b></a></div>
+        <div class="submn"><a href="<@s.url value="/reportAdAgesex.html" />" style="text-decoration:none"><b>廣告族群</b></a></div>
   </@s.if>
   <@s.else>
-        <div class="submn"><a href="<@s.url value="/reportAdAgesex.html" />">廣告族群成效</a></div>
+        <div class="submn"><a href="<@s.url value="/reportAdAgesex.html" />">廣告族群</a></div>
   </@s.else>
   
   <@s.if test="%{#rUri.indexOf('/reportAdWebsite.') != -1}">
-        <div class="submn"><a href="<@s.url value="/reportAdWebsite.html" />" style="text-decoration:none"><b>網站類型成效</b></a></div>
+        <div class="submn"><a href="<@s.url value="/reportAdWebsite.html" />" style="text-decoration:none"><b>網站類型</b></a></div>
   </@s.if>
   <@s.else>
-        <div class="submn"><a href="<@s.url value="/reportAdWebsite.html" />">網站類型成效</a></div>
+        <div class="submn"><a href="<@s.url value="/reportAdWebsite.html" />">網站類型</a></div>
   </@s.else>
   <@s.if test="%{#rUri.indexOf('/reportVideoPerformance.') != -1}">
-        <div class="submn"><a href="<@s.url value="/reportVideoPerformance.html" />" style="text-decoration:none"><b>影音廣告成效</b></a></div>
+        <div class="submn"><a href="<@s.url value="/reportVideoPerformance.html" />" style="text-decoration:none"><b>影音廣告</b></a></div>
   </@s.if>
   <@s.else>
-        <div class="submn"><a href="<@s.url value="/reportVideoPerformance.html" />">影音廣告成效</a></div>
+        <div class="submn"><a href="<@s.url value="/reportVideoPerformance.html" />">影音廣告</a></div>
   </@s.else>
