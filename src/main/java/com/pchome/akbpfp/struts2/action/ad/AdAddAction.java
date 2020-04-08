@@ -760,8 +760,12 @@ public class AdAddAction extends BaseCookieAction{
 			if(StringUtils.isBlank(adVideoURL)){
 				result = "adVideoURL is null";
 			}else{
-				if(adVideoURL.indexOf("&") >-1){
-					adVideoURL = adVideoURL.substring(0,adVideoURL.indexOf("&"));
+				if(adVideoURL.indexOf("&") >= 0) {
+					adVideoURL = adVideoURL.substring(adVideoURL.indexOf("v="),adVideoURL.length());
+					adVideoURL = "https://www.youtube.com/watch?"+adVideoURL;
+					if(adVideoURL.indexOf("&")>=0) {
+						adVideoURL = adVideoURL.substring(0,adVideoURL.indexOf("&"));
+					}
 				}
 			}
 			
