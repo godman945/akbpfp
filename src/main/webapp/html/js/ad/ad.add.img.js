@@ -1,4 +1,4 @@
-﻿//1.建立上傳畫面
+﻿﻿//1.建立上傳畫面
 //2.建立點擊預覽
 //3.送出
 var imgSeq = "";
@@ -233,6 +233,12 @@ function createImgObjDom(file,width, height, fileSize, adSeq, imgMD5, imgRepeat,
 			return false;
 		}
 	});
+	
+	if((file.name.indexOf(".gif") >=0 || file.name.indexOf(".GIF") >=0) && Math.round(file.size/1024) > 1024){
+		imgFileSize = "no";
+		errorTitle = '檔案過大!';
+		errorMsg = '檔案大小上限1024KB';
+	}
 	
 	
 //	console.log('imgFileSize:'+imgFileSize);
