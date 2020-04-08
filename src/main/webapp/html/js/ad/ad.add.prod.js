@@ -496,9 +496,13 @@ function checkUploadRule(file_data){
             if(fileExtensionName.includes("JPEG") || fileExtensionName.includes("PNG") || fileExtensionName.includes("GIF")){
             	fileExtensionNameFlag = true
             }
-            if(file_data.files[0].size <= 184320){
-            	fileSizeFlag = true;
+           
+            if(fileExtensionName.indexOf("GIF") >=0){
+            	fileSizeFlag = (file_data.files[0].size /1024 > 1024) ? false : true;
+            }else{
+            	fileSizeFlag = (file_data.files[0].size /1024 > 10240) ? false : true;
             }
+            
             if(sizeFlag && fileExtensionNameFlag && fileSizeFlag){
             	var previewSrc = e.target.result;
                 var noUpload = $(uploadDom).find(".upload-lab");
@@ -541,7 +545,11 @@ function checkUploadRule(file_data){
             	}else if(fileSizeFlag == false){
             		$(p).append(fileName);
             		$(u).css("color","red");
-            		$(u).append("檔案需小於10240K");
+            		if(fileExtensionName.indexOf("GIF") >=0){
+            			$(u).append("檔案需小於1024K");
+                    }else{
+                    	$(u).append("檔案需小於10240K");
+                    }
             	}else if(fileExtensionNameFlag == false){
             		$(p).append(fileName);
             		$(u).css("color","red");

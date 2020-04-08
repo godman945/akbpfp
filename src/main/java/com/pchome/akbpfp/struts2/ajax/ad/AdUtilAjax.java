@@ -179,9 +179,13 @@ public class AdUtilAjax extends BaseCookieAction{
 		log.info("video url:"+adVideoUrl);
 		JSONObject json = new JSONObject();
 		if(adVideoUrl.indexOf("&") >= 0) {
-			adVideoUrl = adVideoUrl.substring(0, adVideoUrl.indexOf("&"));
+			adVideoUrl = adVideoUrl.substring(adVideoUrl.indexOf("v="),adVideoUrl.length());
+			adVideoUrl = "https://www.youtube.com/watch?"+adVideoUrl;
+			if(adVideoUrl.indexOf("&")>=0) {
+				adVideoUrl = adVideoUrl.substring(0,adVideoUrl.indexOf("&"));
+				log.info("adVideoUrl url:"+adVideoUrl);
+			}
 		}
-		
 		
 		boolean filterBoolean = false;
 		for (String filterStr : filterUrl) {
@@ -201,7 +205,7 @@ public class AdUtilAjax extends BaseCookieAction{
 		
 		String videoResult = "";
 		// 檢查youtube網址是否有效
-		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --list-formats " + adVideoUrl });
+		Process process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl --list-formats " + adVideoUrl +" --proxy http://192.168.3.249:3128/"});
 		process.waitFor();
 		videoResult = IOUtils.toString(process.getInputStream(), "UTF-8");
 		log.info(">>>>>>video format result:" + videoResult);
@@ -239,7 +243,7 @@ public class AdUtilAjax extends BaseCookieAction{
 			verticalAdFlag = true;
 		}
 		
-		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g --get-title " + adVideoUrl });
+		process = Runtime.getRuntime().exec(new String[] { "bash", "-c", "youtube-dl -f 18 -g --get-title " + adVideoUrl +" --proxy http://192.168.3.249:3128/"});
 		
 		log.info(IOUtils.toString(process.getErrorStream(),"UTF-8"));
 		videoResult = IOUtils.toString(process.getInputStream(), "UTF-8");
@@ -289,7 +293,8 @@ public class AdUtilAjax extends BaseCookieAction{
 		process.destroy();
 		json.put("result", true);
 		json.put("videoTime", seconds);
-		json.put("previewUrl", previewUrl); 
+		json.put("previewUrl", previewUrl);
+		json.put("videoUrl", adVideoUrl); 
 		json.put("adTitle", adTitle);
 		json.put("verticalAdFlag", verticalAdFlag);
 //		
